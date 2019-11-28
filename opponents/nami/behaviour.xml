@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 4:27:05  on noviembre 26, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 12:43:34  on noviembre 28, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Nami</first>
@@ -2062,7 +2062,8 @@
                 <condition role="other" character="sayaka" />
                 <state img="#-smug.png">What do you mean there's no money? Oh, I get it... You're trying to get me to leave so you can take it all for yourself. Looks like the only witch here is you.</state>
             </case>
-            <case stage="0" alsoPlaying="zone-tan">
+            <case stage="0">
+                <condition role="other" character="zone-tan" />
                 <state img="#-serious.png">That's funny... Wait, who are you? Do you know me?</state>
             </case>
             <case stage="0">
@@ -2270,6 +2271,33 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0-6" id="94">
+                <condition role="other" character="aella" stage="0-1" sayingMarker="AellaAdventures" />
+                <alternative alsoPlaying="aella" alsoPlayingStage="0-1" totalRounds="2">
+                    <condition count="1" filter="pinkie_pie" role="other" />
+                </alternative>
+                <alternative alsoPlaying="aella" alsoPlayingStage="0-1" totalRounds="1" />
+                <state img="#-smiling.png" marker="aella_adventures">That does sound crazy, Aella, but I've got you beat. I've been to an island in the sky, one at the bottom of the sea, and one on top of a giant elephant. I've met giants, zombies... And that's not even half of it!</state>
+            </case>
+            <case stage="0-6" id="98" oneShotId="258" totalRounds="-10">
+                <condition role="other" character="cynthia" stage="1-2" />
+                <alternative>
+                    <condition role="other" character="cynthia" sayingMarker="QuesExploreRuins" />
+                </alternative>
+                <alternative>
+                    <condition role="other" character="cynthia" sayingMarker="QuesCreationTheories" />
+                </alternative>
+                <alternative>
+                    <condition role="other" character="cynthia" sayingMarker="QuesHistoricalFigures" />
+                </alternative>
+                <alternative>
+                    <condition role="other" character="cynthia" sayingMarker="QuesHistoricalStories" />
+                </alternative>
+                <alternative>
+                    <condition role="other" character="cynthia" sayingMarker="QuesImpactfulHistory" />
+                </alternative>
+                <state img="#-thinking.png" marker="void_century">I don't particularly care for history, but I have an archeologist friend that has a big interest. She's researching the Void Century.</state>
+            </case>
             <case stage="0-6" id="58" alsoPlaying="rainbow_mika" alsoPlayingStage="3" alsoPlayingTimeInStage="0" alsoPlayingSaidMarker="cammy_help">
                 <condition count="1" filter="cammy_white" />
                 <state img="#-smiling.png">I'm not saying it wasn't Mika's fault, but I think Cammy should be better at dodging attacks.</state>
@@ -2395,6 +2423,11 @@
                 <condition role="other" character="revy" sayingMarker="music" />
                 <state img="#-smiling.png" marker="revy_music">Music? I enjoy listening to Brook play anything. I was never on board with Luffy wanting a musician in the crew, but I admit he can liven up the mood with his talent.</state>
             </case>
+            <case stage="0-6">
+                <condition filter="adventurer" role="other" />
+                <condition role="other" character="rainbow_dash" sayingMarker="adventurer_what_do" />
+                <state img="#-thinking.png">Relics? No... Well, sometimes. We sail to new islands, explore places, make friends, fight enemies... Boy, my life sounds pretty crazy when I explain it.</state>
+            </case>
             <case stage="3-6" alsoPlaying="mae" timeInStage="0" saidMarker="pirate" alsoPlayingSayingMarker="nami_offer">
                 <state img="#-thinking.png">You wanna become a pirate, Mae? Okay... I guess I could tell you what it's like. Even though you don't look very strong, I don't want to put you on a dangerous path.</state>
             </case>
@@ -2422,6 +2455,16 @@
                 <condition role="other" character="jessie" sayingMarker="NamiPirateProposal" />
                 <state img="#-smiling.png" marker="jessie_proposal">As tempting as that sounds, Jessie, the risk is too high. I'm not just some small fry, so they wouldn't just let me escape if they capture me.</state>
             </case>
+            <case stage="0-6">
+                <condition role="self" notSaidMarker="pirate" />
+                <condition role="other" character="megumin" sayingMarker="megumin_nami_occupation" />
+                <state img="#-furious.png">What?! That's so rude! Didn't your parents teach you anything?</state>
+            </case>
+            <case stage="0-6">
+                <condition role="self" saidMarker="pirate" />
+                <condition role="other" character="megumin" sayingMarker="megumin_nami_pirate" />
+                <state img="#-annoyed.png">I don't care much for being &lt;i&gt;cool&lt;/i&gt;, but that's not a very nice thing to say, little lady.</state>
+            </case>
             <case stage="0-6" id="63">
                 <condition role="other" character="revy" sayingMarker="killing" />
                 <state img="#-smiling.png" marker="revy_killer">I've never killed anyone. I think I once kicked a Devil Fruit user into the sea... B-but I'm not a killer!</state>
@@ -2437,6 +2480,22 @@
             <case stage="0-6" id="83">
                 <condition role="other" character="jessie" sayingMarker="jessieForfeitFeedback" />
                 <state img="#-thinking.png">Your performance was... good, I guess. And weirdly educational.</state>
+            </case>
+            <case stage="3" oneShotId="256">
+                <condition role="other" character="aella" saying="trouble" />
+                <state img="#-calm.png">I won't cause trouble. I wouldn't want to see that axe of your &lt;i&gt;too close&lt;/i&gt;, Aella.</state>
+            </case>
+            <case stage="0-6" priority="101">
+                <condition role="other" character="dust" sayingMarker="fidgetwho" />
+                <state img="#-calm.png" marker="dust_fidget">I don't think I've ever seen anything like that tiny flying creature. It's kind of adorable.</state>
+            </case>
+            <case stage="0-6" priority="101">
+                <condition role="other" character="dust" sayingMarker="ahrahwho" />
+                <state img="#-shocked.png" marker="dust_ahrah">Your sword is alive? I don't like that, it's too spooky.</state>
+            </case>
+            <case stage="0-6" id="99">
+                <condition role="other" character="cynthia" sayingMarker="CynthiaLucarioSmash" />
+                <state img="#-thinking.png" marker="cynthia_lucario">What's a Lucario? Is it your pet or something?</state>
             </case>
             <case stage="0" oneShotId="130">
                 <alternative hasHand="High Card" timeInStage="2-" saidMarker="target2" notSaidMarker="target2naked">
@@ -2803,7 +2862,7 @@
                 <state img="#-thinking.png" marker="chopper">Want to know about my crew? Let's see... Chopper is the doctor. He's actually a reindeer who can turn into a human thanks to a Devil Fruit. He's not only an amazing doctor, but is also super cute.</state>
                 <state img="#-thinking.png" marker="robin">Want to know about my crew? Let's see... Robin is an archeologist. She's the only other girl in the crew. She might seem too serious because she's been through a lot, but at this point she's like a big sister to me.</state>
                 <state img="#-thinking.png" marker="franky">Want to know about my crew? Let's see... Franky is the shipwright. He built our current ship, the Thousand Sunny. He has built some amazing stuff, but he also likes to create useless crap for some reason.</state>
-                <state img="#-thinking.png" marker="brook">Want to know about my crew? Let's see... Brook is our musician. He's literally a living skeleton, so you'd freak out if you saw him, I know I did the first time. But he's actually harmless, even if he's always annoying me.</state>
+                <state img="#-thinking.png" marker="brook">Want to know about my crew? Let's see... Brook is our musician. He's a living skeleton, so you'd freak out if you saw him, I know I did the first time. But he's harmless, even if he's always annoying me.</state>
             </case>
             <case stage="5-6" oneShotId="75">
                 <condition role="self" timeInStage="1-" />
@@ -2955,6 +3014,10 @@
             </case>
             <case stage="3" alsoPlaying="mulan">
                 <state img="#-serious.png">You'll owe me for this.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="aella" />
+                <state img="#-smiling.png">Me? Steal? Come on, I don't think it'll come to that.</state>
             </case>
             <case stage="0" oneShotId="27" saidMarker="manipulation1" priority="99">
                 <state img="#-sad.png" marker="manipulation1end">Gah, I have no idea why I thought that would work.</state>
@@ -3287,7 +3350,7 @@
                 <state img="#-stripping.png">There's no turning back now. I'll take off my pants.</state>
             </case>
             <case stage="4">
-                <state img="#-stripping.png">If I'm doing this is only because I can still win.</state>
+                <state img="#-stripping.png">If I'm doing this it's only because I can still win.</state>
                 <state img="#-stripping.png">Even if I wear a lot of bikinis, I'm not used to going topless.</state>
                 <state img="#-stripping.png">I'm not embarrassed. I just... don't want to do this.</state>
             </case>
@@ -3388,6 +3451,10 @@
                 <condition role="other" character="jessie" />
                 <state img="#-stripped.png">Seriously? Shouldn't it be the other way around?</state>
             </case>
+            <case stage="1">
+                <condition role="other" character="estelle" />
+                <state img="#-stripped.png">That's a long list, Estelle. But I guess I can do it if you want to see.</state>
+            </case>
             <case stage="6" saidMarker="target1">
                 <state img="#-stripped.png">~Player~? Your nose is bleeding...</state>
                 <state img="#-stripped.png">Is your nose bleeding, ~player~? I'd lend you my handkerchief, but... you know.</state>
@@ -3479,11 +3546,29 @@
                     <text>Mmph, you're just the immature type of guy I expected to find in this sort of game.</text>
                 </state>
             </case>
+            <case stage="0-6">
+                <condition role="target" character="chazz" stage="0-4" />
+                <state img="#-smug.png">
+                    <alt-img stage="7">custom:#-smug</alt-img>
+                    <text>You're too cocky. You know that makes me want to beat you even more, right?</text>
+                </state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="chazz" stage="5" />
+                <state img="#-annoyed.png">You're not leaving, mister! You still have to give me your money... I mean, lose so I can win the prize money.</state>
+            </case>
             <case stage="0-6" target="human" notSaidMarker="target1">
                 <test expr="~human.tag.gay~" value="false" />
                 <state img="#-thinking.png" marker="target1">(I bet I can seduce this guy and get him to throw the game. He has that same silly expression Sanji has when he looks at me.)</state>
                 <state img="#-thinking.png" marker="target1">(~Player~ looks like the kind of man that is easy to manipulate for my own benefit. Just like Sanji.)</state>
                 <state img="#-thinking.png" marker="target1">(Hmmm, maybe I can seduce ~player~ into losing the game for me. It would sure help me to have one less opponent to defeat.)</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="guzma" />
+                <state img="#-annoyed.png">
+                    <alt-img stage="7">custom:#-annoyed</alt-img>
+                    <text>I was right to be worried about meeting common thugs like you in this place.</text>
+                </state>
             </case>
             <case stage="0">
                 <state img="#-calm.png">You tried, and you lost. Don't feel bad.</state>
@@ -3889,10 +3974,15 @@
                     <text>So what are your powers as a goddess? Just out of curiosity, you can't summon lighting, can you?</text>
                 </state>
             </case>
-            <case stage="0-8" target="rainbow_mika" targetStage="0">
+            <case stage="0-8">
+                <condition role="target" character="rainbow_mika" stage="0" />
                 <state img="#-thinking.png">
                     <alt-img stage="7">custom:#-thinking</alt-img>
                     <text>A female wrestler, huh? I can understand guys being into stuff like that, the guys in my crew sure are. But a woman?</text>
+                </state>
+                <state img="#-serious.png">
+                    <alt-img stage="7">custom:#-serious</alt-img>
+                    <text>Wrestling seems like the kind of thing Luffy and Usopp would be into. But not me.</text>
                 </state>
             </case>
             <case stage="0-4" target="rarity_eg" targetStage="0">
@@ -4146,7 +4236,7 @@
                 <condition role="target" character="wonder_woman" stage="1" />
                 <state img="#-thinking.png">
                     <alt-img stage="7">custom:#-thinking</alt-img>
-                    <text>Did you say earlier you're an amazon? Luffy spent some time in the amazon's island and met the pirate empress. That's not you, right?</text>
+                    <text>Did you say earlier you're an amazon? Luffy spent some time on the amazon's island and met the pirate empress. That's not you, right?</text>
                 </state>
             </case>
             <case stage="0-8">
@@ -4175,6 +4265,34 @@
                 <state img="#-shocked.png">
                     <alt-img stage="7">custom:#-shocked</alt-img>
                     <text>Hey, little girl. Are you lost? Did you get separated from your parents? You really shouldn't be here.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="aella" stage="0" />
+                <state img="#-smiling.png">
+                    <alt-img stage="7">custom:#-smiling</alt-img>
+                    <text>A female warrior... You look strong. It's refreshing to see a tough looking woman for a change.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="0" />
+                <state img="#-thinking.png">
+                    <alt-img stage="7">custom:#-thinking</alt-img>
+                    <text>An elegant woman like you is the last type I'd expect to see enjoying this sort of activity.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="rainbow_dash" stage="0" />
+                <state img="#-serious.png">
+                    <alt-img stage="7">custom:#-serious</alt-img>
+                    <text>For someone so colorful you're pretty snarky.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="elesa" stage="0" />
+                <state img="#-thinking.png">
+                    <alt-img stage="7">custom:#-thinking</alt-img>
+                    <text>A model, huh? So they make you wear those strange clothes as part of your job?</text>
                 </state>
             </case>
             <case stage="0-6" target="human" notSaidMarker="target2">
@@ -4379,6 +4497,34 @@
                     <text>You sure have a lot of weird artifacts. I have a friend who'd probably like to examine them.</text>
                 </state>
             </case>
+            <case stage="0-8" id="95">
+                <condition role="target" character="chazz" stage="0" />
+                <state img="#-thinking.png">
+                    <alt-img stage="7">custom:#-thinking</alt-img>
+                    <text>I was wondering what that weird device is. Well, it doesn't matter if you're taking it off.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="dust" stage="0-2" />
+                <state img="#-thinking.png">
+                    <alt-img stage="7">custom:#-thinking</alt-img>
+                    <text>Warmblood? Oh, you're probably different from the Minks that live at Zou, so you have a different name for your race.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="guzma" stage="1" />
+                <state img="#-annoyed.png">
+                    <alt-img stage="7">custom:#-annoyed</alt-img>
+                    <text>For a tough looking guy you sure wear a lot of accessories. What's up with that?</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="guzma" stage="4" />
+                <state img="#-greedy.png">
+                    <alt-img stage="7">custom:#-greedy</alt-img>
+                    <text>I somehow doubt that's actually gold. But I would still like to confirm it.</text>
+                </state>
+            </case>
             <case stage="0">
                 <state img="#-annoyed.png">Is that all? Are you sure?</state>
                 <state img="#-annoyed.png">I knew you were going to count your measly ~clothing~.</state>
@@ -4457,6 +4603,13 @@
                     <text>Don't worry, I have no intention of stealing it. No matter how expensive it looks.</text>
                 </state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="1" />
+                <state img="#-smug.png">
+                    <alt-img stage="7">custom:#-smug</alt-img>
+                    <text>That card isn't from this game, dummy. I have a feeling you won't last long.</text>
+                </state>
+            </case>
             <case stage="0">
                 <state img="#-smiling.png">Well, as long as I haven't lost a round yet...</state>
                 <state img="#-serious.png">It's no big deal, I guess. But if things go south for me later, I'll remember this, ~name~,</state>
@@ -4498,8 +4651,9 @@
         </trigger>
 
         <trigger id="female_removing_accessory">
-            <case stage="0-8" target="rin" targetStage="1">
+            <case stage="0-8">
                 <condition count="0" filter="emi" />
+                <condition role="target" character="rin" stage="1" />
                 <state img="#-serious.png">
                     <alt-img stage="7">custom:#-serious</alt-img>
                     <text>What are you waiting for, ~player~? Help her.</text>
@@ -4786,6 +4940,27 @@
                 </state>
             </case>
             <case stage="0-8">
+                <condition role="target" character="aella" stage="0" />
+                <state img="#-thinking.png">
+                    <alt-img stage="7">custom:#-thinking</alt-img>
+                    <text>That sun symbol on your armor... What does it mean? It reminds me of a similar symbol, but it's not exactly the same.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" stage="1" />
+                <state img="#-greedy.png">
+                    <alt-img stage="7">custom:#-greedy</alt-img>
+                    <text>You must be quite wealthy... Am I right, Cynthia? Few things say &lt;i&gt;fancy&lt;/i&gt; like a nice looking scarf.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="elesa" stage="1" />
+                <state img="#-smiling.png">
+                    <alt-img stage="7">custom:#-smiling</alt-img>
+                    <text>Oh, so your shoes are supposed to be of different color! I thought you'd made a mistake when you put them on, but I didn't want to say anything.</text>
+                </state>
+            </case>
+            <case stage="0-8">
                 <condition status="exposed" role="target" />
                 <state img="#-serious.png">
                     <alt-img stage="7">custom:#-serious</alt-img>
@@ -5059,6 +5234,13 @@
                 <condition role="target" character="wonder_woman" stage="4" />
                 <state img="#-greedy.png">And that lasso is so shiny... Is it gold?</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="elesa" stage="2" />
+                <state img="#-calm.png">
+                    <alt-img stage="7">custom:#-calm</alt-img>
+                    <text>It would've been a little ironic for a model to put on different shoes by accident.</text>
+                </state>
+            </case>
             <case stage="0">
                 <state img="#-smug.png">But let's see if you can hold on to your accessories after losing over and over.</state>
                 <state img="#-smug.png">Just keep in mind that if you lose more and more, that won't make a difference.</state>
@@ -5310,7 +5492,8 @@
                     <text>Still, I wouldn't wear an outfit like that. Not because I don't like it, but because I'm sure it would make the guys think I'm going to do all their chores for them.</text>
                 </state>
             </case>
-            <case stage="0-8" id="54" target="rainbow_mika" targetStage="0">
+            <case stage="0-8" id="54">
+                <condition role="target" character="rainbow_mika" stage="0" />
                 <state img="#-calm.png">
                     <alt-img stage="7">custom:#-calm</alt-img>
                     <text>Oh, she's your wrestling partner? I see... What else do you two do together?</text>
@@ -5372,6 +5555,20 @@
                 <state img="#-thinking.png">
                     <alt-img stage="7">custom:#-thinking</alt-img>
                     <text>I've met a few people who can fly through different means. How do you do it?</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="rainbow_dash" stage="1" />
+                <state img="#-thinking.png">
+                    <alt-img stage="7">custom:#-thinking</alt-img>
+                    <text>You're a musician, right? Does everybody who's into music got a screw loose?</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="elesa" stage="0" />
+                <state img="#-annoyed.png">
+                    <alt-img stage="7">custom:#-annoyed</alt-img>
+                    <text>Hey, don't just throw your coat away! It looks like it's of high quality.</text>
                 </state>
             </case>
             <case stage="0">
@@ -5490,6 +5687,13 @@
                 <state img="#-calm.png">
                     <alt-img stage="7">custom:#-calm</alt-img>
                     <text>What a mess. Too bad I don't have a hair brush to loan you right now.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="elesa" stage="1" saying="Shining Beauty" />
+                <state img="#-serious.png">
+                    <alt-img stage="7">custom:#-serious</alt-img>
+                    <text>Shining Beauty? Should you really call yourself that?</text>
                 </state>
             </case>
             <case stage="0-8" target="caulifla" targetStage="3">
@@ -5675,6 +5879,13 @@
         </trigger>
 
         <trigger id="male_removed_major">
+            <case stage="0-8">
+                <condition role="target" character="chazz" stage="5" />
+                <state img="#-smiling.png">
+                    <alt-img stage="7">custom:#-smiling</alt-img>
+                    <text>Hey! I have a pair that looks just like that one, heheh...</text>
+                </state>
+            </case>
             <case stage="0">
                 <state img="#-embarrassed.png">My, you're making me blush. If you strip again I don't know what I'll do.</state>
                 <state img="#-serious.png">I appreciate that you are playing the game right, but I hope you're not a guy that enjoys showing his body in front of strangers.</state>
@@ -6194,6 +6405,13 @@
         </trigger>
 
         <trigger id="male_chest_will_be_visible">
+            <case stage="0-8" id="96">
+                <condition role="target" character="chazz" stage="5" />
+                <state img="#-shocked.png">
+                    <alt-img stage="7">custom:#-shocked</alt-img>
+                    <text>What's that?! Keep it away from me.</text>
+                </state>
+            </case>
             <case stage="0">
                 <state img="#-calm.png">Go ahead, expose your chest. It's not like it's a big deal, or anything.</state>
                 <state img="#-smug.png">Show your chest. No need to make a fuss over this, pal.</state>
@@ -6223,6 +6441,13 @@
         </trigger>
 
         <trigger id="male_chest_is_visible">
+            <case stage="0-8" id="97">
+                <condition role="target" character="chazz" stage="6" />
+                <state img="#-smug.png">
+                    <alt-img stage="7">custom:#-smug</alt-img>
+                    <text>I don't understand what that thing that stopped you from leaving was, but you deserve it.</text>
+                </state>
+            </case>
             <case stage="0-8" id="90">
                 <condition role="target" character="dust" />
                 <state img="#-calm.png">
@@ -6320,6 +6545,13 @@
                     <text>Of course, you enjoy seeing girls get naked. But when it's your turn, you're a wimp.</text>
                 </state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="guzma" />
+                <state img="#-serious.png">
+                    <alt-img stage="7">custom:#-serious</alt-img>
+                    <text>I have no interest in seeing a scary looking guy like you naked.</text>
+                </state>
+            </case>
             <case stage="0">
                 <state img="#-shocked.png">Are you really going to show it? What's with this place?</state>
                 <state img="#-smiling.png">If we got to this point before I've lost once, it means I'm doing something right!</state>
@@ -6393,6 +6625,13 @@
                 <state img="#-smiling.png">
                     <alt-img stage="7">custom:#-smiling</alt-img>
                     <text>Heh, I had a feeling you weren't actually a blonde. You didn't act like one.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="guzma" />
+                <state img="#-annoyed.png">
+                    <alt-img stage="7">custom:#-annoyed</alt-img>
+                    <text>You could at least show some modesty now that you have no clothes left, you know?</text>
                 </state>
             </case>
             <case stage="0">
@@ -7128,6 +7367,20 @@
                 <state img="#-smiling.png">
                     <alt-img stage="7">custom:#-smiling</alt-img>
                     <text>Oh, if you have hair down there, then you're not as young as I thought, That's a relief!</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="cynthia" />
+                <state img="#-thinking.png">
+                    <alt-img stage="7">custom:#-thinking</alt-img>
+                    <text>Wow, even without clothes you have that distinguished aura. I guess the clothes are secondary when it comes to class.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="rainbow_dash" />
+                <state img="#-sad.png">
+                    <alt-img stage="7">custom:#-sad</alt-img>
+                    <text>I wasn't really expecting you to have rainbow color pubes. Nope.</text>
                 </state>
             </case>
             <case stage="0-8" oneShotId="181">
@@ -8350,6 +8603,13 @@
                     <text>Oh, you got that all over your fur.</text>
                 </state>
             </case>
+            <case stage="0-8" oneShotId="257">
+                <condition role="target" character="chazz" />
+                <state img="#-sad.png">
+                    <alt-img stage="7">custom:#-sad</alt-img>
+                    <text>That's a kind of rain I've never seen...</text>
+                </state>
+            </case>
             <case stage="0">
                 <state img="#-smiling.png">You started and finished before I've even stripped once. I don't know if you should feel proud of yourself.</state>
             </case>
@@ -9023,6 +9283,13 @@
                     <text>Ummm, it's really scary when your eyes shine like that...</text>
                 </state>
             </case>
+            <case stage="0-8" id="100">
+                <condition role="target" character="rainbow_dash" />
+                <state img="#-shocked.png">
+                    <alt-img stage="7">custom:#-shocked</alt-img>
+                    <text>Wings? I didn't know you were a sky person. No... What are you?</text>
+                </state>
+            </case>
             <case stage="0-8" filter="tandem">
                 <state img="#-shocked.png">
                     <alt-img stage="7">custom:#-shocked</alt-img>
@@ -9494,7 +9761,7 @@
             <directive type="text" id="m1" width="25%" arrow="right" x="61%" y="19%">Sinclair seems to be in a bad mood today. That can't be good for us.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
-            <directive type="text" id="m2" width="27%" arrow="right" x="63%" y="60%">Didn't you hear? It looks like the Straw Hat pirates are in this island.</directive>
+            <directive type="text" id="m2" width="27%" arrow="right" x="63%" y="60%">Didn't you hear? It looks like the Straw Hat pirates are on this island.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="text" id="m3" width="42%" arrow="right" x="44%" y="17%">Straw Hat? I thought she was in a bad mood because of the Marine ship that arrived yesterday. They've settled at the abandoned base on the edge of town.</directive>
@@ -9861,7 +10128,7 @@
                 <keyframe time="0.5" alpha="100" />
             </directive>
             <directive type="wait" />
-            <directive type="text" id="n15" width="22%" arrow="left" x="67%" y="23%">Heh, as if! You're severily underestimating Luffy, but you haven't realized it yet.</directive>
+            <directive type="text" id="n15" width="22%" arrow="left" x="67%" y="23%">Heh, as if! You're severely underestimating Luffy, but you haven't realized it yet.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="text" id="s6" width="14%" arrow="right" x="16%" y="26%">Oh, I'm not. Trust me.</directive>
@@ -14487,7 +14754,7 @@
                 <keyframe time="0" alpha="0" />
                 <keyframe time="0.5" alpha="100" />
             </directive>
-            <directive type="text" id="n24" width="24%" arrow="down" x="69%" y="13%">Yes! This gotta be it. I have the key right here.</directive>
+            <directive type="text" id="n24" width="24%" arrow="down" x="69%" y="13%">Yes! This has gotta be it. I have the key right here.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="fade">
@@ -14710,7 +14977,7 @@
             <directive type="sprite" id="leg_l2" layer="2" src="epi-treasure_n7_leg2.png" x="959" y="447" scalex="-1" pivotx="58%" pivoty="3%" alpha="0" />
             <directive type="move" id="nami7" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="move" id="leg_l1" ease="linear">
                 <keyframe time="0" alpha="0" />
@@ -14730,7 +14997,7 @@
             </directive>
             <directive type="move" id="nami6" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="p_hand_l" ease="linear">
                 <keyframe time="0" x="718" y="370" rotation="13" />
@@ -14757,7 +15024,7 @@
             <directive type="sprite" id="breasts2b2" layer="1" src="epi-treasure_breasts2b.png" x="743" y="408" scalex="-1" pivotx="100%" pivoty="0%" alpha="0" />
             <directive type="move" id="nami7" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="p_hand_l" ease="linear">
                 <keyframe time="0" x="559" y="416" scalex="-0.9" scaley="0.9" alpha="100" rotation="9" />
@@ -14773,11 +15040,11 @@
             </directive>
             <directive type="move" id="nami8" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="move" id="nami7b" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="move" id="breasts2a1" ease="linear">
                 <keyframe time="0" alpha="0" />
@@ -14918,7 +15185,7 @@
             <directive type="clear-all" />
             <directive type="move" id="nami8" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="breasts2a1" ease="linear">
                 <keyframe time="0" alpha="100" />
@@ -14940,7 +15207,7 @@
             <directive type="sprite" id="vag1" layer="2" src="epi-treasure_n12_vag1.png" x="810" y="584" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="move" id="nami9" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="move" id="vag1" ease="linear">
                 <keyframe time="0" alpha="0" />
@@ -14961,11 +15228,11 @@
             <directive type="wait" />
             <directive type="move" id="nami9" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="nami10" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="move" id="p_hand3" ease="linear">
                 <keyframe time="0" y="670" />
@@ -15001,11 +15268,11 @@
             </directive>
             <directive type="move" id="nami10" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="nami11" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="move" id="leg_l1" ease="linear">
                 <keyframe time="0" y="411" rotation="15" />
@@ -15034,11 +15301,11 @@
             <directive type="sprite" id="p_hand1r" layer="1" src="epi-night_hand.png" x="948" y="645" scalex="-1.1" scaley="1.1" pivotx="14%" pivoty="95%" alpha="0" rotation="37" />
             <directive type="move" id="nami11" delay="1" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="nami12" delay="1" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="camera" ease="linear">
                 <keyframe time="0" x="0" y="-64" zoom="1.4" />
@@ -15079,11 +15346,11 @@
             <directive type="sprite" id="nami13" src="epi-treasure_n13.png" x="582" y="70" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="move" id="nami12" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="nami13" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="move" id="breasts1a" ease="linear">
                 <keyframe time="0" alpha="0" />
@@ -15757,7 +16024,7 @@
                 <keyframe time="0" x="0" y="20" zoom="2" />
                 <keyframe time="6" x="0" y="100" zoom="1.6" />
             </directive>
-            <directive type="text" id="n7" width="42%" x="12%" y="12%">&lt;i&gt;If Sinclair survived our fight, I'm sure she has been captured by the Marinesby now. I don't think that swordswoman would come for my crew after all this. She takes her job seriously, but I still feel we have a sort of understanding.&lt;/i&gt;</directive>
+            <directive type="text" id="n7" width="42%" x="12%" y="12%">&lt;i&gt;If Sinclair survived our fight, I'm sure she has been captured by the Marines by now. I don't think that swordswoman would come for my crew after all this. She takes her job seriously, but I still feel we have a sort of understanding.&lt;/i&gt;</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="fade" ease="linear">
