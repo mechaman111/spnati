@@ -27,10 +27,14 @@ namespace SPNATI_Character_Editor.Providers
 			Costume skin = new Costume();
 			skin.Id = key;
 
-			IRecord record = RecordLookup.DoLookup(typeof(Character), "", false, CharacterDatabase.FilterHuman, skin);
-			if (record == null)
+			Character owner = RecordLookup.DoLookup(typeof(Character), "", false, CharacterDatabase.FilterHuman, skin) as Character;
+			if (owner == null)
 			{
 				return null;
+			}
+			if (!owner.IsFullyLoaded)
+			{
+				owner = CharacterDatabase.Load(owner.FolderName);
 			}
 
 			string folder = $"opponents/reskins/{key}/";
@@ -40,7 +44,6 @@ namespace SPNATI_Character_Editor.Providers
 			TagDatabase.AddTag(skin.Id);
 
 			//Link up basic information with the source character
-			Character owner = record as Character;
 			skin.LinkCharacter(owner);
 
 			skin.Labels.Add(new StageSpecificValue(0, owner.Label));

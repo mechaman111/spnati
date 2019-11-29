@@ -2,11 +2,11 @@
 
 namespace SPNATI_Character_Editor
 {
-	[SubVariable("place")]
-	[SubVariable("revplace")]
-	[SubVariable("lead")]
-	[SubVariable("biggestlead")]
-	[SubVariable("trail")]
+	[SubVariable("place", AllowRHSVariables = true)]
+	[SubVariable("revplace", AllowRHSVariables = true)]
+	[SubVariable("lead", AllowRHSVariables = true)]
+	[SubVariable("biggestlead", AllowRHSVariables = true)]
+	[SubVariable("trail", AllowRHSVariables = true)]
 	public class PlacementControl : PlayerControlBase
 	{
 		private Desktop.Skinning.SkinnedComboBox cboPlace;

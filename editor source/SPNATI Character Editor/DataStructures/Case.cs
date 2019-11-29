@@ -2124,22 +2124,44 @@ namespace SPNATI_Character_Editor
 		{
 			Clothing layer = speaker.Wardrobe[speaker.Layers - stage - 1];
 			string layerType = layer.Type;
-			if (layer.Type == "major" && (string.IsNullOrEmpty(layer.Position) || layer.Position == "upper" || layer.Position == "lower"))
+			if (layer.Type == "major")
 			{
 				//if this is the last major and there are no importants, treat as important
-				bool foundImportant = false;
+				bool hasUpperImportant = false;
+				bool hasLowerImportant = false;
 				for (int l = speaker.Layers - stage - 2; l >= 0; l--)
 				{
 					Clothing other = speaker.Wardrobe[l];
-					if ((other.Type == "important" || other.Type == "major") && (other.Position == "both" || other.Position == layer.Position))
+					if (other.Type == "important" || other.Type == "major")
 					{
-						foundImportant = true;
-						break;
+						if (other.Position == "both")
+						{
+							hasUpperImportant = true;
+							hasLowerImportant = true;
+						}
+						else if (other.Position == "upper")
+						{
+							hasUpperImportant = true;
+						}
+						else if (other.Position == "lower")
+						{
+							hasLowerImportant = true;
+						}
 					}
 				}
-				if (!foundImportant)
+				if (!hasLowerImportant)
 				{
-					layerType = "important";
+					if (layer.Position == "both" || layer.Position == "lower")
+					{
+						return "crotch";
+					}
+				}
+				if (!hasUpperImportant)
+				{
+					if (layer.Position == "both" || layer.Position == "upper")
+					{
+						return "chest";
+					}
 				}
 			}
 			if (layerType == "extra")
@@ -2148,7 +2170,7 @@ namespace SPNATI_Character_Editor
 			}
 			else if (layerType == "important")
 			{
-				if (layer.Position == "lower")
+				if (layer.Position == "lower" || layer.Position == "both")
 				{
 					return "crotch";
 				}

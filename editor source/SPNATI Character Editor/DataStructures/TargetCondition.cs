@@ -455,6 +455,9 @@ namespace SPNATI_Character_Editor
 							case "other":
 								str += " other";
 								break;
+							case "winner":
+								str += " winner";
+								break;
 						}
 						roleStr = Role;
 					}
@@ -479,6 +482,9 @@ namespace SPNATI_Character_Editor
 							break;
 						case "other":
 							str += " other";
+							break;
+						case "winner":
+							str += " winner";
 							break;
 					}
 					roleStr = Role;
@@ -682,6 +688,11 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(Saying))
 			{
 				priority += 1;
+			}
+
+			if (Role == "winner")
+			{
+				priority = (int)Math.Truncate(priority * 1.5f);
 			}
 
 			return priority;
