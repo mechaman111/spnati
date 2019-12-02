@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 5:09:09 PM on November 12, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 5:01:08 PM on November 30, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.6</version>
     <first>Saki</first>
@@ -3274,7 +3274,7 @@
             </case>
             <case stage="0-5">
                 <condition role="target" character="rin" stage="3" />
-                <state img="#-Serious.png">Listen, Handsy, don’t let nothin’ stop ya from yer dreams. My girls in Franchouchou all got their faults, but we  never back down from nothin’!</state>
+                <state img="#-Serious.png">Listen, Handsy, don’t let nothin’ stop ya from yer dreams. My girls in Franchouchou all got their faults, but we never back down from nothin’!</state>
             </case>
             <case stage="6-10">
                 <condition role="target" character="rin" stage="3" />
@@ -4372,7 +4372,8 @@
         </trigger>
 
         <trigger id="game_over_victory">
-            <case stage="1-8" alsoPlaying="sakura">
+            <case stage="1-8">
+                <condition role="other" character="sakura" />
                 <state img="#-Confused.png">Haw! Once again ain’t no one can fuck with Saki— aw shit, I forgot about you Egghead. Guess I fucked up tryin’ ta get ya laid. I’ll make it up to you, I swear.</state>
             </case>
             <case stage="0">
@@ -4385,28 +4386,38 @@
         </trigger>
 
         <trigger id="game_over_defeat">
-            <case stage="10" target="human" alsoPlaying="sakura" notSaidMarker="humanlost" priority="900">
+            <case stage="10" priority="900">
+                <condition role="target" character="human" />
+                <condition role="self" notSaidMarker="humanlost" />
+                <condition role="other" character="sakura" />
                 <state img="custom:#-SakiSaku" marker="SakiSakuDualEp">We all got to get off, ‘cept for poor ~player~ here. Boy, you look really stuffed up there. Might be a two gal job. Whaddya say, Egghead?</state>
             </case>
-            <case stage="10" target="human" filter="human_female" priority="500">
-                <state img="#-Horny.png">“Damn, I though &lt;i&gt;I&lt;/i&gt; was top bitch around here. Even if you look like a nerd, ya know your way around a deck a’ cards. Too bad outta all of us, you’re the one with some clearly “unmet needs.” Say, why not stay for the Franchouchou concert? It starts in a bit n’ I know a coupla people than can getcha backstage passes!”</state>
+            <case stage="10" priority="500">
+                <condition filter="human_female" role="target" character="human" />
+                <state img="#-Horny.png" marker="SakiSoloEp">“Damn, I though &lt;i&gt;I&lt;/i&gt; was top bitch around here. Even if you look like a nerd, ya know your way around a deck a’ cards. Too bad outta all of us, you’re the one with some clearly “unmet needs.” Say, why not stay for the Franchouchou concert? It starts in a bit n’ I know a coupla people than can getcha backstage passes!”</state>
             </case>
-            <case stage="10" target="human" filter="human_male" priority="500">
-                <state img="#-Horny.png">Heh, thought you was a nerd at the beginnin’, ~player~. Shows me, ya whupped us all! Course, seein’ ya flyin’ at full mast tells me yer victory was wantin’. Well, why don’tcha stay for the Franchouchou concert? It starts in a bit n’ I know a coupla people than can getcha backstage passes!</state>
+            <case stage="10" priority="500">
+                <condition filter="human_male" role="target" character="human" />
+                <state img="#-Horny.png" marker="SakiSoloEp">Heh, thought you was a nerd at the beginnin’, ~player~. Shows me, ya whupped us all! Course, seein’ ya flyin’ at full mast tells me yer victory was wantin’. Well, why don’tcha stay for the Franchouchou concert? It starts in a bit n’ I know a coupla people than can getcha backstage passes!</state>
             </case>
-            <case stage="10" target="human">
-                <condition count="1-1" filter="futaba" />
-                <condition count="1-1" filter="haru" />
-                <condition count="1-1" filter="ryuji" />
-                <state img="#-Happy.png">You did a damn good job whuppin’ our asses, ~player~. Too bad you didn’t get off, horny as you look! Maybe after the concert I can help with that! …Um, are those nerds even paying attention to us?</state>
+            <case stage="10">
+                <condition count="1" filter="futaba" />
+                <condition count="1" filter="haru" />
+                <condition count="1" filter="ryuji" />
+                <condition role="target" character="human" />
+                <state img="#-Happy.png" marker="SakiSoloEp">You did a damn good job whuppin’ our asses, ~player~. Too bad you didn’t get off, horny as you look! Maybe after the concert I can help with that! …Um, are those nerds even paying attention to us?</state>
             </case>
-            <case stage="10" target="kira">
+            <case stage="10">
+                <condition role="target" character="kira" />
                 <state img="#-Happy.png">Hey, Mister Ladykiller! Kira! You and your pink cat robot friend oughta party with Franchouchou later. You can hang with ~player~ for now!</state>
             </case>
-            <case stage="10" target="sakura">
+            <case stage="10">
+                <condition role="target" character="sakura" />
                 <state img="#-Laughing.png">Damn, Egghead, think I’d learn to not underestimate you by now. I’m proud a’ you. By the by, if lookin’ at me jill made you horny, I’m here to help out!</state>
             </case>
-            <case stage="10" alsoPlaying="sakura" alsoPlayingStage="9" saidMarker="humanlost">
+            <case stage="10">
+                <condition role="self" saidMarker="humanlost" />
+                <condition role="other" character="sakura" stage="9" />
                 <state img="#-Horny.png">I feel like I could go another round. Too bad ~player~ looks tapped out. Ah well, wanna find a back room, just the two of us, Egghead?</state>
                 <state img="#-Horny.png">Wow, ~player~’s spent. Too bad too, I coulda gone another round. Well, let’s find a love hotel for us two, Egghead.</state>
                 <state img="#-Horny.png">I could go another round, and from the looks of things, so could you Egghead. ~Player~? Naw, you down for the count. Oh well, looks we’re singin’ by ourselves tonight.</state>
@@ -4426,8 +4437,8 @@
         </trigger>
 
     </behaviour>
-    <epilogue hint="Defeat both Saki and Sakura in a game." gender="any" markers="SakiSakuDualEp" alsoPlaying="sakura" img="ep_PREVIEW_TEMP.png">
-        <title>Trio</title>
+    <epilogue hint="Saki's epilogue isn't ready yet. Please enjoy this one." gender="any" markers="SakiSoloEp" img="ep_PREVIEW_TEMP.png">
+        <title>Under Construction</title>
         <scene name="UNDER CONSTRUCTION" color="#8000FF" x="0" y="0" width="1280" height="720" zoom="1">
             <directive type="sprite" id="sprite2" src="ep_MeKo.png" x="27%" y="-339" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
             <directive type="text" id="text3" width="44%" arrow="right" alignmentx="right" alignmenty="bottom" x="53%" y="34%">You’ve unlocked the Saki and Sakura Dual epilogue. Wonderful!</directive>
