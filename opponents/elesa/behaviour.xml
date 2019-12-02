@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.3 at 12:27:52 AM on November 30, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.3 at 3:29:34 PM on December 02, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.3</version>
     <first>Elesa</first>
@@ -95,6 +95,12 @@
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0" priority="200">
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-gamebegin1.png" location="35%">Don't disappoint me. </state>
+                <state img="#-gamebegin1.png" location="35%">Welcome to the main stage.</state>
+                <state img="#-gamebegin1.png" location="35%">Alright. Whose star shall shine brightest, I wonder...?</state>
+            </case>
             <case stage="0">
                 <condition role="other" character="n" />
                 <test expr="~self.costume~" value="elesa_bw" />
@@ -228,12 +234,6 @@
             <case stage="0">
                 <condition role="other" character="zone-tan" />
                 <state img="custom:start">Got a bad feeling about what's to come.</state>
-            </case>
-            <case stage="0">
-                <test expr="~self.costume~" value="elesa_bw" />
-                <state img="#-gamebegin1.png" location="35%">Don't disappoint me. </state>
-                <state img="#-gamebegin1.png" location="35%">Welcome to the main stage.</state>
-                <state img="#-gamebegin1.png" location="35%">Alright. Whose star shall shine brightest, I wonder...?</state>
             </case>
             <case stage="0">
                 <state img="custom:start" location="35%">Don't disappoint me. </state>
@@ -612,15 +612,16 @@
         </trigger>
 
         <trigger id="must_strip_normal">
+            <case stage="1">
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-smug.png">Don't worry, I can make things more interesting later on. Just bear with the small stuff for now.</state>
+                <state img="#-monotone.png">Let's tone it down.</state>
+                <state img="#-neutral.png">I can afford to be a little pickier now, don't you think?</state>
+            </case>
             <case stage="0">
                 <state img="#-loss.png">Let's not waste time, then.</state>
                 <state img="#-loss.png">I'll try and make this interesting.</state>
                 <state img="#-loss.png">How prepared &lt;i&gt;are&lt;/i&gt; you, I wonder...</state>
-            </case>
-            <case stage="1">
-                <state img="#-monotone.png">For the record, that was my only coat. Don't expect anything that flashy again.</state>
-                <state img="#-monotone.png">Let's tone it down.</state>
-                <state img="#-neutral.png">I can afford to be a little pickier now, don't you think?</state>
             </case>
             <case stage="2">
                 <state img="#-happy.png">Well done. I was actually trying that round.</state>
@@ -641,6 +642,11 @@
                 <state img="#-coquettish.png">Well, it was a matter of time...</state>
                 <state img="#-embarrassed.png">O-Oh... hmm.</state>
                 <state img="#-coquettish.png">Are you excited? You should be.</state>
+            </case>
+            <case stage="1">
+                <state img="#-monotone.png">For the record, that was my only coat. Don't expect anything that flashy again.</state>
+                <state img="#-monotone.png">Let's tone it down.</state>
+                <state img="#-neutral.png">I can afford to be a little pickier now, don't you think?</state>
             </case>
         </trigger>
 
@@ -678,6 +684,16 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="1">
+                <condition role="other" character="cynthia" />
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-strip.png">Thank you... do you like my outfit's design? Invokative of a Zebstrika. It's all well-thought out, you know.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="akko" />
+                <test expr="~self.costume~" value="elesa_bw" />
+                <state img="#-strip.png">But if you want beauty, consider these headphones. Do you see the red and blue? They're like magnets.</state>
+            </case>
             <case stage="1">
                 <condition role="other" character="futaba" />
                 <condition count="1" filter="roxie" />
@@ -905,7 +921,7 @@
                 <state img="#-strip.png">&lt;i&gt;(Am I seriously doing this?)&lt;/i&gt;</state>
                 <state img="#-strip.png">What happens here stays here. None of you are to say a word, capiche?</state>
             </case>
-            <case stage="0">
+            <case stage="0" id="1">
                 <state img="custom:#-strip">Do you know what they call me...?</state>
             </case>
             <case stage="1">
@@ -1154,15 +1170,19 @@
             </case>
             <case stage="4">
                 <condition role="other" character="pit" />
-                <state img="#-poststrip.png">Because that's the idea.</state>
+                <state img="#-stripped.png">Because that's the idea.</state>
             </case>
             <case stage="5">
                 <condition role="other" character="pit" />
-                <state img="#-poststrip.png">No. It's got a built-in bra, so it's actually quite convenient!</state>
+                <state img="#-stripped.png">No. It's got a built-in bra, so it's actually quite convenient!</state>
             </case>
             <case stage="6">
                 <condition role="other" character="pit" />
                 <state img="#-neutral.png">Well, if you're not just saying that, thank you.</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="chazz" />
+                <state img="#-stripped.png">Oh, if only you knew the stunning grace of a Zebstrika...</state>
             </case>
             <case stage="2">
                 <condition role="self" saidMarker="functionalfashion" />
@@ -1212,7 +1232,7 @@
                 <state img="#-happy.png">What? Did you think I was all serious, all the time? I'm more than that.</state>
                 <state img="#-happy.png">You know, it's not often I get the chance to enjoy other's company.</state>
             </case>
-            <case stage="4">
+            <case stage="4" id="2">
                 <state img="#-stripped.png">&lt;i&gt;There!&lt;/i&gt; Now I can simply &lt;i&gt;sliiiide&lt;/i&gt; them down---like so!</state>
                 <state img="#-stripped.png">There we go. You may have gotten me down to just my top and underwear, but you still have quite a ways to go.</state>
                 <state img="#-stripped.png">Ahh. Without the safety piece, I can simply slide them down my legs like so. No hands required.</state>
@@ -2403,6 +2423,16 @@
             <case stage="0-8">
                 <test expr="~clothing~" value="headphones" />
                 <state img="#-intrigued.png">Finally, another person who appreciates headphones.</state>
+            </case>
+            <case stage="0-8" priority="0">
+                <condition filter="fashionable" role="target" />
+                <state img="#-happy.png" oneShotId="41">A good pick, as expected of you.</state>
+                <state img="#-think.png" oneShotId="42">As great as the rest of your ensemble.</state>
+                <state img="#-intrigued.png" oneShotId="43">Who does your outfit, if I may ask? I bet they could make me shine brightly as well!</state>
+            </case>
+            <case stage="0-8" priority="0">
+                <condition filter="formal_attire" role="target" />
+                <state img="#-intrigued.png" oneShotId="40">Now, why would you wear such fashionable clothing here? You'll get it all dirty.</state>
             </case>
         </trigger>
 
