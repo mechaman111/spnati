@@ -220,6 +220,10 @@ function loadBackgrounds() {
 
             $xml.children('background').each(function () {
                 var bg = loadBackgroundFromXml($(this), auto_tag_metadata);
+                /* If the background has a listed status, check to ensure it's
+                 * available with the current configuration.
+                 */
+                if (bg.status && !includedOpponentStatuses[bg.status]) return;
                 backgrounds[bg.id] = bg;
             });
 
@@ -375,11 +379,6 @@ function showGameSettingsModal () {
     /* Push selection images for all backgrounds not already on the menu. */
     Object.keys(backgrounds).forEach(function (id) {
         var bg = backgrounds[id];
-
-        /* If the background has a listed status, check to ensure it's
-         * available with the current configuration.
-         */
-        if (bg.status && !includedOpponentStatuses[bg.status]) return;
 
         if ($('#settings-background .background-option[data-background="'+id+'"]').length === 0) {
             pushBackgroundOption(backgrounds[id]);
