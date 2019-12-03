@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 4:15:12 AM on November 19, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 4:17:30 AM on December 03, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>N</first>
@@ -2026,7 +2026,7 @@
             </case>
             <case stage="5">
                 <state img="#-poststrip.png">I heard people claim this floor is cold. I have to disagree. It's actually quite lukewarm in temperature. Not warm, but certainly not &lt;i&gt;cold.&lt;/i&gt;</state>
-                <state img="#-poststrip.png">I used to go barefoot all the time as a child? Now. I find it uncomfortable. But I'd rather be barefoot than expose myself.</state>
+                <state img="#-poststrip.png">I used to go barefoot all the time as a child. Now? I find it uncomfortable. But I'd rather be barefoot than expose myself.</state>
             </case>
             <case stage="6">
                 <state img="#-NoNplussed.png">I'm... running quite low on items here.</state>
@@ -2509,6 +2509,26 @@
                 <condition role="target" character="florina" stage="0" saidMarker="fled" />
                 <state img="#-coNfused.png">I don't understand. Is she too afraid to gamble? &lt;br? ...Huh? This is &lt;i&gt;strip&lt;/i&gt; poker?</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="1" />
+                <test expr="~elesa.costume~" value="default" />
+                <state img="#-coNfused.png">I don't mean to sound rude here, but those tall, thin heels, wouldn't you have a bit of trouble walking?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="2" />
+                <test expr="~elesa.costume~" value="default" />
+                <state img="#-thiNk.png">Were you listening to music?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="1" />
+                <test expr="~elesa.costume~" value="elesa_bw" />
+                <state img="#-thiNk.png">Were you listening to music?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="2" />
+                <test expr="~elesa.costume~" value="elesa_bw" />
+                <state img="#-Neutral.png">Such a vivid color. I quite like it.</state>
+            </case>
             <case stage="0-10" priority="386">
                 <condition role="target" character="ryuko" stage="0" saidMarker="mako" />
                 <condition count="5-" status="alive" />
@@ -2544,14 +2564,6 @@
             <case stage="0-10">
                 <condition role="target" character="revy" stage="3" />
                 <state img="#-NoNplussed.png">&lt;i&gt;(I can breathe a little easier now. I didn't think I'd ever see someone handle a weapon so brazenly...)&lt;/i&gt;</state>
-            </case>
-            <case stage="0-10">
-                <condition role="target" character="elesa" stage="1" />
-                <state img="#-coNfused.png">I don't mean to sound rude here, but those tall, thin heels, wouldn't you have a bit of trouble walking?</state>
-            </case>
-            <case stage="0-10">
-                <condition role="target" character="elesa" stage="2" />
-                <state img="#-thiNk.png">Were you listening to music?</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="starfire" stage="0" />
@@ -2615,12 +2627,23 @@
 
         <trigger id="female_removed_accessory">
             <case stage="0-10">
-                <condition role="target" character="shimakaze" stage="4" sayingMarker="dizzy" />
-                <state img="#-astoNished.png">Oh no! Lie down Shimakaze, you might have a concussion.</state>
+                <condition role="target" character="elesa" stage="3" saidMarker="functionalfashion" />
+                <test expr="~elesa.costume~" value="default" />
+                <state img="#-NoNplussed.png">I could use something like that; I don't do well with noisy crowds. They seem very expensive though.</state>
             </case>
             <case stage="0-10">
-                <condition role="target" character="elesa" stage="3" saidMarker="functionalfashion" />
-                <state img="#-NoNplussed.png">I could use something like that; I don't do well with noisy crowds. They seem very expensive though.</state>
+                <condition role="target" character="elesa" stage="2" />
+                <test expr="~elesa.costume~" value="default" />
+                <state img="#-coNsider.png">How odd. I like looking stylish myself, but not at the cost of practicality.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="3" />
+                <test expr="~elesa.costume~" value="elesa_bw" />
+                <state img="#-thiNk.png">Doesn't seem like it'll provide much insulation, however.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="shimakaze" stage="4" sayingMarker="dizzy" />
+                <state img="#-astoNished.png">Oh no! Lie down Shimakaze, you might have a concussion.</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="ryuko" stage="4" />
@@ -2637,10 +2660,6 @@
             <case stage="0-10" id="3">
                 <condition role="target" character="mae" stage="1" />
                 <state img="#-iNceNsed.png">What the hell is a 'strip tease'? And do you really feel the need to patronize me? I'd rather not be talked down to by a &lt;i&gt;teenager.&lt;/i&gt;</state>
-            </case>
-            <case stage="0-10">
-                <condition role="target" character="elesa" stage="2" />
-                <state img="#-coNsider.png">How odd. I like looking stylish myself, but not at the cost of practicality.</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="starfire" />
@@ -2795,6 +2814,16 @@
 
         <trigger id="female_removing_minor">
             <case stage="0-10">
+                <condition role="target" character="elesa" stage="0" />
+                <test expr="~elesa.costume~" value="default" />
+                <state img="#-thiNk.png">The Shining Beauty, right?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="0" />
+                <test expr="~elesa.costume~" value="elesa_bw" />
+                <state img="#-coNfused.png">I don't mean to sound rude here, but those tall, thin heels, wouldn't you have a bit of trouble walking?</state>
+            </case>
+            <case stage="0-10">
                 <condition role="target" character="cynthia" stage="0" saying="last you’ll see" />
                 <state img="#-thiNk.png">How bold of you.</state>
             </case>
@@ -2813,10 +2842,6 @@
             <case stage="0-10">
                 <condition role="target" character="mae" stage="1" />
                 <state img="#-NoNplussed.png">You certainly like the color red.</state>
-            </case>
-            <case stage="0-10">
-                <condition role="target" character="elesa" stage="0" />
-                <state img="#-thiNk.png">The Shining Beauty, right?</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="natsuki" stage="1" />
@@ -2863,6 +2888,12 @@
         </trigger>
 
         <trigger id="female_removed_minor">
+            <case stage="0-10">
+                <condition role="target" character="elesa" stage="1" />
+                <condition role="other" character="guzma" />
+                <test expr="~elesa.costume~" value="elesa_bw" />
+                <state img="#-coNsider.png">How odd. I like looking stylish myself, but not at the cost of practicality.</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="elesa" stage="1" />
                 <condition role="other" character="guzma" />
