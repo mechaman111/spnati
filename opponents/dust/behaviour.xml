@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.3 at 1:31:38 AM on November 29, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.3 at 2:43:14 AM on December 03, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.3</version>
     <first>Dust</first>
@@ -559,6 +559,11 @@
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0" id="55">
+                <condition count="0" gender="male" />
+                <condition role="other" character="misty_hgss" sayingMarker="misty_noguys" />
+                <state img="#-wat.png" direction="up">{mono}If you see this line, please file a bug report.</state>
+            </case>
             <case stage="0">
                 <condition role="other" character="ribbon_girl" />
                 <state img="#-wat.png">Uh, were her arms just...</state>
@@ -763,9 +768,9 @@
                 <state img="#-pissed.png">You better be lucky I'm holding back... &lt;br&gt;{ahrah}Dust, calm down.{!reset}</state>
                 <state img="#-pissed.png">Someone's not being honest here!</state>
             </case>
-            <case stage="4-6">
+            <case stage="4">
                 <state img="#-facepalm.png">I'm going to have to undress more, aren't I?</state>
-                <state img="#-wat.png">Oh no.</state>
+                <state img="#-wat.png">And this is where I lose my pants.</state>
                 <state img="#-embarrassed.png">I uh... Oh Overseers...</state>
                 <state img="#-wat.png">I'd rather take on Baron Kane's ghost again than show this hand.</state>
             </case>
@@ -793,14 +798,36 @@
                 <state img="custom:#-fidget-snark">Something's telling me to stick to being a warrior.&lt;br&gt;{fidget}It's me, Dust. I'm telling you that.</state>
             </case>
             <case stage="3">
-                <state img="#-embarrassed.png">I'm not really good at this game. Normally when I play cards, it's Go Fish with Fidget.</state>
-                <state img="#-embarrassed.png">Uh... This doesn't look good for me.</state>
-                <state img="#-annoyed.png">That probably wasn't good.</state>
-                <state img="#-pensive.png">Shoot. That wasn't what I needed.</state>
+                <state img="#-embarrassed.png">Uh... how more embarrassing does this have to get?</state>
+                <state img="#-annoyed.png">Damn!</state>
+                <state img="#-annoyed.png">Aaand that's not what I wanted.</state>
+                <state img="#-wat.png">Well... that's... oh.</state>
+            </case>
+            <case stage="5">
+                <state img="#-wat.png">I'm just wondering what I did to deserve this hand.</state>
+                <state img="custom:#-fidget-snark">{fidget}Bingo!{!reset}&lt;br&gt;Fidget, that's not how it works.</state>
+                <state img="#-facepalm.png">Somehow, this is more painful than being smacked around by Trolks.</state>
+                <state img="#-um.png">So, no mulligans, right?</state>
+            </case>
+            <case stage="6">
+                <state img="#-wat.png">...crud.</state>
+                <state img="#-pensive.png">This is... a real difficult battle.</state>
+                <state img="#-facepalm.png">I would love to just forget that this ever happened.</state>
+                <state img="#-embarrassed.png">I'm sure I'll find this funny sometime later, but...</state>
             </case>
         </trigger>
 
         <trigger id="hand">
+            <case stage="0-7" totalRounds="0-2" priority="800">
+                <condition role="self" notSaidMarker="ahrahwho" />
+                <state img="custom:#-calm-ahrah" marker="ahrahwho">Oh, what's this sword, you said, ~player~? Ahrah here's my sword... that can float... and talk. You get used to it after a while.</state>
+                <state img="custom:#-calm-ahrah" marker="ahrahwho" location="85%">{ahrah}I feel an introduction is in order. I am the Blade of Ahrah, one of the five Swords of Elysium.{!reset}</state>
+            </case>
+            <case stage="0-7" totalRounds="0-2" priority="800">
+                <condition role="self" notSaidMarker="fidgetwho" />
+                <state img="custom:#-calm-fidget" marker="fidgetwho">Oh, ~player~, You want to know who Fidget here is? She's technically the guardian of my sword, but she's kind of become my traveling companion.</state>
+                <state img="custom:#-calm-fidget" marker="fidgetwho">{fidget}Hey, aren't you gonna introduce me?{!reset}&lt;br&gt;I was going to get to that. That's Fidget. She's my sidekick.</state>
+            </case>
             <case stage="0-7" oneShotId="79">
                 <condition role="other" character="jura" stage="0-2" />
                 <condition role="other" character="meia" stage="0-3" />
@@ -812,12 +839,10 @@
                 <test expr="~background~" value="beach" />
                 <state img="#-annoyed.png">Don't look at me. ~player~ chose the place.</state>
             </case>
-            <case stage="0-7" oneShotId="60">
-                <condition role="other" character="meia" saidMarker="dust_scared" />
-                <condition character="jura" />
-                <state img="custom:#-fidget-snark" marker="meia_halfvirgin">{fidget}Half of him's never gone far with women, Meia.{!reset}&lt;br&gt;Fidget!</state>
-                <state img="custom:#-fidget-snark" marker="meia_halfvirgin">{fidget}Oh, Meia, he's just really shy. And a half-virgin.{!reset}&lt;br&gt;Fidget, you promised not to talk about that...</state>
-                <state img="custom:#-fidget-snark" marker="meia_halfvirgin">{fidget}Meia, I just think the virgin half of him just exploded.{!reset}&lt;br&gt;Fidget, no...</state>
+            <case stage="0-7" id="53" alsoPlaying="megumin" alsoPlayingSayingMarker="megumin_mass_murder">
+                <condition count="0" notSaidMarker="killing" />
+                <condition role="other" character="revy" sayingMarker="killing" />
+                <state img="#-annoyed.png" marker="megumin_mercy">If they were intelligent enough to beg for mercy, shouldn't you have at least given some pause?</state>
             </case>
             <case stage="0" totalRounds="0">
                 <condition gender="female" role="other" character="human" />
@@ -893,7 +918,7 @@
                 <state img="#-um.png" marker="furless-warmblood">So ~player~, did your fur fall out or were you just never born with it?</state>
                 <state img="custom:#-fidget-snark" marker="furless-warmblood">{fidget}Hey Dust, why is ~player~ missing their fur?{!reset}&lt;br&gt;I have no idea, Fidget...</state>
             </case>
-            <case stage="0-2" oneShotId="48" totalRounds="1-">
+            <case stage="0-2" oneShotId="48" totalRounds="2-">
                 <condition role="other" character="elesa" stage="0-1" />
                 <state img="#-um.png" marker="elesa_outfit">Um, Elesa, was it? That's a rather... interesting outfit.</state>
                 <state img="#-calm.png" marker="elesa_outfit">I don't think I've ever seen an outfit like Elesa's at all back in Falana.</state>
@@ -943,7 +968,7 @@
                 <state img="#-annoyed.png" marker="guzma_loud">You don't need to yell, Guzma.</state>
                 <state img="#-annoyed.png" marker="guzma_loud">Guzma, is there a reason you're yelling so much?</state>
             </case>
-            <case stage="0-7" totalRounds="1-">
+            <case stage="0-7" totalRounds="2-">
                 <condition role="other" character="chazz" />
                 <condition role="self" notSaidMarker="chazz_hair" />
                 <state img="#-embarrassed.png" marker="chazz_hair">Uh... Chazz, was it? Your hair looks like it could stab someone.</state>
@@ -955,20 +980,20 @@
                 <state img="custom:#-fidget-snark" marker="guzma_humiliating-mud" location="20%">{fidget}More humiliating than when Dust got covered in mud after that fight with Lady Tethys?</state>
                 <state img="custom:#-fidget-snark" marker="guzma_humiliating-mute" location="20%">{fidget}More humiliating than when Dust tried to get Haley's mute brother to talk?</state>
             </case>
-            <case stage="0" oneShotId="20" totalRounds="0">
+            <case stage="0" oneShotId="20" totalRounds="2">
                 <condition role="other" character="leggy" />
                 <state img="#-embarrassed.png">Oh! A fellow Warmblood! Where are you from?</state>
             </case>
-            <case stage="0-7" oneShotId="42" totalRounds="1-">
+            <case stage="0-7" oneShotId="42" totalRounds="2-">
                 <condition role="other" character="n" />
                 <state img="#-um.png" marker="n_name">So, N, is there a reason behind your unusual name?</state>
                 <state img="#-um.png" marker="n_name">N, huh? I've never heard of anyone whose name was just a single letter long...</state>
             </case>
-            <case stage="0-7" oneShotId="47" totalRounds="1-">
+            <case stage="0-7" oneShotId="47" totalRounds="2-">
                 <condition role="other" character="cynthia" />
                 <state img="#-calm.png">So you're a champion, Cynthia? What kind of combat do you do?</state>
             </case>
-            <case stage="0-7" oneShotId="49" totalRounds="1-">
+            <case stage="0-7" oneShotId="49" totalRounds="2-">
                 <condition role="other" character="megumin" />
                 <state img="#-wat.png">Anyone else think Megumin sounds a little unhinged?</state>
             </case>
@@ -979,9 +1004,14 @@
                 <state img="#-annoyed.png" marker="kazuma_novice">Aren't you a little old to be playing pretend adventurer, Kazuma?</state>
                 <state img="#-annoyed.png" marker="kazuma_novice">You don't seem the adventurer sort, Kazuma.</state>
             </case>
-            <case stage="0" oneShotId="77" totalRounds="1">
+            <case stage="0" oneShotId="77" totalRounds="2">
                 <condition role="other" character="misato" />
                 <state img="#-um.png" marker="misato_military">Huh, you're in your kingdom's military? I think it's only been a few month since women were allowed to join the Royal Assassins.</state>
+            </case>
+            <case stage="6">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="rainbow_dash" sayingMarker="dust_doggingup" />
+                <state img="custom:#-fidget-snark" marker="rd_dogged_down">{fidget}In a way, I kinda want to see what he looks like "dogged down" then.</state>
             </case>
             <case stage="0-7" oneShotId="65">
                 <condition role="other" character="meia" saidMarker="dust_half" />
@@ -1132,16 +1162,6 @@
                 <state img="#-annoyed.png" marker="ahrah">I don't think I could ever use a gun. Those things are... too loud to me. Plus Ahrah would be offended.</state>
                 <state img="#-um.png" marker="raregun">So, are guns common where you come from, ~target~?</state>
             </case>
-            <case stage="0-7" priority="20">
-                <condition role="self" notSaidMarker="ahrahwho" />
-                <state img="custom:#-calm-ahrah" marker="ahrahwho">Oh, what's this sword, you said, ~player~? Ahrah here's my sword... that can float... and talk. You get used to it after a while.</state>
-                <state img="custom:#-calm-ahrah" marker="ahrahwho" location="85%">{ahrah}I feel an introduction is in order. I am the Blade of Ahrah, one of the five Swords of Elysium.{!reset}</state>
-            </case>
-            <case stage="0-7" priority="20">
-                <condition role="self" notSaidMarker="fidgetwho" />
-                <state img="custom:#-calm-fidget" marker="fidgetwho">Oh, ~player~, You want to know who Fidget here is? She's technically the guardian of my sword, but she's kind of become my traveling companion.</state>
-                <state img="custom:#-calm-fidget" marker="fidgetwho">{fidget}Hey, aren't you gonna introduce me?{!reset}&lt;br&gt;I was going to get to that. That's Fidget. She's my sidekick.</state>
-            </case>
             <case stage="7" priority="15">
                 <condition count="0" status="not_lost_all" />
                 <condition count="1" status="alive" role="opp" var="opponent" />
@@ -1210,9 +1230,17 @@
                 <condition role="self" notSaidMarker="fidgetQA_snacks" />
                 <state img="custom:#-calm-fidget" marker="fidgetQA_snacks" location="20%">{fidget}Hey, I'm kinda curious. What kind of snacks are you guys' favorites?</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" id="56">
                 <condition role="self" notSaidMarker="fidgetQA_stupidhat" />
                 <state img="custom:#-fidget-snark" marker="fidgetQA_stupidhat" location="20%">{fidget}Hey, who else here thinks Dust's hat is a little stupid-looking?</state>
+            </case>
+            <case stage="0-7" id="57">
+                <condition role="self" notSaidMarker="fidgetQA_beatup" />
+                <state img="custom:#-calm-fidget" marker="fidgetQA_beatup" location="20%">{fidget}This one's kind of important to me. If you had to beat up your best friend to bring them back to their senses, would you?</state>
+            </case>
+            <case stage="0-7" id="58">
+                <condition role="self" notSaidMarker="fidgetQA_doubts" />
+                <state img="custom:#-calm-fidget" marker="fidgetQA_doubts" location="20%">{fidget}This is kind of a serious question. What would you do if your best friend had doubts because of something they weren't able to do?</state>
             </case>
             <case stage="0-7" priority="0">
                 <condition count="1-5" role="opp" var="leader" />
@@ -1417,7 +1445,13 @@
         </trigger>
 
         <trigger id="must_strip_losing">
-            <case stage="1-6">
+            <case stage="6">
+                <state img="#-wat.png">Oh, no no no...</state>
+                <state img="custom:#-fidget-snark" location="20%">{fidget}All right, everyone, here it comes! The Dick of the Sen-Mithrarin!</state>
+                <state img="#-facepalm.png">And this is it, my last shred of dignity, gone...</state>
+                <state img="custom:#-fidget-snark">And this is it, my last shred of dignity, gone... {fidget}&lt;br&gt; I think you lost it like two hands ago, actually...</state>
+            </case>
+            <case stage="1-5">
                 <state img="#-wat.png">Oh crap. Everyone's staring at me.</state>
                 <state img="#-wat.png">Do I have to undress again? Oh no.</state>
                 <state img="#-wat.png">Hey, wait! I...</state>
@@ -1782,12 +1816,13 @@
                 <state img="#-wat.png" marker="weiss_name-confusion">Uh, what? Are you talking about me?</state>
             </case>
             <case stage="0-9" priority="410">
-                <condition role="target" character="meia" stage="0-2" />
+                <condition role="target" character="meia" stage="0" />
                 <state img="custom:#-fidget-snark" oneShotId="3" marker="meia_f-accent" location="20%">{fidget}Meia, if you're supposed to be a pirate, where's the "arrr, Jim-lad" accent?</state>
                 <state img="custom:#-calm-fidget" oneShotId="4" marker="meia_f-eyepatch" location="20%">{fidget}You're a pirate captain, right, Meia? But where's your eyepatch? Don't all pirate captains have those?</state>
                 <state img="custom:#-calm-fidget" oneShotId="5" marker="meia_f-scurvy" location="20%">{fidget}Oh oh! Since you're a pirate captain, can you tell me what a "scurvy dog" is?</state>
                 <state img="custom:#-fidget-snark" oneShotId="6" marker="meia_f-parrot" location="20%">{fidget}Did you leave your parrot on the boat, Meia?</state>
                 <state img="custom:#-fidget-snark" oneShotId="7" marker="meia_f-shanties" location="20%">{fidget}Ooh! Do you know any good pirate shanties, Meia?</state>
+                <state img="custom:#-calm-fidget" marker="meia_f-booty" location="20%">{fidget}Since you're pirates, do you go digging around islands for booty?</state>
             </case>
             <case stage="0-9" id="24">
                 <condition role="target" character="nayru" stage="4" notSaidMarker="null_possess" />
@@ -2484,6 +2519,10 @@
                 <condition role="target" stage="0" />
                 <condition role="other" character="mae" stage="0-2" sayingMarker="redeyes_marker" saying="club" />
                 <state img="#-embarrassed.png">That sounds like a way cooler club than the "Stupid Hat Club" Fidget always says I'm in.</state>
+            </case>
+            <case stage="0-9" id="54" targetStage="1-3" alsoPlaying="emi" alsoPlayingNotSaidMarker="pirate" alsoPlayingSayingMarker="emi_hero">
+                <state img="#-calm.png">... Well, I guess the best answer I can give is "destiny."</state>
+                <state img="#-calm.png">Would you be surprised if I said I was literally made for it?</state>
             </case>
             <case stage="0-6">
                 <condition role="other" character="human" hasHand="Royal Flush" />
