@@ -14,6 +14,7 @@ var EPILOGUES_UNLOCKED = false;
 var COLLECTIBLES_ENABLED = true;
 var COLLECTIBLES_UNLOCKED = false;
 var EPILOGUE_BADGES_ENABLED = true;
+var COSTUME_BADGES_ENABLED = true;
 var ALT_COSTUMES_ENABLED = false;
 var FORCE_ALT_COSTUME = null;
 var USAGE_TRACKING = undefined;
@@ -29,6 +30,8 @@ var FEEDBACK_ROUTE = "https://spnati.faraway-vision.io/usage/feedback/";
 var CURRENT_VERSION = undefined;
 var VERSION_COMMIT = undefined;
 var VERSION_TAG = undefined;
+
+var DEFAULT_FILL = undefined;
 
 /* Game Wide Constants */
 var HUMAN_PLAYER = 0;
@@ -518,8 +521,9 @@ Player.prototype.checkStatus = function(status) {
  * @param {jQuery} $metaXml 
  * @param {string} status 
  * @param {number} [releaseNumber] 
+ * @param {string} [highlightStatus]
  */
-function Opponent (id, $metaXml, status, releaseNumber) {
+function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     Player.call(this, id);
 
     this.id = id;
@@ -528,6 +532,7 @@ function Opponent (id, $metaXml, status, releaseNumber) {
     this.metaXml = $metaXml;
 
     this.status = status;
+    this.highlightStatus = highlightStatus || status || '';
     this.first = $metaXml.find('first').text();
     this.last = $metaXml.find('last').text();
     
@@ -1433,6 +1438,15 @@ function loadConfigFile () {
                 console.log("Debugging is disabled");
             }
 
+            var _default_fill_mode = $(xml).find('default-fill').text();
+            if (!_default_fill_mode || _default_fill_mode === 'none') {
+                DEFAULT_FILL = undefined;
+                console.log("Startup table filling disabled");
+            } else {
+                DEFAULT_FILL = _default_fill_mode;
+                console.log("Using startup table fill mode " + DEFAULT_FILL + '.');
+            }
+
             var _game_commit = $(xml).find('commit').text();
             if (_game_commit) {
                 VERSION_COMMIT = _game_commit;
@@ -1463,6 +1477,15 @@ function loadConfigFile () {
             if(_alts === "true") {
                 ALT_COSTUMES_ENABLED = true;
                 console.log("Alternate costumes enabled");
+
+                var _costume_badges = $(xml).find('costume_badges').text();
+                if (_costume_badges.toLowerCase() === 'false') {
+                    COSTUME_BADGES_ENABLED = false;
+                    console.log("Alternate costume badges are disabled.");
+                } else {
+                    console.log("Alternate costume badges are enabled.");
+                    COSTUME_BADGES_ENABLED = true;
+                }
                 
                 FORCE_ALT_COSTUME = $(xml).find('force-alternate-costume').text();
                 if (FORCE_ALT_COSTUME) {

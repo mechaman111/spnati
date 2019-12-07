@@ -39,20 +39,6 @@ $selectRandomButtons = $("#select-random-button, #select-random-female-button, #
 $selectRandomTableButton = $("#select-random-group-button");
 $selectRemoveAllButton = $("#select-remove-all-button");
 
-$selectSuggestions = [
-    $("#opponent-suggestions-1"),
-    $("#opponent-suggestions-2"),
-    $("#opponent-suggestions-3"),
-    $("#opponent-suggestions-4"),
-];
-
-$suggestionQuads = [
-    [$("#opponent-suggestion-1-1"), $("#opponent-suggestion-1-2"), $("#opponent-suggestion-1-3"), $("#opponent-suggestion-1-4")],
-    [$("#opponent-suggestion-2-1"), $("#opponent-suggestion-2-2"), $("#opponent-suggestion-2-3"), $("#opponent-suggestion-2-4")],
-    [$("#opponent-suggestion-3-1"), $("#opponent-suggestion-3-2"), $("#opponent-suggestion-3-3"), $("#opponent-suggestion-3-4")],
-    [$("#opponent-suggestion-4-1"), $("#opponent-suggestion-4-2"), $("#opponent-suggestion-4-3"), $("#opponent-suggestion-4-4")],
-]
-
 mainSelectDisplays = [
 	new MainSelectScreenDisplay(1),
 	new MainSelectScreenDisplay(2),
@@ -78,6 +64,8 @@ $groupLineCountLabels = [$("#group-line-count-label-1"), $("#group-line-count-la
 $groupPoseCountLabels = [$("#group-pose-count-label-1"), $("#group-pose-count-label-2"), $("#group-pose-count-label-3"), $("#group-pose-count-label-4")];
 $groupDescriptionLabels = [$("#group-description-label-1"), $("#group-description-label-2"), $("#group-description-label-3"), $("#group-description-label-4")];
 $groupBadges = [$("#group-badge-1"), $("#group-badge-2"), $("#group-badge-3"), $("#group-badge-4")];
+$groupNewBadges = [$("#group-new-badge-1"), $("#group-new-badge-2"), $("#group-new-badge-3"), $("#group-new-badge-4")];
+$groupCostumeBadges = [$("#group-costume-badge-1"), $("#group-costume-badge-2"), $("#group-costume-badge-3"), $("#group-costume-badge-4")];
 $groupStatuses = [$("#group-status-1"), $("#group-status-2"), $("#group-status-3"), $("#group-status-4")];
 $groupLayers = [$("#group-layer-1"), $("#group-layer-2"), $("#group-layer-3"), $("#group-layer-4")];
 $groupCostumeSelectors = [$("#group-costume-select-1"), $("#group-costume-select-2"), $("#group-costume-select-3"), $("#group-costume-select-4")];
@@ -167,15 +155,23 @@ var groupCreditsShown = false;
 var selectedSlot = 0;
 var shownIndividuals = Array(4);
 var shownGroup = Array(4);
-var shownSuggestions = [Array(4), Array(4), Array(4), Array(4)];
 var randomLock = false;
 
-/* Status icon tooltips */
-var statusTooltips = {
-    testing: "This opponent is currently in testing.",
-    offline: "This opponent has been retired from the official version of the game.",
-    incomplete: "This opponent is incomplete and currently not in development.",
-};
+/* Status indicators */
+var statusIndicators = {
+    testing: {
+        icon: "testing-badge.png",
+        tooltip: "This opponent is currently in testing.",
+    },
+    offline: {
+        icon: "offline-badge.png",
+        tooltip: "This opponent has been retired from the official version of the game.",
+    },
+    incomplete: {
+        icon: "incomplete-badge.png",
+        tooltip: "This opponent is incomplete and currently not in development."
+    }
+}
 
 /**********************************************************************
  *****               Opponent & Group Specification               *****
@@ -241,8 +237,6 @@ function loadListingFile () {
                 splitCreatorField(opp.writer).forEach(function (creator) {
                     creatorSet[creator] = true;
                 });
-                
-                console.log();
                 
                 var disp = new OpponentSelectionCard(opp);
                 opp.selectionCard = disp;
@@ -322,6 +316,7 @@ function loadListingFile () {
                 var oppStatus = $(this).attr('status');
                 var id = $(this).text();
                 var releaseNumber = $(this).attr('release');
+                var highlightStatus = $(this).attr('highlight');
                 var doInclude = (oppStatus === undefined || includedOpponentStatuses[oppStatus]);
 
                 if (available[id]) {
@@ -329,7 +324,7 @@ function loadListingFile () {
 					if (doInclude) {
 						opponentMap[id] = oppDefaultIndex++;
 					}
-                    loadOpponentMeta(id, oppStatus, releaseNumber, onComplete);
+                    loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus, onComplete);
                 }
             });
 
@@ -340,7 +335,7 @@ function loadListingFile () {
 /************************************************************
  * Loads and parses the meta XML file of an opponent.
  ************************************************************/
-function loadOpponentMeta (id, status, releaseNumber, onComplete) {
+function loadOpponentMeta (id, status, releaseNumber, highlightStatus, onComplete) {
 	/* grab and parse the opponent meta file */
     console.log("Loading metadata for \""+id+"\"");
 	$.ajax({
@@ -350,7 +345,7 @@ function loadOpponentMeta (id, status, releaseNumber, onComplete) {
 		success: function(xml) {
             var $xml = $(xml);
 
-			var opponent = new Opponent(id, $xml, status, releaseNumber);
+			var opponent = new Opponent(id, $xml, status, releaseNumber, highlightStatus);
 
 			/* add the opponent to the list */
             onComplete(opponent);
@@ -362,12 +357,17 @@ function loadOpponentMeta (id, status, releaseNumber, onComplete) {
 	});
 }
 
-function updateStatusIcon(elem, status) {
-    if (status) {
+function updateStatusIcon(elem, opp) {
+    var status = opp.status;
+    if (!opp.status) {
+        status = opp.highlightStatus;
+    }
+
+    if (status && statusIndicators[status]) {
         elem.attr({
-            'src': 'img/' + status + '-badge.png',
+            'src': 'img/' + statusIndicators[status].icon,
             'alt': status.initCap(),
-            'data-original-title': statusTooltips[status],
+            'data-original-title': statusIndicators[status].tooltip,
         }).show();
     } else {
         elem.removeAttr('data-original-title').hide();
@@ -476,8 +476,19 @@ function updateGroupSelectScreen (ignore_bg) {
                     $groupBadges[i].hide();
                 }
 
+                if (opponent.highlightStatus === 'new') {
+                    $groupNewBadges[i].show();
+                } else {
+                    $groupNewBadges[i].hide();
+                }
+
                 $groupCostumeSelectors[i].hide();
                 if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
+                    if (COSTUME_BADGES_ENABLED)
+                        $groupCostumeBadges[i].show();
+                    else
+                        $groupCostumeBadges[i].hide();
+                    
                     $groupCostumeSelectors[i].empty();
 
                     if (!FORCE_ALT_COSTUME) {
@@ -502,9 +513,11 @@ function updateGroupSelectScreen (ignore_bg) {
                             }
                         });
                     }
+                } else {
+                    $groupCostumeBadges[i].hide();
                 }
 
-                updateStatusIcon($groupStatuses[i], opponent.status);
+                updateStatusIcon($groupStatuses[i], opponent);
 
                 $groupLayers[i].attr({
                     src: "img/layers" + opponent.layers + ".png",
@@ -525,6 +538,8 @@ function updateGroupSelectScreen (ignore_bg) {
                 $groupArtistLabels[i].html("");
                 $groupDescriptionLabels[i].html("");
                 $groupBadges[i].hide();
+                $groupNewBadges[i].hide();
+                $groupCostumeBadges[i].hide();
                 $groupStatuses[i].hide();
                 $groupLayers[i].hide();
                 $groupImages[i].hide();
@@ -536,41 +551,6 @@ function updateGroupSelectScreen (ignore_bg) {
         $groupNameLabel.html("(No matches)");
     }
 }
-
-/* Sets the suggested opponent to be displayed in a given slot and quadrant.
- * Arguments:
- * - opponent: the opponent object to display
- * - slot: the selection slot to load into
- * - quad: the quadrant of said selection slot to load into
- */
-function updateSuggestionQuad(slot, quad, opponent) {
-    var img_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-image');
-    var label_elem = $suggestionQuads[slot][quad].children('.opponent-suggestion-label');
-    var tooltip = null;
-
-    shownSuggestions[slot][quad] = opponent.id;
-    img_elem.attr(
-        {'src': opponent.selection_image,
-         'alt': opponent.label,
-         'data-original-title': statusTooltips[opponent.status] || null
-        }).show();
-    label_elem.text(opponent.label);
-}
-
-/* Sets the given selection screen slot to display 4 opponents from an array.
- * Arguments:
- * - slot: the main select screen slot to update (zero-indexed)
- * - suggestionsArray: the array to draw suggestions from
- * - startIndex: the index into suggestionsArray to begin drawing suggestions from
- */
-function updateSuggestions(slot, suggestionsArray, startIndex) {
-    for(var i=0;i<4;i++) {
-        if (suggestionsArray[startIndex+i]) {
-            updateSuggestionQuad(slot, i, suggestionsArray[startIndex+i]);
-        }
-    }
-}
-
 
 /**********************************************************************
  *****                   Interaction Functions                    *****
@@ -644,43 +624,6 @@ $('#individual-select-screen .sort-filter-field').on('input', function () {
     updateSelectableOpponents(false);
     updateIndividualSelectScreen();
 });
-
-/************************************************************
- * The player clicked on a suggested character button.
- ************************************************************/
-function suggestionSelected(slot, quad) {
-    var selectedID = shownSuggestions[slot-1][quad-1];
-
-    if(!selectedID) {
-        /* This shouldn't happen. */
-        console.error("Could not find suggested opponent ID for slot " + slot + " and quad " + quad);
-        return;
-    }
-
-    /* Find the character they selected. */
-    for (var i=0; i<loadedOpponents.length; i++) {
-        if (loadedOpponents[i].id === selectedID) {
-            players[slot] = loadedOpponents[i];
-
-            if (SENTRY_INITIALIZED) {
-                Sentry.addBreadcrumb({
-                    category: 'select',
-                    message: 'Loading suggested opponent ' + loadedOpponents[i].id,
-                    level: 'info'
-                });
-            }
-            
-        	updateSelectionVisuals();
-
-            players[slot].loadBehaviour(slot, true);
-
-            return;
-        }
-    }
-
-    /* This shouldn't happen, either. */
-    console.error("Could not find opponent with ID " + selectedID);
-}
 
 /************************************************************
  * The player clicked on an opponent slot.
@@ -889,6 +832,45 @@ function clickedRandomFillButton (predicate) {
 	}
 
 	updateSelectionVisuals();
+}
+
+function loadDefaultFillSuggestions () {
+    /* get a copy of the loaded opponents list, same as above */
+    var possiblePicks = loadedOpponents.filter(function (opp) {
+        return !players.some(function (p) { return p && p.id === opp.id; })
+                && !mainSelectDisplays.some(function (d) { d.prefillSuggestion && d.prefillSuggestion.id === opp.id; })
+                && opp.highlightStatus === DEFAULT_FILL;
+    });
+
+    var nFill = 5 - players.countTrue();
+    if (nFill === 0) return;
+    
+    var fillPlayers = [];
+    if (DEFAULT_FILL === 'new') {
+        /* Always suggest the most recently-added character. */
+        fillPlayers.push(possiblePicks.pop());
+    }
+
+    for (var i = fillPlayers.length; i < nFill; i++) {
+        if (possiblePicks.length === 0) break;
+        /* select random opponent */
+        var idx = getRandomNumber(0, possiblePicks.length);
+        var randomOpponent = possiblePicks[idx];
+        possiblePicks.splice(idx, 1);
+
+        fillPlayers.push(randomOpponent);
+    }
+
+    for (var i = 1; i < players.length; i++) {
+        if (!(i in players)) {
+            if (fillPlayers.length === 0) break;
+
+            var suggestion = fillPlayers.shift();
+            mainSelectDisplays[i - 1].setPrefillSuggestion(suggestion);
+        }
+    }
+
+    updateSelectionVisuals();
 }
 
 /************************************************************
@@ -1128,11 +1110,6 @@ function altCostumeSelected(slot, inGroup) {
  * screen.
  ************************************************************/
 function updateSelectionVisuals () {
-    /* update all opponents */
-    for (var i = 1; i < players.length; i++) {
-		mainSelectDisplays[i-1].update(players[i]);
-    }
-
     /* Check to see if all opponents are loaded. */
     var filled = 0, loaded = 0;
     players.forEach(function(p, idx) {
@@ -1144,21 +1121,8 @@ function updateSelectionVisuals () {
         }
     });
 
-    /* if enough opponents are selected, and all those are loaded, then enable progression */
-    $selectMainButton.attr('disabled', filled < 2 || loaded < filled);
-
-    /* if all slots are taken, disable fill buttons */
-    $selectRandomButtons.attr('disabled', filled >= 4 || loadedOpponents.length == 0);
-
-    /* if no opponents are loaded, disable remove all button */
-    $selectRemoveAllButton.attr('disabled', filled <= 0 || loaded < filled);
-
-    /* Disable buttons while loading is going on */
-    $selectRandomTableButton.attr('disabled', loaded < filled || loadedOpponents.length == 0);
-    $groupButton.attr('disabled', loaded < filled);
-
     /* Update suggestions images. */
-    if (players.countTrue() >= 3) {
+    if (loaded >= 2) {
         var suggested_opponents = loadedOpponents.filter(function(opp) {
             /* hide selected opponents */
             if (players.some(function(p) { return p && p.id == opp.id; })) {
@@ -1172,20 +1136,43 @@ function updateSelectionVisuals () {
         suggested_opponents.sort(sortOpponentsByMostTargeted());
 
         var suggestion_idx = 0;
-        for (var i=1;i<players.length;i++) {
+        for (var i = 1; i < players.length; i++) {
             if (players[i] === undefined) {
-                updateSuggestions(i-1, suggested_opponents, suggestion_idx);
-                $selectSuggestions[i-1].show();
-                suggestion_idx += 4;
+                for (var j = 0; j < 4; j++) {
+                    mainSelectDisplays[i - 1].updateTargetSuggestionDisplay(
+                        j, suggested_opponents[suggestion_idx++]
+                    );
+                }
+                mainSelectDisplays[i - 1].displayTargetSuggestions(true);
             } else {
-                $selectSuggestions[i-1].hide();
+                mainSelectDisplays[i - 1].displayTargetSuggestions(false);
             }
         }
     } else {
-        for (var i=0;i<4;i++) {
-            $selectSuggestions[i].hide();
+        for (var i = 1; i < players.length; i++) {
+            if (players[i] === undefined) {
+                mainSelectDisplays[i - 1].displayTargetSuggestions(false);
+            }
         }
     }
+
+    /* update all opponents */
+    for (var i = 1; i < players.length; i++) {
+        mainSelectDisplays[i - 1].update(players[i]);
+    }
+
+    /* if enough opponents are selected, and all those are loaded, then enable progression */
+    $selectMainButton.attr('disabled', filled < 2 || loaded < filled);
+
+    /* if all slots are taken, disable fill buttons */
+    $selectRandomButtons.attr('disabled', filled >= 4 || loadedOpponents.length == 0);
+
+    /* if no opponents are loaded, disable remove all button */
+    $selectRemoveAllButton.attr('disabled', filled <= 0 || loaded < filled);
+
+    /* Disable buttons while loading is going on */
+    $selectRandomTableButton.attr('disabled', loaded < filled || loadedOpponents.length == 0);
+    $groupButton.attr('disabled', loaded < filled);
 }
 
 
