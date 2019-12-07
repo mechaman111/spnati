@@ -724,7 +724,8 @@ Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
         this.selection_image = costumeDesc.folder + costumeDesc.image;
     }
 
-    this.selectionCard.update();
+    if (this.selectionCard)
+        this.selectionCard.update();
 };
 
 Opponent.prototype.getIntelligence = function () {
