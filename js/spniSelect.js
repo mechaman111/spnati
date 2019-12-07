@@ -842,16 +842,31 @@ function loadDefaultFillSuggestions () {
                 && opp.highlightStatus === DEFAULT_FILL;
     });
 
+    var nFill = 5 - players.countTrue();
+    if (nFill === 0) return;
+    
+    var fillPlayers = [];
+    if (DEFAULT_FILL === 'new') {
+        /* Always suggest the most recently-added character. */
+        fillPlayers.push(possiblePicks.pop());
+    }
+
+    for (var i = fillPlayers.length; i < nFill; i++) {
+        if (possiblePicks.length === 0) break;
+        /* select random opponent */
+        var idx = getRandomNumber(0, possiblePicks.length);
+        var randomOpponent = possiblePicks[idx];
+        possiblePicks.splice(idx, 1);
+
+        fillPlayers.push(randomOpponent);
+    }
+
     for (var i = 1; i < players.length; i++) {
         if (!(i in players)) {
-            if (possiblePicks.length === 0) return;
+            if (fillPlayers.length === 0) break;
 
-            /* select random opponent */
-            var idx = getRandomNumber(0, possiblePicks.length);
-            var randomOpponent = possiblePicks[idx];
-            possiblePicks.splice(idx, 1);
-
-            mainSelectDisplays[i - 1].setPrefillSuggestion(randomOpponent);
+            var suggestion = fillPlayers.shift();
+            mainSelectDisplays[i - 1].setPrefillSuggestion(suggestion);
         }
     }
 
