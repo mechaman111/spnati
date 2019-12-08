@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.3 at 2:43:14 AM on December 03, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.3 at 12:34:24 AM on December 08, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.3</version>
     <first>Dust</first>
@@ -818,12 +818,24 @@
         </trigger>
 
         <trigger id="hand">
-            <case stage="0-7" totalRounds="0-2" priority="800">
+            <case stage="0-7" priority="801">
+                <condition role="self" saidMarker="ahrahwho" />
+                <condition role="other" character="yuelia" sayingMarker="dust_ahrahMaker" />
+                <state img="custom:#-calm-ahrah" marker="yuelia_ahrah-maker" location="80%">{ahrah}My four "siblings" and I were forged centuries ago by some of the most talented Moonblood smiths.</state>
+                <state img="custom:#-calm-ahrah" marker="yuelia_ahrah-maker" location="80%">{ahrah}Their names are lost to history, but they were the most talented Moonblood smiths and mages Falana had ever known.</state>
+            </case>
+            <case stage="0-7" priority="801">
+                <condition role="other" character="yuelia" saidMarker="dust_fidgetWhat" />
+                <condition role="self" saidMarker="fidgetwho" />
+                <state img="custom:#-fidget-snark" location="20%">{fidget}I'm a nimbat, silly!</state>
+                <state img="custom:#-calm-fidget" location="20%">{fidget}I'm a nimbat, one of the best animals out there!</state>
+            </case>
+            <case stage="0-7" totalRounds="0-3" priority="800">
                 <condition role="self" notSaidMarker="ahrahwho" />
                 <state img="custom:#-calm-ahrah" marker="ahrahwho">Oh, what's this sword, you said, ~player~? Ahrah here's my sword... that can float... and talk. You get used to it after a while.</state>
                 <state img="custom:#-calm-ahrah" marker="ahrahwho" location="85%">{ahrah}I feel an introduction is in order. I am the Blade of Ahrah, one of the five Swords of Elysium.{!reset}</state>
             </case>
-            <case stage="0-7" totalRounds="0-2" priority="800">
+            <case stage="0-7" totalRounds="0-3" priority="800">
                 <condition role="self" notSaidMarker="fidgetwho" />
                 <state img="custom:#-calm-fidget" marker="fidgetwho">Oh, ~player~, You want to know who Fidget here is? She's technically the guardian of my sword, but she's kind of become my traveling companion.</state>
                 <state img="custom:#-calm-fidget" marker="fidgetwho">{fidget}Hey, aren't you gonna introduce me?{!reset}&lt;br&gt;I was going to get to that. That's Fidget. She's my sidekick.</state>
@@ -1317,6 +1329,16 @@
                 <condition role="other" character="guzma" saying="You even human" />
                 <state img="#-annoyed.png" marker="human_name">"Human?" Is that the name for you furless Warmbloods? And no, I guess not.</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="yuelia" sayingMarker="dust_forest" />
+                <state img="#-um.png" marker="yuelia_aurora">Ohhh... not exactly. I live in a little place called Aurora Village.</state>
+                <state img="#-calm.png" marker="yuelia_aurora">Uh, I'm not exactly a forest dweller. I'm planning on settling down in Aurora Village.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="yuelia" sayingMarker="dust_spirit" />
+                <state img="#-um.png" marker="yuelia_warmblood">Hm? A forest spirit? I'm just a normal Warmblood.</state>
+                <state img="#-pensive.png" marker="yuelia_warmblood">Oh, nothing like that, I'm just a wolf Warmblood.</state>
+            </case>
             <case stage="2">
                 <condition role="other" character="jura" />
                 <state img="#-embarrassed.png">Um, Jura? Why are you staring at me?</state>
@@ -1417,6 +1439,27 @@
             <case stage="0" oneShotId="9">
                 <state img="#-embarrassed.png" marker="askhat">Er, I'm just curious... How long am I allowed to keep my hat on?</state>
             </case>
+        </trigger>
+
+        <trigger id="must_strip_winning">
+            <case stage="0">
+                <state img="#-embarrassed.png">Well. I guess I had to lose sometime.</state>
+                <state img="#-pensive.png">And there goes the perfect game.</state>
+                <state img="#-annoyed.png">Hm. Didn't really expect to lose this hand.</state>
+            </case>
+            <case stage="1-5">
+                <state img="#-embarrassed.png">And my lead falls a little more.</state>
+                <state img="#-pensive.png">There goes that run of good luck.</state>
+                <state img="#-annoyed.png">Hm. I didn't want to give up this lead.</state>
+            </case>
+            <case stage="6">
+                <state img="#-embarrassed.png">So that's it, huh? We're all going to be naked now.</state>
+                <state img="#-facepalm.png">Who knew that my underwear was the last piece of clothing to go in the game?</state>
+                <state img="#-pensive.png">Now the real tense moments of the game begin.</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip_normal">
             <case stage="0-5">
                 <state img="#-pissed.png" marker="+cassius_talked" weight="0.1">This is ridiculous. What kind of game is this?</state>
                 <state img="#-pissed.png" marker="+cassius_talked" weight="0.1">This. Isn't. Funny.</state>
@@ -1433,14 +1476,6 @@
                 <state img="#-wat.png">Oh no... Oh no...</state>
                 <state img="#-wat.png">This is going to be horrible.</state>
                 <state img="#-wat.png">Did Kane curse me? Am I cursed with bad luck?</state>
-            </case>
-        </trigger>
-
-        <trigger id="must_strip_winning">
-            <case stage="0-5">
-                <state img="#-embarrassed.png">I guess this was inevitable, even with this high Luck stat.</state>
-                <state img="#-pensive.png">There goes that run of good luck.</state>
-                <state img="#-annoyed.png">Hm. Didn't really expect to lose this hand.</state>
             </case>
         </trigger>
 
@@ -2019,6 +2054,10 @@
                 <condition role="target" character="akko" stage="0" saidMarker="necronomicon" />
                 <state img="custom:#-um-ahrah">Uh, Ahrah... should I be ready to fight? &lt;br&gt;{ahrah}No, Dust, there's no threat from her.{!reset}</state>
             </case>
+            <case stage="0-9" id="59">
+                <condition role="target" character="yuelia" stage="0" sayingMarker="transformation" />
+                <state img="#-whoa.png">Wow! So bright... oh.</state>
+            </case>
             <case stage="0-9" id="26">
                 <condition role="target" character="nami" stage="0" />
                 <state img="#-wat.png">Um, is that some sort of...</state>
@@ -2524,12 +2563,6 @@
                 <state img="#-calm.png">... Well, I guess the best answer I can give is "destiny."</state>
                 <state img="#-calm.png">Would you be surprised if I said I was literally made for it?</state>
             </case>
-            <case stage="0-6">
-                <condition role="other" character="human" hasHand="Royal Flush" />
-                <state img="#-whoa.png">What?! A Royal Flush?</state>
-                <state img="#-wat.png">Wow... someone's got a high Luck stat.</state>
-                <state img="#-embarrassed.png">A Royal Flush! Congratulations, ~player~!</state>
-            </case>
             <case stage="0-5">
                 <condition role="other" character="mae" saidMarker="possumsprings_a" />
                 <condition role="self" notSaidMarker="mae_aurora" />
@@ -2540,6 +2573,12 @@
                 <state img="#-facepalm.png">You need some Luck-boosting equipment, ~name~? I've got spares in my inventory.</state>
                 <state img="custom:#-calm-ahrah" location="70%">{ahrah}It appears fortune does not favor ~name~ today.</state>
                 <state img="custom:#-fidget-snark" location="20%">{fidget}Wow, ~name~, how unlucky can you get?</state>
+            </case>
+            <case stage="0-6">
+                <condition role="winner" hasHand="Royal Flush" />
+                <state img="#-whoa.png">What?! A Royal Flush?</state>
+                <state img="#-wat.png">Wow... someone's got a high Luck stat.</state>
+                <state img="#-embarrassed.png">A Royal Flush! Congratulations, ~name~!</state>
             </case>
             <case stage="0-7">
                 <condition role="self" hasHand="High Card" saidMarker="cassius_talked&gt;3" />
