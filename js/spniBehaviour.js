@@ -1816,6 +1816,7 @@ Opponent.prototype.updateChosenState = function (state) {
 
     this.chosenState = state;
     this.stateCommitted = false;
+    this.chosenState.selectImage(this.stage);
 }
 
 /**
@@ -1907,7 +1908,6 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     if (this.stateCommitted) return;
     
     this.chosenState.expandDialogue(this, this.currentTarget);
-    this.chosenState.selectImage(this.stage);
 
     if (this.chosenState.marker) {
         this.chosenState.applyMarker(this, this.currentTarget);
