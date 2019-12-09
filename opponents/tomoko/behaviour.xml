@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 4:13:19 PM on December 08, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 4:01:33 PM on December 09, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Tomoko</first>
@@ -264,16 +264,16 @@
                 <state img="#-ok_hand.png">&lt;i&gt;(Is Nami actually a pirate? Isn't that illegal or something?)&lt;/i&gt;</state>
                 <state img="#-Suprised.png">&lt;i&gt;(She looks way too young to be a pirate! I'm like the same age and the only thing I accomplish is getting out of bed... and some days I don't even manage that!)&lt;/i&gt;</state>
                 <state img="#-lewd.png">&lt;i&gt;(That's a weird tattoo... kind of sexy though...)&lt;/i&gt;</state>
-                <state img="#-Shy.png">P-pirates are cool, I guess... but aren't they like evil?! &lt;i&gt;(What kind of place is this?!)&lt;/i&gt;</state>
+                <state img="#-Shy.png" marker="nami_evilpirates">P-pirates are cool, I guess... but aren't they like evil?! &lt;i&gt;(What kind of place is this?!)&lt;/i&gt;</state>
             </case>
             <case stage="3-6" priority="0">
                 <condition role="other" character="nami" saidMarker="pirate" />
-                <state img="#-Shy.png">Please don't steal my money Nami... I need my pocket change for the train home.</state>
+                <state img="#-Shy.png" marker="nami_steal">Please don't steal my money Nami... I need my pocket change for the train home.</state>
                 <state img="#-thinking.png">&lt;i&gt;(She's really not hiding her breasts, is she? I guess it's impossible when they are &lt;/i&gt;that&lt;i&gt;size...)&lt;/i&gt;</state>
                 <state img="#-Shy.png">I don't think I could be a pirate... I get sea sick too easily...</state>
-                <state img="#-Curious.png">Wait Nami! Have you ever met Blackbeard?!</state>
-                <state img="#-Shy.png">Do you own a parrot?! Or a monkey?! &lt;i&gt;(Pirates are so cool!)&lt;/i&gt;</state>
-                <state img="#-ok_hand.png">I'm a pirate too Nami... I once downloaded an eroge off the internet...</state>
+                <state img="#-Curious.png" marker="nami_blackbeard">Wait Nami! Have you ever met Blackbeard?!</state>
+                <state img="#-Shy.png" marker="nami_animals">Do you own a parrot?! Or a monkey?! &lt;i&gt;(Pirates are so cool!)&lt;/i&gt;</state>
+                <state img="#-ok_hand.png" marker="nami_erogepirate">I'm a pirate too Nami... I once downloaded an eroge off the internet...</state>
             </case>
             <case stage="0-2" priority="0">
                 <condition role="other" character="yuelia" notSaidMarker="transformation" />
@@ -287,16 +287,10 @@
                 <state img="#-Excited.png">&lt;i&gt;(If I can make that magical girl my friend, it'll open up endless magical perverted opportunities!)&lt;/i&gt;</state>
             </case>
             <case stage="3-6" priority="0">
-                <condition role="other" character="yuelia" notSaidMarker="transformation" />
-                <state img="#-ok_hand.png">&lt;i&gt;(I'm playing Strip Poker with a fucking butterfly...)&lt;/i&gt;</state>
-                <state img="#-Idle 01.png">&lt;i&gt;(How does that bug even hold the cards?! How is it even going to strip?!)&lt;/i&gt;</state>
-                <state img="#-thinking.png">&lt;i&gt;(Yup, that thing can talk. Should I get the bug zapper?)&lt;/i&gt;</state>
-            </case>
-            <case stage="3-6" priority="0">
                 <condition role="other" character="yuelia" saidMarker="transformation" />
-                <state img="#-Shy.png">Uh... hey Flutter... uh, what's it like being a butterfly?! &lt;i&gt;(Fuck! Making friends is harder than I thought!)&lt;/i&gt;</state>
-                <state img="#-Shy.png">Flutter... h-how are you constantly so positive? Isn't it hard?!</state>
-                <state img="#-thinking.png">How did you manage to get magical powers Flutter? &lt;i&gt;(Tell me your secrets!)&lt;/I&gt;</state>
+                <state img="#-Shy.png" marker="flutter_butterflyq">Uh... hey Flutter... uh, what's it like being a butterfly?! &lt;i&gt;(Fuck! Making friends is harder than I thought!)&lt;/i&gt;</state>
+                <state img="#-Shy.png" marker="flutter_positiveq">Flutter... h-how are you constantly so positive? Isn't it hard?!</state>
+                <state img="#-thinking.png" marker="flutter_magicpowersq">How did you manage to get magical powers Flutter? &lt;i&gt;(Tell me your secrets!)&lt;/I&gt;</state>
             </case>
             <case stage="3-6" oneShotId="45" priority="0">
                 <condition role="other" character="dust" />
@@ -359,7 +353,7 @@
                 <state img="#-ok_hand.png">&lt;i&gt;(It's better than nothing... right?)&lt;/i&gt;</state>
                 <state img="#-Angery.png">&lt;i&gt;(My heart is beating furiously!)&lt;/i&gt; Let's just show our hands already!</state>
                 <state img="#-Shy.png">Please let me win!! This is so embarrassing!</state>
-                <state img="#-ok_hand.png">I'm not sweating cause I'm nervous...it's just, uh a condition?!</state>
+                <state img="#-ok_hand.png">I'm not sweating because I'm nervous...it's just, uh a condition?!</state>
                 <state img="#-ok_hand.png">I need to sit down! My legs are shaking!</state>
                 <state img="#-thinking.png">&lt;i&gt;(This'll all be over soon Tomoko!)&lt;/i&gt;</state>
             </case>
@@ -426,6 +420,15 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="3-6" oneShotId="47" priority="500">
+                <condition role="other" character="yuelia" saidMarker="tomoko_parents" />
+                <state img="#-ok_hand.png">You are so lucky Flutter! My mother wouldn't even buy me a Thompson Sub-machine Gun for my birthday when I was 6...</state>
+            </case>
+            <case stage="3-6" oneShotId="48" priority="500">
+                <condition role="other" character="yuelia" saidMarker="tomoko_hug" />
+                <state img="#-Shy.png">A... hug?! Uh... yes please...</state>
+                <state img="#-Suprised.png">&lt;i&gt;(Is she pitying me?! How dare she?! Slut! Whore!)&lt;/i&gt;... yes please...</state>
+            </case>
             <case stage="0-8" id="13" priority="206">
                 <condition role="other" character="nami" stage="6" timeInStage="0-" sayingMarker="butt1" />
                 <test expr="~human.stage~" cmp="&gt;=" value="1" />
@@ -459,7 +462,7 @@
             </case>
             <case stage="0-2">
                 <condition role="other" character="mae" sayingMarker="embarrassingunderwear." />
-                <state img="#-Suprised.png">I-I don't have embarrassing u-underwear! It's s-sexy! It's irresitable!</state>
+                <state img="#-Suprised.png">I-I don't have embarrassing u-underwear! It's s-sexy! It's irresistible!</state>
             </case>
             <case stage="4">
                 <condition role="self" saidMarker="tomomoongardevoir" />
@@ -468,6 +471,9 @@
             <case stage="0-2" oneShotId="46" totalRounds="4" priority="1">
                 <condition role="other" character="mae" />
                 <state img="#-thinking.png">&lt;i&gt;(Mae pulls off the silent and expressionless character so well... I tried that once and it just made my face hurt...)&lt;/i&gt;</state>
+            </case>
+            <case stage="4">
+                <state>This line can cover any of the Good/Okay/Bad hand cases if it has a higher priority</state>
             </case>
         </trigger>
 
@@ -642,6 +648,11 @@
                 <state img="#-Shy.png">Y-you, r-really think so F-flutter?! I guess I can take it off then... &lt;i&gt;(A cute girl complimented me! This is the best day ever!)&lt;/i&gt;</state>
             </case>
             <case stage="0">
+                <condition role="other" character="yuelia" sayingMarker="tomoko_youOkay" />
+                <state img="#-Strip.png">I'm o-okay, I-I'm just... I'm not a virgin!</state>
+                <state img="#-Strip.png">I'm n-not n-nervous! &lt;i&gt;You're n-nervous!&lt;/i&gt;</state>
+            </case>
+            <case stage="0">
                 <state img="#-Strip.png">I... I, gu-guess I... I can take off m-my tie...</state>
                 <state img="#-Strip.png">I... It's j-just a t-tie...</state>
                 <state img="#-Strip.png">Wh... Wh-Whatever... it's j-just a t-tie...</state>
@@ -713,7 +724,7 @@
             <case stage="1">
                 <state img="#-Shy.png">&lt;i&gt;(I was hoping I could maybe make some friends here...)&lt;/i&gt;</state>
                 <state img="#-Shy.png">You are all perverts! &lt;i&gt;(Then again... this could be kind of hot.)&lt;/i&gt;</state>
-                <state img="#-post_strip_tie.png">&lt;i&gt;(This is super embarrassing... but I don't think I would've been even able to play this kind of game a year ago...)&lt;/i&gt;</state>
+                <state img="#-post_strip_tie.png">&lt;i&gt;(This is super embarrassing... but I don't think I would've even been able to play this kind of game a year ago...)&lt;/i&gt;</state>
             </case>
             <case stage="2">
                 <state img="#-Shy.png">A-Alright... I won't lose s-so easy next time!..</state>
@@ -780,7 +791,7 @@
                 <state img="#-Shy.png">Thanks for losing ~player~!</state>
                 <state img="#-Shy.png">D-Dang... That really s-sucks for &lt;i&gt;you&lt;/i&gt;, ~player~... doesn't it?</state>
                 <state img="#-Shy.png">G-Guess you're stripping huh, ~player~?.. I don't &lt;i&gt;care&lt;/i&gt; or anything...</state>
-                <state img="#-ok_hand.png">&lt;i&gt;(Seeing someone else stripping while your dressed is super arousing...)&lt;/i&gt;</state>
+                <state img="#-ok_hand.png">&lt;i&gt;(Seeing someone else stripping while you're dressed is super arousing...)&lt;/i&gt;</state>
                 <state img="#-Victorious.png">&lt;i&gt;(Yes! ~player~ lost!)&lt;/i&gt;</state>
                 <state img="#-lewd.png">&lt;i&gt;(I feel so smug right now...)&lt;/i&gt;</state>
             </case>
@@ -1222,7 +1233,7 @@
             </case>
             <case stage="0-2" priority="300">
                 <condition role="target" character="mae" />
-                <state img="#-thinking.png">&lt;i&gt;(Mae might act apathetic and distant... which makes her automatically &lt;/i&gt;badass!&lt;i&gt;)&lt;/i&gt;</state>
+                <state img="#-thinking.png">&lt;i&gt;(Mae might act apathetic and distant... which makes her automatically &lt;/i&gt;bad-ass!&lt;i&gt;)&lt;/i&gt;</state>
             </case>
             <case stage="0-8">
                 <condition role="self" notSaidMarker="tomokostory" />
@@ -1307,6 +1318,16 @@
                 <state img="#-thinking.png">Being a pirate sounds pretty cool... how do I become one Nami?!</state>
                 <state img="#-Curious.png">If you are a pirate, do you have sex hundreds of random men at ports?!</state>
                 <state img="#-Curious.png">Wait, where's your pirate hat?!</state>
+            </case>
+            <case stage="3-6">
+                <condition role="target" character="yuelia" stage="3" saidMarker="tomoko_sexier" />
+                <state img="#-Shy.png" marker="flutter_sexytomo">Um... could you still try?</state>
+                <state img="#-Excited.png">&lt;i&gt;(I'm not hearing a no!)&lt;/i&gt;</state>
+            </case>
+            <case stage="3-6">
+                <condition role="target" character="yuelia" stage="3" saidMarker="tomoko_mindctrl" />
+                <state img="#-thinking.png">&lt;i&gt;(Stupid morals getting in the way of my plans for world domination...)&lt;/i&gt;</state>
+                <state img="#-Shy.png" marker="flutter_justifymc">Um... but what if everyone else is stupid and you can do everything better for them?</state>
             </case>
             <case stage="1">
                 <condition role="target" character="marinette" stage="1" />
@@ -1446,7 +1467,7 @@
                 <condition role="self" notSaidMarker="tomokogymleader" />
                 <state img="#-Shy.png" marker="tomokogymleader">If I was a Pokémon gym leader, I'd probably train Bug types! They might seem creepy or gross... but they are probably really cute and misunderstood!</state>
                 <state img="#-Shy.png" marker="tomokogymleader">If I was a Pokémon gym leader, I'd probably train Dark types... &lt;i&gt;(Then use their strange powers for world domination!)&lt;/i&gt;</state>
-                <state img="#-Shy.png" marker="tomokogymleader">If I was a Pokémon gym leader, I'd probably train Fighting types... &lt;i&gt;(I could have then beat up anyone who ever laughed at me!)&lt;/i&gt;</state>
+                <state img="#-Shy.png" marker="tomokogymleader">If I was a Pokémon gym leader, I'd probably train Fighting types... &lt;i&gt;(I could have them beat up anyone who ever laughed at me!)&lt;/i&gt;</state>
                 <state img="#-Shy.png" marker="tomokogymleader">If I was a Pokémon gym leader, I'd probably train Poison types... &lt;i&gt;(I feel like they'd fit my personality...)&lt;/i&gt;</state>
             </case>
         </trigger>
@@ -2868,7 +2889,7 @@
                 <state img="#-Idle 01.png">&lt;i&gt;(I feel kind of awkward... being in all my clothes and everything...)&lt;/i&gt;</state>
             </case>
             <case stage="1-6">
-                <state img="#-thinking.png">... &lt;i&gt;(I'm suprised she was even able&lt; to finish like that...)&lt;/i&gt;</state>
+                <state img="#-thinking.png">... &lt;i&gt;(I'm suprised she was even able to finish like that...)&lt;/i&gt;</state>
                 <state img="#-Idle 01.png">O-Oh... &lt;i&gt;(I don't think I've ever done something like that when I've climaxed...)&lt;/i&gt;</state>
                 <state img="#-Shy.png">... &lt;i&gt;(I... don't know how to feel about that... she's not even a dude?..)&lt;/i&gt;</state>
             </case>
@@ -2923,7 +2944,7 @@
                 <state img="#-Soft1.png">Point your gun at me ~name~!</state>
             </case>
             <case stage="9">
-                <state img="#-Soft1.png">Call me a degnerate!</state>
+                <state img="#-Soft1.png">Call me a degenerate!</state>
                 <state img="#-Soft1.png">Slut-shame me!</state>
                 <state img="#-Soft1.png">Look me in my eyes! And don't blink!</state>
                 <state img="#-Soft2.png">Let me grope you!... please.</state>
