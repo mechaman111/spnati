@@ -737,6 +737,7 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
         if (this.alt_costume.folder != this.selected_costume) {
             this.unloadAlternateCostume();
         } else {
+            setTimeout(this.onSelected.bind(this), 1, individual);
             return;
         }
     }
@@ -875,7 +876,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.loadAlternateCostume();
         } else {
             this.unloadAlternateCostume();
-            this.onSelected(individual);
+            setTimeout(this.onSelected.bind(this), 1, individual);
         }
         return;
     }
