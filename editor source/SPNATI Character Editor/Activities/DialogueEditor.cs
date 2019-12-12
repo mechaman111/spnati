@@ -479,12 +479,18 @@ namespace SPNATI_Character_Editor.Activities
 							else
 							{
 								//Select the case
-								treeDialogue.SelectNode(_selectedStage?.Id ?? c.Stages[0], c);
-								//Select the line
-								caseControl.SelectTextInRow(l, index, args.FindText.Length);
+								if (treeDialogue.SelectNode(_selectedStage?.Id ?? c.Stages[0], c))
+								{
+									//Select the line
+									caseControl.SelectTextInRow(l, index, args.FindText.Length);
+								}
+								else
+								{
+									args.Success = false;
+								}
 							}
 
-							if (!args.ReplaceAll)
+							if (!args.ReplaceAll && args.Success)
 								return;
 						}
 					}

@@ -199,9 +199,9 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		/// <param name="stage">Which stage within the case to select</param>
 		/// <param name="stageCase">Case to select</param>
-		public void SelectNode(int stage, Case stageCase)
+		public bool SelectNode(int stage, Case stageCase)
 		{
-			_view.SelectNode(stage, stageCase);
+			return _view.SelectNode(stage, stageCase);
 		}
 
 		/// <summary>
