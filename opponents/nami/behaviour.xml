@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.3 at 3:01:42  on diciembre 10, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.3 at 12:34:58  on diciembre 12, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.3</version>
     <first>Nami</first>
@@ -12193,6 +12193,19 @@
                 <state img="#-embarrassed.png">~Player~, I have a confession. You know when I tried to seduce you earlier? I was just lying so you'd let me win. I'm sorry. Although now that I look at you, I do find you kind of cute.</state>
                 <state img="#-embarrassed.png">I'm sorry I tried seducing you earlier, ~player~. I assume you knew I was faking, and that's why it didn't work. I do find you cute, though. I'm serious, I have no reason to lie anymore.</state>
             </case>
+            <case stage="8" oneShotId="284">
+                <condition role="self" timeInStage="2-" />
+                <alternative>
+                    <condition count="1-" filter="kind" />
+                    <condition count="0-" filter="villain" />
+                </alternative>
+                <alternative>
+                    <condition count="1-" filter="hero" />
+                    <condition count="0-" filter="villain" />
+                </alternative>
+                <state img="#-smiling.png">(I was planning on stealing their possesions after the game, but they're not bad people. I could steal play a trick on them, though.)</state>
+                <state img="#-smiling.png">(Change of plans, since there are not bad people here I won't take their stuff. But it would be funny if I make them think I did.)</state>
+            </case>
             <case stage="8" oneShotId="244">
                 <condition role="self" timeInStage="2-" notSaidMarker="butt3" />
                 <state img="#-butt.png" marker="butt3">I take care of my body, and I'm very happy with the results. But don't just take my word for it...</state>
@@ -12263,28 +12276,32 @@
             <case stage="8" id="27" priority="500">
                 <condition count="1" filter="chun-li" />
                 <condition role="self" timeInStage="5-" />
-                <state img="#-stealing.png" marker="stealing">I'm just taking all your stuff. We're friends, Chun-Li! That's why I made an exception for you. Take care!</state>
+                <state img="#-stealing.png" marker="stealing" collectible="Wanted Poster">I'm just taking all your stuff. We're friends, Chun-Li! That's why I made an exception for you. Take care!</state>
             </case>
             <case stage="8" id="15" priority="500">
                 <condition role="self" timeInStage="5-" />
-                <state img="#-stealing.png" marker="stealing">I have good news and bad news. The good is that I won't steal the prize, the bad is that I'm taking your stuff instead. But I left your underwear. Oh, shoot! I forgot to get dressed first.</state>
-                <state img="#-stealing.png" marker="stealing">Bye, everyone! Nice to meet you all! Oh, this?  I'm just taking your valuables. Since I lost, I don't want to leave empty-handed. But I like you, so I'm leaving your underwear. Damn, I forgot my own clothes!</state>
-                <state img="#-stealing.png" marker="stealing">You remember when I said you didn't have to worry about me being a pirate? I guess I exaggerated, cause I'm taking your stuff. Minus your underwear, of course. But I feel like I'm forgetting something...</state>
-            </case>
-            <case stage="8" target="human" saidMarker="target1">
-                <state img="#-seductive.png">Hey, you won, ~player~! Didn't you have a good time? You don't even care about the prize, don't you?</state>
-                <state img="#-seductive.png">Congratulations, ~player~. Consider what you saw today your reward for winning this game. (The only one you'll have...)</state>
-            </case>
-            <case stage="8" target="mae">
-                <state img="#-smiling.png">Fine, a deal is a deal, Mae. Let me grab my clothes and I'll tell you what you want to know.</state>
-            </case>
-            <case stage="8" target="sayaka">
-                <state img="#-shocked.png">Uh... Time to get out of here!</state>
+                <state img="#-stealing.png" marker="stealing" collectible="Wanted Poster">I have good news and bad news. The good is that I won't steal the prize, the bad is that I'm taking your stuff instead. But I left your underwear. Oh, shoot! I forgot to get dressed first.</state>
+                <state img="#-stealing.png" marker="stealing" collectible="Wanted Poster">Bye, everyone! Nice to meet you all! Oh, this?  I'm just taking your valuables. Since I lost, I don't want to leave empty-handed. But I like you, so I'm leaving your underwear. Damn, I forgot my own clothes!</state>
+                <state img="#-stealing.png" marker="stealing" collectible="Wanted Poster">You remember when I said you didn't have to worry about me being a pirate? I guess I exaggerated, cause I'm taking your stuff. Minus your underwear, of course. But I feel like I'm forgetting something...</state>
             </case>
             <case stage="8">
-                <state img="#-smiling.png">Congratulations, ~name~! Well played. (Time for me to steal that prize and get out of here!)</state>
-                <state img="#-greedy.png">Well done, ~name~. This was all part of my plan... losing so you could win. No need to say thanks. I'm a pirate, if you want to thank me, you'll have to do it with valuables.</state>
-                <state img="#-smiling.png">This was quite the adventure! But now it's time to return to my own adventure. Bye bye, everyone! (There's the prize! Showtime...)</state>
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="target1" />
+                <state img="#-seductive.png" collectible="Wanted Poster">Hey, you won, ~player~! Didn't you have a good time? You don't even care about the prize, don't you?</state>
+                <state img="#-seductive.png" collectible="Wanted Poster">Congratulations, ~player~. Consider what you saw today your reward for winning this game. (The only one you'll have...)</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="mae" />
+                <state img="#-smiling.png" collectible="Wanted Poster">Fine, a deal is a deal, Mae. Let me grab my clothes and I'll tell you what you want to know.</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="sayaka" />
+                <state img="#-shocked.png" collectible="Wanted Poster">Uh... Time to get out of here!</state>
+            </case>
+            <case stage="8">
+                <state img="#-smiling.png" collectible="Wanted Poster">Congratulations, ~name~! Well played. (Time for me to steal that prize and get out of here!)</state>
+                <state img="#-greedy.png" collectible="Wanted Poster">Well done, ~name~. This was all part of my plan... losing so you could win. No need to say thanks. I'm a pirate, if you want to thank me, you'll have to do it with valuables.</state>
+                <state img="#-smiling.png" collectible="Wanted Poster">This was quite the adventure! But now it's time to return to my own adventure. Bye bye, everyone! (There's the prize! Showtime...)</state>
             </case>
         </trigger>
 
@@ -17683,6 +17700,7 @@
             <directive type="sprite" id="nami8" src="epi-treasure_n8.png" x="582" y="70" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="sprite" id="nami7b" src="epi-treasure_n7b.png" x="582" y="70" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="sprite" id="nami9" src="epi-treasure_n9.png" x="582" y="70" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="vag1" layer="2" src="epi-treasure_n12_vag1.png" x="810" y="584" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="sprite" id="breasts1a" layer="1" src="epi-treasure_breasts1.png" x="736" y="408" pivotx="50%" pivoty="0%" alpha="0" />
             <directive type="sprite" id="breasts1b" layer="1" src="epi-treasure_breasts1b.png" x="736" y="408" pivotx="50%" pivoty="0%" alpha="0" />
             <directive type="sprite" id="breasts2a1" layer="1" src="epi-treasure_breasts2.png" x="736" y="408" pivotx="100%" pivoty="0%" alpha="0" />
@@ -17879,7 +17897,6 @@
                 <keyframe time="0" alpha="100" />
             </directive>
             <directive type="sprite" id="p_hand3" layer="1" src="epi-treasure_p_hand2.png" x="791" y="670" scalex="0.9" scaley="0.9" pivotx="50%" pivoty="50%" alpha="0" rotation="3" />
-            <directive type="sprite" id="vag1" layer="2" src="epi-treasure_n12_vag1.png" x="810" y="584" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="text" id="n18" width="10%" arrow="left" x="67%" y="10%">You're an idiot...</directive>
             <directive type="pause" />
             <directive type="clear-all" />
