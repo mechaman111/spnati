@@ -629,6 +629,8 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         return player.size;
     case 'gender':
         return player.gender;
+    case 'ifmale':
+        return args.split('|')[(player.gender == 'male' ? 0 : 1)];
     case 'place':
         if (player.out) return players.countTrue() + 1 - player.outOrder;
         return 1 + players.countTrue(function(p) { return p.countLayers() > player.countLayers(); });
