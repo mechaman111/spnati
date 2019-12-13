@@ -2,6 +2,7 @@
 using Desktop.CommonControls.PropertyControls;
 using Desktop.DataStructures;
 using Newtonsoft.Json;
+using SPNATI_Character_Editor.Controls.EditControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -184,6 +185,16 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
+		[PoseMatch(DisplayName = "Pose", GroupName = "Dialogue", GroupOrder = 50, Description ="Character is using a particular pose")]
+		[DefaultValue("")]
+		[XmlAttribute("pose")]
+		[JsonProperty("pose")]
+		public string Pose
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
+
 		public static readonly KeyValuePair<string, string>[] StatusTypes = {
 			new KeyValuePair<string, string>(null, ""),
 			new KeyValuePair<string, string>("lost_some", "Lost something"),
@@ -268,6 +279,9 @@ namespace SPNATI_Character_Editor
 							case "hashand":
 								Hand = value;
 								break;
+							case "pose":
+								Pose = value;
+								break;
 						}
 					}
 				}
@@ -312,6 +326,7 @@ namespace SPNATI_Character_Editor
 				SayingMarker == other.SayingMarker &&
 				Saying == other.Saying &&
 				ConsecutiveLosses == other.ConsecutiveLosses &&
+				Pose == other.Pose &&
 				(Variable ?? "") == (other.Variable ?? "");
 		}
 
@@ -334,6 +349,7 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (Saying ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (ConsecutiveLosses ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Variable ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Pose ?? string.Empty).GetHashCode();
 			return hash;
 		}
 
@@ -420,6 +436,10 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(Saying))
 			{
 				parts.Add("saying;" + Saying);
+			}
+			if (!string.IsNullOrEmpty(Pose))
+			{
+				parts.Add("pose;" + Pose);
 			}
 			string data = string.Format("count-{1}:{0}", Count, string.Join("&", parts));
 			return data;
@@ -544,6 +564,10 @@ namespace SPNATI_Character_Editor
 				if (!string.IsNullOrEmpty(Saying))
 				{
 					str += $" saying text {Saying}";
+				}
+				if (!string.IsNullOrEmpty(Pose))
+				{
+					str += $" using pose {Pose}";
 				}
 				if (!string.IsNullOrEmpty(Variable))
 				{
@@ -689,6 +713,10 @@ namespace SPNATI_Character_Editor
 			{
 				priority += 1;
 			}
+			if (!string.IsNullOrEmpty(Pose))
+			{
+				priority += 1;
+			}
 
 			if (Role == "winner")
 			{
@@ -725,7 +753,8 @@ namespace SPNATI_Character_Editor
 					!string.IsNullOrEmpty(StartingLayers) ||
 					!string.IsNullOrEmpty(Gender) ||
 					!string.IsNullOrEmpty(FilterTag) ||
-					!string.IsNullOrEmpty(Status);
+					!string.IsNullOrEmpty(Status) ||
+					!string.IsNullOrEmpty(Pose);
 			}
 		}
 

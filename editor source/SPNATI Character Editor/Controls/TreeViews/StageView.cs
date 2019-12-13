@@ -40,6 +40,11 @@ namespace SPNATI_Character_Editor.Controls
 			InitializeColumns();
 		}
 
+		public GroupedList<DialogueNode> GetModel()
+		{
+			return _model;
+		}
+
 		private void InitializeColumns()
 		{
 			AccordionColumn column;
@@ -96,6 +101,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			_showHidden = showHidden;
 			_listView.DataSource = null;
+			_caseMap.Clear();
 
 			_model = new GroupedList<DialogueNode>();
 			_model.GroupComparer = SortGroups;
@@ -153,21 +159,23 @@ namespace SPNATI_Character_Editor.Controls
 			BuildTree(_showHidden);
 		}
 
-		public void SelectNode(int stage, Case stageCase)
+		public bool SelectNode(int stage, Case stageCase)
 		{
 			DialogueNode node = _caseMap.Get(stageCase, stage);
 			if (node != null)
 			{
 				_listView.SelectedItem = node;
+				return true;
 			}
 			else
 			{
 				//try the earliest stage
 				if (stageCase.Stages.Count > 0 && stage != stageCase.Stages[0])
 				{
-					SelectNode(stageCase.Stages[0], stageCase);
+					return SelectNode(stageCase.Stages[0], stageCase);
 				}
 			}
+			return false;
 		}
 
 		public void BuildCase(Case theCase)

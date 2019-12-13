@@ -34,6 +34,10 @@ namespace SPNATI_Character_Editor
 		{
 			if (recWho.RecordKey == "target")
 			{
+				if (record.Key == "human")
+				{
+					return true;
+				}
 				Case workingCase = Data as Case;
 				if (workingCase != null)
 				{
@@ -80,6 +84,11 @@ namespace SPNATI_Character_Editor
 			{
 				return true;
 			}
+		}
+
+		protected override void OnDestroy()
+		{
+			tableAdvanced.Data = null;
 		}
 
 		public override void OnInitialAdd()

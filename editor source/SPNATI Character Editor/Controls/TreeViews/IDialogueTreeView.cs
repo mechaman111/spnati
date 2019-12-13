@@ -43,7 +43,7 @@ namespace SPNATI_Character_Editor.Controls
 		/// </summary>
 		/// <param name="stage"></param>
 		/// <param name="stageCase"></param>
-		void SelectNode(int stage, Case stageCase);
+		bool SelectNode(int stage, Case stageCase);
 
 		/// <summary>
 		/// Called when a case was changed (ex. a stage added or removed)

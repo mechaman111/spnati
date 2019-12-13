@@ -32,6 +32,11 @@ namespace SPNATI_Character_Editor.Controls
 		private Func<Case, bool> _filter;
 		private bool _showHidden;
 
+		public GroupedList<DialogueNode> GetModel()
+		{
+			return _model;
+		}
+
 		public void Initialize(AccordionListView listView, Character character)
 		{
 			_listView = listView;
@@ -95,6 +100,8 @@ namespace SPNATI_Character_Editor.Controls
 			_showHidden = showHidden;
 			_listView.DataSource = null;
 
+			_caseMap.Clear();
+
 			_model = new GroupedList<DialogueNode>();
 			_model.GroupComparer = SortGroups;
 			_model.ItemComparer = DialogueNode.CompareCases;
@@ -153,13 +160,15 @@ namespace SPNATI_Character_Editor.Controls
 			BuildTree(_showHidden);
 		}
 
-		public void SelectNode(int stage, Case stageCase)
+		public bool SelectNode(int stage, Case stageCase)
 		{
 			DialogueNode node = _caseMap.Get(stageCase);
 			if (node != null)
 			{
 				_listView.SelectedItem = node;
+				return true;
 			}
+			return false;
 		}
 
 		public void BuildCase(Case theCase)

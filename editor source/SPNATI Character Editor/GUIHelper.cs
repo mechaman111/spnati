@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
@@ -304,5 +305,100 @@ namespace SPNATI_Character_Editor
 			list.Sort();
 			return list;
 		}
+
+		public static List<Word> ParseWords(string sentence)
+		{
+			Tuple<string, FormatMarker>[] markers = new Tuple<string, FormatMarker>[] {
+				new Tuple<string, FormatMarker>("<i>", FormatMarker.ItalicOn),
+				new Tuple<string, FormatMarker>("</i>", FormatMarker.ItalicOff),
+				new Tuple<string, FormatMarker>("<br>", FormatMarker.LineBreak),
+				new Tuple<string, FormatMarker>("<br/>", FormatMarker.LineBreak),
+			};
+			List<Word> words = new List<Word>();
+			string[] rawWords = sentence.Split(' ');
+			for (int i = 0; i < rawWords.Length; i++)
+			{
+				string word = rawWords[i];
+				ParseForMarker(word, 0, markers, words);
+			}
+			return words;
+		}
+
+		private static void ParseForMarker(string text, int markerIndex, Tuple<string, FormatMarker>[] markers, List<Word> words)
+		{
+			string tag = markers[markerIndex].Item1;
+			FormatMarker marker = markers[markerIndex].Item2;
+			string[] segments = text.Split(new string[] { tag }, StringSplitOptions.None);
+			Regex regex = new Regex(@"^[!?,\.]+$");
+			for (int i = 0; i < segments.Length; i++)
+			{
+				string segment = segments[i];
+				if (i > 0)
+				{
+					words.Add(new Word(marker));
+				}
+				if (markerIndex < markers.Length - 1)
+				{
+					ParseForMarker(segment, markerIndex + 1, markers, words);
+				}
+				else if(!string.IsNullOrEmpty(segment))
+				{
+					//if punctuation only, add it to the previous word
+					if (words.Count > 0 && regex.IsMatch(segment))
+					{
+						bool found = false;
+						for (int j = words.Count - 1; j >= 0; j--)
+						{
+							if (words[j].Formatter == FormatMarker.None)
+							{
+								words[j].Text += segment;
+								found = true;
+								break;
+							}
+						}
+						if (found)
+						{
+							continue;
+						}
+					}
+					
+					words.Add(new Word(segment));
+				}
+			}
+		}
+	}
+
+	public class Word
+	{
+		public string Text;
+		public float Width;
+		public FormatMarker Formatter;
+
+		public Word(string text)
+		{
+			Text = text;
+		}
+
+		public Word(FormatMarker formatter)
+		{
+			Formatter = formatter;
+		}
+
+		public override string ToString()
+		{
+			if (!string.IsNullOrEmpty(Text))
+			{
+				return Text;
+			}
+			return Formatter.ToString();
+		}
+	}
+
+	public enum FormatMarker
+	{
+		None = 0,
+		ItalicOn = 1,
+		ItalicOff = 2,
+		LineBreak = 3,
 	}
 }
