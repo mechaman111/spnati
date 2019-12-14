@@ -395,14 +395,16 @@ function startDealPhase () {
     for (var i = 0; i < players.length; i++) {
         if (players[i]) {
             /* collect the player's hand */
-            collectPlayerHand(i);
+            clearHand(i);
             
             if (i !== 0) {
                 $gameOpponentAreas[i-1].removeClass('opponent-revealed-cards opponent-lost');
             }
         }
     }
-    shuffleDeck();
+
+    setupDeck();
+
     var numPlayers = getNumPlayersInStage(STATUS_ALIVE);
     var n = 0;
     for (var i = 0; i < players.length; i++) {

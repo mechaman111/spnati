@@ -55,8 +55,7 @@ var BLANK_CARD_IMAGE = IMG + "blank.png";
 var UNKNOWN_CARD_IMAGE = IMG + "unknown.jpg";
  
 /* card decks */
-var inDeck = [];	/* cards left in the deck */
-var outDeck = [];	/* cards waiting to be shuffled into the deck */
+var activeDeck;	/* deck for current round */
 
 /* deal lock */
 var dealLock = 0;
@@ -95,6 +94,44 @@ Hand.prototype.toString = function() {
 	return handStrengthToString(this.strength);
 }
 
+/************************************************************
+ * Deck class
+ ************************************************************/
+
+function Deck() {
+    var cards = [];
+
+	for (var i = 0; i < 4; i++) {
+		for (var j = 2; j <= 14; j++) {
+			cards.push(new Card(i, j));
+		}
+	}
+
+    /* Fisher-Yates shuffling algorithm.  At step i, cards 0 through i -
+     * 1 of the shuffled deck have already been selected, while cards i
+     * through cards.length - 1 have not.  We select a card uniformly
+     * randomly from the unselected cards.  It becomes card i, and
+     * whatever card was stored at index i gets tossed into the set of
+     * unselected cards.
+     */
+    this.shuffle = function() {
+        for (var i = 0; i < cards.length - 1; i++) {
+            swapIndex = getRandomNumber(i, cards.length);
+            var c = cards[i];
+            cards[i] = cards[swapIndex];
+            cards[swapIndex] = c;
+        }
+    }
+
+    /* The maximum number of cards we deal in a round is 50.  This
+     * happens when there are five active players and they all exchange
+     * all their cards.  Since the deck starts with 52 cards we will
+     * never run out.
+     */
+    this.dealCard = function() {
+        return cards.pop();
+    }
+}
 
 /**********************************************************************
  *****                    Start Up Functions                      *****
@@ -108,24 +145,6 @@ function setupPoker () {
     players.forEach(function(player) {
         player.hand = new Hand()
     });
-    
-    /* compose a new deck */
-    composeDeck();
-}
- 
-/************************************************************
- * Composes a brand new deck of cards.
- ************************************************************/
-function composeDeck () {
-	inDeck = [];
-    outDeck = [];
-	var suit = "";
-	
-	for (var i = 0; i < 4; i++) {
-		for (j = 2; j <= 14; j++) {
-			inDeck.push(new Card(i, j));
-		}
-	}
 }
 
 /************************************************************
@@ -237,30 +256,11 @@ function stopCardAnimations () {
  **********************************************************************/
 
 /************************************************************
- * Collects the given player's hand into the outDeck.
+ * Compose and shuffle a new deck.
  ************************************************************/
-function collectPlayerHand (player) {
-	/* collect cards from the hand into the outDeck */
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-		if (players[player].hand.cards[i]) {
-			outDeck.push(players[player].hand.cards[i]);
-		}
-		delete players[player].hand.cards[i];
-	}
-	clearHand(player);
-}
-
-/************************************************************
- * Shuffles the outDeck into the inDeck.
- ************************************************************/
-function shuffleDeck () {
-	/* shuffle the cards from the outDeck into the inDeck */
-	for (var i = 0; i < outDeck.length; i++) {
-        inDeck.push(outDeck[i]);
-	}
-	
-	/* empty the outDeck */
-	outDeck = [];
+function setupDeck () {
+    activeDeck = new Deck();
+    activeDeck.shuffle();
 }
 
 /************************************************************
@@ -268,20 +268,12 @@ function shuffleDeck () {
  ************************************************************/
 function dealHand (player, numPlayers, playersBefore) {
 	/* collect their old hand */
-	collectPlayerHand (player);
-	
-	/* first make sure the deck has enough cards */
-	if (inDeck.length < CARDS_PER_HAND) {
-		shuffleDeck();
-	}
-	
+	clearHand(player);
+
 	/* deal the new cards */
-	var drawnCard;
 	for (var i = 0; i < CARDS_PER_HAND; i++) {
 		players[player].hand.tradeIns[i] = false;
-		drawnCard = getRandomNumber(0, inDeck.length);
-		players[player].hand.cards[i] = inDeck[drawnCard];
-		inDeck.splice(drawnCard, 1);
+		players[player].hand.cards[i] = activeDeck.dealCard();
 		// Simulate dealing one card to each player, then another to
 		// each player, and so on.
 		animateDealtCard(player, i, numPlayers * i + playersBefore);
@@ -292,41 +284,27 @@ function dealHand (player, numPlayers, playersBefore) {
  * Exchanges the chosen cards for the given player.
  ************************************************************/
 function exchangeCards (player) {
-	/* determine how many cards are being swapped */
-	var swap = 0;
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-		if (players[player].hand.tradeIns[i]) {
-			swap++;
-		}
-	}
-	
-	/* make sure the deck has enough cards */
-	if (inDeck.length < swap) {
-		shuffleDeck();
-	}
-    dealLock = swap;
-	
-	/* collect their old cards */
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-		if (players[player].hand.tradeIns[i] && players[player].hand.cards[i]) {
-			outDeck.push(players[player].hand.cards[i]);
-			delete players[player].hand.cards[i];
-		}
-	}
+    /* delete swapped cards */
+    var swaps = 0;
+    for (var i = 0; i < CARDS_PER_HAND; i++) {
+        if (players[player].hand.tradeIns[i]) {
+            delete players[player].hand.cards[i];
+            swaps++;
+        }
+    }
+
+    dealLock += swaps;
 
     /* Move kept cards to the left */
     players[player].hand.cards = players[player].hand.cards.filter(function(c) { return c; });
     /* Refresh display. */
     displayHand(player, player == HUMAN_PLAYER);
-	
-    /* take the new cards */
+
+    /* draw new cards */
     var n = 0;
-    var drawnCard;
-    for (var i = players[player].hand.cards.length; i < CARDS_PER_HAND; i++) {
-        drawnCard = getRandomNumber(0, inDeck.length);
-        players[player].hand.cards.push(inDeck[drawnCard]);
-        animateDealtCard(player, i, n++);
-        inDeck.splice(drawnCard, 1);
+    for (var i = players[player].hand.cards.length; i < CARDS_PER_HAND; i++, n++) {
+        players[player].hand.cards.push(activeDeck.dealCard());
+        animateDealtCard(player, i, n);
     }
 }
 
