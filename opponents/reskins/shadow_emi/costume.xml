@@ -4,28 +4,56 @@
     <label>Emi</label>
     <tags>
         <tag>alternative_skin</tag>
-	<tag>black_hair</tag>
-	<tag>amber_eyes</tag>
-	<tag>pale-skinned</tag>
-	<tag>choker</tag>
-	<tag>goth</tag>
-	<tag>indifferent</tag>
-	<tag remove="true">blonde</tag>
-	<tag remove="true">green_eyes</tag>
-	<tag remove="true">fair-skinned</tag>
-	<tag remove="true">removed_tag</tag>
-	<tag remove="true">school_uniform</tag>
-	<tag remove="true">cheerful</tag>
+        <tag>amber_eyes</tag>
+        <tag>black_hair</tag>
+        <tag remove="true">blonde</tag>
+        <tag remove="true">cheerful</tag>
+        <tag>choker</tag>
+        <tag remove="true">fair-skinned</tag>
+        <tag>goth</tag>
+        <tag remove="true">green_eyes</tag>
+        <tag>indifferent</tag>
+        <tag>pale-skinned</tag>
+        <tag remove="true">school_uniform</tag>
     </tags>
     <folder>opponents/reskins/shadow_emi/</folder>
     <wardrobe>
-        <clothing lowercase="prosthetic legs" plural="true" position="lower" proper-name="Prosthetic Legs" type="major" />
-        <clothing lowercase="socks" plural="true" position="lower" proper-name="Socks" type="minor" />
-        <clothing lowercase="panties" plural="true" position="lower" proper-name="Panties" type="important" />
-        <clothing lowercase="top" position="upper" proper-name="Panties" type="important" />
-	<clothing lowercase="skirt" position="lower" proper-name="Skirt" type="major" />
-	<clothing lowercase="jacket" position="upper" proper-name="Jacket" type="major" />
-	<clothing lowercase="choker" position="neck" proper-name="Choker" type="extra" />
-	<clothing lowercase="boots" plural="true" position="feet" proper-name="Boots" type="extra" />
+        <clothing name="prosthetic legs" generic="prosthetic legs" position="legs" type="major" plural="true" />
+        <clothing name="socks" generic="socks" position="legs" type="minor" plural="true" />
+        <clothing name="panties" generic="Panties" position="lower" type="important" plural="true" />
+        <clothing name="top" generic="Panties" position="upper" type="important" />
+        <clothing name="skirt" generic="Skirt" position="lower" type="major" />
+        <clothing name="jacket" generic="Jacket" position="upper" type="major" />
+        <clothing name="choker" generic="Choker" position="neck" type="extra" />
+        <clothing name="boots" generic="boots" position="feet" type="extra" plural="true" />
     </wardrobe>
+
+    <poses>
+        <pose id="ghost_boot">
+            <sprite id="stripping" z="2" src="emi/ghost.png" x="0" y="0" />
+            <sprite id="Boots" z="2" src="emi/Boots.png" x="0" y="0" alpha="100" />
+            <sprite id="shadow" src="emi/shadow.png" x="0" y="0" />
+            <sprite id="BootsInside" src="emi/BootsInside.png" x="0" y="0" alpha="100" />
+            <directive type="animation" id="stripping" ease="ease-in-out-cubic" interpolation="linear">
+                <keyframe time="0" x="0" y="0" />
+                <keyframe time="2" x="1" y="-250" />
+                <keyframe time="3.5" x="0" />
+            </directive>
+            <directive type="animation" id="stripping" delay="2" ease="ease-in-out-cubic" interpolation="linear">
+                <keyframe time="0" y="-250" />
+                <keyframe time="1.5" y="-250" />
+                <keyframe time="4.5" y="0" />
+            </directive>
+            <directive type="animation" id="Boots" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="0" y="0" alpha="100" />
+                <keyframe time="2.25" alpha="100" />
+                <keyframe time="3.25" alpha="0" />
+            </directive>
+            <directive type="animation" id="BootsInside" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="0" y="0" alpha="100" />
+                <keyframe time="2.25" alpha="100" />
+                <keyframe time="3.25" alpha="0" />
+            </directive>
+        </pose>
+    </poses>
 </costume>
