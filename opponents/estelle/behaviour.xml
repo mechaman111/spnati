@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 8:20:07  on November 17, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 1:50:25  on Dezember 16, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.8</version>
+    <version>v5.4</version>
     <first>Estelle</first>
     <last>Sidos Heurassein</last>
     <label>Estelle</label>
@@ -49,6 +49,7 @@
     </wardrobe>
 
     <poses>
+        <pose id="1-strip" />
         <pose id="2-calm_m">
             <sprite id="calm" src="estelle/2-calm.png" x="0" y="0" />
             <sprite id="MessyHair" marker="messyend==0" src="estelle/MessyHair.png" x="5" y="145" scalex="0.99" rotation="-1" />
@@ -161,10 +162,15 @@
             <sprite id="after" src="estelle/4-after.png" x="0" y="0" />
             <sprite id="MessyHair" marker="messyend==0" src="estelle/MessyHair.png" x="7" y="147" scalex="0.99" rotation="-2" />
         </pose>
+        <pose id="4-strip" />
     </poses>
 
     <behaviour>
         <trigger id="selected">
+            <case stage="0">
+                <test expr="~self.costume~" value="witchs_costume" />
+                <state img="#-calm.png">My name is Estelle. I'm a witch today, if you can't tell from my outfit.</state>
+            </case>
             <case stage="0">
                 <state img="#-calm.png">My name is Estellise Sidos Heurassein. Please, call me Estelle!</state>
             </case>
@@ -181,19 +187,25 @@
                 <state img="#-insecure.png">A goddess and her servant? I hope you two get along well enough… the maids in the castle can be really overbearing sometimes.</state>
             </case>
             <case stage="0">
+                <test expr="~self.costume~" value="witchs_costume" />
+                <state img="#-happy.png">&lt;i&gt;Trick or treat!&lt;/i&gt; I've always wanted to say that...</state>
+            </case>
+            <case stage="0">
                 <state img="#-determind.png">Yuri teased me, telling me that I wouldn't be brave enough for this game. Maybe I'm not as good as Judith, but I'm just as brave as her!</state>
                 <state img="#-determind.png">Yuri said I wasn't brave or sexy enough for this kind of game, which is why I've come to prove myself through my actions!</state>
             </case>
         </trigger>
 
         <trigger id="swap_cards">
-            <case stage="2-3" notSaidMarker="messyend" priority="60">
+            <case stage="2-3" priority="60">
+                <condition role="self" notSaidMarker="messyend" />
                 <state img="custom:#-calm_m" marker="-messy_c">If I remember Judith's advice correctly, I should exchange ~cards~ cards now.</state>
                 <state img="custom:#-pushing_m" marker="-messy_c">&lt;i&gt;(Just remember what Rita told you, Estelle!)&lt;/i&gt; ~cards~ new cards, please!</state>
                 <state img="custom:#-pushing_m" marker="-messy_c">Okay, dealer! I want ~cards~ new cards, please!</state>
                 <state img="custom:#-calm_m" marker="-messy_c">I don't know if Yuri would do the same, but I'll exchange ~cards~ cards.</state>
             </case>
-            <case stage="2-3" notSaidMarker="messyend">
+            <case stage="2-3">
+                <condition role="self" notSaidMarker="messyend" />
                 <test expr="~cards~" value="0" />
                 <state img="custom:#-happy_m" marker="-messy_c">How wonderful! I don't need to exchange any cards at all.</state>
                 <state img="custom:#-interested_m" marker="-messy_c">Huh? What should I do now? I don't need any other cards... I think I should just keep them.</state>
@@ -205,7 +217,8 @@
                 <state img="#-interested.png">Huh? What should I do now? I don't need any other cards... I think I should just keep them.</state>
                 <state img="#-excited.png">Is that...? Yes, that's already a very good hand. No need for new cards at all!</state>
             </case>
-            <case stage="4" notSaidMarker="messyend">
+            <case stage="4">
+                <condition role="self" notSaidMarker="messyend" />
                 <state img="#-brush.png">Time to brush my hair.</state>
             </case>
             <case stage="0-4">
@@ -335,7 +348,7 @@
             <case stage="5-7">
                 <state img="#-pushing.png">"The best defense is a good offense!" ...Or so I've read.</state>
                 <state img="#-determind.png">I can't lose now! This is my chance to experience so many new things!</state>
-                <state img="#-insecure.png">I know I said I would be brave, but I hope I don't lose this round. Losing is still very embarrassing for someone who don't go out in public very often...</state>
+                <state img="#-insecure.png">I know I said I would be brave, but I hope I don't lose this round. Losing is still very embarrassing for someone who doesn't go out in public very often...</state>
                 <state img="#-insecure.png">&lt;i&gt;(I think I'm good for this round, but what about the others? What if I have the worst hand after all?)&lt;/i&gt;</state>
             </case>
         </trigger>
@@ -382,12 +395,18 @@
                 </alternative>
                 <state img="#-brush.png" marker="messyend">Rita once told me I look cute with messy hair, but I have to take care of my appearance... especially in front of fellow royalty.</state>
             </case>
-            <case stage="2-3" notSaidMarker="messyend" priority="700">
+            <case stage="2-3" priority="700">
+                <condition role="self" notSaidMarker="messyend" />
                 <test expr="~self.marker.messy_c~" value="0" />
                 <state img="#-brush.png" marker="messyend">I think I've left my hair messy for long enough... time to brush it!</state>
             </case>
-            <case stage="4" notSaidMarker="messyend" priority="700">
+            <case stage="4" priority="700">
+                <condition role="self" notSaidMarker="messyend" />
                 <state img="#-brush.png" marker="messyend">I should brush my hair... I definitely feel more comfortable when it's tidy.</state>
+            </case>
+            <case stage="2-3" priority="700">
+                <condition role="self" saidMarker="messy_saki" />
+                <state img="#-brush.png" marker="messyend">I know you meant it as a compliment, Saki, but a princess shouldn't look like a peasant. Time to get my hair tidy again.</state>
             </case>
             <case stage="0-7" id="16" priority="156">
                 <condition role="other" character="nami" stage="2-6" timeInStage="0-" sayingMarker="dreams" />
@@ -408,6 +427,10 @@
                     <alt-img stage="2-3">custom:#-insecure_m</alt-img>
                     <text>I don't think there's a rule that says you have to strip in a certain order, but... isn't it more embarrassing to show your crotch first?</text>
                 </state>
+            </case>
+            <case stage="0-7" id="20" priority="155">
+                <condition role="other" character="saki_zls" stage="6" timeInStage="0" />
+                <state img="#-fear.png">A z-zombie? What should I do now? Should I try to revive her, or should I purify her?</state>
             </case>
             <case stage="0-7" alsoPlaying="florina" alsoPlayingStage="8" alsoPlayingSaidMarker="butt" alsoPlayingNotSaidMarker="butt_over">
                 <state img="#-interested.png">
@@ -481,6 +504,21 @@
             <case stage="5" alsoPlaying="natsuki" alsoPlayingStage="7-10">
                 <state img="#-pouting.png">If we match? D-do you mean our chests? ...Do mine really look &lt;i&gt;that&lt;/i&gt; small...?</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="saki_zls" saying="wrapped up quickly" />
+                <state img="#-pouting.png">Even though I lost this round, I'm actually pretty good at poker, Saki. For a princess, at least...</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="saki_zls" saying="fancy-ass" />
+                <state img="#-happy.png">I'm not sure what you mean by "fancy-ass", Saki, but I guess it's a compliment, right? I like these clothes as well... Too bad I have to strip them.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="saki_zls" saying="ivory towers" />
+                <state img="custom:#-pouting_m">
+                    <alt-img stage="2">custom:#-pouting_m</alt-img>
+                    <text>But I learned how to play with Judith so many times before coming here! It's not fair to say I didn't learn anything, Saki...</text>
+                </state>
+            </case>
             <case stage="0" totalRounds="0" priority="100">
                 <state img="#-pouting.png">I guess the first loss goes to me... I should start with something small to get used to these poker rules.</state>
                 <state img="#-pouting.png">I know someone has to take the loss of the first turn, but I was hoping it wouldn't be me! Is it okay to start with something small?</state>
@@ -506,22 +544,42 @@
                 <condition role="other" character="miko" />
                 <state img="#-insecure.png">My long-term goals? It's somehow embarrassing to talk about it, now that I have to expose myself to you, but I want to write children stories one day... Or isn't that what you meant?</state>
             </case>
+            <case stage="1" priority="100">
+                <test expr="~self.costume~" value="witchs_costume" />
+                <state img="#-pain.png">Oh no! I have to lose my hat now? I hope I'm still recognized as a witch without it... </state>
+            </case>
+            <case stage="2" priority="100">
+                <test expr="~self.costume~" value="witchs_costume" />
+                <state img="custom:#-surpised_m">It's my turn again? Let's see... I could try to make my boots disappear as well!</state>
+            </case>
+            <case stage="3" priority="100">
+                <test expr="~self.costume~" value="witchs_costume" />
+                <state img="custom:#-pouting_m">I know the rules, but splitting up my outfit is really a shame... Now it's time for the cape.</state>
+            </case>
+            <case stage="4" priority="100">
+                <test expr="~self.costume~" value="witchs_costume" />
+                <state img="#-pouting.png">Me again? B-but... my costume...</state>
+            </case>
             <case stage="1" consecutiveLosses="2-">
                 <state img="#-pain.png">I lost again? Is it because my gloves weren't good enough...? I'd better strip something bigger this round, then...</state>
             </case>
-            <case stage="2" consecutiveLosses="2-">
+            <case stage="2">
+                <condition role="self" consecutiveLosses="2-" />
                 <state img="custom:#-fear_m">I lost again even though I stripped my overdress last round? Is this the curse of the Quoi woods? I should take off the boots that touched the ground there...</state>
             </case>
-            <case stage="3" consecutiveLosses="2-">
+            <case stage="3">
+                <condition role="self" consecutiveLosses="2-" />
                 <state img="custom:#-surpised_m">Me again? But my dress... Wait, if it's within the rules, I can take off my pantyhose from under it first, right?</state>
             </case>
-            <case stage="4" consecutiveLosses="2-">
+            <case stage="4">
+                <condition role="self" consecutiveLosses="2-" />
                 <state img="#-pouting.png">H-how can my luck be so awful today?! Seems like I barely bought any time before I have to show my underwear...</state>
             </case>
             <case stage="5" consecutiveLosses="2-">
                 <state img="#-pain.png">Me again? This is some considerable misfortune. Somehow I must overcome this challenge, even if I have to show my breasts now...</state>
             </case>
-            <case stage="6" consecutiveLosses="2-">
+            <case stage="6">
+                <condition role="self" consecutiveLosses="2-" />
                 <state img="#-pouting.png">...Again? But I barely got used to my breasts being exposed...</state>
             </case>
             <case stage="0-6">
@@ -630,11 +688,20 @@
                 <condition role="other" character="natsuki" />
                 <state img="#-strip.png">Do you really think this outfit is too gaudy, Natsuki...? It's one of the more modest dresses I have.</state>
             </case>
+            <case stage="1" priority="110">
+                <test expr="~self.costume~" value="witchs_costume" />
+                <state img="custom:#-strip">As a witch, I can make my hat disappear with magic. There!</state>
+            </case>
+            <case stage="4" priority="110">
+                <test expr="~self.costume~" value="witchs_costume" />
+                <state img="custom:#-strip">Rita was right, I should have learned the spell for removing the dress in parts as well. Now I have to remove it all at once...</state>
+            </case>
             <case stage="0">
                 <condition role="other" character="jessie" />
                 <state img="#-strip.png">Oh, do you like to put them on, Jessie? I'd love to lend them to you, but try not to damage them.</state>
             </case>
-            <case stage="4" alsoPlaying="natsuki">
+            <case stage="4">
+                <condition role="other" character="natsuki" />
                 <state img="#-strip.png" marker="natsukiDress">Do you want to try this on, Natsuki? I think it might be a little bit too big for you...</state>
             </case>
             <case stage="0">
@@ -643,18 +710,25 @@
             </case>
             <case stage="2">
                 <condition role="other" character="miko" />
-                <state img="#-strip.png">Ah, I see... So in other words... I should always make the most of the moment? Thanks for the advice!</state>
+                <state img="custom:#-strip_m">Ah, I see... So in other words... I should always make the most of the moment? Thanks for the advice!</state>
             </case>
             <case stage="3">
                 <condition role="other" character="miko" />
-                <state img="#-strip.png">N-not yet, Lady Miko. If I remove my pantyhose carefully, then...</state>
+                <state img="custom:#-strip_m">N-not yet, Lady Miko. If I remove my pantyhose carefully, then...</state>
             </case>
             <case stage="4">
                 <condition role="other" character="miko" />
                 <state img="#-strip.png">Oh, that... well, as long as I don't end up being known as the "Stripping Princess", I'll probably be fine...</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="saki_zls" />
+                <state img="#-strip.png">No need to hold back, Saki! The poker guide I was reading was really informative! And I'm here to prove myself, so give it your all!</state>
+            </case>
+            <case stage="3">
+                <test expr="~self.costume~" value="witchs_costume" />
+                <state img="custom:#-strip_m">I liked the cape... Raven said I look like a little vampire with it. I &lt;i&gt;guess&lt;/i&gt; it was a compliment...?</state>
+            </case>
             <case stage="6">
-                <condition role="self" saidMarker="goodPlayer" />
                 <state img="#-strip.png">Don't worry, ~player~! I can strip myself this time. Panties aren't as complicated as bras. Even if they're way more embarrassing to take off...</state>
             </case>
             <case stage="0">
@@ -687,9 +761,6 @@
                 <state img="#-strip.png">I still don't quite know how this thing detaches... Er, ~player~, mind helping me with this?</state>
                 <state img="#-strip.png">I suppose I have no other option... I need to remove my bra. Well, I could use a hand with this. Can you help me take it off, ~player~...?</state>
             </case>
-            <case stage="6">
-                <state img="#-afterBad.png">No default case allowed here!</state>
-            </case>
         </trigger>
 
         <trigger id="stripped">
@@ -697,17 +768,25 @@
                 <condition character="lotte" />
                 <state img="#-after.png" marker="nightfall2">Wow, that's wonderful! I never expected to ever meet another Nightfall fan! We should talk &lt;i&gt;a lot&lt;/i&gt; about it later!</state>
             </case>
+            <case stage="2">
+                <condition role="other" character="yuelia" stage="1-10" />
+                <state img="#-after.png" marker="messy_c=8">You think my hair looks cute like this, Yuelia? Well, I could keep it like that for a while...</state>
+            </case>
             <case stage="1" totalRounds="1-">
                 <condition role="other" character="natsuki" />
                 <state img="#-after.png">Come on, Natsuki! Put your hand in the air like this! I'll give you a high five!</state>
             </case>
             <case stage="2">
                 <condition role="other" character="jessie" sayingMarker="EstelleFriskyWithDress" />
-                <state img="#-after.png">I don't know what "getting frisky" means, or what it has to do with my dress, but it sounds like fun. Could you teach me how to do so, Jessie?</state>
+                <state img="#-after.png" marker="messy_c=5">I don't know what "getting frisky" means, or what it has to do with my dress, but it sounds like fun. Could you teach me how to do so, Jessie?</state>
             </case>
             <case stage="2">
                 <condition role="other" character="jessie" sayingMarker="EstelleMessyHair" />
-                <state img="#-after.png">"My hair looks like I did something else"? ...Do you know what Jessie meant by that, ~player~...?</state>
+                <state img="#-after.png" marker="messy_c=5">"My hair looks like I did something else"? ...Do you know what Jessie meant by that, ~player~...?</state>
+            </case>
+            <case stage="2" priority="101">
+                <test expr="~self.costume~" value="witchs_costume" />
+                <state img="#-after.png" marker="messy_c=5">Oh, er... I'm still practising this spell. But at least my hat is gone as intended... </state>
             </case>
             <case stage="2">
                 <condition role="other" character="natsuki" />
@@ -731,7 +810,7 @@
             </case>
             <case stage="2">
                 <condition role="other" character="miko" />
-                <state img="#-after.png">Huh? Did you say something, Lady Miko? I couldn't hear you while my head was inside my dress... Huh? Messed up hair?</state>
+                <state img="#-after.png" marker="messy_c=5">Huh? Did you say something, Lady Miko? I couldn't hear you while my head was inside my dress... Huh? Messed up hair?</state>
             </case>
             <case stage="3">
                 <condition role="other" character="miko" />
@@ -745,14 +824,22 @@
                 <condition role="other" character="miko" />
                 <state img="#-after.png">Immortality? D-does that mean you're a g-ghost as well? You're just kidding me, right? ...Right?</state>
             </case>
+            <case stage="2">
+                <condition role="other" character="saki_zls" />
+                <state img="#-after.png" marker="messy_saki">I'm out! ...Huh? I look like a peasant?</state>
+            </case>
+            <case stage="4" priority="50">
+                <condition count="0" status="exposed" />
+                <state img="custom:#-after_m">S-so um… how far do we strip? Huh? All the way? W-well, if you insist...</state>
+            </case>
+            <case stage="4" priority="45">
+                <test expr="~self.costume~" value="witchs_costume" />
+                <state img="custom:#-after_m">Does the costume still look good without the cape?</state>
+            </case>
             <case stage="7">
                 <condition count="1" gender="female" status="crotch_visible" />
                 <state img="#-after0.png">Please don't stare so much! I still need a few seconds to get used to this situation...</state>
                 <state img="#-after0.png">Being the only woman to have shown her crotch so far is kinda embarrassing...</state>
-            </case>
-            <case stage="4">
-                <condition count="0" status="exposed" />
-                <state img="custom:#-after_m">S-so um… how far do we strip? Huh? All the way? W-well, if you insist...</state>
             </case>
             <case stage="1">
                 <state img="#-after.png">The sign of victory! Sorry, just recalling something I do with my friends.</state>
@@ -815,6 +902,16 @@
                 <state img="#-determind.png">Even though I've already lost, watching ~name~ strip doesn't feel like a loss at all. I like this game!</state>
                 <state img="#-insecure.png">I hope It's not against the rules to watch the other players strip, even if you're out...</state>
                 <state img="#-pain.png">Is it even appropriate to watch a man undress in this situation? I'd better only watch with one eye half open...</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_human_must_strip">
+            <case stage="0-9">
+                <condition role="target" character="saki_zls" stage="0" />
+                <state img="#-happy.png">
+                    <alt-img stage="2-3">custom:#-happy_m</alt-img>
+                    <text>You're a delinquent, right? Yuri once told me about them. They're bold, and talk strangely, but can actually be pretty nice people!</text>
+                </state>
             </case>
         </trigger>
 
@@ -914,6 +1011,13 @@
                 <state img="#-interested.png">
                     <alt-img stage="2-3">custom:#-interested_m</alt-img>
                     <text>I wanted to ask you before, but... are you a girl, or...? Oh, it's the ghost maid again!</text>
+                </state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="yuelia" stage="0" />
+                <state img="#-interested.png">
+                    <alt-img stage="2-3">custom:#-interested_m</alt-img>
+                    <text>Who lost? ...Oh, I didn't realise that that butterfly was playing.</text>
                 </state>
             </case>
             <case stage="0" totalRounds="0">
@@ -1191,6 +1295,13 @@
                 <condition role="target" character="lyn" stage="4" saying="very few people have seen" />
                 <state img="#-surprised.png" marker="lynHair">Something very few people have seen? Is it her time to finally expose herself?</state>
             </case>
+            <case stage="0-9" id="18">
+                <condition role="target" character="yuelia" stage="1" sayingMarker="fast_learning" />
+                <state img="#-interested.png">
+                    <alt-img stage="2-3">custom:#-interested_m</alt-img>
+                    <text>I see. Skills in my world are learned via equipment. It sometimes take really long to learn them, so a necklace like that would come in handy!</text>
+                </state>
+            </case>
             <case stage="0-9">
                 <condition role="target" character="catria" stage="0" />
                 <state img="#-pain.png">
@@ -1311,6 +1422,13 @@
                 <state img="#-interested.png">
                     <alt-img stage="2-3">custom:#-interested_m</alt-img>
                     <text>Oh, you dropped something! ...Is that a "wanted" poster?</text>
+                </state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="yuelia" stage="0" />
+                <state img="#-surprised.png">
+                    <alt-img stage="2-3">custom:#-surpised_m</alt-img>
+                    <text>It's shining! ...The butterfly turned into a girl?</text>
                 </state>
             </case>
             <case stage="0-4">
@@ -1593,6 +1711,13 @@
                     <text>It really &lt;i&gt;is&lt;/i&gt; a "wanted" poster! Wow, and the picture looks beautiful! Not like Yuri's wanted poster, when people thought he'd kidnapped me. I wonder why they drew him so weirdly...</text>
                 </state>
             </case>
+            <case stage="0-9">
+                <condition role="target" character="yuelia" stage="1" />
+                <state img="#-happy.png">
+                    <alt-img stage="2-3">custom:#-happy_m</alt-img>
+                    <text>I'm always surprised by how many magical and mystical things there are in our world. Nice to meet you, Yuelia! I'm Estelle!</text>
+                </state>
+            </case>
             <case stage="3-5" targetStatus="mostly_clothed">
                 <state img="custom:#-calm_m">
                     <alt-img stage="4-5">#-calm.png</alt-img>
@@ -1651,7 +1776,10 @@
                     <alt-img stage="2">custom:#-pushing_m</alt-img>
                     <text>Just you watch, ~name~! First your ~clothing~, and soon... everything else. Um... sorry?</text>
                 </state>
-                <state img="#-interested.png">Did you wear your ~clothing~ because ~clothing.ifPlural(they're|it's)~ fashionable, or because you wanted more layers? ~clothing.ifPlural(They|It)~ looked really good on you, nonetheless.</state>
+                <state img="#-interested.png">
+                    <alt-img stage="2">custom:#-interested_m</alt-img>
+                    <text>Did you wear your ~clothing~ because ~clothing.ifPlural(they're|it's)~ fashionable, or because you wanted more layers? ~clothing.ifPlural(They|It)~ looked really good on you, nonetheless.</text>
+                </state>
             </case>
             <case stage="3-5">
                 <state img="custom:#-pouting_m">
@@ -2404,6 +2532,13 @@
                     <text>Oh, you didn't mean to strip it as two items?</text>
                 </state>
             </case>
+            <case stage="0-9">
+                <condition role="target" character="saki_zls" stage="5" />
+                <state img="#-interested.png">
+                    <alt-img stage="2-3">custom:#-interested_m</alt-img>
+                    <text>Makeup? I didn't realise you were wearing any.</text>
+                </state>
+            </case>
             <case stage="0-4" filter="princess">
                 <condition role="self" notSaidMarker="princessMajor" />
                 <state img="#-fear.png" marker="princessMajor">
@@ -2609,6 +2744,13 @@
                 <state img="#-happy.png">
                     <alt-img stage="2-3">custom:#-happy_m</alt-img>
                     <text>Teehee! Now I'm absolutely certain that you're not a boy. I feel silly for not realizing earlier. You actually have similar proportions to my friend, Rita.</text>
+                </state>
+            </case>
+            <case stage="0-9" id="19">
+                <condition role="target" character="saki_zls" stage="6" />
+                <state img="#-surprised.png">
+                    <alt-img stage="2-3">custom:#-surpised_m</alt-img>
+                    <text>Water? Is that how delinquents take off their makeup nowadays...?</text>
                 </state>
             </case>
             <case stage="0-9">
@@ -3027,6 +3169,13 @@
                     <text>I bet your breasts are absolutely... No, I should be careful with what I praise.</text>
                 </state>
             </case>
+            <case stage="0-9" id="21">
+                <condition role="target" character="saki_zls" />
+                <state img="#-fear.png">
+                    <alt-img stage="2-3">custom:#-fear_m</alt-img>
+                    <text>Oh, no! Now she fell apart! I should have purified her by now...</text>
+                </state>
+            </case>
             <case stage="0-5">
                 <condition count="0" gender="female" status="chest_visible" />
                 <state img="#-insecure.png">
@@ -3104,6 +3253,13 @@
                 <state img="#-fear.png">
                     <alt-img stage="2-3">custom:#-fear_m</alt-img>
                     <text>Oh, no! Her breasts turned into butterflies as well! ...Or were they that flat the whole time?</text>
+                </state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="saki_zls" />
+                <state img="#-pain.png">
+                    <alt-img stage="2-3">custom:#-pain_m</alt-img>
+                    <text>Oh, you can fix yourself? That's a relief. Tell me if you need me to heal you... though I don't know if it'd accidentally purify you in the process...</text>
                 </state>
             </case>
             <case stage="0-7 9">
@@ -4085,7 +4241,7 @@
             </case>
             <case stage="5-7">
                 <state img="#-pushing.png">Sorry, ~name~, but you lost... That means it's time for the forfeit!</state>
-                <state img="#-lecture.png">And with that, ~name~ has been eliminated! Now she just need to perform... the forfeit.</state>
+                <state img="#-lecture.png">And with that, ~name~ has been eliminated! Now she just needs to perform... the forfeit.</state>
             </case>
             <case stage="8">
                 <state img="#-excited.png">You have to do it too? Together with me?</state>
@@ -4408,6 +4564,10 @@
         </trigger>
 
         <trigger id="start_masturbating">
+            <case stage="7">
+                <test expr="~self.costume~" value="witchs_costume" />
+                <state img="#-start.png">Oh, I nearly forgot that I'm a witch today. I can sit on my broom!</state>
+            </case>
             <case stage="7" id="3">
                 <state img="#-start.png">What? You brought this chair for me to feel comfortable? That's so lovely! Thanks, all of you! I'll try to do my best!</state>
             </case>
