@@ -714,7 +714,7 @@ function expandDialogue (dialogue, self, target, bindings) {
                     } else {
                         substitution = clothing.name;
                     }
-                } else if ((fn == 'type' || fn == 'position') && args === undefined) {
+                } else if ((fn == 'type' || fn == 'position' || fn == 'generic') && args === undefined) {
                     substitution = clothing[fn];
                 } else if (fn === undefined) {
                     substitution = clothing.name;
