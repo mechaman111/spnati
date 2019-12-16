@@ -941,6 +941,9 @@ MainSelectScreenDisplay.prototype.onSingleSuggestionSelected = function () {
 }
 
 MainSelectScreenDisplay.prototype.update = function (player) {
+    if (this.prefillSuggestion && players.some(function (p) { return p && p.id === this.prefillSuggestion.id; }, this))
+        this.setPrefillSuggestion(null);
+
     if (!player && this.prefillSuggestion && !this.targetSuggestionsShown)
         return this.displaySingleSuggestion();
 
