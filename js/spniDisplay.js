@@ -821,7 +821,31 @@ function MainSelectScreenDisplay (slot) {
         $('#select-image-area-'+slot),
         $('#select-name-label-'+slot)
     );
-    
+
+    this.targetSuggestionsShown = false;
+    this.targetSuggestions = Array(4);
+    this.suggestionQuad = Array(4);
+    this.suggestionQuadContainer = $("#opponent-suggestions-"+slot);
+    for (var i = 0; i < 4; i++) {
+        this.suggestionQuad[i] = $("#opponent-suggestion-"+slot+"-"+(i+1));
+        this.suggestionQuad[i].children(".opponent-suggestion-label").click(
+            this.targetSuggestionSelected.bind(this, i)
+        );
+    }
+
+    this.prefillSuggestion = null;
+    this.prefillButton = $("#select-prefill-button-" + slot);
+    this.prefillButton.click(
+        this.onSingleSuggestionSelected.bind(this)
+    );
+
+    this.prefillBadgeRow = $('#selection-badge-row-' + slot);
+    this.prefillSuggestionBadges = {
+        'new': this.prefillBadgeRow.children('.badge-icon[data-badge="new"]'),
+        'epilogue': this.prefillBadgeRow.children('.badge-icon[data-badge="epilogue"]'),
+        'costume': this.prefillBadgeRow.children('.badge-icon[data-badge="costume"]'),
+    }
+
     this.altCostumeSelector = $("#main-costume-select-"+slot);
     this.selectButton = $("#select-slot-button-"+slot);
 
@@ -831,7 +855,104 @@ function MainSelectScreenDisplay (slot) {
 MainSelectScreenDisplay.prototype = Object.create(OpponentDisplay.prototype);
 MainSelectScreenDisplay.prototype.constructor = MainSelectScreenDisplay;
 
+MainSelectScreenDisplay.prototype.updateTargetSuggestionDisplay = function (quad, opponent) {
+    var img_elem = this.suggestionQuad[quad].children('.opponent-suggestion-image');
+    var label_elem = this.suggestionQuad[quad].children('.opponent-suggestion-label');
+    var tooltip = null;
+    
+    this.targetSuggestions[quad] = opponent;
+    if (opponent.status && statusIndicators[opponent.status]) {
+        tooltip = statusIndicators[opponent.status].tooltip;
+    } else if (opponent.highlightStatus && statusIndicators[opponent.highlightStatus]) {
+        tooltip = statusIndicators[opponent.highlightStatus].tooltip;
+    }
+
+    img_elem.attr({
+        'src': opponent.selection_image,
+        'alt': opponent.label,
+        'data-original-title': tooltip || null
+    }).show();
+    label_elem.text(opponent.label);
+}
+
+MainSelectScreenDisplay.prototype.targetSuggestionSelected = function (quad) {
+    players[this.slot] = this.targetSuggestions[quad];
+
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Loading suggested opponent ' + this.targetSuggestions[quad].id,
+            level: 'info'
+        });
+    }
+
+    players[this.slot].loadBehaviour(this.slot, true);
+    updateSelectionVisuals();
+}
+
+MainSelectScreenDisplay.prototype.displayTargetSuggestions = function (show) {
+    this.targetSuggestionsShown = show;
+    if (show) {
+        this.suggestionQuadContainer.show();
+    } else {
+        this.suggestionQuadContainer.hide();
+    }
+}
+
+MainSelectScreenDisplay.prototype.setPrefillSuggestion = function (player) {
+    this.prefillSuggestion = player;
+}
+
+MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
+    var player = this.prefillSuggestion;
+
+    this.hideBubble();
+    this.drawPose(player.selection_image);
+    this.label.html(player.label.initCap()).addClass('suggestion-label');
+    this.simpleImage.addClass('prefill-suggestion');
+    this.selectButton.html("Select Other Opponent").removeClass("red").addClass("green suggestion-shown");
+    this.prefillButton.show();
+
+    this.prefillBadgeRow.children().hide();
+
+    if (player.highlightStatus === 'new')
+        this.prefillSuggestionBadges.new.show();
+
+    if (player.ending)
+        this.prefillSuggestionBadges.epilogue.show();
+
+    if (player.alternate_costumes.length > 0)
+        this.prefillSuggestionBadges.costume.show();
+}
+
+MainSelectScreenDisplay.prototype.onSingleSuggestionSelected = function () {
+    players[this.slot] = this.prefillSuggestion;
+
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'select',
+            message: 'Loading prefill suggested opponent ' + this.prefillSuggestion.id,
+            level: 'info'
+        });
+    }
+
+    players[this.slot].loadBehaviour(this.slot, true);
+    updateSelectionVisuals();
+}
+
 MainSelectScreenDisplay.prototype.update = function (player) {
+    if (this.prefillSuggestion && players.some(function (p) { return p && p.id === this.prefillSuggestion.id; }, this))
+        this.setPrefillSuggestion(null);
+
+    if (!player && this.prefillSuggestion && !this.targetSuggestionsShown)
+        return this.displaySingleSuggestion();
+
+    this.prefillBadgeRow.children().hide();
+    this.label.removeClass("suggestion-label");
+    this.simpleImage.removeClass("prefill-suggestion");
+    this.selectButton.removeClass("suggestion-shown");
+    this.prefillButton.hide();
+
     if (!player) {
         this.hideBubble();
         this.clearPose();
@@ -840,8 +961,8 @@ MainSelectScreenDisplay.prototype.update = function (player) {
 
         /* change the button */
         this.selectButton.html("Select Opponent");
-        this.selectButton.removeClass("smooth-button-red");
-        this.selectButton.addClass("smooth-button-green");
+        this.selectButton.removeClass("red");
+        this.selectButton.addClass("green");
         this.altCostumeSelector.hide();
         return;
     }
@@ -856,9 +977,11 @@ MainSelectScreenDisplay.prototype.update = function (player) {
     } else {
         OpponentDisplay.prototype.update.call(this, player);
         
+        this.setPrefillSuggestion(null);
+
         this.selectButton.attr('disabled', false).html("Remove Opponent");
-        this.selectButton.removeClass("smooth-button-green");
-        this.selectButton.addClass("smooth-button-red");
+        this.selectButton.removeClass("green");
+        this.selectButton.addClass("red");
         
         if (!(this.pose instanceof Pose)) {
             this.simpleImage.one('load', function() {
@@ -947,22 +1070,43 @@ function OpponentSelectionCard (opponent) {
     this.opponent = opponent;
     
     this.mainElem = createElementWithClass('div', 'selection-card');
+
+    if (opponent.highlightStatus)
+        this.mainElem.dataset.highlight = opponent.highlightStatus;
     
     var clipElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-image-clip'));
     this.imageArea = clipElem.appendChild(createElementWithClass('div', 'selection-card-image-area'));
     this.simpleImage = $(this.imageArea.appendChild(createElementWithClass('img', 'selection-card-image-simple')));
     
     this.imageArea = $(this.imageArea);
-    
-    this.epilogueBadge = $(this.mainElem.appendChild(createElementWithClass('img', 'badge-icon')));
-    
+
+    var badgeSidebar = this.mainElem.appendChild(createElementWithClass('div', 'badge-sidebar'));
+
+    if (opponent.highlightStatus === 'new') {
+        $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
+            src: "img/new_icon.png",
+            alt: "SPNatI Epilogue available"
+        });
+    }
+
+    if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
+        $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
+            src: "img/epilogue_icon.png",
+            alt: "SPNatI Epilogue available"
+        });
+    }
+
+    if (COSTUME_BADGES_ENABLED && opponent.alternate_costumes.length > 0) {
+        $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
+            src: "img/costume_icon.png",
+            alt: "SPNatI Alternate Costume available"
+        });
+    }
+
     var sidebarElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-sidebar'));
     this.layerIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'layer-icon')));
     this.genderIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'gender-icon')));
     this.statusIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'status-icon')));
-    
-    $(this.epilogueBadge).attr({src: "img/epilogue_icon.png",
-                                alt: "SPNatI Epilogue available"});
     
     var footerElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-footer'));
     this.label = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-name')));
@@ -977,13 +1121,7 @@ OpponentSelectionCard.prototype = Object.create(OpponentDisplay.prototype);
 OpponentSelectionCard.prototype.constructor = OpponentSelectionCard;
 
 OpponentSelectionCard.prototype.update = function () {    
-    if (EPILOGUE_BADGES_ENABLED && this.opponent.ending) {
-        this.epilogueBadge.show();
-    } else {
-        this.epilogueBadge.hide();
-    }
-
-    updateStatusIcon(this.statusIcon, this.opponent.status);
+    updateStatusIcon(this.statusIcon, this.opponent);
 
     this.layerIcon.attr({
         src: "img/layers" + this.opponent.layers + ".png",

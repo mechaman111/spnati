@@ -379,6 +379,16 @@ namespace SPNATI_Character_Editor
 		{
 			return DisplayName.CompareTo(other.DisplayName);
 		}
+
+		public string GetBasicName()
+		{
+			string name = Path.GetFileNameWithoutExtension(Key);
+			if (name.StartsWith("#-"))
+			{
+				name = name.Substring(2);
+			}
+			return name;
+		}
 	}
 
 	public class PoseReference

@@ -500,6 +500,12 @@ State.prototype.checkUnwanteds = function (self, target) {
             }, this)) {
             return true;  // At least one line of text matched.
         }
+        if (p.chosenState.parentCase.unwantedPoses
+            && p.chosenState.parentCase.unwantedPoses.some(function (item) {
+                return self == item[0] && poseNameMatches(item[1], this.image);
+            }, this)) {
+            return true; // At least one pose matched.
+        }
         return false;
     }, this);
     self.chosenState = savedState;
@@ -623,6 +629,8 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         return player.size;
     case 'gender':
         return player.gender;
+    case 'ifmale':
+        return args.split('|')[(player.gender == 'male' ? 0 : 1)];
     case 'place':
         if (player.out) return players.countTrue() + 1 - player.outOrder;
         return 1 + players.countTrue(function(p) { return p.countLayers() > player.countLayers(); });
@@ -884,6 +892,16 @@ function normalizeConditionText (str) {
             }).join('');
 }
 
+function normalizeImageName(img) {
+    if (img.startsWith('custom:')) img = img.substring(7);
+    return img.toLowerCase().replace(/\.(?:png|jpg|jpeg|gif)/gi, '').replace(/(?:\#|\d+)\-/gi, '');
+}
+
+function poseNameMatches(nameA, nameB) {
+    if (!nameA || !nameB) return false;
+    return normalizeImageName(nameA) === normalizeImageName(nameB);
+}
+
 /************************************************************
  * Given a string containing a number or two numbers 
  * separated by a dash, returns an array with the same number 
@@ -1010,6 +1028,7 @@ function Condition($xml) {
     this.sayingMarker   = $xml.attr('sayingMarker');
     this.notSaidMarker  = $xml.attr('notSaidMarker');
     this.saying         = $xml.attr('saying');
+    this.pose           = $xml.attr('pose');
     this.priority = 0;
 
     if (this.role == "self") {
@@ -1031,7 +1050,8 @@ function Condition($xml) {
              + (this.hand ? 15 : 0) + (this.gender ? 5 : 0))
     }
     this.priority += (this.saidMarker ? 1 : 0) + (this.notSaidMarker ? 1 : 0)
-        + (this.sayingMarker ? 1 : 0) + (this.saying ? 1 : 0);
+        + (this.sayingMarker ? 1 : 0) + (this.saying ? 1 : 0)
+        + (this.pose ? 1 : 0);
 
     if (this.id && !this.variable) {
         /* Apply correct normalization to player ID when using it as a variable. */
@@ -1164,7 +1184,7 @@ function Case($xml) {
     this.isVolatile = this.targetSayingMarker || this.targetSaying
         || this.alsoPlayingSayingMarker || this.alsoPlayingSaying
         || this.counters.some(function(c) {
-            return c.sayingMarker || c.saying;
+            return c.sayingMarker || c.saying || c.pose;
         });
 }
 
@@ -1542,7 +1562,7 @@ Case.prototype.checkConditions = function (self, opp) {
     }
 
     var counterMatches = {};
-    var unwantedSayings = [], unwantedMarkers = [];
+    var unwantedSayings = [], unwantedMarkers = [], unwantedPoses = [];
     // filter counter targets
     if (!this.counters.every(function (ctr) {
         var matches = players.filter(function(p) {
@@ -1566,10 +1586,10 @@ Case.prototype.checkConditions = function (self, opp) {
                 && (ctr.notSaidMarker === undefined || !checkMarker(ctr.notSaidMarker, p, ctr.role == "other" ? opp : null));
         });
         var hasUpperBound = (ctr.count.max !== null && ctr.count.max < matches.length);
-        if (ctr.sayingMarker !== undefined || ctr.saying !== undefined) matches = matches.filter(function(p) {
+        if (ctr.sayingMarker !== undefined || ctr.saying !== undefined || ctr.pose !== undefined) matches = matches.filter(function(p) {
             if (ctr.sayingMarker !== undefined) {
                 // The human player can't talk, and using
-                // saying/sayingMarker on self would be circular.
+                // saying/sayingMarker/pose on self would be circular.
                 if (p == self || p == humanPlayer) return false;
                 if (checkMarker(ctr.sayingMarker, p, ctr.role == "other" ? opp : null, true)) {
                     volatileDependencies.add(p);
@@ -1595,13 +1615,25 @@ Case.prototype.checkConditions = function (self, opp) {
                     return false;
                 }
             }
+            if (ctr.pose !== undefined) {
+                if (p == self || p == humanPlayer) return false;
+                if (!p.updatePending && p.chosenState && poseNameMatches(ctr.pose, p.chosenState.image)) {
+                    volatileDependencies.add(p);
+                } else {
+                    if (hasUpperBound) {
+                        unwantedPoses.push([p, ctr.pose]);
+                    }
+                    return false;
+                }
+            }
             return true;
         });
         /* Don't limit what other characters can say before the've had
          * a first chance to pick something to say. */
-        if ((unwantedSayings.length || unwantedMarkers.length) && players.some(function(p) {
+        if ((unwantedSayings.length || unwantedMarkers.length || unwantedPoses.length) && players.some(function(p) {
             return p.updatePending && (unwantedSayings.some(function(item) { return item[0] == p; })
-                                       || unwantedMarkers.some(function(item) { return item[0] == p; }));
+                                       || unwantedMarkers.some(function(item) { return item[0] == p; })
+                                       || unwantedPoses.some(function (item) { return item[0] == p; }));
         })) {
             return false;
         }
@@ -1671,6 +1703,7 @@ Case.prototype.checkConditions = function (self, opp) {
             this.volatileDependencies = volatileDependencies;
             this.unwantedSayings = unwantedSayings;
             this.unwantedMarkers = unwantedMarkers;
+            this.unwantedPoses = unwantedPoses;
             return true;
         }
     }
@@ -1683,6 +1716,7 @@ Case.prototype.cleanupMutableState = function () {
     delete this.volatileDependencies;
     delete this.unwantedMarkers;
     delete this.unwantedSayings;
+    delete this.unwantedPoses;
 }
 
 Case.prototype.applyOneShot = function (player) {
@@ -1784,6 +1818,7 @@ Opponent.prototype.updateChosenState = function (state) {
 
     this.chosenState = state;
     this.stateCommitted = false;
+    this.chosenState.selectImage(this.stage);
 }
 
 /**
@@ -1875,7 +1910,6 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     if (this.stateCommitted) return;
     
     this.chosenState.expandDialogue(this, this.currentTarget);
-    this.chosenState.selectImage(this.stage);
 
     if (this.chosenState.marker) {
         this.chosenState.applyMarker(this, this.currentTarget);

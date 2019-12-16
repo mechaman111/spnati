@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
@@ -29,6 +30,7 @@ namespace SPNATI_Character_Editor.Controls
 		private Image _imageReference;
 		private bool _animating;
 		private string _text = null;
+		private List<Word> _words = null;
 		private float _percent = 0.5f;
 		private List<string> _markers = new List<string>();
 
@@ -41,6 +43,7 @@ namespace SPNATI_Character_Editor.Controls
 		private DateTime _lastTick;
 
 		private Font _textFont;
+		private Font _italicFont;
 		private Pen _textBorder;
 
 		public Matrix SceneTransform;
@@ -111,11 +114,13 @@ namespace SPNATI_Character_Editor.Controls
 		private void UpdateFont()
 		{
 			_textFont?.Dispose();
+			_italicFont?.Dispose();
 
 			int screenWidth = (int)(canvas.Height * 1.33f);
 
 			float size = 14 * (screenWidth / 1000f);
 			_textFont = new Font("Trebuchet MS", size == 0 ? 14 : size);
+			_italicFont = new Font(_textFont, FontStyle.Italic);
 		}
 
 		private void UpdateSceneTransform()
@@ -151,13 +156,15 @@ namespace SPNATI_Character_Editor.Controls
 
 		public void SetText(DialogueLine line)
 		{
-			if (line == null)
+			if (line == null || line.Text == null)
 			{
 				_text = null;
+				_words = null;
 			}
 			else
 			{
 				_text = line.Text;
+				_words = GUIHelper.ParseWords(_text);
 				_percent = 0.5f;
 				if (!string.IsNullOrEmpty(line.Location) && line.Location.EndsWith("%"))
 				{
@@ -212,7 +219,7 @@ namespace SPNATI_Character_Editor.Controls
 							file = Path.Combine(_character.GetDirectory(), poseRef.FileName);
 						}
 						_reference = ImageCache.Get(file);
-						_imageReference = _reference.Image;
+						_imageReference = _reference?.Image;
 						if (ImageAnimator.CanAnimate(_imageReference))
 						{
 							_animating = true;
@@ -281,6 +288,65 @@ namespace SPNATI_Character_Editor.Controls
 				}
 				bounds.Height = Math.Max(size.Height, bounds.Height);
 
+				//group words into lines
+				List<List<Word>> lines = new List<List<Word>>();
+				List<Word> line = new List<Word>();
+				float remainingWidth = bounds.Width;
+				bool italics = false;
+				float height = 0;
+				for (int i = 0; i < _words.Count; i++)
+				{
+					Word word = _words[i];
+					if (!string.IsNullOrEmpty(word.Text))
+					{
+						string text = word.Text;
+						Font font = (italics ? _italicFont : _textFont);
+						SizeF textSize = g.MeasureString(text, font);
+						word.Width = textSize.Width;
+						height = Math.Max(textSize.Height, height);
+
+						if (word.Width >= remainingWidth)
+						{
+							//need a new line
+							if (line.Count > 0)
+							{
+								lines.Add(line);
+							}
+							line = new List<Word>();
+							remainingWidth = bounds.Width;
+						}
+
+						line.Add(word);
+						remainingWidth -= word.Width;
+					}
+					else
+					{
+						switch (word.Formatter)
+						{
+							case FormatMarker.ItalicOn:
+								italics = true;
+								line.Add(word);
+								break;
+							case FormatMarker.ItalicOff:
+								italics = false;
+								line.Add(word);
+								break;
+							case FormatMarker.LineBreak:
+								if (line.Count > 0)
+								{
+									lines.Add(line);
+								}
+								line = new List<Word>();
+								remainingWidth = bounds.Width;
+								break;
+						}
+					}
+				}
+				if (line.Count > 0)
+				{
+					lines.Add(line);
+				}
+
 				const int TopOffset = 4;
 				using (SolidBrush br = new SolidBrush(SkinManager.Instance.CurrentSkin.FieldBackColor))
 				{
@@ -288,8 +354,43 @@ namespace SPNATI_Character_Editor.Controls
 
 					using (SolidBrush fr = new SolidBrush(SkinManager.Instance.CurrentSkin.Surface.ForeColor))
 					{
-						g.DrawString(_text, _textFont, fr, bounds, sf);
+						//print each line
+						float requiredHeight = height * lines.Count;
+						float lineY = bounds.Y + bounds.Height / 2 - requiredHeight / 2;
+						italics = false;
+						foreach (List<Word> workingLine in lines)
+						{
+							float totalWidth = workingLine.Sum(w => w.Width);
+							float lineX = bounds.X + bounds.Width / 2 - totalWidth / 2;
+							for (int j = 0; j < workingLine.Count; j++)
+							{
+								Word word = workingLine[j];
+								switch (word.Formatter)
+								{
+									case FormatMarker.ItalicOn:
+										italics = true;
+										break;
+									case FormatMarker.ItalicOff:
+										italics = false;
+										break;
+									case FormatMarker.None:
+										string text = word.Text;
+										float width = word.Width;
+										Font font = (italics ? _italicFont : _textFont);
+										g.DrawString(text, font, fr, lineX, lineY);
+										lineX += width;
+										break;
+								}
+
+							}
+							lineY += height;
+						}
 					}
+
+					//using (SolidBrush fr = new SolidBrush(SkinManager.Instance.CurrentSkin.Surface.ForeColor))
+					//{
+					//	g.DrawString(_text, _textFont, fr, bounds, sf);
+					//}
 					g.DrawRectangle(_textBorder, TextMargin, topPadding + TopOffset, canvas.Width - TextMargin * 2, textboxHeight - TopOffset);
 					Point[] triangle = new Point[] {
 						new Point((int)(canvas.Width * _percent) - ArrowSize, topPadding  + textboxHeight - 1),

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 1:20:44 PM on November 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 8:21:58 AM on December 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.8</version>
+    <version>v5.4</version>
     <first>Erufuda</first>
     <last />
     <label>Erufuda</label>
@@ -103,7 +103,7 @@
                 <state img="#-smug.png">Just &lt;i&gt;~cards~&lt;/i&gt; more.</state>
                 <state img="#-bored.png">~Cards~ more.</state>
                 <state img="#-pleased.png">Give me ~cards~.</state>
-                <state img="#-eating.png">~Cards~ cards means I get ~cards~ fries. It's the law!</state>
+                <state img="#-eating.png" oneShotId="22">~Cards~ cards means I get ~cards~ fries. It's the law!</state>
                 <state img="#-bored.png">I'll swap these ~cards~ out.</state>
             </case>
         </trigger>
@@ -119,10 +119,10 @@
                 <state img="#-pleased.png">Ahhh~ This is more like it.</state>
                 <state img="#-smug.png">Power to the potato!</state>
                 <state img="#-smug.png">It's the year of the potato!</state>
-                <state img="#-pleased.png">I think I'm starting to understand this game.</state>
+                <state img="#-pleased.png" oneShotId="23">I think I'm starting to understand this game.</state>
                 <state img="#-smug.png">Courage and wisdom will guide me to victory.</state>
                 <state img="#-taunting.png">This is easy!</state>
-                <state img="#-smug.png">Human games are child's play to an elf.</state>
+                <state img="#-smug.png" oneShotId="24">Human games are child's play to an elf.</state>
                 <state img="#-smug.png">Healthy mind, healthy body.</state>
                 <state img="#-smug.png">This is what discipline can accomplish!</state>
             </case>
@@ -132,7 +132,7 @@
             <case stage="0-6">
                 <state img="#-frustrated.png">I wish I had something to drink.</state>
                 <state img="#-frustrated.png">Average cards? I deserve the best!</state>
-                <state img="#-bored.png">These cards could use a little salt.</state>
+                <state img="#-bored.png" oneShotId="25">These cards could use a little salt.</state>
                 <state img="#-smug.png">When I make a decision, nobody can change my mind. It's called &lt;i&gt;consistency!&lt;/i&gt;</state>
                 <state img="#-worried.png">I hope somebody messes up...</state>
                 <state img="#-angry.png">Hey dealer! You gave me ~player~'s stupid cards by mistake!</state>
@@ -186,6 +186,10 @@
                 <state img="#-eating.png" marker="sei_soda">Something carbonated, preferably sweet.</state>
                 <state img="#-eating.png" marker="sei_soda">A refreshing soda is the ideal beverage.</state>
                 <state img="#-eating.png" marker="sei_soda">I'll have a soda. The perfect drink to wash down a healthy snack.</state>
+            </case>
+            <case stage="0-6" id="37" priority="156">
+                <condition role="other" character="aella" stage="4" timeInStage="0" sayingMarker="AellaBookClub" />
+                <state img="#-eating.png">Let's see... I've been reading this &lt;i&gt;hilarious&lt;/i&gt; manga called &lt;i&gt;Elf-san wa Yaserarenai&lt;/i&gt;.</state>
             </case>
             <case stage="1-6" priority="155">
                 <condition role="other" character="mavis" stage="3" timeInStage="0" saying="getting tight" />
@@ -278,8 +282,10 @@
                 <state img="#-eating.png" marker="aella_fries">French fries! They're a holy treat from the human world!</state>
                 <state img="#-eating.png" marker="aella_fries">These are called fries, Aella. They're a human delicacy made from potatoes!</state>
             </case>
-            <case stage="0-6" alsoPlaying="futaba" totalRounds="10" notSaidMarker="futaba_music" alsoPlayingSayingMarker="futaba_jukebox">
-                <state img="#-pleased.png" marker="futaba_music">Oooh! Karaoke is fun! &lt;i&gt;So long as nobody gets hyponitized, anyway...&lt;/i&gt;</state>
+            <case stage="0-6" totalRounds="10">
+                <condition role="self" notSaidMarker="futaba_music" />
+                <condition role="other" character="futaba" sayingMarker="futaba_jukebox" />
+                <state img="#-pleased.png" marker="futaba_music">Oooh! Karaoke is fun! &lt;i&gt;So long as nobody gets hypnotized, anyway...&lt;/i&gt;</state>
             </case>
             <case stage="1" alsoPlaying="akko" timeInStage="0" notSaidMarker="akko_holy_potato" alsoPlayingSaying="Erufuda, could you... maybe put those fries away? The smell of potatoes is a little nauseating...">
                 <state img="#-angry.png" marker="akko_holy_potato">How dare you! Potatoes are a holy vegetable!</state>
@@ -310,8 +316,9 @@
             <case stage="6" alsoPlaying="syrenne" notSaidMarker="syrenne_assets">
                 <state img="#-horny.png" marker="syrenne_assets">What do you think, Syrenne? Have I got the &lt;i&gt;assets&lt;/i&gt; to be a good barmaid?</state>
             </case>
-            <case stage="0-6" notSaidMarker="french_means_fries">
+            <case stage="0-6">
                 <condition count="1-5" filter="french" gender="female" />
+                <condition role="self" notSaidMarker="french_means_fries" />
                 <state img="#-eating.png" marker="french_means_fries">You're French... that means you must be an expert on fries!</state>
                 <state img="#-eating.png" marker="french_means_fries">You're from France! The holy country where they only eat fries!</state>
                 <state img="#-eating.png" marker="french_means_fries">You're from France... that means you must love fries like I do!</state>
@@ -431,7 +438,7 @@
             <case stage="0-5">
                 <state img="#-smug.png">I guess I was bound to slip up eventually.</state>
                 <state img="#-bored.png">Finally.</state>
-                <state img="#-smug.png">I guess I shouldn't keep ~player~ waiting forever.</state>
+                <state img="#-smug.png" oneShotId="26">I guess I shouldn't keep ~player~ waiting forever.</state>
                 <state img="#-miffed.png">Congratulations. You finally got me.</state>
                 <state img="#-bored.png">Fine. Just this once.</state>
                 <state img="#-smug.png">I guess I'll take a turn. I can't let you have &lt;i&gt;all&lt;/i&gt; the fun.</state>
@@ -463,7 +470,7 @@
                 <state img="#-miffed.png">This is your fault, ~player~!</state>
                 <state img="#-angry.png">You'd better watch your back, dealer!</state>
                 <state img="#-frustrated.png">Anyone else want to deal instead?</state>
-                <state img="#-worried.png">&lt;i&gt;I wouldn't mind stripping if I was in better shape.&lt;/i&gt;</state>
+                <state img="#-worried.png" oneShotId="27">&lt;i&gt;I wouldn't mind stripping if I was in better shape.&lt;/i&gt;</state>
                 <state img="#-miffed.png">I see how it is! Teaming up against the elf girl!</state>
                 <state img="#-smug.png">&lt;i&gt;Sigh.&lt;/i&gt; I guess I'll just have to dazzle you with my elven beauty.</state>
             </case>
@@ -793,7 +800,7 @@
                 <state img="#-taunting.png">Typical human behavior.</state>
                 <state img="#-worried.png">Are all human guys this stupid?</state>
                 <state img="#-pleased.png">Do try to show a little courage, ~player~.</state>
-                <state img="#-horny.png">I've only seen one other human naked before today...</state>
+                <state img="#-horny.png" oneShotId="28">I've only seen one other human naked before today...</state>
                 <state img="#-eating.png">Try to keep up, ~name~.</state>
                 <state img="#-horny.png">Let's see if ~name~'s been keeping up his fitness.</state>
                 <state img="#-eating.png">Victory fries!</state>
@@ -826,7 +833,9 @@
             <case stage="0-8" target="pit" notSaidMarker="pit_siren">
                 <state img="#-worried.png" marker="pit_siren">Are you some kind of... &lt;i&gt;siren&lt;/i&gt; or something? What are you doing in a place like this?</state>
             </case>
-            <case stage="6-8" filter="shy" notSaidMarker="shy_encourage">
+            <case stage="6-8">
+                <condition filter="shy" role="target" />
+                <condition role="self" notSaidMarker="shy_encourage" />
                 <state img="#-pleased.png" marker="shy_encourage">Don't worry, ~name~. I'm sure you'll do fine.</state>
                 <state img="#-horny.png" marker="shy_encourage">Let me know if you need a hand, ~name~.</state>
                 <state img="#-pleased.png" marker="shy_encourage">You're doing great, ~name~!</state>
@@ -840,11 +849,11 @@
                 <state img="#-eating.png">Sooooo predictable.</state>
                 <state img="#-smug.png">Erufuda wins again!</state>
                 <state img="#-taunting.png">Try looking at your cards instead of me.</state>
-                <state img="#-horny.png">Don't worry, ~name~. Forest elves are comfortable with nudity.</state>
+                <state img="#-horny.png" oneShotId="29">Don't worry, ~name~. Forest elves are comfortable with nudity.</state>
                 <state img="#-eating.png">Are you hungry, ~name~? It's hard to focus on an empty stomach.</state>
                 <state img="#-smug.png">What can I say? It's a gift.</state>
                 <state img="#-smug.png">I'll give you some tips after the game, ~name~.</state>
-                <state img="#-eating.png">Winners get fries! Losers lose clothes! Those are the rules!</state>
+                <state img="#-eating.png" oneShotId="30">Winners get fries! Losers lose clothes! Those are the rules!</state>
                 <state img="#-eating.png">Looks like I earned another fry!</state>
                 <state img="#-taunting.png">I hope you've been practicing your stripping exercises...</state>
                 <state img="#-taunting.png">Sorry, ~name~. But rules are rules.</state>
@@ -878,11 +887,11 @@
 
         <trigger id="female_human_must_strip">
             <case stage="0-6 8">
-                <state img="#-taunting.png">Nice going, ~player~. &lt;i&gt;Do try to pay attention now.&lt;/i&gt;</state>
+                <state img="#-taunting.png" oneShotId="31">Nice going, ~player~. &lt;i&gt;Do try to pay attention now.&lt;/i&gt;</state>
                 <state img="#-taunting.png">Typical human behavior.</state>
                 <state img="#-worried.png">Are all human girls this stupid?</state>
                 <state img="#-pleased.png">Do try to show a little courage, ~player~.</state>
-                <state img="#-horny.png">I've only seen one other human naked before today...</state>
+                <state img="#-horny.png" oneShotId="32">I've only seen one other human naked before today...</state>
                 <state img="#-eating.png">Try to keep up, ~name~.</state>
                 <state img="#-horny.png">Let's see if ~name~'s been keeping up her fitness.</state>
                 <state img="#-eating.png">Victory fries!</state>
@@ -954,8 +963,9 @@
                 <state img="#-taunting.png" marker="futaba_neet">Careful, Futaba. Neets don't tend to stay in shape forever...</state>
                 <state img="#-taunting.png" marker="futaba_neet">With your lifestyle, that slim figure's living on borrowed time...</state>
             </case>
-            <case stage="0-8" target="miko" targetStage="0">
-                <state img="#-bored.png">Save us the theatrics and just pick one of those pieces of jewlrey or something.</state>
+            <case stage="0-8">
+                <condition role="target" character="miko" stage="0" />
+                <state img="#-bored.png">Save us the theatrics and just pick one of those pieces of jewelry or something.</state>
             </case>
             <case stage="0-8" target="miko" targetStage="1">
                 <state img="#-frustrated.png">&lt;i&gt;Ugh...&lt;/i&gt; all those accessories are going to take &lt;i&gt;forever&lt;/i&gt; to get through.</state>
@@ -1030,7 +1040,9 @@
             <case stage="1-6" target="wiifitfemale" notSaidMarker="trainer_ask_about_flab">
                 <state img="#-weight_conscious.png" marker="trainer_ask_about_flab">Hey Trainer, do you think your game could help me lose some of &lt;i&gt;this&lt;/i&gt;.</state>
             </case>
-            <case stage="0-8" filter="bodysuit" targetStage="0-1" notSaidMarker="nice_bodysuit">
+            <case stage="0-8">
+                <condition filter="bodysuit" role="target" stage="0-1" />
+                <condition role="self" notSaidMarker="nice_bodysuit" />
                 <state img="#-horny.png" marker="nice_bodysuit">That suit... it doesn't leave much to the imagination, huh...</state>
                 <state img="#-horny.png" marker="nice_bodysuit">I guess bodysuits are great... if you've got the figure for them.</state>
                 <state img="#-horny.png" marker="nice_bodysuit">That suit removes any doubt about your fitness...</state>
@@ -1038,7 +1050,9 @@
             <case stage="0-8" targetStage="0" alsoPlaying="syrenne" notSaidMarker="syrenne_fries_share">
                 <state img="#-bored.png" marker="syrenne_fries_share">I &lt;i&gt;guess&lt;/i&gt; you can have a few... Just as long as you promise to buy me another box if we run out!</state>
             </case>
-            <case stage="0-6 8" filter="chubby" notSaidMarker="diet_offer">
+            <case stage="0-6 8">
+                <condition filter="chubby" role="target" />
+                <condition role="self" notSaidMarker="diet_offer" />
                 <state img="#-smug.png" marker="diet_offer">You know, ~name~, I could give you some diet tips if you'd like...</state>
                 <state img="#-eating.png" marker="diet_offer">I could help you with your diet, ~name~. It looks like you could use some expert advice...</state>
                 <state img="#-smug.png" marker="diet_offer">You know, ~name~, Human taught me everything there is to know about dieting. Just in case you were curious...</state>
@@ -1063,16 +1077,16 @@
                 <state img="#-eating.png">Sooooo predictable.</state>
                 <state img="#-smug.png">Erufuda wins again!</state>
                 <state img="#-taunting.png">Try looking at your cards instead of me.</state>
-                <state img="#-horny.png">Don't worry, ~name~. Forest elves are comfortable with nudity.</state>
+                <state img="#-horny.png" oneShotId="33">Don't worry, ~name~. Forest elves are comfortable with nudity.</state>
                 <state img="#-eating.png">Are you hungry, ~name~? It's hard to focus on an empty stomach.</state>
                 <state img="#-smug.png">What can I say? It's a gift.</state>
                 <state img="#-smug.png">I'll give you some tips after the game, ~name~.</state>
-                <state img="#-eating.png">Winners get fries! Losers lose clothes! Those are the rules!</state>
+                <state img="#-eating.png" oneShotId="34">Winners get fries! Losers lose clothes! Those are the rules!</state>
                 <state img="#-eating.png">Looks like I earned another fry!</state>
                 <state img="#-taunting.png">I hope you've been practicing your stripping exercises...</state>
                 <state img="#-taunting.png">Sorry, ~name~. But rules are rules.</state>
                 <state img="#-eating.png">With girls like ~name~ playing, this should be a cinch.</state>
-                <state img="#-taunting.png">Maybe if ~name~ spent more time working out, she wouldn't have lost.</state>
+                <state img="#-taunting.png" oneShotId="35">Maybe if ~name~ spent more time working out, she wouldn't have lost.</state>
                 <state img="#-horny.png">~Name~! Show us what you've got!</state>
             </case>
             <case stage="6-8">
@@ -1122,7 +1136,7 @@
                 <state img="#-smug.png">Looks like someone's going to have to teach you a lesson.</state>
                 <state img="#-bored.png">Are you afraid to take off something bigger?</state>
                 <state img="#-bored.png">Come on, ~name~. Let's pick up the pace.</state>
-                <state img="#-miffed.png">You're slower than a drive-through at rush hour!</state>
+                <state img="#-miffed.png" oneShotId="36">You're slower than a drive-through at rush hour!</state>
                 <state img="#-bored.png">Whatever. I beat you once, I can do it again.</state>
                 <state img="#-worried.png">Looks like ~name~'s stalling... Could he be hiding something?</state>
                 <state img="#-angry.png">This is why people lose faith in humanity!</state>
@@ -1168,7 +1182,7 @@
                 <state img="#-bored.png">Potatoes come to those who wait.</state>
                 <state img="#-bored.png">My patience is legendary.</state>
                 <state img="#-bored.png">Dealer, can I get a soda?</state>
-                <state img="#-bored.png">Would anybody not named ~name~ like some fries?</state>
+                <state img="#-bored.png" oneShotId="37">Would anybody not named ~name~ like some fries?</state>
                 <state img="#-worried.png">Is ~name~ going to just keep stalling forever?</state>
                 <state img="#-bored.png">Come on, human. At least &lt;i&gt;try&lt;/i&gt; to excite me.</state>
             </case>
@@ -1204,6 +1218,10 @@
             <case stage="0-8" target="mulan" targetStage="0">
                 <state img="#-worried.png" marker="mulan_odd">Does Ping seem a little &lt;i&gt;odd&lt;/i&gt; to anyone else?</state>
             </case>
+            <case stage="0-8" id="42">
+                <condition role="target" character="nami" stage="2" />
+                <state img="#-worried.png">Um, Nami? You dropped something...</state>
+            </case>
             <case stage="0-8">
                 <state img="#-bored.png">Is that it?</state>
                 <state img="#-smug.png">Looks like someone's going to have to teach you a lesson.</state>
@@ -1211,7 +1229,7 @@
                 <state img="#-bored.png">Come on, ~name~. Let's pick up the pace.</state>
                 <state img="#-miffed.png">You're slower than a drive-through at rush hour!</state>
                 <state img="#-bored.png">Whatever. I beat you once, I can do it again.</state>
-                <state img="#-worried.png">Looks like ~name~'s stalling... Could she be hiding something?</state>
+                <state img="#-worried.png" oneShotId="38">Looks like ~name~'s stalling... Could she be hiding something?</state>
                 <state img="#-angry.png">This is why people lose faith in humanity!</state>
                 <state img="#-angry.png">You should be like me! Live life to the fullest!</state>
             </case>
@@ -1271,7 +1289,7 @@
                 <state img="#-bored.png">Potatoes come to those who wait.</state>
                 <state img="#-smug.png">My patience is legendary.</state>
                 <state img="#-bored.png">Dealer, can I get a soda?</state>
-                <state img="#-bored.png">Would anybody not named ~name~ like some fries?</state>
+                <state img="#-bored.png" oneShotId="39">Would anybody not named ~name~ like some fries?</state>
                 <state img="#-worried.png">Is ~name~ going to just keep stalling forever?</state>
             </case>
             <case stage="8">
@@ -1364,7 +1382,7 @@
                 <state img="#-taunting.png">A crushing defeat for ~name~!</state>
                 <state img="#-smug.png">You're weak. Weak!</state>
                 <state img="#-bored.png">Eh, I've seen better.</state>
-                <state img="#-bored.png">So dramatic! I can &lt;i&gt;hardly wait&lt;/i&gt; to see what you've got coming next.</state>
+                <state img="#-bored.png" oneShotId="40">So dramatic! I can &lt;i&gt;hardly wait&lt;/i&gt; to see what you've got coming next.</state>
                 <state img="#-smug.png">Bit by bit, I will wear you down!</state>
                 <state img="#-bored.png">&lt;i&gt;Yawn.&lt;/i&gt;</state>
                 <state img="#-bored.png">...</state>
@@ -1407,7 +1425,7 @@
                 <state img="#-smug.png">Whatever. I guess you're still cute.</state>
                 <state img="#-frustrated.png">Why waste your short life stalling like this?</state>
                 <state img="#-frustrated.png">Enough half-measures. Go big or go home!</state>
-                <state img="#-smug.png">You'd never catch &lt;i&gt;me&lt;/i&gt; doing something so dishonorable.</state>
+                <state img="#-smug.png" oneShotId="41">You'd never catch &lt;i&gt;me&lt;/i&gt; doing something so dishonorable.</state>
                 <state img="#-bored.png">If you want to grab a snack, ~player~, now's a good time.</state>
                 <state img="#-bored.png">Move it, potato head.</state>
             </case>
@@ -1440,7 +1458,7 @@
                 <state img="#-eating.png">Delicious...</state>
                 <state img="#-pleased.png">Wanna work out sometime, ~name~?</state>
                 <state img="#-taunting.png">Embarrassing!</state>
-                <state img="#-smug.png">&lt;i&gt;Never forget the day you lost your ~clothing~ to an elf!&lt;/i&gt;</state>
+                <state img="#-smug.png" oneShotId="42">&lt;i&gt;Never forget the day you lost your ~clothing~ to an elf!&lt;/i&gt;</state>
                 <state img="#-eating.png">Drop the ~clothing~.</state>
             </case>
             <case stage="7">
@@ -1517,7 +1535,7 @@
                 <state img="#-eating.png">Delicious...</state>
                 <state img="#-pleased.png">Wanna work out sometime, ~name~?</state>
                 <state img="#-taunting.png">Embarrassing!</state>
-                <state img="#-smug.png">&lt;i&gt;Never forget the day you lost your ~clothing~ to an elf!&lt;/i&gt;</state>
+                <state img="#-smug.png" oneShotId="43">&lt;i&gt;Never forget the day you lost your ~clothing~ to an elf!&lt;/i&gt;</state>
                 <state img="#-eating.png">Drop the ~clothing~.</state>
             </case>
             <case stage="7">
@@ -1694,6 +1712,9 @@
         </trigger>
 
         <trigger id="female_chest_will_be_visible">
+            <case stage="0-8" id="39" target="chun-li" alsoPlaying="juri" alsoPlayingStage="4" targetSaidMarker="juri_attack">
+                <state img="#-panic.png" marker="chun_li_warn">Chun-Li! Your behind!!! ...I mean... Behind you!!!</state>
+            </case>
             <case stage="0-8" target="miko" notSaidMarker="miko_mediocre_boobs">
                 <state img="#-taunting.png" marker="miko_mediocre_boobs">That sounds like loser talk to me. Admit it. Your boobs are mediocre!</state>
             </case>
@@ -1705,7 +1726,7 @@
                 <state img="#-smug.png">Don't worry, ~name~. I'm sure you have nothing to be ashamed of.</state>
                 <state img="#-horny.png">Show me something good, ~name~!</state>
                 <state img="#-smug.png">Don't worry, there's nothing wrong with being second best.</state>
-                <state img="#-horny.png">Have you ever tried half-body bathing, ~name~?</state>
+                <state img="#-horny.png" oneShotId="44">Have you ever tried half-body bathing, ~name~?</state>
                 <state img="#-horny.png">Woooo!</state>
                 <state img="#-smug.png">Nice ~clothing~.</state>
                 <state img="#-smug.png">You knew this was coming, ~name~.</state>
@@ -1731,7 +1752,12 @@
             <case stage="1-6 8" target="natsuki" notSaidMarker="natsuki_boob_diet">
                 <state img="#-weight_conscious.png" marker="natsuki_boob_diet">If it's boobs you want, I know a diet that's guaranteed to make you need a new bra! ...and bigger pants.</state>
             </case>
-            <case stage="0-8" filter="chubby" notSaidMarker="chubby_flat">
+            <case stage="0-8" id="40" target="raven">
+                <state img="#-miffed.png" marker="raven_butt">It's not that special... definitely not something to be jealous of. No way.</state>
+            </case>
+            <case stage="0-8">
+                <condition filter="chubby" role="target" />
+                <condition role="self" notSaidMarker="chubby_flat" />
                 <state img="#-taunting.png" marker="chubby_flat">Hah! Imagine getting fat and still having tiny boobs!</state>
                 <state img="#-taunting.png" marker="chubby_flat">~Name~ got fat and didn't even get nice boobs. &lt;i&gt;Ridiculous!&lt;/i&gt;</state>
             </case>
@@ -1776,7 +1802,9 @@
         </trigger>
 
         <trigger id="female_large_chest_is_visible">
-            <case stage="0-8" filter="athletic" notSaidMarker="boobs_and_abs">
+            <case stage="0-8">
+                <condition filter="athletic" role="target" />
+                <condition role="self" notSaidMarker="boobs_and_abs" />
                 <state img="#-angry.png" marker="boobs_and_abs">Big boobs &lt;i&gt;and abs?&lt;/i&gt; That's just cruel!</state>
                 <state img="#-angry.png" marker="boobs_and_abs">You can't have big boobs and abs! That's illegal!</state>
             </case>
@@ -1784,9 +1812,9 @@
                 <state img="#-worried.png">Wow! ~name~'s looking lovely!</state>
                 <state img="#-worried.png">Mine are still better, right, ~player~?</state>
                 <state img="#-horny.png">~name~'s been taking care of herself.</state>
-                <state img="#-horny.png">You know, potatoes and milk can form a complete diet...</state>
+                <state img="#-horny.png" oneShotId="45">You know, potatoes and milk can form a complete diet...</state>
                 <state img="#-miffed.png">I don't know how, but ~name~'s cheating at boobs!</state>
-                <state img="#-pleased.png">I never understood the human fascination with breasts... until I saw ~name~'s!</state>
+                <state img="#-pleased.png" oneShotId="46">I never understood the human fascination with breasts... until I saw ~name~'s!</state>
                 <state img="#-horny.png">I love this game!</state>
                 <state img="#-smug.png">~name~ might just have the second-best chest here tonight!</state>
                 <state img="#-horny.png">Do you do any archery, ~name~?</state>
@@ -1798,11 +1826,18 @@
         </trigger>
 
         <trigger id="female_crotch_will_be_visible">
+            <case stage="0-8" id="43" target="cammy_white" alsoPlaying="chun-li" alsoPlayingStage="0" targetSaidMarker="chunli_help">
+                <state img="#-worried.png">&lt;i&gt;Ouch... be careful...&lt;/i&gt;</state>
+            </case>
             <case stage="0-8" target="hanako" notSaidMarker="hanako_dont_be_sorry">
                 <state img="#-angry.png" marker="hanako_dont_be_sorry">Don't be sorry for losing! What kind of stupid talk is that?</state>
             </case>
             <case stage="0-8" target="syrenne">
                 <state img="#-taunting.png">&lt;i&gt;Pfffft... so clumsy!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-2" id="38" target="cammy_white">
+                <state img="#-taunting.png" marker="cammy_taunt">Ahaha! Imagine ripping your clothes! What an idiot!</state>
+                <state img="#-taunting.png" marker="cammy_taunt">How could Cammy be so clumsy? Ripping her outfit like that!</state>
             </case>
             <case stage="0-6 8">
                 <state img="#-horny.png">Don't hold back, ~name~!</state>
@@ -1834,7 +1869,9 @@
                 <state img="#-miffed.png" marker="meia_butt_envy">Big deal. I used to have a cute little butt too, you know.</state>
                 <state img="#-miffed.png" marker="meia_butt_envy">Whatever. I had a butt like that. Nothing special.</state>
             </case>
-            <case stage="0-8" target="mulan" saidMarker="mulan_duel_accept" targetSaidMarker="mulan_duel" targetNotSaidMarker="challenge_answer" targetSayingMarker="duel_lost">
+            <case stage="0-8">
+                <condition role="target" character="mulan" saidMarker="mulan_duel" sayingMarker="duel_lost" notSaidMarker="challenge_answer" />
+                <condition role="self" saidMarker="mulan_duel_accept" />
                 <state img="#-taunting.png">Haha! Time to discover your darkest secret... have you ever caught &lt;i&gt;yourself&lt;/i&gt; getting chubby?</state>
             </case>
             <case stage="0-8" target="jessie" notSaidMarker="jessie_weight" targetSayingMarker="jessieWeight">
@@ -2000,7 +2037,7 @@
                 <state img="#-horny.png">Join the party, ~name~.</state>
                 <state img="#-horny.png">If you hurry, we can finish together!</state>
                 <state img="#-horny.png">Try to hold it together, ~player~.</state>
-                <state img="#-horny.png">Men and women getting off together. It's perfectly proper.</state>
+                <state img="#-horny.png">Men and women celebrating together. It's perfectly proper.</state>
             </case>
         </trigger>
 
@@ -2008,7 +2045,7 @@
             <case stage="0-6 8">
                 <state img="#-horny.png">Focus, ~name~!</state>
                 <state img="#-pleased.png">Nice form, ~name~...</state>
-                <state img="#-horny.png">&lt;i&gt;Is ~name~ looking a little more elven to any of you?&lt;/i&gt;</state>
+                <state img="#-horny.png" oneShotId="51">&lt;i&gt;Is ~name~ looking a little more elven to any of you?&lt;/i&gt;</state>
                 <state img="#-pleased.png">Slow and steady, ~name~.</state>
                 <state img="#-horny.png">Work those muscles, ~name~!</state>
                 <state img="#-horny.png">~Name~! Show me what a human man can do!</state>
@@ -2025,7 +2062,7 @@
                 <state img="#-smug.png">Are you watching, ~name~?</state>
                 <state img="#-horny.png">Here, let me give ~name~ a better view.</state>
                 <state img="#-heavy.png">Yes, ~name~, yes!</state>
-                <state img="#-weight_conscious.png">Be honest, ~name~. Is my butt too big for you?</state>
+                <state img="#-weight_conscious.png" oneShotId="48">Be honest, ~name~. Is my butt too big for you?</state>
                 <state img="#-smug.png">I see you peeking this way, ~name~. It's ok, you can look.</state>
                 <state img="#-horny.png">Maybe I &lt;i&gt;can&lt;/i&gt; learn a thing or two...</state>
                 <state img="#-horny.png">Careful there, ~name~, don't get too crazy.</state>
@@ -2160,7 +2197,7 @@
             <case stage="0-6 8">
                 <state img="#-horny.png">Focus, ~name~!</state>
                 <state img="#-pleased.png">Nice form, ~name~...</state>
-                <state img="#-horny.png">&lt;i&gt;Is ~name~ looking a little more elven to any of you?&lt;/i&gt;</state>
+                <state img="#-horny.png" oneShotId="50">&lt;i&gt;Is ~name~ looking a little more elven to any of you?&lt;/i&gt;</state>
                 <state img="#-pleased.png">Slow and steady, ~name~.</state>
                 <state img="#-horny.png">Work those muscles, ~name~!</state>
                 <state img="#-horny.png">~Name~! Show me what a human woman can do!</state>
@@ -2181,7 +2218,7 @@
                 <state img="#-heavy.png">Need a... &lt;i&gt;huff...&lt;/i&gt; workout partner, ~name~?</state>
                 <state img="#-horny.png">I love it when I have an audience!</state>
                 <state img="#-smug.png">You're adorable, ~name~.</state>
-                <state img="#-weight_conscious.png">Be honest. Is my butt too big, ~name~?</state>
+                <state img="#-weight_conscious.png" oneShotId="47">Be honest. Is my butt too big, ~name~?</state>
                 <state img="#-horny.png">&lt;i&gt;Oh ~name~...&lt;/i&gt;</state>
             </case>
         </trigger>
@@ -2202,7 +2239,7 @@
             </case>
             <case stage="0-8">
                 <state img="#-horny.png">Nice finish! Stamina is very important.</state>
-                <state img="#-horny.png">Wow! I didn't realize ~name~ was so into elves!</state>
+                <state img="#-horny.png" oneShotId="49">Wow! I didn't realize ~name~ was so into elves!</state>
                 <state img="#-smug.png">I guess it's easy to finish with an elf girl to watch...</state>
                 <state img="#-worried.png">Was that all, ~name~?</state>
                 <state img="#-worried.png">Done so soon?</state>
@@ -2341,6 +2378,10 @@
         </trigger>
 
         <trigger id="game_over_defeat">
+            <case stage="8" id="44" priority="116">
+                <condition role="other" character="nami" timeInStage="5-" sayingMarker="stealing" />
+                <state img="#-miffed.png">Take them. I hope you like pants that fall apart on you...</state>
+            </case>
             <case stage="8">
                 <state img="#-smug.png">I may have lost, but at least I was the cutest.</state>
                 <state img="#-eating.png">Oh, is the game over? I'll just finish these up then...</state>

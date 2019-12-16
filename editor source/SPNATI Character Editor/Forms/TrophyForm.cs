@@ -39,7 +39,7 @@ namespace SPNATI_Character_Editor.Forms
 			UpdatePreview();
 
 			Collectible collectible = character.Collectibles.Get(id);
-			if (string.IsNullOrEmpty(value))
+			if (!string.IsNullOrEmpty(value))
 			{
 				bool hasCounter = (collectible == null || collectible.Counter > 0);
 				radDecrement.Enabled = radIncrement.Enabled = radSet.Enabled = hasCounter;
@@ -125,7 +125,7 @@ namespace SPNATI_Character_Editor.Forms
 				}
 				else if (radSet.Checked)
 				{
-					Value = $"{valDecrement.Value}";
+					Value = $"{valSet.Value}";
 				}
 			}
 

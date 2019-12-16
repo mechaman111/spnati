@@ -170,7 +170,7 @@ namespace SPNATI_Character_Editor
 			List<object> data = new List<object>();
 			cboFrom.BindingContext = new BindingContext();
 			cboTo.BindingContext = new BindingContext();
-			if (character == null)
+			if (character == null || character.Layers == 0)
 			{
 				//If the character is not valid, still allow something but there's no way to give a useful name to it
 				for (int i = 0; i < 8 + Clothing.ExtraStages; i++)

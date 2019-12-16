@@ -426,6 +426,7 @@ namespace SPNATI_Character_Editor.Controls
 			table.AddSpeedButton("Also Playing", "Also Playing Saying Text", (data) => { return AddFilter("other", data, "Saying"); });
 			table.AddSpeedButton("Also Playing", "Also Playing Time in Stage", (data) => { return AddFilter("other", data, "TimeInStage"); });
 			table.AddSpeedButton("Also Playing", "Also Playing Hand", (data) => { return AddFilter("other", data, "Hand"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Pose", (data) => { return AddFilter("other", data, "Pose"); });
 
 			//Game-wide
 			table.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
@@ -439,6 +440,7 @@ namespace SPNATI_Character_Editor.Controls
 			table.AddSpeedButton("Filter", "Self", (data) => { return AddFilter("self", data); });
 			table.AddSpeedButton("Filter", "Also Playing", (data) => { return AddFilter("other", data); });
 			table.AddSpeedButton("Filter", "Opponent", (data) => { return AddFilter("opp", data); });
+			table.AddSpeedButton("Filter", "Winner", (data) => { return AddFilter("winner", data); });
 			table.AddSpeedButton("Filter", "Specific Character", (data) =>
 			{
 				Character character = RecordLookup.DoLookup(typeof(Character), "", false, null) as Character;
@@ -482,6 +484,7 @@ namespace SPNATI_Character_Editor.Controls
 				table.AddSpeedButton("Target", "Target Status", (data) => { return AddFilter("target", data, "Status"); });
 				table.AddSpeedButton("Target", "Target Layers", (data) => { return AddFilter("target", data, "Layers"); });
 				table.AddSpeedButton("Target", "Target Starting Layers", (data) => { return AddFilter("target", data, "StartingLayers"); });
+				table.AddSpeedButton("Target", "Target Pose", (data) => { return AddFilter("target", data, "Pose"); });
 
 				//Clothing
 				if (caseTrigger.AvailableVariables.Contains("clothing"))

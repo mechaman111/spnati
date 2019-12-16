@@ -344,7 +344,7 @@ namespace Desktop.Skinning
 			get { return _selectedIndex; }
 			set
 			{
-				if (!_changingDataSource && _selectedIndex != value && value >= 0 && value < Items.Count)
+				if (!_changingDataSource && _selectedIndex != value && value >= -1 && value < Items.Count)
 				{
 					UpdateIndex(value);
 					OnSelectedIndexChanged(EventArgs.Empty);

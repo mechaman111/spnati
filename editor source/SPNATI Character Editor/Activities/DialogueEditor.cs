@@ -358,7 +358,7 @@ namespace SPNATI_Character_Editor.Activities
 					}
 					DataConversions.ConvertCase5_2(response);
 					//see if there's a response already matching the conditions of this response and just reuse that if possible
-					existing = responder.Behavior.GetWorkingCases().FirstOrDefault(c => c.MatchesConditions(response));
+					existing = responder.Behavior.GetWorkingCases().FirstOrDefault(c => c.MatchesConditions(response) && c.MatchesStages(response, true));
 					if (existing == null)
 					{
 						isNew = true;
@@ -479,12 +479,18 @@ namespace SPNATI_Character_Editor.Activities
 							else
 							{
 								//Select the case
-								treeDialogue.SelectNode(_selectedStage?.Id ?? c.Stages[0], c);
-								//Select the line
-								caseControl.SelectTextInRow(l, index, args.FindText.Length);
+								if (treeDialogue.SelectNode(_selectedStage?.Id ?? c.Stages[0], c))
+								{
+									//Select the line
+									caseControl.SelectTextInRow(l, index, args.FindText.Length);
+								}
+								else
+								{
+									args.Success = false;
+								}
 							}
 
-							if (!args.ReplaceAll)
+							if (!args.ReplaceAll && args.Success)
 								return;
 						}
 					}

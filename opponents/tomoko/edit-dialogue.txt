@@ -1,0 +1,2064 @@
+#required for behaviour.xml
+first=Tomoko
+last=Kuroki
+label=Tomoko
+gender=female
+size=small
+intelligence=good
+intelligence=good,1
+intelligence=good,2
+intelligence=good,3
+intelligence=good,4
+intelligence=bad,5
+intelligence=bad,6
+intelligence=bad,7
+intelligence=bad,8
+
+#Number of phases to "finish" masturbating
+timer=15
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=black_hair
+tag=long_hair
+tag=messy_hair
+tag=green_eyes
+tag=pale-skinned
+tag=short
+tag=hairy
+tag=pubic_hair
+tag=small_breasts
+tag=school_uniform
+tag=gloomy
+tag=lonely
+tag=mean
+tag=moe
+tag=perverted
+tag=quiet
+tag=sarcastic
+tag=shut_in
+tag=shy
+tag=boob_envy
+tag=enf
+tag=straight
+tag=single
+tag=japanese
+tag=anime
+tag=manga
+tag=student
+tag=cheater
+tag=uses_toy,from:9,to:10
+tag=pale_skinned
+tag=body_envy
+tag=watamote
+tag=bi_curious
+
+#required for meta.xml
+#select screen image
+pic=0-Idle 01
+height=5'
+from=Watamote
+writer=Skill & tppolis
+artist=tppolis
+description=Tomoko Kuroki is a socially inept Japanese highschool student. Due to being a shut-in, she has a hard time socializing, and she's also become a massive pervert/slob.
+z-layer=0
+dialogue-layer=over
+
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=tie,tie,extra,upper
+clothes=shoes,shoes,extra,other
+clothes=leggings,leggings,major,lower
+clothes=blazer,blazer,minor,upper
+clothes=skirt,skirt,minor,lower
+clothes=Shirt,shirt,minor,upper
+clothes=Dress,dress,important,upper
+clothes=Panties,panties,important,lower
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermione=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#INTRODUCTION
+#These lines are used to say different things depending on which other characters are present when the character
+#is selected and when the game starts.
+	
+
+#fully clothed
+0-selected=Idle 01.png,I-I'm Tomoko... if you were asking...
+0-game_start=just_me.png,So you expected some hot girl? O-Oh... I-It's just me, Tomoko... sorry...
+0-game_start=just_me.png,So you expected some hot girl? O-Oh... I-It's just me, Tomoko... sorry...
+0-game_start=just_me.png,So you expected some hot girl? O-Oh... I-It's just me, Tomoko... sorry...
+0-game_start=Select 02.png,O-Of course you'd choose me! I'm sensational! Popular even!
+0-game_start=Select 03.png,Being someone with over 50 years of dating experience with over 100 men in my Otome games, it's obvious that I would be the best choice.
+0-game_start,marker:cheatingtomoko=thinking.png,Oh... you are all older than who I usually play cards with. B-but I'll win anyway!
+0-game_start,marker:cheatingtomoko=thinking.png,Oh... you are all older than who I usually play cards with. B-but I'll win anyway!
+0-game_start,count-role;other&character;palutena:=Idle 00.png,I don't really believe in Gods... just killing them...
+0-game_start,count-female:1=Suprised.png,What?! Why are there only guys here?! <i>(Fuck, I've not talked to a boy in person for years! Keep it together Tomoko!)</i>
+0-game_start,priority:0,count-male&character;human:=Curious.png,(<i>Well, this guy, ~player~, I guess he's pretty cute. Whatever.</i>)
+0-game_start,count-male:0=thinking.png,<i>(Wait, where are all the hot guys?!)</i>
+0-game_start,count-male:0=Idle 01.png,This is fine. Uh, all my friends are girls anyway.
+
+
+
+
+#POKER PLAY
+#This is what a character says while they're exchanging cards and commenting on their hands afterwards.
+#When swapping cards, the game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+swap_cards=thinking.png,~cards~ cards! Quickly dealer!
+swap_cards=thinking.png,I-I guess I'll swap ~cards~ cards out...
+swap_cards=Idle 01.png,H-Here are the cards I'd like to swap...
+swap_cards=Shy.png,I-I'd like to swap out these ones please...
+swap_cards=Shy.png,Th-These are- to swap- please... thank you...
+swap_cards=thinking.png,I've played poker online before so I'll be really good at this too! <i>(Uh, hopefully...)</i>
+swap_cards=thinking.png,Why do all these cards look so boring? I wish they had badass pictures on them... oh, uh ~cards~.
+good_hand=Excited.png,<i>(No stripping today!)</i>
+good_hand=Excited.png,<i>(This game is <i>EASIER</i> than dating virtual men!)</i>
+good_hand=Victorious.png,This is fun! I'm happy!
+good_hand=Excited.png,<i>(Suck it!)</i>
+good_hand=Excited.png,Th-There's no way I l-lose!..
+good_hand=Victorious.png,N-Nothing to worry about!..
+good_hand=Victorious.png,I don't usually play with nobodies... but I'll make an exception this time. <i>(That sounded cool, right?!</i>)
+okay_hand=ok_hand.png,( Well, this is better than nothing... )
+okay_hand=ok_hand.png,( I'll probably be fine with this... )
+okay_hand=ok_hand.png,( This should be fine... )
+okay_hand=ok_hand.png,( I guess... It's not <i>awful</i>... )
+okay_hand=ok_hand.png,Uh, my hand is really good and you should all be worried. Trust me!
+okay_hand=Shy.png,You know... uh, I don't know what to say. I just wanted to say something.
+okay_hand=ok_hand.png,This is better than nothing! Wait, did I say that out loud?
+okay_hand=ok_hand.png,<i>(This is better than nothing!)</i> Wait, did I say that out loud?
+okay_hand=Curious.png,<i>(If I calculate the probalities I could win easily! Now, uh, how do I do that?)</i>
+bad_hand=Suprised.png,<i>(I can't leave now! It's too late to back out!)</i>
+bad_hand=Suprised.png,This hand is so bad that I'm gonna kill someone!
+bad_hand=Suprised.png,<i>Why did I decide to play this game?!</i>
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-swap_cards,count-role;self&saidmarker;cheatingtomoko:,test:~cards~:0=Excited.png,<i>(Perfect! I don't even need to cheat with this kind of hand!)</i>
+0-swap_cards,totalRounds:0,priority:10,count-role;self&saidmarker;cheatingtomoko:=Victorious.png,Uh, I'll still win this! Where I'm from they call me Queen!
+0-swap_cards,totalRounds:0,priority:10,count-role;self&saidmarker;cheatingtomoko:=thinking.png,<i>(I'll just slip a couple cards up my sleeve... ha! Nobody will notice...)</i>
+0-swap_cards,totalRounds:0,priority:10,count-role;self&saidmarker;cheatingtomoko:=Angery.png,What type of cards are these?! Where are the power rankings?! You tricked me!
+0-swap_cards,totalRounds:0,priority:10,count-role;self&saidmarker;cheatingtomoko:=thinking.png,<i>(Wait, I've never played poker! I've still got my secret strategy though...)</i>
+0-swap_cards,priority:5,test:~cards~:4=Angery.png,I guess I'll keep one. But all these ~cards~ cards are bitches!
+0-swap_cards,priority:5,test:~cards~:4=ok_hand.png,Why does my hand suck?! Give me ~cards~  new cards...
+0-swap_cards,totalRounds:0,priority:1=Shy.png,W-wait I'm supposed to put cards back?! Can someone explain the rules... please!
+0-swap_cards,totalRounds:0,priority:1=Suprised.png,Poker?! I thought this was a different game! <i>(Don't panic Tomoko! You can still win this!)</i>
+0-good_hand,count-role;self&saidmarker;cheatingtomoko:=Suprised.png,I'm not cheating! H-honestly!
+0-good_hand,count-role;self&saidmarker;cheatingtomoko:=Excited.png,<i>(Ha! Cheating pays off!)</i>
+0-good_hand,count-role;self&saidmarker;cheatingtomoko:=Excited.png,<i>(Who cares about the rules?! I care about winning!)</i>
+0-bad_hand,marker:worthless=Suprised.png,( If you aren't a worthless god, please keep me from losing this round. If you don't, it's fine I guess, but I'll despise you forever. )
+0-bad_hand=thinking.png,<i>(Where is the nearest escape>?!)</i>
+0-bad_hand=ok_hand.png,Uh, I guess I'll let somebody else win this round.
+0-bad_hand=thinking.png,( Why did things have to go like this? )
+0-bad_hand=Suprised.png,( If only I hadn't swapped that! )
+0-bad_hand=Suprised.png,( I probably have the <i>worst</i> hand out of the lot of us!.. )
+0-bad_hand=Suprised.png,I-... I'm going to l-lose...
+0-bad_hand=Select 03.png,( This is hopeless. I'm going to end up losing every round and have to <i>masturbate</i> in front of everyone! )
+0-bad_hand,count-role;self&saidmarker;cheatingtomoko:=Suprised.png,I-if anybody sees some cards dropped on the ground, they weren't mine! Promise!
+0-bad_hand,count-role;self&saidmarker;cheatingtomoko:=thinking.png,<i>(They were watching too closely and I couldn't cheat! Unfair!)</i>
+0-bad_hand,count-role;self&notsaidmarker;bukkake:,count-male:2-4,marker:bukkake=Horny.png,<i>(This is hopeless. I'm going to end up losing every round and get <b>bukkake'd</b> by these guys!)</i>
+0-hand,alsoPlaying:guzma,alsoPlayingSayingMarker:MostHumiliatingMoment,totalRounds:6,id:1=Suprised.png,Heh... you really think you can humiliate me?! I've been through cringey situations others can only have nightmares about!
+0-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,Oh... um... I'm kinda into rap. If you are asking!
+0-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,I like rap. You know- gangster Western stuff! <i>(I bet everybody is thinking I'm super cool...)</i>
+
+
+#lost tie
+1-swap_cards,count-role;self&saidmarker;cheatingtomoko:,test:~cards~:0=Excited.png,<i>(Perfect! I don't even need to cheat with this kind of hand!)</i>
+1-swap_cards,priority:5,test:~cards~:4=Angery.png,I guess I'll keep one. But all these ~cards~ cards are bitches!
+1-swap_cards,priority:5,test:~cards~:4=ok_hand.png,Why does my hand suck?! Give me ~cards~  new cards...
+1-good_hand,count-role;self&saidmarker;cheatingtomoko:=Suprised.png,I'm not cheating! H-honestly!
+1-good_hand,count-role;self&saidmarker;cheatingtomoko:=Excited.png,<i>(Ha! Cheating pays off!)</i>
+1-good_hand,count-role;self&saidmarker;cheatingtomoko:=Excited.png,<i>(Who cares about the rules?! I care about winning!)</i>
+1-bad_hand,marker:worthless=Suprised.png,( If you aren't a worthless god, please keep me from losing this round. If you don't, it's fine I guess, but I'll despise you forever. )
+1-bad_hand=thinking.png,<i>(Where is the nearest escape>?!)</i>
+1-bad_hand=ok_hand.png,Uh, I guess I'll let somebody else win this round.
+1-bad_hand=thinking.png,( Why did things have to go like this? )
+1-bad_hand=Suprised.png,( If only I hadn't swapped that! )
+1-bad_hand=Suprised.png,( I probably have the <i>worst</i> hand out of the lot of us!.. )
+1-bad_hand=Suprised.png,I-... I'm going to l-lose...
+1-bad_hand=post_strip_tie.png,Sh-Shit...
+1-bad_hand=post_strip_tie.png,F-Fuck...
+1-bad_hand,count-role;self&saidmarker;cheatingtomoko:=Suprised.png,I-if anybody sees some cards dropped on the ground, they weren't mine! Promise!
+1-bad_hand,count-role;self&saidmarker;cheatingtomoko:=thinking.png,<i>(They were watching too closely and I couldn't cheat! Unfair!)</i>
+1-hand,alsoPlaying:guzma,alsoPlayingSayingMarker:MostHumiliatingMoment,totalRounds:6,id:1=Suprised.png,Heh... you really think you can humiliate me?! I've been through cringey situations others can only have nightmares about!
+1-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,Oh... um... I'm kinda into rap. If you are asking!
+1-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,I like rap. You know- gangster Western stuff! <i>(I bet everybody is thinking I'm super cool...)</i>
+
+
+#lost shoes
+2-swap_cards,count-role;self&saidmarker;cheatingtomoko:,test:~cards~:0=Excited.png,<i>(Perfect! I don't even need to cheat with this kind of hand!)</i>
+2-swap_cards,priority:5,test:~cards~:4=Angery.png,I guess I'll keep one. But all these ~cards~ cards are bitches!
+2-swap_cards,priority:5,test:~cards~:4=ok_hand.png,Why does my hand suck?! Give me ~cards~  new cards...
+2-good_hand,count-role;self&saidmarker;cheatingtomoko:=Suprised.png,I'm not cheating! H-honestly!
+2-good_hand,count-role;self&saidmarker;cheatingtomoko:=Excited.png,<i>(Ha! Cheating pays off!)</i>
+2-good_hand,count-role;self&saidmarker;cheatingtomoko:=Excited.png,<i>(Who cares about the rules?! I care about winning!)</i>
+2-bad_hand,marker:worthless=Suprised.png,( If you aren't a worthless god, please keep me from losing this round. If you don't, it's fine I guess, but I'll despise you forever. )
+2-bad_hand=thinking.png,<i>(Where is the nearest escape>?!)</i>
+2-bad_hand=ok_hand.png,Uh, I guess I'll let somebody else win this round.
+2-bad_hand=thinking.png,( Why did things have to go like this? )
+2-bad_hand=Suprised.png,( If only I hadn't swapped that! )
+2-bad_hand=Suprised.png,( I probably have the <i>worst</i> hand out of the lot of us!.. )
+2-bad_hand=Suprised.png,I-... I'm going to l-lose...
+2-bad_hand,count-role;self&saidmarker;cheatingtomoko:=Suprised.png,I-if anybody sees some cards dropped on the ground, they weren't mine! Promise!
+2-bad_hand,count-role;self&saidmarker;cheatingtomoko:=thinking.png,<i>(They were watching too closely and I couldn't cheat! Unfair!)</i>
+2-hand,alsoPlaying:guzma,alsoPlayingSayingMarker:MostHumiliatingMoment,totalRounds:6,id:1=Suprised.png,Heh... you really think you can humiliate me?! I've been through cringey situations others can only have nightmares about!
+2-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,Oh... um... I'm kinda into rap. If you are asking!
+2-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,I like rap. You know- gangster Western stuff! <i>(I bet everybody is thinking I'm super cool...)</i>
+
+
+#lost leggings
+3-swap_cards,count-role;self&saidmarker;cheatingtomoko:,test:~cards~:0=Excited.png,<i>(Perfect! I don't even need to cheat with this kind of hand!)</i>
+3-swap_cards,priority:5,test:~cards~:4=Angery.png,I guess I'll keep one. But all these ~cards~ cards are bitches!
+3-swap_cards,priority:5,test:~cards~:4=ok_hand.png,Why does my hand suck?! Give me ~cards~  new cards...
+3-good_hand,count-role;self&saidmarker;cheatingtomoko:=Suprised.png,I'm not cheating! H-honestly!
+3-good_hand,count-role;self&saidmarker;cheatingtomoko:=Excited.png,<i>(Ha! Cheating pays off!)</i>
+3-good_hand,count-role;self&saidmarker;cheatingtomoko:=Excited.png,<i>(Who cares about the rules?! I care about winning!)</i>
+3-bad_hand,marker:worthless=Suprised.png,( If you aren't a worthless god, please keep me from losing this round. If you don't, it's fine I guess, but I'll despise you forever. )
+3-bad_hand=thinking.png,<i>(Where is the nearest escape>?!)</i>
+3-bad_hand=ok_hand.png,Uh, I guess I'll let somebody else win this round.
+3-bad_hand=thinking.png,( Why did things have to go like this? )
+3-bad_hand=Suprised.png,( If only I hadn't swapped that! )
+3-bad_hand=Suprised.png,( I probably have the <i>worst</i> hand out of the lot of us!.. )
+3-bad_hand=Suprised.png,I-... I'm going to l-lose...
+3-bad_hand,count-role;self&saidmarker;cheatingtomoko:=Suprised.png,I-if anybody sees some cards dropped on the ground, they weren't mine! Promise!
+3-bad_hand,count-role;self&saidmarker;cheatingtomoko:=thinking.png,<i>(They were watching too closely and I couldn't cheat! Unfair!)</i>
+3-hand,alsoPlaying:guzma,alsoPlayingSayingMarker:MostHumiliatingMoment,totalRounds:6,id:1=Suprised.png,Heh... you really think you can humiliate me?! I've been through cringey situations others can only have nightmares about!
+3-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,Oh... um... I'm kinda into rap. If you are asking!
+3-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,I like rap. You know- gangster Western stuff! <i>(I bet everybody is thinking I'm super cool...)</i>
+
+
+#lost blazer
+4-swap_cards,marker:thequeen=Excited.png,E-Even when things look bad... the Queen always draws just what she needs!
+4-swap_cards=thinking.png,I'll swap these ~cards~. Maybe? <i>(This game is hard!)</i>
+4-swap_cards=Angery.png,<i>(Gods of luck! I demand you smile upon me!)</i>
+4-swap_cards=ok_hand.png,Give me ~cards~ cards now!!... please?
+4-swap_cards,priority:0,count-role;other&character;moon:,marker:tomomoongardevoir=Excited.png,<i>(Moon seems like a total slut! Maybe I can ask her my perverted questions?!)</i>
+4-swap_cards,count-role;self&saidmarker;cheatingtomoko:,test:~cards~:0=Excited.png,<i>(Even without cheating, I can still win this!)</i> I'll keep this hand! All of it!
+4-swap_cards,test:~cards~:0=Shy.png,{b}Yes!!{!reset} W-Wait, was that too loud? {b}Sorry!{!reset}
+4-swap_cards,test:~cards~:0=Suprised.png,Yes!! <i>(Wait, poker face Tomoko!)</i> I mean, woah, like this hand totally sucks! Believe me!
+4-swap_cards,test:~cards~:0=thinking.png,Huh? I really didn't think I'd draw so well...
+4-swap_cards,test:~cards~:4:>==Angery.png,These ~cards~ cards are all whores. Replace them!
+4-good_hand=ok_hand.png,<i>(Hey... my cards are good! That's a weird feeling.)</i>
+4-good_hand=Victorious.png,Y-you small fries t-tried your best! B-be proud!
+4-good_hand=Idle 01.png,<i>(I don't know what to say... so I guess I'll say nothing.)</i>
+4-good_hand=thinking.png,Wait, am I good at poker?!
+4-good_hand=Excited.png,My favourite card is... all of these ones!
+4-good_hand=lewd.png,<i>(I've spent the last two years as a loner! Don't underestimate me!)</i>
+4-good_hand,count-role;self&saidmarker;thequeen:=Excited.png,I-I told you! The Queen can't lose!
+4-okay_hand=ok_hand.png,W-Well, it's not <i>bad</i>...
+4-okay_hand=ok_hand.png,I-It's better than nothing... I-I guess...
+4-okay_hand=Shy.png,W-Well, <i>someone's</i> gotta have a w-worse hand than me!..
+4-okay_hand=thinking.png,I can still win! Even if fate is against me!
+4-okay_hand=Shy.png,I'll show you my cards, if you show me yours! That was supposed to be a sexual innuendo...
+4-okay_hand=thinking.png,<i>(If I win, will it make me more popular?)</i>
+4-okay_hand,count-role;self&saidmarker;cheatingtomoko:=ok_hand.png,<i>(I wish I still had my blazer so I could hide cards up the sleeve...)</i>
+4-bad_hand,count-role;self&saidmarker;thequeen:=Angery.png,You've got to be kidding me! I guess it's my fault for trying to be optimistic...
+4-hand,alsoPlaying:guzma,alsoPlayingSayingMarker:MostHumiliatingMoment,totalRounds:6,id:1=Suprised.png,Heh... you really think you can humiliate me?! I've been through cringey situations others can only have nightmares about!
+4-hand,count-role;self&saidmarker;tomomoongardevoir:=Shy.png,Uh, Moon? What does a Gardevoir look like... <i>down there?</i>
+4-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,Oh... um... I'm kinda into rap. If you are asking!
+4-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,I like rap. You know- gangster Western stuff! <i>(I bet everybody is thinking I'm super cool...)</i>
+
+
+#lost skirt
+5-swap_cards,marker:thequeen=Excited.png,E-Even when things look bad... the Queen always draws just what she needs!
+5-swap_cards=thinking.png,I'll swap these ~cards~. Maybe? <i>(This game is hard!)</i>
+5-swap_cards=Angery.png,<i>(Gods of luck! I demand you smile upon me!)</i>
+5-swap_cards=ok_hand.png,Give me ~cards~ cards now!!... please?
+5-swap_cards,count-role;self&saidmarker;cheatingtomoko:,test:~cards~:0=Excited.png,<i>(Even without cheating, I can still win this!)</i> I'll keep this hand! All of it!
+5-swap_cards,test:~cards~:0=thinking.png,Huh? I really didn't think I'd draw so well...
+5-swap_cards,test:~cards~:4:>==Angery.png,These ~cards~ cards are all whores. Replace them!
+5-good_hand=ok_hand.png,<i>(Hey... my cards are good! That's a weird feeling.)</i>
+5-good_hand=Victorious.png,Y-you small fries t-tried your best! B-be proud!
+5-good_hand=Idle 01.png,<i>(I don't know what to say... so I guess I'll say nothing.)</i>
+5-good_hand=thinking.png,Wait, am I good at poker?!
+5-good_hand=Excited.png,My favourite card is... all of these ones!
+5-good_hand=lewd.png,<i>(I've spent the last two years as a loner! Don't underestimate me!)</i>
+5-good_hand,count-role;self&saidmarker;thequeen:=Excited.png,I-I told you! The Queen can't lose!
+5-okay_hand=ok_hand.png,W-Well, it's not <i>bad</i>...
+5-okay_hand=ok_hand.png,I-It's better than nothing... I-I guess...
+5-okay_hand=Shy.png,W-Well, <i>someone's</i> gotta have a w-worse hand than me!..
+5-okay_hand=thinking.png,I can still win! Even if fate is against me!
+5-okay_hand=Shy.png,I'll show you my cards, if you show me yours! That was supposed to be a sexual innuendo...
+5-okay_hand=thinking.png,<i>(If I win, will it make me more popular?)</i>
+5-okay_hand,count-role;self&saidmarker;cheatingtomoko:=ok_hand.png,<i>(I wish I still had my blazer so I could hide cards up the sleeve...)</i>
+5-bad_hand,count-role;self&saidmarker;thequeen:=Angery.png,You've got to be kidding me! I guess it's my fault for trying to be optimistic...
+5-hand,alsoPlaying:guzma,alsoPlayingSayingMarker:MostHumiliatingMoment,totalRounds:6,id:1=Suprised.png,Heh... you really think you can humiliate me?! I've been through cringey situations others can only have nightmares about!
+5-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,Oh... um... I'm kinda into rap. If you are asking!
+5-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,I like rap. You know- gangster Western stuff! <i>(I bet everybody is thinking I'm super cool...)</i>
+
+
+#lost shirt
+6-swap_cards=Angery.png,~cards~... did you even hear me?!
+6-swap_cards=Suprised.png,<i>(I can't lose again!!)</i> ~cards~!! ~cards~ cards!
+6-swap_cards=thinking.png,<i>(Don't panic Tomoko, just don't lose!)</i>
+6-swap_cards=Angery.png,I won't give in to another inevitable humiliation! New cards!
+6-swap_cards,count-role;self&saidmarker;cheatingtomoko:,test:~cards~:4:>==Suprised.png,<i>(Is this karma for cheating?!)</i> ~cards~ cards...
+6-swap_cards,test:~cards~:0=Excited.png,If these cards somehow get beat... I'm gonna cry!
+6-swap_cards,test:~cards~:0=Victorious.png,I deserve this! I'll keep all of these!
+6-swap_cards,test:~cards~:4:>==Angery.png,I hate my life! ~cards~ cards!
+6-swap_cards,test:~cards~:4:>==Shy.png,Why does the world hate me!?  I n-need ~cards~ new cards...
+6-good_hand=ok_hand.png,<i>(Hey... my cards are good! That's a weird feeling.)</i>
+6-good_hand=Victorious.png,Y-you small fries t-tried your best! B-be proud!
+6-good_hand=Idle 01.png,<i>(I don't know what to say... so I guess I'll say nothing.)</i>
+6-good_hand=thinking.png,Wait, am I good at poker?!
+6-good_hand=Excited.png,My favourite card is... all of these ones!
+6-good_hand=lewd.png,<i>(I've spent the last two years as a loner! Don't underestimate me!)</i>
+6-okay_hand=ok_hand.png,W-Well, it's not <i>bad</i>...
+6-okay_hand=ok_hand.png,I-It's better than nothing... I-I guess...
+6-okay_hand=Shy.png,W-Well, <i>someone's</i> gotta have a w-worse hand than me!..
+6-okay_hand=thinking.png,I can still win! Even if fate is against me!
+6-okay_hand=Shy.png,I'll show you my cards, if you show me yours! That was supposed to be a sexual innuendo...
+6-okay_hand=thinking.png,<i>(If I win, will it make me more popular?)</i>
+6-okay_hand,count-role;self&saidmarker;cheatingtomoko:=ok_hand.png,<i>(I wish I still had my blazer so I could hide cards up the sleeve...)</i>
+6-hand,alsoPlaying:guzma,alsoPlayingSayingMarker:MostHumiliatingMoment,totalRounds:6,id:1=Suprised.png,Heh... you really think you can humiliate me?! I've been through cringey situations others can only have nightmares about!
+6-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,Oh... um... I'm kinda into rap. If you are asking!
+6-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,I like rap. You know- gangster Western stuff! <i>(I bet everybody is thinking I'm super cool...)</i>
+
+
+#lost dress
+7-swap_cards=Angery.png,~cards~... did you even hear me?!
+7-swap_cards=Suprised.png,<i>(I can't lose again!!)</i> ~cards~!! ~cards~ cards!
+7-swap_cards=thinking.png,<i>(Don't panic Tomoko, just don't lose!)</i>
+7-swap_cards=Angery.png,I won't give in to another inevitable humiliation! New cards!
+7-swap_cards,count-role;self&saidmarker;cheatingtomoko:,test:~cards~:4:>==Suprised.png,<i>(Is this karma for cheating?!)</i> ~cards~ cards...
+7-swap_cards,test:~cards~:0=Excited.png,If these cards somehow get beat... I'm gonna cry!
+7-swap_cards,test:~cards~:0=Victorious.png,I deserve this! I'll keep all of these!
+7-swap_cards,test:~cards~:4:>==Angery.png,I hate my life! ~cards~ cards!
+7-swap_cards,test:~cards~:4:>==Shy.png,Why does the world hate me!?  I n-need ~cards~ new cards...
+7-good_hand=ok_hand.png,It's too bad the only god I haven't killed is the one that gives me luck.
+7-good_hand=Idle 01.png,Of course the god of luck smiles upon me, I let him live.
+7-good_hand=Victorious.png,Thank you dealer! {b}Thank you!{!reset}
+7-good_hand=Angery.png,Is this a dream?! Why didn't I draw this earlier?!
+7-okay_hand=Shy.png,I... s-see...
+7-okay_hand=ok_hand.png,( This hand should be fine... )
+7-okay_hand=ok_hand.png,( It's better than nothing... right? )
+7-okay_hand=Angery.png,<i>(My heart is beating furiously!)</i> Let's just show our hands already!
+7-okay_hand=Shy.png,Please let me win!! This is so embarrasing!
+7-okay_hand=ok_hand.png,I'm not sweating cause I'm nervous...it's just, uh a condition?!
+7-okay_hand=ok_hand.png,I need to sit down! My legs are shaking!
+7-okay_hand=thinking.png,<i>(This'll all be over soon Tomoko!)</i>
+7-bad_hand=Suprised.png,<i>Why did I decide to play this game?!</i>
+7-bad_hand=Suprised.png,<i>Idiot! How do you get yourself into these situations?</i>
+7-bad_hand=Suprised.png,Please forgive me! I'm sorry for everything!
+7-bad_hand=Suprised.png,I-... I'm going to l-lose...
+7-hand,alsoPlaying:guzma,alsoPlayingSayingMarker:MostHumiliatingMoment,totalRounds:6,id:1=Suprised.png,Heh... you really think you can humiliate me?! I've been through cringey situations others can only have nightmares about!
+7-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,Oh... um... I'm kinda into rap. If you are asking!
+7-hand,alsoPlaying:revy,alsoPlayingSayingMarker:music,count-futaba:0,id:3=,I like rap. You know- gangster Western stuff! <i>(I bet everybody is thinking I'm super cool...)</i>
+
+
+#naked
+-3-swap_cards=Angery.png,~cards~... did you even hear me?!
+-3-swap_cards=Suprised.png,<i>(I can't lose again!!)</i> ~cards~!! ~cards~ cards!
+-3-swap_cards=thinking.png,<i>(Don't panic Tomoko, just don't lose!)</i>
+-3-swap_cards=Angery.png,I won't give in to another inevitable humiliation! New cards!
+-3-swap_cards,count-role;self&saidmarker;cheatingtomoko:,test:~cards~:4:>==Suprised.png,<i>(Is this karma for cheating?!)</i> ~cards~ cards...
+-3-swap_cards,test:~cards~:0=Excited.png,If these cards somehow get beat... I'm gonna cry!
+-3-swap_cards,test:~cards~:0=Victorious.png,I deserve this! I'll keep all of these!
+-3-swap_cards,test:~cards~:4:>==Angery.png,I hate my life! ~cards~ cards!
+-3-swap_cards,test:~cards~:4:>==Shy.png,Why does the world hate me!?  I n-need ~cards~ new cards...
+-3-good_hand=ok_hand.png,It's too bad the only god I haven't killed is the one that gives me luck.
+-3-good_hand=Idle 01.png,Of course the god of luck smiles upon me, I let him live.
+-3-good_hand=Victorious.png,Thank you dealer! {b}Thank you!{!reset}
+-3-good_hand=Angery.png,Is this a dream?! Why didn't I draw this earlier?!
+-3-okay_hand=Shy.png,I... s-see...
+-3-okay_hand=ok_hand.png,( This hand should be fine... )
+-3-okay_hand=ok_hand.png,( It's better than nothing... right? )
+-3-okay_hand=Angery.png,<i>(My heart is beating furiously!)</i> Let's just show our hands already!
+-3-okay_hand=Shy.png,Please let me win!! This is so embarrasing!
+-3-okay_hand=ok_hand.png,I'm not sweating cause I'm nervous...it's just, uh a condition?!
+-3-okay_hand=ok_hand.png,I need to sit down! My legs are shaking!
+-3-okay_hand=thinking.png,<i>(This'll all be over soon Tomoko!)</i>
+-3-bad_hand=Suprised.png,<i>Why did I decide to play this game?!</i>
+-3-bad_hand=Suprised.png,<i>Idiot! How do you get yourself into these situations?</i>
+-3-bad_hand=Suprised.png,Please forgive me! I'm sorry for everything!
+-3-bad_hand=Suprised.png,I-... I'm going to l-lose...
+-3-hand,alsoPlaying:guzma,alsoPlayingSayingMarker:MostHumiliatingMoment,totalRounds:6,id:1=Suprised.png,Heh... you really think you can humiliate me?! I've been through cringey situations others can only have nightmares about!
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#losing tie
+0-must_strip_winning=Thinking_Blush.png,( Well at least I'm not as naked as everyone else )
+0-must_strip_winning=Thinking_Blush.png,( Whatever. I'm <i>winning</i>... )
+0-must_strip_winning=Thinking_Blush.png,( It's just a tie... )
+0-must_strip_winning=Thinking_Blush.png,Don't expect this to be a common occurance!
+0-must_strip_winning,count-role;self&saidmarker;worthless:=Select 01.png,( God... You weren't worthless... Up to this point... )
+0-must_strip_normal=Thinking_Blush.png,( I thought luck was on my side... )
+0-must_strip_normal=Thinking_Blush.png,I've played these kind of games online...
+0-must_strip_normal,count-role;self&saidmarker;worthless:=Select 01.png,( Well... you weren't a worthless God for a little bit... )
+0-must_strip_normal,count-male:1-4,count-not_crotch_visible:4=Thinking_Blush.png,Ugh, fine. <i>(But I'm only staying cause I wanna see dicks!)</i>
+0-must_strip_losing=Thinking_Blush.png,( It's just a tie... )
+0-must_strip_losing=Thinking_Blush.png,( I'm sure it's just a fluke! )
+0-must_strip_losing=Thinking_Blush.png,My shoes are uncomfortable anyway...
+0-must_strip_losing=Angery.png,Wait?! Why did you all bring so much clothing?!
+0-must_strip_losing,count-role;self&saidmarker;worthless:=Angery.png,( You really are a <b>worthless</b> god... )
+0-stripping=Strip.png,I... I, gu-guess I... I can take off m-my tie...
+0-stripping=Strip.png,I... It's j-just a t-tie...
+0-stripping=Strip.png,Wh... Wh-Whatever... it's j-just a t-tie...
+
+
+#losing shoes
+1-stripped,marker:greet_all_friend=Shy.png,I-I'm Tomoko... I-I was hoping I could m-maybe make some friends...
+1-stripped,marker:greet_all_bother=Shy.png,I-I'm Tomoko... I hope I'm n-no bother...
+1-stripped,marker:greet_all=Shy.png,H-Hi... I'm Tomoko... I'm pretty n-new to this game... sorry...
+1-stripped,priority:1,count-role;other&character;samus&saidmarker;mute_curious:=post_strip_tie.png,O-Of course I-I can talk... sorry you had to even ask...
+1-stripped,totalRounds:0=uncomfortable.png,Ugh, I guess I'll keep playing. <i>(It's not like I have anything better to do...)</i>
+1-stripped,totalRounds:0=uncomfortable.png,You are all perverts! <i>(Then again... this could be kind of hot.)</i>
+1-stripped,totalRounds:0=thinking.png,<i>(Is this a game that popular people play?!)</i> I guess I'll stay...
+1-must_strip_winning=nervous.png,I... I guess I-I'll join you guys...
+1-must_strip_winning=Shy.png,( I thought I might just keep winning for a second... )
+1-must_strip_winning=post_strip_tie.png,I j-just take off m-my shoes... right?..
+1-must_strip_winning=Angery.png,Don't forget! I'm still winning, okay?!
+1-must_strip_winning=nervous.png,I guess I'll keep playing. Only a loser would leave now... right?
+1-must_strip_normal=post_strip_tie.png,( I can't believe I'm losing to these people!.. Well... at least some of them are losing harder... )
+1-must_strip_normal=post_strip_tie.png,Th-That... makes s-sense...
+1-must_strip_normal=nervous.png,It's only shoes! I'm not nervous!
+1-must_strip_normal=Angery.png,C-Can I count each shoe seperately? No? Why not!?
+1-must_strip_losing=Suprised.png,( I can't believe I'm losing like this! It must be some sort of prank! )
+1-must_strip_losing=uncomfortable.png,A-Again?!...
+1-must_strip_losing=uncomfortable.png,<i>(I came here to see other people strip! I don't want anybody to see me naked!)</i>
+1-stripping=Strip.png,M-My shoes count... right?..
+1-stripping=Strip.png,I-I'll take off m-my shoes I guess...
+1-stripping=Strip.png,Sh-Shoes?.. W-What I'm taking off, I mean...
+1-stripping=Strip.png,Sh-Shoes come next... r-right?
+1-stripping=Strip.png,M-My shoes are okay... r-right?
+1-stripping=Strip.png,<i>(I really hope I don't fall over trying to take these off...)</i>
+1-stripping=Strip.png,Just let me untie my laces! I might be a minute...
+
+
+#losing leggings
+2-stripped=Angery.png,A-Alright... I won't lose s-so easy next time!..
+2-stripped=ok_hand.png,T-Two down... more to go...
+2-stripped=nervous.png,<i>(Without my shoes it'll be harder to run away if I lose...)</i>
+2-stripped=nervous.png,<i>(I feel so much shorter without my shoes... and I'm already short enough!)</i>
+2-must_strip_winning=Shy.png,I g-guess I might as w-well join you guys...
+2-must_strip_winning=Shy.png,( I thought I might just win that one... )
+2-must_strip_winning=nervous.png,J-Just my socks... right?..
+2-must_strip_winning=Angery.png,C-Can I count each sock seperately? No? Why not!?
+2-must_strip_normal=nervous.png,G-Guess it's time to s-strip... again...
+2-must_strip_normal=Shy.png,I-I lose... again...
+2-must_strip_normal=Suprised.png,<i>(I lost?! I hate this game!)</i>
+2-must_strip_normal=Angery.png,~silent~
+2-must_strip_losing=nervous.png,F-Fuck...
+2-must_strip_losing=Suprised.png,( How am I losing like this?!.. )
+2-must_strip_losing=Suprised.png,( What is my luck?! Fuck you god! )
+2-must_strip_losing,count-role;self&saidmarker;cheatingtomoko:=Angery.png,<i>(How am I cheating and still losing?!)</i>
+2-stripping=Strip.png,I-It looks like the <i>s-socks</i> are coming off...
+2-stripping=Strip.png,Y-You perverts are about to g-get a lot of skin...
+2-stripping=Strip.png,<i>(I hope somebody tells me I'm cute...)</i>
+2-stripping=Strip.png,<i>(I really hope that no perverts here have a foot fetish!)</i>
+
+
+#losing blazer
+3-stripped=Angery.png,I-I don't <i>need</i> leggings to b-beat you guys!..
+3-stripped=Angery.png,L-Leggings aren't important or anything!..
+3-stripped=Suprised.png,Heh, well you know what they say. Small feet, small- {b}Wait!{!reset} I don't have a dick!
+3-must_strip_winning=winning.png,W-Well, I've probably gotta catch up with you guys <i>some</i>time!
+3-must_strip_winning=winning.png,A-At least I'm not as behind as you guys!
+3-must_strip_winning=winning.png,L-Looks like your chances of winning have increased!.. <i>slightly</i>...
+3-must_strip_winning,count-role;self&saidmarker;cheatingtomoko:=thinking.png,<i>(I can finish this without cheating...I'm already winning anyway!)</i>
+3-must_strip_normal=winning.png,W-Well... I guess it had to happen sooner or later!
+3-must_strip_normal=winning.png,S-Sooner or later, it was <i>bound</i> to happen!
+3-must_strip_normal=winning.png,I-I guess it was gonna happen sooner or later!
+3-must_strip_normal=Shy.png,How did I lose again?! <i>(These people are better than I thought they'd be!)</i>
+3-must_strip_normal=Shy.png,<i>(This is the last thing I can take off before everything is super embarrassing!)</i>
+3-must_strip_normal,count-role;self&saidmarker;cheatingtomoko:=Curious.png,<i>If I take this off I can't hide cards up my sleeve! But I can't expose anything else though!)</i> What should I do?!
+3-must_strip_losing=Excited.png,I-I may be losing, but it won't be like that for long!
+3-must_strip_losing=Angery.png,I-I may be losing now, but the game's only just begun!
+3-must_strip_losing=Angery.png,If I lose once more, I'm leaving! Promise!
+3-stripping=Strip.png,The <i>Big Girl Gloves</i> are coming off!
+3-stripping=Strip.png,The <i>Big Girl's Blazer</i> is coming off!
+3-stripping=Strip.png,The <i>Blazer's</i> coming off!
+3-stripping=Strip.png,The <i>"Going Easy" Gloves</i> are coming off!
+3-stripping=Strip.png,With the shedding of this <i>Blazer</i>, comes the lighting of passionate fire within' me!
+3-stripping,marker:poop_joke=specialstrip.png,I'd go take a <i>really messy</i> shit in the bathroom right now if I didn't need to pull a win out of my ass right now!
+
+
+#losing skirt
+4-stripped=Shy.png,<i>(This is super embarrassing... but I don't think I would've been even able to play this kind of game a year ago...)</i>
+4-stripped=Angery.png,<i>(I really can't lose again! It's time to show these normies not to underestimate me!)</i>
+4-stripped=lewd.png,At least everybody is paying attention to me now... heh...
+4-must_strip_winning=Angery.png,Don't judge me! <i>(This is so perverted!)</i>
+4-must_strip_winning=ok_hand.png,I guess it's a little better when everybody else is already undressed...
+4-must_strip_winning=thinking.png,This is like an anime which sucks and nobody watches.
+4-must_strip_normal=Angery.png,I'm, just, like going to do it! Okay?! This is so stupid!
+4-must_strip_normal=Shy.png,<i>(Oh god! Why is this happening to me?!)</i>
+4-must_strip_normal=Shy.png,I've been through a lot of embarrassing situations... but nobody has seen me naked before!
+4-must_strip_losing=Suprised.png,Give me a second! I'm just having a mental breakdown!
+4-must_strip_losing=Shy.png,<i>(I wanna go home, but everybody will laugh at me if I leave early!)</i>
+4-must_strip_losing=Suprised.png,<i>(No, no, no!)<i> No!
+4-stripping,marker:cutegirlstrip=Strip.png,<i>(I'm getting a little nervous here! They won't force a cute girl like me to strip right?!)</i>
+4-stripping=Strip.png,<i>(If I don't act embarrassed, will they all think I'm some sort of slut?!)</i>
+
+
+#losing shirt
+5-stripped=Angery.png,<i>(I'm getting mad at myself for getting so embarrassed!)</i>
+5-stripped=Shy.png,Can we continue now?
+5-stripped=Angery.png,D-Don't get your hopes up!.. perverts...
+5-stripped,count-role;self&saidmarker;cutegirlstrip:=Shy.png,<i>(I guess I'm not a cute girl anyway...)</i>
+5-must_strip_winning=Shy.png,This is the worst day of my life... or uh, one of the worst days of my life.
+5-must_strip_winning=thinking.png,<i>Even if I lose here, I can still win overall!</i>
+5-must_strip_winning=Suprised.png,<i>(I want to kill myself!)</i>
+5-must_strip_normal=Angery.png,Don't laugh! I'm serious!
+5-must_strip_normal=Shy.png,This is the worst day of my life... or uh, one of the worst days of my life.
+5-must_strip_normal=Suprised.png,<i>(Oh god! Why is this happening to me?!)</i>
+5-must_strip_losing=Shy.png,<i>(I'm glad Kii-chan isn't here to see me lose...)</i>
+5-must_strip_losing=Shy.png,Can we play a different game? One where I wear more clothes?
+5-must_strip_losing=Suprised.png,Is this some sort of prank!? Where are the hidden cameras?!
+5-stripping=Strip.png,If anybody laughs, I'll put you on my hitlist...
+
+
+#losing dress
+6-stripped=Angery.png,<i>(I can't believe I'm embarrassed like some normie!)</i>
+6-stripped=Shy.png,<i>(I guess this is a game for exhibistionists... and pervs like me.)</i>
+6-must_strip_winning=Shy.png,Can everyone close your eyes for a second?! This is already really weird!
+6-must_strip_winning=Suprised.png,<i>(Even if I win, they'll still have seen my boobs!)</i>
+6-must_strip_winning=ok_hand.png,Oh god, no! Nothing ever goes right for me...
+6-must_strip_normal=Shy.png,Don't look! {b}Please!{!reset}
+6-must_strip_normal=Shy.png,<i>(Just get it over with Tomoko... it's just another inevitable failure...)</i>
+6-must_strip_normal=Shy.png,<i>(I'm gonna die of shame...)</i>
+6-must_strip_normal=Angery.png,This place is just a palace of anxiety and peer pressure. 
+6-must_strip_losing=Angery.png,How the fuck do I always end up in embarrassing situations?!
+6-must_strip_losing=Shy.png,<i>(I think I peed myself a little...)</i>
+6-must_strip_losing=Angery.png,You are all just bullying me because I'm a loner!
+6-stripping=Strip.png,My last piece of any sort of modesty...
+6-stripping=Strip.png,<i>(Oh god, this is karma for all my perverted antics!)</i>
+6-stripping=Strip.png,It's not like there's much to see anyway...
+
+
+#losing panties
+7-stripped=Shy.png,<i>(I really really hope people don't think my panties are gross or dirty...)</i>
+7-stripped=Shy.png,... my friend Yuu-chan helped me pick these...
+7-stripped=Angery.png,Usually I wear a bra but I couldn't be bothered today. I didn't know I'd play this game earlier, okay!?
+7-stripped=Shy.png,Sorry... they are a little small...
+7-must_strip_winning=Suprised.png,I can't believe I ever thought I could win!
+7-must_strip_winning=Suprised.png,... I lost.
+7-must_strip_normal=Angery.png,If any of you tell anyone about this, I'll report you to the police!
+7-must_strip_normal=Suprised.png,Eek! Why couldn't I draw better?!
+7-must_strip_normal=Suprised.png,... I lost.
+7-must_strip_losing=Suprised.png,Fuck, fuck, fuck! <i>(If I take this off, I'll be butt naked!)</i>
+7-must_strip_losing=Suprised.png,Haha! Funny joke guys! But I don't have to get like actually naked? Right?!
+7-must_strip_losing=Suprised.png,Rematch! {b}Rematch!{!reset}
+7-stripping=Strip.png,<i>(Don't underestimate the mental strength of someone who's survived countless battles with shame!)</i>
+7-stripping=Strip.png,<i>(If I close my eyes, maybe it'll be easier...)</i>
+7-stripping=Strip.png,Fuck, fuck, fuck! <i>(If I take this off, I'll be butt naked!)</i>
+7-stripping,marker:dickjoke=Strip.png,It'd be funny if I took this off and I had a dick... wait, I'm joking!
+
+
+#naked
+-3-stripped=Angery.png,Now I'm naked! Happy?! <i>(Why is this so arousing?!)</i>
+-3-stripped=Suprised.png,<i>(I'm usually naked when I'm alone anyway, so just pretend nobody else is here!)</i>
+-3-stripped=Idle 01.png,<i>(I can't believe I'm using my hands to cover myself like some sort of female!)</i>
+-3-stripped=Angery.png,Uh, I mean I shave sometimes... ok? I didn't know this game would happen!
+-3-stripped,count-role;self&saidmarker;dickjoke:=Angery.png,See! No dick, okay?!
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#fully clothed
+0-male_human_must_strip=Thinking_Blush.png,( He lost... That means he has to take something off? )
+0-male_human_must_strip=Select 01.png,( Strip poker...  Truly a game of intellect. )
+0-male_human_must_strip=Select 01.png,Heh! Take it off!
+0-male_human_must_strip=Victorious.png,I've not even taken off my shoes yet! <i>(Winning feels sexy!)</i>
+0-male_human_must_strip=Select 02.png,I feel so smug right now.
+0-male_human_must_strip,count-role;self&notsaidmarker;cloth_virgin:,marker:cloth_virgin=Curious.png,( I've never really <b><i>seen</i></b> a boy take off any clothes before! )
+0-male_human_must_strip,count-role;self&notsaidmarker;new:,marker:new=thinking.png,( So this is what strip poker is like... )
+0-male_human_must_strip,count-role;self&notsaidmarker;new:,marker:new=thinking.png,( So this is strip poker?.. Interesting... )
+0-male_human_must_strip,count-role;self&notsaidmarker;new:,marker:new=thinking.png,<i>(This is strip poker?! Act cool Tomoko!)</i> Oh y-yeah. N-Nudity. C-Cool.
+0-male_human_must_strip,count-role;self&notsaidmarker;new:,marker:new=Curious.png,Why is ~player~ taking their clothes off? Wait, this is what game now?!
+0-male_human_must_strip,count-not_exposed:1-4=Excited.png,<i>(Every piece of clothing, the closer I get to seeing a real dick!)</i>
+0-male_must_strip=Thinking_Blush.png,( He lost... That means he has to take something off? )
+0-male_must_strip=Select 01.png,( Strip poker...  Truly a game of intellect. )
+0-male_must_strip=Select 02.png,I've not even taken off my shoes yet! <i>(Winning feels sexy!)</i>
+0-male_must_strip=Thinking_Blush.png,<i>(He's really going to take his clothes off! Does he not have any shame?!)</i>
+0-male_must_strip=thinking.png,<i>(I've barely talked to a boy in years and now one is stripping in front of me!)</i>
+0-male_must_strip,count-role;self&notsaidmarker;cloth_virgin:,marker:cloth_virgin=Curious.png,( I've never really <b><i>seen</i></b> a boy take off any clothes before! )
+0-male_must_strip,count-role;self&notsaidmarker;new:,marker:new=thinking.png,( So this is what strip poker is like... )
+0-male_must_strip,count-role;self&notsaidmarker;new:,marker:new=thinking.png,( So this is strip poker?.. Interesting... )
+0-male_must_strip,count-role;self&notsaidmarker;new:,marker:new=thinking.png,<i>Wait, this is strip poker?! Act cool Tomoko!</i> Oh y-yeah. N-Nudity. C-Cool.
+0-female_human_must_strip=thinking.png,( So this is what strip poker is like... )
+0-female_human_must_strip=thinking.png,( So this is strip poker?.. Interesting... )
+0-female_human_must_strip=Thinking_Blush.png,( She lost... That means she has to take something off? )
+0-female_human_must_strip=Select 01.png,( Strip poker...  Truly a game of intellect. )
+0-female_human_must_strip,count-role;self&notsaidmarker;new:,marker:new=thinking.png,( So this is what strip poker is like... )
+0-female_human_must_strip,count-role;self&notsaidmarker;new:,marker:new=thinking.png,( So this is strip poker?.. Interesting... )
+0-female_human_must_strip,count-role;self&notsaidmarker;new:,marker:new=Shy.png,<i>This is strip poker?! Act cool Tomoko!</i> Oh y-yeah. N-Nudity. C-Cool.
+0-female_must_strip=thinking.png,( So this is what strip poker is like... )
+0-female_must_strip=thinking.png,( So this is strip poker?.. Interesting... )
+0-female_must_strip=Thinking_Blush.png,( She lost... That means she has to take something off? )
+0-female_must_strip=Select 01.png,( Strip poker...  Truly a game of intellect. )
+0-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_jaune,id:5=,What?! No! Never!.... how much money?
+0-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,I'm not a furry... but my cousin Kii-chan is.
+0-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(I've only masturbated to furry porn a couples times... that doesn't make me a furry, right?!)</i>
+0-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(Furry porn gets weird for me when they change a characters face. But just tails or ears can be kinda hot..)</i>
+0-female_must_strip,count-role;self&notsaidmarker;new:,marker:new=thinking.png,( So this is what strip poker is like... )
+0-female_must_strip,count-role;self&notsaidmarker;new:,marker:new=thinking.png,( So this is strip poker?.. Interesting... )
+0-female_must_strip,count-role;self&notsaidmarker;new:,marker:new=Shy.png,<i>This is strip poker?! Act cool Tomoko!</i> Oh y-yeah. N-Nudity. C-Cool.
+
+
+#lost tie
+1-male_human_must_strip=Curious.png,( How curious... )
+1-male_human_must_strip=ok_hand.png,Oh...
+1-male_human_must_strip=Victorious.png,( ~player~ lost... alright! That's not me! )
+1-male_human_must_strip=Shy.png,This game is more fun than I expected...
+1-male_human_must_strip=Victorious.png,Thanks for losing ~player~!
+1-male_human_must_strip,count-role;self&notsaidmarker;cloth_virgin:,marker:cloth_virgin=Curious.png,( I've never really <b><i>seen</i></b> a boy take off any clothes before! )
+1-male_human_must_strip,count-not_exposed:1-4=Excited.png,<i>(Every piece of clothing, the closer I get to seeing a real dick!)</i>
+1-male_must_strip=Curious.png,( How curious... )
+1-male_must_strip=ok_hand.png,Oh...
+1-male_must_strip=Victorious.png,( ~name~ lost... alright! That's not me! )
+1-male_must_strip=Victorious.png,This game is more fun than I expected...
+1-male_must_strip=Shy.png,Strip! <i>(Am I being too desperate?!)</i>
+1-male_must_strip,count-role;self&notsaidmarker;cloth_virgin:,marker:cloth_virgin=Curious.png,( I've never really <b><i>seen</i></b> a boy take off any clothes before! )
+1-female_human_must_strip=internal_victory.png,( Better her than me... )
+1-female_human_must_strip=Shy.png,( Well at least it's not me... )
+1-female_human_must_strip=thinking.png,<i>(Wow, I didn't think I'd ever be involved in a game like this.)</i>
+1-female_must_strip=nervous.png,( Wow... That was a close one... )
+1-female_must_strip=post_strip_tie.png,( Looks like ~name~ took this round... As long as it isn't me...)
+1-female_must_strip=thinking.png,<i>(Wow, I didn't think I'd ever be involved in a game like this.)</i>
+1-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_jaune,id:5=,What?! No! Never!.... how much money?
+1-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,I'm not a furry... but my cousin Kii-chan is.
+1-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(I've only masturbated to furry porn a couples times... that doesn't make me a furry, right?!)</i>
+1-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(Furry porn gets weird for me when they change a characters face. But just tails or ears can be kinda hot..)</i>
+
+
+#lost shoes
+2-male_human_must_strip=Victorious.png,D-Dang... That really s-sucks for <i>you</i>, ~player~... doesn't it?
+2-male_human_must_strip=Victorious.png,I... I guess you g-gotta strip for us ~player~... don't you?
+2-male_human_must_strip=nervous.png,G-Guess you're stripping huh, ~player~?.. I don't <i>care</i> or anything...
+2-male_human_must_strip=Shy.png,Strip!...  wait, I'm not a pervert, okay?!
+2-male_human_must_strip,count-role;self&notsaidmarker;cloth_virgin:,marker:cloth_virgin=Curious.png,( I've never really <b><i>seen</i></b> a boy take off any clothes before! )
+2-male_human_must_strip,count-not_exposed:1-4=Excited.png,<i>(Every piece of clothing, the closer I get to seeing a real dick!)</i>
+2-male_must_strip=Victorious.png,D-Dang... That really s-sucks for <i>you</i>... doesn't it?
+2-male_must_strip=Victorious.png,I... I guess you g-gotta strip for us... don't you?
+2-male_must_strip=nervous.png,G-Guess you're stripping huh?.. I don't <i>care</i> or anything...
+2-male_must_strip=Curious.png,Uh, what are you going to take off?
+2-male_must_strip,count-role;self&notsaidmarker;cloth_virgin:,marker:cloth_virgin=Curious.png,( I've never really <b><i>seen</i></b> a boy take off any clothes before! )
+2-female_human_must_strip=Idle 01.png,G-Guess you lose huh, ~player~...
+2-female_human_must_strip=Shy.png,B-Better ~player~ than me...
+2-female_human_must_strip=Shy.png,B-Better luck next time, ~player~...
+2-female_human_must_strip=Victorious.png,If you strip, I won't tell anyone!
+2-female_must_strip=Idle 01.png,G-Guess you lose huh...
+2-female_must_strip=Shy.png,A-At least it's not me...
+2-female_must_strip=Shy.png,B-Better luck next time...
+2-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_jaune,id:5=,What?! No! Never!.... how much money?
+2-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,I'm not a furry... but my cousin Kii-chan is.
+2-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(I've only masturbated to furry porn a couples times... that doesn't make me a furry, right?!)</i>
+2-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(Furry porn gets weird for me when they change a characters face. But just tails or ears can be kinda hot..)</i>
+2-female_must_strip,count-role;target&character;streaming-chan&stage;5-7&notsaidmarker;stream_banned:,marker:stream_banned=Shy.png,B-But you might get b-banned!.. S-Streamer-chan...
+2-female_must_strip,count-role;target&character;streaming-chan&stage;0-4&notsaidmarker;stream_views:,marker:stream_views=Shy.png,I-It can only g-get you more views... S-Streamer-chan...
+2-female_must_strip,count-role;target&character;streaming-chan&stage;0-4&notsaidmarker;stream_views:,marker:stream_views=Shy.png,Y-You can only g-get more views b-by stripping... S-Streamer-chan...
+
+
+#lost leggings
+3-male_human_must_strip=Shy.png,S-Sucks to lose, doesn't it?..
+3-male_human_must_strip=winning.png,L-Looks like the god of l-luck isn't smiling down on <i>you</i>, ~name~!
+3-male_human_must_strip=Shy.png,Y-You win some, you lose some, <i>I just hope ~name~ keeps losing some</i>...
+3-male_human_must_strip,count-role;self&notsaidmarker;cloth_virgin:,marker:cloth_virgin=Curious.png,( I've never really <b><i>seen</i></b> a boy take off any clothes before! )
+3-male_human_must_strip,count-not_exposed:1-4=Excited.png,<i>(Every piece of clothing, the closer I get to seeing a real dick!)</i>
+3-male_must_strip=lewd.png,L-Looks like you have to strip for us, ~name~...
+3-male_must_strip=lewd.png,G-Guess you gotta strip, <i>~name~</i>...
+3-male_must_strip=Shy.png,L-Looks like it's <i>~name~s</i> turn to strip...
+3-male_must_strip=lewd.png,You ever heard of the term game theory? I use it so I win!
+3-male_must_strip,count-role;self&notsaidmarker;cloth_virgin:,marker:cloth_virgin=Curious.png,( I've never really <b><i>seen</i></b> a boy take off any clothes before! )
+3-female_human_must_strip=winning.png,Y-You win some, you lose some, ~player~.
+3-female_human_must_strip=ok_hand.png,G-Guess you gotta strip now, ~player~.
+3-female_human_must_strip=Shy.png,S-Sucks...
+3-female_human_must_strip=thinking.png,Forcing someone else to strip is super hot...
+3-female_must_strip=Shy.png,G-Guess you gotta strip, ~name~.
+3-female_must_strip=ok_hand.png,A-At least it wasn't me...
+3-female_must_strip=ok_hand.png,If you strip, I won't tell anyone!
+3-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_jaune,id:5=,What?! No! Never!.... how much money?
+3-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,I'm not a furry... but my cousin Kii-chan is.
+3-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(I've only masturbated to furry porn a couples times... that doesn't make me a furry, right?!)</i>
+3-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(Furry porn gets weird for me when they change a characters face. But just tails or ears can be kinda hot..)</i>
+3-female_must_strip,count-role;target&character;streaming-chan&stage;5-7&notsaidmarker;stream_banned:,marker:stream_banned=Shy.png,B-But you might get b-banned!.. S-Streamer-chan...
+3-female_must_strip,count-role;target&character;streaming-chan&stage;0-4&notsaidmarker;stream_views:,marker:stream_views=Shy.png,I-It can only g-get you more views... S-Streamer-chan...
+3-female_must_strip,count-role;target&character;streaming-chan&stage;0-4&notsaidmarker;stream_views:,marker:stream_views=Shy.png,Y-You can only g-get more views b-by stripping... S-Streamer-chan...
+
+
+#lost blazer
+4-male_human_must_strip=Victorious.png,Hurry up and strip already!
+4-male_human_must_strip=lewd.png,<i>(Seeing someone else stripping while your dressed is super arousing...)</i>
+4-male_human_must_strip=Victorious.png,Thanks for losing ~player~!
+4-male_human_must_strip,count-role;self&notsaidmarker;cloth_virgin:,marker:cloth_virgin=Curious.png,( I've never really <b><i>seen</i></b> a boy take off any clothes before! )
+4-male_must_strip=lewd.png,<i>(Heh, this is better than playing card games with kids.)</i>
+4-male_must_strip=Victorious.png,I'm glad I didn't just stay in my room...
+4-male_must_strip=Victorious.png,You know what you have to do now!
+4-male_must_strip,count-role;self&notsaidmarker;cloth_virgin:,marker:cloth_virgin=Curious.png,( I've never really <b><i>seen</i></b> a boy take off any clothes before! )
+4-female_human_must_strip=Victorious.png,I win and somebody else loses. Perfect!
+4-female_human_must_strip=ok_hand.png,Don't worry! After a while you become numb to these intensely embarrassing situations.
+4-female_human_must_strip=lewd.png,Well, uh, you gotta take it off heh.
+4-female_human_must_strip=Curious.png,<i>(Is ~player~ horny?)</i>
+4-female_must_strip=ok_hand.png,Uh, well you've got to obey the rules right?
+4-female_must_strip=lewd.png,<i>(I'm happy to obey these dumb rules if it means I get to see a girl strip!)</i>
+4-female_must_strip=Excited.png,Yeah, yeah. Just strip already!
+4-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_jaune,id:5=,What?! No! Never!.... how much money?
+4-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,I'm not a furry... but my cousin Kii-chan is.
+4-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(I've only masturbated to furry porn a couples times... that doesn't make me a furry, right?!)</i>
+4-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(Furry porn gets weird for me when they change a characters face. But just tails or ears can be kinda hot..)</i>
+
+
+#lost skirt
+5-male_human_must_strip=Excited.png,<i>(Yes! ~player~ lost!)</i>
+5-male_human_must_strip=Shy.png,Am I allowed to see this?
+5-male_human_must_strip=lewd.png,This game is hot...
+5-male_human_must_strip,count-role;self&notsaidmarker;cloth_virgin:,marker:cloth_virgin=Curious.png,( I've never really <b><i>seen</i></b> a boy take off any clothes before! )
+5-male_must_strip=thinking.png,I've played games like this before... uh, video games. Not real ones.
+5-male_must_strip=Shy.png, I'll not look! <i>(I'm totally gonna look.)</i>
+5-male_must_strip=lewd.png,This game is hot...
+5-male_must_strip,count-role;self&notsaidmarker;cloth_virgin:,marker:cloth_virgin=Curious.png,( I've never really <b><i>seen</i></b> a boy take off any clothes before! )
+5-female_human_must_strip=lewd.png,<i>(This is way better than some nerdy card game!)</i>
+5-female_human_must_strip=Excited.png,You've gotta take it off!
+5-female_human_must_strip=Curious.png,<i>(Is ~player~ popular? Or is she a loner like me?)</i>
+5-female_human_must_strip=lewd.png,<i>(This is way better than some nerdy card game!)</i>
+5-female_must_strip=thinking.png,If you stop playing now, you are a total normie...
+5-female_must_strip=Excited.png,I win and somebody else loses. Perfect!
+5-female_must_strip=lewd.png,<i>(This is way better than some nerdy card game!)</i>
+5-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_jaune,id:5=,What?! No! Never!.... how much money?
+5-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,I'm not a furry... but my cousin Kii-chan is.
+5-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(I've only masturbated to furry porn a couples times... that doesn't make me a furry, right?!)</i>
+5-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(Furry porn gets weird for me when they change a characters face. But just tails or ears can be kinda hot..)</i>
+
+
+#lost shirt
+6-male_human_must_strip=Shy.png,Please strip! I don't want to be the loner who is the only embarrassed person here...
+6-male_human_must_strip=Shy.png,Maybe this game isn't all bad...
+6-male_human_must_strip=Shy.png,<i>(If ~player~ strips, maybe people will stop paying attention to me!)</i>
+6-male_must_strip=lewd.png,I didn't think I'd ever see a guy strip in person...
+6-male_must_strip=thinking.png,I guess this is the kind of things popular people do...
+6-male_must_strip=thinking.png,<i>(I don't know what to say... so I guess I'll say nothing.)</i>
+6-female_human_must_strip=Excited.png,Whenever you are ready... but do it quickly!
+6-female_human_must_strip=lewd.png,You know, if you decide to forfiet now, you'll never lose again!
+6-female_human_must_strip=Shy.png,<i>(Thank god I didn't lose!)</i>
+6-female_human_must_strip=Victorious.png,What? Did you think I'd lose ~player~?
+6-female_must_strip=Victorious.png,I'm glad you are stripping and not me!
+6-female_must_strip=Excited.png,You lost so you have to take it off!
+6-female_must_strip=lewd.png,You know, if you decide to forfiet now, you'll never lose again!
+6-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_jaune,id:5=,What?! No! Never!.... how much money?
+6-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,I'm not a furry... but my cousin Kii-chan is.
+6-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(I've only masturbated to furry porn a couples times... that doesn't make me a furry, right?!)</i>
+6-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(Furry porn gets weird for me when they change a characters face. But just tails or ears can be kinda hot..)</i>
+
+
+#lost dress
+7-male_human_must_strip=thinking.png,<i>(This game is terrible and great!)</i>
+7-male_human_must_strip=Victorious.png,<i>(I shouldn't be so happy about this!)</i>
+7-male_human_must_strip=,Strip! Please...
+7-male_must_strip=Curious.png,Wait who lost? I wasn't paying attention!
+7-male_must_strip=lewd.png,Strip! Please...
+7-male_must_strip=Shy.png,<i>(This game is terrible and great!)</i>
+7-female_human_must_strip=Shy.png,I hate this game when I lose, but I love it when I win!
+7-female_human_must_strip=Shy.png,Lewd...
+7-female_human_must_strip=lewd.png,<i>(I better act casually, I don't want anybody thinking I'm a virgin!)</i>
+7-female_human_must_strip=thinking.png,<i>(Do you think ~player~ is enjoying this like some sort of slut?)</i>
+7-female_must_strip=Shy.png,It's cold in here. My nips are- <i>(I'm not going to finish that.)</i>
+7-female_must_strip=Shy.png,<i>(All I can think about is boobs now...)</i>
+7-female_must_strip=ok_hand.png,<i>(I better act casually, I don't want anybody thinking I'm a virgin!)</i>
+7-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_jaune,id:5=,What?! No! Never!.... how much money?
+7-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,I'm not a furry... but my cousin Kii-chan is.
+7-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(I've only masturbated to furry porn a couples times... that doesn't make me a furry, right?!)</i>
+7-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(Furry porn gets weird for me when they change a characters face. But just tails or ears can be kinda hot..)</i>
+
+
+#naked
+-3-male_human_must_strip=Curious.png,Nobody here is judging you. <i>(Unless you have a tiny dick...)</i>
+-3-male_human_must_strip=Shy.png,<i>(Thank god everybody is paying attention to them and not me...)</i>
+-3-male_human_must_strip=lewd.png,If I'm naked you should be naked too ~player~...
+-3-male_must_strip=Shy.png,<i>(Thank god everybody is paying attention to them and not me...)</i>
+-3-male_must_strip=Shy.png,<i>(The more people that get naked, the less naked I am.)</i>
+-3-male_must_strip=Shy.png,Nobody here is judging you. <i>(Unless you have a tiny dick...)</i>
+-3-female_human_must_strip=Shy.png,<i>(The more people that get naked, the less naked I am!)</i>
+-3-female_human_must_strip=Shy.png,<i>(If ~player~ strips, maybe people will stop paying attention to me!)</i>
+-3-female_human_must_strip=Shy.png,<i>(I hope nobody notices that I'm wet...)</i>
+-3-female_human_must_strip=Shy.png,Please strip! I don't want to be the loner who is the only embarrassed person here...
+-3-female_must_strip=lewd.png,<i>(Try not to stare Tomoko or everyone will think your a lesbo!)</i>
+-3-female_must_strip=Shy.png,<i>(This is so embarrassing... but so arousing!)</i>
+-3-female_must_strip=Shy.png,<i>(I hope nobody notices that I'm wet...)</i>
+-3-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_jaune,id:5=,What?! No! Never!.... how much money?
+-3-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,I'm not a furry... but my cousin Kii-chan is.
+-3-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(I've only masturbated to furry porn a couples times... that doesn't make me a furry, right?!)</i>
+-3-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(Furry porn gets weird for me when they change a characters face. But just tails or ears can be kinda hot..)</i>
+
+
+#masturbating
+-2-male_human_must_strip=Soft1.png,I really really want to see you ~player~!
+-2-male_human_must_strip=Soft1.png,Just strip already! Stop teasing me!
+-2-male_human_must_strip=Soft1.png,Yes! This'll make things easier...
+-2-male_must_strip=Soft1.png,Just strip already! Stop teasing me!
+-2-male_must_strip=Soft1.png,Take it off in a sexy way!
+-2-male_must_strip=Soft1.png,Fuck! I've got to pay attention to this!
+-2-female_human_must_strip=Soft1.png,It's sexier when they are reluctant...
+-2-female_human_must_strip=Soft1.png, Goddammit! Just get naked already!
+-2-female_human_must_strip=Soft1.png,Forcing someone else to strip is super hot...
+-2-female_human_must_strip=Soft1.png,Can I grope you ~player~ after the game?
+-2-female_must_strip=Soft1.png,Strip! I love this game!
+-2-female_must_strip=Soft1.png,Take it off! I'm so hot...
+-2-female_must_strip=Soft1.png,It's sexier when they are a pure hearted person...
+-2-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,I'm not a furry... but my cousin Kii-chan is.
+-2-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(I've only masturbated to furry porn a couples times... that doesn't make me a furry, right?!)</i>
+-2-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(Furry porn gets weird for me when they change a characters face. But just tails or ears can be kinda hot..)</i>
+
+
+#finished
+-1-male_human_must_strip=,... I've got to admit I'm curious... <i>(And still a little horny...)</i>
+-1-male_human_must_strip=,<i>(Oh I forgot this game was still happening...)</i>
+-1-male_human_must_strip=,Is it weird that I kind of want a boyfriend? Uh, unrelated are you dating anyone ~player~?
+-1-male_must_strip=,... I've got to admit I'm curious... <i>(And still a little horny...)</i>
+-1-male_must_strip=,<i>(Everyone here is such a degenerate, me included.)</i>
+-1-male_must_strip=,I didn't think I'd ever see a guy strip in person...
+-1-female_human_must_strip=,Aw, I was hoping you'd take off something more.
+-1-female_human_must_strip=,Haha! Isn't this game fun?!
+-1-female_human_must_strip=,Well... why not?
+-1-female_must_strip=,I might not be playing but I'm glad I'm still allowed to watch!
+-1-female_must_strip=,Why don't we all just get naked? It's only fair.
+-1-female_must_strip=,<i>(This game is lasting longer than I thought it would...)</i>
+-1-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,I'm not a furry... but my cousin Kii-chan is.
+-1-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(I've only masturbated to furry porn a couples times... that doesn't make me a furry, right?!)</i>
+-1-female_must_strip,alsoPlaying:streaming-chan,alsoPlayingSayingMarker:gen_yiff,id:4=,<i>(Furry porn gets weird for me when they change a characters face. But just tails or ears can be kinda hot..)</i>
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#fully clothed
+0-male_removing_accessory=Thinking_Blush.png,( How... Provocative... It's totally provocative... )
+0-male_removing_accessory=,This is lame.
+0-male_removing_accessory=,<i>(I'm talking to people casually...I really have changed into a normie.)</i>
+0-male_removing_accessory=,Heh. Sorry, I just thought of a funny joke.
+0-male_removed_accessory=thinking.png,( That was basically nothing! What is this game for if not to show some skin to the rest of us! )
+0-male_removed_accessory=thinking.png,( That's basically nothing... in terms of stripping... )
+0-male_removed_accessory=thinking.png,So, uh, we continue right? <i>(Is this how this game usually goes?)</i>
+0-male_removed_accessory=Idle 01.png,You might not but some people have places to be! Like me! <i>(There's a new anime premiering tonight I want to watch...)</i>
+0-male_removed_accessory,count-role;self&saidmarker;cheatingtomoko:=lewd.png,You know the sooner we start the next round, the quicker you'll get me naked... <i>(As if I'll lose!)</i>
+0-female_removing_accessory=Angery.png,( Her bra is probably smaller!.. )
+0-female_removing_accessory=thinking.png,( How underwhelming... )
+0-female_removing_accessory=thinking.png,( ... That's all?.. )
+0-female_removing_accessory=just_me.png,Well, uh, new hand?
+0-female_removing_accessory=ok_hand.png,Yawn. Do we keep playing?
+0-female_removing_accessory=Shy.png,Don't worry, I'm only a little shy... heh.
+0-female_removing_accessory,count-role;target&character;mahiru&stage;0:=ok_hand.png,( Mahiru took her tie off first... That's a pretty good idea... )
+0-female_removed_accessory=thinking.png,( That's basically nothing... in terms of stripping... )
+0-female_removed_accessory=lewd.png,So can we continue? <i>(The quicker we get these dumb boring rounds done, the sooner I can see some actually lewd stuff!)</i>
+0-female_removed_accessory=ok_hand.png,Uhh... is that it?
+
+
+#lost tie
+1-male_removing_accessory=Curious.png,( ...? )
+1-male_removing_accessory=Idle 00.png,( ...? )
+1-male_removing_accessory=Idle 00.png,Yawn. <i>(I probably shouldn't have stayed up all night on the internet...)</i>
+1-male_removing_accessory=Idle 01.png,I guess most people would take something like that off...
+1-male_removing_accessory=Shy.png,S-so, uh, how long do we stand here taking off shoes for? Heh.
+1-male_removed_accessory=nervous.png,O-Oh... ( Not as much as I was expecting... )
+1-male_removed_accessory=Angery.png,( That's <i><b>basically</b></i> nothing!.. )
+1-male_removed_accessory=post_strip_tie.png,Oh... ( Just a little thing like that isn't anything to get worked up over... )
+1-male_removed_accessory=thinking.png,Um. Cool.
+1-male_removed_accessory,count-role;self&saidmarker;cheatingtomoko:=lewd.png,You know the sooner we start the next round, the quicker you'll get me naked... <i>(As if I'll lose!)</i>
+1-female_removing_accessory=ok_hand.png,( ~name~'s removing- ... That qualifies, I <i>guess</i>... )
+1-female_removing_accessory=Idle 01.png,Oh...
+1-female_removing_accessory=nervous.png,<i>(Am I supposed to act like I care?)</i>
+1-female_removing_accessory,count-role;target&character;mahiru&stage;0:=thinking.png,( Oh... me and Mahiru both took our ties off first... How neat... )
+1-female_removed_accessory=thinking.png,( It's nothing she can't live without... )
+1-female_removed_accessory=thinking.png,( That's something she'd probably take off before going to sleep... )
+1-female_removed_accessory=thinking.png,<i>(I'm sure there are still some virigns who will get a boner over just that...)</i>
+1-female_removed_accessory,count-role;target&character;marinette&stage;1:=thinking.png,( I wonder if that yo-yo actually makes her luckier... I'd take that over our lame god any day... )
+
+
+#lost shoes
+2-male_removing_accessory=Shy.png,O-Oh...
+2-male_removing_accessory=Shy.png,I s-see...
+2-male_removing_accessory=Shy.png,Do any of you guys know Asuka Kato? Cause she's popular and my friend!
+2-male_removed_accessory=Shy.png,Th-That's all?..
+2-male_removed_accessory=Shy.png,Th-That's it?..
+2-male_removed_accessory=ok_hand.png,I'm so tired already... <i>(I probably should've slept more last night.)</i>
+2-male_removed_accessory=thinking.png,<i>(Am I supposed to act like I care?)</i>
+2-male_removed_accessory=ok_hand.png,So, like can we get our new hand already?
+2-male_removed_accessory,count-role;self&saidmarker;cheatingtomoko:=lewd.png,You know the sooner we start the next round, the quicker you'll get me naked... <i>(As if I'll lose!)</i>
+2-female_removing_accessory=Curious.png,...J-Just that?..
+2-female_removing_accessory=Curious.png,...Th-That's all?..
+2-female_removing_accessory=thinking.png,I'm so tired already... <i>(I probably should've slept more last night.)</i>
+2-female_removing_accessory,count-role;target&character;mahiru&stage;0:=thinking.png,( Oh... me and Mahiru both took our ties off first... How neat... )
+2-female_removed_accessory=ok_hand.png,A-Alright...
+2-female_removed_accessory=Idle 01.png,An entire game where you just watch people take shoes and socks off..
+2-female_removed_accessory=Shy.png,Can we hurry this up? My mom will moan at me if I'm too late.
+
+
+#lost leggings
+3-male_removing_accessory=ok_hand.png,H-His ~clothing~? Well, I wasn't <i>expecting</i> more or anything...
+3-male_removing_accessory=lewd.png,O-One step closer to some real fun!..
+3-male_removing_accessory=Shy.png,Uh, I guess you can just take that off and we can keep playing...
+3-male_removed_accessory=Shy.png,N-Neat...
+3-male_removed_accessory=lewd.png,N-Nice...
+3-male_removed_accessory=ok_hand.png,Yup. Uh, dealer?
+3-female_removing_accessory,marker:tomokostory=ok_hand.png,<i>(I need to make friends with these people somehow!)</i>Do you guys want to hear a, uh, funny story?
+3-female_removing_accessory=Angery.png,Th-That's basically nothing...
+3-female_removing_accessory=ok_hand.png,Th-That's not even that much...
+3-female_removing_accessory=thinking.png,<i>(I wish more people here were whores... it'd make this game easier...)</i>
+3-female_removed_accessory=ok_hand.png,...
+3-female_removed_accessory=Idle 01.png,Uh, this is <i>strip</i> poker, right?
+3-female_removed_accessory=ok_hand.png,Are we going to keep playing? Or are we all going to go home?
+3-female_removed_accessory,count-role;self&saidmarker;tomokostory:=ok_hand.png,So once I joked to my cousin that some random guy was my boyfriend... and um, she took it seriously and told him. So that's how I had to give a stranger my first dogeza.
+3-female_removed_accessory,count-role;self&saidmarker;tomokostory:=Shy.png,There's this dog I know which looked up my deliquent friends skirt! It was pretty funny at the time...
+3-female_removed_accessory,count-role;self&saidmarker;tomokostory:=Victorious.png,Well, I once got detention and had to do art class after school with a random boy. And then he drew a really pretty picture of me!
+3-female_removed_accessory,count-role;self&saidmarker;tomokostory:=Shy.png,Once my friend sent me a dick picture as a joke and then my teacher saw me on my phone and showed it to the entire class! Uh, you can laugh now?
+
+
+#lost blazer
+4-male_removing_accessory=thinking.png,<i>(Do you think Yuu-chan plays games like this?)</i>
+4-male_removing_accessory=Idle 01.png,It took you long enough.
+4-male_removing_accessory=Shy.png,Uh, so do any of you guys watch anime? I like dark ones...
+4-male_removed_accessory=Angery.png,<i>(Why am I even playing a dumb game like this?)</i>
+4-male_removed_accessory=ok_hand.png,Now that's finally over, we can continue right?
+4-male_removed_accessory=Angery.png,Redraw! This time I'm going to win!
+4-female_removing_accessory,marker:tomokostory=ok_hand.png,<i>(I need to make friends with these people somehow!)</i>Do you guys want to hear a, uh, funny story?
+4-female_removing_accessory=ok_hand.png,<i>(I was hoping to see some boobs...)</i>.
+4-female_removing_accessory=Curious.png,Uh, I thought this was {b}strip{!reset} poker.
+4-female_removing_accessory=Angery.png,<i>(If you were just going to take something like that off then don't waste all of our time!)</i>
+4-female_removed_accessory=Idle 01.png,Wh-Whatever
+4-female_removed_accessory=Angery.png,<i>(Why am I even playing a dumb game like this?)</i>
+4-female_removed_accessory=Suprised.png,At least it's something... <i>(It's basically nothing.)</i>
+4-female_removed_accessory,count-role;self&saidmarker;tomokostory:=ok_hand.png,So once I joked to my cousin that some random guy was my boyfriend... and um, she took it seriously and told him. So that's how I had to give a stranger my first dogeza.
+4-female_removed_accessory,count-role;self&saidmarker;tomokostory:=Shy.png,There's this dog I know which looked up my deliquent friends skirt! It was pretty funny at the time...
+4-female_removed_accessory,count-role;self&saidmarker;tomokostory:=Victorious.png,Well, I once got detention and had to do art class after school with a random boy. And then he drew a really pretty picture of me!
+4-female_removed_accessory,count-role;self&saidmarker;tomokostory:=Shy.png,Once my friend sent me a dick picture as a joke and then my teacher saw me on my phone and showed it to the entire class! Uh, you can laugh now?
+
+
+#lost skirt
+5-male_removing_accessory=lewd.png,<i>(If I was a guy, I'd totally have constant boner.)</i>
+5-male_removing_accessory=ok_hand.png,That's a thing. I guess.
+5-male_removing_accessory=thinking.png,If I was the main character in an anime, I'd be super popular. <i>(And everyone would worship me!)</i>
+5-male_removed_accessory=Shy.png,Can you guys please let me win the next round?
+5-male_removed_accessory=ok_hand.png,I'm bored... can we continue already?
+5-male_removed_accessory=Shy.png,I'm ready for the next round... I think.
+5-female_removing_accessory=Shy.png,<i>(The longer this takes, the more I'm embarrassing myself!)</i>
+5-female_removing_accessory=Shy.png,You know if I could I'd write light novels... I don't usually tell people that.
+5-female_removing_accessory=ok_hand.png,I'm not a NEET, I do go to college!
+5-female_removing_accessory=thinking.png,<i>(What do you think Yuri would do if she lost this game?... she'd probably just punch someone.)</i>
+5-female_removed_accessory=Angery.png,Redraw! This time I'm going to win!
+5-female_removed_accessory=Shy.png,New round, new chance!
+5-female_removed_accessory=ok_hand.png,Just hand out the cards so we can get this game moving already!
+
+
+#lost shirt
+6-male_removing_accessory=thinking.png,<i>(I've been handling this game really well... I should treat myself to ice cream!)</i>
+6-male_removing_accessory=Shy.png,Uh, can I get any of your guys LINE? It's fine if not...
+6-male_removing_accessory=Shy.png,<i>(Take off something bigger you coward...)</i>
+6-male_removed_accessory=Angery.png,Just hand out the cards so we can get this game moving already!
+6-male_removed_accessory=Angery.png,I'm just going take new cards! Now!
+6-male_removed_accessory=Shy.png,<i>(The longer this takes, the more I'm embarrassing myself!)</i>
+6-female_removing_accessory=thinking.png,How did you manage to make strip poker boring?
+6-female_removing_accessory=Angery.png,Can somebody at least turn the heating on in the place if I'm dressed like this?
+6-female_removing_accessory=Shy.png,You know... I'm glad none of my friends are here to see this. I have friends, okay?!
+6-female_removed_accessory=thinking.png,<i>(This is kind of like perving on Yuu or Yuri... just way more boring!)</i>
+6-female_removed_accessory=ok_hand.png,Um, so we just keep playing, right?
+6-female_removed_accessory=Idle 01.png,At least I didn't lose...
+
+
+#lost dress
+7-male_removing_accessory=thinking.png,Yeah, I expected as much. <i>(Seriously, how do they still have something like that?!)</i>
+7-male_removing_accessory=Shy.png,That's the kind of article a normie would remove...
+7-male_removing_accessory=Shy.png,I can't blame you... <i>(But I can internally mock you!)</i>
+7-male_removed_accessory=Angery.png,Ugh! Just give me new cards so I can lose pathetically already! <i>(Just my luck...)</i>
+7-male_removed_accessory=Angery.png,You are enjoying this, aren't you?
+7-male_removed_accessory=ok_hand.png,Now we've spent precious time we can never get back, can we get on with the point of this game? <i>(Me seeing other people naked!)</i>
+7-female_removing_accessory=Shy.png,I wish I was wearing something like that right now...
+7-female_removing_accessory=Suprised.png,<i>(I know I'm playing with normies but this is ridiculous!)</i>
+7-female_removing_accessory=Suprised.png,I should've expected something like this...
+7-female_removed_accessory=Shy.png,Ugh, just give me new cards. <i>(I thought winning would feel more satisfying...)</i>
+7-female_removed_accessory=thinking.png,How does winning feel like losing?
+7-female_removed_accessory=ok_hand.png,<i>(That was boring. I wish I was playing with sluts.)</i> Can we just start a new round?
+
+
+#naked
+-3-male_removing_accessory=Shy.png,Can you just strip off a littel more? C'mon, this is already too embarrassing.
+-3-male_removing_accessory=Angery.png,Ughhh, I hate this game now!
+-3-male_removing_accessory=Suprised.png,Are you mocking me?!
+-3-male_removed_accessory=Shy.png,I'm feeling vulnerable... so none of you perverts better take advantage of that!
+-3-male_removed_accessory=Angery.png,How did you even still have that?!
+-3-male_removed_accessory=Angery.png,<i>(Being naked feels slightly liberating... wait fuck! Am I an goddamn exhibistionist!?)</i>
+-3-female_removing_accessory=Suprised.png,<i>(Keep your rage contained Tomoko...)</i>
+-3-female_removing_accessory=Angery.png,I'm not mad at you! I'm just angry at this unfair world!
+-3-female_removing_accessory=Angery.png,I'm naked so pity me!
+-3-female_removed_accessory=Angery.png,<i>(I hate this game. But I still wanna see naked people!)</i>
+-3-female_removed_accessory=Suprised.png,<i>(Being naked feels slightly liberating... wait fuck! Am I an goddamn exhibistionist!?)</i>
+-3-female_removed_accessory=Angery.png,Just give me new cards so I can inevtiably lose already... <i>This world is so unfair!)</i>
+
+
+#masturbating
+-2-male_removing_accessory=Soft1.png,Stop going with the flow! Take something big off!
+-2-male_removing_accessory=Soft1.png,Is that all?!
+-2-male_removing_accessory=Soft1.png,Am I supposed to care?!
+-2-male_removed_accessory=Soft2.png,Why can't we just have an orgy instead?!
+-2-male_removed_accessory=Soft2.png,None of you can tell anyone from my school about this!
+-2-male_removed_accessory=Soft2.png,Yeah, yeah, continue and keep stripping already!
+-2-female_removing_accessory=Soft1.png,I was hoping to see boobs!
+-2-female_removing_accessory=Soft1.png,Why can't we just have an orgy instead?!
+-2-female_removing_accessory=Soft2.png,Degrade me more...
+-2-female_removed_accessory=Soft1.png,Just fucking continue already!
+-2-female_removed_accessory=Soft1.png,Keep playing! I want to see more people strip!
+-2-female_removed_accessory=Soft1.png,{b}I'm not satisfied!{!reset}
+
+
+#finished
+-1-male_removing_accessory=,Is it weird that I kind of want a boyfriend? Uh, unrelated are you dating anyone ~player~?
+-1-male_removing_accessory=,Haha! Isn't this game fun?!
+-1-male_removing_accessory=,Aw, I was hoping you'd take off something more.
+-1-male_removed_accessory=,Next time we're playing strip video games!
+-1-male_removed_accessory=,So when do I get to join back in?
+-1-male_removed_accessory=,This game is lasting a while... it's not a complete waste of time though.
+-1-female_removing_accessory=,The longer this game lasts the longer I sit in my own shame.
+-1-female_removing_accessory=,<i>(Everybody knows I'm a complete pervert now... but I don't care!)</i>
+-1-female_removing_accessory=,C'mon, just strip. I want to leer at you...
+-1-female_removed_accessory=,Next time we're playing strip video games!
+-1-female_removed_accessory=,I'm content with just watching. Playing was tiring anyway.
+-1-female_removed_accessory=,Keep playing! I still want to see nudity...
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#fully clothed
+0-male_removing_minor=Curious.png,( ~name~'s taking off his ~clothing~! How interesting... )
+0-male_removing_minor=Thinking_Blush.png,( ~name~'s taking off his ~clothing~! ... )
+0-male_removing_minor=Select 01.png,At least you've taken off more than I have!
+0-male_removing_minor=lewd.png,<i>(Wow, that totally is a real boy stripping in front of me. Even though it's not much I'm still horny as hell!)</i>
+0-male_removed_minor=ok_hand.png,( I'm glad that isn't me! )
+0-male_removed_minor=,I'm patient! But, uh, give me other cards now!
+0-male_removed_minor=,My hands are empty when they should have new cards!
+0-female_removing_minor=Select 01.png,( She's probably a pro at this... Stripping I mean... )
+0-female_removing_minor=Shy.png,( I avoided losing! )
+0-female_removing_minor=just_me.png,This game is really different from an ergoe.
+0-female_removing_minor=Idle 01.png,<i>(This game isn't so bad... especially when I'm not the one stripping.)</i>
+0-female_removing_minor=Angery.png,I've got to get home at some point to talk to my brother so can we hurry up?
+0-female_removing_minor=lewd.png,Have you ever considered stripping faster?
+0-female_removing_minor=ok_hand.png,This game is so slow! I thought something like strip poker would be interesting!
+0-female_removing_minor,marker:tomokogunthought=thinking.png,You know boring rounds like these let me think about a lot of dumb things. Like, how would you save everyone if a person with a gun showed up?
+0-female_removing_minor,count-role;target&character;marinette:=Idle 01.png,( Looks like it's strippin' time for the lady bug... )
+0-female_removed_minor=Shy.png,( I'm glad that wasn't me! )
+0-female_removed_minor=Shy.png,( I'm glad I'm not the one who lost! )
+0-female_removed_minor,count-role;self&saidmarker;tomokogunthought:=thinking.png,I'd probably find a sharp object and go for the eyes. And then kick him in the crotch! <i>(I'd probably have to use these guys here as human shields though...)</i>
+
+
+#lost tie
+1-male_removing_minor=Idle 01.png,( ~clothing~... Well, it's more than nothing... )
+1-male_removing_minor=Idle 01.png,( ~clothing~... It's more than a watch or a tie or something... )
+1-male_removing_minor=internal_victory.png,You know... I used to be a lot more awkward... heh. If you can believe it!
+1-male_removing_minor=post_strip_tie.png,You are killing my boner...
+1-male_removed_minor=Curious.png,( That shows a little more skin than I expected!.. )
+1-male_removed_minor=Shy.png,( At least we get to see some skin... )
+1-male_removed_minor=thinking.png,( Men are interesting creatures... )
+1-female_removing_minor=thinking.png,( This should be interesting... )
+1-female_removing_minor=ok_hand.png,( It looks like ~name~'s about to show some skin... nice?.. )
+1-female_removing_minor=Idle 01.png,( Strippin' time for ~name~... )
+1-female_removing_minor=nervous.png,You are killing my boner...
+1-female_removing_minor=Idle 01.png,<i>(This game isn't so bad... especially when I'm not the one stripping.)</i>
+1-female_removing_minor=Angery.png,I've got to get home at some point to talk to my brother so can we hurry up?
+1-female_removing_minor=lewd.png,Have you ever considered stripping faster?
+1-female_removing_minor=ok_hand.png,This game is so slow! I thought something like strip poker would be interesting!
+1-female_removing_minor,marker:tomokogunthought=thinking.png,You know boring rounds like these let me think about a lot of dumb things. Like, how would you save everyone if a person with a gun showed up?
+1-female_removing_minor,count-role;target&character;marinette:=Idle 01.png,( Looks like it's strippin' time for the lady bug... )
+1-female_removed_minor=uncomfortable.png,( That's a little more skin than I was expecting... )
+1-female_removed_minor=post_strip_tie.png,( At least she's actually taking something off that shows a little skin... )
+1-female_removed_minor=internal_victory.png,( Tomoko: 1. ~name~: 0 )
+1-female_removed_minor=lewd.png,<i>(I'm sure there are still some virigns who will get a boner over just that...)</i>
+1-female_removed_minor,count-role;self&saidmarker;tomokogunthought:=thinking.png,I'd probably find a sharp object and go for the eyes. And then kick him in the crotch! <i>(I'd probably have to use these guys here as human shields though...)</i>
+
+
+#lost shoes
+2-male_removing_minor=Shy.png,~Clothing~?.. O-Oh...
+2-male_removing_minor=Shy.png,~name~ has t-to remove that?..
+2-male_removing_minor=thinking.png,If I was a guy... I'd have a boner constantly.
+2-male_removing_minor=thinking.png,Sometimes I open my mouth without thinking what I'm actually going to say. Uh, like right now.
+2-male_removed_minor=Shy.png,Th-That's nice...
+2-male_removed_minor=Shy.png,W-Wow...
+2-male_removed_minor=lewd.png,This game would be so much better if you just stripped completely naked the first time you lost. <i>(Or if it was just an orgy!)</i>
+2-female_removing_minor=Idle 01.png,<i>(This game isn't so bad... especially when I'm not the one stripping.)</i>
+2-female_removing_minor=Angery.png,I've got to get home at some point to talk to my brother so can we hurry up?
+2-female_removing_minor=lewd.png,Have you ever considered stripping faster?
+2-female_removing_minor=ok_hand.png,This game is so slow! I thought something like strip poker would be interesting!
+2-female_removing_minor,marker:tomokogunthought=thinking.png,You know boring rounds like these let me think about a lot of dumb things. Like, how would you save everyone if a person with a gun showed up?
+2-female_removing_minor=Idle 01.png,M-Might as well get it o-over with...
+2-female_removing_minor=ok_hand.png,I-It's not t-too bad...
+2-female_removing_minor=Shy.png,I'm so tired and you taking that off doesn't help...
+2-female_removing_minor,count-role;target&character;marinette:=Idle 01.png,( Looks like it's strippin' time for the lady bug... )
+2-female_removed_minor=Shy.png,N-Not that b-bad...
+2-female_removed_minor=Shy.png,E-Easy...
+2-female_removed_minor=lewd.png,I guess I'd take that off too... <i>(But I'm not a slut like you! Take off something bigger!)</i>
+2-female_removed_minor,count-role;self&saidmarker;tomokogunthought:=thinking.png,I'd probably find a sharp object and go for the eyes. And then kick him in the crotch! <i>(I'd probably have to use these guys here as human shields though...)</i>
+
+
+#lost leggings
+3-male_removing_minor=ok_hand.png,Just ~clothing~?.. o-okay...
+3-male_removing_minor=ok_hand.png,O-Only ~clothing?.. f-fine...
+3-male_removing_minor=Shy.png,Can we make this game a little lewder please?
+3-male_removed_minor=ok_hand.png,Better than n-nothing... I <i>guess</i>...
+3-male_removed_minor=ok_hand.png,I <i>guess</i> that's b-better than nothing...
+3-male_removed_minor=Shy.png,I'm happy to keep playing if you guys want to...
+3-female_removing_minor=Idle 01.png,<i>(This game isn't so bad... especially when I'm not the one stripping.)</i>
+3-female_removing_minor=Angery.png,I've got to get home at some point to talk to my brother so can we hurry up?
+3-female_removing_minor=lewd.png,Have you ever considered stripping faster?
+3-female_removing_minor=ok_hand.png,This game is so slow! I thought something like strip poker would be interesting!
+3-female_removing_minor,marker:tomokogunthought=thinking.png,You know boring rounds like these let me think about a lot of dumb things. Like, how would you save everyone if a person with a gun showed up?
+3-female_removing_minor=Angery.png,L-Lame... Just ~clothing~...
+3-female_removing_minor=ok_hand.png,J-Just ~clothing~?.. Fine...
+3-female_removing_minor=ok_hand.png,At least it's something?
+3-female_removing_minor=Shy.png,<i>(Heh, I'm acting so normally that none of these people would even be able to guess that I was a social outcast once...)</i>
+3-female_removed_minor=Idle 01.png,L-Lame...
+3-female_removed_minor=Angery.png,L-Let's go...
+3-female_removed_minor=thinking.png,I'm still not losing! <i>(Technically...)</i>
+3-female_removed_minor,count-role;self&saidmarker;tomokogunthought:=thinking.png,I'd probably find a sharp object and go for the eyes. And then kick him in the crotch! <i>(I'd probably have to use these guys here as human shields though...)</i>
+
+
+#lost blazer
+4-male_removing_minor=lewd.png,<i>(I've waited this long to see a naked boy... I can wait a bit longer!)</i>)
+4-male_removing_minor=ok_hand.png,Isolation can make people weird... so treat loners kindly!
+4-male_removing_minor=thinking.png,Have any of you watched an isekai anime? They are kinda lame but I think if I woke up in an other world I'd become supreme ruler in a couple weeks.
+4-male_removed_minor=,Can I get better cards this time?
+4-male_removed_minor=Shy.png,<i>(Even if that was boring, next round should be more interesting!)</i>
+4-male_removed_minor=thinking.png,<i>(I hate remembering all my cringey memories... which are pretty much all my memories.)</i>
+4-female_removing_minor=Idle 01.png,<i>(This game isn't so bad... especially when I'm not the one stripping.)</i>
+4-female_removing_minor=Angery.png,I've got to get home at some point to talk to my brother so can we hurry up?
+4-female_removing_minor=lewd.png,Have you ever considered stripping faster?
+4-female_removing_minor=ok_hand.png,This game is so slow! I thought something like strip poker would be interesting!
+4-female_removing_minor,marker:tomokogunthought=thinking.png,You know boring rounds like these let me think about a lot of dumb things. Like, how would you save everyone if a person with a gun showed up?
+4-female_removing_minor=Curious.png,Being popular must be exhausting... how do you talk to so many different people?
+4-female_removing_minor=thinking.png,<i>(There are a bunch of loners who'd love to play a game like this... me included.)</i>
+4-female_removing_minor=Idle 01.png,How lewd. <i>(Bitch.)</i>
+4-female_removed_minor=thinking.png,That's a thing. <i>(Barely.)</i>
+4-female_removed_minor=lewd.png,Well, if you lose again you'll have to take something big off! <i>(I hope...)</i>
+4-female_removed_minor=Shy.png,So, um, cards? <i>(Be more confident Tomoko! Goddamn it!)</i>
+4-female_removed_minor,count-role;self&saidmarker;tomokogunthought:=thinking.png,I'd probably find a sharp object and go for the eyes. And then kick him in the crotch! <i>(I'd probably have to use these guys here as human shields though...)</i>
+
+
+#lost skirt
+5-male_removing_minor=ok_hand.png,And I officially hate this game.
+5-male_removing_minor=Angery.png,You might find this funny but I don't!
+5-male_removing_minor=ok_hand.png,You'll get your comeuppance eventually. Everyone does!
+5-male_removed_minor=thinking.png,<i>(I'm glad I can talk to people other than my little brother now... otherwise this game would be awkward!)</i>
+5-male_removed_minor=Angery.png,I vote to make you strip again! That shouldn't count!
+5-male_removed_minor=Idle 01.png,What? <i>(Do they expect me to give a shit about something that small?)</i>
+5-female_removing_minor=Angery.png,You'll get your comeuppance eventually. Everyone does!
+5-female_removing_minor=Shy.png,Um... ~name~ how are you so good at this game!? Tell me your secrets!
+5-female_removing_minor=thinking.png,<i>(Bitch! Take off something worth my while!)</i>
+5-female_removed_minor=Curious.png,What? <i>(Do they expect me to give a shit about something that small?)</i>
+5-female_removed_minor=Shy.png,<i>(I need to scratch myself... surely nobody will notice?)</i>
+
+
+#lost shirt
+6-male_removing_minor=Angery.png,Is this a joke? Cause it's not funny.
+6-male_removing_minor=Curious.png,Is there any snacks? Any game is better with snacks!
+6-male_removing_minor=Suprised.png,<i>(Tomoko! Try and think of a joke that doesn't have anything to do with dicks! Why is all my humour perverted?!)</i>
+6-male_removed_minor=Shy.png,<i>(Can we have more of the stripping part and less of the poker part?)</i>
+6-male_removed_minor=Suprised.png,<i>(If I'm completely naked before they take off anything interesting, I'm gonna have a breakdown!)</i>
+6-male_removed_minor=,I wish I could take something like that off...
+6-female_removing_minor=Angery.png,I get that it isn't your fault... but I kinda wanna punch you right now...
+6-female_removing_minor=Suprised.png,<i>(Tomoko! Try and think of a joke that doesn't have anything to do with panties! Why is all my humour perverted?!)</i>
+6-female_removing_minor=Curious.png,Is there any snacks? Any game is better with snacks!
+6-female_removed_minor=,<i>(This is kind of like perving on Yuu or Yuri... just less lewd...)/i>
+6-female_removed_minor=,<i>(If I'm completely naked before they take off anything interesting, I'm gonna have a breakdown!)</i>
+6-female_removed_minor=,You've disappointed me ~name~. <i>(I don't know why I expected otherwise.)</i>
+
+
+#lost dress
+7-male_removing_minor=Angery.png,Whatever. Go ahead and remove anything! Just do it quickly!
+7-male_removing_minor=Angery.png,So yes I'm losing, ok? Is that a big deal?!
+7-male_removing_minor=Shy.png,Is surrendering an option in this game?
+7-male_removed_minor=Suprised.png,<i>(How do I make murder look accidental?!)</i>
+7-male_removed_minor=Angery.png,Give me cards! Just let this game be over with! {b}Please!{!reset}
+7-male_removed_minor=Shy.png,I'm- I'm not blushing! I'm just, uh, h-hot. <i>(And horny as fuck!)</i>
+7-female_removing_minor=ok_hand.png,<i>(Ah, humilation my old friend. I know you well.)</i>
+7-female_removing_minor=Shy.png,I should've expected this...
+7-female_removing_minor,marker:impresstomoko=thinking.png,Why don't you impress me by taking something big off?
+7-female_removed_minor=,Dealer! Give us new cards already!
+7-female_removed_minor=Angery.png,We gonna keep playing or just continue standing around wasting our valuable lives? <i>(I could be masturbating at home right now!)</i>
+7-female_removed_minor=,<i>(How do I make murder look accidental?!)</i>
+7-female_removed_minor,count-role;self&saidmarker;impresstomoko:=thinking.png,I'm disappointed. <i>(Like always.)</i>
+
+
+#naked
+-3-male_removing_minor=Angery.png,Uh-huh, rub it in cruel world!
+-3-male_removing_minor=Angery.png,If you want me to feel miserable, you are doing a good job!
+-3-male_removing_minor=Suprised.png,<i>(This isn't that bad! You are just naked. In front of strangers. Who are ALL totally judging you. Fuck!)</i>
+-3-male_removed_minor=Suprised.png,<i>(This is what I get for leaving my comfort zone... I'm never going to try and change myself again!)</i>
+-3-male_removed_minor=Angery.png,You better watch out for karma. <i>(And me.)</i>
+-3-male_removed_minor=Suprised.png,You are gonna make me cry!
+-3-female_removing_minor=Angery.png,I get that it isn't your fault... but I kinda wanna punch you right now...
+-3-female_removing_minor=Shy.png,Can you PLEASE stop beating me?!
+-3-female_removing_minor=Suprised.png,I already know I'm going to lose... so can we get this over with?
+-3-female_removing_minor=Suprised.png,<i>(This isn't that bad! You are just naked. In front of strangers. Who are ALL totally judging you. Fuck!)</i>
+-3-female_removed_minor=Suprised.png,<i>(This is what I get for leaving my comfort zone... I'm never going to try and change myself again!)</i>
+-3-female_removed_minor=Angery.png,Ughh, I hate everything! Just give me new cards!
+-3-female_removed_minor=Angery.png,You are doing this on purpose! It isn't funny!
+
+
+#masturbating
+-2-male_removing_minor=Soft1.png,You just made this a little more degrading, thanks.
+-2-male_removing_minor=Soft1.png,Stop teasing me motherfucker!
+-2-male_removing_minor=Soft1.png,Yeah, not helping!
+-2-male_removing_minor=Soft1.png,Fuck it, I'm so horny right now even that'll do.
+-2-male_removed_minor=Soft1.png,Keep playing already! Show me {b}anything!{!reset}
+-2-male_removed_minor=Soft1.png,I'm masturbating for you- {b}I deserve nudity!{!reset}
+-2-male_removed_minor=Soft1.png,Not helping!
+-2-female_removing_minor=Soft1.png,I'm so unaroused.
+-2-female_removing_minor=Soft1.png,Give me something to work with!
+-2-female_removing_minor=Soft1.png,Fuck it, I'm so horny right now even that'll do.
+-2-female_removing_minor=Soft1.png,You just made this a little more degrading, thanks.
+-2-female_removed_minor=Soft1.png,Keep playing already! Show me {b}anything!{!reset}
+-2-female_removed_minor=Soft1.png,You've somehow made masturbating in front of strangers unarousing. Nice job.
+-2-female_removed_minor=Soft1.png,Be more normie!
+
+
+#finished
+-1-male_removing_minor=,How am I supposed to perv over that?
+-1-male_removing_minor=,Why do you even care about losing? It's fun!
+-1-male_removing_minor=,I don't think I've ever been so unaroused. And I once got covered entirely in ants.
+-1-male_removing_minor=,I'm sure I'll regret everything about my life tomorrow. But I feel so relaxed right now, you know?
+-1-male_removed_minor=,Can we have more of the stripping part and less of the poker part?
+-1-male_removed_minor=,Cute.
+-1-male_removed_minor=,This game isn't over yet.
+-1-female_removing_minor=,How am I supposed to perv over that?
+-1-female_removing_minor=,Eh, it's something. I've masturbated over less.
+-1-female_removing_minor=,I'm sure I'll regret everything about my life tomorrow. But I feel so relaxed right now, you know?
+-1-female_removed_minor=,Can we have more of the stripping part and less of the poker part?
+-1-female_removed_minor=,Eh. I'm content to stick around until something big comes off.
+-1-female_removed_minor=,~name~ can I have some of your luck?
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removed_major=Horny.png,W-Wow... Glad I'm here...
+male_removed_major=lewd.png,V-Very nice... You don't even need the ~clothing~, ~name~...
+male_removed_major=Shy.png,I'll, uh, try not to stare. <i>(Yeah, right!)</i>
+female_removed_major=lewd.png,W-Wow... That's, pretty <i>hot</i>.
+female_removed_major=Curious.png,Huh...
+female_removed_major=Curious.png,Oh...
+female_removed_major=Shy.png,I'll, uh, try not to stare. <i>(Yeah, right!)</i>
+female_removed_major=Victorious.png,<i>(Only a slut would take off clothing so easily... but I like playing with sluts!)</i>
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_major=Horny.png,( That's... quite the item to be stripping... I haven't even stripped yet! )
+0-male_removing_major=Horny.png,<i>(Woah... uh, should I say something?)</i>
+0-male_removing_major=Horny.png,That's um... nice! Real nice!
+0-male_removed_major=ok_hand.png,( My luck has yet to run out... )
+0-male_removed_major=Shy.png,Wait, we're still playing? Give me a second! <i>(I need to regain my senses!)</i>
+0-male_removed_major=Horny.png,Uh... whoa. <i>(What should I say?!)</i>
+0-female_removing_major=Excited.png,( Take that! And I haven't even lost yet!.. )
+0-female_removing_major=Victorious.png,( Guess I'm staying ahead!.. )
+0-female_removed_major=Shy.png,( I hope I can keep this luck up! )
+0-female_removed_major=Shy.png,( How... Bold... )
+0-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=thinking.png,<i>(She writes FanFiction? I guess I'm not the only loser here...)</i>
+0-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=Shy.png,I wrote FanFiction once... <i>(It was real horny.)</i>
+
+
+#lost tie
+1-male_removing_major=nervous.png,( Okay, going straight for the ~clothing~... At least he's not a coward... )
+1-male_removing_major=internal_victory.png,( ~name~'s getting a little daring... I like it ♥ ... )
+1-male_removing_major=nervous.png,( Oh... I wonder if ~clothing~ is a little much... )
+1-male_removed_major=Shy.png,( O-Oh... Wow... )
+1-male_removed_major=Suprised.png,( That's <i>WAY</i> more skin than I expected!.. )
+1-male_removed_major=nervous.png,F-Fuck...
+1-female_removing_major=internal_victory.png,( We're getting down to the <i>meat</i> of the situation... )
+1-female_removing_major=Victorious.png,( Guess some people just have more luck than others... )
+1-female_removing_major=internal_victory.png,( ~Clothing~ is quite the step on the stripping ladder... )
+1-female_removed_major=nervous.png,( Wow!.. That's a <i>LOT</i> of skin!.. )
+1-female_removed_major=uncomfortable.png,( Looks like ~name~ might have bitten off a little more than I could chew!.. )
+1-female_removed_major=Suprised.png,!!!...
+1-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=thinking.png,<i>(She writes FanFiction? I guess I'm not the only loser here...)</i>
+1-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=Shy.png,I wrote FanFiction once... <i>(It was real horny.)</i>
+
+
+#lost shoes
+2-male_removing_major=Shy.png,R-Really?.. ~Clothing~?....
+2-male_removing_major=Shy.png,R-Really?..
+2-male_removing_major=lewd.png,<i>(Don't drool Tomoko!)</i>
+2-male_removed_major=Shy.png,W-Wow...
+2-male_removed_major=Shy.png,O-Oh... W-Wow...
+2-female_removing_major=thinking.png,W-Well... You d-don't have anything l-left...
+2-female_removing_major=Idle 01.png,W-Well... You d-don't really have anything l-left...
+2-female_removing_major=lewd.png,<i>(I wonder what kind of panties she is wearing...)</i>
+2-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=thinking.png,<i>(She writes FanFiction? I guess I'm not the only loser here...)</i>
+2-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=Shy.png,I wrote FanFiction once... <i>(It was real horny.)</i>
+
+
+#lost leggings
+3-male_removing_major=Suprised.png,W-Wait, really?..
+3-male_removing_major=Suprised.png,~Clothing~?.. Already?..
+3-male_removing_major=Shy.png,<i>(Fuck! He's actually taking it off! What do I do?!)</i>
+3-female_removing_major=Horny.png,<i>(Even though it's another girl, this is still really lewd!)</i>
+3-female_removing_major=Horny.png,<i>(Don't drool Tomoko!)</i>
+3-female_removing_major=,Heh, I guess that's what you deserve for being unlucky! <i>(Wait, am I being hypocritical?)</i>
+3-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=thinking.png,<i>(She writes FanFiction? I guess I'm not the only loser here...)</i>
+3-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=Shy.png,I wrote FanFiction once... <i>(It was real horny.)</i>
+
+
+#lost blazer
+4-male_removing_major=lewd.png,<i>(Yes! This game is getting interesting!)</i>
+4-male_removing_major=lewd.png,<i>(I wonder what he's wearing under there... I guess I'll find out!)</i>
+4-male_removing_major,marker:tomokonosebleed=lewd.png,<i>(I hope I don't get a nosebleed like a dumb anime boy...)</i>
+4-male_removed_major,count-role;self&saidmarker;tomokonosebleed:=Horny.png,<i>(Fuck!)</i> Has anyone got a tissue?!
+4-female_removing_major,marker:tomokonosebleed=,<i>(I hope I don't get a nosebleed like a dumb anime boy...)</i>
+4-female_removing_major=,<i>(She's taking that off?! What a slut!... not that I mind.)</i>
+4-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=thinking.png,<i>(She writes FanFiction? I guess I'm not the only loser here...)</i>
+4-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=Shy.png,I wrote FanFiction once... <i>(It was real horny.)</i>
+
+
+#lost skirt
+5-male_removing_major=Horny.png,<i>(I'm glad ~name~ is a whore...)</i>
+5-male_removing_major=lewd.png,<i>(I've never seen anything like this before! Anything!)</i>
+5-male_removing_major=Horny.png,O-oh, uh, your g-gonna take T-THAT off?! <i>(Act casual!)</i>
+5-male_removed_major=lewd.png,We should keep playing! <i>(This isn't enough to quench my insatiable desires!)</i>
+5-male_removed_major=thinking.png,<i>(The fact I'm still able to talk normally is a testement to my character development...)</i>
+5-male_removed_major=Shy.png,I like what I see ~name~! Am I being too forward?!
+5-male_removed_major=lewd.png,I'll play another round! <i>(How can I not after that show?!)</i>
+5-female_removing_major=Horny.png,<i>(I'm glad ~name~ is a slut...)</i>
+5-female_removing_major=,You are really brave ~name~! <i>(And perverted...)</i>
+5-female_removed_major=lewd.png,<i>(This is kind of like perving on Yuu or Yuri... actually, it's exactly like that!)</i>
+5-female_removed_major=,<i>(Do you think ~name~ would tell me where she bought her underwear?)</i>
+5-female_removed_major=,<i>(Something like this in person is so much more lewd than watching online...)</i>
+5-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=thinking.png,<i>(She writes FanFiction? I guess I'm not the only loser here...)</i>
+5-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=Shy.png,I wrote FanFiction once... <i>(It was real horny.)</i>
+
+
+#lost shirt
+6-male_removing_major=Horny.png,I'm, uh, g-glad you lost.
+6-male_removing_major=lewd.png,You haven't got much left ~name~... heh.
+6-male_removing_major=Horny.png,<i>(I'm already wet.)</i>
+6-male_removed_major=lewd.png,We should keep playing! <i>(This isn't enough to quench my insatiable desires!)</i>
+6-male_removed_major=thinking.png,<i>(The fact I'm still able to talk normally is a testement to my character development...)</i>
+6-male_removed_major=Shy.png,I like what I see ~name~! Am I being too forward?!
+6-male_removed_major=lewd.png,I'll play another round! <i>(How can I not after that show?!)</i>
+6-female_removing_major=,<i>(I wonder what type of underwear ~name~ is wearing... I bet it's slutty.)</i>
+6-female_removing_major=,<i>(Well at least I ain't playing with a bunch of virgins!)</i>
+6-female_removed_major=lewd.png,<i>(This is kind of like perving on Yuu or Yuri... actually, it's exactly like that!)</i>
+6-female_removed_major=,<i>(Do you think ~name~ would tell me where she bought her underwear?)</i>
+6-female_removed_major=,<i>(Something like this in person is so much more lewd than watching online...)</i>
+6-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=thinking.png,<i>(She writes FanFiction? I guess I'm not the only loser here...)</i>
+6-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=Shy.png,I wrote FanFiction once... <i>(It was real horny.)</i>
+
+
+#lost dress
+7-male_removing_major=lewd.png,<i>(I might be nearly naked but at least it's worth it!)</i>
+7-male_removing_major=Horny.png,This game is too confusing!
+7-male_removing_major=lewd.png,<i>(I have to act like a normie!)</i> Um. ~clothing~. Remove! <i>(Perfect.)</i>
+7-male_removed_major=Suprised.png,<i>(Don't forget Tomoko, your still doing worse!)</i>
+7-male_removed_major=Horny.png,<i>(Focus Tomoko! He's trying to distract you with his manly charms!)</i>
+7-male_removed_major=Angery.png,<i>(Why do I have to be naked for anything good to happen to me?!)</i>
+7-male_removed_major=lewd.png,<i>(I'm going to take a mental picture of this to masturbate with later!)</i>
+7-male_removed_major=lewd.png,Can I get new cards?... <i>(Even if I lose, at least someone else will get naked eventually... and then I can secretly lust over them!)</i>
+7-female_removing_major=,<i>(I have to act like a normie!)</i> Um. ~clothing~. Remove! <i>(Perfect.)</i>
+7-female_removing_major=,<i>(Should I compliment her? Being an introvert is so hard!)</i>
+7-female_removed_major=Horny.png,<i>(Focus Tomoko! She's trying to distract you by being a complete slut!)</i>
+7-female_removed_major=,<i>(Well her ~clothing~ is off. ~name~ looks better without it anyway!)</i>
+7-female_removed_major=,How many people have seen you like this ~name~?
+7-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=thinking.png,<i>(She writes FanFiction? I guess I'm not the only loser here...)</i>
+7-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=Shy.png,I wrote FanFiction once... <i>(It was real horny.)</i>
+
+
+#naked
+-3-male_removing_major=Horny.png,<i>(So much is happening! I need to act normal or everyone will know I'm a virgin!)</i>
+-3-male_removing_major=Horny.png,Take your ~clothing~ off! It's clearly the only choice!
+-3-male_removing_major=Shy.png,I thought fanservice only applied to females...
+-3-male_removed_major=Suprised.png,<i>(Don't forget Tomoko, your still doing worse!)</i>
+-3-male_removed_major=Horny.png,<i>(Focus Tomoko! He's trying to distract you with his manly charms!)</i>
+-3-male_removed_major=Angery.png,<i>(Why do I have to be naked for anything good to happen to me?!)</i>
+-3-male_removed_major=lewd.png,<i>(I'm going to take a mental picture of this to masturbate with later!)</i>
+-3-male_removed_major=lewd.png,Can I get new cards?... <i>(Even if I lose, at least someone else will get naked eventually... and then I can secretly lust over them!)</i>
+-3-female_removing_major=,<i>(So much is happening! I need to act normal or everyone will know I'm a virgin!)</i>
+-3-female_removing_major=Horny.png,<i>(I love fanservice!)</i>
+-3-female_removing_major=,Take your ~clothing~ off! It's clearly the only choice!
+-3-female_removed_major=Horny.png,<i>(Focus Tomoko! She's trying to distract you by being a complete slut!)</i>
+-3-female_removed_major=,<i>(Well her ~clothing~ is off. ~name~ looks better without it anyway!)</i>
+-3-female_removed_major=,How many people have seen you like this ~name~?
+-3-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=thinking.png,<i>(She writes FanFiction? I guess I'm not the only loser here...)</i>
+-3-female_removed_major,count-role;target&character;lotte&stage;5:,id:2=Shy.png,I wrote FanFiction once... <i>(It was real horny.)</i>
+
+
+#masturbating
+-2-male_removing_major,marker:tomokosniff=Soft1.png,Let me smell your ~clothing~!
+-2-male_removing_major=Soft1.png,I'm the luckiest pervert ever!
+-2-male_removing_major=Soft1.png,Take it off! I demand you throw your clothing at my feet!
+-2-male_removed_major=Soft1.png,Come closer and give me a better look ~name~!
+-2-male_removed_major=Soft1.png,Keep playing! I'm not satisfied!
+-2-male_removed_major=,<i>(If I stare hard enough, do you think I can see through his underwear?)</i>
+-2-male_removed_major,count-role;self&saidmarker;tomokosniff:=,Yeah... no, even that was a bit weird for me. Forget I said that!
+-2-female_removing_major,marker:tomokosniff=,Let me smell your ~clothing~!
+-2-female_removing_major=,Show me your panties ~name~!
+-2-female_removing_major=,Total slut...
+-2-female_removing_major=,Act embarrassed while you take it off!
+-2-female_removed_major=,Is that all?! I mean I know it's a lot but I need more!
+-2-female_removed_major=,Call me a pervert! <i>(Cause I am!)</i>
+-2-female_removed_major,count-role;self&saidmarker;tomokosniff:=,Yeah... no, even that was a bit weird for me. Forget I said that!
+
+
+#finished
+-1-male_removing_major=,Take it off! I demand you throw your clothing at my feet!
+-1-male_removing_major=,<i>(I'm glad I'm playing a game like this... I'd never see a real guy strip otherwise!)</i>
+-1-male_removing_major=,Sexual harrassment gives me energy! <i>(And this game is filling me with life! Do you think I'll lose the bags under my eyes?)</i>
+-1-male_removed_major=,Uh, the truth is... I'm a huge pervert.
+-1-male_removed_major=,This game just keeps getting better!
+-1-female_removing_major=,Sexual harrassment gives me energy! <i>(And this game is filling me with life! Do you think I'll lose the bags under my eyes?)</i>
+-1-female_removing_major=,<i>(I like it when they pretend to be innocent...)</i>
+-1-female_removing_major=,Are you a pure girl ~name~?
+-1-female_removed_major=,If I asked you to show me your tits, would you?!
+-1-female_removed_major=,Why not keep stripping? Join me in degeneracy!
+-1-female_removed_major=,Uh, the truth is... I'm a huge pervert.
+-1-female_removed_major=,Where did you buy your underwear ~name~?
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character to have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_chest_will_be_visible=lewd.png,A shirtless guy is pretty normal in society... <i>(It's still sexy though!)</i>
+male_chest_will_be_visible=lewd.png,A shirtless guy is pretty normal in society... <i>(But in a setting like this, it's super lewd!)</i>
+male_chest_will_be_visible=Horny.png,Wait, you are taking that off?! <i>(This game is getting interesting... and I'm getting horny!)</i>
+male_chest_will_be_visible=Suprised.png,No way! You're not actually taking that off, are you?!
+male_chest_is_visible=Shy.png,Wait, guys have nipples too?!...  I'm joking! Really!
+male_chest_is_visible=Suprised.png,<i>(Fuck he's hot! How am I supposed to play with this distraction?!)</i>
+male_chest_is_visible=lewd.png,<i>(I didn't think I'd ever be in the same room as a shirtless guy... not that I'm complaining!)</i>
+male_chest_is_visible=lewd.png,Wow, I didn't expect that ~name~... I mean in a good way! <i>(I thought he'd be an ugly NEET if he was playing with me...)</i>
+male_crotch_will_be_visible=Suprised.png,<i>(If I overreact here, they'll smell my musk of virginity!)</i>
+male_crotch_will_be_visible=Horny.png,<i>(I'm trying to speak but no words will come out!)</i>
+male_crotch_will_be_visible=Curious.png,<i>(Will seeing a dick like this change me forever?)</i
+male_crotch_will_be_visible=Horny.png,Holy shit. Is this really happening?!
+male_small_crotch_is_visible=thinking.png,<i>(I'm slightly disappointed...)</i>
+male_small_crotch_is_visible=Curious.png,<i>(Uh, where's the rest?)</i>
+male_small_crotch_is_visible=,<i>(I think I can understand ~name~ better now I've seen their penis... he's must be really insecure!)</i>
+male_medium_crotch_is_visible=Horny.png,<i>(Even I have a boner now...)</i>
+male_medium_crotch_is_visible=Suprised.png,<i>(Finally I've seen a boys dick! I can be popular now!)</i>
+male_medium_crotch_is_visible=lewd.png,<i>(I think I can understand ~name~ better now I've seen their penis... he's just an average guy!)</i>
+female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_chest_will_be_visible=Thinking_Lewd.png,( I'm ready for ~name~ to take that ~clothing~ off already!.. )
+0-male_chest_will_be_visible=Shy.png,( I'm about to see ~name~'s bare chest for the first time... And we only just met!.. )
+0-male_chest_is_visible=Horny.png,( Seeing a man's chest from this close is... exciting... )
+0-male_chest_is_visible=Thinking_Lewd.png,( It's getting <i>really</i> warm in here... )
+0-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,Fuck! <i>(I want to drool on him!)</i>
+0-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,<i>(He looks like a God!... I mean, I'd worship him!)</i>
+0-male_chest_is_visible,priority:1,count-muscular&role;target:=Shy.png,I feel incredibly inadequate. <i>(But that's fine for once...)</i>
+0-male_chest_is_visible,priority:1,count-pale_skinned&role;target:=lewd.png,<i>(~name~ is so pale! He must be an introvert like me... I like it! ♥)</i>
+0-male_crotch_will_be_visible=Suprised.png,( I'm about to see a guy's <b>penis</b> for the <i>first time</i>! I haven't even lost yet! )
+0-male_small_crotch_is_visible=ok_hand.png,( That looks smaller than the ones I've seen via the internet... )
+0-male_medium_crotch_is_visible=Shy.png,( I can't believe it! I've never seen a dick before! And I never had to strip for it! )
+0-male_large_crotch_is_visible=Horny.png,( W-Wow... That's a real monster of a cock... )
+0-male_large_crotch_is_visible=Thinking_Lewd.png,( That is <b>MASSIVE</b>... )
+0-female_chest_will_be_visible=Select 01.png,( Well... I'm glad I'm not her... I really haven't been her the entire time... I guess it's destiny... )
+0-female_small_chest_is_visible=ok_hand.png,( Wow, she almost looks like she's a boy... )
+0-female_medium_chest_is_visible=Idle 01.png,( Her tits aren't anything special... Even if they <i>are</i> bigger than mine...)
+0-female_large_chest_is_visible=Angery.png,( Wow! Look at the <b>KNOCKERS</b> on her! No wonder she's been losing so much, sluts can't read... )
+0-female_crotch_will_be_visible=Thinking_Blush.png,( She's already stripped <i>all</i> of her clothes, and I haven't even lost yet!.. What incredible luck! )
+0-female_crotch_is_visible=Shy.png,( Now that I think about it, I've never really seen a <b>girl</b> naked either... This has been an interesting night so far... )
+
+
+#lost tie
+1-male_chest_will_be_visible=nervous.png,( I... I've never really seen a guy's chest in <i>real life</i>... )
+1-male_chest_will_be_visible=thinking.png,( This is going to be... interesting... )
+1-male_chest_is_visible=Shy.png,W-Wow...
+1-male_chest_is_visible=uncomfortable.png,O-Oh...
+1-male_chest_is_visible=Shy.png,( This is... quite the game isn't it?.. )
+1-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,Fuck! <i>(I want to drool on him!)</i>
+1-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,<i>(He looks like a God!... I mean, I'd worship him!)</i>
+1-male_chest_is_visible,priority:1,count-muscular&role;target:=Shy.png,I feel incredibly inadequate. <i>(But that's fine for once...)</i>
+1-male_chest_is_visible,priority:1,count-pale_skinned&role;target:=lewd.png,<i>(~name~ is so pale! He must be an introvert like me... I like it! ♥)</i>
+1-male_crotch_will_be_visible=uncomfortable.png,( He's gonna take off his ~clothing~... I've never really seen a guy's <i>dick</i> before... )
+1-male_crotch_will_be_visible=Shy.png,( That ~clothing~ is the only thing between me and ~name~'s dick... )
+1-male_small_crotch_is_visible=thinking.png,( So... This is what a dick looks like... )
+1-male_small_crotch_is_visible=thinking.png,...
+1-male_medium_crotch_is_visible=lewd.png,( W-Wow... That's <i>way</i> hotter than the ones in my H-games... )
+1-male_medium_crotch_is_visible=lewd.png,( That looks different than the ones in my H-games... I like it... )
+1-male_large_crotch_is_visible=Suprised.png,( How can that thing even fit in ~name~'s pants!.. )
+1-male_large_crotch_is_visible=Suprised.png,( That <i>dick</i> is <i>MASSIVE</i>!.. )
+1-female_chest_will_be_visible=ok_hand.png,( Looks like ~name~'s about to be showing some chest... I've never seen someone else's... )
+1-female_chest_will_be_visible=Excited.png,( If you play shitty, you get to show <i>titty</i>! )
+1-female_chest_will_be_visible=ok_hand.png,( Guess it's ~name~'s turn to show some cleavage... )
+1-female_small_chest_is_visible=internal_victory.png,( Oh, wow... Those might actually be smaller than mine!... )
+1-female_small_chest_is_visible=internal_victory.png,( And I thought <i>MY</i> tits were small!.. )
+1-female_small_chest_is_visible=Victorious.png,H-Heh...
+1-female_medium_chest_is_visible=post_strip_tie.png,( Oh... Her tits actually look fine... unlike mine... )
+1-female_medium_chest_is_visible=uncomfortable.png,( I guess ~name~'s probably more comfortable showing off her tits than I am... )
+1-female_medium_chest_is_visible=nervous.png,( ~name~'s got some really nice tits... I wish I did... )
+1-female_large_chest_is_visible=Suprised.png,( Those are some <i>HUGE</i> knockers!.. )
+1-female_large_chest_is_visible=post_strip_tie.png,( I wonder how her tits got so huge... Probably a slut... )
+1-female_large_chest_is_visible=post_strip_tie.png,( With knockers like that, it's no wonder you're losing... slut... )
+1-female_crotch_will_be_visible=nervous.png,( ...I don't know how to feel... )
+1-female_crotch_will_be_visible,count-role;target&notsaidmarker;pussy_wonder:,marker:pussy_wonder=,( I've... never really seen another girl's special parts... I wonder if they're also hairy... )
+1-female_crotch_will_be_visible,count-role;target&notsaidmarker;pussy_wonder:,marker:pussy_wonder=Curious.png,( I wonder what her pussy looks like... Do all pussies look the same?.. )
+1-female_crotch_is_visible=Shy.png,O-Oh...
+1-female_crotch_is_visible=uncomfortable.png,...
+1-female_crotch_is_visible=nervous.png,( Interesting... )
+
+
+#lost shoes
+2-male_chest_will_be_visible=lewd.png,A-Ah... ( ~name~'s chest? Don't mind If I see! )
+2-male_chest_will_be_visible=lewd.png,O-Oh... ( ~name~'s chest? Don't mind If I do! )
+2-male_chest_will_be_visible=lewd.png,A-Ah... ( ~name~'s chest? Don't mind me! )
+2-male_chest_is_visible=lewd.png,Oo-Ooh... ( Mmm, yeah, that's the stuff. )
+2-male_chest_is_visible=lewd.png,Oo-Ooh... ( Mmm, yeah, <i>much</i> better than in hentai. )
+2-male_chest_is_visible=lewd.png,Oo-Ooh... ( Mmm, yeah, <i>much</i> better than in VNs. )
+2-male_chest_is_visible=lewd.png,Oo-Ooh... ( Mmm, yeah, <i>much</i> better than in any otome game. )
+2-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,Fuck! <i>(I want to drool on him!)</i>
+2-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,<i>(He looks like a God!... I mean, I'd worship him!)</i>
+2-male_chest_is_visible,priority:1,count-muscular&role;target:=Shy.png,I feel incredibly inadequate. <i>(But that's fine for once...)</i>
+2-male_chest_is_visible,priority:1,count-pale_skinned&role;target:=lewd.png,<i>(~name~ is so pale! He must be an introvert like me... I like it! ♥)</i>
+2-male_crotch_will_be_visible=Horny.png,A-Ah... ( ~name~'s dick? Isn't that a little fast?! )
+2-male_crotch_will_be_visible=Horny.png,O-Oh... ( ~name~'s dick? We just met!! )
+2-male_crotch_will_be_visible=Horny.png,O-Oh... ( ~name~'s dick? But we just met!! )
+2-male_small_crotch_is_visible=thinking.png,...
+2-male_small_crotch_is_visible=thinking.png,Hm... ( So... This is what a dick looks like... )
+2-male_small_crotch_is_visible=thinking.png,<i>(Can ~name~ even have sex when it is that size?)</i>
+2-male_medium_crotch_is_visible=lewd.png,W-Wow... ( That's <i>way</i> hotter than the ones in my H-games... )
+2-male_medium_crotch_is_visible=lewd.png,A-Ahn... ( That looks different than the ones in my H-games... I like it... )
+2-male_large_crotch_is_visible=Suprised.png,W-Woah... ( How can that thing even fit in ~name~'s pants!.. )
+2-male_large_crotch_is_visible=Suprised.png,W-Woah... ( That <i>dick</i> is <i>MASSIVE</i>!.. )
+2-male_large_crotch_is_visible=Horny.png,<i>(I'm sure the dick sisters would love to see something like this...)</i>
+2-female_chest_will_be_visible=ok_hand.png,Hm... ( Looks like ~name~'s about to be showing some chest... I've never seen someone else's... )
+2-female_chest_will_be_visible=Excited.png,E-heh... ( If you play shitty, you get to show <i>titty</i>! )
+2-female_chest_will_be_visible=ok_hand.png,E-heh... ( Guess it's ~name~'s turn to show some cleavage... )
+2-female_small_chest_is_visible=,*pfft* ( Oh, wow... Those might actually be smaller than mine!... )
+2-female_small_chest_is_visible=,*pfft* ( And I thought <i>MY</i> tits were small!.. )
+2-female_small_chest_is_visible=Victorious.png,H-Heh...
+2-female_medium_chest_is_visible=Idle 00.png,... ( Oh... Her tits actually look fine... unlike mine... )
+2-female_medium_chest_is_visible=Shy.png,... ( I guess ~name~'s probably more comfortable showing off her tits than I am... )
+2-female_medium_chest_is_visible=nervous.png,... ( ~name~'s got some really nice tits... I wish I did... )
+2-female_large_chest_is_visible=Suprised.png,*<i>HNG</i>*... ( Those are some <i>HUGE</i> knockers!.. )
+2-female_large_chest_is_visible=thinking.png,Hm... ( I wonder how her tits got so huge... Probably a slut... )
+2-female_large_chest_is_visible=lewd.png,Heh... ( With knockers like that, it's no wonder you're losing... slut... )
+2-female_crotch_will_be_visible=Shy.png,O-Oh... ( Well, seeing someone else's pussy is definitely not in my usual daily life... )
+2-female_crotch_will_be_visible=Shy.png,O-Oh... ( Well, I hope her drawers are well organized... )
+2-female_crotch_will_be_visible,count-role;target&notsaidmarker;pussy_wonder:,marker:pussy_wonder=,( I've... never really seen another girl's special parts... I wonder if they're also hairy... )
+2-female_crotch_will_be_visible,count-role;target&notsaidmarker;pussy_wonder:,marker:pussy_wonder=Curious.png,( I wonder what her pussy looks like... Do all pussies look the same?.. )
+2-female_crotch_is_visible=Shy.png,... ( I'm not sure what emotions I'm feeling right now... )
+2-female_crotch_is_visible=Shy.png,... ( I'm not sure how I feel right now... )
+
+
+#lost leggings
+3-male_chest_will_be_visible,count-role;target&character;n:,marker:tomoNshirtless=Angery.png,<i>(Fuck! He won't shut up about pokemen rights or whatever but he's still hot!)</I>
+3-male_chest_is_visible,count-role;self&saidmarker;tomoNshirtless:=Horny.png,<i>(Maybe this sight was worth listening to this green haired assholes PETA bullshit...)</i>
+3-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,Fuck! <i>(I want to drool on him!)</i>
+3-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,<i>(He looks like a God!... I mean, I'd worship him!)</i>
+3-male_chest_is_visible,priority:1,count-muscular&role;target:=Shy.png,I feel incredibly inadequate. <i>(But that's fine for once...)</i>
+3-male_chest_is_visible,priority:1,count-pale_skinned&role;target:=lewd.png,<i>(~name~ is so pale! He must be an introvert like me... I like it! ♥)</i>
+3-male_crotch_will_be_visible,count-not_naked:4-,marker:firstdick=,<i>(I'm finally seeing a dick! I've waited for this moment all my life!)</i>
+3-male_small_crotch_is_visible,count-role;self&saidmarker;firstdick:=Suprised.png,Wait, that's it?! Where's the rest?! <i>(Why did I ever care about this?!)</i>
+3-male_small_crotch_is_visible,count-role;self&saidmarker;firstdick:=Angery.png,I waited so long... for {b}this?!{!reset}
+3-male_medium_crotch_is_visible,count-role;self&saidmarker;firstdick:=,I am completely satisfied. I could die now and be happy!
+3-male_large_crotch_is_visible=,<i>(I think I can understand ~name~ better now I've seen their penis... he must be a pornstar!)</i>
+3-male_large_crotch_is_visible=,<i>(I'm sure the dick sisters would love to see something like this...)</i>
+3-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+3-female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+3-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+3-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+3-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+3-female_crotch_will_be_visible,count-role;target&notsaidmarker;pussy_wonder:,marker:pussy_wonder=,( I've... never really seen another girl's special parts... I wonder if they're also hairy... )
+3-female_crotch_will_be_visible,count-role;target&notsaidmarker;pussy_wonder:,marker:pussy_wonder=Curious.png,( I wonder what her pussy looks like... Do all pussies look the same?.. )
+3-female_crotch_is_visible=,<i>(I know I've said a bunch of perverted things about other girls, but it's different when it's right there!)</i>
+
+
+#lost blazer
+4-male_chest_will_be_visible,count-role;target&character;n:,marker:tomoNshirtless=Angery.png,<i>(Fuck! He won't shut up about pokemen rights or whatever but he's still hot!)</I>
+4-male_chest_is_visible,count-role;self&saidmarker;tomoNshirtless:=Horny.png,<i>(Maybe this sight was worth listening to this green haired assholes PETA bullshit...)</i>
+4-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,Fuck! <i>(I want to drool on him!)</i>
+4-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,<i>(He looks like a God!... I mean, I'd worship him!)</i>
+4-male_chest_is_visible,priority:1,count-muscular&role;target:=Shy.png,I feel incredibly inadequate. <i>(But that's fine for once...)</i>
+4-male_chest_is_visible,priority:1,count-pale_skinned&role;target:=lewd.png,<i>(~name~ is so pale! He must be an introvert like me... I like it! ♥)</i>
+4-male_crotch_will_be_visible,count-not_naked:4-,marker:firstdick=,<i>(I'm finally seeing a dick! I've waited for this moment all my life!)</i>
+4-male_small_crotch_is_visible,count-role;self&saidmarker;firstdick:=Suprised.png,Wait, that's it?! Where's the rest?! <i>(Why did I ever care about this?!)</i>
+4-male_small_crotch_is_visible,count-role;self&saidmarker;firstdick:=Angery.png,I waited so long... for {b}this?!{!reset}
+4-male_medium_crotch_is_visible,count-role;self&saidmarker;firstdick:=,I am completely satisfied. I could die now and be happy!
+4-male_large_crotch_is_visible=,<i>(I think I can understand ~name~ better now I've seen their penis... he must be a pornstar!)</i>
+4-male_large_crotch_is_visible=,<i>(I'm sure the dick sisters would love to see something like this...)</i>
+4-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+4-female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+4-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+4-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+4-female_crotch_is_visible=,<i>(I know I've said a bunch of perverted things about other girls, but it's different when it's right there!)</i>
+
+
+#lost skirt
+5-male_chest_will_be_visible=Horny.png,<i>(This has been hidden from me all my life and finally I'll see it with my own eyes!)</i>
+5-male_chest_will_be_visible=lewd.png,<i>(I guess now I'll see if ~name~ is a loner like me who stays in his room and never excercises!)</i>
+5-male_chest_will_be_visible=thinking.png,<i>(~name~ really is brave, huh. Either that or an idiot.)</i>
+5-male_chest_will_be_visible=lewd.png,I mean, you know the rules. Heh. <i>(These rules are made for a pervert like me!)</i>
+5-male_chest_will_be_visible,count-role;target&character;n:,marker:tomoNshirtless=Angery.png,<i>(Fuck! He won't shut up about pokemen rights or whatever but he's still hot!)</I>
+5-male_chest_is_visible=Horny.png,<i>(Oh no! He's hot!)</i>
+5-male_chest_is_visible=Horny.png,<i>(Do you think if I ask he'll let me touch his chest? Or is that too weird?)</i>
+5-male_chest_is_visible=Excited.png,<i>(This is a lot! And the game isn't even over!)</i>
+5-male_chest_is_visible=Horny.png,I-if you lose again ~name~... <i>(This game is getting serious!)</i>
+5-male_chest_is_visible,count-role;self&saidmarker;tomoNshirtless:=Horny.png,<i>(Maybe this sight was worth listening to this green haired assholes PETA bullshit...)</i>
+5-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,Fuck! <i>(I want to drool on him!)</i>
+5-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,<i>(He looks like a God!... I mean, I'd worship him!)</i>
+5-male_chest_is_visible,priority:1,count-muscular&role;target:=Shy.png,I feel incredibly inadequate. <i>(But that's fine for once...)</i>
+5-male_chest_is_visible,priority:1,count-pale_skinned&role;target:=lewd.png,<i>(~name~ is so pale! He must be an introvert like me... I like it! ♥)</i>
+5-male_crotch_will_be_visible=Horny.png,I'm hyperventilating! Give me a second or I might literally die! <i>(Fuck my virgin mind!)</i>
+5-male_crotch_will_be_visible=Horny.png,<i>(A real dick?! I wonder what it'll look like...)</i>
+5-male_crotch_will_be_visible=Horny.png,<i>(Does this count as losing my virginity?)</i>
+5-male_crotch_will_be_visible=Horny.png,I will remember this forever.
+5-male_crotch_will_be_visible,count-not_naked:4-,marker:firstdick=,<i>(I'm finally seeing a dick! I've waited for this moment all my life!)</i>
+5-male_small_crotch_is_visible=thinking.png,<i>(I'm sure the ones I've seen online are bigger... are they some sort of camera trick?)</i>
+5-male_small_crotch_is_visible=ok_hand.png,<i>(I wish I'd never got excited... I guess it's my fault for ever being optimistic...)</i>
+5-male_small_crotch_is_visible=,<i>(I hope it gets bigger like it does in the videos...)</i>
+5-male_small_crotch_is_visible,count-role;self&saidmarker;firstdick:=Suprised.png,Wait, that's it?! Where's the rest?! <i>(Why did I ever care about this?!)</i>
+5-male_small_crotch_is_visible,count-role;self&saidmarker;firstdick:=Angery.png,I waited so long... for {b}this?!{!reset}
+5-male_medium_crotch_is_visible=Horny.png,{b}WOAH!{!reset} I mean... I've seen something like this on my boyfriend...
+5-male_medium_crotch_is_visible=lewd.png,<i>(My reputation as the girl who looks at dicks is finally justified.)</i>
+5-male_medium_crotch_is_visible=Excited.png,<i>(I can't wait to tell all my friends about this!)</i>
+5-male_medium_crotch_is_visible,count-role;self&saidmarker;firstdick:=,I am completely satisfied. I could die now and be happy!
+5-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+5-female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+5-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+5-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+5-female_crotch_is_visible=,<i>(I know I've said a bunch of perverted things about other girls, but it's different when it's right there!)</i>
+
+
+#lost shirt
+6-male_chest_will_be_visible=Horny.png,<i>(This has been hidden from me all my life and finally I'll see it with my own eyes!)</i>
+6-male_chest_will_be_visible=lewd.png,<i>(I guess now I'll see if ~name~ is a loner like me who stays in his room and never excercises!)</i>
+6-male_chest_will_be_visible=thinking.png,<i>(~name~ really is brave, huh. Either that or an idiot.)</i>
+6-male_chest_will_be_visible=lewd.png,I mean, you know the rules. Heh. <i>(These rules are made for a pervert like me!)</i>
+6-male_chest_will_be_visible,count-role;target&character;n:,marker:tomoNshirtless=Angery.png,<i>(Fuck! He won't shut up about pokemen rights or whatever but he's still hot!)</I>
+6-male_chest_is_visible=Horny.png,<i>(Oh no! He's hot!)</i>
+6-male_chest_is_visible=Horny.png,<i>(Do you think if I ask he'll let me touch his chest? Or is that too weird?)</i>
+6-male_chest_is_visible=Excited.png,<i>(This is a lot! And the game isn't even over!)</i>
+6-male_chest_is_visible=Horny.png,I-if you lose again ~name~... <i>(This game is getting serious!)</i>
+6-male_chest_is_visible,count-role;self&saidmarker;tomoNshirtless:=Horny.png,<i>(Maybe this sight was worth listening to this green haired assholes PETA bullshit...)</i>
+6-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,Fuck! <i>(I want to drool on him!)</i>
+6-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,<i>(He looks like a God!... I mean, I'd worship him!)</i>
+6-male_chest_is_visible,priority:1,count-muscular&role;target:=Shy.png,I feel incredibly inadequate. <i>(But that's fine for once...)</i>
+6-male_chest_is_visible,priority:1,count-pale_skinned&role;target:=lewd.png,<i>(~name~ is so pale! He must be an introvert like me... I like it! ♥)</i>
+6-male_crotch_will_be_visible=Horny.png,I'm hyperventilating! Give me a second or I might literally die! <i>(Fuck my virgin mind!)</i>
+6-male_crotch_will_be_visible=Horny.png,<i>(A real dick?! I wonder what it'll look like...)</i>
+6-male_crotch_will_be_visible=Horny.png,<i>(Does this count as losing my virginity?)</i>
+6-male_crotch_will_be_visible=Horny.png,I will remember this forever.
+6-male_crotch_will_be_visible,count-not_naked:4-,marker:firstdick=,<i>(I'm finally seeing a dick! I've waited for this moment all my life!)</i>
+6-male_small_crotch_is_visible=thinking.png,<i>(I'm sure the ones I've seen online are bigger... are they some sort of camera trick?)</i>
+6-male_small_crotch_is_visible=ok_hand.png,<i>(I wish I'd never got excited... I guess it's my fault for ever being optimistic...)</i>
+6-male_small_crotch_is_visible=,<i>(I hope it gets bigger like it does in the videos...)</i>
+6-male_small_crotch_is_visible,count-role;self&saidmarker;firstdick:=Suprised.png,Wait, that's it?! Where's the rest?! <i>(Why did I ever care about this?!)</i>
+6-male_small_crotch_is_visible,count-role;self&saidmarker;firstdick:=Angery.png,I waited so long... for {b}this?!{!reset}
+6-male_medium_crotch_is_visible=Horny.png,{b}WOAH!{!reset} I mean... I've seen something like this on my boyfriend...
+6-male_medium_crotch_is_visible=lewd.png,<i>(My reputation as the girl who looks at dicks is finally justified.)</i>
+6-male_medium_crotch_is_visible=Excited.png,<i>(I can't wait to tell all my friends about this!)</i>
+6-male_medium_crotch_is_visible=,<i>(I can't think about anything but dicks now! Not that I mind...)</i>
+6-male_medium_crotch_is_visible=,<i>(I didn't realise how sexually repressed I was until this moment now!)</i>
+6-male_medium_crotch_is_visible=,<i>(Do you think anyone will notice if I move my hand a little closer to my crotch?!)</i>
+6-male_medium_crotch_is_visible=,<i>(Fuck! I knew strip poker would be horny but not  {b}this{!reset} horny!)</i>
+6-male_medium_crotch_is_visible,count-role;self&saidmarker;firstdick:=,I am completely satisfied. I could die now and be happy!
+6-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+6-female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+6-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+6-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+6-female_medium_chest_is_visible=Horny.png,<i>(This is kind of like perving on Yuu or Yuri... just way more exciting!)</i>
+6-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+6-female_crotch_is_visible=,<i>(I know I've said a bunch of perverted things about other girls, but it's different when it's right there!)</i>
+6-female_crotch_is_visible=Horny.png,<i>(This is kind of like perving on Yuu or Yuri...but like 100 times more lewd!)</i>
+
+
+#lost dress
+7-male_chest_will_be_visible,marker:tomokospecialtits=lewd.png,A shirtless guy is pretty normal in society... so, uh, my tits aren't anything special! <i>(Hopefully that'll stop people from paying attention to them... wait...)</i>
+7-male_chest_will_be_visible=Horny.png,<i>(Focus Tomoko! He's trying to distract you with his manly charms!)</i>
+7-male_chest_will_be_visible=lewd.png,I've already degraded myself so it's only fair! <i>(If I suffer, everyone else should too!)</i>
+7-male_chest_is_visible=,<i>(Should I compliment his chest? Or is that weird.)</i>
+7-male_chest_is_visible=,<i>(I guess I have to lose before I start masturbating...)</i>
+7-male_chest_is_visible=,Uh ~name~, I l-like what I see! <i>(Oh god, they are probably all judging me!)</i>
+7-male_chest_is_visible,count-role;self&saidmarker;tomokospecialtits:=Suprised.png,Wait! I mean my tits are super special! The best boobs!
+7-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,Fuck! <i>(I want to drool on him!)</i>
+7-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,<i>(He looks like a God!... I mean, I'd worship him!)</i>
+7-male_chest_is_visible,priority:1,count-muscular&role;target:=Shy.png,I feel incredibly inadequate. <i>(But that's fine for once...)</i>
+7-male_chest_is_visible,priority:1,count-pale_skinned&role;target:=lewd.png,<i>(~name~ is so pale! He must be an introvert like me... I like it! ♥)</i>
+7-male_crotch_will_be_visible=,I'm naked so I deserve this!
+7-male_crotch_will_be_visible=,Uh, uh, uh! <i>(Stop panicking Tomoko! It's only a DICK!)</i>
+7-male_crotch_will_be_visible,count-not_naked:4-,marker:firstdick=,<i>(I'm finally seeing a dick! I've waited for this moment all my life!)</i>
+7-male_small_crotch_is_visible=Angery.png,Seriously?! You look nearly the same as me! Where is it?!
+7-male_small_crotch_is_visible=Angery.png,Wait, wait. I got naked and played this game, for {b}that?!{!reset}I want my clothes back!
+7-male_small_crotch_is_visible=Shy.png,<i>(I bet ~name~ is a virgin with something like that...)</i>
+7-male_small_crotch_is_visible,count-role;self&saidmarker;firstdick:=Suprised.png,Wait, that's it?! Where's the rest?! <i>(Why did I ever care about this?!)</i>
+7-male_small_crotch_is_visible,count-role;self&saidmarker;firstdick:=Angery.png,I waited so long... for {b}this?!{!reset}
+7-male_medium_crotch_is_visible=,<i>(I can't think about anything but dicks now! Not that I mind...)</i>
+7-male_medium_crotch_is_visible=,<i>(I didn't realise how sexually repressed I was until this moment now!)</i>
+7-male_medium_crotch_is_visible=,<i>(Do you think anyone will notice if I move my hand a little closer to my crotch?!)</i>
+7-male_medium_crotch_is_visible=,<i>(Fuck! I knew strip poker would be horny but not  {b}this{!reset} horny!)</i>
+7-male_medium_crotch_is_visible,count-role;self&saidmarker;firstdick:=,I am completely satisfied. I could die now and be happy!
+7-male_large_crotch_is_visible=,I think your dick just broke my mind ~name~.
+7-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+7-female_chest_will_be_visible=Suprised.png,I wanna grope some tits... Shit! Did I say that out loud?!
+7-female_chest_will_be_visible=,<i>(A pervert like me doesn't deserve to see something like this...)</i>
+7-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+7-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+7-female_crotch_is_visible=,<i>(I know I've said a bunch of perverted things about other girls, but it's different when it's right there!)</i>
+
+
+#naked
+-3-male_chest_will_be_visible,marker:tomokospecialtits=lewd.png,A shirtless guy is pretty normal in society... so, uh, my tits aren't anything special! <i>(Hopefully that'll stop people from paying attention to them... wait...)</i>
+-3-male_chest_will_be_visible=Horny.png,<i>(Focus Tomoko! He's trying to distract you with his manly charms!)</i>
+-3-male_chest_will_be_visible=lewd.png,I've already degraded myself so it's only fair! <i>(If I suffer, everyone else should too!)</i>
+-3-male_chest_is_visible=,<i>(Should I compliment his chest? Or is that weird.)</i>
+-3-male_chest_is_visible=,<i>(I guess I have to lose before I start masturbating...)</i>
+-3-male_chest_is_visible=,Uh ~name~, I l-like what I see! <i>(Oh god, they are probably all judging me!)</i>
+-3-male_chest_is_visible,count-role;self&saidmarker;tomokospecialtits:=Suprised.png,Wait! I mean my tits are super special! The best boobs!
+-3-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,Fuck! <i>(I want to drool on him!)</i>
+-3-male_chest_is_visible,priority:1,count-muscular&role;target:=Horny.png,<i>(He looks like a God!... I mean, I'd worship him!)</i>
+-3-male_chest_is_visible,priority:1,count-muscular&role;target:=Shy.png,I feel incredibly inadequate. <i>(But that's fine for once...)</i>
+-3-male_chest_is_visible,priority:1,count-pale_skinned&role;target:=lewd.png,<i>(~name~ is so pale! He must be an introvert like me... I like it! ♥)</i>
+-3-male_crotch_will_be_visible=,I'm naked so I deserve this!
+-3-male_crotch_will_be_visible=,Uh, uh, uh! <i>(Stop panicking Tomoko! It's only a DICK!)</i>
+-3-male_crotch_will_be_visible,count-not_naked:4-,marker:firstdick=,<i>(I'm finally seeing a dick! I've waited for this moment all my life!)</i>
+-3-male_small_crotch_is_visible=Angery.png,Seriously?! You look nearly the same as me! Where is it?!
+-3-male_small_crotch_is_visible=Angery.png,Wait, wait. I got naked and played this game, for {b}that?!{!reset}I want my clothes back!
+-3-male_small_crotch_is_visible=Shy.png,<i>(I bet ~name~ is a virgin with something like that...)</i>
+-3-male_small_crotch_is_visible,count-role;self&saidmarker;firstdick:=Suprised.png,Wait, that's it?! Where's the rest?! <i>(Why did I ever care about this?!)</i>
+-3-male_small_crotch_is_visible,count-role;self&saidmarker;firstdick:=Angery.png,I waited so long... for {b}this?!{!reset}
+-3-male_medium_crotch_is_visible=,I love your dick ~name~!
+-3-male_medium_crotch_is_visible=,Pretend to be ashamed! ♥
+-3-male_medium_crotch_is_visible,count-role;self&saidmarker;firstdick:=,I am completely satisfied. I could die now and be happy!
+-3-male_large_crotch_is_visible=,I think your dick just broke my mind ~name~.
+-3-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+-3-female_chest_will_be_visible=Suprised.png,I wanna grope some tits... Shit! Did I say that out loud?!
+-3-female_chest_will_be_visible=,<i>(A pervert like me doesn't deserve to see something like this...)</i>
+-3-female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+-3-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+-3-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+-3-female_crotch_is_visible=,<i>(I know I've said a bunch of perverted things about other girls, but it's different when it's right there!)</i>
+
+
+#masturbating
+-2-male_chest_will_be_visible=,Take it off! And that's a demand!
+-2-male_chest_will_be_visible=,Take it off slowly! And blush when you do so!
+-2-male_chest_will_be_visible=,I'm not a pervert, I'm just horny!
+-2-male_chest_is_visible=,Cover yourself in oil! They have that here, right?!
+-2-male_chest_is_visible=,Thanks for the help ~name~!
+-2-male_chest_is_visible=,I deserve this! And more!
+-2-male_crotch_will_be_visible=Soft1.png,Show me your dick!
+-2-male_crotch_will_be_visible=,You made this process a lot easier!
+-2-male_crotch_will_be_visible=,You... slut... ♥
+-2-male_small_crotch_is_visible=Soft1.png,Don't worry ~name~! I'm so horny I don't even care!
+-2-male_small_crotch_is_visible=Soft1.png,Make it bigger! I demand you!
+-2-male_medium_crotch_is_visible=,I love your dick ~name~!
+-2-male_medium_crotch_is_visible=,Pretend to be ashamed! ♥
+-2-male_large_crotch_is_visible=,<i>(With a dick that size, ~name~ must be a massive whore!)</i>
+-2-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+-2-female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+-2-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+-2-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+-2-female_crotch_is_visible=,<i>(I know I've said a bunch of perverted things about other girls, but it's different when it's right there!)</i>
+
+
+#finished
+-1-male_chest_will_be_visible=,I can imagine falling asleep on your chest ~name~... eh, I'm embarrassed that I said that even now.
+-1-male_chest_will_be_visible=,You know ~name~, you could totally be a male stripper!
+-1-male_chest_is_visible=,I can imagine falling asleep on your chest ~name~... eh, I'm embarrassed that I said that even while I'm delerious.
+-1-male_chest_is_visible=,I guess this game is coming to an end... <i>(Eh it's fine, I already blew my load.)</i>
+-1-male_chest_is_visible=,I admire the sentiment, but could you not have done that while I was busy fucking myself?
+-1-male_chest_is_visible=,<i>(Why do things get interesting once I'm out of the game? Just my luck...)</i>
+-1-male_crotch_will_be_visible=,~name~ is going to show me his dick?! Best game.
+-1-male_crotch_will_be_visible=,I just fucked myself, so you don't have anything to be embarrassed about. Just get it over with! <i>(I have no hidden agenda here...)</i>
+-1-male_crotch_will_be_visible=,Show me your dick.
+-1-male_small_crotch_is_visible=,Heh. S-sorry, I-I'm not laughing at you! <i>(I mean of course I am... but I don't want ~name~ to beat me up!)</i>
+-1-male_medium_crotch_is_visible=,I'll admit it- I'm a shameless pervert who likes dicks.
+-1-male_medium_crotch_is_visible=,The internet has lied to me! I bet that's what most dicks actually look like!
+-1-male_large_crotch_is_visible=,<i>(With a dick that size, ~name~ must be a massive whore!)</i>
+-1-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+-1-female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+-1-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+-1-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+-1-female_crotch_is_visible=,<i>(I know I've said a bunch of perverted things about other girls, but it's different when it's right there!)</i>
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+male_start_masturbating=,What the character says when a male character has started masturbating.
+male_masturbating=,What the character says while a male character is masturbating.
+female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+female_start_masturbating=,What the character says when a female character has started masturbating.
+female_masturbating=,What the character says while a female character is masturbating.
+female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_must_masturbate=Thinking_Lewd.png,( He's going to start jacking off in front of everyone?! I can't handle this!.. )
+0-male_start_masturbating=Horny.png,( I wonder if I'm dreaming or something? There's no way I could have made it this far without stripping, only to watch some guy jack off in front of me!.. )
+0-male_masturbating=Horny.png,( I might start soaking through all these <i>luckily unstripped</i> layers if I don't get a hold of myself... )
+0-male_masturbating=Horny.png,( I-It's moving on its own!.. I kindof want to touch it... )
+0-male_masturbating=Horny.png,( Dicks look pretty different in person than they do on a screen... )
+0-male_finished_masturbating=Select 03.png,( Woah! That looks a lot different than it does in hentai! )
+0-male_finished_masturbating=Thinking_Lewd.png,( <i>That's. <b>HOT</b></i>,,, )
+0-female_must_masturbate=Select 02.png,( She's already lost, and here I am, not a single article of clothing gone... )
+0-female_must_masturbate=Select 01.png,( Looks like it's time for her to get crackin', us clothed folk don't have all day! )
+0-female_start_masturbating=thinking.png,( I've... never really seen this kind of thing from someone else's point of view... It's pretty interesting... )
+0-female_start_masturbating=Thinking_Blush.png,( I've... never really seen this kind of thing from someone else's point of view... It's pretty neat!.. )
+0-female_masturbating=Thinking_Blush.png,( Watching her kindof makes me with I wasn't so good at this game... )
+0-female_masturbating=Horny.png,( I haven't even lost yet, and she's going at it like there's no one here... I wonder if this place has a bathroom I could use...)
+0-female_finished_masturbating=Select 01.png,( At least you could wait until I lost once!.. )
+0-female_finished_masturbating=Idle 01.png,( I feel kind of awkward... being in all my clothes and everything... )
+
+
+#lost tie
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>whack his gack</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta<i> buff his banana</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>distribute some free literature</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>play some five on one</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>beat his meat</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>choke the chicken</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>fire off some knuckle children</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>go to the palm prom</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>beat the beaver</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>pump the keg</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>rub one out</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>shuffle his iP*d</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>spank the monkey</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>stroke the one eyed snake</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>tickle his pickle</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>abuse the wicked stick</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>be his own best friend</i> in front of <i>me</i>? Wow... )
+1-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>crank the love pump</i> in front of <i>me</i>? Wow... )
+1-male_start_masturbating=Horny.png,( Phew... My mind is so stuck on dicks, I can't concentrate at all... )
+1-male_masturbating=Horny.png,( Wow... Who knew watching a guy jack off in real life would be this <i>hot</i>?.. )
+1-male_masturbating=Horny.png,( ~name~'s really going to town over there... )
+1-male_masturbating=Horny.png,*Wimper*...
+1-male_finished_masturbating=lewd.png,( Woah!.. That's quite the display!.. )
+1-male_finished_masturbating=lewd.png,( It's not really like in my H-games... It's better!.. )
+1-male_finished_masturbating=lewd.png,( And thus concludes a wonderful masturbation session... )
+1-female_must_masturbate=ok_hand.png,( Well, some people are just born to lose... )
+1-female_must_masturbate=ok_hand.png,( Another one bites the dust... )
+1-female_must_masturbate=ok_hand.png,( Guess some people are just made to lose... )
+1-female_start_masturbating=ok_hand.png,( Interesting... a technique that isn't derivitive of my own... )
+1-female_start_masturbating=Idle 01.png,( She appears quite... amateur, in her technique... )
+1-female_start_masturbating=ok_hand.png,( Interesting, she isn't quite reaching maximum efficiency like that... )
+1-female_masturbating=ok_hand.png,( How sloppy... )
+1-female_masturbating=thinking.png,( Her form... quite ineffective... )
+1-female_masturbating=ok_hand.png,( It appears that ~name~ lacks the proper technique to effectively masturbate... )
+1-female_finished_masturbating=thinking.png,( I'm suprised she was even <i>able</i> to finish like that... )
+1-female_finished_masturbating=Idle 01.png,( I don't think I've ever done something like that when I've climaxed... )
+1-female_finished_masturbating=nervous.png,( I... don't know how to feel about that... she's not even a dude?.. )
+
+
+#lost shoes
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>whack his gack</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta<i> buff his banana</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>distribute some free literature</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>play some five on one</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>beat his meat</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>choke the chicken</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>fire off some knuckle children</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>go to the palm prom</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>beat the beaver</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>pump the keg</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>rub one out</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>shuffle his iP*d</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>spank the monkey</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>stroke the one eyed snake</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>tickle his pickle</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>abuse the wicked stick</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>be his own best friend</i> in front of <i>me</i>? Wow... )
+2-male_must_masturbate=lewd.png,O-Oh... ( Oh! So ~name~'s gotta <i>crank the love pump</i> in front of <i>me</i>? Wow... )
+2-male_start_masturbating=Horny.png,mmh... ( ...Show me your dick... )
+2-male_masturbating=Horny.png,*Wimper*...
+2-male_masturbating=Horny.png,mhm... ( Wow... Who knew watching a guy jack off in real life would be this <i>hot</i>?.. )
+2-male_masturbating=Horny.png,oh... ( ~name~'s really going to town over there... )
+2-male_finished_masturbating=lewd.png,Ah!.. ( Fuck yeah!.. What a display!.. )
+2-male_finished_masturbating=lewd.png,Ah!.. ( It's not really like in my H-games... It's better!.. )
+2-male_finished_masturbating=lewd.png,Ah!.. ( And thus concludes a <i>wonderful</i> masturbation session... )
+2-female_must_masturbate=ok_hand.png,... ( Well, some people are just born to lose... )
+2-female_must_masturbate=ok_hand.png,... ( Another one down... )
+2-female_must_masturbate=ok_hand.png,... ( Guess some people are just made to lose... )
+2-female_start_masturbating=ok_hand.png,... ( Strange... why is her technique so different from my own?.. )
+2-female_start_masturbating=Idle 01.png,... ( She appears quite... amateur, in her technique... )
+2-female_start_masturbating=ok_hand.png,... ( Interesting, she isn't quite reaching maximum efficiency like that... )
+2-female_masturbating=ok_hand.png,E-Eh... ( How sloppy... )
+2-female_masturbating=thinking.png,Hmf... ( Her form... quite ineffective... )
+2-female_masturbating=ok_hand.png,... ( It appears that ~name~ lacks the proper technique to effectively masturbate... )
+2-female_finished_masturbating=thinking.png,... ( I'm suprised she was even <i>able</i> to finish like that... )
+2-female_finished_masturbating=Idle 01.png,O-Oh... ( I don't think I've ever done something like that when I've climaxed... )
+2-female_finished_masturbating=nervous.png,... ( I... don't know how to feel about that... she's not even a dude?.. )
+
+
+#lost leggings
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>whack his gack</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta<i> buff his banana</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>distribute some free literature</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>play some five on one</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>beat his meat</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>choke the chicken</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>fire off some knuckle children</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>go to the palm prom</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>beat the beaver</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>pump the keg</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>rub one out</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>shuffle his iP*d</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>spank the monkey</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>stroke the one eyed snake</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>tickle his pickle</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>abuse the wicked stick</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>be his own best friend</i> in front of <i>me</i>? Wow... )
+3-male_must_masturbate=lewd.png,( Oh! So ~name~'s gotta <i>crank the love pump</i> in front of <i>me</i>? Wow... )
+3-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+
+
+#lost blazer
+4-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+
+
+#lost skirt
+5-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+5-female_masturbating=,Y
+
+
+#lost shirt
+6-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+
+
+#lost dress
+7-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+
+
+#naked
+-3-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+
+
+#masturbating
+-2-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+
+
+#finished
+-1-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+-1-male_finished_masturbating=,You could be a pornstar ~name~!
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+
+#naked
+-3-must_masturbate_first=,This is the character response when they lost their last hand and have to masturbate, and they're the first character who's required to masturbate.
+-3-must_masturbate=,This is the character response when they lost their last hand and have to masturbate, and they're not the first character who's required to masturbate.
+-3-start_masturbating=,What the character says as they start masturbating.
+
+
+#masturbating
+-2-masturbating=,What the character says while they're masturbating.
+-2-heavy_masturbating=,What the character says while they're masturbating, and closer to "finishing".
+-2-finishing_masturbating=orgAsm.png,Ooch! My gooch!
+
+
+#finished
+-1-finished_masturbating=,What the character says after they've finished masturbating.
+
+
+
+
+#GAME OVER
+#Lines spoken after the overall winner has been decided and all the losers have finished their forfeits.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+game_over_victory=,What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-game_over_victory=Idle 01.png,( I guess I'll go home now. )
+0-game_over_victory,count-role;self&saidmarker;worthless:=thinking.png,( I guess maybe God isn't so worthless after all... )
+
+
+#lost tie
+1-game_over_victory=Shy.png,U-Uh... Goodbye!..
+
+
+#lost shoes
+2-game_over_victory=Shy.png,I-I guess I w-win huh?..
+
+
+#lost leggings
+3-game_over_victory=lewd.png,We have to do this again sometime!
+
+
+#lost blazer
+4-game_over_victory=Victorious.png,How's THAT for character development?!
+
+
+#finished
+game_over_defeat=,What the character says when someone else has won the game. This can only occur when a player is in the "finished" stage.
+game_over_defeat=,I feel sorry for the winner... they must be so horny.
+
+#EPILOGUE/ENDING
+
+ending=New Ending
+	ending_gender=any
+
+#CUSTOM POSES

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.7 at 11:55:53 AM on October 28, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.3 at 8:42:22 PM on December 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.7</version>
+    <version>v5.3</version>
     <first>Emi</first>
     <last>Ibarazaki</last>
     <label>Emi</label>
@@ -67,6 +67,32 @@
     </wardrobe>
 
     <poses>
+        <pose id="ghost_boot">
+            <sprite id="stripping" z="2" src="reskins/shadow_emi/0-stripping.png" x="0" y="0" />
+            <sprite id="Boots" z="2" src="reskins/shadow_emi/Boots.png" x="0" y="0" alpha="100" />
+            <sprite id="shadow" src="reskins/shadow_emi/shadow.png" x="0" y="0" />
+            <sprite id="BootsInside" src="reskins/shadow_emi/BootsInside.png" x="0" y="0" alpha="100" />
+            <directive type="animation" id="stripping" ease="ease-in-out-cubic" interpolation="linear">
+                <keyframe time="0" x="0" y="0" />
+                <keyframe time="2" x="1" y="-250" />
+                <keyframe time="3.5" x="0" />
+            </directive>
+            <directive type="animation" id="stripping" delay="2" ease="ease-in-out-cubic" interpolation="linear">
+                <keyframe time="0" y="-250" />
+                <keyframe time="1.5" y="-250" />
+                <keyframe time="4.5" y="0" />
+            </directive>
+            <directive type="animation" id="Boots" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="0" y="0" alpha="100" />
+                <keyframe time="2.25" alpha="100" />
+                <keyframe time="3.25" alpha="0" />
+            </directive>
+            <directive type="animation" id="BootsInside" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="0" y="0" alpha="100" />
+                <keyframe time="2.25" alpha="100" />
+                <keyframe time="3.25" alpha="0" />
+            </directive>
+        </pose>
         <pose id="lemon_transform">
             <sprite id="waiting" src="emi/1-calm.png" x="0" y="0" alpha="100" />
             <sprite id="lemon" src="emi/1-lemon.png" x="0" y="0" alpha="0" />
@@ -189,6 +215,16 @@
                 <condition count="3-4" filter="ddlc" />
                 <test expr="~background~" value="classroom" />
                 <state img="#-confused.png">Did I wander into the wrong school or something?</state>
+            </case>
+            <case stage="0">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-content.png">What do you want?</state>
+                <state img="#-content.png">Strip poker? Are you &lt;i&gt;seriously&lt;/i&gt; that desparate? </state>
+                <state img="#-bored.png">Please don't bore the shit out of me. Thanks. </state>
+                <state img="#-annoyed.png">I know you probably thought I dressed for this occasion, but I'm seriously just a fucked up distorted cognition version of myself. I always look like this. </state>
+                <state img="#-calm.png">I'm hoping for a chance to feel something but I'm not holding my fucking breath. </state>
+                <state img="#-content.png">I just came here looking for some razor blades and a bottle of antifreeze.</state>
+                <state img="#-annoyed.png">This isn't where I buried my hopes and dreams!</state>
             </case>
             <case stage="0">
                 <condition count="3-4" filter="ddlc" />
@@ -340,6 +376,13 @@
             <case stage="0">
                 <test expr="~player~" value="Master" />
                 <state img="#-annoyed.png">You've &lt;i&gt;got&lt;/i&gt; to be kidding me. Master? Really? That's the name you picked? You're such a dweeb.</state>
+            </case>
+            <case stage="0">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-calm.png">Hello, bartender? May I have your finest bleach on the rocks? Yeah...tap is fine. </state>
+                <state img="#-bored.png">Fuck, I forgot to bring my extra small condoms. Sorry, ~player~. </state>
+                <state img="#-content.png">If you can't take the self-loathing, get out of the inner machinations of my mind. </state>
+                <state img="#-annoyed.png">If this is just a shitty excuse to see me in a skimpy outfit I swear to god...</state>
             </case>
             <case stage="0">
                 <state img="#-calm.png">I would just like to warn everybody that I will probably take this game more seriously than I should.</state>
@@ -588,13 +631,25 @@
         </trigger>
 
         <trigger id="hand">
-            <case stage="1" id="3" alsoPlaying="akko" saidMarker="lemon" notSaidMarker="lemon2" priority="1000">
+            <case stage="1" id="3" priority="1000">
+                <condition role="self" saidMarker="lemon" notSaidMarker="lemon2" />
+                <condition role="other" character="akko" />
+                <test expr="~self.costume~" value="default" />
                 <state img="custom:lemon_transform" marker="lemon2" collectible="lemon">Thanks, Akko! You know what they say; &lt;i&gt;when life gives you lemons, drop your bucket in the dirt!&lt;/i&gt;</state>
                 <state img="custom:lemon_transform" marker="lemon2">Thanks, Akko! Kinky is definitely...one way of putting it...</state>
                 <state img="custom:lemon_transform" marker="lemon2">You're the best, Akko!</state>
             </case>
             <case stage="8" saidMarker="pirate" notSaidMarker="captain" priority="800">
                 <state img="#-annoyed.png" marker="captain" set-label="Captain Ibarazaki">Yarr, me hearties, give 'em a broadside wit' th' long guns! Ahoy! Me name be cap'n Ibarazaki t' ye!</state>
+            </case>
+            <case stage="0">
+                <condition count="1" filter="natsuki" />
+                <condition role="self" saidMarker="akko_strip" notSaidMarker="natsuki_outfit" />
+                <condition role="other" character="akko" />
+                <test expr="~self.costume~" value="default" />
+                <state img="custom:natsuki_transform" marker="natsuki_outfit">Woah. Akko, what are you doing?!</state>
+                <state img="custom:natsuki_transform" marker="natsuki_outfit">Umm...Akko...is your magic leaking or something?</state>
+                <state img="custom:natsuki_transform" marker="natsuki_outfit">Woah...umm...this is awkward...</state>
             </case>
             <case stage="0-8" alsoPlaying="zone-tan" alsoPlayingStage="0-1" totalMales="2" totalFemales="2-3" totalRounds="0-4" alsoPlayingSaying="I'm here to free those cocks and unleash those pussies!">
                 <state img="#-laughing.png">So you're basically the Moses of strip poker, Zone-tan?</state>
@@ -667,12 +722,6 @@
             </case>
             <case stage="0-7" alsoPlaying="erufuda" totalRounds="8" notSaidMarker="erufuda_correct" alsoPlayingSaying="It's important to balance your calorie intake with your workout.">
                 <state img="#-calm.png" marker="erufuda_correct">Finally, you say something &lt;i&gt;correct&lt;/i&gt;, Erufuda!</state>
-            </case>
-            <case stage="0" alsoPlaying="akko" saidMarker="akko_strip" notSaidMarker="natsuki_outfit">
-                <condition count="1" filter="natsuki" />
-                <state img="custom:natsuki_transform" marker="natsuki_outfit">Woah. Akko, what are you doing?!</state>
-                <state img="custom:natsuki_transform" marker="natsuki_outfit">Umm...Akko...is your magic leaking or something?</state>
-                <state img="custom:natsuki_transform" marker="natsuki_outfit">Woah...umm...this is awkward...</state>
             </case>
             <case stage="2" alsoPlaying="streaming-chan" timeInStage="0" alsoPlayingSayingMarker="viewers" alsoPlayingSaying="legs">
                 <state img="#-bored.png">You're not talking about &lt;i&gt;me&lt;/i&gt; are you? Do you really think I feel threatened right now?</state>
@@ -824,7 +873,8 @@
         </trigger>
 
         <trigger id="must_strip">
-            <case stage="0-3" saidMarker="800m==1" priority="999">
+            <case stage="0-3" priority="999">
+                <condition role="self" saidMarker="800m==1" />
                 <state img="#-annoyed.png" marker="800m=2">Shit. I guess I'll just have to try to beat my PR tomorrow. Consider yourselves lucky to not have to race me.</state>
                 <state img="#-annoyed.png" marker="800m=2">How am I supposed to race any of you if I lose my own bet? That's no fun!</state>
             </case>
@@ -906,6 +956,70 @@
             </case>
             <case stage="7" alsoPlaying="akko">
                 <state img="#-laughing.png">I'm not taking off my hair ties, Akko. That'd be such a lame move &lt;i&gt;this late&lt;/i&gt; into the game!</state>
+            </case>
+            <case stage="0">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-content.png">Whatever. It's not like I was trying that hard. </state>
+                <state img="#-content.png">Better pay attention if you want your mind blown. Or don't. I don't really care. </state>
+                <state img="#-pout.png">Ugh. Already? Fine. </state>
+                <state img="#-bored.png">Huh? My turn? Whatever. </state>
+                <state img="#-excited.png">Time to get started. </state>
+            </case>
+            <case stage="1">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-annoyed.png">That's fucking bullshit.</state>
+                <state img="#-frustrated.png">Are you fucking &lt;i&gt;kidding me?!&lt;/i&gt;</state>
+                <state img="#-pout.png">Shut up. That was on purpose. </state>
+                <state img="#-annoyed.png">Why did I decide to play this stupid game anyway?</state>
+                <state img="#-content.png">Whatever. I'll go. It's not like I give a shit. </state>
+            </case>
+            <case stage="2">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-annoyed.png">I &lt;i&gt;thought&lt;/i&gt; I'd do better looking like this...</state>
+                <state img="#-frustrated.png">Shit! Not again!</state>
+                <state img="#-pout.png">God dammit! I just got &lt;i&gt;shafted&lt;/i&gt;!</state>
+                <state img="#-annoyed.png">It's better than &lt;i&gt;you&lt;/i&gt; would have done with that hand.</state>
+                <state img="#-content.png">Whatever. &lt;i&gt;Someone's&lt;/i&gt; gotta keep this interesting. </state>
+            </case>
+            <case stage="3">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-annoyed.png">It's hard to play poker and brood at the same time!</state>
+                <state img="#-frustrated.png">It's not &lt;i&gt;my&lt;/i&gt; fault I'm dogshit at this game!</state>
+                <state img="#-pout.png">If only these cards were sharper I'd fucking cut myself. </state>
+                <state img="#-pout.png">Merry fucking christmas!</state>
+                <state img="#-content.png">I could be smoking a joint with Miki right now, but instead I'm stuck showing off to you losers...</state>
+            </case>
+            <case stage="4">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-annoyed.png">How am I supposed to bitch and moan about life when I'm naked? It just isn't the same. </state>
+                <state img="#-frustrated.png">Why do I secretly care about winning this stupid game? It's not like it has any skill to it.</state>
+                <state img="#-pout.png">My hatred of losing is getting me too close to actually feeling something. </state>
+                <state img="#-pout.png">Why did I have to take such a stupid risk? There's no bonus points for winning the hand...</state>
+                <state img="#-frustrated.png">I'd rather fuck a cactus than show ~player~ my tits. He hasn't even gotten me high yet! </state>
+            </case>
+            <case stage="5">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-annoyed.png">How many times am I gonna drop the damn ball? For fuck's sake. </state>
+                <state img="#-frustrated.png">I'm so sick of this shit! </state>
+                <state img="#-pout.png">All I can feel is the pain of defeat and self doubt. </state>
+                <state img="#-content.png">I was getting tired of hating myself with panties on anyway. Now I can do it naked. </state>
+                <state img="#-bored.png">Shit. You all must have been desparate to get these off. Fine, I get the hint. </state>
+            </case>
+            <case stage="6">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-bored.png">Oh? Again? Well...I don't feel like masturbating yet, so...</state>
+                <state img="#-content.png">What? You want the socks off or something? Whatever. You're about to be disappointed if you're a foot fetishist. </state>
+                <state img="#-pout.png">I hardly care about taking shit off I just don't want to fucking &lt;i&gt;lose!&lt;/i&gt; </state>
+                <state img="#-content.png">I &lt;i&gt;could&lt;/i&gt; take off every single arm sleeve individually but then I wouldn't deserve my title. </state>
+                <state img="#-bored.png">I'm already naked. I don't really give a shit at this point. </state>
+            </case>
+            <case stage="7">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-bored.png">I'm running out of things to say at this point so I guess it's about time to wrap it up. </state>
+                <state img="#-content.png">I'm pretty sure my dad is rolling in his grave with how horribly I handled that one. </state>
+                <state img="#-pout.png">The fuck was I &lt;i&gt;supposed&lt;/i&gt; to do?!</state>
+                <state img="#-frustrated.png">Why didn't I hide cards in my legs? I'm so fucking stupid.</state>
+                <state img="#-pout.png">Whatver. May as well lose &lt;i&gt;another&lt;i&gt; one. </state>
             </case>
         </trigger>
 
@@ -1045,6 +1159,11 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="3">
+                <condition role="other" character="tharja" />
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripping.png">Tharja if you don't shut the hell up about ~player~ I'll whip you with this thing. It's fucking annoying. </state>
+            </case>
             <case stage="7" id="20" alsoPlaying="juri" alsoPlayingStage="2-4" notSaidMarker="pirate">
                 <state img="#-stripping.png">Me? Give up? Fat chance. I'd rather take my legs off than let &lt;i&gt;you&lt;/i&gt; win.</state>
             </case>
@@ -1129,6 +1248,59 @@
             <case stage="7" id="58" alsoPlaying="pit">
                 <state img="#-stripping.png">Alright. Legs are coming off. No big deal. Pit, you paying attention?</state>
                 <state img="#-stripping.png">I'm not calling it quits yet. Legs are coming off. Hey Pit, have you ever considered wearing a saddle?</state>
+            </case>
+            <case stage="0">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="custom:ghost_boot"></state>
+            </case>
+            <case stage="1">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripping.png">Give me a minute to take this stupid thing off. </state>
+                <state img="#-stripping.png">Why did I even bring this? It's so fucking annoying to take off. </state>
+                <state img="#-stripping.png">I'm not waving this around like a stripper. If you want a slut, go hire one. </state>
+                <state img="#-stripping.png">This might be useful later...</state>
+            </case>
+            <case stage="2">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripping.png">I'd be worried about getting cold but it's not like I can feel anything anyway. </state>
+                <state img="#-stripping.png">What? Want me to say something witty? I'm not your fucking entertainer. </state>
+                <state img="#-stripping.png">Think of this as a preview of what's to come if you can take care of business. </state>
+                <state img="#-stripping.png">Sorry you had to miss your ugly sweater contest to be here, ~player~. </state>
+            </case>
+            <case stage="3">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripping.png">Only the baddest bitches without dads are brave enough to wear a belt so perfect for being whipped with. </state>
+                <state img="#-stripping.png">Don't even ask me to whip you with this. I don't want you begging for more in the morning. </state>
+                <state img="#-stripping.png">I didn't think you losers were good enough to get me out of this. Whatever. I guess it's hard to suck at a game of chance. </state>
+                <state img="#-stripping.png">My skirt doesn't really need a belt but it looks cool and it hides my daddy issues so let's not ask questions. </state>
+            </case>
+            <case stage="4">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripping.png">You'd think I'd have given my subconscious some bigger fucking tits.</state>
+                <state img="#-stripping.png">Seeing my cognitive tits is an entirely new level of privelege. You &lt;i&gt;better fucking appreciate it.&lt;/i&gt;</state>
+                <state img="#-stripping.png">Take your heart my ass. More like take your fucking dignity. </state>
+                <state img="#-stripping.png">If I'm a manifestation of my self doubt and insecurities, what does that make my tits?</state>
+            </case>
+            <case stage="5">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripping.png">If you can't be proud of your ass then what are you even doing with your life?</state>
+                <state img="#-stripping.png">Gross, ~player~. Quit salivating all over the fucking floor. Get ahold of yourself. </state>
+                <state img="#-stripping.png">If there's something edgy to say about taking off your underwear, I haven't thought of it yet. </state>
+                <state img="#-stripping.png">If everything happens for a reason, what the hell does it mean when your subconscious drops her panties?</state>
+            </case>
+            <case stage="6">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripping.png">Taking these off is harder than it looks. I can't wiggle my toes or straighten my foot. </state>
+                <state img="#-stripping.png">These socks look fly as hell. I'm sad to see them go. But then again, I'm always sad. That's my secret, Captain. </state>
+                <state img="#-stripping.png">I think it's about time I awaken my persona and bitch slap all of you out of this damn place. </state>
+                <state img="#-stripping.png">I found these socks at Hot Topic. Don't judge me. </state>
+            </case>
+            <case stage="7" id="66">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripping.png">May as well take these off. It's not like I have any dignity left anyway after losing &lt;i&gt;that&lt;/i&gt; much. </state>
+                <state img="#-stripping.png">A clever person might wonder who made prosthetic legs to match the skin color of a shadow but I'd say that person asks too many questions. </state>
+                <state img="#-stripping.png">I don't really &lt;i&gt;need&lt;/i&gt; prosthetics with my shadow abilities but I'd probably look fucking weird floating around with no legs. </state>
+                <state img="#-stripping.png">Don't tell me you've watched someone's distorted cognition remove their prosthetic legs before because you'd be fucking lying. </state>
             </case>
             <case stage="4" saidMarker="finalbra">
                 <state img="#-stripping.png">I know you've been waiting to see these, ~player~.</state>
@@ -1259,6 +1431,64 @@
             <case stage="4">
                 <test expr="~background~" value="roof" />
                 <state img="#-stripped.png" weight="5">I'll be honest, this isn't the first time I've taken my shirt off up here.</state>
+            </case>
+            <case stage="1">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripped.png">What? You've never seen someone take off their boots like that before? How lame &lt;i&gt;are&lt;/i&gt; you?</state>
+                <state img="#-stripped.png">What? I'm wearing a skirt. I'm not about to bend over to take them off, idiot.</state>
+                <state img="#-stripped.png">I'm not constrained to the rules of your reality. Get used to it. </state>
+                <state img="#-stripped.png">Don't act like that was over the top. It's easier than bending over with prosthetic legs. </state>
+                <state img="#-stripped.png">...I just wanted to see if that would work.</state>
+            </case>
+            <case stage="2">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripped.png">It's too bad that one had to go. I like being choked. </state>
+                <state img="#-stripped.png">Don't let me lose that choker. I might need it tonight. </state>
+                <state img="#-stripped.png">I'll do something better next time, quit your bitching.</state>
+                <state img="#-stripped.png">Quit bitching. My outfit started out more revealing than yours. </state>
+            </case>
+            <case stage="3">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripped.png">When in doubt, pinky out. </state>
+                <state img="#-stripped.png">If you want to be fancy like me, try having some fucking taste. </state>
+                <state img="#-stripped.png">You can't learn to be fancy. You're either fly, or you're not. </state>
+                <state img="#-stripped.png">You've never met a sista like me. I drink wine from a bag.</state>
+            </case>
+            <case stage="4">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripped.png">Pick your jaw off the floor, ~player~, I didn't wear this for &lt;i&gt;you.&lt;/i&gt;</state>
+                <state img="#-stripped.png">The strap rings chafe like crazy but it's the only way I can ever feel anything.</state>
+                <state img="#-stripped.png">So your cognition isn't as sexy as mine. Tough shit.  Life isn't fair. </state>
+                <state img="#-stripped.png">I know it's technically a swimsuit but nobody fucking asked for your opinion.</state>
+            </case>
+            <case stage="5">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripped.png">What? Want to take a picture? </state>
+                <state img="#-stripped.png">Try running a mile with double Ds and then tell me my tits aren't the shit. </state>
+                <state img="#-stripped.png">Staring is weird, ~player~. Stop it. Pretend I'm &lt;i&gt;not&lt;/i&gt; hot as shit for a change.</state>
+                <state img="#-stripped.png">They aren't gonna smother you, but I have other ways of getting that done. </state>
+                <state img="#-stripped.png">I'm running out of purple shit. Purple Phantom's gonna be pissed. </state>
+            </case>
+            <case stage="6">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripped.png">If you thought a distorted shadow was dark, try fucking one. </state>
+                <state img="#-stripped.png">Yeah, I know I had other shit to take off, but I ain't a little bitch. </state>
+                <state img="#-stripped.png">As hard as it may be to resist, ~player~, you can't masturbate until you totally lose. That is, if you haven't already lost. I'm not really paying attention. </state>
+                <state img="#-stripped.png">I'm just a pale bitch that's hotter than your girlfriend if you were man enough to have one. </state>
+            </case>
+            <case stage="7" id="65">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripped.png">Yeah...my legs are prosthetic. Don't be a fucking creep about it. </state>
+                <state img="#-stripped.png">That's right, I don't have real legs. Why do you think I'm such a fucking edgelord? </state>
+                <state img="#-stripped.png">That's right, I saved these for last because they aren't exactly the most appealing parts of my hot bod. </state>
+                <state img="#-stripped.png">Don't fucking pity me. I'm not your little damsel in distress. </state>
+            </case>
+            <case stage="8" id="67">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-stripped.png">If this makes you uncomfortable, grow some hair on your balls. This is like taking off a pair of shoes to me. </state>
+                <state img="#-stripped.png">Imagine walking around on a constant reminder of the event that killed your best friend. </state>
+                <state img="#-stripped.png">You won't see me painting any pictures with these guys. I have the painful emotions of an artist without the talent. </state>
+                <state img="#-stripped.png" location="46%" weight="2">I thought about talking like a pirate, but what's the fucking point of doing something stupid like that?</state>
             </case>
             <case stage="1">
                 <state img="#-stripped.png" marker="car_accident">My legs are prosthetic so this is a little tricky. I was in a car accident and they had to be amputated below the knee.</state>
@@ -4437,6 +4667,13 @@
         </trigger>
 
         <trigger id="must_masturbate">
+            <case stage="8">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-content.png">Whatever, I'll just fucking masturbate. I'm tired of this game. </state>
+                <state img="#-pout.png">I'm fucking done with this game. I'm out. </state>
+                <state img="#-content.png">Fine, I'll just fucking play with myself and spare myself the boredom that is playing this game. </state>
+                <state img="#-content.png">I can't help but feel pissed off for losing this game, no matter how stupid it is. </state>
+            </case>
             <case stage="8" saidMarker="pirate" priority="10">
                 <state img="#-content.png">I be nah happy about this result, but if I be bein' honest, flossin' th' otter ain't th' worst punishment fer losin'.</state>
                 <state img="#-pout.png">I was tryin' so hard 'n I still couldn't pull it off...</state>
@@ -4459,6 +4696,12 @@
         </trigger>
 
         <trigger id="start_masturbating">
+            <case stage="8">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-canoestart.png">I &lt;i&gt;could&lt;/i&gt; float around and do crazy shadow things while doing this, but that's more effort than it's worth. </state>
+                <state img="#-canoestart.png">Happy hallo--errr...whatever holiday we're celebrating today. </state>
+                <state img="#-canoestart.png">I'll be impressed if you're still focused on what I'm saying instead of what my fingers are doing. </state>
+            </case>
             <case stage="8" saidMarker="pirate" priority="10">
                 <state img="#-laughing.png" set-label="Emi">Okay, I'm not going to talk like a pirate for this. That would be weird.</state>
             </case>
@@ -4610,6 +4853,13 @@
         </trigger>
 
         <trigger id="game_over_victory">
+            <case stage="0-8">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-bored.png">That shit was &lt;i&gt;easy&lt;/i&gt;. Were you even trying?! </state>
+                <state img="#-bored.png">This was a huge waste of time. Now I'm horny for nothing. </state>
+                <state img="#-calm.png">Am I supposed to feel happy about winning this or something? Meh. </state>
+                <state img="#-content.png">Winning this stupid game doesn't suddenly make me fulfilled. </state>
+            </case>
             <case stage="8" saidMarker="pirate">
                 <state img="#-content.png">I didn' &lt;i&gt;wants&lt;/i&gt; t' loot me legs off, but it &lt;i&gt;did&lt;/i&gt; end up winnin' me th' game. Worth it.</state>
                 <state img="#-annoyed.png">I shouldn't 'ave had t' loot off me legs t' win th' game. I needs t' do better.</state>
@@ -4654,7 +4904,10 @@
         </trigger>
 
         <trigger id="game_over_defeat">
-            <case stage="10" alsoPlaying="akko" saidMarker="akko_pirate">
+            <case stage="10">
+                <condition role="self" saidMarker="akko_pirate" />
+                <condition role="other" character="akko" />
+                <test expr="~self.costume~" value="default" />
                 <state img="custom:pirate_transform" marker="pirate_defeat" collectible="pirate_hat">Aye! Hang th' black flag at th' end o' th' mast! I'll giv' ye a taste o' the cat, ye cowardly, back-stabbin' codfish!</state>
             </case>
             <case stage="10" saidMarker="pirate" priority="100">
@@ -4675,6 +4928,15 @@
                 <state img="#-content.png" weight="2">Second place is just the first loser. Well, last loser in the case of this game, I suppose.</state>
                 <state img="#-content.png">At least I wasn't the first to go down. It's not much of an extra comfort, though. I'd rather &lt;i&gt;win.&lt;/i&gt;</state>
                 <state img="#-content.png">Second place isn't good enough. Nobody remembers the guy who finishes second after Usain Bolt.</state>
+            </case>
+            <case stage="10">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-content.png">Don't ask me to come again if this is all we're gonna do. </state>
+                <state img="#-content.png">Wow. You won. Congrats. Want a medal? </state>
+                <state img="#-content.png">Anyone got a light? </state>
+                <state img="#-bored.png">Now I can finally go home. This place has &lt;i&gt;nothing&lt;/i&gt; on a palace. </state>
+                <state img="#-bored.png">If nothing else, at least I got off.</state>
+                <state img="#-frustrated.png">Imagine losing a game as dumb as &lt;i&gt;this!&lt;/i&gt; </state>
             </case>
             <case stage="10">
                 <state img="#-frustrated.png">I can't believe I lost to ~name~.</state>

@@ -24,9 +24,71 @@ namespace SPNATI_Character_Editor
 			recCharacter.RecordChanged += RecCharacter_RecordChanged;
 			recWho.RecordType = typeof(FilterType);
 			recCharacter.RecordType = typeof(Character);
+			recCharacter.RecordFilter = FilterTargets;
 			valFrom.Text = "";
 			valTo.Text = "";
 			recWho.RecordChanged += UpdateRecord;
+		}
+
+		private bool FilterTargets(IRecord record)
+		{
+			if (recWho.RecordKey == "target")
+			{
+				if (record.Key == "human")
+				{
+					return true;
+				}
+				Case workingCase = Data as Case;
+				if (workingCase != null)
+				{
+					string gender = "";
+					if (workingCase.Tag.Contains("female_"))
+					{
+						gender = "female";
+					}
+					else if (workingCase.Tag.Contains("male_"))
+					{
+						gender = "male";
+					}
+					Character c = record as Character;
+					if (!string.IsNullOrEmpty(gender) && !c.Metadata.CrossGender && !string.IsNullOrEmpty(c.Gender) && c.Gender != gender)
+					{
+						return false;
+					}
+
+					string size = "";
+					if (workingCase.Tag.Contains("large_"))
+					{
+						size = "large";
+					}
+					else if (workingCase.Tag.Contains("medium_"))
+					{
+						size = "medium";
+					}
+					else if (workingCase.Tag.Contains("small_"))
+					{
+						size = "small";
+					}
+					if (!string.IsNullOrEmpty(size) && !string.IsNullOrEmpty(c.Size) && c.Size != size)
+					{
+						return false;
+					}
+					return true;
+				}
+				else
+				{
+					return true;
+				}
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+		protected override void OnDestroy()
+		{
+			tableAdvanced.Data = null;
 		}
 
 		public override void OnInitialAdd()
@@ -243,6 +305,9 @@ namespace SPNATI_Character_Editor
 				case "opp":
 					grpContainer.PanelType = SkinnedBackgroundType.Group2;
 					break;
+				case "winner":
+					grpContainer.PanelType = SkinnedBackgroundType.Group5;
+					break;
 				default:
 					grpContainer.PanelType = SkinnedBackgroundType.Group1;
 					break;
@@ -317,6 +382,7 @@ namespace SPNATI_Character_Editor
 				case "target":
 				case "opp":
 				case "other":
+				case "winner":
 					return type.Key;
 				default:
 					return null;

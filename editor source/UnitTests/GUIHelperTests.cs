@@ -159,5 +159,147 @@ namespace UnitTests
 			Assert.AreEqual(5, list[2]);
 			Assert.AreEqual(6, list[3]);
 		}
+
+		[TestMethod]
+		public void ParseSentence_Break_Spaced()
+		{
+			string sentence = "A <br> break.";
+			List<Word> words = GUIHelper.ParseWords(sentence);
+			Assert.AreEqual(3, words.Count);
+			Assert.AreEqual("A", words[0].Text);
+			Assert.AreEqual(FormatMarker.LineBreak, words[1].Formatter);
+			Assert.AreEqual("break.", words[2].Text);
+		}
+
+		[TestMethod]
+		public void ParseSentence_Punctuation()
+		{
+			string sentence = "...";
+			List<Word> words = GUIHelper.ParseWords(sentence);
+			Assert.AreEqual(1, words.Count);
+			Assert.AreEqual("...", words[0].Text);
+		}
+
+		[TestMethod]
+		public void ParseSentence_Punctuation_Italics()
+		{
+			string sentence = "<i>...</i>";
+			List<Word> words = GUIHelper.ParseWords(sentence);
+			Assert.AreEqual(3, words.Count);
+			Assert.AreEqual(FormatMarker.ItalicOn, words[0].Formatter);
+			Assert.AreEqual("...", words[1].Text);
+			Assert.AreEqual(FormatMarker.ItalicOff, words[2].Formatter);
+		}
+
+
+		[TestMethod]
+		public void ParseSentence_Break_Single()
+		{
+			string sentence = "A<br>break.";
+			List<Word> words = GUIHelper.ParseWords(sentence);
+			Assert.AreEqual(3, words.Count);
+			Assert.AreEqual("A", words[0].Text);
+			Assert.AreEqual(FormatMarker.LineBreak, words[1].Formatter);
+			Assert.AreEqual("break.", words[2].Text);
+		}
+
+		[TestMethod]
+		public void ParseSentence_Break_SelfClosing()
+		{
+			string sentence = "A <br/> break.";
+			List<Word> words = GUIHelper.ParseWords(sentence);
+			Assert.AreEqual(3, words.Count);
+			Assert.AreEqual("A", words[0].Text);
+			Assert.AreEqual(FormatMarker.LineBreak, words[1].Formatter);
+			Assert.AreEqual("break.", words[2].Text);
+		}
+
+		[TestMethod]
+		public void ParseSentence_Break_Multiple()
+		{
+			string sentence = "A<br>few<br>breaks.";
+			List<Word> words = GUIHelper.ParseWords(sentence);
+			Assert.AreEqual(5, words.Count);
+			Assert.AreEqual("A", words[0].Text);
+			Assert.AreEqual(FormatMarker.LineBreak, words[1].Formatter);
+			Assert.AreEqual("few", words[2].Text);
+			Assert.AreEqual(FormatMarker.LineBreak, words[3].Formatter);
+			Assert.AreEqual("breaks.", words[4].Text);
+		}
+
+		[TestMethod]
+		public void ParseSentence_Break_Punctuation()
+		{
+			string sentence = "Hey<i>, some punctuation .";
+			List<Word> words = GUIHelper.ParseWords(sentence);
+			Assert.AreEqual(4, words.Count);
+			int i = 0;
+			Assert.AreEqual("Hey,", words[i++].Text);
+			Assert.AreEqual(FormatMarker.ItalicOn, words[i++].Formatter);
+			Assert.AreEqual("some", words[i++].Text);
+			Assert.AreEqual("punctuation.", words[i++].Text);			
+		}
+
+		[TestMethod]
+		public void ParseSentence_Italic_Spaced()
+		{
+			string sentence = "Now <i> italics </i> are on.";
+			List<Word> words = GUIHelper.ParseWords(sentence);
+			Assert.AreEqual(6, words.Count);
+			Assert.AreEqual("Now", words[0].Text);
+			Assert.AreEqual(FormatMarker.ItalicOn, words[1].Formatter);
+			Assert.AreEqual("italics", words[2].Text);
+			Assert.AreEqual(FormatMarker.ItalicOff, words[3].Formatter);
+			Assert.AreEqual("are", words[4].Text);
+			Assert.AreEqual("on.", words[5].Text);
+		}
+
+		[TestMethod]
+		public void ParseSentence_Italic_Joined()
+		{
+			string sentence = "Now <i>italics</i> are on.";
+			List<Word> words = GUIHelper.ParseWords(sentence);
+			Assert.AreEqual(6, words.Count);
+			Assert.AreEqual("Now", words[0].Text);
+			Assert.AreEqual(FormatMarker.ItalicOn, words[1].Formatter);
+			Assert.AreEqual("italics", words[2].Text);
+			Assert.AreEqual(FormatMarker.ItalicOff, words[3].Formatter);
+			Assert.AreEqual("are", words[4].Text);
+			Assert.AreEqual("on.", words[5].Text);
+		}
+
+		[TestMethod]
+		public void ParseSentence_Italic_Reverse()
+		{
+			string sentence = "Now </i>italics <i>are on.";
+			List<Word> words = GUIHelper.ParseWords(sentence);
+			Assert.AreEqual(6, words.Count);
+			Assert.AreEqual("Now", words[0].Text);
+			Assert.AreEqual(FormatMarker.ItalicOff, words[1].Formatter);
+			Assert.AreEqual("italics", words[2].Text);
+			Assert.AreEqual(FormatMarker.ItalicOn, words[3].Formatter);
+			Assert.AreEqual("are", words[4].Text);
+			Assert.AreEqual("on.", words[5].Text);
+		}
+
+		[TestMethod]
+		public void ParseSentence_Multiple()
+		{
+			string sentence = "<i>This sentence<br></i> has it <br/><i>all!</i>";
+			List<Word> words = GUIHelper.ParseWords(sentence);
+			Assert.AreEqual(11, words.Count);
+			int i = 0;
+			Assert.AreEqual(FormatMarker.ItalicOn, words[i++].Formatter);
+			Assert.AreEqual("This", words[i++].Text);
+			Assert.AreEqual("sentence", words[i++].Text);
+			Assert.AreEqual(FormatMarker.LineBreak, words[i++].Formatter);
+			Assert.AreEqual(FormatMarker.ItalicOff, words[i++].Formatter);
+			Assert.AreEqual("has", words[i++].Text);
+			Assert.AreEqual("it", words[i++].Text);
+			Assert.AreEqual(FormatMarker.LineBreak, words[i++].Formatter);
+			Assert.AreEqual(FormatMarker.ItalicOn, words[i++].Formatter);
+			Assert.AreEqual("all!", words[i++].Text);
+			Assert.AreEqual(FormatMarker.ItalicOff, words[i++].Formatter);
+		}
 	}
 }

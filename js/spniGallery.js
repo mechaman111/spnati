@@ -69,6 +69,8 @@ var unescapeSubstitutions = {
 var unescapeDialogueRE = /(&(?:lt|gt|quot|apos|amp);)/gi
 
 function unescapeHTML(in_text) {
+	if (!in_text) return '';
+	
     return in_text.replace(unescapeDialogueRE, function (match, p1) {
         return unescapeSubstitutions[p1];
     });

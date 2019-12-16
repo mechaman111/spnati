@@ -361,7 +361,11 @@ namespace Desktop.CommonControls
 			}
 			else
 			{
-				Group indexedGroup = _groupIndex[(T)item];
+				Group indexedGroup;
+				if (!_groupIndex.TryGetValue((T)item, out indexedGroup))
+				{
+					return false;
+				}
 				index++; //count the group
 				if (group.Expanded)
 				{

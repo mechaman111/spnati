@@ -42,6 +42,10 @@ namespace SPNATI_Character_Editor
 			chkChecklistValidation.Checked = Config.EnableDashboardValidation;
 			chkStartDashboard.Checked = Config.StartOnDashboard;
 
+			recAutoOpen.RecordType = typeof(Character);
+			recAutoOpen.RecordFilter = CharacterDatabase.FilterHuman;
+			recAutoOpen.RecordKey = Config.GetString(Settings.AutoOpenCharacter);
+
 			HashSet<string> pauses = Config.AutoPauseDirectives;
 			foreach (DirectiveDefinition def in Definitions.Instance.Get<DirectiveDefinition>())
 			{
@@ -139,6 +143,7 @@ namespace SPNATI_Character_Editor
 			Config.StartOnDashboard = chkStartDashboard.Checked;
 			Config.EnableDashboardSpellCheck = chkChecklistSpell.Checked;
 			Config.EnableDashboardValidation = chkChecklistValidation.Checked;
+			Config.Set(Settings.AutoOpenCharacter, recAutoOpen.RecordKey);
 
 			HashSet<string> pauses = new HashSet<string>();
 			foreach (string item in lstPauses.CheckedItems)

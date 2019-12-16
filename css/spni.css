@@ -315,13 +315,6 @@ label {
     background-color: rgba(169, 68, 66, 0.75);
 }
 
-.select-slot-button {
-    width: 100%;
-    height: 5.44rem;
-    /* To match small-card-image */
-    font-size: 130%;
-}
-
 .game-menu-dropup {
     position: absolute;
     left: 1%;
@@ -1847,6 +1840,52 @@ label {
     width: 98%;
 }
 
+.select-slot-button {
+    width: 100%;
+    height: 5.44rem;
+    /* To match small-card-image */
+    font-size: 130%;
+}
+
+.select-slot-button.suggestion-shown {
+    height: 4.5rem;
+}
+
+.prefill-select-button {
+    width: 100%;
+    height: 4rem;
+    font-size: 130%;
+    margin-bottom: 0.2rem;
+}
+
+.prefill-suggestion {
+    opacity: 0.6;
+}
+
+.suggestion-label::before {
+    font-weight: bold;
+    content: "Suggested: ";
+}
+
+.selection-badge-row {
+    position: absolute;
+    top: 8%;
+    height: 8rem;
+    width: 24.5%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.selection-badge-row .badge-icon {
+    opacity: 0.75;
+
+    height: 100%;
+    width: auto;
+}
+
 /************************************************************
  * Classes for the new individual select screen.
  ************************************************************/
@@ -1882,6 +1921,12 @@ label {
     position: relative;
     cursor: pointer;
 }
+
+/*
+.selection-card[data-highlight="new"] {
+    background-color: rgba(25, 166, 25, 0.75);
+}
+*/
 
 .selection-card-image-clip {
     position: absolute;
@@ -1931,17 +1976,6 @@ label {
     align-items: center;
 }
 
-.badge-icon {
-    opacity: 0.75;
-
-    height: 18%;
-    width: auto;
-
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
 .selection-card-sidebar img {
     width: 100%;
     height: auto;
@@ -1960,6 +1994,28 @@ label {
 .selection-card-sidebar .status-icon {
     opacity: 0.50;
     margin-top: 3%;
+}
+
+.badge-sidebar {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    width: 40%;
+
+    padding: 2% 2.5%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.badge-sidebar .badge-icon {
+    opacity: 0.75;
+    width: 100%;
+    height: auto;
+    position: static;
 }
 
 .selection-card-footer {
@@ -2005,6 +2061,17 @@ label {
     transition: background-color;
     transition-duration: 0.5s;
 }
+
+.selection-card[data-highlight="new"]:hover,
+.selection-card[data-highlight="new"]:active {
+    background-color: rgba(102, 255, 102, 0.50);
+}
+
+.selection-card[data-highlight="testing"]:hover,
+.selection-card[data-highlight="testing"]:active {
+    background-color: rgba(92, 197, 250, 0.6);
+}
+
 
 .selection-card:hover .selection-card-footer .selection-card-label,
 .selection-card:active .selection-card-footer .selection-card-label {
@@ -2654,13 +2721,23 @@ label {
     line-height: 3rem;
 }
 
-.badge-icon {
+.group-badge-bar {
     position: absolute;
     width: 36%;
-    height: auto;
     left: 0;
     top: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.group-badge-bar .badge-icon {
     opacity: 0.75;
+
+    width: 100%;
+    height: auto;
 }
 
 .status-icon {

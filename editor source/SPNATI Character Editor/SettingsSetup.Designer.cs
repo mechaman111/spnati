@@ -88,6 +88,8 @@
 			this.chkWorkflowTracer = new Desktop.Skinning.SkinnedCheckBox();
 			this.stripSections = new Desktop.Skinning.SkinnedTabStrip();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
+			this.recAutoOpen = new Desktop.CommonControls.RecordField();
+			this.skinnedLabel5 = new Desktop.Skinning.SkinnedLabel();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valFrequency)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valLifetime)).BeginInit();
@@ -437,6 +439,8 @@
 			// tabGeneral
 			// 
 			this.tabGeneral.BackColor = System.Drawing.Color.White;
+			this.tabGeneral.Controls.Add(this.skinnedLabel5);
+			this.tabGeneral.Controls.Add(this.recAutoOpen);
 			this.tabGeneral.Controls.Add(this.chkHideImages);
 			this.tabGeneral.Controls.Add(this.cmdBrowseKisekae);
 			this.tabGeneral.Controls.Add(this.txtKisekae);
@@ -541,6 +545,8 @@
 			this.grpChecklist.Image = null;
 			this.grpChecklist.Location = new System.Drawing.Point(6, 29);
 			this.grpChecklist.Name = "grpChecklist";
+			this.grpChecklist.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.grpChecklist.ShowIndicatorBar = false;
 			this.grpChecklist.Size = new System.Drawing.Size(434, 111);
 			this.grpChecklist.TabIndex = 1;
 			this.grpChecklist.TabStop = false;
@@ -631,6 +637,7 @@
 			this.cboImportMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cboImportMethod.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
 			this.cboImportMethod.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.cboImportMethod.KeyMember = null;
 			this.cboImportMethod.Location = new System.Drawing.Point(103, 5);
 			this.cboImportMethod.Name = "cboImportMethod";
 			this.cboImportMethod.SelectedIndex = -1;
@@ -897,6 +904,36 @@
 			this.skinnedPanel1.TabIndex = 14;
 			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
 			// 
+			// recAutoOpen
+			// 
+			this.recAutoOpen.AllowCreate = false;
+			this.recAutoOpen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.recAutoOpen.Location = new System.Drawing.Point(133, 109);
+			this.recAutoOpen.Name = "recAutoOpen";
+			this.recAutoOpen.PlaceholderText = null;
+			this.recAutoOpen.Record = null;
+			this.recAutoOpen.RecordContext = null;
+			this.recAutoOpen.RecordFilter = null;
+			this.recAutoOpen.RecordKey = null;
+			this.recAutoOpen.RecordType = null;
+			this.recAutoOpen.Size = new System.Drawing.Size(276, 20);
+			this.recAutoOpen.TabIndex = 10;
+			this.recAutoOpen.UseAutoComplete = false;
+			// 
+			// skinnedLabel5
+			// 
+			this.skinnedLabel5.AutoSize = true;
+			this.skinnedLabel5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel5.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel5.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel5.Location = new System.Drawing.Point(7, 113);
+			this.skinnedLabel5.Name = "skinnedLabel5";
+			this.skinnedLabel5.Size = new System.Drawing.Size(59, 13);
+			this.skinnedLabel5.TabIndex = 11;
+			this.skinnedLabel5.Text = "Auto-open:";
+			// 
 			// SettingsSetup
 			// 
 			this.AcceptButton = this.cmdOk;
@@ -1003,5 +1040,7 @@
 		private Desktop.Skinning.SkinnedCheckBox chkChecklistValidation;
 		private Desktop.Skinning.SkinnedCheckBox chkChecklistSpell;
 		private Desktop.Skinning.SkinnedCheckBox chkStartDashboard;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel5;
+		private Desktop.CommonControls.RecordField recAutoOpen;
 	}
 }

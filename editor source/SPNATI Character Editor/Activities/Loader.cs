@@ -32,7 +32,11 @@ namespace SPNATI_Character_Editor.Activities
 			await LoadChunk("Default Dialogue", 1, () => DialogueDatabase.Load());
 			await LoadChunk("Recipes", 1, () => RecipeProvider.Load());
 
-			string lastCharacter = Config.GetString(Settings.LastCharacter);
+			string lastCharacter = Config.GetString(Settings.AutoOpenCharacter);
+			if (string.IsNullOrEmpty(lastCharacter))
+			{
+				lastCharacter = Config.GetString(Settings.LastCharacter);
+			}
 
 			List<string> failedCharacters = new List<string>();
 
