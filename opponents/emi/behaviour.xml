@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.3 at 8:42:22 PM on December 14, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.3 at 11:46:42 AM on December 16, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.3</version>
     <first>Emi</first>
@@ -68,10 +68,10 @@
 
     <poses>
         <pose id="ghost_boot">
-            <sprite id="stripping" z="2" src="reskins/shadow_emi/0-stripping.png" x="0" y="0" />
-            <sprite id="Boots" z="2" src="reskins/shadow_emi/Boots.png" x="0" y="0" alpha="100" />
-            <sprite id="shadow" src="reskins/shadow_emi/shadow.png" x="0" y="0" />
-            <sprite id="BootsInside" src="reskins/shadow_emi/BootsInside.png" x="0" y="0" alpha="100" />
+            <sprite id="stripping" z="2" src="emi/ghost.png" x="0" y="0" />
+            <sprite id="Boots" z="2" src="emi/Boots.png" x="0" y="0" alpha="100" />
+            <sprite id="shadow" src="emi/shadow.png" x="0" y="0" />
+            <sprite id="BootsInside" src="emi/BootsInside.png" x="0" y="0" alpha="100" />
             <directive type="animation" id="stripping" ease="ease-in-out-cubic" interpolation="linear">
                 <keyframe time="0" x="0" y="0" />
                 <keyframe time="2" x="1" y="-250" />
@@ -822,8 +822,9 @@
                 <state img="#-happy.png" oneShotId="48">Better watch your back, ~leader~! I'm not about to let you keep that lead!</state>
                 <state img="#-pout.png" oneShotId="49">~leader~'s certainly having some great luck right now. Must be nice.</state>
             </case>
-            <case stage="0-2" notSaidMarker="lonely">
+            <case stage="0-2">
                 <condition count="1-4" filter="lonely" stage="4" />
+                <condition role="self" notSaidMarker="lonely" />
                 <state img="#-excited.png" marker="lonely">What's better than a game of strip poker to help you feel accompanied? Well, okay, maybe a lot of things, but that's not the point!</state>
             </case>
             <case stage="8" totalAlive="2" notSaidMarker="pirate">
@@ -832,36 +833,46 @@
                 <state img="#-excited.png" marker="Last_hand" weight="2">It all comes down to this, ~player~! Are you ready? Excited? Terrified?</state>
                 <state img="#-excited.png" marker="Last_hand">Alright ~player~, last chance, make it count!</state>
             </case>
-            <case stage="0-2" notSaidMarker="thigh-high">
+            <case stage="0-2">
                 <condition count="2-5" filter="thigh-highs" gender="female" />
+                <condition role="self" notSaidMarker="thigh-high" />
                 <state img="#-happy.png" marker="thigh-high">I think we're all making it very clear that thigh-highs are the best!</state>
             </case>
-            <case stage="8" totalAlive="2">
+            <case stage="8" priority="15">
                 <condition count="0" status="not_lost_all" />
                 <condition count="1" status="alive" role="opp" var="opponent" />
+                <condition count="2" status="alive" />
                 <state img="#-happy.png">Here we go, ~opponent~! Last round, sudden death!</state>
             </case>
-            <case stage="0-2" totalFemales="5" notSaidMarker="jagno">
+            <case stage="0-2">
+                <condition role="self" notSaidMarker="jagno" />
+                <condition count="5" gender="female" />
                 <state img="#-calm.png" marker="jagno">Is this just a regular girls night out for all of you?</state>
             </case>
-            <case stage="0-1" totalMales="4" notSaidMarker="sausage-fest">
+            <case stage="0-1">
+                <condition role="self" notSaidMarker="sausage-fest" />
+                <condition count="4" gender="male" />
                 <state img="#-confused.png" marker="sausage-fest">I'll be honest, I'm not super comfortable playing this with &lt;i&gt;four&lt;/i&gt; guys...I feel like all eyes are on me!</state>
             </case>
-            <case stage="1-2" saidMarker="car_accident" notSaidMarker="setup_pirate">
+            <case stage="1-2">
+                <condition role="self" saidMarker="car_accident" notSaidMarker="setup_pirate" />
                 <state img="#-happy.png" marker="setup_pirate">With these legs I'd make a pretty good pirate, wouldn't I?</state>
                 <state img="#-laughing.png" marker="setup_pirate">With my fake legs, striped clothes, and assertive attitude, I'm basically a pirate!</state>
                 <state img="#-excited.png" marker="setup_pirate">I've got the legs to make a damn good pirate. I'd be the terror of the high seas!</state>
             </case>
-            <case stage="5-8" oneShotId="9" saidMarker="800m==2" notSaidMarker="pirate">
+            <case stage="5-8" oneShotId="9">
+                <condition role="self" saidMarker="800m==2" notSaidMarker="pirate" />
                 <state img="#-interested.png" marker="=3">Here's a new bet just for you, ~player~. If you manage to win this game, you have to race me at the track tomorrow! Sound fair?</state>
                 <state img="#-interested.png" weight="4">Don't worry, ~player~, we'll have a bet just between us if you manage to win this game! </state>
             </case>
-            <case stage="8" notSaidMarker="placeholder" priority="1">
+            <case stage="8" priority="1">
+                <condition role="self" notSaidMarker="placeholder" />
                 <test expr="~emi.marker.pirate~" value="0" />
                 <test expr="~player~" value="Tenzo" />
                 <state img="#-content.png" marker="placeholder">I seem to have misplaced my inflatable black socks...</state>
             </case>
-            <case stage="1" notSaidMarker="car_accident">
+            <case stage="1">
+                <condition role="self" notSaidMarker="car_accident" />
                 <state img="#-content.png" marker="car_accident">It might be hard to tell with my vibrant socks, but my legs were amputated below the knee after I was in a car accident. Now I wear prosthetics.</state>
                 <state img="#-sad.png" marker="car_accident">In case any of you were wondering, yes, my legs are prosthetic. I lost them in a car accident several years ago.</state>
                 <state img="#-content.png" marker="car_accident">So yeah, long story short; I was in a car accident several years ago and lost my legs below the knee. I wear prosthetics now.</state>
@@ -869,6 +880,23 @@
             <case stage="0-7" oneShotId="26" priority="0">
                 <condition filter="persona_5" role="other" />
                 <state img="#-annoyed.png" marker="p5_joker">Who left a joker in the deck?!</state>
+            </case>
+            <case stage="0-8" priority="0">
+                <test expr="~self.costume~" value="shadow_emi" />
+                <state img="#-bored.png" oneShotId="144">If you don't cry yourself to sleep, what are you even doing with your life? </state>
+                <state img="#-content.png" oneShotId="145">Don't talk to me like I'm your precious little broken girl needing saving. I don't need to be fixed. </state>
+                <state img="#-confused.png" oneShotId="146">I can't say I'm a big fan of these gloves. Running with them on makes my hands feel weird. Why am I wearing them? </state>
+                <state img="#-annoyed.png" oneShotId="147">Quit feeling sorry for yourself. It's only cool when &lt;i&gt;I&lt;/i&gt; do it!</state>
+                <state img="#-bored.png" oneShotId="148">Isn't this the point where we're supposed to monologue about our deepest emotional hangups? </state>
+                <state img="#-bored.png" oneShotId="149">Huh. I thought we'd see an emotional breakdown by now. Maybe I need to step my game up. </state>
+                <state img="#-annoyed.png" oneShotId="150">I'd be better at this game if it wasn't literally a luck of the draw. </state>
+                <state img="#-frustrated.png" oneShotId="151">Shit. Wasn't the Weezer concert tonight? What am I doing here?</state>
+                <state img="#-pout.png" oneShotId="152">Why won't you love me, Edward? You give me everything just by breathing.</state>
+                <state img="#-sad.png" oneShotId="153">No amount of high cards will fill the hole that he left behind. </state>
+                <state img="#-sad.png" oneShotId="154">Maybe if I were better, he'd still be here...</state>
+                <state img="#-sad.png" oneShotId="155">I should have taken his place...</state>
+                <state img="#-pout.png" oneShotId="156">I scare people when I run in the middle of the night. Who wants to be out in the bright sun, though?</state>
+                <state img="#-content.png" oneShotId="157">Don't talk to me if you don't listen to Sorority Noise and La Dispute religiously. </state>
             </case>
         </trigger>
 
@@ -1181,7 +1209,8 @@
                 <condition count="0" filter="ryuji" />
                 <state img="#-stripping.png">He sounds like someone I'd like to meet!</state>
             </case>
-            <case stage="0-7" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="emi_pick1" alsoPlayingSayingMarker="emi_pick2">
+            <case stage="0-7">
+                <condition role="other" character="streaming-chan" saidMarker="emi_pick1" sayingMarker="emi_pick2" />
                 <state img="#-stripping.png">Ugh. You can't be serious! I was sore for &lt;i&gt;days.&lt;/i&gt;</state>
             </case>
             <case stage="0" alsoPlaying="juri" notSaidMarker="pirate">
@@ -1251,7 +1280,16 @@
             </case>
             <case stage="0">
                 <test expr="~self.costume~" value="shadow_emi" />
-                <state img="custom:ghost_boot"></state>
+                <state img="custom:ghost_boot">Ę̵̳͒́͆͂v̸̯͕̌̽͂i̷̬̽̈́ĉ̷͓̹͕̯̓͝e̵̤̗͆̏͘͘ń̷͎̣͓͑ḭ̵̗̉̐m̶̚͜ ̶͉͆͆̌̕P̶̜̙̙̉́͜ȓ̸̰̦̾̐i̴͔̻̫̟̐͂̀s̴̟͇̀́e̵̖̝̦̼͌̒n̸̻̞̽̃ď̵̖̪̕ȉ̸̩̩̝̀͠ͅụ̴̌̈͝ŝ̶͉̯́̕</state>
+                <state img="custom:ghost_boot">T̶͉̋r̸̜̓͘͠ã̶̼͓͊͂̂ń̶̗͔͉ş̷̢͌͛ẽ̸̹̭̀̐͜g̷̬̚o̴͍̓̃̀ ̷͍͈̹̄̈͂͘T̶̪͊o̵̞̳͌̊̍̐r̴̘͍͛̏̀m̴̙̣͗̆e̶̱̮̍n̴̳͉̖͗͜é̸̘͎̭̘͛̃̀g̷̥̻͎̳̊͝r̸̫̦̲͇̒̄i̵̱̎̾̈͜s̷̖̤͉̯̄͆</state>
+                <state img="custom:ghost_boot">M̵͙̠̘̜̓̄̇͆u̶̢̙͇̖̓̀͋͝f̸̲̻̫̀̆̍̂f̴͚̽l̸̮̎̅̈̾e̵̳̮̫̎̔̇͗r̵̩̿̈́͠i̶̤͕̺̲̕̚̕s̸̛̞͉͎̓̓͝ ̶̖͉̬͈͛̕͘Ï̶̧̻͈͑n̵̼̳̦̹͛̍́͝t̶̡̠͓̉̎͑i̸͔͐̈́̊͗m̴̥̌͛͠ï̴̫͉̝͖̋͊̐d̵̩̦̒̽͐̿ę̶͓̓̊n̸̦̗̓̓ḏ̴̢̡͍̈ì̴̢͙͉̼ò̸͎</state>
+                <state img="custom:ghost_boot">E̵̛̮x̵̣̯̯̾͒̍͜ṯ̸͇̏e̸̹̿͛ṙ̵͉̍m̸̦̈́͋͘͠ì̷̘̲͘ę̷̩͉̥͂n̴̮̯̳͍̐̐́̈d̸̩̾ǐ̴͕͍̤͛̂͝o̴̡̥̟͌ͅ ̷̭͠Ĉ̷͈̤̩͒ò̵̻͒͒̆m̶̰͑̃p̷̛̖̮̟l̴̢̠̱̀͐͊͑ę̷͚̦͓̾̎̑͠ṫ̵͙͈͙͔̍ü̴͕̔͝m̵͖͑</state>
+                <state img="custom:ghost_boot">E̷̙̼̼̭̎̾v̸̡̡̞̬̍ȋ̴̹͚̀̂̚c̷̣̤͂͠e̴̯̾ò̷̢̰m̷̨̠̈̽ ̵̲̄̿͋D̶̠͗̊͌̍ï̴̦̮̊͠͝v̸͕̮̥̞̈́͛i̷̛̠̼̒n̷̦̤͒̚͠͝e̴̻͊n̷͖̯̠͐̌͛̽d̵̮͒̏ḯ̸͕̳̻͝͝u̴͓̥̒̐̎s̸̻̼͐͜͠</state>
+                <state img="custom:ghost_boot">S̸̨͒͜͝͝a̵̗͋̏ṇ̷̡͚͙̌͋̚c̶͖͂e̸̞̒͜n̴͓̂̉̓t̷͉̦͕͉̓ą̵̯̫̊̏ ̵̥̬̙̓̌D̷̤̜͇̼̂̍͝͠ḛ̵̛̩̞̆̆̔ͅm̶͐͌͜ő̶̱͍̂̈́ͅǹ̴̨a̶̘͌̈̚͘͜r̵̠̿̂b̴͍̲̌̍͆u̴̥̬͓̥͂̂s̴̛̻͜</state>
+                <state img="custom:ghost_boot">L̷̢̤̩̠̎́́ė̶̢̝͚͍v̶̰̘̫̌͋͑̚i̶̧̧̘̎͒t̸͈̊̈́̆̍à̴̭͖̕͠á̶̝̣̲̻t̶̜̻̎ͅe̷͙̝̍͝ͅ ̷̥̥͚̦̐C̴̼͇̙̤̍̈́̐ō̵̝̞̘̉͌m̵̦̋̎̐̄p̷̨͒l̴̠̑́ȇ̸̯̭̐͘̚ť̸̫̦̌̊̚i̷͍̟͠n̴̡̹̎d̴̥͇͊͒̀̾ó̸̡̞̱͉̃̾͝</state>
+                <state img="custom:ghost_boot">P̴̬̉u̶̧̖͐̀͂͝ŗ̵͕̱̺̓̿̏͘i̵̺͗̅̎ė̴̻̭͝r̴͖͔͗̽̎̚ì̷͎͇͕̹̔ǫ̴̙̖͆̿ ̷̼̥̠̇̏̚P̶̡̛͕͕̔̊̑e̴͍̞̹̞̍͛r̵̮͋f̷̯͒̒e̷͉͌͝c̸̢̛͗́̕ȗ̵̘̼͛̋̚ň̵̟̩̬͚̊͂ḑ̵͙̫̤͂̈͆̚i̵̟̲̬̊̏s̶̢̮͔̋̀̈́</state>
+                <state img="custom:ghost_boot">L̴͕̃͑̄̈́õ̴̞͇͍c̴̲̮̼̹͂̅͠ö̷͔̰̭̲́͛̒m̴̠̩̯̒̇o̸̢̺͗̀̚̕o̸̺̓̔͛r̸̛̮̞͜t̵̮̑̂ï̵̻̅a̵̳̻̲͆͑̀͘ ̴̦̄̍̏C̸͓͂̅á̶̛̝̖͍n̸̤͔̱̪̋͒̕ỉ̶̻̥̱̂̐n̸̡̲̟͗́̉͆i̵̛͕̰̼̩̐̄t̵͓̅̀̈́ẻ̸̺̤̒ů̵̢̙͎͓̕s̶͚͍̗͖̉͛͛͠</state>
+                <state img="custom:ghost_boot">Ë̴̢̙̹́͝v̷̻̣͠ỉ̶̦͠c̵̫̻̙̫̐t̷̡̺̊̐͐ẹ̷̯̿̑o̶̰̊͜͜u̵̱̾ş̵̨̺͙̈́̓̅ ̵̜̘̈̍̍P̴̥̽͠͝h̸͎̮̳̊ã̵̪̘n̷̢̤̫͙͛͆ẗ̵͎̬̱́̎͛ͅe̴͔̻̊ġ̸͎̈́̈́̈õ̶̧͙͓̀͑</state>
             </case>
             <case stage="1">
                 <test expr="~self.costume~" value="shadow_emi" />
