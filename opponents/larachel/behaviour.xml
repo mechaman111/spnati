@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.3 at 8:00:08 PM on December 07, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.3 at 8:08:09 PM on December 16, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.3</version>
     <first>L'Arachel</first>
@@ -538,7 +538,7 @@
             <case stage="0-6" priority="0">
                 <state img="#-calm.png" oneShotId="26" marker="faith">Perhaps some of you are interested in what I do as priestess? All followers of the goddess seek to help others. I happen to do so through my healing and light magic.</state>
                 <state img="#-confident.png" oneShotId="27">I assure you, my friends, that I am no idle priestess. I travel around Magvel, protecting those in danger of monster threats. By comparison, this game is nothing!</state>
-                <state img="#-awkward.png" oneShotId="28" marker="faith2">O divine goddess, just as your Sacred Stones sealed away the Demon King hundreds of years ago, I call upon your aid for this very hand.</state>
+                <state img="#-confident.png" oneShotId="28" marker="faith2">O divine goddess, just as your Sacred Stones sealed away the Demon King hundreds of years ago, I call upon your aid for this very hand.</state>
                 <state img="#-confident.png" oneShotId="29">I needn't even look at my cards. As long as I have faith and righteousness on my side, I shan't lose!</state>
             </case>
             <case stage="0-6" priority="0">
@@ -554,7 +554,7 @@
         <trigger id="must_strip">
             <case stage="0" priority="500">
                 <test expr="~self.costume~" value="larachel_harvest_princess" />
-                <state img="#-mad.png">A trick, is it? Dealer, you not receive even a &lt;i&gt;mote&lt;/i&gt; of candy! &lt;i&gt;Not one!&lt;/i&gt;</state>
+                <state img="#-mad.png">A trick, is it? Dealer, you will not receive even a &lt;i&gt;mote&lt;/i&gt; of candy! &lt;i&gt;Not one!&lt;/i&gt;</state>
             </case>
             <case stage="1" priority="500">
                 <test expr="~self.costume~" value="larachel_harvest_princess" />
@@ -866,7 +866,8 @@
             <case stage="0" alsoPlaying="remilia">
                 <state img="#-stripping.png">True, Dozla and Rennac could use better decorum... but don't underestimate us!</state>
             </case>
-            <case stage="0" alsoPlaying="sakura">
+            <case stage="0">
+                <condition role="other" character="sakura" />
                 <state img="#-stripping.png">I am a humble holy woman, and I would appreciate being respected and admired as such.</state>
             </case>
             <case stage="2" alsoPlaying="akko">
@@ -996,7 +997,8 @@
                 <test expr="~self.costume~" value="larachel_harvest_princess" />
                 <state img="#-sad.png">This is more suited for birthdays than the harvest festival, I believe...</state>
             </case>
-            <case stage="4" alsoPlaying="pit" alsoPlayingStage="0-3">
+            <case stage="4">
+                <condition role="other" character="pit" stage="0-3" />
                 <state img="#-smug.png">Is that so? I always knew I had favor with the gods, but to hear from the source is appreciated.</state>
             </case>
             <case stage="4" alsoPlaying="pit" alsoPlayingStage="4-7">
@@ -1417,7 +1419,8 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
-            <case stage="0-1" saidMarker="pr_beaut" notSaidMarker="pr_beaut2">
+            <case stage="0-1">
+                <condition role="self" saidMarker="pr_beaut" notSaidMarker="pr_beaut2" />
                 <state img="#-confident.png" marker="pr_beaut2">What exciting stories! I wonder who could be so divinely blessed, to earn such a title.</state>
             </case>
             <case stage="0-1">
