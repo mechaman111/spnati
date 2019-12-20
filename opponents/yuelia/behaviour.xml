@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 7:48:21 PM on December 16, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 5:07:50 PM on December 19, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Flutter</first>
@@ -95,6 +95,11 @@
                 <keyframe time="0.3800001" alpha="0" />
             </directive>
         </pose>
+        <pose id="wish">
+            <sprite id="neutral" z="2" src="yuelia/1-neutral.png" x="0" y="57" scalex="1.1" scaley="1.1" />
+            <sprite id="wishingStar" z="3" src="yuelia/wishingStar.png" x="-211" y="709" scalex="0.1" scaley="0.1" />
+            <sprite id="wishingStar1" src="yuelia/wishingStar.png" x="0" y="0" />
+        </pose>
     </poses>
 
     <behaviour>
@@ -103,6 +108,15 @@
                 <state img="#-neutral.png">By the way you can all call me... Flutter!</state>
                 <state img="#-neutral.png">Nice to meet you! I'm Flutter.</state>
                 <state img="#-neutral.png">So here we are...the Inventory, At least, I think that's what this is.</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_selected">
+            <case stage="0">
+                <condition role="other" character="panty" />
+                <test expr="~background.location~" value="indoors" />
+                <state img="#-pouty.png">Moth?! I'm a butterfly! When have you ever seen a moth sparkle like this!?</state>
+                <state img="#-pouty.png">I am NOT a moth! I am a butterfly! Moths aren't this brightly colored! &lt;i&gt;Are they?&lt;/i&gt;</state>
             </case>
         </trigger>
 
@@ -302,6 +316,23 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0-8" id="12">
+                <condition role="other" character="aella" stage="0-1" sayingMarker="AellaAdventures" />
+                <alternative alsoPlaying="aella" alsoPlayingStage="0-1" totalRounds="2">
+                    <condition count="1" filter="pinkie_pie" role="other" />
+                </alternative>
+                <alternative alsoPlaying="aella" alsoPlayingStage="0-1" totalRounds="1" />
+                <state img="#-beaming.png" marker="aella_onAdventure">Ooh! I have, Aella! It was wild! But I made a lot of friends in the process and that's what's really important!</state>
+                <state img="#-beaming.png" marker="aella_onAdventure">I have, Aella! It was a lot of fun! In fact, that's why I'm here, to have more fun!</state>
+            </case>
+            <case stage="0-8">
+                <condition count="1-5" role="opp" var="leader" />
+                <condition role="other" character="dust" sayingMarker="askluck" />
+                <test expr="~dust.place~" cmp="&gt;" value="1" />
+                <test expr="~leader.place~" value="1" />
+                <state img="#-curious.png" marker="dust_noLuck">Luck boosting? I'm not wearing anything like that. Only elemental enhancers.</state>
+                <state img="#-curious.png" marker="dustnoLuck">I'm not wearing anything like that. All of my equipment is meant to make my magic better, Dust.</state>
+            </case>
             <case stage="0-8" priority="156">
                 <condition role="self" saidMarker="spooky_boobjob" />
                 <condition role="other" character="spooky" stage="3" timeInStage="0" />
@@ -311,6 +342,11 @@
                 <condition role="self" saidMarker="spooky_boobjob2" />
                 <condition role="other" character="spooky" stage="3" timeInStage="1" />
                 <state img="#-confused.png" marker="spooky_boobjob3">I'm not sure I understand, Spooky. What kind if job do you have?</state>
+            </case>
+            <case stage="0-8" id="13" priority="156">
+                <condition role="other" character="aella" stage="4" timeInStage="0" sayingMarker="AellaBookClub" />
+                <state img="#-curious.png" marker="aella_library">Well, I spent a lot of time in the Castele library Aella, and I thought that all the books were pretty interesting.</state>
+                <state img="#-curious.png" marker="aella_libraryInvite">Oh! There were plenty of interesting books in the Castele library, Aella! I can bring you with me the next time I go if you want.</state>
             </case>
             <case stage="0-8">
                 <condition role="other" character="saki_zls" stage="6" timeInStage="0" />
@@ -327,6 +363,22 @@
                 <state img="#-pouty.png">Of course I can play! Just... give me a second to get my cards in order.</state>
                 <state img="#-pouty.png">Yes I can play! I just... might have some trouble holding these...</state>
             </case>
+            <case stage="1-8" priority="142">
+                <condition role="self" saidMarker="transformation" />
+                <condition role="other" character="tomoko" stage="0-3" sayingMarker="yuelia_cheatingliar" />
+                <state img="#-content.png" marker="tomoko_forgive">Of course I would, Tomoko! We all make mistakes, after all.</state>
+                <state img="#-content.png" marker="tomoko_forgive">I've lied to my friends before, Tomoko. But they all  forgave me, so of course I could forgive you!</state>
+            </case>
+            <case stage="0-8" priority="142">
+                <condition role="self" saidMarker="rin_hugSetup" />
+                <condition role="other" character="rin" sayingMarker="hugged1" />
+                <state img="absent.png"></state>
+            </case>
+            <case stage="8" priority="142">
+                <condition role="self" saidMarker="rin_hugSetup" />
+                <condition role="other" character="rin" stage="6" sayingMarker="hugged2" />
+                <state img="absent.png" marker="rin_2hugs" collectible="rin_portrait"></state>
+            </case>
             <case stage="0">
                 <condition role="other" character="emi" stage="1" sayingMarker="car_accident" />
                 <state img="#-nervous.png">Oh. I'm so sorry to hear that, Emi.</state>
@@ -336,6 +388,16 @@
                 <condition role="other" character="emi" stage="1" sayingMarker="car_accident" />
                 <state img="#-scared.png">Oh. I'm so sorry to hear that, Emi.</state>
                 <state img="#-scared.png">Oh my. I'm sorry that happened to you, Emi.</state>
+            </case>
+            <case stage="0-8" id="18" priority="141">
+                <condition role="other" character="dust" stage="0-5" sayingMarker="fidgetQA_stupidhat" />
+                <state img="#-nervous.png" marker="dust_stupidHat">It's not stupid, Fidget. It's just... unique.</state>
+                <state img="#-nervous.png" marker="dust_stupidHat">That's not very nice, Fidget. It... goes well with the rest of his clothes.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="joey" stage="5" sayingMarker="CandyHat" />
+                <state img="#-shocked.png" marker="joey_madeHat">It is?! What master Cook made that, Joey?</state>
+                <state img="#-shocked.png" marker="joey_madeHat">Is it really, Joey? Who made it?</state>
             </case>
             <case stage="0-8" oneShotId="34">
                 <condition role="other" character="dust" saidMarker="ahrahwho" />
@@ -394,6 +456,21 @@
                 <condition role="other" character="tomoko" sayingMarker="yuelia_cicadas" />
                 <state img="#-nervous.png" marker="tomoko_friendCollect">No, just the butterfly, Tomoko. Though, my friend will collect some cicadas from time to time.</state>
             </case>
+            <case stage="0-8" id="15" priority="101">
+                <condition role="other" character="dust" sayingMarker="fidgetQA_beatup" />
+                <state img="#-nervous.png" marker="dust_beatUp">Funny you ask, Fidget. I actually have had to do something like that before. And I did, so... yes?</state>
+                <state img="#-nervous.png" marker="dust_beatUp">I'd have to say "yes" to that, Fidget. Mainly because something like that has happened before.</state>
+            </case>
+            <case stage="0-8" id="16" priority="101">
+                <condition role="other" character="dust" sayingMarker="fidgetQA_doubts" />
+                <state img="#-neutral.png" marker="dust_doubts">I would give them a hug, and reassure them until they felt better, Fidget.</state>
+                <state img="#-neutral.png" marker="dust_doubts">I would hug them, and let them know that it wasn't their fault, Fidget.</state>
+            </case>
+            <case stage="0-8" id="17" priority="101">
+                <condition role="other" character="dust" sayingMarker="fidgetQA_snacks" />
+                <state img="#-beaming.png" marker="dust_snacks">That's easy, Fidget! Sugared water!</state>
+                <state img="#-beaming.png" marker="dust_snacks">I love sugared water, Fidget!</state>
+            </case>
         </trigger>
 
         <trigger id="must_strip">
@@ -436,6 +513,11 @@
                 <condition role="other" character="jessie" />
                 <state img="#-content.png" marker="jessie_Lunares">I'm from Lunares, Jessie. Well, I think it's called the moon here.</state>
                 <state img="#-content.png" marker="jessie_Lunares">I'm from the other side of the moon, Jessie! Though, I just call it Lunares.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="panty" />
+                <state img="#-pouty.png">Why are you being so mean?! What did I do? Wait, hold on...</state>
+                <state img="#-pouty.png">This "bug" has feelings, you know! Stop being so mean!</state>
             </case>
             <case stage="1-7" oneShotId="36">
                 <condition role="self" consecutiveLosses="2" />
@@ -610,6 +692,24 @@
                 <condition role="other" character="tomoko" stage="3-6" sayingMarker="tomofluttsexier" />
                 <state img="#-strip.png" marker="tomoko_sexier">Uh, no. At least I don't think so, Tomo. I've never tried it before.</state>
             </case>
+            <case stage="1">
+                <condition role="self" saidMarker="megumin_askDad" />
+                <condition role="other" character="megumin" sayingMarker="megumin_yuelia_dragon2" />
+                <state img="#-strip.png" marker="megumin_garden">No, not a demon, Megumin. He's a... gardener, I guess.</state>
+                <state img="#-strip.png" marker="megumin_damien">He's not a demon, Megumin. Though I do have a friend who's dad is a demon. His name is Damien.</state>
+            </case>
+            <case stage="2">
+                <condition role="self" saidMarker="megumin_fatherGave" />
+                <condition role="other" character="megumin" sayingMarker="megumin_yuelia_identity2" />
+                <state img="#-strip.png" marker="megumin_creatorFather">Well, he's not exactly average. He just...well...created a couple of universes.</state>
+                <state img="#-strip.png" marker="megumin_godFather">That's because he's not human. He's...well... a god.</state>
+            </case>
+            <case stage="2">
+                <condition role="self" saidMarker="megumin_humanGirl" />
+                <condition role="other" character="megumin" sayingMarker="megumin_yuelia_identity2" />
+                <state img="#-strip.png" marker="megumin_lineage">Well, my dad created the worlds, and my mom was a human. Though, my dad made her a goddess when they got married.</state>
+                <state img="#-strip.png" marker="megumin_godParents">I mean, it's not a big deal. My dad just made a few universes and my mom gave people the ability to live their Life to the fullest.</state>
+            </case>
             <case stage="0">
                 <condition role="other" character="estelle" sayingMarker="deity" />
                 <state img="custom:transforming" marker="sugared_water">
@@ -678,6 +778,21 @@
                 <condition role="other" character="rin" />
                 <state img="#-after.png" marker="rin_getYouOne">As a matter of fact, it would, Rin! Want me to get you one later?</state>
                 <state img="#-after.png" marker="rin_getYouOne">Yes, it would, Rin! I can get you one if you want.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="panty" />
+                <state img="#-confused.png">A-nal? What are you talking about, Panty?</state>
+                <state img="#-confused.png">I, uh, don't know what you're going on about, Panty.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="panty" />
+                <state img="#-pouty.png">I just said it was Fire Mana! Not blood! At least try to listen.</state>
+                <state img="#-pouty.png" marker="panty_tampon">Stop calling me a moth! Also, what's a "tampon"?</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="panty" />
+                <state img="#-confused.png" marker="panty_middleFinger">What's that thing you're doing with your finger, Panty?</state>
+                <state img="#-nervous.png" marker="panty_what">Uh... what? Where did that come from, Panty?</state>
             </case>
             <case stage="1">
                 <state img="#-neutral.png" marker="real_name">You can all just call me Yuelia from now on. That's my real name.</state>
@@ -824,17 +939,11 @@
         </trigger>
 
         <trigger id="female_must_strip">
-            <case stage="0-10">
-                <condition role="target" character="rin" stage="0" />
-                <condition count="0" role="other" character="emi" />
-                <state img="#-nervous.png" marker="rin_needHelp">So, Rin. Do you need some help with this?</state>
-                <state img="#-neutral.png" marker="rin_needHelp">Are you going to need help with this, Rin?</state>
-            </case>
             <case stage="1-10">
                 <condition role="target" character="rin" stage="1" />
                 <condition count="0" role="other" character="emi" />
-                <state img="#-nervous.png" marker="rin_needHelp2">Do you need help this time, Rin? I can help, if you want.</state>
-                <state img="#-neutral.png" marker="rin_needHelp2">Are you able to take off the rest of your clothes too, Rin. I can help, if not.</state>
+                <state img="#-nervous.png" marker="rin_needHelp">Do you need help this time, Rin? I can help, if you want.</state>
+                <state img="#-neutral.png" marker="rin_needHelp">Are you able to take off the rest of your clothes too, Rin. I can help, if not.</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="elesa" stage="0" />
@@ -853,6 +962,11 @@
                 <test expr="~target.costume~" value="default" />
                 <state img="#-beaming.png" marker="emi_socks">&lt;i&gt;Ooh.&lt;/i&gt; I really like your socks, Emi! They're so pretty and colorful!</state>
                 <state img="#-beaming.png" marker="emi_cheerful">You're such a nice and cheerful person, Emi! I like people like that!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="aella" stage="4" sayingMarker="AellaStalling" />
+                <state img="#-confused.png" marker="aella_goodEars">Really, Aella? I don't hear anything. I think I have pretty good ears too.</state>
+                <state img="#-confused.png" marker="aella_goodEars">Are you sure, Aella? I don't hear it? And I have pretty good hearing.</state>
             </case>
             <case stage="0">
                 <condition role="target" character="akko" stage="0" />
@@ -1002,6 +1116,16 @@
                 <condition role="target" character="catria" stage="0" />
                 <state img="#-curious.png" marker="catria_thinking">You seem kinda jumpy, Catria. Is there something on your mind?</state>
                 <state img="#-curious.png" marker="catria_thinking">You look like you're thinking about something else. What's on your mind, Catria?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="leggy" stage="0" />
+                <state img="#-beaming.png" marker="leggy_fluffy">&lt;i&gt;Ooh!&lt;/i&gt; You look so fluffy and cute, Leggy!</state>
+                <state img="#-beaming.png" marker="leggy_soft">Wow! You look all soft and cuddly, Leggy!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="rin" stage="0" />
+                <state img="#-curious.png" marker="rin_hugSetup">You seem like such a calm person, Rin. How do you like surprises?</state>
+                <state img="#-curious.png" marker="rin_hugSetup">You're so calm and collected, Rin. Are you the kind of person who doesn't like surprises?</state>
             </case>
             <case stage="0" oneShotId="2">
                 <condition filter="short" role="target" />
@@ -1204,6 +1328,11 @@
                 <state img="#-neutral.png" marker="megumin_ImHere">Okay, Megumin. But if you need someone to talk to, remember that I'm here.</state>
             </case>
             <case stage="1-10">
+                <condition role="target" character="rin" stage="1" saidMarker="flutterstriphelp" />
+                <state img="#-neutral.png" marker="rin_helping">Not at all, Rin! Let's just untie this...</state>
+                <state img="#-content.png" marker="rin_helping">I'd be happy to, Rin. Let's get that tie undone...</state>
+            </case>
+            <case stage="1-10">
                 <condition role="target" character="palutena" stage="2" />
                 <state img="#-dissapointed.png" marker="palutena_condescending">I feel like you're being kind of condescending Palutena. It's not very pleasant.</state>
                 <state img="#-scared.png" marker="palutena_kinder">You're being kind of rude, Palutena. Shouldn't you be kinder as a goddess?</state>
@@ -1293,6 +1422,30 @@
 
         <trigger id="female_removed_accessory">
             <case stage="0-10">
+                <condition role="target" character="megumin" stage="1" saidMarker="megumin_yuelia_youngTalent2" />
+                <condition role="self" saidMarker="megumin_betterStaff" />
+                <state img="#-curious.png" marker="megumin_wandMaker">Oh yeah. I guess they can be expensive. My friend always gathers the material and makes their wands themselves, so I guess I forgot about that. </state>
+                <state img="#-curious.png" marker="megumin_friendMake">Hm... Maybe I could ask my friend to make you one, Megumin.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="1" saidMarker="megumin_yuelia_youngTalent2" />
+                <condition role="self" saidMarker="megumin_catMagician" />
+                <state img="#-neutral.png" marker="megumin_catTeacher">No. Well, I don't &lt;i&gt;think&lt;/i&gt; so, Megumin. But she does speak. and teach newcomers.</state>
+                <state img="#-neutral.png" marker="megumin_magicCat2">Well, I'm pretty sure she can't, Megumin. But she does cast really powerful magic.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="2" sayingMarker="megumin_yuelia_heresy2" />
+                <condition role="self" saidMarker="megumin_fizzHate" />
+                <state img="#-neutral.png" marker="megumin_boomMind">I don't think she hates them. She just hates the fact that Flannel thinks of nothing but them.</state>
+                <state img="#-neutral.png" marker="megumin_bottledFireworks">No. She just prefers the accessory side of alchemy. She did make bottled fireworks once though.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="2" sayingMarker="megumin_yuelia_heresy2" />
+                <condition role="self" saidMarker="megumin_fizzMagic" />
+                <state img="#-nervous.png" marker="megumin_apology">I see. Sorry for scaring you, Megumin.</state>
+                <state img="#-neutral.png" marker="megumin_apology">Oh. Sorry about that, Megumin.</state>
+            </case>
+            <case stage="0-10">
                 <condition role="target" character="spooky" stage="1" />
                 <condition role="self" saidMarker="spooky_hostile" />
                 <state img="#-confused.png" marker="spooky_whyKnife">You're not? Then why did you have that knife? Actually, why would a ghost even &lt;i&gt;need&lt;/i&gt; a knife? Isn't your... ghostliness enough? </state>
@@ -1326,6 +1479,21 @@
                 <state img="#-scared.png">Oh my. I'm sorry that happened to you, Emi.</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="megumin" stage="1" saidMarker="megumin_yuelia_bringShame" />
+                <state img="#-beaming.png" marker="megumin_crimsonDemons">They really are! So, uh, what do Crimson Demons do, Megumin?</state>
+                <state img="#-nervous.png" marker="megumin_uniform">Wow. Sounds like there's a pretty strict uniform where you come from, Megumin.</state>
+            </case>
+            <case stage="1-10">
+                <condition role="target" character="megumin" stage="1" saidMarker="megumin_yuelia_elderWizard" />
+                <state img="#-surprise.png" marker="megumin_fastStamina">Oh, they're special clothing made for only the greatest magic users. Wearing them makes your stamina recover much faster!</state>
+                <state img="#-surprise.png" marker="megumin_friendMagician">They're special robes made for great magicians! My friend has a set, and when they wear it, they rarely ever get tired!</state>
+            </case>
+            <case stage="1-10">
+                <condition role="target" character="rin" stage="2" saidMarker="flutterstriphelp" />
+                <state img="#-surprise.png">There! Got it!</state>
+                <state img="#-content.png">And there! Got it.</state>
+            </case>
+            <case stage="0-10">
                 <condition role="target" character="zizou" stage="1" />
                 <state img="#-beaming.png">Oooh! Butterflies! That's so neat, Zizou!</state>
                 <state img="#-beaming.png">Wow! That's so cool, Zizou!</state>
@@ -1349,6 +1517,16 @@
                 <condition role="target" character="chihiro" stage="1" />
                 <state img="#-nervous.png" marker="chihiro_saySomething">If this all gets to be too much for you, just say something, Chihiro.</state>
                 <state img="#-nervous.png" marker="chihiro_saySomething">Don't push yourself too hard, Chihiro. Say something if you need for us to stop.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="other" character="dust" stage="0-7" sayingMarker="cassius_talked==1" />
+                <state img="#-confused.png" marker="dust_noticedCassius1">Uh... Dust?</state>
+                <state img="#-confused.png" marker="dust_noticedCassius1">Dust? Where'd that come from?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="other" character="dust" stage="0-7" sayingMarker="cassius_talked==2" />
+                <state img="#-confused.png" marker="dust_noticedCassius2">Again, Dust? What's happening with you?</state>
+                <state img="#-confused.png" marker="dust_noticedCassius2">Dust? Where are these outbursts coming from?</state>
             </case>
             <case stage="0">
                 <state img="#-curious.png">Did you make ~clothing.ifPlural(them|it)~ yourself? Or maybe a Tailor made ~clothing.ifPlural(them|it)~?</state>
@@ -1455,6 +1633,16 @@
                 <state img="#-neutral.png" marker="elesa_whatCall">No, I don't. What do they call you?</state>
                 <state img="#-neutral.png" marker="elesa_whatCall">No, but I want to know!</state>
             </case>
+            <case stage="1-10">
+                <condition role="target" character="rin" stage="0" saidMarker="rin_whyask" />
+                <state img="#-content.png" marker="rin_makeSure">Oh. I just wanted to make sure. I know that not everyone likes surprises.</state>
+                <state img="#-content.png" marker="rin_interesting">I was just curious, Rin. You seem like a very interesting person.</state>
+            </case>
+            <case stage="0">
+                <condition role="target" character="rin" stage="0" saidMarker="rin_whyask" />
+                <state img="#-idea.png" marker="rin_makeSure">Oh. I just wanted to make sure. I know that not everyone likes surprises.</state>
+                <state img="#-idea.png" marker="rin_interesting">I was just curious, Rin. You seem like a very interesting person.</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="megumin" stage="3" />
                 <state img="#-curious.png" marker="megumin_nervous">You okay, Megumin? You seem nervous all of a sudden.</state>
@@ -1528,6 +1716,11 @@
                 <test expr="~elesa.costume~" value="default" />
                 <state img="#-beaming.png" marker="elesa_earnedIt">What an amazing title! I can't wait to see how you earned it, Elesa!</state>
                 <state img="#-surprise.png" marker="elesa_exciting">That sounds incredible! This'll be such an exciting game!</state>
+            </case>
+            <case stage="1-10">
+                <condition role="target" character="aella" stage="3" sayingMarker="NoShops" />
+                <state img="#-curious.png" marker="aella_tailorFriend">No shops at all? Hm... Maybe my friend could help you out, Aella.</state>
+                <state img="#-surprise.png" marker="aella_tailorFriend">My friend can make all sorts of clothes for all sizes of people, Aella! They could definitely help you out!</state>
             </case>
             <case stage="1-10">
                 <condition role="target" character="aella" stage="3" />
@@ -1666,6 +1859,20 @@
         </trigger>
 
         <trigger id="female_removing_major">
+            <case stage="1-8" priority="581">
+                <condition count="0" role="other" character="emi" />
+                <condition count="0" role="other" character="sei" />
+                <condition role="target" character="rin" stage="2" saidMarker="flutterstriphelp" />
+                <state img="#-content.png">Right, let's just undo this... and there!</state>
+                <state img="#-content.png">Okay! Let me just unbutton this, and there we go!</state>
+            </case>
+            <case stage="1-8" priority="581">
+                <condition count="0" role="other" character="emi" />
+                <condition count="0" role="other" character="sei" />
+                <condition role="target" character="rin" stage="3" saidMarker="flutterstriphelp" />
+                <state img="#-neutral.png">Right. Let me just undo these buttons...</state>
+                <state img="#-content.png">Of course! Let me unbutton these...</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="elesa" stage="3" />
                 <test expr="~elesa.costume~" value="default" />
@@ -1734,12 +1941,26 @@
             </case>
             <case stage="9">
                 <state img="#-surprise.png">Nice! I was hoping for a big play!</state>
-                <state img="#-surprise.png">You're finally taking off ~clothing.ifPlural(those|that)~ ~clothing~,~name~? Perfect!</state>
+                <state img="#-surprise.png">You're finally taking off ~clothing.ifPlural(those|that)~ ~clothing~, ~name~? Perfect!</state>
                 <state img="#-masturL3.png">I'm glad you're going with your ~clothing~, ~name~.</state>
             </case>
         </trigger>
 
         <trigger id="female_removed_major">
+            <case stage="1-8" priority="581">
+                <condition count="0" role="other" character="emi" />
+                <condition count="0" role="other" character="sei" />
+                <condition role="target" character="rin" stage="3" saidMarker="flutterstriphelp" />
+                <state img="#-curious.png" marker="rin_dontLike">I'm not making you uncomfortable at all, am I, Rin?</state>
+                <state img="#-curious.png" marker="rin_dontLike">I'm not doing anything you don't like, right, Rin?</state>
+            </case>
+            <case stage="1-8" priority="581">
+                <condition count="0" role="other" character="emi" />
+                <condition count="0" role="other" character="sei" />
+                <condition role="target" character="rin" stage="4" saidMarker="flutterstriphelp" />
+                <state img="#-beaming.png">There. All done, Rin.</state>
+                <state img="#-beaming.png">And off it goes!</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="elesa" stage="4" />
                 <test expr="~elesa.costume~" value="default" />
@@ -1949,6 +2170,13 @@
         </trigger>
 
         <trigger id="female_chest_will_be_visible">
+            <case stage="1-8" priority="501">
+                <condition count="0" role="other" character="emi" />
+                <condition count="0" role="other" character="sei" />
+                <condition role="target" character="rin" saidMarker="flutterstriphelp" />
+                <state img="#-nervous.png">Uh, right. I'll be careful for that, Rin.</state>
+                <state img="#-nervous.png">Okay. I'll, uh... make sure to not do that, Rin</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="tomoko" stage="6" />
                 <state img="#-confused.png" marker="tomoko_worried">Are you sure you're okay, Tomoko. I'm getting worried about you.</state>
@@ -2022,6 +2250,13 @@
         </trigger>
 
         <trigger id="female_medium_chest_is_visible">
+            <case stage="1-8" priority="501">
+                <condition count="0" role="other" character="emi" />
+                <condition count="0" role="other" character="sei" />
+                <condition role="target" character="rin" saidMarker="flutterstriphelp" />
+                <state img="#-neutral.png">Done. I hope I didn't do either of those things, Rin.</state>
+                <state img="#-neutral.png">Got it. I'm pretty sure I didn't touch either of those things, Rin.</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="sayaka" />
                 <state img="#-nervous.png">I uh... don't quite understand, but I"m sorry anyway, Sayaka.</state>
@@ -2066,6 +2301,13 @@
         </trigger>
 
         <trigger id="female_crotch_will_be_visible">
+            <case stage="1-8" priority="501">
+                <condition count="0" role="other" character="emi" />
+                <condition count="0" role="other" character="sei" />
+                <condition role="target" character="rin" saidMarker="flutterstriphelp" />
+                <state img="#-curious.png" marker="rin_luckyConf">Lucky? Anyway, just hold still for a second, Rin.</state>
+                <state img="#-neutral.png">Right. Hold still for one moment, Rin.</state>
+            </case>
             <case stage="1-10">
                 <condition role="target" character="palutena" sayingMarker="palutena_undies" />
                 <state img="#-pouty.png" marker="palutena_sass">The only thing that's degrading is the way you've been talking to the rest of us, Palutena.</state>
@@ -2121,6 +2363,13 @@
         </trigger>
 
         <trigger id="female_crotch_is_visible">
+            <case stage="1-7" priority="502">
+                <condition count="0" role="other" character="emi" />
+                <condition count="0" role="other" character="sei" />
+                <condition role="target" character="rin" saidMarker="flutterstriphelp" />
+                <state img="#-content.png" marker="rin_feelGoodHelp">It's my pleasure, Rin! It makes me feel good to help people.</state>
+                <state img="#-content.png" marker="rin_moreComfortable">You're welcome, Rin. I'm glad I could help you feel more comfortable.</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="elesa" />
                 <test expr="~elesa.costume~" value="default" />
@@ -2192,7 +2441,7 @@
             </case>
             <case stage="0-10" oneShotId="21">
                 <condition filter="monster" role="target" />
-                <state img="#-confused.png" marker="furlin">You're monster, ~name~? Oh I get it! You must be a friendly monster like the Furlin!</state>
+                <state img="#-confused.png" marker="furlin">You're a monster, ~name~? Oh I get it! You must be a friendly monster like the Furlin!</state>
             </case>
             <case stage="1-10" oneShotId="22">
                 <condition filter="undead" role="target" />
@@ -2349,8 +2598,8 @@
             </case>
             <case stage="6-10">
                 <state img="#-neutral.png">Now you get to pleasure yourself, ~name~. </state>
-                <state img="#-neutral.png">You might've lost, ~name~, but now you can make yourself, feel good, ~name~!</state>
-                <state img="#-nervous.png">You lost, ~name~. But, now you 're gonna make yourself feel good so, it's not all bad, right?</state>
+                <state img="#-neutral.png">You might've lost, ~name~, but now you can make yourself feel good!</state>
+                <state img="#-nervous.png">You lost, ~name~. But, now you're gonna make yourself feel good so, it's not all bad, right?</state>
             </case>
         </trigger>
 
@@ -2417,6 +2666,17 @@
         </trigger>
 
         <trigger id="female_finished_masturbating">
+            <case stage="1-10" priority="302">
+                <condition role="self" saidMarker="transformation" />
+                <condition role="target" character="tomoko" sayingMarker="yuelia_cheater" />
+                <state img="#-content.png" marker="tomoko_fine">It's fine, Tomoko. Everything is fine.</state>
+                <state img="#-content.png" marker="tomoko_notAgain">Of course I forgive you, Tomoko. Just don't do it again. Alright?</state>
+            </case>
+            <case stage="0-10" id="14" priority="301">
+                <condition role="target" character="aella" sayingMarker="WhatDoYouDoWhenYoureDone" />
+                <state img="#-curious.png" marker="aella_after">I think people usually sleep after they do that, Aella.</state>
+                <state img="#-curious.png" marker="aella_after">Don't people usually fall asleep when they're done, Aella?</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="rainbow_dash" />
                 <state img="#-shocked.png" marker="rainbowdash_spirit">Oh whoa! Are you actually a forest spirit Rainbow Dash!?</state>
@@ -2515,6 +2775,14 @@
                 <state img="#-content.png">Today has been sooo eventful, hasn't it?</state>
                 <state img="#-nervous.png">Well...we should call it a day.</state>
                 <state img="#-content.png">Thank you for today. I had so much fun.</state>
+            </case>
+        </trigger>
+
+        <trigger id="global">
+            <case stage="0-10">
+                <condition role="target" character="dust" sayingMarker="haley" />
+                <state img="#-curious.png" marker="dust_haley">Haley? Who's Haley, Dust?</state>
+                <state img="#-confused.png" marker="dust_haley">Haley? Who's that?</state>
             </case>
         </trigger>
 
