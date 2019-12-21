@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.7 at 11:12:53 AM on November 21, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 3:33:43 PM on December 20, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.7</version>
+    <version>v5.4</version>
     <first>Sakura</first>
     <last>Minamoto</last>
     <label>Number One</label>
@@ -163,7 +163,8 @@
                 <state img="#-doubt.png">This hand's just so-so. (&lt;i&gt;Seriously, I had to have taken a wrong turn somewhere, right?&lt;/i&gt;)</state>
                 <state img="#-hum.png">I can certainly see the appeal of a game like this! Buuuuut, definitely not what I'd do professionally.</state>
             </case>
-            <case stage="0-2" saidMarker="sakura_invite&gt;=2" priority="0">
+            <case stage="0-2" priority="0">
+                <condition role="self" saidMarker="sakura_invite&gt;=2" />
                 <state img="#-smile.png" marker="+sakura_invite">So, why'd everyone come out tonight? I think I can guess, but... you could be like me and walk into the wrong room, right?</state>
                 <state img="#-happy.png" marker="+sakura_invite">So... I'm usually pretty good with names, but everyone is so... unique! What can you tell me about yourselves?</state>
             </case>
@@ -210,7 +211,8 @@
         </trigger>
 
         <trigger id="hand">
-            <case stage="0-7" alsoPlaying="saki_zls" alsoPlayingStage="0" totalRounds="0" priority="999">
+            <case stage="0-7" totalRounds="0" priority="999">
+                <condition role="other" character="saki_zls" stage="0" />
                 <state img="#-doubt.png">&lt;i&gt;Sigh.&lt;/i&gt; Like I said. I'm &lt;i&gt;Number One&lt;/i&gt; from Franchouchou. This is &lt;i&gt;definitely&lt;/i&gt; not Number Two.</state>
             </case>
             <case stage="0-7" totalRounds="0">
@@ -386,7 +388,9 @@
             <case stage="0-2" alsoPlaying="mulan" alsoPlayingStage="1" alsoPlayingTimeInStage="0" notSaidMarker="sakura_dates" alsoPlayingSayingMarker="honorable_others">
                 <state img="#-crush.png" marker="sakura_dates">That's such a wholesome question in such a sexy game... I guess I'd probably want a boy that's really romantic, and always cheers me on at my concerts, but knows how to keep things lowkey. I love that stuff.</state>
             </case>
-            <case stage="0-7" alsoPlaying="sei" alsoPlayingStage="1" alsoPlayingTimeInStage="0" notSaidMarker="sakura_drinks" alsoPlayingSayingMarker="drinks_anyone">
+            <case stage="0-7">
+                <condition role="self" notSaidMarker="sakura_drinks" />
+                <condition role="other" character="sei" stage="1" timeInStage="0" sayingMarker="drinks_anyone" />
                 <state img="#-crush.png" marker="sakura_drinks">W-well, idols aren't really supposed to drink unless it's for an advertisement... would you buy me... oh... this "Blue Fairy" sounds cute. Do they have a pink version?</state>
             </case>
             <case stage="3-7" alsoPlaying="mulan" alsoPlayingStage="1" alsoPlayingTimeInStage="0" notSaidMarker="sakura_dates" alsoPlayingSayingMarker="honorable_others">
@@ -737,8 +741,10 @@
                 <condition role="other" character="rin" saidMarker="zombie_clarification_2" />
                 <state img="#-huh.png" marker="rin_zombie_clarification_2">O-Oh, that sounds... really dangerous, Rin! Um... I think I can just hold my breath for a super long time. &lt;i&gt;Jeez&lt;/i&gt;! Now I'm thinking about breathing manually--! So distracting!</state>
             </case>
-            <case stage="3-7" alsoPlaying="jessie" notSaidMarker="no1_jessie_2b" alsoPlayingSaidMarker="JessieQA_DarkSecrets">
-                <state img="#-doubt.png" marker="no1_jessie_2b">...Well, I think any "dark secrets" I have arepretty obvious about now, Ms. Jessie...</state>
+            <case stage="3-7">
+                <condition role="self" notSaidMarker="no1_jessie_2b" />
+                <condition role="other" character="jessie" saidMarker="JessieQA_DarkSecrets" />
+                <state img="#-doubt.png" marker="no1_jessie_2b">...Well, I think any "dark secrets" I have are pretty obvious about now, Ms. Jessie...</state>
             </case>
             <case stage="5-7" alsoPlaying="jessie" saidMarker="no1_jessie_1b" alsoPlayingSayingMarker="QA_Backdoor_Sakura">
                 <state img="#-huh.png">...I... I'm... I may be a choosing beggar but I really'd feel gross if I knew someone was only attracted to me because I'm dead... </state>
@@ -904,7 +910,7 @@
                 <state img="#-sing.png">I think &lt;i&gt;Megumin&lt;/i&gt;'s a really... &lt;i&gt;cute&lt;/i&gt; and elegant name. I'm really jealous! </state>
             </case>
             <case stage="0-7">
-                <condition role="self" notSaidMarker="pokemon" />
+                <condition role="self" notSaidMarker="sakura_pokemon" />
                 <condition role="other" character="n" />
                 <state img="#-happy.png" marker="+sakura_pokemon">Hey, N, I'm a little out of the loop as far as Pokemon go, but I heard there's a cute "Fairy-type" evolution from Eevee... are they good companions?</state>
             </case>
@@ -1393,7 +1399,8 @@
             <case stage="0-6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="sakura_song1" alsoPlayingNotSaidMarker="sakura_song2" alsoPlayingSayingMarker="sakura_song2" priority="500">
                 <state img="#-stripping+.png">Oh! Definitely &lt;i&gt;Yomigaere!&lt;/i&gt;</state>
             </case>
-            <case stage="0-6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="sakura_touch1" alsoPlayingNotSaidMarker="sakura_touch2" alsoPlayingSayingMarker="sakura_touch2" priority="500">
+            <case stage="0-6" priority="500">
+                <condition role="other" character="streaming-chan" saidMarker="sakura_touch1" sayingMarker="sakura_touch2" notSaidMarker="sakura_touch2" />
                 <state img="#-stripping-.png">I-I-- (&lt;i&gt;Can I answer that? &lt;i&gt;Should&lt;/i&gt; I answer it?&lt;/i&gt;) I’ll be honest and say I haven’t done that since I became Zombie #1…</state>
             </case>
             <case stage="0-6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="sakura_zls1" alsoPlayingNotSaidMarker="sakura_zls2" alsoPlayingSayingMarker="sakura_zls2" priority="500">
@@ -1407,7 +1414,8 @@
                 <condition count="1" filter="saki_zls" />
                 <state img="#-stripping+.png">I really admire her can-do attitude and toughgirl spirit! That’s my favorite idol archetype.</state>
             </case>
-            <case stage="3" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="sakura_head1" alsoPlayingNotSaidMarker="sakura_head2" alsoPlayingSayingMarker="sakura_head2" priority="500">
+            <case stage="3" priority="500">
+                <condition role="other" character="streaming-chan" saidMarker="sakura_head1" sayingMarker="sakura_head2" notSaidMarker="sakura_head2" />
                 <state img="#-stripping-.png" marker="headless">W-well that'd be quite a trick! I wouldn't want to ruin a surprise, or give away the performance! It might look kinda like this! Oh crap!</state>
             </case>
             <case stage="5-6" alsoPlaying="streaming-chan" alsoPlayingSaidMarker="sakura_head1" alsoPlayingNotSaidMarker="sakura_head2" alsoPlayingSayingMarker="sakura_head2" priority="500">
@@ -1655,6 +1663,10 @@
                 <state img="#-stripping-.png">Gray... paint? Huh? O-oh... (&lt;i&gt;Oh crap. Oh crap! What do I do? What do I do!?&lt;/i&gt;) </state>
             </case>
             <case stage="2">
+                <condition role="other" character="yuelia" />
+                <state img="#-stripping-.png">I don't think there's really a fix for this... Ms. Butterfly... </state>
+            </case>
+            <case stage="2">
                 <test expr="~background~" value="beach" />
                 <state img="#-stripping+.png" marker="water_removal">Um... I'm just... basically... taking sunblock off... if you... think about it...?</state>
             </case>
@@ -1710,11 +1722,13 @@
                 <state img="#-stripping+.png">It's nice to be looked at, but even idols don't like to have their panties stared at... (&lt;i&gt;Wait a second-- oh crap! I didn't put makeup on my thighs!&lt;/i&gt;)</state>
                 <state img="#-stripping+.png">I don't mind showing off a &lt;i&gt;little&lt;/i&gt;, but please don't try to peek at my panties. (&lt;i&gt;Um, wait a second... did I... forget something?&lt;/i&gt;)</state>
             </case>
-            <case stage="2" saidMarker="3DN">
+            <case stage="2">
+                <condition role="self" saidMarker="3DN" />
                 <state img="#-stripping-.png">This is so embarrassing...</state>
                 <state img="#-stripping-.png">Please don't tell anyone, okay? This would be really bad if it got out!</state>
             </case>
-            <case stage="2" id="1" saidMarker="3UP">
+            <case stage="2" id="1">
+                <condition role="self" saidMarker="3UP" />
                 <state img="#-stripping+.png">You've all been really nice, so I don't mind telling you...</state>
                 <state img="#-stripping+.png">It doesn't look like this is a real show, and besides, I &lt;i&gt;am&lt;/i&gt; here to excite you, just don't freak out, okay?</state>
             </case>
@@ -1800,7 +1814,8 @@
                 <alternative alsoPlaying="mahiru" alsoPlayingStage="9" priority="1111" />
                 <state img="#-blank.png"></state>
             </case>
-            <case stage="3" totalMasturbating="3-4" priority="990">
+            <case stage="3" priority="990">
+                <condition count="3-4" status="masturbating" />
                 <state img="#-rap.png">IS TO GO EVEN FURTHER... BEYOND!!!</state>
             </case>
             <case stage="5" alsoPlaying="mae" priority="990">
@@ -1935,6 +1950,10 @@
             </case>
             <case stage="4" alsoPlaying="ryuji" alsoPlayingStage="6-9">
                 <state img="#-stripped+.png">J-just fine, thanks! Look, it reattaches &lt;i&gt;super&lt;/i&gt; easy.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="yuelia" stage="1-10" />
+                <state img="#-stripped+.png">You're very sweet! &lt;i&gt;I&lt;/i&gt; think that's mega-true, but not everyone's so open-minded. Here's hoping we can all keep having fun! </state>
             </case>
             <case stage="1" alsoPlaying="pit">
                 <condition count="0" filter="saki_zls" />
@@ -2221,6 +2240,10 @@
             <case stage="7">
                 <condition role="other" character="beatrix" />
                 <state img="#-stripped+.png">...Just good hygiene, Beatrix... and I'm not rotting! I'm... well preserved! I'm sure of it! </state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="yuelia" />
+                <state img="#-stripped+.png">Maybe a &lt;i&gt;little&lt;/i&gt;, but it's kind of fun, too, right? We have to just enjoy things! </state>
             </case>
             <case stage="3" totalExposed="0">
                 <condition count="2-4" filter="zombieland_saga" />
