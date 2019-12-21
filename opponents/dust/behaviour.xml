@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 8:32:41 PM on December 13, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 11:28:42 PM on December 20, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Dust</first>
@@ -595,6 +595,14 @@
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0">
+                <condition role="other" character="mei" />
+                <condition role="other" character="hatsume" />
+                <condition role="other" character="meia" />
+                <state img="#-embarrassed.png">There seems to be a theme here...</state>
+                <state img="#-annoyed.png">~player~, are you trying to confuse me?</state>
+                <state img="custom:#-fidget-snark" location="20%">{fidget}Ooh. Three people, one name. Who's on first?</state>
+            </case>
             <case stage="0" id="55">
                 <condition count="0" gender="male" />
                 <condition role="other" character="misty_hgss" sayingMarker="misty_noguys" />
@@ -641,6 +649,10 @@
             </case>
             <case stage="0">
                 <condition count="3" filter="rwby" />
+                <state img="#-um.png">Uh... did I stumble into the wrong room?</state>
+            </case>
+            <case stage="0">
+                <condition count="3" filter="phantom_thieves" />
                 <state img="#-um.png">Uh... did I stumble into the wrong room?</state>
             </case>
             <case stage="0">
@@ -709,6 +721,7 @@
                 <condition role="self" hasHand="Flush" />
                 <state img="#-whoa.png" marker="-cassius_talked">Oh--!</state>
                 <state img="#-whoa.png" marker="-cassius_talked">I got--!</state>
+                <state img="custom:#-fidget-snark">{fidget}Hey, the little pictures are-- {!reset}&lt;br&gt;Shh!</state>
             </case>
             <case stage="0-7">
                 <condition role="self" hasHand="Straight" />
@@ -1196,6 +1209,26 @@
                 <state img="#-pensive.png" marker="meia_greyeyes3">Gaius died, and hopefully, the civil war with him. We might have to deal with some more Royal Assassins and the rest of his army, but I don't think that will take long.</state>
                 <state img="#-um.png">The war... I think might be over in a few months. Hopefully.</state>
             </case>
+            <case stage="0-7">
+                <condition role="other" character="amy" sayingMarker="strange_harmonies" />
+                <state img="#-wat.png">Uh... are you okay?</state>
+                <state img="custom:#-calm-fidget" location="20%">{fidget}I don't hear anything...</state>
+            </case>
+            <case stage="0-5" oneShotId="83">
+                <condition role="other" character="yuelia" saidMarker="dust_stupidHat" />
+                <state img="custom:#-calm-fidget" marker="yuelia_hat">See, Fidget? She doesn't think it's stupid.&lt;br&gt;{fidget}She didn't say it looked good, either.</state>
+            </case>
+            <case stage="0-5" oneShotId="84">
+                <condition role="other" character="yuelia" saidMarker="dust_beatUp" />
+                <state img="custom:#-calm-fidget" marker="yuelia_beatup" location="20%">{fidget}Whoa! You actually did? What was it like?</state>
+                <state img="custom:#-fidget-snark" marker="yuelia_beatup">You didn't hurt them too much, I hope?&lt;br&gt;{fidget}What he said.</state>
+            </case>
+            <case stage="0-5" oneShotId="85">
+                <condition role="other" character="yuelia" saidMarker="dust_stupidHat" />
+                <state img="custom:#-calm-fidget" marker="yuelia_snack">Fidget tried that once, and then she went careening off the walls and prophesizing about a great plague.</state>
+                <state img="custom:#-fidget-snark" marker="yuelia_snack">Fidget actually tried drinking sugar water once. I have to make sure she doesn't again.</state>
+                <state img="custom:#-fidget-snark" marker="yuelia_snack" location="20%">{fidget}I actually tried drinking that once, and then the next thing I remember I woke up and Dust was apologizing to Mordecai a lot.</state>
+            </case>
             <case stage="0-7" oneShotId="61" priority="100">
                 <condition role="other" character="meia" saidMarker="laser_ring" />
                 <state img="#-um.png" marker="meia_laserring">A... Laser Ring? I've never heard of that. What stat changes does it offer?</state>
@@ -1527,19 +1560,25 @@
         </trigger>
 
         <trigger id="must_strip_losing">
-            <case stage="6">
-                <state img="#-wat.png">Oh, no no no...</state>
-                <state img="custom:#-fidget-snark" location="20%">{fidget}All right, everyone, here it comes! The Dick of the Sen-Mithrarin!</state>
-                <state img="#-facepalm.png">And this is it, my last shred of dignity, gone...</state>
-                <state img="custom:#-fidget-snark">And this is it, my last shred of dignity, gone... {fidget}&lt;br&gt; I think you lost it like two hands ago, actually...</state>
+            <case stage="5">
+                <state img="#-wat.png">Ah, really? Can't I avoid losing just once?</state>
+                <state img="#-wat.png">Dealer, can I get a mulligan on this?</state>
+                <state img="#-facepalm.png">Oh, no... Please, no...</state>
+                <state img="#-annoyed.png">Nnnngh...</state>
             </case>
-            <case stage="1-5">
+            <case stage="1-4">
                 <state img="#-wat.png">Oh crap. Everyone's staring at me.</state>
                 <state img="#-wat.png">Do I have to undress again? Oh no.</state>
                 <state img="#-wat.png">Hey, wait! I...</state>
                 <state img="#-annoyed.png">Oh, Hounds' Teeth and Trolk Fingers...</state>
                 <state img="#-annoyed.png">Son of a Beast...</state>
                 <state img="#-annoyed.png">Oh, Blomb it...</state>
+            </case>
+            <case stage="6">
+                <state img="#-wat.png">Oh, no no no...</state>
+                <state img="custom:#-fidget-snark" location="20%">{fidget}All right, everyone, here it comes! The Dick of the Sen-Mithrarin!</state>
+                <state img="#-facepalm.png">And this is it, my last shred of dignity, gone...</state>
+                <state img="custom:#-fidget-snark">And this is it, my last shred of dignity, gone... {fidget}&lt;br&gt; I think you lost it like two hands ago, actually...</state>
             </case>
         </trigger>
 
@@ -1592,6 +1631,7 @@
             <case stage="3">
                 <condition role="other" character="tomoko" stage="3-6" />
                 <state img="custom:#-fidget-snark" location="20%">{fidget}Flying rat?! I'm a NIMBAT, thank you very much. {small}&lt;br&gt;Sheesh, some people...</state>
+                <state img="custom:#-fidget-snark" location="20%">{fidget}Rat?! RAT?!!? I'M A NIMBAT!! Oh, I am so going to bite your face off.{!reset}&lt;br&gt;Fidget, calm down!</state>
             </case>
             <case stage="0">
                 <condition role="self" saidMarker="yuelia_aurora" />
@@ -1625,7 +1665,7 @@
             <case stage="5">
                 <condition role="other" character="chazz" />
                 <state img="#-stripping.png">It's a SATGAT...</state>
-                <state img="custom:#-strip-fidget" location="20%">{fidget}Maybe you should wear the stupid hat if you think you're gonna turn into him, Chazz.</state>
+                <state img="custom:#-strip-fidget" marker="chazz_stupidhat" location="20%">{fidget}Maybe you should wear the stupid hat if you think you're gonna turn into him, Chazz.</state>
             </case>
             <case stage="3">
                 <condition role="other" character="chazz" />
@@ -1716,6 +1756,10 @@
             <case stage="1-6" oneShotId="40">
                 <condition role="other" character="rarity_eg" sayingMarker="attire_choice2" />
                 <state img="#-annoyed.png">My outfit is for traveling, not for looks.</state>
+            </case>
+            <case stage="7">
+                <condition role="other" character="tomoko" saying="knotted" />
+                <state img="#-wat.png">Why does everyone keep assuming that?</state>
             </case>
             <case stage="6">
                 <condition role="other" character="jessie" />
@@ -1997,6 +2041,10 @@
                 <state img="#-wat.png">(I really hope a fight won't break out... I don't know how I'd fare...)</state>
                 <state img="custom:#-fidget-snark" marker="revy_fear" location="20%">{fidget}You've faced zombies, ghosts, cloaked assassins... and SHE'S the thing you fear the most?</state>
             </case>
+            <case stage="0-9">
+                <condition role="target" character="hatsume" stage="5" />
+                <state img="#-wat.png">Um, hold on... are you playing badly just to show off your "gadgets?"</state>
+            </case>
             <case stage="0-9" priority="50">
                 <condition role="self" saidMarker="cassius_talked&gt;3" />
                 <state img="#-c-standoffish.png">So ~name~ lost. Can we move on?</state>
@@ -2161,6 +2209,10 @@
                 <state img="#-calm.png">That is quite an... unique hat.</state>
             </case>
             <case stage="0-9">
+                <condition role="target" character="hatsume" stage="3" />
+                <state img="custom:#-fidget-snark" location="20%">{fidget}Is... something supposed to happen?</state>
+            </case>
+            <case stage="0-9">
                 <condition role="self" saidMarker="cassius_talked&gt;3" />
                 <state img="#-c-standoffish.png">Come on, quit making everyone wait.</state>
                 <state img="#-c-standoffish.png">Your ~clothing~? Take off something good instead.</state>
@@ -2222,6 +2274,11 @@
                 <state img="#-pensive.png">A sword is something that needs to be treated with respect.</state>
                 <state img="custom:#-calm-ahrah">A sword is meant to represent who you are. It's your partner.</state>
                 <state img="#-annoyed.png">You treat it with that, and it won't really have much of a long useful life.</state>
+            </case>
+            <case stage="0">
+                <condition role="target" character="yuelia" stage="1" />
+                <state img="#-um.png">Oh! You're able to transform. How interesting!</state>
+                <state img="custom:#-calm-fidget" location="20%">{fidget}Wow! A shapeshifter! Neat!</state>
             </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="cassius_talked&gt;=3" />
@@ -2380,6 +2437,12 @@
             <case stage="0-9">
                 <condition role="target" character="meia" stage="2" />
                 <state img="#-um.png" marker="meia_bodysuit">That's an odd garment. Tight, and yet covers the entire body. I couldn't see myself wearing something like that.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="amy" stage="3" />
+                <state img="custom:#-fidget-scared" location="20%">{fidget}Oh no, she likes spiders. Eughh...</state>
+                <state img="custom:#-fidget-scared" location="20%">{fidget}I hope when she says she likes spiders she means the tiny ones, and not the Stonecutters back home..</state>
+                <state img="custom:#-fidget-scared" location="20%">{fidget}Oh, why'd she have to be a fan of something THAT TERRIFIES ME?!</state>
             </case>
             <case stage="0-9">
                 <state img="#-embarrassed.png">Oh, you're going for the ~clothing~ now?</state>
