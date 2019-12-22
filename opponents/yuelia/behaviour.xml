@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 5:07:50 PM on December 19, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 6:41:34 PM on December 21, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Flutter</first>
@@ -14,7 +14,7 @@
 
     <intelligence stage="1">average</intelligence>
 
-    <intelligence stage="5">good</intelligence>
+    <intelligence stage="4">good</intelligence>
 
     <intelligence stage="6">average</intelligence>
 
@@ -97,7 +97,7 @@
         </pose>
         <pose id="wish">
             <sprite id="neutral" z="2" src="yuelia/1-neutral.png" x="0" y="57" scalex="1.1" scaley="1.1" />
-            <sprite id="wishingStar" z="3" src="yuelia/wishingStar.png" x="-211" y="709" scalex="0.1" scaley="0.1" />
+            <sprite id="wishingStar" z="3" src="yuelia/wishingStar.png" x="-353" y="705" scalex="0.1" scaley="0.1" />
             <sprite id="wishingStar1" src="yuelia/wishingStar.png" x="0" y="0" />
         </pose>
     </poses>
@@ -169,12 +169,6 @@
                 <condition role="self" saidMarker="transformation" />
                 <condition role="other" character="tomoko" stage="3-6" saying="being a butterfly" />
                 <state img="#-beaming.png" marker="tomoko_beingButterfly">Oh, it's actually very interesting, Tomo! It feels so light and ethereal!</state>
-            </case>
-            <case stage="1-8" oneShotId="33">
-                <condition role="self" saidMarker="transformation" />
-                <condition role="other" character="tomoko" stage="3-6" saying="so positive" />
-                <state img="#-curious.png" marker="tomoko_hug">... Are you alright, Tomo? Do you need a hug?</state>
-                <state img="#-content.png" marker="tomoko_excited">Not really, Tomo. The thought of discovery just always gets me excited!</state>
             </case>
             <case stage="1-8" oneShotId="31">
                 <condition role="self" saidMarker="transformation" />
@@ -318,9 +312,6 @@
         <trigger id="hand">
             <case stage="0-8" id="12">
                 <condition role="other" character="aella" stage="0-1" sayingMarker="AellaAdventures" />
-                <alternative alsoPlaying="aella" alsoPlayingStage="0-1" totalRounds="2">
-                    <condition count="1" filter="pinkie_pie" role="other" />
-                </alternative>
                 <alternative alsoPlaying="aella" alsoPlayingStage="0-1" totalRounds="1" />
                 <state img="#-beaming.png" marker="aella_onAdventure">Ooh! I have, Aella! It was wild! But I made a lot of friends in the process and that's what's really important!</state>
                 <state img="#-beaming.png" marker="aella_onAdventure">I have, Aella! It was a lot of fun! In fact, that's why I'm here, to have more fun!</state>
@@ -348,6 +339,11 @@
                 <state img="#-curious.png" marker="aella_library">Well, I spent a lot of time in the Castele library Aella, and I thought that all the books were pretty interesting.</state>
                 <state img="#-curious.png" marker="aella_libraryInvite">Oh! There were plenty of interesting books in the Castele library, Aella! I can bring you with me the next time I go if you want.</state>
             </case>
+            <case stage="0-8" priority="156">
+                <condition role="other" character="akko" stage="0-2" timeInStage="1" sayingMarker="shiny_rod" />
+                <state img="#-curious.png" marker="akko_makeWands">Oh, wow. I wonder how it compares to the wands my friend makes.</state>
+                <state img="#-shocked.png" marker="akko_howGot">Wow! That sounds like something really rare, Akko. How'd you get it?</state>
+            </case>
             <case stage="0-8">
                 <condition role="other" character="saki_zls" stage="6" timeInStage="0" />
                 <state img="#-confused.png" marker="sakiZLS_composed">Oh wow. You're very different from the zombies I usually see. You're very composed, Saki.</state>
@@ -362,6 +358,12 @@
                 <condition role="other" character="megumin" stage="0-3" sayingMarker="megumin_yuelia_talkingButterfly" />
                 <state img="#-pouty.png">Of course I can play! Just... give me a second to get my cards in order.</state>
                 <state img="#-pouty.png">Yes I can play! I just... might have some trouble holding these...</state>
+            </case>
+            <case stage="0-8" priority="146">
+                <condition role="other" character="akko" stage="0-2" sayingMarker="akko_smile" />
+                <condition status="exposed" />
+                <state img="#-beaming.png" marker="akko_helpSmile">Ooh! If you need help getting them to smile, I'd be happy to help, Akko!</state>
+                <state img="#-surprise.png" marker="akko_helpSmile">I can help you get those smiles, Akko!</state>
             </case>
             <case stage="1-8" priority="142">
                 <condition role="self" saidMarker="transformation" />
@@ -378,6 +380,23 @@
                 <condition role="self" saidMarker="rin_hugSetup" />
                 <condition role="other" character="rin" stage="6" sayingMarker="hugged2" />
                 <state img="absent.png" marker="rin_2hugs" collectible="rin_portrait"></state>
+            </case>
+            <case stage="0-8" priority="142">
+                <condition role="other" character="akko" stage="0-2" saidMarker="akko_intro_a" sayingMarker="akko_intro2" />
+                <state img="#-beaming.png" marker="akko_pursueWish">That's incredible, Akko! It's wonderful that you're pursuing your greatest wish in Life!</state>
+                <state img="#-beaming.png" marker="akko_pursueWish">That's amazing, Akko! You must be so happy working towards your Wish.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="self" saidMarker="dust_beatUp" />
+                <condition role="other" character="dust" stage="0-5" sayingMarker="yuelia_beatup" />
+                <state img="#-nervous.png">Well, I'm not even sure they can feel pain, since they're basically just a doll, but I thought that we had broken him for a minute.</state>
+                <state img="#-nervous.png">It was weird, since it wasn't a person, it was a doll. Though, I was afraid we had broken him at first.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="self" saidMarker="dust_stupidHat" />
+                <condition role="other" character="dust" stage="0-5" sayingMarker="yuelia_snack" />
+                <state img="#-nervous.png">Well, you shouldn't drink too much at once. A small dish is usually enough.</state>
+                <state img="#-nervous.png">You can't have too much of it at once, just a little bit is enough for me.</state>
             </case>
             <case stage="0">
                 <condition role="other" character="emi" stage="1" sayingMarker="car_accident" />
@@ -398,6 +417,10 @@
                 <condition role="other" character="joey" stage="5" sayingMarker="CandyHat" />
                 <state img="#-shocked.png" marker="joey_madeHat">It is?! What master Cook made that, Joey?</state>
                 <state img="#-shocked.png" marker="joey_madeHat">Is it really, Joey? Who made it?</state>
+            </case>
+            <case stage="0-8" priority="141">
+                <condition role="other" character="akko" stage="0-2" sayingMarker="luna_nova_academy" />
+                <state img="#-curious.png" marker="akko_jinxDoes">A school for magic? Oh, so it's like what Jinx does!</state>
             </case>
             <case stage="0-8" oneShotId="34">
                 <condition role="other" character="dust" saidMarker="ahrahwho" />
@@ -470,6 +493,59 @@
                 <condition role="other" character="dust" sayingMarker="fidgetQA_snacks" />
                 <state img="#-beaming.png" marker="dust_snacks">That's easy, Fidget! Sugared water!</state>
                 <state img="#-beaming.png" marker="dust_snacks">I love sugared water, Fidget!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Backdoor" />
+                <state img="#-confused.png" marker="jessie_backDoor">Backdoor? I mean, if the main door is locked, then why not?</state>
+                <state img="#-confused.png" marker="jessie_backDoor">The backdoor of where, Jessie? </state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_DarkSecrets" />
+                <state img="#-neutral.png" marker="jessie_secretsFlutter">Well, I have a secret or two, but I wouldn't call them "dark."</state>
+                <state img="#-neutral.png" marker="jessie_secretsFlutter">I don't have any deep dark secrets, but I have a few regular secrets, Jessie/</state>
+            </case>
+            <case stage="1-8">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_DarkSecrets" />
+                <state img="#-curious.png" marker="jessie_secrets">Hmmm... The whole butterfly thing was my main secret, to be honest.</state>
+                <state img="#-nervous.png" marker="jessie_secrets">You mean, besides the butterfly thing, Jessie? No, not really.</state>
+            </case>
+            <case stage="1-8">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Family" />
+                <state img="#-content.png" marker="jessie_family">Family is extremely important to me. Even if we don't always get along, we all still love each other.</state>
+                <state img="#-content.png" marker="jessie_family">Family is one of the things I hold closest to my heart, Jessie. My sister, my father, my mother... they're all very important to me.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Family" />
+                <state img="#-embarrassed.png" marker="jessie_family">Family is extremely important to me. Even if we don't always get along, we all still love each other.</state>
+                <state img="#-embarrassed.png" marker="jessie_family">Family is one of the things I hold closest to my heart, Jessie. My sister, my father, my mother... they're all very important to me.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_LittleLies" />
+                <state img="#-nervous.png" marker="jessie_lying">I try to avoid lying as much as I can, Jessie. Lying makes my heart ache.</state>
+                <state img="#-nervous.png" marker="jessie_lying">I've done something like that once before, Jessie, and it made me feel awful.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Million" />
+                <state img="#-confused.png" marker="jessie_million">Is that a lot? I don't know. I'm not usually the person handling money.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Porn" />
+                <state img="#-confused.png" marker="jessie_porn">I'm not sure... What is "porn", Jessie?</state>
+                <state img="#-confused.png" marker="jessie_porn">"Porn"? What's that, Jessie?</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Smokers" />
+                <state img="#-confused.png" marker="jessie_smoker">Smokers? You mean like the cooking tool? I mean, they're okay, but an oven usually works better, right?</state>
+                <state img="#-confused.png" marker="jessie_smoker">Smokers? Well, the food that gets made with them usually comes out a little dusty, but it's still pretty good.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_StupidMistakes" />
+                <state img="#-neutral.png" marker="jessie_mistakes">People can change, Jessie. Of course I wouldn't hold it against them.</state>
+                <state img="#-neutral.png" marker="jessie_mistakes">I wouldn't want other people doing that to me, so I wouldn't do it to them, Jessie.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="tomoko" sayingMarker="yuelia_hugging" />
+                <state img="absent.png" marker="tomoko_hugged"></state>
             </case>
         </trigger>
 
@@ -683,6 +759,12 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="3" oneShotId="33">
+                <condition role="self" saidMarker="transformation" />
+                <condition role="other" character="tomoko" stage="3-6" saying="so positive" />
+                <state img="#-strip.png" marker="tomoko_hug">... Are you alright, Tomo? Do you need a hug?</state>
+                <state img="#-strip.png" marker="tomoko_excited">Not really, Tomo. The thought of discovery just always gets me excited!</state>
+            </case>
             <case stage="2" id="8">
                 <condition role="other" character="tomoko" stage="3-6" sayingMarker="tomofluttmindc" />
                 <state img="#-strip.png" marker="tomoko_mindctrl">Well, yes. I could, but I don't. It's wrong to manipulate people like that, Tomo.</state>
@@ -775,6 +857,21 @@
                 <state img="#-after.png">In situations like that, I can only hope that they learn from their mistakes, Tomo.</state>
             </case>
             <case stage="4">
+                <condition role="other" character="tomoko" />
+                <condition role="self" saidMarker="tomoko_hug" />
+                <state img="#-after.png">Okay, Tomoko. Hold on, one second.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="tomoko" sayingMarker="flutter_positive" />
+                <state img="#-after.png">I guess, I just always look for the good in things, Tomo.</state>
+                <state img="#-after.png">I;m really not sure, Tomo. I suppose, I just always try to find the good in things.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="tomoko" sayingMarker="flutter_degrade" />
+                <state img="#-after.png">Degrade? What do you mean, Tomo? This is a friendly game, isn't it?</state>
+                <state img="#-after.png">What do you mean "degrading myself", Tomo? Nobody likes to lose, but you can't let that get in the way of having fun!</state>
+            </case>
+            <case stage="4">
                 <condition role="other" character="rin" />
                 <state img="#-after.png" marker="rin_getYouOne">As a matter of fact, it would, Rin! Want me to get you one later?</state>
                 <state img="#-after.png" marker="rin_getYouOne">Yes, it would, Rin! I can get you one if you want.</state>
@@ -837,6 +934,11 @@
         </trigger>
 
         <trigger id="male_must_strip">
+            <case stage="0-10" totalRounds="1-" priority="392">
+                <condition role="target" character="n" stage="0-2" saidMarker="mentalmath_1==9" sayingMarker="mentalmath_2" />
+                <state img="#-shocked.png" marker="n_mathPraise">Did you do all that math in your head?! Just now?! Amazing!</state>
+                <state img="#-shocked.png" marker="n_genius">Is that right?! If that's right, then you must be a real genius, N!</state>
+            </case>
             <case stage="0">
                 <condition role="target" character="pit" stage="0" />
                 <state img="#-beaming.png" marker="pit_ImFinished">Oh hey! Neat angel costume! You must know about the "I'm finished!" password at the post office!</state>
@@ -861,6 +963,11 @@
                 <condition role="target" character="chihiro" stage="5" />
                 <state img="#-neutral.png" marker="chihiro_relief">Oh! You're still here, Chihiro! That's a relief.</state>
                 <state img="#-neutral.png" marker="chihiro_relief">Thank goodness you're still here, Chihiro. I was afraid we had done something to scare you.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="n" stage="0" />
+                <state img="#-curious.png" marker="n_oneLetter">Your name is N? I don't think I've met anyone whose name was just one letter before.</state>
+                <state img="#-curious.png" marker="n_nickname">"N"? What an interesting name... Or is it a nickname?</state>
             </case>
             <case stage="0" oneShotId="1">
                 <condition filter="short" role="target" />
@@ -955,13 +1062,18 @@
                 <condition role="target" character="emi" stage="0" />
                 <test expr="~emi.costume~" value="default" />
                 <state img="#-beaming.png" marker="emi_socks">&lt;i&gt;Ooh.&lt;/i&gt; I really like your socks, Emi! They're so pretty and colorful!</state>
-                <state img="#-content.png" marker="emi_cheerful">You're such a nice and cheerful person, Emi! I like people like that!</state>
+                <state img="#-content.png" marker="emi_cheerful">You're such an energetic and cheerful person, Emi! I like people like that!</state>
             </case>
             <case stage="0">
                 <condition role="target" character="emi" stage="0" />
                 <test expr="~target.costume~" value="default" />
                 <state img="#-beaming.png" marker="emi_socks">&lt;i&gt;Ooh.&lt;/i&gt; I really like your socks, Emi! They're so pretty and colorful!</state>
                 <state img="#-beaming.png" marker="emi_cheerful">You're such a nice and cheerful person, Emi! I like people like that!</state>
+            </case>
+            <case stage="0-10" totalRounds="1-">
+                <condition role="target" character="catria" stage="0" />
+                <state img="#-curious.png" marker="catria_thinking">You seem kinda jumpy, Catria. Is there something on your mind?</state>
+                <state img="#-curious.png" marker="catria_thinking">You look like you're thinking about something else. What's on your mind, Catria?</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="aella" stage="4" sayingMarker="AellaStalling" />
@@ -1113,11 +1225,6 @@
                 <state img="#-confused.png" marker="erufuda_frenchFries">So, those things are "french fries"? I've never seen a dish like those before.</state>
             </case>
             <case stage="0-10">
-                <condition role="target" character="catria" stage="0" />
-                <state img="#-curious.png" marker="catria_thinking">You seem kinda jumpy, Catria. Is there something on your mind?</state>
-                <state img="#-curious.png" marker="catria_thinking">You look like you're thinking about something else. What's on your mind, Catria?</state>
-            </case>
-            <case stage="0-10">
                 <condition role="target" character="leggy" stage="0" />
                 <state img="#-beaming.png" marker="leggy_fluffy">&lt;i&gt;Ooh!&lt;/i&gt; You look so fluffy and cute, Leggy!</state>
                 <state img="#-beaming.png" marker="leggy_soft">Wow! You look all soft and cuddly, Leggy!</state>
@@ -1126,6 +1233,16 @@
                 <condition role="target" character="rin" stage="0" />
                 <state img="#-curious.png" marker="rin_hugSetup">You seem like such a calm person, Rin. How do you like surprises?</state>
                 <state img="#-curious.png" marker="rin_hugSetup">You're so calm and collected, Rin. Are you the kind of person who doesn't like surprises?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="sola" stage="0" />
+                <state img="#-beaming.png" marker="sola_adorable">Oh my! You're name is Sola, right? You're so adorable!</state>
+                <state img="#-beaming.png" marker="sola_haveFun">Aww! Sola is so cute! Are you here to have some fun too, Sola?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="sola" stage="1" />
+                <state img="#-neutral.png" marker="sola_deepBreaths">Try to stay calm, Sola. Take some deep breaths.</state>
+                <state img="#-neutral.png" marker="sola_friendlyGame">You don't have to panic, Sola. This is just a friendly game.</state>
             </case>
             <case stage="0" oneShotId="2">
                 <condition filter="short" role="target" />
@@ -1192,6 +1309,11 @@
         </trigger>
 
         <trigger id="male_removing_accessory">
+            <case stage="0-10" priority="382">
+                <condition role="target" character="n" stage="0-3" saidMarker="notdecent_player" sayingMarker="notdecent_player1" />
+                <state img="#-content.png" marker="n_dontBeLikeThat">Oh, don't be like that, N! We're here to have fun, so try to enjoy yourself.</state>
+                <state img="#-content.png" marker="n_tryToHaveFun">Come on, N. This is a game, so just try to have fun, okay?</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="dust" stage="0" saidMarker="yuelia_aurora" />
                 <state img="#-beaming.png" marker="dust_whatsItLike">Aurora Village? That sounds lovely! What's it like!</state>
@@ -1201,6 +1323,26 @@
                 <condition role="target" character="dust" stage="0" saidMarker="yuelia_warmblood" />
                 <state img="#-confused.png" marker="dust_warmwhat">"Warmblood"? I don't think I've ever heard of those before.</state>
                 <state img="#-confused.png" marker="dust_warmwhat">And, uh... what exactly does that mean, Dust?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="n" stage="1" sayingMarker="clarification" />
+                <state img="#-curious.png">Is there? I wasn't told of anything like that. Then again. I didn't really ask.</state>
+                <state img="#-confused.png">Uuuuh... I don't know, N. Is there?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="n" stage="1" sayingMarker="sponge" />
+                <state img="#-shocked.png" marker="n_neatCube">I don't know what a few of those words mean, but it sounds really neat!</state>
+                <state img="#-shocked.png" marker="n_toyAndMemento">So it's like both a toy, and a memento for you, N? That's amazing!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="n" stage="3" sayingMarker="mathematics" />
+                <state img="#-beaming.png" marker="yuelia_badAtBoth">That's still pretty impressive, N! I'm not really good at either of those things.</state>
+                <state img="#-nervous.png" marker="yuelia_stillSmart">Either way, you seem like you're really smart, N! I'm not even sure what "psychology" is.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="n" stage="2" />
+                <state img="#-nervous.png" marker="n_needHelp">Um, are you going to need help with that, N?</state>
+                <state img="#-nervous.png" marker="n_needHelp">N, are you having some trouble? Do you need some help?</state>
             </case>
             <case stage="0">
                 <state img="#-beaming.png">That's a neat accessory, ~name~!</state>
@@ -1235,6 +1377,25 @@
         </trigger>
 
         <trigger id="male_removed_accessory">
+            <case stage="0-10" priority="382">
+                <condition role="target" character="n" stage="1-4" saidMarker="notdecent_player1" sayingMarker="notdecent_player2" />
+                <state img="#-nervous.png" marker="n_notHappening">I don't think that's what's happening, N. Please calm down.</state>
+                <state img="#-nervous.png" marker="n_friendlyGame">N, please try to calm down. This is just a friendly game.</state>
+            </case>
+            <case stage="0-10" priority="382">
+                <condition role="target" character="n" stage="2" saidMarker="clarification" sayingMarker="clarification2" />
+                <state img="#-curious.png" marker="n_countingClothes">How many clothes am I wearing again? Let's see... one, two, three, four...</state>
+                <state img="#-curious.png" marker="n_shouldICount">I don't think I'm wearing more that eight items. Should I count to make sure?</state>
+            </case>
+            <case stage="0-10" priority="381">
+                <condition role="target" character="n" stage="2" saidMarker="sponge" sayingMarker="sponge_explain" />
+                <state img="#-beaming.png" marker="n_rambling">That's incredible, N! I honestly didn't understand most of that, but it all sounded really smart. It makes me think of Hugh. He's always going on and on about things that he knows other people can't understand because he thinks it makes him look good. But you seem like you actually like it and aren't just trying to sound smart! Of course, you are smart though. It's funny, because I was just thinking, "Wouldn't be great to meet a really smart person I could actually get along with?"  Not that smart people always hate me, they just seem to get annoyed that I don't always understand them. But you don't seem to care that much, N! You just seem happy to be able to openly talk about it. Wow! Once I start talking, I just can't stop! We'd better get back to the game...</state>
+            </case>
+            <case stage="0-10" priority="381">
+                <condition role="target" character="n" stage="2" saidMarker="sponge" sayingMarker="calming" />
+                <state img="#-content.png" marker="n_necklaceComfort">I know how you feel, N. When I get scared, I tend to play with my necklace. It reminds me of my mother and that comforts me.</state>
+                <state img="#-content.png" marker="n_necklaceComfort">I can understand that, N. I do the same thing with my necklace whenever I get worried.</state>
+            </case>
             <case stage="0">
                 <state img="#-curious.png">~clothing.ifPlural(Were they|Was it)~ made by an Alchemist or a Tailor?</state>
                 <state img="#-curious.png">What kind of stat bonuses did ~clothing.ifPlural(they|it)~ give you, ~name~? Or was it just for cosmetics?</state>
@@ -1387,6 +1548,11 @@
                 <condition role="target" character="catria" stage="0" />
                 <state img="#-neutral.png" marker="catria_game">Just relax and try to enjoy yourself, Catria! This is a game, after all.</state>
                 <state img="#-neutral.png" marker="catria_game">Well, this is a friendly game, Catria. Try to have fun with it.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="akko" stage="0" />
+                <state img="#-shocked.png" marker="akko_neatTrick">Wow! That was a neat trick, Akko!</state>
+                <state img="#-shocked.png" marker="akko_how">I've never seen a spell like that before! How'd you do that, Akko?</state>
             </case>
             <case stage="0">
                 <state img="#-beaming.png">What ~clothing.ifPlural(interesting|an interesting)~ ~clothing~, ~name~. I like ~clothing.ifPlural(them!|it!)~</state>
@@ -2015,6 +2181,10 @@
                 <state img="#-shocked.png">Saki?! What are you doing?!</state>
                 <state img="#-nervous.png" marker="sakiZLS_reason">Uhh... Is there a reason for this, Saki?</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="n" sayingMarker="bra_asking" />
+                <state img="#-nervous.png" marker="n_neverSeen">Yes, that's a bra, N. Have you really never seen one before?</state>
+            </case>
             <case stage="0">
                 <state img="#-idea.png" marker="tailor_god">Oh! My best friend is a literal god of tailoring! Maybe they could make ~clothing.ifPlural(some|a)~ better ~clothing~ for you, ~name~.</state>
                 <state img="#-curious.png">You seem a little worried about something, ~name~. Is something wrong?</state>
@@ -2076,6 +2246,11 @@
         </trigger>
 
         <trigger id="male_chest_is_visible">
+            <case stage="0-10">
+                <condition role="target" character="n" stage="7" />
+                <state img="#-shocked.png" marker="n_whatHappened">Oh no! N! What happened to you?!</state>
+                <state img="#-shocked.png" marker="n_needHealing">&lt;i&gt;Gasp&lt;/i&gt; N! Are you okay!? Do you need me to heal you?!</state>
+            </case>
             <case stage="0">
                 <state img="#-embarrassed.png">That's strange. Suddenly, I feel really warm...</state>
                 <state img="#-embarrassed.png">I feel a little strange...</state>
