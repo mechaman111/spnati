@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.7 at 2:28:42 PM on November 21, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 12:25:59 AM on December 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.7</version>
+    <version>v5.4</version>
     <first>Beatrix</first>
     <last>Lucavi</last>
     <label>Beatrix</label>
@@ -84,7 +84,8 @@
         </trigger>
 
         <trigger id="game_start">
-            <case stage="0" alsoPlaying="sayaka">
+            <case stage="0">
+                <condition role="other" character="sayaka" />
                 <state img="#-smug.png">Magic? Ha! What are you, a child? Magic doesn't exist.</state>
             </case>
             <case stage="0">
@@ -118,7 +119,8 @@
                 <state img="#-telling.png">One male opponent, huh? If you're expecting this to turn into a four-on-one harem, you're dead wrong! Beatrix Lucavi does &lt;i&gt;not&lt;/i&gt; share her men!</state>
                 <state img="#-telling.png">One male opponent, huh? I hope you're not expecting a harem. Beatrix Lucavi does &lt;i&gt;not&lt;/i&gt; share her men! The others can have you when I'm done!</state>
             </case>
-            <case stage="0" totalMales="4" priority="0">
+            <case stage="0" priority="0">
+                <condition count="4" gender="male" />
                 <state img="#-horny.png">&lt;i&gt;Oh my! Four of you? Why, if you were to gang up on me, there'd be nothing I could do!&lt;/i&gt;</state>
                 <state img="#-horny.png">&lt;i&gt;Oh dear! I'm outnumbered by men! I hope none of you try to take advantage of this situation!&lt;/i&gt;</state>
                 <state img="#-horny.png">Oh my! All my opponents are men! I must be dreaming!</state>
@@ -236,6 +238,10 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0-3" oneShotId="1" priority="242">
+                <condition role="other" character="mulan" stage="8" saidMarker="duel_lost" />
+                <state img="#-happy.png">Tell me, have you ever considered having sex with something that's not humanoid? You know, like a dog, or a Varelsi.</state>
+            </case>
             <case stage="0" totalRounds="0">
                 <condition role="other" character="sakura" />
                 <alternative totalRounds="0">
@@ -248,6 +254,13 @@
                 <condition role="other" character="pinkie_pie" stage="3-5" sayingMarker="dizzy_pre_pinka2" />
                 <state img="#-informative.png">Nothing to worry about. Just relax, lie on your back, and apply immediate pressure to your temples.</state>
             </case>
+            <case stage="0-2" priority="171">
+                <condition role="other" character="mulan" stage="2-4" timeInStage="1" sayingMarker="mulan_duel" />
+                <condition count="0" status="naked" />
+                <condition count="0" status="masturbating" />
+                <condition count="0" status="finished" />
+                <state img="#-smug.png">Alright, I'll take your bet. I'll start thinking of my question now, because you're surely going to lose.</state>
+            </case>
             <case stage="0-3" priority="156">
                 <condition role="other" character="croix" stage="0" timeInStage="0" sayingMarker="nefarious" />
                 <state img="#-smug.png">A psychologist, huh? You guys just can't stay away from me, can you?</state>
@@ -255,6 +268,10 @@
             <case stage="0-3" id="25" priority="156">
                 <condition role="other" character="juri" stage="4" timeInStage="0" saidMarker="juri_attack" />
                 <state img="#-informative.png">I was going to be mad at you for your failed attack, Juri, but now I'm interested in your... &lt;i&gt;hair trigger&lt;/i&gt;. I've &lt;i&gt;got&lt;/i&gt; to study you!</state>
+            </case>
+            <case stage="0-3" priority="156">
+                <condition role="other" character="mulan" stage="1" timeInStage="0" sayingMarker="honorable_others" />
+                <state img="#-smug.png">Ha! Wouldn't you like to know what I'm into.</state>
             </case>
             <case stage="0-3">
                 <condition role="other" character="amalia" stage="5" timeInStage="0" />
@@ -315,6 +332,10 @@
             <case stage="0-3" priority="155">
                 <condition role="other" character="joey" stage="4" timeInStage="1" />
                 <state img="#-telling.png">Just because you have an active immune system doesn't mean you should go around doing disgusting things and risk getting sick. You wouldn't lick a toilet seat, would you?</state>
+            </case>
+            <case stage="0-3">
+                <condition role="other" character="mulan" stage="2" timeInStage="0" />
+                <state img="#-oops.png">That was sarcasm, by the way. I knew from the start - and no, not because I can detect gender on sight. It was because of how hard you were trying to be convincing.</state>
             </case>
             <case stage="0-3" totalRounds="1">
                 <condition role="other" character="spooky" stage="0-1" />
@@ -539,6 +560,14 @@
                 <condition role="other" character="starfire" />
                 <state img="#-informative.png">I assure you, it's very standard, very healthy, and very clean!</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="nami" />
+                <state img="#-telling.png">Thriller Bark? I am no one's experiment but my own, I'll have you know!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="ribbon_girl" />
+                <state img="#-hopkins.png">It's only a weapon if you consider needles weapons.</state>
+            </case>
             <case stage="1-2" consecutiveLosses="2">
                 <state img="#-annoyed.png" marker="MultipleLosses">&lt;i&gt;Me again?&lt;/i&gt; Fine!</state>
                 <state img="#-annoyed.png" marker="MultipleLosses">&lt;i&gt;How is it even possible that I'm the one losing?! I'm the smartest, most cunning person here!&lt;/i&gt;</state>
@@ -555,6 +584,10 @@
             <case stage="0" totalRounds="0">
                 <state img="#-smug.png">Age, beauty, and brains before... Heh heh, what do &lt;i&gt;you&lt;/i&gt; have again, ~player~?</state>
                 <state img="#-informative.png">Looks like I'll be setting the pace. Try to keep up, everyone!</state>
+            </case>
+            <case stage="0">
+                <condition filter="dominant" role="other" var="~other~" />
+                <state img="#-cute.png">Aw, that's cute, you think you're the one in control here, huh, ~other~? But &lt;i&gt;you're&lt;/i&gt; not the one packing sedatives, now are you?</state>
             </case>
             <case stage="1" timeInStage="7-" saidMarker="winning1">
                 <state img="#-happy.png">Wow, either I'm really good at poker, or you all suck at it! Let's go with &lt;i&gt;both&lt;/i&gt;.</state>
@@ -673,7 +706,8 @@
                 <condition role="other" character="aella" />
                 <state img="#-stripping.png">Would I be taking it off if I wasn't sure?</state>
             </case>
-            <case stage="0" alsoPlaying="joey">
+            <case stage="0">
+                <condition role="other" character="joey" />
                 <state img="#-strippingJ.png">&lt;i&gt;Willy Wonka?&lt;/i&gt; You &lt;i&gt;think&lt;/i&gt; he's a genius, but he's an idiot!</state>
             </case>
             <case stage="0">
@@ -716,12 +750,34 @@
                 <condition role="other" character="starfire" />
                 <state img="#-stripping.png">I hope you like small breasts, because mine will be the best ones you've ever seen!</state>
             </case>
+            <case stage="1">
+                <condition role="other" character="sayaka" />
+                <state img="#-stripping.png">Depends on your definition of a "weapon." Can I kill you with it? Yes. Can I kill you with literally any other kind of injector? Also yes.</state>
+            </case>
             <case stage="0">
-                <alternative />
-                <alternative alsoPlaying="clover" />
+                <condition role="other" character="clover" />
                 <state img="#-stripping.png">You know what they say, "You can't perform brain surgery without cutting through the skull."</state>
-                <state img="#-stripping.png">In my line of work, I've gotten used to getting my hands dirty - both metaphorically and literally.</state>
-                <state img="#-stripping.png">If you think I'm afraid to get my hands dirty, you don't know me &lt;i&gt;or&lt;/i&gt; my line of work.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="pit" />
+                <state img="#-stripping.png">You know what they say, "You can't perform brain surgery without cutting through the skull."</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="pit" />
+                <state img="#-stripping.png">Get ready to see the most arousing small bust you've ever seen!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="nami" />
+                <state img="#-stripping.png">If you think &lt;i&gt;I'm&lt;/i&gt; scary, you wouldn't last five minutes in the Detritus Ring. &lt;i&gt;And you call yourself a pirate...&lt;/i&gt;</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="ribbon_girl" />
+                <state img="#-stripping.png">It only comes off as far as any other robotic limb comes off. Which is to say, &lt;i&gt;painfully&lt;/i&gt;, so obviously, I won't be removing it.</state>
+            </case>
+            <case stage="0">
+                <condition filter="dominant" role="other" />
+                <state img="#-strippingJ.png">Let me get one thing straight: Beatrix Lucavi does &lt;i&gt;not&lt;/i&gt; submit. Even when I'm the bottom, I'm still the one in control.</state>
+                <state img="#-strippingJ.png">Let me make one thing clear: I submit to &lt;i&gt;no one&lt;/i&gt;. If my partner's on top of me, it's because &lt;i&gt;I want them to be&lt;/i&gt;.</state>
             </case>
             <case stage="0" saidMarker="Angry1">
                 <state img="#-strippingJ.png">See? I'm taking my dress off. You understand that, &lt;i&gt;right&lt;/i&gt;? Clothes &lt;i&gt;off&lt;/i&gt;?</state>
@@ -731,7 +787,8 @@
                 <state img="#-stripping.png">See? No stalling, just right to something exciting.</state>
                 <state img="#-stripping.png">See? You're supposed to &lt;i&gt;evoke&lt;/i&gt; the release of endorphins, not inhibite it!</state>
             </case>
-            <case stage="0" saidMarker="winning1">
+            <case stage="0">
+                <condition role="self" saidMarker="winning1" />
                 <state img="#-stripping.png">Funny, this isn't the first time I thought I would never lose a hand.</state>
             </case>
             <case stage="1" saidMarker="Annoyed2">
@@ -748,8 +805,14 @@
                 <condition role="self" saidMarker="FirstOneNude" />
                 <state img="#-stripping.png">&lt;i&gt;Yes yes, it's very amusing watching the one-armed girl remove her panties.&lt;/i&gt;</state>
             </case>
-            <case stage="2" saidMarker="MultipleLosses">
+            <case stage="2">
+                <condition role="self" saidMarker="MultipleLosses" />
                 <state img="#-stripping.png">This is why I don't coast by off of my looks! Showing your breasts is never enough for some people!</state>
+            </case>
+            <case stage="0">
+                <state img="#-stripping.png">You know what they say, "You can't perform brain surgery without cutting through the skull."</state>
+                <state img="#-stripping.png">In my line of work, I've gotten used to getting my hands dirty - both metaphorically and literally.</state>
+                <state img="#-stripping.png">If you think I'm afraid to get my hands dirty, you don't know me &lt;i&gt;or&lt;/i&gt; my line of work.</state>
             </case>
             <case stage="1">
                 <state img="#-stripping.png">Get ready to see the most arousing small bust you've ever seen!</state>
@@ -827,7 +890,8 @@
                 <condition role="other" character="jessie" />
                 <state img="#-hopkins.png">It would be ethically reprehensible to remove the Incistyx! You don't want Professor Hopkin's poor little harresburra brain to die, do you?</state>
             </case>
-            <case stage="2" alsoPlaying="jessie">
+            <case stage="2">
+                <condition role="other" character="jessie" />
                 <state img="#-oops.png">Your loss, because the Incistyx isn't going anywhere anytime soon.</state>
             </case>
             <case stage="1">
@@ -853,6 +917,34 @@
             <case stage="3">
                 <condition role="other" character="starfire" />
                 <state img="#-strippedB.png">The last few men who got to see me &lt;i&gt;this&lt;/i&gt; naked all died... from, uh, black widow bites! &lt;i&gt;Funny thing, huh?&lt;/i&gt;</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="sayaka" />
+                <state img="#-smug.png">Is that dread I hear, or excitement?</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="pit" />
+                <state img="#-stripped.png">Try not to strain your eyes staring. I'm not an Ophthalmologist, so I won't be able to help you.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="nami" />
+                <state img="#-oops.png">&lt;i&gt;Ooh, sorry, I'm fresh out of salt tablets.&lt;/i&gt;</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="ribbon_girl" />
+                <state img="#-happy.png">Thank you, Ribbon Girl. At least &lt;i&gt;someone&lt;/i&gt; around here agrees with how I play this game!</state>
+            </case>
+            <case stage="2">
+                <condition filter="uses_camera" role="other" />
+                <state img="#-stripped.png">Take all the pictures you like. I don't mind. Really.</state>
+                <state img="#-stripped.png">Take all the pictures you like. I don't mind. I'm sure they're quite photogenic.</state>
+                <state img="#-stripped.png">Take a picture, it'll last longer.</state>
+            </case>
+            <case stage="1">
+                <condition filter="dominant" role="other" />
+                <state img="#-grin.png">I make nature my bitch on a daily basis. I'll make you one too if I feel like it, so don't tempt me.</state>
+                <state img="#-grin.png">But if you really think you can dominate someone who can make you wake up with your stomach in your feet, be my guest.</state>
+                <state img="#-grin.png">But if you really want to challenge someone with a javelin-sized needle for an arm and intimate knowledge of vital organs and arteries, be my guest.</state>
             </case>
             <case stage="1">
                 <condition role="self" saidMarker="Angry1" />
@@ -891,17 +983,19 @@
                 <state img="#-oops.png">Nothing to be ashamed of. It's just my body and my underwear, and I chose both of them.</state>
             </case>
             <case stage="2">
-                <state img="#-stripped.png">Try not to strain your eyes staring; &lt;i&gt;I'm not an Ophthalmologist, so I won't be able to help you.&lt;/i&gt;</state>
+                <state img="#-stripped.png">Try not to strain your eyes staring. I'm not an Ophthalmologist, so I won't be able to help you.</state>
                 <state img="#-stripped.png">&lt;i&gt;They're perfect, I know.&lt;/i&gt;</state>
                 <state img="#-stripped.png">Pretty perky for a 71-year-old, wouldn't you agree?</state>
             </case>
-            <case stage="2" totalMales="2-4" priority="0">
+            <case stage="2" priority="0">
+                <condition count="2-4" gender="male" />
                 <state img="#-stripped.png">Careful how much you stare, boys. It is &lt;i&gt;very much&lt;/i&gt; possible to die from an erection.</state>
                 <state img="#-stripped.png">Careful how much you stare, boys. Wouldn't want &lt;i&gt;now&lt;/i&gt; to be the time you find out that you have Volatile Erection Syndrome.</state>
             </case>
             <case stage="3">
                 <state img="#-strippedB.png">The last few men who got to see me &lt;i&gt;this&lt;/i&gt; naked all died... from, uh, black widow bites! &lt;i&gt;Funny thing, huh?&lt;/i&gt;</state>
                 <state img="#-strippedB.png">There. Worth the wait, wouldn't you say?</state>
+                <state img="#-strippedB.png">There. Now you know just how much of my body is organic... Well, &lt;i&gt;roughly&lt;/i&gt;.</state>
             </case>
         </trigger>
 
@@ -943,6 +1037,10 @@
             </case>
             <case stage="0-5" target="kamina" targetStage="0">
                 <state img="#-informative.png">Tell me, how often does this overconfidence of yours get you injured? Your local medic must &lt;i&gt;love&lt;/i&gt; you, am I right?</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="pit" stage="0" />
+                <state img="#-informative.png">You say you can't fly, huh? Attaching a couple of flight aids would be child's play. You'd be flying again in a week!</state>
             </case>
             <case stage="0-5" filter="unusual_skin" targetStage="0">
                 <state img="#-happy.png">My, what a lovely tone your skin is, ~name~!</state>
@@ -1081,8 +1179,40 @@
                 <state img="#-cute.png">I must say, Rin, I admire your decision to forgo arms in favor of spreading your message.</state>
             </case>
             <case stage="0-5">
+                <condition role="target" character="palutena" stage="0" />
+                <state img="#-telling.png">You need to get your ego in check. Having a pretty face and expensive clothes does not make you a literal goddess.</state>
+            </case>
+            <case stage="0-5" id="32">
+                <condition role="target" character="hanako" stage="0" />
+                <state img="#-smug.png">... You know there's medicine for burn scars, right? Literally &lt;i&gt;everyone&lt;/i&gt; has some.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="ribbon_girl" stage="0" />
+                <state img="#-happy.png">What kind of creature are you? I've never seen one with arms made of literal silk before.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="uravity" stage="0" />
+                <state img="#-telling.png">Let me get one thing straight here: humans can't just &lt;i&gt;evolve&lt;/i&gt; super powers. You are not the next step in human evolution. &lt;i&gt;You're a mutant.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="natsuki" stage="1" />
+                <state img="#-informative.png">Listen, if you're going to insist on doing your hair like that and acting all cute, you have to accept that people are going to call you cute.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="yuelia" stage="0" />
+                <state img="#-oops.png">&lt;i&gt;A butterfly?&lt;/i&gt; Your kidding?... Alright, take it off, whatever you have.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="tomoko" stage="0" />
+                <state img="#-smug.png">I don't even need to use my advanced medical degree to tell that you need to get more sleep. They call it "beauty rest" for a reason.</state>
+            </case>
+            <case stage="0-5">
                 <condition role="target" character="erufuda" />
                 <state img="#-oops.png">If you wanted to go the surgical route, there's liposuction, but that's rather risky. There's also stomach staples, but that's not instantaneous and won't ensure you actually lose weight.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="hatsume" />
+                <state img="#-smug.png">Do you &lt;i&gt;really&lt;/i&gt; think your good eyesight is a super power? I can name &lt;i&gt;at least&lt;/i&gt; three species that have better eyes than yours, I'm sure.</state>
             </case>
             <case stage="0-5">
                 <condition filter="unusual_skin" role="target" stage="0" />
@@ -1129,7 +1259,13 @@
                 <condition role="target" character="kamina" stage="2" />
                 <state img="#-annoyed.png">&lt;i&gt;Just&lt;/i&gt; your belt? Not even your pants too? What happened to that overconfidence you started this match with?</state>
             </case>
-            <case stage="3" totalExposed="1" totalNaked="1">
+            <case stage="0-5">
+                <condition role="target" character="pit" stage="0" />
+                <state img="#-telling.png">Don't give me any of that nonsense about magic! Happy thoughts and well-wishes won't get you off the ground!</state>
+            </case>
+            <case stage="2" priority="10">
+                <condition count="1" status="exposed" />
+                <condition count="0" status="naked" />
                 <state img="#-sinister.png">If you don't want to wake up with severe influenza, you'd better stop that!</state>
                 <state img="#-sinister.png">That's it! You've just made my list!</state>
                 <state img="#-sinister.png">That's a good way to make yourself deathly ill!</state>
@@ -1137,7 +1273,7 @@
                 <state img="#-sinister.png">What a brave choice! Not because of what you're uncovering, but because of who you're infuriating!</state>
                 <state img="#-sinister.png">Do you have a death wish, ~name~? Surely you do, if ~clothing.ifPlural(&lt;i&gt;those&lt;/i&gt; are|&lt;i&gt;that's&lt;/i&gt;)~ what you chose to take off!</state>
             </case>
-            <case stage="2" totalExposed="1" totalNaked="0">
+            <case stage="3" totalExposed="1" totalNaked="1">
                 <state img="#-sinister.png">If you don't want to wake up with severe influenza, you'd better stop that!</state>
                 <state img="#-sinister.png">That's it! You've just made my list!</state>
                 <state img="#-sinister.png">That's a good way to make yourself deathly ill!</state>
@@ -1152,7 +1288,9 @@
                 <state img="#-hopkins.png">What's that, Hopkins?... That's right, you &lt;i&gt;could&lt;/i&gt; do better than that!</state>
                 <state img="#-cute.png">Aw, how cute, you think that counts as stripping!</state>
             </case>
-            <case stage="0-5" targetStage="2-8" targetStatus="decent" notSaidMarker="BadStripping1" priority="0">
+            <case stage="0-5" priority="0">
+                <condition status="decent" role="target" stage="2-8" />
+                <condition role="self" notSaidMarker="BadStripping1" />
                 <state img="#-happy.png" marker="BadStripping1">~name~, I've been meaning to say how good of a job you're doing stripping!</state>
                 <state img="#-happy.png" marker="BadStripping1">Have I told you how good of a job you've been doing with the whole "stripping" thing, ~name~?</state>
                 <state img="#-happy.png" marker="BadStripping1">I think it's about time someone told you how good of a job you've been doing stripping, ~name~.</state>
@@ -1169,7 +1307,9 @@
         </trigger>
 
         <trigger id="male_removed_accessory">
-            <case stage="0-5" targetStage="2-8" targetStatus="decent" saidMarker="BadStripping1" notSaidMarker="BadStripping2" priority="999">
+            <case stage="0-5" priority="999">
+                <condition status="decent" role="target" stage="2-8" />
+                <condition role="self" saidMarker="BadStripping1" notSaidMarker="BadStripping2" />
                 <state img="#-smug.png" marker="BadStripping2">Bad! You're doing badly!</state>
                 <state img="#-smug.png" marker="BadStripping2">Terrible! You're doing terribly!</state>
                 <state img="#-smug.png" marker="BadStripping2">Terribly! Simply terribly!</state>
@@ -1182,24 +1322,34 @@
                 <state img="#-telling.png">You could at least throw it at someone like you did with your shoes! You know, make this more entertaining!</state>
             </case>
             <case stage="0-5">
+                <condition role="target" character="pit" stage="1" />
+                <state img="#-oops.png">Although, if you want to jump off a cliff to see which one of us is right, I wouldn't mind a little Darwinism.</state>
+            </case>
+            <case stage="0-5">
                 <condition role="target" character="human" />
                 <state img="#-smug.png">My, you're about as daring as you look.</state>
                 <state img="#-oops.png">And here I was expecting you to surprise me.</state>
                 <state img="#-smug.png">Yeah, that's about what I expected from the likes of &lt;i&gt;you&lt;/i&gt;.</state>
             </case>
-            <case stage="2" totalExposed="1" totalNaked="0">
+            <case stage="2" priority="10">
+                <condition count="1" status="exposed" />
+                <condition count="0" status="naked" />
                 <state img="#-grin.png">I hope you like measles, because I'm &lt;i&gt;definitely&lt;/i&gt; going to give you them later!</state>
                 <state img="#-annoyed.png">You are &lt;i&gt;so&lt;/i&gt; lucky that I left my scalpels at home!</state>
                 <state img="#-severance.png">Forget &lt;i&gt;health&lt;/i&gt; insurance, I hope you have good &lt;i&gt;life&lt;/i&gt; insurance for what I'm going to do to you for that!</state>
                 <state img="#-sinister.png">One day, you're going to find yourself very, &lt;i&gt;very&lt;/i&gt; sick, and you will think back to this day and realize why that is!</state>
                 <state img="#-grin.png">Doctor-assisted suicide is legal in the Solus system, you know. &lt;i&gt;Food for thought.&lt;/i&gt;</state>
+                <state img="#-grin.png">It's not wise to upset someone who can extract all of your blood in 5.3 seconds, you know.</state>
             </case>
-            <case stage="3" totalExposed="1" totalNaked="1">
+            <case stage="3" priority="10">
+                <condition count="1" status="exposed" />
+                <condition count="1" status="naked" />
                 <state img="#-grin.png">I hope you like measles, because I'm &lt;i&gt;definitely&lt;/i&gt; going to give you them later!</state>
                 <state img="#-annoyed.png">You are &lt;i&gt;so&lt;/i&gt; lucky that I left my scalpels at home!</state>
                 <state img="#-severance.png">Forget &lt;i&gt;health&lt;/i&gt; insurance, I hope you have good &lt;i&gt;life&lt;/i&gt; insurance for what I'm going to do to you for that!</state>
                 <state img="#-sinister.png">One day, you're going to find yourself very, &lt;i&gt;very&lt;/i&gt; sick, and you will think back to this day and realize why that is!</state>
                 <state img="#-grin.png">Doctor-assisted suicide is legal in the Solus system, you know. &lt;i&gt;Food for thought.&lt;/i&gt;</state>
+                <state img="#-grin.png">It's not wise to upset someone who can extract all of your blood in 5.3 seconds, you know.</state>
             </case>
             <case stage="0-2">
                 <state img="#-happy.png">There! Over before we knew it! Like a shot! Or a mercy-killing!</state>
@@ -1230,6 +1380,10 @@
             <case stage="0-5">
                 <condition role="target" character="croix" stage="1" saidMarker="cube_explanation" />
                 <state img="#-smug.png">&lt;i&gt;Magical&lt;/i&gt; energy? Okay, now I &lt;i&gt;know&lt;/i&gt; you're a total quack.</state>
+            </case>
+            <case stage="0-5" id="37">
+                <condition role="target" character="yuelia" stage="0" sayingMarker="transformation" />
+                <state img="#-shocked.png">Oh! Well then, at least now you have things to take off!</state>
             </case>
             <case stage="0-5">
                 <condition role="target" character="aella" stage="0" />
@@ -1289,6 +1443,24 @@
                 <condition role="target" character="croix" stage="1" />
                 <state img="#-smug.png">&lt;i&gt;Magical&lt;/i&gt; energy? Are you a total quack or what? Magic is what people call things they're not smart enough to understand.</state>
             </case>
+            <case stage="0-5">
+                <condition role="target" character="palutena" stage="0" />
+                <state img="#-oops.png">I mean, I create and shape life every day, but you don't see &lt;i&gt;me&lt;/i&gt; calling myself a goddess.</state>
+            </case>
+            <case stage="0-5" id="33">
+                <condition role="target" character="hanako" stage="0" />
+                <state img="#-smug.png">How the hell did you manage to burn only &lt;i&gt;half&lt;/i&gt; of your face, anyway? I could understand half of your face &lt;i&gt;horizontally&lt;/i&gt;, but &lt;i&gt;vertically&lt;/i&gt;? That takes a special level of incompetence.</state>
+                <state img="#-smug.png">How the hell did you manage to burn only &lt;i&gt;half&lt;/i&gt; of your face, anyway? Seriously, have you ever heard of a half-burnt piece of toast or a half-burnt lasagna? No, because that's ridiculous!</state>
+                <state img="#-smug.png">How the hell did you manage to burn only &lt;i&gt;half&lt;/i&gt; of your face, anyway? What, were you wearing half a face shield?</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="ribbon_girl" stage="0" />
+                <state img="#-informative.png">I didn't ask what your abilities are, I asked your species. Humans don't just have arms made of silk for no reason. If you &lt;i&gt;are&lt;/i&gt; human, then tell me what made your arms like that.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="uravity" stage="0" />
+                <state img="#-happy.png">Don't get me wrong, mutantions are fun! They cause all sorts of abilities, health complications, and other such fun things. But mutation is not the same as evolution.</state>
+            </case>
             <case stage="0-5" target="florina" targetSaidMarker="fled">
                 <state img="#-smug.png">You think you can get away, huh? Firing sedative in three, two, one...</state>
                 <state img="#-oops.png">&lt;i&gt;Oh no, she's gone. If only someone here had sedatives on hand...&lt;/i&gt;</state>
@@ -1298,7 +1470,9 @@
             <case stage="0-5" target="vriska">
                 <state img="#-oops.png">Teleporting away, huh? All bark and no bite, I suppose.</state>
             </case>
-            <case stage="3" totalExposed="1" totalNaked="1">
+            <case stage="3" priority="10">
+                <condition count="1" status="exposed" />
+                <condition count="1" status="naked" />
                 <state img="#-sinister.png">If you don't want to wake up with severe influenza, you'd better stop that!</state>
                 <state img="#-sinister.png">That's it! You've just made my list!</state>
                 <state img="#-sinister.png">That's a good way to make yourself deathly ill!</state>
@@ -1306,7 +1480,9 @@
                 <state img="#-sinister.png">What a brave choice! Not because of what you're uncovering, but because of who you're infuriating!</state>
                 <state img="#-sinister.png">Do you have a death wish, ~name~? Surely you do, if ~clothing.ifPlural(&lt;i&gt;those&lt;/i&gt; are|&lt;i&gt;that's&lt;/i&gt;)~ what you chose to take off!</state>
             </case>
-            <case stage="2" totalExposed="1" totalNaked="0">
+            <case stage="2" priority="10">
+                <condition count="1" status="exposed" />
+                <condition count="0" status="naked" />
                 <state img="#-sinister.png">If you don't want to wake up with severe influenza, you'd better stop that!</state>
                 <state img="#-sinister.png">That's it! You've just made my list!</state>
                 <state img="#-sinister.png">That's a good way to make yourself deathly ill!</state>
@@ -1338,7 +1514,9 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
-            <case stage="0-5" targetStage="2-8" targetStatus="decent" saidMarker="BadStripping1" notSaidMarker="BadStripping2" priority="999">
+            <case stage="0-5" priority="999">
+                <condition status="decent" role="target" stage="2-8" />
+                <condition role="self" saidMarker="BadStripping1" notSaidMarker="BadStripping2" />
                 <state img="#-smug.png" marker="BadStripping2">Bad! You're doing badly!</state>
                 <state img="#-smug.png" marker="BadStripping2">Terrible! You're doing terribly!</state>
                 <state img="#-smug.png" marker="BadStripping2">Terribly! Simply terribly!</state>
@@ -1382,6 +1560,10 @@
             <case stage="0-5">
                 <condition role="target" character="akko" stage="2" saying="You can’t find it in your heart at all to let one cute, lovely witch like me to sit out the next hand, can you?!" />
                 <state img="#-happy.png">Nope! Suck it up, buttercup!</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="yuelia" stage="1" sayingMarker="real_name" />
+                <state img="#-oops.png">Though, I can't tell if your transformation means you'll be &lt;i&gt;more&lt;/i&gt; fun or &lt;i&gt;less&lt;/i&gt; fun now.</state>
             </case>
             <case stage="0-5">
                 <condition role="target" character="aella" stage="1" />
@@ -1453,6 +1635,22 @@
                 <condition role="target" character="croix" stage="2" />
                 <state img="#-oops.png">Shame. Would've been great to have a rousing conversation about our studies while you strip, but now I trust your research about as far as I can throw you.</state>
             </case>
+            <case stage="0-5">
+                <condition role="target" character="palutena" stage="1" />
+                <state img="#-smug.png">If you're really a goddess, why don't you use your "devine powers" to give me an orgasm right this second?</state>
+            </case>
+            <case stage="0-5" id="34">
+                <condition role="target" character="hanako" stage="1" />
+                <state img="#-cute.png">&lt;i&gt;Oh, I'm sorry, am I being insensitive? I guess I just don't have any sympathy for those who ignore modern medicine.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="ribbon_girl" stage="1" />
+                <state img="#-happy.png">Genes, huh? In that case, I need you to let me have a sample!</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="uravity" stage="1" />
+                <state img="#-informative.png">These "quirks" of yours aren't caused by any exterior factors, are too drastic a change, and are &lt;i&gt;hardly&lt;/i&gt; patterned, so they're mutations.</state>
+            </case>
             <case stage="0-5" target="florina" targetSaidMarker="fled">
                 <state img="#-happy.png">Oh good, you came back! I guess we &lt;i&gt;won't&lt;/i&gt; be needing sedatives!</state>
                 <state img="#-happy.png">Oh good, subject - I mean &lt;i&gt;Florina&lt;/i&gt; - has returned!</state>
@@ -1470,12 +1668,25 @@
                 <condition role="target" character="meia" />
                 <state img="#-smug.png">If you're so reluctant to remove &lt;i&gt;that&lt;/i&gt; tiny thing, then what are you even doing here? You should go home before taking your socks off makes you cry.</state>
             </case>
-            <case stage="3" totalExposed="1" totalNaked="1">
+            <case stage="3" priority="10">
+                <condition count="1" status="exposed" />
+                <condition count="1" status="naked" />
                 <state img="#-grin.png">I hope you like measles, because I'm &lt;i&gt;definitely&lt;/i&gt; going to give you them later!</state>
                 <state img="#-annoyed.png">You are &lt;i&gt;so&lt;/i&gt; lucky that I left my scalpels at home!</state>
                 <state img="#-severance.png">Forget &lt;i&gt;health&lt;/i&gt; insurance, I hope you have good &lt;i&gt;life&lt;/i&gt; insurance for what I'm going to do to you for that!</state>
                 <state img="#-sinister.png">One day, you're going to find yourself very, &lt;i&gt;very&lt;/i&gt; sick, and you will think back to this day and realize why that is!</state>
                 <state img="#-grin.png">Doctor-assisted suicide is legal in the Solus system, you know. &lt;i&gt;Food for thought.&lt;/i&gt;</state>
+                <state img="#-grin.png">It's not wise to upset someone who can extract all of your blood in 5.3 seconds, you know.</state>
+            </case>
+            <case stage="2" priority="10">
+                <condition count="1" status="exposed" />
+                <condition count="0" status="naked" />
+                <state img="#-grin.png">I hope you like measles, because I'm &lt;i&gt;definitely&lt;/i&gt; going to give you them later!</state>
+                <state img="#-annoyed.png">You are &lt;i&gt;so&lt;/i&gt; lucky that I left my scalpels at home!</state>
+                <state img="#-severance.png">Forget &lt;i&gt;health&lt;/i&gt; insurance, I hope you have good &lt;i&gt;life&lt;/i&gt; insurance for what I'm going to do to you for that!</state>
+                <state img="#-sinister.png">One day, you're going to find yourself very, &lt;i&gt;very&lt;/i&gt; sick, and you will think back to this day and realize why that is!</state>
+                <state img="#-grin.png">Doctor-assisted suicide is legal in the Solus system, you know. &lt;i&gt;Food for thought.&lt;/i&gt;</state>
+                <state img="#-grin.png">It's not wise to upset someone who can extract all of your blood in 5.3 seconds, you know.</state>
             </case>
             <case stage="0-2">
                 <state img="#-happy.png">There! Over before we knew it! Like a shot! Or a mercy-killing!</state>
@@ -1516,7 +1727,9 @@
                 <state img="#-annoyed.png">Hurry up! You're taking an eternity!</state>
                 <state img="#-sinister.png">Your stalling is getting on my nerves!</state>
             </case>
-            <case stage="3" totalExposed="1" totalNaked="1" priority="0">
+            <case stage="3" priority="0">
+                <condition count="1" status="exposed" />
+                <condition count="1" status="naked" />
                 <state img="#-sinister.png">I'm standing here completely nude. If you can't bear to remove your ~clothing~, I'll tear every remaining article of clothing off of your body!</state>
             </case>
             <case stage="4">
@@ -1524,7 +1737,8 @@
                 <state img="#-telling.png">Is that your idea of sexy, or are you deliberately trying to put me to sleep?</state>
                 <state img="#-telling.png">Is that your idea of sexy, or are you deliberately trying to bore me to tears?</state>
             </case>
-            <case stage="4" totalExposed="2-" priority="0">
+            <case stage="4" priority="0">
+                <condition count="2-" status="exposed" />
                 <state img="#-calm.png">Truth be told, I'm barely paying attention to you right now, ~name~.</state>
                 <state img="#-calm.png">&lt;i&gt;Oh, I'm sorry, are you stripping right now, ~name~? I'm barely paying attention to you.&lt;/i&gt;</state>
             </case>
@@ -1636,6 +1850,14 @@
                 <state img="#-happy.png">So tell me, do you not have arms as a show of &lt;i&gt;support&lt;/i&gt; for El Dragon, or in &lt;i&gt;protest&lt;/i&gt; to his gold-plated arms?</state>
             </case>
             <case stage="0-5">
+                <condition role="target" character="hatsume" stage="0" />
+                <state img="#-oops.png">Ooh, rocket boots, those would be impressive, &lt;i&gt;if I didn't already see hover boot technology perfected.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="natsuki" stage="1" />
+                <state img="#-oops.png">Besides, just because you're cute doesn't mean that's all you are. I mean, look at me: I'm cute, and I'm also a genius, an expert sniper, and &lt;i&gt;incredibly&lt;/i&gt; sexy.</state>
+            </case>
+            <case stage="0-5">
                 <condition role="target" character="aella" />
                 <state img="#-oops.png">You &lt;i&gt;guess&lt;/i&gt;? What's there to be uncertain about?</state>
             </case>
@@ -1722,7 +1944,8 @@
             <case stage="0-5" target="hermione" targetStage="3">
                 <state img="#-oops.png">Wasn't impressive before, still not impressive now.</state>
             </case>
-            <case stage="0-5" target="kyoko" targetStage="6">
+            <case stage="0-5">
+                <condition role="target" character="kyoko" stage="6" />
                 <state img="#-happy.png">That said, can I cut them off and keep them in a jar? I can give you replacements and make it &lt;i&gt;mostly&lt;/i&gt; painless!</state>
             </case>
             <case stage="0-5">
@@ -1740,6 +1963,14 @@
             <case stage="0-5">
                 <condition role="target" character="rin" stage="1" />
                 <state img="#-oops.png">Obviously you could've just replaced the arms you lost, so there must be &lt;i&gt;some&lt;/i&gt; reason why you haven't yet.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="hatsume" stage="1" />
+                <state img="#-laugh.png">Ah hahaha hahahaha! This is why you don't use &lt;i&gt;rockets&lt;/i&gt; for hover boots, imbecile!</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="natsuki" stage="2" />
+                <state img="#-happy.png">I'm also right, so just take my damn advice.</state>
             </case>
             <case stage="0-5">
                 <condition role="target" character="sei" saidMarker="damage_reduction" />
@@ -2120,6 +2351,18 @@
                 <condition role="target" character="joey" stage="4" />
                 <state img="#-sad.png">Oh. It was an actual banana. I guess that means you aren't nonbinary. How... boring.</state>
             </case>
+            <case stage="0-5" id="35">
+                <condition role="target" character="hanako" stage="4" />
+                <state img="#-shocked.png">You burned half of your &lt;i&gt;body&lt;/i&gt;? That's even more ridiculous than burning only half of your face!</state>
+            </case>
+            <case stage="0-5" id="36">
+                <condition role="target" character="mulan" stage="2" />
+                <state img="#-shocked.png">&lt;i&gt;You're a woman? Why, I had absolutely no idea! Your disguse was impeccable!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="natsuki" stage="6" />
+                <state img="#-informative.png">You look malnourished. Perhaps you should start adding some protein powder to those baked goods of yours?</state>
+            </case>
             <case stage="0-5">
                 <condition role="target" character="aella" />
                 <state img="#-happy.png">So? Are they cold?</state>
@@ -2131,10 +2374,16 @@
             <case stage="0-5" target="misato">
                 <state img="#-smug.png">Honey, that scar is your &lt;i&gt;least&lt;/i&gt; unattractive feature of yours.</state>
             </case>
-            <case stage="0-5" target="wiifitfemale">
+            <case stage="0-5">
+                <condition role="target" character="wiifitfemale" />
                 <state img="#-telling.png">Couldn't you have bothered to shower before coming here? Basic hygiene is a common courtesy, you know!</state>
                 <state img="#-annoyed.png">Couldn't you have at least put on a &lt;i&gt;clean&lt;/i&gt; bra before coming here?</state>
                 <state img="#-shocked.png">Your bra is... so sweaty!... &lt;i&gt;Is that caked on?&lt;/i&gt; I can't believe you wore that here!</state>
+            </case>
+            <case stage="0-5">
+                <condition filter="tan_lines" role="target" />
+                <state img="#-annoyed.png">Ew, &lt;i&gt;tanlines&lt;/i&gt;? You couldn't be bothered to get a &lt;i&gt;full&lt;/i&gt; tan?</state>
+                <state img="#-annoyed.png">Ew, &lt;i&gt;tanlines&lt;/i&gt;? Either tan your full body, or don't tan at all!</state>
             </case>
             <case stage="3-5" totalExposed="1" totalNaked="1" totalRounds="7-">
                 <condition count="2-3" status="decent" />
@@ -2187,7 +2436,8 @@
             <case stage="0-5" target="mettaton">
                 <state img="#-oops.png">Shame. There are several other uses that silicon could've been used for that are much more fun. Oh well.</state>
             </case>
-            <case stage="0-5" filter="athletic">
+            <case stage="0-5">
+                <condition filter="athletic" role="target" />
                 <state img="#-horny.png">Oh my! Looks like someone's been getting plenty of protein!</state>
             </case>
             <case stage="3-5" totalRounds="18-">
@@ -2231,11 +2481,15 @@
         </trigger>
 
         <trigger id="male_small_crotch_is_visible">
-            <case stage="3 5" totalExposed="2" totalNaked="2">
+            <case stage="3 5" priority="10">
+                <condition count="2" status="exposed" />
+                <condition count="2" status="naked" />
                 <state img="#-laugh.png" marker="-Facade">Ahaha ha ha! &lt;i&gt;Aha haha ha ha ha!&lt;/i&gt;</state>
                 <state img="#-laugh.png" marker="-Facade">That's it? &lt;i&gt;That's it?&lt;/i&gt; Aha haha ha ha ha!</state>
             </case>
-            <case stage="4" totalExposed="2" totalNaked="2">
+            <case stage="4" priority="10">
+                <condition count="2" status="exposed" />
+                <condition count="2" status="naked" />
                 <state img="#-grin.png" marker="-">You'd better be a grower, or else you won't be a shower either when I'm done with you!</state>
                 <state img="#-bored.png" marker="-">&lt;i&gt;Oh my, ~name~! I can't handle the sight of your penis! I think I'm going to&lt;/i&gt; -- yawn!</state>
                 <state img="#-happy.png" marker="-">Goodness! That certainly was worth the wait! Oh, not for &lt;i&gt;masturbating to&lt;/i&gt;. I meant for the laugh!</state>
@@ -2254,20 +2508,33 @@
                 <state img="#-laugh.png" marker="-">That's it? I've seen Primal Thralls with bigger genitals that you!</state>
                 <state img="#-happy.png" marker="-">Listen, ~name~, I know you can't help having a small penis, but know that &lt;i&gt;I&lt;/i&gt; can't help laughing at it.</state>
                 <state img="#-smug.png">The liver of a victim of hepatic failure is a more impressive organ than &lt;i&gt;that&lt;/i&gt;! And it does its job better, too!</state>
+                <state img="#-informative.png">Note to self: subject's genitals are &lt;i&gt;incredibly&lt;/i&gt; small.</state>
             </case>
             <case stage="4">
                 <state img="#-calm.png" marker="-">That's not going to cut it. I need more, stat!</state>
                 <state img="#-oops.png" marker="-">It's cute, but cute doesn't get my endorphins flowing.</state>
                 <state img="#-oops.png">Listen, I'm sure it still functions for insemination, but that's only one-third of a penis's necessary functions, and &lt;i&gt;not&lt;/i&gt; one of the ones I need right now!</state>
+                <state img="#-sinister.png">Grr! I ought to perform enlargement surgery on you right this moment!</state>
             </case>
         </trigger>
 
         <trigger id="male_medium_crotch_is_visible">
-            <case stage="3-5" totalExposed="2" totalNaked="2">
-                <state img="#-horny.png" marker="-">Ah, I can feel the epinephrine in my body being over taken by my endorphins.</state>
+            <case stage="4" priority="11">
+                <condition count="2" status="exposed" />
+                <condition count="2" status="naked" />
+                <condition count="2" status="alive" />
+                <state img="#-smug.png" marker="-">Well, at least &lt;i&gt;one of you&lt;/i&gt; decided to give me something to look at.</state>
             </case>
-            <case stage="4" totalExposed="2" totalNaked="2">
+            <case stage="4" priority="10">
+                <condition count="2" status="exposed" />
+                <condition count="2" status="naked" />
                 <state img="#-calm.png" marker="-">Ah! What a much-needed sight!</state>
+                <state img="#-calm.png">Ah~!... Don't think that ~name~'s exposure excuses the rest of you!</state>
+            </case>
+            <case stage="3-5" priority="10">
+                <condition count="2" status="exposed" />
+                <condition count="2" status="naked" />
+                <state img="#-horny.png" marker="-">Ah, I can feel the epinephrine in my body being over taken by my endorphins.</state>
             </case>
             <case stage="0-5">
                 <state img="#-happy.png" marker="-">You are now technically my patient! Tell me all your secrets!</state>
@@ -2388,7 +2655,8 @@
                 <state img="#-happy.png" marker="-">Looks like these outfits are getting smaller and smaller. If I didn't know any better, I'd say you planned this!</state>
                 <state img="#-oops.png" marker="-">Looks like these outfits are getting smaller and smaller. It's almost like your outfit-swapping device has a mind of its own.</state>
             </case>
-            <case stage="0-5" target="wiifitfemale">
+            <case stage="0-5">
+                <condition role="target" character="wiifitfemale" />
                 <state img="#-happy.png" marker="-">Finally! Away with that &lt;i&gt;disgusting&lt;/i&gt; sports bra!</state>
             </case>
             <case stage="0-5">
@@ -2516,7 +2784,8 @@
                 <condition role="target" character="ini" />
                 <state img="#-oops.png">I'm being sarcastic, of course. As long as you strip and masturbate, I don't give a damn who you are.</state>
             </case>
-            <case stage="0-5" targetStartingLayers="7-" totalRounds="18-">
+            <case stage="0-5" totalRounds="18-">
+                <condition role="target" startingLayers="7-" />
                 <state img="#-telling.png" marker="-">I don't know why you spent so much time hiding those. Your breasts are perfectly fine!</state>
             </case>
             <case stage="0-1">
@@ -2551,12 +2820,11 @@
                 <state img="#-happy.png" marker="-">Mammogram? More like mammo&lt;i&gt;ton&lt;/i&gt;, am I right?</state>
                 <state img="#-happy.png" marker="-">Future back pains be damned! Large breasts are fantastic!</state>
             </case>
-            <case stage="0-5">
-                <state img="#-informative.png" marker="-">Remember: bigger doesn't always mean better!</state>
-            </case>
             <case stage="2-5">
                 <state img="#-telling.png" marker="-">You may &lt;i&gt;think&lt;/i&gt; you've got me beat in the chest area, but mine will still be perky &lt;i&gt;long&lt;/i&gt; after yours have sagged to your knees!</state>
                 <state img="#-smug.png" marker="-">Yeah, have fun with your back pains. I'll be here, enjoying my increase sensitivity.</state>
+                <state img="#-informative.png" marker="-">Remember: bigger doesn't always mean better!</state>
+                <state img="#-telling.png">Large breasts are only superficially attractive due to an outdated instinctual assumption that large-breasted women are better caregivers!</state>
             </case>
             <case stage="5">
                 <state img="#-monster.png" marker="-">Wh-what? Me? &lt;i&gt;Jealous?&lt;/i&gt; Not at all! Ahaha haha ha!</state>
@@ -2614,7 +2882,8 @@
             <case stage="0-5" target="vriska">
                 <state img="#-happy.png" marker="-">This next change of clothes could very well leave you nude. &lt;i&gt;Fingers crossed.&lt;/i&gt;</state>
             </case>
-            <case stage="0-5" target="wiifitfemale">
+            <case stage="0-5">
+                <condition role="target" character="wiifitfemale" />
                 <state img="#-annoyed.png" marker="-">Can't you take off that gross, sweaty bra first?</state>
                 <state img="#-annoyed.png" marker="-">You're really going to leave that disgusting, dirty bra on longer?</state>
             </case>
@@ -2739,7 +3008,8 @@
             <case stage="0-5" target="raven">
                 <state img="#-happy.png" marker="-">I hope you keep that leotard &lt;i&gt;very&lt;/i&gt; clean. Two words: &lt;i&gt;vaginal rash.&lt;/i&gt;</state>
             </case>
-            <case stage="0-5" target="wiifitfemale">
+            <case stage="0-5">
+                <condition role="target" character="wiifitfemale" />
                 <state img="#-annoyed.png" marker="-">Ugh, I still can't believe you wore your dirty laundry to this strip poker match!</state>
             </case>
             <case stage="0-5">
@@ -2796,15 +3066,23 @@
         </trigger>
 
         <trigger id="opponent_lost">
-            <case stage="0">
+            <case stage="0-5">
                 <condition filter="pointy_ears" role="target" stage="0" />
                 <state img="#-telling.png">An Aelfrin, huh? You'd better keep your temper in check! I'm packing sedatives!</state>
                 <state img="#-telling.png">You'd better keep that temper of yours under control, Aelfrin! I have sedatives and the authority to administer them!</state>
             </case>
-            <case stage="0">
+            <case stage="0-5">
                 <condition filter="vampire" role="target" stage="0" />
                 <state img="#-smug.png">&lt;i&gt;Vampire&lt;/i&gt;, huh? Many Jennerit warriors have the life-steal ability. You're not special.</state>
                 <state img="#-oops.png">&lt;i&gt;Vampire&lt;/i&gt;, huh? I can spec to have life-steal too if I wanted to.</state>
+            </case>
+            <case stage="0-5">
+                <condition filter="serious" role="target" stage="0" />
+                <state img="#-smug.png">Come on, losen up, you stiff! You're playing strip poker, not attending a funeral!</state>
+            </case>
+            <case stage="0-5">
+                <condition filter="masked" role="target" stage="0" />
+                <state img="#-smug.png">What's with the mask? Ugly, cowardly, or both?</state>
             </case>
         </trigger>
 
@@ -2859,6 +3137,7 @@
                 <state img="#-smug.png">Admit it, ~name~, you're pleasuring yourself to the thought of sex with me. It's written all over your face!</state>
                 <state img="#-smug.png">Sorry to break it to you, ~name~, but this is as close to sex with one another that you and I will ever be.</state>
                 <state img="#-oops.png">I bet you wish my standards weren't so high, ~name~. Too bad for you that they are, or else we could have sex after this match.</state>
+                <state img="#-happy.png">Be sure to pace yourself, ~name~. I wouldn't want you to fracture your penis &lt;i&gt;now&lt;/i&gt;, of all times.</state>
             </case>
         </trigger>
 
@@ -3204,6 +3483,10 @@
             <case stage="3" alsoPlaying="misato">
                 <state img="#-telling.png">What kind of freak do you take me for? Needles are &lt;i&gt;highly&lt;/i&gt; ineffectual vaginal stimulators! I'm going to use my &lt;i&gt;hand&lt;/i&gt;, like any other self-stimulating organism!</state>
             </case>
+            <case stage="3">
+                <condition role="other" character="nami" />
+                <state img="#-telling.png">Yes, it's a syringe, and no, I'm not removing it! I'd rather lose than remove the Incistyx!</state>
+            </case>
             <case stage="3" saidMarker="1v1" priority="2">
                 <state img="#-sinister.png">What? No! &lt;i&gt;No!&lt;/i&gt; I was supposed to win!</state>
             </case>
@@ -3241,8 +3524,20 @@
         </trigger>
 
         <trigger id="masturbating">
+            <case stage="4">
+                <condition role="other" character="pit" stage="0-3" saying="not qualified" />
+                <state img="#-smug.png">Don't be stupid, Pit. You don't need to be qualified to take your clothes off!</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="pit" stage="6" saying="not qualified" />
+                <state img="#-smug.png">Don't be stupid, Pit. You don't need to be qualifications. Just keep doing what you're doing.</state>
+            </case>
             <case stage="4" alsoPlaying="jessie" timeInStage="0">
                 <state img="#-annoyed.png">Now shut up about the damn needle and let me pleasure myself!</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="pit" saying="not qualified" />
+                <state img="#-smug.png">Don't be stupid, Pit. You don't need to be qualified to just stand there and look pretty!</state>
             </case>
             <case stage="4">
                 <state img="#-calm.png">Oooh, I am &lt;i&gt;too&lt;/i&gt; good at this.</state>
@@ -3259,10 +3554,10 @@
         <trigger id="heavy_masturbating">
             <case stage="4">
                 <state img="#-heavy.png">My few remaining fluids are rushing to my head!</state>
-                <state img="#-heavy.png">Ah... Almost there...</state>
+                <state img="#-calm.png">Ah... Almost there...</state>
                 <state img="#-heavy.png">&lt;i&gt;Oh God... The endorphins...&lt;/i&gt;</state>
-                <state img="#-heavy.png">&lt;i&gt;My artificial heart is beating so fast...&lt;/i&gt;</state>
-                <state img="#-heavy.png">&lt;i&gt;Ah... I need to make some modifications... to my respiratory system...&lt;/i&gt;</state>
+                <state img="#-calm.png">&lt;i&gt;My artificial heart is beating so fast...&lt;/i&gt;</state>
+                <state img="#-calm.png">&lt;i&gt;Ah... I need to make some modifications... to my respiratory system...&lt;/i&gt;</state>
                 <state img="#-heavy.png">&lt;i&gt;This part... is almost better... than the climax itself...&lt;/i&gt;</state>
             </case>
         </trigger>
