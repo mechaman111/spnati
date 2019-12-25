@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.3 at 12:34:58  on diciembre 12, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 12:30:09  on diciembre 25, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.3</version>
+    <version>v5.4</version>
     <first>Nami</first>
     <last />
     <label>Nami</label>
@@ -2275,6 +2275,11 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0" oneShotId="286" priority="999">
+                <condition role="other" character="nami" />
+                <state img="#-shocked.png">That's me! What the hell is going on here?</state>
+                <state img="#-shocked.png">Is that a mirror? It's not! What the hell?!</state>
+            </case>
             <case stage="0-6" id="94">
                 <condition role="other" character="aella" stage="0-1" sayingMarker="AellaAdventures" />
                 <alternative alsoPlaying="aella" alsoPlayingStage="0-1" totalRounds="2">
@@ -2395,6 +2400,26 @@
             <case stage="0-6" priority="142">
                 <condition role="other" character="croix" stage="0-1" saidMarker="nefarious" sayingMarker="cube_explanation" />
                 <state img="#-annoyed.png">Magi... what? Yeah, that doesn't sound suspicious at all.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="self" saidMarker="pirate" />
+                <condition role="other" character="tomoko" stage="3-6" sayingMarker="nami_steal" />
+                <state img="#-smiling.png">Hey, don't worry. I'm not a monster. And you don't seem... that bad.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="self" saidMarker="pirate" />
+                <condition role="other" character="tomoko" stage="3-6" sayingMarker="nami_blackbeard" />
+                <state img="#-serious.png">I have, though I didn't know who he was at the time. But I do know he's dangerous.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="self" saidMarker="pirate" />
+                <condition role="other" character="tomoko" stage="3-6" sayingMarker="nami_animals" />
+                <state img="#-calm.png">No... Well, there's Chopper, who is a reindeer. But he's our doctor, not our pet, so I guess it doesn't count.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="self" saidMarker="pirate" />
+                <condition role="other" character="tomoko" stage="3-6" sayingMarker="nami_erogepirate" />
+                <state img="#-sad.png">What's an eroge? Wait, I'm not sure if I want to know...</state>
             </case>
             <case stage="0-6" id="84">
                 <condition role="other" character="jessie" stage="0-2" sayingMarker="JessieQA_DarkSecrets" />
@@ -4166,7 +4191,8 @@
                     <text>Wrestling seems like the kind of thing Luffy and Usopp would be into. But not me.</text>
                 </state>
             </case>
-            <case stage="0-4" target="rarity_eg" targetStage="0">
+            <case stage="0-4">
+                <condition role="target" character="rarity_eg" stage="0" />
                 <state img="#-seductive.png">You're a fashion designer, huh? What do you think of my outfit? I know I look good, but a second opinion doesn't hurt.</state>
             </case>
             <case stage="0-8" target="raven" targetStage="0">
@@ -4975,6 +5001,13 @@
                     <text>You're very young for a model. I suppose they need young models too.</text>
                 </state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="nami" stage="0" />
+                <state img="#-furious.png">
+                    <alt-img stage="7">custom:#-furious</alt-img>
+                    <text>Is that you, okama? What did I tell you last time about copying my body? Especially for this kind of stuff!</text>
+                </state>
+            </case>
             <case stage="0-6" target="human" notSaidMarker="target2">
                 <test expr="~human.tag.lesbian~" value="false" />
                 <state img="#-thinking.png" marker="target2">(~Player~ looks naive. I can probably use my persuasion tactics to convince her into losing the game.)</state>
@@ -5053,7 +5086,8 @@
                     <text>I don't see anything indecent about that outfit, but I also don't consider my own look inappropriate and people are always bugging me about me. What do you think, ~player~?</text>
                 </state>
             </case>
-            <case stage="0-8" oneShotId="236" filter="ginger" targetStage="0" priority="200">
+            <case stage="0-8" oneShotId="236" priority="200">
+                <condition filter="ginger" role="target" stage="0" />
                 <state img="#-smiling.png">
                     <alt-img stage="7">custom:#-smiling</alt-img>
                     <text>Nice hair, ~name~. Heheh...</text>
@@ -5886,6 +5920,13 @@
                 <state img="#-seductive.png">
                     <alt-img stage="7">custom:#-seductive</alt-img>
                     <text>I'm sure I'd have been a good model.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="tomoko" stage="0" />
+                <state img="#-furious.png">
+                    <alt-img stage="7">custom:#-furious</alt-img>
+                    <text>Hey! I was just trying to be nice. If you want to look like you've been living inside your room for a year, fine by me!</text>
                 </state>
             </case>
             <case stage="0-8">
@@ -11393,6 +11434,23 @@
 
         <trigger id="female_masturbating">
             <case stage="0-8">
+                <condition role="target" character="tomoko" />
+                <alternative>
+                    <condition role="target" character="tomoko" sayingMarker="nami_bootyplunder" />
+                </alternative>
+                <alternative>
+                    <condition role="target" character="tomoko" sayingMarker="nami_shamelesspirate" />
+                </alternative>
+                <state img="#-shocked.png" oneShotId="93">
+                    <alt-img stage="7">custom:#-shocked</alt-img>
+                    <text>Is she talking about me...?</text>
+                </state>
+                <state img="#-shocked.png" oneShotId="94">
+                    <alt-img stage="7">custom:#-shocked</alt-img>
+                    <text>What the hell...?</text>
+                </state>
+            </case>
+            <case stage="0-8">
                 <condition filter="tandem" role="target" />
                 <state img="#-shocked.png">
                     <alt-img stage="7">custom:#-shocked</alt-img>
@@ -12203,7 +12261,7 @@
                     <condition count="1-" filter="hero" />
                     <condition count="0-" filter="villain" />
                 </alternative>
-                <state img="#-smiling.png">(I was planning on stealing their possesions after the game, but they're not bad people. I could steal play a trick on them, though.)</state>
+                <state img="#-smiling.png">(I was planning on stealing their possessions after the game, but they're not bad people. I could steal play a trick on them, though.)</state>
                 <state img="#-smiling.png">(Change of plans, since there are not bad people here I won't take their stuff. But it would be funny if I make them think I did.)</state>
             </case>
             <case stage="8" oneShotId="244">
@@ -12307,7 +12365,7 @@
 
     </behaviour>
     <epilogue hint="Win a game against Nami as a male player" gender="male" img="epi-thumbnail.jpg">
-        <title>Adventure in Vortex Island</title>
+        <title>Adventure in Vortex Island: Director's Cut</title>
         <scene name="Intro" background="epi-background_town.jpg" width="1680" height="1050">
             <directive type="sprite" id="black" layer="1" src="epi-black1.png" x="745" y="514" scalex="19" scaley="12" pivotx="50%" pivoty="50%" alpha="100" />
             <directive type="sprite" id="sinclair1" src="epi-intro_s1.png" x="257" y="-9" scalex="0.3" scaley="0.3" pivotx="50%" pivoty="50%" alpha="0" />
@@ -12921,15 +12979,15 @@
             <directive type="sprite" id="nami12" layer="1" src="epi-ambush_n6.png" x="656" y="-33" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="move" id="nami10" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="nami11" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="nami12" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="camera" ease="linear">
                 <keyframe time="0" x="65" y="75" zoom="2" />
@@ -12953,11 +13011,11 @@
             <directive type="sprite" id="sinclair5" src="epi-ambush_s5.png" x="568" y="-35" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="move" id="sinclair4" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="sinclair5" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="text" id="s15" width="15%" arrow="right" x="17%" y="23%">Those useless morons!</directive>
             <directive type="pause" />
@@ -13054,7 +13112,7 @@
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="text" id="n2" width="20%" arrow="right" x="54%" y="37%">I can't run in public like this! Come on, let's take a detour.</directive>
-            <directive type="move" id="nami1" delay="2" ease="linear">
+            <directive type="move" id="nami1" delay="1.5" ease="linear">
                 <keyframe time="0" x="1150" />
                 <keyframe time="1" x="1594" />
             </directive>
@@ -13087,20 +13145,20 @@
             <directive type="sprite" id="nami3" src="epi-escape_n3.png" x="823" y="355" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="move" id="nami3" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="1" alpha="100" />
+                <keyframe time="0.5" alpha="100" />
             </directive>
             <directive type="text" id="n4" width="20%" arrow="left" x="68%" y="12%">Did we lose her? Give me my Clima-Tact.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="sprite" id="nami4" layer="1" src="epi-escape_n4.png" x="624" y="-20" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="move" id="nami2" ease="linear">
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="nami3" ease="linear">
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="nami4" ease="linear">
-                <keyframe time="0.5" alpha="100" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="camera" ease="linear">
                 <keyframe time="0" y="185" zoom="1.7" />
@@ -15486,6 +15544,180 @@
             <directive type="pause" />
         </scene>
         <scene transition="true" color="#000000" effect="fade" ease="linear" time="8" />
+        <scene name="Dream" background="epi-background_forest.jpg" x="-90" y="100" width="1680" height="1050" zoom="2">
+            <directive type="fade" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" color="#FF80C0" alpha="20" />
+                <keyframe time="3" color="#FF0080" alpha="10" />
+            </directive>
+            <directive type="sprite" id="light1" layer="1" src="epi-pink_light.png" x="164" y="256" pivotx="50%" pivoty="50%" alpha="50" />
+            <directive type="sprite" id="light2" layer="1" src="epi-pink_light.png" x="1039" y="320" scalex="2" scaley="2" pivotx="50%" pivoty="50%" alpha="50" />
+            <directive type="sprite" id="light3" layer="1" src="epi-pink_light.png" x="606" y="231" scalex="1.5" scaley="1.5" pivotx="50%" pivoty="50%" alpha="50" />
+            <directive type="sprite" id="light4" layer="1" src="epi-pink_light.png" x="155" y="721" scalex="1.5" scaley="1.5" pivotx="50%" pivoty="50%" alpha="50" />
+            <directive type="move" id="light1" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" alpha="50" />
+                <keyframe time="3" alpha="0" />
+            </directive>
+            <directive type="move" id="light2" delay="0.75" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" alpha="50" />
+                <keyframe time="3" alpha="0" />
+            </directive>
+            <directive type="move" id="light3" delay="1.5" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" alpha="50" />
+                <keyframe time="3" alpha="0" />
+            </directive>
+            <directive type="move" id="light4" delay="2.25" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" alpha="50" />
+                <keyframe time="3" alpha="0" />
+            </directive>
+            <directive type="sprite" id="robin" src="epi-dream_robin.png" x="677" y="296" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="hand1" src="epi-dream_robin_hand1.png" x="905" y="654" scalex="0.3" scaley="0.3" pivotx="78%" pivoty="98%" alpha="0" rotation="50" />
+            <directive type="sprite" id="arm1" src="epi-dream_robin_arm1.png" x="849" y="505" scalex="0.3" scaley="0.3" pivotx="70%" pivoty="98%" alpha="0" rotation="103" />
+            <directive type="sprite" id="robin2" src="epi-dream_robin2.png" x="982" y="710" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="hand2" src="epi-dream_robin_hand2.png" x="965" y="596" scalex="0.3" scaley="0.3" pivotx="54%" pivoty="96%" alpha="0" rotation="-108" />
+            <directive type="sprite" id="arm2" src="epi-dream_robin_arm2.png" x="1011" y="413" scalex="0.3" scaley="0.3" pivotx="59%" pivoty="99%" alpha="0" rotation="-96" />
+            <directive type="sprite" id="tashigi" layer="1" src="epi-dream_tashigi.png" x="299" y="164" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="t_hand" layer="1" src="epi-dream_tashigi_hand.png" x="97" y="674" scalex="0.5" scaley="0.5" pivotx="80%" pivoty="8%" alpha="0" rotation="26" />
+            <directive type="sprite" id="t_arm" layer="1" src="epi-dream_tashigi_arm.png" x="549" y="626" scalex="0.5" scaley="0.5" pivotx="31%" pivoty="1%" alpha="0" rotation="2" />
+            <directive type="sprite" id="tashigi2" layer="1" src="epi-dream_tashigi2.png" x="299" y="164" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="nami" src="epi-dream_nami.png" x="511" y="174" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="n_hand" src="epi-dream_nami_hand.png" x="686" y="686" scalex="0.5" scaley="0.5" pivotx="81%" pivoty="2%" alpha="0" rotation="0" />
+            <directive type="sprite" id="n_arm" src="epi-dream_nami_arm.png" x="633" y="619" scalex="0.5" scaley="0.5" pivotx="99%" pivoty="7%" alpha="0" rotation="0" />
+            <directive type="text" id="1" width="20%" delay="7" x="20%" y="34%">What's this place?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="hand1" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" x="905" y="654" rotation="50" />
+                <keyframe time="1" x="906" y="647" rotation="57" />
+            </directive>
+            <directive type="move" id="arm1" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" rotation="103" />
+                <keyframe time="1" rotation="95" />
+            </directive>
+            <directive type="move" id="hand2" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" x="965" y="596" rotation="-108" />
+                <keyframe time="1" x="965" y="601" rotation="-102" />
+            </directive>
+            <directive type="move" id="arm2" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" rotation="-96" />
+                <keyframe time="1" rotation="-101" />
+            </directive>
+            <directive type="move" id="t_arm" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" rotation="2" />
+                <keyframe time="1" rotation="11" />
+            </directive>
+            <directive type="move" id="t_hand" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" x="97" y="674" rotation="26" />
+                <keyframe time="1" x="84" y="677" rotation="28" />
+            </directive>
+            <directive type="move" id="n_arm" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" rotation="0" />
+                <keyframe time="1" rotation="-4" />
+            </directive>
+            <directive type="move" id="n_hand" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" x="686" y="686" scalex="0.5" scaley="0.5" rotation="0" />
+                <keyframe time="1" x="695" y="689" scalex="0.53" scaley="0.53" rotation="13" />
+            </directive>
+            <directive type="text" id="2" width="20%" x="58%" y="64%">You hear voices calling your name.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="?" width="10%" x="45%" y="24%">~name~!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="robin" delay="2">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="robin2" delay="2">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="camera">
+                <keyframe time="3" x="145" y="144" zoom="2.9" />
+            </directive>
+            <directive type="text" id="r1" width="16%" arrow="right" delay="2" x="19%" y="13%">Were you just going to leave without doing anything to me?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="sprite" id="petals" src="epi-petals.png" x="421" y="447" scalex="0.2" scaley="0.2" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="petals" ease="linear">
+                <keyframe time="0" x="421" y="447" alpha="0" />
+                <keyframe time="0.5" x="555" y="406" alpha="100" />
+                <keyframe time="1" x="713" y="346" alpha="0" />
+            </directive>
+            <directive type="move" id="hand1" delay="0.5" ease="linear">
+                <keyframe time="0.5" alpha="100" />
+            </directive>
+            <directive type="move" id="hand2" delay="0.5" ease="linear">
+                <keyframe time="0.5" alpha="100" />
+            </directive>
+            <directive type="move" id="arm1" delay="0.5" ease="linear">
+                <keyframe time="0.5" alpha="100" />
+            </directive>
+            <directive type="move" id="arm2" delay="0.5" ease="linear">
+                <keyframe time="0.5" alpha="100" />
+            </directive>
+            <directive type="text" id="r2" width="14%" arrow="right" delay="1" x="22%" y="20%">Hmmm, I love how these hands make me feel.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="r3" width="20%" arrow="left" x="66%" y="16%">But I'd rather have &lt;i&gt;your&lt;/i&gt; hands all over me. Why don't you come closer?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera">
+                <keyframe time="1" x="-336" y="99" zoom="2.4" />
+            </directive>
+            <directive type="move" id="tashigi" delay="1" ease="linear">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="tashigi2" delay="1" ease="linear">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="t_arm" delay="1" ease="linear">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="t_hand" delay="1" ease="linear">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="text" id="t1" width="18%" arrow="right" delay="2" x="13%" y="8%">Mmmm, why have I never done this before?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="t2" width="20%" arrow="left" x="68%" y="11%">I'll need to train so I can get better at it.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="t3" width="25%" arrow="right" x="8%" y="7%">But I don't think I'm doing that bad. What do you think, ~name~?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera">
+                <keyframe time="1" x="-136" y="99" zoom="2.6" />
+            </directive>
+            <directive type="move" id="nami" delay="1">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="n_arm" delay="1">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="n_hand" delay="1">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="text" id="n1" width="14%" arrow="left" delay="1.5" x="66%" y="11%">Hey, don't listen to them. You know I'm the one you want.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="n2" width="13%" arrow="right" x="32%" y="7%">You can't abandon me now, ~name~. We still haven't done &lt;i&gt;that&lt;/i&gt;.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="n3" width="11%" arrow="left" x="65%" y="13%">Just listen how wet I am just thinking about it.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera">
+                <keyframe time="4" x="-136" y="100" zoom="1.8" />
+            </directive>
+            <directive type="text" id="n4" width="14%" arrow="down" delay="1" x="46%" y="4%">~Name~ ♡</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="t4" width="10%" arrow="right" x="5%" y="15%">Oh, ~name~...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="r4" width="13%" arrow="down" x="73%" y="15%">~Name~!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+        </scene>
+        <scene transition="true" color="#000000" effect="fade" ease="linear" time="4" />
         <scene name="Night" color="#000000" x="130" y="-250" width="1680" height="1050" zoom="2.4">
             <directive type="sprite" id="forest" src="epi-background_forest.jpg" x="0" y="0" scalex="-1" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="coast" src="epi-background_shore.jpg" x="0" y="0" scalex="-1" pivotx="50%" pivoty="50%" />
@@ -15500,7 +15732,7 @@
             <directive type="fade" ease="linear">
                 <keyframe time="0" color="#000000" alpha="100" />
             </directive>
-            <directive type="text" id="n1" width="17%" delay="7" x="27%" y="31%">~Player~!</directive>
+            <directive type="text" id="n1" width="17%" delay="5" x="27%" y="31%">~Player~!</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="fade" ease="linear">
@@ -15529,6 +15761,9 @@
                 <keyframe time="1" alpha="100" />
             </directive>
             <directive type="text" id="n3" width="15%" arrow="up" x="39%" y="57%">Oh, good. You're alive.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="n3b" width="27%" arrow="right" x="14%" y="19%">You looked so peaceful and blissful that I thought you were dead.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="fade" ease="linear">
@@ -15763,7 +15998,10 @@
             <directive type="move" id="p_hand_r" ease="linear">
                 <keyframe time="0.5" alpha="100" />
             </directive>
-            <directive type="text" id="n17" width="15%" arrow="right" x="23%" y="19%">(We shouldn't do this now, but...)</directive>
+            <directive type="text" id="n17" width="15%" arrow="right" x="23%" y="19%">(We shouldn't do this now...)</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="n17b" width="20%" arrow="left" x="67%" y="4%">(I mean, this isn't how I thought we would...)</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="text" id="d1" width="15%" arrow="up" x="4%" y="20%">I know you two are there! Come out!</directive>
@@ -16097,6 +16335,12 @@
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="text" id="n2" width="20%" arrow="left" x="63%" y="20%">But I'm not complaining, it's much better than having to sleep outside naked.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="n2b" width="16%" arrow="right" x="22%" y="15%">Hey, about what happened earlier in the forest...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="n2c" width="17%" arrow="left" x="64%" y="12%">No this isn't the time for that. We have more important stuff to worry about now.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="camera" ease="linear">
@@ -16513,6 +16757,7 @@
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="fade" ease="linear">
+                <keyframe time="0" color="#000000" alpha="0" />
                 <keyframe time="0.5" color="#000000" alpha="100" />
             </directive>
             <directive type="wait" />
@@ -16553,6 +16798,7 @@
             </directive>
             <directive type="wait" />
             <directive type="fade" ease="linear">
+                <keyframe time="0" color="#000000" alpha="100" />
                 <keyframe time="0.5" color="#000000" alpha="0" />
             </directive>
             <directive type="text" id="s10" width="15%" arrow="left" x="82%" y="33%">Hard to believe that someone like you has made it to the Grand Line.</directive>
@@ -17563,26 +17809,67 @@
                 <keyframe time="2" y="-120" zoom="2.2" />
             </directive>
             <directive type="wait" />
-            <directive type="text" id="n5" width="23%" arrow="right" x="7%" y="13%">~Player~, I only made it this far with your help. Thank you.</directive>
+            <directive type="text" id="n5" width="23%" arrow="right" x="11%" y="13%">~Player~, I only made it this far with your help. Thank you.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="text" id="n6" width="16%" arrow="left" x="62%" y="14%">A promise is a promise, I'll pay back what I owe you.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
+            <directive type="sprite" id="nami3b" src="epi-treasure_n3b.png" x="585" y="123" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="sprite" id="nami4" src="epi-treasure_n4.png" x="540" y="-150" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" alpha="0" />
-            <directive type="move" id="nami4" ease="linear">
-                <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
-            </directive>
+            <directive type="text" id="n7" width="23%" arrow="right" x="10%" y="18%">Buuut... I was thinking... Since we're here maybe I can give you another reward too.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="n8" width="28%" arrow="left" x="63%" y="15%">Okay, maybe it's also a reward for me. But I want it...
+</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
             <directive type="move" id="nami3" ease="linear">
                 <keyframe time="0" alpha="100" />
                 <keyframe time="0.5" alpha="0" />
             </directive>
-            <directive type="text" id="n7" width="23%" arrow="right" x="10%" y="18%">Buuut... I was thinking... Since we're here maybe I can give you another reward too.</directive>
+            <directive type="move" id="nami3b" delay="1" ease="linear">
+                <keyframe time="0" alpha="0" />
+                <keyframe time="0.5" alpha="100" />
+            </directive>
+            <directive type="camera" ease="linear">
+                <keyframe time="0" y="-120" zoom="2.2" />
+                <keyframe time="1" y="-306" zoom="4.9" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="x0" width="23%" x="71%" y="29%">Nami leans close, puts her arms around, and kisses you.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
-            <directive type="text" id="n8" width="28%" arrow="left" x="63%" y="15%">Okay, maybe it's also a reward for me, but I want it. We're both already naked after all. And there's a bed here, so...
-</directive>
+            <directive type="text" id="x1" width="28%" x="68%" y="16%">The unexpected gesture catches you by surprise at first, but you return her advances nonetheless.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="sprite" id="p_hand1" src="epi-night_hand.png" x="706" y="505" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="p_hand2" src="epi-night_hand.png" x="868" y="505" scalex="-0.7" scaley="0.7" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="camera" delay="0.5" ease="linear">
+                <keyframe time="0" y="-306" zoom="4.9" />
+                <keyframe time="1" y="-120" zoom="2.2" />
+            </directive>
+            <directive type="move" id="nami3b" ease="linear">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.5" alpha="0" />
+            </directive>
+            <directive type="move" id="nami4" delay="0.5" ease="linear">
+                <keyframe time="0" alpha="0" />
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="p_hand1" delay="0.5" ease="linear">
+                <keyframe time="0" alpha="0" />
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="p_hand2" delay="0.5" ease="linear">
+                <keyframe time="0" alpha="0" />
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="xn1" width="20%" arrow="right" x="14%" y="14%">After all that has happened between us, we should've started with that. Too bad it took so long.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="xn2" width="14%" arrow="left" x="63%" y="15%">But I don't want to stop here. Let's take this to the bed.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="fade" ease="linear">
@@ -17591,7 +17878,10 @@
             </directive>
             <directive type="wait" />
             <directive type="remove" id="nami3" />
+            <directive type="remove" id="nami3b" />
             <directive type="remove" id="nami4" />
+            <directive type="remove" id="p_hand1" />
+            <directive type="remove" id="p_hand2" />
             <directive type="sprite" id="background2" src="epi-background_treasure.jpg" x="0" y="200" scalex="2" scaley="2" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="bed2" src="epi-bed.png" x="282" y="400" scalex="1.6" scaley="2.4" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="nami5s" src="epi-shadow.png" x="722" y="662" scalex="4.161765" scaley="3.970588" pivotx="50%" pivoty="50%" rotation="-179.3102" />
@@ -17625,6 +17915,307 @@
             <directive type="wait" />
             <directive type="remove" id="nami5" />
             <directive type="remove" id="nami5s" />
+            <directive type="sprite" id="player2s" layer="1" src="epi-shadow.png" x="712" y="728" scalex="1.614815" scaley="8.558824" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="nami5bs" layer="1" src="epi-shadow.png" x="720" y="548" scalex="1.814815" scaley="6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="player2" layer="1" src="epi-treasure_p3.png" x="645" y="515" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="nami5b_back" layer="1" src="epi-treasure_n5b1b.png" x="630" y="373" scaley="0.9" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="nami5b_hair" layer="1" src="epi-treasure_n16_hair.png" x="711" y="431" scalex="1" scaley="0.5" pivotx="52%" pivoty="9%" />
+            <directive type="sprite" id="nami5b_chest" layer="1" src="epi-treasure_n5b1.png" x="631" y="468" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="nami5b_head1" layer="1" src="epi-treasure_n5b2a.png" x="731" y="421" scalex="1" scaley="1" pivotx="50%" pivoty="69%" />
+            <directive type="sprite" id="nami5b_head2" layer="1" src="epi-treasure_n5b2b.png" x="731" y="421" scalex="1" scaley="1" pivotx="50%" pivoty="69%" alpha="0" />
+            <directive type="sprite" id="nami5b_head3" layer="1" src="epi-treasure_n5b2c.png" x="731" y="477" scalex="1" scaley="1" pivotx="50%" pivoty="69%" alpha="0" />
+            <directive type="sprite" id="nami5b_head4" layer="1" src="epi-treasure_n5b2d.png" x="731" y="421" scalex="1" scaley="1" pivotx="50%" pivoty="69%" alpha="0" />
+            <directive type="sprite" id="nami5b_hand1" layer="1" src="epi-night_n9_left_hand1.png" x="817" y="750" pivotx="95%" pivoty="14%" rotation="15" />
+            <directive type="sprite" id="pen3" layer="1" src="epi-penis.png" x="821" y="660" scalex="0.9" scaley="1" pivotx="50%" pivoty="100%" rotation="0" />
+            <directive type="sprite" id="nami5b_hand2" layer="1" src="epi-night_n9_left_hand2.png" x="817" y="750" pivotx="95%" pivoty="14%" rotation="15" />
+            <directive type="sprite" id="nami5b_arm" layer="1" src="epi-dream_nami_arm.png" x="841" y="627" pivotx="42%" pivoty="67%" rotation="20" />
+            <directive type="sprite" id="nami5b_arm_right" layer="1" src="epi-treasure_n5b_rightarm.png" x="631" y="612" scalex="1.1" scaley="1.1" pivotx="0%" pivoty="33%" rotation="36.24686" />
+            <directive type="sprite" id="nami5b_head4b" layer="1" src="epi-treasure_n5b2d2.png" x="731" y="421" scalex="1" scaley="1" pivotx="50%" pivoty="69%" alpha="0" />
+            <directive type="wait" />
+            <directive type="fade" ease="linear">
+                <keyframe time="0" color="#000000" alpha="100" />
+                <keyframe time="1" color="#000000" alpha="0" />
+            </directive>
+            <directive type="wait" />
+            <directive type="camera">
+                <keyframe time="0" x="20" y="0" zoom="1.5" />
+                <keyframe time="1.5" x="0" y="61" zoom="2.3" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="xn3" width="16%" arrow="right" x="6%" y="28%">Hey there. I don't like how we left things back at the forest.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="xn4" width="20%" arrow="left" x="79%" y="29%">Have you caught me sneaking a peek every now and then, ~name~? I thought I was being subtle, but maybe not so much.
+</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="xn5" width="10%" arrow="right" x="14%" y="43%">...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="nami5b_head1" ease="linear">
+                <keyframe time="0" y="421" />
+                <keyframe time="0.5" y="449" />
+                <keyframe time="1" y="477" />
+            </directive>
+            <directive type="move" id="nami5b_head2" ease="linear">
+                <keyframe time="0" y="421" alpha="0" />
+                <keyframe time="0.5" y="449" alpha="0" />
+                <keyframe time="1" y="477" alpha="100" />
+            </directive>
+            <directive type="move" id="pen3" delay="0.75" ease="linear">
+                <keyframe time="0" rotation="0" />
+                <keyframe time="1" rotation="-2" />
+            </directive>
+            <directive type="move" id="nami5b_hair" ease="linear">
+                <keyframe time="0" y="431" scaley="0.5" />
+                <keyframe time="1" y="487" scaley="0.4" />
+            </directive>
+            <directive type="move" id="nami5b_chest" ease="linear">
+                <keyframe time="0" y="468" />
+                <keyframe time="1" y="478" />
+            </directive>
+            <directive type="move" id="nami5b_arm_right" ease="linear">
+                <keyframe time="0" x="631" y="612" rotation="36" />
+                <keyframe time="1" x="631" y="621" rotation="34" />
+            </directive>
+            <directive type="move" id="nami5b_arm" ease="linear">
+                <keyframe time="0" rotation="20" />
+                <keyframe time="1" rotation="23" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="xn6" width="10%" arrow="left" x="82%" y="60%">Mwah!
+</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="nami5b_head1" ease="linear">
+                <keyframe time="0" y="477" />
+                <keyframe time="0.5" y="449" />
+                <keyframe time="1" y="421" />
+            </directive>
+            <directive type="move" id="nami5b_head2" ease="linear">
+                <keyframe time="0" y="477" alpha="100" />
+                <keyframe time="0.5" y="449" alpha="100" />
+                <keyframe time="1" y="421" alpha="0" />
+            </directive>
+            <directive type="move" id="nami5b_head3" ease="linear">
+                <keyframe time="0" y="477" alpha="0" />
+                <keyframe time="0.5" y="449" alpha="0" />
+                <keyframe time="1" y="421" alpha="100" />
+            </directive>
+            <directive type="move" id="pen3" ease="linear">
+                <keyframe time="0" rotation="-2" />
+                <keyframe time="0.25" rotation="2" />
+                <keyframe time="0.5" rotation="1" />
+            </directive>
+            <directive type="move" id="nami5b_hair" ease="linear">
+                <keyframe time="0" y="487" scaley="0.4" />
+                <keyframe time="1" y="431" scaley="0.5" />
+            </directive>
+            <directive type="move" id="nami5b_chest" ease="linear">
+                <keyframe time="0" y="478" />
+                <keyframe time="1" y="468" />
+            </directive>
+            <directive type="move" id="nami5b_arm_right" ease="linear">
+                <keyframe time="0" x="631" y="621" rotation="34" />
+                <keyframe time="1" x="631" y="612" rotation="36" />
+            </directive>
+            <directive type="move" id="nami5b_arm" ease="linear">
+                <keyframe time="0" rotation="23" />
+                <keyframe time="1" rotation="20" />
+            </directive>
+            <directive type="text" id="xn7" width="20%" arrow="right" x="9%" y="32%">What? I just wanted to kiss you there too.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="nami5b_head3" ease="linear">
+                <keyframe time="0.5" alpha="0" />
+            </directive>
+            <directive type="text" id="xn8" width="10%" arrow="left" x="78%" y="43%">But also...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="nami5b_head1" ease="linear">
+                <keyframe time="0" y="421" />
+                <keyframe time="1.2" y="453" />
+                <keyframe time="1.6" y="470" />
+                <keyframe time="3" y="507" />
+            </directive>
+            <directive type="move" id="nami5b_head4" ease="linear">
+                <keyframe time="0" y="421" alpha="0" />
+                <keyframe time="1.2" y="453" alpha="0" />
+                <keyframe time="1.6" y="470" alpha="100" />
+                <keyframe time="3" y="507" alpha="100" />
+            </directive>
+            <directive type="move" id="nami5b_head4b" ease="linear">
+                <keyframe time="0" y="421" alpha="0" />
+                <keyframe time="1.2" y="453" alpha="0" />
+                <keyframe time="1.6" y="470" alpha="100" />
+                <keyframe time="3" y="507" alpha="100" />
+            </directive>
+            <directive type="move" id="nami5b_hair" ease="linear">
+                <keyframe time="0" y="431" scaley="0.5" />
+                <keyframe time="2" y="513" scaley="0.3" />
+            </directive>
+            <directive type="move" id="nami5b_chest" ease="linear">
+                <keyframe time="0" y="468" />
+                <keyframe time="2" y="478" />
+            </directive>
+            <directive type="move" id="nami5b_arm_right" ease="linear">
+                <keyframe time="0" x="631" y="612" rotation="36" />
+                <keyframe time="2" x="631" y="621" rotation="34" />
+            </directive>
+            <directive type="move" id="nami5b_arm" ease="linear">
+                <keyframe time="0" rotation="20" />
+                <keyframe time="2" rotation="23" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="xn9" width="10%" arrow="right" x="13%" y="59%">M-mmmh...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="remove" id="nami5b_head1" />
+            <directive type="remove" id="nami5b_head2" />
+            <directive type="remove" id="nami5b_head3" />
+            <directive type="move" id="nami5b_head4" loop="true" ease="linear">
+                <keyframe time="0" y="507" />
+                <keyframe time="1" y="487" />
+                <keyframe time="2" y="507" />
+            </directive>
+            <directive type="move" id="nami5b_head4b" loop="true" ease="linear">
+                <keyframe time="0" y="507" />
+                <keyframe time="1" y="487" />
+                <keyframe time="2" y="507" />
+            </directive>
+            <directive type="move" id="nami5b_hair" loop="true" ease="linear">
+                <keyframe time="0" y="513" scaley="0.3" />
+                <keyframe time="1" y="471" scaley="0.4" />
+                <keyframe time="2" y="513" scaley="0.3" />
+            </directive>
+            <directive type="move" id="nami5b_chest" loop="true" ease="linear">
+                <keyframe time="0" y="478" />
+                <keyframe time="1" y="468" />
+                <keyframe time="2" y="478" />
+            </directive>
+            <directive type="move" id="nami5b_arm_right" loop="true" ease="linear">
+                <keyframe time="0" x="631" y="621" rotation="34" />
+                <keyframe time="1" x="631" y="612" rotation="36" />
+                <keyframe time="2" x="631" y="621" rotation="34" />
+            </directive>
+            <directive type="move" id="nami5b_arm" loop="true" ease="linear">
+                <keyframe time="0" rotation="23" />
+                <keyframe time="1" rotation="20" />
+                <keyframe time="2" rotation="23" />
+            </directive>
+            <directive type="text" id="x3" width="20%" x="4%" y="11%">Nami's movements are clumsy at first. But soon she starts moving her tongue around the tip.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="xn10" width="10%" arrow="left" x="81%" y="58%">Mmmmh...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="x4" width="20%" x="78%" y="11%">It doesn't seem like you'll be able to last much longer.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="x5" width="14%" x="84%" y="32%">You tell Nami, but she doesn't stop.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="stop" id="nami5b_arm" />
+            <directive type="stop" id="nami5b_arm_right" />
+            <directive type="stop" id="nami5b_chest" />
+            <directive type="stop" id="nami5b_head4" />
+            <directive type="stop" id="nami5b_head4b" />
+            <directive type="stop" id="nami5b_hair" />
+            <directive type="sprite" id="juice2" layer="1" src="x-juice.png" x="827" y="602" scaley="1" pivotx="50%" pivoty="100%" alpha="0" rotation="180" />
+            <directive type="sprite" id="nami5b_head4c" layer="1" src="epi-treasure_n5b2e.png" x="731" y="507" scalex="1" scaley="1" pivotx="50%" pivoty="69%" alpha="0" />
+            <directive type="sprite" id="nami5b_head5" layer="1" src="epi-treasure_n5b2f.png" x="731" y="507" scalex="1" scaley="1" pivotx="50%" pivoty="69%" alpha="0" />
+            <directive type="wait" />
+            <directive type="fade" ease="linear">
+                <keyframe time="0" color="#FFFFFF" alpha="0" />
+                <keyframe time="1.5" color="#FFFFFF" alpha="100" />
+                <keyframe time="2.5" color="#FFFFFF" alpha="0" />
+            </directive>
+            <directive type="move" id="nami5b_head4c" delay="0.25">
+                <keyframe time="0" alpha="0" />
+                <keyframe time="0.5" alpha="100" />
+            </directive>
+            <directive type="wait" />
+            <directive type="move" id="juice2">
+                <keyframe time="0" y="602" alpha="0" />
+                <keyframe time="0" y="602" alpha="80" />
+                <keyframe time="2" y="630" alpha="100" />
+                <keyframe time="6" y="650" alpha="0" />
+            </directive>
+            <directive type="text" id="xn11" width="10%" arrow="right" x="9%" y="55%">Mmmm...?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="xn12" width="10%" arrow="left" x="81%" y="59%">&lt;i&gt;gulp&lt;/i&gt;</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="nami5b_head4" ease="linear">
+                <keyframe time="0" y="507" />
+                <keyframe time="2" y="421" />
+            </directive>
+            <directive type="move" id="nami5b_head4b" ease="linear">
+                <keyframe time="0" y="507" />
+                <keyframe time="2" y="421" />
+            </directive>
+            <directive type="move" id="nami5b_head4c" ease="linear">
+                <keyframe time="0" y="507" />
+                <keyframe time="2" y="421" />
+            </directive>
+            <directive type="move" id="nami5b_head5" ease="linear">
+                <keyframe time="0" y="507" alpha="0" />
+                <keyframe time="1" y="464" alpha="0" />
+                <keyframe time="2" y="421" alpha="100" />
+            </directive>
+            <directive type="move" id="nami5b_chest" ease="linear">
+                <keyframe time="0" y="478" />
+                <keyframe time="2" y="468" />
+            </directive>
+            <directive type="move" id="nami5b_arm_right" ease="linear">
+                <keyframe time="0" x="631" y="621" rotation="34" />
+                <keyframe time="2" x="631" y="612" rotation="36" />
+            </directive>
+            <directive type="move" id="nami5b_arm" ease="linear">
+                <keyframe time="0" rotation="23" />
+                <keyframe time="2" rotation="20" />
+            </directive>
+            <directive type="move" id="pen3" delay="0.25">
+                <keyframe time="0" rotation="1" />
+                <keyframe time="0.25" rotation="-3" />
+                <keyframe time="0.5" rotation="3" />
+                <keyframe time="0.75" rotation="0" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="xn13" width="20%" arrow="right" x="6%" y="23%">It doesn't taste like I was expecting. And it was so much...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="xn14" width="20%" arrow="left" x="78%" y="31%">It's only fair that you return the favor now, don't you think?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="fade">
+                <keyframe time="0" color="#000000" alpha="0" />
+                <keyframe time="1" color="#000000" alpha="100" />
+            </directive>
+            <directive type="wait" />
+            <directive type="remove" id="nami5b_arm" />
+            <directive type="remove" id="nami5b_arm_right" />
+            <directive type="remove" id="nami5b_back" />
+            <directive type="remove" id="nami5b_chest" />
+            <directive type="remove" id="nami5b_hair" />
+            <directive type="remove" id="nami5b_hand1" />
+            <directive type="remove" id="nami5b_hand2" />
+            <directive type="remove" id="nami5b_head4" />
+            <directive type="remove" id="nami5b_head4b" />
+            <directive type="remove" id="nami5b_head4c" />
+            <directive type="remove" id="nami5b_head5" />
+            <directive type="remove" id="nami5bs" />
+            <directive type="remove" id="juice2" />
+            <directive type="move" id="pen3">
+                <keyframe time="0" alpha="0" />
+            </directive>
+            <directive type="move" id="player2">
+                <keyframe time="0" alpha="0" />
+            </directive>
+            <directive type="move" id="player2s">
+                <keyframe time="0" alpha="0" />
+            </directive>
             <directive type="camera" ease="linear">
                 <keyframe time="0" x="20" y="0" zoom="1.5" />
                 <keyframe time="0" x="0" y="-64" zoom="1.4" />
@@ -17685,11 +18276,11 @@
             </directive>
             <directive type="move" id="p_hand_l" ease="linear">
                 <keyframe time="0" x="718" y="370" rotation="13" />
-                <keyframe time="0.5" x="559" y="416" rotation="9" />
+                <keyframe time="0" x="559" y="416" rotation="9" />
             </directive>
             <directive type="move" id="p_hand_r" ease="linear">
                 <keyframe time="0" x="881" y="370" rotation="-13" />
-                <keyframe time="0.5" x="1030" y="416" rotation="-9" />
+                <keyframe time="0" x="1030" y="416" rotation="-9" />
             </directive>
             <directive type="text" id="n13" width="20%" arrow="right" x="10%" y="12%">This is the closest you've ever been to me, so it's still embarrassing.</directive>
             <directive type="pause" />
@@ -17707,9 +18298,13 @@
             <directive type="sprite" id="breasts2b1" layer="1" src="epi-treasure_breasts2b.png" x="736" y="408" pivotx="100%" pivoty="0%" alpha="0" />
             <directive type="sprite" id="breasts2a2" layer="1" src="epi-treasure_breasts2.png" x="743" y="408" scalex="-1" pivotx="100%" pivoty="0%" alpha="0" />
             <directive type="sprite" id="breasts2b2" layer="1" src="epi-treasure_breasts2b.png" x="743" y="408" scalex="-1" pivotx="100%" pivoty="0%" alpha="0" />
-            <directive type="move" id="nami7" ease="linear">
+            <directive type="move" id="nami7" delay="2" ease="linear">
                 <keyframe time="0" alpha="100" />
                 <keyframe time="0" alpha="0" />
+            </directive>
+            <directive type="move" id="nami7b" delay="1.5" ease="linear">
+                <keyframe time="0" alpha="0" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="move" id="p_hand_l" ease="linear">
                 <keyframe time="0" x="559" y="416" scalex="-0.9" scaley="0.9" alpha="100" rotation="9" />
@@ -17724,10 +18319,6 @@
                 <keyframe time="2" x="881" y="375" scalex="0.8" scaley="0.8" alpha="100" rotation="-7" />
             </directive>
             <directive type="move" id="nami8" ease="linear">
-                <keyframe time="0" alpha="0" />
-                <keyframe time="0" alpha="100" />
-            </directive>
-            <directive type="move" id="nami7b" ease="linear">
                 <keyframe time="0" alpha="0" />
                 <keyframe time="0" alpha="100" />
             </directive>
@@ -17822,8 +18413,8 @@
                 <keyframe time="1" alpha="100" />
             </directive>
             <directive type="wait" />
-            <directive type="move" id="nami7b" ease="linear">
-                <keyframe time="0.5" alpha="0" />
+            <directive type="move" id="nami7b" delay="1" ease="linear">
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="p_hand_l2" ease="linear">
                 <keyframe time="0" x="678" y="378" scalex="-0.8" scaley="0.8" alpha="100" rotation="-1" />
@@ -17910,11 +18501,11 @@
                 <keyframe time="0.5" alpha="100" />
             </directive>
             <directive type="wait" />
-            <directive type="move" id="nami9" ease="linear">
+            <directive type="move" id="nami9" delay="1" ease="linear">
                 <keyframe time="0" alpha="100" />
                 <keyframe time="0" alpha="0" />
             </directive>
-            <directive type="move" id="nami10" ease="linear">
+            <directive type="move" id="nami10" delay="1" ease="linear">
                 <keyframe time="0" alpha="0" />
                 <keyframe time="0" alpha="100" />
             </directive>
@@ -18016,13 +18607,13 @@
                 <keyframe time="4.5" y="630" alpha="100" />
                 <keyframe time="5.5" y="610" alpha="100" />
             </directive>
-            <directive type="move" id="vag1" delay="3.5" ease="linear">
+            <directive type="move" id="vag1" delay="4" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
-            </directive>
-            <directive type="move" id="vag2" delay="3.5" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
+            </directive>
+            <directive type="move" id="vag2" delay="4" ease="linear">
+                <keyframe time="0" alpha="0" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="text" id="n24" width="16%" arrow="left" delay="2" x="61%" y="17%">Ngh... Slowly, please...</directive>
             <directive type="pause" />
@@ -18433,19 +19024,26 @@
                 <keyframe time="0" alpha="0" />
             </directive>
             <directive type="sprite" id="nami16s" src="epi-shadow.png" x="710" y="800" scalex="2.274074" scaley="3.941176" pivotx="50%" pivoty="50%" />
-            <directive type="sprite" id="player2s" src="epi-shadow.png" x="712" y="728" scalex="1.614815" scaley="8.558824" pivotx="50%" pivoty="50%" />
-            <directive type="sprite" id="player2" src="epi-treasure_p3.png" x="645" y="515" pivotx="50%" pivoty="50%" />
-            <directive type="sprite" id="nami16_hair" src="epi-treasure_n16_hair.png" x="707" y="132" pivotx="50%" pivoty="9%" />
-            <directive type="sprite" id="nami16_arm_l" src="epi-treasure_n16_arm2.png" x="884" y="521" pivotx="9%" pivoty="1%" rotation="-14" />
-            <directive type="sprite" id="nami16_arm_r" src="epi-treasure_n16_arm1.png" x="669" y="521" pivotx="91%" pivoty="1%" rotation="14" />
-            <directive type="sprite" id="nami16_leg_r" src="epi-treasure_n16_leg.png" x="613" y="593" pivotx="92%" pivoty="30%" rotation="15" />
-            <directive type="sprite" id="nami16_leg_l" src="epi-treasure_n16_leg.png" x="640" y="593" scalex="-1" pivotx="92%" pivoty="30%" rotation="-15" />
-            <directive type="sprite" id="pen3" src="epi-penis.png" x="821" y="660" scalex="0.9" pivotx="50%" pivoty="100%" />
-            <directive type="sprite" id="nami16" src="epi-treasure_n16.png" x="727" y="87" pivotx="50%" pivoty="50%" />
-            <directive type="sprite" id="nami16_breasts1" src="epi-treasure_breasts1.png" x="746" y="383" pivotx="50%" pivoty="0%" />
-            <directive type="sprite" id="nami16_breasts2" src="epi-treasure_breasts1b.png" x="746" y="383" pivotx="50%" pivoty="0%" />
-            <directive type="sprite" id="p_hand3l" src="epi-night_hand.png" x="601" y="637" scalex="1.1" scaley="1.1" pivotx="20%" pivoty="94%" rotation="20" />
-            <directive type="sprite" id="p_hand3r" src="epi-night_hand.png" x="1054" y="637" scalex="-1.1" scaley="1.1" pivotx="20%" pivoty="94%" rotation="-20" />
+            <directive type="sprite" id="nami16_hair" layer="1" src="epi-treasure_n16_hair.png" x="707" y="132" pivotx="50%" pivoty="9%" />
+            <directive type="sprite" id="nami16_arm_l" layer="1" src="epi-treasure_n16_arm2.png" x="884" y="521" pivotx="9%" pivoty="1%" rotation="-14" />
+            <directive type="sprite" id="nami16_arm_r" layer="1" src="epi-treasure_n16_arm1.png" x="669" y="521" pivotx="91%" pivoty="1%" rotation="14" />
+            <directive type="sprite" id="nami16_leg_r" layer="1" src="epi-treasure_n16_leg.png" x="613" y="593" pivotx="92%" pivoty="30%" rotation="15" />
+            <directive type="sprite" id="nami16_leg_l" layer="1" src="epi-treasure_n16_leg.png" x="640" y="593" scalex="-1" pivotx="92%" pivoty="30%" rotation="-15" />
+            <directive type="sprite" id="juice3" layer="1" src="x-juice.png" x="825" y="605" scalex="-1" scaley="1" pivotx="50%" pivoty="100%" rotation="180" />
+            <directive type="sprite" id="nami16" layer="1" src="epi-treasure_n16.png" x="727" y="87" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="nami16_breasts1" layer="1" src="epi-treasure_breasts1.png" x="746" y="383" pivotx="50%" pivoty="0%" />
+            <directive type="sprite" id="nami16_breasts2" layer="1" src="epi-treasure_breasts1b.png" x="746" y="383" pivotx="50%" pivoty="0%" />
+            <directive type="sprite" id="p_hand3l" layer="1" src="epi-night_hand.png" x="601" y="637" scalex="1.1" scaley="1.1" pivotx="20%" pivoty="94%" rotation="20" />
+            <directive type="sprite" id="p_hand3r" layer="1" src="epi-night_hand.png" x="1054" y="637" scalex="-1.1" scaley="1.1" pivotx="20%" pivoty="94%" rotation="-20" />
+            <directive type="move" id="player2s">
+                <keyframe time="0" alpha="100" />
+            </directive>
+            <directive type="move" id="player2">
+                <keyframe time="0" alpha="100" />
+            </directive>
+            <directive type="move" id="pen3">
+                <keyframe time="0" alpha="100" />
+            </directive>
             <directive type="wait" />
             <directive type="fade" ease="linear">
                 <keyframe time="1" color="#000000" alpha="0" />
@@ -18500,6 +19098,7 @@
                 <keyframe time="0.5" y="413" scalex="1" scaley="1" />
                 <keyframe time="0.55" y="413" scalex="1.05" scaley="1.05" />
                 <keyframe time="0.6" y="413" scalex="1" scaley="1" />
+                <keyframe time="1.4" y="383" scalex="1" scaley="0.95" />
                 <keyframe time="1.5" y="383" scalex="1" scaley="1" />
             </directive>
             <directive type="move" id="nami16_breasts2" delay="0.3" loop="true" ease="linear">
@@ -18534,19 +19133,27 @@
             <directive type="stop" id="nami16_leg_r" />
             <directive type="stop" id="p_hand3l" />
             <directive type="stop" id="p_hand3r" />
-            <directive type="sprite" id="nami16b" src="epi-treasure_n16b.png" x="727" y="87" pivotx="50%" pivoty="50%" alpha="0" />
-            <directive type="move" id="nami16b" ease="linear">
+            <directive type="sprite" id="nami16b" layer="1" src="epi-treasure_n16b.png" x="727" y="87" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="move" id="juice3">
+                <keyframe time="0" y="605" scaley="1" alpha="0" />
+                <keyframe time="0" y="605" scaley="1" alpha="100" />
+                <keyframe time="2" y="645" scaley="1.2" alpha="100" />
+            </directive>
+            <directive type="move" id="nami16b" delay="0.5" ease="linear">
                 <keyframe time="0.5" alpha="100" />
             </directive>
             <directive type="camera" ease="linear">
                 <keyframe time="0" x="0" y="-30" zoom="1.2" />
-                <keyframe time="1.5" x="0" y="-100" zoom="1.8" />
+                <keyframe time="1.5" x="0" y="120" zoom="2.5" />
+                <keyframe time="2.5" x="0" y="120" zoom="2.5" />
+                <keyframe time="4.5" x="0" y="-230" zoom="2.5" />
             </directive>
             <directive type="fade" delay="1" ease="linear">
                 <keyframe time="0" color="#FFFFFF" alpha="0" />
-                <keyframe time="2" color="#FFFFFF" alpha="100" />
+                <keyframe time="4.5" color="#FFFFFF" alpha="0" />
+                <keyframe time="6.5" color="#FFFFFF" alpha="100" />
             </directive>
-            <directive type="text" id="n37" width="15%" arrow="left" x="60%" y="20%">Kyaaaahhh!!!</directive>
+            <directive type="text" id="n37" width="10%" arrow="left" x="66%" y="22%">Kyaaaahhh!!!</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="remove" id="nami16" />
@@ -18564,6 +19171,7 @@
             <directive type="remove" id="pen3" />
             <directive type="remove" id="p_hand3l" />
             <directive type="remove" id="p_hand3r" />
+            <directive type="remove" id="juice3" />
             <directive type="move" id="bed3" ease="linear">
                 <keyframe time="0" alpha="100" />
             </directive>
@@ -18577,6 +19185,7 @@
             </directive>
             <directive type="sprite" id="player3s" src="epi-shadow.png" x="712" y="444" scalex="1.345588" scaley="19.70588" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="player3" src="epi-treasure_p2.png" x="540" y="-198" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" alpha="70" />
+            <directive type="sprite" id="juice4" src="x-juice.png" x="881" y="616" scalex="0.75" pivotx="50%" pivoty="50%" alpha="80" rotation="-167.7675" />
             <directive type="sprite" id="nami17" src="epi-treasure_n17.png" x="540" y="-198" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="nami18" src="epi-treasure_n17b.png" x="540" y="-198" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="sprite" id="player3_hand" src="epi-treasure_p2_hand.png" x="540" y="-198" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" alpha="70" />
@@ -18591,7 +19200,7 @@
             <directive type="text" id="n39" width="16%" arrow="left" x="72%" y="27%">I hope I didn't disappoint you either.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
-            <directive type="move" id="nami17" ease="linear">
+            <directive type="move" id="nami17" delay="0.2" ease="linear">
                 <keyframe time="0" alpha="100" />
                 <keyframe time="1" alpha="0" />
             </directive>
