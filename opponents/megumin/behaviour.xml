@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.3 at 7:25:18 PM on December 24, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.3 at 6:44:36 PM on December 25, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.3</version>
     <first>Megumin</first>
@@ -58,7 +58,53 @@
         <clothing name="cape" generic="cape" position="other" type="extra" />
     </wardrobe>
 
-    <poses />
+    <poses>
+        <pose id="jointStrip1">
+            <sprite id="MeguminJoint1_1" src="megumin/MeguminJoint1_1.png" x="15" y="-116" scalex="1.12" scaley="1.12" />
+            <sprite id="MeguminJointGlow" z="1" src="megumin/MeguminJointGlow.png" x="23" y="-168" scalex="1.12" scaley="1.12" alpha="0" />
+            <sprite id="MeguminJoint1_2" delay="1.75" src="megumin/MeguminJoint1_2.png" x="15" y="-116" scalex="1.12" scaley="1.12" />
+            <directive type="animation" id="MeguminJoint1_1" delay="1.75" ease="smooth" interpolation="linear">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.25" alpha="0" />
+            </directive>
+            <directive type="animation" id="MeguminJointGlow" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="23" y="-168" scalex="1.12" scaley="1.12" alpha="0" />
+                <keyframe time="1.75" alpha="100" />
+                <keyframe time="2.25" alpha="100" />
+                <keyframe time="3.5" alpha="0" />
+            </directive>
+        </pose>
+        <pose id="jointStrip2">
+            <sprite id="MeguminJoint2_1" src="megumin/MeguminJoint2_1.png" x="15" y="-116" scalex="1.12" scaley="1.12" />
+            <sprite id="MeguminJointGlow" z="1" src="megumin/MeguminJointGlow.png" x="23" y="-168" scalex="1.12" scaley="1.12" alpha="0" />
+            <sprite id="MeguminJoint2_2" delay="1.75" src="megumin/MeguminJoint2_2.png" x="15" y="-116" scalex="1.12" scaley="1.12" />
+            <directive type="animation" id="MeguminJoint2_1" delay="1.75" ease="smooth" interpolation="linear">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.25" alpha="0" />
+            </directive>
+            <directive type="animation" id="MeguminJointGlow" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="23" y="-168" scalex="1.12" scaley="1.12" alpha="0" />
+                <keyframe time="1.75" alpha="100" />
+                <keyframe time="2.25" alpha="100" />
+                <keyframe time="3.5" alpha="0" />
+            </directive>
+        </pose>
+        <pose id="jointStrip3">
+            <sprite id="MeguminJoint3_1" src="megumin/MeguminJoint3_1.png" x="15" y="-116" scalex="1.12" scaley="1.12" />
+            <sprite id="MeguminJointGlow" z="1" src="megumin/MeguminJointGlow.png" x="23" y="-168" scalex="1.12" scaley="1.12" alpha="0" />
+            <sprite id="MeguminJoint3_2" delay="1.75" src="megumin/MeguminJoint3_2.png" x="15" y="-116" scalex="1.12" scaley="1.12" />
+            <directive type="animation" id="MeguminJoint3_1" delay="1.75" ease="smooth" interpolation="linear">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.25" alpha="0" />
+            </directive>
+            <directive type="animation" id="MeguminJointGlow" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="23" y="-168" scalex="1.12" scaley="1.12" alpha="0" />
+                <keyframe time="1.75" alpha="100" />
+                <keyframe time="2.25" alpha="100" />
+                <keyframe time="3.5" alpha="0" />
+            </directive>
+        </pose>
+    </poses>
 
     <behaviour>
         <trigger id="selected">
@@ -240,7 +286,7 @@
             <case stage="0-6">
                 <condition role="other" character="kazuma" />
                 <state img="#-smug.png" oneShotId="1">Fufufu... You should start saying your prayers, Kazuma, because this hand is going to destroy you!</state>
-                <state img="#-smug.png" oneShotId="3">Kazuma, if you promise to do everything I ask for a week I may hold back from annihilating you with this hand!</state>
+                <state img="#-smug.png" oneShotId="4">Kazuma, if you promise to do everything I ask for a week I may hold back from annihilating you with this hand!</state>
             </case>
             <case stage="0-7" oneShotId="1">
                 <condition role="other" character="cynthia" />
@@ -1431,6 +1477,10 @@
         </trigger>
 
         <trigger id="must_strip">
+            <case stage="6" priority="400">
+                <condition role="other" character="yuelia" stage="6-8" />
+                <state img="#-embarrassed.png" marker="yuelia_jointStrip">(&lt;i&gt;Deep breaths, Megumin. Try to think of a way to make this less embarassing!&lt;/i&gt;) H-Hey, Yuelia? S-Seeing as I have to strip, maybe you could use that magic thing you did for yourself on me? I-I just thought it could be kind of cool... </state>
+            </case>
             <case stage="0">
                 <condition role="other" character="akko" />
                 <condition role="other" character="jessie" saying="pinch" />
@@ -1959,6 +2009,21 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="6" priority="400">
+                <condition role="other" character="yuelia" stage="7" />
+                <condition role="self" saidMarker="yuelia_jointStrip" />
+                <state img="custom:jointStrip2" marker="yuelia_jointStrip2">A-Alright! Here goes nothing! Crimson Demon transformation go!</state>
+            </case>
+            <case stage="6" priority="400">
+                <condition role="other" character="yuelia" stage="8" />
+                <condition role="self" saidMarker="yuelia_jointStrip" />
+                <state img="custom:jointStrip3" marker="yuelia_jointStrip2">A-Alright! Here goes nothing! Crimson Demon transformation go!</state>
+            </case>
+            <case stage="6" priority="400">
+                <condition role="other" character="yuelia" stage="6" />
+                <condition role="self" saidMarker="yuelia_jointStrip" />
+                <state img="custom:jointStrip1" marker="yuelia_jointStrip2">A-Alright! Here goes nothing! Crimson Demon transformation go!</state>
+            </case>
             <case stage="2">
                 <condition role="other" character="raven" />
                 <condition role="other" character="starfire" saying="demon" />
@@ -2364,6 +2429,11 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="7" priority="400">
+                <condition role="other" character="yuelia" />
+                <condition role="self" saidMarker="yuelia_jointStrip2" />
+                <state img="#-embarrassed.png" marker="yuelia_jointStrip3">Th-Thanks, Yuelia. That was kind of cool.</state>
+            </case>
             <case stage="8" priority="148">
                 <condition role="other" character="mulan" stage="2-7" saidMarker="mulan_duel" sayingMarker="megumin_duel" notSaidMarker="challenge_answer" />
                 <condition count="1" status="naked" />
@@ -2517,6 +2587,16 @@
                 <condition role="self" saidMarker="megumin_yuelia_elderWizard" />
                 <condition role="other" character="yuelia" sayingMarker="megumin_friendMagician" />
                 <state img="#-stripped.png" marker="megumin_yuelia_elderWizard2">&lt;i&gt;{b}I. Need. It.{!reset}&lt;/i&gt; C-Can you get me a pair, Yuelia?!?!</state>
+            </case>
+            <case stage="8" priority="102">
+                <condition role="self" saidMarker="megumin_yuelia_bringShame2" />
+                <condition role="other" character="yuelia" saidMarker="megumin_crimsonDemons" sayingMarker="megumin_seeBirthMark" />
+                <state img="#-embarrassed.png" marker="megumin_yuelia_birthMark">Y-Yes, it is, but pleae stop staring at my butt, Yuelia!</state>
+            </case>
+            <case stage="8" priority="102">
+                <condition role="self" saidMarker="megumin_yuelia_bringShame2" />
+                <condition role="other" character="yuelia" saidMarker="megumin_crimsonDemons" sayingMarker="megumin_weirdBirthMark" />
+                <state img="#-embarrassed.png" marker="megumin_yuelia_birthMarkAlt">T-That's just what they all look like, Yuelia. I'm rather self concious about where it's located, however, so please don't stare at my butt.</state>
             </case>
             <case stage="8">
                 <condition role="other" character="futaba" />
@@ -3537,10 +3617,6 @@
             <case stage="0-10">
                 <condition role="target" character="saki_zls" stage="0" />
                 <state img="#-smug.png" marker="megumin_saki_remindDarkness">It's funny, Saki, but you remind me of some kind of rebellious teenage version of our Crusader, Darkness. Then again, it may just be the blonde ponytail.</state>
-            </case>
-            <case stage="0-8 10">
-                <condition role="target" character="tomoko" stage="2" />
-                <state img="#-surprised.png" marker="megumin_tomoko_encourage1">PLACEHOLDER</state>
             </case>
             <case stage="0-8 10">
                 <condition role="target" character="miko" stage="0" />
@@ -4567,14 +4643,12 @@
                 <state img="#-surprised.png" marker="megumin_sakura_zombie">A Zombie?! You are nothing like the zombies back in Belzerg! That's so cool!</state>
             </case>
             <case stage="0-10" priority="450">
-                <condition role="target" character="streaming-chan" stage="3" sayingMarker="viewers" />
-                <condition role="other" saying="fetishists" />
+                <condition role="target" character="streaming-chan" stage="3" sayingMarker="viewers" saying="fetishists" />
                 <condition role="self" saidMarker="megumin_streamingChan_fetish2" />
                 <state img="#-defeated.png" marker="megumin_streamingChan_fetish3" collectible="Fetish Awareness Ribbon">Is there a fetish for everything? Is nothing safe?!</state>
             </case>
             <case stage="0-10" priority="450">
-                <condition role="target" character="streaming-chan" stage="3" sayingMarker="viewers" />
-                <condition role="other" saying="fetishists" />
+                <condition role="target" character="streaming-chan" stage="3" sayingMarker="viewers" saying="fetishists" />
                 <condition role="self" saidMarker="megumin_streamingChan_fetishAlt" />
                 <state img="#-defeated.png" marker="megumin_streamingChan_fetish3" collectible="Fetish Awareness Ribbon">Is there a fetish for everything? Is nothing safe?!</state>
             </case>
@@ -4702,9 +4776,10 @@
             </case>
             <case stage="0-5">
                 <state img="#-embarrassed.png">I-I’m not looking!</state>
-                <state img="#-awkward.png">Did you really have to pick that one?!</state>
-                <state img="#-annoyed.png">Gah! You fiend! Resorting to dirty tricks like that!</state>
-                <state img="#-surprised.png">Wait! You're taking &lt;i&gt;that&lt;/i&gt; off already?!</state>
+                <state img="#-fearful.png">Did you really have to pick that one?!</state>
+                <state img="#-fearful.png">Gah! You fiend! Resorting to dirty tricks like that!</state>
+                <state img="#-fearful.png">Wait! You're taking &lt;i&gt;that&lt;/i&gt; off already?!</state>
+                <state img="#-fearful.png">W-Wait! I'm not ready!</state>
             </case>
             <case stage="6-8">
                 <state img="#-showoff.png">A powerful blow!</state>
@@ -4715,8 +4790,9 @@
             <case stage="9">
                 <state img="#-defeated.png">&lt;i&gt;I can't quite look away...&lt;/i&gt;</state>
                 <state img="#-defeated.png">Yes, hurry up and take it off!</state>
-                <state img="#-defeated.png">(&lt;i&gt;Oh, Oh my... That certainly helped me...&lt;/i&gt;)</state>
-                <state img="#-smug.png">(&lt;i&gt;Th-The combination of doing this while he strips is really good!&lt;/i&gt;)</state>
+                <state img="#-defeated.png">(&lt;i&gt;Oh, Oh my... This certainly makes my job easier...&lt;/i&gt;)</state>
+                <state img="#-smug.png">(&lt;i&gt;Th-The combination of doing this while he strips feels really good!&lt;/i&gt;)</state>
+                <state img="#-smug.png">Y-Yes, put on a good show for me, ~target~.</state>
             </case>
             <case stage="10">
                 <state img="#-annoyed.png">(&lt;i&gt;I would prefer ~name~ did this earlier, but I suppose I can't complain... No wait, I can.&lt;/i&gt;)</state>
@@ -5422,6 +5498,10 @@
             </case>
             <case stage="0-7">
                 <state img="#-smug.png">Be strong, everyone is only going to judge you a little.</state>
+                <state img="#-smug.png">Fufufu, humiliate yourself in front of me!</state>
+                <state img="#-showoff.png">This must be quite embarassing for you, fufufu!</state>
+                <state img="#-showoff.png">I claim your pride and dignity as mine!</state>
+                <state img="#-showoff.png">This victory is all too sweet! Fufufu!</state>
             </case>
             <case stage="8">
                 <state img="#-showoff.png">Join me and we shall have a pity party.</state>
