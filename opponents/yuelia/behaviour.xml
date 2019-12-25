@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 12:38:39 AM on December 24, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 12:51:00 AM on December 25, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Flutter</first>
@@ -96,9 +96,25 @@
             </directive>
         </pose>
         <pose id="wish">
-            <sprite id="neutral" z="2" src="yuelia/1-neutral.png" x="0" y="57" scalex="1.1" scaley="1.1" />
-            <sprite id="wishingStar" z="3" src="yuelia/wishingStar.png" x="-353" y="705" scalex="0.1" scaley="0.1" />
-            <sprite id="wishingStar1" src="yuelia/wishingStar.png" x="0" y="0" />
+            <sprite id="neutral" z="2" src="yuelia/1-neutral.png" x="2" y="43" scalex="1.1" scaley="1.1" />
+            <sprite id="wishingStar" z="3" src="yuelia/wishingStar.png" x="-362" y="717" scalex="0.1" scaley="0.1" rotation="0" />
+            <sprite id="wishingStar1" z="1" src="yuelia/wishingStar.png" x="374" y="718" scalex="0.1" scaley="0.1" rotation="0" />
+            <directive type="animation" id="wishingStar" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="-362" y="717" scalex="0.1" scaley="0.1" rotation="0" />
+                <keyframe time="1.5" x="370" y="-417" scalex="0.1" scaley="0.1" rotation="1440" />
+            </directive>
+            <directive type="animation" id="wishingStar" ease="linear" interpolation="none">
+                <keyframe time="0" src="yuelia/wishingStar.png" />
+                <keyframe time="1.5" src="yuelia/wishingStar.png" />
+            </directive>
+            <directive type="animation" id="wishingStar1" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="374" y="718" scalex="0.1" scaley="0.1" rotation="0" />
+                <keyframe time="1.5" x="-345" y="-411" scalex="0.1" scaley="0.1" rotation="1440" />
+            </directive>
+            <directive type="animation" id="wishingStar1" ease="linear" interpolation="none">
+                <keyframe time="0" src="yuelia/wishingStar.png" />
+                <keyframe time="1.5" src="yuelia/wishingStar.png" />
+            </directive>
         </pose>
     </poses>
 
@@ -363,6 +379,11 @@
                 <condition role="other" character="chihiro" stage="5" timeInStage="0" />
                 <state img="#-confused.png" marker="chihiro_sentientTome">Well, hello, Alter Ego. Are you a sentient tome?</state>
                 <state img="#-confused.png" marker="chihiro_TomeOfShadows">Hello, Alter Ego. You remind me of the Tome of Shadows in the Al Maajik library. </state>
+            </case>
+            <case stage="0-8" priority="155">
+                <condition role="other" character="natsuki" stage="5" timeInStage="0" />
+                <state img="#-confused.png" marker="natsuki_sawPanties">I... don't think it is, Natsuki. I can see them. They're pink with a strawberry pattern.</state>
+                <state img="#-nervous.png" marker="natsuki_sawPanties">Natsuki, are you sure? Because I'm pretty sure I can see them.</state>
             </case>
             <case stage="0" totalRounds="0">
                 <condition role="other" character="megumin" stage="0-3" sayingMarker="megumin_yuelia_talkingButterfly" />
@@ -1025,6 +1046,10 @@
                 <state img="#-shocked.png" marker="n_mathPraise">Did you do all that math in your head?! Just now?! Amazing!</state>
                 <state img="#-shocked.png" marker="n_genius">Is that right?! If that's right, then you must be a real genius, N!</state>
             </case>
+            <case stage="1-6">
+                <condition role="target" character="dust" stage="5" sayingMarker="yuelia_jointPose" />
+                <state img="absent.png"></state>
+            </case>
             <case stage="0">
                 <condition role="target" character="pit" stage="0" />
                 <state img="#-beaming.png" marker="pit_ImFinished">Oh hey! Neat angel costume! You must know about the "I'm finished!" password at the post office!</state>
@@ -1138,6 +1163,11 @@
                 <state img="#-nervous.png" marker="rin_needHelp">Do you need help this time, Rin? I can help, if you want.</state>
                 <state img="#-neutral.png" marker="rin_needHelp">Are you able to take off the rest of your clothes too, Rin. I can help, if not.</state>
             </case>
+            <case stage="0-10" priority="441">
+                <condition role="target" character="natsuki" stage="1" consecutiveLosses="2" sayingMarker="2loss" />
+                <state img="#-nervous.png" marker="natsuki_badLuck">Well, it's mostly luck, Natsuki.It could happen to anyone.</state>
+                <state img="#-nervous.png" marker="natsuki_badLuck">You just had some bad luck, Natsuki... don't get upset.</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="elesa" stage="0" />
                 <test expr="~elesa.costume~" value="default" />
@@ -1168,31 +1198,6 @@
                 <state img="#-nervous.png" marker="meia_mejare">Mejare? Oh right! The world you come from is in bad shape, right Meia? It always made me sad watching it.</state>
                 <state img="#-nervous.png" marker="meia_mejare">Mejare? Oh! Right. I honestly didn't enjoy watching that world very much...</state>
             </case>
-            <case stage="0-10" priority="405">
-                <condition role="target" character="meia" stage="1" timeInStage="7-" saying="embarrassed" />
-                <state img="#-confused.png" marker="meia_embarrassed">You were embarrassed, Meia? You really didn't seem like you were?</state>
-                <state img="#-confused.png" marker="meia_embarrassed">Embarrassed? Were you really, Meia?</state>
-            </case>
-            <case stage="0" priority="405">
-                <condition role="target" character="meia" stage="0" timeInStage="0-0" saying="dressed" />
-                <state img="#-nervous.png" marker="meia_makeFair">Eh heh, do you want me to take off a few things now to make it fair, Meia?</state>
-                <state img="#-nervous.png" marker="meia_makeFair">Sorry, Meia... Should I take off a few things now to even it out?</state>
-            </case>
-            <case stage="0-10" priority="405">
-                <condition role="target" character="meia" stage="1" timeInStage="0-0" saying="own almost nothing" />
-                <state img="#-nervous.png" marker="meia_tailor">That... sounds kinda sad, Meia. Want to visit a Tailor when this is over?</state>
-                <state img="#-nervous.png" marker="meia_tailor">I don't think that's a good thing, Meia. We could go to a Tailor when this is done if you want.</state>
-            </case>
-            <case stage="0-10" priority="405">
-                <condition role="target" character="meia" stage="3" timeInStage="7-" saying="bra" />
-                <state img="#-confused.png" marker="meia_care">I'm having a hard time telling how much you actually care, Meia.</state>
-                <state img="#-nervous.png" marker="meia_notFun">Meia, you don't look like you're having fun. </state>
-            </case>
-            <case stage="0-10" priority="405">
-                <condition role="target" character="meia" stage="4" timeInStage="0-0" />
-                <state img="#-confused.png" marker="meia_hibiki">Hibiki? Who's that, Meia?</state>
-                <state img="#-confused.png" marker="meia_hibiki">Who's Hibiki, Meia?</state>
-            </case>
             <case stage="0-10" totalRounds="1" priority="392">
                 <condition role="target" character="mae" stage="0-1" saidMarker="possumsprings_q" sayingMarker="possumsprings_a" />
                 <state img="#-content.png" marker="mae_makeItSpecial">Oh, come on, Mae! It's your home! Doesn't that make it special in it's own way?</state>
@@ -1203,20 +1208,46 @@
                 <state img="#-curious.png" marker="catria_thinking">You seem kinda jumpy, Catria. Is there something on your mind?</state>
                 <state img="#-curious.png" marker="catria_thinking">You look like you're thinking about something else. What's on your mind, Catria?</state>
             </case>
+            <case stage="0-10" priority="386">
+                <condition role="target" character="natsuki" stage="6" saidMarker="not_1st" />
+                <condition count="0" status="exposed" />
+                <state img="#-neutral.png" marker="natsuki_calmDown">Natsuki, please try to calm down.</state>
+                <state img="#-neutral.png" marker="natsuki_calmDown">Please don't yell, Natsuki. Try to calm down, okay?</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="aella" stage="4" sayingMarker="AellaStalling" />
                 <state img="#-confused.png" marker="aella_goodEars">Really, Aella? I don't hear anything. I think I have pretty good ears too.</state>
                 <state img="#-confused.png" marker="aella_goodEars">Are you sure, Aella? I don't hear it? And I have pretty good hearing.</state>
             </case>
             <case stage="0-10">
-                <condition role="target" character="meia" stage="0" saying="ignoring" />
-                <state img="#-shocked.png" marker="meia_thePoint">If you did that, then what would even be the point, Meia?</state>
-                <state img="#-shocked.png" marker="meia_thePoint">But why, Meia? That's the fun of the game!</state>
+                <condition role="target" character="futaba" stage="0" saying="shame" />
+                <state img="#-confused.png" marker="futaba_noMusic">Music? I don't hear any music. What are you talking about, Futaba?</state>
+                <state img="#-confused.png" marker="futaba_noShame">Shame? Why are you ashamed, Futaba? It's just a game, there's no shame in losing.</state>
             </case>
             <case stage="0-10">
-                <condition role="target" character="meia" stage="1" sayingMarker="riches_to_rags" />
-                <state img="#-curious.png" marker="meia_kidClothes">Oh? What kind of clothes did you wear as a kid, Meia?</state>
-                <state img="#-curious.png" marker="meia_kidClothes">Hmm? What kind of dresses were they, Meia?</state>
+                <condition role="target" character="futaba" stage="1" saying="Hearthstone" />
+                <state img="#-curious.png" marker="futaba_hearthstone">Hearthstone sounds like some sort of gem. Is that what it is, Futaba?</state>
+                <state img="#-curious.png" marker="futaba_hearthstone">Hearthstone? Is that an ore, Futaba? Maybe a piece of equipment?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="futaba" stage="2" saying="try and look sexy" />
+                <state img="#-content.png" marker="futaba_mostComfortable">You can do it in whatever way makes you most comfortable, Futaba.</state>
+                <state img="#-content.png" marker="futaba_mostComfortable">I'm sure you can do it in whatever way that you like, Futaba.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="futaba" stage="5" saying="good social experience" />
+                <state img="#-confused.png" marker="futaba_goodSocial">Do you not, Futaba? I've been having fun.</state>
+                <state img="#-confused.png" marker="futaba_goodSocial">Have you not been having fun, Futaba? I have.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="futaba" stage="1" saying="floor here looks" />
+                <state img="#-confused.png" marker="futaba_grossFloor">It does? It doesn't look very dirty to me. Is there something I'm not seeing, Futaba?</state>
+                <state img="#-confused.png" marker="futaba_grossFloor">Does it? It looks pretty clean to me, Futaba.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="futaba" stage="2" saying="unsavory information" />
+                <state img="#-confused.png" marker="futaba_getsOut">Um, if &lt;i&gt;what&lt;/i&gt; gets out, Futaba? I don't understand what you're getting so worked up about.</state>
+                <state img="#-nervous.png" marker="futaba_specificSkill">That seems like a very specific skill, Futaba. How do you even get good at something like that?</state>
             </case>
             <case stage="0">
                 <condition role="target" character="akko" stage="0" />
@@ -1398,6 +1429,40 @@
                 <condition role="target" character="meia" stage="2" />
                 <state img="#-nervous.png" marker="meia_tooSerious">Hey, Meia? I understand competitiveness, but don't you think you might be taking this a little too seriously?</state>
                 <state img="#-nervous.png" marker="meia_tooSerious">Uh, Meia? I think you might be taking this a little too seriously. This is just a friendly game, after all.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="meia" stage="0" />
+                <state img="#-neutral.png" marker="meia_pilotCrafts">You said that you're a Pilot, right Meia? What kind of crafts can you fly?</state>
+                <state img="#-neutral.png" marker="meia_commander">So you're a commander, Meia? What's that like? Being in charge of so many people?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="meia" stage="1" />
+                <state img="#-curious.png" marker="meia_eyepieceFunction">Hey, Meia. That thing that you took off earlier. What exactly did it do?</state>
+                <state img="#-curious.png" marker="meia_eyepieceImportant">Meia, that thing that you took off earlier. You seemed pretty attached to it. Was it important?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="meia" stage="3" />
+                <state img="#-nervous.png" marker="meia_calm">You've said a couple of times that you're feeling embarrassed, but you seem to be perfectly calm to me, Meia.</state>
+                <state img="#-neutral.png" marker="meia_newPeople">You've played this game before, right Meia? What do you think? Isn't it more fun with some new people?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="natsuki" stage="0" />
+                <state img="#-nervous.png" marker="natsuki_deepBreaths">I get the feeling that you're really on edge right now, Natsuki. Maybe try taking some deep breaths?</state>
+                <state img="#-nervous.png" marker="natsuki_talkAboutIt">You seem to be really aggravated over something, Natsuki. Do you want to talk about it?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="natsuki" stage="4" />
+                <state img="#-nervous.png" marker="natsuki_enjoy">Natsuki, maybe it would help if you just tried to enjoy yourself. </state>
+                <state img="#-nervous.png" marker="natsuki_enjoy">You would probably feel better if you gave yourself a chance to actually enjoy the game, Natsuki.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="natsuki" stage="2" />
+                <state img="#-beaming.png" marker="natsuki_smart">Ooh! That's pretty neat, Natsuki! You must be pretty smart to know all that!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="natsuki" stage="1" />
+                <state img="#-neutral.png" marker="natsuki_literature">So you do a lot of reading, right Natsuki? I like reading too! What types of books do you read?</state>
+                <state img="#-neutral.png" marker="natsuki_literature">You enjoy reading, don't you, Natsuki? What kind of books would you recommend?</state>
             </case>
             <case stage="0" oneShotId="2">
                 <condition filter="short" role="target" />
@@ -1898,6 +1963,10 @@
         </trigger>
 
         <trigger id="male_removing_minor">
+            <case stage="1-6">
+                <condition role="target" character="dust" stage="5" saidMarker="yuelia_jointPose" />
+                <state img="absent.png"></state>
+            </case>
             <case stage="0">
                 <state img="#-nervous.png">I think that you looked pretty cool with your ~clothing~, ~name~.</state>
                 <state img="#-nervous.png">Ah, but your ~clothing~ looked great on you, ~name~.</state>
@@ -1980,6 +2049,11 @@
                 <state img="#-idea.png" marker="rin_makeSure">Oh. I just wanted to make sure. I know that not everyone likes surprises.</state>
                 <state img="#-idea.png" marker="rin_interesting">I was just curious, Rin. You seem like a very interesting person.</state>
             </case>
+            <case stage="0-10" priority="381">
+                <condition role="target" character="natsuki" stage="1" saidMarker="2loss" />
+                <state img="#-nervous.png" marker="natsuki_mayBeFun">If you stay, you might be surprised, Natsuki. You may have fun.</state>
+                <state img="#-nervous.png" marker="natsuki_mayBeFun">Don't be a sore loser, Natsuki. Give it a chance and you just might have fun!</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="megumin" stage="3" />
                 <state img="#-curious.png" marker="megumin_nervous">You okay, Megumin? You seem nervous all of a sudden.</state>
@@ -2014,6 +2088,12 @@
                 <condition role="target" character="sakura" stage="3" />
                 <state img="#-nervous.png" marker="sakura_needHelp">Do you need some help, Sakura?</state>
                 <state img="#-nervous.png" marker="sakura_onPurpose">That wasn't on purpose, was it, Sakura?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="futaba" stage="3" />
+                <state img="#-curious.png" marker="futaba_nervous">Futaba... are you okay? You seem nervous.</state>
+                <state img="#-curious.png" marker="futaba_nervous">You've been pretty jumpy this entire time, Futaba. Is everything alright? Are you nervous?</state>
+                <state img="#-curious.png" marker="futaba_nervous">Are you feeling nervous, Futaba? It kinda feels like you're forcing yourself.</state>
             </case>
             <case stage="0">
                 <state img="#-nervous.png">I think that your ~clothing~ looked so nice on you, ~name~.</state>
