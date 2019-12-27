@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 8:02:59 PM on December 23, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 11:04:10 PM on December 26, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Mary</first>
@@ -81,6 +81,9 @@
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0" id="12" alsoPlaying="yuelia">
+                <state img="#-happy.png">Holy shit, it's a butterfly! I always wondered how bugs masturbate!</state>
+            </case>
             <case stage="0">
                 <state img="#-nutty.png" marker="ImTheJokahBaby">You know how I got here? How I got these scars? I'm playin' pokah, baby!</state>
                 <state img="#-neutral.png">Time to chew some assgum and kick some... Yeah!</state>
@@ -194,7 +197,7 @@
 
         <trigger id="bad_hand">
             <case stage="5">
-                <condition role="self" saidMarker="sanity&gt;=5" />
+                <condition role="self" saidMarker="sanity&gt;=5" notSaidMarker="insanetrigger" />
                 <state img="#-nutty.png" marker="+sanity">...♫&lt;i&gt;My baby takes the morning train, hey! He works from nine to five, hey...!&lt;/i&gt;♫</state>
                 <state img="#-nutty.png" marker="+sanity">...&lt;i&gt;Uh oh. Stinky!&lt;/i&gt;</state>
                 <state img="#-pissed.png">Your mother is, was and will be a whore, dealer.</state>
@@ -245,6 +248,11 @@
         <trigger id="hand">
             <case stage="0" oneShotId="4" priority="1000">
                 <state img="#-neutral.png" marker="sanity=0">My name's Mary, but y'all can call me May. Or gay. Whatever works.</state>
+            </case>
+            <case stage="0-5" oneShotId="39">
+                <condition role="self" saidMarker="alterego" notSaidMarker="insanetrigger" />
+                <condition role="other" character="chihiro" />
+                <state img="#-neutral.png">So, that lil' loli made you? That's pretty impressive. Maybe I oughta like... take her under my wing. You know. Teach her some fun stuff.</state>
             </case>
             <case stage="0-5" oneShotId="1">
                 <condition role="self" notSaidMarker="insanetrigger" />
@@ -394,7 +402,7 @@
         <trigger id="stripped">
             <case stage="1">
                 <condition role="self" saidMarker="insanetrigger" />
-                <state img="#-ineutral.png">Now keep the game going. I have even more than my feet to sho you.s</state>
+                <state img="#-ineutral.png">Now keep the game going. I have even more than my feet to sho you.</state>
             </case>
             <case stage="2">
                 <condition role="self" saidMarker="insanetrigger" />
@@ -410,7 +418,7 @@
             </case>
             <case stage="5">
                 <condition role="self" saidMarker="insanetrigger" />
-                <state img="#-fetish.png">And now I'm all exposed. Maybe today was really one of the few good days in my life after all.s</state>
+                <state img="#-fetish.png">And now I'm all exposed. Maybe today was really one of the few good days in my life after all.</state>
             </case>
             <case stage="1">
                 <state img="#-nutty.png">Plus, I can just swing my foot and fling it so it hits you right between the eyes, ~player~. Which is neat!</state>
@@ -750,7 +758,6 @@
                 <state img="#-thinky.png" marker="SellYourClothes">I know some people online who would pay good money for ~clothing.ifPlural(those|that)~ ~clothing~, though. So hit me up if ya respect the hustle.</state>
             </case>
             <case stage="2-5 7">
-                <state img="#-happy.png">The world would be a better place with less ~clothing~ and more tits!</state>
                 <state img="#-happy.png">I'll be borrowing that after this game! That sound good? Good!</state>
                 <state img="#-nutty.png" marker="+sanity">D'you think you could kill someone with the ~clothing~, by the way? I bet ya could~!</state>
                 <state img="#-horny.png">The things you could do to me with your ~clothing~... Hng...</state>
@@ -765,6 +772,10 @@
                 <state img="#-disappoint.png">If I were a big, buff dude, I'd already have dicked you down by now.</state>
                 <state img="#-disappoint.png">Shit like this is why the commies are going to win.</state>
                 <state img="#-sad.png">&lt;i&gt;Sigh.&lt;/i&gt; I coulda had more fun jerking it in the middle of the bar.</state>
+            </case>
+            <case stage="2-5 7" priority="0">
+                <condition role="self" notSaidMarker="thighhighs" />
+                <state img="#-happy.png">The world would be a better place with less ~clothing~ and more tits!</state>
             </case>
         </trigger>
 
@@ -825,6 +836,11 @@
         </trigger>
 
         <trigger id="female_removing_major">
+            <case stage="0-7" id="11" target="aimee" targetStage="0-2">
+                <state img="#-smug.png" oneShotId="12">Why's everyone freaking out? If you get shot and killed, ya clearly weren't important enough to live in the first place.</state>
+                <state img="#-riled_up.png" oneShotId="13" marker="+sanity">Hoy shit, the way those bullets just bounce around - Aimee, are you like... Like Charlie and I? Can you not die?</state>
+                <state img="#-thinky.png">I wonder if that sort of stripping would work for me. Don't have a gun on me to find out, though.</state>
+            </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="insanetrigger" />
                 <state img="#-ineutral.png" marker="+">Maybe you're actually good for something after all.</state>
@@ -1096,7 +1112,7 @@
             <case stage="2-5">
                 <state img="#-nutty.png" marker="+sanity">Flat as a cutting board - really makes you think, right?</state>
                 <state img="#-horny.png">Smaller... more sensitive... god, i wish that were me.</state>
-                <state img="#-blissful.png">Don't worry, ~name~. I'd like you all over, no matter the size.</state>
+                <state img="#-blissful.png">Don't worry, ~name~. I'd lick you all over, no matter the size.</state>
             </case>
             <case stage="6-7">
                 <state img="#-horny.png">Oh, golly, those tiny tits... Hng, that's my kink right there.</state>
@@ -1236,6 +1252,11 @@
                 <condition role="self" notSaidMarker="insanetrigger" />
                 <state img="#-happy.png">Ayy, loli's back on the menu, boys! Let's see that tiny coochie!</state>
             </case>
+            <case stage="0-7" oneShotId="38">
+                <condition filter="witch" role="target" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-thinky.png">Say, ~name~, how do you feel about pumpkins? Specifically about fuckin' 'em.</state>
+            </case>
         </trigger>
 
         <trigger id="opponent_stripping">
@@ -1260,8 +1281,8 @@
             <case stage="0-5">
                 <condition role="self" notSaidMarker="insanetrigger" />
                 <test expr="~clothing~" value="thigh-highs" />
-                <state img="#-horny.png">Hng. Could you keep those on instead? They make pp become &lt;i&gt;big&lt;/i&gt; pp. A lot.</state>
-                <state img="#-horny.png">God, do you gotta take them off? Think of the thigh bulge, damn it! The &lt;i&gt;thigh bulge&lt;/i&gt;!</state>
+                <state img="#-horny.png" marker="thighhighs">Hng. Could you keep those on instead? They make pp become &lt;i&gt;big&lt;/i&gt; pp. A lot.</state>
+                <state img="#-horny.png" marker="thighhighs">God, do you gotta take them off? Think of the thigh bulge, damn it! The &lt;i&gt;thigh bulge&lt;/i&gt;!</state>
             </case>
             <case stage="7">
                 <test expr="~clothing~" value="thigh-highs" />
@@ -1312,7 +1333,7 @@
             <case stage="0-7" id="8">
                 <condition role="target" character="chihiro" stage="5" />
                 <condition role="self" notSaidMarker="insanetrigger" />
-                <state img="#-neutral.png">Oh, hey. Talking computer tho. A bit harder to fap to than tits, but I can manage.</state>
+                <state img="#-neutral.png" marker="alterego">Oh, hey. Talking computer tho. A bit harder to fap to than tits, but I can manage.</state>
             </case>
         </trigger>
 
@@ -1530,7 +1551,7 @@
         <trigger id="must_masturbate_first">
             <case stage="5">
                 <condition role="self" saidMarker="insanetrigger" />
-                <state img="#-fetish.png">Hnng. This could not have gone any fucking better. I get to letloose while I watch all of you... maybe god isn't so cruel after all.</state>
+                <state img="#-fetish.png">Hnng. This could not have gone any fucking better. I get to let loose while I watch all of you... maybe god isn't so cruel after all.</state>
             </case>
             <case stage="5">
                 <state img="#-happy.png">Aw, guys, ya shouldn't have! If y'all wanted me to defile myself in front of ya, all you had to say was 'please'!</state>
