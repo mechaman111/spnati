@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 9:11:06 AM on December 27, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 7:31:29 AM on December 29, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Mary</first>
@@ -31,7 +31,7 @@
         <tag>bisexual</tag>
         <tag>single</tag>
         <tag>american</tag>
-        <tag>book</tag>
+        <tag>original_character</tag>
         <tag>gamer</tag>
     </tags>
     <nicknames />
@@ -80,7 +80,8 @@
         </trigger>
 
         <trigger id="game_start">
-            <case stage="0" id="12" alsoPlaying="yuelia">
+            <case stage="0" id="12">
+                <condition role="other" character="yuelia" />
                 <state img="#-happy.png">Holy shit, it's a butterfly! I always wondered how bugs masturbate!</state>
             </case>
             <case stage="0">
@@ -145,7 +146,7 @@
                 <state img="#-neutral.png">Aw, hell yea! This shit? It's the &lt;i&gt;good&lt;/i&gt; shit.</state>
                 <state img="#-riled_up.png" marker="NL">Ohh, it's lit!</state>
                 <state img="#-blissful.png">Unf, this hand. Mama not gonna lose her shoes tonight!</state>
-                <state img="#-vore.png" marker="+sanity">I wanna lick these cards. But I won't. But I could. And I might. And I think i will.</state>
+                <state img="#-vore.png" marker="+sanity">I wanna lick these cards. But I won't. But I could. And I might. And I think I will.</state>
             </case>
             <case stage="2-5">
                 <state img="#-horny.png" marker="Dicc">Man, this hand alone's got me fully erect!</state>
@@ -158,6 +159,7 @@
                 <state img="#-neutral.png">I'm all gucci here.</state>
                 <state img="#-blank.png">I forget, do I wanna get a good hand or a bad one? Like, I wanna see tiddy, but do I not also wanna &lt;i&gt;show&lt;/i&gt; tiddy?</state>
                 <state img="#-happy.png">Yuh &lt;i&gt;yeet&lt;/i&gt;!</state>
+                <state img="#-riled_up.png">'Eff' to the 'uck' to the 'yuh' to the 'yah'!</state>
             </case>
         </trigger>
 
@@ -169,6 +171,7 @@
                 <state img="#-ineutral.png">Which card do y'all think is the most fuckable? One of the queens would be a coward's choice. I vote 8 of spades.</state>
                 <state img="#-ineutral.png">You want to know what my hand is? Wet like a fucking fish, that's what my hand is.</state>
                 <state img="#-yandere.png">The sheer thrill of not knowing whether or not it'll be me or someone else taking off something completely fucking irrelevant! Haah! How exciting!</state>
+                <state img="#-void.png">This hand bears no meaning. None at all.</state>
             </case>
             <case stage="2-3">
                 <state img="#-neutral.png" marker="YuGiOh">I set this card in face-down position and end my turn.</state>
@@ -248,10 +251,33 @@
             <case stage="0" oneShotId="4" priority="1000">
                 <state img="#-neutral.png" marker="sanity=0">My name's Mary, but y'all can call me May. Or gay. Whatever works.</state>
             </case>
+            <case stage="0-5" id="15" priority="103">
+                <condition role="other" character="revy" sayingMarker="killing" />
+                <condition role="self" saidMarker="insanetrigger" />
+                <state img="#-yandere.png" marker="RevyKillingInsane">I've killed plenty, but it doesn't really count when they're not real, right?</state>
+            </case>
+            <case stage="0-5" id="16" priority="103">
+                <condition role="other" character="revy" sayingMarker="music" />
+                <condition role="self" saidMarker="insanetrigger" />
+                <state img="#-ineutral.png" marker="RevyMusicInsane">I like listening to &lt;i&gt;fun&lt;/i&gt; stuff. Ever hear of "Hamburger Lady"?</state>
+            </case>
             <case stage="0-5" oneShotId="39">
                 <condition role="self" saidMarker="alterego" notSaidMarker="insanetrigger" />
                 <condition role="other" character="chihiro" />
                 <state img="#-neutral.png">So, that lil' loli made you? That's pretty impressive. Maybe I oughta like... take her under my wing. You know. Teach her some fun stuff.</state>
+            </case>
+            <case stage="0-5" id="17">
+                <condition role="other" character="revy" sayingMarker="music" />
+                <condition role="self" saidMarker="sanity&gt;=5" />
+                <state img="#-neutral.png" marker="RevyNoise">I listen to &lt;i&gt;real&lt;/i&gt; music, bitch. Death Grips, Whitehouse, Merzbow. Real music by &lt;i.real&lt;/i&gt; people.</state>
+            </case>
+            <case stage="0-5" id="13" priority="101">
+                <condition role="other" character="revy" sayingMarker="killing" />
+                <state img="#-nutty.png" marker="RevyKilling">Killed people? Not physically. I've been responsible for plenty, though!</state>
+            </case>
+            <case stage="0-5" id="14">
+                <condition role="other" character="revy" sayingMarker="music" />
+                <state img="#-thinky.png" marker="RevyPop">I guess I like all kindsa stuff. Jap pop mostly. Something about cute anime-sounding girls chirping in my ears really gets me going good.</state>
             </case>
             <case stage="0-5" oneShotId="1">
                 <condition role="self" notSaidMarker="insanetrigger" />
@@ -274,18 +300,25 @@
             <case stage="0-5">
                 <condition role="self" saidMarker="insanetrigger" />
                 <state img="#-ineutral.png" oneShotId="2" marker="SickFuck">Hey, ~player~. You ever think about what kind of person god is? Must be a real sick fuck, right?</state>
-                <state img="#-ineutral.png" oneShotId="3" marker="Probability">The world is ruled by random chance. People talk about probability, but probability means jack shit when something awful actually happens.</state>
-                <state img="#-headpoint.png" oneShotId="4" marker="Immortality">You don't know you can die until you do. There's no way to know whether you're immortal, only that you're mortal. Y'all get that shit?</state>
-                <state img="#-headpoint.png" oneShotId="5" marker="Solipsism">Ain't no way to prove anything outside your own mind exists, right? Like, how the fuck could you?</state>
-                <state img="#-ineutral.png" oneShotId="6" marker="LastThursdayism">Y'know what's a fun thought? The world, everything in it and all your memories of it coulda just popped into existence five seconds ago. No way to prove otherwise.</state>
-                <state img="#-ineutral.png" oneShotId="7" marker="Descartes">'I think, therefore I am'. But we can make machines that think now, so how can you ever be certain?</state>
-                <state img="#-headpoint.png" oneShotId="8" marker="Lifeisfalse">If it turned out your entire life was a lie, what'd you do? Would you care for everyone you grew up with? Your friends, family? Would it ever matter?</state>
-                <state img="#-ineutral.png" oneShotId="9" marker="Egoism">Say, is egoism really that bad? I mean, the only person you ever really know is yourselff. So why not live &lt;i&gt;for&lt;/i&gt; yourself?</state>
-                <state img="#-yandere.png" oneShotId="10" marker="Stirner">We go day by day living by these standards of 'morality', but telll me - why? What do we get out of it? Nothing. Morality is a spook.</state>
-                <state img="#-ineutral.png" oneShotId="11" marker="Romance">You ever like to think about how love is fake? I mean, it's just chemicals in your brain designed to make you breed. Romance is a myth.</state>
+                <state img="#-ineutral.png" oneShotId="3" marker="Probability" weight="3">The world is ruled by random chance. People talk about probability, but probability means jack shit when something awful actually happens.</state>
+                <state img="#-headpoint.png" oneShotId="4" marker="Immortality" weight="4">You don't know you can die until you do. There's no way to know whether you're immortal, only that you're mortal. Y'all get that shit?</state>
+                <state img="#-headpoint.png" oneShotId="5" marker="Solipsism" weight="3">Ain't no way to prove anything outside your own mind exists, right? Like, how the fuck could you?</state>
+                <state img="#-ineutral.png" oneShotId="6" marker="LastThursdayism" weight="3">Y'know what's a fun thought? The world, everything in it and all your memories of it coulda just popped into existence five seconds ago. No way to prove otherwise.</state>
+                <state img="#-ineutral.png" oneShotId="7" marker="Descartes" weight="2">'I think, therefore I am'. But we can make machines that think now, so how can you ever be certain?</state>
+                <state img="#-headpoint.png" oneShotId="8" marker="Lifeisfalse">If it turned out your entire life was a lie, a mere simulation, what'd you do? Would you care for everyone you grew up with? Your friends, family? Would it ever matter?</state>
+                <state img="#-ineutral.png" oneShotId="9" marker="Egoism" weight="3">Say, is egoism really that bad? I mean, the only person you ever really know is yourself. So why not live &lt;i&gt;for&lt;/i&gt; yourself?</state>
+                <state img="#-yandere.png" oneShotId="10" marker="Stirner" weight="3">We go day by day living by these standards of 'morality', but tell me - why? What do we get out of it? Nothing. Morality is a spook.</state>
+                <state img="#-ineutral.png" oneShotId="11" marker="Romance" weight="3">You ever like to think about how love is fake? I mean, it's just chemicals in your brain designed to make you breed. Romance is a myth.</state>
+                <state img="#-ineutral.png" oneShotId="18" marker="carcrashes">Y'know, even with seat belts people die all the time in car crashes. I thought that was interesting.</state>
             </case>
             <case stage="0-5" id="2" oneShotId="18" priority="0">
                 <state img="#-thinky.png" marker="MaiChan">Anyone have any good manga recommendations? Just finished &lt;i&gt;"Mai-chan's daily life"&lt;/i&gt; and iunno what to read next.</state>
+            </case>
+            <case stage="0-5" priority="0">
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-thinky.png" oneShotId="19" marker="52factorial" weight="2">Y'know, whenever ya shuffle a deck of cards, you're probably shuffling it in a way that's never been done before - 52 times 51, times 50, times... Y'know. A lot. It's crazy. </state>
+                <state img="#-thinky.png" oneShotId="20" marker="redisyellow" weight="2">You ever think about how, like... We could be totally seeing different colors but calling them the same? This car here is red to both of us, but my red could be your yellow or something!</state>
+                <state img="#-smug.png"></state>
             </case>
         </trigger>
 
@@ -455,6 +488,7 @@
                 <state img="#-neutral.png">Ey, man, not every loss is a loss, y'know! Except this one, because you lost.</state>
                 <state img="#-smug.png">Ooh, I bet someone here was hoping you'd lose. I wonder whomst, tho...</state>
                 <state img="#-riled_up.png">Remember what Sun Tzu once said. "Fuck bitches, get money."</state>
+                <state img="#-neutral.png">Sometimes them's the breaks, and sometimes them's break you.</state>
             </case>
             <case stage="2-5 7">
                 <state img="#-happy.png">Stripping hyyype! Woop woop!</state>
@@ -497,6 +531,7 @@
                 <state img="#-neutral.png">This is what I came here for. Sniffin' your clothes after you take 'em off.</state>
                 <state img="#-nutty.png" marker="+sanity">Hey, how about i choose what you take off and you can just fuckin' deck me? Deal?</state>
                 <state img="#-neutral.png">Get sprunked!</state>
+                <state img="#-riled_up.png">&lt;i&gt;I want your body!&lt;/i&gt;</state>
             </case>
             <case stage="6">
                 <state img="#-smug.png">You fuckers call &lt;i&gt;this&lt;/i&gt; losing? Schlicking myself while I watch babes strip? Jesus Christ, how horrible!</state>
@@ -584,6 +619,10 @@
         </trigger>
 
         <trigger id="female_removing_accessory">
+            <case stage="0-7" id="18">
+                <condition role="target" character="yuelia" stage="0" sayingMarker="transformation" />
+                <state img="#-disappoint.png">Aw, man, transformation sequence? I was hoping to see a bug jerk off.</state>
+            </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="insanetrigger" />
                 <state img="#-void.png">Why would I expect anything more from the likes of you?</state>
@@ -597,12 +636,15 @@
                 <state img="#-salty.png">When do we see the tiddies again?</state>
                 <state img="#-smug.png">Oh, yo, toss the ~clothing~ my way! I wanna see if I look as hot as you totally don't with ~clothing.ifPlural(them|it)~~!</state>
                 <state img="#-nutty.png" marker="+sanity">After you take ~clothing.ifPlural(those|that)~ off, you should put ~clothing.ifPlural(them|it)~ up your butt! For science!</state>
+                <state img="#-sad.png">I &lt;i&gt;can&lt;/i&gt; think of a way to use that to jerk off, but I shouldn't &lt;i&gt;have&lt;/i&gt; to.</state>
             </case>
             <case stage="2-5">
                 <state img="#-disappoint.png">This shit is why the aliens won't talk to us.</state>
                 <state img="#-blank.png">You're really pissing in my cornflakes here, but not in the &lt;i&gt;good&lt;/i&gt; way.</state>
                 <state img="#-sad.png">I used to have ~clothing.ifPlural(|a)~ ~clothing~ like you. Then I took a cockblock to the knee.</state>
                 <state img="#-nutty.png" marker="+sanity">How about you shove the ~clothing~ up your ass and I pull ~clothing.ifPlural(them|it)~ back out with my teeth?</state>
+                <state img="#-thinky.png">I bet I could find some way to make ~clothing~... spicier. Like with Tabasco.</state>
+                <state img="#-thinky.png">There's gotta be a way to make ~clothing~ sexy. Maybe with some oil?</state>
             </case>
             <case stage="6">
                 <state img="#-smug.png">Man, would you just look at this lil' teasin' sluuuut. Jokes on her, this is just making me more wet!</state>
@@ -616,6 +658,10 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
+            <case stage="0-7" id="19">
+                <condition role="target" character="yuelia" stage="1" />
+                <state img="#-neutral.png">Well, I &lt;i&gt;guess&lt;/i&gt; you're cute as a human, too. Bit less interestin' tho. Like, do bugs even have dicks? Biology ain't my forte.</state>
+            </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="insanetrigger" />
                 <state img="#-enraged.png">I should have your tits mounted on a fucking wall. maybe the next bitch I meet will take the fucking hint.</state>
@@ -633,7 +679,8 @@
                 <state img="#-nutty.png">I ain't playin', girl. Don't think you realize that. </state>
                 <state img="#-aaa.png" marker="+sanity">I JUST WANT TO SEE TITS, YOU SLUT!</state>
                 <state img="#-thinky.png">Ok, but hand the ~clothing~ over here, though. I bet ~clothing.ifPlural(they're|it's)~ &lt;i&gt;moist&lt;/i&gt;.</state>
-                <state img="#-neutral.png" marker="incel">I think we all learned a valuable lesson. that lesson is that all women are bitches.</state>
+                <state img="#-neutral.png" marker="incel">I think we all learned a valuable lesson. That lesson is that all women are bitches.</state>
+                <state img="#-thinky.png">Would I need lube to get your ~clothing~ all up in me? Only one way to know for sure.</state>
             </case>
             <case stage="6">
                 <state img="#-riled_up.png">Now either throw it at my face or throw the game - either works for me!</state>
@@ -773,7 +820,8 @@
                 <state img="#-sad.png">&lt;i&gt;Sigh.&lt;/i&gt; I coulda had more fun jerking it in the middle of the bar.</state>
             </case>
             <case stage="2-5 7" priority="0">
-                <condition role="self" notSaidMarker="thighhighs" />
+                <test expr="~clothing~" cmp="!=" value="thigh-highs" />
+                <test expr="~clothing~" cmp="!=" value="stockings" />
                 <state img="#-happy.png">The world would be a better place with less ~clothing~ and more tits!</state>
             </case>
         </trigger>
@@ -1256,6 +1304,11 @@
                 <condition role="self" notSaidMarker="insanetrigger" />
                 <state img="#-thinky.png">Say, ~name~, how do you feel about pumpkins? Specifically about fuckin' 'em.</state>
             </case>
+            <case stage="0-5">
+                <condition filter="kind" role="target" />
+                <state img="#-happy.png" oneShotId="14" marker="-sanity">Well fuck me sideways, ain't ~name~ just a bundle of sticks. Like, a cute bundle of sticks!</state>
+                <state img="#-thinky.png" oneShotId="15" marker="-sanity">Hey, uh, ~target~? Could you like. Call me a good girl? I usually ask for the opposite but iunno. I wanna hear you say it.</state>
+            </case>
         </trigger>
 
         <trigger id="opponent_stripping">
@@ -1283,6 +1336,12 @@
                 <state img="#-horny.png" marker="thighhighs">Hng. Could you keep those on instead? They make pp become &lt;i&gt;big&lt;/i&gt; pp. A lot.</state>
                 <state img="#-horny.png" marker="thighhighs">God, do you gotta take them off? Think of the thigh bulge, damn it! The &lt;i&gt;thigh bulge&lt;/i&gt;!</state>
             </case>
+            <case stage="0-7">
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <test expr="~clothing~" value="stockings" />
+                <state img="#-horny.png" oneShotId="16">Mmh. Do you &lt;i&gt;have&lt;/i&gt; to take those off, ~name~? Stockings are high culture.</state>
+                <state img="#-horny.png" oneShotId="17" marker="dicc">Ngl, seeing a chick with stockings gets me real hard.</state>
+            </case>
             <case stage="7">
                 <test expr="~clothing~" value="thigh-highs" />
                 <state img="#-horny.png">Hng. Could you keep those on instead? They make pp become &lt;i&gt;big&lt;/i&gt; pp. A lot.</state>
@@ -1294,6 +1353,10 @@
                 <state img="#-horny.png">This is someone's fetish, you know. And it is I. I am the someone.</state>
                 <state img="#-vore.png">I haven't shoved a sock in my mouth in a good, long time. Makes me think.</state>
                 <state img="#-riled_up.png">Hey, how sweaty are those? They better be drippin'.</state>
+            </case>
+            <case stage="0-7" oneShotId="41">
+                <test expr="~clothing~" value="gloves" />
+                <state img="#-smug.png">I once knew a guy who was super into hands. He was a real freak. Don't get why he couldn't just like feet like a normal person.</state>
             </case>
         </trigger>
 
@@ -1366,7 +1429,7 @@
                 <state img="#-ineutral.png">I bet you're enjoying yourself there. Good. Gotta savor any joy you can get in this life.</state>
                 <state img="#-yandere.png">Just imagine my face, slathered in your juices.I know I am.</state>
                 <state img="#-ineutral.png" marker="+">Think of a pile of naked bodies, covered in blood, you sitting atop it like a throne of flesh.</state>
-                <state img="#-headpoint.png">You know, jerking off is great. people always holdbackc their thoughts, but when you jerk off it's like... whatever goes.</state>
+                <state img="#-headpoint.png">You know, jerking off is great. People always hold back their thoughts, but when you jerk off it's like... whatever goes.</state>
                 <state img="#-manic.png">Yes! Scream and moan LOUDER for me!</state>
                 <state img="#-yandere.png">This reminds me of a fantasy I've always had. a lot cleaner, though. Less blood.</state>
             </case>
@@ -1570,7 +1633,7 @@
         <trigger id="start_masturbating">
             <case stage="5">
                 <condition gender="male" status="masturbating" role="other" var="mast" />
-                <state img="#-start.png" marker="FUCKstart">I see ~mast~could use a show. I think I know just what you need!</state>
+                <state img="#-start.png" marker="FUCKstart">I see ~mast~ could use a show. I think I know just what you need!</state>
             </case>
             <case stage="5">
                 <condition role="self" saidMarker="insanetrigger" />
@@ -1592,7 +1655,7 @@
             </case>
             <case stage="6">
                 <state img="#-happy.png">I hope you fucking freaks are enjoying the show! I'm enjoyin' giving it!</state>
-                <state img="#-thinky.png">I always did think about doing camshows or something. But then I'd have to, like... do things other people want me to do. and that sucks.</state>
+                <state img="#-thinky.png">I always did think about doing camshows or something. But then I'd have to, like... do things other people want me to do. And that sucks.</state>
                 <state img="#-vore.png">I usually try to fill every hole I have for this, but my options are kinda limited here. Wanna lend me a hand, ~player~? Or, y'know. A cock?</state>
                 <state img="#-neutral.png">Fuckin' 'ell, mate, I'm slicker 'an a dingo on ice skates down 'ere!</state>
                 <state img="#-horny.png">Sometimes, I like to imagine the things around me fucking me when i do this. A bit less exciting when it's people, really.</state>
@@ -1676,8 +1739,16 @@
 
         <trigger id="global">
             <case stage="0-5" id="3" oneShotId="17" priority="100">
-                <condition role="self" saidMarker="sanity&gt;=15" />
+                <condition role="self" saidMarker="insanetriggercont" />
                 <state img="#-manic.png" marker="insanetrigger">KAAAAAAAMIIIII!</state>
+            </case>
+            <case stage="0-5" id="20" oneShotId="42" priority="100">
+                <condition role="self" saidMarker="insanetriggerstart" />
+                <state img="#-panic.png" marker="insanetriggercont">This isn't real! None of it is real! </state>
+            </case>
+            <case stage="0-5" id="21" oneShotId="43" priority="100">
+                <condition role="self" saidMarker="sanity&gt;=15" />
+                <state img="#-aaa.png" marker="insanetriggerstart">W-wait a sec. What is this? Where am I?</state>
             </case>
             <case stage="0-7" oneShotId="16" priority="20">
                 <condition role="self" saidMarker="mfk" />
