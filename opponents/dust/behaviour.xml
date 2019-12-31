@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 2:01:37 PM on December 26, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 12:40:26 AM on December 31, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Dust</first>
@@ -686,9 +686,9 @@
                 <state img="#-c-standoffish.png">Give me ~cards~. Now.</state>
             </case>
             <case stage="0-6">
-                <state img="#-calm.png">Hmm... ~cards~ cards, please...</state>
-                <state img="#-annoyed.png">I guess I need to exchange these ~cards~.</state>
-                <state img="custom:#-calm-fidget" location="20%">{fidget}Ooh! Ooh! We'll take ~cards~!{!reset}</state>
+                <state img="#-calm.png">Hmm... ~cards.text~ cards, please...</state>
+                <state img="#-annoyed.png">I guess I need to exchange these ~cards.text~.</state>
+                <state img="custom:#-calm-fidget" location="20%">{fidget}Ooh! Ooh! We'll take ~cards.text~!{!reset}</state>
             </case>
             <case stage="7">
                 <state img="#-embarrassed.png">~cards~ cards....</state>
@@ -906,9 +906,10 @@
                 <test expr="~background~" value="beach" />
                 <state img="#-annoyed.png">Don't look at me. ~player~ chose the place.</state>
             </case>
-            <case stage="0-7" id="53" alsoPlaying="megumin" alsoPlayingSayingMarker="megumin_mass_murder">
+            <case stage="0-7" id="53">
                 <condition count="0" notSaidMarker="killing" />
                 <condition role="other" character="revy" sayingMarker="killing" />
+                <condition role="other" character="megumin" sayingMarker="megumin_mass_murder" />
                 <state img="#-annoyed.png" marker="megumin_mercy">If they were intelligent enough to beg for mercy, shouldn't you have at least given some pause?</state>
             </case>
             <case stage="0" totalRounds="0">
@@ -1166,7 +1167,7 @@
             </case>
             <case stage="0-7">
                 <condition role="other" character="megumin" sayingMarker="megumin_flyingVeggies" />
-                <state img="#-calm.png" marker="megumin_veggies_response">{fidget}Wait, a net for cabbage? What, do they swim?</state>
+                <state img="custom:#-fidget-snark" marker="megumin_veggies_response" location="20%">{fidget}Wait, a net for cabbage? What, do they swim?</state>
             </case>
             <case stage="0-7" oneShotId="69">
                 <condition role="other" character="guzma" saidMarker="AetherSlip" />
@@ -1437,6 +1438,30 @@
                 <condition role="other" character="yuelia" sayingMarker="dust_spirit" />
                 <state img="#-um.png" marker="yuelia_warmblood">Hm? A forest spirit? I'm just a normal Warmblood.</state>
                 <state img="#-pensive.png" marker="yuelia_warmblood">Oh, nothing like that, I'm just a wolf Warmblood.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="yuelia" sayingMarker="dust_meeting" />
+                <state img="#-embarrassed.png" marker="yuelia_meeting">Well, when I first woke up in the Glade, Ahrah was already heading toward me, and as the sword's protector, Fidget was already chasing it, and well, here we all are now.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="yuelia" sayingMarker="dust_adventureTypes" />
+                <state img="#-calm.png" marker="yuelia_adventuring">Well, my first adventure was finding about who I am and then saving the Moonbloods. Now? I'm just traveling around to help out whoever needs help.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="yuelia" sayingMarker="dust_howSouls" />
+                <state img="#-pensive.png" marker="yuelia_howSouls">The Twin Souls? Well, they were two men who killed each other at the same time, binding their spirits together. Elder Grey-eyes used them when he was creating me.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="yuelia" sayingMarker="dust_hobbies" />
+                <state img="#-laugh.png" marker="yuelia_SpareTime">Well, besides monster hunting and training, I've come to enjoy wildlife watching and reading.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="yuelia" sayingMarker="dust_goodFriends" />
+                <state img="#-laugh.png" marker="yuelia_friends">Oh, quite a few! Haley, Corbin, Sereth, and Ginger, to name just a handful.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="yuelia" sayingMarker="dust_dayJob" />
+                <state img="#-calm.png" marker="yuelia_job">Ahh, just some odd jobs around Aurora Village. Mostly monster elimination and courier work, you know?</state>
             </case>
             <case stage="2">
                 <condition role="other" character="jura" />
@@ -1726,6 +1751,10 @@
                 <state img="#-stripping.png">How much of a savage do you think I am?</state>
                 <state img="#-stripping.png">Why would you think I would eat people?</state>
             </case>
+            <case stage="1">
+                <condition role="other" character="amy" />
+                <state img="#-wat.png">I'm sorry, a what?</state>
+            </case>
             <case stage="0" totalRounds="0">
                 <condition role="self" notSaidMarker="knowsstrip" />
                 <state img="#-stripping.png">Wait... I have to undress now? Are those the rules?</state>
@@ -1821,6 +1850,10 @@
                 <condition role="other" character="tomoko" saying="knotted" />
                 <state img="#-wat.png">Why does everyone keep assuming that?</state>
             </case>
+            <case stage="1" priority="101">
+                <condition role="other" character="mary" notSaidMarker="insanetrigger" />
+                <state img="#-wat.png">Um... the knot? Ummm...</state>
+            </case>
             <case stage="6">
                 <condition role="other" character="jessie" />
                 <state img="#-pensive.png">"Furry?"</state>
@@ -1868,6 +1901,10 @@
             <case stage="6">
                 <condition role="other" character="nami" />
                 <state img="#-embarrassed.png">Er... thanks?</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="amy" />
+                <state img="#-wat.png">Um, I am quite the formidable swordsman, but what's an Exalted?</state>
             </case>
             <case stage="7">
                 <condition count="0" status="not_lost_all" />
@@ -2327,7 +2364,7 @@
             </case>
             <case stage="0-9">
                 <condition role="target" character="megumin" stage="3" />
-                <state img="custom:#-fidget-snark" marker="megumin_guts" location="20%">{Fidget}I gotta say, I like how Megumin's got guts.</state>
+                <state img="custom:#-fidget-snark" marker="megumin_guts" location="20%">{fidget}I gotta say, I like how Megumin's got guts.</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="jura" stage="1" />
@@ -2335,7 +2372,7 @@
                 <state img="custom:#-calm-ahrah">A sword is meant to represent who you are. It's your partner.</state>
                 <state img="#-annoyed.png">You treat it with that, and it won't really have much of a long useful life.</state>
             </case>
-            <case stage="0">
+            <case stage="0-9">
                 <condition role="target" character="yuelia" stage="1" />
                 <state img="#-um.png">Oh! You're able to transform. How interesting!</state>
                 <state img="custom:#-calm-fidget" location="20%">{fidget}Wow! A shapeshifter! Neat!</state>
