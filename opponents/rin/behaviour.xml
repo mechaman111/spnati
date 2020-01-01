@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 9:53:12 PM on December 22, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 10:44:55 PM on December 31, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Rin</first>
@@ -713,8 +713,8 @@
         <trigger id="swap_cards">
             <case stage="0-3" priority="999">
                 <condition role="self" saidMarker="sleep==2" />
-                <state img="#-sleep2.png" marker="sleep=3">Zzz...huh-wha...Oh. ~cards~ cards.</state>
-                <state img="#-sleep2.png" marker="sleep=3">Zzz...hm? ...~cards~ cards...</state>
+                <state img="#-sleep2.png" marker="sleep=3">Zzz...huh-wha...Oh. ~cards.text~ cards.</state>
+                <state img="#-sleep2.png" marker="sleep=3">Zzz...hm? ...~cards.text~ cards...</state>
                 <state img="#-sleep2.png" marker="sleep=3">Zzz...huh-...what did I...</state>
             </case>
             <case stage="3-6" priority="1">
@@ -724,20 +724,20 @@
                 <state img="#-DPAmused.png" marker="howaboutnow">...Are you feeling it now?</state>
             </case>
             <case stage="0-6">
-                <state img="#-absent.png">~cards~.</state>
+                <state img="#-absent.png">~cards.text~.</state>
                 <state img="#-pondering.png">I have to think about what I think is the appropriate amount of cards.</state>
-                <state img="#-absent.png">~cards~ should do.</state>
-                <state img="#-bored.png">~cards~...</state>
-                <state img="#-pondering.png">~cards~, I suppose.</state>
+                <state img="#-absent.png">~cards.text~ should do.</state>
+                <state img="#-bored.png">~cards.text~...</state>
+                <state img="#-pondering.png">~cards.text~, I suppose.</state>
                 <state img="#-pondering.png">Hmmm...</state>
                 <state img="#-lucid.png">I'm really spacing out, aren't I?</state>
-                <state img="#-absent.png">~cards~ cards.</state>
-                <state img="#-pondering.png">What's the number...Oh yeah. ~cards~.</state>
-                <state img="#-confused.png">I'm not really good with numbers. ~cards~?</state>
-                <state img="#-doubt.png">~cards~...?</state>
-                <state img="#-absent.png">~cards~ I guess.</state>
+                <state img="#-absent.png">~cards.text~ cards.</state>
+                <state img="#-pondering.png">What's the number...Oh yeah. ~cards.text~.</state>
+                <state img="#-confused.png">I'm not really good with numbers. ~cards.text~?</state>
+                <state img="#-doubt.png">~cards.text~...?</state>
+                <state img="#-absent.png">~cards.text~ I guess.</state>
                 <state img="#-lucid.png">...</state>
-                <state img="#-confused.png" oneShotId="54">...Wait, I can't take more than five? ~cards~ then...</state>
+                <state img="#-confused.png" oneShotId="54">...Wait, I can't take more than five? ~cards.text~ then...</state>
             </case>
             <case stage="3-6">
                 <state img="#-lucid.png" marker="havingfunyet">Are you having fun yet?</state>
@@ -845,8 +845,9 @@
                 <state img="#-DPUpset.png">...I feel like I'm being constricted by a huge snake...an actual one, mind you.</state>
                 <state img="#-doubt.png">...Oh no...</state>
             </case>
-            <case stage="1-6" saidMarker="sevenyears" priority="7">
-                <state img="#-lucid.png">...Honestly, these bad omens are really getting on my nerves.</state>
+            <case stage="1-6" priority="10">
+                <condition role="self" saidMarker="sevenyears" />
+                <state img="#-lucid.png" oneShotId="272">...Honestly, these bad omens are really getting on my nerves a little.</state>
             </case>
         </trigger>
 
@@ -1378,6 +1379,12 @@
                 <condition role="other" character="emi" saidMarker="pirate_story9" sayingMarker="pirate_story10" />
                 <state img="#-DPNormal.png">...That's...a little morbid...just like my works of art.</state>
             </case>
+            <case stage="4-6">
+                <condition role="other" character="brock" saidMarker="brock_rin_creepyduck" />
+                <condition role="self" notSaidMarker="rin_duckanswer" />
+                <state img="#-DPUpset.png" marker="rin_duckanswer">I just think Rubber Ducks look creepy in general, Everything that has eyes, but isn't alive is very disturbing.</state>
+                <state img="#-doubt.png" marker="rin_duckanswer">Really, anything that has eyes where it shouldn't is disturbing...Like...Rubber Ducks and reflections on mirrors.</state>
+            </case>
             <case stage="0">
                 <condition role="self" notSaidMarker="can_i_have_a_fry" />
                 <condition role="other" character="erufuda" />
@@ -1455,6 +1462,7 @@
                 <state img="#-bored.png">...People always seem to always ask, "How's life?"  But they never stop to ask, "Why's life?"</state>
                 <state img="#-DPAmused.png">Get this...People say the funniest things..when they are funny...</state>
                 <state img="#-amused.png">I feel like it's nice to moo as a cow...Probably feels really good to moo.</state>
+                <state img="#-amused.png">When you reach for the clouds...every inch counts...no matter what you do to grab it.</state>
             </case>
             <case stage="0-6" totalRounds="8-" priority="10">
                 <state img="#-bored.png" oneShotId="108">What are clouds? I always thought they were thoughts of the sky because you can't touch them...or something like that.</state>
@@ -1562,17 +1570,19 @@
                 <state img="#-confused.png" oneShotId="269">Grapefruit is a fruit...named after a fruit.</state>
                 <state img="#-lucid.png" oneShotId="270">One of the first things you learn is how to sleep, and a lot of people are still not good at it.</state>
                 <state img="#-pondering.png" oneShotId="271">If a wheelchair is a chair without legs, given to people without legs, would the wheelchair be considered disabled?</state>
+                <state img="#-pondering.png" oneShotId="274">If plants could think, they would look at predators like lions and hyenas as their protectors from the evil herbivores...</state>
+                <state img="#-confused.png" oneShotId="275">Have you ever felt like some days...weeks...or even months are more...'Monday-like' than others, even if it isn't a Monday?</state>
+                <state img="#-lucid.png" oneShotId="276">Maybe dogs are afraid of vacuum cleaners because they're intimidated by anything that can do one continuous 'woof'.</state>
+                <state img="#-DPAmused.png" oneShotId="277">Really, the only time we say "Hey Stranger" is to people we already know.</state>
+                <state img="#-pondering.png" oneShotId="279">Nudists must really have trouble cleaning their glasses.</state>
+                <state img="#-DPAmused.png" oneShotId="278">Your tongue knows exactly how everything you look at will feel.</state>
+                <state img="#-absent.png" oneShotId="280">People who use anti-aging creams must have the youngest looking fingertips in the world...Doesn't really apply to me though. I would of just faceplanted into it.</state>
+                <state img="#-pondering.png" oneShotId="281">One brick is good for attacking, but a lot of them is good for defending.</state>
+                <state img="#-confused.png" oneShotId="282">If you're swimming underwater...aren't you also swimming above water as well? English is weird.</state>
             </case>
             <case stage="0-6" totalRounds="8-" priority="10">
                 <condition role="other" character="emi" />
                 <state img="#-pondering.png" oneShotId="186" marker="dead_guy_26">I learned that some guy died running 26 miles and now people do it for fun. Basically rubbing it in his dead face. Emi, do you know anything about this guy?</state>
-            </case>
-            <case stage="0-2" priority="10">
-                <state img="#-absent.png">Clubs...Well, I am a part of the Art Club back in Yamaku.</state>
-                <state img="#-DPNormal.png">Diamonds...They say they're a girl's best friend...Not mine. I'm friends with pencils, paints, and paper.</state>
-                <state img="#-DPAmused.png">Spades...Well, let's call a spade a spade, not a gardening tool.</state>
-                <state img="#-pondering.png">...You're wondering if my cards are any good? Yes...No...Maybe so...</state>
-                <state img="#-bored.png">...The inner machinations of my mind are an enigma...</state>
             </case>
             <case stage="0-2" priority="10">
                 <test expr="~name~" cmp="!=" value="Hisao" />
@@ -1663,6 +1673,13 @@
             <case stage="0-6" priority="5">
                 <condition role="other" character="beatrix" timeInStage="0" />
                 <state img="#-lucid.png" oneShotId="206">That...wasn't an insult...I'm just saying...you've added seven years of bad luck to me, just from seeing your panties.</state>
+            </case>
+            <case stage="0-2" priority="0">
+                <state img="#-absent.png">Clubs...Well, I am a part of the Art Club back in Yamaku.</state>
+                <state img="#-DPNormal.png">Diamonds...They say they're a girl's best friend...Not mine. I'm friends with pencils, paints, and paper.</state>
+                <state img="#-DPAmused.png">Spades...Well, let's call a spade a spade, not a gardening tool.</state>
+                <state img="#-pondering.png">...You're wondering if my cards are any good? Yes...No...Maybe so...</state>
+                <state img="#-bored.png">...The inner machinations of my mind are an enigma...</state>
             </case>
         </trigger>
 
@@ -1856,6 +1873,10 @@
             <case stage="4">
                 <condition role="other" character="amy" />
                 <state img="#-DPNormal.png">Oh, my poor innocence.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="brock" />
+                <state img="#-DPNormal.png">...That depends. You're not gonna blow my clothes up, are you? I don't my clothes to become confetti.</state>
             </case>
             <case stage="0" priority="90">
                 <condition role="other" character="megumin" />
@@ -2398,6 +2419,10 @@
                 <condition role="other" character="amy" />
                 <state img="#-bored.png">That I do...what about it?</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="brock" />
+                <state img="#-strippingsandals.png">Well, considering that you wanted to help strip my clothes, I always have to make you question my question.</state>
+            </case>
             <case stage="1">
                 <condition count="0" filter="emi" />
                 <state img="#-doubt.png">Well...since I really don't have any...hands...I may need some help stripping. ~player~, would you mind getting my tie off?</state>
@@ -2446,7 +2471,8 @@
         </trigger>
 
         <trigger id="stripped">
-            <case stage="1" saidMarker="artistunlucky2" priority="999">
+            <case stage="1" priority="999">
+                <condition role="self" saidMarker="artistunlucky2" />
                 <state img="#-lucid.png">It's a deep and mysterious law of the universe.</state>
             </case>
             <case stage="3">
@@ -2759,6 +2785,10 @@
             <case stage="6">
                 <condition role="other" character="amy" />
                 <state img="custom:#-stripping">Hm...So, If I'm a piece of craft, wouldn't that make us &lt;i&gt;all&lt;/i&gt; paintings?...Either way, I appreciate the sentiment.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="brock" />
+                <state img="#-DPAmused.png">Yep. Pretty much. At least you got it faster than most people. Most people would just be left with more questions.</state>
             </case>
             <case stage="1" saidMarker="dirty_floor">
                 <state img="#-annoyed.png">I pretty much use my feet for everything...eating, painting, walking...I guess you could say dirty floors are the bane of my existence.</state>
@@ -3442,6 +3472,10 @@
                 <state img="#-curious.png">...That palette seems a little too big for you, doesn't it? </state>
                 <state img="#-curious.png">...You're a painter too? You must be really experienced to have a palette that big...</state>
             </case>
+            <case stage="0-8" id="152">
+                <condition role="target" character="brock" stage="3" />
+                <state img="#-surprised.png">...Woah.</state>
+            </case>
             <case stage="0-8">
                 <condition role="other" character="ini" stage="0-4" saying="I'm gonna be honest, I have no idea what's going on right now." />
                 <state img="#-lucid.png">...Me neither Ini...me neither...</state>
@@ -3514,6 +3548,10 @@
             <case stage="0-8">
                 <condition role="target" character="chazz" stage="1" />
                 <state img="#-bored.png">Oh...well then...Did anyone else just see a weird yellow thing come out just now? Or am I just seeing things again?</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="brock" stage="4" />
+                <state img="#-DPAmused.png">...You just wanted to shoot that out, didn't you? I mean...I didn't mind it. It's a nice rocket.</state>
             </case>
             <case stage="0-8">
                 <condition role="self" notSaidMarker="paintanalysis" />
@@ -4264,11 +4302,14 @@
                 <condition role="self" saidMarker="pitsandals==1" />
                 <state img="#-curious.png" marker="pitsandals=2">Where did you get your sandals?...I mean, I do like my pair, but yours...I don't think I've seen anything like them.</state>
             </case>
+            <case stage="0-8" saidMarker="sleep">
+                <state img="#-DPAmused.png" oneShotId="273">...Hey, I'm not sleepy this time.</state>
+            </case>
             <case stage="0-8">
                 <state img="#-lucid.png" weight="0.8">...Goodbye ~clothing~.</state>
                 <state img="#-pondering.png">...Fair choice.</state>
-                <state img="#-DPAmused.png">...Hey, I'm not sleepy this time.</state>
                 <state img="#-bored.png">...I think you made a fair choice this time.</state>
+                <state img="#-lucid.png">...And off it goes.</state>
             </case>
             <case stage="7">
                 <state img="#-confused.png">You're taking off that?</state>
@@ -5220,6 +5261,10 @@
                 <state img="#-bored.png">That's some dark magic you got going there...whoever is doing that.</state>
                 <state img="#-absent.png">Looks like the darkness won't let you leave...Like mine won't leave my mind...</state>
             </case>
+            <case stage="0-8" id="153">
+                <condition role="target" character="brock" stage="4" />
+                <state img="#-surprised.png">...Oh my. The rocket comes back full circle.</state>
+            </case>
             <case stage="0-8">
                 <state img="#-lucid.png" weight="0.7">...Alright...</state>
                 <state img="#-curious.png">...Could this be the body of wonders?</state>
@@ -5252,6 +5297,10 @@
                 <state img="#-confused.png">~player~ did this?...Hm...I don't know about that.</state>
             </case>
             <case stage="0-8">
+                <condition role="target" character="brock" stage="5" />
+                <state img="#-confused.png" marker="rin_brock_scars">...That's impressive that you can take a hit from a rocket, yet...Where's the scars?</state>
+            </case>
+            <case stage="0-8">
                 <condition role="target" character="pit" />
                 <state img="#-curious.png">Oh my...you have the chest of David Michelangelo.</state>
                 <state img="#-surprised.png">I cannot believe my eyes...what do I even believe anymore?</state>
@@ -5266,16 +5315,16 @@
                 <condition role="other" character="emi" />
                 <state img="#-DPAmused.png">Hey Emi...you have some competition.</state>
             </case>
-            <case stage="0-8">
+            <case stage="0-8" priority="1">
                 <condition filter="athletic" role="target" />
                 <state img="#-pondering.png">I wonder who would win in a race between them and Emi...</state>
             </case>
-            <case stage="0-8">
+            <case stage="0-8" priority="1">
                 <condition filter="chubby" role="target" />
                 <state img="#-curious.png">...Are you made out of marshmallow?</state>
                 <state img="#-confused.png">...I'm getting some "Persistence of Memory" vibes right about now.</state>
             </case>
-            <case stage="0-8">
+            <case stage="0-8" priority="1">
                 <condition filter="muscular" role="target" />
                 <state img="#-DPAmused.png">I'd say Emi has some competition.</state>
                 <state img="#-lucid.png">Reminds me of the statues I see in museums...you know the ones...</state>
@@ -5337,7 +5386,7 @@
             <case stage="0-8">
                 <condition role="self" saidMarker="tackle" />
                 <state img="#-pondering.png">Hm...Good enough.</state>
-                <state img="#-DPAmused.png">Not bad at all ~name~.</state>
+                <state img="#-DPAmused.png">Not bad at all, ~name~.</state>
             </case>
             <case stage="0-8">
                 <state img="#-absent.png">Not bad...</state>
