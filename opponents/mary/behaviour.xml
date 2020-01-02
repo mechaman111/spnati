@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 6:33:44 PM on January 01, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 5:12:21 PM on January 02, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Mary</first>
@@ -85,6 +85,10 @@
                 <condition role="target" character="chun-li" />
                 <state img="#-happy.png">Damn, girl, your thighs are so thick you must kick mules for a living!</state>
             </case>
+            <case stage="0">
+                <condition filter="gamer" role="target" />
+                <state img="#-riled_up.png">Aw, shit! A fuckin' fellow gamer bro! Get ready for a smackdown!</state>
+            </case>
         </trigger>
 
         <trigger id="game_start">
@@ -93,9 +97,13 @@
                 <state img="#-happy.png">Holy shit, it's a butterfly! I always wondered how bugs masturbate!</state>
             </case>
             <case stage="0">
+                <condition role="other" character="kizuna" />
+                <state img="#-happy.png">Holy shit, it's fucking Kizuna! I watch your stuff religiously! And I mean that literally!</state>
+            </case>
+            <case stage="0">
                 <state img="#-nutty.png" marker="ImTheJokahBaby">You know how I got here? How I got these scars? I'm playin' pokah, baby!</state>
-                <state img="#-neutral.png" weight="3">Time to chew some assgum and kick some... Yeah!</state>
-                <state img="#-happy.png" marker="ReadyToBingo" weight="3">I'm sexy, free, and ready to bingo!</state>
+                <state img="#-neutral.png" weight="5">Time to chew some assgum and kick some... Yeah!</state>
+                <state img="#-happy.png" marker="ReadyToBingo" weight="5">I'm sexy, free, and ready to bingo!</state>
             </case>
         </trigger>
 
@@ -272,6 +280,25 @@
                 <test expr="~human.stage~" cmp="&gt;=" value="1" />
                 <state img="#-horny.png">Hot damn, you have a good ass, Nami. Like two loaves of soft, sexy bread.</state>
             </case>
+            <case stage="0-5" priority="150">
+                <condition role="other" character="tomoko" />
+                <condition role="self" saidMarker="TomokoGames" notSaidMarker="insanetrigger" />
+                <state img="#-smug.png" marker="TomokoGames2">I used to play the popular stuff but it got way too stale. I mostly play souls-likes now to challenge my skills and Kojima shit to challenge my mind.</state>
+            </case>
+            <case stage="0-5" priority="150">
+                <condition role="other" character="tomoko" />
+                <condition role="self" saidMarker="TomokoAnime" notSaidMarker="insanetrigger" />
+                <state img="#-salty.png" marker="TomokoAnime2">God, I know, right? How many freakin' 'cute girls start a band' shows do we need?</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="tomoko" stage="2" />
+                <condition role="self" saidMarker="TomokoFetish" notSaidMarker="insanetrigger" />
+                <alternative>
+                    <condition role="self" notSaidMarker="TomokoFetish2" />
+                </alternative>
+                <state img="#-salty.png" oneShotId="50" marker="TomokoFetish2">What? We're all here for fucked up reasons anyway, right? Might as well be open about it!</state>
+                <state img="#-thinky.png" oneShotId="51" marker="TomokoFetish2">I mean, I don't think it's too bad, right? We're all here to look at some tits and ass, why not help each other along a bit more if we can?</state>
+            </case>
             <case stage="0-5">
                 <condition role="other" character="tomoko" stage="2" />
                 <condition role="self" notSaidMarker="insanetrigger" />
@@ -280,6 +307,15 @@
                 </alternative>
                 <state img="#-riled_up.png" oneShotId="25" marker="TomokoGames">So, what do you play, Tomoko? Shooters, map games, yearly EA garbage?</state>
                 <state img="#-riled_up.png" oneShotId="26" marker="TomokoAnime">What sort of anime do you watch? I love a brutal shounen.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="chiaki" stage="1-8" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-neutral.png" oneShotId="56" marker="ChiakiGames">So, Chiaki, what games do you play? 'cause I'd like to play Super smash Bros with you, if you know what I'm saying.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="futaba" stage="1-6" />
+                <state img="#-riled_up.png" marker="FutabaGamer">What's your MO, Futaba? You seem like you'd have good taste in vidya.</state>
             </case>
             <case stage="0-5" id="15" priority="103">
                 <condition role="other" character="revy" sayingMarker="killing" />
@@ -299,7 +335,7 @@
             <case stage="0-5" id="17">
                 <condition role="other" character="revy" sayingMarker="music" />
                 <condition role="self" saidMarker="sanity&gt;=5" />
-                <state img="#-neutral.png" marker="RevyNoise">I listen to &lt;i&gt;real&lt;/i&gt; music, bitch. Death Grips, Whitehouse, Merzbow. Real music by &lt;i.real&lt;/i&gt; people.</state>
+                <state img="#-neutral.png" marker="RevyNoise">I listen to &lt;i&gt;real&lt;/i&gt; music, bitch. Death Grips, Whitehouse, Merzbow. Real music by &lt;i&gt;real&lt;/i&gt; people.</state>
             </case>
             <case stage="0-5">
                 <condition role="other" character="jessie" sayingMarker="JessieQA_Backdoor" />
@@ -371,6 +407,27 @@
                 <condition role="self" notSaidMarker="insanetrigger" />
                 <state img="#-blank.png" marker="JessieMistakes">I still remember every single mistake I've made since first grade, so why shouldn't everyone else?</state>
             </case>
+            <case stage="0-5">
+                <condition role="self" sayingMarker="MeiaSugma" />
+                <condition role="other" character="meia" sayingMarker="mary_sugma" />
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="meia" saidMarker="mary_sugma" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-smug.png" marker="SugmaHazard">I'll have ya know that 'sugma' is actually a serious cognitohazard, Meia. A lesser person than I would've used it against you just now.</state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="tomoko" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <alternative>
+                    <condition role="self" saidMarker="TomokoAnime2" />
+                </alternative>
+                <alternative>
+                    <condition role="self" saidMarker="TomokoGames2" />
+                </alternative>
+                <state img="#-neutral.png" oneShotId="48" marker="TomokoBoards">So, you're a bit like me, Tomoko. You frequent imageoards and shit, too? I hear the Japanese ones get wild.</state>
+                <state img="#-thinky.png" oneShotId="49" marker="TomokoReasons">I wonder if you're here for the same reasons as I am, Tomoko...</state>
+            </case>
             <case stage="0-5" id="13" priority="101">
                 <condition role="other" character="revy" sayingMarker="killing" />
                 <state img="#-nutty.png" marker="RevyKilling">Killed people? Not physically. I've been responsible for plenty, though!</state>
@@ -384,6 +441,11 @@
                 <condition role="self" notSaidMarker="insanetrigger" />
                 <state img="#-smug.png" marker="MeiaSlang">Slang is easy, Meia. The basics are that rad means cool, cool means bad, bad means good, good means lame. &lt;i&gt;Easy.&lt;/i&gt; </state>
                 <state img="#-smug.png" marker="MeiaSugma">How about I start you with the basics, Meia? 'Sugma' is a pretty common term on Earth.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="kizuna" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-thinky.png" oneShotId="60" marker="+sanity">Y'know, I always &lt;i&gt;knew&lt;/i&gt; Kizuna was real. Though it brings up the question of whether I am, again.</state>
             </case>
             <case stage="0-5" oneShotId="51">
                 <test expr="~background~" value="street" />
@@ -437,7 +499,7 @@
                 <condition role="self" notSaidMarker="insanetrigger" />
                 <state img="#-thinky.png" oneShotId="19" marker="52factorial" weight="2">Y'know, whenever ya shuffle a deck of cards, you're probably shuffling it in a way that's never been done before - 52 times 51, times 50, times... Y'know. A lot. It's crazy. </state>
                 <state img="#-thinky.png" oneShotId="20" marker="redisyellow" weight="2">You ever think about how, like... We could be totally seeing different colors but calling them the same? This card here is red to both of us, but my red could be your yellow or something!</state>
-                <state img="#-smug.png" oneShotId="21" marker="lifeiscray">Ever think how crazy &lt;i&gt;any&lt;/i&gt; theory on life? Either nothing blew up like 14 billion years ago and then we evolved a bunch of stuff that wasn't immediately useful, or some omnipotent being spawned and put us here for no reason.</state>
+                <state img="#-smug.png" oneShotId="21" marker="lifeiscray">Ever think how crazy &lt;i&gt;any&lt;/i&gt; theory on life is? Either nothing blew up like 14 billion years ago and then we evolved a bunch of stuff that wasn't immediately useful, or some omnipotent being spawned and put us here for no reason.</state>
                 <state img="#-neutral.png" oneShotId="22" marker="primordialsoup">They say that the odds of life coming to be the way it did with evolution, and the primordial soup are, well. Impossible. Folks forget that shit could have been happening all over the universe, for billions of years. We just got unlucky. </state>
             </case>
             <case stage="0-5" priority="0">
@@ -624,6 +686,12 @@
                 <state img="#-yandere.png">You thought you saw the last of me in Zimbabwe, didn't you, Xander!? Well I'm back to finish what I started!</state>
             </case>
             <case stage="0-7">
+                <condition filter="shy" role="target" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-smug.png" oneShotId="61">Ya ain't much of a fucking man if you get all wimpy about stripping some clothes, smh.</state>
+                <state img="#-smug.png" oneShotId="62">How tiny is your dick if you're this worked up about stripping?</state>
+            </case>
+            <case stage="0-7">
                 <condition role="self" saidMarker="insanetrigger" />
                 <state img="#-headpoint.png">Were you thinking you could win with that hand? Are you r'arted or something?</state>
                 <state img="#-yandere.png">If you play nice, I'll stay happy. You want me to stay happy, don't you?</state>
@@ -669,6 +737,16 @@
                 <condition role="target" character="jessie" stage="0" />
                 <condition role="self" notSaidMarker="insanetrigger" />
                 <state img="#-riled_up.png">Wait you're &lt;i&gt;the&lt;/i&gt; Jessie Maye? I have an entire fuckin' research folder dedicated to you!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="chiaki" stage="0" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-horny.png">Holy shit, Chiaki, you're a gamer, too? I didn't know they made them that hot!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="futaba" stage="0" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-horny.png">Hng... small, dorky cute, ginger gamer girl in thigh highs. Thank you, god.</state>
             </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="insanetrigger" />
@@ -804,6 +882,12 @@
             <case stage="0-7" id="18">
                 <condition role="target" character="yuelia" stage="0" sayingMarker="transformation" />
                 <state img="#-disappoint.png">Aw, man, transformation sequence? I was hoping to see a bug jerk off.</state>
+            </case>
+            <case stage="0-7">
+                <condition filter="lesbian" role="target" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-salty.png" oneShotId="65">What do i always fucking say? Lesbians are goddamn prudes!</state>
+                <state img="#-salty.png" oneShotId="64">Oh, what the hell? I thought dykes don't give a shit about accessorizing!</state>
             </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="insanetrigger" />
@@ -1001,7 +1085,7 @@
                 <state img="#-happy.png">I'll be borrowing that after this game! That sound good? Good!</state>
                 <state img="#-nutty.png" marker="+sanity">D'you think you could kill someone with the ~clothing~, by the way? I bet ya could~!</state>
                 <state img="#-horny.png">The things you could do to me with your ~clothing~... Hng...</state>
-                <state img="#-smug.png">I don't even get wearing something like ~clothing~. Does something like that ever make a difference?</state>
+                <state img="#-smug.png">I don't even get wearing something like ~clothing.ifPlural(|a)~ ~clothing~. Does something like that ever make a difference?</state>
             </case>
             <case stage="0-1">
                 <state img="#-smug.png">The virgin ~clothing~ vs the chad panties. Y'know which one would win.</state>
@@ -1326,6 +1410,13 @@
         </trigger>
 
         <trigger id="male_crotch_is_visible">
+            <case stage="0-7">
+                <condition count="0" filter="small_penis" role="target" />
+                <alternative>
+                    <condition filter="gamer" role="target" />
+                </alternative>
+                <state img="#-happy.png">Look at that joystick! Get it? Because video games? God, I'm so fucking clever!</state>
+            </case>
             <case stage="0-7" oneShotId="48">
                 <state img="#-salty.png" oneShotId="30" marker="yaoihole">...Wait. Where's your yaoi hole? Did you have it removed or something?</state>
                 <state img="#-neutral.png" oneShotId="31">Huh. They're a lot less... blurry IRL. No black bars on 'em, either.</state>
@@ -1420,7 +1511,7 @@
             <case stage="2-5">
                 <state img="#-nutty.png" marker="+sanity">I want to make home inside those tits. Like, with a nice front porch and a back yard for the dogs to run around in.</state>
                 <state img="#-horny.png">Whoa, mama, talk about a set of honkers!</state>
-                <state img="#-horny.png">It is eery man's rights to make their own decisions, live life to the fullest and look at some big ole tiddies.</state>
+                <state img="#-horny.png">It is in every man's rights to make their own decisions, live life to the fullest and look at some big ole tiddies.</state>
             </case>
             <case stage="6-7">
                 <state img="#-happy.png">That's a great pair of gazongas! Real big galahahoogas! Some damn fine bing-bang-a-ding-o-la-hoogas!</state>
@@ -1542,6 +1633,23 @@
                 <state img="#-smug.png" oneShotId="28">I remember when I was still in high school. Don't remember if I learned anything, but the chicks were bangin'.</state>
             </case>
             <case stage="0-7">
+                <condition filter="gamer" role="target" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-smug.png" oneShotId="57">And you call yourself a real gamer with hands like that? Pathetic.</state>
+                <state img="#-neutral.png" oneShotId="58">This is what we &lt;i&gt;don't&lt;/i&gt; call a 'pro gamer move', bro.</state>
+                <state img="#-smug.png" oneShotId="59">Is that really the best play you could muster? Talk about weak af.</state>
+            </case>
+            <case stage="0-7">
+                <condition filter="mean" role="target" />
+                <state img="#-smug.png" oneShotId="52">Hah. Time for the bitch to strip. I love it when bitches strip.</state>
+                <state img="#-salty.png" oneShotId="53" marker="+sanity">Why do you have to be such a cunt, you cunt? Just enjoy the cunting game!</state>
+            </case>
+            <case stage="0-7">
+                <condition filter="aggressive" role="target" />
+                <state img="#-thinky.png" oneShotId="54">Y'know, if you wanna punch something out of anger, I'm right here.</state>
+                <state img="#-smug.png" oneShotId="55">You seem a bit salty about that loss. Wanna talk about it? Maybe wreck my shit? Either works for me.</state>
+            </case>
+            <case stage="0-7">
                 <condition role="other" character="amy" sayingMarker="go_apeshit" />
                 <condition role="self" notSaidMarker="insanetrigger" />
                 <state img="#-riled_up.png">Yea! Amy knows what's up! Ya gotta go &lt;i&gt;wild&lt;/i&gt; sometimes!</state>
@@ -1570,15 +1678,44 @@
                 <state img="#-thinky.png">It's like 30 gigs at this point, and I have it all categorized - girl on girl, solo show, solo male, threesome, that one furry thing...</state>
             </case>
             <case stage="0-7">
+                <condition role="target" character="chiaki" stage="3" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-horny.png">D-do you really gotta lose the thigh-highs? The skindentation  from them is &lt;i&gt;so good&lt;/i&gt;!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="futaba" stage="3" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-horny.png">Please, could you keep those on for just a &lt;i&gt;bit&lt;/i&gt; longer? I got a major thing for ZR.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="futaba" stage="5" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-horny.png">Time to see if the carpet matches your name~!</state>
+            </case>
+            <case stage="0-7">
                 <condition role="target" character="nami" stage="0" />
                 <state img="#-riled_up.png">Niiice! My hitachi sure as hell can't pull off shit like that!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="angie" stage="7" />
+                <state img="#-smug.png">Did ya really forget you had that ribbon? And they call &lt;i&gt;me&lt;/i&gt; braindead.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="meia" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-salty.png">I don't mean a planet without men, I mean a planet full of freakin' dykes. I couldn't stand it.</state>
+            </case>
+            <case stage="0-7">
+                <condition filter="gay" role="target" />
+                <condition count="1" gender="male" />
+                <state img="#-smug.png" oneShotId="63">Wow, it must blow being ~name~ right now. Surrounded by pussy but craving the dick.</state>
             </case>
             <case stage="0-7" oneShotId="49">
                 <condition filter="ginger" role="target" />
                 <condition role="self" notSaidMarker="insanetrigger" />
                 <state img="#-thinky.png" marker="gingers">I have always had a thing for redheads, y'know. Hot, fiery, have no souls. The whole package.</state>
             </case>
-            <case stage="0-7">
+            <case stage="0-7" priority="55">
                 <condition role="self" saidMarker="Boots" notSaidMarker="insanetrigger" />
                 <test expr="~clothing~" value="boots" />
                 <state img="#-horny.png" oneShotId="41" marker="FootFetish">Of course, I'm just as happy seeing you without them. Fucking &lt;i&gt;nice&lt;/i&gt;!</state>
@@ -1654,13 +1791,38 @@
             <case stage="0-7" oneShotId="44">
                 <condition role="target" character="tomoko" stage="1" />
                 <condition role="self" notSaidMarker="insanetrigger" />
-                <state img="#-happy.png" marker="-sanity">Aw, shit, we gotta lot to discuss, then! Ya really are a lot like I was back in ye olden days!</state>
+                <state img="#-happy.png" marker="-sanity" weight="3">Aw, shit, we gotta lot to discuss, then! Ya really are a lot like I was back in ye olden days!</state>
                 <state img="#-thinky.png" marker="TomokoFetish">I was more thinking about what you're &lt;i&gt;into&lt;/i&gt;, Tomoko. Feet, armpits, lolis, guro...</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="jessie" stage="1" />
                 <condition role="self" notSaidMarker="insanetrigger" />
                 <state img="#-riled_up.png">And now you're here, hot as shit, IRL! This rocks some serious cocks!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="chiaki" stage="4" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-sad.png">I mean, you're still super hot without them, but it's just not the same.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="futaba" stage="4" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-disappoint.png">I mean, we're closer to seeing you naked, but I'd rather have seen you naked &lt;i&gt;but wearing thigh highs&lt;/i&gt;. I bet ~player~ agrees, the perv.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="futaba" stage="6" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-disappoint.png">...oh. I mean, you're hot as fuck, but I was hoping there''d be something else there. Y know. Futa-ba?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="angie" stage="8" />
+                <state img="#-riled_up.png">But there ain't no stopping the fuck train now, Angie! It has no brakes!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="human" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <test expr="~clothing~" value="kilt" />
+                <state img="#-smug.png">A freakin' kilt? Are you doing some highlander cosplay or did you think that was a regular skirt for some trap shit?</state>
             </case>
             <case stage="0-7" oneShotId="47">
                 <condition role="target" character="nami" />
@@ -1677,7 +1839,16 @@
                 <state img="#-aaa.png">Wait, fuck! I came &lt;i&gt;here&lt;/i&gt; with a fucking hat! Damn it!</state>
             </case>
             <case stage="0-7">
-                <condition role="self" saidMarker="Beltuses" notSaidMarker="insanetrigger" />
+                <condition role="self" saidMarker="Beltuses" />
+                <test expr="~clothing~" value="belt" />
+                <alternative>
+                    <condition role="self" saidMarker="insanetrigger" />
+                </alternative>
+                <state img="#-yandere.png" oneShotId="45" marker="BeltNoose">Belts are quite durable and have a simple tightening mechanism when pulled. They're great for a make-shift noose!</state>
+                <state img="#-yandere.png" oneShotId="47" marker="BeltWindpipe">If you wrap a belt around someone's neck and pull on it from behind, you can crush their windpipe pretty easily!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="self" notSaidMarker="insanetrigger" />
                 <test expr="~clothing~" value="belt" />
                 <state img="#-vore.png" oneShotId="36" marker="BeltGags">You can wrap a belt around a person's face and gag them with it pretty easily!</state>
                 <state img="#-riled_up.png" oneShotId="37" marker="BeltCuffs">You can make a great pair of simple cuffs out of a belt by just making two loops!</state>
@@ -1749,6 +1920,16 @@
 
         <trigger id="opponent_masturbating">
             <case stage="0-7">
+                <condition filter="gamer" role="target" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-smug.png">When you can't beat 'em, beat off instead, I guess.</state>
+                <state img="#-smug.png">What's wroooong, ~name~? I thought you were good at games!</state>
+                <state img="#-neutral.png">Kojima was almost right... Western gamers are only good at mindless shooters. And jerking off. And not card games.</state>
+                <state img="#-happy.png">This is the society gamers &lt;i&gt;should&lt;/i&gt; be living in!</state>
+                <state img="#-riled_up.png">Now use your down-b on your g-spot!</state>
+                <state img="#-riled_up.png">Talk about increasing your one-handed to one hundred! </state>
+            </case>
+            <case stage="0-7">
                 <condition role="self" saidMarker="insanetrigger" />
                 <state img="#-ineutral.png">I bet you're enjoying yourself there. Good. Gotta savor any joy you can get in this life.</state>
                 <state img="#-yandere.png">Just imagine my face, slathered in your juices. I know I am.</state>
@@ -1756,6 +1937,14 @@
                 <state img="#-headpoint.png">You know, jerking off is great. People always hold back their thoughts, but when you jerk off it's like... whatever goes.</state>
                 <state img="#-manic.png">Yes! Scream and moan LOUDER for me!</state>
                 <state img="#-yandere.png">This reminds me of a fantasy I've always had. A lot cleaner, though. Less blood.</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_finished_masturbating">
+            <case stage="0-7">
+                <condition filter="gamer" role="target" />
+                <condition role="self" notSaidMarker="insanetrigger" />
+                <state img="#-neutral.png" oneShotId="66">So. You're finally awake.</state>
             </case>
         </trigger>
 
@@ -1801,7 +1990,7 @@
                 <state img="#-neutral.png">Just remember to aim your nut carefully. Don't wanna hit someone in the eye. Unless they want to be hit in the eye. I know I do.</state>
             </case>
             <case stage="2-5">
-                <state img="#-nutty.png">Eyes on the prize, bud. And it me. I am the prize.</state>
+                <state img="#-nutty.png">Eyes on the prize, bud. And it's me. I am the prize.</state>
                 <state img="#-nutty.png" marker="+sanity">If i can do something to help, let me know. I am ready for some fuuuucked up shit, y'know!</state>
                 <state img="#-horny.png">God, I wish that were me.</state>
             </case>
