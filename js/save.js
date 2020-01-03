@@ -398,6 +398,7 @@ function saveSettings(){
 
 function saveOptions(){
     save.saveOptions();
+    save.saveSettings();
 }
 
 /**
