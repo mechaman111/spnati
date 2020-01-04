@@ -823,6 +823,9 @@ function populateUnavailableEpilogues() {
     opp.endings.each(function() {
       var ending = $(this);
       var title = ending.text();
+      
+      /* Don't display unlisted epilogues */
+      if (ending.status === "Unlisted") return;
 
       /* Skip any epilogues that share titles with available epilogues */
       if (epilogues.some(function (e) { return e.title === title; })) return;
