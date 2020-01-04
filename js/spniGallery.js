@@ -78,8 +78,8 @@ function unescapeHTML(in_text) {
 
 function Collectible(xmlElem, player) {
 	this.id = xmlElem.attr('id');
-	this.thumbnail = xmlElem.attr('thumbnail');
 	this.image = xmlElem.attr('img');
+	this.thumbnail = xmlElem.attr('thumbnail') || this.image;
 	this.status = xmlElem.attr('status');
 	this.title = unescapeHTML(xmlElem.find('title').text());
 	this.subtitle = unescapeHTML(xmlElem.find('subtitle').text());	
