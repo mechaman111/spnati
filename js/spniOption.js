@@ -272,8 +272,10 @@ function showOptionsModal () {
     setActiveOption('options-auto-ending', ENDING_DELAY);
     setActiveOption('options-minimal-ui', MINIMAL_UI);
 
-    /* TEMP FIX: prevent finishing animation on Safari */
-    if (!(true)) { // stubbed so I can test it without Safari
+    /* TEMP FIX: prevent finishing animation option on Safari */
+    if (true) { // stubbed so I can test it without Safari
+        $('#player-finishing-effect-control').hide();
+    } else {
         setActiveOption('options-player-finishing-effect', PLAYER_FINISHING_EFFECT);
     }
     
