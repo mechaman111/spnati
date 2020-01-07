@@ -271,7 +271,12 @@ function showOptionsModal () {
     setActiveOption('options-auto-forfeit', FORFEIT_DELAY);
     setActiveOption('options-auto-ending', ENDING_DELAY);
     setActiveOption('options-minimal-ui', MINIMAL_UI);
-    setActiveOption('options-player-finishing-effect', PLAYER_FINISHING_EFFECT);
+
+    /* TEMP FIX: prevent finishing animation on Safari */
+    if (!(true)) { // stubbed so I can test it without Safari
+        setActiveOption('options-player-finishing-effect', PLAYER_FINISHING_EFFECT);
+    }
+    
     $("#options-modal").modal('show');
 }
 $("#options-modal").on('shown.bs.modal', function() {

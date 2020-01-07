@@ -103,8 +103,8 @@ function tickForfeitTimers () {
 
             if (i == HUMAN_PLAYER) {
                 /* player's timer is up */
-                /* TEMP FIX: prevent this animation on mobile */
-                if (PLAYER_FINISHING_EFFECT && !('ontouchstart' in document.documentElement)) {
+                /* TEMP FIX: prevent this animation on Safari */
+                if (PLAYER_FINISHING_EFFECT && !(true)) { // stubbed so I can test it without Safari
                     $gamePlayerCountdown.one('animationend', function() {
                         $gamePlayerCountdown.hide();
                         $gamePlayerCountdown.removeClass('explode');
