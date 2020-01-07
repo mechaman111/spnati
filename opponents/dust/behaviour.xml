@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 12:40:26 AM on December 31, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 9:06:58 PM on January 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Dust</first>
@@ -1374,6 +1374,23 @@
                 <condition role="other" character="yuelia" stage="6" saidMarker="dust_stupidHat" />
                 <state img="PreHatPull6.png" marker="yuelia_jointPose">Yuelia? Where are you going?</state>
             </case>
+            <case stage="2">
+                <condition role="other" character="maki" stage="0-8" sayingMarker="maki_dust_umi" />
+                <state img="#-um.png">That's not a bad idea. It'd help me out with monsters with a bit of range to them if we ever decided to meet up.</state>
+                <state img="#-laugh.png">Oh yeah, I'd love to meet your friend!</state>
+                <state img="#-calm.png">That sounds like a good idea. An archer does sound like a good friend for a swordsman to have.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="maki" stage="0-8" sayingMarker="maki_dust_fur" />
+                <state img="#-um.png">Falana's not really that hot in the summer, unless you count the volcanoes in the Blackmoor Mountains.</state>
+                <state img="#-calm.png">It doesn't get real hot in the Falana summer, but there are some rivers I can spend time in.</state>
+                <state img="#-calm.png">Swimming helps if the day gets too hot.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="maki" stage="0-8" sayingMarker="maki_dust_zipper" />
+                <state img="#-wat.png">Zipper?</state>
+                <state img="#-wat.png">What exactly is that supposed to mean?</state>
+            </case>
             <case stage="0">
                 <condition role="other" character="meia" stage="0-5" />
                 <state img="#-stripping.png" marker="meia_animals">That's how everything is in Falana... both men and women are either Warmbloods like me, or Moonbloods... </state>
@@ -1645,6 +1662,11 @@
                 <state img="custom:ahrah_alone">{ahrah}By the Overseers, Dust, WHAT ARE YOU DOING?!</state>
                 <state img="custom:ahrah_alone">{ahrah}Dust! Even if Chazz is an annoyance, LEAVE HIS BEHIND ALONE!</state>
             </case>
+            <case stage="2">
+                <condition role="self" saidMarker="yuelia_howSouls" />
+                <condition role="other" character="yuelia" stage="0" sayingMarker="dust_problems" />
+                <state img="#-pensive.png" marker="yuelia_problems">They fight occasionally, and sometimes the night they did that comes up in my dreams, but I like to think I have it under control now.</state>
+            </case>
             <case stage="0-6">
                 <condition role="other" character="mae" stage="1-2" saidMarker="asking_target_location" />
                 <state img="#-stripping.png" marker="mae_location_response">Where I'm from? It's a nation called Falana. I don't really have a hometown there.</state>
@@ -1727,6 +1749,14 @@
             <case stage="0">
                 <condition role="other" character="elesa" saying="worldly traveler?" />
                 <state img="#-stripping.png">Well, I've been traveling around Falana for the most part. I'd like to see more of the world someday.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="yuelia" sayingMarker="dust_wildLife" />
+                <state img="#-calm.png" marker="yuelia_deer">Mostly the deer that tend to live in the Glade. It's peaceful there.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="yuelia" sayingMarker="dust_reading" />
+                <state img="#-laugh.png" marker="yuelia_books">Books about far-off places. I kind of want to visit overseas kingdoms soon.</state>
             </case>
             <case stage="1">
                 <condition role="other" character="jessie" />
@@ -1990,6 +2020,11 @@
         </trigger>
 
         <trigger id="male_must_strip">
+            <case stage="0-9" oneShotId="87">
+                <condition role="target" character="n" saidMarker="king_N" />
+                <condition role="self" notSaidMarker="n_royalassassins" />
+                <state img="#-um.png" marker="n_royalassassins">So, um, if you're a king, does that mean you control a cadre of Royal Assassins?</state>
+            </case>
             <case stage="0-9">
                 <condition role="other" character="kazuma" stage="4" saying="a cute girl" />
                 <state img="custom:#-fidget-snark" location="20%">{fidget}I wish. I wonder how big Dust's chest would be if--&lt;br&gt;{!reset}FIDGET!!</state>
@@ -2199,6 +2234,15 @@
                 <condition role="target" character="n" stage="2" />
                 <state img="#-um.png">Hey, N, is that your natural hair color?</state>
             </case>
+            <case stage="0-7 9" id="62" target="brock" targetStage="3">
+                <state img="custom:#-dustStorm">By Elysium's light, GET THAT THING AWAY FROM ME!</state>
+                <state img="custom:#-dustStorm">Dahh!</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="brock" stage="0" />
+                <state img="#-um.png">What is that large thing you're carrying around?</state>
+                <state img="#-annoyed.png">That box you've got... it seems dangerous.</state>
+            </case>
             <case stage="0-5">
                 <condition status="not_decent" role="target" />
                 <state img="#-embarrassed.png">Uh... Aren't you supposed to remove the small stuff first?</state>
@@ -2308,6 +2352,9 @@
             <case stage="0-9">
                 <condition role="target" character="hatsume" stage="3" />
                 <state img="custom:#-fidget-snark" location="20%">{fidget}Is... something supposed to happen?</state>
+            </case>
+            <case stage="0-9" id="63" target="larachel" targetStage="1">
+                <state img="#-um.png">Oh! Royalty? I hope you don't mind if -- huh?!</state>
             </case>
             <case stage="0-9">
                 <condition role="self" saidMarker="cassius_talked&gt;3" />
@@ -2573,6 +2620,10 @@
                 <state img="#-um.png">Wait, who's using magic here?</state>
                 <state img="custom:#-um-ahrah" location="20%">{ahrah}It appears there are forces at work that discourage fleeing, Chazz.</state>
                 <state img="custom:#-calm-fidget" location="20%">{fidget}Well. Didn't see this coming.</state>
+            </case>
+            <case stage="0-9" id="61" target="brock" targetStage="4">
+                <state img="#-wat.png">By the Overseers... are you all right?</state>
+                <state img="#-wat.png">Er... are you still alive?</state>
             </case>
             <case stage="0-9">
                 <state img="#-calm.png">You know, men going shirtless is okay in Falana. Doesn't really happen very often, but it's not illegal.</state>
@@ -3618,6 +3669,10 @@
             <case stage="0-9">
                 <condition role="other" character="jessie" sayingMarker="QA_StupidMistakes_Dust" />
                 <state img="#-calm.png" marker="qa_stupidmistakes_response2">One thing you just have to know is that hidden behind every mistake is a lesson about what doesn't work.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="other" character="rainbow_dash" sayingMarker="competition_question" />
+                <state img="#-victory.png">That's easy for me: swordsmanship!</state>
             </case>
             <case stage="0-9" oneShotId="31">
                 <condition role="self" saidMarker="jin_talked" notSaidMarker="jin_whoops" />
