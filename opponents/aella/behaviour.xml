@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 6:53:37 PM on January 03, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 8:42:24 PM on January 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Aella</first>
@@ -1010,7 +1010,7 @@
                 <condition role="self" />
                 <state img="#-interested.png">W-wait, really? W-well then, what are the benefits?</state>
             </case>
-            <case stage="3">
+            <case stage="3" oneShotId="5">
                 <condition role="other" character="yuelia" />
                 <condition role="self" />
                 <state img="#-interested.png">Tailor life? No, I'm not a tailor. I work on my own clothes and no one else's. At least, not regularly.</state>
@@ -1465,6 +1465,40 @@
                 <condition role="other" character="streaming-chan" saidMarker="aella_level1" sayingMarker="aella_level2" notSaidMarker="aella_level2" />
                 <state img="#-stripping.png">I've never had a bard in my party before. What can you do?</state>
             </case>
+            <case stage="1">
+                <condition role="self" saidMarker="FriendToSister" />
+                <condition role="other" character="yuelia" sayingMarker="aella_freindSisterMore" />
+                <state img="#-stripping.png">Her name is Jolene, and she was living on the streets when I met her. She's a pretty decent Thief, which is definitely helpful in battle, but I'm trying to teach her to stop taking things without paying for them.</state>
+            </case>
+            <case stage="1">
+                <condition role="self" saidMarker="SecondMother" />
+                <condition role="other" character="yuelia" sayingMarker="aella_secondMotherMore" />
+                <state img="#-stripping.png">Her name is Etsuko, and she's a black mage. Some people think she's a witch, but she's actually really friendly and nice. She can be a little overprotective, though...</state>
+            </case>
+            <case stage="1" priority="102">
+                <condition role="other" character="yuelia" saidMarker="aella_newAdventure" sayingMarker="aella_accompany" />
+                <condition gender="female" role="other" character="human" />
+                <state img="#-stripping.png">Uh, sure, I suppose I could use the company. ~player~ should probably come with us too, since she probably knows this world better.</state>
+            </case>
+            <case stage="1" priority="102">
+                <condition role="other" character="yuelia" saidMarker="aella_newAdventure" sayingMarker="aella_accompany" />
+                <condition gender="male" role="other" character="human" />
+                <state img="#-stripping.png">Uh, sure, I suppose I could use the company. ~player~ should probably come with us too, since he probably knows this world better.</state>
+            </case>
+            <case stage="3">
+                <condition role="self" saidMarker="HalfSwording" />
+                <condition role="other" character="yuelia" sayingMarker="aella_halfSwording" />
+                <state img="#-stripping.png">Oh, uh, half-swording is when you hold the sword backwards to strike with the handle. It's quite effective against armored targets.</state>
+            </case>
+            <case stage="3">
+                <condition role="self" saidMarker="HalfSwording" />
+                <condition role="other" character="yuelia" sayingMarker="aella_claymore" />
+                <state img="#-stripping.png">Actually, I do use big swords. Bigger handles help me align the edge better, and the extra reach is an obvious plus as well.</state>
+            </case>
+            <case stage="3" priority="102">
+                <condition role="other" character="yuelia" saidMarker="aella_comfyHome" sayingMarker="aella_somethingGreater" />
+                <state img="#-stripping.png">Why would I do that? I like my home. It already has everything I could ever want in it.</state>
+            </case>
             <case stage="4">
                 <condition role="self" notSaidMarker="AellaStalling" />
                 <condition role="other" character="joey" />
@@ -1482,6 +1516,14 @@
             <case stage="0">
                 <condition role="other" character="yuelia" saidMarker="aella_heavyArmor" />
                 <state img="#-stripping.png">Oh, I absolutely could. Unless you weigh a ton more than you look like you do, it'd be no problem at all.</state>
+            </case>
+            <case stage="5" priority="101">
+                <condition role="other" character="yuelia" saidMarker="aella_bestAdventure" sayingMarker="aella_miniAdventures" />
+                <state img="#-stripping.png">In that case, uh... the one I went on to destroy the demon weapons was... the best one, I guess?</state>
+            </case>
+            <case stage="5" priority="101">
+                <condition role="other" character="yuelia" saidMarker="aella_bestAdventure" sayingMarker="aella_memorable" />
+                <state img="#-stripping.png">Well, uh... none are coming to mind right now...</state>
             </case>
             <case stage="0">
                 <condition role="other" character="akko" />
@@ -5951,6 +5993,10 @@
                 <condition role="target" character="nami" />
                 <state img="#-embarrassed.png">W-whatever makes you comfortable, I guess.</state>
             </case>
+            <case stage="0-8">
+                <condition filter="uses_toy" role="target" />
+                <state img="#-horny.png">Is that... some kind of wand?... What kind of magic are you going to cast?</state>
+            </case>
             <case stage="0-3">
                 <condition role="self" saidMarker="1v1" />
                 <state img="#-calm.png">Well, uh, good game, everyone.</state>
@@ -6116,6 +6162,14 @@
                 <alternative target="jolyne" />
                 <alternative target="kizuna" />
                 <state img="#-flustered.png">...</state>
+            </case>
+            <case stage="0-8">
+                <condition filter="uses_toy" role="target" />
+                <state img="#-flustered.png">That's, uh... not how we use wands in my world...</state>
+                <state img="#-interested.png">D-do you have any wands that get used on... other parts of the body...? Like hand wands or something?</state>
+                <state img="#-interested.png">S-so how far can you cast magic with that...?</state>
+                <state img="#-embarrassed.png">I wonder if Etsuko has any wands like that...</state>
+                <state img="#-embarrassed.png">I can't even imagine what kind of store you'd have to find to buy one of those...</state>
             </case>
             <case stage="0-3" priority="0">
                 <condition role="self" notSaidMarker="1v1" />
