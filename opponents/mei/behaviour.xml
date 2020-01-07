@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.3 at 1:53:08 PM on December 03, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 11:33:08 PM on January 07, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.3</version>
+    <version>v5.4</version>
     <first>Mei</first>
     <last />
     <label>Mei</label>
@@ -44,16 +44,18 @@
         <clothing name="shirt" generic="Shirt" position="upper" type="major" />
         <clothing name="jacket" generic="Jacket" position="upper" type="minor" />
         <clothing name="shoes" generic="Shoes" position="other" type="extra" plural="true" />
-        <clothing name="gloves" generic="Gloves" position="other" type="extra" plural="true" />
+        <clothing name="gloves" generic="gloves" position="other" type="extra" plural="true" />
     </wardrobe>
 
     <poses />
 
     <behaviour>
         <trigger id="selected">
-            <case stage="0" alsoPlaying="d.va">
+            <case stage="0">
+                <condition role="other" character="d.va" />
                 <state img="#-interested.png">Don't worry, Hana. I'm here to supervise.</state>
                 <state img="#-embarrassed.png">Do you think Hana will mind if I play too? This isn't just for teenagers, right?</state>
+                <state img="#-happy.png">All right, Hana, I'm excited for this game!</state>
             </case>
             <case stage="0" alsoPlaying="kyu">
                 <state img="#-loss.png">I dressed as warmly as possible. Is that okay?</state>
@@ -64,7 +66,8 @@
             <case stage="0" alsoPlaying="mercy">
                 <state img="#-happy.png">Angela, it's so good to see a familiar face! Do you remember when we played this game one time in Dorado?</state>
             </case>
-            <case stage="0" alsoPlaying="tracer">
+            <case stage="0">
+                <condition role="other" character="tracer" />
                 <state img="#-happy.png">Lena, good to see you! If we broadcast this on all channels, maybe we could have a big reunion!</state>
                 <state img="#-calm.png">Hey Lena, how is Winston doing? I wonder what he's researching these days...</state>
                 <state img="#-horny.png">There you are, Lena. This time I'm going to stop you in your tracks.</state>
@@ -80,7 +83,8 @@
         </trigger>
 
         <trigger id="opponent_selected">
-            <case stage="0" target="mae">
+            <case stage="0">
+                <condition role="target" character="mae" />
                 <state img="#-happy.png" marker="mei_mae_beautiful_name">Oh, hello, Mae! You have a beautiful name!</state>
             </case>
         </trigger>
@@ -102,21 +106,25 @@
                 <state img="#-calm.png">~Cards~, please.</state>
                 <state img="#-calm.png">我要 ~cards~.</state>
                 <state img="#-calm.png">Just ~cards~ more.</state>
+                <state img="#-calm.png">Hmmm, I'll take ~cards~ cards this time.</state>
             </case>
         </trigger>
 
         <trigger id="good_hand">
-            <case stage="1" alsoPlaying="weiss">
-                <state img="#-happy.png">It's nice to finally meet you, Weiss. I use Schnee Dust to power my endothermic blaster!</state>
-                <state img="#-interested.png">I'm safe this time. Did you get a good hand too, Weiss?</state>
-            </case>
             <case stage="0" totalRounds="5">
                 <state img="#-happy.png">I'm getting good at this!</state>
+                <state img="#-happy.png">Well I'm not losing this time!</state>
+            </case>
+            <case stage="1">
+                <condition role="other" />
+                <state img="#-happy.png">It's nice to finally meet you, Weiss. I use Schnee Dust to power my endothermic blaster!</state>
+                <state img="#-interested.png">I'm safe this time. Did you get a good hand too, Weiss?</state>
             </case>
             <case stage="0">
                 <state img="#-interested.png">This will stop them.</state>
             </case>
-            <case stage="0" totalFemales="4" priority="0">
+            <case stage="0" priority="0">
+                <condition count="4" gender="female" />
                 <state img="#-interested.png">The four of us would do great in Team Deathmatch!</state>
                 <state img="#-interested.png">I'm good for this round! What did everyone else get?</state>
             </case>
@@ -131,8 +139,10 @@
             <case stage="3">
                 <state img="#-happy.png">Thanks!</state>
                 <state img="#-happy.png" marker="mei_speaking_chinese">瞧瞧这个。</state>
+                <state img="#-happy.png">Now this is a buffed hand!</state>
             </case>
-            <case stage="3" alsoPlaying="chara" priority="0">
+            <case stage="3" priority="0">
+                <condition role="other" />
                 <state img="#-happy.png">I'm safe this hand. How did you go, Chara?</state>
                 <state img="#-strip.png">I've been eating right and getting exercise. I don't know why the public is so focused on a scientist's body type...</state>
             </case>
@@ -140,37 +150,41 @@
                 <state img="#-interested.png">Blocking them off.</state>
                 <state img="#-happy.png">My ultimate is ready!</state>
             </case>
-            <case stage="4" alsoPlaying="zone-tan" priority="0">
+            <case stage="4" priority="0">
+                <condition role="other" character="zone-tan" />
                 <state img="#-interested.png">Zone-tan, if you watch everyone fap, you must have &lt;i&gt;so much data&lt;/i&gt; from your observation! You should share it for peer review.</state>
             </case>
             <case stage="5">
                 <state img="#-interested.png">You know, I'm pretty good at this!</state>
                 <state img="#-interested.png">I'm ready to start a blizzard!</state>
             </case>
-            <case stage="5" alsoPlaying="jasmine" priority="0">
+            <case stage="5" priority="0">
+                <condition role="other" />
                 <state img="#-calm.png">Jasmine, do you happen to know Elsa from &lt;i&gt;Frozen&lt;/i&gt;? I've wanted to meet her for years!</state>
             </case>
             <case stage="6">
                 <state img="#-happy.png" marker="mei_speaking_chinese">这样可以挡住他们。</state>
+                <state img="#-happy.png">Looks like I'll be staying clothed for a bit longer.</state>
             </case>
             <case stage="7">
                 <state img="#-happy.png">Yay!</state>
                 <state img="#-interested.png">I can still win this!</state>
+                <state img="#-calm.png">I'm not done yet!</state>
             </case>
         </trigger>
 
         <trigger id="okay_hand">
-            <case stage="0" alsoPlaying="samus" alsoPlayingStage="0" totalRounds="3-30" notSaidMarker="mei_samus_mech">
+            <case stage="0" totalRounds="3-30">
+                <condition role="self" notSaidMarker="mei_samus_mech" />
+                <condition role="other" character="samus" stage="0" />
                 <state img="#-calm.png" marker="mei_samus_mech">You seem like a good fighter, Samus. Can you call down a mech like D.Va?</state>
             </case>
-            <case stage="0" alsoPlaying="florina" alsoPlayingStage="0" alsoPlayingSaidMarker="bee">
+            <case stage="0">
+                <condition role="other" character="florina" stage="0" saidMarker="bee" />
                 <state img="#-interested.png">If a bee starts bothering you, Florina, then I'll have to get out my beekeeper gear!</state>
             </case>
             <case stage="7" alsoPlaying="samus" alsoPlayingStage="0-1">
                 <state img="#-sad.png">Are you cheating, Samus? Snowball and I will learn the truth.</state>
-            </case>
-            <case stage="1" alsoPlaying="leela" saidMarker="mei_leela_question" notSaidMarker="mei_leela_sadness">
-                <state img="#-loss.png" marker="mei_leela_sadness">A thousand years... Everyone he ever knew would have passed away. Sorry for bringing up such a sad topic during the game, Leela.</state>
             </case>
             <case stage="1" alsoPlaying="leela" notSaidMarker="mei_leela_question">
                 <state img="#-sad.png" marker="mei_leela_question">Leela, is it true that you once met a man who was accidentally in cryostasis for &lt;i&gt;a thousand years&lt;/i&gt;?</state>
@@ -181,6 +195,11 @@
             <case stage="0" totalRounds="5">
                 <state img="#-happy.png">I'm getting good at this!</state>
             </case>
+            <case stage="1">
+                <condition role="self" saidMarker="mei_leela_question" notSaidMarker="mei_leela_sadness" />
+                <condition role="other" />
+                <state img="#-loss.png" marker="mei_leela_sadness">A thousand years... Everyone he ever knew would have passed away. Sorry for bringing up such a sad topic during the game, Leela.</state>
+            </case>
             <case stage="0">
                 <state img="#-calm.png">This is better than nothing, right?</state>
                 <state img="#-calm.png">It's a start.</state>
@@ -188,6 +207,7 @@
             <case stage="1">
                 <state img="#-calm.png">I can take care of myself.</state>
                 <state img="#-happy.png">This is fun! Nobody wanted to play this game when I was in Antarctica...</state>
+                <state img="#-interested.png">Well this should be interesting.</state>
             </case>
             <case stage="2">
                 <state img="#-sad.png">Still quite good! I... guess...</state>
@@ -198,6 +218,7 @@
             </case>
             <case stage="3">
                 <state img="#-interested.png">Hmm... I still have a chance!</state>
+                <state img="#-calm.png">I can win with a combination of skill and luck!</state>
             </case>
             <case stage="4">
                 <state img="#-calm.png">Starting to get hot there!</state>
@@ -209,8 +230,10 @@
             </case>
             <case stage="6">
                 <state img="#-interested.png">Not this time.</state>
+                <state img="#-calm.png">Hopefully I won't have to strip this round.</state>
             </case>
-            <case stage="6" alsoPlaying="florina" alsoPlayingStage="7" alsoPlayingSaidMarker="first_exposed" priority="0">
+            <case stage="6" priority="0">
+                <condition role="other" character="florina" stage="7" saidMarker="first_exposed" />
                 <state img="#-interested.png" marker="mei_keeping_florina_company">You seemed like you could use some company, Florina.</state>
             </case>
             <case stage="7">
@@ -219,7 +242,8 @@
         </trigger>
 
         <trigger id="bad_hand">
-            <case stage="6" alsoPlaying="d.va" alsoPlayingStage="4">
+            <case stage="6">
+                <condition role="other" character="d.va" stage="4" />
                 <state img="#-horny.png">Even though it'd be bad for me, I was kind of hoping you'd somehow be wearing your police officer outfit under your suit this time, Hana.</state>
             </case>
             <case stage="1" alsoPlaying="samus" notSaidMarker="mei_other_planets">
@@ -272,7 +296,8 @@
             <case stage="5" totalExposed="0" priority="0">
                 <state img="#-embarrassed.png">It's almost time for me to take the lead...</state>
             </case>
-            <case stage="5" totalExposed="1-4" priority="0">
+            <case stage="5" priority="0">
+                <condition count="1-4" status="exposed" />
                 <state img="#-embarrassed.png">It's about to be my turn.</state>
             </case>
             <case stage="6">
@@ -280,7 +305,8 @@
                 <state img="#-embarrassed.png">It's starting to get dangerous...</state>
                 <state img="#-sad.png">This does not bode well.</state>
             </case>
-            <case stage="6" totalExposed="1-4" priority="0">
+            <case stage="6" priority="0">
+                <condition count="1-4" status="exposed" />
                 <state img="#-stripped.png">My luck has run out.</state>
             </case>
             <case stage="7">
@@ -288,17 +314,20 @@
                 <state img="#-sad.png">It is not looking good...</state>
                 <state img="#-embarrassed.png">I hope you guys are okay with seeing someone like me perform.</state>
             </case>
-            <case stage="7" alsoPlaying="hermione" alsoPlayingStage="9" priority="0">
+            <case stage="7" priority="0">
+                <condition role="other" character="hermione" stage="9" />
                 <state img="#-loss.png">I hope you're ready to share those hands, Hermione...</state>
             </case>
-            <case stage="7" totalMasturbating="1-4" priority="0">
+            <case stage="7" priority="0">
+                <condition count="1-4" status="masturbating" />
                 <state img="#-happy.png">It's almost my turn!</state>
             </case>
         </trigger>
 
         <trigger id="hand">
-            <case stage="0" alsoPlaying="ruby" totalRounds="0">
+            <case stage="0" totalRounds="0">
                 <condition count="1" filter="rwby" />
+                <condition role="other" character="ruby" />
                 <state img="#-loss.png">Where's the rest of your team, Ruby? Oh no! Are they okay?!</state>
             </case>
         </trigger>
@@ -418,7 +447,8 @@
         </trigger>
 
         <trigger id="stripped">
-            <case stage="5" alsoPlaying="revy" totalRounds="5-6">
+            <case stage="5" totalRounds="5-6">
+                <condition role="other" character="revy" />
                 <state img="#-sad.png">Hmmph. I hate bullies.</state>
             </case>
             <case stage="1">
@@ -590,7 +620,8 @@
             <case stage="0-7 9" target="aimee" targetStage="4">
                 <state img="#-horny.png">You have one shot---one opportunity---to let it slip.</state>
             </case>
-            <case stage="0" target="d.va" targetStage="0">
+            <case stage="0">
+                <condition role="target" character="d.va" stage="0" />
                 <state img="#-happy.png">Thanks for taking one for the team, Hana!</state>
             </case>
             <case stage="0-3" target="dawn" targetStage="0">
@@ -668,7 +699,8 @@
             <case stage="0-7 9" target="zone-tan" targetStage="3">
                 <state img="#-horny.png">Things are heating up as we deplete the o-ZONE layer!</state>
             </case>
-            <case stage="1" target="d.va" targetStage="0">
+            <case stage="1">
+                <condition role="target" character="d.va" stage="0" />
                 <state img="#-loss.png">Hana, don't you dare eat Snowball with your Defense Matrix again! I didn't pick these cards...</state>
             </case>
             <case stage="1" target="spooky" targetStage="1">
@@ -1183,6 +1215,7 @@
             </case>
             <case stage="2">
                 <state img="#-horny.png">Just wait a little longer and I'll catch up.</state>
+                <state img="#-calm.png">At least it's not me this time.</state>
             </case>
             <case stage="3">
                 <state img="#-embarrassed.png" marker="mei_speaking_chinese">有本事就过来。</state>
@@ -1228,7 +1261,8 @@
             <case stage="0" target="d.va">
                 <state img="#-interested.png">A bodysuit that leaves little to the imagination is the essence of discovery!</state>
             </case>
-            <case stage="1-2" target="d.va">
+            <case stage="1-2">
+                <condition role="target" character="d.va" />
                 <state img="#-happy.png">
                     <alt-img stage="2">#-strip.png</alt-img>
                     <text>Remember that time Roadhog's hook just missed your body but ripped your suit off, Hana?</text>
@@ -1240,7 +1274,8 @@
             <case stage="8" target="d.va">
                 <state img="#-happy.png" marker="mei_speaking_chinese">最后！ 你的制服被删除！</state>
             </case>
-            <case stage="9" target="d.va">
+            <case stage="9">
+                <condition role="target" character="d.va" />
                 <state img="#-horny.png">Let's see Hanamura! Uh, I mean, more-o'-Hana!</state>
             </case>
             <case stage="0">
@@ -1306,7 +1341,8 @@
             <case stage="7 9" target="dawn" targetStage="4">
                 <state img="#-happy.png">Wow! Cute bra, Dawn! I love the polka dots!</state>
             </case>
-            <case stage="0" target="d.va">
+            <case stage="0">
+                <condition role="target" character="d.va" />
                 <state img="#-happy.png">Wow, Hana! If you wanted to start in your underwear, you could have just said so!</state>
             </case>
             <case stage="0-4" target="mercy">
@@ -1318,22 +1354,27 @@
             <case stage="0-7 9" target="samus">
                 <state img="#-embarrassed.png">How do you keep such a slim figure, Samus? Is it all of the somersaulting?</state>
             </case>
-            <case stage="1" target="d.va">
+            <case stage="1">
+                <condition role="target" character="d.va" />
                 <state img="#-loss.png">Hana, I'm sorry! You always seemed so good at games...</state>
             </case>
-            <case stage="2" target="d.va">
+            <case stage="2">
+                <condition role="target" character="d.va" />
                 <state img="#-embarrassed.png">I haven't seen you wear that style before, Hana. Not that I'm looking when we're in the locker room...</state>
             </case>
-            <case stage="3" target="d.va">
+            <case stage="3">
+                <condition role="target" character="d.va" />
                 <state img="#-shocked.png">Wow, you took off the whole suit! You're so good at charging in, Hana!</state>
             </case>
             <case stage="3-4" target="tracer">
                 <state img="#-happy.png">Now it's starting to feel like the stakes are raised, like a real mission!</state>
             </case>
-            <case stage="4" target="d.va">
+            <case stage="4">
+                <condition role="target" character="d.va" />
                 <state img="#-happy.png">Now that you have your suit off, it feels like I'm winning again, Hana!</state>
             </case>
-            <case stage="5" target="d.va">
+            <case stage="5">
+                <condition role="target" character="d.va" />
                 <state img="#-interested.png">Sorry, Hana, but I had to even the score!</state>
             </case>
             <case stage="6" target="d.va">
@@ -2191,16 +2232,16 @@
         </trigger>
 
         <trigger id="female_start_masturbating">
-            <case stage="0-7 9" target="d.va">
+            <case stage="0-7 9">
+                <condition role="target" character="d.va" />
                 <state img="#-embarrassed.png">I think I just joined the D.Va fan club.</state>
             </case>
-            <case stage="0-3" target="hermione">
+            <case stage="0-3">
+                <condition role="target" character="hermione" />
                 <state img="#-shocked.png">Wow! You're really taking this into your own hands, Hermione!</state>
             </case>
-            <case stage="0-1" target="mercy">
-                <state img="#-embarrassed.png">I had no idea that you really were this promiscuous!</state>
-            </case>
-            <case stage="0-7 9" target="tracer">
+            <case stage="0-7 9">
+                <condition role="target" character="tracer" />
                 <state img="#-embarrassed.png">Um, your girlfriend is a very lucky lady...</state>
             </case>
             <case stage="3-7 9" target="kyu">
@@ -2221,6 +2262,10 @@
             <case stage="7">
                 <condition count="1" status="alive" />
                 <state img="#-shocked.png">Oh, does this mean...</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" />
+                <state img="#-embarrassed.png">I had no idea that you really were this promiscuous!</state>
             </case>
             <case stage="0">
                 <state img="#-shocked.png">~Name~!</state>
@@ -2256,10 +2301,13 @@
         </trigger>
 
         <trigger id="female_masturbating">
-            <case stage="7-9" target="hermione">
+            <case stage="7-9">
+                <condition role="target" character="hermione" />
                 <state img="#-happy.png">How enchanting!</state>
+                <state img="#-happy.png">Well that was bewitching!</state>
             </case>
-            <case stage="0-7 9" filter="creepy">
+            <case stage="0-7 9">
+                <condition filter="creepy" role="target" />
                 <state img="#-embarrassed.png">Science holds the key to understanding...</state>
             </case>
             <case stage="0">
@@ -2270,18 +2318,23 @@
             </case>
             <case stage="2">
                 <state img="#-horny.png">I'm enjoying this.</state>
+                <state img="#-horny.png">Maybe I'll try that if I lose.</state>
             </case>
             <case stage="3">
                 <state img="#-embarrassed.png">Does the penalty step have to be after the clothing removal, or can it be in any order?</state>
+                <state img="#-horny.png">I'm really liking the show!</state>
             </case>
             <case stage="4">
                 <state img="#-interested.png">Come on, ~name~! Just a little bit longer.</state>
+                <state img="#-embarrassed.png">That looks like it feels pretty good.</state>
             </case>
             <case stage="5">
                 <state img="#-embarrassed.png">Um, if it helps, you can imagine us all naked...</state>
+                <state img="#-interested.png">Maybe try increasing your speed?</state>
             </case>
             <case stage="6">
                 <state img="#-embarrassed.png">Is your temperature elevated, ~name~? Mine is...</state>
+                <state img="#-happy.png">Looking good over there ~name~!</state>
             </case>
             <case stage="7">
                 <state img="#-embarrassed.png">This is definitely the most sordid part of the game!</state>
@@ -2301,42 +2354,53 @@
         </trigger>
 
         <trigger id="female_finished_masturbating">
-            <case stage="0-1 3-5" target="mercy">
-                <state img="#-happy.png">Wow, that was amazing, Angela! Your sacrifice will be remembered!</state>
-            </case>
             <case stage="7">
                 <condition count="1" status="alive" />
                 <state img="#-adjusting.png">That was, uh, very special. Thank you for going through with it, ~name~.</state>
+                <state img="#-horny.png">That was a good one!</state>
+            </case>
+            <case stage="0-1 3-5">
+                <condition role="target" />
+                <state img="#-happy.png">Wow, that was amazing, Angela! Your sacrifice will be remembered!</state>
             </case>
             <case stage="0">
                 <state img="#-embarrassed.png">I didn't think your loss would affect me so much, ~name~.</state>
+                <state img="#-embarrassed.png">That was certainly interesting to watch.</state>
             </case>
             <case stage="1">
                 <state img="#-embarrassed.png">Do I make that face when I lose?</state>
+                <state img="#-embarrassed.png">Where'd you learn to do it like that?</state>
             </case>
             <case stage="2">
                 <state img="#-strip.png">Thanks. I'll give you my jacket after I take it off if you want.</state>
+                <state img="#-embarrassed.png">That looked like a lot of fun.</state>
             </case>
             <case stage="3">
                 <state img="#-shocked.png">Wow! You were so loud at the end!</state>
+                <state img="#-embarrassed.png">Now I kinda want to do it too...</state>
             </case>
             <case stage="4">
                 <state img="#-happy.png" marker="mei_speaking_chinese">哇！真好玩儿！</state>
+                <state img="#-happy.png">Great job finishing!</state>
             </case>
             <case stage="5">
                 <state img="#-embarrassed.png">Those little squeaks you made were cute.</state>
+                <state img="#-horny.png">~Name~, you looked so good at the end.</state>
             </case>
             <case stage="6">
                 <state img="#-interested.png">You're out, ~name~. That's it. This is a lockout elimination game.</state>
+                <state img="#-embarrassed.png">Are you gonna put your clothes back on now that you're finished?</state>
             </case>
             <case stage="7">
                 <state img="#-embarrassed.png">Oh, you're already finished? I was hoping you'd still be distracting everyone when I start...</state>
+                <state img="#-embarrassed.png">I hope I don't have to go next.</state>
             </case>
             <case stage="8">
                 <state img="#-happy.png" marker="mei_speaking_chinese">那很性感！</state>
             </case>
             <case stage="9">
                 <state img="#-calm.png">We should compare notes sometime.</state>
+                <state img="#-happy.png">You did a great job there, ~name~.</state>
             </case>
         </trigger>
 
@@ -2344,12 +2408,14 @@
             <case stage="7">
                 <state img="#-shocked.png">That's a Play of the Game I don't want to take part of...</state>
                 <state img="#-loss.png">Being naked was bad enough... I don't think I'm ready to start... this.</state>
+                <state img="#-embarrassed.png">You mean I have to do it in front of everyone?</state>
             </case>
         </trigger>
 
         <trigger id="must_masturbate">
             <case stage="7">
                 <state img="#-calm.png">It's less embarrassing if you're not the first one to lose, I guess...</state>
+                <state img="#-happy.png">Well, it's always fun to share experiences!</state>
             </case>
         </trigger>
 
@@ -2392,9 +2458,11 @@
         <trigger id="game_over_victory">
             <case stage="0">
                 <state img="#-embarrassed.png">Sorry! Sorry, I'm sorry. Sorry.</state>
+                <state img="#-happy.png">I didn't have to undress!</state>
             </case>
             <case stage="1">
                 <state img="#-happy.png">A-&lt;i&gt;Mei&lt;/i&gt;-zing!</state>
+                <state img="#-calm.png">Good game, everyone. Now where are my gloves?</state>
             </case>
             <case stage="2">
                 <state img="#-interested.png">Just ice delivered!</state>
@@ -2402,15 +2470,19 @@
             </case>
             <case stage="3">
                 <state img="#-calm.png" marker="mei_speaking_chinese">这个世界值得我们奋战！</state>
+                <state img="#-calm.png">I enjoyed that thoroughly!</state>
             </case>
             <case stage="4">
                 <state img="#-happy.png">Haha! That was great!</state>
+                <state img="#-calm.png">Thank you for inviting me to play.</state>
             </case>
             <case stage="5">
                 <state img="#-interested.png">So... when is the next game?</state>
+                <state img="#-interested.png">What're we going to do now?</state>
             </case>
             <case stage="6">
                 <state img="#-happy.png">This game was very fun!</state>
+                <state img="#-happy.png">I'm glad I won!</state>
             </case>
             <case stage="7">
                 <state img="#-happy.png">If you focus on the objective, you can win too!</state>
@@ -2420,21 +2492,26 @@
         </trigger>
 
         <trigger id="game_over_defeat">
-            <case stage="9" target="marinette" targetSaidMarker="twiceloss">
+            <case stage="9">
+                <condition role="target" character="marinette" saidMarker="twiceloss" />
                 <state img="#-interested.png">Good job, Marinette. I didn't think you had a chance when you started that losing streak.</state>
             </case>
-            <case stage="9" target="zone-tan" targetSaidMarker="zone-tan_deciding">
+            <case stage="9">
+                <condition role="target" character="zone-tan" saidMarker="zone-tan_deciding" />
                 <state img="#-embarrassed.png">Please don't put me in your next flash video, Zone-tan.</state>
             </case>
-            <case stage="9" target="nugi-chan">
+            <case stage="9">
+                <condition role="target" character="nugi-chan" />
                 <state img="#-happy.png">Haha, it's not every day I get Mei'd by a maid!</state>
             </case>
-            <case stage="9" target="raven">
+            <case stage="9">
+                <condition role="target" character="raven" />
                 <state img="#-interested.png">I've never lost to a zombie before. Great game, Raven!</state>
             </case>
             <case stage="9">
                 <state img="#-interested.png">Well played, ~name~! But you'll be in my shoes next time.</state>
                 <state img="#-interested.png">Okay, everyone, let's do it again!</state>
+                <state img="#-happy.png">Well that was an interesting experience.</state>
             </case>
             <case stage="9" hidden="1">
                 <condition role="target" character="human" />
