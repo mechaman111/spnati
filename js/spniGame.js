@@ -89,6 +89,14 @@ var AUTO_FADE = true;
 var MINIMAL_UI = true;
 var DEBUG = false;
 
+/* temp fix for mobile Safari finishing crashes */
+var PLAYER_FINISHING_EFFECT_AVAILABLE = (
+    (navigator.userAgent.indexOf('Safari') !== -1) ||
+    (navigator.userAgent.indexOf('Chrome') >= 0) ||
+    !('maxTouchPoints' in navigator) ||
+    (navigator.maxTouchPoints === 0)
+);
+
 /* game state
  * 
  * First element: text to display on main button to begin the phase

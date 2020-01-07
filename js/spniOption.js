@@ -272,8 +272,8 @@ function showOptionsModal () {
     setActiveOption('options-auto-ending', ENDING_DELAY);
     setActiveOption('options-minimal-ui', MINIMAL_UI);
 
-    /* TEMP FIX: prevent finishing animation option on Safari */
-    if (navigator.userAgent.indexOf("Safari") != -1) {
+    /* TEMP FIX: prevent finishing animation option on mobile Safari */
+    if (!PLAYER_FINISHING_EFFECT_AVAILABLE) {
         $('#player-finishing-effect-control').hide();
     } else {
         setActiveOption('options-player-finishing-effect', PLAYER_FINISHING_EFFECT);
