@@ -103,7 +103,8 @@ function tickForfeitTimers () {
 
             if (i == HUMAN_PLAYER) {
                 /* player's timer is up */
-                if (PLAYER_FINISHING_EFFECT) {
+                /* TEMP FIX: prevent this animation on Safari */
+                if (PLAYER_FINISHING_EFFECT && (navigator.userAgent.indexOf("Safari") == -1)) {
                     $gamePlayerCountdown.one('animationend', function() {
                         $gamePlayerCountdown.hide();
                         $gamePlayerCountdown.removeClass('explode');
