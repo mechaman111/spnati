@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 11:33:08 PM on January 07, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 12:01:26 AM on January 08, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Mei</first>
@@ -33,7 +33,12 @@
         <tag>scientist</tag>
         <tag>hero</tag>
     </tags>
-    <nicknames />
+    <nicknames>
+        <nickname for="croix">Dr. Croix</nickname>
+        <nickname for="d.va">Hana</nickname>
+        <nickname for="mercy">Angela</nickname>
+        <nickname for="tracer">Lena</nickname>
+    </nicknames>
 
     <start />
 
@@ -57,13 +62,16 @@
                 <state img="#-embarrassed.png">Do you think Hana will mind if I play too? This isn't just for teenagers, right?</state>
                 <state img="#-happy.png">All right, Hana, I'm excited for this game!</state>
             </case>
-            <case stage="0" alsoPlaying="kyu">
+            <case stage="0">
+                <condition role="other" character="kyu" />
                 <state img="#-loss.png">I dressed as warmly as possible. Is that okay?</state>
             </case>
-            <case stage="0" alsoPlaying="lyn">
+            <case stage="0">
+                <condition role="other" character="lyn" />
                 <state img="#-interested.png">I can tell that you're all skilled warriors, but would any of you be willing to switch to healing?</state>
             </case>
-            <case stage="0" alsoPlaying="mercy">
+            <case stage="0">
+                <condition role="other" character="mercy" />
                 <state img="#-happy.png">Angela, it's so good to see a familiar face! Do you remember when we played this game one time in Dorado?</state>
             </case>
             <case stage="0">
@@ -77,9 +85,6 @@
                 <state img="#-happy.png">It's good to get out of the lab.</state>
                 <state img="#-calm.png">Mei on duty!</state>
             </case>
-            <case stage="0">
-                <state img="#-interested.png">Let's gather some valuable data on this mission.</state>
-            </case>
         </trigger>
 
         <trigger id="opponent_selected">
@@ -91,22 +96,31 @@
 
         <trigger id="game_start">
             <case stage="0">
+                <test expr="~background.privacy~" value="public" />
+                <state img="#-embarrassed.png">Oh, are we not going to move to somewhere more private?</state>
+            </case>
+            <case stage="0">
+                <test expr="~background~" value="library" />
+                <state img="#-interested.png">Let's all be extra quiet. We wouldn't want to make the librarian angry.</state>
+            </case>
+            <case stage="0">
+                <test expr="~background~" value="haunted forest" />
+                <state img="#-loss.png">If I get too scared, can I hide behind you, ~player~?</state>
+            </case>
+            <case stage="0">
                 <state img="#-happy.png">I can't wait to get started.</state>
                 <state img="#-shocked.png">Hey, wait for me!</state>
                 <state img="#-happy.png">Okay gang, let's go!</state>
-            </case>
-            <case stage="0">
-                <state img="#-interested.png">Let's gather some valuable data on this mission.</state>
             </case>
         </trigger>
 
         <trigger id="swap_cards">
             <case stage="0-7">
-                <state img="#-calm.png">Sorry, but could I have ~cards~ cards?</state>
-                <state img="#-calm.png">~Cards~, please.</state>
-                <state img="#-calm.png">我要 ~cards~.</state>
-                <state img="#-calm.png">Just ~cards~ more.</state>
-                <state img="#-calm.png">Hmmm, I'll take ~cards~ cards this time.</state>
+                <state img="#-calm.png">Sorry, but could I have ~cards.text~ cards?</state>
+                <state img="#-calm.png">~Cards.text~, please.</state>
+                <state img="#-calm.png">我要~cards~张.</state>
+                <state img="#-calm.png">Just ~cards.text~ more.</state>
+                <state img="#-calm.png">Hmmm, I'll take ~cards.text~ cards this time.</state>
             </case>
         </trigger>
 
@@ -799,6 +813,12 @@
             <case stage="9">
                 <state img="#-interested.png">Let's get you a little bit closer to the end of the game.</state>
                 <state img="#-calm.png">You're about to be one step nearer to where I am!</state>
+            </case>
+        </trigger>
+
+        <trigger id="tie">
+            <case stage="0-9">
+                <state img="#-shocked.png">Is this a tie? How unlikely!</state>
             </case>
         </trigger>
 
@@ -2103,12 +2123,13 @@
                 <state img="#-sad.png">Sometimes a scientist wants to do more than just observe.</state>
             </case>
             <case stage="8">
-                <state img="#-embarrassed.png" marker="mei_speaking_chinese">我不禁想，如果一起工作会更有效率...</state>
+                <state img="#-embarrassed.png" marker="mei_speaking_chinese">我觉得，如果一起来会更好...</state>
             </case>
             <case stage="9">
                 <state img="#-embarrassed.png">The way you look at me when you do that, it's like you're looking at &lt;i&gt;me&lt;/i&gt; for inspiration...</state>
                 <state img="#-happy.png">I'd like to be playing, but spectating is fun too!</state>
                 <state img="#-horny.png">That's amazing!</state>
+                <state img="#-happy.png">You can't give up! Keep going!</state>
             </case>
         </trigger>
 
@@ -2428,21 +2449,21 @@
 
         <trigger id="masturbating">
             <case stage="8">
-                <state img="#-shocked.png" marker="mei_speaking_chinese">哦! 感觉比我的记忆更好！</state>
+                <state img="#-shocked.png" marker="mei_speaking_chinese">哦！感觉比我记忆中的更好！</state>
                 <state img="#-embarrassed.png" marker="mei_speaking_chinese">啊! 嘿! 不要盯着我，请！</state>
             </case>
         </trigger>
 
         <trigger id="heavy_masturbating">
             <case stage="8">
-                <state img="#-heavy.png" marker="mei_speaking_chinese">我很热，引起全球变暖！</state>
+                <state img="#-heavy.png" marker="mei_speaking_chinese">我热到要引起全球变暖了！</state>
                 <state img="#-embarrassed.png" marker="mei_speaking_chinese">哦，我真的感觉很好。</state>
             </case>
         </trigger>
 
         <trigger id="finishing_masturbating">
             <case stage="8">
-                <state img="#-finishing.png" marker="mei_speaking_chinese">我是射精！ 我是射精！</state>
+                <state img="#-finishing.png" marker="mei_speaking_chinese">真是鬼斧神工啊！</state>
                 <state img="#-finishing.png" marker="mei_speaking_chinese">哇，我已经到了最后！</state>
             </case>
         </trigger>
