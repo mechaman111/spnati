@@ -273,7 +273,7 @@ function showOptionsModal () {
     setActiveOption('options-minimal-ui', MINIMAL_UI);
 
     /* TEMP FIX: prevent finishing animation option on Safari */
-    if (true) { // stubbed so I can test it without Safari
+    if (navigator.userAgent.indexOf("Safari") != -1) {
         $('#player-finishing-effect-control').hide();
     } else {
         setActiveOption('options-player-finishing-effect', PLAYER_FINISHING_EFFECT);
