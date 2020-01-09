@@ -90,12 +90,7 @@ var MINIMAL_UI = true;
 var DEBUG = false;
 
 /* temp fix for mobile Safari finishing crashes */
-var PLAYER_FINISHING_EFFECT_AVAILABLE = (
-    (navigator.userAgent.indexOf('Safari') !== -1) ||
-    (navigator.userAgent.indexOf('Chrome') >= 0) ||
-    !('maxTouchPoints' in navigator) ||
-    (navigator.maxTouchPoints === 0)
-);
+var PLAYER_FINISHING_EFFECT_AVAILABLE = navigator.userAgent.toLowerCase().indexOf('iphone') === -1;
 
 /* game state
  * 
