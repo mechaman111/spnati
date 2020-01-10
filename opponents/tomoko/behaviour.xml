@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 9:00:22 PM on January 10, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 10:20:25 PM on January 10, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Tomoko</first>
@@ -448,17 +448,6 @@
                 <condition role="other" character="saki_zls" stage="6" />
                 <state img="#-Shy.png" oneShotId="426">Y-you were a zombie?! I guess there was a weird smell... butI  thought that was just me!</state>
             </case>
-            <case stage="0-6" id="64" oneShotId="127">
-                <condition count="4-5" status="lost_some" />
-                <condition role="other" character="maki" stage="0-4" />
-                <test expr="~maki.lead~" value="1" />
-                <alternative alsoPlaying="maki" alsoPlayingStage="0-4">
-                    <condition count="5" />
-                </alternative>
-                <state img="#-ok_hand.png">Uh, what? &lt;i&gt;(If I ever tried to do anything like that, a creep like me would be arrested...)&lt;/i&gt;</state>
-                <state img="#-Suprised.png" marker="maki_tomochanhorny">&lt;i&gt;(I can be cute like that too!)&lt;/I&gt; Uh, Tomo-chan horny!?</state>
-                <state img="#-Suprised.png" marker="maki_tomochansexy">&lt;i&gt;(I can be cute like that too!)&lt;/I&gt; Uh, Tomo-chan sexy big titty!?</state>
-            </case>
             <case stage="0-6" oneShotId="99" priority="300">
                 <condition role="other" character="yuelia" saidMarker="tomoko_hug" />
                 <state img="#-YueliaHug.png">&lt;i&gt;(This is way too wholesome for a degenerate like me!)&lt;/i&gt;</state>
@@ -483,6 +472,18 @@
                 <condition role="other" character="revy" sayingMarker="killing" />
                 <condition role="other" character="megumin" sayingMarker="megumin_mass_murder" />
                 <state img="#-thinking.png" oneShotId="27">&lt;i&gt;(Megumin is either bad-ass or psychotic. Probably both.)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6" id="64">
+                <condition role="other" character="maki" />
+                <alternative>
+                    <condition role="other" character="maki" saying="Maki-chan pretty?" />
+                </alternative>
+                <alternative>
+                    <condition role="other" character="maki" saying="Maki-chan kawaii?" />
+                </alternative>
+                <state img="#-ok_hand.png" oneShotId="476">Uh, what? &lt;i&gt;(If I ever tried to do anything like that, a creep like me would be arrested...)&lt;/i&gt;</state>
+                <state img="#-Suprised.png" oneShotId="477" marker="maki_tomochanhorny">&lt;i&gt;(I can be cute like that too!)&lt;/I&gt; Uh, Tomo-chan horny!?</state>
+                <state img="#-Suprised.png" oneShotId="478" marker="maki_tomochansexy">&lt;i&gt;(I can be cute like that too!)&lt;/I&gt; Uh, Tomo-chan sexy big titty!?</state>
             </case>
             <case stage="3-6">
                 <condition role="other" character="megumin" />
@@ -1188,14 +1189,17 @@
                 <state img="#-thinking.png" oneShotId="424">&lt;i&gt;(Hm... I kind of wish I knew magic too. If only because sluts &lt;/i&gt;love&lt;i&gt; magic.)&lt;/i&gt;</state>
                 <state oneShotId="425">&lt;i&gt;(You could probably do all sorts of perverted stuff with magic...)&lt;/i&gt;</state>
             </case>
-            <case stage="3-6">
-                <condition filter="white_hair" stage="8" />
-                <condition role="self" saidMarker="tomoko_silverdye" />
-                <state img="#-Shy.png" oneShotId="472">I also tried to dye my pubes silver too... it, uh, &lt;i&gt;really&lt;/i&gt; fucking hurt...</state>
-            </case>
             <case stage="0-2">
                 <test expr="~background~" value="bedroom" />
                 <state img="#-thinking.png" oneShotId="268">&lt;i&gt;(Who’s bedroom even is this? Eh, I’ll go through the drawers and judge them anyway.)&lt;/i&gt;</state>
+            </case>
+            <case stage="3-6">
+                <condition filter="white_hair" status="crotch_visible" var="x" />
+                <condition role="self" saidMarker="tomoko_silverdye" />
+                <alternative>
+                    <condition filter="pubic_hair" var="x" />
+                </alternative>
+                <state img="#-Shy.png" oneShotId="472">I also tried to dye my pubes silver too... it, uh, &lt;i&gt;really&lt;/i&gt; fucking hurt...</state>
             </case>
             <case stage="4-6" id="62" priority="10">
                 <condition role="self" saidMarker="introspective_tomoko" />
@@ -4644,6 +4648,11 @@
         </trigger>
 
         <trigger id="male_masturbating">
+            <case stage="9">
+                <condition role="target" character="human" />
+                <state img="#-Soft1.png">We're doing this together ~name~! Together!</state>
+                <state img="#-Hard1.png">This counts as losing my virgnity with ~name~! I swear!</state>
+            </case>
             <case stage="0-4">
                 <state img="#-Horny.png">*Wimper*...</state>
                 <state img="#-Horny.png">Mhm... &lt;i&gt;(Wow... Who knew watching a guy jack off in real life would be this hot?..)&lt;/i&gt;</state>
@@ -5123,11 +5132,6 @@
             <case stage="9" oneShotId="100">
                 <condition role="other" character="kazuma" stage="7" />
                 <state img="#-Soft1.png" marker="kazuma_firstcum">First one to cum loses Kazuma!</state>
-            </case>
-            <case stage="9">
-                <condition character="human" stage="1" />
-                <state img="#-Soft2.png" oneShotId="467">We're doing this together ~name~! Together!</state>
-                <state img="#-Hard2.png" oneShotId="468">This counts as losing my virgnity with ~name~! I swear!</state>
             </case>
             <case stage="9" oneShotId="80">
                 <condition role="other" character="megumin" saying="look at me" />
