@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.5 at 10:12:47 PM on January 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.5 at 11:11:12 PM on January 09, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.5</version>
     <first>Saki</first>
@@ -76,7 +76,8 @@
             <case stage="0" alsoPlaying="bi">
                 <state img="#-confused.png">&lt;i&gt;(...Why do I have the sudden urge to say something witty and sarcastic to this guy?)&lt;/i&gt;</state>
             </case>
-            <case stage="0" alsoPlaying="leggy">
+            <case stage="0">
+                <condition role="other" character="leggy" />
                 <state img="#-nervous.png">&lt;i&gt;(That...that is a sheep. I am playing strip poker against a sheep. Okay.)&lt;/i&gt;</state>
             </case>
             <case stage="0" id="15" alsoPlaying="navi">
@@ -152,8 +153,10 @@
             <case stage="0-7" alsoPlaying="uravity" alsoPlayingStage="1" notSaidMarker="ura">
                 <state img="#-shy.png" marker="ura">&lt;i&gt;(Maybe I could get Ochako to teach me how to be more brave...)&lt;/i&gt;</state>
             </case>
-            <case stage="0-1" alsoPlaying="corrin_m" notSaidMarker="TWO">
+            <case stage="0-1">
                 <condition count="1" filter="corrin_f" />
+                <condition role="self" notSaidMarker="TWO" />
+                <condition role="other" character="corrin_m" />
                 <state img="#-confused.png" marker="TWO">Um... Are those two related?</state>
             </case>
             <case stage="0-7" alsoPlaying="link" saidMarker="silentcheck2" notSaidMarker="sureis" alsoPlayingNotSaidMarker="link_speaks">
@@ -344,7 +347,8 @@
         </trigger>
 
         <trigger id="hand">
-            <case stage="0-7" alsoPlaying="shimakaze" alsoPlayingStage="4" alsoPlayingTimeInStage="0" alsoPlayingSaidMarker="japanese" alsoPlayingNotSaidMarker="japend" alsoPlayingSayingMarker="japend">
+            <case stage="0-7">
+                <condition role="other" character="shimakaze" stage="4" timeInStage="0" saidMarker="japanese" sayingMarker="japend" notSaidMarker="japend" />
                 <state img="#-embarrassed.png">&lt;i&gt;(Okay, she's fine, good.)&lt;/i&gt;</state>
             </case>
             <case stage="0-7">
@@ -389,6 +393,26 @@
             <case stage="0-7">
                 <condition role="other" character="jessie" sayingMarker="JessieQA_StupidMistakes" />
                 <state img="#-confused.png" marker="JessieMistake">Um... i-it depends on how stupid the mistake was, I guess. If it was something minor... yeah. But if you... kiled someone... well, first, I'd call the police.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="yuelia" sayingMarker="promptAskCervantes" />
+                <state img="#-happy.png" marker="FlutterPlays">Oh! I've always wanted to go see a musical. I, uh... I d-don't know which one, though.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="yuelia" sayingMarker="promptAskFern" />
+                <state img="#-sad.png" marker="FlutterPet">I've always wanted a cat, b-but my parents say it'd be too much work... m-maybe when I live on my own I'll get a hamster or something?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="yuelia" sayingMarker="promptAskIsaac" />
+                <state img="#-excited.png" marker="FlutterFish">O-oh! I went fishing with my cousins once! I didn't manage to catch anything, b-but it was really relaxing! And we got dinner afterwards!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="yuelia" sayingMarker="promptAskOphelia" />
+                <state img="#-confused.png" marker="FlutterSweets">Um... chocolate? Bubble gum? Caramel? I... uh. Give me a minute.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="yuelia" sayingMarker="promptAskPorthos" />
+                <state img="#-excited.png" marker="FlutterMeal">Oh! One time, I was home alone, a-and I didn't know how to cook for myself, s-so I watched a video on how to make this really good ramen! I was... really proud of myself.</state>
             </case>
         </trigger>
 
@@ -2527,8 +2551,9 @@
             <case stage="0-9" target="ann" targetStage="2" alsoPlaying="futaba">
                 <state img="#-sad.png">&lt;i&gt;(I wish I had a friend like that...)&lt;/i&gt;</state>
             </case>
-            <case stage="0-9" id="11" target="haru" targetStage="5" targetSayingMarker="mommyharu">
-                <state img="#-confused.png">Y-you're gonna... pretend to be our mother? Or... i-is something going over my head?</state>
+            <case stage="0-9" id="11">
+                <condition role="target" character="haru" stage="5" sayingMarker="mommyharu" />
+                <state img="#-confused.png">Y-you're gonna... pretend to be my... mom? &lt;i&gt;(I have to be missing something, right? Is this a fetish thing? It feels like a fetish thing.)&lt;/i&gt;</state>
             </case>
             <case stage="0-9" target="aimee" targetStage="1">
                 <state img="#-flinching.png">Can we not do that again?</state>
