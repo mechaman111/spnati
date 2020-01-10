@@ -104,7 +104,7 @@ var eIntelligence = {
  * @param {string} [releaseNumber] This character's release number.
  * @param {string} [highlightStatus] This character's highlight status.
  */
-function Player (id, $metaXml, status, releaseNumber) {
+function Player(id, $metaXml, status, releaseNumber, highlightStatus) {
     /** 
      * This player's unique ID.
      * @type {string}
