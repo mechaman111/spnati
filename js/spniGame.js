@@ -89,9 +89,6 @@ var AUTO_FADE = true;
 var MINIMAL_UI = true;
 var DEBUG = false;
 
-/* temp fix for mobile Safari finishing crashes */
-var PLAYER_FINISHING_EFFECT_AVAILABLE = navigator.userAgent.toLowerCase().indexOf('iphone') === -1;
-
 /* game state
  * 
  * First element: text to display on main button to begin the phase
