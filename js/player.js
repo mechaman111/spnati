@@ -943,6 +943,7 @@ Player.prototype.clone = function () {
     /* This should be deep enough for our purposes. */
     for (var prop in this) {
         if (this[prop] instanceof Array) {
+            // @ts-ignore
             clone[prop] = this[prop].slice();
         } else {
             clone[prop] = this[prop];
