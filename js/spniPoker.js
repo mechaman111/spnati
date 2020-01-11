@@ -193,6 +193,9 @@ function clearCard (player, i) {
 function displayCard (player, i, visible) {
     if (players[player].hand.cards[i]) {
         if (visible) {
+            if (typeof players[player].hand.cards[i].altText !== "function") {
+                Sentry.setExtra("altText_type", typeof players[player].hand.cards[i].altText);
+            }
             $cardCells[player][i].attr({ src: IMG + players[player].hand.cards[i] + ".jpg",
                                          alt: players[player].hand.cards[i].altText() });
         } else {
