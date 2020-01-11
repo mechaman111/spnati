@@ -77,7 +77,7 @@ Card.prototype.toString = function() {
 };
 
 Card.prototype.altText = function() {
-	return (this.rank >= 11 ? "JQKA"[this.rank-11] : this.rank) + ["♠", "♡", "♢", "♣"][this.suit];
+	return (this.rank >= 11 ? "JQKA"[this.rank-11] : this.rank) + String.fromCharCode(0x2660 + this.suit);
 };
 
 /************************************************************
