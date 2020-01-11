@@ -1829,7 +1829,7 @@ Player.prototype.updateChosenState = function (state) {
 /**
  * Clears out this Opponent's previous chosenState, leaving it at null.
  */
-Opponent.prototype.clearChosenState = function () {
+Player.prototype.clearChosenState = function () {
     if (this.chosenState && this.chosenState.parentCase) {
         this.chosenState.parentCase.cleanupMutableState();
     }

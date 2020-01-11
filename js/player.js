@@ -1205,7 +1205,7 @@ Player.prototype.loadBehaviour = function (slot, individual) {
             this.loadAlternateCostume(individual);
         } else {
             this.unloadAlternateCostume();
-            this.onSelected(individual);
+            setTimeout(this.onSelected.bind(this), 1, individual);
         }
         return;
     }
