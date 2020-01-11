@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Mocha Tests</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://unpkg.com/mocha/mocha.css" />
+    </head>
+    <body>
+        <!-- spniEpilogue.js errors on load if this isn't here. -->
+        <!-- Start of Epilogue Screen -->
+        <div id="epilogue-screen" role="dialog" hidden>
+          <div id='epilogue-container' data-background='-1' data-scene='-1'>
+            <div id="epilogue-spinner" class="spinner" style="display: none">
+              <div class="spinner-pip"></div>
+              <div class="spinner-pip"></div>
+              <div class="spinner-pip"></div>
+              <div id="epilogue-progress">0%</div>
+            </div>
+          </div>
+          <div id='epilogue-buttons'>
+            <button type="button" id='epilogue-next' class="bordered smooth-button">
+              Next
+            </button>
+            <button type="button" id='epilogue-previous' class="bordered smooth-button">
+              Previous
+            </button>
+            <button type="button" id='epilogue-restart' class="bordered smooth-button">
+              Restart?
+            </button>
+          </div>
+        </div>
+        <!-- End of Epilogue Screen -->
+        
+        <div id="mocha"></div>
+        
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/pako.min.js"></script>
+        
+        <script src="js/player.js"></script>
+        <script src="js/table.js"></script>
+        <script src="js/save.js"></script>
+        
+        <script src="js/spniCore.js"></script>
+        <script src="js/spniOption.js"></script>
+        <script src="js/spniClothing.js"></script>
+        <script src="js/spniDisplay.js"></script>
+        <script src="js/spniEpilogue.js"></script>
+        <script src="js/spniGallery.js"></script>
+        <script src="js/spniPoker.js"></script>
+        <script src="js/spniBehaviour.js"></script>
+        
+        <script src="https://unpkg.com/chai/chai.js"></script>
+        <script src="https://unpkg.com/mocha/mocha.js"></script>
+        
+        <script class="mocha-init">
+            mocha.setup('bdd');
+            mocha.checkLeaks();
+            window.removeEventListener('error', errorEventListener);
+        </script>
+        
+        <script src="tests/fixtures.js"></script>
+        <script src="tests/spniCore.js"></script>
+        <script class="mocha-exec">
+            mocha.run();
+        </script>
+    </body>
+</html>

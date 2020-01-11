@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<opponent>
+    <first>Alice</first>
+    <last>Sert</last>
+    <label>Black</label>
+    <gender>female</gender>
+    <size>medium</size>
+    <timer>25</timer>
+    <intelligence>average</intelligence>
+    <tags>
+        <tag>black_hair</tag>
+        <tag>medium_hair</tag>
+        <tag>dark_eyes</tag>
+        <tag>unusual_skin</tag>
+        <tag>virtual</tag>
+        <tag>robot</tag>
+        <tag>medium_breasts</tag>
+        <tag>kind</tag>
+        <tag from="4">test_1</tag>
+        <tag from="4" to="5">test_2</tag>
+    </tags>
+    <start />
+    <wardrobe>
+        <clothing lowercase="panties" position="lower" formalName="panties" type="important" />
+        <clothing lowercase="bra" position="upper" formalName="bra" type="important" />
+        <clothing lowercase="skirt" position="lower" formalName="skirt" type="major" />
+        <clothing lowercase="shirt" position="upper" formalName="shirt" type="major" />
+        <clothing lowercase="socks" position="lower" formalName="socks (formal)" plural="true" type="minor" />
+    </wardrobe>
+    <poses />
+    <behaviour>
+        <stage id="1">
+            <!-- empty state, used for testing updateBehaviour with no valid-tagged cases -->
+            <case tag="hand">
+                <state img="0-calm.png">Dummy hand line.</state>
+            </case>
+        </stage>
+        
+        <stage id="0">
+            <case tag="selected" priority="200">
+                <state img="0-calm.png">Dummy selected line.</state>
+            </case>
+            
+            <!-- Used for testing checkMarker -->
+            <case tag="checkMarker_currentOnly_test_1" priority="200">
+                <state img="0-calm.png" marker="test=5">checkMarker_currentOnly_test_1</state>
+            </case>
+            
+            <case tag="checkMarker_currentOnly_test_2" priority="200">
+                <state img="0-calm.png" marker="test*=5">checkMarker_currentOnly_test_2</state>
+            </case>
+            
+            <!-- Used for testing targetedLine counting. -->
+            <case tag="hand" alsoPlaying="target_linecount_test" priority="-1">
+                <state img="0-calm.png">Dummy alsoPlaying targeted line.</state>
+            </case>
+            <case tag="female_must_strip" target="target_linecount_test" targetStage="0" priority="-1">
+                <state img="0-calm.png">Dummy targeted line.</state>
+            </case>
+            
+            <case tag="global" priority="100">
+                <state img="0-calm.png">global_fallback</state>
+            </case>
+            
+            <!-- Used for testing basic updateBehaviour functionality. -->
+            <case tag="basic_test_a" priority="200">
+                <state img="0-calm.png">basic_test_a</state>
+            </case>
+            <case tag="basic_test_b" priority="0">
+                <state img="0-calm.png">basic_test_b</state>
+            </case>
+            
+            <!--
+                Most of the following groups of test cases are/will designed to
+                operate in the following manner:
+                 - if any non-A case fires (false positive), then that will take priority.
+                 - if the A case fails to fire (false negative), then the global fallback should be used instead.
+                
+                In either event (false positive / negative), the observed
+                result state will differ from the intended result (the A case).
+              -->
+        </stage>
+    </behaviour>
+</opponent>

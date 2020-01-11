@@ -318,7 +318,7 @@ function changeCharacterFilter (collectibleScreen) {
 function loadAllCollectibles() {
     loadedOpponents.forEach(function (opp) {
         if (opp && opp.has_collectibles) {
-            opp.loadCollectibles(updateCollectiblesScreen);
+            opp.loadCollectibles().then(updateCollectiblesScreen);
         }
     });
 }

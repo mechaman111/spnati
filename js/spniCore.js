@@ -347,10 +347,14 @@ Player.prototype.initClothingStatus = function () {
 		});
 }
 
-/*******************************************************************
- * (Re)Initialize the player properties that change during a game
- *******************************************************************/
-Player.prototype.resetState = function () {
+/**
+ * Initialize (or reinitialize) the player properties that change during a game.
+ * 
+ * @param {boolean} skipStartStateInit If true, dialogue initialization from
+ * `this.startStates` (if it exists) will be skipped. This is currently only
+ * used for unit testing.
+ */
+Player.prototype.resetState = function (skipDialogueInit) {
     this.out = this.finished = false;
     this.outOrder = undefined;
     this.biggestLead = 0;
@@ -367,7 +371,8 @@ Player.prototype.resetState = function () {
         this.currentTags = [];
         this.stateCommitted = false;
 
-        if (this.startStates.length > 0) this.updateChosenState(new State(this.startStates[0]));
+        if (this.startStates.length > 0 && !skipStartStateInit)
+            this.updateChosenState(new State(this.startStates[0]));
 
         var appearance = this.default_costume;
         if (ALT_COSTUMES_ENABLED && this.alt_costume) {
@@ -382,7 +387,7 @@ Player.prototype.resetState = function () {
 		/* Load the player's wardrobe. */
 
     	/* Find and grab the wardrobe tag */
-    	$wardrobe = appearance.wardrobe;
+    	var $wardrobe = appearance.wardrobe;
 
     	/* find and create all of their clothing */
         var clothingArr = [];
@@ -817,11 +822,11 @@ Opponent.prototype.unloadAlternateCostume = function () {
     this.resetState();
 }
 
-Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
+Opponent.prototype.loadCollectibles = function () {
     if (!this.has_collectibles) return;
     if (this.collectibles !== null) return;
     
-    $.ajax({
+    return $.ajax({
 		type: "GET",
 		url: this.folder + 'collectibles.xml',
 		dataType: "text",
@@ -837,13 +842,12 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
                 return !c.status || includedOpponentStatuses[c.status];
             });
             
-            if (onLoaded) onLoaded(this);
+            return this
 		}.bind(this),
         error: function (jqXHR, status, err) {
             console.error("Error loading collectibles for "+this.id+": "+status+" - "+err);
-            if (onError) onError(this, status, err);
         }.bind(this)
-	});
+	}).promise();
 }
 
 /* Called prior to removing a character from the table. */
@@ -866,10 +870,10 @@ Opponent.prototype.unloadOpponent = function () {
  * Loads and parses the start of the behaviour XML file of the
  * given opponent.
  *
- * The onLoadFinished parameter must be a function capable of
- * receiving a new player object and a slot number.
+ * redirectFinalization and redirectError are optional callbacks that
+ * are used by the unit tests to hook into this function when loading fixtures.
  ************************************************************/
-Opponent.prototype.loadBehaviour = function (slot, individual) {
+Opponent.prototype.loadBehaviour = function (slot, individual, redirectFinalization, redirectError) {
     this.slot = slot;
     if (this.isLoaded()) {
         if (this.selected_costume) {
@@ -896,8 +900,9 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 });
             }
 
+            var collectibles_promise = null;
             if (this.has_collectibles) {
-                this.loadCollectibles();
+                collectibles_promise = this.loadCollectibles();
             }
             
             this.xml = $xml;
@@ -1011,24 +1016,42 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 var cachePromise = this.loadXMLStages();
             }
 
-            cachePromise.progress(function (completed, total) {
-                this.loadProgress = completed / total;
-                mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
-            });
+            /* disable this if hooking finalization to make life easier
+             * for unit test code
+             */
+            if (!redirectFinalization) {
+                cachePromise.progress(function (completed, total) {
+                    this.loadProgress = completed / total;
+                    mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
+                });
+            }
+
+            if (collectibles_promise) {
+                /* Make sure collectibles loading finishes before returning. */
+                cachePromise = cachePromise.then(function () {
+                    return collectibles_promise
+                });
+            }
 
             cachePromise.then(function () {
                 this.loaded = true;
 
+                if (redirectFinalization) {
+                    return redirectFinalization();
+                }
+                
                 if (this.selected_costume) {
                     return this.loadAlternateCostume();
                 }
 
                 return this.onSelected(individual);
-            });
+            }.bind(this));
 		}.bind(this))
 		/* Error callback. */
         .fail(function(err) {
             console.log("Failed reading \""+this.id+"\" behaviour.xml");
+            if (redirectError) return redirectError();
+
             delete players[this.slot];
         }.bind(this));
 }

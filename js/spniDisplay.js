@@ -1526,7 +1526,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
             .prop('disabled', false);
             
         if (!opponent.collectibles) {
-            opponent.loadCollectibles(updateCollectiblesBtn);
+            opponent.loadCollectibles().then(updateCollectiblesBtn);
         } else {
             updateCollectiblesBtn();
         }
