@@ -77,7 +77,7 @@ Card.prototype.toString = function() {
 };
 
 Card.prototype.altText = function() {
-	return (this.rank >= 11 ? "JQKA"[this.rank-11] : this.rank) + ["♠", "♡", "♢", "♣"][this.suit];
+	return (this.rank >= 11 ? "JQKA"[this.rank-11] : this.rank) + String.fromCharCode(0x2660 + this.suit);
 };
 
 /************************************************************
@@ -193,6 +193,9 @@ function clearCard (player, i) {
 function displayCard (player, i, visible) {
     if (players[player].hand.cards[i]) {
         if (visible) {
+            if (typeof players[player].hand.cards[i].altText !== "function") {
+                Sentry.setExtra("altText_type", typeof players[player].hand.cards[i].altText);
+            }
             $cardCells[player][i].attr({ src: IMG + players[player].hand.cards[i] + ".jpg",
                                          alt: players[player].hand.cards[i].altText() });
         } else {
