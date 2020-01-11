@@ -308,6 +308,8 @@ function MarkerOperation (name, op, value, persistent, perTarget) {
  * parameter.
  */
 function parseMarkerOperation (markerOp, persistMarker) {
+    if (!markerOp) return;
+
     var match = markerOp.match(/^(?:(\+|-)([\w-]+\*?)|([\w-]+\*?)\s*([-+*%\/]?=)\s*(.*?)\s*)$/);
     if (match) {
         if (match[1]) {
@@ -566,8 +568,24 @@ function State($xml_or_state, parentCase) {
     this.location = $xml.attr('location') || '';
     this.alt_images = null;
 
+    /** @type {MarkerOperation[]} */
+    this.markerOps = [];
+
+    var persistMarker = ($xml.attr('persist-marker') === 'true');
+    var markerOp = parseMarkerOperation($xml.attr('marker'), persistMarker);
+    if (markerOp) {
+        this.markerOps.push(markerOp);
+    }
+
     if (this.rawDialogue = $xml.children('text').html()) {
         this.alt_images = $xml.children('alt-img');
+        $xml.children('marker').each(function (idx, elem) {
+            var $elem = $(elem);
+            var persistent = ($elem.attr('persist') === 'true');
+
+            var op = parseMarkerOperation($(elem).text(), persistent);
+            if (op) this.markerOps.push(op);
+        }.bind(this));
     } else {
         this.rawDialogue = $xml.html();
     }
@@ -587,23 +605,29 @@ function State($xml_or_state, parentCase) {
     
     var collectibleId = $xml.attr('collectible') || undefined;
     var collectibleOp = $xml.attr('collectible-value') || undefined;
-    var persistMarker = $xml.attr('persist-marker') === 'true';
-    var markerOp = $xml.attr('marker');
 
     if (collectibleId)
         this.collectible = new CollectibleOperation(collectibleId, collectibleOp);
     
-    if (markerOp) this.marker = parseMarkerOperation(markerOp);
 }
 
-State.prototype.evaluateMarker = function (self, opp) {
-    if (!this.marker) return;
-    return this.marker.evaluate(self, opp, this.parentCase);
+State.prototype.evaluateMarker = function (name, perTarget, self, opp) {
+    for (var i = 0; i < this.markerOps.length; i++) {
+        var marker = this.markerOps[i];
+
+        if (
+            ((perTarget && opp) || !marker.perTarget) 
+            && marker.name === name
+        ) {
+            return marker.evaluate(self, opp, this.parentCase);
+        }
+    }
 }
 
-State.prototype.applyMarker = function (self, opp) {
-    if (!this.marker) return;
-    return this.marker.apply(self, opp, this.parentCase);
+State.prototype.applyMarkers = function (self, opp) {
+    return this.markerOps.forEach(function (marker) {
+        marker.apply(self, opp, this.parentCase);
+    }, this);
 }
 
 State.prototype.expandDialogue = function(self, target) {
@@ -665,17 +689,20 @@ State.prototype.checkUnwanteds = function (self, target) {
     var ok = !players.some(function(p) { // Check that none of the other players' unwanted lists are violated,
         if (p == self) return false;  // Shouldn't happen
         if (!p.chosenState || !p.updatePending || !p.chosenState.parentCase) return false; // Ignore if they don't have a case
-        if (this.marker && p.chosenState.parentCase.unwantedMarkers
+        
+        if (this.markerOps.length > 0 && p.chosenState.parentCase.unwantedMarkers
             && p.chosenState.parentCase.unwantedMarkers.some(function(item) {
                 if (self == item[0]) {
                     self.chosenState = this;  // Temporarily set chosenState to this state to be able to use checkMarker()
-                    return checkMarker(item[1], self, target, true); // item[1] is the marker predicate from the <condition>
+                    // item[1] is the marker predicate from the <condition>:
+                    return checkMarker(item[1], self, target, true); 
                     // If the marker matched, true is returned, which means not OK.
                 }
                 return false;  // Not us
             }, this)) {
             return true;  // At least one marker matched.
         }
+
         if (p.chosenState.parentCase.unwantedSayings
             && p.chosenState.parentCase.unwantedSayings.some(function(item) {
                 return self == item[0]
@@ -1174,12 +1201,14 @@ function checkMarker(predicate, self, target, currentOnly) {
     }
     
     if (currentOnly) {
-        return !self.updatePending
-            && self.chosenState
-            && self.chosenState.marker
-            && self.chosenState.marker.name === name
-            && ((perTarget && target) || !self.chosenState.marker.perTarget)
-            && evalOperator(self.chosenState.evaluateMarker(self, target), op, cmpVal);
+        if (self.updatePending || !self.chosenState) return false;
+
+        var marker_val = self.chosenState.evaluateMarker(name, perTarget, self, target);
+
+        /* marker_val === undefined indicates that marker evaluation failed */
+        if (marker_val === undefined) return false;
+
+        return evalOperator(marker_val, op, cmpVal);
     }
     if (perTarget && target) {
         val = self.markers[getTargetMarker(name, target)];
@@ -2094,9 +2123,7 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     
     this.chosenState.expandDialogue(this, this.currentTarget);
 
-    if (this.chosenState.marker) {
-        this.chosenState.applyMarker(this, this.currentTarget);
-    }
+    this.chosenState.applyMarkers(this, this.currentTarget);
     
     if (this.chosenState.setLabel) {
         this.label = this.chosenState.setLabel;
@@ -2142,7 +2169,7 @@ Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
     var self = this;
     chosenCase.applyOneShot(self);
     chosenCase.states.forEach(function (c) {
-        c.applyMarker(self, opp);
+        c.applyMarkers(self, opp);
         c.applyCollectible(self);
         c.applyOneShot(self);
     });

@@ -304,12 +304,16 @@ DevModeDialogueBox.prototype.saveEdits = function () {
                 var curCase = curState.parentCase;
                     
                 info.case = curCase.serializeConditions();
-                info.state = {'text': curState.rawDialogue, 'image': curState.image, 'marker': null};
-                
-                if (curState.marker) {
-                    info.state.marker = curState.marker.serialize();
-                    info.state.marker.value = curState.marker.getCurrentValue();
-                }
+                info.state = {
+                    'text': curState.rawDialogue, 
+                    'image': curState.image, 
+                    'markers': curState.markerOps.map(function (marker) {
+                        var s = marker.serialize();
+                        s.value = marker.getCurrentValue();
+
+                        return s;
+                    })
+                };
             }
             
             return info;
