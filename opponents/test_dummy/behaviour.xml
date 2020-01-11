@@ -49,6 +49,16 @@
             <case tag="checkMarker_currentOnly_test_2" priority="200">
                 <state img="0-calm.png" marker="test*=5">checkMarker_currentOnly_test_2</state>
             </case>
+
+            <case tag="checkMarker_currentOnly_test_3" priority="200">
+                <state img="0-calm.png">
+                    <text>checkMarker_currentOnly_test_3</text>
+                    <marker>test1=5</marker>
+                    <marker>test2=not foo</marker>
+                    <marker>test3*=45</marker>
+                    <marker>test4*=sleepo</marker>
+                </state>
+            </case>
             
             <!-- Used for testing targetedLine counting. -->
             <case tag="hand" alsoPlaying="target_linecount_test" priority="-1">
@@ -71,7 +81,7 @@
             </case>
             
             <!--
-                Most of the following groups of test cases are/will designed to
+                Most of the following groups of test cases are designed to
                 operate in the following manner:
                  - if any non-A case fires (false positive), then that will take priority.
                  - if the A case fails to fire (false negative), then the global fallback should be used instead.
@@ -79,6 +89,167 @@
                 In either event (false positive / negative), the observed
                 result state will differ from the intended result (the A case).
               -->
+            
+            <!-- Used for testing target condition functionality. -->
+            <case tag="target_test_a" target="chihiro" priority="200">
+                <state img="0-calm.png">target_test_a</state>
+            </case>
+            <case tag="target_test_b" target="hk416" priority="9999">
+                <state img="0-calm.png">target_test_b</state>
+            </case>
+            
+            <!-- Used for testing filter condition functionality. -->
+            <case tag="filter_test_1a" filter="danganronpa" priority="200">
+                <!-- matches Chihiro -->
+                <state img="0-calm.png">filter_test_1a</state>
+            </case>
+            <case tag="filter_test_1b" filter="unknown_tag" priority="9999">
+                <state img="0-calm.png">filter_test_1b</state>
+            </case>
+            
+            <case tag="filter_test_2a" filter="brunette" priority="200">
+                <!-- matches Chihiro -->
+                <state img="0-calm.png">filter_test_2a</state>
+            </case>
+            <case tag="filter_test_2b" filter="white_hair" priority="9999">
+                <!-- matches HK416 -->
+                <state img="0-calm.png">filter_test_2b</state>
+            </case>
+            
+            <!-- Used for testing alsoPlaying condition functionality. -->
+            <case tag="alsoplaying_test_1a" alsoPlaying="chihiro" priority="200">
+                <state img="0-calm.png">alsoplaying_test_1a</state>
+            </case>
+            <case tag="alsoplaying_test_1b" alsoPlaying="unknown" priority="9999">
+                <state img="0-calm.png">alsoplaying_test_1b</state>
+            </case>
+            
+            <case tag="alsoplaying_test_2a" alsoPlaying="chihiro" priority="200">
+                <state img="0-calm.png">alsoplaying_test_2a</state>
+            </case>
+            <case tag="alsoplaying_test_2b" alsoPlaying="hk416" priority="9999">
+                <state img="0-calm.png">alsoplaying_test_2b</state>
+            </case>
+            
+            <!-- Used for testing targetStage condition functionality. -->
+            <case tag="targetstage_test_1a" targetStage="1" priority="200">
+                <state img="0-calm.png">targetstage_test_1a</state>
+            </case>
+            <case tag="targetstage_test_1b" targetStage="0" priority="9999">
+                <state img="0-calm.png">targetstage_test_1b</state>
+            </case>
+            <case tag="targetstage_test_1c" targetStage="2" priority="9999">
+                <state img="0-calm.png">targetstage_test_1c</state>
+            </case>
+            
+            <case tag="targetstage_test_2a" targetStage="2-3" priority="200">
+                <state img="0-calm.png">targetstage_test_2a</state>
+            </case>
+            <case tag="targetstage_test_2b" targetStage="0-1" priority="9999">
+                <state img="0-calm.png">targetstage_test_2b</state>
+            </case>
+            <case tag="targetstage_test_2c" targetStage="4-5" priority="9999">
+                <state img="0-calm.png">targetstage_test_2c</state>
+            </case>
+            
+            <!-- Used for testing targetLayers condition functionality. -->
+            <case tag="targetlayers_test_1a" targetLayers="4" priority="200">
+                <state img="0-calm.png">targetlayers_test_1a</state>
+            </case>
+            <case tag="targetlayers_test_1b" targetLayers="3" priority="9999">
+                <state img="0-calm.png">targetlayers_test_1b</state>
+            </case>
+            <case tag="targetlayers_test_1c" targetLayers="5" priority="9999">
+                <state img="0-calm.png">targetlayers_test_1c</state>
+            </case>
+            
+            <case tag="targetlayers_test_2a" targetLayers="2-3" priority="200">
+                <state img="0-calm.png">targetlayers_test_2a</state>
+            </case>
+            <case tag="targetlayers_test_2b" targetLayers="0-1" priority="9999">
+                <state img="0-calm.png">targetlayers_test_2b</state>
+            </case>
+            <case tag="targetlayers_test_2c" targetLayers="4-5" priority="9999">
+                <state img="0-calm.png">targetlayers_test_2c</state>
+            </case>
+            
+            <!-- Used for testing targetStartingLayers condition functionality. -->
+            <case tag="targetstartinglayers_test_1a" targetStartingLayers="6" priority="200">
+                <state img="0-calm.png">targetstartinglayers_test_1a</state>
+            </case>
+            <case tag="targetstartinglayers_test_1b" targetStartingLayers="5" priority="9999">
+                <state img="0-calm.png">targetstartinglayers_test_1b</state>
+            </case>
+            <case tag="targetstartinglayers_test_1c" targetStartingLayers="7" priority="9999">
+                <state img="0-calm.png">targetstartinglayers_test_1c</state>
+            </case>
+            
+            <case tag="targetstartinglayers_test_2a" targetStartingLayers="5-6" priority="200">
+                <state img="0-calm.png">targetstartinglayers_test_2a</state>
+            </case>
+            <case tag="targetstartinglayers_test_2b" targetStartingLayers="0-2" priority="9999">
+                <state img="0-calm.png">targetstartinglayers_test_2b</state>
+            </case>
+            <case tag="targetstartinglayers_test_2c" targetStartingLayers="7-8" priority="9999">
+                <state img="0-calm.png">targetstartinglayers_test_2c</state>
+            </case>
+            
+            <!-- Used for testing targetSaidMarker functionality. -->
+            <case tag="targetsaidmarker_test_1a" targetSaidMarker="test==42" priority="200">
+                <state img="0-calm.png">targetsaidmarker_test_1a</state>
+            </case>
+            
+            <!-- Used for testing targetNotSaidMarker functionality. -->
+            <case tag="targetnotsaidmarker_test_1a" targetNotSaidMarker="test" priority="200">
+                <state img="0-calm.png">targetnotsaidmarker_test_1a</state>
+            </case>
+            
+            <!-- Used for testing targetTimeInStage condition functionality. -->
+            <case tag="targettimeinstage_test_1a" targetTimeInStage="4" priority="200">
+                <state img="0-calm.png">targettimeinstage_test_1a</state>
+            </case>
+            <case tag="targettimeinstage_test_1b" targetTimeInStage="3" priority="9999">
+                <state img="0-calm.png">targettimeinstage_test_1b</state>
+            </case>
+            <case tag="targettimeinstage_test_1c" targetTimeInStage="5" priority="9999">
+                <state img="0-calm.png">targettimeinstage_test_1c</state>
+            </case>
+            
+            <case tag="targettimeinstage_test_2a" targetTimeInStage="3-4" priority="200">
+                <state img="0-calm.png">targettimeinstage_test_2a</state>
+            </case>
+            <case tag="targettimeinstage_test_2b" targetTimeInStage="0-2" priority="9999">
+                <state img="0-calm.png">targettimeinstage_test_2b</state>
+            </case>
+            <case tag="targettimeinstage_test_2c" targetTimeInStage="5-6" priority="9999">
+                <state img="0-calm.png">targettimeinstage_test_2c</state>
+            </case>
+            
+            <!-- Used for testing oppHand functionality. -->
+            <case tag="opphand_test_1a" oppHand="Three of a Kind" priority="200">
+                <state img="0-calm.png">opphand_test_1a</state>
+            </case>
+            
+            <!-- Used for testing consecutiveLosses functionality. -->
+            <case tag="consecutivelosses_test_1a" consecutiveLosses="4" priority="200">
+                <state img="0-calm.png">consecutivelosses_test_1a</state>
+            </case>
+            <case tag="consecutivelosses_test_1b" consecutiveLosses="3" priority="9999">
+                <state img="0-calm.png">consecutivelosses_test_1b</state>
+            </case>
+            <case tag="consecutivelosses_test_1c" consecutiveLosses="5" priority="9999">
+                <state img="0-calm.png">consecutivelosses_test_1c</state>
+            </case>
+            
+            <case tag="consecutivelosses_test_2a" consecutiveLosses="4-5" priority="200">
+                <state img="0-calm.png">consecutivelosses_test_2a</state>
+            </case>
+            <case tag="consecutivelosses_test_2b" consecutiveLosses="0-3" priority="9999">
+                <state img="0-calm.png">consecutivelosses_test_2b</state>
+            </case>
+            <case tag="consecutivelosses_test_2c" consecutiveLosses="6-7" priority="9999">
+                <state img="0-calm.png">consecutivelosses_test_2c</state>
+            </case>
         </stage>
     </behaviour>
 </opponent>

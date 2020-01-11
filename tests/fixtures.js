@@ -24,6 +24,10 @@ function load_opponent_fixture (id) {
     }
 }
 
+before('storing human player', function() {
+    opponent_fixtures['human'] = humanPlayer;
+});
+
 before('loading test dummy', load_opponent_fixture('test_dummy'));
 before('loading Chihiro', load_opponent_fixture('chihiro'));
 before('loading HK416', load_opponent_fixture('hk416'));
@@ -54,16 +58,20 @@ function setupTableFixture (slot_ids) {
     slot_ids.forEach(function (id, idx) {
         if (!id) return;
         
-        loadOpponent(id, idx+1);
+        getOpponent(id, idx+1);
     });
 }
 
 function cleanUpPlayers () {
     players.forEach(function (pl) {
-        pl.resetState(true);
+        if(pl) pl.resetState(true);
     })
 
     players = Array(5);
+
+    humanPlayer = new Player('human');
+    players[HUMAN_PLAYER] = humanPlayer;
+    players[HUMAN_PLAYER].slot = HUMAN_PLAYER;
 }
 
 function dummyState (attrs, parentCase) {
