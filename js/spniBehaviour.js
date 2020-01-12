@@ -799,7 +799,27 @@ function expandDialogue (dialogue, self, target, bindings) {
                 }
                 break;
             case 'weekday':
-                substitution = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()];
+                if (fn == 'number') {
+                    substitution = new Date().getDay() || 7;
+                } else {
+                    substitution = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()];
+                }
+                break;
+            case 'day':
+                if (fn == 'number') {
+                    substitution = new Date().getDate();
+                } else {
+                    var day = new Date().getDate();
+                    substitution = day + ((day - 1) % 10 < 3 && (day < 4 || day > 13) ? ['st', 'nd', 'rd'][day % 10 - 1] : 'th');
+                }
+                break;
+            case 'month':
+                if (fn == 'number') {
+                    substitution = new Date().getMonth() + 1;
+                } else {
+                    substitution = ['January', 'February', 'March', 'April', 'May', 'June',
+                                    'July', 'August', 'September', 'November', 'December'][new Date().getMonth()];
+                }
                 break;
             case 'target':
             case 'self':
