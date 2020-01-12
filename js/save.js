@@ -148,7 +148,7 @@ function Save() {
                 && (typeof options.autoEnding == 'number' || options.autoEnding === null))
                 ENDING_DELAY = options.autoEnding;
             if ('minimalUI' in options && typeof options.minimalUI == 'boolean') setUIMode(options.minimalUI);
-            if ('playerFinishingEffect' in options && typeof options.playerFinishingEffect == 'boolean') PLAYER_FINISHING_EFFECT = options.cardSuggest;
+            if ('playerFinishingEffect' in options && typeof options.playerFinishingEffect == 'boolean') PLAYER_FINISHING_EFFECT = options.playerFinishingEffect;
         } catch (ex) {
             console.error('Failed parsing options from localStorage');
             if (SENTRY_INITIALIZED) Sentry.captureException(ex);
@@ -398,6 +398,7 @@ function saveSettings(){
 
 function saveOptions(){
     save.saveOptions();
+    save.saveSettings();
 }
 
 /**

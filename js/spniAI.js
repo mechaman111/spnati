@@ -90,9 +90,8 @@ function determineAIAction (player) {
 
 		if (player.getIntelligence() == eIntelligence.AVERAGE) {
 			/* Check for flush draw, even if holding a pair */
-			var flush_draw = player.hand.suits.indexOf(function(s) { return s == CARDS_PER_HAND - 1; });
-			if (flush_draw >= 0) {
-				player.hand.tradeIns = hand.map(function(c) { return c.suit != flush_draw; });
+			if (player.hand.suits.some(function(s) { return s == CARDS_PER_HAND - 1; })) {
+				player.hand.tradeIns = hand.map(function(c) { return player.hand.suits[c.suit] == 1; });
 				console.log("Hand is " + (player.hand.strength == PAIR ? "okay" : "bad") + ", going for a flush, trading in one card. " + player.hand.tradeIns);
 				return;
 			}

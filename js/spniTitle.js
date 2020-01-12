@@ -118,6 +118,10 @@ var CANDY_LIST = [
     "palutena/1-calm.png",
     "palutena/2-tranquil.png",
     "palutena/3-surprised.png",
+    "panty/0-laughing.png",
+    "panty/0-impressed.png",
+    "panty/0-bored.png",
+    "panty/0-xxstripping.png",
     "pinkie_pie/0-excited.png",
     "pinkie_pie/0-smug.png",
     "pinkie_pie/1-wink.png",
@@ -471,6 +475,8 @@ function validateTitleScreen () {
 
     save.savePlayer();
     console.log(players[0]);
+
+    loadDefaultFillSuggestions();
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
     screenTransition($titleScreen, $selectScreen);

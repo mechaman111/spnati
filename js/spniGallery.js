@@ -69,6 +69,8 @@ var unescapeSubstitutions = {
 var unescapeDialogueRE = /(&(?:lt|gt|quot|apos|amp);)/gi
 
 function unescapeHTML(in_text) {
+	if (!in_text) return '';
+	
     return in_text.replace(unescapeDialogueRE, function (match, p1) {
         return unescapeSubstitutions[p1];
     });
@@ -76,8 +78,8 @@ function unescapeHTML(in_text) {
 
 function Collectible(xmlElem, player) {
 	this.id = xmlElem.attr('id');
-	this.thumbnail = xmlElem.attr('thumbnail');
 	this.image = xmlElem.attr('img');
+	this.thumbnail = xmlElem.attr('thumbnail') || this.image;
 	this.status = xmlElem.attr('status');
 	this.title = unescapeHTML(xmlElem.find('title').text());
 	this.subtitle = unescapeHTML(xmlElem.find('subtitle').text());	
@@ -109,8 +111,9 @@ Collectible.prototype.isUnlocked = function () {
     }
 }
 
-Collectible.prototype.getCounter = function (inc) {    
-    return save.getCollectibleCounter(this);
+Collectible.prototype.getCounter = function () {
+    var ctr = save.getCollectibleCounter(this);
+    return (this.counter && ctr > this.counter) ? this.counter : ctr;
 }
 
 Collectible.prototype.unlock = function () {
@@ -119,10 +122,17 @@ Collectible.prototype.unlock = function () {
 
 Collectible.prototype.incrementCounter = function (inc) {
     var newCounter = save.getCollectibleCounter(this) + inc;
+    
+    if (this.counter && newCounter > this.counter)
+        newCounter = this.counter;
+    
     save.setCollectibleCounter(this, newCounter); 
 }
 
 Collectible.prototype.setCounter = function (val) {
+    if (this.counter && val > this.counter)
+        val = this.counter;
+        
     save.setCollectibleCounter(this, val); 
 }
 
