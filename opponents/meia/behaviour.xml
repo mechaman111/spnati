@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 12:22:45 AM on January 10, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 3:31:39 AM on January 12, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Meia</first>
@@ -799,7 +799,8 @@
                 <state img="#-stretching.png" marker="laser_ring">I feel naked without my eyepiece...but at least I still have my laser ring.</state>
                 <state img="#-busy.png" marker="tablet">...I just realized delegating to Barnette means my whole schedule is off now.  Jura, don't bother her tonight.</state>
             </case>
-            <case stage="2" timeInStage="0-0">
+            <case stage="2">
+                <condition role="self" timeInStage="0-0" />
                 <state img="#-bored.png">I've got to pull myself together...</state>
                 <state img="#-annoyed.png">Yet another mistake...</state>
                 <state img="#-annoyed.png">Terrible...and with my whole suit on the line.</state>
@@ -992,18 +993,20 @@
                 <state img="#-interested.png" marker="misato_clothing">I wasn't expecting such like-minded fashion on Earth myself, Misato.  Even &lt;i&gt;your&lt;/i&gt; outfit shows off your figure.</state>
                 <state img="#-addressing.png" marker="misato_clothing">Perhaps the tight-fitting fashion of Mejare isn't as unique as I thought.  Your own dress is hugging your hips, as well, Misato.</state>
             </case>
-            <case stage="0-5" totalFemales="4">
+            <case stage="0-5">
                 <condition role="other" character="jura" stage="0-6" sayingMarker="seduction" />
                 <condition character="sei" />
                 <condition character="rin" />
+                <condition count="4" gender="female" />
                 <state img="#-annoyed.png" marker="jura_seduction_sei_rin">...Jura, is this a roundabout way of matchmaking me and Sei?  Now she's going and including the child...</state>
                 <state img="#-disappointed.png" marker="jura_seduction_sei_rin">...Jura, I understand that you want me to either date Sei or admit I'm interested in men, but she's dragging Rin into this.</state>
                 <state img="#-explaining.png" marker="jura_seduction_sei_rin">I am &lt;i&gt;not&lt;/i&gt; about to date this woman, Jura, even if you bring up men by comparison.  Look how she's bringing children into the mix.</state>
                 <state img="#-annoyed.png" marker="jura_seduction_sei_rin">...What's this really about, Jura?  Is bringing up men supposed to make Sei look better by comparison?  She wants some bizarre threesome with me and Rin.</state>
             </case>
-            <case stage="0-5" totalFemales="4">
+            <case stage="0-5">
                 <condition role="other" character="jura" stage="0-6" sayingMarker="seduction" />
                 <condition character="sei" />
+                <condition count="4" gender="female" />
                 <state img="#-annoyed.png" marker="jura_seduction_sei">...Jura, is this a roundabout way of matchmaking me and Sei?  Some of the &lt;i&gt;men&lt;/i&gt; we know are more upstanding than she is...</state>
                 <state img="#-bored.png" marker="jura_seduction_sei">...Jura, I understand that you want me to date Sei, but bringing up men just makes them look better.  Male soldiers seem &lt;i&gt;disciplined.&lt;/i&gt;</state>
                 <state img="#-explaining.png" marker="jura_seduction_sei">I am &lt;i&gt;not&lt;/i&gt; about to date this woman, Jura, even if you bring up men by comparison.  In fact, I might actually prefer a man...they're more principled.</state>
@@ -1437,9 +1440,10 @@
                 <state img="#-bored.png">Oh, for God's sake...dabble in magic, and this is the result.  A sweet woman possessed by...something less sweet.</state>
                 <state img="#-busy.png">For once, a kind, gentle woman, and she gets overtaken by shadow.  Tch...back to work.</state>
             </case>
-            <case stage="0-5" alsoPlaying="sei" alsoPlayingStage="1" alsoPlayingTimeInStage="0" alsoPlayingSayingMarker="drinks_anyone">
+            <case stage="0-5">
+                <condition role="other" character="sei" stage="1" timeInStage="0" sayingMarker="drinks_anyone" />
                 <state img="#-bored.png" marker="coffee">...Coffee.  Black.</state>
-                <state img="#-explaining.png" marker="coffee">...I don't drink.  Does this bar serve coffee?</state>
+                <state img="#-disappointed.png" marker="coffee">...I don't drink.  Does this bar serve coffee?</state>
                 <state img="#-explaining.png" marker="coffee">...Coffee.  I don't like being unfocused.</state>
                 <state img="#-stoic.png" marker="coffee">...Is there coffee here?  Though it's late...so perhaps water.</state>
             </case>
@@ -1767,32 +1771,41 @@
                 <state img="#-addressing.png" marker="one_on_one">You might have a better body, Jura, but I'm not afraid to face you down like this.</state>
                 <state img="#-addressing.png" marker="one_on_one">Ready to beat me, Jura?  If not...maybe Barnette deserves a promotion.</state>
             </case>
-            <case stage="0" alsoPlaying="jura" alsoPlayingStage="0-6" totalAlive="2" notSaidMarker="one_on_one">
-                <state img="#-bored.png" marker="one_on_one">Well, Jura, here we go.  No different from our games on the ship...besides the stripping.</state>
-                <state img="#-disappointed.png" marker="one_on_one">You haven't impressed me so far, Jura.  Just the two of us now, so get it together.</state>
-                <state img="#-disappointed.png" marker="one_on_one">OK, Jura...just you and me.  Now focus on winning for once.</state>
-                <state img="#-disappointed.png" marker="one_on_one">Good, no more distractions.  Give me a challenge, Jura.</state>
-            </case>
-            <case stage="0-2" alsoPlaying="sei" alsoPlayingStage="0-3" totalAlive="2" notSaidMarker="one_on_one">
+            <case stage="0-2" priority="146">
+                <condition role="self" notSaidMarker="one_on_one" />
+                <condition role="other" character="sei" stage="0-3" />
+                <condition count="2" status="alive" />
                 <state img="#-addressing.png" marker="one_on_one">Alright, soldier.  Let's see what you're made of.</state>
                 <state img="#-addressing.png" marker="one_on_one">I'd say we're on pretty even footing, Sei.  So let's get right into it.</state>
                 <state img="#-addressing.png" marker="one_on_one">Think you can take me alone, soldier?</state>
                 <state img="#-addressing.png" marker="one_on_one">Just you and me, Sei.  Ready?</state>
                 <state img="#-addressing.png" marker="one_on_one">A soldier can appreciate a good showdown.  Right, Sei?</state>
             </case>
-            <case stage="0-2" alsoPlaying="sei" alsoPlayingStage="4-6" totalAlive="2" notSaidMarker="one_on_one">
+            <case stage="0-2" priority="146">
+                <condition role="self" notSaidMarker="one_on_one" />
+                <condition role="other" character="sei" stage="4-6" />
+                <condition count="2" status="alive" />
                 <state img="#-addressing.png" marker="one_on_one">Alright, soldier.  Sober up and focus for a moment.</state>
                 <state img="#-addressing.png" marker="one_on_one">You'd better sober up, Sei.  It's just you and me now.</state>
                 <state img="#-addressing.png" marker="one_on_one">Do you think you can take me alone, Sei?  Perhaps if you were sober.</state>
                 <state img="#-addressing.png" marker="one_on_one">It's just you and me, Sei.  Make this worth it for me.</state>
                 <state img="#-addressing.png" marker="one_on_one">A soldier should be able to appreciate a good showdown, even when she's drunk.</state>
             </case>
-            <case stage="0-2" alsoPlaying="sei" alsoPlayingStage="7-8" totalAlive="2" notSaidMarker="one_on_one">
+            <case stage="0-2" priority="146">
+                <condition role="self" notSaidMarker="one_on_one" />
+                <condition role="other" character="sei" stage="7-8" />
+                <condition count="2" status="alive" />
                 <state img="#-addressing.png" marker="one_on_one">Half-naked and half in the bag.  Things aren't looking good for you, Sei.</state>
                 <state img="#-addressing.png" marker="one_on_one">I smell an easy kill.  And it smells like alcohol.</state>
                 <state img="#-addressing.png" marker="one_on_one">Now would be a good time for those nanobots to sober you up, Sei.</state>
                 <state img="#-addressing.png" marker="one_on_one">Just you and me, Sei...but not for long.</state>
                 <state img="#-addressing.png" marker="one_on_one">Forgive me for not being worried about this showdown.</state>
+            </case>
+            <case stage="0" alsoPlaying="jura" alsoPlayingStage="0-6" totalAlive="2" notSaidMarker="one_on_one">
+                <state img="#-bored.png" marker="one_on_one">Well, Jura, here we go.  No different from our games on the ship...besides the stripping.</state>
+                <state img="#-disappointed.png" marker="one_on_one">You haven't impressed me so far, Jura.  Just the two of us now, so get it together.</state>
+                <state img="#-disappointed.png" marker="one_on_one">OK, Jura...just you and me.  Now focus on winning for once.</state>
+                <state img="#-disappointed.png" marker="one_on_one">Good, no more distractions.  Give me a challenge, Jura.</state>
             </case>
             <case stage="1" alsoPlaying="jura" alsoPlayingStage="0-6" totalAlive="2-2" notSaidMarker="one_on_one">
                 <state img="#-disappointed.png" marker="one_on_one">OK, Jura, give me a good show here.  You know what kind of mood losing my eyepiece has put me in.</state>
@@ -1842,7 +1855,9 @@
                 <state img="#-addressing.png" marker="one_on_one">A showdown between crewmates...I'd prefer to be better dressed for the occasion, but that's my own fault.</state>
                 <state img="#-addressing.png" marker="one_on_one">You're certainly not the type to be distracted by breasts, Jura...so &lt;i&gt;that's&lt;/i&gt; not going to help me in this little showdown.</state>
             </case>
-            <case stage="0-2" alsoPlaying="sei" alsoPlayingStage="0-2" saidMarker="sei_response" notSaidMarker="sei1" alsoPlayingSayingMarker="meia1">
+            <case stage="0-2">
+                <condition role="self" saidMarker="sei_response" notSaidMarker="sei1" />
+                <condition role="other" character="sei" stage="0-2" sayingMarker="meia1" />
                 <state img="#-bored.png" marker="sei1">...Sei, maybe I'd &lt;i&gt;relax&lt;/i&gt; if you stopped pestering me.</state>
                 <state img="#-bored.png" marker="sei1">...This tiny woman is going to prod me all night, isn't she?</state>
                 <state img="#-bored.png" marker="sei1">My crewmates have been telling me to relax for a long time, Sei.  Leave me alone...</state>
@@ -1856,7 +1871,9 @@
                 <state img="#-bored.png" marker="sei2">Weren't you listening, Sei?  I'm from planet Mejare, which is known for being all-female.</state>
                 <state img="#-annoyed.png" marker="sei2">...&lt;i&gt;Mejare,&lt;/i&gt; Sei.  It's the all-female planet where I was born...you should listen if you're going to ask questions.</state>
             </case>
-            <case stage="0-2" alsoPlaying="sei" alsoPlayingStage="0-2" saidMarker="sei_response" notSaidMarker="sei3" alsoPlayingSayingMarker="meia3">
+            <case stage="0-2">
+                <condition role="self" saidMarker="sei_response" notSaidMarker="sei3" />
+                <condition role="other" character="sei" stage="0-2" sayingMarker="meia3" />
                 <state img="#-annoyed.png" marker="sei3">Leave it to a soldier to brag about her expensive armor.  You make me sick.</state>
                 <state img="#-bored.png" marker="sei3">Public money well-spent, Sei.  I'm sure the average citizen appreciates you absorbing shells.</state>
                 <state img="#-critical.png" marker="sei3">Mejarian soldiers had a tendency to brag about their equipment, too, Sei.  One did it before she beat me.</state>
@@ -1888,10 +1905,10 @@
                 <state img="#-stretching.png" marker="nayru_intro">It's a pleasure, Nayru.  It's good to see another blue-haired woman on Earth...and you seem to bring the kindness I lack.</state>
             </case>
             <case stage="0-5" alsoPlaying="nayru" alsoPlayingStage="2" alsoPlayingSaidMarker="meiaprep==din" alsoPlayingSayingMarker="meia_din">
-                <state img="#-horny.png">What are you talking abo--o-oh.  &lt;i&gt;Oh.&lt;/i&gt;  Now I see what it does...perhaps I should grow my hair out like yours.</state>
-                <state img="#-horny.png">I think you're overreac--&lt;i&gt;mm!&lt;/i&gt;  I--I see.  That's indeed...appropriate for a stripping game.  You squirmed in such a cute way...</state>
-                <state img="#-horny.png">Are you feeling alright, Nay--&lt;i&gt;mm.&lt;/i&gt;  I see now...and I see that you're a beautiful woman.</state>
-                <state img="#-horny.png">It's just a song--&lt;i&gt;oh.&lt;/i&gt;  Oh...Nayru, I'm never this forward, but the way your hair flowed as you played your harp...was something else.</state>
+                <state img="#-curious.png">What are you talking abo--o-oh.  &lt;i&gt;Oh.&lt;/i&gt;  Now I see what it does...perhaps I should grow my hair out like yours.</state>
+                <state img="#-curious.png">I think you're overreac--&lt;i&gt;mm!&lt;/i&gt;  I--I see.  That's indeed...appropriate for a stripping game.  You squirmed in such a cute way...</state>
+                <state img="#-curious.png">Are you feeling alright, Nay--&lt;i&gt;mm.&lt;/i&gt;  I see now...and I see that you're a beautiful woman.</state>
+                <state img="#-curious.png">It's just a song--&lt;i&gt;oh.&lt;/i&gt;  Oh...Nayru, I'm never this forward, but the way your hair flowed as you played your harp...was something else.</state>
             </case>
             <case stage="0-5" alsoPlaying="nayru" alsoPlayingStage="2" alsoPlayingSaidMarker="meiaprep==elegy" alsoPlayingSayingMarker="meia_elegy">
                 <state img="#-danger.png">W-what is &lt;i&gt;that?&lt;/i&gt;  Like a deformed decoy...I won't doubt your magic again.</state>
@@ -2067,6 +2084,16 @@
                 <state img="#-busy.png" marker="yuelia_time">...Thank you for your concern earlier, Flutter, but my time management is not an issue.  I exercise, eat, work, and sleep.</state>
             </case>
             <case stage="0-5">
+                <condition role="other" character="tomoko" stage="7-8" saidMarker="meia_angrytomoko" />
+                <condition role="self" notSaidMarker="tomoko_angry" />
+                <state img="#-disappointed.png" marker="tomoko_angry">...I'm sorry if I angered you, Tomoko.  I suppose you're not in a good state of mind, having stripped down so much...again, you should take care of your body.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="tomoko" stage="7-8" saidMarker="meia_losevirgin" />
+                <condition role="self" notSaidMarker="tomoko_virgin" />
+                <state img="#-thinking.png" marker="tomoko_virgin">...You wished to lose your virginity, Tomoko?  You shouldn't say it like that...wish instead to find someone you want to be with.</state>
+            </case>
+            <case stage="0-5">
                 <condition role="other" character="futaba" stage="0-6" sayingMarker="futaba_juke_ask" />
                 <state img="#-thinking.png" marker="futaba_classical">...I don't have any idea what music is played on Earth today.  I know &lt;i&gt;classical&lt;/i&gt; music was composed here...and I enjoy that.</state>
                 <state img="#-thinking.png" marker="futaba_classical">...Suggestions?  Earthlings composed many of the classical tracks that survive even on Mejare.  I've never cared for much else...</state>
@@ -2209,6 +2236,43 @@
                 <state img="#-thinking.png" marker="tomoko_wish">...And what do people on Earth usually wish for?  What about you personally?</state>
                 <state img="#-thinking.png" marker="tomoko_wish">...Do you make wishes yourself, Tomoko?  Or...have you ever tried to grant one of the wishes you read?</state>
             </case>
+            <case stage="0-5">
+                <condition role="other" character="cynthia" stage="6-8" sayingMarker="QuesLewdArtifacts" />
+                <state img="#-confused.png" marker="cynthia_artifacts">..."Lewd artifacts"?  I suppose there's ancient depictions of men and women having sex on this planet...Mejare isn't old enough to have "artifacts."</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="cynthia" stage="6-8" sayingMarker="QuesHistoryGossip" />
+                <state img="#-awkward.png" marker="cynthia_gossip">Because Mejare changed so many rulers to women in its accounts of history, any of their sex lives would probably shock me, hearing about Earth's men...</state>
+            </case>
+            <case stage="0-2">
+                <condition role="other" character="elesa" stage="2-6" sayingMarker="elesa_ensemble" />
+                <state img="#-thinking.png" marker="elesa_fashion">This may be a pilot's flightsuit, but skintight and revealing clothing is still popular on my homeworld.  As for my favorite outfit...I have a sundress.</state>
+            </case>
+            <case stage="3-5">
+                <condition role="other" character="elesa" stage="2-6" sayingMarker="elesa_ensemble" />
+                <state img="#-thinking.png" marker="elesa_fashion">I was wearing a pilot's flightsuit earlier, but skintight and revealing clothing is still popular on my homeworld.  As for my favorite outfit...I have a sundress.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="aella" stage="8" sayingMarker="WhatDoYouDoWhenYoureDone" />
+                <state img="#-disappointed.png" marker="aella_finished">...There's no need to overthink things, Aella.  Just listen to your body and relax.</state>
+                <state img="#-stoic.png" marker="aella_finished">...Masturbation is a perfectly natural thing, Aella.  Just do whatever feels natural.</state>
+                <state img="#-confused.png" marker="aella_finished">I can't believe such a large girl would need to be coached through something like this...just behave naturally, Aella.  There's no "correct" behavior.</state>
+                <state img="#-confused.png" marker="aella_finished">How can a girl be so out of touch with her own body?  ...Aella, just do what's comfortable.  Whether that's spreading out or sitting upright...</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="aella" stage="0-1" sayingMarker="AellaAdventures" />
+                <state img="#-stoic.png" marker="aella_adventures">As a matter of fact, our crew has been traveling across the galaxy for the first time.  We've adventured past many of Earth's other colonies.</state>
+                <state img="#-stoic.png" marker="aella_adventures">Up until recently, no--but our crew has been on an adventure across the galaxy due to a wormhole incident.  I'd never been outside the Mejarian system.</state>
+                <state img="#-thinking.png" marker="aella_adventures">Some would call piracy a daily adventure, but our crew had never left Mejare and Tarak until recently.  I've learned a lot about other human colonies in the galaxy.</state>
+                <state img="#-thinking.png" marker="aella_adventures">Our crew has only recently ever adventured far from home.  It's let me gain perspective on men and women living together on other worlds...</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="aella" stage="4" sayingMarker="AellaBookClub" />
+                <state img="#-thinking.png" marker="aella_books">Your can only fit so many books onto a pirate vessel, but there's an old section of our ship from Earth times-- with a book on men and women's physiology.</state>
+                <state img="#-stoic.png" marker="aella_books">Recently, our crew discovered a book on human reproduction in one of our ship's storage rooms.  It's helped me understand men's physiology somewhat.</state>
+                <state img="#-thinking.png" marker="aella_books">I used to read more when I was a girl...and I actually had books.  But we &lt;i&gt;have&lt;/i&gt; recently found a book showing men's anatomy, which was an interesting read.</state>
+                <state img="#-stoic.png" marker="aella_books">I've just read a book on how men and women reproduce, actually.  It's the reason I've wanted to see men's bodies here for myself.</state>
+            </case>
             <case stage="0-1">
                 <alternative alsoPlaying="natsuki" totalRounds="1">
                     <condition count="1" filter="monika" />
@@ -2245,8 +2309,9 @@
                 <state img="#-bored.png">I'm not sure who tell to leave first--Natsuki, who looks underage, or Sayori, who &lt;i&gt;acts&lt;/i&gt; underage.</state>
                 <state img="#-critical.png">I was afraid I'd get stuck with Earth schoolgirls in over their heads.  Natsuki, you don't look like an adult.  Sayori, you seem far too naive for this game.</state>
             </case>
-            <case stage="0-2" alsoPlaying="natsuki" totalRounds="2-2">
+            <case stage="0-2" totalRounds="2">
                 <condition count="1" filter="ddlc" />
+                <condition role="other" character="natsuki" />
                 <state img="#-bored.png">...Being eighteen does not suddenly make you mature, Natsuki.  Besides, you look malnourished...</state>
                 <state img="#-confused.png">...For a supposed eighteen-year-old girl, Natsuki, you look underdeveloped.  Have you been eating enough food?</state>
                 <state img="#-disappointed.png">Eighteen years old...you don't look it, Natsuki.  Even ignoring height, you come off as malnourished.</state>
@@ -2315,7 +2380,8 @@
                 <state img="#-bored.png">Pleased to meet you.  Jura here will be happy to speak for both of us.</state>
                 <state img="#-disappointed.png">Meia Gisborn.  The taller woman is my crewmate, and she's a lot more excited to be here, if you couldn't tell.</state>
             </case>
-            <case stage="0-1" alsoPlaying="d.va" totalRounds="1" alsoPlayingSaying="nice suit">
+            <case stage="0-1" totalRounds="1">
+                <condition role="other" character="d.va" saying="nice suit" />
                 <state img="#-disappointed.png">Thanks for the compliment, but I didn't pick it out.  Squadron leaders all wear this.</state>
                 <state img="#-pleased.png">Yours looks a little sleeker, honestly.</state>
                 <state img="#-disappointed.png">&lt;i&gt;Expand your wardrobe?&lt;/i&gt;  Bodysuits are as sensible as it gets.</state>
@@ -2885,6 +2951,18 @@
                 <state img="#-addressing.png" marker="saki_men">...You may need to be even &lt;i&gt;more&lt;/i&gt; aggressive to find a man, Saki.  Based on Tarak and Mejare's war, men respect women who stand up to them.</state>
             </case>
             <case stage="0-5">
+                <condition role="other" character="tomoko" saidMarker="meia_everyonewish" />
+                <condition role="self" notSaidMarker="tomoko_sweet" />
+                <state img="#-interested.png" marker="tomoko_sweet">...Wishing for everyone's wishes to be granted is very sweet of you, Tomoko.  Not many girls your age would think of others in that moment.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="jessie" saidMarker="MeiaMenInfo" />
+                <condition role="self" notSaidMarker="jessie_men" />
+                <state img="#-awkward.png" marker="jessie_men">...You asked if I had any questions, Jessie?  Well...how &lt;i&gt;forceful&lt;/i&gt; do men tend to be?  How soon do couples start having sex?</state>
+                <state img="#-confused.png" marker="jessie_men">...Jessie.  You wanted to know if I had any questions about dating men...how quickly do relationships with them become sexual?</state>
+                <state img="#-awkward.png" marker="jessie_men">I'm not sure if you're the best person to ask, Jessie...but men seem so aggressive.  Do they tend to pressure women into sex soon after dating?</state>
+            </case>
+            <case stage="0-5">
                 <condition role="other" character="nagisa" sayingMarker="nagisa_maid" />
                 <state img="#-thinking.png">My family was wealthy, but my parents didn't want a maid to raise me.  We did everything together...</state>
                 <state img="#-thinking.png">I was an only child--my parents didn't need a maid to take care of me, and they didn't want one, despite their wealth.</state>
@@ -3324,6 +3402,99 @@
                 <state img="#-explaining.png" marker="megumin_pervert">...I see.  So you just wanted to tell me about her fetishes, and that strength training will build strength.</state>
                 <state img="#-bored.png" marker="megumin_pervert">So...you're saying I should exercise.  ...Your friend &lt;i&gt;must&lt;/i&gt; be strong if she can let monsters assault her for her own masochism.</state>
                 <state img="#-bored.png" marker="megumin_pervert">...I was about to say that our closest analog to monsters would be letting &lt;i&gt;men&lt;/i&gt; beat me up.  But your advice is to do basic strength training.</state>
+            </case>
+            <case stage="2-5">
+                <condition role="other" character="amy" sayingMarker="amy_boys_response" />
+                <state img="#-confused.png" marker="amy_childish">...Your "bits"?  That's such childish wording...I can't believe men left you unscathed.  How early do men and women start dating on this planet?</state>
+                <state img="#-shocked.png" marker="amy_childish">...What kind of childlike view of sex is &lt;i&gt;that?&lt;/i&gt;  You sound so naive about it, but you've dated men from an early age...?</state>
+            </case>
+            <case stage="2-5">
+                <condition role="other" character="amy" sayingMarker="amy_meia_q_1" />
+                <state img="#-thinking.png" marker="amy_books">...Being the pirates we are, we don't have many books on our ship.  But I have enjoyed studying the books on fighter ships I was given when I became a pilot.</state>
+                <state img="#-thinking.png" marker="amy_books">I used to read more when I was a girl...that's not an option for a pirate.  But our ship does have books on Dread fighters that I enjoy.</state>
+            </case>
+            <case stage="2-5">
+                <condition role="other" character="amy" sayingMarker="amy_meia_q_2" />
+                <state img="#-explaining.png" marker="amy_moms">&lt;i&gt;Slow down,&lt;/i&gt; Amy.  Are you saying that Earth women sometimes splice their eggs and have daughters, as Mejarians do?  And that practice is looked down upon?</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="rainbow_dash" sayingMarker="sports_question" />
+                <state img="#-thinking.png" marker="rainbowdash_sports">I was never very athletic in school...I was a polite girl, and praised for my looks.  When I dropped out, I managed to survive by streetfighting...</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="rainbow_dash" sayingMarker="competition_question" />
+                <state img="#-pleased.png" marker="rainbowdash_competition">That's the same as asking us what our talents are, isn't it?  Our captain claims I learned how to pilot Dread fighters faster than any girl she's met.</state>
+                <state img="#-stretching.png" marker="rainbowdash_competition">I never thought I had much talent for anything as a girl...but in a flying competition, I could win.  I've been told I'm the Magno Family's fastest-learning pilot.</state>
+                <state img="#-pleased.png" marker="rainbowdash_competition">I discovered my aptitude for piloting when I joined our pirate crew.  In some sort of flight competition, I'd have a good shot.</state>
+                <state img="#-stretching.png" marker="rainbowdash_competition">...I used to streetfight, but I have no formal training there.  In a &lt;i&gt;flying&lt;/i&gt; competition, our crew agrees I'm our most talented pilot.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="rainbow_dash" sayingMarker="movie_question" />
+                <state img="#-bored.png" marker="rainbowdash_movie">...I just arrived on this planet, so I'm not aware of any films here.  &lt;i&gt;Mejarian&lt;/i&gt; film is usually propaganda celebrating the empire's glory.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="cynthia" sayingMarker="QuesExploreRuins" />
+                <state img="#-stoic.png">Ancient Earth ruins would be quite interesting...and I could fly us both to them in no time.  You'd just have to direct me.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="cynthia" sayingMarker="QuesHistoricalStories" />
+                <state img="#-bored.png" marker="cynthia_history">Mejare was only colonized about a century ago, so our history is limited.  And its version of &lt;i&gt;Earth's&lt;/i&gt; history has men scrubbed from it...</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="cynthia" sayingMarker="QuesHistoricalFigures" />
+                <state img="#-bored.png" marker="cynthia_figures">Historical figures...after learning that Mejare changed many historical figures to women in its version of history, I'm not sure &lt;i&gt;who&lt;/i&gt; to respect.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="cynthia" sayingMarker="QuesExploreRuins" />
+                <state img="#-stoic.png" marker="cynthia_ruins">Ancient Earth ruins would be quite interesting...and I could fly us both to them in no time.  You'd just have to direct me.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="cynthia" sayingMarker="QuesImpactfulHistory" />
+                <state img="#-stoic.png" marker="cynthia_impactful">I would say Earth's first development of interstellar space travel.  It was what led to the colonization of the galaxy, and thus my homeworld.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="cynthia" sayingMarker="QuesCreationTheories" />
+                <state img="#-pleased.png" marker="cynthia_creation">Mejare has more of a colonization story than a creation one...saying how we were led away from Earth, and men's oppression, by the angel Gynos.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="megumin" sayingMarker="megumin_giantFrogs" />
+                <state img="#-confused.png" marker="megumin_frog">...Are there giant frogs on Earth that attack the populace?  You mentioned that so offhandedly...</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="megumin" sayingMarker="megumin_villageGolems" />
+                <state img="#-disappointed.png" marker="megumin_golems">...I can see how explosion magic might lead to damage.  But if your villagers can create magical golems, why not study that, as well?</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="megumin" sayingMarker="megumin_biggestMonster" />
+                <state img="#-disappointed.png" marker="megumin_monster">...What is your definition of "monster"?  Earth's intentions with the Harvest are quite monstrous, and I've helped destroy its motherships.</state>
+                <state img="#-disappointed.png" marker="megumin_monster">...The most monstrous ships our crew has faced are the Harvest's motherships--many times the size of the Nirvana.  But what do &lt;i&gt;you&lt;/i&gt; call a monster?</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="megumin" sayingMarker="megumin_game" />
+                <state img="#-bored.png" marker="megumin_game">Our quartermaster, Gascogne, likes to use poker to socialize with crew members.  As a result, I've played this game a lot...just without the stripping.</state>
+            </case>
+            <case stage="0-3">
+                <condition role="other" character="guzma" sayingMarker="MostHumiliatingMoment" />
+                <state img="#-addressing.png" marker="guzma_humiliating">...Are you saying stripping naked will be humiliating?  I find losing to a man to be far moreso.</state>
+                <state img="#-addressing.png" marker="guzma_humiliating">...Losing to a man would be quite humiliating indeed, Guzma.  I don't plan to show you my body.</state>
+            </case>
+            <case stage="4-5">
+                <condition role="other" character="guzma" sayingMarker="MostHumiliatingMoment" />
+                <state img="#-addressing.png" marker="guzma_humiliating">...Are you saying being stripped naked like this is humiliating?  I find losing to a man to be far moreso.</state>
+                <state img="#-addressing.png" marker="guzma_humiliating">...Losing to a man would be quite humiliating indeed, Guzma.  I don't plan on doing so.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="brock" saying="you're most skilled with" />
+                <state img="#-stretch.png" marker="brock_dread">...If a Dread fighter can count as a weapon, then many of our crew considers me our best pilot, the captain included.</state>
+                <state img="#-busy.png" marker="brock_dread">...Would you include piloting in that question, Brock?  I've been told that no girl on our crew learned to pilot a Dread fighter faster than I did.</state>
+                <state img="#-busy.png" marker="brock_laserring">...Discounting my Dread ship, I've been complimented on my aim with a laser ring.  It &lt;i&gt;is&lt;/i&gt; a woman's weapon of choice.</state>
+                <state img="#-bored.png" marker="brock_laserring">Are you only including &lt;i&gt;men's&lt;/i&gt; weapons?  I've been praised for my accuracy with a laser ring, but that's a woman's gun...</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="kazuma" sayingMarker="devil_deal" />
+                <state img="#-bored.png" marker="kazuma_deal">...No.</state>
+                <state img="#-annoyed.png" marker="kazuma_deal">...That sounds like the offer of a pervert who wouldn't mind degrading himself for a woman if he lost.</state>
+                <state img="#-explaining.png" marker="kazuma_deal">...And what would &lt;i&gt;we&lt;/i&gt; get out of that deal that would be worth your perversion?</state>
             </case>
             <case stage="0-3" totalRounds="3">
                 <test expr="~background~" value="inventory" />
@@ -4618,6 +4789,38 @@
                 <state img="#-bored.png">...I'd describe "fancy underwear" as lingerie, but you seem to mean that there should be mechanical parts on my bra.  I don't see the use.</state>
                 <state img="#-stretching.png">Even my "space stuff" isn't fancy, Amy.  Something as simple as underwear isn't improved with electronics.</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="brock" saying="y'all ever fought" />
+                <state img="#-bored.png">...I used to streetfight, either for money or just to survive.  Still, I wouldn't think it's made me muscular enough to be called a "brawler."</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="brock" saying="Close combat" />
+                <state img="#-explaining.png">...I pilot a Dread ship.  That places me firmly in &lt;i&gt;long-range...&lt;/i&gt;we're taught to not fight men up close if we can help it.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="brock" saying="fight with" />
+                <state img="#-busy.png">...That depends what a man's definition of a "brawler" is.  I fight with my Dread ship, as well as small arms...and formerly my fists.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="brock" saying="see any weapons" />
+                <state img="#-critical.png">And you would be mistaken, Brock.  Women's weapons are inconspicuous, as opposed to men and their rocket launchers.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="brock" saying="seems familiar" />
+                <state img="#-disappointed.png">..."Max" sounds like a man's name.  I can assure you my experience with men is limited.  Do you actually wear bodysuits here?</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="brock" saying="Max seems" />
+                <state img="#-disappointed.png">...Who is "Max"?  Another man, it sounds like...the only men I know personally are the three prisoners aboard our ship.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="brock" saying="Max set you up" />
+                <state img="#-disappointed.png">..."Max"?  A man, I assume--why would a man wear a bodysuit, let alone give me one?  Men's bodies are too angular.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="brock" saying="done some brawling" />
+                <state img="#-disappointed.png">...No, I don't know a "Max."  I know very few men in general...do men really consider bodysuits a fighting outfit?</state>
+            </case>
             <case stage="0" alsoPlaying="9s">
                 <state img="#-disappointed.png">...Is there something wrong with any of those things?</state>
                 <state img="#-disappointed.png">What are you mumbling about?</state>
@@ -5663,14 +5866,16 @@
                 <state img="#-losing-eyepiece.png">A professional has a salary, HK416.  I'm given rations and a squadron of other young pirates.</state>
                 <state img="#-losing-eyepiece.png">I'm no professional, HK416--I'm a pirate.  I think the only thing we have in common is our disposition.</state>
             </case>
-            <case stage="0" alsoPlaying="jotaro" alsoPlayingStage="0-2">
+            <case stage="0">
+                <condition role="other" character="jotaro" stage="0-2" />
                 <state img="#-losing-eyepiece.png">At least you're polite...especially for a man.  I must confess I can't see where your hat ends and your hair begins.</state>
                 <state img="#-losing-eyepiece.png">...Thank you.  Your hat is certainly unusual...it doesn't seem to have a back.</state>
                 <state img="#-losing-eyepiece.png">I didn't expect a man to be so understanding.  If only I could understand where your hat meets your hair.</state>
                 <state img="#-losing-eyepiece.png">Strange I'd have so much in common with a man...and that a man would be polite.  Still, your hat blends into your hair oddly...</state>
                 <state img="#-losing-eyepiece.png">A man being sympathetic?  Strange indeed...strange like your hat's edges.</state>
             </case>
-            <case stage="0" alsoPlaying="jotaro" alsoPlayingStage="3-9">
+            <case stage="0">
+                <condition role="other" character="jotaro" stage="3-9" />
                 <state img="#-losing-eyepiece.png">At least you're polite...especially for a man.  I must confess I couldn't see where your hat ended and your hair began.</state>
                 <state img="#-losing-eyepiece.png">...Thank you.  Your hat was certainly unusual...it didn't seem to have a back.</state>
                 <state img="#-losing-eyepiece.png">I didn't expect a man to be so understanding.  If only I could understand where your hat met your hair.</state>
@@ -10259,7 +10464,7 @@
             <case stage="6" consecutiveLosses="2-">
                 <state img="#-stoic.png">Is something drawing your attention, ~player~?</state>
                 <state img="#-pleased.png">...Am I being distracting?</state>
-                <state img="#-horny.png">...Am I making too much noise, ~player~?  Well, too bad.</state>
+                <state img="#-curious.png">...Am I making too much noise, ~player~?  Well, too bad.</state>
             </case>
             <case stage="7" consecutiveLosses="2-">
                 <state img="#-stoic.png">Giving up, ~player~?</state>
@@ -10410,8 +10615,8 @@
                 <state img="#-stretch.png">The best way to win is to make your opponent believe you're out of options...</state>
             </case>
             <case stage="6">
-                <state img="#-horny.png">&lt;i&gt;Good.  Satisfy my curiosity.&lt;/i&gt;</state>
-                <state img="#-horny.png">&lt;i&gt;That's&lt;/i&gt; what I needed.</state>
+                <state img="#-curious.png">&lt;i&gt;Good.  Satisfy my curiosity.&lt;/i&gt;</state>
+                <state img="#-curious.png">&lt;i&gt;That's&lt;/i&gt; what I needed.</state>
                 <state img="#-happy.png">Make this worth it for me, ~player~...</state>
                 <state img="#-interested.png">This is too much...!</state>
                 <state img="#-pleased.png">Help me out here, ~player~...</state>
@@ -10885,7 +11090,7 @@
             <case stage="6" consecutiveLosses="2-">
                 <state img="#-stoic.png">Is something drawing your attention, ~name~?</state>
                 <state img="#-interested.png">...Am I being distracting?</state>
-                <state img="#-horny.png">...Am I making too much noise, ~name~?  Well, too bad.</state>
+                <state img="#-curious.png">...Am I making too much noise, ~name~?  Well, too bad.</state>
             </case>
             <case stage="7" consecutiveLosses="2-">
                 <state img="#-stoic.png">Giving up, ~name~?</state>
@@ -11036,8 +11241,8 @@
                 <state img="#-addressing.png">Is that all you have for me?  I wanted a challenge tonight...</state>
             </case>
             <case stage="6">
-                <state img="#-horny.png">&lt;i&gt;Good.  Satisfy my curiosity.&lt;/i&gt;</state>
-                <state img="#-horny.png">&lt;i&gt;That's&lt;/i&gt; what I needed.</state>
+                <state img="#-curious.png">&lt;i&gt;Good.  Satisfy my curiosity.&lt;/i&gt;</state>
+                <state img="#-curious.png">&lt;i&gt;That's&lt;/i&gt; what I needed.</state>
                 <state img="#-happy.png">Make this worth it for me, ~name~.</state>
                 <state img="#-interested.png">This is too much...!</state>
                 <state img="#-pleased.png">Help me out here, ~name~.</state>
@@ -11177,7 +11382,7 @@
                 <state img="#-interested.png">This is a great game we have going...</state>
                 <state img="#-happy.png">This is shaping up to be a nice match...</state>
                 <state img="#-addressing.png">You're a tough one.  Gascogne's the only woman to ever beat me...but that wasn't strip poker.</state>
-                <state img="#-horny.png">I know I go on about men...but with my breasts exposed, seeing a woman's skill brings out the Mejarian in me.</state>
+                <state img="#-curious.png">I know I go on about men...but with my breasts exposed, seeing a woman's skill brings out the Mejarian in me.</state>
             </case>
             <case stage="5" targetTimeInStage="7-">
                 <state img="#-interested.png">That's the way, ~player~...you were winning for a while there.</state>
@@ -11272,7 +11477,7 @@
                 <state img="#-stoic.png">Stay calm and focus.  The clothes don't matter...the cards do.</state>
                 <state img="#-addressing.png">You're always your own biggest obstacle...</state>
                 <state img="#-addressing.png">Earth's Harvest cubes are a little intimidating.  But its women don't frighten me.</state>
-                <state img="#-horny.png">I'm out of my suit.  Now's the time to impress me with your body...</state>
+                <state img="#-curious.png">I'm out of my suit.  Now's the time to impress me with your body...</state>
             </case>
             <case stage="4">
                 <state img="#-pleased.png">We're all in this together, ~player~...on a cosmic level.</state>
@@ -14461,13 +14666,13 @@
                 <state img="#-pleased.png">What's next, Jura?  Actual clothing?</state>
                 <state img="#-stretching.png">I'm not getting my hopes up that you'll strip actual clothing...not that I'd masturbate to you anyway.</state>
                 <state img="#-stoic.png">This'll be interesting.  I wonder just how many accessories you brought with you...</state>
-                <state img="#-horny.png">At least I don't have the weight of the game on me now.  I can focus on analyzing how you've layered instead.</state>
+                <state img="#-curious.png">At least I don't have the weight of the game on me now.  I can focus on analyzing how you've layered instead.</state>
             </case>
             <case stage="6" target="jura" targetStage="2">
                 <state img="#-stretching.png">I'm masturbating...that's all you need to know.</state>
                 <state img="#-annoyed.png">Out of the many things that aren't any of your business, Jura, that's the most of all.</state>
                 <state img="#-mast-2.png">I wouldn't tell you that if I had a gun to my head.</state>
-                <state img="#-horny.png">You're not prying that out of me so easily...but it definitely isn't &lt;i&gt;you.&lt;/i&gt;</state>
+                <state img="#-curious.png">You're not prying that out of me so easily...but it definitely isn't &lt;i&gt;you.&lt;/i&gt;</state>
             </case>
             <case stage="6" target="jura" targetStage="3">
                 <state img="#-interested.png">You're getting dangerously close to nude.  I still want you to win this for me.</state>
@@ -14483,7 +14688,7 @@
             </case>
             <case stage="6" target="jura" targetStage="5">
                 <state img="#-interested.png">Down to nothing at all...you'll find it thrilling, or at least I did.</state>
-                <state img="#-horny.png">It's better going naked anyway...it forces you to rely on nothing but wits.</state>
+                <state img="#-curious.png">It's better going naked anyway...it forces you to rely on nothing but wits.</state>
                 <state img="#-stoic.png">Here comes the final test of your skill.  Don't let me down, Jura.</state>
                 <state img="#-interested.png">You can still win this, Jura.  Believe in yourself...I made you play this with me all the time for a reason.</state>
             </case>
@@ -14860,7 +15065,7 @@
                 <state img="#-interested.png">This is a great game we have going.</state>
                 <state img="#-happy.png">This is shaping up to be a nice match.</state>
                 <state img="#-addressing.png">You're a tough one.  Gascogne's the only woman to ever beat me...but that wasn't strip poker.</state>
-                <state img="#-horny.png">I know I go on about men...but with my breasts exposed, seeing a woman's skill brings out the Mejarian in me.</state>
+                <state img="#-curious.png">I know I go on about men...but with my breasts exposed, seeing a woman's skill brings out the Mejarian in me.</state>
             </case>
             <case stage="5" targetTimeInStage="7-">
                 <state img="#-interested.png">That's the way, ~name~.  You were winning for a while there.</state>
@@ -14956,7 +15161,7 @@
                 <state img="#-stretch.png">Stay calm and focus.  The clothes don't matter, the cards do.</state>
                 <state img="#-busy.png">You're always your own biggest obstacle...that's one of the lines I give the rookies.</state>
                 <state img="#-addressing.png">Earth's Harvest cubes are a little intimidating.  But its women don't frighten me.</state>
-                <state img="#-horny.png">I'm out of my suit.  Now's the time to impress me with your body...</state>
+                <state img="#-curious.png">I'm out of my suit.  Now's the time to impress me with your body...</state>
             </case>
             <case stage="4">
                 <state img="#-pleased.png">We're all in this together, ~name~.  On a cosmic level.</state>
@@ -15066,6 +15271,50 @@
                 <state img="#-impressed.png">...I think I understand.  You're not human...and you're not from this planet, either.  To think I'd meet alien life here...</state>
                 <state img="#-impressed.png">"Warmbloods"...is that the name of your race?  Men are alien enough to me, but meeting an actual alien life form...</state>
                 <state img="#-stoic.png">Ah, I see.  You're not an Earthling in the first place--we've never encountered an alien species in our exploration.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="brock" stage="0" saidMarker="brock_meia_oldgeezer" />
+                <state img="#-angry.png">
+                    <alt-img stage="0-2">#-angry2.png</alt-img>
+                    <text>Don't try to distract me with stories about your colleagues!  As if I'd let my guard down around a man with a weapon out--!</text>
+                </state>
+                <state img="#-angry.png">
+                    <alt-img stage="0-2">#-angry2.png</alt-img>
+                    <text>"Dynamike"?  Don't waste my time with nonsense--you expect me to listen to a man with explosives on his shoulder?</text>
+                </state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="brock" stage="0" saidMarker="brock_meia_terrorist" />
+                <state img="#-angry.png">
+                    <alt-img stage="0-2">#-angry2.png</alt-img>
+                    <text>Why &lt;i&gt;wouldn't&lt;/i&gt; I take you as a terrorist?  A rocket launcher goes far beyond a personal sidearm!</text>
+                </state>
+                <state img="#-angry.png">
+                    <alt-img stage="0-2">#-angry2.png</alt-img>
+                    <text>Carry it around for &lt;i&gt;self-defense,&lt;/i&gt; I assume?  Don't insult my intelligence!</text>
+                </state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="brock" stage="0" saidMarker="brock_meia_notreckless" />
+                <state img="#-angry.png">
+                    <alt-img stage="0-2">#-angry2.png</alt-img>
+                    <text>If you would never fire it, then why bring it at all?  And in such a cramped space, with innocent bystanders--!</text>
+                </state>
+                <state img="#-angry.png">
+                    <alt-img stage="0-2">#-angry2.png</alt-img>
+                    <text>It's reckless to bring explosives into such a crowded area, regardless of whether you plan to fire it!  Why do you even have it?</text>
+                </state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="brock" stage="0" saidMarker="brock_meia_nokill" />
+                <state img="#-angry.png">
+                    <alt-img stage="0-2">#-angry2.png</alt-img>
+                    <text>And what might drive you to kill someone?  That woman being a pirate from one of Earth's hated colonies?</text>
+                </state>
+                <state img="#-angry.png">
+                    <alt-img stage="0-2">#-angry2.png</alt-img>
+                    <text>Unless you &lt;i&gt;have&lt;/i&gt; to kill someone?  If you're here to eliminate a few Mejarian aggressors, then just say it!</text>
+                </state>
             </case>
             <case stage="0-5" target="9s" targetStage="0">
                 <state img="#-disappointed.png">Must be thin fabric, then.  Why even wear it?</state>
@@ -15321,9 +15570,9 @@
                 <state img="#-awkward.png">I've only met a few men.  I'm not asking for much here...</state>
             </case>
             <case stage="7">
-                <state img="#-horny.png">For me to be outplayed so thoroughly...</state>
+                <state img="#-curious.png">For me to be outplayed so thoroughly...</state>
                 <state img="#-stoic.png">For me to be so soundly defeated...I didn't know men were smart enough for deception.</state>
-                <state img="#-horny.png">To rout me, and then make me cum in front of you...&lt;i&gt;incredible.&lt;/i&gt;</state>
+                <state img="#-curious.png">To rout me, and then make me cum in front of you...&lt;i&gt;incredible.&lt;/i&gt;</state>
                 <state img="#-interested.png">You've been toying with me this whole time, haven't you?</state>
                 <state img="#-pleased.png">Damn you, ~name~...</state>
             </case>
@@ -16209,7 +16458,7 @@
                 <state img="#-bored.png">I'll never understand why you insist on flooding your work environment with sex and gossip.</state>
             </case>
             <case stage="6" target="jura" targetStage="3">
-                <state img="#-horny.png">It would seem that's the last of your trinkets.  Better start playing seriously, Jura.</state>
+                <state img="#-curious.png">It would seem that's the last of your trinkets.  Better start playing seriously, Jura.</state>
                 <state img="#-interested.png">If you weren't taking this seriously before, now's the time.  Don't give up!</state>
                 <state img="#-stoic.png">No more accessories, it seems...but that's better.  Now I want to see what your skill can manage.</state>
                 <state img="#-stretching.png">Only that dress can save you now...that, and your own wits.  I have my doubts about your underwear situation.</state>
@@ -16343,7 +16592,7 @@
             <case stage="7">
                 <state img="#-interested.png">To be so far ahead of me...have you considered a piloting career?</state>
                 <state img="#-impressed.png">After all that time I took to finish, you're still so clothed...</state>
-                <state img="#-horny.png">Your play has been excellent...it's giving me goosebumps.</state>
+                <state img="#-curious.png">Your play has been excellent...it's giving me goosebumps.</state>
                 <state img="#-stoic.png">I really thought tonight would be an easy win...I sold Earth women short.</state>
                 <state img="#-pleased.png">This place attracts the best women around, it seems.</state>
             </case>
@@ -17033,7 +17282,7 @@
                 <state img="#-thinking.png">The casual observer would probably guess my eyepiece is a fashion item.</state>
             </case>
             <case stage="6" target="jura" targetStage="2">
-                <state img="#-horny.png">Don't you dare complain about the floor being cold.  I have far more right to do that, but here I am.</state>
+                <state img="#-curious.png">Don't you dare complain about the floor being cold.  I have far more right to do that, but here I am.</state>
                 <state img="#-addressing.png">Maybe now you'll appreciate how chilly the floor is in here.</state>
                 <state img="#-interested.png">I've learned to love the coolness of this place.  This should be your first taste of the floor's temperature.</state>
                 <state img="#-pleased.png">I'd better not hear you whine about the floor's coldness.  Just look at me...</state>
@@ -17305,7 +17554,7 @@
                 <state img="#-addressing.png">Does that cover your poison sac or something?</state>
             </case>
             <case stage="6">
-                <state img="#-horny.png">Duero's handsomer than you, so you'll have to make up for that somewhere...</state>
+                <state img="#-curious.png">Duero's handsomer than you, so you'll have to make up for that somewhere...</state>
                 <state img="#-awkward.png">I hate being so wrapped up in what a man's doing...</state>
                 <state img="#-bored.png">Just enough to be even less interesting...</state>
                 <state img="#-disappointed.png">I didn't think men kept themselves so covered...bad time to find out.</state>
@@ -17439,6 +17688,13 @@
                 <state img="#-shocked.png">...&lt;i&gt;~player~,&lt;/i&gt; you said?  I--I know men who've saved my life, and I wouldn't let them strip me...!</state>
                 <state img="#-surprised.png">...You're letting that man take your clothes off for you?  Even if he's your friend, I--I would never.  Standing there helpless as he...</state>
                 <state img="#-shocked.png">&lt;i&gt;~player~?&lt;/i&gt;  ...D-don't let a man strip you like that, Rin!  What if he--takes advantage of you?</state>
+            </case>
+            <case stage="0-5">
+                <condition filter="jessie_christmas_queen" role="target" character="jessie" stage="0" saidMarker="MeiaDress1" />
+                <state img="#-confused.png">I &lt;i&gt;thought&lt;/i&gt; Mejare treated Christmas as a special holiday, but perhaps Earth takes it more seriously...what exactly does it mark on this planet?</state>
+                <state img="#-confused.png">...Does Earth see Christmas as more than just an end-of-the-year celebration?  What does it mark here for you to dress up so elaborately?</state>
+                <state img="#-disappointed.png">I understand that Christmas is special, but not to &lt;i&gt;this&lt;/i&gt; degree.  On Mejare, it's just a celebration of the year's conclusion...is it something else here?</state>
+                <state img="#-confused.png">...What &lt;i&gt;is&lt;/i&gt; Earth Christmas celebrating, exactly?  Mejare just sees it as an annual festival of cheer...</state>
             </case>
             <case stage="0-5" target="corrin_f" targetStage="0" alsoPlaying="rinkah" alsoPlayingStage="0">
                 <state img="#-disappointed.png" marker="rinkcorrinconflict">I see.  Have you actually been in combat together?  And against whom?</state>
@@ -17728,7 +17984,7 @@
                 <state img="#-interested.png">Fantastic game.  If only I were still a part of it...</state>
             </case>
             <case stage="7">
-                <state img="#-horny.png">Impressive for you to still be so covered...</state>
+                <state img="#-curious.png">Impressive for you to still be so covered...</state>
                 <state img="#-pleased.png">You wear so much clothing.  Barnette and her leotard would give you a heart attack.</state>
                 <state img="#-pleased.png">Mejare isn't known for conservative dress...</state>
                 <state img="#-busy.png">There's got to be &lt;i&gt;someone&lt;/i&gt; on the Nirvana that dresses like you...</state>
@@ -18045,7 +18301,7 @@
                 <state img="#-addressing.png">I've got you in my sights.  Dangerous place to be...</state>
             </case>
             <case stage="6">
-                <state img="#-horny.png">My body's having a fit...and my instincts are going haywire.</state>
+                <state img="#-curious.png">My body's having a fit...and my instincts are going haywire.</state>
                 <state img="#-pleased.png">Tarakkians believe they'd combust at the sight of me doing this...</state>
                 <state img="#-happy.png">Just the fuel I needed.</state>
                 <state img="#-mast-3.png">Can't believe I'm doing this...</state>
@@ -18056,7 +18312,7 @@
                 <state img="#-stoic.png">Are we reaching a conclusion?  You should always savor the climax.</state>
                 <state img="#-stoic.png">Showing a lot of skin, ~name~.  Maybe you'd fit in on Melanus.</state>
                 <state img="#-addressing.png">Down to your ~clothing~...never thought men wore more than loincloths.</state>
-                <state img="#-horny.png">This is intense...even though I'm out already.</state>
+                <state img="#-curious.png">This is intense...even though I'm out already.</state>
             </case>
         </trigger>
 
@@ -18075,8 +18331,8 @@
             <case stage="6" alsoPlaying="jura">
                 <state img="#-stretching.png">I'll be honest, Jura...this is more than I bargained for.</state>
                 <state img="#-interested.png">I'm really getting into this...more than I ever thought I would.</state>
-                <state img="#-horny.png">I'll pay you back for making a fool of me...</state>
-                <state img="#-horny.png">I'll get you for this, ~name~...</state>
+                <state img="#-curious.png">I'll pay you back for making a fool of me...</state>
+                <state img="#-curious.png">I'll get you for this, ~name~...</state>
                 <state img="#-mast-2.png">How could a man be making me feel this way?</state>
                 <state img="#-pleased.png">...</state>
             </case>
@@ -18133,8 +18389,8 @@
             <case stage="6">
                 <state img="#-stoic.png">Jura would've gotten more than she bargained for if &lt;i&gt;she&lt;/i&gt; came here.</state>
                 <state img="#-interested.png">I'm really getting into this...more than I ever thought I would.</state>
-                <state img="#-horny.png">I'll pay you back for making a fool of me...</state>
-                <state img="#-horny.png">I'll get you for this, ~name~...</state>
+                <state img="#-curious.png">I'll pay you back for making a fool of me...</state>
+                <state img="#-curious.png">I'll get you for this, ~name~...</state>
                 <state img="#-mast-2.png">How could a man be making me feel this way?</state>
             </case>
             <case stage="7">
@@ -18407,7 +18663,7 @@
             </case>
             <case stage="0-2 6-7">
                 <state img="#-disappointed.png">
-                    <alt-img stage="7">#-horny.png</alt-img>
+                    <alt-img stage="7">#-curious.png</alt-img>
                     <text>...</text>
                 </state>
             </case>
@@ -18830,7 +19086,7 @@
                 <state img="#-addressing.png">I'm afraid underwear won't get a Mejarian's attention.  We usually consider it optional.</state>
                 <state img="#-addressing.png">I'm a pirate...and we're not above taking prisoners.</state>
                 <state img="#-addressing.png">Be glad you're not in my squadron...where I could whip you into shape however I choose.</state>
-                <state img="#-horny.png">&lt;i&gt;Mhmhmhm&lt;/i&gt;...it's nice to look at a woman like this again.  No clinical shower-room nudity...</state>
+                <state img="#-curious.png">&lt;i&gt;Mhmhmhm&lt;/i&gt;...it's nice to look at a woman like this again.  No clinical shower-room nudity...</state>
             </case>
             <case stage="4" filter="athletic" priority="0">
                 <state img="#-interested.png">You look good.  You must be disciplined.</state>
@@ -18850,7 +19106,7 @@
                 <state img="#-interested.png">Nice build.  How do I stack up, ~name~?</state>
             </case>
             <case stage="6">
-                <state img="#-horny.png">You're finally below what Mejarians wear all the time.</state>
+                <state img="#-curious.png">You're finally below what Mejarians wear all the time.</state>
                 <state img="#-interested.png">I've had my eye on you...better that than a man.</state>
                 <state img="#-stoic.png">I've had my eye on you...but I wasn't going to say anything.</state>
                 <state img="#-stretching.png">People really change as this game progresses...</state>
@@ -18858,20 +19114,20 @@
             </case>
             <case stage="6" filter="athletic" priority="0">
                 <state img="#-interested.png">You've taken care of your body...all the better for me.</state>
-                <state img="#-horny.png">I can appreciate a fit woman...professionally and otherwise.</state>
+                <state img="#-curious.png">I can appreciate a fit woman...professionally and otherwise.</state>
                 <state img="#-happy.png">You've kept your body fit, so be proud of it...</state>
                 <state img="#-mast-5.png">I think I might like women with sturdier frames...God, our quartermaster could just pull me in...hold me close...bend down to kiss me...</state>
             </case>
             <case stage="7">
                 <state img="#-stoic.png">You're showing a lot more skin now.  Melanus could use a woman like you.</state>
                 <state img="#-happy.png">You can still pull through, ~name~.</state>
-                <state img="#-horny.png">........</state>
+                <state img="#-curious.png">........</state>
                 <state img="#-stoic.png">You have to show me what an Earth woman's wardrobe looks like sometime...</state>
                 <state img="#-pleased.png">I hope you're proud of winning only by wearing more clothing in the first place.</state>
                 <state img="#-happy.png">I believe in you, ~name~.  Anything is possible if you put your mind to it.</state>
             </case>
             <case stage="7" filter="athletic" priority="0">
-                <state img="#-horny.png">You must exercise a lot...</state>
+                <state img="#-curious.png">You must exercise a lot...</state>
                 <state img="#-stoic.png">I &lt;i&gt;wish&lt;/i&gt; I looked as good as you...</state>
                 <state img="#-happy.png">Don't let anyone tell you you aren't in shape...</state>
             </case>
@@ -18920,7 +19176,7 @@
                 <state img="#-stretching.png">You've kept me waiting long enough.  My curiosity is mostly gone now.</state>
                 <state img="#-pleased.png">You're hardly covering your chest anyway, ~name~.</state>
                 <state img="#-stretching.png">Come on, ~name~, Jura really wants to see this...I'm indifferent.</state>
-                <state img="#-horny.png">...I'm ready.  Let me see what a man looks like.</state>
+                <state img="#-curious.png">...I'm ready.  Let me see what a man looks like.</state>
                 <state img="#-pleased.png">If you were hoping I'd be masturbating to this, it seems you overestimated my poker skills...</state>
                 <state img="#-surprised.png">A man's...&lt;i&gt;chest.&lt;/i&gt;  With me like this...</state>
             </case>
@@ -18962,7 +19218,7 @@
             <case stage="5">
                 <state img="#-stretching.png">I can vouch for the comfort of nudity...and yours would be especially interesting.</state>
                 <state img="#-addressing.png">Well, let's see it, ~name~.  I certainly want to.</state>
-                <state img="#-horny.png">I'm wetter than I'd ever admit to my crewmates...in fact, I think I'll keep this whole experience from them.</state>
+                <state img="#-curious.png">I'm wetter than I'd ever admit to my crewmates...in fact, I think I'll keep this whole experience from them.</state>
                 <state img="#-interested.png">OK, I'm interested.  Let's see it before I change my mind.</state>
                 <state img="#-addressing.png">Got anything worth displaying?  Not that I'd be an expert there.</state>
             </case>
@@ -18980,7 +19236,7 @@
                 <state img="#-stretching.png">You've kept me waiting long enough.  My curiosity is mostly gone now.</state>
                 <state img="#-stretching.png">You're hardly covering your chest anyway, ~name~.</state>
                 <state img="#-stoic.png">Come on, ~name~, let me make Jura jealous.</state>
-                <state img="#-horny.png">...I'm ready.  Let me see what a man looks like.</state>
+                <state img="#-curious.png">...I'm ready.  Let me see what a man looks like.</state>
                 <state img="#-pleased.png">If you were hoping I'd be masturbating to this, it seems you overestimated my poker skills...</state>
                 <state img="#-surprised.png">A man's...&lt;i&gt;chest.&lt;/i&gt;  With me like this...</state>
             </case>
@@ -19044,7 +19300,7 @@
                 <state img="#-impressed.png">Nipples, huh?  You don't seem the type to nurse your young...</state>
                 <state img="#-addressing.png">You're in good shape...for a man.</state>
                 <state img="#-pleased.png">It's like someone shaved an ape...</state>
-                <state img="#-horny.png">Oh, are you into exercise too?</state>
+                <state img="#-curious.png">Oh, are you into exercise too?</state>
                 <state img="#-pleased.png">Dita and Misty fought over Hibiki...if he looked like &lt;i&gt;you,&lt;/i&gt; maybe I'd understand.</state>
             </case>
             <case stage="4">
@@ -19058,11 +19314,11 @@
             </case>
             <case stage="5">
                 <state img="#-addressing.png">You're in good shape...I like that, male or female.</state>
-                <state img="#-horny.png">Standing here naked...makes those muscles very captivating.</state>
-                <state img="#-horny.png">Oh my...something's coming over me.</state>
+                <state img="#-curious.png">Standing here naked...makes those muscles very captivating.</state>
+                <state img="#-curious.png">Oh my...something's coming over me.</state>
                 <state img="#-awkward.png">Next to a woman's slenderness, men's bodies are...&lt;i&gt;broad&lt;/i&gt; and &lt;i&gt;angular.&lt;/i&gt;  Are we really the same species?</state>
-                <state img="#-horny.png">Seeing a man like this is so strange...all my instincts flare up at once.</state>
-                <state img="#-horny.png">...Men are so...&lt;i&gt;broad.&lt;/i&gt;  I can only imagine lying on top of all those muscles...</state>
+                <state img="#-curious.png">Seeing a man like this is so strange...all my instincts flare up at once.</state>
+                <state img="#-curious.png">...Men are so...&lt;i&gt;broad.&lt;/i&gt;  I can only imagine lying on top of all those muscles...</state>
             </case>
             <case stage="6">
                 <state img="#-stoic.png">You're incredible...is what my instincts say.</state>
@@ -19075,13 +19331,13 @@
                 <state img="#-interested.png">&lt;i&gt;Mmm...&lt;/i&gt;you could just toss me around, couldn't you?</state>
             </case>
             <case stage="7">
-                <state img="#-horny.png">All those muscles...I might have to go another round.</state>
+                <state img="#-curious.png">All those muscles...I might have to go another round.</state>
                 <state img="#-stoic.png">This still feels a little alien...but in a good way.</state>
                 <state img="#-stoic.png">I could have used a peek at that while I was masturbating...</state>
                 <state img="#-pleased.png">Maybe I should get myself a...what's the word?  &lt;i&gt;Boyfriend?&lt;/i&gt;</state>
-                <state img="#-horny.png">I know men and women are supposed to feel this way about each other...it's welling up inside me.</state>
+                <state img="#-curious.png">I know men and women are supposed to feel this way about each other...it's welling up inside me.</state>
                 <state img="#-stoic.png">I'm not too proud to admit it...I want to see you flex.  I &lt;i&gt;love&lt;/i&gt; muscles...</state>
-                <state img="#-horny.png">Muscles are so exciting...and men have them in spades.</state>
+                <state img="#-curious.png">Muscles are so exciting...and men have them in spades.</state>
             </case>
         </trigger>
 
@@ -19114,7 +19370,7 @@
                 <state img="#-interested.png">Give me something to brag about seeing...if I were the bragging type.</state>
             </case>
             <case stage="6" alsoPlaying="jura">
-                <state img="#-horny.png">The chance to see your thing like this...was always in the back of my mind.</state>
+                <state img="#-curious.png">The chance to see your thing like this...was always in the back of my mind.</state>
                 <state img="#-stoic.png">I want to see how my body reacts to this...</state>
                 <state img="#-stretching.png">This feels so right...</state>
                 <state img="#-interested.png">Never thought I'd be in this situation...</state>
@@ -19160,7 +19416,7 @@
                 <state img="#-addressing.png">Don't be so dramatic about it.  I've seen pictures in Duero's textbook.</state>
             </case>
             <case stage="4">
-                <state img="#-horny.png">Ooh.  I ought to learn something from this.</state>
+                <state img="#-curious.png">Ooh.  I ought to learn something from this.</state>
                 <state img="#-impressed.png">The men swear those things have minds of their own...perhaps they're right.</state>
                 <state img="#-interested.png">Looks like it's already breaking free.  Who's responsible for that?</state>
                 <state img="#-interested.png">Come on.  Men aren't supposed to be shy.</state>
@@ -19176,7 +19432,7 @@
                 <state img="#-addressing.png">I may have had to show you my naked body for this, but isn't that mundane to an Earth man?  I believe I've won this exchange...</state>
             </case>
             <case stage="6">
-                <state img="#-horny.png">The chance to see your thing like this...was always in the back of my mind.</state>
+                <state img="#-curious.png">The chance to see your thing like this...was always in the back of my mind.</state>
                 <state img="#-interested.png">I want to see how my body reacts to this...</state>
                 <state img="#-interested.png">This feels so right...</state>
                 <state img="#-stoic.png">I never thought I'd be in this situation...</state>
@@ -19185,7 +19441,7 @@
                 <state img="#-interested.png">&lt;i&gt;Show me...&lt;/i&gt;oh, God...</state>
                 <state img="#-happy.png">Something about this feels right.  It must be instinct...</state>
                 <state img="#-interested.png">...&lt;i&gt;Well, now.&lt;/i&gt;  I didn't think I'd be so vulnerable when it finally came out...</state>
-                <state img="#-horny.png">This had better live up to my wildest imagination, ~name~... this mythical tube of men.</state>
+                <state img="#-curious.png">This had better live up to my wildest imagination, ~name~... this mythical tube of men.</state>
                 <state img="#-addressing.png">...So you're really bringing it out?  &lt;i&gt;Come on.  Men don't scare me.&lt;/i&gt;</state>
             </case>
             <case stage="7">
@@ -19193,7 +19449,7 @@
                 <state img="#-pleased.png">This should have been &lt;i&gt;my&lt;/i&gt; victory...instead it's my anatomy lesson.</state>
                 <state img="#-stoic.png">Don't men &lt;i&gt;like&lt;/i&gt; to just whip it out?</state>
                 <state img="#-stoic.png">Let me see.  It already looks uncomfortable in there.</state>
-                <state img="#-horny.png">Your tube-thing...I could have used &lt;i&gt;this&lt;/i&gt; earlier.</state>
+                <state img="#-curious.png">Your tube-thing...I could have used &lt;i&gt;this&lt;/i&gt; earlier.</state>
                 <state img="#-awkward.png">Your...&lt;i&gt;penis,&lt;/i&gt; right?  I can never remember the word...</state>
                 <state img="#-surprised.png">&lt;i&gt;You're showing your&lt;/i&gt;--uh...</state>
                 <state img="#-stoic.png">Even after cumming right in front of you...I don't feel ready to see this.  I haven't earned it...</state>
@@ -19302,7 +19558,7 @@
                 <state img="#-confused.png">How do men walk around with those things?</state>
                 <state img="#-confused.png">Such a bizarre-looking organ.</state>
                 <state img="#-impressed.png">I'll be honest.  I wasn't sure those tube-rumors were even true.</state>
-                <state img="#-horny.png">You're not much of a poker player, but that tube really does look...&lt;i&gt;well.&lt;/i&gt;</state>
+                <state img="#-curious.png">You're not much of a poker player, but that tube really does look...&lt;i&gt;well.&lt;/i&gt;</state>
             </case>
             <case stage="0" totalMales="1-1" priority="0">
                 <state img="#-awkward.png">I've...never seen one before.</state>
@@ -19340,9 +19596,9 @@
             <case stage="3">
                 <state img="#-addressing.png">Looks about right, but I wonder what it's like in action...</state>
                 <state img="#-thinking.png">I wonder if B.C. still has hers...</state>
-                <state img="#-horny.png">Mmm...feels like the Paksis flooding my mind.</state>
+                <state img="#-curious.png">Mmm...feels like the Paksis flooding my mind.</state>
                 <state img="#-pleased.png">That thing must be dear to men.  It &lt;i&gt;is&lt;/i&gt; where Hibiki marked his Vanguard...</state>
-                <state img="#-horny.png">It looks strange...but there's something about it I can't ignore.</state>
+                <state img="#-curious.png">It looks strange...but there's something about it I can't ignore.</state>
             </case>
             <case stage="3" totalMales="1-1" priority="0">
                 <state img="#-surprised.png">I'd hoped to see this, but to actually be staring at it...</state>
@@ -19352,7 +19608,7 @@
             <case stage="4">
                 <state img="#-confused.png">That looks like a manageable size.  But can't it get bigger?  Something about blood flow?</state>
                 <state img="#-interested.png">Is that as big as it gets?  I'm curious...</state>
-                <state img="#-horny.png">The way that thing twitches and pulses...it seems so eager.</state>
+                <state img="#-curious.png">The way that thing twitches and pulses...it seems so eager.</state>
                 <state img="#-impressed.png">When they called it a tube, I wasn't expecting a cap on the end...or for it to twitch about on its own.</state>
                 <state img="#-interested.png">That thing looks like it was made from spare parts...but I &lt;i&gt;do&lt;/i&gt; kind of like it.</state>
                 <state img="#-awkward.png">...Is it true that men prefer to take women from behind?  Perhaps that rod is an easier fit from that angle...</state>
@@ -19364,10 +19620,10 @@
                 <state img="#-surprised.png">I'm still not quite sure what to make of men...this just complicates things.</state>
             </case>
             <case stage="5">
-                <state img="#-horny.png">Standing here like this, seeing your thing...I can't explain the feeling.</state>
+                <state img="#-curious.png">Standing here like this, seeing your thing...I can't explain the feeling.</state>
                 <state img="#-pleased.png">Men and women, naked together.  We're practically mating already.</state>
                 <state img="#-surprised.png">Are you really supposed to just...&lt;i&gt;insert&lt;/i&gt; that thing?</state>
-                <state img="#-horny.png">...Standing at attention, like any good pilot.</state>
+                <state img="#-curious.png">...Standing at attention, like any good pilot.</state>
                 <state img="#-addressing.png">Not bad at all, ~name~.  Maybe I'll give men a shot...if I ever get desperate enough.</state>
                 <state img="#-happy.png">...I finally see one, and I'm standing nude in front of it... &lt;i&gt;mhmhmhmhm.&lt;/i&gt;</state>
             </case>
@@ -19376,12 +19632,12 @@
                 <state img="#-surprised.png">A nude man.  I can hardly take this...</state>
                 <state img="#-surprised.png">I really didn't think I'd be naked when I finally saw one...</state>
                 <state img="#-happy.png">I'm still not sure what to make of men...but you don't seem so bad.</state>
-                <state img="#-horny.png">What a pleasant surprise.  I thought it would smell...or sting.</state>
+                <state img="#-curious.png">What a pleasant surprise.  I thought it would smell...or sting.</state>
                 <state img="#-addressing.png">It stands up with blood, yes?  ...Am I making your heart beat faster, ~name~?</state>
             </case>
             <case stage="6">
                 <state img="#-interested.png">Your thing...it's doing something to me I can't control.</state>
-                <state img="#-horny.png">No one on the crew can call me uptight after this game...touching myself to a man's tube.</state>
+                <state img="#-curious.png">No one on the crew can call me uptight after this game...touching myself to a man's tube.</state>
                 <state img="#-interested.png">It just stands up by itself...&lt;i&gt;fascinating.&lt;/i&gt;</state>
                 <state img="#-interested.png">You're making my head spin...my body really does cry out for that thing.</state>
                 <state img="#-impressed.png">I'm starting to understand what it really means to "combine"...the way that thing pulses.</state>
@@ -19390,12 +19646,12 @@
             <case stage="6" totalMales="1" priority="0">
                 <state img="#-stoic.png">I can't believe I'm doing this in front of a man...a &lt;i&gt;naked&lt;/i&gt; man.</state>
                 <state img="#-interested.png">So, that's really what your tube looks like...it's even better in person.</state>
-                <state img="#-horny.png">The way it twitches, desperate to release your seed...men are such animals.</state>
+                <state img="#-curious.png">The way it twitches, desperate to release your seed...men are such animals.</state>
                 <state img="#-stoic.png">I'm just letting my instincts guide me...that thing looks like it's got a mind of its own.</state>
                 <state img="#-interested.png">This is a whole new wave of feelings...I can't keep up.  Shake it around...</state>
             </case>
             <case stage="7">
-                <state img="#-horny.png">You're hard...and I'm getting wet again.</state>
+                <state img="#-curious.png">You're hard...and I'm getting wet again.</state>
                 <state img="#-stoic.png">I wonder how it tastes...no, I'm not going to taste it.</state>
                 <state img="#-addressing.png">Here's hoping you're forced to masturbate...so I can see that, too.</state>
                 <state img="#-stoic.png">The book didn't really tell me what to do with that thing...</state>
@@ -19403,7 +19659,7 @@
             </case>
             <case stage="7" totalMales="1-1" priority="0">
                 <state img="#-happy.png">Ah...there it is.  You sure made me wait to see it.</state>
-                <state img="#-horny.png">&lt;i&gt;Finally...&lt;/i&gt;I had to use my imagination earlier.</state>
+                <state img="#-curious.png">&lt;i&gt;Finally...&lt;/i&gt;I had to use my imagination earlier.</state>
                 <state img="#-stoic.png">So that's the real thing.  Masturbating to it would have been strange...</state>
                 <state img="#-addressing.png">Figures men would just have a big blunt rod compared to a woman's complex inner workings.</state>
             </case>
@@ -19460,7 +19716,7 @@
             </case>
             <case stage="3">
                 <state img="#-addressing.png">Size isn't everything, you know.  Pilots need to be...&lt;i&gt;manuverable.&lt;/i&gt;</state>
-                <state img="#-horny.png">Oh...I want to see how that thing works.</state>
+                <state img="#-curious.png">Oh...I want to see how that thing works.</state>
                 <state img="#-awkward.png">...Are you just going to stand there swinging it around?  It's like a slab of meat...</state>
                 <state img="#-addressing.png">Impressive size...but I like people who know how to &lt;i&gt;use&lt;/i&gt; their gifts, not just show them off.</state>
                 <state img="#-interested.png">Form isn't everything...do you have the function to match?</state>
@@ -19470,20 +19726,20 @@
                 <state img="#-shocked.png">I--I, uh...uh...I don't think I could start with that.</state>
                 <state img="#-shocked.png">Do you have enough blood for that thing?  It...needs blood, right?</state>
                 <state img="#-surprised.png">There's no way that thing would fit...in &lt;i&gt;any&lt;/i&gt; woman.</state>
-                <state img="#-horny.png">Oh, wow--coming here &lt;i&gt;was&lt;/i&gt; a good idea.  I can see every inch of that thing...</state>
+                <state img="#-curious.png">Oh, wow--coming here &lt;i&gt;was&lt;/i&gt; a good idea.  I can see every inch of that thing...</state>
                 <state img="#-impressed.png">I guess you wouldn't relate to size anxiety...that's a big one, right?</state>
             </case>
             <case stage="5">
                 <state img="#-impressed.png">Oh, my.  That's about the size of Hibiki's entire body...</state>
                 <state img="#-interested.png">Are you sure you can handle that thing?  Men have never struck me as good with tools.</state>
                 <state img="#-shocked.png">Ooh.  They called it a tube, not a pipe.</state>
-                <state img="#-horny.png">My head feels hot...and it's all your fault.</state>
+                <state img="#-curious.png">My head feels hot...and it's all your fault.</state>
                 <state img="#-surprised.png">I don't think I could handle that...especially without practice.</state>
                 <state img="#-awkward.png">...Isn't that a little big?  Even the smaller ones from the book look like they can barely fit...</state>
                 <state img="#-awkward.png">...Do you know any men with...&lt;i&gt;smaller&lt;/i&gt; tubes?  For practice...</state>
             </case>
             <case stage="6">
-                <state img="#-horny.png">...Men's rods look so ridiculous...how can something so ridiculous &lt;i&gt;ah&lt;/i&gt; do this to me?</state>
+                <state img="#-curious.png">...Men's rods look so ridiculous...how can something so ridiculous &lt;i&gt;ah&lt;/i&gt; do this to me?</state>
                 <state img="#-impressed.png">A-ah--!  I...I wasn't expecting it to be so big...or so hard...or...</state>
                 <state img="#-interested.png">&lt;i&gt;That&lt;/i&gt; would have broken my composure...and maybe my body, too.</state>
                 <state img="#-explaining.png">This is too much stimulus for one night...I need alone time.  &lt;i&gt;Mhmhm.&lt;/i&gt;</state>
@@ -19494,7 +19750,7 @@
                 <state img="#-confused.png">Mm--!  Is...is it true that men with larger rods just...lay them on women's faces?  Like slabs of meat...</state>
             </case>
             <case stage="7">
-                <state img="#-horny.png">It's too bad you couldn't show that thing off for me before...it would have really thrown me for a loop.</state>
+                <state img="#-curious.png">It's too bad you couldn't show that thing off for me before...it would have really thrown me for a loop.</state>
                 <state img="#-stoic.png">You're driving me wild over here...I don't appreciate that.</state>
                 <state img="#-impressed.png">&lt;i&gt;That&lt;/i&gt; would have broken my composure.</state>
                 <state img="#-shocked.png">...Do Earth women tend to be taller?  As in...more &lt;i&gt;space&lt;/i&gt; inside them?</state>
@@ -19911,7 +20167,7 @@
                 <state img="#-interested.png">I'd be surprised if a drunken soldier was actually elected in the first place, Gwen.</state>
                 <state img="#-bored.png" marker="country_as_planet">What kind of utopia is this "New York" planet if even its &lt;i&gt;soldiers&lt;/i&gt; are elected officials?  I doubt Sei has any concern for that.</state>
                 <state img="#-interested.png">Aren't you used to soldiers' hypocrisy where you're from, Gwen?  I'm surprised you think they're elected.</state>
-                <state img="#-horny.png">What voters?  Sei is a &lt;i&gt;soldier,&lt;/i&gt; Gwen...and she's having a hard enough time winning &lt;i&gt;me&lt;/i&gt; over.</state>
+                <state img="#-curious.png">What voters?  Sei is a &lt;i&gt;soldier,&lt;/i&gt; Gwen...and she's having a hard enough time winning &lt;i&gt;me&lt;/i&gt; over.</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="moon" />
@@ -19969,8 +20225,8 @@
             </case>
             <case stage="0-5 7">
                 <condition role="target" character="jolyne" />
-                <state img="#-horny.png">Well...you may not be disciplined, but with your body on full display, I can say you're in excellent shape...</state>
-                <state img="#-horny.png">Mm...I love meeting women who are just as dedicated to fitness.  You come together nicely.</state>
+                <state img="#-curious.png">Well...you may not be disciplined, but with your body on full display, I can say you're in excellent shape...</state>
+                <state img="#-curious.png">Mm...I love meeting women who are just as dedicated to fitness.  You come together nicely.</state>
                 <state img="#-interested.png">...Well, despite your forgetfulness, you haven't forgotten to train your body.  I respect women for that...</state>
                 <state img="#-interested.png">...So does your figure come from exercise, or a life of fighting?  Either way, it's a pleasure to see.</state>
             </case>
@@ -20038,28 +20294,28 @@
             <case stage="3">
                 <state img="#-interested.png" marker="oma_and_fama">That's a nice size.  You'd make a good Fama...it's often whose breasts are bigger in the couple.</state>
                 <state img="#-thinking.png">I wonder if I could get mine that big...somehow.</state>
-                <state img="#-horny.png">I see this sort of thing all the time...but it's always the same women, and the same breasts.</state>
+                <state img="#-curious.png">I see this sort of thing all the time...but it's always the same women, and the same breasts.</state>
                 <state img="#-thinking.png" marker="oma_and_fama">Is it possible to make breasts grow?  I wish mine were big enough to be a Fama...</state>
                 <state img="#-thinking.png">Ezra's have been getting bigger, always feeding Kahlua...</state>
             </case>
             <case stage="4">
-                <state img="#-horny.png">Mmm, they're nice, ~name~.  Do you get massages?</state>
+                <state img="#-curious.png">Mmm, they're nice, ~name~.  Do you get massages?</state>
                 <state img="#-pleased.png">We look pretty comparable.  In poker skills, too, apparently.</state>
                 <state img="#-pleased.png">Reminds me of our crew's spa breaks...</state>
-                <state img="#-horny.png">This shouldn't be so exciting...I need a cooler head.</state>
+                <state img="#-curious.png">This shouldn't be so exciting...I need a cooler head.</state>
                 <state img="#-interested.png">Better than mine, maybe, but a woman's worth is in her brain.</state>
             </case>
             <case stage="5">
-                <state img="#-horny.png">Standing here like this, seeing your chest...it's awkward, but...</state>
+                <state img="#-curious.png">Standing here like this, seeing your chest...it's awkward, but...</state>
                 <state img="#-happy.png">You look great, ~name~.  I don't give compliments often.</state>
                 <state img="#-happy.png">You should be proud of yourself, ~name~.  Women need their pride.</state>
                 <state img="#-pleased.png">I could use a good massage...</state>
-                <state img="#-horny.png">You shouldn't have kept us waiting...this is nice and familiar.</state>
+                <state img="#-curious.png">You shouldn't have kept us waiting...this is nice and familiar.</state>
             </case>
             <case stage="6">
                 <state img="#-interested.png">It's so nice to see an unfamiliar woman...</state>
                 <state img="#-pleased.png">~name~...massage them a little.</state>
-                <state img="#-horny.png">Well, don't just stand there.  Move around.</state>
+                <state img="#-curious.png">Well, don't just stand there.  Move around.</state>
                 <state img="#-interested.png">Ah...&lt;i&gt;this&lt;/i&gt; is what I needed.  A woman's breasts...nice and familiar.</state>
                 <state img="#-happy.png">I wonder where you'd rank on our crew...</state>
             </case>
@@ -20428,7 +20684,8 @@
                 <state img="#-thinking.png">It's irritating enough to strip naked...to &lt;i&gt;arrive&lt;/i&gt; naked and perform personal hygiene here shows a lot of self-confidence.</state>
                 <state img="#-thinking.png">Maybe I could learn from how at peace you are with your body...just arriving naked and smiling the entire time.</state>
             </case>
-            <case stage="0-7" target="jolyne">
+            <case stage="0-7">
+                <condition role="target" character="jolyne" />
                 <state img="#-disappointed.png">...Is something wrong, Jolyne?</state>
                 <state img="#-disappointed.png">For a woman with an exposed midriff, you seem uncomfortable stripping your pants.</state>
                 <state img="#-confused.png">...Jolyne?  Are you taking your pants off or not?</state>
@@ -20593,20 +20850,20 @@
             </case>
             <case stage="5">
                 <state img="#-addressing.png">Don't be shy, ~name~...I haven't been.</state>
-                <state img="#-horny.png">I'm a leader...I shouldn't be all worked up like this.</state>
-                <state img="#-horny.png">It &lt;i&gt;is&lt;/i&gt; a little exciting...and I don't get excited.</state>
+                <state img="#-curious.png">I'm a leader...I shouldn't be all worked up like this.</state>
+                <state img="#-curious.png">It &lt;i&gt;is&lt;/i&gt; a little exciting...and I don't get excited.</state>
                 <state img="#-interested.png">I'm sure it's nothing out of the ordinary.</state>
                 <state img="#-happy.png">You can do it, ~name~.  Didn't you watch me do it?</state>
             </case>
             <case stage="6">
                 <state img="#-pleased.png">There's a lot of visual teasing on the Nirvana...nice to see a payoff for once.</state>
-                <state img="#-horny.png">&lt;i&gt;Finally.&lt;/i&gt;  Men or not, I haven't forgotten women's bodies...</state>
-                <state img="#-horny.png">Now I can &lt;i&gt;really&lt;/i&gt; get going.</state>
+                <state img="#-curious.png">&lt;i&gt;Finally.&lt;/i&gt;  Men or not, I haven't forgotten women's bodies...</state>
+                <state img="#-curious.png">Now I can &lt;i&gt;really&lt;/i&gt; get going.</state>
                 <state img="#-interested.png">Just smile, ~name~.  You'll feel better.</state>
                 <state img="#-stretching.png">If this is bothering you...well, it's every day on the Nirvana.</state>
             </case>
             <case stage="7">
-                <state img="#-horny.png">~name~...you look beautiful, and I'm sure it's fine.</state>
+                <state img="#-curious.png">~name~...you look beautiful, and I'm sure it's fine.</state>
                 <state img="#-pleased.png">I wonder what the captain looked like at your age...or mine.</state>
                 <state img="#-stoic.png">I could have used this while I was masturbating, you know.  I was raised to appreciate beautiful women.</state>
                 <state img="#-happy.png">No way I was staying stoic tonight...</state>
@@ -20759,6 +21016,13 @@
                 <state img="#-addressing.png">And what price did the women of "Wakfu" pay for their popularity?  An evening with one of your "tentacle-friends"?</state>
                 <state img="#-addressing.png">...I imagine "popularity" is the only compensation I'd get for spreading my legs before a tentacle monster.  Is that true for "Wakfu"?</state>
             </case>
+            <case stage="0-7">
+                <condition role="target" character="jessie" saidMarker="MeiaFather2" />
+                <state img="#-disappointed.png">...Hm.  Was this man a civilian?  The men I know are soldiers, and they at least seem to have a sense of duty.</state>
+                <state img="#-thinking.png">...If that's true, then maybe our prisoners would make decent fathers.  They're all soldiers, so they're somewhat reliable...</state>
+                <state img="#-busy.png">...I suppose men must &lt;i&gt;sometimes&lt;/i&gt; raise children successfully if Earth women are so used to them.  Maybe our prisoners could do it...they're soldiers.</state>
+                <state img="#-thinking.png">...I still can't imagine a man holding a baby.  But if any man were responsible enough to raise a child, maybe it'd be a soldier, like our prisoners are.</state>
+            </case>
             <case stage="0-7" target="aimee">
                 <state img="#-angry.png">See what happens?  I &lt;i&gt;told&lt;/i&gt; you to be careful!</state>
                 <state img="#-impressed.png">You're...?  Even Barnette isn't &lt;i&gt;that&lt;/i&gt; big on guns...</state>
@@ -20777,7 +21041,8 @@
                 <state img="#-bored.png">I know I'm insulting your life's work, but this isn't making me laugh.</state>
                 <state img="#-annoyed.png">I think you should go back to telling jokes, Joey.  This is embarrassing.</state>
             </case>
-            <case stage="0-7" target="jolyne">
+            <case stage="0-7">
+                <condition role="target" character="jolyne" />
                 <state img="#-addressing.png">
                     <alt-img stage="6-7">#-stoic.png</alt-img>
                     <text>...I tend to look for &lt;i&gt;situational awareness&lt;/i&gt; in my pilots, Jolyne.  Apologies.</text>
@@ -20787,7 +21052,7 @@
                     <text>Well, that's &lt;i&gt;one&lt;/i&gt; advantage of a limited wardrobe.  I was just about to compliment your awareness, too--you had the eyes of a pilot.</text>
                 </state>
                 <state img="#-addressing.png">...I was about to ask you about being a pilot, too.  But I don't want you forgetting formations in the middle of a dogfight.</state>
-                <state img="#-addressing.png">Not the best presence of mind, apparently.  And I was ready to offer you a piloting position.</state>
+                <state img="#-addressing.png">...You don't have the best presence of mind, apparently.  And I was ready to offer you a piloting position.</state>
             </case>
             <case stage="0" target="jura">
                 <state img="#-thinking.png">I...that's none of Misty's business.  I just try to give her advice.</state>
@@ -20829,7 +21094,7 @@
             <case stage="0-7" target="sei">
                 <state img="#-addressing.png">Shaved...I didn't expect that from a soldier.  Not one as sloppy as you, anyway.</state>
                 <state img="#-interested.png">Completely shaved...for once, Sei, we agree.  I was expecting your pubic hair to be as disgusting as your behavior.</state>
-                <state img="#-horny.png">...Well, if nothing else, Sei, we look alike.  Blue hair, and completely shaved...much cleaner than I expected of you.</state>
+                <state img="#-curious.png">...Well, if nothing else, Sei, we look alike.  Blue hair, and completely shaved...much cleaner than I expected of you.</state>
                 <state img="#-addressing.png">Mejare makes a point of shaving pubic hair...I wasn't aware Earth women did, as well.  Especially when you're so undisciplined otherwise.</state>
             </case>
             <case stage="0-7" target="velma">
@@ -20905,7 +21170,9 @@
                 <condition role="self" notSaidMarker="pubic_hair_comments" />
                 <state img="#-stoic.png" marker="pubic_hair_comments">I've always thought shaved looks better...more functional, too.</state>
             </case>
-            <case stage="0-5 7" filter="hairy" notSaidMarker="pubic_hair_comments">
+            <case stage="0-5 7">
+                <condition filter="hairy" role="target" />
+                <condition role="self" notSaidMarker="pubic_hair_comments" />
                 <state img="#-disappointed.png" marker="pubic_hair_comments">
                     <alt-img stage="7">#-stretching.png</alt-img>
                     <text>...Shaved is more sensible.</text>
@@ -20948,7 +21215,7 @@
                 <state img="#-impressed.png">Are you...getting wet?</state>
                 <state img="#-thinking.png">Exactly what the Harvest wants Mejare for...</state>
                 <state img="#-thinking.png">I guess I'm no better, agreeing to play this...</state>
-                <state img="#-horny.png">I've been in a bit of a mood...but you really do look nice.  Women always do, where I'm from...</state>
+                <state img="#-curious.png">I've been in a bit of a mood...but you really do look nice.  Women always do, where I'm from...</state>
             </case>
             <case stage="2">
                 <state img="#-addressing.png">I hope you're not ashamed of that.</state>
@@ -20970,22 +21237,22 @@
                 <state img="#-pleased.png">Now you're dressed like Barnette really wants to be.</state>
                 <state img="#-addressing.png">You could still mount a comeback on me no problem.</state>
                 <state img="#-pleased.png">I'm wet already...it's distracting.</state>
-                <state img="#-horny.png">You have to understand...I was raised to love women.</state>
+                <state img="#-curious.png">You have to understand...I was raised to love women.</state>
             </case>
             <case stage="5">
                 <state img="#-awkward.png">...It's not often I'm in this situation.  Not unless I'm in the spa.</state>
                 <state img="#-pleased.png">Even on Mejare, this is a &lt;i&gt;little&lt;/i&gt; strange...just a little.</state>
-                <state img="#-horny.png">Don't mind me...I grew up feeling this way.</state>
+                <state img="#-curious.png">Don't mind me...I grew up feeling this way.</state>
                 <state img="#-awkward.png" marker="oma_and_fama">Do you take after your Fama--er, mother?</state>
                 <state img="#-awkward.png">Do men really feel the same way I do about this?</state>
-                <state img="#-horny.png">Perhaps to an Earth woman, this feels weird...but to a Mejarian, there is no other sexuality.</state>
+                <state img="#-curious.png">Perhaps to an Earth woman, this feels weird...but to a Mejarian, there is no other sexuality.</state>
             </case>
             <case stage="6">
                 <state img="#-addressing.png">Women's bodies are just &lt;i&gt;better.&lt;/i&gt;</state>
                 <state img="#-interested.png">I'm never like this...but with a woman, it's OK.</state>
                 <state img="#-pleased.png">Maybe it's weird to you, but I was raised to see other women this way...</state>
                 <state img="#-stretching.png">The Harvest would certainly want a piece of &lt;i&gt;you...&lt;/i&gt;</state>
-                <state img="#-horny.png">Normally I only have my imagination...alone in my room.</state>
+                <state img="#-curious.png">Normally I only have my imagination...alone in my room.</state>
                 <state img="#-explaining.png">Agh...&lt;i&gt;mm.&lt;/i&gt;  I s-spent some time with a bad crowd...but it gave me a taste for being &lt;i&gt;handled,&lt;/i&gt; if you follow...</state>
             </case>
             <case stage="7">
@@ -21182,7 +21449,7 @@
             </case>
             <case stage="4" totalMales="1-1">
                 <state img="#-interested.png">The moment of truth.  An Earth man &lt;i&gt;must&lt;/i&gt; know what he's doing.</state>
-                <state img="#-horny.png">...&lt;i&gt;Show me.&lt;/i&gt;</state>
+                <state img="#-curious.png">...&lt;i&gt;Show me.&lt;/i&gt;</state>
                 <state img="#-interested.png">Tarakkians are unusual men, apparently...so fill me in.</state>
             </case>
             <case stage="5" totalMales="1-1">
@@ -21191,7 +21458,7 @@
                 <state img="#-surprised.png">If you dropped me into this situation a year ago...I don't know &lt;i&gt;what&lt;/i&gt; would have happened.</state>
             </case>
             <case stage="7" totalMales="1-1">
-                <state img="#-horny.png">I've waited all night to see this...</state>
+                <state img="#-curious.png">I've waited all night to see this...</state>
                 <state img="#-stoic.png">I wanted to force this myself, but at least I still get to see it.</state>
                 <state img="#-pleased.png">A man's technique...I've already shown you mine.</state>
             </case>
@@ -21274,7 +21541,7 @@
                 <state img="#-addressing.png">Even in defeat, you &lt;i&gt;do&lt;/i&gt; have something to offer me...</state>
             </case>
             <case stage="5">
-                <state img="#-horny.png">I'm not sure what's coming over me...but please do.</state>
+                <state img="#-curious.png">I'm not sure what's coming over me...but please do.</state>
                 <state img="#-addressing.png">Relieving yourself can help ease the frustration of losing...at least, that's the case for women.</state>
                 <state img="#-interested.png">You look like you've been needing this.  Part of me has, too.</state>
                 <state img="#-addressing.png">So long, ~name~.  You've got plenty to look at, right?</state>
@@ -21285,7 +21552,7 @@
             <case stage="6">
                 <state img="#-addressing.png">&lt;i&gt;Perfect...&lt;/i&gt;right when I needed it.</state>
                 <state img="#-addressing.png">Just what I was hoping for...a man touching his thing.</state>
-                <state img="#-horny.png">Can a man last as long as I can?</state>
+                <state img="#-curious.png">Can a man last as long as I can?</state>
                 <state img="#-happy.png">You can still tell people you defeated me...though I'll never admit it.</state>
                 <state img="#-addressing.png">Let's see how a veteran handles that tube...</state>
                 <state img="#-interested.png">Oh, God...masturbating alongside a man...this is &lt;i&gt;unreal.&lt;/i&gt;</state>
@@ -21416,14 +21683,14 @@
             </case>
             <case stage="4">
                 <state img="#-pleased.png">For all her talk of "Mr. Alien," I don't think Dita would have the stomach for this.</state>
-                <state img="#-horny.png">This is so interesting...scientifically, that is.</state>
-                <state img="#-horny.png">I know this is &lt;i&gt;supposed&lt;/i&gt; to make me wet, but it's just so strange...</state>
+                <state img="#-curious.png">This is so interesting...scientifically, that is.</state>
+                <state img="#-curious.png">I know this is &lt;i&gt;supposed&lt;/i&gt; to make me wet, but it's just so strange...</state>
                 <state img="#-interested.png">My teachers always told me men were just wild animals...</state>
-                <state img="#-horny.png">Take your time...I want to take this in.</state>
+                <state img="#-curious.png">Take your time...I want to take this in.</state>
             </case>
             <case stage="5">
                 <state img="#-pleased.png">Now I'm &lt;i&gt;really&lt;/i&gt; curious about B.C...</state>
-                <state img="#-horny.png">I can't look away...nor do I want to.</state>
+                <state img="#-curious.png">I can't look away...nor do I want to.</state>
                 <state img="#-addressing.png">Every teacher I've ever had is begging me to look away.</state>
                 <state img="#-addressing.png">Straight into it?  Just like a man.</state>
                 <state img="#-addressing.png">Men are something else...just look at that brutish motion.</state>
@@ -21434,13 +21701,13 @@
                 <state img="#-interested.png">Such a simple motion, but so effective...</state>
                 <state img="#-interested.png">Come on...&lt;i&gt;I want to lose control.&lt;/i&gt;</state>
                 <state img="#-stoic.png">No grace at all, huh?</state>
-                <state img="#-horny.png">Don't get any ideas...I don't even know you.</state>
+                <state img="#-curious.png">Don't get any ideas...I don't even know you.</state>
                 <state img="#-addressing.png">As appealing as that tube is...I don't fall for people that easily.  Especially not some &lt;i&gt;man.&lt;/i&gt;</state>
                 <state img="#-addressing.png">Come on, then...do it with me.  Men don't scare me.</state>
             </case>
             <case stage="7">
                 <state img="#-stoic.png">I don't have much of a reference point...so don't do anything strange.</state>
-                <state img="#-horny.png">So rough...so &lt;i&gt;furious...&lt;/i&gt;</state>
+                <state img="#-curious.png">So rough...so &lt;i&gt;furious...&lt;/i&gt;</state>
                 <state img="#-stretching.png">No complaints about tonight...other than losing.</state>
                 <state img="#-addressing.png">You don't have the finesse of a woman, but it seems to be working.</state>
                 <state img="#-stoic.png">Do you have the brainpower to feel shame?</state>
@@ -21483,14 +21750,14 @@
             <case stage="3" alsoPlaying="jura">
                 <state img="#-pleased.png">At least you can't stain my suit now.</state>
                 <state img="#-awkward.png">Something you like, ~name~?  ...No, seriously.</state>
-                <state img="#-horny.png">If I'm in your thoughts anywhere...that &lt;i&gt;is&lt;/i&gt; kind of flattering.</state>
+                <state img="#-curious.png">If I'm in your thoughts anywhere...that &lt;i&gt;is&lt;/i&gt; kind of flattering.</state>
                 <state img="#-impressed.png">Thinking about something in particular, ~name~?  Earth &lt;i&gt;women&lt;/i&gt; are mysterious enough to me.</state>
                 <state img="#-interested.png">What does a man think about while he masturbates?  Or does he just return to his primal state?</state>
                 <state img="#-addressing.png">So, Jura, lost your nerve yet?  This is what you have to deal with if you want to have that baby with a man...</state>
             </case>
             <case stage="0-5" targetTimeInStage="0-0" totalMasturbating="1-1" totalFinished="0-0">
                 <state img="#-surprised.png">
-                    <alt-img stage="3-5">#-horny.png</alt-img>
+                    <alt-img stage="3-5">#-curious.png</alt-img>
                     <text>...</text>
                 </state>
             </case>
@@ -21520,29 +21787,29 @@
             <case stage="3">
                 <state img="#-pleased.png">At least you can't stain my suit now.</state>
                 <state img="#-awkward.png">Something you like, ~name~?  ...No, seriously.</state>
-                <state img="#-horny.png">If I'm in your thoughts anywhere...that &lt;i&gt;is&lt;/i&gt; kind of flattering.</state>
+                <state img="#-curious.png">If I'm in your thoughts anywhere...that &lt;i&gt;is&lt;/i&gt; kind of flattering.</state>
                 <state img="#-impressed.png">Thinking about something in particular, ~name~?  Earth &lt;i&gt;women&lt;/i&gt; are mysterious enough to me.</state>
                 <state img="#-interested.png">What does a man think about while he masturbates?  Or does he just return to his primal state?</state>
                 <state img="#-pleased.png">Jura is always talking about having a baby with a man...I wonder if she'd lose her nerve after seeing this.</state>
             </case>
             <case stage="4">
-                <state img="#-horny.png">Don't stop...I want to see what a man does when he's pushed to his limit.</state>
+                <state img="#-curious.png">Don't stop...I want to see what a man does when he's pushed to his limit.</state>
                 <state img="#-addressing.png">How often &lt;i&gt;do&lt;/i&gt; you masturbate, exactly?</state>
                 <state img="#-thinking.png">Do you...&lt;i&gt;like&lt;/i&gt; my breasts, ~name~?</state>
-                <state img="#-horny.png">I'm starting to see the appeal of a man...</state>
-                <state img="#-horny.png">I can't explain what's going through my mind...or guess what's going through yours.</state>
+                <state img="#-curious.png">I'm starting to see the appeal of a man...</state>
+                <state img="#-curious.png">I can't explain what's going through my mind...or guess what's going through yours.</state>
                 <state img="#-pleased.png">If you think I'd tell the crew I saw this, the Harvest must have gotten a hold of your brain.</state>
             </case>
             <case stage="5">
-                <state img="#-horny.png">Hah...mmm...what's coming over me?</state>
+                <state img="#-curious.png">Hah...mmm...what's coming over me?</state>
                 <state img="#-pleased.png">You men are all the same...but maybe that's just fine.</state>
                 <state img="#-addressing.png">You look like you do this a lot, ~name~.</state>
                 <state img="#-interested.png">Well, someone's a seasoned masturbator...figures a man would be.</state>
                 <state img="#-addressing.png">I try to maintain my body...has it paid off, in a man's opinion?</state>
-                <state img="#-horny.png">You're getting so big...I underestimated what that thing was capable of.</state>
+                <state img="#-curious.png">You're getting so big...I underestimated what that thing was capable of.</state>
                 <state img="#-pleased.png">How often do our prisoners masturbate, I wonder?  And...to whom?</state>
                 <state img="#-interested.png">This is all-new to me...but it's pretty interesting.</state>
-                <state img="#-horny.png">Never pictured myself with a man...but I'm starting to see why my instincts call out for them.</state>
+                <state img="#-curious.png">Never pictured myself with a man...but I'm starting to see why my instincts call out for them.</state>
             </case>
             <case stage="6">
                 <state img="#-stoic.png">Keep going...we'll pretend it's more than it is.</state>
@@ -21552,28 +21819,28 @@
                 <state img="#-addressing.png">Are you enjoying this?  You'd better be.</state>
                 <state img="#-pleased.png">Are you enjoying this?  Men can be hard to read.</state>
                 <state img="#-stoic.png">Is this routine for you, ~name~?  You seem...&lt;i&gt;experienced.&lt;/i&gt;</state>
-                <state img="#-horny.png">I enjoy all sorts of challenges...&lt;i&gt;I wonder if you could make me squeal.&lt;/i&gt;</state>
+                <state img="#-curious.png">I enjoy all sorts of challenges...&lt;i&gt;I wonder if you could make me squeal.&lt;/i&gt;</state>
                 <state img="#-happy.png">I'm glad you're here...this is driving me wild, doing this together with you...</state>
                 <state img="#-addressing.png">I see you staring at me, ~name~...I'm sure you want to deposit your seed in me, or however you phrase it...</state>
                 <state img="#-addressing.png">That tube of yours doesn't impress me...maybe seeing you climax will.</state>
                 <state img="#-addressing.png">As if being a pirate didn't make me bad enough in the eyes of Mejare...now I'm masturbating with a &lt;i&gt;man.&lt;/i&gt;</state>
                 <state img="#-stoic.png" marker="oma_and_fama">Hmhm...when my Fama told me to open my heart, I don't think this is what she meant.</state>
                 <state img="#-addressing.png">I'm not...going to lose to a man, damn it.  You'd better cum before I do...</state>
-                <state img="#-horny.png">Come on...spray some seed out, let me taste it.  I know I won't be bold enough for that once I finish...</state>
+                <state img="#-curious.png">Come on...spray some seed out, let me taste it.  I know I won't be bold enough for that once I finish...</state>
             </case>
             <case stage="7">
-                <state img="#-horny.png">Your tube is one thing...it's your seed I'm really curious about.</state>
-                <state img="#-horny.png">I &lt;i&gt;do&lt;/i&gt; want a good look at your seed...</state>
+                <state img="#-curious.png">Your tube is one thing...it's your seed I'm really curious about.</state>
+                <state img="#-curious.png">I &lt;i&gt;do&lt;/i&gt; want a good look at your seed...</state>
                 <state img="#-stoic.png">Don't fire off too soon, ~name~...</state>
                 <state img="#-happy.png">I'm never like this around people...</state>
                 <state img="#-stoic.png">Thinking about the show I put on for you?</state>
-                <state img="#-horny.png">Wow, you're getting even bigger...</state>
+                <state img="#-curious.png">Wow, you're getting even bigger...</state>
                 <state img="#-addressing.png">Can't you go any faster, ~name~?  I didn't hold back when it was my turn...</state>
                 <state img="#-stretching.png">You're lucky I'm in a good mood now.  Otherwise I would've been calling you disgusting.</state>
                 <state img="#-addressing.png">Don't stop &lt;i&gt;now.&lt;/i&gt;  You've got my full attention, ~name~.</state>
                 <state img="#-interested.png">I'm learning so much from you doing this...now go faster, so I can see if it's different.</state>
                 <state img="#-pleased.png">Must be nice for a man, with only one motion to worry about.  Maybe two, if you count those egglike things in back.</state>
-                <state img="#-horny.png">This is just &lt;i&gt;thrilling.&lt;/i&gt;  Don't mind if I take it all in...</state>
+                <state img="#-curious.png">This is just &lt;i&gt;thrilling.&lt;/i&gt;  Don't mind if I take it all in...</state>
                 <state img="#-stoic.png">Try not get any...&lt;i&gt;seed&lt;/i&gt; on me.  I know how it spurts...</state>
             </case>
         </trigger>
@@ -21610,7 +21877,7 @@
             </case>
             <case stage="7" alsoPlaying="jura" totalMales="1-1">
                 <state img="#-impressed.png">It really is fascinating, how it just shoots out...</state>
-                <state img="#-horny.png">A man's seed, in the flesh.  It doesn't even look real...</state>
+                <state img="#-curious.png">A man's seed, in the flesh.  It doesn't even look real...</state>
                 <state img="#-impressed.png">Do you &lt;i&gt;know&lt;/i&gt; when it's going to shoot out?</state>
                 <state img="#-pleased.png">Save some for Jura.  You want a man's baby, don't you?</state>
                 <state img="#-stoic.png">Well, Jura...this is what it takes to have a baby with a man.  Sure you want to do this to Barnette?</state>
@@ -21714,17 +21981,17 @@
             <case stage="5">
                 <state img="#-pleased.png">Heehee.  Duero's book didn't say anything about men making &lt;i&gt;that&lt;/i&gt; face.</state>
                 <state img="#-interested.png">Growing up, I was told men were vile animals.  Now I know for sure...</state>
-                <state img="#-horny.png">Get a little on me...&lt;i&gt;just a little, so I know what it feels like.&lt;/i&gt;</state>
+                <state img="#-curious.png">Get a little on me...&lt;i&gt;just a little, so I know what it feels like.&lt;/i&gt;</state>
                 <state img="#-addressing.png">Nude women too much for your simple mind?</state>
                 <state img="#-addressing.png">I was always told that stuff was poison.  It certainly took a lot out of &lt;i&gt;you.&lt;/i&gt;</state>
             </case>
             <case stage="5 7">
-                <state img="#-horny.png">Give me some...I want to know what it feels like.</state>
+                <state img="#-curious.png">Give me some...I want to know what it feels like.</state>
             </case>
             <case stage="5" totalMales="1-1" priority="0">
-                <state img="#-horny.png">A man's seed is so strange-looking...yet appealing.</state>
-                <state img="#-horny.png">So &lt;i&gt;forceful...&lt;/i&gt;how does it do that?</state>
-                <state img="#-horny.png">Let me feel it...I've never seen this in person.</state>
+                <state img="#-curious.png">A man's seed is so strange-looking...yet appealing.</state>
+                <state img="#-curious.png">So &lt;i&gt;forceful...&lt;/i&gt;how does it do that?</state>
+                <state img="#-curious.png">Let me feel it...I've never seen this in person.</state>
                 <state img="#-interested.png">Well, I still prefer women, I think...but you're making quite the argument.</state>
             </case>
             <case stage="6">
@@ -21751,7 +22018,7 @@
             </case>
             <case stage="7">
                 <state img="#-stoic.png">It's like a man's very essence...a liquid soul.</state>
-                <state img="#-horny.png">Oh, wow...it's &lt;i&gt;everywhere.&lt;/i&gt;</state>
+                <state img="#-curious.png">Oh, wow...it's &lt;i&gt;everywhere.&lt;/i&gt;</state>
                 <state img="#-stoic.png">I'm starting to see the appeal of a man...just look at all that.</state>
                 <state img="#-pleased.png">That's just unnatural...&lt;i&gt;you men are so disgusting.&lt;/i&gt;</state>
                 <state img="#-addressing.png">...It must be nice for a man to mark his territory like that.</state>
@@ -22321,7 +22588,7 @@
             <case stage="0-7" target="alice_mgq">
                 <state img="#-addressing.png">Well, now...I'm certainly curious if you &lt;i&gt;masturbate&lt;/i&gt; like a woman.</state>
                 <state img="#-addressing.png">Masturbation is a good indicator of humanity...I wonder if you're more woman or monster.</state>
-                <state img="#-horny.png">You still have a woman's anatomy in all the ways that matter for this.  I'm curious if you'll treat yourself that way.</state>
+                <state img="#-curious.png">You still have a woman's anatomy in all the ways that matter for this.  I'm curious if you'll treat yourself that way.</state>
                 <state img="#-addressing.png">
                     <alt-img stage="6-7">#-stoic.png</alt-img>
                     <text>Some overgrown reptile masturbating for us...let's see how human you really are.</text>
@@ -22433,7 +22700,7 @@
                 <state img="#-pleased.png">I should've known you'd use your powers for this.  I'd probably do the same...</state>
                 <state img="#-addressing.png">I'm not so arrogant to imply I wouldn't float for this, too...you should appreciate the powers you wield.</state>
                 <state img="#-pleased.png">I'm not sure whether I should envy your powers when this is what you'd use them for.  ...Of course, I probably would, too.</state>
-                <state img="#-horny.png">Floating as you do this...I figured as much, and yet...I wish I could, too.</state>
+                <state img="#-curious.png">Floating as you do this...I figured as much, and yet...I wish I could, too.</state>
             </case>
             <case stage="0-7" target="revy">
                 <state img="#-pleased.png">There's no doubt in my mind your language will only intensify...maybe I'll learn something about sex on this planet.</state>
@@ -22529,7 +22796,7 @@
                 <condition role="other" character="jura" />
                 <state img="#-addressing.png">A Mejarian can handle this just fine...</state>
                 <state img="#-pleased.png">There are as many masturbation techniques as there are women...</state>
-                <state img="#-horny.png">Imagine yourself among the stars...that's what I do.</state>
+                <state img="#-curious.png">Imagine yourself among the stars...that's what I do.</state>
                 <state img="#-interested.png">Just make it good for yourself.  You should know, Jura, that Barnette's hung up on what you think of her...</state>
                 <state img="#-pleased.png">It's just the rules...I was only interested in the cards.</state>
             </case>
@@ -22564,7 +22831,7 @@
             <case stage="3">
                 <state img="#-pleased.png">Just another day on Mejare.</state>
                 <state img="#-addressing.png">I wonder if you can last as long as I can.</state>
-                <state img="#-horny.png">You're very pretty, ~name~...and I don't like giving compliments.</state>
+                <state img="#-curious.png">You're very pretty, ~name~...and I don't like giving compliments.</state>
                 <state img="#-interested.png">Pick a formation and stick with it...it'll help.</state>
                 <state img="#-pleased.png">Dita would be a wreck at this point...poor girl.</state>
             </case>
@@ -22578,7 +22845,7 @@
             <case stage="5">
                 <state img="#-addressing.png">A Mejarian can handle this just fine...</state>
                 <state img="#-pleased.png">There are as many masturbation techniques as there are women...</state>
-                <state img="#-horny.png">Imagine yourself among the stars...that's what I do.</state>
+                <state img="#-curious.png">Imagine yourself among the stars...that's what I do.</state>
                 <state img="#-happy.png">Just make it good for yourself.  Barnette always gets hung up on what Jura thinks.</state>
                 <state img="#-pleased.png">It's just the rules...I was only interested in the cards.</state>
             </case>
@@ -22590,7 +22857,7 @@
                 <state img="#-pleased.png">Women masturbating together...that's just another night on the starship &lt;i&gt;Nirvana.&lt;/i&gt;</state>
             </case>
             <case stage="7">
-                <state img="#-horny.png">Ooh, I like your technique...</state>
+                <state img="#-curious.png">Ooh, I like your technique...</state>
                 <state img="#-interested.png">I'm glad I still got to salvage this...</state>
                 <state img="#-stoic.png">Think you'll do any better than I did?</state>
                 <state img="#-stretching.png">Sorry you couldn't win, ~name~.  But this is a close second, trust me...</state>
@@ -22690,11 +22957,11 @@
                 <state img="#-thinking.png">I shudder to think I'd ever reach the point where I need &lt;i&gt;that&lt;/i&gt; to feel pleasure...</state>
             </case>
             <case stage="0-7" target="cammy">
-                <state img="#-horny.png">I have to admit...this is making me nostalgic.  Although it's more of an orgy...</state>
+                <state img="#-curious.png">I have to admit...this is making me nostalgic.  Although it's more of an orgy...</state>
                 <state img="#-impressed.png">So many women...how are you so comfortable with them?</state>
                 <state img="#-awkward.png">I can only imagine this many women tending to me...or even wanting to.  Just bizarre...</state>
                 <state img="#-pleased.png">They just keep rotating...this is like if I got the whole crew to take care of me.</state>
-                <state img="#-horny.png">Earth women are much more comfortable with each other than I realized.  I'm glad men haven't taken that from you...</state>
+                <state img="#-curious.png">Earth women are much more comfortable with each other than I realized.  I'm glad men haven't taken that from you...</state>
                 <state img="#-addressing.png">This is quite the...&lt;i&gt;Mejarian&lt;/i&gt; bout of group sex.  Thank you...now I don't have to corral the crew for this.</state>
             </case>
             <case stage="0-7" target="elizabeth">
@@ -22719,9 +22986,9 @@
                 <state img="#-bored.png">Not sure I want to know what it takes to get you going...you and Barnette seem to go at it every night.</state>
             </case>
             <case stage="0-7" target="miko">
-                <state img="#-horny.png">I...this must be strange to an Earth woman.  But not me...</state>
+                <state img="#-curious.png">I...this must be strange to an Earth woman.  But not me...</state>
                 <state img="#-happy.png">Two married women, in love...this reminds me of home.</state>
-                <state img="#-horny.png">The floating makes this a bit unusual...but it's Mejarian love through and through.</state>
+                <state img="#-curious.png">The floating makes this a bit unusual...but it's Mejarian love through and through.</state>
                 <state img="#-pleased.png">Perhaps &lt;i&gt;I&lt;/i&gt; could find a wife who floats...it might be nice.</state>
                 <state img="#-impressed.png">You're both some of the strangest women I've ever met...and that's saying a lot.</state>
             </case>
@@ -22751,10 +23018,10 @@
                 <state img="#-interested.png">I need an exercise partner...someone who can push my limits like that.</state>
             </case>
             <case stage="0-7" target="raven">
-                <state img="#-horny.png">Well, you're certainly a strange woman...but with incredible powers.</state>
+                <state img="#-curious.png">Well, you're certainly a strange woman...but with incredible powers.</state>
                 <state img="#-addressing.png">You remind me of myself when I was younger...still not comfortable being stoic.</state>
                 <state img="#-addressing.png">I see you're not as stoic as you try to be, Raven...I could give you some tips.</state>
-                <state img="#-horny.png">Telekinesis...once it was an enemy who used it.  This is much better...</state>
+                <state img="#-curious.png">Telekinesis...once it was an enemy who used it.  This is much better...</state>
                 <state img="#-addressing.png">Seeing a woman control powers beyond my understanding...I &lt;i&gt;relish&lt;/i&gt; that challenge.</state>
             </case>
             <case stage="0-7" target="revy">
@@ -22771,15 +23038,15 @@
                 <state img="#-awkward.png">I'm conflicted...between your muscles and your choice of orifice.</state>
             </case>
             <case stage="0-7" target="sei">
-                <state img="#-horny.png">...I know I was rude to you...but you really are fit.</state>
-                <state img="#-horny.png">...</state>
-                <state img="#-horny.png">...Sei...</state>
+                <state img="#-curious.png">...I know I was rude to you...but you really are fit.</state>
+                <state img="#-curious.png">...</state>
+                <state img="#-curious.png">...Sei...</state>
                 <state img="#-surprised.png">What a disgusting woman...a very fit woman, but...she just keeps going.</state>
                 <state img="#-pleased.png">Drunken dirty talk...just embarrassing.</state>
-                <state img="#-horny.png">I knew this wouldn't be graceful...or dignified.  You've got quite the mouth on you, Sei...</state>
-                <state img="#-horny.png">WIth those muscles, I should be glad you're drunk...you might to try to pin me down.</state>
-                <state img="#-horny.png">...Sei...a drunken little imp of a woman.</state>
-                <state img="#-horny.png">Sei...</state>
+                <state img="#-curious.png">I knew this wouldn't be graceful...or dignified.  You've got quite the mouth on you, Sei...</state>
+                <state img="#-curious.png">WIth those muscles, I should be glad you're drunk...you might to try to pin me down.</state>
+                <state img="#-curious.png">...Sei...a drunken little imp of a woman.</state>
+                <state img="#-curious.png">Sei...</state>
             </case>
             <case stage="0-7" target="sola">
                 <state img="#-impressed.png">She barely even has to touch herself...magic really is impressive.</state>
@@ -22787,7 +23054,7 @@
                 <state img="#-awkward.png">...Well, that &lt;i&gt;looks&lt;/i&gt; pleasurable.  But I can't quite relate to having a magical gem inside me...</state>
                 <state img="#-annoyed.png">Men and their tubes penetrating me is supposedly &lt;i&gt;normal...&lt;/i&gt;a gem seems strange, even for this planet.</state>
                 <state img="#-stretch.png">Handsfree masturbation...the benefits of magic.  But I...&lt;i&gt;enjoy&lt;/i&gt; my own touch.</state>
-                <state img="#-horny.png">...I'm glad you're enjoying your magic, Sola...though my hands seem fine for me.</state>
+                <state img="#-curious.png">...I'm glad you're enjoying your magic, Sola...though my hands seem fine for me.</state>
             </case>
             <case stage="0-7" target="vriska">
                 <state img="#-surprised.png" marker="claustrophobia">Can you...get loose?  I hate being restrained...</state>
@@ -22865,16 +23132,16 @@
             <case stage="3" alsoPlaying="jura">
                 <state img="#-awkward.png">How do Earth women feel about each other, exactly...?</state>
                 <state img="#-disappointed.png">Since we're here, Jura, I hope you realize you and Barnette keep me up at night.</state>
-                <state img="#-horny.png">Anything caught your interest, ~name~?  I try to stay fit...</state>
+                <state img="#-curious.png">Anything caught your interest, ~name~?  I try to stay fit...</state>
                 <state img="#-addressing.png">The universe is a big place...lose yourself in it.</state>
                 <state img="#-pleased.png">I can feel the vibes from here...must be the Paksis's doing.</state>
             </case>
             <case stage="4" alsoPlaying="jura">
-                <state img="#-horny.png">In spite of myself, this is turning me on...I try to stay professional.</state>
+                <state img="#-curious.png">In spite of myself, this is turning me on...I try to stay professional.</state>
                 <state img="#-interested.png">Sometimes release can be good...like when you're cooped up on a spaceship for months.</state>
                 <state img="#-impressed.png">Maybe I should get a girlfriend...</state>
                 <state img="#-addressing.png">I imagine this is every night for you and Barnette, Jura?  No relationship trouble that could distract you in a dogfight?</state>
-                <state img="#-horny.png">Maybe Earth isn't all bad...it's home to women like you.</state>
+                <state img="#-curious.png">Maybe Earth isn't all bad...it's home to women like you.</state>
             </case>
             <case stage="7" alsoPlaying="jura">
                 <state img="#-pleased.png">I pictured B.C. doing this for a second...but that image probably isn't right.</state>
@@ -22885,7 +23152,7 @@
             </case>
             <case stage="0-5" targetTimeInStage="0-0" totalMasturbating="1-1" totalFinished="0-0">
                 <state img="#-surprised.png">
-                    <alt-img stage="3-5">#-horny.png</alt-img>
+                    <alt-img stage="3-5">#-curious.png</alt-img>
                     <text>...</text>
                 </state>
             </case>
@@ -22957,40 +23224,40 @@
                 <state img="#-addressing.png">How do I look in this flightsuit, ~name~?</state>
                 <state img="#-impressed.png">Are you feeling good, ~name~?  Release can be important.</state>
                 <state img="#-happy.png">You can look at me, ~name~.  It's perfectly natural where I'm from...</state>
-                <state img="#-horny.png">Keep yourself steady, and build up to a climax.</state>
+                <state img="#-curious.png">Keep yourself steady, and build up to a climax.</state>
                 <state img="#-impressed.png">You're pretty, ~name~...and that's without the benefit of Mejarian genetic engineering.</state>
             </case>
             <case stage="3">
                 <state img="#-awkward.png">How do Earth women feel about each other, exactly...?</state>
                 <state img="#-bored.png">Jura and Barnette always keep me up at night, the way they go at each other.</state>
-                <state img="#-horny.png">Anything caught your interest, ~name~?  I try to stay fit...</state>
+                <state img="#-curious.png">Anything caught your interest, ~name~?  I try to stay fit...</state>
                 <state img="#-addressing.png">The universe is a big place...lose yourself in it.</state>
                 <state img="#-pleased.png">I can feel the vibes from here...must be the Paksis's doing.</state>
             </case>
             <case stage="4">
-                <state img="#-horny.png">In spite of myself, this is turning me on...I try to stay professional.</state>
+                <state img="#-curious.png">In spite of myself, this is turning me on...I try to stay professional.</state>
                 <state img="#-interested.png">Sometimes release can be good...like when you're cooped up on a spaceship for months.</state>
-                <state img="#-horny.png">Maybe I should get a girlfriend...</state>
+                <state img="#-curious.png">Maybe I should get a girlfriend...</state>
                 <state img="#-pleased.png">I wonder if Jura and Barnette do this together...</state>
-                <state img="#-horny.png">Maybe Earth isn't all bad...it's home to some beautiful women.</state>
+                <state img="#-curious.png">Maybe Earth isn't all bad...it's home to some beautiful women.</state>
             </case>
             <case stage="5">
                 <state img="#-pleased.png">I walked in on Misty doing it once.  That's how she got her own room.</state>
-                <state img="#-horny.png">I'm not one for the dating scene...but now I'm thinking about it.</state>
+                <state img="#-curious.png">I'm not one for the dating scene...but now I'm thinking about it.</state>
                 <state img="#-pleased.png">I've heard Parfet does it in the engine room.</state>
                 <state img="#-interested.png">I've worked hard to make my body presentable to other women...</state>
                 <state img="#-interested.png">You have energy on par with the Paksis...</state>
-                <state img="#-horny.png">Mm...~name~, I...no, I have to stay professional.</state>
-                <state img="#-horny.png">I'll just...watch from afar.  I shouldn't get close to any strange women...</state>
-                <state img="#-horny.png">I...&lt;i&gt;this is just like home.&lt;/i&gt;  I'm feeling nostalgic...</state>
-                <state img="#-horny.png">You're not afraid...of other women, are you, ~name~?  Indulge a Mejarian...</state>
-                <state img="#-horny.png">I wonder...if this is strange to you.  It's so natural to &lt;i&gt;me...&lt;/i&gt;</state>
+                <state img="#-curious.png">Mm...~name~, I...no, I have to stay professional.</state>
+                <state img="#-curious.png">I'll just...watch from afar.  I shouldn't get close to any strange women...</state>
+                <state img="#-curious.png">I...&lt;i&gt;this is just like home.&lt;/i&gt;  I'm feeling nostalgic...</state>
+                <state img="#-curious.png">You're not afraid...of other women, are you, ~name~?  Indulge a Mejarian...</state>
+                <state img="#-curious.png">I wonder...if this is strange to you.  It's so natural to &lt;i&gt;me...&lt;/i&gt;</state>
                 <state img="#-addressing.png">...Come on.  You Earth women survive around men...you &lt;i&gt;must&lt;/i&gt; have more fire than this.</state>
             </case>
             <case stage="6">
                 <state img="#-addressing.png">I wonder, ~name~...who will finish first?</state>
                 <state img="#-addressing.png">No matter what, I always give 100%.  You should follow my lead...</state>
-                <state img="#-horny.png">If you don't want another woman flirting with you...then don't invite the Mejarian next time.</state>
+                <state img="#-curious.png">If you don't want another woman flirting with you...then don't invite the Mejarian next time.</state>
                 <state img="#-stoic.png">Fly steady, ~name~...then speed up for the kill.</state>
                 <state img="#-mast-3.png">Take deep breaths and focus.  Just like flying...</state>
                 <state img="#-interested.png">Don't read too deeply into this...Mejarians love other women.</state>
@@ -22999,7 +23266,7 @@
                 <state img="#-interested.png">I'm sorry if I'm staring...do Earth women love each other like Mejarians do, even with men around?</state>
                 <state img="#-stoic.png">Just looking at you is making me twitch all over...</state>
                 <state img="#-pleased.png">Do Earth women ever...&lt;i&gt;taste&lt;/i&gt; each other?  That's very romantic where I'm from...</state>
-                <state img="#-horny.png">I hear about all the things my subordinates get up to...groping in the showers, eating each other out in their cockpits...</state>
+                <state img="#-curious.png">I hear about all the things my subordinates get up to...groping in the showers, eating each other out in their cockpits...</state>
                 <state img="#-explaining.png">&lt;i&gt;Mm...&lt;/i&gt;a-are you--thinking about me, ~name~?  I'd like to think women loving each is universal...</state>
                 <state img="#-interested.png">&lt;i&gt;Agh...&lt;/i&gt;w-women always picture groping each other's breasts, o-or licking...but nothing turns me on like a kiss.</state>
             </case>
@@ -23009,14 +23276,14 @@
                 <state img="#-pleased.png">Better than my crewmate's haphazard pawing...which I've heard about secondhand.</state>
                 <state img="#-stretching.png">This is actually rather soothing...I should visit our hot springs again.</state>
                 <state img="#-happy.png">&lt;i&gt;Mmhmhmhm...&lt;/i&gt;I hope I looked a bit more dignified than that.</state>
-                <state img="#-horny.png">Just look at you go...this more than anything is making me feel connected to Earth women.</state>
+                <state img="#-curious.png">Just look at you go...this more than anything is making me feel connected to Earth women.</state>
                 <state img="#-stoic.png">I hope I'm not making it hard for you to focus, ~name~...I don't know if Earth women are used to being stared at by other girls.</state>
                 <state img="#-stoic.png">You're very beautiful, ~name~...I can admit it to a woman much easier than a man.</state>
                 <state img="#-happy.png">Is this good for you, ~name~?  It was good for &lt;i&gt;me,&lt;/i&gt; against all odds...</state>
                 <state img="#-pleased.png">You're so wet...now that I think about it, so am I.</state>
-                <state img="#-horny.png">I'm sorry if you're not used to women staring at you like this...I can't help it.</state>
-                <state img="#-horny.png">...If you're thinking about me, ~name~...I can show any part of me that you'd like.</state>
-                <state img="#-horny.png">...Women stick together where I'm from, ~name~.  Men are a common enemy, after all...so just say the word.</state>
+                <state img="#-curious.png">I'm sorry if you're not used to women staring at you like this...I can't help it.</state>
+                <state img="#-curious.png">...If you're thinking about me, ~name~...I can show any part of me that you'd like.</state>
+                <state img="#-curious.png">...Women stick together where I'm from, ~name~.  Men are a common enemy, after all...so just say the word.</state>
             </case>
         </trigger>
 
@@ -23089,7 +23356,7 @@
             </case>
             <case stage="0-7" target="miko">
                 <state img="#-pleased.png">How long have you been together?  That was nostalgic.  Not that I've had many...well, never mind.</state>
-                <state img="#-horny.png">...How long have you been together?  You seem so...&lt;i&gt;comfortable&lt;/i&gt; with each other.</state>
+                <state img="#-curious.png">...How long have you been together?  You seem so...&lt;i&gt;comfortable&lt;/i&gt; with each other.</state>
                 <state img="#-impressed.png">I wonder how long I'd need to be with a woman to do that in public with her...what about you two?</state>
                 <state img="#-interested.png">I can't even picture myself having sex in public...but I'm not married.  How many years has it been for you two?</state>
             </case>
@@ -23134,7 +23401,7 @@
                 <state img="#-impressed.png">So &lt;i&gt;forceful...&lt;/i&gt;as if it knew you were finished.  This &lt;i&gt;Syega&lt;/i&gt; must see into the soul.</state>
                 <state img="#-confused.png">&lt;i&gt;Syega,&lt;/i&gt; you said this was called?  It...seemed to know everything about you.</state>
                 <state img="#-pleased.png">"Syega," a gem in tune with your very body...it came out just as you climaxed.  It reminds me of the Paksis...</state>
-                <state img="#-horny.png">Magic gems..."Syega."  The way it shot out, it was like it could &lt;i&gt;feel&lt;/i&gt; you...</state>
+                <state img="#-curious.png">Magic gems..."Syega."  The way it shot out, it was like it could &lt;i&gt;feel&lt;/i&gt; you...</state>
             </case>
             <case stage="0-7" target="uravity">
                 <state img="#-addressing.png">Seems your powers mostly come from self-control.  Maybe &lt;i&gt;I'd&lt;/i&gt; be better suited for them.</state>
@@ -23212,7 +23479,7 @@
                 <state img="#-pleased.png">Not much different from how a Mejarian might do it...</state>
                 <state img="#-pleased.png">Alright, you've had your fun.  Clean yourself up.</state>
                 <state img="#-impressed.png">Well, you sure made it count.</state>
-                <state img="#-horny.png">That was actually a little titillating.  Well done.</state>
+                <state img="#-curious.png">That was actually a little titillating.  Well done.</state>
                 <state img="#-addressing.png">All too easy, ~name~.  I'm up for another round anytime.</state>
                 <state img="#-pleased.png">Maybe you focused on yourself a little &lt;i&gt;too&lt;/i&gt; much...</state>
                 <state img="#-impressed.png">I think she's got you beat on the self-enjoyment, Jura.  That was something else.</state>
@@ -23248,7 +23515,7 @@
                 <state img="#-pleased.png">Not much different from how a Mejarian might do it...</state>
                 <state img="#-pleased.png">Alright, you've had your fun.  Clean yourself up.</state>
                 <state img="#-impressed.png">Well, you sure made it count.</state>
-                <state img="#-horny.png">That was actually a little titillating.  Well done.</state>
+                <state img="#-curious.png">That was actually a little titillating.  Well done.</state>
                 <state img="#-addressing.png">All too easy, ~name~.  I'm up for another round anytime.</state>
                 <state img="#-pleased.png">Maybe you focused on yourself a little &lt;i&gt;too&lt;/i&gt; much...</state>
                 <state img="#-impressed.png">Jura says &lt;i&gt;she&lt;/i&gt; enjoys herself...but you're something else.</state>
@@ -23273,7 +23540,7 @@
             </case>
             <case stage="5">
                 <state img="#-addressing.png">Heehee.  You sing like our ship's choir.</state>
-                <state img="#-horny.png">I need a girlfriend...I wonder if Valore is taken.</state>
+                <state img="#-curious.png">I need a girlfriend...I wonder if Valore is taken.</state>
                 <state img="#-thinking.png">Maybe a girlfriend would loosen me up...</state>
                 <state img="#-addressing.png">That was like a supernova, ~name~...but a little more romantic.</state>
                 <state img="#-pleased.png">Sing like that, and you'll make this a space opera...</state>
@@ -24121,6 +24388,14 @@
                 <state img="#-stretching.png" marker="pit_mast">Can't believe I lost to a man, and one as talkative as Hibiki at that.</state>
                 <state img="#-addressing.png" marker="pit_mast">You look like you're enjoying the show, Pit.  At least this helps me understand men a little better.</state>
             </case>
+            <case stage="6">
+                <condition role="other" character="aella" stage="8" sayingMarker="WhatDoYouDoWhenYoureDone" />
+                <state>What the character says while they're masturbating.</state>
+                <state img="#-happy.png" marker="aella_finished">Just listen to your body, Aella...here, watch me if you'd like.</state>
+                <state img="#-stoic.png" marker="aella_finished">...Masturbation is a perfectly natural thing, Aella.  Be natural...shift your weight around if it feels right.</state>
+                <state img="#-bored.png" marker="aella_finished">I can't believe such a large girl would need to be coached through something like this...just behave naturally, Aella.  Here, I'm not overthinking it...</state>
+                <state img="#-confused.png" marker="aella_finished">How can a girl be so out of touch with her own body?  ...Aella, just do what's comfortable.  You can follow my lead once I'm done...</state>
+            </case>
             <case stage="6" alsoPlaying="streaming-chan" timeInStage="0" totalMasturbating="1" totalFinished="0">
                 <state img="#-annoyed.png">Would you stop giving me orders?</state>
                 <state img="#-annoyed.png">I'm trying to concentrate.  Don't tell me what to do.</state>
@@ -24206,7 +24481,10 @@
                 <state img="#-disappointed.png" marker="seiof_response">Mejarians are born from two women, Sei.  The Oma donates an egg, and the Fama carries the combination...</state>
                 <state img="#-stretching.png" marker="seiof_response">...If &lt;i&gt;mother&lt;/i&gt; and &lt;i&gt;father&lt;/i&gt; helps you understand, Sei, then yes.  Though I can't picture a man being a parent.</state>
             </case>
-            <case stage="6" timeInStage="0" totalMasturbating="1" totalFinished="0">
+            <case stage="6">
+                <condition role="self" timeInStage="0" />
+                <condition count="1" status="masturbating" />
+                <condition count="0" status="finished" />
                 <state img="#-annoyed.png">I despise losing...</state>
                 <state img="#-disappointed.png">You'd better appreciate this.</state>
                 <state img="#-bored.png">I don't do this very often, you know...</state>
@@ -24233,13 +24511,18 @@
                 <state img="#-stretch.png">Let me get more comfortable here...</state>
                 <state img="#-stretch.png">&lt;i&gt;Mmm...OK.  OK...&lt;/i&gt;</state>
                 <state img="#-stretch.png">I might as well stretch myself out...there's no sense being humiliated &lt;i&gt;and&lt;/i&gt; uncomfortable.</state>
-                <state img="#-horny.png">I'm not giving you the satisfaction of seeing me embarrassed...</state>
+                <state img="#-curious.png">I'm not giving you the satisfaction of seeing me embarrassed...</state>
                 <state img="#-mast-2.png">N-none of your business...who I'm thinking of...</state>
                 <state img="#-stoic.png">Oh, God...I feel so exposed.  Every inch of me...</state>
                 <state img="#-busy.png">Can't focus...did I tell Barnette everything she needed?  When was my last maintenance check?</state>
                 <state img="#-stoic.png">I hear Earth women do things with the &lt;i&gt;anus...&lt;/i&gt;that's just unfit for a Mejarian.</state>
                 <state img="#-happy.png">...Oh, picturing the looks on my crewmates' faces, with me spread-legged on the floor...</state>
                 <state img="#-mast-4.png">...Perhaps I should order the &lt;i&gt;delta formation&lt;/i&gt;...where we spread out.</state>
+                <state img="#-seductive.png">&lt;i&gt;A-ah...&lt;/i&gt;maybe I could reach further down...and massage my &lt;i&gt;backside&lt;/i&gt; a bit.  As if this wasn't embarrassing enough...</state>
+                <state img="#-butt.png">&lt;i&gt;Mnnh...&lt;/i&gt;I-I shouldn't--be so dirty...</state>
+                <state img="#-seductive.png">&lt;i&gt;Mhmhmhm...&lt;/i&gt;now that I'm sitting here, exposing myself like this...&lt;i&gt;I want to lose control.&lt;/i&gt;</state>
+                <state img="#-seductive.png">...My suit is &lt;i&gt;always&lt;/i&gt; showing off my body...it stretches against my butt, my hips, my thighs...but even &lt;i&gt;it&lt;/i&gt; hides what you're seeing now... </state>
+                <state img="#-seductive.png">...The body is such a strange thing, isn't it?  Even as I take these deep breaths...it's &lt;i&gt;pulsing&lt;/i&gt; all on its own...look at the way my vagina is pumping, crying out for more...</state>
             </case>
             <case stage="6" priority="0">
                 <condition role="other" character="jura" stage="0" />
@@ -24378,7 +24661,7 @@
                 <state img="#-mast-5.png">Can't believe I--I'm--&lt;i&gt;whatever...&lt;/i&gt;</state>
                 <state img="#-mast-5.png">&lt;i&gt;To hell with modesty...&lt;/i&gt;</state>
                 <state img="#-mast-5.png">Mm...&lt;i&gt;mmm--ah...&lt;/i&gt;</state>
-                <state img="#-horny.png">N-nobody move...that's an...&lt;i&gt;order...&lt;/i&gt;</state>
+                <state img="#-curious.png">N-nobody move...that's an...&lt;i&gt;order...&lt;/i&gt;</state>
             </case>
             <case stage="6">
                 <state img="#-mast-3.png">Oh...</state>
@@ -24398,8 +24681,9 @@
                 <state img="#-mast-5.png">Can't believe I--I'm--&lt;i&gt;whatever...&lt;/i&gt;</state>
                 <state img="#-mast-5.png">&lt;i&gt;O-oh, to hell with modesty...&lt;/i&gt;</state>
                 <state img="#-mast-5.png">Mm...&lt;i&gt;mmm--ah...&lt;/i&gt;</state>
-                <state img="#-horny.png">N-nobody move...that's an...&lt;i&gt;order...&lt;/i&gt;</state>
+                <state img="#-curious.png">N-nobody move...that's an...&lt;i&gt;order...&lt;/i&gt;</state>
                 <state img="#-mast-5.png">...Mm...&lt;i&gt;oh yeah.&lt;/i&gt;</state>
+                <state img="#-butt.png">Ngh...&lt;i&gt;hunnh!&lt;/i&gt;</state>
             </case>
         </trigger>
 
@@ -24601,6 +24885,14 @@
                 <state img="#-bored.png" marker="bc_confusion">...No, I &lt;i&gt;don't&lt;/i&gt; know.  You could be more considerate of a woman who isn't from Earth and doesn't know what condoms are.</state>
                 <state img="#-confused.png" marker="bc_confusion">...What is it about sex with men that makes Earth women get all quiet?  And what's a &lt;i&gt;condom?&lt;/i&gt;</state>
             </case>
+            <case stage="7">
+                <condition role="other" character="aella" stage="8" sayingMarker="WhatDoYouDoWhenYoureDone" />
+                <state>What the character says after they've finished masturbating.</state>
+                <state img="#-stretching.png" marker="aella_finished">...There's no need to overthink things, Aella.  Look at me...I'm just relaxing, letting my body recover.</state>
+                <state img="#-interested.png" marker="aella_finished">...Masturbation is a perfectly natural thing, Aella.  Whatever your body wants to do, you should listen--I'm just resting.</state>
+                <state img="#-confused.png" marker="aella_finished">I can't believe such a large girl would need to be coached through something like this...just behave naturally, Aella.  All &lt;i&gt;I'm&lt;/i&gt; doing is resting.</state>
+                <state img="#-confused.png" marker="aella_finished">How can a girl be so out of touch with her own body?  ...Aella, just do what's comfortable.  Do you see how I'm sitting back and taking deep breaths?</state>
+            </case>
             <case stage="7" alsoPlaying="elaine" timeInStage="0-0">
                 <state img="#-addressing.png">We can talk if you want, Elaine, but all I'll drink is water.</state>
                 <state img="#-stretching.png">I wouldn't mind a chat with an Earth woman.  Might be informative.</state>
@@ -24735,11 +25027,11 @@
                 <state img="#-stoic.png">I hope you're proud of yourself, making me do that...</state>
                 <state img="#-stretching.png">...</state>
                 <state img="#-pleased.png">That completes my rounds for the day...</state>
-                <state img="#-horny.png">Mmm...that was relaxing.</state>
+                <state img="#-curious.png">Mmm...that was relaxing.</state>
                 <state img="#-happy.png">Great...I'll never hear the end of this, will I, Jura?</state>
                 <state img="#-happy.png">I should do that more often...</state>
-                <state img="#-horny.png">I still feel so excited...</state>
-                <state img="#-horny.png">That wasn't enough...I still feel like I'm burning up.</state>
+                <state img="#-curious.png">I still feel so excited...</state>
+                <state img="#-curious.png">That wasn't enough...I still feel like I'm burning up.</state>
                 <state img="#-stoic.png">...Hoo.  That felt great.</state>
                 <state img="#-stretching.png">...I don't masturbate often enough.</state>
                 <state img="#-happy.png">...I definitely needed that.  I was in a bad mood...</state>
@@ -24789,8 +25081,8 @@
                 <state img="#-pleased.png">...That settles things.  I'm masturbating more often...alone.</state>
                 <state img="#-pleased.png">...I still prefer masturbating alone, but that wasn't so bad.</state>
                 <state img="#-stoic.png">Heehee.  I think I'm in a better mood now.</state>
-                <state img="#-horny.png">I still feel so excited...</state>
-                <state img="#-horny.png">That wasn't enough...I still feel like I'm burning up.</state>
+                <state img="#-curious.png">I still feel so excited...</state>
+                <state img="#-curious.png">That wasn't enough...I still feel like I'm burning up.</state>
                 <state img="#-stretch.png">Just &lt;i&gt;fantastic...&lt;/i&gt;even if I had to do it out of shame.</state>
                 <state img="#-stretch.png">In these matters, your first duty is always to yourself.</state>
                 <state img="#-stoic.png">...My imagination just doesn't compare.  Of course, the privacy of my room makes up for that.</state>
