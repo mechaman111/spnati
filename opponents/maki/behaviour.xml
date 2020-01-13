@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 5:33:00  on enero 10, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 1:40:45  on enero 13, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Maki</first>
@@ -72,7 +72,7 @@
             </case>
             <case stage="0">
                 <test expr="~background~" value="street" />
-                <state img="#-bored.png">What are we supposed to do here? There are a lot of people watching you know.</state>
+                <state img="#-bored.png">What are we supposed to do here? There are a lot of people watching, you know.</state>
             </case>
             <case stage="0">
                 <state img="#-angry.png">What in the world is this place?! It looks shady.</state>
@@ -182,8 +182,8 @@
                 <alternative oneShotId="13">
                     <condition count="5" />
                 </alternative>
-                <state img="#-call.png">Maki-chan pretty?</state>
-                <state img="#-call.png">Maki-chan kawaii?</state>
+                <state img="#-call.png" marker="makicall">Maki-chan pretty?</state>
+                <state img="#-call.png" marker="makicall">Maki-chan kawaii?</state>
             </case>
             <case stage="0-4" priority="55">
                 <condition role="self" hasHand="Royal Flush" />
@@ -356,6 +356,63 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0-8" oneShotId="181" totalRounds="6-8" priority="251">
+                <condition role="self" saidMarker="makimood1" />
+                <test expr="~maki.lead~" value="3" />
+                <state img="#-win.png" marker="makimood2">I tried to help you, but you rejected my help, so I think I'm going to enjoy this.</state>
+                <state img="#-smug.png" marker="makimood2">This is what happens when you ignore me. Now that you're all losing, why don't you beg me a little?</state>
+                <state img="#-interested.png" marker="makimood2">I look quite comfortable in the lead, are you already regretting my offer?</state>
+            </case>
+            <case stage="0-6" oneShotId="179" totalRounds="3-5" priority="250">
+                <state img="#-unamused.png" marker="makimood1">You aren't listening to me, right? OK, fine, I'll play along, but don't expect much else.</state>
+                <state img="#-confused.png" marker="makimood1">If you're going to ignore me, then I suppose I'll play along with you just a bit.</state>
+                <state img="#-angry.png" marker="makimood1">I'm trying to help you, and yet you continue to play. You know what? Fine, I'll play along, but I'm opposed to this.</state>
+            </case>
+            <case stage="0-8" oneShotId="182" totalRounds="6-8" priority="250">
+                <condition role="self" saidMarker="makimood1" />
+                <test expr="~maki.place~" value="1" />
+                <state img="#-interested.png" marker="makimood3">Actually, this is kinda funny, especially when I'm winning.</state>
+                <state img="#-win.png" marker="makimood3">Since' Im winning, I guess I can enjoy this a little bit.</state>
+                <state img="#-confident.png" marker="makimood3">Jeez... I guess it's not bad to enjoy this when I'm winning.</state>
+            </case>
+            <case stage="6-8" oneShotId="186" priority="250">
+                <condition role="self" saidMarker="makimood2" />
+                <state img="#-confused.png" marker="makimood21">I don't get why I ended up in this situation, after being well ahead. Guess I was too overconfident.</state>
+                <state img="#-calm.png" marker="makimood21">I need to step up in my game, losing now would be embarrassing.</state>
+                <state img="#-confident.png" marker="makimood21">Maybe I'm in my underwear, but  before you weren't boasting so much. Let's see who ends up laughing.</state>
+            </case>
+            <case stage="6-8" oneShotId="187" priority="250">
+                <condition role="self" saidMarker="makimood3" />
+                <state img="#-nervous.png" marker="makimood31">What did happen? I sure let me go. I must focus again.</state>
+                <state img="#-calm.png" marker="makimood31">This isn't going as planned, but I guess playing with you all wasn't that bad at the end.</state>
+                <state img="#-confused.png" marker="makimood31">OK, OK, this has been funny, I'll admit it, but I shouldn't be this close to defeat.</state>
+            </case>
+            <case stage="6-8" oneShotId="188" priority="250">
+                <condition role="self" saidMarker="makimood4" />
+                <state img="#-calm.png" marker="makimood41">I-I'm OK, I'll definitely turn the tables this time.</state>
+                <state img="#-worried.png" marker="makimood41">I-I can still win this thing, for sure.</state>
+                <state img="#-nervous.png" marker="makimood41">This got a little out of control, b-but I won't give up.</state>
+            </case>
+            <case stage="6-8" oneShotId="189" priority="250">
+                <condition role="self" saidMarker="makimood5" />
+                <state img="#-angry.png" marker="makimood51">That's enough, you pushed me really hard, but I'll win this! W-What's so funny?</state>
+                <state img="#-unamused.png" marker="makimood51">Do you think this is funny, right? I'll show you what is funny now.</state>
+                <state img="#-calm.png" marker="makimood51">I haven't beaten yet, I'll show you what this game looks like when I'm serious.</state>
+            </case>
+            <case stage="0-8" oneShotId="183" totalRounds="6-8" priority="249">
+                <condition role="self" saidMarker="makimood1" />
+                <test expr="~maki.place~" cmp="&gt;=" value="3" />
+                <state img="#-calm.png" marker="makimood4">Now that I've been playing for a while, I can see the appeal of it, but I can't relax.</state>
+                <state img="#-confused.png" marker="makimood4">I kinda get now why we're playing, but I still think that to quit was a better alternative.</state>
+                <state img="#-nervous.png" marker="makimood4">This game is a bit funny, but it's still too risky.</state>
+            </case>
+            <case stage="0-8" oneShotId="185" totalRounds="6-8" priority="247">
+                <condition role="self" saidMarker="makimood1" />
+                <test expr="~maki.place~" cmp="&lt;=" value="4" />
+                <state img="#-sad.png" marker="makimood5">Can't you just spare me? This isn't funny.</state>
+                <state img="#-worried.png" marker="makimood5">Please, can't we just stop playing? T-This isn't funny.</state>
+                <state img="#-embarrassed.png" marker="makimood5">I-I don't want to continue, I-I can sing, or give you money if you prefer.</state>
+            </case>
             <case stage="0-7" oneShotId="113" priority="200">
                 <condition count="1-" status="lost_all" />
                 <state img="#-confused.png" marker="makinakedhand">Wait, aren't you supposed to lose when you're already naked? Weird.</state>
@@ -369,7 +426,7 @@
                 <state img="#-confused.png">I don't get why I get cards if I'm naked, but I suppose it's fine.</state>
             </case>
             <case stage="6" oneShotId="166" priority="160">
-                <condition role="self" timeInStage="0" saidMarker="makieyesquestion" />
+                <condition role="self" timeInStage="0-2" saidMarker="makieyesquestion" />
                 <state img="#-embarrassed.png" marker="makieyesembarrassed">B-Because they remind you of amethysts? S-Stop, you idiot!</state>
                 <state img="#-embarrassed.png" marker="makieyesembarrassed">B-Because you "can't look away from those gem stones"? Y-You're making me blush, idiot!</state>
                 <state img="#-embarrassed.png" marker="makieyesembarrassed">B-Because "eyes are the mirror of the soul, and yours are beautiful"? Kyaaa! I-Idiot!</state>
@@ -405,6 +462,12 @@
             </case>
             <case stage="6-8" oneShotId="177" priority="150">
                 <condition role="self" saidMarker="makiplayereyes" />
+                <state img="#-disappointed.png">I-I know that I suck at this, I wasn't the lyricist of µ's. D-Do you like it, ~player~? Y-You don't need to compliment me for that... dummy. </state>
+                <state img="#-nervous.png">T-That came out wrong, ~player~. W-Wait, did you like it? Y-You're w-weird... b-but thank you.</state>
+                <state img="#-worried.png">D-Don't laugh, ~player~, I was horrible. W-Wait, you liked it? Y-You're so simple... but thanks.</state>
+            </case>
+            <case stage="6-8" oneShotId="178" priority="150">
+                <condition role="self" saidMarker="makiplayereyesb" />
                 <state img="#-disappointed.png">I-I know that I suck at this, I wasn't the lyricist of µ's. D-Do you like it, ~player~? Y-You don't need to compliment me for that... dummy. </state>
                 <state img="#-nervous.png">T-That came out wrong, ~player~. W-Wait, did you like it? Y-You're w-weird... b-but thank you.</state>
                 <state img="#-worried.png">D-Don't laugh, ~player~, I was horrible. W-Wait, you liked it? Y-You're so simple... but thanks.</state>
@@ -459,10 +522,10 @@
                 <state img="#-worried.png" marker="makiplayereyes">Your red eyes look like a summer sunset. How was that?</state>
             </case>
             <case stage="6-8" oneShotId="176" priority="148">
-                <condition role="self" saidMarker="makiplayerchallenge" />
-                <state img="#-calm.png" marker="makiplayereyes">Your beautiful eyes look like a shine in the moonlight. How was that?</state>
-                <state img="#-nervous.png" marker="makiplayereyes">Your eyes look like they were made out of love. How was that?</state>
-                <state img="#-worried.png" marker="makiplayereyes">Your eyes look like something beautiful. How was that?</state>
+                <condition role="self" saidMarker="makiplayerchallenge" notSaidMarker="makiplayereyes" />
+                <state img="#-calm.png" marker="makiplayereyesb">Your beautiful eyes look like a shine in the moonlight. How was that?</state>
+                <state img="#-nervous.png" marker="makiplayereyesb">Your eyes look like they were made out of love. How was that?</state>
+                <state img="#-worried.png" marker="makiplayereyesb">Your eyes look like something beautiful. How was that?</state>
             </case>
             <case stage="0-4" oneShotId="56">
                 <condition role="other" character="megumin" stage="0-3" sayingMarker="megumin_maki_wagerSet" />
@@ -534,7 +597,7 @@
                 <state img="#-worried.png">Hey, ~player~, what do you think about my hand?</state>
                 <state img="#-confident.png">I have a really good hand. Or might not. Can you really tell, ~player~?</state>
                 <state img="#-unamused.png">See? I can actually put a poker face, unlike Umi.</state>
-                <state img="#-win.png">Honestly, Umi is the worst poker player I've ever seen, you can tell how good is her hand just by looking at her face.</state>
+                <state img="#-win.png">Honestly, Umi is the worst poker player I've ever seen, you can tell how good her hand is just by looking at her face.</state>
                 <state img="#-bored.png">Let's end this quickly.</state>
                 <state img="#-confused.png">What is that? I don't get it!</state>
                 <state img="#-surprised.png">Oh! These cards are really curious!</state>
@@ -553,6 +616,7 @@
                 <state img="#-embarrassed.png" marker="makifirst">W-What? I have to strip? Can't I offer money instead?</state>
                 <state img="#-shocked.png" marker="makifirst">Wait, strip poker?! Why did Nozomi send me here?</state>
                 <state img="#-angry.png" marker="makifirst">What the hell do you mean that we're betting clothes?! Are you kidding me?!</state>
+                <state img="#-shocked.png" marker="makifirst">Why are you all looking me? Strip poker?! What the hell?!</state>
             </case>
             <case stage="0" oneShotId="65">
                 <condition role="other" character="megumin" stage="0-8" sayingMarker="megumin_maki_outfit" />
@@ -994,9 +1058,9 @@
 
         <trigger id="male_human_must_strip">
             <case stage="0" oneShotId="133" totalRounds="0" priority="500">
-                <state img="#-shocked.png">S-Strip poker?! Why didn't Nozomi tell me about this?!</state>
-                <state img="#-shocked.png">W-What do you mean that we're betting clothes?!</state>
-                <state img="#-shocked.png">Strip poker?! Did you know about this all along, ~player~?</state>
+                <state img="#-win.png">It's a pity that you lost, ~player~. At least we're just playing for fun.</state>
+                <state img="#-surprised.png">Who are you exactly, ~player~? But since we didn't bet anything, you don't have to worry about it.</state>
+                <state img="#-confused.png">You were unlucky, ~player~. I'm wondering why we didn't bet anything, though.</state>
             </case>
             <case stage="0-10" oneShotId="12">
                 <condition filter="bald" role="target" character="human" />
@@ -1045,7 +1109,7 @@
                 <state img="#-happy.png">Don't worry, ~player~, you're still in the game.</state>
                 <state img="#-confident.png">Why the long face, ~player~? You're not out yet, aren`t you?</state>
             </case>
-            <case stage="0-4">
+            <case stage="2-4">
                 <state img="#-confident.png">What happened, ~player~?</state>
                 <state img="#-win.png">Of course I won.</state>
                 <state img="#-calm.png">Let's move on to the next one.</state>
@@ -1073,6 +1137,15 @@
                 <state img="#-calm.png">You still have things to take off?</state>
                 <state img="#-confident.png">Let's see what you got.</state>
                 <state img="#-nervous.png">It's not like I care, but are you feeling alright?</state>
+            </case>
+            <case stage="0-1">
+                <state img="#-nervous.png">I'm still not sure if this is going to work out in the end.</state>
+                <state img="#-confused.png">Why are you all so sure about this strip poker thing? I think we can still back down.</state>
+                <state img="#-calm.png">I don't think this is the best way to meet new people, but if you all insist in playing this game...</state>
+                <state img="#-surprised.png">So... who are you exactly, ~player~? You seem different from the rest.</state>
+                <state img="#-worried.png">It might take me a little to get in the mood for this thing.</state>
+                <state img="#-shocked.png">A-Are you sure about this thing, ~player~?</state>
+                <state img="#-embarrassed.png">S-So we're playing for real to this thing. I don't get it.</state>
             </case>
         </trigger>
 
@@ -2348,7 +2421,7 @@
                 <state img="#-confident.png">This reminds me of Nozomi.</state>
                 <state img="#-win.png">Looks like we have here a perfect pair of pillows.</state>
                 <state img="#-calm.png">They're way bigger than mine.</state>
-                <state img="#-horny.png">Large breasts should be handled with care. I must make you a breasts exam, ~name~.</state>
+                <state img="#-horny.png">Large breasts should be handled with care. I must give you a breasts exam, ~name~.</state>
             </case>
             <case stage="9">
                 <state img="#-horny.png">I want to place my face between them!</state>
@@ -2863,7 +2936,7 @@
 
         <trigger id="heavy_masturbating">
             <case stage="9">
-                <state img="#-closea.png">H-Hey,~player~, do you think I'm good at this?</state>
+                <state img="#-closea.png">H-Hey, ~player~, do you think I'm good at this?</state>
                 <state img="#-closeb.png">I'll let you see, just don't tell anyone OK? Hehe.</state>
                 <state img="#-closec.png">T-This feels so good... if only she...</state>
                 <state img="#-closeb.png">I-I'm close...</state>
@@ -3075,6 +3148,13 @@
         </trigger>
 
         <trigger id="game_over_defeat">
+            <case stage="10" priority="150">
+                <condition role="self" saidMarker="playerfinish" notSaidMarker="maki_signature" />
+                <state img="#-signature.png" marker="maki_signaturedefeat" collectible="signature">H-Hey, ~player~, don't leave so quickly, take this first.</state>
+                <state img="#-signature.png" marker="maki_signaturedefeat" collectible="signature">W-Wait, ~player~! I-I'll give you this before you leave.</state>
+                <state img="#-signature.png" marker="maki_signaturedefeat" collectible="signature">Y-You can't leave already, ~player~! T-Take this first!</state>
+                <state img="#-signature.png" marker="maki_signaturedefeat" collectible="signature">D-Don't leave yet, ~player~! I'm finishing this for you.</state>
+            </case>
             <case stage="10">
                 <condition role="self" saidMarker="makisakurasorry" />
                 <condition role="other" character="sakura" stage="3-7" />
