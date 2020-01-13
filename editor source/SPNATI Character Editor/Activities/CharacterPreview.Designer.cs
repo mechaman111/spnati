@@ -31,14 +31,13 @@
 			this.lblLinesOfDialogue = new Desktop.Skinning.SkinnedLabel();
 			this.lblSkin = new Desktop.Skinning.SkinnedLabel();
 			this.cboSkin = new Desktop.Skinning.SkinnedComboBox();
-			this.chkText = new Desktop.Skinning.SkinnedCheckBox();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.cmdReference = new Desktop.Skinning.SkinnedButton();
 			this.picPortrait = new SPNATI_Character_Editor.Controls.CharacterImageBox();
 			this.tabsReference = new Desktop.Skinning.SkinnedTabControl();
 			this.tabTags = new System.Windows.Forms.TabPage();
-			this.stripReference = new Desktop.Skinning.SkinnedTabStrip();
 			this.tabTargets = new System.Windows.Forms.TabPage();
+			this.stripReference = new Desktop.Skinning.SkinnedTabStrip();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -83,6 +82,7 @@
 			this.cboSkin.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
 			this.cboSkin.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboSkin.FormattingEnabled = true;
+			this.cboSkin.KeyMember = null;
 			this.cboSkin.Location = new System.Drawing.Point(145, 619);
 			this.cboSkin.Name = "cboSkin";
 			this.cboSkin.SelectedIndex = -1;
@@ -91,18 +91,6 @@
 			this.cboSkin.Sorted = false;
 			this.cboSkin.TabIndex = 19;
 			this.cboSkin.SelectedIndexChanged += new System.EventHandler(this.cboSkin_SelectedIndexChanged);
-			// 
-			// chkText
-			// 
-			this.chkText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.chkText.AutoSize = true;
-			this.chkText.Location = new System.Drawing.Point(172, 0);
-			this.chkText.Name = "chkText";
-			this.chkText.Size = new System.Drawing.Size(77, 17);
-			this.chkText.TabIndex = 20;
-			this.chkText.Text = "Show Text";
-			this.chkText.UseVisualStyleBackColor = true;
-			this.chkText.CheckedChanged += new System.EventHandler(this.chkText_CheckedChanged);
 			// 
 			// splitContainer1
 			// 
@@ -114,7 +102,6 @@
 			// splitContainer1.Panel1
 			// 
 			this.splitContainer1.Panel1.Controls.Add(this.cboSkin);
-			this.splitContainer1.Panel1.Controls.Add(this.chkText);
 			this.splitContainer1.Panel1.Controls.Add(this.cmdReference);
 			this.splitContainer1.Panel1.Controls.Add(this.lblLinesOfDialogue);
 			this.splitContainer1.Panel1.Controls.Add(this.lblSkin);
@@ -154,7 +141,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.picPortrait.Location = new System.Drawing.Point(0, 0);
 			this.picPortrait.Name = "picPortrait";
-			this.picPortrait.ShowTextBox = false;
 			this.picPortrait.Size = new System.Drawing.Size(251, 640);
 			this.picPortrait.TabIndex = 15;
 			this.picPortrait.TabStop = false;
@@ -183,13 +169,26 @@
 			this.tabTags.TabIndex = 0;
 			this.tabTags.Text = "Tags";
 			// 
+			// tabTargets
+			// 
+			this.tabTargets.BackColor = System.Drawing.Color.White;
+			this.tabTargets.ForeColor = System.Drawing.Color.Black;
+			this.tabTargets.Location = new System.Drawing.Point(4, 22);
+			this.tabTargets.Name = "tabTargets";
+			this.tabTargets.Size = new System.Drawing.Size(243, 140);
+			this.tabTargets.TabIndex = 1;
+			this.tabTargets.Text = "Targets";
+			// 
 			// stripReference
 			// 
+			this.stripReference.AddCaption = null;
+			this.stripReference.DecorationText = null;
 			this.stripReference.Dock = System.Windows.Forms.DockStyle.Top;
 			this.stripReference.Location = new System.Drawing.Point(0, 0);
 			this.stripReference.Margin = new System.Windows.Forms.Padding(0);
 			this.stripReference.Name = "stripReference";
 			this.stripReference.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.stripReference.ShowAddButton = false;
 			this.stripReference.ShowCloseButton = false;
 			this.stripReference.Size = new System.Drawing.Size(150, 23);
 			this.stripReference.StartMargin = 5;
@@ -199,13 +198,7 @@
 			this.stripReference.TabPadding = 20;
 			this.stripReference.TabSize = -1;
 			this.stripReference.TabType = Desktop.Skinning.SkinnedBackgroundType.Background;
-			this.stripReference.Vertical = false; this.tabTargets.BackColor = System.Drawing.Color.White;
-			this.tabTargets.ForeColor = System.Drawing.Color.Black;
-			this.tabTargets.Location = new System.Drawing.Point(4, 22);
-			this.tabTargets.Name = "tabTargets";
-			this.tabTargets.Size = new System.Drawing.Size(243, 140);
-			this.tabTargets.TabIndex = 1;
-			this.tabTargets.Text = "Targets";
+			this.stripReference.Vertical = false;
 			// 
 			// CharacterPreview
 			// 
@@ -230,7 +223,6 @@
 		private SPNATI_Character_Editor.Controls.CharacterImageBox picPortrait;
 		private Desktop.Skinning.SkinnedLabel lblSkin;
 		private Desktop.Skinning.SkinnedComboBox cboSkin;
-		private Desktop.Skinning.SkinnedCheckBox chkText;
 		private Desktop.Skinning.SkinnedButton cmdReference;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private Desktop.Skinning.SkinnedTabControl tabsReference;

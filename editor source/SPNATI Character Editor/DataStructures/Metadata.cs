@@ -14,13 +14,6 @@ namespace SPNATI_Character_Editor
 	[XmlRoot("opponent")]
 	public class Metadata : BindableObject, IHookSerialization
 	{
-		[XmlElement("enabled")]
-		public bool Enabled
-		{
-			get { return Get<bool>(); }
-			set { Set(value); }
-		}
-
 		[XmlElement("first")]
 		public string FirstName
 		{
@@ -188,10 +181,7 @@ namespace SPNATI_Character_Editor
 			FirstName = c.FirstName;
 			LastName = c.LastName;
 			Label = c.Label;
-			if (string.IsNullOrEmpty(Gender))
-			{
-				Gender = c.Gender;
-			}
+			Gender = c.Gender;
 			Layers = c.Layers;
 			Endings = c.Endings.ConvertAll(e => new EpilogueMeta
 			{

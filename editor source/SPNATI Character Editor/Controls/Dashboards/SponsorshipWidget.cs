@@ -41,6 +41,8 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			barUnique.Value = current.Targets.Count;
 			barSize.Maximum = requirements.SizeLimit;
 			barSize.Value = (decimal)fileSize;
+			barCollectibles.Maximum = TestRequirements.Instance.GetAllowedCollectibles(current.TotalLines);
+			barCollectibles.Value = _character.Collectibles.Count;
 			grpRequirements.Unshield();
 			yield break;
 		}

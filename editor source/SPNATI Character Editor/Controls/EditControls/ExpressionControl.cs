@@ -11,6 +11,7 @@ namespace SPNATI_Character_Editor
 	public partial class ExpressionControl : PropertyEditControl
 	{
 		private static Dictionary<List<string>, Type> _subControlTypes;
+		private Dictionary<Type, List<SubVariableAttribute>> _subControlAttributes;
 
 		private ExpressionTest _expression;
 		private string _currentVariable;
@@ -29,14 +30,6 @@ namespace SPNATI_Character_Editor
 				"~clothing.position~",
 				"~clothing.type~",
 				"~player~",
-				"~self.costume~",
-				"~self.slot~",
-				"~target.costume~",
-				"~target.gender~",
-				"~target.position~",
-				"~target.size~",
-				"~target.slot~",
-				"~weekday~",
 			});
 			foreach (BackgroundTag tag in Definitions.Instance.Get<BackgroundTag>())
 			{
@@ -50,11 +43,14 @@ namespace SPNATI_Character_Editor
 			if (_subControlTypes == null)
 			{
 				_subControlTypes = new Dictionary<List<string>, Type>();
+				_subControlAttributes = new Dictionary<Type, List<SubVariableAttribute>>();
 				foreach (Type type in this.GetType().Assembly.GetTypes())
 				{
 					foreach (SubVariableAttribute attrib in type.GetCustomAttributes<SubVariableAttribute>())
 					{
 						_subControlTypes[attrib.Variables] = type;
+						List<SubVariableAttribute> list = _subControlAttributes.GetOrAddDefault(type, () => new List<SubVariableAttribute>());
+						list.Add(attrib);
 					}
 				}
 			}
@@ -189,6 +185,13 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		private bool IsReservedVariable(string variable)
+		{
+			return variable == "month" || 
+				variable == "day" || 
+				variable == "weekday";
+		}
+
 		/// <summary>
 		/// Switches the entry field for a record select depending on what variable was added. Works in conjunction with speed buttons
 		/// </summary>
@@ -206,9 +209,14 @@ namespace SPNATI_Character_Editor
 					for (int i = 0; i < kvp.Key.Count; i++)
 					{
 						string variablePiece = kvp.Key[i];
+
 						if (variable.StartsWith("~" + variablePiece + "~") || variable.StartsWith("~" + variablePiece + "."))
 						{
-							variable = _expression.Expression = _expression.Expression.Insert(1, "self.");
+							variable =  _expression.Expression.Insert(1, "self.");
+							if (!IsReservedVariable(variablePiece))
+							{
+								_expression.Expression = variable;
+							}
 						}
 						if (variable.Contains("." + variablePiece))
 						{
@@ -434,17 +442,6 @@ namespace SPNATI_Character_Editor
 						cboValue.Items.AddRange(bkgNames.Values);
 					}
 					break;
-				case "~weekday~":
-					cboValue.Items.AddRange(new string[] {
-						"Sunday",
-						"Monday",
-						"Tuesday",
-						"Wednesday",
-						"Thursday",
-						"Friday",
-						"Saturday",
-					});
-					break;
 				case "~self.costume~":
 					cboValue.Items.Add("default");
 					if (character != null)
@@ -480,7 +477,8 @@ namespace SPNATI_Character_Editor
 				case "~target.costume~":
 					Case data = Data as Case;
 					cboValue.Items.Add("default");
-					if (!string.IsNullOrEmpty(data.Target))
+					string targetKey = data.GetTarget();
+					if (!string.IsNullOrEmpty(targetKey))
 					{
 						Character target = CharacterDatabase.Get(data.Target);
 						if (target != null)

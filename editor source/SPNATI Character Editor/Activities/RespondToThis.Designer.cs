@@ -124,7 +124,6 @@
 			this.imgSource.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.imgSource.Location = new System.Drawing.Point(0, 0);
 			this.imgSource.Name = "imgSource";
-			this.imgSource.ShowTextBox = false;
 			this.imgSource.Size = new System.Drawing.Size(314, 144);
 			this.imgSource.TabIndex = 0;
 			// 
@@ -175,7 +174,6 @@
 			this.imgResponse.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.imgResponse.Location = new System.Drawing.Point(0, 0);
 			this.imgResponse.Name = "imgResponse";
-			this.imgResponse.ShowTextBox = false;
 			this.imgResponse.Size = new System.Drawing.Size(315, 528);
 			this.imgResponse.TabIndex = 0;
 			// 

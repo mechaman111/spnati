@@ -53,7 +53,6 @@ namespace SPNATI_Character_Editor.Providers
 				CharacterDatabase.Add(c);
 
 				//Add to the listing under testing status
-				c.Metadata.Enabled = true;
 				Listing.Instance.Characters.Add(new Opponent(c.FolderName, OpponentStatus.Testing));
 				Serialization.ExportListing(Listing.Instance);
 			}

@@ -68,6 +68,8 @@
 			this.lblDragger = new System.Windows.Forms.Label();
 			this.treeScenes = new Desktop.CommonControls.DBTreeView();
 			this.openFileDialog = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
+			this.tsCollapse = new System.Windows.Forms.ToolStripButton();
+			this.tsExpandAll = new System.Windows.Forms.ToolStripButton();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -113,7 +115,9 @@
             this.tsPaste,
             this.tsDuplicate,
             this.toolStripSeparator7,
-            this.tsLock});
+            this.tsLock,
+            this.tsCollapse,
+            this.tsExpandAll});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(357, 25);
@@ -484,6 +488,26 @@
 			this.openFileDialog.IncludeOpponents = false;
 			this.openFileDialog.UseAbsolutePaths = false;
 			// 
+			// tsCollapse
+			// 
+			this.tsCollapse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsCollapse.Image = global::SPNATI_Character_Editor.Properties.Resources.CollapseAll;
+			this.tsCollapse.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsCollapse.Name = "tsCollapse";
+			this.tsCollapse.Size = new System.Drawing.Size(23, 22);
+			this.tsCollapse.Text = "Collapse all";
+			this.tsCollapse.Click += new System.EventHandler(this.tsCollapse_Click);
+			// 
+			// tsExpandAll
+			// 
+			this.tsExpandAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsExpandAll.Image = global::SPNATI_Character_Editor.Properties.Resources.ExpandAll;
+			this.tsExpandAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsExpandAll.Name = "tsExpandAll";
+			this.tsExpandAll.Size = new System.Drawing.Size(23, 20);
+			this.tsExpandAll.Text = "Expand all";
+			this.tsExpandAll.Click += new System.EventHandler(this.tsExpandAll_Click);
+			// 
 			// SceneTree
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -543,5 +567,7 @@
 		private CharacterImageDialog openFileDialog;
 		private System.Windows.Forms.ToolStripMenuItem jumpToSceneToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem userPromptToolStripMenuItem;
+		private System.Windows.Forms.ToolStripButton tsCollapse;
+		private System.Windows.Forms.ToolStripButton tsExpandAll;
 	}
 }

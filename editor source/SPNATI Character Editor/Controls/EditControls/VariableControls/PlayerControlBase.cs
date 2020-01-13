@@ -62,9 +62,10 @@ namespace SPNATI_Character_Editor
 			else if (targetType == "target")
 			{
 				Case dataCase = Data as Case;
-				if (!string.IsNullOrEmpty(dataCase.Target))
+				string target = dataCase.GetTarget();
+				if (!string.IsNullOrEmpty(target))
 				{
-					return CharacterDatabase.Get(dataCase.Target);
+					return CharacterDatabase.Get(target);
 				}
 			}
 			return CharacterDatabase.GetById(targetType);

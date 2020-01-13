@@ -1787,7 +1787,7 @@ namespace SPNATI_Character_Editor
 
 			if (!string.IsNullOrEmpty(Filter))
 			{
-				ExpressionTest test = new ExpressionTest("self.tag." +  Filter, "true");
+				ExpressionTest test = new ExpressionTest("self.tag." + Filter, "true");
 				other.Expressions.Add(test);
 			}
 		}
@@ -2748,6 +2748,35 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			return "";
+		}
+
+		/// <summary>
+		/// Gets this case's target
+		/// </summary>
+		/// <returns></returns>
+		public string GetTarget()
+		{
+			if (!string.IsNullOrEmpty(Target))
+			{
+				return Target;
+			}
+			foreach (TargetCondition test in Conditions)
+			{
+				if (test.Role == "target")
+				{
+					return test.Character;
+				}
+			}
+
+			foreach (Case alt in AlternativeConditions)
+			{
+				string target = alt.GetTarget();
+				if (!string.IsNullOrEmpty(target))
+				{
+					return target;
+				}
+			}
+			return null;
 		}
 	}
 

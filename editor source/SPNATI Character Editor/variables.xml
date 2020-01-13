@@ -20,7 +20,15 @@
     <function name="toPlural" description="Pluralizes the clothing name."/>
   </variable>
   <variable name="marker" description="Displays the value of a marker." global="true" useMarkers="true" />
-  <variable name="weekday" description="Displays the current day of the week." global="true" />
+  <variable name="weekday" description="Displays the current day of the week." global="true">
+    <function name="number" description="Day of the week as a number (1-7, with 1 being Monday and 7 Sunday)" />
+  </variable>
+  <variable name="month" description="Displays the name of the current month." global="true">
+    <function name="number" description="Displays the number of the current month (1-12)" />
+  </variable>
+  <variable name="day" description="Displays the current day of the month (e.g. 31st)" global="true">
+    <function name="number" description="Day of the month as a number (1-31)" />
+  </variable>
   <variable name="background" description="Displays the name of the background the player is using." global="true">
     <function name="location" description="Displays 'indoors' or 'outdoors' depending on which background is in play."/>
     <function name="time" description="Displays 'day' or 'night' depending on which background is in play."/>
@@ -28,6 +36,10 @@
   <variable name="target" description="Displays the target's name, same as ~name~.">
     <function name="costume" description="Expands to the ID of the current skin the target is using, or 'default' by default." />
     <function name="gender" description="Expands to male or female depending on the character's gender." />
+    <function name="ifMale" description="Displays text conditionally based on whether the target is male or not.">
+      <param name="true" description="Text when male (ex. his)."/>
+      <param name="false" description="Text when not male (ex. her)."/>
+    </function>
     <function name="position" description="Expands to left, right, or self based on the target's position on the screen relative to this character." />
     <function name="size" description="Expands to small, medium, or large based on the character's chest or penis size." />
     <function name="slot" description="Expands to 1, 2, 3, or 4 based on the target's position on screen, where 1 is leftmost and 4 is rightmost." />
@@ -54,4 +66,5 @@
       <param name="other" description="ID of the character to compare to." />
     </function>
   </variable>
+  <variable name="winner" description="Displays the name of the player who had the best hand of the most recent round (including this one)." global="true" />
 </variables>
