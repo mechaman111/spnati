@@ -27,8 +27,6 @@ namespace SPNATI_Character_Editor
 				"~cards~",
 				"~clothing~",
 				"~clothing.plural~",
-				"~clothing.position~",
-				"~clothing.type~",
 				"~player~",
 			});
 			foreach (BackgroundTag tag in Definitions.Instance.Get<BackgroundTag>())
@@ -189,7 +187,8 @@ namespace SPNATI_Character_Editor
 		{
 			return variable == "month" || 
 				variable == "day" || 
-				variable == "weekday";
+				variable == "weekday" ||
+				variable == "clothing";
 		}
 
 		/// <summary>
@@ -200,7 +199,7 @@ namespace SPNATI_Character_Editor
 			DestroySubControl();
 
 			string variable = expression.Expression;
-			if (!string.IsNullOrEmpty(variable) && !variable.StartsWith("~clothing"))
+			if (!string.IsNullOrEmpty(variable))
 			{
 				Type bestMatch = null;
 				int bestCount = 0;
@@ -393,29 +392,6 @@ namespace SPNATI_Character_Editor
 					break;
 				case "~clothing~":
 					cboValue.Items.AddRange(ClothingDatabase.Items.Values);
-					break;
-				case "~clothing.position~":
-					cboValue.Items.AddRange(new string[] {
-						"upper",
-						"lower",
-						"both",
-						"head",
-						"neck",
-						"hands",
-						"arms",
-						"feet",
-						"legs",
-						"waist",
-						"other",
-					});
-					break;
-				case "~clothing.type~":
-					cboValue.Items.AddRange(new string[] {
-						"extra",
-						"minor",
-						"major",
-						"important",
-					});
 					break;
 				case "~clothing.plural~":
 					cboValue.Items.AddRange(new string[] {

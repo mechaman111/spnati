@@ -35,6 +35,29 @@ namespace Desktop.CommonControls
 			}
 		}
 
+		public bool AllowsNew
+		{
+			get { return _cellTemplate.AllowsNew; }
+			set
+			{
+				_cellTemplate.AllowsNew = value;
+				if (DataGridView != null)
+				{
+					DataGridViewRowCollection rows = DataGridView.Rows;
+					for (int i = 0; i < rows.Count; i++)
+					{
+						DataGridViewRow row = rows.SharedRow(i);
+						RecordCell cell = row.Cells[Index] as RecordCell;
+						if (cell != null)
+						{
+							cell.AllowsNew = value;
+						}
+					}
+					DataGridView.InvalidateColumn(Index);
+				}
+			}
+		}
+
 		public override object Clone()
 		{
 			RecordColumn copy = base.Clone() as RecordColumn;

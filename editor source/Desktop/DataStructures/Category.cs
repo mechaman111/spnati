@@ -21,7 +21,7 @@
 			return Key.CompareTo(other.Key);
 		}
 
-		public string ToLookupString()
+		public virtual string ToLookupString()
 		{
 			return $"{Name} [{Key}]";
 		}

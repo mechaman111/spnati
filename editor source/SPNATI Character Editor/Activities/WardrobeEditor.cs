@@ -1,4 +1,6 @@
 ﻿using Desktop;
+using SPNATI_Character_Editor.Categories;
+using SPNATI_Character_Editor.DataStructures;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -17,9 +19,12 @@ namespace SPNATI_Character_Editor.Controls
 		public WardrobeEditor()
 		{
 			InitializeComponent();
-			ColType.Items.AddRange(new object[] { "extra", "minor", "major", "important"});
-			ColPosition.Items.AddRange(new object[] { "upper", "lower", "both", "head", "neck", "hands", "arms", "feet", "legs", "waist", "other"});
+			ColGeneric.RecordType = typeof(ClothingCategory);
+			ColType.RecordType = typeof(ClothingTypeCategory);
+			ColPosition.RecordType = typeof(ClothingPositionCategory);
 			ColPlural.TrueValue = true;
+			ColPosition.AllowsNew = true;
+			ColGeneric.AllowsNew = true;
 		}
 
 		public override string Caption
@@ -58,7 +63,7 @@ namespace SPNATI_Character_Editor.Controls
 				Clothing c = _wardrobe.GetClothing(i);
 				try
 				{
-					DataGridViewRow row = gridWardrobe.Rows[gridWardrobe.Rows.Add(c.GenericName, c.Name, c.Plural, c.Type, c.Position)];
+					DataGridViewRow row = gridWardrobe.Rows[gridWardrobe.Rows.Add(c.Name, c.GenericName, c.Plural, c.Type, c.Position)];
 					row.Tag = c;
 					if (_restrictions.HasFlag(WardrobeRestrictions.LayerTypes))
 					{
@@ -86,12 +91,12 @@ namespace SPNATI_Character_Editor.Controls
 		private void SaveLayer(int rowIndex)
 		{
 			DataGridViewRow row = gridWardrobe.Rows[rowIndex];
-			string name = row.Cells[1].Value?.ToString();
-			if (string.IsNullOrEmpty(name)) { return; }
-			string lowercase = row.Cells[1].Value?.ToString();
-			bool plural = row.Cells[2].Value != null ? (bool)row.Cells[2].Value : false;
-			string type = row.Cells[3].Value?.ToString();
-			string position = row.Cells[4].Value?.ToString();
+			string lowercase = row.Cells[nameof(ColLower)].Value?.ToString();
+			if (string.IsNullOrEmpty(lowercase)) { return; }
+			string name = row.Cells[nameof(ColGeneric)].Value?.ToString();
+			bool plural = row.Cells[nameof(ColPlural)].Value != null ? (bool)row.Cells[nameof(ColPlural)].Value : false;
+			string type = row.Cells[nameof(ColType)].Value?.ToString();
+			string position = row.Cells[nameof(ColPosition)].Value?.ToString();
 			Clothing layer = row.Tag as Clothing;
 			if (layer != null)
 			{

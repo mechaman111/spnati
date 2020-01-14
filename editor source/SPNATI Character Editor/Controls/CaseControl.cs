@@ -257,9 +257,9 @@ namespace SPNATI_Character_Editor.Controls
 			return gridDialogue.FindText(text, startIndex, args);
 		}
 
-		public void SelectTextInRow(int rowIndex, int startIndex, int length)
+		public void SelectTextInRow(int rowIndex, int startIndex, int length, bool selectMarker)
 		{
-			gridDialogue.SelectTextInRow(rowIndex, startIndex, length);
+			gridDialogue.SelectTextInRow(rowIndex, startIndex, length, selectMarker);
 		}
 
 		/// <summary>
@@ -495,6 +495,7 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					table.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
 					table.AddSpeedButton("Clothing", "Clothing Type", (data) => { return AddVariableTest("~clothing.type~", data); });
+					table.AddSpeedButton("Clothing", "Clothing Category", (data) => { return AddVariableTest("~clothing.generic~", data); });
 				}
 			}
 		}

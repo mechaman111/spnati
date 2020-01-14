@@ -151,13 +151,16 @@ namespace SPNATI_Character_Editor.Categories
 			{
 				string suffix = "th";
 				int mod = i % 10;
-				if (mod == 1) {
+				if (mod == 1)
+				{
 					suffix = "st";
 				}
-				else if (mod == 2) {
+				else if (mod == 2)
+				{
 					suffix = "nd";
 				}
-				else if (mod == 3) {
+				else if (mod == 3)
+				{
 					suffix = "th";
 				}
 				string key = $"{i}{suffix}";
@@ -192,6 +195,88 @@ namespace SPNATI_Character_Editor.Categories
 			}
 
 			return list.ToArray();
+		}
+	}
+
+	public class ClothingPositionCategory : Category
+	{
+		public ClothingPositionCategory(string key, string value) : base(key, value)
+		{
+		}
+
+		public override string ToLookupString()
+		{
+			return Key;
+		}
+	}
+
+	public class ClothingPositionProvider : CategoryProvider<ClothingPositionCategory>
+	{
+		public override string GetLookupCaption()
+		{
+			return "Choose a Position";
+		}
+
+		protected override ClothingPositionCategory[] GetCategoryValues()
+		{
+			return new ClothingPositionCategory[] {
+				new ClothingPositionCategory("upper", "upper"),
+				new ClothingPositionCategory("lower", "lower"),
+				new ClothingPositionCategory("both", "both"),
+				new ClothingPositionCategory("head", "head"),
+				new ClothingPositionCategory("neck", "neck"),
+				new ClothingPositionCategory("hands", "hands"),
+				new ClothingPositionCategory("arms", "arms"),
+				new ClothingPositionCategory("feet", "feet"),
+				new ClothingPositionCategory("legs", "legs"),
+				new ClothingPositionCategory("waist", "waist"),
+				new ClothingPositionCategory("other", "other"),
+				};
+		}
+
+		public override bool AllowsNew
+		{
+			get
+			{
+				return true;
+			}
+		}
+
+		public override IRecord Create(string key)
+		{
+			ClothingPositionCategory category = new ClothingPositionCategory(key, key);
+			Add(category);
+			return category;
+		}
+	}
+
+	public class ClothingTypeCategory : Category
+	{
+		public ClothingTypeCategory(string key, string value) : base(key, value)
+		{
+		}
+
+		public override string ToLookupString()
+		{
+			return Key;
+		}
+	}
+
+	public class ClothingTypeProvider : CategoryProvider<ClothingTypeCategory>
+	{
+		public override string GetLookupCaption()
+		{
+			return "Choose a Clothing Type";
+		}
+
+		protected override ClothingTypeCategory[] GetCategoryValues()
+		{
+			return new ClothingTypeCategory[] {
+				new ClothingTypeCategory("extra", "extra"),
+				new ClothingTypeCategory("minor", "minor"),
+				new ClothingTypeCategory("major", "major"),
+				new ClothingTypeCategory("important", "important"),
+				};
 		}
 	}
 }

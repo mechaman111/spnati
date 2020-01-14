@@ -46,6 +46,7 @@ namespace SPNATI_Character_Editor
 			cmdReplaceAll.Visible = replace;
 			lblReplace.Visible = replace;
 			txtReplace.Visible = replace;
+			chkMarkers.Visible = !replace;
 		}
 
 		public void RepeatKeyPress()
@@ -67,7 +68,8 @@ namespace SPNATI_Character_Editor
 			var args = new FindArgs(txtFind.Text)
 			{
 				MatchCase = chkMatchCase.Checked,
-				WholeWords = chkWholeWords.Checked
+				WholeWords = chkWholeWords.Checked,
+				SearchMarkers = chkMarkers.Checked && !_replaceMode,
 			};
 			Find?.Invoke(this, args);
 			if (!args.Success)
@@ -121,6 +123,18 @@ namespace SPNATI_Character_Editor
 			focusTimer.Enabled = false;
 			RestoreFocus?.Invoke(sender, new EventArgs());
 		}
+
+		private void chkMarkers_CheckedChanged(object sender, EventArgs e)
+		{
+			if (chkMarkers.Checked)
+			{
+				tabs.TabPages.Remove(tabReplace);
+			}
+			else
+			{
+				tabs.TabPages.Add(tabReplace);
+			}
+		}
 	}
 
 	public class FindArgs : EventArgs
@@ -149,6 +163,10 @@ namespace SPNATI_Character_Editor
 		/// True to find whole words only
 		/// </summary>
 		public bool WholeWords;
+		/// <summary>
+		/// True to search markers instead of text
+		/// </summary>
+		public bool SearchMarkers;
 
 		/// <summary>
 		/// Event handler sets this to indicate whether the find/replace operation was successful

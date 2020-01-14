@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SPNATI_Character_Editor.Categories;
+using SPNATI_Character_Editor.DataStructures;
 
 namespace SPNATI_Character_Editor.Controls.EditControls.VariableControls
 {
@@ -126,6 +127,63 @@ namespace SPNATI_Character_Editor.Controls.EditControls.VariableControls
 		public override void OnAddedToRow()
 		{
 			OnChangeLabel("Weekday");
+		}
+	}
+
+	[SubVariable("clothing", "position")]
+	public class ClothingPositionControl : GlobalCategoryControl
+	{
+		protected override Type GetCategoryType()
+		{
+			return typeof(ClothingPositionCategory);
+		}
+
+		protected override string GetVariable()
+		{
+			return "clothing.position";
+		}
+
+		public override void OnAddedToRow()
+		{
+			OnChangeLabel("Clothing (Position)");
+		}
+	}
+
+	[SubVariable("clothing", "type")]
+	public class ClothingTypeControl : GlobalCategoryControl
+	{
+		protected override Type GetCategoryType()
+		{
+			return typeof(ClothingTypeCategory);
+		}
+
+		protected override string GetVariable()
+		{
+			return "clothing.type";
+		}
+
+		public override void OnAddedToRow()
+		{
+			OnChangeLabel("Clothing (Type)");
+		}
+	}
+
+	[SubVariable("clothing", "generic")]
+	public class ClothingCategoryControl : GlobalCategoryControl
+	{
+		protected override Type GetCategoryType()
+		{
+			return typeof(ClothingCategory);
+		}
+
+		protected override string GetVariable()
+		{
+			return "clothing.generic";
+		}
+
+		public override void OnAddedToRow()
+		{
+			OnChangeLabel("Clothing (Category)");
 		}
 	}
 

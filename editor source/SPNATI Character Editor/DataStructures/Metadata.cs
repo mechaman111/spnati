@@ -14,6 +14,13 @@ namespace SPNATI_Character_Editor
 	[XmlRoot("opponent")]
 	public class Metadata : BindableObject, IHookSerialization
 	{
+		[XmlElement("enabled")]
+		public bool Enabled
+		{
+			get { return Get<bool>(); }
+			set { Set(value); }
+		}
+
 		[XmlElement("first")]
 		public string FirstName
 		{
