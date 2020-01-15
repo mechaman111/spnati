@@ -40,7 +40,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			InitializeComponent();
 
-			cboView.Items.AddRange(new string[] { "Stage", "Case", "Target" });
+			cboView.Items.AddRange(new string[] { "Stage", "Case", "Target", "Folder" });
 		}
 
 		private void DialogueTree_Load(object sender, EventArgs e)
@@ -53,6 +53,7 @@ namespace SPNATI_Character_Editor.Controls
 				lstDialogue.FormatRow += LstDialogue_FormatRow;
 				lstDialogue.FormatGroup += LstDialogue_FormatGroup;
 				lstDialogue.RightClick += LstDialogue_RightClick;
+				lstDialogue.MoveItem += LstDialogue_MoveItem;
 			}
 		}
 
@@ -76,6 +77,9 @@ namespace SPNATI_Character_Editor.Controls
 						break;
 					case 2:
 						_view = new TargetView();
+						break;
+					case 3:
+						_view = new FolderView();
 						break;
 					default:
 						_view = new StageView();
@@ -101,6 +105,7 @@ namespace SPNATI_Character_Editor.Controls
 			lstDialogue.DataSource = null;
 			lstDialogue.ClearColumns();
 			_view.Initialize(lstDialogue, _character);
+			lstDialogue.AllowRowReorder = _view.AllowReorder();
 		}
 
 		private void PopulateTriggerMenu()
@@ -446,6 +451,9 @@ namespace SPNATI_Character_Editor.Controls
 				case 2:
 					_view = new TargetView();
 					break;
+				case 3:
+					_view = new FolderView();
+					break;
 				default:
 					_view = new StageView();
 					break;
@@ -589,6 +597,13 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			lstDialogue.ExpandAll();
 		}
+
+
+		private void LstDialogue_MoveItem(object sender, AccordionListViewDragEventArgs e)
+		{
+			_view.MoveItem(e.Source, e.Target, e.Before);
+		}
+
 	}
 
 	public class CaseSelectionEventArgs : EventArgs

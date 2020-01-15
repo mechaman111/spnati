@@ -388,14 +388,16 @@ namespace SPNATI_Character_Editor
 			return text;
 		}
 
-		public void SetLabel(Case workingCase, string text, string colorCode, string folder)
+		public CaseLabel SetLabel(Case workingCase, string text, string colorCode, string folder)
 		{
 			if (string.IsNullOrEmpty(text) && (colorCode == null || colorCode == "0") && string.IsNullOrEmpty(folder))
 			{
 				_labels.Remove(workingCase.Id);
-				return;
+				return null;
 			}
+			CaseLabel oldLabel = GetLabel(workingCase);
 			AssignId(workingCase);
+
 			CaseLabel label = new CaseLabel()
 			{
 				Id = workingCase.Id,
@@ -403,12 +405,17 @@ namespace SPNATI_Character_Editor
 				Text = text,
 				Folder = folder,
 			};
+			if (oldLabel != null)
+			{
+				label.SortId = oldLabel.SortId;
+			}
 			_labels[workingCase.Id] = label;
 			if (!string.IsNullOrEmpty(folder))
 			{
 				_usedFolders.Add(folder);
 			}
 			workingCase.NotifyPropertyChanged(nameof(workingCase.Id));
+			return label;
 		}
 
 		public CaseLabel GetLabel(Case workingCase)
@@ -420,6 +427,52 @@ namespace SPNATI_Character_Editor
 			CaseLabel label = null;
 			_labels.TryGetValue(workingCase.Id, out label);
 			return label;
+		}
+
+		public CaseLabel SetSortId(Case workingCase, string folder, int sortId)
+		{
+			CaseLabel label = GetLabel(workingCase);
+			if (label == null)
+			{
+				if (folder == null)
+				{
+					return null;
+				}
+				label = SetLabel(workingCase, null, null, folder);
+			}
+			label.Folder = folder;
+			label.SortId = sortId;
+			return label;
+		}
+
+		public int GetSortId(Case workingCase)
+		{
+			CaseLabel label = GetLabel(workingCase);
+			if (label == null)
+			{
+				return 0;
+			}
+			return label.SortId;
+		}
+
+		public List<CaseLabel> GetCasesInFolder(string path)
+		{
+			int id = 2;
+			List<CaseLabel> list = new List<CaseLabel>();
+			foreach (CaseLabel l in _labels.Values)
+			{
+				if (l.Folder == path)
+				{
+					if (l.SortId == 0)
+					{
+						l.SortId = id;
+						id += 2;
+					}
+					list.Add(l);
+				}
+			}
+			list.Sort((l1, l2) => { return l1.SortId.CompareTo(l2.SortId); });
+			return list;
 		}
 	}
 

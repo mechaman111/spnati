@@ -207,19 +207,30 @@ namespace SPNATI_Character_Editor
 		public string GetGroupKey()
 		{
 			string key = "";
-			if (Mode == NodeMode.Stage)
+			switch (Mode)
 			{
-				key = Stage.Id.ToString();
+				case NodeMode.Stage:
+					key = Stage.Id.ToString();
+					break;
+				case NodeMode.Target:
+					key = TargetCharacter?.FolderName ?? "-";
+					break;
+				case NodeMode.Folder:
+					key = "-";
+					if (_editorData != null && Case.Id > 0)
+					{
+						CaseLabel label = _editorData.GetLabel(Case);
+						if (label != null && !string.IsNullOrEmpty(label.Folder))
+						{
+							key = label.Folder;
+						}
+					}
+					break;
+				default:
+					key = Case.Tag;
+					break;
 			}
-			else if (Mode == NodeMode.Target)
-			{
-				key = TargetCharacter?.FolderName ?? "-";
-			}
-			else
-			{
-				key = Case.Tag;
-			}
-			if (_editorData != null && Case.Id > 0)
+			if (Mode != NodeMode.Folder && _editorData != null && Case.Id > 0)
 			{
 				CaseLabel label = _editorData.GetLabel(Case);
 				if (label != null && !string.IsNullOrEmpty(label.Folder))
@@ -280,6 +291,7 @@ namespace SPNATI_Character_Editor
 		Case,
 		Stage,
 		Target,
+		Folder,
 	}
 
 	public enum NodeType

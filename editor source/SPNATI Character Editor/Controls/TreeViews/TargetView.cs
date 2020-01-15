@@ -520,5 +520,15 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			return key1.CompareTo(key2);
 		}
+
+		public bool AllowReorder()
+		{
+			return false;
+		}
+
+		public void MoveItem(object source, object target, bool before)
+		{
+
+		}
 	}
 }
