@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.3 at 1:52:48 PM on December 03, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 4:00:51 PM on January 15, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.3</version>
+    <version>v5.4</version>
     <first>Ami</first>
     <last>Kawashima</last>
     <label>Ami</label>
@@ -52,8 +52,6 @@
         <trigger id="selected">
             <case stage="0">
                 <state img="#-happytoplay.png">Oh, I like strip poker. I'll play!</state>
-            </case>
-            <case stage="0">
                 <state img="#-calm.png">So we'll be playing strip poker... I hope we have fun.</state>
             </case>
         </trigger>
@@ -71,9 +69,6 @@
                 <state img="#-happy.png">Let's go for it!</state>
                 <state img="#-happytostrip.png">Just so you know, I'm a student model. But I might not be a model student.</state>
                 <state img="#-happy.png">Don't ask me to do weird things for you. You know how my gorgeousness attracts attention.</state>
-            </case>
-            <case stage="0">
-                <state img="#-calm.png">So we'll be playing strip poker... I hope we have fun.</state>
             </case>
         </trigger>
 
@@ -214,10 +209,12 @@
         </trigger>
 
         <trigger id="hand">
-            <case stage="0" alsoPlaying="kyu" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="kyu" />
                 <state img="#-shocked.png" marker="ami_kyu_slutty_fairies">Oh, I'm sorry. Were we &lt;i&gt;all&lt;/i&gt; meant to dress up as slutty fairies?</state>
             </case>
-            <case stage="0" alsoPlaying="streaming-chan" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="streaming-chan" />
                 <state img="#-embarrassed.png">Is that a camera? I've had some obsessive fans, so I'll need you to blur out my face.</state>
             </case>
             <case stage="5-7" oneShotId="1" priority="0">
@@ -329,11 +326,13 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="6" priority="65">
+                <condition role="self" consecutiveLosses="3-6" />
+                <condition count="1" status="exposed" />
+                <state img="#-angry.png">Why did I agree to this? Talk about a stupid idea.</state>
+            </case>
             <case stage="4" consecutiveLosses="2-4" totalExposed="0">
                 <state img="#-embarrassed.png">You just caught me off guard. It won't happen again.</state>
-            </case>
-            <case stage="6" consecutiveLosses="3-6" totalExposed="1">
-                <state img="#-angry.png">Why did I agree to this? Talk about a stupid idea.</state>
             </case>
             <case stage="1">
                 <state img="#-stripped.png">The uniform socks are cute, aren't they?</state>
@@ -347,7 +346,7 @@
             <case stage="4">
                 <state img="#-stripped.png">See, is it cute?</state>
             </case>
-            <case stage="5">
+            <case stage="5" id="1">
                 <state img="#-stripped.png" marker="ever_seen_a_model">Ever seen a model in only her underwear?</state>
             </case>
             <case stage="6">
@@ -1932,7 +1931,7 @@
                 <state img="#-calm.png">I can be patient.</state>
                 <state img="#-calm.png">Don't feel safe. Not everything goes to plan.</state>
             </case>
-            <case stage="9">
+            <case stage="9" oneShotId="2">
                 <state img="#-shocked.png" marker="ami_finished_2">S-sorry you guys had to see me like that, haha...</state>
             </case>
         </trigger>
