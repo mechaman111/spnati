@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 3:32:10 PM on January 12, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 8:19:41 PM on January 15, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Yuelia</first>
@@ -686,10 +686,6 @@
                 <state img="#-thinking.png" marker="meia_laserAsk">Why? What would happen if it did malfunction, Meia?</state>
                 <state img="#-nervous.png" marker="meia_laserAsk">And, uh... if it did malfunction, Meia, what would happen?</state>
             </case>
-            <case stage="0-8" id="40" alsoPlaying="brock" totalRounds="3-">
-                <state img="#-thinking.png">You mean in a fight, Brock? I usually just use my magic.</state>
-                <state img="#-thinking.png">Well, I don't use any weapons, Brock. I just use my magic.</state>
-            </case>
             <case stage="4">
                 <condition role="self" timeInStage="0" />
                 <condition role="other" character="amy" sayingMarker="amy_yuelia_lightvdark" />
@@ -751,6 +747,11 @@
             <case stage="5-10" priority="102">
                 <condition role="other" character="amy" sayingMarker="amy_sexual_healing==3" />
                 <state img="#-beaming.png" marker="amy_careAll">That was beautifully, Amy! Yes! I love caring for people in any way that I can!</state>
+            </case>
+            <case stage="0-8" id="40">
+                <condition role="other" character="brock" sayingMarker="brock_prompt_weapon" />
+                <state img="#-thinking.png">You mean in a fight, Brock? I usually just use my magic.</state>
+                <state img="#-thinking.png">Well, I don't use any weapons, Brock. I just use my magic.</state>
             </case>
             <case stage="0-8" oneShotId="34">
                 <condition role="other" character="dust" saidMarker="ahrahwho" />
@@ -904,13 +905,49 @@
                 <condition role="other" character="jessie" saidMarker="YueliaPromptOlivia" />
                 <state img="#-crying.png" marker="jessie_olivia1">W-what? What happened to your daughter, Jessie?</state>
             </case>
-            <case stage="0-8" oneShotId="80">
+            <case stage="1-8" oneShotId="80">
                 <condition role="other" character="tomoko" saidMarker="flutter_cutecat" />
                 <state img="#-thinking.png" marker="tomoko_fern1">You said that you usually see a cat on your way home, Tomoko? Even if it's not yours, do you still have a name for it?</state>
             </case>
             <case stage="0" oneShotId="81">
                 <condition role="other" character="tomoko" saidMarker="flutter_brother" />
                 <state img="#-content.png" marker="tomoko_noelia1">You said something about a brother, Tomoko? That's cute. It reminds me of me and my sister.</state>
+            </case>
+            <case stage="1-8" oneShotId="82">
+                <condition role="other" character="tomoko" saidMarker="flutter_style" />
+                <state img="#-thinking.png" marker="tomoko_fizz1">Hey, Tomo? Earlier you said your friends sometimes help you dress up? How does that usually go for you?</state>
+            </case>
+            <case stage="1-8" oneShotId="83">
+                <condition role="other" character="tomoko" saidMarker="flutter_yoshida" />
+                <state img="#-content.png" marker="tomoko_odin1">Tomoko? You mentioned a friend named Yoshido earlier. How did the two of you get to know each other?</state>
+            </case>
+            <case stage="1-8" oneShotId="85">
+                <condition role="other" character="tomoko" saidMarker="flutter_megumi" />
+                <state img="#-content.png" marker="tomoko_damien1">So, Tomoko. You mentioned earlier that you had a friend named Megumi who really helped you out. What exactly did she do?</state>
+            </case>
+            <case stage="1-8" oneShotId="86">
+                <condition role="other" character="brock" saidMarker="brock_yuelia_nita" />
+                <state img="#-thinking.png" marker="brock_nitaBear">Hey, Brock? Earlier you said something about a girl named Nita and... a bear? What did you mean by that?</state>
+            </case>
+            <case stage="1-8" oneShotId="87">
+                <condition role="other" character="brock" saidMarker="brock_yuelia_tara" />
+                <state img="#-thinking.png" marker="brock_taraRobes">Hey, Brock? Earlier you said something about someone named Tara. Something about seeing under their robes. Could you explain that a little more?</state>
+            </case>
+            <case stage="1-8" oneShotId="88">
+                <condition role="other" character="brock" saidMarker="brock_yuelia_tara" />
+                <state img="#-confused.png" marker="brock_tickHead">Brock? What were you talking about earlier when you mentioned someone with a &lt;i&gt;detachable head&lt;/i&gt;?</state>
+            </case>
+            <case stage="1-8" oneShotId="89">
+                <condition role="other" character="meia" saidMarker="yuelia_duglas" />
+                <state img="#-confused.png" marker="meia_duglas1">Wait, I thought you didn't know any men, Meia.</state>
+            </case>
+            <case stage="1-8" oneShotId="90">
+                <condition role="other" character="meia" saidMarker="yuelia_flamel" />
+                <state img="#-confused.png" marker="meia_flamel1">Man? I thought you hated men, Meia.</state>
+            </case>
+            <case stage="1-8" oneShotId="91">
+                <condition role="other" character="meia" saidMarker="yuelia_jinx" />
+                <state img="#-thinking.png" marker="meia_jinx1">Hey, Meia? With that thing you said before about men, do you ever wonder if anything else you were taught was a lie?</state>
             </case>
         </trigger>
 
@@ -2190,11 +2227,6 @@
                 <state img="#-nervous.png" marker="saki_down">Uh, Saki? Is everything okay? You sound kinda down.</state>
             </case>
             <case stage="0-10">
-                <condition role="target" character="saki" stage="1" />
-                <state img="#-content.png" marker="saki_dontBeFrightened">Are you frightened, Saki? Don't be. Everything will be fine.</state>
-                <state img="#-content.png" marker="saki_okay">You don't have to be afraid, Saki. Everything is okay.</state>
-            </case>
-            <case stage="0-10">
                 <condition role="target" character="mavis" stage="0" />
                 <state img="#-beaming.png" marker="mavis_optimistic">I really like how optimistic you're being, Mavis! It makes the game so much more fun!</state>
                 <state img="#-beaming.png" marker="mavis_homeClothes">What an interesting set of clothes. Are clothes like that common where you live Mavis?</state>
@@ -2314,6 +2346,30 @@
             <case stage="0-10">
                 <condition role="target" character="emi" stage="3" />
                 <state img="#-thinking.png" marker="emi_feelWeird">So, you said that your legs are some sort of replacements, right Emi? Does that feel weird at all?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="gaige" stage="0" />
+                <state img="#-curious.png" marker="gaige_smart">So, you're Gaige? You seem like a really smart person! All those tools and the way you talk...</state>
+                <state img="#-curious.png" marker="gaige_beltSkull">Hey, Gaige? What's that kull symbol on your belt? Does it mean something?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="gaige" stage="1" />
+                <state img="#-curious.png" marker="gaige_bandage">Gaige? Why do you have that bandage on your face? Did you hurt yourself?</state>
+                <state img="#-thinking.png" marker="gaige_metalArm">Hey, Gaige? Is your arm... made of metal? How did you even do that?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="gaige" stage="2" />
+                <state img="#-curious.png" marker="gaige_necklaceBits">I was wondering, Gaige, what're those little bits on that necklace you're wearing?</state>
+                <state img="#-curious.png" marker="gaige_wardrobe">So, Gaige? How dod you decide on what to wear? Because what you're wearing now seems like just a mix of everything.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="gaige" stage="3" />
+                <state img="#-neutral.png" marker="gaige_goggles">So Gaige, why do you wear those goggles? They remind me of a pilot's goggles.</state>
+                <state img="#-neutral.png" marker="gaige_machines">You seem to know alot about machines and stuff, Gaige. How did you get interested in them?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="gaige" stage="5" />
+                <state img="#-thinking.png" marker="gaige_cold">Hey Gaige? Why do you still have your stockings on? Are you sensitive to the cold?</state>
             </case>
             <case stage="0-10" priority="360">
                 <condition role="target" character="kizuna" consecutiveLosses="2" />
@@ -2716,6 +2772,11 @@
                 <state img="#-confused.png" marker="larachel_whatHappened">What happened to your wand, L'Arachel? </state>
                 <state img="#-confused.png" marker="larachel_stamina">Did you run out of magic, L'Arachel? Are you low on stamina?</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="saki" stage="0" />
+                <state img="#-thinking.png">I guess I know a few people like that, Saki.</state>
+                <state img="#-confused.png">Well, yes, I guess. You don't look angry though.</state>
+            </case>
             <case stage="0">
                 <state img="#-beaming.png">What ~clothing.ifPlural(interesting|an interesting)~ ~clothing~, ~name~. I like ~clothing.ifPlural(them!|it!)~</state>
                 <state img="#-beaming.png">You have some very nice accessories, ~name~.</state>
@@ -2901,6 +2962,11 @@
                 <condition role="target" character="miko" stage="2" />
                 <state img="#-content.png">I see. That's very kind of you, Tojiko.</state>
                 <state img="#-content.png">Ah. That makes sense. Thank you for that, Tojiko.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="saki" stage="1" />
+                <state img="#-curious.png">Okay, but even if you're not actually uninterested, you don't seem like you're happy either, Saki.</state>
+                <state img="#-curious.png">So... you're not actually uninterested or about to cry, Saki? But, are you happy?</state>
             </case>
             <case stage="0-10">
                 <condition role="other" character="dust" stage="0-7" sayingMarker="cassius_talked==1" />
