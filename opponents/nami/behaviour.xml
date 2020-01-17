@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.3 at 12:34:58  on diciembre 12, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 9:51:31  on enero 16, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.3</version>
+    <version>v5.4</version>
     <first>Nami</first>
     <last />
     <label>Nami</label>
@@ -2174,8 +2174,9 @@
                 <state img="#-calm.png">I prefer games that depend less on luck, but I still think I can manage.</state>
                 <state img="#-greedy.png">This game is my chance to win a lot of money. I can't let it slip away!</state>
                 <state img="#-thinking.png">Considering how good these cards are, I'd say my chances of losing are about...</state>
-                <state img="#-smiling.png">I'm ready. Do you best!</state>
+                <state img="#-smiling.png">I'm ready. Do your best!</state>
                 <state img="#-calm.png">I still can lose with these cards, but I'd say I have a nice shot.</state>
+                <state img="#-smug.png">Not the best hand... Or is it? That's up to you to figure out.</state>
             </case>
             <case stage="3">
                 <state img="#-serious.png">Everyone's weak when they hesitate.</state>
@@ -2215,6 +2216,10 @@
             <case stage="4-6" oneShotId="260">
                 <test expr="~background~" value="armory" />
                 <state img="#-sad.png">I'm worried. I'm considering picking up one of those swords behind me and slashing my way out of here. No, I wouldn't make it far anyway...</state>
+            </case>
+            <case stage="4-6" oneShotId="288">
+                <test expr="~background~" value="roof" />
+                <state img="#-furious.png">Gaaah, I'm gonna throw someone off this roof! I'm not kidding!</state>
             </case>
             <case stage="0">
                 <state img="#-sad.png">&lt;i&gt;Sigh&lt;/i&gt;... I should've known better than to swap those cards.</state>
@@ -2275,6 +2280,11 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0" oneShotId="286" priority="999">
+                <condition role="other" character="nami" />
+                <state img="#-shocked.png">That's me! What the hell is going on here?</state>
+                <state img="#-shocked.png">Is that a mirror? It's not! What the hell?!</state>
+            </case>
             <case stage="0-6" id="94">
                 <condition role="other" character="aella" stage="0-1" sayingMarker="AellaAdventures" />
                 <alternative alsoPlaying="aella" alsoPlayingStage="0-1" totalRounds="2">
@@ -2370,6 +2380,11 @@
                 <condition role="other" character="yuelia" stage="0" />
                 <state img="#-shocked.png">Did that butterfly just talk?</state>
             </case>
+            <case stage="0-6" id="135">
+                <condition count="5" status="alive" />
+                <condition role="other" character="maki" stage="0-4" sayingMarker="makifood" />
+                <state img="#-smiling.png" marker="tangerines">I like tangerines. How about you? If you don't, that's only because you haven't tasted mine yet.</state>
+            </case>
             <case stage="6" priority="145">
                 <condition role="other" character="human" stage="0" />
                 <condition count="2" status="alive" />
@@ -2395,6 +2410,26 @@
             <case stage="0-6" priority="142">
                 <condition role="other" character="croix" stage="0-1" saidMarker="nefarious" sayingMarker="cube_explanation" />
                 <state img="#-annoyed.png">Magi... what? Yeah, that doesn't sound suspicious at all.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="self" saidMarker="pirate" />
+                <condition role="other" character="tomoko" stage="3-6" sayingMarker="nami_steal" />
+                <state img="#-smiling.png">Hey, don't worry. I'm not a monster. And you don't seem... that bad.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="self" saidMarker="pirate" />
+                <condition role="other" character="tomoko" stage="3-6" sayingMarker="nami_blackbeard" />
+                <state img="#-serious.png">I have, though I didn't know who he was at the time. But I do know he's dangerous.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="self" saidMarker="pirate" />
+                <condition role="other" character="tomoko" stage="3-6" sayingMarker="nami_animals" />
+                <state img="#-calm.png">No... Well, there's Chopper, who is a reindeer. But he's our doctor, not our pet, so I guess it doesn't count.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="self" saidMarker="pirate" />
+                <condition role="other" character="tomoko" stage="3-6" sayingMarker="nami_erogepirate" />
+                <state img="#-sad.png">What's an eroge? Wait, I'm not sure if I want to know...</state>
             </case>
             <case stage="0-6" id="84">
                 <condition role="other" character="jessie" stage="0-2" sayingMarker="JessieQA_DarkSecrets" />
@@ -2451,6 +2486,11 @@
                 <condition role="other" character="franziska" timeInStage="3-" sayingMarker="wherearewe=1" notSaidMarker="wherearewe" />
                 <state img="#-thinking.png">Los Angeles? Japan? I've never heard of either of those places.</state>
             </case>
+            <case stage="0-6" id="126" totalRounds="7" priority="117">
+                <condition count="4-5" status="alive" />
+                <condition role="other" character="mary" sayingMarker="mfk" notSaidMarker="insanetrigger" />
+                <state img="#-embarrassed.png">Well, I don't wanna kill anyone. And I'm too young to get married. As for the other stuff...</state>
+            </case>
             <case stage="0-6" id="64">
                 <condition count="0" filter="futaba" />
                 <condition role="other" character="revy" sayingMarker="music" />
@@ -2460,6 +2500,10 @@
                 <condition filter="adventurer" role="other" />
                 <condition role="other" character="rainbow_dash" sayingMarker="adventurer_what_do" />
                 <state img="#-thinking.png">Relics? No... Well, sometimes. We sail to new islands, explore places, make friends, fight enemies... Boy, my life sounds pretty crazy when I explain it.</state>
+            </case>
+            <case stage="0-6" id="131" oneShotId="295" totalRounds="3-">
+                <condition role="other" character="brock" sayingMarker="brock_prompt_weapon" />
+                <state img="#-calm.png" marker="brock_weapon">Weapon? My Clima-Tact, of course. Nobody can use it better than me, because it's one of a kind.</state>
             </case>
             <case stage="3-6" alsoPlaying="mae" timeInStage="0" saidMarker="pirate" alsoPlayingSayingMarker="nami_offer">
                 <state img="#-thinking.png">You wanna become a pirate, Mae? Okay... I guess I could tell you what it's like. Even though you don't look very strong, I don't want to put you on a dangerous path.</state>
@@ -2482,6 +2526,16 @@
                 <test expr="~self.costume~" value="nostalgia_nami" />
                 <state img="#-smiling.png">Too bad I'm not wearing a swimsuit, the pool looks so tempting. Either way, I have to finish the game first.</state>
                 <state img="#-smiling.png">Can't wait to win this game, and then take a swim in the pool to relax. I'll have to put on my swimsuit first, though.</state>
+            </case>
+            <case stage="3">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="amy" />
+                <state img="#-thinking.png">Seriously? And I thought I was passing unnoticed.</state>
+            </case>
+            <case stage="4">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="amy" />
+                <state img="#-seductive.png">Hahaha, I don't know, Amy. I suppose some of us care about the way we look in any situation. And thank you ♡</state>
             </case>
             <case stage="0-6" id="65" alsoPlaying="jura" totalFemales="3-4" alsoPlayingSayingMarker="seduction">
                 <state img="#-smug.png" marker="jura_seduction_males">Pfff, men are easy to seduce, Jura. I don't see why a beautiful woman like you would have a hard time with that. The hard part is stopping them from trying to spy on you in the shower. I would like tips for that.</state>
@@ -2558,6 +2612,10 @@
                 <condition role="other" character="cynthia" sayingMarker="CynthiaLucarioSmash" />
                 <state img="#-thinking.png" marker="cynthia_lucario">What's a Lucario? Is it your pet or something?</state>
             </case>
+            <case stage="0-6" id="125">
+                <condition role="other" character="mary" sayingMarker="MaiChan" />
+                <state img="#-thinking.png">Manga? What's that? Sounds more like a fruit than a book.</state>
+            </case>
             <case stage="0-6" oneShotId="280">
                 <test expr="~background~" value="poolside" />
                 <test expr="~self.costume~" value="nostalgia_nami" />
@@ -2569,6 +2627,14 @@
                 <test expr="~self.costume~" value="default" />
                 <state img="#-serious.png">I hope nobody pushes me into the pool. At least until I've taken off my jeans.</state>
                 <state img="#-smiling.png">Even if this place is shady, at least the water in the pool seems clean.</state>
+            </case>
+            <case stage="0-6" oneShotId="302">
+                <condition count="1-5" role="opp" var="leader" />
+                <test expr="~leader.lead~" cmp="&gt;" value="0" />
+                <test expr="~self.place~" cmp="&gt;" value="1" />
+                <state img="#-smug.png">I can tell you're the biggest threat in this game, ~leader~. I'll try my hardest to bring you down.</state>
+                <state img="#-smug.png">Don't get too cocky, ~leader~. I can tell you're the favorite to win the game, so I'm coming for you next.</state>
+                <state img="#-smug.png">How are your cards, ~leader~? Don't think you'll be able to keep the lead for much longer. I'll focus all my attention on you.</state>
             </case>
             <case stage="0" oneShotId="130">
                 <alternative hasHand="High Card" timeInStage="2-" saidMarker="target2" notSaidMarker="target2naked">
@@ -2771,6 +2837,20 @@
                 <state img="#-shocked.png">Ahhhhhh! A spider fell on my back! Oh, no. It was nothing. I hate this forest...</state>
                 <state img="#-shocked.png">D-did a ghost pass behind me? Why does this forest has to be haunted? Couldn't we play in a regular forest? In daylight?</state>
             </case>
+            <case stage="0-6" oneShotId="289" totalRounds="6-">
+                <test expr="~background.dark~" cmp="!=" value="true" />
+                <state img="#-serious.png">Can I get some more light over here, please? I'm having trouble seeing my cards.</state>
+                <state img="#-serious.png">Is it just me, or is it a little dark in here? How do they expect us to see our cards... or each others faces so we know who's bluffing.</state>
+            </case>
+            <case stage="0-6" oneShotId="290" totalRounds="4-">
+                <test expr="~background.temperature~" value="hot" />
+                <state img="#-happy.png">If I'd brought more clothes, I'd be feeling too hot in here. Who's the inappropriately dressed one now, huh?</state>
+            </case>
+            <case stage="0-6" oneShotId="291" totalRounds="4-">
+                <test expr="~background.temperature~" value="cold" />
+                <state img="#-sad.png">I would've brought a jacket if I'd known it was gonna be so cold in here. And because it would've help me in the game.</state>
+                <state img="#-sad.png">Why didn't I bring a jacket? I'm the one that's always supposed to pay attention the weather, what the hell was I thinking?</state>
+            </case>
             <case stage="6" id="51" oneShotId="242">
                 <condition role="self" timeInStage="0-" notSaidMarker="butt1" />
                 <test expr="~human.stage~" cmp="&gt;=" value="1" />
@@ -2865,6 +2945,12 @@
                 <condition count="3-" filter="student" />
                 <state img="#-smiling.png">Hey, it's me and three students. It's like I'm your teacher, heheh...</state>
             </case>
+            <case stage="0" oneShotId="79" totalRounds="5-">
+                <condition count="1" gender="female" />
+                <state img="#-serious.png">So I'm the only girl here? Is that supposed to scare me? I'll show what's really scary.</state>
+                <state img="#-smug.png">If I can handle a bunch of guys in a fight, I can do it in poker.</state>
+                <state img="#-serious.png">Don't think I'm gonna be the only naked girl in a room full of guys, that's not gonna happen.</state>
+            </case>
             <case stage="0-6" totalRounds="1-">
                 <condition role="self" notSaidMarker="presentation" />
                 <state img="#-calm.png" marker="presentation">Oh, sorry for not introducing myself earlier. I'm Nami. I'm just a regular girl who loves poker. Oh, and I'm a navigator.</state>
@@ -2878,6 +2964,10 @@
             <case stage="0-6" oneShotId="77" totalRounds="28-">
                 <state img="#-annoyed.png">Are these games always this long? I need to finish it fast so I can return to the ship. My crew mates are hopeless without me.</state>
                 <state img="#-sad.png">Luffy and the others are probably wondering why I'm not back yet...</state>
+            </case>
+            <case stage="0-6" oneShotId="287">
+                <condition count="2-4" filter="ddlc" />
+                <state img="#-thinking.png">So you guys are from the same school? That must be awkward. Or not, I don't really know you.</state>
             </case>
             <case stage="4-6" oneShotId="74">
                 <condition role="self" timeInStage="0-" notSaidMarker="tattoo" />
@@ -2961,12 +3051,6 @@
             <case stage="6" oneShotId="87" timeInStage="7-">
                 <state img="#-embarrassed.png">One more loss and it's over, one more loss and it's over... As long as I keep telling myself that, I shouldn't lose.</state>
                 <state img="#-serious.png">I wish I'd had this winning streak when I still had some clothes on. Well, I shouldn't be ungrateful...</state>
-            </case>
-            <case stage="0" oneShotId="79">
-                <condition count="1" gender="female" />
-                <state img="#-serious.png">So I'm the only girl here? Is that supposed to scare me? I'll show what's really scary.</state>
-                <state img="#-smug.png">If I can handle a bunch of guys in a fight, I can do it in poker.</state>
-                <state img="#-serious.png">Don't think I'm gonna be the only naked girl in a room full of guys, that's not gonna happen.</state>
             </case>
             <case stage="0" oneShotId="78" totalMales="0">
                 <state img="#-calm.png">No men, huh? I'd expect this to be the kind of activity that would appeal to them, but I guess they're too chicken to come.</state>
@@ -3112,6 +3196,18 @@
             <case stage="3">
                 <condition role="other" character="aella" />
                 <state img="#-smiling.png">Me? Steal? Come on, I don't think it'll come to that.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="amy" />
+                <state img="#-annoyed.png">Nonsense? Are you calling me a liar?</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="amy" />
+                <state img="#-smiling.png">Oh, lots of them. Enough that I don't need to make up any stories, at least.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="amy" />
+                <state img="#-shocked.png">Stop talking about spiders, they freak me out! Yes, I've seen all of those type of things and more. And no, they were no cute and cuddly...</state>
             </case>
             <case stage="0" oneShotId="27" saidMarker="manipulation1" priority="99">
                 <state img="#-sad.png" marker="manipulation1end">Gah, I have no idea why I thought that would work.</state>
@@ -3443,6 +3539,18 @@
                 <condition role="other" character="jessie" />
                 <state img="#-stripping.png">I know, you don't have to remind me.</state>
             </case>
+            <case stage="1">
+                <condition role="other" character="amy" />
+                <state img="#-stripping.png">Jack Sparrow? Never heard of him. No, the Log Pose follows the islands magnetic field. It's pure science.</state>
+            </case>
+            <case stage="2" id="124">
+                <condition role="other" character="amy" />
+                <state img="custom:#-stripping">Like this one time, a spider was crawling on my... Oops, what did I drop,,,?</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="amy" />
+                <state img="#-stripping.png">So you accuse me of stealing while talking about spiders? Talk about rude.</state>
+            </case>
             <case stage="2" id="102">
                 <test expr="~self.costume~" value="nostalgia_nami" />
                 <state img="custom:#-stripping">I'll remove my sandals carefully. I don't wanna show more than... whoops.</state>
@@ -3496,7 +3604,7 @@
             <case stage="5">
                 <state img="#-stripping.png">&lt;i&gt;Sigh&lt;/i&gt;... Why me? At least there's nobody here who knows me.</state>
                 <state img="#-stripping.png">I won't forgive you all for putting me in this position.</state>
-                <state img="#-stripping.png">If I'm doing this because I want to win the prize, does it mean I'm stripping for money? I better don't think about it.</state>
+                <state img="#-stripping.png">If I'm doing this because I want to win the prize, does it mean I'm stripping for money? It's better if I don't think about it.</state>
             </case>
         </trigger>
 
@@ -3512,6 +3620,10 @@
                 <condition role="self" sayingMarker="pirate" />
                 <condition role="other" character="starfire" />
                 <state img="#-stripped.png" marker="pirate">Calm down, Starfire! I'm not a dangerous criminal...</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="panty" sayingMarker="panty_nami_tips" />
+                <state img="#-serious.png">I better leave my Clima-Tact all the way over there... As far away from Panty as possible.</state>
             </case>
             <case stage="1" alsoPlaying="akko">
                 <state img="#-stripped.png">Oh, you mean that stuff you're carrying is a weapon like my Clima-Tact? I'd love to examine it!</state>
@@ -3595,6 +3707,10 @@
                 <condition role="other" character="estelle" />
                 <state img="#-stripped.png">That's a long list, Estelle. But I guess I can do it if you want to see.</state>
             </case>
+            <case stage="2">
+                <condition role="other" character="amy" />
+                <state img="#-smiling.png">I get what you mean. Good thing there's no such artifact, though it probably would make my job as navigator a lot easier.</state>
+            </case>
             <case stage="4">
                 <test expr="~self.costume~" value="nostalgia_nami" />
                 <state img="#-stripped.png" marker="tangerine_panties">These are my panties... They have a design with little tangerines. So what? I thought they were cute.</state>
@@ -3606,6 +3722,11 @@
                 <state img="#-stripped.png">I swear, I should make you all pay me for seeing me like this.</state>
                 <state img="#-stripped.png">I know I'm cute, but you don't have to stare &lt;i&gt;that&lt;/i&gt; much.</state>
                 <state img="#-stripped.png">Seeing me like this will cost you... 100.000 beli each. Yeah, that sounds right. Now I feel better, heheh.</state>
+            </case>
+            <case stage="5">
+                <condition count="1" status="exposed" />
+                <state img="#-stripped.png">I'm the first one exposed? This is just great... I mean, it's not! I was being sarcastic.</state>
+                <state img="#-stripped.png">Just awesome that I'm the first one exposing my body. And by that, I mean it sucks.</state>
             </case>
             <case stage="6">
                 <condition role="self" saidMarker="target1" />
@@ -3648,7 +3769,9 @@
         </trigger>
 
         <trigger id="male_must_strip">
-            <case stage="0-6" target="human" filter="gay" notSaidMarker="target2">
+            <case stage="0-6">
+                <condition filter="gay" role="target" character="human" />
+                <condition role="self" notSaidMarker="target2" />
                 <state img="#-thinking.png" marker="target2">(Hmmm, ~player~ doesn't seem to be interested in me. Never mind, there are other ways to manipulate people besides seducing them.)</state>
                 <state img="#-thinking.png" marker="target2">(I don't think ~player~ is attracted to women. But I'm sure I can convince him to lose using other tactics.)</state>
                 <state img="#-thinking.png" marker="target2">(Is ~player~ not into women? He hasn't looked at me. Still, I'm confident I can convince him to lose the game through other means.)</state>
@@ -3700,7 +3823,7 @@
                 </state>
             </case>
             <case stage="0-6">
-                <condition role="target" character="chazz" stage="0-4" />
+                <condition role="target" character="chazz" stage="0" />
                 <state img="#-smug.png">
                     <alt-img stage="7">custom:#-smug</alt-img>
                     <text>You're too cocky. You know that makes me want to beat you even more, right?</text>
@@ -3729,6 +3852,20 @@
                 <state img="#-shocked.png">
                     <alt-img stage="7">custom:#-shocked</alt-img>
                     <text>Just a normal looking guy. You don't seem like the type to fight... What did you say you fight?</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="brock" stage="0" />
+                <state img="#-serious.png">
+                    <alt-img stage="7">custom:#-serious</alt-img>
+                    <text>What's that thing you got there? Wait, I'm not sure I want to know.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="brock" stage="3" />
+                <state img="#-serious.png">
+                    <alt-img stage="7">custom:#-serious</alt-img>
+                    <text>Okay... Just put it down slowly...</text>
                 </state>
             </case>
             <case stage="0-6" target="human" notSaidMarker="target1">
@@ -3760,6 +3897,7 @@
                 <state img="#-win.png">No way I can lose to you!</state>
                 <state img="#-seductive.png">See? I'm more than just a cute navigator.</state>
                 <state img="#-embarrassed.png">You wanted to see me strip? I'm flattered, but my answer is no.</state>
+                <state img="#-seductive.png">Not my turn! You'll have to try harder.</state>
             </case>
             <case stage="3">
                 <state img="#-smug.png">Okay, ~name~! Let's go, time to pay.</state>
@@ -4166,7 +4304,8 @@
                     <text>Wrestling seems like the kind of thing Luffy and Usopp would be into. But not me.</text>
                 </state>
             </case>
-            <case stage="0-4" target="rarity_eg" targetStage="0">
+            <case stage="0-4">
+                <condition role="target" character="rarity_eg" stage="0" />
                 <state img="#-seductive.png">You're a fashion designer, huh? What do you think of my outfit? I know I look good, but a second opinion doesn't hurt.</state>
             </case>
             <case stage="0-8" target="raven" targetStage="0">
@@ -4325,10 +4464,11 @@
                     <text>Even for a princess, you're a lot more... colorful than what I'm used to.</text>
                 </state>
             </case>
-            <case stage="0-8" target="uravity" targetStage="0">
+            <case stage="0-8">
+                <condition role="target" character="uravity" stage="0" />
                 <state img="#-thinking.png">
                     <alt-img stage="7">custom:#-thinking</alt-img>
-                    <text>Are you a member of Germa 66? I don't think I've every seen anyone else wear an outfit like that.</text>
+                    <text>Are you a member of Germa 66? I don't think I've ever seen anyone else wear an outfit like that.</text>
                 </state>
             </case>
             <case stage="0-8" target="weiss_schnee" targetStage="0">
@@ -4975,6 +5115,41 @@
                     <text>You're very young for a model. I suppose they need young models too.</text>
                 </state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="nami" stage="0" />
+                <state img="#-furious.png">
+                    <alt-img stage="7">custom:#-furious</alt-img>
+                    <text>Is that you, okama? What did I tell you last time about copying my body? Especially for this kind of stuff!</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="amy" stage="0" />
+                <state img="#-annoyed.png">
+                    <alt-img stage="7">custom:#-annoyed</alt-img>
+                    <text>I don't think a young girl should be talking about spiders so much. It's unladylike. And gross.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="mary" stage="0" />
+                <state img="#-thinking.png">
+                    <alt-img stage="7">custom:#-thinking</alt-img>
+                    <text>Do you live here, Mary? Oh, it's just that you dress the way I'd expect someone to dress when they're at home.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="maki" stage="0" />
+                <state img="#-greedy.png">
+                    <alt-img stage="7">custom:#-greedy</alt-img>
+                    <text>A schoolgirl from a wealthy family, huh? How rich are we talking about here? Do you live in a mansion?</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="gaige" stage="0" />
+                <state img="#-sad.png">
+                    <alt-img stage="7">custom:#-sad</alt-img>
+                    <text>...Oh sorry, I didn't mean to stare at your metal arm. For what it's worth, I'm sure some members of my crew would find that very cool.</text>
+                </state>
+            </case>
             <case stage="0-6" target="human" notSaidMarker="target2">
                 <test expr="~human.tag.lesbian~" value="false" />
                 <state img="#-thinking.png" marker="target2">(~Player~ looks naive. I can probably use my persuasion tactics to convince her into losing the game.)</state>
@@ -5053,7 +5228,8 @@
                     <text>I don't see anything indecent about that outfit, but I also don't consider my own look inappropriate and people are always bugging me about me. What do you think, ~player~?</text>
                 </state>
             </case>
-            <case stage="0-8" oneShotId="236" filter="ginger" targetStage="0" priority="200">
+            <case stage="0-8" oneShotId="236" priority="200">
+                <condition filter="ginger" role="target" stage="0" />
                 <state img="#-smiling.png">
                     <alt-img stage="7">custom:#-smiling</alt-img>
                     <text>Nice hair, ~name~. Heheh...</text>
@@ -5226,6 +5402,13 @@
                     <text>Is that your weapon?</text>
                 </state>
             </case>
+            <case stage="0-8" id="129">
+                <condition role="target" character="brock" stage="3" />
+                <state img="#-furious.png">
+                    <alt-img stage="7">custom:#-furious</alt-img>
+                    <text>DAMMIT, BROCK!</text>
+                </state>
+            </case>
             <case stage="0">
                 <state img="#-annoyed.png">Is that all? Are you sure?</state>
                 <state img="#-annoyed.png">I knew you were going to count your measly ~clothing~.</state>
@@ -5237,6 +5420,7 @@
             <case stage="2">
                 <state img="#-furious.png">What? Hmph...</state>
                 <state img="#-furious.png">This is annoying. Almost as annoying as Luffy when he's hungry.</state>
+                <state img="#-furious.png">Oh, you're taking &lt;i&gt;that&lt;/i&gt; off? So I guess you don't really care if it gets "lost"...</state>
             </case>
             <case stage="3">
                 <state img="#-sad.png">You're taking &lt;i&gt;that&lt;/i&gt; off now? You're more unpredictable than the Grand Line...</state>
@@ -5280,7 +5464,8 @@
                     <text>Your belts disappeared. Is that an ability? But how...?</text>
                 </state>
             </case>
-            <case stage="0-8" target="jotaro" targetStage="2">
+            <case stage="0-8">
+                <condition role="target" character="jotaro" stage="2" />
                 <state img="#-thinking.png">
                     <alt-img stage="7">custom:#-thinking</alt-img>
                     <text>(Is he stopping time or something? No, that would be too farfetched and terrifying for a Devil Fruit ability.)</text>
@@ -5298,7 +5483,8 @@
                     <text>Wow, a sky archipelago! I'd love to see it one day, but there's no way I'm going to the White Sea through the Knock Up Stream again.</text>
                 </state>
             </case>
-            <case stage="0-8" target="pit" targetStage="2">
+            <case stage="0-8">
+                <condition role="target" character="pit" stage="2" />
                 <state img="#-smiling.png">
                     <alt-img stage="7">custom:#-smiling</alt-img>
                     <text>Don't worry, I have no intention of stealing it. No matter how expensive it looks.</text>
@@ -5325,6 +5511,13 @@
                     <text>What kind of sword is that? It emits light. Zoro would probably be freaking out if he saw it.</text>
                 </state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="brock" stage="4" />
+                <state img="#-annoyed.png">
+                    <alt-img stage="7">custom:#-annoyed</alt-img>
+                    <text>How can you be so careless with that thing? It's a mystery to me how you're still alive.</text>
+                </state>
+            </case>
             <case stage="0">
                 <state img="#-smiling.png">Well, as long as I haven't lost a round yet...</state>
                 <state img="#-serious.png">It's no big deal, I guess. But if things go south for me later, I'll remember this, ~name~,</state>
@@ -5336,6 +5529,7 @@
             <case stage="2">
                 <state img="#-serious.png">Maybe next time you'll remove something bigger and stop wasting our time. Wouldn't &lt;i&gt;that&lt;/i&gt; be special?</state>
                 <state img="#-serious.png">You seem to be determined to extend this game as much as you can. What's your deal, ~name~?</state>
+                <state img="#-serious.png">Everyone seems to be conspiring to make this game as long as they can.</state>
             </case>
             <case stage="3">
                 <state img="#-smiling.png">Good thing I'm used to dealing with weird individuals. I bet you're no different, ~name~.</state>
@@ -5889,6 +6083,34 @@
                 </state>
             </case>
             <case stage="0-8">
+                <condition role="target" character="tomoko" stage="0" />
+                <state img="#-furious.png">
+                    <alt-img stage="7">custom:#-furious</alt-img>
+                    <text>Hey! I was just trying to be nice. If you want to look like you've been living inside your room for a year, fine by me!</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="mary" stage="0" />
+                <state img="#-calm.png">
+                    <alt-img stage="7">custom:#-calm</alt-img>
+                    <text>Those are called crocs? Are they made of crocodile skin, or something?</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="gaige" stage="0" />
+                <state img="#-thinking.png">
+                    <alt-img stage="7">custom:#-thinking</alt-img>
+                    <text>Do I want to know what sort of dangerous stuff you keep in there?</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="gaige" stage="2" />
+                <state img="#-greedy.png" marker="gaige_vault">
+                    <alt-img stage="7">custom:#-greedy</alt-img>
+                    <text>So this Vault you're hunting... How much stuff does it contain? It must be very valuable if it's so rare to find, right?</text>
+                </state>
+            </case>
+            <case stage="0-8">
                 <condition status="exposed" role="target" />
                 <state img="#-serious.png">
                     <alt-img stage="7">custom:#-serious</alt-img>
@@ -5919,6 +6141,7 @@
                 <state img="#-calm.png">Your ~clothing~? You do what you can, sister.</state>
                 <state img="#-smiling.png">Oh, your ~clothing~. I see, I see...</state>
                 <state img="#-smug.png">I bet you're going to remove your... ~clothing~! Ah, see? I was right.</state>
+                <state img="#-serious.png">What do you call that? Oh, right.. Your ~clothing~.</state>
             </case>
             <case stage="2">
                 <state img="#-thinking.png">Your ~clothing~, huh?</state>
@@ -5936,9 +6159,9 @@
                 <state img="#-sad.png">Everybody thought about wearing accessories except for me. Well, I did have my Log Pose. And my belt...</state>
             </case>
             <case stage="5">
-                <state img="#-furious.png">I know what I'm going to do with your ~clothing~. I'll steal it and sell it to anyone at a very cheap price!</state>
-                <state img="#-furious.png">How would you feel if I steal your ~clothing~ and sell it to the first person who wants ~clothing.ifPlural(them|it)~?</state>
-                <state img="#-furious.png">Wouldn't it be fun if &lt;i&gt;someone&lt;/i&gt; stole your ~clothing~ and sold it? If it was me, I wouldn't even ask more than a measly price for it.</state>
+                <state img="#-furious.png">I know what I'm going to do with your ~clothing~. I'll steal ~clothing.ifPlural(them|it)~ and sell ~clothing.ifPlural(them|it)~ to anyone at a very cheap price!</state>
+                <state img="#-furious.png">How would you feel if I steal your ~clothing~ and sell ~clothing.ifPlural(them|it)~ to the first person who wants ~clothing.ifPlural(them|it)~?</state>
+                <state img="#-furious.png">Wouldn't it be fun if &lt;i&gt;someone&lt;/i&gt; stole your ~clothing~ and sold ~clothing.ifPlural(them|it)~? If it was me, I wouldn't even ask more than a measly price for ~clothing.ifPlural(them|it)~.</state>
             </case>
             <case stage="6">
                 <state img="#-furious.png">Why are you taking that off now? Are you mocking me?</state>
@@ -5976,6 +6199,21 @@
                 <state img="#-thinking.png">
                     <alt-img stage="7">custom:#-thinking</alt-img>
                     <text>A butterfly that transforms into a woman is easier for me to swallow than an actual talking butterfly, for some reason.</text>
+                </state>
+            </case>
+            <case stage="0-8" id="133">
+                <condition role="target" character="maki" stage="2" sayingMarker="makidoctor" />
+                <state img="#-calm.png">
+                    <alt-img stage="7">custom:#-calm</alt-img>
+                    <text>That's a good goal, there can never be enough doctors. If it wasn't for Chopper, my crew's doctor, I'd have died a long time ago.</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="gaige" stage="3" />
+                <condition role="self" saidMarker="gaige_vault" />
+                <state img="#-happy.png">
+                    <alt-img stage="7">custom:#-happy</alt-img>
+                    <text>Maybe I should tell Luffy and the others about it. Becoming temporary Vault Hunters sounds like a fun and &lt;i&gt;rewarding&lt;/i&gt; detour.</text>
                 </state>
             </case>
             <case stage="0-8">
@@ -6399,6 +6637,7 @@
                 <state img="#-smiling.png">I don't blame you for not wanting to strip, but you gotta admit this is a little infuriating for us.</state>
                 <state img="#-thinking.png">You're the kind that enjoys making new enemies, aren't you?</state>
                 <state img="#-smiling.png">Now let's hope this doesn't come back to bite you in the ass. How, you ask? I wonder...</state>
+                <state img="#-thinking.png">Hmmm, this is still kinda disappointing.</state>
             </case>
             <case stage="2">
                 <state img="#-serious.png">Earlier I would've found this amusing, but not anymore. It's time to get serious.</state>
@@ -6505,7 +6744,8 @@
         </trigger>
 
         <trigger id="male_removed_minor">
-            <case stage="0-8" target="kamina" targetStage="7">
+            <case stage="0-8">
+                <condition role="target" character="kamina" stage="7" />
                 <state img="#-serious.png">
                     <alt-img stage="7">custom:#-serious</alt-img>
                     <text>(I hope this guy never meets Luffy and the others. They'd get along immediately, and then annoy me to no end.)</text>
@@ -6536,6 +6776,7 @@
             <case stage="2">
                 <state img="#-greedy.png">To entertain myself, I'm gonna think about all the stuff I'm gonna buy with the prize.</state>
                 <state img="#-smiling.png">Maybe I should come up with a game to distract myself from the real game. Like counting the times ~player~ does something dumb.</state>
+                <state img="#-thinking.png">How many days has it been since it last rained? Hmmm...</state>
             </case>
             <case stage="3">
                 <state img="#-calm.png">This won't work, you know? I guess you can't know until you try.</state>
@@ -6817,6 +7058,7 @@
                 <state img="#-thinking.png">Seeing all these people wearing different clothes makes me want to go shopping.</state>
                 <state img="#-thinking.png">So many women wearing different clothes in this place. Should I increase my inventory?</state>
                 <state img="#-thinking.png">With all these different clothes everybody's wearing, I'm thinking if my closet is too samey.</state>
+                <state img="#-calm.png">One of my favorite parts of this game is seeing all the clothes everyone wears.</state>
             </case>
             <case stage="2">
                 <state img="#-smiling.png">It's so quiet here compared to the ship! It's feels nice for a change.</state>
@@ -6827,7 +7069,7 @@
             <case stage="3">
                 <state img="#-smiling.png">Looking at the different clothing you all wear is one of the most interesting parts of this game.</state>
                 <state img="#-embarrassed.png">Oh, your ~clothing~? For me? Ah, you're just taking it off.</state>
-                <state img="#-thinking.png">I might have a similar ~clothing~ to yours. Or don't I?</state>
+                <state img="#-thinking.png">I might have a similar ~clothing~ to yours. Wait, do I?</state>
             </case>
             <case stage="4">
                 <state img="#-serious.png">Hmmm, that ~clothing~... Classic ~name~ move.</state>
@@ -6938,6 +7180,13 @@
                 <state img="#-annoyed.png">
                     <alt-img stage="7">custom:#-annoyed</alt-img>
                     <text>Really? You think the face-painting will help you play better? This is just like Luffy with the afro...</text>
+                </state>
+            </case>
+            <case stage="0-8" id="134">
+                <condition role="target" character="maki" stage="1" sayingMarker="makipiano" />
+                <state img="#-thinking.png">
+                    <alt-img stage="7">custom:#-thinking</alt-img>
+                    <text>I don't know how to play an instrument. I guess if I wanted to learn, I could ask Brook to teach me. I do enjoy music every now and then.</text>
                 </state>
             </case>
             <case stage="0-8" target="caulifla" targetStage="3">
@@ -7100,6 +7349,13 @@
                     <text>Not really, but it's pretty obvious.</text>
                 </state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="gaige" stage="2" />
+                <state img="#-calm.png">
+                    <alt-img stage="7">custom:#-calm</alt-img>
+                    <text>That skull doesn't mean you're a pirate, right? I mean, I don't think it does. But I'm sure a moron would make that mistake.</text>
+                </state>
+            </case>
             <case stage="0">
                 <state img="#-smiling.png">Now that you're without your ~clothing~, let's keep going!</state>
                 <state img="#-smug.png">I will claim victory one small step at a time.</state>
@@ -7109,6 +7365,7 @@
                 <state img="#-calm.png">By the way, where did you get your ~clothing~, ~name~?</state>
                 <state img="#-calm.png">Hmmm, I wonder if your ~clothing~ would fit me.</state>
                 <state img="#-sad.png">I am forced to dress depending on the weather of the islands we go to, anyway.</state>
+                <state img="#-smiling.png">Different types of people with different fashion styles. But they all have to undress...</state>
             </case>
             <case stage="2">
                 <state img="#-serious.png">I hope Sanji and Brook aren't hiding somewhere, waiting for me to lose again.</state>
@@ -7597,6 +7854,13 @@
                 </state>
             </case>
             <case stage="0-8">
+                <condition role="target" character="mary" stage="3" sayingMarker="Dicc" />
+                <state img="#-shocked.png">
+                    <alt-img stage="7">custom:#-shocked</alt-img>
+                    <text>You're not serious, right? I'm like 80% sure you're not serious.</text>
+                </state>
+            </case>
+            <case stage="0-8">
                 <condition role="target" character="caulifla" stage="2" />
                 <state img="#-sad.png">
                     <alt-img stage="7">custom:#-sad</alt-img>
@@ -7993,6 +8257,13 @@
                     <text>What's that?! Keep it away from me.</text>
                 </state>
             </case>
+            <case stage="0-8" id="130">
+                <condition role="target" character="brock" stage="4" />
+                <state img="#-shocked.png">
+                    <alt-img stage="7">custom:#-shocked</alt-img>
+                    <text>AHHHH!!! GET DOWN!</text>
+                </state>
+            </case>
             <case stage="0">
                 <state img="#-calm.png">Go ahead, expose your chest. It's not like it's a big deal, or anything.</state>
                 <state img="#-smug.png">Show your chest. No need to make a fuss over this, pal.</state>
@@ -8041,6 +8312,13 @@
                 <state img="#-annoyed.png">
                     <alt-img stage="7">custom:#-annoyed</alt-img>
                     <text>I bet you got those scars jumping straight into danger, just like Luffy and Zoro. Why are men like that?</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="brock" stage="5" />
+                <state img="#-sad.png">
+                    <alt-img stage="7">custom:#-sad</alt-img>
+                    <text>How did you not get injured by that? Can you also use that haki thing?</text>
                 </state>
             </case>
             <case stage="0-8" id="90">
@@ -8903,6 +9181,14 @@
                     <text>&lt;i&gt;sigh&lt;/i&gt; Man...</text>
                 </state>
             </case>
+            <case stage="0-8" id="132">
+                <condition count="5" status="not_naked" />
+                <condition role="target" character="maki" sayingMarker="makisanta" />
+                <state img="#-smiling.png">
+                    <alt-img stage="7">custom:#-smiling</alt-img>
+                    <text>Santa? Oh, y-yeah... That would be bad, because he's very much real. Yep.</text>
+                </state>
+            </case>
             <case stage="0-8" id="29" target="cammy_white">
                 <state img="#-shocked.png">
                     <alt-img stage="7">custom:#-shocked</alt-img>
@@ -9115,6 +9401,13 @@
                 <state img="#-thinking.png">
                     <alt-img stage="7">custom:#-thinking</alt-img>
                     <text>Geode? Is that the thing you have around your neck? Is it special in any way?</text>
+                </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="maki" saidMarker="makisanta" />
+                <state img="#-thinking.png">
+                    <alt-img stage="7">custom:#-thinking</alt-img>
+                    <text>Anyway, why would you want Santa to bring you presents? Can't your family buy you stuff?</text>
                 </state>
             </case>
             <case stage="0-8" target="cammy_white">
@@ -9482,9 +9775,11 @@
                 <state img="#-serious.png" marker="manipulation7end">Really? Lying never got me anything, but telling the truth does? Hmmm...</state>
                 <state img="#-calm.png" marker="manipulation7end">Being honest worked? Seriously? It must just be a fluke...</state>
             </case>
-            <case stage="6" oneShotId="11" target="human" saidMarker="seduction7" notSaidMarker="seduction7end">
+            <case stage="6" oneShotId="11">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="seduction7" notSaidMarker="seduction7end" />
                 <state img="#-happy.png" marker="seduction7end">Yes, I'm saved! Thank you, ~player~. How can I repay you? Oh, I already said it, didn't I? Well, we'll talk about that later.</state>
-                <state img="#-smiling.png" marker="seduction7end">Heheh, I didn't lose! And it's thanks to you, ~player~. Did you because of what I said? That was... Well, let's talk about it later.</state>
+                <state img="#-smiling.png" marker="seduction7end">Heheh, I didn't lose! And it's thanks to you, ~player~. Did you lose because of what I said? That was... Well, let's talk about it later.</state>
                 <state img="#-happy.png" marker="seduction7end">I didn't lose, woohoo! Eh... let's talk about the thing I just said later. I'd like to have the chance to... get ready first.</state>
             </case>
             <case stage="0-6" oneShotId="69" alsoPlaying="human" saidMarker="manipulation_final" priority="301">
@@ -9545,7 +9840,8 @@
                     <text>That's a very unique hairstyle you have. It would be quite easy to identify you with that.</text>
                 </state>
             </case>
-            <case stage="0-8" oneShotId="172" filter="fancy" targetStage="0">
+            <case stage="0-8" oneShotId="172">
+                <condition filter="fancy" role="target" stage="0" />
                 <state img="#-greedy.png">
                     <alt-img stage="7">custom:#-greedy</alt-img>
                     <text>You're rich, aren't you? You don't have to tell me. Are you looking for some new friends, ~name~?</text>
@@ -9593,7 +9889,8 @@
                 <state img="#-smiling.png">I can tell you're a good person, ~name~. I hope we can get along.</state>
                 <state img="#-calm.png" oneShotId="2">It seems to me your heart is in the right place. If I don't win this game, I hope you do. But I'm really gonna win!</state>
             </case>
-            <case stage="0-8" oneShotId="169" filter="weapon" targetStage="0" priority="225">
+            <case stage="0-8" oneShotId="169" priority="225">
+                <condition filter="weapon" role="target" stage="0" />
                 <state img="#-thinking.png">
                     <alt-img stage="7">custom:#-thinking</alt-img>
                     <text>Why would you even bring a weapon to a poker game? Oh, I did bring my Clima-Tact, heheh...</text>
@@ -9603,7 +9900,8 @@
                     <text>I hope you have no intention of using that weapon, or there will be trouble. And I'll be out of here.</text>
                 </state>
             </case>
-            <case stage="0-8" oneShotId="174" filter="very_long_hair" targetStage="0" priority="220">
+            <case stage="0-8" oneShotId="174" priority="220">
+                <condition filter="very_long_hair" role="target" stage="0" />
                 <state img="#-thinking.png">
                     <alt-img stage="7">custom:#-thinking</alt-img>
                     <text>How do you even take care of hair that long? Doesn't it get tangled everywhere?</text>
@@ -9653,6 +9951,14 @@
                     <alt-img stage="7">custom:#-sad</alt-img>
                     <text>How many losses in a row does this make? I feel bad for you.</text>
                 </state>
+            </case>
+            <case stage="0-8" oneShotId="300">
+                <test expr="~target.revplace~" value="1" />
+                <state img="#-sad.png">Uhhh... That's what they call going from bad to worse. Sorry, ~name~.</state>
+            </case>
+            <case stage="0-8" oneShotId="301">
+                <test expr="~target.lead~" cmp="&gt;" value="1" />
+                <state img="#-serious.png">I'm happy you lost, but this will barely make a difference. Who else thinks ~name~ should strip twice?</state>
             </case>
             <case stage="0-2" oneShotId="191" hasHand="High Card">
                 <state img="#-smiling.png">Uff, that was a close one. I thought I was losing this one.</state>
@@ -9872,7 +10178,7 @@
                 </state>
                 <state img="#-smiling.png">
                     <alt-img stage="7">custom:#-smiling</alt-img>
-                    <text>Stocking are cute. Ah, so many adorable kind of clothing I could've worn for this game.</text>
+                    <text>Stockings are cute. Ah, so many adorable kind of clothing I could've worn for this game.</text>
                 </state>
             </case>
             <case stage="0-8" oneShotId="100">
@@ -9896,6 +10202,30 @@
         </trigger>
 
         <trigger id="opponent_stripped">
+            <case stage="0-8" oneShotId="292">
+                <condition filter="bald" role="target" character="human" />
+                <test expr="~clothing~" value="hat" />
+                <state img="#-smiling.png">
+                    <alt-img stage="7">custom:#-smiling</alt-img>
+                    <text>Do you wear that hat just to hide that you're bald? Oh, I'm sorry! I hope I didn't touch on a sensitive subject.</text>
+                </state>
+                <state img="#-thinking.png">
+                    <alt-img stage="7">custom:#-thinking</alt-img>
+                    <text>You know... being bald is not that bad. I mean, you don't have to wear a hat to hide it. You know what I mean, ~player~?</text>
+                </state>
+            </case>
+            <case stage="0-8" oneShotId="293">
+                <condition filter="chubby" role="target" character="human" />
+                <test expr="~clothing~" value="belt" />
+                <state img="#-thinking.png">
+                    <alt-img stage="7">custom:#-thinking</alt-img>
+                    <text>Do you really need to wear a belt, ~player~? I doubt your pants would just fall off considering your... figure.</text>
+                </state>
+                <state img="#-thinking.png">
+                    <alt-img stage="7">custom:#-thinking</alt-img>
+                    <text>Why do you wear that belt, ~player~? I don't think your pants would fall off if you don't, unless you lost a little... Never mind.</text>
+                </state>
+            </case>
             <case stage="0-6" oneShotId="65" target="human" targetStatus="lost_all" saidMarker="target2">
                 <test expr="~target.gender~" value="female" />
                 <state img="#-thinking.png" marker="target2naked">(Hmmm, so ~player~ is now fully naked. Which means she only has to lose once more to be out. How am I going to do this?)</state>
@@ -9948,7 +10278,8 @@
                     <text>That belt came off very easy. Have you lost weight worrying about the game, ~player~?</text>
                 </state>
             </case>
-            <case stage="0-8" oneShotId="198" target="human">
+            <case stage="0-8" oneShotId="198">
+                <condition role="target" character="human" />
                 <test expr="~clothing~" value="glasses" />
                 <state img="#-smiling.png">
                     <alt-img stage="7">custom:#-smiling</alt-img>
@@ -9978,7 +10309,8 @@
                     <text>Do you bite your nails, ~player~? You have reason to be nervous, so it makes sense.</text>
                 </state>
             </case>
-            <case stage="0-8" oneShotId="200" target="human">
+            <case stage="0-8" oneShotId="200">
+                <condition role="target" character="human" />
                 <test expr="~clothing~" value="hat" />
                 <state img="#-calm.png">
                     <alt-img stage="7">custom:#-calm</alt-img>
@@ -10023,7 +10355,8 @@
                     <text>You must be a confident guy to wear a skirt. I mean, you must be proud of your legs.</text>
                 </state>
             </case>
-            <case stage="0-8" oneShotId="204" target="human">
+            <case stage="0-8" oneShotId="204">
+                <condition role="target" character="human" />
                 <test expr="~clothing~" value="necklace" />
                 <state img="#-greedy.png">
                     <alt-img stage="7">custom:#-greedy</alt-img>
@@ -10053,6 +10386,11 @@
                     <text>Oh, I liked the tie. It really made you look like you knew what you were doing.</text>
                 </state>
             </case>
+            <case stage="0-8" oneShotId="297">
+                <condition role="target" character="human" />
+                <test expr="~clothing~" value="socks" />
+                <state img="#-smiling.png">Leave that pair of socks over there, please. Oh, I'm not saying that they smell. Just... leave them over there.</state>
+            </case>
             <case stage="0-8" oneShotId="185" filter="assisted_strip" priority="151">
                 <state img="#-calm.png">
                     <alt-img stage="7">custom:#-calm</alt-img>
@@ -10063,10 +10401,20 @@
                     <text>This doesn't bother me, but I can't say I understand it.</text>
                 </state>
             </case>
-            <case stage="0-8" id="61" alsoPlaying="rainbow_mika" alsoPlayingStage="3" alsoPlayingSaidMarker="embarrassed" alsoPlayingSayingMarker="putting_mask">
+            <case stage="0-8" id="61">
+                <condition role="other" character="rainbow_mika" stage="3" saidMarker="embarrassed" sayingMarker="putting_mask" />
                 <state img="#-sad.png">
                     <alt-img stage="7">custom:#-sad</alt-img>
                     <text>Wow. I guess you never really know a person's weakness until you see it.</text>
+                </state>
+            </case>
+            <case stage="0-4" oneShotId="299" priority="125">
+                <condition status="exposed" role="target" />
+                <condition count="1" status="exposed" />
+                <test expr="~target.biggestlead~" cmp="&gt;=" value="3" />
+                <state img="#-smug.png">
+                    <alt-img stage="7">custom:#-smug</alt-img>
+                    <text>Oh, how the mighty have fallen. I don't mean to gloat. But if you lost your advantage, you must have done something wrong, ~name~.</text>
                 </state>
             </case>
             <case stage="0-4" oneShotId="23" targetStatus="crotch_visible" totalExposed="1">
@@ -10193,6 +10541,10 @@
                     <alt-img stage="7">custom:#-seductive</alt-img>
                     <text>Stockings are irresistible. I should wear them more.</text>
                 </state>
+            </case>
+            <case stage="0-6" oneShotId="298">
+                <test expr="~target.diff(self)~" value="0" />
+                <state img="#-smug.png">Looks like the scales are balanced for us now, ~name~. Are you scared? I won't hold back.</state>
             </case>
         </trigger>
 
@@ -10496,7 +10848,7 @@
             <case stage="8">
                 <state img="#-embarrassed.png">A little slower, ~name~. Please...</state>
                 <state img="#-seductive.png">Anything catching your attention, ~name~? I just thought I would help you a little.</state>
-                <state img="#-embarrassed.png">I'm always so busy on adventure that maybe I haven't had much chance to look at men... that way.</state>
+                <state img="#-embarrassed.png">I'm always so busy on adventures that maybe I haven't had much chance to look at men... that way.</state>
                 <state img="#-seductive.png">Is this my reward for being so good?</state>
                 <state img="#-happy.png">You still seem full of spirit, ~name~. That's good!</state>
                 <state img="#-thinking.png">Does it feel as hard to the touch as it looks? Hmm... Am I thinking out loud again?</state>
@@ -10755,6 +11107,13 @@
                 <state img="#-shocked.png">
                     <alt-img stage="7">custom:#-shocked</alt-img>
                     <text>What the hell? You look at that stuff...</text>
+                </state>
+            </case>
+            <case stage="0-8" oneShotId="294">
+                <condition role="target" character="brock" />
+                <state img="#-shocked.png">
+                    <alt-img stage="7">custom:#-shocked</alt-img>
+                    <text>Wow... Good thing nobody was standing in front of you.</text>
                 </state>
             </case>
             <case stage="0">
@@ -11393,6 +11752,23 @@
 
         <trigger id="female_masturbating">
             <case stage="0-8">
+                <condition role="target" character="tomoko" />
+                <alternative>
+                    <condition role="target" character="tomoko" sayingMarker="nami_bootyplunder" />
+                </alternative>
+                <alternative>
+                    <condition role="target" character="tomoko" sayingMarker="nami_shamelesspirate" />
+                </alternative>
+                <state img="#-shocked.png" oneShotId="93">
+                    <alt-img stage="7">custom:#-shocked</alt-img>
+                    <text>Is she talking about me...?</text>
+                </state>
+                <state img="#-shocked.png" oneShotId="94">
+                    <alt-img stage="7">custom:#-shocked</alt-img>
+                    <text>What the hell...?</text>
+                </state>
+            </case>
+            <case stage="0-8">
                 <condition filter="tandem" role="target" />
                 <state img="#-shocked.png">
                     <alt-img stage="7">custom:#-shocked</alt-img>
@@ -11953,6 +12329,13 @@
                 <condition role="target" character="meg" />
                 <state img="#-sad.png">Uh... Maybe clean yourself?</state>
             </case>
+            <case stage="0-8" oneShotId="296">
+                <condition role="target" character="maki" />
+                <state img="#-embarrassed.png">
+                    <alt-img stage="7">custom:#-embarrassed</alt-img>
+                    <text>Hey, you don't have to explain yourself. I'd also be very embarrassed if I said someone's name during... you know.</text>
+                </state>
+            </case>
             <case stage="0-8" filter="tandem">
                 <state img="#-shocked.png">
                     <alt-img stage="7">custom:#-shocked</alt-img>
@@ -12031,7 +12414,8 @@
                 <state img="custom:#-starting" marker="seduction7end">So you didn't fall for that, ~player~. That means I'm out. Okay, I'll just follow the rules of the game. Let me use my Clima-Tact for a second.</state>
                 <state img="custom:#-starting" marker="seduction7end">Whatever. A-as if I'd like to do that, ~player~. I'll just follow the forfeit. Let me use my Clima-Tact for a second.</state>
             </case>
-            <case stage="6" saidMarker="last_round">
+            <case stage="6">
+                <condition role="self" saidMarker="last_round" />
                 <state img="custom:#-starting">Alright, I lost. After I got so far. You must feel great, ~player~. Well, I just have to do the thing now. Let me get my Clima-Tact...</state>
             </case>
             <case stage="6" id="12">
@@ -12045,6 +12429,10 @@
         <trigger id="start_masturbating">
             <case stage="6" id="46" alsoPlaying="sayaka" alsoPlayingStage="0-7">
                 <state img="custom:#-starting2">Justice this, justice that. Are you sure you're not a Marine? I bet they'd be happy to recruit someone like you.</state>
+            </case>
+            <case stage="6" id="128">
+                <condition role="other" character="mei" sayingMarker="mei_nami_precipitation" />
+                <state img="custom:#-starting2">I'm happy someone here appreciates weather science, Mei. If only the circumstances were different...</state>
             </case>
             <case stage="6" alsoPlaying="chun-li">
                 <state img="custom:#-starting2">That's why I call it my Shower Tempo. This is how I shower every time.</state>
@@ -12134,6 +12522,7 @@
                 <state img="custom:#-heavy">This is... so intense...</state>
                 <state img="custom:#-heavy">I'm going... I'm going to...</state>
                 <state img="custom:#-heavy">Rain, don't stop. I'm so close...</state>
+                <state img="custom:#-heavy">I... I'm loving this... so much...</state>
             </case>
         </trigger>
 
@@ -12203,7 +12592,7 @@
                     <condition count="1-" filter="hero" />
                     <condition count="0-" filter="villain" />
                 </alternative>
-                <state img="#-smiling.png">(I was planning on stealing their possesions after the game, but they're not bad people. I could steal play a trick on them, though.)</state>
+                <state img="#-smiling.png">(I was planning on stealing their possessions after the game, but they're not bad people. I could steal play a trick on them, though.)</state>
                 <state img="#-smiling.png">(Change of plans, since there are not bad people here I won't take their stuff. But it would be funny if I make them think I did.)</state>
             </case>
             <case stage="8" oneShotId="244">
@@ -12299,15 +12688,34 @@
                 <state img="#-shocked.png" collectible="Wanted Poster">Uh... Time to get out of here!</state>
             </case>
             <case stage="8">
+                <condition status="lost_all" role="target" />
+                <test expr="~self.place~" value="2" />
+                <state img="#-serious.png">I still can't believe how close I was to winning. But no hard feelings, ~name~. None at all...</state>
+            </case>
+            <case stage="8">
+                <test expr="~self.place~" value="2" />
+                <state img="#-greedy.png">Congratulations, ~name~. I still finished second, so that's enough reason to try again. That prize will be mine!</state>
+            </case>
+            <case stage="8">
                 <state img="#-smiling.png" collectible="Wanted Poster">Congratulations, ~name~! Well played. (Time for me to steal that prize and get out of here!)</state>
                 <state img="#-greedy.png" collectible="Wanted Poster">Well done, ~name~. This was all part of my plan... losing so you could win. No need to say thanks. I'm a pirate, if you want to thank me, you'll have to do it with valuables.</state>
                 <state img="#-smiling.png" collectible="Wanted Poster">This was quite the adventure! But now it's time to return to my own adventure. Bye bye, everyone! (There's the prize! Showtime...)</state>
             </case>
         </trigger>
 
+        <trigger id="global">
+            <case stage="0-8" id="127" priority="142">
+                <condition role="other" character="mary" stage="0-5" saidMarker="sanity&gt;=15" sayingMarker="insanetrigger" />
+                <state img="#-shocked.png">
+                    <alt-img stage="7">custom:#-shocked</alt-img>
+                    <text>Mary, are you okay?</text>
+                </state>
+            </case>
+        </trigger>
+
     </behaviour>
     <epilogue hint="Win a game against Nami as a male player" gender="male" img="epi-thumbnail.jpg">
-        <title>Adventure in Vortex Island</title>
+        <title>Adventure in Vortex Island: Director's Cut</title>
         <scene name="Intro" background="epi-background_town.jpg" width="1680" height="1050">
             <directive type="sprite" id="black" layer="1" src="epi-black1.png" x="745" y="514" scalex="19" scaley="12" pivotx="50%" pivoty="50%" alpha="100" />
             <directive type="sprite" id="sinclair1" src="epi-intro_s1.png" x="257" y="-9" scalex="0.3" scaley="0.3" pivotx="50%" pivoty="50%" alpha="0" />
@@ -12921,15 +13329,15 @@
             <directive type="sprite" id="nami12" layer="1" src="epi-ambush_n6.png" x="656" y="-33" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="move" id="nami10" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="nami11" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="nami12" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="camera" ease="linear">
                 <keyframe time="0" x="65" y="75" zoom="2" />
@@ -12953,11 +13361,11 @@
             <directive type="sprite" id="sinclair5" src="epi-ambush_s5.png" x="568" y="-35" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="move" id="sinclair4" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="sinclair5" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="text" id="s15" width="15%" arrow="right" x="17%" y="23%">Those useless morons!</directive>
             <directive type="pause" />
@@ -13054,7 +13462,7 @@
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="text" id="n2" width="20%" arrow="right" x="54%" y="37%">I can't run in public like this! Come on, let's take a detour.</directive>
-            <directive type="move" id="nami1" delay="2" ease="linear">
+            <directive type="move" id="nami1" delay="1.5" ease="linear">
                 <keyframe time="0" x="1150" />
                 <keyframe time="1" x="1594" />
             </directive>
@@ -13087,20 +13495,20 @@
             <directive type="sprite" id="nami3" src="epi-escape_n3.png" x="823" y="355" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="move" id="nami3" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="1" alpha="100" />
+                <keyframe time="0.5" alpha="100" />
             </directive>
             <directive type="text" id="n4" width="20%" arrow="left" x="68%" y="12%">Did we lose her? Give me my Clima-Tact.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="sprite" id="nami4" layer="1" src="epi-escape_n4.png" x="624" y="-20" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="move" id="nami2" ease="linear">
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="nami3" ease="linear">
-                <keyframe time="0.5" alpha="0" />
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="nami4" ease="linear">
-                <keyframe time="0.5" alpha="100" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="camera" ease="linear">
                 <keyframe time="0" y="185" zoom="1.7" />
@@ -15486,6 +15894,180 @@
             <directive type="pause" />
         </scene>
         <scene transition="true" color="#000000" effect="fade" ease="linear" time="8" />
+        <scene name="Dream" background="epi-background_forest.jpg" x="-90" y="100" width="1680" height="1050" zoom="2">
+            <directive type="fade" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" color="#FF80C0" alpha="20" />
+                <keyframe time="3" color="#FF0080" alpha="10" />
+            </directive>
+            <directive type="sprite" id="light1" layer="1" src="epi-pink_light.png" x="164" y="256" pivotx="50%" pivoty="50%" alpha="50" />
+            <directive type="sprite" id="light2" layer="1" src="epi-pink_light.png" x="1039" y="320" scalex="2" scaley="2" pivotx="50%" pivoty="50%" alpha="50" />
+            <directive type="sprite" id="light3" layer="1" src="epi-pink_light.png" x="606" y="231" scalex="1.5" scaley="1.5" pivotx="50%" pivoty="50%" alpha="50" />
+            <directive type="sprite" id="light4" layer="1" src="epi-pink_light.png" x="155" y="721" scalex="1.5" scaley="1.5" pivotx="50%" pivoty="50%" alpha="50" />
+            <directive type="move" id="light1" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" alpha="50" />
+                <keyframe time="3" alpha="0" />
+            </directive>
+            <directive type="move" id="light2" delay="0.75" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" alpha="50" />
+                <keyframe time="3" alpha="0" />
+            </directive>
+            <directive type="move" id="light3" delay="1.5" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" alpha="50" />
+                <keyframe time="3" alpha="0" />
+            </directive>
+            <directive type="move" id="light4" delay="2.25" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" alpha="50" />
+                <keyframe time="3" alpha="0" />
+            </directive>
+            <directive type="sprite" id="robin" src="epi-dream_robin.png" x="677" y="296" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="hand1" src="epi-dream_robin_hand1.png" x="905" y="654" scalex="0.3" scaley="0.3" pivotx="78%" pivoty="98%" alpha="0" rotation="50" />
+            <directive type="sprite" id="arm1" src="epi-dream_robin_arm1.png" x="849" y="505" scalex="0.3" scaley="0.3" pivotx="70%" pivoty="98%" alpha="0" rotation="103" />
+            <directive type="sprite" id="robin2" src="epi-dream_robin2.png" x="982" y="710" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="hand2" src="epi-dream_robin_hand2.png" x="965" y="596" scalex="0.3" scaley="0.3" pivotx="54%" pivoty="96%" alpha="0" rotation="-108" />
+            <directive type="sprite" id="arm2" src="epi-dream_robin_arm2.png" x="1011" y="413" scalex="0.3" scaley="0.3" pivotx="59%" pivoty="99%" alpha="0" rotation="-96" />
+            <directive type="sprite" id="tashigi" layer="1" src="epi-dream_tashigi.png" x="299" y="164" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="t_hand" layer="1" src="epi-dream_tashigi_hand.png" x="97" y="674" scalex="0.5" scaley="0.5" pivotx="80%" pivoty="8%" alpha="0" rotation="26" />
+            <directive type="sprite" id="t_arm" layer="1" src="epi-dream_tashigi_arm.png" x="549" y="626" scalex="0.5" scaley="0.5" pivotx="31%" pivoty="1%" alpha="0" rotation="2" />
+            <directive type="sprite" id="tashigi2" layer="1" src="epi-dream_tashigi2.png" x="299" y="164" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="nami" src="epi-dream_nami.png" x="511" y="174" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="n_hand" src="epi-dream_nami_hand.png" x="686" y="686" scalex="0.5" scaley="0.5" pivotx="81%" pivoty="2%" alpha="0" rotation="0" />
+            <directive type="sprite" id="n_arm" src="epi-dream_nami_arm.png" x="633" y="619" scalex="0.5" scaley="0.5" pivotx="99%" pivoty="7%" alpha="0" rotation="0" />
+            <directive type="text" id="1" width="20%" delay="7" x="20%" y="34%">What's this place?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="hand1" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" x="905" y="654" rotation="50" />
+                <keyframe time="1" x="906" y="647" rotation="57" />
+            </directive>
+            <directive type="move" id="arm1" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" rotation="103" />
+                <keyframe time="1" rotation="95" />
+            </directive>
+            <directive type="move" id="hand2" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" x="965" y="596" rotation="-108" />
+                <keyframe time="1" x="965" y="601" rotation="-102" />
+            </directive>
+            <directive type="move" id="arm2" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" rotation="-96" />
+                <keyframe time="1" rotation="-101" />
+            </directive>
+            <directive type="move" id="t_arm" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" rotation="2" />
+                <keyframe time="1" rotation="11" />
+            </directive>
+            <directive type="move" id="t_hand" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" x="97" y="674" rotation="26" />
+                <keyframe time="1" x="84" y="677" rotation="28" />
+            </directive>
+            <directive type="move" id="n_arm" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" rotation="0" />
+                <keyframe time="1" rotation="-4" />
+            </directive>
+            <directive type="move" id="n_hand" loop="true" ease="linear" clamp="mirror">
+                <keyframe time="0" x="686" y="686" scalex="0.5" scaley="0.5" rotation="0" />
+                <keyframe time="1" x="695" y="689" scalex="0.53" scaley="0.53" rotation="13" />
+            </directive>
+            <directive type="text" id="2" width="20%" x="58%" y="64%">You hear voices calling your name.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="?" width="10%" x="45%" y="24%">~name~!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="robin" delay="2">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="robin2" delay="2">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="camera">
+                <keyframe time="3" x="145" y="144" zoom="2.9" />
+            </directive>
+            <directive type="text" id="r1" width="16%" arrow="right" delay="2" x="19%" y="13%">Were you just going to leave without doing anything to me?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="sprite" id="petals" src="epi-petals.png" x="421" y="447" scalex="0.2" scaley="0.2" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="petals" ease="linear">
+                <keyframe time="0" x="421" y="447" alpha="0" />
+                <keyframe time="0.5" x="555" y="406" alpha="100" />
+                <keyframe time="1" x="713" y="346" alpha="0" />
+            </directive>
+            <directive type="move" id="hand1" delay="0.5" ease="linear">
+                <keyframe time="0.5" alpha="100" />
+            </directive>
+            <directive type="move" id="hand2" delay="0.5" ease="linear">
+                <keyframe time="0.5" alpha="100" />
+            </directive>
+            <directive type="move" id="arm1" delay="0.5" ease="linear">
+                <keyframe time="0.5" alpha="100" />
+            </directive>
+            <directive type="move" id="arm2" delay="0.5" ease="linear">
+                <keyframe time="0.5" alpha="100" />
+            </directive>
+            <directive type="text" id="r2" width="14%" arrow="right" delay="1" x="22%" y="20%">Hmmm, I love how these hands make me feel.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="r3" width="20%" arrow="left" x="66%" y="16%">But I'd rather have &lt;i&gt;your&lt;/i&gt; hands all over me. Why don't you come closer?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera">
+                <keyframe time="1" x="-336" y="99" zoom="2.4" />
+            </directive>
+            <directive type="move" id="tashigi" delay="1" ease="linear">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="tashigi2" delay="1" ease="linear">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="t_arm" delay="1" ease="linear">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="t_hand" delay="1" ease="linear">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="text" id="t1" width="18%" arrow="right" delay="2" x="13%" y="8%">Mmmm, why have I never done this before?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="t2" width="20%" arrow="left" x="68%" y="11%">I'll need to train so I can get better at it.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="t3" width="25%" arrow="right" x="8%" y="7%">But I don't think I'm doing that bad. What do you think, ~name~?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera">
+                <keyframe time="1" x="-136" y="99" zoom="2.6" />
+            </directive>
+            <directive type="move" id="nami" delay="1">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="n_arm" delay="1">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="n_hand" delay="1">
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="text" id="n1" width="14%" arrow="left" delay="1.5" x="66%" y="11%">Hey, don't listen to them. You know I'm the one you want.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="n2" width="13%" arrow="right" x="32%" y="7%">You can't abandon me now, ~name~. We still haven't done &lt;i&gt;that&lt;/i&gt;.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="n3" width="11%" arrow="left" x="65%" y="13%">Just listen how wet I am just thinking about it.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera">
+                <keyframe time="4" x="-136" y="100" zoom="1.8" />
+            </directive>
+            <directive type="text" id="n4" width="14%" arrow="down" delay="1" x="46%" y="4%">~Name~ ♡</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="t4" width="10%" arrow="right" x="5%" y="15%">Oh, ~name~...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="r4" width="13%" arrow="down" x="73%" y="15%">~Name~!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+        </scene>
+        <scene transition="true" color="#000000" effect="fade" ease="linear" time="4" />
         <scene name="Night" color="#000000" x="130" y="-250" width="1680" height="1050" zoom="2.4">
             <directive type="sprite" id="forest" src="epi-background_forest.jpg" x="0" y="0" scalex="-1" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="coast" src="epi-background_shore.jpg" x="0" y="0" scalex="-1" pivotx="50%" pivoty="50%" />
@@ -15500,7 +16082,7 @@
             <directive type="fade" ease="linear">
                 <keyframe time="0" color="#000000" alpha="100" />
             </directive>
-            <directive type="text" id="n1" width="17%" delay="7" x="27%" y="31%">~Player~!</directive>
+            <directive type="text" id="n1" width="17%" delay="5" x="27%" y="31%">~Player~!</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="fade" ease="linear">
@@ -15529,6 +16111,9 @@
                 <keyframe time="1" alpha="100" />
             </directive>
             <directive type="text" id="n3" width="15%" arrow="up" x="39%" y="57%">Oh, good. You're alive.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="n3b" width="25%" arrow="up" x="29%" y="57%">You looked so peaceful and blissful that I thought you were dead.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="fade" ease="linear">
@@ -15763,7 +16348,10 @@
             <directive type="move" id="p_hand_r" ease="linear">
                 <keyframe time="0.5" alpha="100" />
             </directive>
-            <directive type="text" id="n17" width="15%" arrow="right" x="23%" y="19%">(We shouldn't do this now, but...)</directive>
+            <directive type="text" id="n17" width="15%" arrow="right" x="23%" y="19%">(We shouldn't do this now...)</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="n17b" width="20%" arrow="left" x="67%" y="4%">(I mean, this isn't how I thought we would...)</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="text" id="d1" width="15%" arrow="up" x="4%" y="20%">I know you two are there! Come out!</directive>
@@ -16070,6 +16658,8 @@
             <directive type="clear-all" />
             <directive type="text" id="n25" width="13%" arrow="right" x="54%" y="12%">Thank you. I'm Nami, and his name is ~player~.</directive>
             <directive type="pause" />
+            <directive type="emit" count="1" />
+            <directive type="emit" />
         </scene>
         <scene transition="true" color="#000000" effect="fade" ease="linear" time="4" />
         <scene name="House" background="epi-background_room.jpg" width="1680" height="1050">
@@ -16097,6 +16687,12 @@
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="text" id="n2" width="20%" arrow="left" x="63%" y="20%">But I'm not complaining, it's much better than having to sleep outside naked.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="n2b" width="16%" arrow="right" x="22%" y="15%">Hey, about what happened earlier in the forest...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="n2c" width="17%" arrow="left" x="64%" y="12%">No this isn't the time for that. We have more important stuff to worry about now.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="camera" ease="linear">
@@ -16513,6 +17109,7 @@
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="fade" ease="linear">
+                <keyframe time="0" color="#000000" alpha="0" />
                 <keyframe time="0.5" color="#000000" alpha="100" />
             </directive>
             <directive type="wait" />
@@ -16553,6 +17150,7 @@
             </directive>
             <directive type="wait" />
             <directive type="fade" ease="linear">
+                <keyframe time="0" color="#000000" alpha="100" />
                 <keyframe time="0.5" color="#000000" alpha="0" />
             </directive>
             <directive type="text" id="s10" width="15%" arrow="left" x="82%" y="33%">Hard to believe that someone like you has made it to the Grand Line.</directive>
@@ -17563,26 +18161,67 @@
                 <keyframe time="2" y="-120" zoom="2.2" />
             </directive>
             <directive type="wait" />
-            <directive type="text" id="n5" width="23%" arrow="right" x="7%" y="13%">~Player~, I only made it this far with your help. Thank you.</directive>
+            <directive type="text" id="n5" width="23%" arrow="right" x="11%" y="13%">~Player~, I only made it this far with your help. Thank you.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="text" id="n6" width="16%" arrow="left" x="62%" y="14%">A promise is a promise, I'll pay back what I owe you.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
+            <directive type="sprite" id="nami3b" src="epi-treasure_n3b.png" x="585" y="123" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="sprite" id="nami4" src="epi-treasure_n4.png" x="540" y="-150" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" alpha="0" />
-            <directive type="move" id="nami4" ease="linear">
-                <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
-            </directive>
+            <directive type="text" id="n7" width="23%" arrow="right" x="10%" y="18%">Buuut... I was thinking... Since we're here maybe I can give you another reward too.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="n8" width="28%" arrow="left" x="63%" y="15%">Okay, maybe it's also a reward for me. But I want it...
+</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
             <directive type="move" id="nami3" ease="linear">
                 <keyframe time="0" alpha="100" />
                 <keyframe time="0.5" alpha="0" />
             </directive>
-            <directive type="text" id="n7" width="23%" arrow="right" x="10%" y="18%">Buuut... I was thinking... Since we're here maybe I can give you another reward too.</directive>
+            <directive type="move" id="nami3b" delay="1" ease="linear">
+                <keyframe time="0" alpha="0" />
+                <keyframe time="0.5" alpha="100" />
+            </directive>
+            <directive type="camera" ease="linear">
+                <keyframe time="0" y="-120" zoom="2.2" />
+                <keyframe time="1" y="-306" zoom="4.9" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="x0" width="23%" x="71%" y="29%">Nami leans close, puts her arms around, and kisses you.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
-            <directive type="text" id="n8" width="28%" arrow="left" x="63%" y="15%">Okay, maybe it's also a reward for me, but I want it. We're both already naked after all. And there's a bed here, so...
-</directive>
+            <directive type="text" id="x1" width="28%" x="68%" y="16%">The unexpected gesture catches you by surprise at first, but you return her advances nonetheless.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="sprite" id="p_hand1" src="epi-night_hand.png" x="706" y="505" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="p_hand2" src="epi-night_hand.png" x="868" y="505" scalex="-0.7" scaley="0.7" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="camera" delay="0.5" ease="linear">
+                <keyframe time="0" y="-306" zoom="4.9" />
+                <keyframe time="1" y="-120" zoom="2.2" />
+            </directive>
+            <directive type="move" id="nami3b" ease="linear">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.5" alpha="0" />
+            </directive>
+            <directive type="move" id="nami4" delay="0.5" ease="linear">
+                <keyframe time="0" alpha="0" />
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="p_hand1" delay="0.5" ease="linear">
+                <keyframe time="0" alpha="0" />
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="move" id="p_hand2" delay="0.5" ease="linear">
+                <keyframe time="0" alpha="0" />
+                <keyframe time="1" alpha="100" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="xn1" width="20%" arrow="right" x="14%" y="14%">After all that has happened between us, we should've started with that. Too bad it took so long.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="xn2" width="14%" arrow="left" x="63%" y="15%">But I don't want to stop here. Let's take this to the bed.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="fade" ease="linear">
@@ -17591,7 +18230,10 @@
             </directive>
             <directive type="wait" />
             <directive type="remove" id="nami3" />
+            <directive type="remove" id="nami3b" />
             <directive type="remove" id="nami4" />
+            <directive type="remove" id="p_hand1" />
+            <directive type="remove" id="p_hand2" />
             <directive type="sprite" id="background2" src="epi-background_treasure.jpg" x="0" y="200" scalex="2" scaley="2" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="bed2" src="epi-bed.png" x="282" y="400" scalex="1.6" scaley="2.4" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="nami5s" src="epi-shadow.png" x="722" y="662" scalex="4.161765" scaley="3.970588" pivotx="50%" pivoty="50%" rotation="-179.3102" />
@@ -17625,6 +18267,307 @@
             <directive type="wait" />
             <directive type="remove" id="nami5" />
             <directive type="remove" id="nami5s" />
+            <directive type="sprite" id="player2s" layer="1" src="epi-shadow.png" x="712" y="728" scalex="1.614815" scaley="8.558824" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="nami5bs" layer="1" src="epi-shadow.png" x="720" y="548" scalex="1.814815" scaley="6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="player2" layer="1" src="epi-treasure_p3.png" x="645" y="515" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="nami5b_back" layer="1" src="epi-treasure_n5b1b.png" x="630" y="373" scaley="0.9" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="nami5b_hair" layer="1" src="epi-treasure_n16_hair.png" x="711" y="431" scalex="1" scaley="0.5" pivotx="52%" pivoty="9%" />
+            <directive type="sprite" id="nami5b_chest" layer="1" src="epi-treasure_n5b1.png" x="631" y="468" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="nami5b_head1" layer="1" src="epi-treasure_n5b2a.png" x="731" y="421" scalex="1" scaley="1" pivotx="50%" pivoty="69%" />
+            <directive type="sprite" id="nami5b_head2" layer="1" src="epi-treasure_n5b2b.png" x="731" y="421" scalex="1" scaley="1" pivotx="50%" pivoty="69%" alpha="0" />
+            <directive type="sprite" id="nami5b_head3" layer="1" src="epi-treasure_n5b2c.png" x="731" y="477" scalex="1" scaley="1" pivotx="50%" pivoty="69%" alpha="0" />
+            <directive type="sprite" id="nami5b_head4" layer="1" src="epi-treasure_n5b2d.png" x="731" y="421" scalex="1" scaley="1" pivotx="50%" pivoty="69%" alpha="0" />
+            <directive type="sprite" id="nami5b_hand1" layer="1" src="epi-night_n9_left_hand1.png" x="817" y="750" pivotx="95%" pivoty="14%" rotation="15" />
+            <directive type="sprite" id="pen3" layer="1" src="epi-penis.png" x="821" y="660" scalex="0.9" scaley="1" pivotx="50%" pivoty="100%" rotation="0" />
+            <directive type="sprite" id="nami5b_hand2" layer="1" src="epi-night_n9_left_hand2.png" x="817" y="750" pivotx="95%" pivoty="14%" rotation="15" />
+            <directive type="sprite" id="nami5b_arm" layer="1" src="epi-dream_nami_arm.png" x="841" y="627" pivotx="42%" pivoty="67%" rotation="20" />
+            <directive type="sprite" id="nami5b_arm_right" layer="1" src="epi-treasure_n5b_rightarm.png" x="631" y="612" scalex="1.1" scaley="1.1" pivotx="0%" pivoty="33%" rotation="36.24686" />
+            <directive type="sprite" id="nami5b_head4b" layer="1" src="epi-treasure_n5b2d2.png" x="731" y="421" scalex="1" scaley="1" pivotx="50%" pivoty="69%" alpha="0" />
+            <directive type="wait" />
+            <directive type="fade" ease="linear">
+                <keyframe time="0" color="#000000" alpha="100" />
+                <keyframe time="1" color="#000000" alpha="0" />
+            </directive>
+            <directive type="wait" />
+            <directive type="camera">
+                <keyframe time="0" x="20" y="0" zoom="1.5" />
+                <keyframe time="1.5" x="0" y="61" zoom="2.3" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="xn3" width="16%" arrow="right" x="6%" y="28%">Hey there. I don't like how we left things back at the forest.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="xn4" width="20%" arrow="left" x="79%" y="29%">Have you caught me sneaking a peek every now and then, ~name~? I thought I was being subtle, but maybe not so much.
+</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="xn5" width="10%" arrow="right" x="14%" y="43%">...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="nami5b_head1" ease="linear">
+                <keyframe time="0" y="421" />
+                <keyframe time="0.5" y="449" />
+                <keyframe time="1" y="477" />
+            </directive>
+            <directive type="move" id="nami5b_head2" ease="linear">
+                <keyframe time="0" y="421" alpha="0" />
+                <keyframe time="0.5" y="449" alpha="0" />
+                <keyframe time="1" y="477" alpha="100" />
+            </directive>
+            <directive type="move" id="pen3" delay="0.75" ease="linear">
+                <keyframe time="0" rotation="0" />
+                <keyframe time="1" rotation="-2" />
+            </directive>
+            <directive type="move" id="nami5b_hair" ease="linear">
+                <keyframe time="0" y="431" scaley="0.5" />
+                <keyframe time="1" y="487" scaley="0.4" />
+            </directive>
+            <directive type="move" id="nami5b_chest" ease="linear">
+                <keyframe time="0" y="468" />
+                <keyframe time="1" y="478" />
+            </directive>
+            <directive type="move" id="nami5b_arm_right" ease="linear">
+                <keyframe time="0" x="631" y="612" rotation="36" />
+                <keyframe time="1" x="631" y="621" rotation="34" />
+            </directive>
+            <directive type="move" id="nami5b_arm" ease="linear">
+                <keyframe time="0" rotation="20" />
+                <keyframe time="1" rotation="23" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="xn6" width="10%" arrow="left" x="82%" y="60%">Mwah!
+</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="nami5b_head1" ease="linear">
+                <keyframe time="0" y="477" />
+                <keyframe time="0.5" y="449" />
+                <keyframe time="1" y="421" />
+            </directive>
+            <directive type="move" id="nami5b_head2" ease="linear">
+                <keyframe time="0" y="477" alpha="100" />
+                <keyframe time="0.5" y="449" alpha="100" />
+                <keyframe time="1" y="421" alpha="0" />
+            </directive>
+            <directive type="move" id="nami5b_head3" ease="linear">
+                <keyframe time="0" y="477" alpha="0" />
+                <keyframe time="0.5" y="449" alpha="0" />
+                <keyframe time="1" y="421" alpha="100" />
+            </directive>
+            <directive type="move" id="pen3" ease="linear">
+                <keyframe time="0" rotation="-2" />
+                <keyframe time="0.25" rotation="2" />
+                <keyframe time="0.5" rotation="1" />
+            </directive>
+            <directive type="move" id="nami5b_hair" ease="linear">
+                <keyframe time="0" y="487" scaley="0.4" />
+                <keyframe time="1" y="431" scaley="0.5" />
+            </directive>
+            <directive type="move" id="nami5b_chest" ease="linear">
+                <keyframe time="0" y="478" />
+                <keyframe time="1" y="468" />
+            </directive>
+            <directive type="move" id="nami5b_arm_right" ease="linear">
+                <keyframe time="0" x="631" y="621" rotation="34" />
+                <keyframe time="1" x="631" y="612" rotation="36" />
+            </directive>
+            <directive type="move" id="nami5b_arm" ease="linear">
+                <keyframe time="0" rotation="23" />
+                <keyframe time="1" rotation="20" />
+            </directive>
+            <directive type="text" id="xn7" width="20%" arrow="right" x="9%" y="32%">What? I just wanted to kiss you there too.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="nami5b_head3" ease="linear">
+                <keyframe time="0.5" alpha="0" />
+            </directive>
+            <directive type="text" id="xn8" width="10%" arrow="left" x="78%" y="43%">But also...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="nami5b_head1" ease="linear">
+                <keyframe time="0" y="421" />
+                <keyframe time="1.2" y="453" />
+                <keyframe time="1.6" y="470" />
+                <keyframe time="3" y="507" />
+            </directive>
+            <directive type="move" id="nami5b_head4" ease="linear">
+                <keyframe time="0" y="421" alpha="0" />
+                <keyframe time="1.2" y="453" alpha="0" />
+                <keyframe time="1.6" y="470" alpha="100" />
+                <keyframe time="3" y="507" alpha="100" />
+            </directive>
+            <directive type="move" id="nami5b_head4b" ease="linear">
+                <keyframe time="0" y="421" alpha="0" />
+                <keyframe time="1.2" y="453" alpha="0" />
+                <keyframe time="1.6" y="470" alpha="100" />
+                <keyframe time="3" y="507" alpha="100" />
+            </directive>
+            <directive type="move" id="nami5b_hair" ease="linear">
+                <keyframe time="0" y="431" scaley="0.5" />
+                <keyframe time="2" y="513" scaley="0.3" />
+            </directive>
+            <directive type="move" id="nami5b_chest" ease="linear">
+                <keyframe time="0" y="468" />
+                <keyframe time="2" y="478" />
+            </directive>
+            <directive type="move" id="nami5b_arm_right" ease="linear">
+                <keyframe time="0" x="631" y="612" rotation="36" />
+                <keyframe time="2" x="631" y="621" rotation="34" />
+            </directive>
+            <directive type="move" id="nami5b_arm" ease="linear">
+                <keyframe time="0" rotation="20" />
+                <keyframe time="2" rotation="23" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="xn9" width="10%" arrow="right" x="13%" y="59%">M-mmmh...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="remove" id="nami5b_head1" />
+            <directive type="remove" id="nami5b_head2" />
+            <directive type="remove" id="nami5b_head3" />
+            <directive type="move" id="nami5b_head4" loop="true" ease="linear">
+                <keyframe time="0" y="507" />
+                <keyframe time="1" y="487" />
+                <keyframe time="2" y="507" />
+            </directive>
+            <directive type="move" id="nami5b_head4b" loop="true" ease="linear">
+                <keyframe time="0" y="507" />
+                <keyframe time="1" y="487" />
+                <keyframe time="2" y="507" />
+            </directive>
+            <directive type="move" id="nami5b_hair" loop="true" ease="linear">
+                <keyframe time="0" y="513" scaley="0.3" />
+                <keyframe time="1" y="471" scaley="0.4" />
+                <keyframe time="2" y="513" scaley="0.3" />
+            </directive>
+            <directive type="move" id="nami5b_chest" loop="true" ease="linear">
+                <keyframe time="0" y="478" />
+                <keyframe time="1" y="468" />
+                <keyframe time="2" y="478" />
+            </directive>
+            <directive type="move" id="nami5b_arm_right" loop="true" ease="linear">
+                <keyframe time="0" x="631" y="621" rotation="34" />
+                <keyframe time="1" x="631" y="612" rotation="36" />
+                <keyframe time="2" x="631" y="621" rotation="34" />
+            </directive>
+            <directive type="move" id="nami5b_arm" loop="true" ease="linear">
+                <keyframe time="0" rotation="23" />
+                <keyframe time="1" rotation="20" />
+                <keyframe time="2" rotation="23" />
+            </directive>
+            <directive type="text" id="x3" width="20%" x="4%" y="11%">Nami's movements are clumsy at first. But soon she starts moving her tongue around the tip.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="xn10" width="10%" arrow="left" x="81%" y="58%">Mmmmh...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="x4" width="20%" x="78%" y="11%">It doesn't seem like you'll be able to last much longer.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="x5" width="14%" x="84%" y="32%">You tell Nami, but she doesn't stop.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="stop" id="nami5b_arm" />
+            <directive type="stop" id="nami5b_arm_right" />
+            <directive type="stop" id="nami5b_chest" />
+            <directive type="stop" id="nami5b_head4" />
+            <directive type="stop" id="nami5b_head4b" />
+            <directive type="stop" id="nami5b_hair" />
+            <directive type="sprite" id="juice2" layer="1" src="x-juice.png" x="827" y="602" scaley="1" pivotx="50%" pivoty="100%" alpha="0" rotation="180" />
+            <directive type="sprite" id="nami5b_head4c" layer="1" src="epi-treasure_n5b2e.png" x="731" y="507" scalex="1" scaley="1" pivotx="50%" pivoty="69%" alpha="0" />
+            <directive type="sprite" id="nami5b_head5" layer="1" src="epi-treasure_n5b2f.png" x="731" y="507" scalex="1" scaley="1" pivotx="50%" pivoty="69%" alpha="0" />
+            <directive type="wait" />
+            <directive type="fade" ease="linear">
+                <keyframe time="0" color="#FFFFFF" alpha="0" />
+                <keyframe time="1.5" color="#FFFFFF" alpha="100" />
+                <keyframe time="2.5" color="#FFFFFF" alpha="0" />
+            </directive>
+            <directive type="move" id="nami5b_head4c" delay="0.25">
+                <keyframe time="0" alpha="0" />
+                <keyframe time="0.5" alpha="100" />
+            </directive>
+            <directive type="wait" />
+            <directive type="move" id="juice2">
+                <keyframe time="0" y="602" alpha="0" />
+                <keyframe time="0" y="602" alpha="80" />
+                <keyframe time="2" y="630" alpha="100" />
+                <keyframe time="6" y="650" alpha="0" />
+            </directive>
+            <directive type="text" id="xn11" width="10%" arrow="right" x="9%" y="55%">Mmmm...?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="xn12" width="10%" arrow="left" x="81%" y="59%">&lt;i&gt;gulp&lt;/i&gt;</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="nami5b_head4" ease="linear">
+                <keyframe time="0" y="507" />
+                <keyframe time="2" y="421" />
+            </directive>
+            <directive type="move" id="nami5b_head4b" ease="linear">
+                <keyframe time="0" y="507" />
+                <keyframe time="2" y="421" />
+            </directive>
+            <directive type="move" id="nami5b_head4c" ease="linear">
+                <keyframe time="0" y="507" />
+                <keyframe time="2" y="421" />
+            </directive>
+            <directive type="move" id="nami5b_head5" ease="linear">
+                <keyframe time="0" y="507" alpha="0" />
+                <keyframe time="1" y="464" alpha="0" />
+                <keyframe time="2" y="421" alpha="100" />
+            </directive>
+            <directive type="move" id="nami5b_chest" ease="linear">
+                <keyframe time="0" y="478" />
+                <keyframe time="2" y="468" />
+            </directive>
+            <directive type="move" id="nami5b_arm_right" ease="linear">
+                <keyframe time="0" x="631" y="621" rotation="34" />
+                <keyframe time="2" x="631" y="612" rotation="36" />
+            </directive>
+            <directive type="move" id="nami5b_arm" ease="linear">
+                <keyframe time="0" rotation="23" />
+                <keyframe time="2" rotation="20" />
+            </directive>
+            <directive type="move" id="pen3" delay="0.25">
+                <keyframe time="0" rotation="1" />
+                <keyframe time="0.25" rotation="-3" />
+                <keyframe time="0.5" rotation="3" />
+                <keyframe time="0.75" rotation="0" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="xn13" width="20%" arrow="right" x="6%" y="23%">It doesn't taste like I was expecting. And it was so much...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="xn14" width="20%" arrow="left" x="78%" y="31%">It's only fair that you return the favor now, don't you think?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="fade">
+                <keyframe time="0" color="#000000" alpha="0" />
+                <keyframe time="1" color="#000000" alpha="100" />
+            </directive>
+            <directive type="wait" />
+            <directive type="remove" id="nami5b_arm" />
+            <directive type="remove" id="nami5b_arm_right" />
+            <directive type="remove" id="nami5b_back" />
+            <directive type="remove" id="nami5b_chest" />
+            <directive type="remove" id="nami5b_hair" />
+            <directive type="remove" id="nami5b_hand1" />
+            <directive type="remove" id="nami5b_hand2" />
+            <directive type="remove" id="nami5b_head4" />
+            <directive type="remove" id="nami5b_head4b" />
+            <directive type="remove" id="nami5b_head4c" />
+            <directive type="remove" id="nami5b_head5" />
+            <directive type="remove" id="nami5bs" />
+            <directive type="remove" id="juice2" />
+            <directive type="move" id="pen3">
+                <keyframe time="0" alpha="0" />
+            </directive>
+            <directive type="move" id="player2">
+                <keyframe time="0" alpha="0" />
+            </directive>
+            <directive type="move" id="player2s">
+                <keyframe time="0" alpha="0" />
+            </directive>
             <directive type="camera" ease="linear">
                 <keyframe time="0" x="20" y="0" zoom="1.5" />
                 <keyframe time="0" x="0" y="-64" zoom="1.4" />
@@ -17685,11 +18628,11 @@
             </directive>
             <directive type="move" id="p_hand_l" ease="linear">
                 <keyframe time="0" x="718" y="370" rotation="13" />
-                <keyframe time="0.5" x="559" y="416" rotation="9" />
+                <keyframe time="0" x="559" y="416" rotation="9" />
             </directive>
             <directive type="move" id="p_hand_r" ease="linear">
                 <keyframe time="0" x="881" y="370" rotation="-13" />
-                <keyframe time="0.5" x="1030" y="416" rotation="-9" />
+                <keyframe time="0" x="1030" y="416" rotation="-9" />
             </directive>
             <directive type="text" id="n13" width="20%" arrow="right" x="10%" y="12%">This is the closest you've ever been to me, so it's still embarrassing.</directive>
             <directive type="pause" />
@@ -17707,9 +18650,13 @@
             <directive type="sprite" id="breasts2b1" layer="1" src="epi-treasure_breasts2b.png" x="736" y="408" pivotx="100%" pivoty="0%" alpha="0" />
             <directive type="sprite" id="breasts2a2" layer="1" src="epi-treasure_breasts2.png" x="743" y="408" scalex="-1" pivotx="100%" pivoty="0%" alpha="0" />
             <directive type="sprite" id="breasts2b2" layer="1" src="epi-treasure_breasts2b.png" x="743" y="408" scalex="-1" pivotx="100%" pivoty="0%" alpha="0" />
-            <directive type="move" id="nami7" ease="linear">
+            <directive type="move" id="nami7" delay="1.5" ease="linear">
                 <keyframe time="0" alpha="100" />
                 <keyframe time="0" alpha="0" />
+            </directive>
+            <directive type="move" id="nami7b" delay="1" ease="linear">
+                <keyframe time="0" alpha="0" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="move" id="p_hand_l" ease="linear">
                 <keyframe time="0" x="559" y="416" scalex="-0.9" scaley="0.9" alpha="100" rotation="9" />
@@ -17723,11 +18670,7 @@
                 <keyframe time="1.5" x="881" y="375" scalex="0.8" scaley="0.8" alpha="0" rotation="-7" />
                 <keyframe time="2" x="881" y="375" scalex="0.8" scaley="0.8" alpha="100" rotation="-7" />
             </directive>
-            <directive type="move" id="nami8" ease="linear">
-                <keyframe time="0" alpha="0" />
-                <keyframe time="0" alpha="100" />
-            </directive>
-            <directive type="move" id="nami7b" ease="linear">
+            <directive type="move" id="nami8" delay="1" ease="linear">
                 <keyframe time="0" alpha="0" />
                 <keyframe time="0" alpha="100" />
             </directive>
@@ -17822,8 +18765,8 @@
                 <keyframe time="1" alpha="100" />
             </directive>
             <directive type="wait" />
-            <directive type="move" id="nami7b" ease="linear">
-                <keyframe time="0.5" alpha="0" />
+            <directive type="move" id="nami7b" delay="1" ease="linear">
+                <keyframe time="0" alpha="0" />
             </directive>
             <directive type="move" id="p_hand_l2" ease="linear">
                 <keyframe time="0" x="678" y="378" scalex="-0.8" scaley="0.8" alpha="100" rotation="-1" />
@@ -17910,11 +18853,11 @@
                 <keyframe time="0.5" alpha="100" />
             </directive>
             <directive type="wait" />
-            <directive type="move" id="nami9" ease="linear">
+            <directive type="move" id="nami9" delay="1" ease="linear">
                 <keyframe time="0" alpha="100" />
                 <keyframe time="0" alpha="0" />
             </directive>
-            <directive type="move" id="nami10" ease="linear">
+            <directive type="move" id="nami10" delay="1" ease="linear">
                 <keyframe time="0" alpha="0" />
                 <keyframe time="0" alpha="100" />
             </directive>
@@ -18016,13 +18959,13 @@
                 <keyframe time="4.5" y="630" alpha="100" />
                 <keyframe time="5.5" y="610" alpha="100" />
             </directive>
-            <directive type="move" id="vag1" delay="3.5" ease="linear">
+            <directive type="move" id="vag1" delay="4" ease="linear">
                 <keyframe time="0" alpha="100" />
-                <keyframe time="0.5" alpha="0" />
-            </directive>
-            <directive type="move" id="vag2" delay="3.5" ease="linear">
                 <keyframe time="0" alpha="0" />
-                <keyframe time="0.5" alpha="100" />
+            </directive>
+            <directive type="move" id="vag2" delay="4" ease="linear">
+                <keyframe time="0" alpha="0" />
+                <keyframe time="0" alpha="100" />
             </directive>
             <directive type="text" id="n24" width="16%" arrow="left" delay="2" x="61%" y="17%">Ngh... Slowly, please...</directive>
             <directive type="pause" />
@@ -18433,19 +19376,26 @@
                 <keyframe time="0" alpha="0" />
             </directive>
             <directive type="sprite" id="nami16s" src="epi-shadow.png" x="710" y="800" scalex="2.274074" scaley="3.941176" pivotx="50%" pivoty="50%" />
-            <directive type="sprite" id="player2s" src="epi-shadow.png" x="712" y="728" scalex="1.614815" scaley="8.558824" pivotx="50%" pivoty="50%" />
-            <directive type="sprite" id="player2" src="epi-treasure_p3.png" x="645" y="515" pivotx="50%" pivoty="50%" />
-            <directive type="sprite" id="nami16_hair" src="epi-treasure_n16_hair.png" x="707" y="132" pivotx="50%" pivoty="9%" />
-            <directive type="sprite" id="nami16_arm_l" src="epi-treasure_n16_arm2.png" x="884" y="521" pivotx="9%" pivoty="1%" rotation="-14" />
-            <directive type="sprite" id="nami16_arm_r" src="epi-treasure_n16_arm1.png" x="669" y="521" pivotx="91%" pivoty="1%" rotation="14" />
-            <directive type="sprite" id="nami16_leg_r" src="epi-treasure_n16_leg.png" x="613" y="593" pivotx="92%" pivoty="30%" rotation="15" />
-            <directive type="sprite" id="nami16_leg_l" src="epi-treasure_n16_leg.png" x="640" y="593" scalex="-1" pivotx="92%" pivoty="30%" rotation="-15" />
-            <directive type="sprite" id="pen3" src="epi-penis.png" x="821" y="660" scalex="0.9" pivotx="50%" pivoty="100%" />
-            <directive type="sprite" id="nami16" src="epi-treasure_n16.png" x="727" y="87" pivotx="50%" pivoty="50%" />
-            <directive type="sprite" id="nami16_breasts1" src="epi-treasure_breasts1.png" x="746" y="383" pivotx="50%" pivoty="0%" />
-            <directive type="sprite" id="nami16_breasts2" src="epi-treasure_breasts1b.png" x="746" y="383" pivotx="50%" pivoty="0%" />
-            <directive type="sprite" id="p_hand3l" src="epi-night_hand.png" x="601" y="637" scalex="1.1" scaley="1.1" pivotx="20%" pivoty="94%" rotation="20" />
-            <directive type="sprite" id="p_hand3r" src="epi-night_hand.png" x="1054" y="637" scalex="-1.1" scaley="1.1" pivotx="20%" pivoty="94%" rotation="-20" />
+            <directive type="sprite" id="nami16_hair" layer="1" src="epi-treasure_n16_hair.png" x="707" y="132" pivotx="50%" pivoty="9%" />
+            <directive type="sprite" id="nami16_arm_l" layer="1" src="epi-treasure_n16_arm2.png" x="884" y="521" pivotx="9%" pivoty="1%" rotation="-14" />
+            <directive type="sprite" id="nami16_arm_r" layer="1" src="epi-treasure_n16_arm1.png" x="669" y="521" pivotx="91%" pivoty="1%" rotation="14" />
+            <directive type="sprite" id="nami16_leg_r" layer="1" src="epi-treasure_n16_leg.png" x="613" y="593" pivotx="92%" pivoty="30%" rotation="15" />
+            <directive type="sprite" id="nami16_leg_l" layer="1" src="epi-treasure_n16_leg.png" x="640" y="593" scalex="-1" pivotx="92%" pivoty="30%" rotation="-15" />
+            <directive type="sprite" id="juice3" layer="1" src="x-juice.png" x="825" y="605" scalex="-1" scaley="1" pivotx="50%" pivoty="100%" rotation="180" />
+            <directive type="sprite" id="nami16" layer="1" src="epi-treasure_n16.png" x="727" y="87" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="nami16_breasts1" layer="1" src="epi-treasure_breasts1.png" x="746" y="383" pivotx="50%" pivoty="0%" />
+            <directive type="sprite" id="nami16_breasts2" layer="1" src="epi-treasure_breasts1b.png" x="746" y="383" pivotx="50%" pivoty="0%" />
+            <directive type="sprite" id="p_hand3l" layer="1" src="epi-night_hand.png" x="601" y="637" scalex="1.1" scaley="1.1" pivotx="20%" pivoty="94%" rotation="20" />
+            <directive type="sprite" id="p_hand3r" layer="1" src="epi-night_hand.png" x="1054" y="637" scalex="-1.1" scaley="1.1" pivotx="20%" pivoty="94%" rotation="-20" />
+            <directive type="move" id="player2s">
+                <keyframe time="0" alpha="100" />
+            </directive>
+            <directive type="move" id="player2">
+                <keyframe time="0" alpha="100" />
+            </directive>
+            <directive type="move" id="pen3">
+                <keyframe time="0" alpha="100" />
+            </directive>
             <directive type="wait" />
             <directive type="fade" ease="linear">
                 <keyframe time="1" color="#000000" alpha="0" />
@@ -18500,6 +19450,7 @@
                 <keyframe time="0.5" y="413" scalex="1" scaley="1" />
                 <keyframe time="0.55" y="413" scalex="1.05" scaley="1.05" />
                 <keyframe time="0.6" y="413" scalex="1" scaley="1" />
+                <keyframe time="1.4" y="383" scalex="1" scaley="0.95" />
                 <keyframe time="1.5" y="383" scalex="1" scaley="1" />
             </directive>
             <directive type="move" id="nami16_breasts2" delay="0.3" loop="true" ease="linear">
@@ -18534,19 +19485,27 @@
             <directive type="stop" id="nami16_leg_r" />
             <directive type="stop" id="p_hand3l" />
             <directive type="stop" id="p_hand3r" />
-            <directive type="sprite" id="nami16b" src="epi-treasure_n16b.png" x="727" y="87" pivotx="50%" pivoty="50%" alpha="0" />
-            <directive type="move" id="nami16b" ease="linear">
+            <directive type="sprite" id="nami16b" layer="1" src="epi-treasure_n16b.png" x="727" y="87" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="move" id="juice3">
+                <keyframe time="0" y="605" scaley="1" alpha="0" />
+                <keyframe time="0" y="605" scaley="1" alpha="100" />
+                <keyframe time="2" y="645" scaley="1.2" alpha="100" />
+            </directive>
+            <directive type="move" id="nami16b" delay="0.5" ease="linear">
                 <keyframe time="0.5" alpha="100" />
             </directive>
             <directive type="camera" ease="linear">
                 <keyframe time="0" x="0" y="-30" zoom="1.2" />
-                <keyframe time="1.5" x="0" y="-100" zoom="1.8" />
+                <keyframe time="1.5" x="0" y="120" zoom="2.5" />
+                <keyframe time="2.5" x="0" y="120" zoom="2.5" />
+                <keyframe time="4.5" x="0" y="-230" zoom="2.5" />
             </directive>
             <directive type="fade" delay="1" ease="linear">
                 <keyframe time="0" color="#FFFFFF" alpha="0" />
-                <keyframe time="2" color="#FFFFFF" alpha="100" />
+                <keyframe time="4.5" color="#FFFFFF" alpha="0" />
+                <keyframe time="6.5" color="#FFFFFF" alpha="100" />
             </directive>
-            <directive type="text" id="n37" width="15%" arrow="left" x="60%" y="20%">Kyaaaahhh!!!</directive>
+            <directive type="text" id="n37" width="10%" arrow="left" x="66%" y="22%">Kyaaaahhh!!!</directive>
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="remove" id="nami16" />
@@ -18564,6 +19523,7 @@
             <directive type="remove" id="pen3" />
             <directive type="remove" id="p_hand3l" />
             <directive type="remove" id="p_hand3r" />
+            <directive type="remove" id="juice3" />
             <directive type="move" id="bed3" ease="linear">
                 <keyframe time="0" alpha="100" />
             </directive>
@@ -18577,6 +19537,7 @@
             </directive>
             <directive type="sprite" id="player3s" src="epi-shadow.png" x="712" y="444" scalex="1.345588" scaley="19.70588" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="player3" src="epi-treasure_p2.png" x="540" y="-198" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" alpha="70" />
+            <directive type="sprite" id="juice4" src="x-juice.png" x="881" y="616" scalex="0.75" pivotx="50%" pivoty="50%" alpha="80" rotation="-167.7675" />
             <directive type="sprite" id="nami17" src="epi-treasure_n17.png" x="540" y="-198" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="nami18" src="epi-treasure_n17b.png" x="540" y="-198" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" alpha="0" />
             <directive type="sprite" id="player3_hand" src="epi-treasure_p2_hand.png" x="540" y="-198" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" alpha="70" />
@@ -18591,7 +19552,7 @@
             <directive type="text" id="n39" width="16%" arrow="left" x="72%" y="27%">I hope I didn't disappoint you either.</directive>
             <directive type="pause" />
             <directive type="clear-all" />
-            <directive type="move" id="nami17" ease="linear">
+            <directive type="move" id="nami17" delay="0.2" ease="linear">
                 <keyframe time="0" alpha="100" />
                 <keyframe time="1" alpha="0" />
             </directive>

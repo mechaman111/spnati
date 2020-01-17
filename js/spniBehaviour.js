@@ -426,7 +426,7 @@ State.prototype.selectImage = function (stage) {
 }
 
 State.prototype.applyCollectible = function (player) {
-    if (COLLECTIBLES_ENABLED && this.collectible && player.collectibles) {        
+    if (COLLECTIBLES_ENABLED && this.collectible && player.collectibles) {
         player.collectibles.some(function (collectible) {
             if (collectible.id === this.collectible.id) {
                 console.log(
@@ -435,8 +435,13 @@ State.prototype.applyCollectible = function (player) {
                     " on ID: "+
                     this.collectible.id
                 );
+
+		if (collectible.isUnlocked()) {
+                    console.log("Collectible already unlocked; returning");
+		    return;
+		}
                 
-                switch(this.collectible.op) {
+                switch (this.collectible.op) {
                 default:
                 case 'unlock':
                     collectible.unlock();

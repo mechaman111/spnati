@@ -77,7 +77,7 @@ Card.prototype.toString = function() {
 };
 
 Card.prototype.altText = function() {
-	return (this.rank >= 11 ? "JQKA"[this.rank-11] : this.rank) + ["♠", "♡", "♢", "♣"][this.suit];
+	return (this.rank >= 11 ? "JQKA"[this.rank-11] : this.rank) + String.fromCharCode(0x2660 + this.suit);
 };
 
 /************************************************************
@@ -193,6 +193,9 @@ function clearCard (player, i) {
 function displayCard (player, i, visible) {
     if (players[player].hand.cards[i]) {
         if (visible) {
+            if (typeof players[player].hand.cards[i].altText !== "function") {
+                Sentry.setExtra("altText_type", typeof players[player].hand.cards[i].altText);
+            }
             $cardCells[player][i].attr({ src: IMG + players[player].hand.cards[i] + ".jpg",
                                          alt: players[player].hand.cards[i].altText() });
         } else {
@@ -471,34 +474,12 @@ Hand.prototype.score = function() {
 
 // Sort the cards
 Hand.prototype.sort = function() {
-    switch (this.strength) {
-    case PAIR:
-    case TWO_PAIR:
-    case THREE_OF_A_KIND:
-    case FULL_HOUSE:
-    case FOUR_OF_A_KIND:
-        // Sort the cards such that the pair, triplet, etc. comes
-        // first, then the kickers. .value[] is sorted in the
-        // right order by .determine().
-        this.cards.sort(function(a, b) {
-            return this.value.indexOf(a.rank) - this.value.indexOf(b.rank);
-        }.bind(this));
-        break;
-    case STRAIGHT:
-    case STRAIGHT_FLUSH:
-        if (this.value[0] == 5) { // Wheel (5-A straight)
-            this.cards.sort(function(a, b) { return (b.rank % 13) - (a.rank % 13); }.bind(this));
-            break;
-        } // else fall through
-    case HIGH_CARD:
-    case FLUSH:
-    case ROYAL_FLUSH:
-        // For straights, value[] only holds the high card. For
-        // flushes and high cards, the above algorithm works, but this
-        // is more efficient.
-        this.cards.sort(function(a, b) { return b.rank - a.rank; }.bind(this));
-        break;
-    }
+    // Sort the cards such that the pair, triplet, etc. comes
+    // first, then the kickers. .value[] is sorted in the
+    // right order by .determine().
+    this.cards.sort(function(a, b) {
+        return this.value.indexOf(a.rank) - this.value.indexOf(b.rank);
+    }.bind(this));
 };
 
 /**********************************************************************
@@ -533,7 +514,8 @@ Hand.prototype.determine = function() {
 	/* start by collecting the ranks and suits of the cards */
 	this.ranks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     this.suits = [0, 0, 0, 0];
-	this.strength = NONE;
+    this.strength = NONE;
+    this.value = [];
 
 	this.cards.forEach(function(card) {
 		this.ranks[card.rank - 1]++;
@@ -566,13 +548,13 @@ Hand.prototype.determine = function() {
 			this.strength = have_pair.length == 2 ? TWO_PAIR : PAIR;
 			this.value = have_pair;
         }
+    }
 
-        for (var i = this.ranks.length-1; i > 0; i--) {
-            if (this.ranks[i] == 1) {
-                this.value.push(i+1);
-            }
+    for (var i = this.ranks.length-1; i > 0; i--) {
+        if (this.ranks[i] == 1) {
+            this.value.push(i+1);
         }
-	}
+    }
 	
 	/* look for straights and flushes */
 	if (this.strength == NONE) {
@@ -611,26 +593,20 @@ Hand.prototype.determine = function() {
 			}
 		}
 		
-		/* determine royal flush, straight flush, flush, straight, and high card */
+        /* determine royal flush, straight flush, flush, straight, and high card.
+           this.value[] has already been populated */
 		if (have_flush && have_straight == 14) {
 			this.strength = ROYAL_FLUSH;
-			this.value = [have_straight];
 		} else if (have_flush && have_straight) {
 			this.strength = STRAIGHT_FLUSH;
-			this.value = [have_straight];
 		} else if (have_straight) {
 			this.strength = STRAIGHT;
-			this.value = [have_straight];
 		} else {
 			this.strength = (have_flush ? FLUSH : HIGH_CARD);
-			this.value = [];
-			
-			for (var i = this.ranks.length-1; i > 0; i--) {
-				if (this.ranks[i] == 1) {
-					this.value.push(i+1);
-				}
-			}
 		}
+        if (have_straight == 5) { // Wheel, special case, sort ace last
+            this.value = [5, 4, 3, 2, 14];
+        }
 	}
 
 	/* stats for the log */
