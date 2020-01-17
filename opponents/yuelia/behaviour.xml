@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 8:19:41 PM on January 15, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 8:49:14 PM on January 16, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Yuelia</first>
@@ -120,6 +120,11 @@
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0">
+                <condition role="other" character="jolyne" sayingMarker="Stand" />
+                <state img="#-confused.png" marker="jolyne_seeingIt">What's that thing, Jolyne?</state>
+                <state img="#-confused.png" marker="jolyne_seeingIt">I &lt;i&gt;do&lt;/i&gt; see something behind you, Jolyne. What is it?</state>
+            </case>
             <case stage="0" id="32">
                 <condition role="other" character="kazuma" />
                 <state img="#-pouty.png" marker="kazuma_sparkly">I am NOT a moth! Moths are dusty! I am sparkly! I'm a butterfly!</state>
@@ -1847,6 +1852,12 @@
                 <state img="#-beaming.png" marker="emi_socks">&lt;i&gt;Ooh.&lt;/i&gt; I really like your socks, Emi! They're so pretty and colorful!</state>
                 <state img="#-beaming.png" marker="emi_cheerful">You're such a nice and cheerful person, Emi! I like people like that!</state>
             </case>
+            <case stage="1-8 10">
+                <condition role="target" character="sakura" stage="5" />
+                <test expr="~target.position~" value="left" />
+                <state img="#-neutral.png" marker="sakura_setUp">You know, Sakura, I really like that polka dot pattern on your undies. It's so cute and-</state>
+                <state img="#-neutral.png" marker="sakura_setUp">Don't you think it's really nice to be able to take some time to just have some fun, Saku-</state>
+            </case>
             <case stage="0-10" oneShotId="49" priority="405">
                 <condition role="target" character="meia" stage="0-5" timeInStage="0" saying="Mejarians" />
                 <condition role="self" notSaidMarker="meia_mejare" />
@@ -2346,11 +2357,12 @@
             <case stage="0-10">
                 <condition role="target" character="emi" stage="3" />
                 <state img="#-thinking.png" marker="emi_feelWeird">So, you said that your legs are some sort of replacements, right Emi? Does that feel weird at all?</state>
+                <state img="#-curious.png" marker="emi_noLegs">Hey, Emi? What do you do when you don't have your leg replacements with you? Does that ever happen?</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="gaige" stage="0" />
                 <state img="#-curious.png" marker="gaige_smart">So, you're Gaige? You seem like a really smart person! All those tools and the way you talk...</state>
-                <state img="#-curious.png" marker="gaige_beltSkull">Hey, Gaige? What's that kull symbol on your belt? Does it mean something?</state>
+                <state img="#-curious.png" marker="gaige_beltSkull">Hey, Gaige? What's that skull symbol on your belt? Does it mean something?</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="gaige" stage="1" />
@@ -2360,16 +2372,31 @@
             <case stage="0-10">
                 <condition role="target" character="gaige" stage="2" />
                 <state img="#-curious.png" marker="gaige_necklaceBits">I was wondering, Gaige, what're those little bits on that necklace you're wearing?</state>
-                <state img="#-curious.png" marker="gaige_wardrobe">So, Gaige? How dod you decide on what to wear? Because what you're wearing now seems like just a mix of everything.</state>
+                <state img="#-curious.png" marker="gaige_wardrobe">So, Gaige? How did you decide on what to wear? Because what you're wearing now seems like just a mix of everything.</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="gaige" stage="3" />
                 <state img="#-neutral.png" marker="gaige_goggles">So Gaige, why do you wear those goggles? They remind me of a pilot's goggles.</state>
-                <state img="#-neutral.png" marker="gaige_machines">You seem to know alot about machines and stuff, Gaige. How did you get interested in them?</state>
+                <state img="#-neutral.png" marker="gaige_machines">You seem to know a lot about machines and stuff, Gaige. How did you get interested in them?</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="gaige" stage="5" />
                 <state img="#-thinking.png" marker="gaige_cold">Hey Gaige? Why do you still have your stockings on? Are you sensitive to the cold?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="emi" stage="4" />
+                <state img="#-neutral.png" marker="emi_energy">It must take up a lot of energy to do all the running around you do, Emi. What do you eat to stay energized?</state>
+                <state img="#-curious.png" marker="emi_hobbies">So, do you have any other hobbies besides running, Emi?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="jolyne" stage="0" />
+                <state img="#-beaming.png" marker="jolyne_butterflyExtras">Oooh! You have pretty butterfly accessories! Where'd you get those?</state>
+                <state img="#-curious.png" marker="jolyne_tummyStar">Do you have a star on your tummy, Jolyne? Why is that there?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="jolyne" stage="1" />
+                <state img="#-curious.png" marker="jolyne_shoeBits">Hey, Jolyne? What are those little green bits on your shoes?</state>
+                <state img="#-curious.png" marker="jolyne_catEars">Hey, Jolyne? Why's your hat shaped like that? It kinda looks like cat ears.</state>
             </case>
             <case stage="0-10" priority="360">
                 <condition role="target" character="kizuna" consecutiveLosses="2" />
@@ -2705,6 +2732,30 @@
                 <condition role="target" character="amy" stage="2" />
                 <condition role="self" saidMarker="amy_books" />
                 <state img="#-content.png" marker="amy_fantasy">I definitely understand that, Amy! It's always fun to imagine yourself as a different person, or in a different place!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="gaige" stage="0" />
+                <condition role="self" saidMarker="gaige_beltSkull" />
+                <state img="#-confused.png" marker="gaige_inTheBox">How does a lunchbox do all that? Or is it something inside the lunchbox?</state>
+                <state img="#-thinking.png" marker="gaige_lifeBonus">Class mod? Is that like a Life bonus? It sounds like one.</state>
+                <state img="#-thinking.png" marker="gaige_whatLife">Fancy Mathematics and Death From Above? Those are some interesting special skill names. What is your Life anyway, Gaige?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="gaige" stage="0" />
+                <condition role="self" saidMarker="gaige_smart" />
+                <state img="#-thinking.png" marker="gaige_lessSmart">I don't think that things like those would make anyone seem any less smart, Gaige.</state>
+                <state img="#-shocked.png" marker="gaige_smarter">Do you mean that you're even smarter than you seem?! Wow!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="gaige" stage="2" />
+                <condition role="self" saidMarker="gaige_necklaceBits" />
+                <state img="#-curious.png" marker="gaige_necklace2">Really? But there must be some reason why you're wearing it. Do you just like the way it looks? Is it like a good luck charm maybe?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="gaige" stage="2" />
+                <condition role="self" saidMarker="gaige_wardrobe" />
+                <state img="#-thinking.png" marker="gaige_skullClothes">Really? So then, do a lot of your clothes have skulls on them, or was that just a coincidence this time?</state>
+                <state img="#-curious.png" marker="gaige_moodClothes">Okay. But do you have any clothes that you like to wear when you're in a certain mood? Like when you're really excited?</state>
             </case>
             <case stage="1-10">
                 <condition role="target" character="palutena" stage="2" />
@@ -3156,6 +3207,19 @@
                 <state img="#-neutral.png" marker="rainbowdash_passion">It's great that you have something that you're so passionate about, Dashie! </state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="gaige" stage="1" />
+                <condition role="self" saidMarker="gaige_bandage" />
+                <state img="#-nervous.png" marker="gaige_workplace">Is that kind of thing normal where you work, Gaige? Where do you work, anyway?</state>
+                <state img="#-shocked.png" marker="gaige_metalHow">A piece of metal! How did that even happen? </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="gaige" stage="1" />
+                <condition role="self" saidMarker="gaige_metalArm" />
+                <state img="#-shocked.png" marker="gaige_armWhy">What?! Why would you cut off your own arm, Gaige!?</state>
+                <state img="#-nervous.png" marker="gaige_armProblem">Was there something wrong with your other arm, Gaige? </state>
+                <state img="#-nervous.png" marker="gaige_armReplace">And... replacing your arm with a metal one hasn't caused you &lt;i&gt;any&lt;/i&gt; problems, Gaige?</state>
+            </case>
+            <case stage="0-10">
                 <condition role="target" character="megumin" stage="3" />
                 <state img="#-curious.png" marker="megumin_nervous">You okay, Megumin? You seem nervous all of a sudden.</state>
                 <state img="#-curious.png" marker="megumin_worried">What's wrong, Megumin? You seem worried about something.</state>
@@ -3468,6 +3532,18 @@
                 <condition role="target" character="aella" stage="3" />
                 <condition role="self" saidMarker="aella_comfyHome" />
                 <state img="#-content.png" marker="aella_somethingGreater">My best friend started off in a small, comfy home, Aella. I'm sure you'll move on to something greater soon.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="gaige" stage="3" />
+                <condition role="self" saidMarker="gaige_goggles" />
+                <state img="#-thinking.png" marker="gaige_explosions">Shrapnel? Are you usually near explosions, Gaige? And shouldn't you have protection for more than just your eyes for that?</state>
+                <state img="#-nervous.png" marker="gaige_moreProtection">Um... if you deal with those kinds of things often, shouldn't you be protecting more than just your eyes, Gaige?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="gaige" stage="3" />
+                <condition role="self" saidMarker="gaige_machines" />
+                <state img="#-curious.png" marker="gaige_movieBots">What kinds of things did you see them doing in movies, Gaige?</state>
+                <state img="#-curious.png" marker="gaige_bookBots">What exactly did you read about them that was so cool, Gaige?</state>
             </case>
             <case stage="1-10">
                 <condition role="target" character="joey" stage="2" />
@@ -3867,6 +3943,12 @@
                 <state img="#-confused.png" marker="tomoko_worried">Are you sure you're okay, Tomoko. I'm getting worried about you.</state>
                 <state img="#-confused.png" marker="tomoko_nervous">You seem to be getting very nervous, Tomoko. Are you sure you don't want to take a break?</state>
             </case>
+            <case stage="1-8 10">
+                <condition role="target" character="sakura" />
+                <test expr="~target.position~" value="left" />
+                <state img="#-sakuraShock.png" marker="sakura_WHAP">!?</state>
+                <state img="#-sakuraShock.png" marker="sakura_WHAP">Ow!</state>
+            </case>
             <case stage="6-8">
                 <condition role="target" character="megumin" saidMarker="yuelia_jointStrip" />
                 <state img="absent.png"></state>
@@ -3890,7 +3972,7 @@
                 <state img="#-nervous.png" marker="sakiZLS_whatHappened">Uuuh... What? What just happened, Saki?</state>
                 <state img="#-nervous.png">That... doesn't look good. Want some help, Saki?</state>
             </case>
-            <case stage="0-10">
+            <case stage="0 9">
                 <condition role="target" character="sakura" />
                 <state img="#-shocked.png">Look out!</state>
                 <state img="#-shocked.png">How did that happen?!</state>
@@ -3965,6 +4047,13 @@
         </trigger>
 
         <trigger id="female_large_chest_is_visible">
+            <case stage="1-8 10">
+                <condition role="target" character="sakura" />
+                <condition role="self" saidMarker="sakura_WHAP" />
+                <test expr="~target.position~" value="left" />
+                <state img="#-sakuraToss.png">Well, that's a little embarrassing for both of us, right Sakura?</state>
+                <state img="#-sakuraToss.png">That was unexpected. Let's hope it doesn't happen again.</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="palutena" sayingMarker="palutena_there" />
                 <state img="#-confused.png">Like what, Palutena? </state>
@@ -3977,7 +4066,7 @@
                 <condition role="target" character="palutena" sayingMarker="palutena_shorts" />
                 <state img="#-confused.png">Better than going without what, Palutena? Underwear? That's the only thing I can think of, since it's all you have left.</state>
             </case>
-            <case stage="0-10">
+            <case stage="0 9">
                 <condition role="target" character="sakura" />
                 <state img="#-nervous.png" marker="sakura_embarassing">That's probably a little embarrassing, Sakura.</state>
                 <state img="#-nervous.png" marker="sakura_whoops">That's a big "whoops!", eh Sakura?</state>
@@ -4042,6 +4131,16 @@
                 <condition role="target" character="mavis" />
                 <state img="#-shocked.png">Right! Your pan- Wait what?!</state>
                 <state img="#-shocked.png">I didn't expect that at all!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="gaige" />
+                <state img="#-curious.png" marker="gaige_comfySocks">What do you like about them, Gaige? Are they comfy? </state>
+                <state img="#-curious.png" marker="gaige_sockBonus">Why do you like them so much, Gaige? Do they give you some sort of bonus?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="jolyne" />
+                <state img="#-confused.png">You have that written on your waist? How odd.</state>
+                <state img="#-confused.png">Speaking of underwear... where are yours, Jolyne?</state>
             </case>
             <case stage="0">
                 <state img="#-beaming.png">This game is so intense!</state>
@@ -4110,6 +4209,11 @@
                 <condition role="target" character="joey" />
                 <state img="#-shocked.png">I didn't expect that one!</state>
                 <state img="#-shocked.png">How did you do that?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="jolyne" />
+                <state img="#-confused.png" marker="jolyne_forgotHow">How did you forget something like that, Jolyne? didn't your pants feel strange while you were walking around?</state>
+                <state img="#-thinking.png" marker="jolyne_onPurpose">I feel like that's something you would notice immediately, Jolyne. Did you do this on purpose?</state>
             </case>
             <case stage="1-10">
                 <condition filter="shaved" role="target" />
