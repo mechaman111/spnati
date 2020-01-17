@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 3:09:43 PM on January 10, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 8:01:33 PM on January 16, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Amy</first>
@@ -497,13 +497,18 @@
             <case stage="0-2" priority="300">
                 <condition role="other" character="sayori" />
                 <condition role="self" notSaidMarker="sayori_riri" />
-                <state img="#-chat.png" marker="sayori_riri">Sayori, can I call you Riri? Sayori just seems so formal. (&lt;i&gt;Is also kind of sounds like... satori. You know, death?&lt;/i&gt;) It's not like we use my real name, huh? </state>
+                <state img="#-chat.png" marker="sayori_riri">Sayori, can I call you Riri? Sayori just seems so formal. (&lt;i&gt;It also kind of sounds like... satori. You know, death?&lt;/i&gt;) It's not like we use my real name, huh? </state>
                 <state img="#-chat.png" marker="sayori_riri">Sayori, it's fine if I call you Riri like I used to, huh? (&lt;i&gt;It sounds way cuter...!&lt;/i&gt;) It's not like we use &lt;i&gt;my&lt;/i&gt; real name. </state>
             </case>
             <case stage="0-8" priority="300">
                 <condition role="other" character="guzma" stage="1-8" />
                 <condition role="self" saidMarker="amy_guzma_compose==3" notSaidMarker="amy_guzma_poem" />
                 <state img="#-cheer.png" marker="+amy_guzma_poem">I got it! I got it! Guzma, next hand, I have a poem for bug lovers! </state>
+            </case>
+            <case stage="3" priority="300">
+                <condition role="self" timeInStage="0" notSaidMarker="futaba_model_talk" />
+                <condition role="other" character="futaba" sayingMarker="amy_model_talk" />
+                <state img="#-happy.png" marker="+futaba_model_talk">I do~~! I actually like a lot of Western kits over stuff like Gunpla! </state>
             </case>
             <case stage="0-8">
                 <condition role="other" character="monika" stage="1" timeInStage="0" />
@@ -667,6 +672,12 @@
                 <condition role="other" character="monika" sayingMarker="resp-natsuki-20-rounds" />
                 <state img="#-annoyed.png">...</state>
             </case>
+            <case stage="3-8">
+                <condition role="self" saidMarker="futaba_model_talk==6" />
+                <condition role="other" character="natsuki" saidMarker="amy_shibuya" />
+                <condition role="other" character="futaba" />
+                <state img="#-happy.png">You could always join me, Nat~su~ki~! There's lots of great manga shops-- or maybe you'd like to check out a maid cafe? I'll cover the trip down as long as you buy me lunch while we're there! </state>
+            </case>
             <case stage="0-8" priority="201">
                 <condition role="other" character="natsuki" sayingMarker="say_gets_player" />
                 <condition role="other" character="sayori" />
@@ -726,7 +737,7 @@
             </case>
             <case stage="0-8" priority="156">
                 <condition role="other" character="mulan" stage="1" timeInStage="0" sayingMarker="honorable_others" />
-                <state img="#-hmm.png" marker="amy_SO">...I think I'd just really like it if someone acknowledged me. Not just in the "Oh! Senpai noticed me!"-type... but someone who takes me as a whole person. With my faults and my successes, just as I am. I think that'd be &lt;i&gt;perfect&lt;/i&gt;.</state>
+                <state img="#-hmm.png" marker="amy_SO">...I'd really like it if someone acknowledged me. Not just in the "Oh! Senpai noticed me!"-type... but someone who takes me as a whole person. Just as I am. I think that'd be &lt;i&gt;perfect&lt;/i&gt;.</state>
             </case>
             <case stage="0-8" priority="156">
                 <condition role="other" character="sakura" stage="1" timeInStage="0" sayingMarker="sakura_amy_music" />
@@ -850,6 +861,10 @@
                 <condition role="other" character="tharja" stage="1" timeInStage="0" />
                 <state img="#-sarcastic.png">~Player~, where do you meet all these... girls like me and the rest of the club, anyway? </state>
             </case>
+            <case stage="0-8">
+                <condition role="other" character="futaba" stage="4" timeInStage="0" />
+                <state img="#-happy.png">I'm glad you can respect the dungeoncraft, Futaba! </state>
+            </case>
             <case stage="0-8" id="63" priority="151">
                 <condition count="0" filter="yuri" />
                 <condition role="other" character="sayori" stage="0-3" sayingMarker="yuri-absent-1" />
@@ -958,8 +973,18 @@
             </case>
             <case stage="0-8" priority="142">
                 <condition role="self" saidMarker="amy_yuelia_get_jiggy==1" />
-                <condition role="other" character="yuelia" stage="2-7" />
-                <state img="#-sad.png" oneShotId="57">Well, Yuelia... slutty is like... well, people tend to be kind of offended if women enjoy their sexuality. Like... if you wanted to have sex with as many people as made you happy, someone would call you a slut. It's meant to be shameful, even if enjoying yourself isn't... </state>
+                <condition role="other" character="yuelia" stage="2-7" saidMarker="amy_anyoneFun" />
+                <state img="#-sad.png" oneShotId="57" marker="amy_yuelia_get_jiggy">Well, Yuelia... slutty is like... well, people tend to be kind of offended if women enjoy their sexuality. Like... if you wanted to have sex with as many people as made you happy, someone would call you a slut. It's meant to be shameful, even if enjoying yourself isn't... </state>
+            </case>
+            <case stage="0-8" priority="142">
+                <condition role="self" saidMarker="amy_yuelia_get_jiggy==1" />
+                <condition role="other" character="yuelia" stage="2-7" saidMarker="amy_pleaseExplain" />
+                <state img="#-sad.png" oneShotId="59" marker="amy_yuelia_get_jiggy">Well, Yuelia... slutty is like... well, people tend to be kind of offended if women enjoy their sexuality. Like... if you wanted to have sex with as many people as made you happy, someone would call you a slut. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="self" saidMarker="yuelia_virgin" />
+                <condition role="other" character="yuelia" stage="4-10" saidMarker="amy_specialConnection" />
+                <state img="#-happy.png">Mayyybe you and I'll have a special connection at the end of this, Yuelia~ </state>
             </case>
             <case stage="0-8" priority="141">
                 <condition role="other" character="raven" stage="2" sayingMarker="inventory_vibe" />
@@ -1027,7 +1052,7 @@
             </case>
             <case stage="0-8">
                 <condition role="other" character="yuelia" stage="8" saidMarker="amy_kinkyMeaning" />
-                <state img="#-happy.png">You know, something &lt;i&gt;sexy&lt;/i&gt;? Like... when you whisper in someone's ear that you want them inside of you, or you really want to feel them squeeze your breasts, or feel how wet and aroused you are! Like that!</state>
+                <state img="#-happy.png" oneShotId="60">You know, something &lt;i&gt;sexy&lt;/i&gt;? Like... when you whisper in someone's ear that you want them inside of you, or you really want to feel them squeeze your breasts, or feel how wet and aroused you are! Like that!</state>
             </case>
             <case stage="0-6" priority="140">
                 <condition role="other" character="natsuki" stage="2" timeInStage="0" />
@@ -1195,6 +1220,31 @@
                 <state img="#-chat.png" oneShotId="56" marker="+amy_ini_spider_facts">Spider fact for Ini! A brown recluse is actually really shy! But if you upset them, their bites can kill. Just like shy girls with glasses ! </state>
                 <state img="#-chat.png" oneShotId="50" marker="+amy_ini_spider_facts">Spider fact for Ini! Jumping spiders can leap 40 times their own body length. Can you imagine an athlete jumping almost 100 meters?</state>
             </case>
+            <case stage="3-8">
+                <condition role="self" saidMarker="futaba_model_talk==1" />
+                <condition role="other" character="futaba" />
+                <state img="#-focused.png" marker="+futaba_model_talk">Futaba, that Featherman stuff, are those like model kits? They look kind of like action figures... it'd be so cool to have an action figure of your own... </state>
+            </case>
+            <case stage="3-8">
+                <condition role="self" saidMarker="futaba_model_talk==2" />
+                <condition role="other" character="futaba" />
+                <state img="#-chat.png" marker="+futaba_model_talk">Futaba, I actually build most of my models myself. I really like these things called "Tyranids." They're little bug-dino monsters. But painting them is the best part.</state>
+            </case>
+            <case stage="3-8">
+                <condition role="self" saidMarker="futaba_model_talk==3" />
+                <condition role="other" character="futaba" />
+                <state img="#-hmm.png" marker="+futaba_model_talk">I used to be a lot clumsier, Futaba. But sticking your fingers together or missing with a knife is a quick teacher. &lt;br&gt;I guess you could say I put a little of myself into my work, though. </state>
+            </case>
+            <case stage="3-8">
+                <condition role="self" saidMarker="futaba_model_talk==5" />
+                <condition role="other" character="futaba" />
+                <state img="#-happy.png" marker="+futaba_model_talk">I'd love to be modelling friends with you, Futaba! Next time, let's go to Shibuya together, okay? </state>
+            </case>
+            <case stage="3-8">
+                <condition role="self" saidMarker="futaba_model_talk==4" />
+                <condition role="other" character="futaba" />
+                <state img="#-hmm.png" marker="+futaba_model_talk">How'd I get into models? One of my moms travels a bunch. When I was about 12, I... well, she'd bring me home model kits to build as a reward for good grades, and to help me focus on one task. </state>
+            </case>
             <case stage="0-8" totalRounds="10">
                 <condition count="2-4" filter="ddlc" />
                 <condition role="self" saidMarker="amy_gets_meta&lt;2" />
@@ -1253,6 +1303,30 @@
         </trigger>
 
         <trigger id="must_strip">
+            <case stage="0" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-chat.png">Are any of us &lt;i&gt;really&lt;/i&gt; human? Or are we just pixels and ink on someone's screen, Miko? #deepthoughts</state>
+            </case>
+            <case stage="1" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-sad.png">...Just like any spider, I'm pretty happy to do my own thing as long as nobody messes with me. Or is a small, vulnerable insect who's wandered too close to my trap... </state>
+            </case>
+            <case stage="2" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-chat.png">As long as someone treats me well, genitals and the like are all things I'm pretty flexible on. People are people. And most of them can be &lt;i&gt;great&lt;/i&gt; in bed. </state>
+            </case>
+            <case stage="3" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-happy.png">I'm glad you think &lt;i&gt;this&lt;/i&gt; is behaved! You've also been rather restrained as far as monologuing goes, Miko-sama. </state>
+            </case>
+            <case stage="4" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-loss.png">The &lt;i&gt;human&lt;/i&gt; guests? Of course not. But, I &lt;i&gt;am&lt;/i&gt; a spider. It's my nature to devour pestly bugs. </state>
+            </case>
+            <case stage="5" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-annoyed.png">First of all, I'm not &lt;i&gt;repressed&lt;/i&gt;. That doesn't make me &lt;i&gt;promiscuous&lt;/i&gt;. Second, &lt;i&gt;yes. I am exceptionally clean both medically and hygienically.&lt;/i&gt;</state>
+            </case>
             <case stage="0" totalRounds="0">
                 <condition role="other" character="natsuki" stage="0" />
                 <state img="#-sarcastic.png">...I'm a little surprised, Natsuki, but not &lt;i&gt;offended...&lt;/i&gt; Like &lt;i&gt;some&lt;/i&gt; people. </state>
@@ -1385,6 +1459,179 @@
                 <condition role="other" character="ini" stage="5-8" />
                 <state img="#-chat.png">I just think it's really important to treat a game like a game! And we're all winners here, huh? Even when you lose, it's not &lt;i&gt;that&lt;/i&gt; bad... </state>
             </case>
+            <case stage="0-7" priority="113">
+                <condition role="other" character="streaming-chan" saidMarker="amy_monikaA3" sayingMarker="amy_monikaB1" />
+                <condition count="0" filter="monika" />
+                <state img="#-annoyed.png" marker="amy_sc_ddlc">
+                    <alt-img stage="0-3 5-7">#-annoyed.png</alt-img>
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <text>Hate's a strong word. That's why I use it.</text>
+                </state>
+            </case>
+            <case stage="0-7" priority="112">
+                <condition role="self" saidMarker="amy_sc_ddlc&lt;3" />
+                <condition role="other" character="streaming-chan" sayingMarker="amy_yuriA1" />
+                <condition count="0" filter="yuri" />
+                <state img="#-happy.png" marker="amy_sc_ddlc">
+                    <alt-img stage="0-3 5-7">#-happy.png</alt-img>
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <text>Yuri…? Umm… Well, I really like her taste in books. I'm a big fan of emotional stuff, so horror and the like is a big hit with me, and she's not afraid of spiders! </text>
+                </state>
+            </case>
+            <case stage="0-7" priority="112">
+                <condition role="self" saidMarker="amy_sc_ddlc&lt;2" />
+                <condition role="other" character="streaming-chan" sayingMarker="amy_yuriB1" />
+                <condition count="0" filter="yuri" />
+                <state img="#-happy.png" marker="amy_sc_ddlc">
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <alt-img stage="0-3 5-7">#-happy.png</alt-img>
+                    <text>Yeah… it's kind of awkward, but I think beating her to the Inventory was super funny.</text>
+                </state>
+            </case>
+            <case stage="0-7" priority="112">
+                <condition role="self" saidMarker="amy_sc_ddlc&lt;2" />
+                <condition role="other" character="streaming-chan" sayingMarker="amy_natsukiA1" />
+                <condition count="0" filter="natsuki" />
+                <state marker="amy_sc_ddlc">
+                    <alt-img stage="0-3 5-7">#-sad.png</alt-img>
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <text>Oh! I think we were really close when we were growing up, but we sort of drifted apart.</text>
+                </state>
+            </case>
+            <case stage="0-7" priority="112">
+                <condition role="self" saidMarker="amy_sc_ddlc&lt;2" />
+                <condition role="other" character="streaming-chan" sayingMarker="amy_natsukiB1" />
+                <condition count="0" filter="natsuki" />
+                <state marker="amy_sc_ddlc">
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <alt-img stage="0-3 5-7">#-hmm.png</alt-img>
+                    <text>Well, she's sort of the reason I exist, right?</text>
+                </state>
+            </case>
+            <case stage="0-7" priority="112">
+                <condition role="self" saidMarker="amy_sc_ddlc&lt;2" />
+                <condition role="other" character="streaming-chan" sayingMarker="amy_natsukiC1" />
+                <condition count="0" filter="natsuki" />
+                <state marker="amy_sc_ddlc">
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <alt-img stage="0-3 5-7">#-hmm.png</alt-img>
+                    <text>I dunno. Sometimes it feels really hostile but…</text>
+                </state>
+            </case>
+            <case stage="0-7" priority="112">
+                <condition role="self" saidMarker="amy_sc_ddlc&lt;2" />
+                <condition role="other" character="streaming-chan" sayingMarker="amy_monikaA1" />
+                <condition count="0" filter="monika" />
+                <state marker="amy_sc_ddlc">
+                    <alt-img stage="0-3 5-7">#-annoyed.png</alt-img>
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <text>I don't care for Monika… but she let me into the club when Band kicked me out.</text>
+                </state>
+            </case>
+            <case stage="0-7" priority="112">
+                <condition role="self" saidMarker="amy_sc_ddlc&lt;2" />
+                <condition role="other" character="streaming-chan" sayingMarker="amy_sayoriA1" />
+                <condition count="0" filter="sayori" />
+                <state marker="amy_sc_ddlc">
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <alt-img stage="0-3 5-7">#-surprise.png</alt-img>
+                    <text>Riri? I actually only met her in high school, but she's so special to me! </text>
+                </state>
+            </case>
+            <case stage="0-7" priority="112">
+                <condition role="self" saidMarker="amy_sc_ddlc&lt;2" />
+                <condition role="other" character="streaming-chan" sayingMarker="amy_sayoriB1" />
+                <condition count="0" filter="sayori" />
+                <state marker="amy_sc_ddlc">
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <alt-img stage="0-3 5-7">#-happy.png</alt-img>
+                    <text>She's definitely the least complicated of the club. Well, besides ~player~!</text>
+                </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&lt;4" sayingMarker="amy_insecure1" />
+                <state img="#-surprise.png">I'm… isn't it obvious? I always feel like I'm missing something. </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=8" sayingMarker="amy_archetype1" />
+                <state img="#-annoyed.png">
+                    <alt-img stage="0-3 5-7">#-annoyed.png</alt-img>
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <text>I'm not just some stereotype, you know! I have hopes, dreams, and ambitions-- to um... exemplify myself! </text>
+                </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=8" sayingMarker="amy_collab1" />
+                <state img="#-happy.png">
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <alt-img stage="0-3 5-7">#-happy.png</alt-img>
+                    <text>Of course I do-- but... I kind of have a hard time working in teams... </text>
+                </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=8" sayingMarker="amy_discomfort1" />
+                <state img="#-hmm.png">
+                    <alt-img stage="0-3 5-7">#-hmm.png</alt-img>
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <text>That's really tough... on the one hand, I'm sort of a love letter, right? Like, someone had to love the idea of me or the game or something a &lt;i&gt;lot&lt;/i&gt; to put all this effort in. </text>
+                </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=8" sayingMarker="amy_kinks1" />
+                <state img="#-hmm.png">
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <alt-img stage="0-3 5-7">#-hmm.png</alt-img>
+                    <text>Huh? Oh! Yeah! I really want to tie someone up and have my way with them. </text>
+                </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&lt;4" sayingMarker="amy_add1" />
+                <state img="#-annoyed.png">
+                    <alt-img stage="0-3 5-7">#-annoyed.png</alt-img>
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <text>It's not funny to mock people for things outside their control, Streaming-chan... </text>
+                </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&lt;4" sayingMarker="amy_real1" />
+                <state img="#-ooooh.png">I'm Amy, dummy. Um... the real answer is that I'm sort of like a self-aware idea, if that makes sense? </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&lt;4" sayingMarker="amy_valid1" />
+                <state>
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <alt-img stage="0-3 5-7">#-hmm.png</alt-img>
+                    <text>...Um... do you think &lt;i&gt;you&lt;/i&gt; validate yourself through intimacy, Streaming-chan? </text>
+                </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=4" sayingMarker="amy_crossover1" />
+                <state>
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <alt-img stage="0-3 5-7">#-focused.png</alt-img>
+                    <text>&lt;i&gt;Allllll&lt;/i&gt; the time! I'd have so much fun and so many questions-- I mean, imagine a Literature Club without me!</text>
+                </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=4" sayingMarker="amy_first1" />
+                <state img="#-horny.png">My first time...? That's pretty personal but... </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=4" sayingMarker="amy_hobbies1" />
+                <state img="#-hmm.png">Um... I really like the idea of tabletop RPGs, but the gaming club's kinda... more about computer games. </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=4" sayingMarker="amy_sex1" />
+                <state>
+                    <alt-img stage="0-3 5-7">#-hmm.png</alt-img>
+                    <alt-img stage="4">#-loss.png</alt-img>
+                    <text>Do you mean... like you count each instance, or the number of people? </text>
+                </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=4" sayingMarker="amy_spiders1" />
+                <state img="#-surprise.png">Why &lt;i&gt;not&lt;/i&gt; spiders is the better question! I just like spiders, what's so weird about that? </state>
+            </case>
             <case stage="0" priority="101">
                 <condition role="other" character="mary" notSaidMarker="insanetrigger" />
                 <state img="#-surprise.png">...Huh? Is this some kind of roleplaying thing, Mary? </state>
@@ -1445,30 +1692,6 @@
                 <condition role="other" character="saki_zls" />
                 <state img="#-hmm.png">...This is going to sound cliche... but I love stuff about the soul. </state>
             </case>
-            <case stage="0">
-                <condition role="other" character="miko" />
-                <state img="#-chat.png">Are any of us &lt;i&gt;really&lt;/i&gt; human? Or are we just pixels and ink on someone's screen, Miko? #deepthoughts</state>
-            </case>
-            <case stage="1">
-                <condition role="other" character="miko" />
-                <state img="#-sad.png">...Just like any spider, I'm pretty happy to do my own thing as long as nobody messes with me. Or is a small, vulnerable insect who's wandered too close to my trap... </state>
-            </case>
-            <case stage="2">
-                <condition role="other" character="miko" />
-                <state img="#-chat.png">As long as someone treats me well, genitals and the like are all things I'm pretty flexible on. People are people. And most of them can be &lt;i&gt;great&lt;/i&gt; in bed. </state>
-            </case>
-            <case stage="3">
-                <condition role="other" character="miko" />
-                <state img="#-happy.png">I'm glad you think &lt;i&gt;this&lt;/i&gt; is behaved! You've also been rather restrained as far as monologuing goes, Miko-sama. </state>
-            </case>
-            <case stage="4">
-                <condition role="other" character="miko" />
-                <state img="#-loss.png">The &lt;i&gt;human&lt;/i&gt; guests? Of course not. But, I &lt;i&gt;am&lt;/i&gt; a spider. It's my nature to devour pestly bugs. </state>
-            </case>
-            <case stage="5">
-                <condition role="other" character="miko" />
-                <state img="#-annoyed.png">First of all, I'm not &lt;i&gt;repressed&lt;/i&gt;. That doesn't make me &lt;i&gt;promiscuous&lt;/i&gt;. Second, &lt;i&gt;yes. I am exceptionally clean both medically and hygienically.&lt;/i&gt;</state>
-            </case>
             <case stage="6">
                 <condition count="2-" filter="mean" />
                 <condition count="0" status="exposed" />
@@ -1515,15 +1738,39 @@
         </trigger>
 
         <trigger id="stripping">
-            <case stage="4">
+            <case stage="4" priority="300">
                 <condition count="0" character="monika" />
                 <condition role="other" character="miko" />
                 <state img="#-strip.png">I'm anxious just thinking about how I'd have to deal with Monika... and "human?" No. That girl's a monster. </state>
             </case>
-            <case stage="4">
+            <case stage="4" priority="300">
                 <condition role="other" character="monika" />
                 <condition role="other" character="miko" />
                 <state img="#-strip.png">...It's bad luck to speak ill of someone in the room. </state>
+            </case>
+            <case stage="1" priority="300">
+                <condition role="other" character="miko" stage="1-10" />
+                <state img="#-strip.png">You know, if you and your wife wanted to teach a naive, inexperienced &lt;i&gt;youkai&lt;/i&gt; together, I'd probably be into &lt;i&gt;that&lt;/i&gt; kind of obliteration.</state>
+            </case>
+            <case stage="1" priority="300">
+                <condition role="other" character="miko" stage="0" />
+                <state img="#-strip.png">Obliterate? Are you trying to get the weird spider girl drunk so you can have your way with her? Naughty, naughty, Miko-sama. </state>
+            </case>
+            <case stage="0" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-strip.png">...I guess #deepthoughts is better than #deep&lt;i&gt;thots&lt;/i&gt;... um... this was all a little bit of a surprise, but I'm not going to pass up the chance to see attractive people naked...! </state>
+            </case>
+            <case stage="2" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-strip.png">...Normally I prefer to do that &lt;i&gt;during&lt;/i&gt; sex but... hm... sorry, getting fidgety... I'll keep this ribbon, okay? </state>
+            </case>
+            <case stage="3" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-strip.png">Like I was saying, people are people, Miko! Youkai, deity, or mortal... </state>
+            </case>
+            <case stage="5" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-strip.png">...I'll have you know there are &lt;i&gt;zero&lt;/i&gt; incidents, ever, of spiders being an infectious disease vector on Earth! &lt;i&gt;Zero!&lt;/i&gt; </state>
             </case>
             <case stage="0" totalRounds="0">
                 <condition role="other" character="natsuki" stage="0" />
@@ -1634,13 +1881,93 @@
                 <condition role="other" character="ini" stage="5-8" />
                 <state img="#-strip.png">Well... if you're not used to any attention, it's pretty easy to appreciate being in the spotlight... so... </state>
             </case>
-            <case stage="1">
-                <condition role="other" character="miko" stage="1-10" />
-                <state img="#-strip.png">You know, if you and your wife wanted to teach a naive, inexperienced &lt;i&gt;youkai&lt;/i&gt; together, I'd probably be into &lt;i&gt;that&lt;/i&gt; kind of obliteration.</state>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_yuriA1" sayingMarker="amy_yuriA2" />
+                <state img="#-strip.png">We're both… skilled with hobby knives, I just use mine on plastic… I don't like that she's so dishonest with herself.</state>
             </case>
-            <case stage="1">
-                <condition role="other" character="miko" stage="0-10" />
-                <state img="#-strip.png">Obliterate? Are you trying to get the weird spider girl drunk so you can have your way with her? Naughty, naughty, Miko-sama. </state>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_yuriB1" sayingMarker="amy_yuriB2" />
+                <state img="#-strip.png">Um… Well, it's fun to make projects that people like, but sometimes you want to see if you can deliver something nobody expects, right?</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_natsukiA1" sayingMarker="amy_natsukiA2" />
+                <state img="#-strip.png">I dunno. Natsuki’s always been smart, but it felt like we kind of consolidated into our own interests…</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_natsukiB1" sayingMarker="amy_natsukiB2" />
+                <state img="#-strip.png">So it begs the question of: what am I to her? On one hand, I'm sort of a joke that's been taken literally and then taken too far, so I get why, as a person, she wouldn't love that.</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_natsukiC1" sayingMarker="amy_natsukiC2" />
+                <state img="#-strip.png"> I think part of a character like her is that she's someone you want to protect, right? You and I want to make people &lt;i&gt;feel&lt;/i&gt;, but not always in a good way.</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_monikaA1" sayingMarker="amy_monikaA2" />
+                <state img="#-strip.png">I'm… told I'm hard to work with in ensembles. ...Well, I think she had to. It’s a pretty small club, so… I guess she just choose to ignore me.</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_monikaB1" sayingMarker="amy_monikaB2" />
+                <state img="#-strip.png">If someone told you they were going to guide you, or at least be &lt;i&gt;helpful.&lt;/i&gt; Imagine this person turned on those people she was supposed to protect and subjected them to their worst selves. </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_sayoriA1" sayingMarker="amy_sayoriA2" />
+                <state img="#-strip.png">I just… I really admire the inner strength it takes to be happy. I know she spaces out too but…</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_sayoriB1" sayingMarker="amy_sayoriB2" />
+                <state img="#-strip.png">Natsuki and Yuri are kind of why I exist, so I borrow a little from the two of them. Monika… well, she's not the only one who can see the world for what it is.</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_insecure1" sayingMarker="amy_insecure2" />
+                <state img="#-strip.png">My ability to focus is pretty bad, and I tend to get bored easily. So, it feels like I'm watching people's lives from the outside, a lot. And it's hard to make friends. </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_archetype1" sayingMarker="amy_archetype2" />
+                <state img="#-strip.png">...I'm supposed to be the free spirit, or "lulrandum" girl. I'm fun but... kind of a challenge... </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_collab1" sayingMarker="amy_collab2" />
+                <state img="#-strip.png">Yeah... I don't envy your work, Streaming-chan... </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_discomfort1" sayingMarker="amy_discomfort2" />
+                <state img="#-strip.png">Lots of people do porn... or just have sex, you know? What's wrong with being erotic? Your whole job is built around exciting people, Nicole. </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_kinks1" sayingMarker="amy_kinks2" />
+                <state img="#-strip.png">You're literally kinkshaming me. &lt;i&gt;Literally&lt;/i&gt;. </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_add1" sayingMarker="amy_add2" />
+                <state img="#-strip.png">...But if I'm being honest, I think life is really hard when you buy into your own failings and stereotypes. There's one thing about owning what makes you &lt;i&gt;you&lt;/i&gt;, and another to be trying too hard to stand out-- &lt;i&gt;HEY!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_real1" sayingMarker="amy_real2" />
+                <state img="#-strip.png">I'm a bunch of things, but mostly I'm Just Amy. I'm one part a joke about literature being taken too figuratively, one part a fun effort to write someone that blends in &lt;i&gt;mostly&lt;/i&gt;... and one part just the idea to earmark story elements. </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_valid1" sayingMarker="amy_valid2" />
+                <state img="#-strip.png">No-- I think I validate myself based on the medium. If this were a Visual Novel, I'd be referencing a lot more than just poems-- art of all kinds. This is sexy, so I'm at my sexiest.</state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_crossover1" sayingMarker="amy_crossover2" />
+                <state img="#-strip.png">...A girl has to have &lt;i&gt;some&lt;/i&gt; secrets, right? </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_first1" sayingMarker="amy_first2" />
+                <state img="#-strip.png">It wasn't anything super scary or exciting? I'd been masturbating for a while so it's not like I wasn't... &lt;i&gt;used&lt;/i&gt; to stuff? ...We were both just really horny teenagers. It was fun, but not something special. </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_hobbies1" sayingMarker="amy_hobbies2" />
+                <state img="#-strip.png">...It can be also kind of hard to find people to play with. I run into that a lot... and um... you're not totally &lt;i&gt;wrong&lt;/i&gt;? </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_sex1" sayingMarker="amy_sex2" />
+                <state img="#-strip.png">...I'd say about four people, close to one per year since I started high school? And probably a handful of times with each of those? I'd love to date someone long term, but... why not have fun when you can? </state>
+            </case>
+            <case stage="0-7" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_spiders1" sayingMarker="amy_spiders2" />
+                <state img="#-strip.png">It's not like I'm secretly some kind of spider-demon of vengeance or weird etheric entity! It'd be puh-rettttty sweet if I was, though~! </state>
             </case>
             <case stage="0" priority="101">
                 <condition role="other" character="mary" notSaidMarker="insanetrigger" />
@@ -1693,22 +2020,6 @@
             <case stage="3">
                 <condition role="other" character="maki" />
                 <state img="#-strip.png">...And if they're hard to notice... it doesn't mean they don't... </state>
-            </case>
-            <case stage="0">
-                <condition role="other" character="miko" />
-                <state img="#-strip.png">...I guess #deepthoughts is better than #deep&lt;i&gt;thots&lt;/i&gt;... um... this was all a little bit of a surprise, but I'm not going to pass up the chance to see attractive people naked...! </state>
-            </case>
-            <case stage="2">
-                <condition role="other" character="miko" />
-                <state img="#-strip.png">...Normally I prefer to do that &lt;i&gt;during&lt;/i&gt; sex but... hm... sorry, getting fidgety... I'll keep this ribbon, okay? </state>
-            </case>
-            <case stage="3">
-                <condition role="other" character="miko" />
-                <state img="#-strip.png">Like I was saying, people are people, Miko! Youkai, deity, or mortal... </state>
-            </case>
-            <case stage="5">
-                <condition role="other" character="miko" />
-                <state img="#-strip.png">...I'll have you know there are &lt;i&gt;zero&lt;/i&gt; incidents, ever, of spiders being an infectious disease vector on Earth! &lt;i&gt;Zero!&lt;/i&gt; </state>
             </case>
             <case stage="6" priority="30">
                 <condition count="2-" filter="mean" />
@@ -1770,6 +2081,30 @@
             <case stage="3" priority="550">
                 <condition role="other" character="ini" stage="0-4" />
                 <state img="#-stripped.png" marker="+amy_ini_spider_facts">Hm...? I'm going to hold onto the ribbon a little longer... but if you want to know about spiders, I can definitely tell you, Ini! </state>
+            </case>
+            <case stage="1" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-stripped.png">I'm not so sure about that, Miko. I'm a pretty tough metafictional entity, even if I can't do stuff like Monika. Plus, I'm mostly here for the banter. I can see pretty much anything on the internet. Or in person. </state>
+            </case>
+            <case stage="2" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-happy.png">You can't be serious! ...I was being serious! Humans are fine too, but... a goddess and her wife? You have to be &lt;i&gt;prettty&lt;/i&gt; knowledgable. </state>
+            </case>
+            <case stage="3" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-stripped.png">...Oral's valid as far as sex goes... ribbon... twisting under my fingers... tongues... ohoho~...</state>
+            </case>
+            <case stage="4" priority="300">
+                <condition role="other" character="miko" />
+                <state img="custom:stripped">I think we can &lt;i&gt;all&lt;/i&gt; enjoy cute girls doing cute things. Hm? </state>
+            </case>
+            <case stage="5" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-stripped.png">You're not going to help me? What good &lt;i&gt;are&lt;/i&gt; you!? </state>
+            </case>
+            <case stage="6" priority="300">
+                <condition role="other" character="miko" />
+                <state img="#-sad.png">...It hurts my feelings when you call me a dirty tramp. Whatever I am, Miko-sama, I'm not unclean. (&lt;i&gt;Even if I don't mind being dirty...&lt;/i&gt;) </state>
             </case>
             <case stage="1" totalRounds="0">
                 <condition role="other" character="natsuki" stage="0" />
@@ -1907,6 +2242,194 @@
                 <condition role="other" character="ini" stage="5-8" />
                 <state img="#-chat.png">Well... I'd love a compliment or two coming my way, Ini~ </state>
             </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_yuriA2" sayingMarker="amy_yuriA3" />
+                <state>
+                    <alt-img stage="1 3 5-6 8">#-stripped.png</alt-img>
+                    <alt-img stage="2 7">#-annoyed.png</alt-img>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <text>She tries so hard, but it's hard to be friends with a girl who wants so badly to be saved, but… honestly can get a little oppressive. </text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_yuriB2" sayingMarker="amy_yuriB3" />
+                <state>
+                    <alt-img stage="1 3 5-6 8">#-stripped.png</alt-img>
+                    <alt-img stage="2 7">#-happy.png</alt-img>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <text>Plus, it’s &lt;i&gt;hilarious&lt;/i&gt; to upstage people. </text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_natsukiA2" sayingMarker="amy_natsukiA3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="1 3-6 8">#-stripped.png</alt-img>
+                    <alt-img stage="2 7">#-hmm.png</alt-img>
+                    <text> I really do wish we were as good of friends as we once were… Though &lt;i&gt;that&lt;/i&gt; kind of friendship wouldn’t be so bad either… I think Natsuki’s really only as straight as a plastic ruler. </text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_natsukiB2" sayingMarker="amy_natsukiB3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="1 3-6 8">#-stripped.png</alt-img>
+                    <alt-img stage="2 7">#-chat.png</alt-img>
+                    <text>...But I think, in a place like this, we can get along pretty well. It's a bit like facing your ideas but not needing to own them as much as inspire them, I guess? </text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_natsukiC2" sayingMarker="amy_natsukiC3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="1 3-6 8">#-stripped.png</alt-img>
+                    <alt-img stage="2 7">#-hmm.png</alt-img>
+                    <text>If we make her life hard, doesn't she feel &lt;i&gt;more&lt;/i&gt; sympathetic? Are we pushing her to be more of the archetype she's supposed to be, or are we delivering for her fans by being harsh? </text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_monikaA2" sayingMarker="amy_monikaA3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="1 3 5-6 8">#-stripped.png</alt-img>
+                    <alt-img stage="2 7">#-annoyed.png</alt-img>
+                    <text> At least in the Literature Club, I can explore new versions of myself, right? We're all just a series of personas, after all. </text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_monikaB2" sayingMarker="amy_monikaB3" />
+                <state img="#-annoyed.png">Imagine knowing you only know because your flaw, your &lt;i&gt;otherness&lt;/i&gt; made them forget about you. &lt;br&gt;The monster cheerily killed my friends. And I'm the only one who remembered it because &lt;i&gt;she forgot I existed.&lt;/i&gt;</state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_sayoriA2" sayingMarker="amy_sayoriA3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="1 3 5-6 8">#-stripped.png</alt-img>
+                    <alt-img stage="2 7">#-hmm.png</alt-img>
+                    <text>I really do respect her. I'm like a magnet that sticks to the biggest… biggest other magnet. She's more like a candle, slowly burning away. It's hard to be a light when you're burning yourself...</text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_sayoriB2" sayingMarker="amy_sayoriB3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="1-3 6-8">#-singing.png</alt-img>
+                    <alt-img stage="5">#-stripped.png</alt-img>
+                    <text> ...Though I'm more like a bat! I can hear the melodies of the strings and spheres, but… Monika sees them. She can play them like a piano. I just recognize the music</text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_insecure2" sayingMarker="amy_insecure3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="1-3 6-8">#-sad.png</alt-img>
+                    <alt-img stage="5">#-stripped.png</alt-img>
+                    <text> Mostly I worry that people will love my friends for who they are, but people just… put up with me. I know some people in my life really &lt;i&gt;do&lt;/i&gt; love me. But, I always worry I'm an idea that's wrong or bad and that I have to stop being myself to be actually happy… Sorry, I kind of rambled there… </text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_archetype2" sayingMarker="amy_archetype3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="1 3 5-6 8">#-stripped.png</alt-img>
+                    <alt-img stage="2 7">#-hmm.png</alt-img>
+                    <text>...Hm... would I be written with enough witticism to actually be satirical, I wonder? Or am I just here to shitpost? </text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_collab2" sayingMarker="amy_collab3" />
+                <state img="#-happy.png">
+                    <alt-img stage="1-3 6-8">#-happy.png</alt-img>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="5">#-stripped.png</alt-img>
+                    <text>Honestly, collaborations are the most fun part of an art project, even though I can be all over the place. ♪ &lt;i&gt;But all these pieces and parts of me / Could be something much larger than me / Some day~&lt;/i&gt; ♪</text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_discomfort2" sayingMarker="amy_discomfort3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="1-2 6-7">#-happy.png</alt-img>
+                    <alt-img stage="3 5 8">#-stripped.png</alt-img>
+                    <text>If I were a &lt;i&gt;real&lt;/i&gt; real person, I'd probably be a lot different too, right? There's no reason I can't have fun on my terms. Both for what I'm made to do and what I'm going to do. &lt;i&gt;Psst&lt;/i&gt;, that's probably you, ~player~~</text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_kinks2" sayingMarker="amy_kinks3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="2 7">#-horny.png</alt-img>
+                    <alt-img stage="1 3 5-6 8">#-stripped.png</alt-img>
+                    <text>I'm a nightmare girl for a nightmare world~ ♪</text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_add2" sayingMarker="amy_add3" />
+                <state img="#-annoyed.png">--And don't badmouth my friends! They're people, not some weird mental health case study. Respect them, or I &lt;i&gt;will&lt;/i&gt; go full spork on you, Streaming-chan! </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_real2" sayingMarker="amy_real3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="1-3 6-8">#-happy.png</alt-img>
+                    <alt-img stage="5">#-stripped.png</alt-img>
+                    <text>Mostly, though, seriously! I'm Just Amy. And I'm whatever the story needs. And really, c'mon, Dan Salvato, you didn't add &lt;i&gt;one&lt;/i&gt; oversexed high schooler? It's so boring without me! </text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_valid2" sayingMarker="amy_valid3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="1 3 5-6 8">#-stripped.png</alt-img>
+                    <alt-img stage="2 7">#-happy.png</alt-img>
+                    <text>That said, sex is great, so why be ashamed of liking and admitting that?</text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_crossover2" sayingMarker="amy_crossover3" />
+                <state img="#-singing.png">
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="1-3 6-8">#-singing.png</alt-img>
+                    <alt-img stage="5">#-stripped.png</alt-img>
+                    <text>...That's weird. I always thought of it like being a worm who can view an apple from the outside, rather than just chewing his way through it... </text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_first2" sayingMarker="amy_first3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="1 3-6 8">#-stripped.png</alt-img>
+                    <alt-img stage="2 7">#-happy.png</alt-img>
+                    <text>Ehehe~ I think there's plenty of special prospects out there in the future. If your best memory of sex is your first... that's terrible! </text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_hobbies2" sayingMarker="amy_hobbies3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="2 7">#-sarcastic.png</alt-img>
+                    <alt-img stage="1 3 5-6 8">#-stripped.png</alt-img>
+                    <text>Know yourself, and you'll win every battle, I think~ And what's wrong with any of that stuff, &lt;i&gt;Streaming-chan&lt;/i&gt;? </text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_sex2" sayingMarker="amy_sex3" />
+                <state>
+                    <alt-img stage="2 7">#-sarcastic.png</alt-img>
+                    <alt-img stage="1 3 5-6 8">#-stripped.png</alt-img>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <text>If you're hitting on me, I'll have to pass. I don't like the idea of having my pictures on the internet, thanks... </text>
+                </state>
+            </case>
+            <case stage="1-8" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="amy_spiders2" sayingMarker="amy_spiders3" />
+                <state>
+                    <alt-img stage="4">custom:stripped</alt-img>
+                    <alt-img stage="2 7">#-singing.png</alt-img>
+                    <alt-img stage="1 3 5-6 8">#-stripped.png</alt-img>
+                    <text>Ehehe~... I'm just Amy, in all my spinny, shiny webs~ </text>
+                </state>
+            </case>
             <case stage="8" priority="101">
                 <condition role="other" character="haru" saidMarker="theoven" />
                 <state img="#-stripped.png">Ah, nope! The pizza just came out extra crispy, is all! And speaking of crisp, &lt;i&gt;cute&lt;/i&gt; lines on my trim job, hmm? </state>
@@ -1929,7 +2452,7 @@
             </case>
             <case stage="1">
                 <condition role="other" character="saki_zls" />
-                <state img="#-stripped.png">Well... poems and music are pretty similar, huh? I'd hoped so,anyway... </state>
+                <state img="#-stripped.png">Well... poems and music are pretty similar, huh? I'd hoped so, anyway... </state>
             </case>
             <case stage="2">
                 <condition role="other" character="saki_zls" />
@@ -1950,30 +2473,6 @@
             <case stage="4">
                 <condition role="other" character="maki" />
                 <state img="custom:stripped">...Have some style or &lt;i&gt;bite&lt;/i&gt;. Huh, Maki? </state>
-            </case>
-            <case stage="1">
-                <condition role="other" character="miko" />
-                <state img="#-stripped.png">I'm not so sure about that, Miko. I'm a pretty tough metafictional entity, even if I can't do stuff like Monika. Plus, I'm mostly here for the banter. I can see pretty much anything on the internet. Or in person. </state>
-            </case>
-            <case stage="2">
-                <condition role="other" character="miko" />
-                <state img="#-happy.png">You can't be serious! ...I was being serious! Humans are fine too, but... a goddess and her wife? You have to be &lt;i&gt;prettty&lt;/i&gt; knowledgable. </state>
-            </case>
-            <case stage="3">
-                <condition role="other" character="miko" />
-                <state img="#-stripped.png">...Oral's valid as far as sex goes... ribbon... twisting under my fingers... tongues... ohoho~...</state>
-            </case>
-            <case stage="4">
-                <condition role="other" character="miko" />
-                <state img="custom:stripped">I think we can &lt;i&gt;all&lt;/i&gt; enjoy cute girls doing cute things. Hm? </state>
-            </case>
-            <case stage="5">
-                <condition role="other" character="miko" />
-                <state img="#-stripped.png">You're not going to help me? What good &lt;i&gt;are&lt;/i&gt; you!? </state>
-            </case>
-            <case stage="6">
-                <condition role="other" character="miko" />
-                <state img="#-sad.png">...It hurts my feelings when you call me a dirty tramp. Whatever I am, Miko-sama, I'm not unclean. (&lt;i&gt;Even if I don't mind being dirty...&lt;/i&gt;) </state>
             </case>
             <case stage="7" priority="30">
                 <condition count="1-" filter="mean" />
@@ -4041,11 +4540,11 @@
             </case>
             <case stage="0-10">
                 <condition role="target" character="mulan" stage="0" />
-                <state img="#-hmm.png">Did you say your name was Ping Fa...? Fa Ping...? ...Are &lt;i&gt;you&lt;/i&gt; impersonating a boy? </state>
+                <state img="#-hmm.png">Did you say your name was Ping Fa...? Fa Ping...? ...Are &lt;i&gt;you&lt;/i&gt; impersonating a &lt;i&gt;boy?&lt;/i&gt; </state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="mulan" stage="2" />
-                <state img="#-sad.png">...I have two moms, so I take it &lt;i&gt;really&lt;/i&gt; presonally when someone makes me look like I'm being hateful. </state>
+                <state img="#-sad.png">...I have two moms, so I take it &lt;i&gt;really&lt;/i&gt; personally when someone makes me look like I'm being hateful. </state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="emi" stage="0" />
@@ -4500,7 +4999,7 @@
             </case>
             <case stage="0-10">
                 <condition role="target" character="mulan" stage="3" />
-                <state img="#-sarcastic.png">...I'm sure your reasons for doing... &lt;i&gt;that&lt;/i&gt; are more important than my annoyance, but I'm not good at keeping that thing bottled up, so there. </state>
+                <state img="#-sarcastic.png">...I'm sure your reasons for doing... &lt;i&gt;that&lt;/i&gt; are more important than my annoyance, but I'm not good at keeping things bottled up, so there. </state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="emi" stage="1" />
@@ -7269,12 +7768,8 @@
                 <state img="#-surprise.png">Hmph... I know it's not what you want but... Sayori... I hope you'll feel better after you get your head out of the clouds... kind of like your fluffy... &lt;i&gt;gah!&lt;/i&gt; </state>
             </case>
             <case stage="0-10" priority="382">
-                <condition role="target" character="futaba" stage="6" saidMarker="glasses_table" sayingMarker="on_her_glasses" />
+                <condition role="target" character="futaba" saidMarker="glasses_table" sayingMarker="on_her_glasses" />
                 <state img="#-horny.png">...Huh. That's kinda hot. &lt;i&gt;And&lt;/i&gt; nothing a little sink time won't fix~. I'm glad she's the smart one. </state>
-            </case>
-            <case stage="0-10" id="58">
-                <condition role="target" character="futaba" stage="6" />
-                <state img="#-sarcastic.png">A little grooming would take you a lot further than just skipping panties when getting dressed, Futaba. </state>
             </case>
             <case stage="0-10" id="196">
                 <condition role="target" character="monika" stage="8" />
@@ -7305,6 +7800,10 @@
             <case stage="0-10" id="20">
                 <condition role="target" character="haru" sayingMarker="booty" />
                 <state img="#-horny.png">O-oh... dang. Does anyone have a fan? I'm actually... w-wow...</state>
+            </case>
+            <case stage="0-10" id="58">
+                <condition role="target" character="futaba" />
+                <state img="#-sarcastic.png">A little grooming would take you a lot further than just skipping panties when getting dressed, Futaba. </state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="ini" />
@@ -8316,7 +8815,7 @@
                 <state img="#-horny.png">Like what you see, ~name~? That's good. I'm a show, don't tell kind of singer-&lt;i&gt;CUM&lt;/i&gt;-poet~ ♪</state>
             </case>
             <case stage="9">
-                <state img="#-masturbate_a.png">That whole barely legal thing isn't quite as fun of an angle when it's two girls... but, on the other hand, it's twice as many girls. Sounds good, right, ~name~? </state>
+                <state img="#-masturbate_a.png" oneShotId="58">That whole barely legal thing isn't quite as fun of an angle when it's two girls... but, on the other hand, it's twice as many girls. Sounds good, right, ~name~? </state>
                 <state img="#-masturbate_c.png">You know, I'm about to graduate. From school. But I could graduate on to some kinky fetishes if you just tell me, ~name~~ ♫</state>
                 <state img="#-masturbate_b.png">I'm stupid horny right now. Anything that comes out of my mouth I'm liable to definitely not remember... ♫~ </state>
                 <state img="#-masturbate_c.png">It's doing it for &lt;i&gt;me&lt;/i&gt;, ~name~. Don't stop. </state>
@@ -8734,6 +9233,31 @@
             <case stage="9-10">
                 <condition role="other" character="sayori" stage="4" timeInStage="0" />
                 <state img="#-singing.png">♪ Come down, come down, come down from your holy mountain~ / I'm down, I'm down to put your shame on a billboard for a second ♪/ Sometimes, sometimes the only way out is through, through~ ♪</state>
+            </case>
+            <case stage="10" priority="143">
+                <condition role="self" saidMarker="amy_yuelia_post_questions32" notSaidMarker="amy_yuelia_post_questions33" />
+                <condition role="other" character="yuelia" saidMarker="amy_q3How" />
+                <state img="#-ooooh.png" marker="amy_yuelia_post_questions33">I've never done it either but like... when I think about it, I'd love to have a boy inside of me... um. You're &lt;i&gt;really&lt;/i&gt; literal, so I'd want his penis in my vagina, and I'd like to kiss another girl's vagina with my mouth and tongue... like that! </state>
+            </case>
+            <case stage="10" priority="143">
+                <condition role="self" saidMarker="amy_yuelia_post_questions32" notSaidMarker="amy_invites_yuelia" />
+                <condition role="other" character="yuelia" stage="10" saidMarker="amy_q3NeverDone" />
+                <state img="#-surprise.png" marker="amy_invites_yuelia">Well... if you wanted, we could make love? I'd be really gentle! </state>
+            </case>
+            <case stage="10" priority="143">
+                <condition role="self" saidMarker="amy_yuelia_post_questions42" notSaidMarker="amy_yuelia_post_questions43" />
+                <condition role="other" character="yuelia" stage="10" saidMarker="amy_q4Hold" />
+                <state img="#-surprise.png" marker="amy_yuelia_post_questions43">Oh... you're such a cinnamon roll. ...They'd definitely be holding onto you the whole time, Yuelia! </state>
+            </case>
+            <case stage="10" priority="143">
+                <condition role="self" saidMarker="amy_yuelia_post_questions42" notSaidMarker="amy_yuelia_post_questions43" />
+                <condition role="other" character="yuelia" stage="10" saidMarker="amy_q4Scary" />
+                <state img="#-surprise.png" marker="amy_yuelia_post_questions43">Oh...! That's okay, Yuelia. Um... I guess it's not for everyone... </state>
+            </case>
+            <case stage="10" priority="143">
+                <condition role="self" saidMarker="amy_yuelia_post_questions63" notSaidMarker="amy_yuelia_post_questions64" />
+                <condition role="other" character="yuelia" stage="10" saidMarker="amy_whatIsAnal" />
+                <state img="#-hmm.png" marker="amy_yuelia_post_questions64">I've heard some people say it feels sort of uncomfortable at first, but then it feels kind of amazing? I've never done it myself, but... apparently boys go crazy for it. </state>
             </case>
             <case stage="10">
                 <condition role="self" saidMarker="amy_yuelia_post_questions6" notSaidMarker="amy_yuelia_post_questions63" />
