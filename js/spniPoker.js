@@ -195,6 +195,9 @@ function displayCard (player, i, visible) {
         if (visible) {
             if (typeof players[player].hand.cards[i].altText !== "function") {
                 Sentry.setExtra("altText_type", typeof players[player].hand.cards[i].altText);
+                Sentry.setExtra("toString_type", typeof players[player].hand.cards[i].toString);
+                Sentry.setExtra("card_type", typeof players[player].hand.cards[i]);
+                Sentry.setExtra("altText_prototype_type", typeof Card.prototype.altText);
             }
             $cardCells[player][i].attr({ src: IMG + players[player].hand.cards[i] + ".jpg",
                                          alt: players[player].hand.cards[i].altText() });
