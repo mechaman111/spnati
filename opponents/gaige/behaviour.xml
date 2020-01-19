@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 3:38:39 PM on January 17, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 5:31:03 PM on January 19, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Gaige</first>
@@ -43,13 +43,13 @@
     <start />
 
     <wardrobe>
-        <clothing name="Socks" generic="Socks" position="legs" type="major" plural="true" />
-        <clothing name="Panties" generic="Panties" position="lower" type="important" plural="true" />
-        <clothing name="Shirt" generic="Shirt" position="upper" type="important" />
-        <clothing name="Skirt" generic="Skirt" position="lower" type="major" />
-        <clothing name="Shoes and glove" generic="Shoes and glove" position="other" type="extra" plural="true" />
-        <clothing name="Vest" generic="Vest" position="upper" type="minor" />
-        <clothing name="Toolbelt" generic="Toolbelt" position="waist" type="extra" />
+        <clothing name="socks" generic="socks" position="legs" type="minor" plural="true" />
+        <clothing name="panties" generic="panties" position="lower" type="important" plural="true" />
+        <clothing name="shirt" generic="shirt" position="upper" type="important" />
+        <clothing name="skirt" generic="skirt" position="lower" type="major" />
+        <clothing name="shoes and glove" generic="shoes and glove" position="other" type="extra" plural="true" />
+        <clothing name="vest" generic="vest" position="upper" type="minor" />
+        <clothing name="toolbelt" generic="toolbelt" position="waist" type="extra" />
     </wardrobe>
 
     <poses>
@@ -114,7 +114,7 @@
         <trigger id="swap_cards">
             <case stage="0-7">
                 <state img="#-calm.png">Gimme ~cards~.</state>
-                <state img="#-calm.png">Lemme have ~cards~</state>
+                <state img="#-calm.png">Lemme have ~cards~.</state>
                 <state img="#-calm.png">I need ~cards~.</state>
                 <state img="#-thinking.png">Hmm... Guess I'll trade ~cards~.</state>
                 <state img="#-thinking.png">Eh... ~cards~ should work.</state>
@@ -321,6 +321,14 @@
                 <condition role="other" character="nami" />
                 <state img="#-happy.png">Nah, don't worry about it. My arm's not the worst reason someone's had for staring at me.</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="jessie" />
+                <state img="#-calm.png">I didn't buy it, I &lt;i&gt;made&lt;/i&gt; it! It's &lt;i&gt;way&lt;/i&gt; better than that stock Hyperion crap.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="jessie" />
+                <state img="#-thinking.png">Huh, well, I guess Pandora kinda is one big junkyard, but no, I'm a Vault Hunter.</state>
+            </case>
         </trigger>
 
         <trigger id="must_strip_winning">
@@ -505,6 +513,14 @@
                 <state img="#-stripping.png">Don't worry, the most dangerous thing I have with me right now is my mind... and Deathtrap...</state>
             </case>
             <case stage="0">
+                <condition role="other" character="jessie" />
+                <state img="#-stripping.png">Well, I didn't exactly &lt;i&gt;lose&lt;/i&gt; it. I cut it off after I got a really cool idea!</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="jessie" />
+                <state img="#-stripping.png">Yeah, like bank vaults, except way bigger and way more ancient. Some say they contain tons of riches!</state>
+            </case>
+            <case stage="0">
                 <state img="#-stripping.png">Alright, nothing too exciting for now. Just my toolbelt.</state>
                 <state img="#-stripping.png">I'll just take off my toolbelt. Not like I'm using any of this junk right now anyway.</state>
             </case>
@@ -536,13 +552,111 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="2" priority="141">
+                <condition role="other" character="yuelia" stage="1-10" saidMarker="gaige_armProblem" sayingMarker="gaige_painful" />
+                <state img="#-happy.png">Nah, not really. If you injure yourself badly enough, the adrenaline just takes care of the pain. Connecting my arm is the part that sucked ass. Nerves and whatnot.</state>
+            </case>
             <case stage="1">
                 <condition role="other" character="tomoko" stage="0-8" />
                 <state img="#-thinking.png">Well that and the ability to blow the faces off of people who pose a threat to you.</state>
             </case>
+            <case stage="1" priority="102">
+                <condition role="other" character="yuelia" saidMarker="gaige_whatLife" sayingMarker="gaige_adventures" />
+                <state img="#-excited.png">Oh yeah, totally! Like this one time, I tried to find a new body for this Loader, and he kept trying to kill me, so I turned him into a talking gun!</state>
+            </case>
+            <case stage="3" priority="102">
+                <condition role="other" character="yuelia" saidMarker="gaige_moodClothes" sayingMarker="gaige_thisMorning" />
+                <state img="#-stripped.png">I felt like wearing my skull shirt, duh.</state>
+            </case>
             <case stage="3" priority="101">
                 <condition role="other" character="nami" saidMarker="gaige_vault" />
                 <state img="#-stripped.png">Just be ready for a lot of people trying to kill you. Like &lt;i&gt;a lot&lt;/i&gt;. With guns, and explosives, and saws, and forklift exoskeletons, and forklift &lt;i&gt;robots&lt;/i&gt;, and...</state>
+            </case>
+            <case stage="1" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_inTheBox" sayingMarker="gaige_lunchBox" />
+                <state img="#-happy.png">Nah, you're not thinking outside the box! You can put whatever you want in a lunchbox!</state>
+            </case>
+            <case stage="1" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_inTheBox" sayingMarker="gaige_smallBox" />
+                <state img="#-happy.png">You'd be surprised how compact technology has become! I mean, I can fit Deathtrap inside of my arm!</state>
+            </case>
+            <case stage="1" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_lessSmart" />
+                <state img="#-calm.png">I just mean, it's like, I don't sound &lt;i&gt;dumb&lt;/i&gt;, just not &lt;i&gt;smart&lt;/i&gt;, you see now?</state>
+            </case>
+            <case stage="1" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_lifeBonus" sayingMarker="gaige_lifeBonus2" />
+                <state img="#-thinking.png">Uh... Well, it gives me a bonus to gun damage, and shooting people is what I do. Is that what you mean?</state>
+            </case>
+            <case stage="1" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_lifeBonus" sayingMarker="gaige_more" />
+                <state img="#-happy.png">Oh yeah, I got a bunch! One gives me more assault rifle damage, one gives me a bonus to accuracy and reload speed, and so on. It's good to have options!</state>
+            </case>
+            <case stage="1" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_smarter" sayingMarker="gaige_superSmart" />
+                <state img="#-happy.png">&lt;i&gt;Pilot?&lt;/i&gt; Hah, &lt;i&gt;I wish&lt;/i&gt;! No one in their right mind would let &lt;i&gt;me&lt;/i&gt; fly!</state>
+            </case>
+            <case stage="1" priority="101">
+                <condition role="other" character="yuelia" var="~other~" saidMarker="gaige_smarter" sayingMarker="gaige_dontUnderstand" />
+                <state img="#-wink.png">Well thanks, ~other~, and don't worry, I can explain what you didn't understand later.</state>
+            </case>
+            <case stage="2" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_armReplace" sayingMarker="gaige_digistruct" />
+                <state img="#-calm.png">You know, Digistruct? Building physical objects from data? You don't know that?</state>
+            </case>
+            <case stage="2" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_armReplace" sayingMarker="gaige_breaks" />
+                <state img="#-happy.png">Break? Hah! What am I, an amateur?... I mean techincally I am, but still...</state>
+            </case>
+            <case stage="2" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_armWhy" sayingMarker="gaige_deathTrap" />
+                <state img="#-claptrap.png">Oh, Deathtrap is my killer robot! I designed him for a science fair... and got third place...</state>
+            </case>
+            <case stage="2" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_armWhy" sayingMarker="gaige_morbid" />
+                <state img="#-claptrap.png">I could've, but it would've been inelegant, and ugly, and like a million times less badass.</state>
+            </case>
+            <case stage="2" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_metalHow" />
+                <state img="#-stripped.png">I mean yeah, these are the kinds of risks you take in shop. Haven't you ever heard of people losing fingers on saws and stuff? It happens.</state>
+            </case>
+            <case stage="2" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_workplace" sayingMarker="gaige_sanctuary" />
+                <state img="#-happy.png">Oh, Sanctuary's this city built on top of an old mining ship. Used to be near Three Horns, but we had a space laser problem not to long ago, so now it's flying near the Highlands.</state>
+                <state img="#-happy.png">Oh, Sanctuary's this city built on top of an old mining ship. Safest place on Pandora - relatively speaking.</state>
+            </case>
+            <case stage="2" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_workplace" sayingMarker="gaige_blackSmith" />
+                <state img="#-stripped.png">Huh, yeah, I guess you could make that comparison. Although I guess blacksmithes don't fix holes in people's walls.</state>
+            </case>
+            <case stage="3" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_skullClothes" sayingMarker="gaige_skullMeaning" />
+                <state img="#-stripped.png">Not really. I just think they're really cool.</state>
+            </case>
+            <case stage="3" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_skullClothes" sayingMarker="gaige_moreSkulls" />
+                <state img="#-stripped.png">Well, I wore my skull panties today too, but you're gonna have to get me to lose again if you want to see them.</state>
+            </case>
+            <case stage="4" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_explosions" sayingMarker="gaige_saidYes" />
+                <state img="#-stripped.png">I've got my shield for all the other crap, but it doesn't help in the shop... Don't ask me why.</state>
+            </case>
+            <case stage="4" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_explosions" sayingMarker="gaige_badSituations" />
+                <state img="#-stripped.png">Psychos.</state>
+                <state img="#-stripped.png">Vault Hunting.</state>
+            </case>
+            <case stage="4" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_moreProtection" />
+                <state img="#-happy.png">Aw, but what's adventure without a little danger?</state>
+            </case>
+            <case stage="6" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_comfySocks" sayingMarker="gaige_niceStripes" />
+                <state img="#-happy.png">Thanks, I think so too!</state>
+            </case>
+            <case stage="6" priority="101">
+                <condition role="other" character="yuelia" saidMarker="gaige_comfySocks" sayingMarker="gaige_socksMake" />
+                <state img="#-happy.png">You should totally ask! I bet you'd rock them!</state>
             </case>
             <case stage="4">
                 <condition role="other" character="dust" />
@@ -551,6 +665,14 @@
             <case stage="2">
                 <condition role="other" character="nami" />
                 <state img="#-happy.png">Nah, I'm not a pirate. I just like skulls.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="jessie" />
+                <state img="#-happy.png">Oh, sorry, &lt;i&gt;I said I cut it off!&lt;/i&gt; This way, I can summon Deathtrap wherever and whenever I want!</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="jessie" />
+                <state img="#-stripped.png">I mean, some &lt;i&gt;say&lt;/i&gt; they contain tons of riches inside, but the last one we opened just had an alien demon thing inside.</state>
             </case>
             <case stage="6">
                 <condition count="2-4" filter="shaved" status="crotch_visible" />
@@ -1276,6 +1398,10 @@
         </trigger>
 
         <trigger id="masturbating">
+            <case stage="8" oneShotId="6">
+                <condition role="other" character="yuelia" />
+                <state img="#-calm.png">I'm not sensitive to cold, I just wasn't expecting my fingers to be so cold.</state>
+            </case>
             <case stage="8">
                 <condition role="self" timeInStage="3" />
                 <state img="#-calm.png">Ah... My fingers finally warmed up...</state>
