@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 1:42:20 AM on January 20, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 1:41:57 PM on January 20, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Panty</first>
@@ -856,6 +856,11 @@
 
         <trigger id="must_strip">
             <case stage="0">
+                <condition role="other" character="natsuki" saying="Are you really doing a cosplay of Panty" />
+                <test expr="~natsuki.position~" value="left" />
+                <state img="#-really.png" marker="panty_natsuki_cosplay">A cospla- what now?</state>
+            </case>
+            <case stage="0">
                 <condition role="other" character="palutena" />
                 <state img="#-really.png">Uh, yeah. Obviously I was trying to lose, Stripper. </state>
             </case>
@@ -926,10 +931,6 @@
             <case stage="4">
                 <condition role="other" character="pit" />
                 <state img="#-excitednoblush.png">Yo Pit. You like food right? I got a real delicious meal for ya.</state>
-            </case>
-            <case stage="0">
-                <condition role="other" character="natsuki" />
-                <state img="#-really.png">A cospla- what now?</state>
             </case>
             <case stage="3">
                 <condition role="other" character="natsuki" />
@@ -1708,6 +1709,11 @@
                 <test expr="~background~" value="street" />
                 <state img="#-happy.png">Time to show these guys what we're made of!</state>
             </case>
+            <case stage="1-5">
+                <condition count="1-2" gender="female" role="other" var="otherfemale" />
+                <condition filter="human_male" />
+                <state img="#-impressed.png" oneShotId="319" marker="panty_fmk">Ever played Fuck, Marry, Kill? Who would you pick out of me, ~otherfemale~, and ~name~?</state>
+            </case>
             <case stage="0" totalRounds="0">
                 <state img="#-happy.png">Let's start getting naked! ~Name~, you volunteering to go first?</state>
                 <state img="#-happy.png">Here we go! Sluttiest chick strips first.</state>
@@ -1819,11 +1825,6 @@
                 <condition filter="twintails" role="target" />
                 <condition count="1" filter="twintails" />
                 <state img="#-cocky.png" oneShotId="266">Your time to shine, twin tails.</state>
-            </case>
-            <case stage="1-5" priority="0">
-                <condition gender="female" role="other" />
-                <condition filter="human_male" />
-                <state img="#-impressed.png" oneShotId="319" marker="panty_fmk">Ever played Fuck, Marry, Kill? Who would you pick out of me, ~otherfemale~, and ~name~?</state>
             </case>
             <case stage="0-7" priority="0">
                 <condition filter="glasses" role="target" />
