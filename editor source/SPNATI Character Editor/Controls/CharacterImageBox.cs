@@ -301,7 +301,7 @@ namespace SPNATI_Character_Editor.Controls
 						Font font = (italics ? _italicFont : _textFont);
 						SizeF textSize = g.MeasureString(text, font);
 						word.Width = textSize.Width;
-						height = Math.Max(textSize.Height, height);
+						height = Math.Max(textSize.Height, height) - 2;
 
 						if (word.Width >= remainingWidth)
 						{

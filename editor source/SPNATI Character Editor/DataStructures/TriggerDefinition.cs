@@ -481,6 +481,11 @@ namespace SPNATI_Character_Editor
 			return new string[] { "Tag", "Label" };
 		}
 
+		public int[] GetColumnWidths()
+		{
+			return null;
+		}
+
 		public string GetLookupCaption()
 		{
 			return "Select a Case Type";

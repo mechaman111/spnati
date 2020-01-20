@@ -116,6 +116,11 @@ namespace SPNATI_Character_Editor.Providers
 			return new string[] { "Name", "Id", "Character", "Folder" };
 		}
 
+		public int[] GetColumnWidths()
+		{
+			return null;
+		}
+
 		public ListViewItem FormatItem(IRecord record)
 		{
 			Costume skin = record as Costume;

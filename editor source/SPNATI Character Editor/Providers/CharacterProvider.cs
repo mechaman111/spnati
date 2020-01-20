@@ -100,6 +100,11 @@ namespace SPNATI_Character_Editor.Providers
 			return new string[] { "Name", "Folder", "Last Update", "Source" };
 		}
 
+		public int[] GetColumnWidths()
+		{
+			return null;
+		}
+
 		public ListViewItem FormatItem(IRecord record)
 		{
 			OpponentStatus status = Listing.Instance.GetCharacterStatus(record.Key);

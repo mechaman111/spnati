@@ -66,6 +66,11 @@ namespace Desktop.Providers
 			return new string[] { "Type", "Description" };
 		}
 
+		public virtual int[] GetColumnWidths()
+		{
+			return null;
+		}
+
 		public ListViewItem FormatItem(IRecord record)
 		{
 			PropertyRecord data = record as PropertyRecord;

@@ -3,6 +3,7 @@ using SPNATI_Character_Editor.Categories;
 using SPNATI_Character_Editor.DataStructures;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
@@ -165,7 +166,7 @@ namespace SPNATI_Character_Editor.Controls
 		private void gridWardrobe_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
 		{
 			if (_populatingWardrobe) { return; }
-			Clothing layer = _wardrobe.GetClothing(_wardrobe.Layers - e.RowCount - 1);
+			Clothing layer = _wardrobe.GetClothing(_wardrobe.Layers - e.RowIndex - 1);
 			if (layer != null)
 			{
 				int index = _wardrobe.RemoveLayer(layer);
@@ -207,6 +208,40 @@ namespace SPNATI_Character_Editor.Controls
 					MessageBox.Show("Cannot change position for an important layer.");
 					e.Cancel = true;
 				}
+			}
+		}
+
+		private void gridWardrobe_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.ColumnIndex != ColDelete.Index || gridWardrobe.AllowUserToDeleteRows)
+			{
+				return;
+			}
+			DataGridViewColumn col = gridWardrobe.Columns[e.ColumnIndex];
+			if (col == ColDelete)
+			{
+				DataGridViewRow row = gridWardrobe.Rows[e.RowIndex];
+				if (row != null && !row.IsNewRow)
+				{
+					gridWardrobe.Rows.RemoveAt(e.RowIndex);
+					row.Tag = null;
+				}
+			}
+		}
+
+		private void gridWardrobe_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+		{
+			if (e.ColumnIndex == ColDelete.Index)
+			{
+				Image img = Properties.Resources.Delete;
+				e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+				var w = img.Width;
+				var h = img.Height;
+				var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
+				var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
+
+				e.Graphics.DrawImage(img, new Rectangle(x, y, w, h));
+				e.Handled = true;
 			}
 		}
 	}

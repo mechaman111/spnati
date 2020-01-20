@@ -37,6 +37,7 @@
 			this.ColPlural = new Desktop.Skinning.SkinnedDataGridViewCheckBoxColumn();
 			this.ColType = new Desktop.CommonControls.RecordColumn();
 			this.ColPosition = new Desktop.CommonControls.RecordColumn();
+			this.ColDelete = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
 			this.cmdClothesDown = new Desktop.Skinning.SkinnedButton();
 			this.cmdClothesUp = new Desktop.Skinning.SkinnedButton();
 			this.label9 = new Desktop.Skinning.SkinnedLabel();
@@ -78,7 +79,8 @@
             this.ColGeneric,
             this.ColPlural,
             this.ColType,
-            this.ColPosition});
+            this.ColPosition,
+            this.ColDelete});
 			this.gridWardrobe.Data = null;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
@@ -106,6 +108,8 @@
 			this.gridWardrobe.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
 			this.gridWardrobe.Size = new System.Drawing.Size(939, 307);
 			this.gridWardrobe.TabIndex = 0;
+			this.gridWardrobe.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridWardrobe_CellContentClick);
+			this.gridWardrobe.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.gridWardrobe_CellPainting);
 			this.gridWardrobe.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridWardrobe_CellValidated);
 			this.gridWardrobe.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.gridWardrobe_CellValidating);
 			this.gridWardrobe.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.gridWardrobe_RowsAdded);
@@ -120,6 +124,7 @@
 			// 
 			// ColGeneric
 			// 
+			this.ColGeneric.AllowsNew = false;
 			this.ColGeneric.HeaderText = "Classification";
 			this.ColGeneric.Name = "ColGeneric";
 			this.ColGeneric.RecordType = null;
@@ -133,13 +138,25 @@
 			// 
 			// ColType
 			// 
+			this.ColType.AllowsNew = false;
 			this.ColType.HeaderText = "Type";
 			this.ColType.Name = "ColType";
+			this.ColType.RecordType = null;
 			// 
 			// ColPosition
 			// 
+			this.ColPosition.AllowsNew = false;
 			this.ColPosition.HeaderText = "Position";
 			this.ColPosition.Name = "ColPosition";
+			this.ColPosition.RecordType = null;
+			// 
+			// ColDelete
+			// 
+			this.ColDelete.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.ColDelete.Flat = true;
+			this.ColDelete.HeaderText = "";
+			this.ColDelete.Name = "ColDelete";
+			this.ColDelete.Width = 21;
 			// 
 			// cmdClothesDown
 			// 
@@ -367,5 +384,6 @@
 		private Desktop.Skinning.SkinnedDataGridViewCheckBoxColumn ColPlural;
 		private Desktop.CommonControls.RecordColumn ColType;
 		private Desktop.CommonControls.RecordColumn ColPosition;
+		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColDelete;
 	}
 }

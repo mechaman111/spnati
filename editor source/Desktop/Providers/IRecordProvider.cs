@@ -10,6 +10,7 @@ namespace Desktop
 		string GetLookupCaption();
 		List<IRecord> GetRecords(string text);
 		string[] GetColumns();
+		int[] GetColumnWidths();
 		ListViewItem FormatItem(IRecord record);
 
 		IRecord Create(string key);

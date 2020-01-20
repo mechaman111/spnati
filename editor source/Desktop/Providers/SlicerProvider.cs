@@ -80,6 +80,11 @@ namespace Desktop.Providers
 			return new string[] { "Name", "Description" };
 		}
 
+		public virtual int[] GetColumnWidths()
+		{
+			return null;
+		}
+
 		public string GetLookupCaption()
 		{
 			return "Slice on Data";

@@ -258,10 +258,15 @@ namespace Desktop
 			lstRecent.Columns.Clear();
 			lstItems.Columns.Clear();
 			string[] cols = _provider.GetColumns();
+			int[] widths = _provider.GetColumnWidths();
 			for (int i = 0; i < cols.Length; i++)
 			{
 				string col = cols[i];
 				int width = (i == 0 ? 150 : i < cols.Length - 1 ? 100 : -2);
+				if (widths != null)
+				{
+					width = widths[i];
+				}
 				lstItems.Columns.Add(col, width);
 				lstRecent.Columns.Add(col, width);
 			}

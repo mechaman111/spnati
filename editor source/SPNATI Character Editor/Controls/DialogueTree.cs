@@ -559,10 +559,27 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void tsRecipe_Click(object sender, EventArgs e)
 		{
-			Recipe recipe = RecordLookup.DoLookup(typeof(Recipe), "", false, null) as Recipe;
+			Recipe recipe = RecordLookup.DoLookup(typeof(Recipe), "", false, _character) as Recipe;
 			if (recipe != null)
 			{
+				CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character);
+				Case existing = editorData.GetRecipeUsage(recipe);
+				if (existing != null)
+				{
+					DialogResult result = MessageBox.Show("Do you want to create a new case?", $"Add {recipe.Name}", MessageBoxButtons.YesNoCancel);
+					if (result == DialogResult.Cancel)
+					{
+						return;
+					}
+					else if (result == DialogResult.No)
+					{
+						SelectNode(existing.Stages[0], existing);
+						return;
+					}
+				}
+
 				Case instance = recipe.AddToCharacter(_character);
+				editorData.AddRecipeUsage(recipe, instance);
 				SelectNode(instance.Stages[0], instance);
 			}
 		}

@@ -28,6 +28,7 @@ namespace SPNATI_Character_Editor
 				"~clothing~",
 				"~clothing.plural~",
 				"~player~",
+				"~winner~",
 			});
 			foreach (BackgroundTag tag in Definitions.Instance.Get<BackgroundTag>())
 			{

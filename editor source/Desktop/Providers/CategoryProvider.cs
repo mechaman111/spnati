@@ -40,6 +40,11 @@ namespace Desktop.Providers
 			return new string[] { "Key", "Value" };
 		}
 
+		public virtual int[] GetColumnWidths()
+		{
+			return null;
+		}
+
 		public abstract string GetLookupCaption();
 
 		protected abstract T[] GetCategoryValues();

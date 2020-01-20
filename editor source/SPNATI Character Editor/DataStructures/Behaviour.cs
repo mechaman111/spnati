@@ -1129,6 +1129,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="index"></param>
 		private void RemoveStage(int index)
 		{
+			List<Case> orphanedCases = new List<Case>();
 			foreach (Case workingCase in _workingCases)
 			{
 				List<int> stages = workingCase.Stages;
@@ -1138,8 +1139,18 @@ namespace SPNATI_Character_Editor
 					if (stage > index)
 						stages[i] = stage - 1;
 					else if (stage == index)
+					{
 						stages.RemoveAt(i);
+						if (stages.Count == 0)
+						{
+							orphanedCases.Add(workingCase);
+						}
+					}
 				}
+			}
+			foreach (Case orphan in orphanedCases)
+			{
+				RemoveWorkingCase(orphan);
 			}
 		}
 
