@@ -194,12 +194,13 @@ function displayCard (player, i, visible) {
     if (players[player].hand.cards[i]) {
         if (visible) {
             if (typeof players[player].hand.cards[i].altText !== "function") {
-                Sentry.setExtra("altText_type", typeof players[player].hand.cards[i].altText);
+                Sentry.setExtra("player", player);
+                Sentry.setExtra("i", i);
                 Sentry.setExtra("toString_type", typeof players[player].hand.cards[i].toString);
                 Sentry.setExtra("card_type", typeof players[player].hand.cards[i]);
                 Sentry.setExtra("altText_prototype_type", typeof Card.prototype.altText);
             }
-            $cardCells[player][i].attr({ src: IMG + players[player].hand.cards[i] + ".jpg",
+            $cardCells[player][i].attr({ src: IMG + players[player].hand.cards[i].toString() + ".jpg",
                                          alt: players[player].hand.cards[i].altText() });
         } else {
             $cardCells[player][i].attr({ src: UNKNOWN_CARD_IMAGE,
