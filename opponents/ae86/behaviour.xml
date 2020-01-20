@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v4.3 at 11:45:02 AM on May 21, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 3:07:46 PM on January 20, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v4.3</version>
+    <version>v5.4</version>
     <first>Toyota Sprinter AE86 Trueno GT Apex</first>
     <last>(The Car from Inital D)</last>
     <label>AE86</label>
@@ -21,18 +21,19 @@
         <tag>initial d</tag>
         <tag>april fools</tag>
     </tags>
+    <nicknames />
 
     <start />
 
     <wardrobe>
-        <clothing lowercase="Deja Vu" position="lower" formalName="Deja Vu" type="important" />
-        <clothing lowercase="Beat of the Rising Sun" position="upper" formalName="Beat of the Rising Sun" type="important" />
-        <clothing lowercase="Space Boy" position="lower" formalName="Space Boy" type="major" />
-        <clothing lowercase="Gas Gas Gas" position="upper" formalName="Gas Gas Gas" type="major" />
-        <clothing lowercase="Back on the Rocks" position="lower" formalName="Back on the Rocks" type="minor" plural="true" />
-        <clothing lowercase="Speedy Speed Boy" position="upper" formalName="Speedy Speed Boy" type="minor" />
-        <clothing lowercase="Running in the 90s" position="lower" formalName="Running in the 90s" type="extra" plural="true" />
-        <clothing lowercase="Deja Vu" position="upper" formalName="Deja Vu" type="extra" />
+        <clothing name="Deja Vu" generic="Deja Vu" position="lower" type="important" />
+        <clothing name="Beat of the Rising Sun" generic="Beat of the Rising Sun" position="upper" type="important" />
+        <clothing name="Space Boy" generic="Space Boy" position="lower" type="major" />
+        <clothing name="Gas Gas Gas" generic="Gas Gas Gas" position="upper" type="major" />
+        <clothing name="Back on the Rocks" generic="Back on the Rocks" position="lower" type="minor" plural="true" />
+        <clothing name="Speedy Speed Boy" generic="Speedy Speed Boy" position="upper" type="minor" />
+        <clothing name="Running in the 90s" generic="Running in the 90s" position="lower" type="extra" plural="true" />
+        <clothing name="Deja Vu" generic="Deja Vu" position="upper" type="extra" />
     </wardrobe>
 
     <poses>
@@ -67,205 +68,582 @@
     </poses>
 
     <behaviour>
-        <stage id="0">
-            <case tag="selected">
+        <trigger id="selected">
+            <case stage="0">
+                <test expr="~player~" value="wily" />
+                <state img="x-forward.png">Tonight the streets are red. The lights are blue and blinding...</state>
+            </case>
+            <case stage="0" id="5">
+                <test expr="~background~" value="street" />
                 <state img="x-forward.png">Now Playing - "Deja Vu"...</state>
             </case>
-            <case tag="selected">
-                <test expr="~player~" value="wily" />
-                <state img="x-forward.png">Tonight the streets are red The lights are blue and blinding...</state>
+            <case stage="0" id="6">
+                <test expr="~background.location~" value="indoors" />
+                <state img="x-forward.png">Now Playing - "Deja Vu"...</state>
             </case>
-            <case tag="swap_cards">
+            <case stage="0" id="1">
+                <state img="x-forward.png">Now Playing - "Deja Vu"...</state>
+            </case>
+        </trigger>
+
+        <trigger id="game_start">
+            <case stage="0">
+                <state img="x-forward.png">
+                    <alt-img stage="0">x-forward.png</alt-img>
+                    <text>♫</text>
+                </state>
+            </case>
+        </trigger>
+
+        <trigger id="swap_cards">
+            <case stage="0 7">
                 <state img="x-forward.png">See your body into the moonlight!</state>
                 <state img="x-left.png">Even if I try to cancel!</state>
                 <state img="x-sideways.png">All the pictures into my eyes!</state>
             </case>
-            <case tag="good_hand" priority="0">
-                <state img="x-forward.png">I've got a good hand.</state>
-            </case>
-            <case tag="okay_hand" priority="0">
-                <state img="0-.png">I've got an okay hand.</state>
-            </case>
-            <case tag="bad_hand" priority="0">
-                <state img="0-.png">I've got a bad hand.</state>
-            </case>
-            <case tag="hand" priority="10">
+        </trigger>
+
+        <trigger id="hand">
+            <case stage="0 7" priority="10">
                 <state img="x-forward.png">Don't you see my condition?</state>
                 <state img="x-left.png">The fiction is gonna run it again!</state>
                 <state img="x-sideways.png">Can't you see now illusions?</state>
             </case>
-            <case tag="must_strip" priority="500">
+        </trigger>
+
+        <trigger id="must_strip">
+            <case stage="0-7" id="2" priority="500">
                 <state img="x-forward.png">Now playing...</state>
             </case>
-            <case tag="must_strip_winning" priority="0">
-                <state img="x-forward.png">They say this when they're winning - they have more clothing items left than other players.</state>
+        </trigger>
+
+        <trigger id="stripping">
+            <case stage="1" priority="500">
+                <state img="x-forward.png">Speedy Speed Boy...</state>
             </case>
-            <case tag="must_strip_normal" priority="0">
-                <state img="x-forward.png">What the character says when they're in the middle of the group in terms of clothes left.</state>
+            <case stage="2" priority="500">
+                <state img="x-forward.png">Back on the Rocks...</state>
             </case>
-            <case tag="must_strip_losing" priority="0">
-                <state img="x-forward.png">The character has lost a round, and also has the fewest pieces of clothing left.</state>
+            <case stage="3" priority="500">
+                <state img="x-forward.png">Gas Gas Gas!</state>
             </case>
-            <case tag="stripping">
+            <case stage="4" priority="500">
+                <state img="x-forward.png">Space Boy!</state>
+            </case>
+            <case stage="5" priority="500">
+                <state img="x-forward.png">Beat of the Rising Sun!</state>
+            </case>
+            <case stage="6" priority="500">
+                <state img="x-forward.png">Deja Vu, again.</state>
+            </case>
+            <case stage="0" priority="500">
                 <state img="x-forward.png">"Running in the 90s"...</state>
             </case>
-            <case tag="male_must_strip">
-                <state img="x-forward.png">Right into your mind!</state>
-                <state img="x-left.png">Deja vu!</state>
-                <state img="x-sideways.png">I've just been in this place before!</state>
+            <case stage="7" id="3" priority="500">
+                <state img="x-forward.png">Song title not found...</state>
             </case>
-            <case tag="male_must_strip" target="captain_falcon" targetStage="0" priority="510">
+        </trigger>
+
+        <trigger id="stripped">
+            <case stage="1" priority="500">
+                <state img="x-forward.png">Modem talking...</state>
+            </case>
+            <case stage="2" priority="500">
+                <state img="x-forward.png">Speedy speed boy!</state>
+            </case>
+            <case stage="3" priority="500">
+                <state img="x-forward.png">When you get to the top...</state>
+            </case>
+            <case stage="4" priority="500">
+                <state img="x-forward.png">Do you like my car?</state>
+            </case>
+            <case stage="5" priority="500">
+                <state img="x-forward.png">Every night you light me with your gasoline!</state>
+            </case>
+            <case stage="6" priority="500">
+                <state img="x-forward.png">I'm feeling bright...</state>
+            </case>
+            <case stage="7">
+                <state img="x-forward.png">DEJA VU!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_must_strip">
+            <case stage="0-7" oneShotId="1" priority="510">
+                <condition role="target" character="captain_falcon" stage="0" />
                 <state img="x-forward.png">Have you ever heard it? The meaning of truth?</state>
             </case>
-            <case tag="female_must_strip">
-                <state img="x-forward.png">Right into your mind!</state>
-                <state img="x-left.png">Deja vu!</state>
-                <state img="x-sideways.png">I've just been in this place before!</state>
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
             </case>
-            <case tag="male_removing_accessory">
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_must_strip">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removing_accessory">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="0 7">
                 <state img="x-forward.png">Higher on the street!</state>
                 <state img="x-left.png">And I know it's my time to go!</state>
                 <state img="x-sideways.png">Calling you, and the search is a mystery!</state>
             </case>
-            <case tag="male_removed_accessory">
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removed_accessory">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="0 7">
                 <state img="x-forward.png">Standing on my feet!</state>
                 <state img="x-left.png">It's so hard when I try to be me!</state>
                 <state img="x-sideways.png">Woah!</state>
             </case>
-            <case tag="female_removing_accessory">
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removing_accessory">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="0 7">
                 <state img="x-forward.png">Higher on the street!</state>
                 <state img="x-left.png">And I know it's my time to go!</state>
                 <state img="x-sideways.png">Calling you, and the search is a mystery!</state>
             </case>
-            <case tag="female_removed_accessory">
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removed_accessory">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="0 7">
                 <state img="x-forward.png">Standing on my feet!</state>
                 <state img="x-left.png">It's so hard when I try to be me!</state>
                 <state img="x-sideways.png">Woah!</state>
             </case>
-            <case tag="male_removing_minor">
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removing_minor">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="0 7">
                 <state img="x-forward.png">Deja vu!</state>
                 <state img="x-left.png">I've just been in this time before!</state>
                 <state img="x-sideways.png">Higher on the beat!</state>
             </case>
-            <case tag="male_removed_minor">
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removed_minor">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="0 7">
                 <state img="x-forward.png">And I know it's a place to go!</state>
                 <state img="x-left.png">Calling you and the search is a mystery!</state>
                 <state img="x-sideways.png">Standing on my feet!</state>
             </case>
-            <case tag="female_removing_minor">
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removing_minor">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="0 7">
                 <state img="x-forward.png">Deja vu!</state>
                 <state img="x-left.png">I've just been in this time before!</state>
                 <state img="x-sideways.png">Higher on the beat!</state>
             </case>
-            <case tag="female_removed_minor">
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removed_minor">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="0 7">
                 <state img="x-forward.png">And I know it's a place to go!</state>
                 <state img="x-left.png">Calling you and the search is a mystery!</state>
                 <state img="x-sideways.png">Standing on my feet!</state>
             </case>
-            <case tag="male_removing_major">
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removing_major">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="0 7">
                 <state img="x-forward.png">It's so hard when I try to be me, yeah!</state>
                 <state img="x-left.png">See the future into the present!</state>
                 <state img="x-sideways.png">See my past leaves in the distance!</state>
             </case>
-            <case tag="male_removed_major">
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removed_major">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="0 7">
                 <state img="x-forward.png">Try to guess now what's going on!</state>
                 <state img="x-left.png">And the band begins to play!</state>
                 <state img="x-sideways.png">Don't you see my commission, the nation!</state>
             </case>
-            <case tag="female_removing_major">
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removing_major">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="0 7">
                 <state img="x-forward.png">It's so hard when I try to be me, yeah!</state>
                 <state img="x-left.png">See the future into the present!</state>
                 <state img="x-sideways.png">See my past leaves in the distance!</state>
             </case>
-            <case tag="female_removed_major">
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removed_major">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="0 7">
                 <state img="x-sideways.png">Don't you see my commission, the nation!</state>
                 <state img="x-left.png">And the band begins to play!</state>
                 <state img="x-forward.png">Try to guess now what's going on!</state>
             </case>
-            <case tag="male_chest_will_be_visible">
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_chest_will_be_visible">
+            <case stage="0 7">
                 <state img="x-forward.png">Has gone running again!</state>
                 <state img="x-left.png">Can't you see now, illusions!</state>
                 <state img="x-sideways.png">Right into your mind!</state>
             </case>
-            <case tag="male_chest_is_visible">
+        </trigger>
+
+        <trigger id="male_chest_is_visible">
+            <case stage="0 7">
                 <state img="x-forward.png">Deja vu!</state>
                 <state img="x-forward.png">I've just been in this place before!</state>
                 <state img="x-forward.png">Higher on the street!</state>
             </case>
-            <case tag="male_crotch_will_be_visible">
+        </trigger>
+
+        <trigger id="male_crotch_will_be_visible">
+            <case stage="0 7">
                 <state img="x-forward.png">And I know it's my time to go!</state>
                 <state img="x-left.png">Calling you, and the search is a mystery!</state>
                 <state img="x-sideways.png">Standing on my feet!</state>
             </case>
-            <case tag="male_small_crotch_is_visible">
+        </trigger>
+
+        <trigger id="male_small_crotch_is_visible">
+            <case stage="0 7">
                 <state img="x-forward.png">It's so hard when I try to be me, woah!</state>
             </case>
-            <case tag="male_medium_crotch_is_visible">
+        </trigger>
+
+        <trigger id="male_medium_crotch_is_visible">
+            <case stage="0 7">
                 <state img="x-forward.png">I've just been in this time before!</state>
             </case>
-            <case tag="male_large_crotch_is_visible">
+        </trigger>
+
+        <trigger id="male_large_crotch_is_visible">
+            <case stage="0 7">
                 <state img="x-forward.png">Higher on the street!</state>
                 <state img="x-forward.png">Deja vu!</state>
                 <state img="x-forward.png">I've just been in this place before!</state>
             </case>
-            <case tag="female_chest_will_be_visible">
+        </trigger>
+
+        <trigger id="female_chest_will_be_visible">
+            <case stage="0 7">
                 <state img="x-sideways.png">Right into your mind!</state>
                 <state img="x-forward.png">Has gone running again!</state>
                 <state img="x-left.png">Can't you see now, illusions!</state>
             </case>
-            <case tag="female_small_chest_is_visible">
+        </trigger>
+
+        <trigger id="female_small_chest_is_visible">
+            <case stage="0 7">
                 <state img="x-forward.png">I've just been in this place before!</state>
                 <state img="x-forward.png">Deja vu!</state>
                 <state img="x-forward.png">Higher on the street!</state>
             </case>
-            <case tag="female_medium_chest_is_visible">
+        </trigger>
+
+        <trigger id="female_medium_chest_is_visible">
+            <case stage="0 7">
                 <state img="x-forward.png">Higher on the street!</state>
                 <state img="x-forward.png">Deja vu!</state>
                 <state img="x-forward.png">I've just been in this place before!</state>
             </case>
-            <case tag="female_large_chest_is_visible">
+        </trigger>
+
+        <trigger id="female_large_chest_is_visible">
+            <case stage="0 7">
                 <state img="x-forward.png">I've just been in this place before!</state>
                 <state img="x-forward.png">Deja vu!</state>
                 <state img="x-forward.png">Higher on the street!</state>
             </case>
-            <case tag="female_crotch_will_be_visible">
+        </trigger>
+
+        <trigger id="female_crotch_will_be_visible">
+            <case stage="0 7">
                 <state img="x-sideways.png">Standing on my feet!</state>
                 <state img="x-left.png">Calling you, and the search is a mystery!</state>
                 <state img="x-forward.png">And I know it's my time to go!</state>
             </case>
-            <case tag="female_crotch_is_visible">
+        </trigger>
+
+        <trigger id="female_crotch_is_visible">
+            <case stage="0 7">
                 <state img="x-forward.png">Higher on the beat!</state>
                 <state img="x-left.png">And I know it's a place to go!</state>
                 <state img="x-sideways.png">Calling you and the search is a mystery!</state>
             </case>
-            <case tag="male_must_masturbate" priority="500">
+        </trigger>
+
+        <trigger id="opponent_lost">
+            <case stage="0 7">
+                <state img="x-forward.png">Right into your mind!</state>
+                <state img="x-left.png">Deja vu!</state>
+                <state img="x-sideways.png">I've just been in this place before!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_must_masturbate">
+            <case stage="0-8" priority="500">
                 <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
             </case>
-            <case tag="male_start_masturbating" priority="500">
+        </trigger>
+
+        <trigger id="male_start_masturbating">
+            <case stage="0-8" priority="500">
                 <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
             </case>
-            <case tag="male_masturbating" priority="500">
+        </trigger>
+
+        <trigger id="male_masturbating">
+            <case stage="0-8" priority="500">
                 <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
             </case>
-            <case tag="male_finished_masturbating" priority="500">
+        </trigger>
+
+        <trigger id="male_finished_masturbating">
+            <case stage="0-8" priority="500">
                 <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
             </case>
-            <case tag="female_must_masturbate" priority="500">
+        </trigger>
+
+        <trigger id="female_must_masturbate">
+            <case stage="0-8" priority="500">
                 <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
             </case>
-            <case tag="female_start_masturbating" priority="500">
+        </trigger>
+
+        <trigger id="female_start_masturbating">
+            <case stage="0-8" priority="500">
                 <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
             </case>
-            <case tag="female_masturbating" priority="500">
+        </trigger>
+
+        <trigger id="female_masturbating">
+            <case stage="0-8" priority="500">
                 <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
             </case>
-            <case tag="female_finished_masturbating" priority="500">
+        </trigger>
+
+        <trigger id="female_finished_masturbating">
+            <case stage="0-8" priority="500">
                 <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
             </case>
-            <case tag="game_over_victory" priority="500">
+        </trigger>
+
+        <trigger id="must_masturbate">
+            <case stage="8">
+                <state img="x-forward.png">&lt;i&gt;Motor noises.&lt;/i&gt;</state>
+                <state img="x-forward.png">&lt;i&gt;Engine noises.&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="start_masturbating">
+            <case stage="8">
+                <state img="custom:Drive Left">&lt;i&gt;VRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="masturbating">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="heavy_masturbating">
+            <case stage="9">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="finishing_masturbating">
+            <case stage="9" priority="705">
+                <state img="x-forward.png">&lt;i&gt;Engine dying noises.&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="finished_masturbating">
+            <case stage="10" id="4" priority="605">
+                <condition role="self" notSaidMarker="driveaway" />
+                <state img="custom:Drive Left" marker="driveaway">Toyota Sprinter AE86 Trueno GT Apex out.</state>
+            </case>
+        </trigger>
+
+        <trigger id="after_masturbating">
+            <case stage="10">
+                <state img="x-gone.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="game_over_victory">
+            <case stage="0-8" priority="500">
                 <state img="custom:Drive Left">&lt;i&gt;Light up the night!&lt;/i&gt;</state>
             </case>
-            <case tag="global" priority="800">
+        </trigger>
+
+        <trigger id="global">
+            <case stage="0-8" priority="800">
                 <test expr="~player~" value="protomen" />
                 <state img="x-forward.png">This city's sleeping like a soldier!</state>
                 <state img="x-forward.png">Trapped inside of an iron lung!</state>
@@ -302,155 +680,38 @@
                 <state img="x-left.png">If you destroy the working parts, what you'll get is a broken machine.</state>
                 <state img="x-sideways.png">A beacon of light from a burning screen.</state>
             </case>
-        </stage>
-
-        <stage id="1">
-            <case tag="swap_cards">
-                <state img="x-forward.png">I'll exchange ~cards~ cards.</state>
+            <case stage="9" priority="700">
+                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
             </case>
-            <case tag="good_hand" priority="0">
-                <state img="x-forward.png">I've got a good hand.</state>
+            <case stage="9" priority="700">
+                <condition role="self" saidMarker="goingleft1" notSaidMarker="goingright2" />
+                <state img="custom:Drive Right" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
             </case>
-            <case tag="okay_hand" priority="0">
-                <state img="1-.png">I've got an okay hand.</state>
+            <case stage="9" priority="700">
+                <condition role="self" saidMarker="goingleft2" notSaidMarker="goingright3" />
+                <state img="custom:Drive Right" marker="goingright3">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
             </case>
-            <case tag="bad_hand" priority="0">
-                <state img="1-.png">I've got a bad hand.</state>
+            <case stage="9" priority="700">
+                <condition role="self" saidMarker="goingright1" notSaidMarker="goingleft1" />
+                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
             </case>
-            <case tag="must_strip" priority="500">
-                <state img="x-forward.png">Now playing...</state>
+            <case stage="9" priority="700">
+                <condition role="self" saidMarker="goingright2" notSaidMarker="goingleft2" />
+                <state img="custom:Drive Left" marker="goingleft2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
             </case>
-            <case tag="must_strip_winning" priority="0">
-                <state img="x-forward.png">They say this when they're winning - they have more clothing items left than other players.</state>
+            <case stage="10" priority="500">
+                <state img="x-gone.png"></state>
             </case>
-            <case tag="must_strip_normal" priority="0">
-                <state img="x-forward.png">What the character says when they're in the middle of the group in terms of clothes left.</state>
-            </case>
-            <case tag="must_strip_losing" priority="0">
-                <state img="x-forward.png">The character has lost a round, and also has the fewest pieces of clothing left.</state>
-            </case>
-            <case tag="stripping" priority="500">
-                <state img="x-forward.png">Speedy Speed Boy...</state>
-            </case>
-            <case tag="stripped" priority="500">
-                <state img="x-forward.png">Modem talking...</state>
-            </case>
-            <case tag="male_must_strip">
-                <state img="x-forward.png">What they say to a male NPC who has lost a round</state>
-            </case>
-            <case tag="male_must_strip" target="captain_falcon" targetStage="0" priority="510">
-                <state img="x-forward.png">Have you ever heard it? The meaning of truth?</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="x-forward.png">What they say to a female NPC who has lost a round</state>
-            </case>
-            <case tag="male_removing_accessory">
-                <state img="1-sad.png">A male character is about to remove a small item, with the type "extra".</state>
-            </case>
-            <case tag="male_removed_accessory">
-                <state img="1-calm.png">A male character has just removed that small item.</state>
-            </case>
-            <case tag="female_removing_accessory">
-                <state img="1-sad.png">A female character is about to remove a small item, with the type "extra".</state>
-            </case>
-            <case tag="female_removed_accessory">
-                <state img="1-calm.png">A female character has just removed that small item.</state>
-            </case>
-            <case tag="male_removing_minor">
-                <state img="1-calm.png">A male character is about to remove a clothing item with the type "minor".</state>
-            </case>
-            <case tag="male_removed_minor">
-                <state img="1-happy.png">The male character has just removed that minor item.</state>
-            </case>
-            <case tag="female_removing_minor">
-                <state img="1-calm.png">A female character is about to remove a clothing item with the type "minor".</state>
-            </case>
-            <case tag="female_removed_minor">
-                <state img="1-happy.png">The female character has just removed that minor item.</state>
-            </case>
-            <case tag="male_removing_major">
-                <state img="1-interested.png">What the character says before a male loses an item with the "major" type.</state>
-            </case>
-            <case tag="male_removed_major">
-                <state img="1-interested.png">What the character says after the major item has been taken off.</state>
-            </case>
-            <case tag="female_removing_major">
-                <state img="1-interested.png">What the character says before a female loses an item with the "major" type.</state>
-            </case>
-            <case tag="female_removed_major">
-                <state img="1-interested.png">What the character says after the major item has been taken off.</state>
-            </case>
-            <case tag="male_chest_will_be_visible">
-                <state img="1-interested.png">What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="male_chest_is_visible">
-                <state img="1-interested.png">What the character says once the male character's chest is visible.</state>
-            </case>
-            <case tag="male_crotch_will_be_visible">
-                <state img="1-horny.png">What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="male_small_crotch_is_visible">
-                <state img="1-calm.png">What the character says after the male character's crotch is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="male_medium_crotch_is_visible">
-                <state img="1-awkward.png">What the character says after the male character's crotch is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="male_large_crotch_is_visible">
-                <state img="1-shocked.png">What the character says after the male character's crotch is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_chest_will_be_visible">
-                <state img="1-interested.png">What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="female_small_chest_is_visible">
-                <state img="1-interested.png">What the character says after the female character's chest is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="female_medium_chest_is_visible">
-                <state img="1-horny.png">What the character says after the female character's chest is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="female_large_chest_is_visible">
-                <state img="1-shocked.png">What the character says after the female character's chest is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_crotch_will_be_visible">
-                <state img="1-horny.png">What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="female_crotch_is_visible">
-                <state img="x-forward.png">What the character says after the female character's crotch has become visible.</state>
-            </case>
-            <case tag="male_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="male_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="female_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="game_over_victory" priority="500">
-                <state img="custom:Drive Left">&lt;i&gt;Light up the night!&lt;/i&gt;</state>
-            </case>
-            <case tag="global" priority="499">
+            <case stage="1" priority="499">
                 <state img="x-forward.png">Modern walking in the streets!</state>
                 <state img="x-left.png">New desire, take me higher!</state>
                 <state img="x-sideways.png">Lift me higher with your speed!</state>
+                <state img="x-left.png">Lift me higher with your speed!</state>
                 <state img="x-forward.png">I need fire!</state>
+                <state img="x-sideways.png">I need fire!</state>
                 <state img="x-left.png">Get the satellite if you want to see me!</state>
                 <state img="x-sideways.png">Talking on the net I know the way you like it!</state>
-                <state img="x-forward.png">Get your credit card cause I need no money!</state>
+                <state img="x-forward.png">Get your credit card, 'cause I need no money!</state>
                 <state img="x-left.png">All I wanna get is you baby!</state>
                 <state img="x-sideways.png">Running in the nineties, is a new way I like to be!</state>
                 <state img="x-forward.png">I'm just running in the nineties!</state>
@@ -463,192 +724,12 @@
                 <state img="x-left.png">Take me higher!</state>
                 <state img="x-sideways.png">Boost me higher with your mind!</state>
                 <state img="x-forward.png">Set me on fire!</state>
-                <state img="x-left.png">Lift me higher with your speed!</state>
-                <state img="x-sideways.png">I need fire!</state>
                 <state img="x-forward.png">Get the satellite!</state>
                 <state img="x-left.png">Talking on the net!</state>
                 <state img="x-sideways.png">Get your credit card!</state>
                 <state img="x-forward.png">All I wanna get!</state>
             </case>
-            <case tag="global" priority="800">
-                <test expr="~player~" value="protomen" />
-                <state img="x-forward.png">This city's sleeping like a soldier!</state>
-                <state img="x-forward.png">Trapped inside of an iron lung!</state>
-                <state img="x-left.png">Machines can keep you breathing!</state>
-                <state img="x-sideways.png">But what happens when you find a new war's begun?</state>
-                <state img="x-left.png">Flip a switch and turn it off, you won't be able to breathe.</state>
-                <state img="x-sideways.png">So either way you're a casualty.</state>
-                <state img="x-forward.png">I've got this burning like my veins are filled!</state>
-                <state img="x-left.png">With nothing but gasoline!</state>
-                <state img="x-sideways.png">And with a spark!</state>
-                <state img="x-forward.png">It's gonna be the biggest fire they've ever seen.</state>
-                <state img="x-left.png">Cut me down or let me run!</state>
-                <state img="x-sideways.png">Either way it's all gonna burn...</state>
-                <state img="x-forward.png">The only way that they'll ever learn!</state>
-                <state img="x-forward.png">We've got to turn it off!</state>
-                <state img="x-forward.png">Flip a switch.</state>
-                <state img="x-forward.png">Light up the night!</state>
-                <state img="x-left.png">There is a city that this darkness can't hide.</state>
-                <state img="x-sideways.png">There are the embers of a fire that's gone out!</state>
-                <state img="x-forward.png">But I can still feel the heat on my skin!</state>
-                <state img="x-left.png">This mess we're in, well you and I!</state>
-                <state img="x-sideways.png">Maybe you and I!</state>
-                <state img="x-forward.png">We can still make it right!</state>
-                <state img="x-left.png">Maybe we can bring back the light!</state>
-                <state img="x-sideways.png">At the heart of the city there is a building that looks down over all there is!</state>
-                <state img="x-forward.png">And the man in the tower controls it all without raising a single fist!</state>
-                <state img="x-left.png">It's like they gathered up the city!</state>
-                <state img="x-sideways.png">They sold it to the devil, and now!</state>
-                <state img="x-forward.png">It's gone to hell and they wonder how.</state>
-                <state img="x-forward.png">Well, a friend once told me...</state>
-                <state img="x-left.png">Men, they would follow any man who would turn the wheels.</state>
-                <state img="x-sideways.png">Now the wheels are spinning out of control.</state>
-                <state img="x-forward.png">What would they do if we held them still?</state>
-                <state img="x-left.png">If you destroy the working parts, what you'll get is a broken machine.</state>
-                <state img="x-sideways.png">A beacon of light from a burning screen.</state>
-            </case>
-        </stage>
-
-        <stage id="2">
-            <case tag="swap_cards">
-                <state img="x-forward.png">I'll exchange ~cards~ cards.</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <state img="x-forward.png">I've got a good hand.</state>
-            </case>
-            <case tag="okay_hand" priority="0">
-                <state img="2-.png">I've got an okay hand.</state>
-            </case>
-            <case tag="bad_hand" priority="0">
-                <state img="2-.png">I've got a bad hand.</state>
-            </case>
-            <case tag="must_strip" priority="500">
-                <state img="x-forward.png">Now playing...</state>
-            </case>
-            <case tag="must_strip_winning" priority="0">
-                <state img="x-forward.png">They say this when they're winning - they have more clothing items left than other players.</state>
-            </case>
-            <case tag="must_strip_normal" priority="0">
-                <state img="x-forward.png">What the character says when they're in the middle of the group in terms of clothes left.</state>
-            </case>
-            <case tag="must_strip_losing" priority="0">
-                <state img="x-forward.png">The character has lost a round, and also has the fewest pieces of clothing left.</state>
-            </case>
-            <case tag="stripping" priority="500">
-                <state img="x-forward.png">Back on the Rocks...</state>
-            </case>
-            <case tag="stripped" priority="500">
-                <state img="x-forward.png">Speedy speed boy!</state>
-            </case>
-            <case tag="male_must_strip">
-                <state img="x-forward.png">What they say to a male NPC who has lost a round</state>
-            </case>
-            <case tag="male_must_strip" target="captain_falcon" targetStage="0" priority="510">
-                <state img="x-forward.png">Have you ever heard it? The meaning of truth?</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="x-forward.png">What they say to a female NPC who has lost a round</state>
-            </case>
-            <case tag="male_removing_accessory">
-                <state img="2-sad.png">A male character is about to remove a small item, with the type "extra".</state>
-            </case>
-            <case tag="male_removed_accessory">
-                <state img="2-calm.png">A male character has just removed that small item.</state>
-            </case>
-            <case tag="female_removing_accessory">
-                <state img="2-sad.png">A female character is about to remove a small item, with the type "extra".</state>
-            </case>
-            <case tag="female_removed_accessory">
-                <state img="2-calm.png">A female character has just removed that small item.</state>
-            </case>
-            <case tag="male_removing_minor">
-                <state img="2-calm.png">A male character is about to remove a clothing item with the type "minor".</state>
-            </case>
-            <case tag="male_removed_minor">
-                <state img="2-happy.png">The male character has just removed that minor item.</state>
-            </case>
-            <case tag="female_removing_minor">
-                <state img="2-calm.png">A female character is about to remove a clothing item with the type "minor".</state>
-            </case>
-            <case tag="female_removed_minor">
-                <state img="2-happy.png">The female character has just removed that minor item.</state>
-            </case>
-            <case tag="male_removing_major">
-                <state img="2-interested.png">What the character says before a male loses an item with the "major" type.</state>
-            </case>
-            <case tag="male_removed_major">
-                <state img="2-interested.png">What the character says after the major item has been taken off.</state>
-            </case>
-            <case tag="female_removing_major">
-                <state img="2-interested.png">What the character says before a female loses an item with the "major" type.</state>
-            </case>
-            <case tag="female_removed_major">
-                <state img="2-interested.png">What the character says after the major item has been taken off.</state>
-            </case>
-            <case tag="male_chest_will_be_visible">
-                <state img="2-interested.png">What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="male_chest_is_visible">
-                <state img="2-interested.png">What the character says once the male character's chest is visible.</state>
-            </case>
-            <case tag="male_crotch_will_be_visible">
-                <state img="2-horny.png">What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="male_small_crotch_is_visible">
-                <state img="2-calm.png">What the character says after the male character's crotch is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="male_medium_crotch_is_visible">
-                <state img="2-awkward.png">What the character says after the male character's crotch is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="male_large_crotch_is_visible">
-                <state img="2-shocked.png">What the character says after the male character's crotch is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_chest_will_be_visible">
-                <state img="2-interested.png">What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="female_small_chest_is_visible">
-                <state img="2-interested.png">What the character says after the female character's chest is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="female_medium_chest_is_visible">
-                <state img="2-horny.png">What the character says after the female character's chest is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="female_large_chest_is_visible">
-                <state img="2-shocked.png">What the character says after the female character's chest is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_crotch_will_be_visible">
-                <state img="2-horny.png">What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="female_crotch_is_visible">
-                <state img="x-forward.png">What the character says after the female character's crotch has become visible.</state>
-            </case>
-            <case tag="male_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="male_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="female_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="game_over_victory" priority="500">
-                <state img="custom:Drive Left">&lt;i&gt;Light up the night!&lt;/i&gt;</state>
-            </case>
-            <case tag="global" priority="499">
+            <case stage="2" priority="499">
                 <state img="x-forward.png">Speedy speed boy - every night and day!</state>
                 <state img="x-left.png">Wind is on my face!</state>
                 <state img="x-sideways.png">Speedy speed boy!</state>
@@ -669,185 +750,7 @@
                 <state img="x-forward.png">My step on the brakes!</state>
                 <state img="x-left.png">Rear vision mirror to spy!</state>
             </case>
-            <case tag="global" priority="800">
-                <test expr="~player~" value="protomen" />
-                <state img="x-forward.png">This city's sleeping like a soldier!</state>
-                <state img="x-forward.png">Trapped inside of an iron lung!</state>
-                <state img="x-left.png">Machines can keep you breathing!</state>
-                <state img="x-sideways.png">But what happens when you find a new war's begun?</state>
-                <state img="x-left.png">Flip a switch and turn it off, you won't be able to breathe.</state>
-                <state img="x-sideways.png">So either way you're a casualty.</state>
-                <state img="x-forward.png">I've got this burning like my veins are filled!</state>
-                <state img="x-left.png">With nothing but gasoline!</state>
-                <state img="x-sideways.png">And with a spark!</state>
-                <state img="x-forward.png">It's gonna be the biggest fire they've ever seen.</state>
-                <state img="x-left.png">Cut me down or let me run!</state>
-                <state img="x-sideways.png">Either way it's all gonna burn...</state>
-                <state img="x-forward.png">The only way that they'll ever learn!</state>
-                <state img="x-forward.png">We've got to turn it off!</state>
-                <state img="x-forward.png">Flip a switch.</state>
-                <state img="x-forward.png">Light up the night!</state>
-                <state img="x-left.png">There is a city that this darkness can't hide.</state>
-                <state img="x-sideways.png">There are the embers of a fire that's gone out!</state>
-                <state img="x-forward.png">But I can still feel the heat on my skin!</state>
-                <state img="x-left.png">This mess we're in, well you and I!</state>
-                <state img="x-sideways.png">Maybe you and I!</state>
-                <state img="x-forward.png">We can still make it right!</state>
-                <state img="x-left.png">Maybe we can bring back the light!</state>
-                <state img="x-sideways.png">At the heart of the city there is a building that looks down over all there is!</state>
-                <state img="x-forward.png">And the man in the tower controls it all without raising a single fist!</state>
-                <state img="x-left.png">It's like they gathered up the city!</state>
-                <state img="x-sideways.png">They sold it to the devil, and now!</state>
-                <state img="x-forward.png">It's gone to hell and they wonder how.</state>
-                <state img="x-forward.png">Well, a friend once told me...</state>
-                <state img="x-left.png">Men, they would follow any man who would turn the wheels.</state>
-                <state img="x-sideways.png">Now the wheels are spinning out of control.</state>
-                <state img="x-forward.png">What would they do if we held them still?</state>
-                <state img="x-left.png">If you destroy the working parts, what you'll get is a broken machine.</state>
-                <state img="x-sideways.png">A beacon of light from a burning screen.</state>
-            </case>
-        </stage>
-
-        <stage id="3">
-            <case tag="swap_cards">
-                <state img="x-forward.png">I'll exchange ~cards~ cards.</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <state img="x-forward.png">I've got a good hand.</state>
-            </case>
-            <case tag="okay_hand" priority="0">
-                <state img="3-.png">I've got an okay hand.</state>
-            </case>
-            <case tag="bad_hand" priority="0">
-                <state img="3-.png">I've got a bad hand.</state>
-            </case>
-            <case tag="must_strip" priority="500">
-                <state img="x-forward.png">Now playing...</state>
-            </case>
-            <case tag="must_strip_winning" priority="0">
-                <state img="x-forward.png">They say this when they're winning - they have more clothing items left than other players.</state>
-            </case>
-            <case tag="must_strip_normal" priority="0">
-                <state img="x-forward.png">What the character says when they're in the middle of the group in terms of clothes left.</state>
-            </case>
-            <case tag="must_strip_losing" priority="0">
-                <state img="x-forward.png">The character has lost a round, and also has the fewest pieces of clothing left.</state>
-            </case>
-            <case tag="stripping" priority="500">
-                <state img="x-forward.png">Gas Gas Gas!</state>
-            </case>
-            <case tag="stripped" priority="500">
-                <state img="x-forward.png">When you get to the top...</state>
-            </case>
-            <case tag="male_must_strip">
-                <state img="x-forward.png">What they say to a male NPC who has lost a round</state>
-            </case>
-            <case tag="male_must_strip" target="captain_falcon" targetStage="0" priority="510">
-                <state img="x-forward.png">Have you ever heard it? The meaning of truth?</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="x-forward.png">What they say to a female NPC who has lost a round</state>
-            </case>
-            <case tag="male_removing_accessory">
-                <state img="3-sad.png">A male character is about to remove a small item, with the type "extra".</state>
-            </case>
-            <case tag="male_removed_accessory">
-                <state img="3-calm.png">A male character has just removed that small item.</state>
-            </case>
-            <case tag="female_removing_accessory">
-                <state img="3-sad.png">A female character is about to remove a small item, with the type "extra".</state>
-            </case>
-            <case tag="female_removed_accessory">
-                <state img="3-calm.png">A female character has just removed that small item.</state>
-            </case>
-            <case tag="male_removing_minor">
-                <state img="3-calm.png">A male character is about to remove a clothing item with the type "minor".</state>
-            </case>
-            <case tag="male_removed_minor">
-                <state img="3-happy.png">The male character has just removed that minor item.</state>
-            </case>
-            <case tag="female_removing_minor">
-                <state img="3-calm.png">A female character is about to remove a clothing item with the type "minor".</state>
-            </case>
-            <case tag="female_removed_minor">
-                <state img="3-happy.png">The female character has just removed that minor item.</state>
-            </case>
-            <case tag="male_removing_major">
-                <state img="3-interested.png">What the character says before a male loses an item with the "major" type.</state>
-            </case>
-            <case tag="male_removed_major">
-                <state img="3-interested.png">What the character says after the major item has been taken off.</state>
-            </case>
-            <case tag="female_removing_major">
-                <state img="3-interested.png">What the character says before a female loses an item with the "major" type.</state>
-            </case>
-            <case tag="female_removed_major">
-                <state img="3-interested.png">What the character says after the major item has been taken off.</state>
-            </case>
-            <case tag="male_chest_will_be_visible">
-                <state img="3-interested.png">What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="male_chest_is_visible">
-                <state img="3-interested.png">What the character says once the male character's chest is visible.</state>
-            </case>
-            <case tag="male_crotch_will_be_visible">
-                <state img="3-horny.png">What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="male_small_crotch_is_visible">
-                <state img="3-calm.png">What the character says after the male character's crotch is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="male_medium_crotch_is_visible">
-                <state img="3-awkward.png">What the character says after the male character's crotch is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="male_large_crotch_is_visible">
-                <state img="3-shocked.png">What the character says after the male character's crotch is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_chest_will_be_visible">
-                <state img="3-interested.png">What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="female_small_chest_is_visible">
-                <state img="3-interested.png">What the character says after the female character's chest is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="female_medium_chest_is_visible">
-                <state img="3-horny.png">What the character says after the female character's chest is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="female_large_chest_is_visible">
-                <state img="3-shocked.png">What the character says after the female character's chest is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_crotch_will_be_visible">
-                <state img="3-horny.png">What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="female_crotch_is_visible">
-                <state img="x-forward.png">What the character says after the female character's crotch has become visible.</state>
-            </case>
-            <case tag="male_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="male_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="female_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="game_over_victory" priority="500">
-                <state img="custom:Drive Left">&lt;i&gt;Light up the night!&lt;/i&gt;</state>
-            </case>
-            <case tag="global" priority="499">
+            <case stage="3" priority="499">
                 <state img="x-forward.png">You ever been to the top?</state>
                 <state img="x-left.png">Just listen... let me tell ya!</state>
                 <state img="x-sideways.png">Hear what you're missin'!</state>
@@ -866,187 +769,9 @@
                 <state img="x-forward.png">Givin' the facts on!</state>
                 <state img="x-left.png">It can be all gone!</state>
             </case>
-            <case tag="global" priority="800">
-                <test expr="~player~" value="protomen" />
-                <state img="x-forward.png">This city's sleeping like a soldier!</state>
-                <state img="x-forward.png">Trapped inside of an iron lung!</state>
-                <state img="x-left.png">Machines can keep you breathing!</state>
-                <state img="x-sideways.png">But what happens when you find a new war's begun?</state>
-                <state img="x-left.png">Flip a switch and turn it off, you won't be able to breathe.</state>
-                <state img="x-sideways.png">So either way you're a casualty.</state>
-                <state img="x-forward.png">I've got this burning like my veins are filled!</state>
-                <state img="x-left.png">With nothing but gasoline!</state>
-                <state img="x-sideways.png">And with a spark!</state>
-                <state img="x-forward.png">It's gonna be the biggest fire they've ever seen.</state>
-                <state img="x-left.png">Cut me down or let me run!</state>
-                <state img="x-sideways.png">Either way it's all gonna burn...</state>
-                <state img="x-forward.png">The only way that they'll ever learn!</state>
-                <state img="x-forward.png">We've got to turn it off!</state>
-                <state img="x-forward.png">Flip a switch.</state>
-                <state img="x-forward.png">Light up the night!</state>
-                <state img="x-left.png">There is a city that this darkness can't hide.</state>
-                <state img="x-sideways.png">There are the embers of a fire that's gone out!</state>
-                <state img="x-forward.png">But I can still feel the heat on my skin!</state>
-                <state img="x-left.png">This mess we're in, well you and I!</state>
-                <state img="x-sideways.png">Maybe you and I!</state>
-                <state img="x-forward.png">We can still make it right!</state>
-                <state img="x-left.png">Maybe we can bring back the light!</state>
-                <state img="x-sideways.png">At the heart of the city there is a building that looks down over all there is!</state>
-                <state img="x-forward.png">And the man in the tower controls it all without raising a single fist!</state>
-                <state img="x-left.png">It's like they gathered up the city!</state>
-                <state img="x-sideways.png">They sold it to the devil, and now!</state>
-                <state img="x-forward.png">It's gone to hell and they wonder how.</state>
-                <state img="x-forward.png">Well, a friend once told me...</state>
-                <state img="x-left.png">Men, they would follow any man who would turn the wheels.</state>
-                <state img="x-sideways.png">Now the wheels are spinning out of control.</state>
-                <state img="x-forward.png">What would they do if we held them still?</state>
-                <state img="x-left.png">If you destroy the working parts, what you'll get is a broken machine.</state>
-                <state img="x-sideways.png">A beacon of light from a burning screen.</state>
-            </case>
-        </stage>
-
-        <stage id="4">
-            <case tag="swap_cards">
-                <state img="x-forward.png">I'll exchange ~cards~ cards.</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <state img="x-forward.png">I've got a good hand.</state>
-            </case>
-            <case tag="okay_hand" priority="0">
-                <state img="4-.png">I've got an okay hand.</state>
-            </case>
-            <case tag="bad_hand" priority="0">
-                <state img="4-.png">I've got a bad hand.</state>
-            </case>
-            <case tag="must_strip" priority="500">
-                <state img="x-forward.png">Now playing...</state>
-            </case>
-            <case tag="must_strip_winning" priority="0">
-                <state img="x-forward.png">They say this when they're winning - they have more clothing items left than other players.</state>
-            </case>
-            <case tag="must_strip_normal" priority="0">
-                <state img="x-forward.png">What the character says when they're in the middle of the group in terms of clothes left.</state>
-            </case>
-            <case tag="must_strip_losing" priority="0">
-                <state img="x-forward.png">The character has lost a round, and also has the fewest pieces of clothing left.</state>
-            </case>
-            <case tag="stripping" priority="500">
-                <state img="x-forward.png">Space boy!</state>
-            </case>
-            <case tag="stripped" priority="500">
-                <state img="x-forward.png">Do you like my car?</state>
-            </case>
-            <case tag="male_must_strip">
-                <state img="x-forward.png">What they say to a male NPC who has lost a round</state>
-            </case>
-            <case tag="male_must_strip" target="captain_falcon" targetStage="0" priority="510">
-                <state img="x-forward.png">Have you ever heard it? The meaning of truth?</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="x-forward.png">What they say to a female NPC who has lost a round</state>
-            </case>
-            <case tag="male_removing_accessory">
-                <state img="4-sad.png">A male character is about to remove a small item, with the type "extra".</state>
-            </case>
-            <case tag="male_removed_accessory">
-                <state img="4-calm.png">A male character has just removed that small item.</state>
-            </case>
-            <case tag="female_removing_accessory">
-                <state img="4-sad.png">A female character is about to remove a small item, with the type "extra".</state>
-            </case>
-            <case tag="female_removed_accessory">
-                <state img="4-calm.png">A female character has just removed that small item.</state>
-            </case>
-            <case tag="male_removing_minor">
-                <state img="4-calm.png">A male character is about to remove a clothing item with the type "minor".</state>
-            </case>
-            <case tag="male_removed_minor">
-                <state img="4-happy.png">The male character has just removed that minor item.</state>
-            </case>
-            <case tag="female_removing_minor">
-                <state img="4-calm.png">A female character is about to remove a clothing item with the type "minor".</state>
-            </case>
-            <case tag="female_removed_minor">
-                <state img="4-happy.png">The female character has just removed that minor item.</state>
-            </case>
-            <case tag="male_removing_major">
-                <state img="4-interested.png">What the character says before a male loses an item with the "major" type.</state>
-            </case>
-            <case tag="male_removed_major">
-                <state img="4-interested.png">What the character says after the major item has been taken off.</state>
-            </case>
-            <case tag="female_removing_major">
-                <state img="4-interested.png">What the character says before a female loses an item with the "major" type.</state>
-            </case>
-            <case tag="female_removed_major">
-                <state img="4-interested.png">What the character says after the major item has been taken off.</state>
-            </case>
-            <case tag="male_chest_will_be_visible">
-                <state img="4-interested.png">What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="male_chest_is_visible">
-                <state img="4-interested.png">What the character says once the male character's chest is visible.</state>
-            </case>
-            <case tag="male_crotch_will_be_visible">
-                <state img="4-horny.png">What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="male_small_crotch_is_visible">
-                <state img="4-calm.png">What the character says after the male character's crotch is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="male_medium_crotch_is_visible">
-                <state img="4-awkward.png">What the character says after the male character's crotch is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="male_large_crotch_is_visible">
-                <state img="4-shocked.png">What the character says after the male character's crotch is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_chest_will_be_visible">
-                <state img="4-interested.png">What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="female_small_chest_is_visible">
-                <state img="4-interested.png">What the character says after the female character's chest is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="female_medium_chest_is_visible">
-                <state img="4-horny.png">What the character says after the female character's chest is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="female_large_chest_is_visible">
-                <state img="4-shocked.png">What the character says after the female character's chest is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_crotch_will_be_visible">
-                <state img="4-horny.png">What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="female_crotch_is_visible">
-                <state img="x-forward.png">What the character says after the female character's crotch has become visible.</state>
-            </case>
-            <case tag="male_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="male_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="female_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="game_over_victory" priority="500">
-                <state img="custom:Drive Left">&lt;i&gt;Light up the night!&lt;/i&gt;</state>
-            </case>
-            <case tag="global" priority="499">
+            <case stage="4" priority="499">
                 <state img="x-forward.png">Guess you're ready!</state>
-                <state img="x-left.png">Cause I'm waiting for you!</state>
+                <state img="x-left.png">'Cause I'm waiting for you!</state>
                 <state img="x-sideways.png">It's gonna be so exciting!</state>
                 <state img="x-forward.png">Got this feeling!</state>
                 <state img="x-left.png">Really deep in my soul!</state>
@@ -1057,13 +782,13 @@
                 <state img="x-forward.png">I wanna race for you shall I go now?</state>
                 <state img="x-forward.png">Gas gas gas!</state>
                 <state img="x-left.png">I'm gonna step on the gas!</state>
+                <state img="x-sideways.png">I'm gonna step on the gas!</state>
                 <state img="x-sideways.png">Tonight I'll fly and be your lover!</state>
                 <state img="x-forward.png">Yeah! Yeah! Yeah!</state>
                 <state img="x-left.png">I'll be so quick as a flash!</state>
                 <state img="x-sideways.png">And I'll be your hero!</state>
                 <state img="x-forward.png">I'm gonna run as a flash!</state>
                 <state img="x-left.png">Tonight I'll fight to be the winner!</state>
-                <state img="x-sideways.png">I'm gonna step on the gas!</state>
                 <state img="x-forward.png">And you'll see the big show!</state>
                 <state img="x-left.png">Don't be lazy!</state>
                 <state img="x-sideways.png">'Cause I'm burning for you!</state>
@@ -1072,185 +797,7 @@
                 <state img="x-sideways.png">That is taking me out!</state>
                 <state img="x-forward.png">Yes I've got a crash on you ready now ready go!</state>
             </case>
-            <case tag="global" priority="800">
-                <test expr="~player~" value="protomen" />
-                <state img="x-forward.png">This city's sleeping like a soldier!</state>
-                <state img="x-forward.png">Trapped inside of an iron lung!</state>
-                <state img="x-left.png">Machines can keep you breathing!</state>
-                <state img="x-sideways.png">But what happens when you find a new war's begun?</state>
-                <state img="x-left.png">Flip a switch and turn it off, you won't be able to breathe.</state>
-                <state img="x-sideways.png">So either way you're a casualty.</state>
-                <state img="x-forward.png">I've got this burning like my veins are filled!</state>
-                <state img="x-left.png">With nothing but gasoline!</state>
-                <state img="x-sideways.png">And with a spark!</state>
-                <state img="x-forward.png">It's gonna be the biggest fire they've ever seen.</state>
-                <state img="x-left.png">Cut me down or let me run!</state>
-                <state img="x-sideways.png">Either way it's all gonna burn...</state>
-                <state img="x-forward.png">The only way that they'll ever learn!</state>
-                <state img="x-forward.png">We've got to turn it off!</state>
-                <state img="x-forward.png">Flip a switch.</state>
-                <state img="x-forward.png">Light up the night!</state>
-                <state img="x-left.png">There is a city that this darkness can't hide.</state>
-                <state img="x-sideways.png">There are the embers of a fire that's gone out!</state>
-                <state img="x-forward.png">But I can still feel the heat on my skin!</state>
-                <state img="x-left.png">This mess we're in, well you and I!</state>
-                <state img="x-sideways.png">Maybe you and I!</state>
-                <state img="x-forward.png">We can still make it right!</state>
-                <state img="x-left.png">Maybe we can bring back the light!</state>
-                <state img="x-sideways.png">At the heart of the city there is a building that looks down over all there is!</state>
-                <state img="x-forward.png">And the man in the tower controls it all without raising a single fist!</state>
-                <state img="x-left.png">It's like they gathered up the city!</state>
-                <state img="x-sideways.png">They sold it to the devil, and now!</state>
-                <state img="x-forward.png">It's gone to hell and they wonder how.</state>
-                <state img="x-forward.png">Well, a friend once told me...</state>
-                <state img="x-left.png">Men, they would follow any man who would turn the wheels.</state>
-                <state img="x-sideways.png">Now the wheels are spinning out of control.</state>
-                <state img="x-forward.png">What would they do if we held them still?</state>
-                <state img="x-left.png">If you destroy the working parts, what you'll get is a broken machine.</state>
-                <state img="x-sideways.png">A beacon of light from a burning screen.</state>
-            </case>
-        </stage>
-
-        <stage id="5">
-            <case tag="swap_cards">
-                <state img="x-forward.png">I'll exchange ~cards~ cards.</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <state img="x-forward.png">I've got a good hand.</state>
-            </case>
-            <case tag="okay_hand" priority="0">
-                <state img="5-.png">I've got an okay hand.</state>
-            </case>
-            <case tag="bad_hand" priority="0">
-                <state img="5-.png">I've got a bad hand.</state>
-            </case>
-            <case tag="must_strip" priority="500">
-                <state img="x-forward.png">Now playing...</state>
-            </case>
-            <case tag="must_strip_winning" priority="0">
-                <state img="x-forward.png">They say this when they're winning - they have more clothing items left than other players.</state>
-            </case>
-            <case tag="must_strip_normal" priority="0">
-                <state img="x-forward.png">What the character says when they're in the middle of the group in terms of clothes left.</state>
-            </case>
-            <case tag="must_strip_losing" priority="0">
-                <state img="x-forward.png">The character has lost a round, and also has the fewest pieces of clothing left.</state>
-            </case>
-            <case tag="stripping" priority="500">
-                <state img="x-forward.png">Beat of the Rising Sun!</state>
-            </case>
-            <case tag="stripped" priority="500">
-                <state img="x-forward.png">Every night you light me with your gasoline!</state>
-            </case>
-            <case tag="male_must_strip">
-                <state img="x-forward.png">What they say to a male NPC who has lost a round</state>
-            </case>
-            <case tag="male_must_strip" target="captain_falcon" targetStage="0" priority="510">
-                <state img="x-forward.png">Have you ever heard it? The meaning of truth?</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="x-forward.png">What they say to a female NPC who has lost a round</state>
-            </case>
-            <case tag="male_removing_accessory">
-                <state img="5-sad.png">A male character is about to remove a small item, with the type "extra".</state>
-            </case>
-            <case tag="male_removed_accessory">
-                <state img="5-calm.png">A male character has just removed that small item.</state>
-            </case>
-            <case tag="female_removing_accessory">
-                <state img="5-sad.png">A female character is about to remove a small item, with the type "extra".</state>
-            </case>
-            <case tag="female_removed_accessory">
-                <state img="5-calm.png">A female character has just removed that small item.</state>
-            </case>
-            <case tag="male_removing_minor">
-                <state img="5-calm.png">A male character is about to remove a clothing item with the type "minor".</state>
-            </case>
-            <case tag="male_removed_minor">
-                <state img="5-happy.png">The male character has just removed that minor item.</state>
-            </case>
-            <case tag="female_removing_minor">
-                <state img="5-calm.png">A female character is about to remove a clothing item with the type "minor".</state>
-            </case>
-            <case tag="female_removed_minor">
-                <state img="5-happy.png">The female character has just removed that minor item.</state>
-            </case>
-            <case tag="male_removing_major">
-                <state img="5-interested.png">What the character says before a male loses an item with the "major" type.</state>
-            </case>
-            <case tag="male_removed_major">
-                <state img="5-interested.png">What the character says after the major item has been taken off.</state>
-            </case>
-            <case tag="female_removing_major">
-                <state img="5-interested.png">What the character says before a female loses an item with the "major" type.</state>
-            </case>
-            <case tag="female_removed_major">
-                <state img="5-interested.png">What the character says after the major item has been taken off.</state>
-            </case>
-            <case tag="male_chest_will_be_visible">
-                <state img="5-interested.png">What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="male_chest_is_visible">
-                <state img="5-interested.png">What the character says once the male character's chest is visible.</state>
-            </case>
-            <case tag="male_crotch_will_be_visible">
-                <state img="5-horny.png">What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="male_small_crotch_is_visible">
-                <state img="5-calm.png">What the character says after the male character's crotch is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="male_medium_crotch_is_visible">
-                <state img="5-awkward.png">What the character says after the male character's crotch is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="male_large_crotch_is_visible">
-                <state img="5-shocked.png">What the character says after the male character's crotch is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_chest_will_be_visible">
-                <state img="5-interested.png">What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="female_small_chest_is_visible">
-                <state img="5-interested.png">What the character says after the female character's chest is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="female_medium_chest_is_visible">
-                <state img="5-horny.png">What the character says after the female character's chest is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="female_large_chest_is_visible">
-                <state img="5-shocked.png">What the character says after the female character's chest is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_crotch_will_be_visible">
-                <state img="5-horny.png">What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="female_crotch_is_visible">
-                <state img="x-forward.png">What the character says after the female character's crotch has become visible.</state>
-            </case>
-            <case tag="male_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="male_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="female_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="game_over_victory" priority="500">
-                <state img="custom:Drive Left">&lt;i&gt;Light up the night!&lt;/i&gt;</state>
-            </case>
-            <case tag="global" priority="499">
+            <case stage="5" priority="499">
                 <state img="x-forward.png">Every time I feel delight when you recall my name!</state>
                 <state img="x-left.png">So you can be my shining star tonight!</state>
                 <state img="x-sideways.png">I'm not alone with all your love!</state>
@@ -1268,185 +815,7 @@
                 <state img="x-sideways.png">Everyday I scream so loud you'll always be my queen!</state>
                 <state img="x-forward.png">I'm a space boy!</state>
             </case>
-            <case tag="global" priority="800">
-                <test expr="~player~" value="protomen" />
-                <state img="x-forward.png">This city's sleeping like a soldier!</state>
-                <state img="x-forward.png">Trapped inside of an iron lung!</state>
-                <state img="x-left.png">Machines can keep you breathing!</state>
-                <state img="x-sideways.png">But what happens when you find a new war's begun?</state>
-                <state img="x-left.png">Flip a switch and turn it off, you won't be able to breathe.</state>
-                <state img="x-sideways.png">So either way you're a casualty.</state>
-                <state img="x-forward.png">I've got this burning like my veins are filled!</state>
-                <state img="x-left.png">With nothing but gasoline!</state>
-                <state img="x-sideways.png">And with a spark!</state>
-                <state img="x-forward.png">It's gonna be the biggest fire they've ever seen.</state>
-                <state img="x-left.png">Cut me down or let me run!</state>
-                <state img="x-sideways.png">Either way it's all gonna burn...</state>
-                <state img="x-forward.png">The only way that they'll ever learn!</state>
-                <state img="x-forward.png">We've got to turn it off!</state>
-                <state img="x-forward.png">Flip a switch.</state>
-                <state img="x-forward.png">Light up the night!</state>
-                <state img="x-left.png">There is a city that this darkness can't hide.</state>
-                <state img="x-sideways.png">There are the embers of a fire that's gone out!</state>
-                <state img="x-forward.png">But I can still feel the heat on my skin!</state>
-                <state img="x-left.png">This mess we're in, well you and I!</state>
-                <state img="x-sideways.png">Maybe you and I!</state>
-                <state img="x-forward.png">We can still make it right!</state>
-                <state img="x-left.png">Maybe we can bring back the light!</state>
-                <state img="x-sideways.png">At the heart of the city there is a building that looks down over all there is!</state>
-                <state img="x-forward.png">And the man in the tower controls it all without raising a single fist!</state>
-                <state img="x-left.png">It's like they gathered up the city!</state>
-                <state img="x-sideways.png">They sold it to the devil, and now!</state>
-                <state img="x-forward.png">It's gone to hell and they wonder how.</state>
-                <state img="x-forward.png">Well, a friend once told me...</state>
-                <state img="x-left.png">Men, they would follow any man who would turn the wheels.</state>
-                <state img="x-sideways.png">Now the wheels are spinning out of control.</state>
-                <state img="x-forward.png">What would they do if we held them still?</state>
-                <state img="x-left.png">If you destroy the working parts, what you'll get is a broken machine.</state>
-                <state img="x-sideways.png">A beacon of light from a burning screen.</state>
-            </case>
-        </stage>
-
-        <stage id="6">
-            <case tag="swap_cards">
-                <state img="x-forward.png">I'll exchange ~cards~ cards.</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <state img="x-forward.png">I've got a good hand.</state>
-            </case>
-            <case tag="okay_hand" priority="0">
-                <state img="6-.png">I've got an okay hand.</state>
-            </case>
-            <case tag="bad_hand" priority="0">
-                <state img="6-.png">I've got a bad hand.</state>
-            </case>
-            <case tag="must_strip" priority="500">
-                <state img="x-forward.png">Now playing...</state>
-            </case>
-            <case tag="must_strip_winning" priority="0">
-                <state img="x-forward.png">They say this when they're winning - they have more clothing items left than other players.</state>
-            </case>
-            <case tag="must_strip_normal" priority="0">
-                <state img="x-forward.png">What the character says when they're in the middle of the group in terms of clothes left.</state>
-            </case>
-            <case tag="must_strip_losing" priority="0">
-                <state img="x-forward.png">The character has lost a round, and also has the fewest pieces of clothing left.</state>
-            </case>
-            <case tag="stripping" priority="500">
-                <state img="x-forward.png">Deja Vu, again.</state>
-            </case>
-            <case tag="stripped" priority="500">
-                <state img="x-forward.png">I'm feeling bright...</state>
-            </case>
-            <case tag="male_must_strip">
-                <state img="x-forward.png">What they say to a male NPC who has lost a round</state>
-            </case>
-            <case tag="male_must_strip" target="captain_falcon" targetStage="0" priority="510">
-                <state img="x-forward.png">Have you ever heard it? The meaning of truth?</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="x-forward.png">What they say to a female NPC who has lost a round</state>
-            </case>
-            <case tag="male_removing_accessory">
-                <state img="6-sad.png">A male character is about to remove a small item, with the type "extra".</state>
-            </case>
-            <case tag="male_removed_accessory">
-                <state img="6-calm.png">A male character has just removed that small item.</state>
-            </case>
-            <case tag="female_removing_accessory">
-                <state img="6-sad.png">A female character is about to remove a small item, with the type "extra".</state>
-            </case>
-            <case tag="female_removed_accessory">
-                <state img="6-calm.png">A female character has just removed that small item.</state>
-            </case>
-            <case tag="male_removing_minor">
-                <state img="6-calm.png">A male character is about to remove a clothing item with the type "minor".</state>
-            </case>
-            <case tag="male_removed_minor">
-                <state img="6-happy.png">The male character has just removed that minor item.</state>
-            </case>
-            <case tag="female_removing_minor">
-                <state img="6-calm.png">A female character is about to remove a clothing item with the type "minor".</state>
-            </case>
-            <case tag="female_removed_minor">
-                <state img="6-happy.png">The female character has just removed that minor item.</state>
-            </case>
-            <case tag="male_removing_major">
-                <state img="6-interested.png">What the character says before a male loses an item with the "major" type.</state>
-            </case>
-            <case tag="male_removed_major">
-                <state img="6-interested.png">What the character says after the major item has been taken off.</state>
-            </case>
-            <case tag="female_removing_major">
-                <state img="6-interested.png">What the character says before a female loses an item with the "major" type.</state>
-            </case>
-            <case tag="female_removed_major">
-                <state img="6-interested.png">What the character says after the major item has been taken off.</state>
-            </case>
-            <case tag="male_chest_will_be_visible">
-                <state img="6-interested.png">What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="male_chest_is_visible">
-                <state img="6-interested.png">What the character says once the male character's chest is visible.</state>
-            </case>
-            <case tag="male_crotch_will_be_visible">
-                <state img="6-horny.png">What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="male_small_crotch_is_visible">
-                <state img="6-calm.png">What the character says after the male character's crotch is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="male_medium_crotch_is_visible">
-                <state img="6-awkward.png">What the character says after the male character's crotch is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="male_large_crotch_is_visible">
-                <state img="6-shocked.png">What the character says after the male character's crotch is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_chest_will_be_visible">
-                <state img="6-interested.png">What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="female_small_chest_is_visible">
-                <state img="6-interested.png">What the character says after the female character's chest is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="female_medium_chest_is_visible">
-                <state img="6-horny.png">What the character says after the female character's chest is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="female_large_chest_is_visible">
-                <state img="6-shocked.png">What the character says after the female character's chest is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_crotch_will_be_visible">
-                <state img="6-horny.png">What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="female_crotch_is_visible">
-                <state img="x-forward.png">What the character says after the female character's crotch has become visible.</state>
-            </case>
-            <case tag="male_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="male_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="female_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="game_over_victory" priority="500">
-                <state img="custom:Drive Left">&lt;i&gt;Light up the night!&lt;/i&gt;</state>
-            </case>
-            <case tag="global" priority="499">
+            <case stage="6" priority="499">
                 <state img="x-forward.png">Come baby come on!</state>
                 <state img="x-left.png">I say to you!</state>
                 <state img="x-sideways.png">It's all right!</state>
@@ -1473,830 +842,10 @@
                 <state img="x-left.png">You're gonna shine!</state>
                 <state img="x-sideways.png">Oh baby listen!</state>
             </case>
-            <case tag="global" priority="800">
-                <test expr="~player~" value="protomen" />
-                <state img="x-forward.png">This city's sleeping like a soldier!</state>
-                <state img="x-forward.png">Trapped inside of an iron lung!</state>
-                <state img="x-left.png">Machines can keep you breathing!</state>
-                <state img="x-sideways.png">But what happens when you find a new war's begun?</state>
-                <state img="x-left.png">Flip a switch and turn it off, you won't be able to breathe.</state>
-                <state img="x-sideways.png">So either way you're a casualty.</state>
-                <state img="x-forward.png">I've got this burning like my veins are filled!</state>
-                <state img="x-left.png">With nothing but gasoline!</state>
-                <state img="x-sideways.png">And with a spark!</state>
-                <state img="x-forward.png">It's gonna be the biggest fire they've ever seen.</state>
-                <state img="x-left.png">Cut me down or let me run!</state>
-                <state img="x-sideways.png">Either way it's all gonna burn...</state>
-                <state img="x-forward.png">The only way that they'll ever learn!</state>
-                <state img="x-forward.png">We've got to turn it off!</state>
-                <state img="x-forward.png">Flip a switch.</state>
-                <state img="x-forward.png">Light up the night!</state>
-                <state img="x-left.png">There is a city that this darkness can't hide.</state>
-                <state img="x-sideways.png">There are the embers of a fire that's gone out!</state>
-                <state img="x-forward.png">But I can still feel the heat on my skin!</state>
-                <state img="x-left.png">This mess we're in, well you and I!</state>
-                <state img="x-sideways.png">Maybe you and I!</state>
-                <state img="x-forward.png">We can still make it right!</state>
-                <state img="x-left.png">Maybe we can bring back the light!</state>
-                <state img="x-sideways.png">At the heart of the city there is a building that looks down over all there is!</state>
-                <state img="x-forward.png">And the man in the tower controls it all without raising a single fist!</state>
-                <state img="x-left.png">It's like they gathered up the city!</state>
-                <state img="x-sideways.png">They sold it to the devil, and now!</state>
-                <state img="x-forward.png">It's gone to hell and they wonder how.</state>
-                <state img="x-forward.png">Well, a friend once told me...</state>
-                <state img="x-left.png">Men, they would follow any man who would turn the wheels.</state>
-                <state img="x-sideways.png">Now the wheels are spinning out of control.</state>
-                <state img="x-forward.png">What would they do if we held them still?</state>
-                <state img="x-left.png">If you destroy the working parts, what you'll get is a broken machine.</state>
-                <state img="x-sideways.png">A beacon of light from a burning screen.</state>
-            </case>
-        </stage>
-
-        <stage id="7">
-            <case tag="swap_cards">
-                <state img="x-forward.png">See your body into the moonlight!</state>
-                <state img="x-left.png">Even if I try to cancel!</state>
-                <state img="x-sideways.png">All the pictures into my eyes!</state>
-            </case>
-            <case tag="good_hand" priority="0">
-                <state img="x-forward.png">I've got a good hand.</state>
-            </case>
-            <case tag="okay_hand" priority="0">
-                <state img="7-.png">I've got an okay hand.</state>
-            </case>
-            <case tag="bad_hand" priority="0">
-                <state img="7-.png">I've got a bad hand.</state>
-            </case>
-            <case tag="hand" priority="10">
-                <state img="x-forward.png">Don't you see my condition?</state>
-                <state img="x-left.png">The fiction is gonna run it again!</state>
-                <state img="x-sideways.png">Can't you see now illusions?</state>
-            </case>
-            <case tag="must_strip" priority="500">
-                <state img="x-forward.png">Now playing...</state>
-            </case>
-            <case tag="must_strip_winning" priority="0">
-                <state img="x-forward.png">They say this when they're winning - they have more clothing items left than other players.</state>
-            </case>
-            <case tag="must_strip_normal" priority="0">
-                <state img="x-forward.png">What the character says when they're in the middle of the group in terms of clothes left.</state>
-            </case>
-            <case tag="must_strip_losing" priority="0">
-                <state img="x-forward.png">The character has lost a round, and also has the fewest pieces of clothing left.</state>
-            </case>
-            <case tag="stripping">
-                <state img="x-forward.png">Song title not found...</state>
-            </case>
-            <case tag="stripped">
-                <state img="x-forward.png">DEJA VU!</state>
-            </case>
-            <case tag="male_must_strip">
-                <state img="x-forward.png">Right into your mind!</state>
-                <state img="x-left.png">Deja vu!</state>
-                <state img="x-sideways.png">I've just been in this place before!</state>
-            </case>
-            <case tag="male_must_strip" target="captain_falcon" targetStage="0" priority="510">
-                <state img="x-forward.png">Have you ever heard it? The meaning of truth?</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="x-forward.png">Right into your mind!</state>
-                <state img="x-left.png">Deja vu!</state>
-                <state img="x-sideways.png">I've just been in this place before!</state>
-            </case>
-            <case tag="male_removing_accessory">
-                <state img="x-forward.png">Higher on the street!</state>
-                <state img="x-left.png">And I know it's my time to go!</state>
-                <state img="x-sideways.png">Calling you, and the search is a mystery!</state>
-            </case>
-            <case tag="male_removed_accessory">
-                <state img="x-forward.png">Standing on my feet!</state>
-                <state img="x-left.png">It's so hard when I try to be me!</state>
-                <state img="x-sideways.png">Woah!</state>
-            </case>
-            <case tag="female_removing_accessory">
-                <state img="x-forward.png">Higher on the street!</state>
-                <state img="x-left.png">And I know it's my time to go!</state>
-                <state img="x-sideways.png">Calling you, and the search is a mystery!</state>
-            </case>
-            <case tag="female_removed_accessory">
-                <state img="x-forward.png">Standing on my feet!</state>
-                <state img="x-left.png">It's so hard when I try to be me!</state>
-                <state img="x-sideways.png">Woah!</state>
-            </case>
-            <case tag="male_removing_minor">
-                <state img="x-forward.png">Deja vu!</state>
-                <state img="x-left.png">I've just been in this time before!</state>
-                <state img="x-sideways.png">Higher on the beat!</state>
-            </case>
-            <case tag="male_removed_minor">
-                <state img="x-forward.png">And I know it's a place to go!</state>
-                <state img="x-left.png">Calling you and the search is a mystery!</state>
-                <state img="x-sideways.png">Standing on my feet!</state>
-            </case>
-            <case tag="female_removing_minor">
-                <state img="x-forward.png">Deja vu!</state>
-                <state img="x-left.png">I've just been in this time before!</state>
-                <state img="x-sideways.png">Higher on the beat!</state>
-            </case>
-            <case tag="female_removed_minor">
-                <state img="x-forward.png">And I know it's a place to go!</state>
-                <state img="x-left.png">Calling you and the search is a mystery!</state>
-                <state img="x-sideways.png">Standing on my feet!</state>
-            </case>
-            <case tag="male_removing_major">
-                <state img="x-forward.png">It's so hard when I try to be me, yeah!</state>
-                <state img="x-left.png">See the future into the present!</state>
-                <state img="x-sideways.png">See my past leaves in the distance!</state>
-            </case>
-            <case tag="male_removed_major">
-                <state img="x-forward.png">Try to guess now what's going on!</state>
-                <state img="x-left.png">And the band begins to play!</state>
-                <state img="x-sideways.png">Don't you see my commission, the nation!</state>
-            </case>
-            <case tag="female_removing_major">
-                <state img="x-forward.png">It's so hard when I try to be me, yeah!</state>
-                <state img="x-left.png">See the future into the present!</state>
-                <state img="x-sideways.png">See my past leaves in the distance!</state>
-            </case>
-            <case tag="female_removed_major">
-                <state img="x-sideways.png">Don't you see my commission, the nation!</state>
-                <state img="x-left.png">And the band begins to play!</state>
-                <state img="x-forward.png">Try to guess now what's going on!</state>
-            </case>
-            <case tag="male_chest_will_be_visible">
-                <state img="x-forward.png">Has gone running again!</state>
-                <state img="x-left.png">Can't you see now, illusions!</state>
-                <state img="x-sideways.png">Right into your mind!</state>
-            </case>
-            <case tag="male_chest_is_visible">
-                <state img="x-forward.png">Deja vu!</state>
-                <state img="x-forward.png">I've just been in this place before!</state>
-                <state img="x-forward.png">Higher on the street!</state>
-            </case>
-            <case tag="male_crotch_will_be_visible">
-                <state img="x-forward.png">And I know it's my time to go!</state>
-                <state img="x-left.png">Calling you, and the search is a mystery!</state>
-                <state img="x-sideways.png">Standing on my feet!</state>
-            </case>
-            <case tag="male_small_crotch_is_visible">
-                <state img="x-forward.png">It's so hard when I try to be me, woah!</state>
-            </case>
-            <case tag="male_medium_crotch_is_visible">
-                <state img="x-forward.png">I've just been in this time before!</state>
-            </case>
-            <case tag="male_large_crotch_is_visible">
-                <state img="x-forward.png">Higher on the street!</state>
-                <state img="x-forward.png">Deja vu!</state>
-                <state img="x-forward.png">I've just been in this place before!</state>
-            </case>
-            <case tag="female_chest_will_be_visible">
-                <state img="x-sideways.png">Right into your mind!</state>
-                <state img="x-forward.png">Has gone running again!</state>
-                <state img="x-left.png">Can't you see now, illusions!</state>
-            </case>
-            <case tag="female_small_chest_is_visible">
-                <state img="x-forward.png">I've just been in this place before!</state>
-                <state img="x-forward.png">Deja vu!</state>
-                <state img="x-forward.png">Higher on the street!</state>
-            </case>
-            <case tag="female_medium_chest_is_visible">
-                <state img="x-forward.png">Higher on the street!</state>
-                <state img="x-forward.png">Deja vu!</state>
-                <state img="x-forward.png">I've just been in this place before!</state>
-            </case>
-            <case tag="female_large_chest_is_visible">
-                <state img="x-forward.png">I've just been in this place before!</state>
-                <state img="x-forward.png">Deja vu!</state>
-                <state img="x-forward.png">Higher on the street!</state>
-            </case>
-            <case tag="female_crotch_will_be_visible">
-                <state img="x-sideways.png">Standing on my feet!</state>
-                <state img="x-left.png">Calling you, and the search is a mystery!</state>
-                <state img="x-forward.png">And I know it's my time to go!</state>
-            </case>
-            <case tag="female_crotch_is_visible">
-                <state img="x-forward.png">Higher on the beat!</state>
-                <state img="x-left.png">And I know it's a place to go!</state>
-                <state img="x-sideways.png">Calling you and the search is a mystery!</state>
-            </case>
-            <case tag="male_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="male_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="female_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="game_over_victory" priority="500">
-                <state img="custom:Drive Left">&lt;i&gt;Light up the night!&lt;/i&gt;</state>
-            </case>
-            <case tag="global" priority="800">
-                <test expr="~player~" value="protomen" />
-                <state img="x-forward.png">This city's sleeping like a soldier!</state>
-                <state img="x-forward.png">Trapped inside of an iron lung!</state>
-                <state img="x-left.png">Machines can keep you breathing!</state>
-                <state img="x-sideways.png">But what happens when you find a new war's begun?</state>
-                <state img="x-left.png">Flip a switch and turn it off, you won't be able to breathe.</state>
-                <state img="x-sideways.png">So either way you're a casualty.</state>
-                <state img="x-forward.png">I've got this burning like my veins are filled!</state>
-                <state img="x-left.png">With nothing but gasoline!</state>
-                <state img="x-sideways.png">And with a spark!</state>
-                <state img="x-forward.png">It's gonna be the biggest fire they've ever seen.</state>
-                <state img="x-left.png">Cut me down or let me run!</state>
-                <state img="x-sideways.png">Either way it's all gonna burn...</state>
-                <state img="x-forward.png">The only way that they'll ever learn!</state>
-                <state img="x-forward.png">We've got to turn it off!</state>
-                <state img="x-forward.png">Flip a switch.</state>
-                <state img="x-forward.png">Light up the night!</state>
-                <state img="x-left.png">There is a city that this darkness can't hide.</state>
-                <state img="x-sideways.png">There are the embers of a fire that's gone out!</state>
-                <state img="x-forward.png">But I can still feel the heat on my skin!</state>
-                <state img="x-left.png">This mess we're in, well you and I!</state>
-                <state img="x-sideways.png">Maybe you and I!</state>
-                <state img="x-forward.png">We can still make it right!</state>
-                <state img="x-left.png">Maybe we can bring back the light!</state>
-                <state img="x-sideways.png">At the heart of the city there is a building that looks down over all there is!</state>
-                <state img="x-forward.png">And the man in the tower controls it all without raising a single fist!</state>
-                <state img="x-left.png">It's like they gathered up the city!</state>
-                <state img="x-sideways.png">They sold it to the devil, and now!</state>
-                <state img="x-forward.png">It's gone to hell and they wonder how.</state>
-                <state img="x-forward.png">Well, a friend once told me...</state>
-                <state img="x-left.png">Men, they would follow any man who would turn the wheels.</state>
-                <state img="x-sideways.png">Now the wheels are spinning out of control.</state>
-                <state img="x-forward.png">What would they do if we held them still?</state>
-                <state img="x-left.png">If you destroy the working parts, what you'll get is a broken machine.</state>
-                <state img="x-sideways.png">A beacon of light from a burning screen.</state>
-            </case>
-        </stage>
-
-        <stage id="8">
-            <case tag="swap_cards">
+            <case stage="8">
                 <state img="x-forward.png">...</state>
             </case>
-            <case tag="good_hand">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="okay_hand">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="bad_hand">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="stripped">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_must_strip">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_must_strip" target="captain_falcon" targetStage="0" priority="510">
-                <state img="x-forward.png">Have you ever heard it? The meaning of truth?</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_removing_accessory">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_removed_accessory">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="female_removing_accessory">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="female_removed_accessory">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_removing_minor">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_removed_minor">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="female_removing_minor">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="female_removed_minor">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_removing_major">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_removed_major">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="female_removing_major">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="female_removed_major">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_chest_will_be_visible">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_chest_is_visible">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_crotch_will_be_visible">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_small_crotch_is_visible">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_medium_crotch_is_visible">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_large_crotch_is_visible">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="female_chest_will_be_visible">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="female_small_chest_is_visible">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="female_medium_chest_is_visible">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="female_large_chest_is_visible">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="female_crotch_will_be_visible">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="female_crotch_is_visible">
-                <state img="x-forward.png">...</state>
-            </case>
-            <case tag="male_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="male_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_must_masturbate" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_start_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_masturbating" priority="500">
-                <state img="x-forward.png">Make me feel feel all right I need you all this night forever!</state>
-            </case>
-            <case tag="female_finished_masturbating" priority="500">
-                <state img="x-forward.png">&lt;i&gt;Lonely love!&lt;/i&gt;</state>
-            </case>
-            <case tag="must_masturbate_first">
-                <state img="x-forward.png">&lt;i&gt;Motor noises.&lt;/i&gt;</state>
-                <state img="x-forward.png">&lt;i&gt;Engine noises.&lt;/i&gt;</state>
-            </case>
-            <case tag="must_masturbate">
-                <state img="x-forward.png">&lt;i&gt;Motor noises.&lt;/i&gt;</state>
-                <state img="x-forward.png">&lt;i&gt;Engine noises.&lt;/i&gt;</state>
-            </case>
-            <case tag="start_masturbating">
-                <state img="custom:Drive Left">&lt;i&gt;VRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="game_over_victory" priority="500">
-                <state img="custom:Drive Left">&lt;i&gt;Light up the night!&lt;/i&gt;</state>
-            </case>
-            <case tag="global" priority="800">
-                <test expr="~player~" value="protomen" />
-                <state img="x-forward.png">This city's sleeping like a soldier!</state>
-                <state img="x-forward.png">Trapped inside of an iron lung!</state>
-                <state img="x-left.png">Machines can keep you breathing!</state>
-                <state img="x-sideways.png">But what happens when you find a new war's begun?</state>
-                <state img="x-left.png">Flip a switch and turn it off, you won't be able to breathe.</state>
-                <state img="x-sideways.png">So either way you're a casualty.</state>
-                <state img="x-forward.png">I've got this burning like my veins are filled!</state>
-                <state img="x-left.png">With nothing but gasoline!</state>
-                <state img="x-sideways.png">And with a spark!</state>
-                <state img="x-forward.png">It's gonna be the biggest fire they've ever seen.</state>
-                <state img="x-left.png">Cut me down or let me run!</state>
-                <state img="x-sideways.png">Either way it's all gonna burn...</state>
-                <state img="x-forward.png">The only way that they'll ever learn!</state>
-                <state img="x-forward.png">We've got to turn it off!</state>
-                <state img="x-forward.png">Flip a switch.</state>
-                <state img="x-forward.png">Light up the night!</state>
-                <state img="x-left.png">There is a city that this darkness can't hide.</state>
-                <state img="x-sideways.png">There are the embers of a fire that's gone out!</state>
-                <state img="x-forward.png">But I can still feel the heat on my skin!</state>
-                <state img="x-left.png">This mess we're in, well you and I!</state>
-                <state img="x-sideways.png">Maybe you and I!</state>
-                <state img="x-forward.png">We can still make it right!</state>
-                <state img="x-left.png">Maybe we can bring back the light!</state>
-                <state img="x-sideways.png">At the heart of the city there is a building that looks down over all there is!</state>
-                <state img="x-forward.png">And the man in the tower controls it all without raising a single fist!</state>
-                <state img="x-left.png">It's like they gathered up the city!</state>
-                <state img="x-sideways.png">They sold it to the devil, and now!</state>
-                <state img="x-forward.png">It's gone to hell and they wonder how.</state>
-                <state img="x-forward.png">Well, a friend once told me...</state>
-                <state img="x-left.png">Men, they would follow any man who would turn the wheels.</state>
-                <state img="x-sideways.png">Now the wheels are spinning out of control.</state>
-                <state img="x-forward.png">What would they do if we held them still?</state>
-                <state img="x-left.png">If you destroy the working parts, what you'll get is a broken machine.</state>
-                <state img="x-sideways.png">A beacon of light from a burning screen.</state>
-            </case>
-        </stage>
-
-        <stage id="9">
-            <case tag="male_must_strip">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_must_strip" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_must_strip" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_must_strip" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_must_strip" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removing_accessory">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removing_accessory" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removing_accessory" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removed_accessory">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removed_accessory" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removed_accessory" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removing_accessory">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removing_accessory" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removing_accessory" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removed_accessory">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removed_accessory" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removed_accessory" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removing_minor">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removing_minor" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removing_minor" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removed_minor">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removed_minor" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removed_minor" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removing_minor">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removing_minor" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removing_minor" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removed_minor">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removed_minor" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removed_minor" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removing_major">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removing_major" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removing_major" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removed_major">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removed_major" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_removed_major" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removing_major">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removing_major" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removing_major" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removed_major">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removed_major" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="female_removed_major" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="male_chest_will_be_visible">
-                <state img="9-interested.png">What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="male_chest_is_visible">
-                <state img="9-interested.png">What the character says once the male character's chest is visible.</state>
-            </case>
-            <case tag="male_crotch_will_be_visible">
-                <state img="9-horny.png">What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="male_small_crotch_is_visible">
-                <state img="9-calm.png">What the character says after the male character's crotch is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="male_medium_crotch_is_visible">
-                <state img="9-awkward.png">What the character says after the male character's crotch is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="male_large_crotch_is_visible">
-                <state img="9-shocked.png">What the character says after the male character's crotch is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_chest_will_be_visible">
-                <state img="9-interested.png">What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="female_small_chest_is_visible">
-                <state img="9-interested.png">What the character says after the female character's chest is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="female_medium_chest_is_visible">
-                <state img="9-horny.png">What the character says after the female character's chest is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="female_large_chest_is_visible">
-                <state img="9-shocked.png">What the character says after the female character's chest is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_crotch_will_be_visible">
-                <state img="9-horny.png">What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="female_crotch_is_visible">
-                <state img="9-.png">What the character says after the female character's crotch has become visible.</state>
-            </case>
-            <case tag="male_must_masturbate">
-                <state img="9-interested.png">What the character says when a male character has lost a hand while nude, and must masturbate.</state>
-            </case>
-            <case tag="male_start_masturbating">
-                <state img="9-horny.png">What the character says when a male character has started masturbating.</state>
-            </case>
-            <case tag="male_masturbating">
-                <state img="9-horny.png">What the character says while a male character is masturbating.</state>
-            </case>
-            <case tag="male_finished_masturbating">
-                <state img="9-shocked.png">What the character says when a male character "finishes" masturbating.</state>
-            </case>
-            <case tag="female_must_masturbate">
-                <state img="9-interested.png">What the character says when a female character has lost a hand while nude, and must masturbate.</state>
-            </case>
-            <case tag="female_start_masturbating">
-                <state img="9-horny.png">What the character says when a female character has started masturbating.</state>
-            </case>
-            <case tag="female_masturbating">
-                <state img="9-horny.png">What the character says while a female character is masturbating.</state>
-            </case>
-            <case tag="female_finished_masturbating">
-                <state img="9-shocked.png">What the character says when a female character "finishes" masturbating.</state>
-            </case>
-            <case tag="masturbating">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="masturbating" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="masturbating" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="heavy_masturbating">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="heavy_masturbating" saidMarker="goingleft1" notSaidMarker="goingright2">
-                <state img="custom:Drive Left" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="heavy_masturbating" saidMarker="goingright1" notSaidMarker="goingleft1">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="finishing_masturbating" priority="705">
-                <state img="x-forward.png">&lt;i&gt;Engine dying noises.&lt;/i&gt;</state>
-            </case>
-            <case tag="global" priority="700">
-                <state img="custom:Drive Right" marker="goingright1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="global" saidMarker="goingleft1" notSaidMarker="goingright2" priority="700">
-                <state img="custom:Drive Right" marker="goingright2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="global" saidMarker="goingleft2" notSaidMarker="goingright3" priority="700">
-                <state img="custom:Drive Right" marker="goingright3">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="global" saidMarker="goingright1" notSaidMarker="goingleft1" priority="700">
-                <state img="custom:Drive Left" marker="goingleft1">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-            <case tag="global" saidMarker="goingright2" notSaidMarker="goingleft2" priority="700">
-                <state img="custom:Drive Left" marker="goingleft2">&lt;i&gt;VRRRRRRRRRRRRRRRRRR!&lt;/i&gt;</state>
-            </case>
-        </stage>
-
-        <stage id="10">
-            <case tag="male_must_strip">
-                <state img="10-1x-forward.png">What they say to a male NPC who has lost a round</state>
-            </case>
-            <case tag="female_must_strip">
-                <state img="10-1x-forward.png">What they say to a female NPC who has lost a round</state>
-            </case>
-            <case tag="male_removing_accessory">
-                <state img="10-sad.png">A male character is about to remove a small item, with the type "extra".</state>
-            </case>
-            <case tag="male_removed_accessory">
-                <state img="10-calm.png">A male character has just removed that small item.</state>
-            </case>
-            <case tag="female_removing_accessory">
-                <state img="10-sad.png">A female character is about to remove a small item, with the type "extra".</state>
-            </case>
-            <case tag="female_removed_accessory">
-                <state img="10-calm.png">A female character has just removed that small item.</state>
-            </case>
-            <case tag="male_removing_minor">
-                <state img="10-calm.png">A male character is about to remove a clothing item with the type "minor".</state>
-            </case>
-            <case tag="male_removed_minor">
-                <state img="10-happy.png">The male character has just removed that minor item.</state>
-            </case>
-            <case tag="female_removing_minor">
-                <state img="10-calm.png">A female character is about to remove a clothing item with the type "minor".</state>
-            </case>
-            <case tag="female_removed_minor">
-                <state img="10-happy.png">The female character has just removed that minor item.</state>
-            </case>
-            <case tag="male_removing_major">
-                <state img="10-interested.png">What the character says before a male loses an item with the "major" type.</state>
-            </case>
-            <case tag="male_removed_major">
-                <state img="10-interested.png">What the character says after the major item has been taken off.</state>
-            </case>
-            <case tag="female_removing_major">
-                <state img="10-interested.png">What the character says before a female loses an item with the "major" type.</state>
-            </case>
-            <case tag="female_removed_major">
-                <state img="10-interested.png">What the character says after the major item has been taken off.</state>
-            </case>
-            <case tag="male_chest_will_be_visible">
-                <state img="10-interested.png">What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="male_chest_is_visible">
-                <state img="10-interested.png">What the character says once the male character's chest is visible.</state>
-            </case>
-            <case tag="male_crotch_will_be_visible">
-                <state img="10-horny.png">What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="male_small_crotch_is_visible">
-                <state img="10-calm.png">What the character says after the male character's crotch is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="male_medium_crotch_is_visible">
-                <state img="10-awkward.png">What the character says after the male character's crotch is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="male_large_crotch_is_visible">
-                <state img="10-shocked.png">What the character says after the male character's crotch is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_chest_will_be_visible">
-                <state img="10-interested.png">What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.</state>
-            </case>
-            <case tag="female_small_chest_is_visible">
-                <state img="10-interested.png">What the character says after the female character's chest is visible, and has a size value of "small".</state>
-            </case>
-            <case tag="female_medium_chest_is_visible">
-                <state img="10-horny.png">What the character says after the female character's chest is visible, and has a size value of "medium".</state>
-            </case>
-            <case tag="female_large_chest_is_visible">
-                <state img="10-shocked.png">What the character says after the female character's chest is visible, and has a size value of "large".</state>
-            </case>
-            <case tag="female_crotch_will_be_visible">
-                <state img="10-horny.png">What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.</state>
-            </case>
-            <case tag="female_crotch_is_visible">
-                <state img="10-1x-forward.png">What the character says after the female character's crotch has become visible.</state>
-            </case>
-            <case tag="male_must_masturbate">
-                <state img="10-interested.png">What the character says when a male character has lost a hand while nude, and must masturbate.</state>
-            </case>
-            <case tag="male_start_masturbating">
-                <state img="10-horny.png">What the character says when a male character has started masturbating.</state>
-            </case>
-            <case tag="male_masturbating">
-                <state img="10-horny.png">What the character says while a male character is masturbating.</state>
-            </case>
-            <case tag="male_finished_masturbating">
-                <state img="10-shocked.png">What the character says when a male character "finishes" masturbating.</state>
-            </case>
-            <case tag="female_must_masturbate">
-                <state img="10-interested.png">What the character says when a female character has lost a hand while nude, and must masturbate.</state>
-            </case>
-            <case tag="female_start_masturbating">
-                <state img="10-horny.png">What the character says when a female character has started masturbating.</state>
-            </case>
-            <case tag="female_masturbating">
-                <state img="10-horny.png">What the character says while a female character is masturbating.</state>
-            </case>
-            <case tag="female_finished_masturbating">
-                <state img="10-shocked.png">What the character says when a female character "finishes" masturbating.</state>
-            </case>
-            <case tag="finished_masturbating">
-                <state img="x-gone.png"></state>
-            </case>
-            <case tag="finished_masturbating" notSaidMarker="driveaway" priority="605">
-                <state img="custom:Drive Left" marker="driveaway">Toyota Sprinter AE86 Trueno GT Apex out.</state>
-            </case>
-            <case tag="game_over_defeat">
-                <state img="10-1x-forward.png">What the character says when someone else has won the game. This can only occur when a player is in the "finished" stage.</state>
-            </case>
-            <case tag="global" priority="500">
-                <state img="x-gone.png"></state>
-            </case>
-            <case tag="global" priority="800">
-                <test expr="~player~" value="protomen" />
-                <state img="x-forward.png">This city's sleeping like a soldier!</state>
-                <state img="x-forward.png">Trapped inside of an iron lung!</state>
-                <state img="x-left.png">Machines can keep you breathing!</state>
-                <state img="x-sideways.png">But what happens when you find a new war's begun?</state>
-                <state img="x-left.png">Flip a switch and turn it off, you won't be able to breathe.</state>
-                <state img="x-sideways.png">So either way you're a casualty.</state>
-                <state img="x-forward.png">I've got this burning like my veins are filled!</state>
-                <state img="x-left.png">With nothing but gasoline!</state>
-                <state img="x-sideways.png">And with a spark!</state>
-                <state img="x-forward.png">It's gonna be the biggest fire they've ever seen.</state>
-                <state img="x-left.png">Cut me down or let me run!</state>
-                <state img="x-sideways.png">Either way it's all gonna burn...</state>
-                <state img="x-forward.png">The only way that they'll ever learn!</state>
-                <state img="x-forward.png">We've got to turn it off!</state>
-                <state img="x-forward.png">Flip a switch.</state>
-                <state img="x-forward.png">Light up the night!</state>
-                <state img="x-left.png">There is a city that this darkness can't hide.</state>
-                <state img="x-sideways.png">There are the embers of a fire that's gone out!</state>
-                <state img="x-forward.png">But I can still feel the heat on my skin!</state>
-                <state img="x-left.png">This mess we're in, well you and I!</state>
-                <state img="x-sideways.png">Maybe you and I!</state>
-                <state img="x-forward.png">We can still make it right!</state>
-                <state img="x-left.png">Maybe we can bring back the light!</state>
-                <state img="x-sideways.png">At the heart of the city there is a building that looks down over all there is!</state>
-                <state img="x-forward.png">And the man in the tower controls it all without raising a single fist!</state>
-                <state img="x-left.png">It's like they gathered up the city!</state>
-                <state img="x-sideways.png">They sold it to the devil, and now!</state>
-                <state img="x-forward.png">It's gone to hell and they wonder how.</state>
-                <state img="x-forward.png">Well, a friend once told me...</state>
-                <state img="x-left.png">Men, they would follow any man who would turn the wheels.</state>
-                <state img="x-sideways.png">Now the wheels are spinning out of control.</state>
-                <state img="x-forward.png">What would they do if we held them still?</state>
-                <state img="x-left.png">If you destroy the working parts, what you'll get is a broken machine.</state>
-                <state img="x-sideways.png">A beacon of light from a burning screen.</state>
-            </case>
-        </stage>
+        </trigger>
 
     </behaviour>
 </opponent>
