@@ -35,6 +35,7 @@
 			// 
 			// view
 			// 
+			this.view.AllowDrop = true;
 			this.view.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.view.FullRowSelect = true;
 			this.view.HideSelection = false;

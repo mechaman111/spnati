@@ -26,7 +26,6 @@ namespace SPNATI_Character_Editor
 			chkInitialAdd.Checked = Config.AutoOpenConditions;
 			chkDefaults.Checked = !Config.SuppressDefaults;
 			chkCaseTree.Checked = !Config.UseSimpleTree;
-			chkHideImages.Checked = Config.GetBoolean(Settings.HideImages);
 			chkColorTargets.Checked = Config.ColorTargetedLines;
 			chkWorkflowTracer.Checked = !Config.DisableWorkflowTracer;
 			chkEmptyCases.Checked = !Config.HideEmptyCases;
@@ -41,6 +40,9 @@ namespace SPNATI_Character_Editor
 			chkChecklistSpell.Checked = Config.EnableDashboardSpellCheck;
 			chkChecklistValidation.Checked = Config.EnableDashboardValidation;
 			chkStartDashboard.Checked = Config.StartOnDashboard;
+			chkHideImages.Checked = !Config.GetBoolean(Settings.HideImages);
+			chkPreviewBubble.Checked = Config.GetBoolean(Settings.ShowPreviewText);
+			chkPreviewFormatting.Checked = !Config.GetBoolean(Settings.DisablePreviewFormatting);
 
 			recAutoOpen.RecordType = typeof(Character);
 			recAutoOpen.RecordFilter = CharacterDatabase.FilterHuman;
@@ -251,7 +253,7 @@ namespace SPNATI_Character_Editor
 
 		private void chkHideImages_CheckedChanged_1(object sender, EventArgs e)
 		{
-			Config.Set(Settings.HideImages, chkHideImages.Checked);
+			Config.Set(Settings.HideImages, !chkHideImages.Checked);
 			Shell.Instance.PostOffice.SendMessage(DesktopMessages.ToggleImages);
 		}
 
@@ -275,6 +277,18 @@ namespace SPNATI_Character_Editor
 		private void chkDashboard_CheckedChanged(object sender, EventArgs e)
 		{
 			chkStartDashboard.Enabled = grpChecklist.Enabled = chkDashboard.Checked;
+		}
+
+		private void chkPreviewBubble_CheckedChanged(object sender, EventArgs e)
+		{
+			Config.Set(Settings.ShowPreviewText, chkPreviewBubble.Checked);
+			Shell.Instance.PostOffice.SendMessage(DesktopMessages.ToggleImages);
+		}
+
+		private void chkPreviewFormatting_CheckedChanged(object sender, EventArgs e)
+		{
+			Config.Set(Settings.DisablePreviewFormatting, !chkPreviewFormatting.Checked);
+			Shell.Instance.PostOffice.SendMessage(DesktopMessages.ToggleImages);
 		}
 	}
 }

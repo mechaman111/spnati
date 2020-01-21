@@ -868,11 +868,12 @@ namespace SPNATI_Character_Editor.Controls
 			return -1;
 		}
 
-		public void SelectTextInRow(int rowIndex, int startIndex, int length)
+		public void SelectTextInRow(int rowIndex, int startIndex, int length, bool selectMarker)
 		{
 			DataGridViewRow row = gridDialogue.Rows[rowIndex];
 			gridDialogue.Select();
-			gridDialogue.CurrentCell = row.Cells["ColText"];
+			string colName = selectMarker ? nameof(ColMarker) : nameof(ColText);
+			gridDialogue.CurrentCell = row.Cells[colName];
 			gridDialogue.BeginEdit(false);
 			SelectText(startIndex, length);
 		}
@@ -902,6 +903,10 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			int startLine = _selectedRow;
 			int startIndex = GetSelectionStart(gridDialogue);
+			if (args.SearchMarkers)
+			{
+				startLine++;
+			}
 			if (args.DoReplace && startIndex >= 0)
 			{
 				//Back up a space when replacing so the highlighted word gets replaced
@@ -910,41 +915,64 @@ namespace SPNATI_Character_Editor.Controls
 			for (int l = startLine; l < gridDialogue.Rows.Count; l++)
 			{
 				DataGridViewRow row = gridDialogue.Rows[l];
-				string text = row.Cells["ColText"].Value?.ToString();
-				if (!string.IsNullOrEmpty(text))
+				if (args.SearchMarkers)
 				{
-					int index = startIndex;
-					do
+					string marker = row.Cells[nameof(ColMarker)].Value?.ToString();
+					if (!string.IsNullOrEmpty(marker))
 					{
-						index = FindText(text, index + 1, args);
+						int index = FindText(marker, 0, args);
 						if (index >= 0)
 						{
-							//highlight it
-							if (ActiveControl != gridDialogue.EditingControl || gridDialogue.CurrentCell != row.Cells["ColText"])
+							if (ActiveControl != gridDialogue.EditingControl || gridDialogue.CurrentCell != row.Cells[nameof(ColMarker)])
 							{
 								gridDialogue.Select();
-								gridDialogue.CurrentCell = row.Cells["ColText"];
+								gridDialogue.CurrentCell = row.Cells[nameof(ColMarker)];
 								gridDialogue.BeginEdit(false);
 							}
 							SelectText(index, args.FindText.Length);
-
 							args.Success = true;
-
-							if (args.DoReplace)
-							{
-								ReplaceText(args.ReplaceText);
-								args.ReplaceCount++;
-								text = row.Cells["ColText"].Value?.ToString();
-								index += args.ReplaceText.Length - 1;
-							}
-
-							if (!args.ReplaceAll)
-								return true;
+							return true;
 						}
 					}
-					while (index >= 0);
 				}
-				startIndex = -1;
+				else
+				{
+					string text = row.Cells["ColText"].Value?.ToString();
+					if (!string.IsNullOrEmpty(text))
+					{
+						int index = startIndex;
+						do
+						{
+							index = FindText(text, index + 1, args);
+							if (index >= 0)
+							{
+								//highlight it
+								if (ActiveControl != gridDialogue.EditingControl || gridDialogue.CurrentCell != row.Cells["ColText"])
+								{
+									gridDialogue.Select();
+									gridDialogue.CurrentCell = row.Cells["ColText"];
+									gridDialogue.BeginEdit(false);
+								}
+								SelectText(index, args.FindText.Length);
+
+								args.Success = true;
+
+								if (args.DoReplace)
+								{
+									ReplaceText(args.ReplaceText);
+									args.ReplaceCount++;
+									text = row.Cells["ColText"].Value?.ToString();
+									index += args.ReplaceText.Length - 1;
+								}
+
+								if (!args.ReplaceAll)
+									return true;
+							}
+						}
+						while (index >= 0);
+					}
+					startIndex = -1;
+				}
 			}
 			return false;
 		}

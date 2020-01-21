@@ -10,4 +10,13 @@ namespace SPNATI_Character_Editor
 		[XmlText]
 		public string Text;
 	}
+
+	public class CaseRecipe
+	{
+		[XmlAttribute("key")]
+		public string Key;
+		[XmlArray("cases")]
+		[XmlArrayItem("id")]
+		public List<int> CaseIds = new List<int>();
+	}
 }

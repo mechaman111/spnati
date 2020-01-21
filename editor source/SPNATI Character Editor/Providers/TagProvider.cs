@@ -41,6 +41,11 @@ namespace SPNATI_Character_Editor.Providers
 			return new string[] { "Name", "Value", "Description" };
 		}
 
+		public int[] GetColumnWidths()
+		{
+			return null;
+		}
+
 		public ListViewItem FormatItem(IRecord record)
 		{
 			Tag tag = record as Tag;

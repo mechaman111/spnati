@@ -110,6 +110,24 @@ namespace SPNATI_Character_Editor.Controls.EditControls.VariableControls
 		{
 			OnChangeLabel("Size");
 		}
+	}
 
+	[SubVariable("gender")]
+	public class GenderControl : CategoryControl
+	{
+		protected override Type GetCategoryType()
+		{
+			return typeof(GenderCategory);
+		}
+
+		protected override string GetVariable()
+		{
+			return "gender";
+		}
+
+		public override void OnAddedToRow()
+		{
+			OnChangeLabel("Gender");
+		}
 	}
 }

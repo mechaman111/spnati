@@ -91,8 +91,11 @@ namespace SPNATI_Character_Editor.Controls
 		void FormatRow(FormatRowEventArgs args);
 		void FormatGroup(FormatGroupEventArgs args);
 		void Sort();
+		void MoveItem(object source, object target, bool before);
 
 		ContextMenuStrip ShowContextMenu(AccordionListViewEventArgs args);
+
+		bool AllowReorder();
 	}
 
 	public enum TreeFilterMode

@@ -49,6 +49,11 @@ namespace Desktop.Providers
 			return new string[] { "Name" };
 		}
 
+		public virtual int[] GetColumnWidths()
+		{
+			return null;
+		}
+
 		public ListViewItem FormatItem(IRecord record)
 		{
 			Macro data = record as Macro;

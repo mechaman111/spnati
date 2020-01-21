@@ -26,6 +26,8 @@ namespace SPNATI_Character_Editor
 
 		[XmlElement("debug")]
 		public bool Debug;
+		[XmlElement("default-fill")]
+		public string DefaultFillMode;
 		[XmlElement("epilogues")]
 		public bool Epilogues;
 		[XmlElement("epilogues-unlocked")]
@@ -40,6 +42,14 @@ namespace SPNATI_Character_Editor
 		public bool AlternateCostumes;
 		[XmlElement("alternate-costume-sets")]
 		public string AlternateCostumeSets;
+		[XmlElement("costume_badges")]
+		public bool CostumeBadges;
+		[XmlElement("force-alternate-costume")]
+		public string ForceAlternate;
+		[XmlElement("default-background")]
+		public string DefaultBackground;
+		[XmlElement("resort")]
+		public bool ResortMode;
 		[XmlElement("include-status")]
 		public List<string> IncludeStatus;
 	}

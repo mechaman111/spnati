@@ -60,6 +60,11 @@ namespace SPNATI_Character_Editor.Providers
 			return new string[] { "ID", "Title", "Subtitle" };
 		}
 
+		public int[] GetColumnWidths()
+		{
+			return null;
+		}
+
 		public string GetLookupCaption()
 		{
 			return "Select a Collectible";

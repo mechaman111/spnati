@@ -1168,6 +1168,16 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 		}
+
+		private void tsCollapse_Click(object sender, EventArgs e)
+		{
+			treeScenes.CollapseAll();
+		}
+
+		private void tsExpandAll_Click(object sender, EventArgs e)
+		{
+			treeScenes.ExpandAll();
+		}
 	}
 
 	public class SceneTreeEventArgs

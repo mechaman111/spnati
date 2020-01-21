@@ -221,6 +221,32 @@ namespace SPNATI_Character_Editor.Activities
 
 			Config.LoadRecentRecords<Character>();
 			Config.LoadRecentRecords<Costume>();
+
+			//look for new editor versions
+			try
+			{
+				string toolsFolder = Path.Combine(Config.SpnatiDirectory, "tools", "character_editor");
+				string newestVersion = null;
+				foreach (string file in Directory.EnumerateFiles(toolsFolder, "*.zip"))
+				{
+					string filename = Path.GetFileNameWithoutExtension(file);
+					if (filename.StartsWith("Character Editor "))
+					{
+						filename = filename.Replace(" (x86)", "");
+						string version = "v" + filename.Substring(17);
+						if (!Config.VersionHistory.Contains(version) && Config.GetString("LastVersionNotice") != version)
+						{
+							newestVersion = version;
+						}
+					}
+				}
+				if (!string.IsNullOrEmpty(newestVersion))
+				{
+					Shell.Instance.ShowToast("New Version Available", "A new version of the Character Editor is available! Head to the tools folder to check it out.");
+					Config.Set("LastVersionNotice", newestVersion);
+				}
+			}
+			catch { }
 		}
 
 		private Task LoadChunk(string caption, int progress, Action action)

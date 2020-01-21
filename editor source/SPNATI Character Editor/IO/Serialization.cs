@@ -632,6 +632,29 @@ namespace SPNATI_Character_Editor
 			return true;
 		}
 
+		/// <summary>
+		/// Imports an xml file into an object
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="file"></param>
+		/// <returns></returns>
+		public static T Import<T>(string file) where T : class
+		{
+			TextReader reader = null;
+			try
+			{
+				XmlSerializer serializer = new XmlSerializer(typeof(T), "");
+				reader = new StreamReader(file);
+				T obj = serializer.Deserialize(reader) as T;
+				return obj;
+			}
+			finally
+			{
+				if (reader != null)
+					reader.Close();
+			}
+		}
+
 	}
 
 	public interface IHookSerialization

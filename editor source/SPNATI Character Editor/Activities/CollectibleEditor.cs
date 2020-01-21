@@ -44,6 +44,24 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnActivate()
 		{
 			PopulateCollectibles();
+			UpdateAddButton();
+		}
+
+		private void UpdateAddButton()
+		{
+			CharacterHistory history = CharacterHistory.Get(_character, false);
+			int limit = TestRequirements.Instance.GetAllowedCollectibles(history.Current.TotalLines);
+			tsAdd.Enabled = _character.Collectibles.Count < limit;
+			if (!tsAdd.Enabled)
+			{
+				int thresholds = _character.Collectibles.Count - 2 + 1;
+				int requirement = thresholds * 600 + 1;
+				tsAdd.ToolTipText = $"You need {requirement} lines to be able to add another collectible.";
+			}
+			else
+			{
+				tsAdd.ToolTipText = "Add Collectible";
+			}
 		}
 
 		protected override void OnParametersUpdated(params object[] parameters)
@@ -97,6 +115,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				item.Selected = true;
 			}
+			UpdateAddButton();
 		}
 
 		public static Bitmap GetImage(string src)
@@ -139,6 +158,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				lstCollectibles.Items.Remove(item);
 				_character.Collectibles.Remove(collectible);
+				UpdateAddButton();
 			}
 		}
 

@@ -1,18 +1,20 @@
 ﻿using Desktop.CommonControls;
 using Desktop.Skinning;
-using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
 	/// <summary>
-	/// View that orders the dialogue tree by stage where cases shared across stages have nodes in each stage
+	/// Views that lets the user create their own groups and sort order
 	/// </summary>
-	public class CaseView : IDialogueTreeView
+	public class FolderView : IDialogueTreeView
 	{
 		public event EventHandler SaveNode;
 
@@ -81,9 +83,6 @@ namespace SPNATI_Character_Editor.Controls
 		public ContextMenuStrip GetCopyMenu()
 		{
 			splitMenu = new ContextMenuStrip();
-			splitMenu.Items.Add("Isolate Stage", null, SeparateCaseFromStage);
-			splitMenu.Items.Add("Split at Stage", null, SplitCaseAtPoint);
-			splitMenu.Items.Add("Split this Case into Individual Stages", null, SplitAllStages);
 			splitMenu.Items.Add("Duplicate this Case", null, DuplicateCase);
 			splitMenu.Items.Add(new ToolStripSeparator());
 			splitMenu.Items.Add("Remove", null, DeleteCase);
@@ -104,20 +103,8 @@ namespace SPNATI_Character_Editor.Controls
 
 			_model = new GroupedList<DialogueNode>();
 			_model.GroupComparer = SortGroups;
-			_model.ItemComparer = DialogueNode.CompareCases;
+			_model.ItemComparer = SortCases;
 
-			//Make nodes for each case tag
-			foreach (string tag in TriggerDatabase.GetTags())
-			{
-				if (tag == "-") { continue; }
-				TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag);
-				if (!Config.HideEmptyCases || !trigger.Optional)
-				{
-					_model.AddGroup(trigger.Tag);
-				}
-			}
-
-			//Add working cases to the right grouper
 			foreach (Case workingCase in _character.Behavior.GetWorkingCases())
 			{
 				if (!showHidden && _editorData.IsHidden(workingCase)) { continue; }
@@ -138,7 +125,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 
 			DialogueNode wrapper = new DialogueNode(_character, new Stage(workingCase.Stages[0]), workingCase);
-			wrapper.Mode = NodeMode.Case;
+			wrapper.Mode = NodeMode.Folder;
 			CreateNode(wrapper);
 		}
 
@@ -149,7 +136,13 @@ namespace SPNATI_Character_Editor.Controls
 		/// <param name="parent"></param>
 		/// <returns></returns>
 		private void CreateNode(DialogueNode wrapper)
-		{	
+		{
+			CaseLabel label = _editorData.GetLabel(wrapper.Case);
+			if (label != null && !string.IsNullOrEmpty(label.Folder) && label.SortId == 0)
+			{
+				//auto-assign a sort ID to foldered nodes
+				_editorData.SetSortId(wrapper.Case, label.Folder, _model.GetGroupCount(label.Folder) + 1);
+			}
 			_model.AddItem(wrapper);
 			_caseMap[wrapper.Case] = wrapper;
 		}
@@ -190,11 +183,11 @@ namespace SPNATI_Character_Editor.Controls
 				string tag = group?.RootKey ?? group?.Key?.ToString();
 				if (!string.IsNullOrEmpty(tag))
 				{
-					if (tag != group?.Key?.ToString())
+					if (tag != "-")
 					{
-						folder = group?.Key?.ToString();
+						folder = tag;
 					}
-					newTag = tag;
+					return null;
 				}
 			}
 			else
@@ -237,7 +230,7 @@ namespace SPNATI_Character_Editor.Controls
 		public void AddCase(Case newCase)
 		{
 			DialogueNode wrapper = new DialogueNode(_character, new Stage(newCase.Stages[0]), newCase);
-			wrapper.Mode = NodeMode.Case;
+			wrapper.Mode = NodeMode.Folder;
 			CreateNode(wrapper);
 		}
 
@@ -247,55 +240,12 @@ namespace SPNATI_Character_Editor.Controls
 			if (node == null) { return; }
 			_model.RemoveItem(node);
 			_caseMap.Remove(removedCase);
-		}
-		
-		private void SeparateCaseFromStage(object sender, EventArgs e)
-		{
-			DialogueNode selectedNode = _listView.SelectedItem as DialogueNode;
-			if (_character == null || selectedNode?.Case == null)
-				return;
-			Case selectedCase = selectedNode?.Case;
-			StageSelect select = new StageSelect();
-			select.SetData(_character, selectedCase, "Isolate Stage", "Choose the stage you want to split out from the others.");
-			if (select.ShowDialog() == DialogResult.OK)
-			{
-				int stage = select.Stage;
-				SaveNode?.Invoke(this, EventArgs.Empty);
-				_character.Behavior.SplitCaseStage(selectedCase, stage);
-				SelectNode(stage, selectedCase);
-			}
-		}
 
-		private void SplitCaseAtPoint(object sender, EventArgs e)
-		{
-			DialogueNode selectedNode = _listView.SelectedItem as DialogueNode;
-			if (_character == null || selectedNode?.Case == null)
-				return;
-			Case selectedCase = selectedNode?.Case;
-			StageSelect select = new StageSelect();
-			select.SetData(_character, selectedCase, "Split Case at Stage", "Choose the stage to split at. Two cases will be created: one with cases before the split point, and one starting at the split.");
-			if (select.ShowDialog() == DialogResult.OK)
+			CaseLabel label = _editorData.GetLabel(removedCase);
+			if (!string.IsNullOrEmpty(label?.Folder))
 			{
-				int stage = select.Stage;
-				SaveNode?.Invoke(this, EventArgs.Empty);
-				_character.Behavior.SplitCaseAtStage(selectedCase, stage);
-				SelectNode(stage, selectedCase);
+				Resort(label.Folder);
 			}
-		}
-
-		/// <summary>
-		/// Separates the selected case into individual copies for each applicable stage
-		/// </summary>
-		private void SplitAllStages(object sender, EventArgs e)
-		{
-			DialogueNode selectedNode = _listView.SelectedItem as DialogueNode;
-			if (_character == null || selectedNode?.Case == null)
-				return;
-			int stage = selectedNode.Stage.Id;
-			Case selectedCase = selectedNode.Case;
-			SaveNode?.Invoke(this, EventArgs.Empty);
-			_character.Behavior.DivideCaseIntoSeparateStages(selectedCase, stage);
-			SelectNode(stage, selectedCase);
 		}
 
 		private void DuplicateCase(object sender, EventArgs e)
@@ -307,6 +257,15 @@ namespace SPNATI_Character_Editor.Controls
 			int stage = selectedNode.Stage.Id;
 			SaveNode?.Invoke(this, EventArgs.Empty);
 			Case copy = _character.Behavior.DuplicateCase(selectedCase, true);
+
+			CaseLabel original = _editorData.GetLabel(selectedCase);
+			CaseLabel label = _editorData.GetLabel(copy);
+			if (original != null && label != null && !string.IsNullOrEmpty(original.Folder))
+			{
+				label.SortId = original.SortId + 1;
+				Resort(original.Folder);
+			}
+
 			SelectNode(stage, copy);
 		}
 
@@ -365,7 +324,26 @@ namespace SPNATI_Character_Editor.Controls
 
 		public int SortGroups(string key1, string key2)
 		{
-			return TriggerDatabase.Compare(key1, key2);
+			if (key1 == "-")
+			{
+				return 1;
+			}
+			else if (key2 == "-")
+			{
+				return -1;
+			}
+			return key1.CompareTo(key2);
+		}
+
+		public int SortCases(DialogueNode caseNode1, DialogueNode caseNode2)
+		{
+			CaseLabel label1 = _editorData.GetLabel(caseNode1.Case);
+			CaseLabel label2 = _editorData.GetLabel(caseNode2.Case);
+			if (label1 != null && label2 != null && label1.Folder == label2.Folder && label1.SortId > 0 && label2.SortId > 0)
+			{
+				return label1.SortId.CompareTo(label2.SortId);
+			}
+			return DialogueNode.CompareCases(caseNode1, caseNode2);
 		}
 
 		public void FormatRow(FormatRowEventArgs args)
@@ -373,8 +351,6 @@ namespace SPNATI_Character_Editor.Controls
 			Skin skin = SkinManager.Instance.CurrentSkin;
 			DialogueNode node = args.Model as DialogueNode;
 			args.Tooltip = node.Case.ToString();
-
-			args.GrouperColor = GetGroupColor(args.Group.Key, args.Group.Index);
 
 			CaseLabel label = _editorData.GetLabel(node.Case);
 			if (label != null)
@@ -420,24 +396,22 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		private Color GetGroupColor(string key, int index)
-		{
-			TriggerDefinition trigger = TriggerDatabase.GetTrigger(key);
-			if (string.IsNullOrEmpty(trigger.Label))
-			{
-				return index % 2 == 0 ? SkinManager.Instance.CurrentSkin.PrimaryForeColor : SkinManager.Instance.CurrentSkin.SecondaryForeColor;
-			}
-			return SkinManager.Instance.CurrentSkin.GetGrouper(trigger.ColorScheme);
-		}
-
 		public void FormatGroup(FormatGroupEventArgs args)
 		{
 			args.Font = _font;
-			args.ForeColor = GetGroupColor(args.Group.Key, args.Group.Index);
-			TriggerDefinition trigger = TriggerDatabase.GetTrigger(args.Group.Key);
-			if (!string.IsNullOrEmpty(trigger.Label))
+
+			string folder = args.Group.Key;
+			Character c = CharacterDatabase.Get(folder);
+			if (c == null)
 			{
-				args.Label = trigger.Label;
+				if (folder == "-")
+				{
+					args.Label = "- unsorted -";
+				}
+			}
+			else
+			{
+				args.Label = c.ToLookupString();
 			}
 		}
 
@@ -452,12 +426,108 @@ namespace SPNATI_Character_Editor.Controls
 
 		public bool AllowReorder()
 		{
-			return false;
+			return true;
 		}
 
 		public void MoveItem(object source, object target, bool before)
 		{
+			DialogueNode src = source as DialogueNode;
+			if (src == null)
+			{
+				return;
+			}
 
+			CaseLabel oldLabel = _editorData.GetLabel(src.Case);
+			string oldFolder = oldLabel?.Folder;
+
+			if (target is GroupedListGrouper)
+			{
+				//Dragged onto a folder. Give the case that name
+				GroupedListGrouper group = target as GroupedListGrouper;
+				SaveNode?.Invoke(this, EventArgs.Empty);
+				string folder = group.Key == "-" ? null : group.Key;
+
+				if (string.IsNullOrEmpty(folder))
+				{
+					_editorData.SetSortId(src.Case, null, -1);
+				}
+				else
+				{
+					InsertAndResort(src.Case, folder);
+				}
+				SelectNode(-1, src.Case);
+			}
+			else
+			{
+				SaveNode?.Invoke(this, EventArgs.Empty);
+
+				DialogueNode targetNode = target as DialogueNode;
+				int sortId = _editorData.GetSortId(targetNode.Case);
+				if (before)
+				{
+					sortId--;
+				}
+				else
+				{
+					sortId++;
+				}
+				CaseLabel targetLabel = _editorData.GetLabel(targetNode.Case);
+				string targetFolder = targetLabel?.Folder;
+
+				if (string.IsNullOrEmpty(targetFolder))
+				{
+					_editorData.SetSortId(src.Case, null, -1);
+				}
+				else
+				{
+					_editorData.SetSortId(src.Case, targetFolder, sortId);
+					Resort(targetFolder);
+				}
+				SelectNode(-1, src.Case);
+			}
+
+			//Update IDs of the old folder if there is one
+			if (!string.IsNullOrEmpty(oldFolder))
+			{
+				Resort(oldFolder);
+			}
+
+			//force the tree to update groups
+			SaveNode?.Invoke(this, EventArgs.Empty);
+			Sort();
+			SelectNode(-1, src.Case);
+		}
+
+		private void InsertAndResort(Case workingCase, string folder)
+		{
+			List<CaseLabel> cases = _editorData.GetCasesInFolder(folder);
+			int nextId = cases.Count * 2 + 1;
+			CaseLabel existing = cases.Find(c => c.Id == workingCase.Id);
+			CaseLabel label = _editorData.SetSortId(workingCase, folder, nextId);
+			if (existing == null)
+			{
+				cases.Add(label);
+			}
+			cases.Sort((l1, l2) => l1.SortId.CompareTo(l2.SortId));
+
+			//rebuild sort indices
+			int id = 2;
+			foreach (CaseLabel c in cases)
+			{
+				c.SortId = id;
+				id += 2;
+			}
+		}
+
+		private void Resort(string folder)
+		{
+			List<CaseLabel> cases = _editorData.GetCasesInFolder(folder);
+			int id = 2;
+			foreach (CaseLabel c in cases)
+			{
+				c.SortId = id;
+				id += 2;
+			}
 		}
 	}
 }

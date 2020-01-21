@@ -139,6 +139,10 @@ namespace KisekaeImporter.ImageImport
 			for (int stage = 0; stage < Stages.Count; stage++)
 			{
 				StageTemplate stageTemplate = Stages[stage];
+				if (string.IsNullOrEmpty(stageTemplate.Code))
+				{
+					continue;
+				}
 				foreach (Emotion emotion in Emotions)
 				{
 					KisekaeCode finalCode = CreatePose(BaseCode, stageTemplate, emotion);

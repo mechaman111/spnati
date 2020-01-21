@@ -32,13 +32,11 @@ namespace SPNATI_Character_Editor.Activities
 				_character.Behavior.CaseAdded += WorkingCasesChanged;
 				_character.Behavior.CaseRemoved += WorkingCasesChanged;
 				_character.Behavior.CaseModified += WorkingCasesChanged;
-				chkText.Checked = Config.GetBoolean("PreviewText");
 			}
 			else
 			{
 				lblSkin.Visible = false;
 				cboSkin.Visible = false;
-				chkText.Visible = false;
 			}
 			SubscribeWorkspace<DialogueLine>(WorkspaceMessages.PreviewLine, UpdatePreview);
 			SubscribeWorkspace<UpdateImageArgs>(WorkspaceMessages.UpdatePreviewImage, UpdatePreviewImage);
@@ -150,13 +148,6 @@ namespace SPNATI_Character_Editor.Activities
 			SkinLink current = cboSkin.SelectedItem as SkinLink;
 			_character.CurrentSkin = current?.Costume;
 			Workspace.SendMessage(WorkspaceMessages.SkinChanged);
-		}
-
-		private void chkText_CheckedChanged(object sender, System.EventArgs e)
-		{
-			bool preview = chkText.Checked;
-			Config.Set("PreviewText", preview);
-			picPortrait.ShowTextBox = preview;
 		}
 
 		private void cmdReference_Click(object sender, System.EventArgs e)

@@ -55,7 +55,8 @@
 			this.txtFilter = new Desktop.Skinning.SkinnedTextBox();
 			this.tabsSections = new Desktop.Skinning.SkinnedTabControl();
 			this.tabGeneral = new System.Windows.Forms.TabPage();
-			this.chkHideImages = new Desktop.Skinning.SkinnedCheckBox();
+			this.skinnedLabel5 = new Desktop.Skinning.SkinnedLabel();
+			this.recAutoOpen = new Desktop.CommonControls.RecordField();
 			this.cmdBrowseKisekae = new Desktop.Skinning.SkinnedButton();
 			this.txtKisekae = new Desktop.Skinning.SkinnedTextBox();
 			this.label5 = new Desktop.Skinning.SkinnedLabel();
@@ -75,6 +76,10 @@
 			this.chkColorTargets = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkCaseTree = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkInitialAdd = new Desktop.Skinning.SkinnedCheckBox();
+			this.tabSidebar = new System.Windows.Forms.TabPage();
+			this.chkPreviewFormatting = new Desktop.Skinning.SkinnedCheckBox();
+			this.chkPreviewBubble = new Desktop.Skinning.SkinnedCheckBox();
+			this.chkHideImages = new Desktop.Skinning.SkinnedCheckBox();
 			this.tabEpilogues = new System.Windows.Forms.TabPage();
 			this.label6 = new Desktop.Skinning.SkinnedLabel();
 			this.lstPauses = new Desktop.Skinning.SkinnedCheckedListBox();
@@ -88,8 +93,6 @@
 			this.chkWorkflowTracer = new Desktop.Skinning.SkinnedCheckBox();
 			this.stripSections = new Desktop.Skinning.SkinnedTabStrip();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
-			this.recAutoOpen = new Desktop.CommonControls.RecordField();
-			this.skinnedLabel5 = new Desktop.Skinning.SkinnedLabel();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valFrequency)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valLifetime)).BeginInit();
@@ -99,6 +102,7 @@
 			this.grpChecklist.SuspendLayout();
 			this.tabImages.SuspendLayout();
 			this.tabDialogue.SuspendLayout();
+			this.tabSidebar.SuspendLayout();
 			this.tabEpilogues.SuspendLayout();
 			this.tabBackups.SuspendLayout();
 			this.panelSnapshot.SuspendLayout();
@@ -423,6 +427,7 @@
 			this.tabsSections.Controls.Add(this.tabDashboard);
 			this.tabsSections.Controls.Add(this.tabImages);
 			this.tabsSections.Controls.Add(this.tabDialogue);
+			this.tabsSections.Controls.Add(this.tabSidebar);
 			this.tabsSections.Controls.Add(this.tabEpilogues);
 			this.tabsSections.Controls.Add(this.tabBackups);
 			this.tabsSections.Controls.Add(this.tabTroubleshoot);
@@ -441,7 +446,6 @@
 			this.tabGeneral.BackColor = System.Drawing.Color.White;
 			this.tabGeneral.Controls.Add(this.skinnedLabel5);
 			this.tabGeneral.Controls.Add(this.recAutoOpen);
-			this.tabGeneral.Controls.Add(this.chkHideImages);
 			this.tabGeneral.Controls.Add(this.cmdBrowseKisekae);
 			this.tabGeneral.Controls.Add(this.txtKisekae);
 			this.tabGeneral.Controls.Add(this.label5);
@@ -458,17 +462,35 @@
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
 			// 
-			// chkHideImages
+			// skinnedLabel5
 			// 
-			this.chkHideImages.AutoSize = true;
-			this.chkHideImages.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkHideImages.Location = new System.Drawing.Point(9, 86);
-			this.chkHideImages.Name = "chkHideImages";
-			this.chkHideImages.Size = new System.Drawing.Size(126, 17);
-			this.chkHideImages.TabIndex = 9;
-			this.chkHideImages.Text = "Hide Preview Images";
-			this.chkHideImages.UseVisualStyleBackColor = true;
-			this.chkHideImages.CheckedChanged += new System.EventHandler(this.chkHideImages_CheckedChanged_1);
+			this.skinnedLabel5.AutoSize = true;
+			this.skinnedLabel5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel5.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel5.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel5.Location = new System.Drawing.Point(7, 89);
+			this.skinnedLabel5.Name = "skinnedLabel5";
+			this.skinnedLabel5.Size = new System.Drawing.Size(59, 13);
+			this.skinnedLabel5.TabIndex = 11;
+			this.skinnedLabel5.Text = "Auto-open:";
+			// 
+			// recAutoOpen
+			// 
+			this.recAutoOpen.AllowCreate = false;
+			this.recAutoOpen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.recAutoOpen.Location = new System.Drawing.Point(133, 86);
+			this.recAutoOpen.Name = "recAutoOpen";
+			this.recAutoOpen.PlaceholderText = null;
+			this.recAutoOpen.Record = null;
+			this.recAutoOpen.RecordContext = null;
+			this.recAutoOpen.RecordFilter = null;
+			this.recAutoOpen.RecordKey = null;
+			this.recAutoOpen.RecordType = null;
+			this.recAutoOpen.Size = new System.Drawing.Size(276, 20);
+			this.recAutoOpen.TabIndex = 10;
+			this.recAutoOpen.UseAutoComplete = false;
 			// 
 			// cmdBrowseKisekae
 			// 
@@ -725,6 +747,55 @@
 			this.chkInitialAdd.Text = "Auto-open selection form when adding conditions";
 			this.chkInitialAdd.UseVisualStyleBackColor = true;
 			// 
+			// tabSidebar
+			// 
+			this.tabSidebar.BackColor = System.Drawing.Color.White;
+			this.tabSidebar.Controls.Add(this.chkPreviewFormatting);
+			this.tabSidebar.Controls.Add(this.chkPreviewBubble);
+			this.tabSidebar.Controls.Add(this.chkHideImages);
+			this.tabSidebar.ForeColor = System.Drawing.Color.Black;
+			this.tabSidebar.Location = new System.Drawing.Point(104, 4);
+			this.tabSidebar.Name = "tabSidebar";
+			this.tabSidebar.Size = new System.Drawing.Size(447, 242);
+			this.tabSidebar.TabIndex = 8;
+			this.tabSidebar.Text = "Sidebar";
+			// 
+			// chkPreviewFormatting
+			// 
+			this.chkPreviewFormatting.AutoSize = true;
+			this.chkPreviewFormatting.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkPreviewFormatting.Location = new System.Drawing.Point(3, 49);
+			this.chkPreviewFormatting.Name = "chkPreviewFormatting";
+			this.chkPreviewFormatting.Size = new System.Drawing.Size(219, 17);
+			this.chkPreviewFormatting.TabIndex = 12;
+			this.chkPreviewFormatting.Text = "Format Preview Bubble (e.g. show italics)";
+			this.chkPreviewFormatting.UseVisualStyleBackColor = true;
+			this.chkPreviewFormatting.CheckedChanged += new System.EventHandler(this.chkPreviewFormatting_CheckedChanged);
+			// 
+			// chkPreviewBubble
+			// 
+			this.chkPreviewBubble.AutoSize = true;
+			this.chkPreviewBubble.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkPreviewBubble.Location = new System.Drawing.Point(3, 26);
+			this.chkPreviewBubble.Name = "chkPreviewBubble";
+			this.chkPreviewBubble.Size = new System.Drawing.Size(170, 17);
+			this.chkPreviewBubble.TabIndex = 11;
+			this.chkPreviewBubble.Text = "Show Preview Speech Bubble";
+			this.chkPreviewBubble.UseVisualStyleBackColor = true;
+			this.chkPreviewBubble.CheckedChanged += new System.EventHandler(this.chkPreviewBubble_CheckedChanged);
+			// 
+			// chkHideImages
+			// 
+			this.chkHideImages.AutoSize = true;
+			this.chkHideImages.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkHideImages.Location = new System.Drawing.Point(3, 3);
+			this.chkHideImages.Name = "chkHideImages";
+			this.chkHideImages.Size = new System.Drawing.Size(131, 17);
+			this.chkHideImages.TabIndex = 10;
+			this.chkHideImages.Text = "Show Preview Images";
+			this.chkHideImages.UseVisualStyleBackColor = true;
+			this.chkHideImages.CheckedChanged += new System.EventHandler(this.chkHideImages_CheckedChanged_1);
+			// 
 			// tabEpilogues
 			// 
 			this.tabEpilogues.BackColor = System.Drawing.Color.White;
@@ -904,36 +975,6 @@
 			this.skinnedPanel1.TabIndex = 14;
 			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
 			// 
-			// recAutoOpen
-			// 
-			this.recAutoOpen.AllowCreate = false;
-			this.recAutoOpen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.recAutoOpen.Location = new System.Drawing.Point(133, 109);
-			this.recAutoOpen.Name = "recAutoOpen";
-			this.recAutoOpen.PlaceholderText = null;
-			this.recAutoOpen.Record = null;
-			this.recAutoOpen.RecordContext = null;
-			this.recAutoOpen.RecordFilter = null;
-			this.recAutoOpen.RecordKey = null;
-			this.recAutoOpen.RecordType = null;
-			this.recAutoOpen.Size = new System.Drawing.Size(276, 20);
-			this.recAutoOpen.TabIndex = 10;
-			this.recAutoOpen.UseAutoComplete = false;
-			// 
-			// skinnedLabel5
-			// 
-			this.skinnedLabel5.AutoSize = true;
-			this.skinnedLabel5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.skinnedLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.skinnedLabel5.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
-			this.skinnedLabel5.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.skinnedLabel5.Location = new System.Drawing.Point(7, 113);
-			this.skinnedLabel5.Name = "skinnedLabel5";
-			this.skinnedLabel5.Size = new System.Drawing.Size(59, 13);
-			this.skinnedLabel5.TabIndex = 11;
-			this.skinnedLabel5.Text = "Auto-open:";
-			// 
 			// SettingsSetup
 			// 
 			this.AcceptButton = this.cmdOk;
@@ -966,6 +1007,8 @@
 			this.tabImages.PerformLayout();
 			this.tabDialogue.ResumeLayout(false);
 			this.tabDialogue.PerformLayout();
+			this.tabSidebar.ResumeLayout(false);
+			this.tabSidebar.PerformLayout();
 			this.tabEpilogues.ResumeLayout(false);
 			this.tabEpilogues.PerformLayout();
 			this.tabBackups.ResumeLayout(false);
@@ -1009,7 +1052,6 @@
 		private Desktop.Skinning.SkinnedLabel label6;
 		private Desktop.Skinning.SkinnedCheckedListBox lstPauses;
 		private Desktop.Skinning.SkinnedCheckBox chkCaseTree;
-		private Desktop.Skinning.SkinnedCheckBox chkHideImages;
 		private Desktop.Skinning.SkinnedTabStrip stripSections;
 		private Desktop.Skinning.SkinnedPanel skinnedPanel1;
 		private Desktop.Skinning.SkinnedCheckBox chkColorTargets;
@@ -1042,5 +1084,9 @@
 		private Desktop.Skinning.SkinnedCheckBox chkStartDashboard;
 		private Desktop.Skinning.SkinnedLabel skinnedLabel5;
 		private Desktop.CommonControls.RecordField recAutoOpen;
+		private System.Windows.Forms.TabPage tabSidebar;
+		private Desktop.Skinning.SkinnedCheckBox chkPreviewFormatting;
+		private Desktop.Skinning.SkinnedCheckBox chkPreviewBubble;
+		private Desktop.Skinning.SkinnedCheckBox chkHideImages;
 	}
 }

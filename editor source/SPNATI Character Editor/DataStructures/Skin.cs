@@ -321,6 +321,9 @@ namespace SPNATI_Character_Editor
 		[XmlText]
 		public string Name;
 
+		[XmlAttribute("status")]
+		public string Status;
+
 		[XmlIgnore]
 		public Costume Costume { get; set; }
 

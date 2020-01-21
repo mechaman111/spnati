@@ -40,7 +40,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			InitializeComponent();
 
-			cboView.Items.AddRange(new string[] { "Stage", "Case", "Target" });
+			cboView.Items.AddRange(new string[] { "Stage", "Case", "Target", "Folder" });
 		}
 
 		private void DialogueTree_Load(object sender, EventArgs e)
@@ -53,6 +53,7 @@ namespace SPNATI_Character_Editor.Controls
 				lstDialogue.FormatRow += LstDialogue_FormatRow;
 				lstDialogue.FormatGroup += LstDialogue_FormatGroup;
 				lstDialogue.RightClick += LstDialogue_RightClick;
+				lstDialogue.MoveItem += LstDialogue_MoveItem;
 			}
 		}
 
@@ -76,6 +77,9 @@ namespace SPNATI_Character_Editor.Controls
 						break;
 					case 2:
 						_view = new TargetView();
+						break;
+					case 3:
+						_view = new FolderView();
 						break;
 					default:
 						_view = new StageView();
@@ -101,6 +105,7 @@ namespace SPNATI_Character_Editor.Controls
 			lstDialogue.DataSource = null;
 			lstDialogue.ClearColumns();
 			_view.Initialize(lstDialogue, _character);
+			lstDialogue.AllowRowReorder = _view.AllowReorder();
 		}
 
 		private void PopulateTriggerMenu()
@@ -446,6 +451,9 @@ namespace SPNATI_Character_Editor.Controls
 				case 2:
 					_view = new TargetView();
 					break;
+				case 3:
+					_view = new FolderView();
+					break;
 				default:
 					_view = new StageView();
 					break;
@@ -551,10 +559,27 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void tsRecipe_Click(object sender, EventArgs e)
 		{
-			Recipe recipe = RecordLookup.DoLookup(typeof(Recipe), "", false, null) as Recipe;
+			Recipe recipe = RecordLookup.DoLookup(typeof(Recipe), "", false, _character) as Recipe;
 			if (recipe != null)
 			{
+				CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character);
+				Case existing = editorData.GetRecipeUsage(recipe);
+				if (existing != null)
+				{
+					DialogResult result = MessageBox.Show("Do you want to create a new case?", $"Add {recipe.Name}", MessageBoxButtons.YesNoCancel);
+					if (result == DialogResult.Cancel)
+					{
+						return;
+					}
+					else if (result == DialogResult.No)
+					{
+						SelectNode(existing.Stages[0], existing);
+						return;
+					}
+				}
+
 				Case instance = recipe.AddToCharacter(_character);
+				editorData.AddRecipeUsage(recipe, instance);
 				SelectNode(instance.Stages[0], instance);
 			}
 		}
@@ -589,6 +614,13 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			lstDialogue.ExpandAll();
 		}
+
+
+		private void LstDialogue_MoveItem(object sender, AccordionListViewDragEventArgs e)
+		{
+			_view.MoveItem(e.Source, e.Target, e.Before);
+		}
+
 	}
 
 	public class CaseSelectionEventArgs : EventArgs

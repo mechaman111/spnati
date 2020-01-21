@@ -20,6 +20,9 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("folder")]
 		public string Folder;
 
+		[XmlAttribute("sort")]
+		public int SortId;
+
 		public override string ToString()
 		{
 			return Text;

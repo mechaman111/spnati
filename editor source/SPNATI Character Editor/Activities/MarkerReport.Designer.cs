@@ -175,7 +175,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.picPortrait.Location = new System.Drawing.Point(676, 3);
 			this.picPortrait.Name = "picPortrait";
-			this.picPortrait.ShowTextBox = false;
 			this.picPortrait.Size = new System.Drawing.Size(166, 319);
 			this.picPortrait.TabIndex = 0;
 			this.picPortrait.TabStop = false;

@@ -41,6 +41,11 @@ namespace Desktop.Providers
 			return new string[] { "Name", "Group" };
 		}
 
+		public virtual int[] GetColumnWidths()
+		{
+			return null;
+		}
+
 		public string GetLookupCaption()
 		{
 			return "Select Skin";
