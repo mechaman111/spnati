@@ -292,24 +292,17 @@ function dealHand (player, numPlayers, playersBefore) {
  ************************************************************/
 function exchangeCards (player) {
     /* delete swapped cards */
-    var swaps = 0;
-    for (var i = 0; i < CARDS_PER_HAND; i++) {
-        if (players[player].hand.tradeIns[i]) {
-            delete players[player].hand.cards[i];
-            swaps++;
-        }
-    }
-
-    dealLock += swaps;
-
     /* Move kept cards to the left */
-    players[player].hand.cards = players[player].hand.cards.filter(function(c) { return c; });
+    players[player].hand.cards = players[player].hand.cards.filter(function(c, i) {
+        return !players[player].hand.tradeIns[i];
+    });
     /* Refresh display. */
     displayHand(player, player == HUMAN_PLAYER);
 
     /* draw new cards */
     var n = 0;
     for (var i = players[player].hand.cards.length; i < CARDS_PER_HAND; i++, n++) {
+        dealLock++;
         players[player].hand.cards.push(activeDeck.dealCard());
         animateDealtCard(player, i, n);
     }
