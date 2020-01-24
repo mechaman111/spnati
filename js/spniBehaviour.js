@@ -1864,7 +1864,7 @@ Opponent.prototype.clearChosenState = function () {
  ************************************************************/
 Opponent.prototype.updateBehaviour = function(tags, opp) {
     /* determine if the AI is dialogue locked */
-    if (this.out && this.forfeit[1] == CANNOT_SPEAK && !tags.includes(DEALING_CARDS)) {
+    if (this.out && this.forfeit[1] == CANNOT_SPEAK && tags !== DEALING_CARDS) {
         /* their is restricted to this only */
         tags = [this.forfeit[0]];
     }
@@ -1877,7 +1877,7 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     }
     
     /* Global lines play in any phase except DEALING_CARDS */
-    if (!tags.includes(DEALING_CARDS)) {
+    if (tags[0] !== DEALING_CARDS) {
         tags.push(GLOBAL_CASE);
     }
     
