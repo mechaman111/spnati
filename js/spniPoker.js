@@ -193,12 +193,14 @@ function clearCard (player, i) {
 function displayCard (player, i, visible) {
     if (players[player].hand.cards[i]) {
         if (visible) {
-            if (typeof players[player].hand.cards[i].altText !== "function") {
+            if (typeof players[player].hand.cards[i].altText !== "function" && SENTRY_INITIALIZED) {
                 Sentry.setExtra("player", player);
                 Sentry.setExtra("i", i);
                 Sentry.setExtra("toString_type", typeof players[player].hand.cards[i].toString);
                 Sentry.setExtra("card_type", typeof players[player].hand.cards[i]);
+                Sentry.setExtra("card", players[player].hand.cards[i]);
                 Sentry.setExtra("altText_prototype_type", typeof Card.prototype.altText);
+                Sentry.setExtra("num_bad_cards", players.reduce(function(a, p) { return a.concat(p.hand.cards); }, []).countTrue(c => typeof c != 'object'));
             }
             $cardCells[player][i].attr({ src: IMG + players[player].hand.cards[i].toString() + ".jpg",
                                          alt: players[player].hand.cards[i].altText() });
@@ -296,6 +298,13 @@ function exchangeCards (player) {
     players[player].hand.cards = players[player].hand.cards.filter(function(c, i) {
         return !players[player].hand.tradeIns[i];
     });
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'game',
+            message: players[player].id+' swaps '+players[player].hand.tradeIns.countTrue()+' cards',
+            level: 'debug'
+        });
+    }
     /* Refresh display. */
     displayHand(player, player == HUMAN_PLAYER);
 
