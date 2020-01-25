@@ -593,7 +593,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
      */
     this.baseTags = $metaXml.find('tags').children().map(function() { return canonicalizeTag($(this).text()); }).get();
     this.updateTags();
-    this.searchTags = this.baseTags.slice();
+    this.searchTags = expandTagsList(this.baseTags);
     
     this.cases = new Map();
 
