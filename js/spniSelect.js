@@ -405,7 +405,7 @@ function updateIndividualSelectScreen () {
  ************************************************************/
 function updateGroupSelectScreen (ignore_bg) {
 	/* safety wrap around */
-  if (groupPage[groupSelectScreen] < 0) {
+    if (groupPage[groupSelectScreen] < 0) {
 		/* wrap to last page */
 		groupPage[groupSelectScreen] = (selectableGroups[groupSelectScreen].length)-1;
 	} else if (groupPage[groupSelectScreen] > selectableGroups[groupSelectScreen].length-1) {
@@ -455,100 +455,102 @@ function updateGroupSelectScreen (ignore_bg) {
                 }
             }
         }
+    } else {
+        $groupNameLabel.html("(No matches)");
+        $groupButton.attr('disabled', true);
+    }
 
-        for (var i = 0; i < 4; i++) {
-            var opponent = group.opponents[i];
+    for (var i = 0; i < 4; i++) {
+        var opponent = group ? group.opponents[i] : null;
 
-            if (opponent && typeof opponent == "object") {
-                shownGroup[i] = opponent;
+        if (opponent && typeof opponent == "object") {
+            shownGroup[i] = opponent;
 
-                $groupNameLabels[i].html(opponent.first + " " + opponent.last);
-                $groupPrefersLabels[i].html(opponent.label);
-                $groupSexLabels[i].html(opponent.gender);
-                $groupSourceLabels[i].html(opponent.source);
-                $groupWriterLabels[i].html(opponent.writer);
-                $groupArtistLabels[i].html(opponent.artist);
-                $groupDescriptionLabels[i].html(opponent.description);
+            $groupNameLabels[i].html(opponent.first + " " + opponent.last);
+            $groupPrefersLabels[i].html(opponent.label);
+            $groupSexLabels[i].html(opponent.gender);
+            $groupSourceLabels[i].html(opponent.source);
+            $groupWriterLabels[i].html(opponent.writer);
+            $groupArtistLabels[i].html(opponent.artist);
+            $groupDescriptionLabels[i].html(opponent.description);
 
-                if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
-                    $groupBadges[i].show();
-                } else {
-                    $groupBadges[i].hide();
-                }
+            if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
+                $groupBadges[i].show();
+            } else {
+                $groupBadges[i].hide();
+            }
 
-                if (opponent.highlightStatus === 'new') {
-                    $groupNewBadges[i].show();
-                } else {
-                    $groupNewBadges[i].hide();
-                }
+            if (opponent.highlightStatus === 'new') {
+                $groupNewBadges[i].show();
+            } else {
+                $groupNewBadges[i].hide();
+            }
 
-                $groupCostumeSelectors[i].hide();
-                if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
-                    if (COSTUME_BADGES_ENABLED)
-                        $groupCostumeBadges[i].show();
-                    else
-                        $groupCostumeBadges[i].hide();
-                    
-                    $groupCostumeSelectors[i].empty();
-
-                    if (!FORCE_ALT_COSTUME) {
-                        $groupCostumeSelectors[i].append($('<option>', {
-                            val: '',
-                            text: 'Default Costume'
-                        }));
-
-                        opponent.alternate_costumes.forEach(function (alt) {
-                            $groupCostumeSelectors[i].append(getCostumeOption(alt, opponent.selected_costume));
-                        });
-
-                        $groupCostumeSelectors[i].show();
-                    } else {
-                        opponent.alternate_costumes.some(function (alt) {
-                            if (alt.set === FORCE_ALT_COSTUME) {
-                                $groupCostumeSelectors[i]
-                                    .append(getCostumeOption(alt, opponent.selected_costume))
-                                    .prop('disabled', true)
-                                    .show();
-                                return true;
-                            }
-                        });
-                    }
+            $groupCostumeSelectors[i].hide();
+            if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
+                if (COSTUME_BADGES_ENABLED) {
+                    $groupCostumeBadges[i].show();
                 } else {
                     $groupCostumeBadges[i].hide();
                 }
 
-                updateStatusIcon($groupStatuses[i], opponent);
+                $groupCostumeSelectors[i].empty();
 
-                $groupLayers[i].attr({
-                    src: "img/layers" + opponent.layers + ".png",
-                    alt: opponent.layers + ' layers',
-                }).show();
+                if (!FORCE_ALT_COSTUME) {
+                    $groupCostumeSelectors[i].append($('<option>', {
+                        val: '',
+                        text: 'Default Costume'
+                    }));
 
-                $groupImages[i].attr('src', opponent.selection_image);
-                $groupImages[i].css('height', opponent.scale + '%');
-                $groupImages[i].show();
+                    opponent.alternate_costumes.forEach(function (alt) {
+                        $groupCostumeSelectors[i].append(getCostumeOption(alt, opponent.selected_costume));
+                    });
+
+                    $groupCostumeSelectors[i].show();
+                } else {
+                    opponent.alternate_costumes.some(function (alt) {
+                        if (alt.set === FORCE_ALT_COSTUME) {
+                            $groupCostumeSelectors[i]
+                                .append(getCostumeOption(alt, opponent.selected_costume))
+                                .prop('disabled', true)
+                                .show();
+                            return true;
+                        }
+                    });
+                }
             } else {
-                delete shownGroup[i];
-
-                $groupNameLabels[i].html("");
-                $groupPrefersLabels[i].html("");
-                $groupSexLabels[i].html("");
-                $groupSourceLabels[i].html("");
-                $groupWriterLabels[i].html("");
-                $groupArtistLabels[i].html("");
-                $groupDescriptionLabels[i].html("");
-                $groupBadges[i].hide();
-                $groupNewBadges[i].hide();
                 $groupCostumeBadges[i].hide();
-                $groupStatuses[i].hide();
-                $groupLayers[i].hide();
-                $groupImages[i].hide();
-                $groupCostumeSelectors[i].hide();
-                $groupButton.attr('disabled', true);
             }
+
+            updateStatusIcon($groupStatuses[i], opponent);
+
+            $groupLayers[i].attr({
+                src: "img/layers" + opponent.layers + ".png",
+                alt: opponent.layers + ' layers',
+            }).show();
+
+            $groupImages[i].attr('src', opponent.selection_image);
+            $groupImages[i].css('height', opponent.scale + '%');
+            $groupImages[i].show();
+        } else {
+            delete shownGroup[i];
+
+            $groupNameLabels[i].html("");
+            $groupPrefersLabels[i].html("");
+            $groupSexLabels[i].html("");
+            $groupSourceLabels[i].html("");
+            $groupWriterLabels[i].html("");
+            $groupArtistLabels[i].html("");
+            $groupDescriptionLabels[i].html("");
+            $groupBadges[i].hide();
+            $groupNewBadges[i].hide();
+            $groupCostumeBadges[i].hide();
+            $groupStatuses[i].hide();
+            $groupLayers[i].hide();
+            $groupImages[i].hide();
+            $groupCostumeSelectors[i].hide();
+            $groupButton.attr('disabled', true);
         }
-    } else if (selectableGroups[groupSelectScreen].length == 0) {
-        $groupNameLabel.html("(No matches)");
     }
 }
 
@@ -741,6 +743,8 @@ function updateSelectableGroups(screen) {
  * to load the members of a group (preset table)
  ************************************************************/
 function loadGroup (chosenGroup) {
+    if (!chosenGroup) return;
+
 	clickedRemoveAllButton();
     console.log(chosenGroup.title);
     
@@ -972,7 +976,8 @@ function changeGroupPage (skip, page) {
 function groupSelectKeyToggle(e)
 {
     console.log(e)
-    if ($('#group-select-screen:visible').length > 0) {
+    if ($('#group-select-screen:visible').length > 0
+        && selectableGroups[groupSelectScreen].length > 0) {
         if (e.keyCode == 37) { // left arrow
             changeGroupPage(false, -1);
         }
