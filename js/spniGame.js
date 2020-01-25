@@ -576,6 +576,13 @@ function completeRevealPhase () {
     recentWinner = sortedPlayers[sortedPlayers.length-1].slot;
 
     console.log("Player "+recentLoser+" is the loser.");
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'game',
+            message: players[recentLoser].id+' lost the round',
+            level: 'info'
+        });
+    }
 
     // update loss history
     if (recentLoser == previousLoser) {

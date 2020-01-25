@@ -84,7 +84,7 @@ Card.prototype.altText = function() {
  * Hand class
  ************************************************************/
 function Hand() {
-    this.cards = Array(CARDS_PER_HAND);
+    this.cardArray = Array(CARDS_PER_HAND);
     this.strength = NONE;
     this.value = [];
     this.tradeIns = Array(CARDS_PER_HAND);
@@ -93,6 +93,18 @@ function Hand() {
 Hand.prototype.toString = function() {
 	return handStrengthToString(this.strength);
 }
+Object.defineProperty(Hand.prototype, "cards", {
+    enumerable: true,
+    get: function() { return this.cardArray; },
+    set: function(value) {
+        if (!(value instanceof Array
+              && value.length <= CARDS_PER_HAND
+              && value.every(function(c) { return c instanceof Card; }))) {
+            throw new TypeError("Invalid card array");
+        }
+        this.cardArray = value;
+    }
+});
 
 /************************************************************
  * Deck class
@@ -193,12 +205,14 @@ function clearCard (player, i) {
 function displayCard (player, i, visible) {
     if (players[player].hand.cards[i]) {
         if (visible) {
-            if (typeof players[player].hand.cards[i].altText !== "function") {
+            if (typeof players[player].hand.cards[i].altText !== "function" && SENTRY_INITIALIZED) {
                 Sentry.setExtra("player", player);
                 Sentry.setExtra("i", i);
                 Sentry.setExtra("toString_type", typeof players[player].hand.cards[i].toString);
                 Sentry.setExtra("card_type", typeof players[player].hand.cards[i]);
+                Sentry.setExtra("card", players[player].hand.cards[i]);
                 Sentry.setExtra("altText_prototype_type", typeof Card.prototype.altText);
+                Sentry.setExtra("num_bad_cards", players.reduce(function(a, p) { return a.concat(p.hand.cards); }, []).countTrue(c => typeof c != 'object'));
             }
             $cardCells[player][i].attr({ src: IMG + players[player].hand.cards[i].toString() + ".jpg",
                                          alt: players[player].hand.cards[i].altText() });
@@ -292,24 +306,24 @@ function dealHand (player, numPlayers, playersBefore) {
  ************************************************************/
 function exchangeCards (player) {
     /* delete swapped cards */
-    var swaps = 0;
-    for (var i = 0; i < CARDS_PER_HAND; i++) {
-        if (players[player].hand.tradeIns[i]) {
-            delete players[player].hand.cards[i];
-            swaps++;
-        }
-    }
-
-    dealLock += swaps;
-
     /* Move kept cards to the left */
-    players[player].hand.cards = players[player].hand.cards.filter(function(c) { return c; });
+    players[player].hand.cards = players[player].hand.cards.filter(function(c, i) {
+        return !players[player].hand.tradeIns[i];
+    });
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'game',
+            message: players[player].id+' swaps '+players[player].hand.tradeIns.countTrue()+' cards',
+            level: 'debug'
+        });
+    }
     /* Refresh display. */
     displayHand(player, player == HUMAN_PLAYER);
 
     /* draw new cards */
     var n = 0;
     for (var i = players[player].hand.cards.length; i < CARDS_PER_HAND; i++, n++) {
+        dealLock++;
         players[player].hand.cards.push(activeDeck.dealCard());
         animateDealtCard(player, i, n);
     }
