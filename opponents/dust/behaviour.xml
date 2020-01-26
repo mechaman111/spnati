@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 2:03:05 AM on January 15, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 2:08:04 AM on January 26, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.4</version>
+    <version>v5.5</version>
     <first>Dust</first>
     <last />
     <label>Dust</label>
@@ -108,8 +108,8 @@
             <sprite id="fidget" src="dust/xx-fidgetchat.png" x="-201" y="238" />
             <sprite id="ahrah" z="-1" src="dust/xx-ahrah-smorking.png" x="283" y="-305" scalex="0.5" scaley="0.5" rotation="-12" />
         </pose>
-        <pose id="1-strip-ahrah">
-            <sprite id="stripping" src="dust/1-stripping.png" />
+        <pose id="1-calm-ahrah">
+            <sprite id="stripping" src="dust/1-calm.png" />
             <sprite id="ahrah-smorking" z="-1" src="dust/xx-ahrah-smorking.png" x="283" y="-305" scalex="0.5" scaley="0.5" rotation="-12" />
         </pose>
         <pose id="1-calm-fidget">
@@ -142,6 +142,10 @@
         <pose id="1-laugh-fidget">
             <sprite id="dust" src="dust/1-laugh.png" />
             <sprite id="fidget" z="-1" src="dust/xx-fidgetlaugh.png" x="-192" y="129" rotation="-4" />
+        </pose>
+        <pose id="1-strip-ahrah">
+            <sprite id="stripping" src="dust/1-stripping.png" />
+            <sprite id="ahrah-smorking" z="-1" src="dust/xx-ahrah-smorking.png" x="283" y="-305" scalex="0.5" scaley="0.5" rotation="-12" />
         </pose>
         <pose id="1-strip-fidget">
             <sprite id="dust" src="dust/1-stripping.png" />
@@ -535,10 +539,6 @@
         <pose id="readyM_ahrah">
             <sprite id="ready-M" src="dust/7-ready-M.png" x="0" y="0" />
             <sprite id="ahrah-smorking" z="-1" src="dust/xx-ahrah-smorking.png" x="-73" y="-216" scalex="0.5" scaley="0.5" rotation="11" />
-        </pose>
-        <pose id="1-calm-ahrah">
-            <sprite id="stripping" src="dust/1-calm.png" />
-            <sprite id="ahrah-smorking" z="-1" src="dust/xx-ahrah-smorking.png" x="283" y="-305" scalex="0.5" scaley="0.5" rotation="-12" />
         </pose>
     </poses>
 
@@ -1086,6 +1086,10 @@
                 <state img="custom:#-fidget-snark" marker="guzma_humiliating-mud" location="20%">{fidget}More humiliating than when Dust got covered in mud after that fight with Lady Tethys?</state>
                 <state img="custom:#-fidget-snark" marker="guzma_humiliating-mute" location="20%">{fidget}More humiliating than when Dust tried to get Haley's mute brother to talk?</state>
             </case>
+            <case stage="0-7" id="65" totalRounds="3-">
+                <condition role="other" character="brock" sayingMarker="brock_prompt_weapon" />
+                <state img="custom:#-calm-ahrah">Well, that's an easy question to answer -- I'm most skilled with Ahrah.</state>
+            </case>
             <case stage="0" oneShotId="20" totalRounds="2">
                 <condition role="other" character="leggy" />
                 <state img="#-embarrassed.png">Oh! A fellow Warmblood! Where are you from?</state>
@@ -1383,6 +1387,11 @@
             <case stage="3-6" priority="900">
                 <condition role="self" consecutiveLosses="4" />
                 <state img="#-pissed.png" marker="cassius_talked=5">THAT DOES IT!</state>
+            </case>
+            <case stage="2-3">
+                <condition role="self" saidMarker="fidgetwho" />
+                <condition role="other" character="brock" stage="0-7" sayingMarker="brock_dust_ahrahorigins" />
+                <state img="custom:#-calm-ahrah">Ahrah was forged by the most talented Moonblood smiths and mages centuries ago. As to our meeting, it was the first thing I saw when I "woke up." </state>
             </case>
             <case stage="0">
                 <condition role="other" character="meia" stage="0-5" saying="genetic" />
@@ -1986,6 +1995,10 @@
                 <condition role="other" character="saki_zls" />
                 <state img="custom:#-whole-gang" location="20%">{fidget}Um, it can move on its own?</state>
             </case>
+            <case stage="1">
+                <condition role="other" character="miko" />
+                <state img="#-um.png" marker="miko_youkai">Er... is "youkai" your word for Warmblood?</state>
+            </case>
             <case stage="7">
                 <condition count="0" status="not_lost_all" />
                 <condition count="1-" gender="female" />
@@ -2061,6 +2074,7 @@
                 <state img="custom:#-calm-fidget" location="20%">{fidget}Well, don't keep us waiting.</state>
                 <state img="#-calm.png">Well, sorry, ~player~, but your loss means I'm still safe...</state>
                 <state img="#-embarrassed.png" oneShotId="1">You'd never see a game like this in Aurora Village at least. Maybe in the capital, but I've never been there.</state>
+                <state img="custom:#-fidget-snark" location="20%">{fidget}Oh great. It's the mute guy's turn.</state>
             </case>
             <case stage="7-9">
                 <state img="#-calm.png">Bad luck, ~name~...</state>
@@ -2129,6 +2143,7 @@
                 <state img="custom:#-laugh-fidget" location="20%">{fidget}Yes! Not last place! Uh, that's the point of this game, right?{!reset}</state>
                 <state img="#-calm.png">What do you have in mind, ~player~?</state>
                 <state img="#-embarrassed.png">You'd never see a game like this in Aurora Village at least. Maybe in the capital, but I've never been there.</state>
+                <state img="custom:#-fidget-snark" location="20%">{fidget}Oh great. It's the mute girl's turn.</state>
             </case>
             <case stage="7-9">
                 <state img="#-calm.png">Bad luck, ~name~...</state>
@@ -2290,7 +2305,8 @@
                 <condition role="target" character="n" stage="2" />
                 <state img="#-um.png">Hey, N, is that your natural hair color?</state>
             </case>
-            <case stage="0-7 9" id="62" target="brock" targetStage="3">
+            <case stage="0-7 9" id="62">
+                <condition role="target" character="brock" stage="3" />
                 <state img="custom:#-dustStorm">By Elysium's light, GET THAT THING AWAY FROM ME!</state>
                 <state img="custom:#-dustStorm">Dahh!</state>
             </case>
@@ -2560,6 +2576,10 @@
                 <condition role="target" character="saki_zls" stage="0" />
                 <state img="#-um.png">Is... something wrong?</state>
             </case>
+            <case stage="0-9" id="64">
+                <condition role="target" character="miko" stage="0" />
+                <state img="#-wat.png">Er... who's that? ...and "Crown Prince?"</state>
+            </case>
             <case stage="0-9">
                 <state img="#-embarrassed.png">Well, that's something, I guess...</state>
                 <state img="#-annoyed.png">I see the game's heating up for you, ~name~.</state>
@@ -2589,6 +2609,10 @@
             <case stage="0-9">
                 <condition role="target" character="tomoko" stage="4" />
                 <state img="custom:#-fidget-snark">{fidget}Someone needs therapy.&lt;br&gt;{!reset}Shh!</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="miko" stage="1" />
+                <state img="#-embarrassed.png">At least this ghost doesn't seem malicious...</state>
             </case>
             <case stage="0-9">
                 <state img="#-embarrassed.png">Well, we're certainly ramping up the action now.</state>
@@ -2693,7 +2717,8 @@
                 <state img="custom:#-um-ahrah" location="20%">{ahrah}It appears there are forces at work that discourage fleeing, Chazz.</state>
                 <state img="custom:#-calm-fidget" location="20%">{fidget}Well. Didn't see this coming.</state>
             </case>
-            <case stage="0-9" id="61" target="brock" targetStage="4">
+            <case stage="0-9" id="61">
+                <condition role="target" character="brock" stage="4" />
                 <state img="#-wat.png">By the Overseers... are you all right?</state>
                 <state img="#-wat.png">Er... are you still alive?</state>
             </case>
@@ -3396,6 +3421,8 @@
                 <state img="#-horny.png">This is... what a show!</state>
                 <state img="#-horny.png">I normally don't swear but... damn...</state>
                 <state img="#-horny.png">You're really turning me on right now, ~name~.</state>
+                <state img="#-embarrassed.png">Do I look away or look at ~name~?</state>
+                <state img="custom:#-fidget-snark">{fidget}Tell me, do you think ~name~'s hotter than Haley?{!reset}&lt;br&gt;FIDGET!!</state>
             </case>
             <case stage="8">
                 <state img="#-masturbate_a.png">Oh! Oh, what a show, ~name~!</state>
