@@ -496,28 +496,16 @@ function updateGroupSelectScreen (ignore_bg) {
 
                 $groupCostumeSelectors[i].empty();
 
-                if (!FORCE_ALT_COSTUME) {
-                    $groupCostumeSelectors[i].append($('<option>', {
-                        val: '',
-                        text: 'Default Costume'
-                    }));
+                $groupCostumeSelectors[i].append($('<option>', {
+                    val: '',
+                    text: 'Default Costume'
+                }));
 
-                    opponent.alternate_costumes.forEach(function (alt) {
-                        $groupCostumeSelectors[i].append(getCostumeOption(alt, opponent.selected_costume));
-                    });
+                opponent.alternate_costumes.forEach(function (alt) {
+                    $groupCostumeSelectors[i].append(getCostumeOption(alt, opponent.selected_costume));
+                });
 
-                    $groupCostumeSelectors[i].show();
-                } else {
-                    opponent.alternate_costumes.some(function (alt) {
-                        if (alt.set === FORCE_ALT_COSTUME) {
-                            $groupCostumeSelectors[i]
-                                .append(getCostumeOption(alt, opponent.selected_costume))
-                                .prop('disabled', true)
-                                .show();
-                            return true;
-                        }
-                    });
-                }
+                $groupCostumeSelectors[i].show();
             } else {
                 $groupCostumeBadges[i].hide();
             }
