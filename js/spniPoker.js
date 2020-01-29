@@ -84,7 +84,7 @@ Card.prototype.altText = function() {
  * Hand class
  ************************************************************/
 function Hand() {
-    this.cardArray = Array(CARDS_PER_HAND);
+    this.cards = Array(CARDS_PER_HAND);
     this.strength = NONE;
     this.value = [];
     this.tradeIns = Array(CARDS_PER_HAND);
@@ -93,18 +93,6 @@ function Hand() {
 Hand.prototype.toString = function() {
 	return handStrengthToString(this.strength);
 }
-Object.defineProperty(Hand.prototype, "cards", {
-    enumerable: true,
-    get: function() { return this.cardArray; },
-    set: function(value) {
-        if (!(value instanceof Array
-              && value.length <= CARDS_PER_HAND
-              && value.every(function(c) { return c instanceof Card; }))) {
-            throw new TypeError("Invalid card array");
-        }
-        this.cardArray = value;
-    }
-});
 
 /************************************************************
  * Deck class
