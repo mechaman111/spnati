@@ -2149,8 +2149,7 @@ function showHelpModal () {
     $helpModal.modal('show');
 }
 
-$('.help-page-select').click(function (ev) {
-    var toPage = $(ev.target).attr('data-select-page');
+function gotoHelpPage (toPage) {
     var curPage = $helpModal.attr('data-current-page');
     curPage = parseInt(curPage, 10) || 1;
     
@@ -2167,6 +2166,10 @@ $('.help-page-select').click(function (ev) {
     $('.help-page[data-page="'+curPage+'"]').show();
     $('.help-page-select').removeClass('active');
     $('.help-page-select[data-page="'+curPage+'"]').addClass('active');
+}
+
+$('.help-page-select').click(function (ev) {
+    gotoHelpPage($(ev.target).attr('data-select-page'));
 })
 
 /************************************************************

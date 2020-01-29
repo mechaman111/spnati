@@ -84,7 +84,7 @@ Card.prototype.altText = function() {
  * Hand class
  ************************************************************/
 function Hand() {
-    this.cardArray = Array(CARDS_PER_HAND);
+    this.cards = Array(CARDS_PER_HAND);
     this.strength = NONE;
     this.value = [];
     this.tradeIns = Array(CARDS_PER_HAND);
@@ -93,18 +93,6 @@ function Hand() {
 Hand.prototype.toString = function() {
 	return handStrengthToString(this.strength);
 }
-Object.defineProperty(Hand.prototype, "cards", {
-    enumerable: true,
-    get: function() { return this.cardArray; },
-    set: function(value) {
-        if (!(value instanceof Array
-              && value.length <= CARDS_PER_HAND
-              && value.every(function(c) { return c instanceof Card; }))) {
-            throw new TypeError("Invalid card array");
-        }
-        this.cardArray = value;
-    }
-});
 
 /************************************************************
  * Deck class
@@ -204,16 +192,8 @@ function clearCard (player, i) {
  ************************************************************/
 function displayCard (player, i, visible) {
     if (players[player].hand.cards[i]) {
+        detectCheat();
         if (visible) {
-            if (typeof players[player].hand.cards[i].altText !== "function" && SENTRY_INITIALIZED) {
-                Sentry.setExtra("player", player);
-                Sentry.setExtra("i", i);
-                Sentry.setExtra("toString_type", typeof players[player].hand.cards[i].toString);
-                Sentry.setExtra("card_type", typeof players[player].hand.cards[i]);
-                Sentry.setExtra("card", players[player].hand.cards[i]);
-                Sentry.setExtra("altText_prototype_type", typeof Card.prototype.altText);
-                Sentry.setExtra("num_bad_cards", players.reduce(function(a, p) { return a.concat(p.hand.cards); }, []).countTrue(c => typeof c != 'object'));
-            }
             $cardCells[player][i].attr({ src: IMG + players[player].hand.cards[i].toString() + ".jpg",
                                          alt: players[player].hand.cards[i].altText() });
         } else {
