@@ -1817,7 +1817,7 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
         console.log("Current case priority for player "+this.slot+": "+bestMatchPriority);
 
         var rnd = Math.random() * weightSum;
-        for (var i = 0, x = 0; x < rnd; x += states[i++].weight);
+        for (var i = 0, x = 0; x <= rnd && i < states.length; x += states[i++].weight);
         
         /* Clean up mutable state on cases not selected. */
         var chosenState = states[i-1];
