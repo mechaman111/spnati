@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 3:32:11 PM on January 13, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 7:42:13 PM on January 29, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Arash</first>
@@ -79,7 +79,8 @@
                 <state img="#-Neutral.png">Hey! I'm Arash. Let's play!</state>
                 <state img="#-C'mere.png">Ooh, new faces! C'mere!</state>
             </case>
-            <case stage="0" id="92" alsoPlaying="panty">
+            <case stage="0" id="92">
+                <condition role="other" character="panty" />
                 <state img="#-Neutral.png">This is definitely poker, Panty.</state>
             </case>
         </trigger>
@@ -92,8 +93,9 @@
         </trigger>
 
         <trigger id="game_start">
-            <case stage="0" id="95" alsoPlaying="misty_hgss" alsoPlayingSayingMarker="player_male=8">
+            <case stage="0" id="95">
                 <condition count="1" filter="human_male" />
+                <condition role="other" character="misty_hgss" sayingMarker="player_male=8" />
                 <test expr="~background~" value="poolside" />
                 <state img="#-Neutral.png">That could be fun, Misty!</state>
             </case>
@@ -102,12 +104,14 @@
                 <state img="#-Horny.png">A butterfly?</state>
                 <state img="#-Thoughtful.png">Huh. What's with the butterfly?</state>
             </case>
-            <case stage="0" id="106" alsoPlaying="rin">
+            <case stage="0" id="106">
+                <condition role="other" character="rin" />
                 <state img="#-C'mere.png">You're good, Rin!</state>
             </case>
             <case stage="0" priority="1">
                 <state img="#-Horny.png">Strip poker's a great way to unwind after a long day, isn't it?</state>
                 <state img="#-Happy.png">Looking forward to this!</state>
+                <state img="#-Thoughtful.png">It's nice to get a break from training.</state>
             </case>
         </trigger>
 
@@ -177,11 +181,6 @@
         </trigger>
 
         <trigger id="hand">
-            <case stage="0-8" id="54" alsoPlaying="revy" alsoPlayingSayingMarker="music">
-                <condition count="0" filter="futaba" />
-                <condition role="other" character="revy" sayingMarker="music" />
-                <state img="#-Neutral.png">Not really picky about music, but I do prefer upbeat stuff. And maybe not electropop?</state>
-            </case>
             <case stage="0-8" id="63" alsoPlaying="megumin" alsoPlayingSayingMarker="megumin_learnShave">
                 <condition role="other" character="megumin" saidMarker="megumin_ShavedDiscovery" sayingMarker="megumin_learnShave" />
                 <state img="#-Thoughtful.png">Some people like the way it looks.</state>
@@ -204,7 +203,8 @@
                 <state img="#-Thoughtful.png">Does this place have snacks? Pita chips and hummus sound good right now. Maybe a beer, too?</state>
                 <state img="#-Neutral.png">Probably just going to have one drink for the night, but yeah, I could go for a beer. Something light.</state>
             </case>
-            <case stage="0-8" id="102" alsoPlaying="mulan" alsoPlayingStage="0-1" totalRounds="9" alsoPlayingSayingMarker="fa_pp_ing">
+            <case stage="0-8" id="102" totalRounds="9">
+                <condition role="other" character="mulan" stage="0-1" sayingMarker="fa_pp_ing" />
                 <state img="#-Thoughtful.png">No one's making fun of you, Ping, it's just slang for masturbating.</state>
             </case>
             <case stage="0-8" id="28" priority="141">
@@ -213,7 +213,8 @@
                 <state img="#-C'mere.png">I like the hat!</state>
                 <state img="#-Thoughtful.png">The hat's not my style, sure, but Dust makes it work!</state>
             </case>
-            <case stage="0-8" id="97" alsoPlaying="mei" alsoPlayingStage="5-7" alsoPlayingSayingMarker="mei_ice_block">
+            <case stage="0-8" id="97">
+                <condition role="other" character="mei" stage="5-7" sayingMarker="mei_ice_block" />
                 <state img="#-C'mere.png">You okay, Mei?</state>
             </case>
             <case stage="0-8" id="38" totalRounds="7" priority="117">
@@ -222,7 +223,13 @@
                 <state img="#-Horny.png">Not to sound like Merlin, but can I just answer "fuck" for everyone? I'm not really interested in committing to someone right now, and I don't exactly want to kill anyone either...</state>
                 <state img="#-Thoughtful.png">Not to sound like Merlin, but can I just answer "fuck" for everyone? I'm not really interested in getting married, and I don't exactly want to kill anyone either...</state>
             </case>
-            <case stage="0-8" id="51" alsoPlaying="guzma" totalRounds="6" alsoPlayingSayingMarker="MostHumiliatingMoment">
+            <case stage="0-8" id="54" priority="111">
+                <condition count="0" filter="futaba" />
+                <condition role="other" character="revy" sayingMarker="music" />
+                <state img="#-Neutral.png">Not really picky about music, but I do prefer upbeat stuff. And maybe not electropop?</state>
+            </case>
+            <case stage="0-8" id="51" totalRounds="6">
+                <condition role="other" character="guzma" sayingMarker="MostHumiliatingMoment" />
                 <state img="#-Thoughtful.png">Meh, I'm used to shenanigans.</state>
             </case>
             <case stage="0-8" alsoPlaying="sheena" alsoPlayingSaidMarker="zelossize" alsoPlayingSayingMarker="zelossize2">
@@ -258,6 +265,10 @@
                 <state img="#-Horny.png">Is it just me, or is it hot in here?</state>
                 <state img="#-Thoughtful.png">Hmm...</state>
             </case>
+            <case stage="0-8" oneShotId="2">
+                <state img="#-Horny.png">I...should probably come here more often. Training all the time gets stressful.</state>
+            </case>
+            <case stage="0-8" oneShotId="3" />
         </trigger>
 
         <trigger id="must_strip">
@@ -634,6 +645,9 @@
             <case stage="0-10" id="76" target="elesa" targetStage="0">
                 <state img="#-Neutral.png">Heh. A flair for the dramatic  tends to be fun.</state>
             </case>
+            <case stage="0-10" id="118" target="elisa" targetStage="3">
+                <state img="#-C'mere.png">Are you alright, Elisa?</state>
+            </case>
             <case stage="0-1 10">
                 <state img="#-Happy.png">You got this!</state>
                 <state img="#-C'mere.png">You got this!</state>
@@ -789,6 +803,9 @@
             </case>
             <case stage="0-10" id="107" target="lotte" targetStage="5">
                 <state img="#-Thoughtful.png">Maybe we could talk about it after the game? I'd rather not hold things up, but it does sound interesting!</state>
+            </case>
+            <case stage="0-10" id="116" target="ava" targetStage="6">
+                <state img="#-Thoughtful.png">Those do look comfortable.</state>
             </case>
             <case stage="0-1">
                 <state img="#-Happy.png">I hope everyone's enjoying the game!</state>
@@ -1129,7 +1146,30 @@
             </case>
         </trigger>
 
+        <trigger id="opponent_lost">
+            <case stage="0-10">
+                <condition filter="innocent" role="target" />
+                <state img="#-Thoughtful.png">...are you sure you should be here, ~name~?</state>
+                <state img="#-Thoughtful.png">~name~...you do understand the rules of the game, right?</state>
+                <state img="#-Thoughtful.png">~name~? You know the stakes, right?</state>
+                <state img="#-Thoughtful.png">~name~...I hope you know the stakes.</state>
+                <state img="#-Thoughtful.png">Are you sure you should be here, ~name~?</state>
+                <state img="#-Thoughtful.png">~name~? You're...not the type I'd expect to see here.</state>
+                <state img="#-Thoughtful.png">~name~? You realize what we're playing for...</state>
+            </case>
+            <case stage="0-10">
+                <condition filter="yandere" role="target" />
+                <state img="#-Annoyed.png" collectible="arash_annoyed">~name~, watch yourself. I'd rather not be stuck in the middle of a bar fight, and I doubt anyone else here is eager for one either.</state>
+            </case>
+        </trigger>
+
         <trigger id="opponent_stripping">
+            <case stage="0-10">
+                <condition filter="weapon" role="target" />
+                <test expr="~clothing.type~" value="extra" />
+                <state img="#-Thoughtful.png">Do you know how to use that weapon, ~name~? Maybe we could spar sometime.</state>
+                <state img="#-Neutral.png">Always good to be ready for anything.</state>
+            </case>
             <case stage="0-10" id="39">
                 <condition role="target" stage="1-3" />
                 <condition role="other" character="emi" saidMarker="emi_hero" sayingMarker="emi_hero2" notSaidMarker="pirate" />
@@ -1144,6 +1184,11 @@
                 <state img="#-Neutral.png">I was shy my first few times playing strip poker too. You're alright.</state>
                 <state img="#-C'mere.png">I was shy my first few times playing strip poker too. You'll be okay, trust me.</state>
             </case>
+            <case stage="0-10" id="112">
+                <test expr="~clothing.type~" value="extra" />
+                <state img="#-Thoughtful.png" marker="servant">Being a Servant can be tough sometimes, but it's a rewarding life - afterlife? - too.</state>
+                <state img="#-Horny.png" marker="servant">It's a busy life, being a Servant. Nice to have a moment to do something other than training and adventuring.</state>
+            </case>
         </trigger>
 
         <trigger id="opponent_stripped">
@@ -1154,6 +1199,20 @@
                 <condition role="target" character="d.va" saidMarker="d.va_needs_a_hug" />
                 <state img="#-C'mere.png">C'mere, D.Va.</state>
             </case>
+            <case stage="0-10">
+                <condition filter="fighter" role="target" />
+                <test expr="~clothing.type~" value="extra" />
+                <state img="#-C'mere.png">Us warriors need to stick together, y'know?</state>
+                <state img="#-Happy.png">You're a warrior too, ~name~?</state>
+                <state img="#-Neutral.png">Are you a warrior too, ~name~? We should get to know each other sometime.</state>
+                <state img="#-Thoughtful.png">Let's share our fighting stories sometime, ~name~.</state>
+            </case>
+            <case stage="0-10">
+                <condition filter="scarred" role="target" />
+                <test expr="~clothing.type~" value="extra" />
+                <state img="#-Thoughtful.png">What's the story of your scar, ~name~? If you'd like to tell it.</state>
+                <state img="#-Thoughtful.png">You wear that scar well, ~name~.</state>
+            </case>
             <case stage="0-10" id="33" totalRounds="0">
                 <condition role="other" character="misato" stage="0" sayingMarker="Misato_Beer_Offer" />
                 <state img="#-Happy.png">Ooh, what kind? I've always been a light lager kind of guy.</state>
@@ -1161,6 +1220,11 @@
             </case>
             <case stage="0-10" id="77" alsoPlaying="rainbow_mika" alsoPlayingStage="3" alsoPlayingSaidMarker="embarrassed" alsoPlayingSayingMarker="putting_mask">
                 <state img="#-C'mere.png">I think I see what you're saying.</state>
+            </case>
+            <case stage="0-10" id="113" oneShotId="4">
+                <condition role="self" saidMarker="servant" />
+                <test expr="~clothing.type~" value="extra" />
+                <state img="#-Neutral.png">Oh, I should explain - Servants are the ghosts of ancient heroes. Powerful magi can summon us to fight for them.</state>
             </case>
         </trigger>
 
@@ -1316,6 +1380,9 @@
         </trigger>
 
         <trigger id="female_must_masturbate">
+            <case stage="0-10" id="115" target="clare" totalMasturbating="0" totalFinished="0">
+                <state img="#-Thoughtful.png">Your sword? I suppose it'd be comforting to have.</state>
+            </case>
             <case stage="0-10" id="7">
                 <condition role="target" character="nami" />
                 <state img="#-Horny.png">Whatever you're into!</state>
@@ -1331,6 +1398,9 @@
             </case>
             <case stage="0-10" id="94" target="sola">
                 <state img="#-Thoughtful.png">Whatever works, Sola. I want this to be good for everyone.</state>
+            </case>
+            <case stage="0-10" id="114" target="clare">
+                <state img="#-Thoughtful.png">Your sword? I suppose it'd be comforting to have...</state>
             </case>
             <case stage="0-1 10">
                 <state img="#-C'mere.png">You got this! Just relax and enjoy yourself, y'know?</state>
@@ -1389,6 +1459,9 @@
             </case>
             <case stage="0-10" id="108" target="leafy">
                 <state img="#-Thoughtful.png">That's clever, Leafy.</state>
+            </case>
+            <case stage="0-10" id="117" target="clare">
+                <state img="#-Neutral.png">Ah, so that's why you wanted it!</state>
             </case>
             <case stage="0-1 10">
                 <state img="#-Horny.png">I like your technique.</state>
