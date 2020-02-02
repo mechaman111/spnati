@@ -1901,7 +1901,6 @@ SceneView.prototype.clearAllText = function (directive, context) {
 SceneView.prototype.clearText = function (directive, context, keepObject) {
   context.boxes = context.boxes || [];
   var boxContext = {};
-  context.boxes.push(boxContext);
 
   var id = directive.id || this.lastTextId;
   boxContext.id = lastTextId = id;
@@ -1912,6 +1911,7 @@ SceneView.prototype.clearText = function (directive, context, keepObject) {
   }
 
   boxContext.directive = box.data("directive");
+  context.boxes.push(boxContext);
   this.$textContainer.get(0).removeChild(box[0]);
   if (!keepObject) {
     delete this.textObjects[id];
