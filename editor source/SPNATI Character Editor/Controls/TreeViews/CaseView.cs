@@ -449,5 +449,15 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			return null;
 		}
+
+		public bool AllowReorder()
+		{
+			return false;
+		}
+
+		public void MoveItem(object source, object target, bool before)
+		{
+
+		}
 	}
 }

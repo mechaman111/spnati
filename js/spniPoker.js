@@ -192,11 +192,9 @@ function clearCard (player, i) {
  ************************************************************/
 function displayCard (player, i, visible) {
     if (players[player].hand.cards[i]) {
+        detectCheat();
         if (visible) {
-            if (typeof players[player].hand.cards[i].altText !== "function") {
-                Sentry.setExtra("altText_type", typeof players[player].hand.cards[i].altText);
-            }
-            $cardCells[player][i].attr({ src: IMG + players[player].hand.cards[i] + ".jpg",
+            $cardCells[player][i].attr({ src: IMG + players[player].hand.cards[i].toString() + ".jpg",
                                          alt: players[player].hand.cards[i].altText() });
         } else {
             $cardCells[player][i].attr({ src: UNKNOWN_CARD_IMAGE,
@@ -288,24 +286,24 @@ function dealHand (player, numPlayers, playersBefore) {
  ************************************************************/
 function exchangeCards (player) {
     /* delete swapped cards */
-    var swaps = 0;
-    for (var i = 0; i < CARDS_PER_HAND; i++) {
-        if (players[player].hand.tradeIns[i]) {
-            delete players[player].hand.cards[i];
-            swaps++;
-        }
-    }
-
-    dealLock += swaps;
-
     /* Move kept cards to the left */
-    players[player].hand.cards = players[player].hand.cards.filter(function(c) { return c; });
+    players[player].hand.cards = players[player].hand.cards.filter(function(c, i) {
+        return !players[player].hand.tradeIns[i];
+    });
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'game',
+            message: players[player].id+' swaps '+players[player].hand.tradeIns.countTrue()+' cards',
+            level: 'debug'
+        });
+    }
     /* Refresh display. */
     displayHand(player, player == HUMAN_PLAYER);
 
     /* draw new cards */
     var n = 0;
     for (var i = players[player].hand.cards.length; i < CARDS_PER_HAND; i++, n++) {
+        dealLock++;
         players[player].hand.cards.push(activeDeck.dealCard());
         animateDealtCard(player, i, n);
     }

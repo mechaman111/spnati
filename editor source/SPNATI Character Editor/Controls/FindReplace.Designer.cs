@@ -45,6 +45,7 @@
 			this.focusTimer = new System.Windows.Forms.Timer(this.components);
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
 			this.strip = new Desktop.Skinning.SkinnedTabStrip();
+			this.chkMarkers = new Desktop.Skinning.SkinnedCheckBox();
 			this.tabs.SuspendLayout();
 			this.skinnedPanel1.SuspendLayout();
 			this.SuspendLayout();
@@ -64,7 +65,8 @@
 			// 
 			// tabFind
 			// 
-			this.tabFind.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(230)))));
+			this.tabFind.BackColor = System.Drawing.Color.White;
+			this.tabFind.ForeColor = System.Drawing.Color.Black;
 			this.tabFind.Location = new System.Drawing.Point(4, 22);
 			this.tabFind.Name = "tabFind";
 			this.tabFind.Padding = new System.Windows.Forms.Padding(3);
@@ -74,17 +76,21 @@
 			// 
 			// tabReplace
 			// 
-			this.tabReplace.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(230)))));
+			this.tabReplace.BackColor = System.Drawing.Color.White;
+			this.tabReplace.ForeColor = System.Drawing.Color.Black;
 			this.tabReplace.Location = new System.Drawing.Point(4, 22);
 			this.tabReplace.Name = "tabReplace";
 			this.tabReplace.Padding = new System.Windows.Forms.Padding(3);
-			this.tabReplace.Size = new System.Drawing.Size(391, 0);
+			this.tabReplace.Size = new System.Drawing.Size(382, 0);
 			this.tabReplace.TabIndex = 1;
 			this.tabReplace.Text = "Replace";
 			// 
 			// lblFind
 			// 
 			this.lblFind.AutoSize = true;
+			this.lblFind.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.lblFind.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.lblFind.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.lblFind.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.lblFind.Location = new System.Drawing.Point(12, 58);
 			this.lblFind.Name = "lblFind";
@@ -105,6 +111,7 @@
 			// chkMatchCase
 			// 
 			this.chkMatchCase.AutoSize = true;
+			this.chkMatchCase.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.chkMatchCase.Location = new System.Drawing.Point(15, 107);
 			this.chkMatchCase.Name = "chkMatchCase";
 			this.chkMatchCase.Size = new System.Drawing.Size(82, 17);
@@ -115,6 +122,7 @@
 			// chkWholeWords
 			// 
 			this.chkWholeWords.AutoSize = true;
+			this.chkWholeWords.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.chkWholeWords.Location = new System.Drawing.Point(15, 130);
 			this.chkWholeWords.Name = "chkWholeWords";
 			this.chkWholeWords.Size = new System.Drawing.Size(130, 17);
@@ -125,6 +133,8 @@
 			// cmdFind
 			// 
 			this.cmdFind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdFind.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdFind.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.cmdFind.Flat = false;
 			this.cmdFind.Location = new System.Drawing.Point(292, 53);
 			this.cmdFind.Name = "cmdFind";
@@ -138,8 +148,11 @@
 			// cmdCancel
 			// 
 			this.cmdCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdCancel.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.cmdCancel.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.cmdCancel.Flat = true;
+			this.cmdCancel.ForeColor = System.Drawing.Color.White;
 			this.cmdCancel.Location = new System.Drawing.Point(320, 3);
 			this.cmdCancel.Name = "cmdCancel";
 			this.cmdCancel.Size = new System.Drawing.Size(75, 23);
@@ -161,6 +174,9 @@
 			// lblReplace
 			// 
 			this.lblReplace.AutoSize = true;
+			this.lblReplace.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.lblReplace.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.lblReplace.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.lblReplace.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.lblReplace.Location = new System.Drawing.Point(12, 84);
 			this.lblReplace.Name = "lblReplace";
@@ -171,6 +187,8 @@
 			// cmdReplace
 			// 
 			this.cmdReplace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdReplace.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdReplace.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.cmdReplace.Flat = false;
 			this.cmdReplace.Location = new System.Drawing.Point(292, 81);
 			this.cmdReplace.Name = "cmdReplace";
@@ -184,6 +202,8 @@
 			// cmdReplaceAll
 			// 
 			this.cmdReplaceAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdReplaceAll.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdReplaceAll.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.cmdReplaceAll.Flat = false;
 			this.cmdReplaceAll.Location = new System.Drawing.Point(292, 110);
 			this.cmdReplaceAll.Name = "cmdReplaceAll";
@@ -207,21 +227,42 @@
 			this.skinnedPanel1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryDark;
 			this.skinnedPanel1.Size = new System.Drawing.Size(399, 30);
 			this.skinnedPanel1.TabIndex = 54;
+			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
 			// 
 			// strip
 			// 
+			this.strip.AddCaption = null;
 			this.strip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.strip.DecorationText = null;
 			this.strip.Location = new System.Drawing.Point(1, 25);
 			this.strip.Margin = new System.Windows.Forms.Padding(0);
 			this.strip.Name = "strip";
+			this.strip.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryLight;
+			this.strip.ShowAddButton = false;
+			this.strip.ShowCloseButton = false;
 			this.strip.Size = new System.Drawing.Size(397, 23);
+			this.strip.StartMargin = 5;
 			this.strip.TabControl = this.tabs;
 			this.strip.TabIndex = 55;
+			this.strip.TabMargin = 5;
 			this.strip.TabPadding = 20;
 			this.strip.TabSize = -1;
+			this.strip.TabType = Desktop.Skinning.SkinnedBackgroundType.Background;
 			this.strip.Text = "skinnedTabStrip1";
 			this.strip.Vertical = false;
+			// 
+			// chkMarkers
+			// 
+			this.chkMarkers.AutoSize = true;
+			this.chkMarkers.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkMarkers.Location = new System.Drawing.Point(150, 107);
+			this.chkMarkers.Name = "chkMarkers";
+			this.chkMarkers.Size = new System.Drawing.Size(100, 17);
+			this.chkMarkers.TabIndex = 56;
+			this.chkMarkers.Text = "Search markers";
+			this.chkMarkers.UseVisualStyleBackColor = true;
+			this.chkMarkers.CheckedChanged += new System.EventHandler(this.chkMarkers_CheckedChanged);
 			// 
 			// FindReplace
 			// 
@@ -230,6 +271,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
 			this.ClientSize = new System.Drawing.Size(399, 183);
+			this.Controls.Add(this.chkMarkers);
 			this.Controls.Add(this.strip);
 			this.Controls.Add(this.skinnedPanel1);
 			this.Controls.Add(this.cmdReplaceAll);
@@ -278,5 +320,6 @@
 		private System.Windows.Forms.Timer focusTimer;
 		private Desktop.Skinning.SkinnedPanel skinnedPanel1;
 		private Desktop.Skinning.SkinnedTabStrip strip;
+		private Desktop.Skinning.SkinnedCheckBox chkMarkers;
 	}
 }

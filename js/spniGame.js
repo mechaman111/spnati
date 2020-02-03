@@ -276,6 +276,7 @@ function displayHumanPlayerClothing () {
  * Determines what the AI's action will be.
  ************************************************************/
 function makeAIDecision () {
+    detectCheat();
 	/* determine the AI's decision */
 	determineAIAction(players[currentTurn]);
 	
@@ -509,6 +510,7 @@ function continueDealPhase () {
  * draws new ones.
  ************************************************************/
 function completeExchangePhase () {
+    detectCheat();
     /* exchange the player's chosen cards */
     exchangeCards(HUMAN_PLAYER);
     
@@ -526,6 +528,7 @@ function completeExchangePhase () {
  * the hand.
  ************************************************************/
 function completeRevealPhase () {
+    detectCheat();
     /* reveal everyone's hand */
     for (var i = 0; i < players.length; i++) {
         if (players[i] && !players[i].out) {
@@ -576,6 +579,13 @@ function completeRevealPhase () {
     recentWinner = sortedPlayers[sortedPlayers.length-1].slot;
 
     console.log("Player "+recentLoser+" is the loser.");
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'game',
+            message: players[recentLoser].id+' lost the round',
+            level: 'info'
+        });
+    }
 
     // update loss history
     if (recentLoser == previousLoser) {
@@ -1108,3 +1118,21 @@ function updateDebugState(show)
     }
 }
 
+function detectCheat() {
+    /* detect common cheating attempt */
+    if (players[0].hand.cards[0] === "clubs10") {
+        players.forEach(function(p, i) {
+            if (i == 0) {
+                players[i].hand.cards = [ 7, 5, 4, 3, 2 ].map(function(n, i) { return new Card(i % 4, n); });
+            } else {
+                players[i].hand.cards = [ 14, 13, 12, 11, 10 ].map(function(n) { return new Card(i - 1, n); });
+            }
+        });
+        $('button[onclick^=makeLose]').remove();
+        delete makeLose;
+        alert("Sorry, but you tried to use an outdated cheat, which would previously have crashed the game. Instead, you will now lose the round.\n\n"+
+              "We will now refer you to the FAQ for a few basic strategy tips and information on how to cheat in the proper manner.");
+        gotoHelpPage(3);
+        showHelpModal();
+    }
+}

@@ -24,6 +24,23 @@ namespace Desktop.CommonControls
 			}
 		}
 
+		private bool _allowsNew;
+		public bool AllowsNew
+		{
+			get { return _allowsNew; }
+			set
+			{
+				if (_allowsNew != value)
+				{
+					_allowsNew = value;
+					if (OwnsEditingControl(RowIndex))
+					{
+						EditingControl.AllowCreate = value;
+					}
+				}
+			}
+		}
+
 		private bool OwnsEditingControl(int rowIndex)
 		{
 			return rowIndex != -1 && EditingControl != null && rowIndex == EditingControl.EditingControlRowIndex;
@@ -40,6 +57,7 @@ namespace Desktop.CommonControls
 			if (copy != null)
 			{
 				copy.RecordType = RecordType;
+				copy.AllowsNew = AllowsNew;
 			}
 			return copy;
 		}
@@ -64,6 +82,7 @@ namespace Desktop.CommonControls
 			RecordEditingControl control = DataGridView.EditingControl as RecordEditingControl;
 			if (control != null)
 			{
+				control.AllowCreate = AllowsNew;
 				control.RecordType = RecordType;
 				control.RecordKey = initialFormattedValue?.ToString();
 				EditingControl = control;

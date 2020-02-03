@@ -11,14 +11,17 @@ timer=26
 
 #Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
 tag=ginger
-tag=medium_hair
-tag=twintails
+tag=medium_hair,from:7,to:9
+tag=messy_hair
+tag=twintails,from:0,to:6
 tag=green_eyes
 tag=fair-skinned
 tag=pubic_hair
 tag=medium_breasts
-tag=choker
+tag=choker,from:0,to:6
 tag=no_bra
+tag=school_uniform
+tag=thigh_highs,from:0,to:6
 tag=cheerful
 tag=nerdy
 tag=smart
@@ -56,13 +59,13 @@ dialogue-layer=over
 #If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
 #What they cover = upper (upper body), lower (lower body), other (neither).
 #The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
-clothes=Toolbelt,Toolbelt,extra,waist
-clothes=Vest,Vest,minor,upper
-clothes=Shoes and glove,Shoes and glove,extra,other,plural
-clothes=Skirt,Skirt,major,lower
-clothes=Shirt,Shirt,important,upper
-clothes=Panties,Panties,important,lower,plural
-clothes=Socks,Socks,major,legs,plural
+clothes=toolbelt,toolbelt,extra,waist
+clothes=vest,vest,minor,upper
+clothes=shoes and glove,shoes and glove,extra,other,plural
+clothes=skirt,skirt,major,lower
+clothes=shirt,shirt,important,upper
+clothes=panties,panties,important,lower,plural
+clothes=socks,socks,minor,legs,plural
 
 
 
@@ -127,7 +130,7 @@ clothes=Socks,Socks,major,legs,plural
 
 #stage-generic lines that will be used for every individual stage that doesn't have a line written
 swap_cards=calm.png,Gimme ~cards~.
-swap_cards=calm.png,Lemme have ~cards~
+swap_cards=calm.png,Lemme have ~cards~.
 swap_cards=calm.png,I need ~cards~.
 swap_cards=thinking.png,Hmm... Guess I'll trade ~cards~.
 swap_cards=thinking.png,Eh... ~cards~ should work.
@@ -148,7 +151,7 @@ bad_hand=thinking.png,Normally, duct tape can fix anything, but <i>this</i>?... 
 0-good_hand=wink.png,No miscalculations here!
 0-good_hand=happy.png,Hehe, just how I do!
 0-good_hand=excited.png,Hell yeah! A hand as badass as my badass robot!
-0-good_hand,one-shot-id:2=wink.png,Read 'em and weap, suckas!... Er, well, I guess you can't read them right now, but you <i>will</i>!
+0-good_hand,one-shot-id:2=wink.png,Read 'em and weep, suckas!... Er, well, I guess you can't read them right now, but you <i>will</i>!
 0-good_hand,hasHand:Royal Flush=excited.png,Hell yes! I've got the most awesomely awesome hand you could possible have!
 0-good_hand,hasHand:Royal Flush=turboexcited.png,Hell yeah! Royal flush, suckas!
 0-good_hand,totalRounds:0=excited.png,Hell yeah! This is a kick-ass start!
@@ -161,7 +164,14 @@ bad_hand=thinking.png,Normally, duct tape can fix anything, but <i>this</i>?... 
 0-okay_hand,one-shot-id:11=thinking.png,I wonder if Tediore makes playing cards... That'd be pretty rad...
 0-okay_hand,one-shot-id:19=wink.png,Heh, this makes my <i>second</i> pair. See what I did there?... No, I guess not, 'cause you can't see my hand...
 0-bad_hand,totalRounds:0=claptrap.png,Damn. This is <i>not</i> a good start.
+0-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_superconfident:=happy.png,Anxious? Nah! If people don't like me, that's their problem, 'cause I <i>know</i> I'm awesome!
+0-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_schoolbully:=claptrap.png,Aw, it's not that great, it was a total accident. Besides, she's totally fine now, and didn't even get in trouble for shoving me or stealing DT's plans!
+0-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_friendrobot:=happy.png,Don't just wish for one, build your own! It's not that hard!
 0-hand,oneShotId:3,count-role;other&character;twilight&stage;4:,marker:TwilightRuleBreaker=sad.png,Man, I thought you were a rule-breaker, Twilight!
+0-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_guns:=happy.png,Of course I like guns! Pretty much every girl on Pandora does!... Okay, I guess Tanis doesn't, but she's weird.
+0-hand,oneShotId:7,count-role;other&character;emi&stage;7:=calm.png,So are you using those old things by choice? 'Cause I could totally hook you up with a more modern pair. They'd be much more comfortable, <i>and</i>you'd be able to kick through concrete!
+0-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_cooluniform:=happy.png,Yeah, I never really liked my school uniform, so I made it my own. I don't even wear that stupid button-up that I'm supposed to.
+0-hand,count-role;other&character;meia&stage;1:,count-role;self&notsaidmarker;Meia_ECHO:,marker:Meia_ECHO=happy.png,Well yeah, that's why eye pieces sucked. ECHOs are handheld devices, and they give you everything you'd need in one little package!
 0-hand,totalRounds:0,count-role;other&character;streaming-chan:=claptrap.png,You're streaming this, huh? Well, I guess that's a good way to get new followers, so okay, but you'd better not save the VOD!
 0-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;movie_question:,id:11=thinking.png,Depends. Is that Short Circuit remake out yet?
 0-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;sports_question:=thinking.png,Hmm... Pandora doesn't really have any sports. Unless you count Skag-splatting.
@@ -179,7 +189,7 @@ bad_hand=thinking.png,Normally, duct tape can fix anything, but <i>this</i>?... 
 1-good_hand=wink.png,No miscalculations here!
 1-good_hand=happy.png,Hehe, just how I do!
 1-good_hand=excited.png,Hell yeah! A hand as badass as my badass robot!
-1-good_hand,one-shot-id:2=wink.png,Read 'em and weap, suckas!... Er, well, I guess you can't read them right now, but you <i>will</i>!
+1-good_hand,one-shot-id:2=wink.png,Read 'em and weep, suckas!... Er, well, I guess you can't read them right now, but you <i>will</i>!
 1-good_hand,hasHand:Royal Flush=excited.png,Hell yes! I've got the most awesomely awesome hand you could possible have!
 1-good_hand,hasHand:Royal Flush=turboexcited.png,Hell yeah! Royal flush, suckas!
 1-okay_hand=calm.png,Hmm... There's definitely room for improvement.
@@ -188,7 +198,14 @@ bad_hand=thinking.png,Normally, duct tape can fix anything, but <i>this</i>?... 
 1-okay_hand,one-shot-id:10=thinking.png,Did I remember to turn off the lazer saw...?
 1-okay_hand,one-shot-id:11=thinking.png,I wonder if Tediore makes playing cards... That'd be pretty rad...
 1-okay_hand,one-shot-id:19=wink.png,Heh, this makes my <i>second</i> pair. See what I did there?... No, I guess not, 'cause you can't see my hand...
+1-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_superconfident:=happy.png,Anxious? Nah! If people don't like me, that's their problem, 'cause I <i>know</i> I'm awesome!
+1-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_schoolbully:=claptrap.png,Aw, it's not that great, it was a total accident. Besides, she's totally fine now, and didn't even get in trouble for shoving me or stealing DT's plans!
+1-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_friendrobot:=happy.png,Don't just wish for one, build your own! It's not that hard!
 1-hand,oneShotId:3,count-role;other&character;twilight&stage;4:,marker:TwilightRuleBreaker=sad.png,Man, I thought you were a rule-breaker, Twilight!
+1-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_guns:=happy.png,Of course I like guns! Pretty much every girl on Pandora does!... Okay, I guess Tanis doesn't, but she's weird.
+1-hand,oneShotId:7,count-role;other&character;emi&stage;7:=calm.png,So are you using those old things by choice? 'Cause I could totally hook you up with a more modern pair. They'd be much more comfortable, <i>and</i>you'd be able to kick through concrete!
+1-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_cooluniform:=happy.png,Yeah, I never really liked my school uniform, so I made it my own. I don't even wear that stupid button-up that I'm supposed to.
+1-hand,count-role;other&character;meia&stage;1:,count-role;self&notsaidmarker;Meia_ECHO:,marker:Meia_ECHO=happy.png,Well yeah, that's why eye pieces sucked. ECHOs are handheld devices, and they give you everything you'd need in one little package!
 1-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;movie_question:,id:11=thinking.png,Depends. Is that Short Circuit remake out yet?
 1-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;sports_question:=thinking.png,Hmm... Pandora doesn't really have any sports. Unless you count Skag-splatting.
 1-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;competition_question:,id:10=claptrap.png,Well, uh, I was gonna say "Science fare," but... third place...
@@ -205,7 +222,7 @@ bad_hand=thinking.png,Normally, duct tape can fix anything, but <i>this</i>?... 
 2-good_hand=wink.png,No miscalculations here!
 2-good_hand=happy.png,Hehe, just how I do!
 2-good_hand=excited.png,Hell yeah! A hand as badass as my badass robot!
-2-good_hand,one-shot-id:2=wink.png,Read 'em and weap, suckas!... Er, well, I guess you can't read them right now, but you <i>will</i>!
+2-good_hand,one-shot-id:2=wink.png,Read 'em and weep, suckas!... Er, well, I guess you can't read them right now, but you <i>will</i>!
 2-good_hand,hasHand:Royal Flush=excited.png,Hell yes! I've got the most awesomely awesome hand you could possible have!
 2-good_hand,hasHand:Royal Flush=turboexcited.png,Hell yeah! Royal flush, suckas!
 2-okay_hand=calm.png,Hmm... There's definitely room for improvement.
@@ -214,7 +231,14 @@ bad_hand=thinking.png,Normally, duct tape can fix anything, but <i>this</i>?... 
 2-okay_hand,one-shot-id:10=thinking.png,Did I remember to turn off the lazer saw...?
 2-okay_hand,one-shot-id:11=thinking.png,I wonder if Tediore makes playing cards... That'd be pretty rad...
 2-okay_hand,one-shot-id:19=wink.png,Heh, this makes my <i>second</i> pair. See what I did there?... No, I guess not, 'cause you can't see my hand...
+2-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_superconfident:=happy.png,Anxious? Nah! If people don't like me, that's their problem, 'cause I <i>know</i> I'm awesome!
+2-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_schoolbully:=claptrap.png,Aw, it's not that great, it was a total accident. Besides, she's totally fine now, and didn't even get in trouble for shoving me or stealing DT's plans!
+2-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_friendrobot:=happy.png,Don't just wish for one, build your own! It's not that hard!
 2-hand,oneShotId:3,count-role;other&character;twilight&stage;4:,marker:TwilightRuleBreaker=sad.png,Man, I thought you were a rule-breaker, Twilight!
+2-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_guns:=happy.png,Of course I like guns! Pretty much every girl on Pandora does!... Okay, I guess Tanis doesn't, but she's weird.
+2-hand,oneShotId:7,count-role;other&character;emi&stage;7:=calm.png,So are you using those old things by choice? 'Cause I could totally hook you up with a more modern pair. They'd be much more comfortable, <i>and</i>you'd be able to kick through concrete!
+2-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_cooluniform:=happy.png,Yeah, I never really liked my school uniform, so I made it my own. I don't even wear that stupid button-up that I'm supposed to.
+2-hand,count-role;other&character;meia&stage;1:,count-role;self&notsaidmarker;Meia_ECHO:,marker:Meia_ECHO=happy.png,Well yeah, that's why eye pieces sucked. ECHOs are handheld devices, and they give you everything you'd need in one little package!
 2-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;movie_question:,id:11=thinking.png,Depends. Is that Short Circuit remake out yet?
 2-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;sports_question:=thinking.png,Hmm... Pandora doesn't really have any sports. Unless you count Skag-splatting.
 2-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;competition_question:,id:10=claptrap.png,Well, uh, I was gonna say "Science fare," but... third place...
@@ -231,7 +255,7 @@ bad_hand=thinking.png,Normally, duct tape can fix anything, but <i>this</i>?... 
 3-good_hand=wink.png,No miscalculations here!
 3-good_hand=happy.png,Hehe, just how I do!
 3-good_hand=excited.png,Hell yeah! A hand as badass as my badass robot!
-3-good_hand,one-shot-id:2=wink.png,Read 'em and weap, suckas!... Er, well, I guess you can't read them right now, but you <i>will</i>!
+3-good_hand,one-shot-id:2=wink.png,Read 'em and weep, suckas!... Er, well, I guess you can't read them right now, but you <i>will</i>!
 3-good_hand,hasHand:Royal Flush=excited.png,Hell yes! I've got the most awesomely awesome hand you could possible have!
 3-good_hand,hasHand:Royal Flush=turboexcited.png,Hell yeah! Royal flush, suckas!
 3-okay_hand=calm.png,Hmm... There's definitely room for improvement.
@@ -240,7 +264,15 @@ bad_hand=thinking.png,Normally, duct tape can fix anything, but <i>this</i>?... 
 3-okay_hand,one-shot-id:10=thinking.png,Did I remember to turn off the lazer saw...?
 3-okay_hand,one-shot-id:11=thinking.png,I wonder if Tediore makes playing cards... That'd be pretty rad...
 3-okay_hand,one-shot-id:19=wink.png,Heh, this makes my <i>second</i> pair. See what I did there?... No, I guess not, 'cause you can't see my hand...
+3-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_superconfident:=happy.png,Anxious? Nah! If people don't like me, that's their problem, 'cause I <i>know</i> I'm awesome!
+3-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_schoolbully:=claptrap.png,Aw, it's not that great, it was a total accident. Besides, she's totally fine now, and didn't even get in trouble for shoving me or stealing DT's plans!
+3-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_friendrobot:=happy.png,Don't just wish for one, build your own! It's not that hard!
 3-hand,oneShotId:3,count-role;other&character;twilight&stage;4:,marker:TwilightRuleBreaker=sad.png,Man, I thought you were a rule-breaker, Twilight!
+3-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_guns:=happy.png,Of course I like guns! Pretty much every girl on Pandora does!... Okay, I guess Tanis doesn't, but she's weird.
+3-hand,oneShotId:7,count-role;other&character;emi&stage;7:=calm.png,So are you using those old things by choice? 'Cause I could totally hook you up with a more modern pair. They'd be much more comfortable, <i>and</i>you'd be able to kick through concrete!
+3-hand,oneShotId:4,count-role;other&character;dust:,marker:IntergalacticLimbLaw=calm.png,Well it's basically intergalactic law that you have to leave any robotic limbs you have unclothed, because otherwise how would anyone know you have a badass robot limb?
+3-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_cooluniform:=happy.png,Yeah, I never really liked my school uniform, so I made it my own. I don't even wear that stupid button-up that I'm supposed to.
+3-hand,count-role;other&character;meia&stage;1:,count-role;self&notsaidmarker;Meia_ECHO:,marker:Meia_ECHO=happy.png,Well yeah, that's why eye pieces sucked. ECHOs are handheld devices, and they give you everything you'd need in one little package!
 3-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;movie_question:,id:11=thinking.png,Depends. Is that Short Circuit remake out yet?
 3-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;sports_question:=thinking.png,Hmm... Pandora doesn't really have any sports. Unless you count Skag-splatting.
 3-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;competition_question:,id:10=claptrap.png,Well, uh, I was gonna say "Science fare," but... third place...
@@ -259,7 +291,7 @@ bad_hand=thinking.png,Normally, duct tape can fix anything, but <i>this</i>?... 
 4-good_hand=wink.png,No miscalculations here!
 4-good_hand=happy.png,Hehe, just how I do!
 4-good_hand=excited.png,Hell yeah! A hand as badass as my badass robot!
-4-good_hand,one-shot-id:2=wink.png,Read 'em and weap, suckas!... Er, well, I guess you can't read them right now, but you <i>will</i>!
+4-good_hand,one-shot-id:2=wink.png,Read 'em and weep, suckas!... Er, well, I guess you can't read them right now, but you <i>will</i>!
 4-good_hand,hasHand:Royal Flush=excited.png,Hell yes! I've got the most awesomely awesome hand you could possible have!
 4-good_hand,hasHand:Royal Flush=turboexcited.png,Hell yeah! Royal flush, suckas!
 4-okay_hand=calm.png,Hmm... There's definitely room for improvement.
@@ -268,7 +300,14 @@ bad_hand=thinking.png,Normally, duct tape can fix anything, but <i>this</i>?... 
 4-okay_hand,one-shot-id:10=thinking.png,Did I remember to turn off the lazer saw...?
 4-okay_hand,one-shot-id:11=thinking.png,I wonder if Tediore makes playing cards... That'd be pretty rad...
 4-okay_hand,one-shot-id:19=wink.png,Heh, this makes my <i>second</i> pair. See what I did there?... No, I guess not, 'cause you can't see my hand...
+4-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_superconfident:=happy.png,Anxious? Nah! If people don't like me, that's their problem, 'cause I <i>know</i> I'm awesome!
+4-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_schoolbully:=claptrap.png,Aw, it's not that great, it was a total accident. Besides, she's totally fine now, and didn't even get in trouble for shoving me or stealing DT's plans!
+4-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_friendrobot:=happy.png,Don't just wish for one, build your own! It's not that hard!
 4-hand,oneShotId:3,count-role;other&character;twilight&stage;4:,marker:TwilightRuleBreaker=sad.png,Man, I thought you were a rule-breaker, Twilight!
+4-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_guns:=happy.png,Of course I like guns! Pretty much every girl on Pandora does!... Okay, I guess Tanis doesn't, but she's weird.
+4-hand,oneShotId:7,count-role;other&character;emi&stage;7:=calm.png,So are you using those old things by choice? 'Cause I could totally hook you up with a more modern pair. They'd be much more comfortable, <i>and</i>you'd be able to kick through concrete!
+4-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_cooluniform:=happy.png,Yeah, I never really liked my school uniform, so I made it my own. I don't even wear that stupid button-up that I'm supposed to.
+4-hand,count-role;other&character;meia&stage;1:,count-role;self&notsaidmarker;Meia_ECHO:,marker:Meia_ECHO=happy.png,Well yeah, that's why eye pieces sucked. ECHOs are handheld devices, and they give you everything you'd need in one little package!
 4-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;movie_question:,id:11=thinking.png,Depends. Is that Short Circuit remake out yet?
 4-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;sports_question:=thinking.png,Hmm... Pandora doesn't really have any sports. Unless you count Skag-splatting.
 4-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;competition_question:,id:10=claptrap.png,Well, uh, I was gonna say "Science fare," but... third place...
@@ -291,7 +330,15 @@ bad_hand=thinking.png,Normally, duct tape can fix anything, but <i>this</i>?... 
 5-bad_hand=annoyed.png,Stupid cards, <i>I'm</i> the one who's supposed to be doing the screwing!
 5-bad_hand=sad.png,FML...
 5-bad_hand=sad.png,Damn it, I wanted <i>rad</i> cards, not <i>bad</i> cards!
+5-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_superconfident:=happy.png,Anxious? Nah! If people don't like me, that's their problem, 'cause I <i>know</i> I'm awesome!
+5-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_schoolbully:=claptrap.png,Aw, it's not that great, it was a total accident. Besides, she's totally fine now, and didn't even get in trouble for shoving me or stealing DT's plans!
+5-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_friendrobot:=happy.png,Don't just wish for one, build your own! It's not that hard!
 5-hand,oneShotId:3,count-role;other&character;twilight&stage;4:,marker:TwilightRuleBreaker=sad.png,Man, I thought you were a rule-breaker, Twilight!
+5-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_guns:=happy.png,Of course I like guns! Pretty much every girl on Pandora does!... Okay, I guess Tanis doesn't, but she's weird.
+5-hand,oneShotId:7,count-role;other&character;emi&stage;7:=calm.png,So are you using those old things by choice? 'Cause I could totally hook you up with a more modern pair. They'd be much more comfortable, <i>and</i>you'd be able to kick through concrete!
+5-hand,oneShotId:8,count-role;other&character;pit:=happy.png,What, going braless? Buddy, nip-slips are the least of my worries in my line of work!
+5-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_cooluniform:=happy.png,Yeah, I never really liked my school uniform, so I made it my own. I don't even wear that stupid button-up that I'm supposed to.
+5-hand,count-role;other&character;meia&stage;1:,count-role;self&notsaidmarker;Meia_ECHO:,marker:Meia_ECHO=happy.png,Well yeah, that's why eye pieces sucked. ECHOs are handheld devices, and they give you everything you'd need in one little package!
 5-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;movie_question:,id:11=thinking.png,Depends. Is that Short Circuit remake out yet?
 5-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;sports_question:=thinking.png,Hmm... Pandora doesn't really have any sports. Unless you count Skag-splatting.
 5-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;competition_question:,id:10=claptrap.png,Well, uh, I was gonna say "Science fare," but... third place...
@@ -314,7 +361,14 @@ bad_hand=thinking.png,Normally, duct tape can fix anything, but <i>this</i>?... 
 6-bad_hand=annoyed.png,Stupid cards, <i>I'm</i> the one who's supposed to be doing the screwing!
 6-bad_hand=sad.png,FML...
 6-bad_hand=sad.png,Damn it, I wanted <i>rad</i> cards, not <i>bad</i> cards!
+6-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_superconfident:=happy.png,Anxious? Nah! If people don't like me, that's their problem, 'cause I <i>know</i> I'm awesome!
+6-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_schoolbully:=claptrap.png,Aw, it's not that great, it was a total accident. Besides, she's totally fine now, and didn't even get in trouble for shoving me or stealing DT's plans!
+6-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_friendrobot:=happy.png,Don't just wish for one, build your own! It's not that hard!
 6-hand,oneShotId:3,count-role;other&character;twilight&stage;4:,marker:TwilightRuleBreaker=sad.png,Man, I thought you were a rule-breaker, Twilight!
+6-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_guns:=happy.png,Of course I like guns! Pretty much every girl on Pandora does!... Okay, I guess Tanis doesn't, but she's weird.
+6-hand,oneShotId:7,count-role;other&character;emi&stage;7:=calm.png,So are you using those old things by choice? 'Cause I could totally hook you up with a more modern pair. They'd be much more comfortable, <i>and</i>you'd be able to kick through concrete!
+6-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_cooluniform:=happy.png,Yeah, I never really liked my school uniform, so I made it my own. I don't even wear that stupid button-up that I'm supposed to.
+6-hand,count-role;other&character;meia&stage;1:,count-role;self&notsaidmarker;Meia_ECHO:,marker:Meia_ECHO=happy.png,Well yeah, that's why eye pieces sucked. ECHOs are handheld devices, and they give you everything you'd need in one little package!
 6-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;movie_question:,id:11=thinking.png,Depends. Is that Short Circuit remake out yet?
 6-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;sports_question:=thinking.png,Hmm... Pandora doesn't really have any sports. Unless you count Skag-splatting.
 6-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;competition_question:,id:10=claptrap.png,Well, uh, I was gonna say "Science fare," but... third place...
@@ -343,7 +397,15 @@ bad_hand=thinking.png,Normally, duct tape can fix anything, but <i>this</i>?... 
 -3-bad_hand=annoyed.png,Stupid cards, <i>I'm</i> the one who's supposed to be doing the screwing!
 -3-bad_hand=sad.png,FML...
 -3-bad_hand=sad.png,Damn it, I wanted <i>rad</i> cards, not <i>bad</i> cards!
+-3-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_superconfident:=happy.png,Anxious? Nah! If people don't like me, that's their problem, 'cause I <i>know</i> I'm awesome!
+-3-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_schoolbully:=claptrap.png,Aw, it's not that great, it was a total accident. Besides, she's totally fine now, and didn't even get in trouble for shoving me or stealing DT's plans!
+-3-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_friendrobot:=happy.png,Don't just wish for one, build your own! It's not that hard!
+-3-hand,oneShotId:5,count-role;other&character;dust:=calm.png,I mean, there's other junk in there too, but yeah, it's metalic. Have you never heard of robot limbs?
 -3-hand,oneShotId:3,count-role;other&character;twilight&stage;4:,marker:TwilightRuleBreaker=sad.png,Man, I thought you were a rule-breaker, Twilight!
+-3-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_guns:=happy.png,Of course I like guns! Pretty much every girl on Pandora does!... Okay, I guess Tanis doesn't, but she's weird.
+-3-hand,oneShotId:7,count-role;other&character;emi&stage;7:=calm.png,So are you using those old things by choice? 'Cause I could totally hook you up with a more modern pair. They'd be much more comfortable, <i>and</i>you'd be able to kick through concrete!
+-3-hand,count-role;other&character;tomoko&stage;3-6&sayingmarker;gaige_cooluniform:=happy.png,Yeah, I never really liked my school uniform, so I made it my own. I don't even wear that stupid button-up that I'm supposed to.
+-3-hand,count-role;other&character;meia&stage;1:,count-role;self&notsaidmarker;Meia_ECHO:,marker:Meia_ECHO=happy.png,Well yeah, that's why eye pieces sucked. ECHOs are handheld devices, and they give you everything you'd need in one little package!
 -3-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;movie_question:,id:11=thinking.png,Depends. Is that Short Circuit remake out yet?
 -3-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;sports_question:=thinking.png,Hmm... Pandora doesn't really have any sports. Unless you count Skag-splatting.
 -3-hand,totalRounds:5-,count-role;other&character;rainbow_dash&sayingmarker;competition_question:,id:10=claptrap.png,Well, uh, I was gonna say "Science fare," but... third place...
@@ -362,23 +424,31 @@ bad_hand=thinking.png,Normally, duct tape can fix anything, but <i>this</i>?... 
 must_strip_winning=happy.png,You can't keep a good Technomancer down!
 must_strip_winning=happy.png,Ha! Just a flesh wound!
 must_strip_winning=happy.png,'Tis but a scratch!
-must_strip_winning=happy.png,It take more than this to get <i>me</i> embarrassed!
+must_strip_winning=happy.png,It'll take more than this to get <i>me</i> embarrassed!
 must_strip_winning,one-shot-id:13=happy.png,For the record, I don't "lose" hands, I cut them off with a particle saw when I get a really great idea!
 must_strip_normal=happy.png,You can't keep a good Technomancer down!
 must_strip_normal=happy.png,Ha! Just a flesh wound!
 must_strip_normal=happy.png,'Tis but a scratch!
-must_strip_normal=happy.png,It take more than this to get <i>me</i> embarrassed!
+must_strip_normal=happy.png,It'll take more than this to get <i>me</i> embarrassed!
 must_strip_normal,one-shot-id:14=happy.png,For the record, I don't "lose" hands, I cut them off with a particle saw when I get a really great idea!
 must_strip_losing=happy.png,You can't keep a good Technomancer down!
 must_strip_losing=happy.png,Ha! Just a flesh wound!
 must_strip_losing=happy.png,'Tis but a scratch!
-must_strip_losing=happy.png,It take more than this to get <i>me</i> embarrassed!
+must_strip_losing=happy.png,It'll take more than this to get <i>me</i> embarrassed!
 must_strip_losing,one-shot-id:15=happy.png,For the record, I don't "lose" hands, I cut them off with a particle saw when I get a really great idea!
 
 
 #stage-specific lines that override the stage-generic ones
 
 #losing toolbelt
+0-must_strip,count-role;other&character;dust&stage;0-6&sayingmarker;gaige-blacksmith:=wink.png,Because we both make awesome weapons, right? Or maybe this blacksmith is also a hot redhead? Either way, I'll take that as a compliment!
+0-must_strip,count-role;other&character;pit:=happy.png,Hah!... I don't get it. Is that a thing people say? Gauge something out?
+0-must_strip,count-role;other&character;jessie:=calm.png,I didn't buy it, I <i>made</i> it! It's <i>way</i> better than that stock Hyperion crap.
+0-must_strip,count-role;other&character;nami:=happy.png,Nah, don't worry about it. My arm's not the worst reason someone's had for staring at me.
+0-must_strip,count-role;other&character;tomoko&stage;0-8:=happy.png,Oh, you don't know? It's basically a system of government where there is no government! Having no rules rules!
+0-must_strip,count-role;other&character;yuelia&sayingmarker;gaige_smart:=thinking.png,Really? You think I sound smart? I would've figured with all the contractions and slang that I use that I don't sound as smart as I am.
+0-must_strip,count-role;other&character;meia&stage;0-5:=claptrap.png,Yep, I relate to that. Building robots didn't exactly get me a ton of friends in school...
+0-must_strip,count-role;other&character;yuelia&sayingmarker;gaige_beltSkull:=happy.png,You mean the lunchbox? That's my class mod! It gives me extra gun damage at the cost of accuracy, and also adds points in my Fancy Mathematics and Death From Above skills!
 0-must_strip_winning=happy.png,First blood from me? NBD.
 0-must_strip_winning=thinking.png,Hmm. So many things to take off. What should I start with?
 0-must_strip_winning=thinking.png,Hmm. What can I take off that'll make the best first impression?...
@@ -393,6 +463,16 @@ must_strip_losing,one-shot-id:15=happy.png,For the record, I don't "lose" hands,
 0-must_strip_losing=claptrap.png,Damn, there goes my perfect...
 0-stripping=stripping.png,Alright, nothing too exciting for now. Just my toolbelt.
 0-stripping=stripping.png,I'll just take off my toolbelt. Not like I'm using any of this junk right now anyway.
+0-stripping,count-role;other&character;nami:=stripping.png,Don't worry, the most dangerous thing I have with me right now is my mind... and Deathtrap...
+0-stripping,count-role;other&character;pit:=stripping.png,I mean, yeah, I guess if you want to be a lame-o you could count each tool as it's own turn, but I'm no coward!
+0-stripping,count-role;other&character;meia&stage;0-5:=stripping.png,Oh, you know, the typical story. No one wanted to be friends with the weirdo punk nerd girl. I think becoming a Vault Hunter's changing that, though!
+0-stripping,count-role;other&character;tomoko&stage;0-8:=stripping.png,Well yeah, pretty much. I mean, in a system where the only people you need around are people you <i>want</i> around, popularity's pretty important.
+0-stripping,count-role;other&character;jessie:=stripping.png,Well, I didn't exactly <i>lose</i> it. I cut it off after I got a really cool idea!
+0-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_smart&sayingmarker;gaige_lessSmart:=stripping.png,I didn't really mean that it makes me sound <i>less</i> smart, just <i>not as</i> smart, you know?
+0-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_beltSkull&sayingmarker;gaige_whatLife:=stripping.png,One would say my life is similar to that of a Vault Hunter. One might even say that I <i>am</i> a Vault Hunter.
+0-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_smart&sayingmarker;gaige_smarter:=stripping.png,Well, uh, that depends: how smart do I seem?
+0-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_beltSkull&sayingmarker;gaige_inTheBox:=stripping.png,Yeah, there's a bunch of tech inside. It's, uh, pretty technical.
+0-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_beltSkull&sayingmarker;gaige_lifeBonus:=stripping.png,You mean a Health bonus? Nah, that's a different one.
 
 
 #losing vest
@@ -400,9 +480,31 @@ must_strip_losing,one-shot-id:15=happy.png,For the record, I don't "lose" hands,
 1-stripped=stripped.png,Hey, don't get mad. I'm dropping all the crap dangling from it too - <i>including</i> my shield.
 1-stripped=stripped.png,I've got several important things hanging from that, so that should count for a lot.
 1-stripped=stripped.png,My shield, my hammer, <i>and</i> my class mod hang from that, so that'd better count for a lot.
+1-stripped,count-role;other&character;nami:=happy.png,Deathtrap's my killer robot! It's okay though, I got most of the bugs fixed, so he shouldn't attack you unless I tell him to!
+1-stripped,count-role;other&character;jessie:=happy.png,Oh, sorry, <i>I said I cut it off!</i> This way, I can summon Deathtrap wherever and whenever I want!
+1-stripped,count-role;other&character;tomoko&stage;0-8:=thinking.png,Well that and the ability to blow the faces off of people who pose a threat to you.
+1-stripped,count-role;other&character;pit:=stripped.png,Well, I've got my shield, my hammer, <i>and</i> class mod hanging from that, along with some decorations. So yeah, you should be grateful that I took them off in one go.
+1-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_smarter&sayingmarker;gaige_superSmart:=happy.png,<i>Pilot?</i> Hah, <i>I wish</i>! No one in their right mind would let <i>me</i> fly!
+1-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_lessSmart:=calm.png,I just mean, it's like, I don't sound <i>dumb</i>, just not <i>smart</i>, you see now?
+1-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_inTheBox&sayingmarker;gaige_lunchBox:=happy.png,Nah, you're not thinking outside the box! You can put whatever you want in a lunchbox!
+1-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_lifeBonus&sayingmarker;gaige_more:=happy.png,Oh yeah, I got a bunch! One gives me more assault rifle damage, one gives me a bonus to accuracy and reload speed, and so on. It's good to have options!
+1-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_lifeBonus&sayingmarker;gaige_lifeBonus2:=thinking.png,Uh... Well, it gives me a bonus to gun damage, and shooting people is what I do. Is that what you mean?
+1-stripped,priority:101,count-role;other&character;yuelia&var;yuelia&saidmarker;gaige_smarter&sayingmarker;gaige_dontUnderstand:=wink.png,Well thanks, ~other~, and don't worry, I can explain what you didn't understand later.
+1-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_inTheBox&sayingmarker;gaige_smallBox:=happy.png,You'd be surprised how compact technology has become! I mean, I can fit Deathtrap inside of my arm!
+1-stripped,priority:102,count-role;other&character;yuelia&saidmarker;gaige_whatLife&sayingmarker;gaige_adventures:=excited.png,Oh yeah, totally! Like this one time, I tried to find a new body for this Loader, and he kept trying to kill me, so I turned him into a talking gun!
+1-must_strip,count-role;other&character;yuelia&sayingmarker;gaige_metalArm:=happy.png,Heh, well first, I cut it off with a particle saw, and then I built a robotic one! In hindsight, I should've reversed my order of operations...
+1-must_strip,count-role;other&character;jessie:=thinking.png,Huh, well, I guess Pandora kinda is one big junkyard, but no, I'm a Vault Hunter.
+1-must_strip,count-role;other&character;pit:=happy.png,Nah, not really. I got a cool idea, I cut off my arm, and then I built this replacement! Not much of a story there!
+1-must_strip,count-role;other&character;yuelia&sayingmarker;gaige_bandage:=happy.png,Oh, yeah, just a little workshop accident. Piece of metal flew up and hit my face. No biggie.
 1-stripping=stripping.png,Time for another mediocre pick: my vest.
 1-stripping=stripping.png,Guess I'll take off my vest next. Don't fall asleep on me!
 1-stripping=stripping.png,Yeah yeah, "vests are boring," but I gotta take it off to get to my shirt anyway, so shut up!
+1-stripping,count-role;other&character;jessie:=stripping.png,Yeah, like bank vaults, except way bigger and way more ancient. Some say they contain tons of riches!
+1-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_metalArm&sayingmarker;gaige_armReplace:=stripping.png,Nah, no problems at all! In fact, this is way better, 'cause I can digistruct claws and punch through concrete! It's so badass!
+1-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_bandage&sayingmarker;gaige_metalHow:=stripping.png,Oh, you know, typical metal shop accident. The kind of thing that safety goggles were designed for.
+1-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_metalArm&sayingmarker;gaige_armProblem:=stripping.png,Well, I did accidentally slice halfway through my arm with some sheet metal, but that could've been fixed with some Insta-Health.
+1-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_bandage&sayingmarker;gaige_workplace:=stripping.png,Well, I don't exactly "work" anywhere. At least, not in the sense of having a job. I do metalwork around Sanctuary, though.
+1-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_metalArm&sayingmarker;gaige_armWhy:=stripping.png,Well, I was trying to figure out a good way to quickly summon Deathtrap, and then I got the idea to cut my arm off and store his digistruct data in it so I can summon him anytime!
 
 
 #losing shoes and glove
@@ -410,14 +512,37 @@ must_strip_losing,one-shot-id:15=happy.png,For the record, I don't "lose" hands,
 2-stripped=stripped.png,Now that I think about it, I <i>might</i> have left some washers in the pockets. Eh, oh well! Doesn't matter!
 2-stripped=wink.png,Hope you like shoulders... Er, <i>shoulder</i>, singular.
 2-stripped=stripped.png,I have a bad habit of leaving things in my pockets, so there's probably some extra junk in there too.
+2-stripped,count-role;other&character;jessie:=stripped.png,I mean, some <i>say</i> they contain tons of riches inside, but the last one we opened just had an alien demon thing inside.
+2-stripped,count-role;other&character;nami:=happy.png,Nah, I'm not a pirate. I just like skulls.
+2-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_armReplace&sayingmarker;gaige_breaks:=happy.png,Break? Hah! What am I, an amateur?... I mean techincally I am, but still...
+2-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_workplace&sayingmarker;gaige_blackSmith:=stripped.png,Huh, yeah, I guess you could make that comparison. Although I guess blacksmithes don't fix holes in people's walls.
+2-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_armWhy&sayingmarker;gaige_morbid:=claptrap.png,I could've, but it would've been inelegant, and ugly, and like a million times less badass.
+2-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_metalHow:=stripped.png,I mean yeah, these are the kinds of risks you take in shop. Haven't you ever heard of people losing fingers on saws and stuff? It happens.
+2-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_armWhy&sayingmarker;gaige_deathTrap:=claptrap.png,Oh, Deathtrap is my killer robot! I designed him for a science fair... and got third place...
+2-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_workplace&sayingmarker;gaige_sanctuary:=happy.png,Oh, Sanctuary's this city built on top of an old mining ship. Used to be near Three Horns, but we had a space laser problem not to long ago, so now it's flying near the Highlands.
+2-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_workplace&sayingmarker;gaige_sanctuary:=happy.png,Oh, Sanctuary's this city built on top of an old mining ship. Safest place on Pandora - relatively speaking.
+2-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_armReplace&sayingmarker;gaige_digistruct:=calm.png,You know, Digistruct? Building physical objects from data? You don't know that?
+2-stripped,priority:141,count-role;other&character;yuelia&stage;1-10&saidmarker;gaige_armProblem&sayingmarker;gaige_painful:=happy.png,Nah, not really. If you injure yourself badly enough, the adrenaline just takes care of the pain. Connecting my arm is the part that sucked ass. Nerves and whatnot.
+2-must_strip,count-role;other&character;yuelia&sayingmarker;gaige_wardrobe:=happy.png,Eh, I just put on whatever. I don't overthink it.
+2-must_strip,count-role;other&character;yuelia&sayingmarker;gaige_necklaceBits:=calm.png,Oh, just some bits of metal. Nothing fancy.
 2-stripping=stripping.png,My shoes don't feel like enough... but I don't wanna take off my socks...
 2-stripping=stripping.png,Just shoes... doesn't feel like enough somehow... but I love my socks...
-2-stripping=stripping.png,Shoes on their own seem cheep... but these socks are sexy AF...
+2-stripping=stripping.png,Shoes on their own seem cheap... but these socks are sexy AF...
+2-stripping,count-role;other&character;nami&sayingmarker;gaige_vault:=stripping.png,Well, it depends. The last Vault we opened just had a giant alien monster inside of it, so they could have <i>anything</i> inside. The <i>real</i> money in Vault Hunting is in the side quests!
+2-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_wardrobe&sayingmarker;gaige_moodClothes:=stripping.png,Do people really do that?... I mean, I <i>guess</i> I do, but it's more like picking what I feel like wearing that morning.
+2-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_wardrobe&sayingmarker;gaige_skullClothes:=stripping.png,Uh, both? I do have a lot of shirts with skulls on them, but not <i>all</i> of my shirts have skulls. I just happen to be wearing one of the ones that do today.
+2-stripping,priority:102,count-role;other&character;yuelia&saidmarker;gaige_necklaceBits&sayingmarker;gaige_necklace2:=stripping.png,Nope, no special reasons, I just like it.
 
 
 #losing skirt
 3-stripped=stripped.png,Might as well take off my glove and junk too.
 3-stripped=stripped.png,I'll take off all the crap on my arm too. That feels more fair.
+3-stripped,priority:101,count-role;other&character;nami&saidmarker;gaige_vault:=stripped.png,Just be ready for a lot of people trying to kill you. Like <i>a lot</i>. With guns, and explosives, and saws, and forklift exoskeletons, and forklift <i>robots</i>, and...
+3-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_skullClothes&sayingmarker;gaige_skullMeaning:=stripped.png,Not really. I just think they're really cool.
+3-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_skullClothes&sayingmarker;gaige_moreSkulls:=stripped.png,Well, I wore my skull panties today too, but you're gonna have to get me to lose again if you want to see them.
+3-stripped,priority:102,count-role;other&character;yuelia&saidmarker;gaige_moodClothes&sayingmarker;gaige_thisMorning:=stripped.png,I felt like wearing my skull shirt, duh.
+3-must_strip,count-role;other&character;yuelia&sayingmarker;gaige_goggles:=calm.png,Oh, that's easy, they're for eye protection. Keeps my eyes safe from stray shrapnel, and they're tinted for welding, too!
+3-must_strip,count-role;other&character;yuelia&sayingmarker;gaige_machines:=thinking.png,Thinking about it, I probably got interested in robots after seeing them in movies and reading about them in books as a kid.
 3-must_strip_winning=claptrap.png,Erm... I know I still have accessories left, but looking cool is just as important as staying clothed, so...
 3-must_strip_winning=thinking.png,Hmm. Which is worse, cold legs, or putting my panties on display...? Gimme a sec, I need to think this through.
 3-must_strip_winning=calm.png,So, what do you think will be next? Goggles? Socks? Whatever you're thinking, you're <i>wrong</i>!
@@ -429,6 +554,9 @@ must_strip_losing,one-shot-id:15=happy.png,For the record, I don't "lose" hands,
 3-must_strip_losing=calm.png,So, what do you think will be next? Goggles? Socks? Whatever you're thinking, you're <i>wrong</i>!
 3-stripping=stripping.png,Guess I'll ditch my skirt now.
 3-stripping=stripping.png,Looks like it's panty time.
+3-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_goggles&sayingmarker;gaige_moreProtection:=stripping.png,Maybe? But we have things like shields, and Insta-Health, and New-U Stations, so it's all good. Getting something in your eye still hurts like hell, though.
+3-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_machines:=stripping.png,Oh, you know, the usual stuff: kicking ass, taking names, and generally being badass.
+3-stripping,priority:101,count-role;other&character;yuelia&saidmarker;gaige_goggles&sayingmarker;gaige_explosions:=stripping.png,Uh, well, yes and yes, but that's not what I meant. I meant, like, the crap that sometimes flies off of stuff when cutting it, you know?
 
 
 #losing shirt
@@ -436,6 +564,11 @@ must_strip_losing,one-shot-id:15=happy.png,For the record, I don't "lose" hands,
 4-stripped=stripped.png,What can I say? I like skulls.
 4-stripped=stripped.png,I just really like these socks, okay?
 4-stripped=stripped.png,I'm sure most girls wear shorts under their skirts or whatever, but why do that when it's perfectly legal to shoot pervs in the face on Pandora?
+4-stripped,count-role;other&character;dust:=thinking.png,Well, I <i>did</i> do some sand-sailing and took down the incorrigible Captain Scarlett. I dunno if that really makes me a pirate, though.
+4-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_moreProtection:=happy.png,Aw, but what's adventure without a little danger?
+4-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_explosions&sayingmarker;gaige_saidYes:=stripped.png,I've got my shield for all the other crap, but it doesn't help in the shop... Don't ask me why.
+4-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_explosions&sayingmarker;gaige_badSituations:=stripped.png,Psychos.
+4-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_explosions&sayingmarker;gaige_badSituations:=stripped.png,Vault Hunting.
 4-must_strip_winning=wink.png,Time for some more fanservice!
 4-must_strip_winning=claptrap.png,Damn. I'm getting awful close to failing that bonus objective...
 4-must_strip_winning=wink.png,Looks like the view's about to get even better!
@@ -452,6 +585,7 @@ must_strip_losing,one-shot-id:15=happy.png,For the record, I don't "lose" hands,
 #losing panties
 5-stripped=stripped.png,Yeah, I go braless. NBD.
 5-stripped=stripped.png,Yeah, they're a rockin' pair. I know.
+5-must_strip,count-role;other&character;yuelia&sayingmarker;gaige_cold:=happy.png,Pfft, hardly. I just really like these socks!
 5-must_strip_winning=wink.png,Time for some more fanservice!
 5-must_strip_winning=claptrap.png,Damn. I'm getting awful close to failing that bonus objective...
 5-must_strip_winning=wink.png,Looks like the view's about to get even better!
@@ -463,11 +597,17 @@ must_strip_losing,one-shot-id:15=happy.png,For the record, I don't "lose" hands,
 5-must_strip_losing=wink.png,Looks like the view's about to get even better!
 5-stripping=stripping.png,I think I'll keep my socks on <i>a bit</i> longer. Which means...
 5-stripping=stripping.png,Welp, I've already come this far, might as well go all the way...
+5-stripping,count-role;other&character;yuelia&sayingmarker;gaige_comfySocks:=stripping.png,Oh yeah, they're hella comfortable. I also just really like the stripes.
+5-stripping,count-role;other&character;yuelia&sayingmarker;gaige_sockBonus:=stripping.png,Yeah, they give me +10 to my Sexiness stat.
+5-stripping,count-role;other&character;pit:=stripping.png,You know it, wingman!
 
 
 #losing socks
 6-stripped=stripped.png,Sorry, I didn't have time to shave before coming here.
 6-stripped=stripped.png,Hope you like little red bushes! I didn't have time to shave...
+6-stripped,count-role;other&character;pit:=happy.png,Yeah. See? I know what I'm doin'!
+6-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_comfySocks&sayingmarker;gaige_niceStripes:=happy.png,Thanks, I think so too!
+6-stripped,priority:101,count-role;other&character;yuelia&saidmarker;gaige_comfySocks&sayingmarker;gaige_socksMake:=happy.png,You should totally ask! I bet you'd rock them!
 6-stripped,count-crotch_visible&shaved:2-4=stripped.png,I'm starting to feel a little self-concious here...
 6-must_strip_winning=thinking.png,Guess it can't get worse from here.
 6-must_strip_winning=happy.png,Hah! Do I even <i>need</i> to take anything else off?... <i>The answer is yes because I don't want to lose...</i>
@@ -488,6 +628,7 @@ must_strip_losing,one-shot-id:15=happy.png,For the record, I don't "lose" hands,
 -3-stripped=stripped.png,There! Now I'm as nude as I can get. Well, except for the bandage, I guess, but let's just keep that on.
 -3-stripped=stripped.png,Don't worry, I'm not going to try to get a second wind off of my bandage. I'm not some kind of psycho obsessed with winning.
 -3-stripped=stripped.png,I work naked sometimes, you know. Can't get your clothes covered in hydraulic fluid if you're not wearing any!
+-3-stripped,count-role;other&character;pit:=stripped.png,What, is this <i>too</i> naked for you, Pit? Don't like my hair being down or something?
 
 
 
@@ -520,6 +661,9 @@ tie=shocked.png,A tie? What're the odds?... Seriously, what're the odds? I can't
 0-male_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,Ha! In your face! Your crappy hand was crappier than mine!
 0-male_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,<i>Damn</i> that was close!
 0-female_must_strip,count-role;target&character;hatsume&stage;0:=happy.png,A fellow inventor, huh? Didn't expect to meet one here!
+0-female_must_strip,count-role;target&character;emi&stage;7:=thinking.png,C'mon, dude, you're totally out!... Unless...
+0-female_must_strip,count-role;target&character;emi&stage;0:=happy.png,Man, what're the odds that we'd both show up here wearing striped thigh-highs and sneakers?
+0-female_must_strip,count-role;target&character;rin&stage;0:=excited.png,Oh dude, you've <i>gotta</i> let me build you a sweet pair of robot arms!  You'll be turbo high-fiving and punching through concrete in no time!
 0-female_must_strip,count-role;target&character;yuelia&stage;0:=calm.png,Oh, the butterfly's playing? I thought it was just here to watch.
 0-female_must_strip,count-role;target&character;meia&stage;0:=calm.png,You're a space pirate, huh? But you don't have a hook or a pegleg. Do you at least have a sweet hat?
 0-female_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,Ha! In your face! Your crappy hand was crappier than mine!
@@ -530,6 +674,9 @@ tie=shocked.png,A tie? What're the odds?... Seriously, what're the odds? I can't
 1-male_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,Ha! In your face! Your crappy hand was crappier than mine!
 1-male_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,<i>Damn</i> that was close!
 1-female_must_strip,count-role;target&character;hatsume&stage;0:=happy.png,A fellow inventor, huh? Didn't expect to meet one here!
+1-female_must_strip,count-role;target&character;emi&stage;7:=thinking.png,C'mon, dude, you're totally out!... Unless...
+1-female_must_strip,count-role;target&character;emi&stage;0:=happy.png,Man, what're the odds that we'd both show up here wearing striped thigh-highs and sneakers?
+1-female_must_strip,count-role;target&character;rin&stage;0:=excited.png,Oh dude, you've <i>gotta</i> let me build you a sweet pair of robot arms!  You'll be turbo high-fiving and punching through concrete in no time!
 1-female_must_strip,count-role;target&character;yuelia&stage;0:=calm.png,Oh, the butterfly's playing? I thought it was just here to watch.
 1-female_must_strip,count-role;target&character;meia&stage;0:=calm.png,You're a space pirate, huh? But you don't have a hook or a pegleg. Do you at least have a sweet hat?
 1-female_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,Ha! In your face! Your crappy hand was crappier than mine!
@@ -540,6 +687,9 @@ tie=shocked.png,A tie? What're the odds?... Seriously, what're the odds? I can't
 2-male_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,Ha! In your face! Your crappy hand was crappier than mine!
 2-male_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,<i>Damn</i> that was close!
 2-female_must_strip,count-role;target&character;hatsume&stage;0:=happy.png,A fellow inventor, huh? Didn't expect to meet one here!
+2-female_must_strip,count-role;target&character;emi&stage;7:=thinking.png,C'mon, dude, you're totally out!... Unless...
+2-female_must_strip,count-role;target&character;emi&stage;0:=happy.png,Man, what're the odds that we'd both show up here wearing striped thigh-highs and sneakers?
+2-female_must_strip,count-role;target&character;rin&stage;0:=excited.png,Oh dude, you've <i>gotta</i> let me build you a sweet pair of robot arms!  You'll be turbo high-fiving and punching through concrete in no time!
 2-female_must_strip,count-role;target&character;yuelia&stage;0:=calm.png,Oh, the butterfly's playing? I thought it was just here to watch.
 2-female_must_strip,count-role;target&character;meia&stage;0:=calm.png,You're a space pirate, huh? But you don't have a hook or a pegleg. Do you at least have a sweet hat?
 2-female_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,Ha! In your face! Your crappy hand was crappier than mine!
@@ -550,6 +700,9 @@ tie=shocked.png,A tie? What're the odds?... Seriously, what're the odds? I can't
 3-male_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,Ha! In your face! Your crappy hand was crappier than mine!
 3-male_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,<i>Damn</i> that was close!
 3-female_must_strip,count-role;target&character;hatsume&stage;0:=happy.png,A fellow inventor, huh? Didn't expect to meet one here!
+3-female_must_strip,count-role;target&character;emi&stage;7:=thinking.png,C'mon, dude, you're totally out!... Unless...
+3-female_must_strip,count-role;target&character;emi&stage;0:=happy.png,Man, what're the odds that we'd both show up here wearing striped thigh-highs and sneakers?
+3-female_must_strip,count-role;target&character;rin&stage;0:=excited.png,Oh dude, you've <i>gotta</i> let me build you a sweet pair of robot arms!  You'll be turbo high-fiving and punching through concrete in no time!
 3-female_must_strip,count-role;target&character;yuelia&stage;0:=calm.png,Oh, the butterfly's playing? I thought it was just here to watch.
 3-female_must_strip,count-role;target&character;meia&stage;0:=calm.png,You're a space pirate, huh? But you don't have a hook or a pegleg. Do you at least have a sweet hat?
 3-female_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,Ha! In your face! Your crappy hand was crappier than mine!
@@ -560,6 +713,9 @@ tie=shocked.png,A tie? What're the odds?... Seriously, what're the odds? I can't
 4-male_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,Ha! In your face! Your crappy hand was crappier than mine!
 4-male_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,<i>Damn</i> that was close!
 4-female_must_strip,count-role;target&character;hatsume&stage;0:=happy.png,A fellow inventor, huh? Didn't expect to meet one here!
+4-female_must_strip,count-role;target&character;emi&stage;7:=thinking.png,C'mon, dude, you're totally out!... Unless...
+4-female_must_strip,count-role;target&character;emi&stage;0:=happy.png,Man, what're the odds that we'd both show up here wearing striped thigh-highs and sneakers?
+4-female_must_strip,count-role;target&character;rin&stage;0:=excited.png,Oh dude, you've <i>gotta</i> let me build you a sweet pair of robot arms!  You'll be turbo high-fiving and punching through concrete in no time!
 4-female_must_strip,count-role;target&character;yuelia&stage;0:=calm.png,Oh, the butterfly's playing? I thought it was just here to watch.
 4-female_must_strip,count-role;target&character;meia&stage;0:=calm.png,You're a space pirate, huh? But you don't have a hook or a pegleg. Do you at least have a sweet hat?
 4-female_must_strip,count-role;target&hashand;High Card:,count-role;self&hashand;High Card:=excited.png,Ha! In your face! Your crappy hand was crappier than mine!
@@ -586,6 +742,9 @@ tie=shocked.png,A tie? What're the odds?... Seriously, what're the odds? I can't
 5-female_must_strip=calm.png,Make it good, ~name~! Don't forget, I brought a killer robot with me!
 5-female_must_strip=happy.png,Stripping time!
 5-female_must_strip,count-role;target&character;hatsume&stage;0:=happy.png,A fellow inventor, huh? Didn't expect to meet one here!
+5-female_must_strip,count-role;target&character;emi&stage;7:=thinking.png,C'mon, dude, you're totally out!... Unless...
+5-female_must_strip,count-role;target&character;emi&stage;0:=happy.png,Man, what're the odds that we'd both show up here wearing striped thigh-highs and sneakers?
+5-female_must_strip,count-role;target&character;rin&stage;0:=excited.png,Oh dude, you've <i>gotta</i> let me build you a sweet pair of robot arms!  You'll be turbo high-fiving and punching through concrete in no time!
 5-female_must_strip,count-role;target&character;yuelia&stage;0:=calm.png,Oh, the butterfly's playing? I thought it was just here to watch.
 5-female_must_strip,count-role;target&character;meia&stage;0:=calm.png,You're a space pirate, huh? But you don't have a hook or a pegleg. Do you at least have a sweet hat?
 5-female_must_strip,oppHand:High Card,hasHand:High Card=shocked.png,Holy hell that was close!
@@ -611,6 +770,9 @@ tie=shocked.png,A tie? What're the odds?... Seriously, what're the odds? I can't
 6-female_must_strip=calm.png,Make it good, ~name~! Don't forget, I brought a killer robot with me!
 6-female_must_strip=happy.png,Stripping time!
 6-female_must_strip,count-role;target&character;hatsume&stage;0:=happy.png,A fellow inventor, huh? Didn't expect to meet one here!
+6-female_must_strip,count-role;target&character;emi&stage;7:=thinking.png,C'mon, dude, you're totally out!... Unless...
+6-female_must_strip,count-role;target&character;emi&stage;0:=happy.png,Man, what're the odds that we'd both show up here wearing striped thigh-highs and sneakers?
+6-female_must_strip,count-role;target&character;rin&stage;0:=excited.png,Oh dude, you've <i>gotta</i> let me build you a sweet pair of robot arms!  You'll be turbo high-fiving and punching through concrete in no time!
 6-female_must_strip,count-role;target&character;yuelia&stage;0:=calm.png,Oh, the butterfly's playing? I thought it was just here to watch.
 6-female_must_strip,count-role;target&character;meia&stage;0:=calm.png,You're a space pirate, huh? But you don't have a hook or a pegleg. Do you at least have a sweet hat?
 6-female_must_strip,oppHand:High Card,hasHand:High Card=shocked.png,Holy hell that was close!
@@ -636,6 +798,9 @@ tie=shocked.png,A tie? What're the odds?... Seriously, what're the odds? I can't
 -3-female_must_strip=calm.png,Make it good, ~name~! Don't forget, I brought a killer robot with me!
 -3-female_must_strip=happy.png,Stripping time!
 -3-female_must_strip,count-role;target&character;hatsume&stage;0:=happy.png,A fellow inventor, huh? Didn't expect to meet one here!
+-3-female_must_strip,count-role;target&character;emi&stage;7:=thinking.png,C'mon, dude, you're totally out!... Unless...
+-3-female_must_strip,count-role;target&character;emi&stage;0:=happy.png,Man, what're the odds that we'd both show up here wearing striped thigh-highs and sneakers?
+-3-female_must_strip,count-role;target&character;rin&stage;0:=excited.png,Oh dude, you've <i>gotta</i> let me build you a sweet pair of robot arms!  You'll be turbo high-fiving and punching through concrete in no time!
 -3-female_must_strip,count-role;target&character;yuelia&stage;0:=calm.png,Oh, the butterfly's playing? I thought it was just here to watch.
 -3-female_must_strip,count-role;target&character;meia&stage;0:=calm.png,You're a space pirate, huh? But you don't have a hook or a pegleg. Do you at least have a sweet hat?
 -3-female_must_strip,oppHand:High Card,hasHand:High Card=shocked.png,Holy hell that was close!
@@ -660,6 +825,9 @@ tie=shocked.png,A tie? What're the odds?... Seriously, what're the odds? I can't
 -2-female_must_strip=calm.png,Make it good, ~name~! Don't forget, I brought a killer robot with me!
 -2-female_must_strip=happy.png,Stripping time!
 -2-female_must_strip,count-role;target&character;hatsume&stage;0:=happy.png,A fellow inventor, huh? Didn't expect to meet one here!
+-2-female_must_strip,count-role;target&character;emi&stage;7:=thinking.png,C'mon, dude, you're totally out!... Unless...
+-2-female_must_strip,count-role;target&character;emi&stage;0:=happy.png,Man, what're the odds that we'd both show up here wearing striped thigh-highs and sneakers?
+-2-female_must_strip,count-role;target&character;rin&stage;0:=excited.png,Oh dude, you've <i>gotta</i> let me build you a sweet pair of robot arms!  You'll be turbo high-fiving and punching through concrete in no time!
 -2-female_must_strip,count-role;target&character;yuelia&stage;0:=calm.png,Oh, the butterfly's playing? I thought it was just here to watch.
 -2-female_must_strip,count-role;target&character;meia&stage;0:=calm.png,You're a space pirate, huh? But you don't have a hook or a pegleg. Do you at least have a sweet hat?
 
@@ -683,6 +851,9 @@ tie=shocked.png,A tie? What're the odds?... Seriously, what're the odds? I can't
 -1-female_must_strip=calm.png,Make it good, ~name~! Don't forget, I brought a killer robot with me!
 -1-female_must_strip=happy.png,Stripping time!
 -1-female_must_strip,count-role;target&character;hatsume&stage;0:=happy.png,A fellow inventor, huh? Didn't expect to meet one here!
+-1-female_must_strip,count-role;target&character;emi&stage;7:=thinking.png,C'mon, dude, you're totally out!... Unless...
+-1-female_must_strip,count-role;target&character;emi&stage;0:=happy.png,Man, what're the odds that we'd both show up here wearing striped thigh-highs and sneakers?
+-1-female_must_strip,count-role;target&character;rin&stage;0:=excited.png,Oh dude, you've <i>gotta</i> let me build you a sweet pair of robot arms!  You'll be turbo high-fiving and punching through concrete in no time!
 -1-female_must_strip,count-role;target&character;yuelia&stage;0:=calm.png,Oh, the butterfly's playing? I thought it was just here to watch.
 -1-female_must_strip,count-role;target&character;meia&stage;0:=calm.png,You're a space pirate, huh? But you don't have a hook or a pegleg. Do you at least have a sweet hat?
 
@@ -695,18 +866,18 @@ tie=shocked.png,A tie? What're the odds?... Seriously, what're the odds? I can't
 #Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
 
 #stage-generic lines that will be used for every individual stage that doesn't have a line written
-male_removing_accessory=claptrap.png,Uh, yep... ~clothing.ifPlural(Those... sure are things|That... sure is a thing)~ you can take off...
-male_removing_accessory=claptrap.png,~Clothing~, huh?... That's all?... Cool...
-male_removing_accessory=claptrap.png,Yeah... Real exciting, there, chief...
-male_removing_accessory=sad.png,Your choice is as unexciting as it is perfectly legal.
+male_removing_accessory=sad.png,Are you freakin' kidding?
+male_removing_accessory=annoyed.png,Stalling? Really?
+male_removing_accessory=annoyed.png,You lookin' to get capped? 'Cause that's a great way to get capped.
+male_removing_accessory=sad.png,Aw, lame!
 male_removed_accessory=calm.png,Whatev, let's just move on!
 male_removed_accessory=calm.png,Done yet?
 male_removed_accessory=claptrap.png,Guess I can't complain. Even if I <i>am</i> getting a little bored.
 male_removed_accessory=sad.png,Aw... I know I shouldn't complain, but geez, ~clothing.ifPlural(those're|that's)~ like, the furthest from exciting you can get!
-female_removing_accessory=claptrap.png,Uh, yep... ~clothing.ifPlural(Those... sure are things|That... sure is a thing)~ you can take off...
-female_removing_accessory=claptrap.png,~Clothing~, huh?... That's all?... Cool...
-female_removing_accessory=claptrap.png,Yeah... Real exciting, there, chief...
-female_removing_accessory=sad.png,Your choice is as unexciting as it is perfectly legal.
+female_removing_accessory=sad.png,Are you freakin' kidding?
+female_removing_accessory=annoyed.png,Stalling? Really?
+female_removing_accessory=annoyed.png,You lookin' to get capped? 'Cause that's a great way to get capped.
+female_removing_accessory=sad.png,Aw, lame!
 female_removed_accessory=calm.png,Whatev, let's just move on!
 female_removed_accessory=calm.png,Done yet?
 female_removed_accessory=claptrap.png,Guess I can't complain. Even if I <i>am</i> getting a little bored.
@@ -716,50 +887,117 @@ female_removed_accessory=sad.png,Aw... I know I shouldn't complain, but geez, ~c
 #stage-specific lines that override the stage-generic ones
 
 #fully clothed
+0-male_removing_accessory=sad.png,I really can't complain, but I'm gonna anyway: your choice <i>sucks</i>!
+0-male_removing_accessory=claptrap.png,Uh, yep... ~clothing.ifPlural(Those... sure are things|That... sure is a thing)~ you can take off...
+0-male_removing_accessory=claptrap.png,~Clothing~, huh?... That's all?... Cool...
+0-male_removing_accessory=claptrap.png,Yeah... Real exciting, there, chief...
+0-male_removing_accessory=sad.png,Your choice is as unexciting as it is perfectly legal.
+0-female_removing_accessory=sad.png,I really can't complain, but I'm gonna anyway: your choice <i>sucks</i>!
+0-female_removing_accessory=claptrap.png,Uh, yep... ~clothing.ifPlural(Those... sure are things|That... sure is a thing)~ you can take off...
+0-female_removing_accessory=claptrap.png,~Clothing~, huh?... That's all?... Cool...
+0-female_removing_accessory=claptrap.png,Yeah... Real exciting, there, chief...
+0-female_removing_accessory=sad.png,Your choice is as unexciting as it is perfectly legal.
 0-female_removing_accessory,count-role;target&character;meia&stage;0:=happy.png,Also, on a different note, that eyepiece is super outdated. You know we have ECHOs now, right? I heard they're even working on an ECHO-2! So stoked for it!
 0-female_removing_accessory,count-role;target&character;twilight&stage;3:=excited.png,Aw yeah, there we go! Better late than never!
+0-female_removing_accessory,count-role;target&character;twilight&stage;5:=thinking.png,I don't get it. You were so eager to take your important stuff off, but you're kept your shirt on this whole time. It's not like you would've lost the game if you took it off, so why wait?
 0-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:14=happy.png,So what, you got on a tiny little pair of shoes or something?
+0-female_removing_accessory,count-role;target&character;twilight&stage;4:=claptrap.png,You just <i>had</i> to remember your accessories, huh?...
 0-female_removed_accessory,count-role;target&character;yuelia&stage;1&sayingmarker;real_name:=shocked.png,Oh my god, you're a person! How the hell did you do that?!
+0-female_removed_accessory,count-role;target&character;meia&stage;1:=thinking.png,Oh, sorry, I thought ECHOs were, like, an intergalactic thing. An ECHO is a comunication device, GPS, notebook, storage device, uh... what am I forgetting?...
 0-female_removed_accessory,count-role;target&character;twilight&stage;4:=shocked.png,Wha-? Aw man! You blindsided me!
+0-female_removed_accessory,count-role;target&character;twilight&stage;6:=happy.png,You could've even kept your leg warmers longer. Win-win, dude! Total missed opportunity!
+0-female_removed_accessory,count-role;target&character;twilight&stage;5&sayingmarker;twilight_not_human:=thinking.png,You don't like your feet, huh?... I could probably replace them with Hunter bot legs, if you like. Or we could go a step further and get rid of your legs too and give you a hover spine.
 
 
 #lost toolbelt
+1-male_removing_accessory=sad.png,I really can't complain, but I'm gonna anyway: your choice <i>sucks</i>!
+1-male_removing_accessory=claptrap.png,Uh, yep... ~clothing.ifPlural(Those... sure are things|That... sure is a thing)~ you can take off...
+1-male_removing_accessory=claptrap.png,~Clothing~, huh?... That's all?... Cool...
+1-male_removing_accessory=claptrap.png,Yeah... Real exciting, there, chief...
+1-male_removing_accessory=sad.png,Your choice is as unexciting as it is perfectly legal.
+1-female_removing_accessory=sad.png,I really can't complain, but I'm gonna anyway: your choice <i>sucks</i>!
+1-female_removing_accessory=claptrap.png,Uh, yep... ~clothing.ifPlural(Those... sure are things|That... sure is a thing)~ you can take off...
+1-female_removing_accessory=claptrap.png,~Clothing~, huh?... That's all?... Cool...
+1-female_removing_accessory=claptrap.png,Yeah... Real exciting, there, chief...
+1-female_removing_accessory=sad.png,Your choice is as unexciting as it is perfectly legal.
 1-female_removing_accessory,count-role;target&character;meia&stage;0:=happy.png,Also, on a different note, that eyepiece is super outdated. You know we have ECHOs now, right? I heard they're even working on an ECHO-2! So stoked for it!
 1-female_removing_accessory,count-role;target&character;twilight&stage;3:=excited.png,Aw yeah, there we go! Better late than never!
+1-female_removing_accessory,count-role;target&character;twilight&stage;5:=thinking.png,I don't get it. You were so eager to take your important stuff off, but you're kept your shirt on this whole time. It's not like you would've lost the game if you took it off, so why wait?
 1-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:14=happy.png,So what, you got on a tiny little pair of shoes or something?
+1-female_removing_accessory,count-role;target&character;twilight&stage;4:=claptrap.png,You just <i>had</i> to remember your accessories, huh?...
 1-female_removed_accessory,count-role;target&character;yuelia&stage;1&sayingmarker;real_name:=shocked.png,Oh my god, you're a person! How the hell did you do that?!
+1-female_removed_accessory,count-role;target&character;meia&stage;1:=thinking.png,Oh, sorry, I thought ECHOs were, like, an intergalactic thing. An ECHO is a comunication device, GPS, notebook, storage device, uh... what am I forgetting?...
 1-female_removed_accessory,count-role;target&character;twilight&stage;4:=shocked.png,Wha-? Aw man! You blindsided me!
+1-female_removed_accessory,count-role;target&character;twilight&stage;6:=happy.png,You could've even kept your leg warmers longer. Win-win, dude! Total missed opportunity!
+1-female_removed_accessory,count-role;target&character;twilight&stage;5&sayingmarker;twilight_not_human:=thinking.png,You don't like your feet, huh?... I could probably replace them with Hunter bot legs, if you like. Or we could go a step further and get rid of your legs too and give you a hover spine.
 
 
 #lost vest
+2-male_removing_accessory=sad.png,I really can't complain, but I'm gonna anyway: your choice <i>sucks</i>!
+2-male_removing_accessory=claptrap.png,Uh, yep... ~clothing.ifPlural(Those... sure are things|That... sure is a thing)~ you can take off...
+2-male_removing_accessory=claptrap.png,~Clothing~, huh?... That's all?... Cool...
+2-male_removing_accessory=claptrap.png,Yeah... Real exciting, there, chief...
+2-male_removing_accessory=sad.png,Your choice is as unexciting as it is perfectly legal.
+2-female_removing_accessory=sad.png,I really can't complain, but I'm gonna anyway: your choice <i>sucks</i>!
+2-female_removing_accessory=claptrap.png,Uh, yep... ~clothing.ifPlural(Those... sure are things|That... sure is a thing)~ you can take off...
+2-female_removing_accessory=claptrap.png,~Clothing~, huh?... That's all?... Cool...
+2-female_removing_accessory=claptrap.png,Yeah... Real exciting, there, chief...
+2-female_removing_accessory=sad.png,Your choice is as unexciting as it is perfectly legal.
 2-female_removing_accessory,count-role;target&character;meia&stage;0:=happy.png,Also, on a different note, that eyepiece is super outdated. You know we have ECHOs now, right? I heard they're even working on an ECHO-2! So stoked for it!
 2-female_removing_accessory,count-role;target&character;twilight&stage;3:=excited.png,Aw yeah, there we go! Better late than never!
+2-female_removing_accessory,count-role;target&character;twilight&stage;5:=thinking.png,I don't get it. You were so eager to take your important stuff off, but you're kept your shirt on this whole time. It's not like you would've lost the game if you took it off, so why wait?
 2-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:14=happy.png,So what, you got on a tiny little pair of shoes or something?
+2-female_removing_accessory,count-role;target&character;twilight&stage;4:=claptrap.png,You just <i>had</i> to remember your accessories, huh?...
 2-female_removed_accessory,count-role;target&character;yuelia&stage;1&sayingmarker;real_name:=shocked.png,Oh my god, you're a person! How the hell did you do that?!
+2-female_removed_accessory,count-role;target&character;meia&stage;1:=thinking.png,Oh, sorry, I thought ECHOs were, like, an intergalactic thing. An ECHO is a comunication device, GPS, notebook, storage device, uh... what am I forgetting?...
 2-female_removed_accessory,count-role;target&character;twilight&stage;4:=shocked.png,Wha-? Aw man! You blindsided me!
+2-female_removed_accessory,count-role;target&character;twilight&stage;6:=happy.png,You could've even kept your leg warmers longer. Win-win, dude! Total missed opportunity!
+2-female_removed_accessory,count-role;target&character;twilight&stage;5&sayingmarker;twilight_not_human:=thinking.png,You don't like your feet, huh?... I could probably replace them with Hunter bot legs, if you like. Or we could go a step further and get rid of your legs too and give you a hover spine.
 
 
 #lost shoes and glove
+3-male_removing_accessory=claptrap.png,Uh, yep... ~clothing.ifPlural(Those... sure are things|That... sure is a thing)~ you can take off...
+3-male_removing_accessory=claptrap.png,~Clothing~, huh?... That's all?... Cool...
+3-male_removing_accessory=claptrap.png,Yeah... Real exciting, there, chief...
+3-male_removing_accessory=sad.png,Your choice is as unexciting as it is perfectly legal.
+3-female_removing_accessory=claptrap.png,Uh, yep... ~clothing.ifPlural(Those... sure are things|That... sure is a thing)~ you can take off...
+3-female_removing_accessory=claptrap.png,~Clothing~, huh?... That's all?... Cool...
+3-female_removing_accessory=claptrap.png,Yeah... Real exciting, there, chief...
+3-female_removing_accessory=sad.png,Your choice is as unexciting as it is perfectly legal.
 3-female_removing_accessory,count-role;target&character;meia&stage;0:=happy.png,Also, on a different note, that eyepiece is super outdated. You know we have ECHOs now, right? I heard they're even working on an ECHO-2! So stoked for it!
 3-female_removing_accessory,count-role;target&character;twilight&stage;3:=excited.png,Aw yeah, there we go! Better late than never!
+3-female_removing_accessory,count-role;target&character;twilight&stage;5:=thinking.png,I don't get it. You were so eager to take your important stuff off, but you're kept your shirt on this whole time. It's not like you would've lost the game if you took it off, so why wait?
 3-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:14=happy.png,So what, you got on a tiny little pair of shoes or something?
+3-female_removing_accessory,count-role;target&character;twilight&stage;4:=claptrap.png,You just <i>had</i> to remember your accessories, huh?...
 3-female_removed_accessory,count-role;target&character;yuelia&stage;1&sayingmarker;real_name:=shocked.png,Oh my god, you're a person! How the hell did you do that?!
+3-female_removed_accessory,count-role;target&character;meia&stage;1:=thinking.png,Oh, sorry, I thought ECHOs were, like, an intergalactic thing. An ECHO is a comunication device, GPS, notebook, storage device, uh... what am I forgetting?...
 3-female_removed_accessory,count-role;target&character;twilight&stage;4:=shocked.png,Wha-? Aw man! You blindsided me!
+3-female_removed_accessory,count-role;target&character;twilight&stage;6:=happy.png,You could've even kept your leg warmers longer. Win-win, dude! Total missed opportunity!
+3-female_removed_accessory,count-role;target&character;twilight&stage;5&sayingmarker;twilight_not_human:=thinking.png,You don't like your feet, huh?... I could probably replace them with Hunter bot legs, if you like. Or we could go a step further and get rid of your legs too and give you a hover spine.
 
 
 #lost skirt
+4-male_removing_accessory=claptrap.png,Uh, yep... ~clothing.ifPlural(Those... sure are things|That... sure is a thing)~ you can take off...
+4-male_removing_accessory=claptrap.png,~Clothing~, huh?... That's all?... Cool...
+4-male_removing_accessory=claptrap.png,Yeah... Real exciting, there, chief...
+4-male_removing_accessory=sad.png,Your choice is as unexciting as it is perfectly legal.
+4-female_removing_accessory=claptrap.png,Uh, yep... ~clothing.ifPlural(Those... sure are things|That... sure is a thing)~ you can take off...
+4-female_removing_accessory=claptrap.png,~Clothing~, huh?... That's all?... Cool...
+4-female_removing_accessory=claptrap.png,Yeah... Real exciting, there, chief...
+4-female_removing_accessory=sad.png,Your choice is as unexciting as it is perfectly legal.
 4-female_removing_accessory,count-role;target&character;meia&stage;0:=happy.png,Also, on a different note, that eyepiece is super outdated. You know we have ECHOs now, right? I heard they're even working on an ECHO-2! So stoked for it!
 4-female_removing_accessory,count-role;target&character;twilight&stage;3:=excited.png,Aw yeah, there we go! Better late than never!
+4-female_removing_accessory,count-role;target&character;twilight&stage;5:=thinking.png,I don't get it. You were so eager to take your important stuff off, but you're kept your shirt on this whole time. It's not like you would've lost the game if you took it off, so why wait?
 4-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:14=happy.png,So what, you got on a tiny little pair of shoes or something?
+4-female_removing_accessory,count-role;target&character;twilight&stage;4:=claptrap.png,You just <i>had</i> to remember your accessories, huh?...
 4-female_removed_accessory,count-role;target&character;yuelia&stage;1&sayingmarker;real_name:=shocked.png,Oh my god, you're a person! How the hell did you do that?!
+4-female_removed_accessory,count-role;target&character;meia&stage;1:=thinking.png,Oh, sorry, I thought ECHOs were, like, an intergalactic thing. An ECHO is a comunication device, GPS, notebook, storage device, uh... what am I forgetting?...
 4-female_removed_accessory,count-role;target&character;twilight&stage;4:=shocked.png,Wha-? Aw man! You blindsided me!
+4-female_removed_accessory,count-role;target&character;twilight&stage;6:=happy.png,You could've even kept your leg warmers longer. Win-win, dude! Total missed opportunity!
+4-female_removed_accessory,count-role;target&character;twilight&stage;5&sayingmarker;twilight_not_human:=thinking.png,You don't like your feet, huh?... I could probably replace them with Hunter bot legs, if you like. Or we could go a step further and get rid of your legs too and give you a hover spine.
 
 
 #lost shirt
-5-male_removing_accessory=sad.png,Are you freakin' kidding?
-5-male_removing_accessory=annoyed.png,Stalling? Really?
-5-male_removing_accessory=annoyed.png,You lookin' to get capped? 'Cause that's a great way to get capped.
-5-male_removing_accessory=sad.png,Aw, lame!
 5-male_removed_accessory=claptrap.png,This's about as exciting as Claptrap's birthday party... Well, at least <i>that</i> had pizza...
 5-male_removed_accessory=sad.png,You could've at least put some razzle-dazzle in it, you know...
 5-male_removed_accessory=sad.png,What a waste of a turn.
@@ -767,13 +1005,11 @@ female_removed_accessory=sad.png,Aw... I know I shouldn't complain, but geez, ~c
 5-male_removed_accessory=annoyed.png,~clothing.ifPlural(Those'd|That'd)~ better be special edition ~clothing~.
 5-male_removed_accessory=sad.png,Your move is perfectly legal, but that's exactly why it's boring! C'mon! Break some rules! Throw us a curve ball!
 5-male_removed_accessory=annoyed.png,Pro tip: try not to piss off me or my robot.
-5-female_removing_accessory=sad.png,Are you freakin' kidding?
-5-female_removing_accessory=annoyed.png,Stalling? Really?
-5-female_removing_accessory=annoyed.png,You lookin' to get capped? 'Cause that's a great way to get capped.
-5-female_removing_accessory=sad.png,Aw, lame!
 5-female_removing_accessory,count-role;target&character;meia&stage;0:=happy.png,Also, on a different note, that eyepiece is super outdated. You know we have ECHOs now, right? I heard they're even working on an ECHO-2! So stoked for it!
 5-female_removing_accessory,count-role;target&character;twilight&stage;3:=excited.png,Aw yeah, there we go! Better late than never!
+5-female_removing_accessory,count-role;target&character;twilight&stage;5:=thinking.png,I don't get it. You were so eager to take your important stuff off, but you're kept your shirt on this whole time. It's not like you would've lost the game if you took it off, so why wait?
 5-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:14=happy.png,So what, you got on a tiny little pair of shoes or something?
+5-female_removing_accessory,count-role;target&character;twilight&stage;4:=claptrap.png,You just <i>had</i> to remember your accessories, huh?...
 5-female_removed_accessory=claptrap.png,This's about as exciting as Claptrap's birthday party... Well, at least <i>that</i> had pizza...
 5-female_removed_accessory=sad.png,You could've at least put some razzle-dazzle in it, you know...
 5-female_removed_accessory=sad.png,What a waste of a turn.
@@ -782,14 +1018,13 @@ female_removed_accessory=sad.png,Aw... I know I shouldn't complain, but geez, ~c
 5-female_removed_accessory=sad.png,Your move is perfectly legal, but that's exactly why it's boring! C'mon! Break some rules! Throw us a curve ball!
 5-female_removed_accessory=annoyed.png,Pro tip: try not to piss off me or my robot.
 5-female_removed_accessory,count-role;target&character;yuelia&stage;1&sayingmarker;real_name:=shocked.png,Oh my god, you're a person! How the hell did you do that?!
+5-female_removed_accessory,count-role;target&character;meia&stage;1:=thinking.png,Oh, sorry, I thought ECHOs were, like, an intergalactic thing. An ECHO is a comunication device, GPS, notebook, storage device, uh... what am I forgetting?...
 5-female_removed_accessory,count-role;target&character;twilight&stage;4:=shocked.png,Wha-? Aw man! You blindsided me!
+5-female_removed_accessory,count-role;target&character;twilight&stage;6:=happy.png,You could've even kept your leg warmers longer. Win-win, dude! Total missed opportunity!
+5-female_removed_accessory,count-role;target&character;twilight&stage;5&sayingmarker;twilight_not_human:=thinking.png,You don't like your feet, huh?... I could probably replace them with Hunter bot legs, if you like. Or we could go a step further and get rid of your legs too and give you a hover spine.
 
 
 #lost panties
-6-male_removing_accessory=sad.png,Are you freakin' kidding?
-6-male_removing_accessory=annoyed.png,Stalling? Really?
-6-male_removing_accessory=annoyed.png,You lookin' to get capped? 'Cause that's a great way to get capped.
-6-male_removing_accessory=sad.png,Aw, lame!
 6-male_removed_accessory=claptrap.png,This's about as exciting as Claptrap's birthday party... Well, at least <i>that</i> had pizza...
 6-male_removed_accessory=sad.png,You could've at least put some razzle-dazzle in it, you know...
 6-male_removed_accessory=sad.png,What a waste of a turn.
@@ -797,13 +1032,11 @@ female_removed_accessory=sad.png,Aw... I know I shouldn't complain, but geez, ~c
 6-male_removed_accessory=annoyed.png,~clothing.ifPlural(Those'd|That'd)~ better be special edition ~clothing~.
 6-male_removed_accessory=sad.png,Your move is perfectly legal, but that's exactly why it's boring! C'mon! Break some rules! Throw us a curve ball!
 6-male_removed_accessory=annoyed.png,Pro tip: try not to piss off me or my robot.
-6-female_removing_accessory=sad.png,Are you freakin' kidding?
-6-female_removing_accessory=annoyed.png,Stalling? Really?
-6-female_removing_accessory=annoyed.png,You lookin' to get capped? 'Cause that's a great way to get capped.
-6-female_removing_accessory=sad.png,Aw, lame!
 6-female_removing_accessory,count-role;target&character;meia&stage;0:=happy.png,Also, on a different note, that eyepiece is super outdated. You know we have ECHOs now, right? I heard they're even working on an ECHO-2! So stoked for it!
 6-female_removing_accessory,count-role;target&character;twilight&stage;3:=excited.png,Aw yeah, there we go! Better late than never!
+6-female_removing_accessory,count-role;target&character;twilight&stage;5:=thinking.png,I don't get it. You were so eager to take your important stuff off, but you're kept your shirt on this whole time. It's not like you would've lost the game if you took it off, so why wait?
 6-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:14=happy.png,So what, you got on a tiny little pair of shoes or something?
+6-female_removing_accessory,count-role;target&character;twilight&stage;4:=claptrap.png,You just <i>had</i> to remember your accessories, huh?...
 6-female_removed_accessory=claptrap.png,This's about as exciting as Claptrap's birthday party... Well, at least <i>that</i> had pizza...
 6-female_removed_accessory=sad.png,You could've at least put some razzle-dazzle in it, you know...
 6-female_removed_accessory=sad.png,What a waste of a turn.
@@ -812,14 +1045,13 @@ female_removed_accessory=sad.png,Aw... I know I shouldn't complain, but geez, ~c
 6-female_removed_accessory=sad.png,Your move is perfectly legal, but that's exactly why it's boring! C'mon! Break some rules! Throw us a curve ball!
 6-female_removed_accessory=annoyed.png,Pro tip: try not to piss off me or my robot.
 6-female_removed_accessory,count-role;target&character;yuelia&stage;1&sayingmarker;real_name:=shocked.png,Oh my god, you're a person! How the hell did you do that?!
+6-female_removed_accessory,count-role;target&character;meia&stage;1:=thinking.png,Oh, sorry, I thought ECHOs were, like, an intergalactic thing. An ECHO is a comunication device, GPS, notebook, storage device, uh... what am I forgetting?...
 6-female_removed_accessory,count-role;target&character;twilight&stage;4:=shocked.png,Wha-? Aw man! You blindsided me!
+6-female_removed_accessory,count-role;target&character;twilight&stage;6:=happy.png,You could've even kept your leg warmers longer. Win-win, dude! Total missed opportunity!
+6-female_removed_accessory,count-role;target&character;twilight&stage;5&sayingmarker;twilight_not_human:=thinking.png,You don't like your feet, huh?... I could probably replace them with Hunter bot legs, if you like. Or we could go a step further and get rid of your legs too and give you a hover spine.
 
 
 #naked
--3-male_removing_accessory=sad.png,Are you freakin' kidding?
--3-male_removing_accessory=annoyed.png,Stalling? Really?
--3-male_removing_accessory=annoyed.png,You lookin' to get capped? 'Cause that's a great way to get capped.
--3-male_removing_accessory=sad.png,Aw, lame!
 -3-male_removed_accessory=claptrap.png,This's about as exciting as Claptrap's birthday party... Well, at least <i>that</i> had pizza...
 -3-male_removed_accessory=sad.png,You could've at least put some razzle-dazzle in it, you know...
 -3-male_removed_accessory=sad.png,What a waste of a turn.
@@ -827,13 +1059,11 @@ female_removed_accessory=sad.png,Aw... I know I shouldn't complain, but geez, ~c
 -3-male_removed_accessory=annoyed.png,~clothing.ifPlural(Those'd|That'd)~ better be special edition ~clothing~.
 -3-male_removed_accessory=sad.png,Your move is perfectly legal, but that's exactly why it's boring! C'mon! Break some rules! Throw us a curve ball!
 -3-male_removed_accessory=annoyed.png,Pro tip: try not to piss off me or my robot.
--3-female_removing_accessory=sad.png,Are you freakin' kidding?
--3-female_removing_accessory=annoyed.png,Stalling? Really?
--3-female_removing_accessory=annoyed.png,You lookin' to get capped? 'Cause that's a great way to get capped.
--3-female_removing_accessory=sad.png,Aw, lame!
 -3-female_removing_accessory,count-role;target&character;meia&stage;0:=happy.png,Also, on a different note, that eyepiece is super outdated. You know we have ECHOs now, right? I heard they're even working on an ECHO-2! So stoked for it!
 -3-female_removing_accessory,count-role;target&character;twilight&stage;3:=excited.png,Aw yeah, there we go! Better late than never!
+-3-female_removing_accessory,count-role;target&character;twilight&stage;5:=thinking.png,I don't get it. You were so eager to take your important stuff off, but you're kept your shirt on this whole time. It's not like you would've lost the game if you took it off, so why wait?
 -3-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:14=happy.png,So what, you got on a tiny little pair of shoes or something?
+-3-female_removing_accessory,count-role;target&character;twilight&stage;4:=claptrap.png,You just <i>had</i> to remember your accessories, huh?...
 -3-female_removed_accessory=claptrap.png,This's about as exciting as Claptrap's birthday party... Well, at least <i>that</i> had pizza...
 -3-female_removed_accessory=sad.png,You could've at least put some razzle-dazzle in it, you know...
 -3-female_removed_accessory=sad.png,What a waste of a turn.
@@ -842,7 +1072,10 @@ female_removed_accessory=sad.png,Aw... I know I shouldn't complain, but geez, ~c
 -3-female_removed_accessory=sad.png,Your move is perfectly legal, but that's exactly why it's boring! C'mon! Break some rules! Throw us a curve ball!
 -3-female_removed_accessory=annoyed.png,Pro tip: try not to piss off me or my robot.
 -3-female_removed_accessory,count-role;target&character;yuelia&stage;1&sayingmarker;real_name:=shocked.png,Oh my god, you're a person! How the hell did you do that?!
+-3-female_removed_accessory,count-role;target&character;meia&stage;1:=thinking.png,Oh, sorry, I thought ECHOs were, like, an intergalactic thing. An ECHO is a comunication device, GPS, notebook, storage device, uh... what am I forgetting?...
 -3-female_removed_accessory,count-role;target&character;twilight&stage;4:=shocked.png,Wha-? Aw man! You blindsided me!
+-3-female_removed_accessory,count-role;target&character;twilight&stage;6:=happy.png,You could've even kept your leg warmers longer. Win-win, dude! Total missed opportunity!
+-3-female_removed_accessory,count-role;target&character;twilight&stage;5&sayingmarker;twilight_not_human:=thinking.png,You don't like your feet, huh?... I could probably replace them with Hunter bot legs, if you like. Or we could go a step further and get rid of your legs too and give you a hover spine.
 
 
 #masturbating
@@ -857,13 +1090,18 @@ female_removed_accessory=sad.png,Aw... I know I shouldn't complain, but geez, ~c
 -2-female_removing_accessory=annoyed.png,You ever heard of a chick getting turned on by this? 'Cause I haven't.
 -2-female_removing_accessory,count-role;target&character;meia&stage;0:=happy.png,Also, on a different note, that eyepiece is super outdated. You know we have ECHOs now, right? I heard they're even working on an ECHO-2! So stoked for it!
 -2-female_removing_accessory,count-role;target&character;twilight&stage;3:=excited.png,Aw yeah, there we go! Better late than never!
+-2-female_removing_accessory,count-role;target&character;twilight&stage;5:=thinking.png,I don't get it. You were so eager to take your important stuff off, but you're kept your shirt on this whole time. It's not like you would've lost the game if you took it off, so why wait?
 -2-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:14=happy.png,So what, you got on a tiny little pair of shoes or something?
+-2-female_removing_accessory,count-role;target&character;twilight&stage;4:=claptrap.png,You just <i>had</i> to remember your accessories, huh?...
 -2-female_removing_accessory,targetStatus:chest_visible,id:3=happy.png,Sorry, did you say something, ~name~? I was too busy staring at your tits!
 -2-female_removing_accessory,targetStatus:chest_visible,id:3=wink.png,I'm cool with you taking ~clothing.ifPlural(those|that)~ off as long as you're cool with me staring at your tits!
 -2-female_removed_accessory=thinking.png,What would you call someone who's turned on by this? A ~clothing.ifPlural(~clothing~exual|~clothing~-sexual)~?
 -2-female_removed_accessory=claptrap.png,I feel like a guinea pig in an experiment to find the fastest way to turn someone off...
 -2-female_removed_accessory,count-role;target&character;yuelia&stage;1&sayingmarker;real_name:=shocked.png,Oh my god, you're a person! How the hell did you do that?!
+-2-female_removed_accessory,count-role;target&character;meia&stage;1:=thinking.png,Oh, sorry, I thought ECHOs were, like, an intergalactic thing. An ECHO is a comunication device, GPS, notebook, storage device, uh... what am I forgetting?...
 -2-female_removed_accessory,count-role;target&character;twilight&stage;4:=shocked.png,Wha-? Aw man! You blindsided me!
+-2-female_removed_accessory,count-role;target&character;twilight&stage;6:=happy.png,You could've even kept your leg warmers longer. Win-win, dude! Total missed opportunity!
+-2-female_removed_accessory,count-role;target&character;twilight&stage;5&sayingmarker;twilight_not_human:=thinking.png,You don't like your feet, huh?... I could probably replace them with Hunter bot legs, if you like. Or we could go a step further and get rid of your legs too and give you a hover spine.
 -2-female_removed_accessory,targetStatus:chest_visible,id:4=happy.png,I don't care what you take off anymore, 'cause you already got the best part hangin' out!
 
 
@@ -873,10 +1111,15 @@ female_removed_accessory=sad.png,Aw... I know I shouldn't complain, but geez, ~c
 -1-female_removing_accessory=claptrap.png,Guess if I played more like ~name~, I might not have lost.
 -1-female_removing_accessory,count-role;target&character;meia&stage;0:=happy.png,Also, on a different note, that eyepiece is super outdated. You know we have ECHOs now, right? I heard they're even working on an ECHO-2! So stoked for it!
 -1-female_removing_accessory,count-role;target&character;twilight&stage;3:=excited.png,Aw yeah, there we go! Better late than never!
+-1-female_removing_accessory,count-role;target&character;twilight&stage;5:=thinking.png,I don't get it. You were so eager to take your important stuff off, but you're kept your shirt on this whole time. It's not like you would've lost the game if you took it off, so why wait?
 -1-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:14=happy.png,So what, you got on a tiny little pair of shoes or something?
+-1-female_removing_accessory,count-role;target&character;twilight&stage;4:=claptrap.png,You just <i>had</i> to remember your accessories, huh?...
 -1-female_removed_accessory=thinking.png,I was too generous with my accessories, now that I think about it.
 -1-female_removed_accessory,count-role;target&character;yuelia&stage;1&sayingmarker;real_name:=shocked.png,Oh my god, you're a person! How the hell did you do that?!
+-1-female_removed_accessory,count-role;target&character;meia&stage;1:=thinking.png,Oh, sorry, I thought ECHOs were, like, an intergalactic thing. An ECHO is a comunication device, GPS, notebook, storage device, uh... what am I forgetting?...
 -1-female_removed_accessory,count-role;target&character;twilight&stage;4:=shocked.png,Wha-? Aw man! You blindsided me!
+-1-female_removed_accessory,count-role;target&character;twilight&stage;6:=happy.png,You could've even kept your leg warmers longer. Win-win, dude! Total missed opportunity!
+-1-female_removed_accessory,count-role;target&character;twilight&stage;5&sayingmarker;twilight_not_human:=thinking.png,You don't like your feet, huh?... I could probably replace them with Hunter bot legs, if you like. Or we could go a step further and get rid of your legs too and give you a hover spine.
 
 
 
@@ -901,32 +1144,52 @@ female_removed_minor=happy.png,Progress!
 
 #fully clothed
 0-female_removing_minor,count-role;target&character;hatsume&stage;0:=excited.png,<i>Rocket boots?</i> Awesome! I want a pair!
+0-female_removing_minor,count-role;target&character;rin&stage;0:=thinking.png,I mean, I've never opperated on anyone other than myself, but I did that with only one arm, so logically, it'd be half as hard on someone else!
+0-female_removing_minor,count-role;target&character;emi&stage;6:=claptrap.png,I totally get it. I wouldn't want to take those socks off either.
 0-female_removed_minor,count-role;target&character;rainbow_dash&stage;2:=excited.png,Aw, dude, I had a pair of socks just like that! Except I spilled oil on them, and then they became boring ol' black socks...
+0-female_removed_minor,count-role;target&character;rin&stage;1:=happy.png,Fair warning, though, it'll hurt. Like <i>a lot</i>. But that's a small price to pay for a totally badass new pair of arms!
 0-female_removed_minor,count-role;target&character;hatsume&stage;1:=claptrap.png,Ooh, uh, never mind... You okay?
+0-female_removed_minor,count-role;target&character;emi&stage;7:,id:15=shocked.png,Woah! Those prosthetics are totally retro! 
 
 
 #lost toolbelt
 1-female_removing_minor,count-role;target&character;hatsume&stage;0:=excited.png,<i>Rocket boots?</i> Awesome! I want a pair!
+1-female_removing_minor,count-role;target&character;rin&stage;0:=thinking.png,I mean, I've never opperated on anyone other than myself, but I did that with only one arm, so logically, it'd be half as hard on someone else!
+1-female_removing_minor,count-role;target&character;emi&stage;6:=claptrap.png,I totally get it. I wouldn't want to take those socks off either.
 1-female_removed_minor,count-role;target&character;rainbow_dash&stage;2:=excited.png,Aw, dude, I had a pair of socks just like that! Except I spilled oil on them, and then they became boring ol' black socks...
+1-female_removed_minor,count-role;target&character;rin&stage;1:=happy.png,Fair warning, though, it'll hurt. Like <i>a lot</i>. But that's a small price to pay for a totally badass new pair of arms!
 1-female_removed_minor,count-role;target&character;hatsume&stage;1:=claptrap.png,Ooh, uh, never mind... You okay?
+1-female_removed_minor,count-role;target&character;emi&stage;7:,id:15=shocked.png,Woah! Those prosthetics are totally retro! 
 
 
 #lost vest
 2-female_removing_minor,count-role;target&character;hatsume&stage;0:=excited.png,<i>Rocket boots?</i> Awesome! I want a pair!
+2-female_removing_minor,count-role;target&character;rin&stage;0:=thinking.png,I mean, I've never opperated on anyone other than myself, but I did that with only one arm, so logically, it'd be half as hard on someone else!
+2-female_removing_minor,count-role;target&character;emi&stage;6:=claptrap.png,I totally get it. I wouldn't want to take those socks off either.
 2-female_removed_minor,count-role;target&character;rainbow_dash&stage;2:=excited.png,Aw, dude, I had a pair of socks just like that! Except I spilled oil on them, and then they became boring ol' black socks...
+2-female_removed_minor,count-role;target&character;rin&stage;1:=happy.png,Fair warning, though, it'll hurt. Like <i>a lot</i>. But that's a small price to pay for a totally badass new pair of arms!
 2-female_removed_minor,count-role;target&character;hatsume&stage;1:=claptrap.png,Ooh, uh, never mind... You okay?
+2-female_removed_minor,count-role;target&character;emi&stage;7:,id:15=shocked.png,Woah! Those prosthetics are totally retro! 
 
 
 #lost shoes and glove
 3-female_removing_minor,count-role;target&character;hatsume&stage;0:=excited.png,<i>Rocket boots?</i> Awesome! I want a pair!
+3-female_removing_minor,count-role;target&character;rin&stage;0:=thinking.png,I mean, I've never opperated on anyone other than myself, but I did that with only one arm, so logically, it'd be half as hard on someone else!
+3-female_removing_minor,count-role;target&character;emi&stage;6:=claptrap.png,I totally get it. I wouldn't want to take those socks off either.
 3-female_removed_minor,count-role;target&character;rainbow_dash&stage;2:=excited.png,Aw, dude, I had a pair of socks just like that! Except I spilled oil on them, and then they became boring ol' black socks...
+3-female_removed_minor,count-role;target&character;rin&stage;1:=happy.png,Fair warning, though, it'll hurt. Like <i>a lot</i>. But that's a small price to pay for a totally badass new pair of arms!
 3-female_removed_minor,count-role;target&character;hatsume&stage;1:=claptrap.png,Ooh, uh, never mind... You okay?
+3-female_removed_minor,count-role;target&character;emi&stage;7:,id:15=shocked.png,Woah! Those prosthetics are totally retro! 
 
 
 #lost skirt
 4-female_removing_minor,count-role;target&character;hatsume&stage;0:=excited.png,<i>Rocket boots?</i> Awesome! I want a pair!
+4-female_removing_minor,count-role;target&character;rin&stage;0:=thinking.png,I mean, I've never opperated on anyone other than myself, but I did that with only one arm, so logically, it'd be half as hard on someone else!
+4-female_removing_minor,count-role;target&character;emi&stage;6:=claptrap.png,I totally get it. I wouldn't want to take those socks off either.
 4-female_removed_minor,count-role;target&character;rainbow_dash&stage;2:=excited.png,Aw, dude, I had a pair of socks just like that! Except I spilled oil on them, and then they became boring ol' black socks...
+4-female_removed_minor,count-role;target&character;rin&stage;1:=happy.png,Fair warning, though, it'll hurt. Like <i>a lot</i>. But that's a small price to pay for a totally badass new pair of arms!
 4-female_removed_minor,count-role;target&character;hatsume&stage;1:=claptrap.png,Ooh, uh, never mind... You okay?
+4-female_removed_minor,count-role;target&character;emi&stage;7:,id:15=shocked.png,Woah! Those prosthetics are totally retro! 
 
 
 #lost shirt
@@ -938,11 +1201,15 @@ female_removed_minor=happy.png,Progress!
 5-female_removing_minor=claptrap.png,Well... That's progress, at least.
 5-female_removing_minor=annoyed.png,Ugh. Freakin' ~clothing~...
 5-female_removing_minor,count-role;target&character;hatsume&stage;0:=excited.png,<i>Rocket boots?</i> Awesome! I want a pair!
+5-female_removing_minor,count-role;target&character;rin&stage;0:=thinking.png,I mean, I've never opperated on anyone other than myself, but I did that with only one arm, so logically, it'd be half as hard on someone else!
+5-female_removing_minor,count-role;target&character;emi&stage;6:=claptrap.png,I totally get it. I wouldn't want to take those socks off either.
 5-female_removed_minor=wink.png,We'll get you naked yet!
 5-female_removed_minor=calm.png,That's more like it, but don't stop now!
 5-female_removed_minor=claptrap.png,Suddenly, I feel <i>loads</i> more naked...
 5-female_removed_minor,count-role;target&character;rainbow_dash&stage;2:=excited.png,Aw, dude, I had a pair of socks just like that! Except I spilled oil on them, and then they became boring ol' black socks...
+5-female_removed_minor,count-role;target&character;rin&stage;1:=happy.png,Fair warning, though, it'll hurt. Like <i>a lot</i>. But that's a small price to pay for a totally badass new pair of arms!
 5-female_removed_minor,count-role;target&character;hatsume&stage;1:=claptrap.png,Ooh, uh, never mind... You okay?
+5-female_removed_minor,count-role;target&character;emi&stage;7:,id:15=shocked.png,Woah! Those prosthetics are totally retro! 
 
 
 #lost panties
@@ -954,11 +1221,15 @@ female_removed_minor=happy.png,Progress!
 6-female_removing_minor=claptrap.png,Well... That's progress, at least.
 6-female_removing_minor=annoyed.png,Ugh. Freakin' ~clothing~...
 6-female_removing_minor,count-role;target&character;hatsume&stage;0:=excited.png,<i>Rocket boots?</i> Awesome! I want a pair!
+6-female_removing_minor,count-role;target&character;rin&stage;0:=thinking.png,I mean, I've never opperated on anyone other than myself, but I did that with only one arm, so logically, it'd be half as hard on someone else!
+6-female_removing_minor,count-role;target&character;emi&stage;6:=claptrap.png,I totally get it. I wouldn't want to take those socks off either.
 6-female_removed_minor=wink.png,We'll get you naked yet!
 6-female_removed_minor=calm.png,That's more like it, but don't stop now!
 6-female_removed_minor=claptrap.png,Suddenly, I feel <i>loads</i> more naked...
 6-female_removed_minor,count-role;target&character;rainbow_dash&stage;2:=excited.png,Aw, dude, I had a pair of socks just like that! Except I spilled oil on them, and then they became boring ol' black socks...
+6-female_removed_minor,count-role;target&character;rin&stage;1:=happy.png,Fair warning, though, it'll hurt. Like <i>a lot</i>. But that's a small price to pay for a totally badass new pair of arms!
 6-female_removed_minor,count-role;target&character;hatsume&stage;1:=claptrap.png,Ooh, uh, never mind... You okay?
+6-female_removed_minor,count-role;target&character;emi&stage;7:,id:15=shocked.png,Woah! Those prosthetics are totally retro! 
 
 
 #naked
@@ -970,11 +1241,15 @@ female_removed_minor=happy.png,Progress!
 -3-female_removing_minor=claptrap.png,Well... That's progress, at least.
 -3-female_removing_minor=annoyed.png,Ugh. Freakin' ~clothing~...
 -3-female_removing_minor,count-role;target&character;hatsume&stage;0:=excited.png,<i>Rocket boots?</i> Awesome! I want a pair!
+-3-female_removing_minor,count-role;target&character;rin&stage;0:=thinking.png,I mean, I've never opperated on anyone other than myself, but I did that with only one arm, so logically, it'd be half as hard on someone else!
+-3-female_removing_minor,count-role;target&character;emi&stage;6:=claptrap.png,I totally get it. I wouldn't want to take those socks off either.
 -3-female_removed_minor=wink.png,We'll get you naked yet!
 -3-female_removed_minor=calm.png,That's more like it, but don't stop now!
 -3-female_removed_minor=claptrap.png,Suddenly, I feel <i>loads</i> more naked...
 -3-female_removed_minor,count-role;target&character;rainbow_dash&stage;2:=excited.png,Aw, dude, I had a pair of socks just like that! Except I spilled oil on them, and then they became boring ol' black socks...
+-3-female_removed_minor,count-role;target&character;rin&stage;1:=happy.png,Fair warning, though, it'll hurt. Like <i>a lot</i>. But that's a small price to pay for a totally badass new pair of arms!
 -3-female_removed_minor,count-role;target&character;hatsume&stage;1:=claptrap.png,Ooh, uh, never mind... You okay?
+-3-female_removed_minor,count-role;target&character;emi&stage;7:,id:15=shocked.png,Woah! Those prosthetics are totally retro! 
 
 
 #masturbating
@@ -986,11 +1261,15 @@ female_removed_minor=happy.png,Progress!
 -2-female_removing_minor=claptrap.png,Well... That's progress, at least.
 -2-female_removing_minor=annoyed.png,Ugh. Freakin' ~clothing~...
 -2-female_removing_minor,count-role;target&character;hatsume&stage;0:=excited.png,<i>Rocket boots?</i> Awesome! I want a pair!
+-2-female_removing_minor,count-role;target&character;rin&stage;0:=thinking.png,I mean, I've never opperated on anyone other than myself, but I did that with only one arm, so logically, it'd be half as hard on someone else!
+-2-female_removing_minor,count-role;target&character;emi&stage;6:=claptrap.png,I totally get it. I wouldn't want to take those socks off either.
 -2-female_removed_minor=wink.png,We'll get you naked yet!
 -2-female_removed_minor=calm.png,That's more like it, but don't stop now!
 -2-female_removed_minor=claptrap.png,Suddenly, I feel <i>loads</i> more naked...
 -2-female_removed_minor,count-role;target&character;rainbow_dash&stage;2:=excited.png,Aw, dude, I had a pair of socks just like that! Except I spilled oil on them, and then they became boring ol' black socks...
+-2-female_removed_minor,count-role;target&character;rin&stage;1:=happy.png,Fair warning, though, it'll hurt. Like <i>a lot</i>. But that's a small price to pay for a totally badass new pair of arms!
 -2-female_removed_minor,count-role;target&character;hatsume&stage;1:=claptrap.png,Ooh, uh, never mind... You okay?
+-2-female_removed_minor,count-role;target&character;emi&stage;7:,id:15=shocked.png,Woah! Those prosthetics are totally retro! 
 
 
 #finished
@@ -1002,11 +1281,15 @@ female_removed_minor=happy.png,Progress!
 -1-female_removing_minor=claptrap.png,Well... That's progress, at least.
 -1-female_removing_minor=annoyed.png,Ugh. Freakin' ~clothing~...
 -1-female_removing_minor,count-role;target&character;hatsume&stage;0:=excited.png,<i>Rocket boots?</i> Awesome! I want a pair!
+-1-female_removing_minor,count-role;target&character;rin&stage;0:=thinking.png,I mean, I've never opperated on anyone other than myself, but I did that with only one arm, so logically, it'd be half as hard on someone else!
+-1-female_removing_minor,count-role;target&character;emi&stage;6:=claptrap.png,I totally get it. I wouldn't want to take those socks off either.
 -1-female_removed_minor=wink.png,We'll get you naked yet!
 -1-female_removed_minor=calm.png,That's more like it, but don't stop now!
 -1-female_removed_minor=claptrap.png,Suddenly, I feel <i>loads</i> more naked...
 -1-female_removed_minor,count-role;target&character;rainbow_dash&stage;2:=excited.png,Aw, dude, I had a pair of socks just like that! Except I spilled oil on them, and then they became boring ol' black socks...
+-1-female_removed_minor,count-role;target&character;rin&stage;1:=happy.png,Fair warning, though, it'll hurt. Like <i>a lot</i>. But that's a small price to pay for a totally badass new pair of arms!
 -1-female_removed_minor,count-role;target&character;hatsume&stage;1:=claptrap.png,Ooh, uh, never mind... You okay?
+-1-female_removed_minor,count-role;target&character;emi&stage;7:,id:15=shocked.png,Woah! Those prosthetics are totally retro! 
 
 
 
@@ -1033,23 +1316,33 @@ female_removed_major=wink.png,I like what I see so far, but you're not stopping 
 #stage-specific lines that override the stage-generic ones
 
 #fully clothed
+0-female_removing_major,count-role;target&character;emi&stage;7:,id:16=excited.png,That's an absolutely insane idea! I love it!
 0-female_removed_major,count-role;target&character;rainbow_dash&stage;5:=happy.png,Eh, don't worry about your shirt! I can just hack the nearest New-U Station to give you a new one!... We <i>might</i> have to deal with a second you, though...
+0-female_removed_major,count-role;target&character;emi&stage;8:,id:17=happy.png,I would never do the same thing, myself. Taking this arm of hurts like hell!
 
 
 #lost toolbelt
+1-female_removing_major,count-role;target&character;emi&stage;7:,id:16=excited.png,That's an absolutely insane idea! I love it!
 1-female_removed_major,count-role;target&character;rainbow_dash&stage;5:=happy.png,Eh, don't worry about your shirt! I can just hack the nearest New-U Station to give you a new one!... We <i>might</i> have to deal with a second you, though...
+1-female_removed_major,count-role;target&character;emi&stage;8:,id:17=happy.png,I would never do the same thing, myself. Taking this arm of hurts like hell!
 
 
 #lost vest
+2-female_removing_major,count-role;target&character;emi&stage;7:,id:16=excited.png,That's an absolutely insane idea! I love it!
 2-female_removed_major,count-role;target&character;rainbow_dash&stage;5:=happy.png,Eh, don't worry about your shirt! I can just hack the nearest New-U Station to give you a new one!... We <i>might</i> have to deal with a second you, though...
+2-female_removed_major,count-role;target&character;emi&stage;8:,id:17=happy.png,I would never do the same thing, myself. Taking this arm of hurts like hell!
 
 
 #lost shoes and glove
+3-female_removing_major,count-role;target&character;emi&stage;7:,id:16=excited.png,That's an absolutely insane idea! I love it!
 3-female_removed_major,count-role;target&character;rainbow_dash&stage;5:=happy.png,Eh, don't worry about your shirt! I can just hack the nearest New-U Station to give you a new one!... We <i>might</i> have to deal with a second you, though...
+3-female_removed_major,count-role;target&character;emi&stage;8:,id:17=happy.png,I would never do the same thing, myself. Taking this arm of hurts like hell!
 
 
 #lost skirt
+4-female_removing_major,count-role;target&character;emi&stage;7:,id:16=excited.png,That's an absolutely insane idea! I love it!
 4-female_removed_major,count-role;target&character;rainbow_dash&stage;5:=happy.png,Eh, don't worry about your shirt! I can just hack the nearest New-U Station to give you a new one!... We <i>might</i> have to deal with a second you, though...
+4-female_removed_major,count-role;target&character;emi&stage;8:,id:17=happy.png,I would never do the same thing, myself. Taking this arm of hurts like hell!
 
 
 #lost shirt
@@ -1068,6 +1361,7 @@ female_removed_major=wink.png,I like what I see so far, but you're not stopping 
 5-male_removed_major,priority:0,test:~clothing.position~:upper,id:7=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 5-female_removing_major=excited.png,That's more like it!
 5-female_removing_major=happy.png,Hell yeah! Get on my level, girl!
+5-female_removing_major,count-role;target&character;emi&stage;7:,id:16=excited.png,That's an absolutely insane idea! I love it!
 5-female_removed_major=wink.png,Now if you could lose a few more hands, that'd be great.
 5-female_removed_major=happy.png,Oh, you think you're done? Nah, dude, <i>you're going down</i>! And so's the rest of your outfit!
 5-female_removed_major=wink.png,Now if you could lose a few more hands, that'd be great.
@@ -1076,6 +1370,7 @@ female_removed_major=wink.png,I like what I see so far, but you're not stopping 
 5-female_removed_major,priority:0,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
 5-female_removed_major,priority:0,id:8=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 5-female_removed_major,count-role;target&character;rainbow_dash&stage;5:=happy.png,Eh, don't worry about your shirt! I can just hack the nearest New-U Station to give you a new one!... We <i>might</i> have to deal with a second you, though...
+5-female_removed_major,count-role;target&character;emi&stage;8:,id:17=happy.png,I would never do the same thing, myself. Taking this arm of hurts like hell!
 5-female_removed_major,priority:0,test:~clothing.position~:both,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
 5-female_removed_major,priority:0,test:~clothing.position~:both,id:8=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 5-female_removed_major,priority:0,test:~clothing.position~:lower,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
@@ -1100,6 +1395,7 @@ female_removed_major=wink.png,I like what I see so far, but you're not stopping 
 6-male_removed_major,priority:0,test:~clothing.position~:upper,id:7=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 6-female_removing_major=excited.png,That's more like it!
 6-female_removing_major=happy.png,Hell yeah! Get on my level, girl!
+6-female_removing_major,count-role;target&character;emi&stage;7:,id:16=excited.png,That's an absolutely insane idea! I love it!
 6-female_removed_major=wink.png,Now if you could lose a few more hands, that'd be great.
 6-female_removed_major=happy.png,Oh, you think you're done? Nah, dude, <i>you're going down</i>! And so's the rest of your outfit!
 6-female_removed_major=wink.png,Now if you could lose a few more hands, that'd be great.
@@ -1108,6 +1404,7 @@ female_removed_major=wink.png,I like what I see so far, but you're not stopping 
 6-female_removed_major,priority:0,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
 6-female_removed_major,priority:0,id:8=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 6-female_removed_major,count-role;target&character;rainbow_dash&stage;5:=happy.png,Eh, don't worry about your shirt! I can just hack the nearest New-U Station to give you a new one!... We <i>might</i> have to deal with a second you, though...
+6-female_removed_major,count-role;target&character;emi&stage;8:,id:17=happy.png,I would never do the same thing, myself. Taking this arm of hurts like hell!
 6-female_removed_major,priority:0,test:~clothing.position~:both,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
 6-female_removed_major,priority:0,test:~clothing.position~:both,id:8=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 6-female_removed_major,priority:0,test:~clothing.position~:lower,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
@@ -1132,6 +1429,7 @@ female_removed_major=wink.png,I like what I see so far, but you're not stopping 
 -3-male_removed_major,priority:0,test:~clothing.position~:upper,id:7=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 -3-female_removing_major=excited.png,That's more like it!
 -3-female_removing_major=happy.png,Hell yeah! Get on my level, girl!
+-3-female_removing_major,count-role;target&character;emi&stage;7:,id:16=excited.png,That's an absolutely insane idea! I love it!
 -3-female_removed_major=wink.png,Now if you could lose a few more hands, that'd be great.
 -3-female_removed_major=happy.png,Oh, you think you're done? Nah, dude, <i>you're going down</i>! And so's the rest of your outfit!
 -3-female_removed_major=wink.png,Now if you could lose a few more hands, that'd be great.
@@ -1140,6 +1438,7 @@ female_removed_major=wink.png,I like what I see so far, but you're not stopping 
 -3-female_removed_major,priority:0,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
 -3-female_removed_major,priority:0,id:8=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 -3-female_removed_major,count-role;target&character;rainbow_dash&stage;5:=happy.png,Eh, don't worry about your shirt! I can just hack the nearest New-U Station to give you a new one!... We <i>might</i> have to deal with a second you, though...
+-3-female_removed_major,count-role;target&character;emi&stage;8:,id:17=happy.png,I would never do the same thing, myself. Taking this arm of hurts like hell!
 -3-female_removed_major,priority:0,test:~clothing.position~:both,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
 -3-female_removed_major,priority:0,test:~clothing.position~:both,id:8=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 -3-female_removed_major,priority:0,test:~clothing.position~:lower,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
@@ -1164,6 +1463,7 @@ female_removed_major=wink.png,I like what I see so far, but you're not stopping 
 -2-male_removed_major,priority:0,test:~clothing.position~:upper,id:7=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 -2-female_removing_major=excited.png,That's more like it!
 -2-female_removing_major=happy.png,Hell yeah! Get on my level, girl!
+-2-female_removing_major,count-role;target&character;emi&stage;7:,id:16=excited.png,That's an absolutely insane idea! I love it!
 -2-female_removed_major=wink.png,Now if you could lose a few more hands, that'd be great.
 -2-female_removed_major=happy.png,Oh, you think you're done? Nah, dude, <i>you're going down</i>! And so's the rest of your outfit!
 -2-female_removed_major=wink.png,Now if you could lose a few more hands, that'd be great.
@@ -1172,6 +1472,7 @@ female_removed_major=wink.png,I like what I see so far, but you're not stopping 
 -2-female_removed_major,priority:0,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
 -2-female_removed_major,priority:0,id:8=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 -2-female_removed_major,count-role;target&character;rainbow_dash&stage;5:=happy.png,Eh, don't worry about your shirt! I can just hack the nearest New-U Station to give you a new one!... We <i>might</i> have to deal with a second you, though...
+-2-female_removed_major,count-role;target&character;emi&stage;8:,id:17=happy.png,I would never do the same thing, myself. Taking this arm of hurts like hell!
 -2-female_removed_major,priority:0,test:~clothing.position~:both,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
 -2-female_removed_major,priority:0,test:~clothing.position~:both,id:8=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 -2-female_removed_major,priority:0,test:~clothing.position~:lower,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
@@ -1196,6 +1497,7 @@ female_removed_major=wink.png,I like what I see so far, but you're not stopping 
 -1-male_removed_major,priority:0,test:~clothing.position~:upper,id:7=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 -1-female_removing_major=excited.png,That's more like it!
 -1-female_removing_major=happy.png,Hell yeah! Get on my level, girl!
+-1-female_removing_major,count-role;target&character;emi&stage;7:,id:16=excited.png,That's an absolutely insane idea! I love it!
 -1-female_removed_major=wink.png,Now if you could lose a few more hands, that'd be great.
 -1-female_removed_major=happy.png,Oh, you think you're done? Nah, dude, <i>you're going down</i>! And so's the rest of your outfit!
 -1-female_removed_major=wink.png,Now if you could lose a few more hands, that'd be great.
@@ -1204,6 +1506,7 @@ female_removed_major=wink.png,I like what I see so far, but you're not stopping 
 -1-female_removed_major,priority:0,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
 -1-female_removed_major,priority:0,id:8=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 -1-female_removed_major,count-role;target&character;rainbow_dash&stage;5:=happy.png,Eh, don't worry about your shirt! I can just hack the nearest New-U Station to give you a new one!... We <i>might</i> have to deal with a second you, though...
+-1-female_removed_major,count-role;target&character;emi&stage;8:,id:17=happy.png,I would never do the same thing, myself. Taking this arm of hurts like hell!
 -1-female_removed_major,priority:0,test:~clothing.position~:both,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
 -1-female_removed_major,priority:0,test:~clothing.position~:both,id:8=sad.png,Wait, you actually <i>wear something</i> under your ~clothing~? Aw man...
 -1-female_removed_major,priority:0,test:~clothing.position~:lower,id:8=sad.png,Aw, I was thinking there wouldn't be anything under your ~clothing~.
@@ -1228,7 +1531,7 @@ male_crotch_will_be_visible=wink.png,Let's see that Gravity Hammer of yours!
 male_crotch_will_be_visible=happy.png,Lemme see you're nuts and bolts!
 male_small_crotch_is_visible=claptrap.png,That's, uh... Yep, that's a penis, alright.
 male_small_crotch_is_visible=happy.png,Um... Hey, not every gun needs an extended barrel!
-male_small_crotch_is_visible=thinking.png,(<i>I wonder if Dr. Zed has anything to make dicks bigger?</i>)
+male_small_crotch_is_visible=thinking.png,<i>(I wonder if Dr. Zed has anything to make dicks bigger?)</i>
 male_medium_crotch_is_visible=wink.png,Now <i>there's</i> a gun I'd like to get my hands on!
 male_medium_crotch_is_visible=happy.png,You ever get jerked off by a robot arm before? Don't worry, the cold metal warms up eventually!
 male_medium_crotch_is_visible=wink.png,Oh yeah! I'd like to... uh, put that in my mouth! Yep!...
@@ -1245,8 +1548,8 @@ female_large_chest_is_visible=thinking.png,Hmm. I wonder if anyone's ever hid di
 female_large_chest_is_visible=excited.png,Man! You'd give Moxxi a run for her money!
 female_large_chest_is_visible=wink.png,I wanna, um... stick my face between those! Yep!...
 female_large_chest_is_visible=wink.png,Those look prime for paddle boating!... Wait crap, that's <i>motor</i>boating. <i>Damn it</i>...
-female_crotch_will_be_visible=thinking.png,Wait, hold on, I'm trying to think of a vagina euphamism that doesn't sound gross. They're surprisingly hard to come up with...
-female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just keep pointing and winking...*)
+female_crotch_will_be_visible=thinking.png,Wait, hold on, I'm trying to think of a vagina euphemism that doesn't sound gross. They're surprisingly hard to come up with...
+female_crotch_is_visible=wink.png,<i>(Crap, I forgot my clever euphemism... Just keep pointing and winking...)</i>
 
 
 #stage-specific lines that override the stage-generic ones
@@ -1258,8 +1561,11 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 0-male_large_crotch_is_visible,count-robot&role;target:=embarrassed.png,Woah... Giant robot dick...
 0-male_crotch_is_visible,count-not_chest_visible&role;target:=wink.png,Bottom before top? I dig your ballsiness!... Oh, heh, <i>balls</i>, sorry, poor choice of words!
 0-male_crotch_is_visible,count-not_chest_visible&role;target:=happy.png,Heheheh! Sorry, I just can't get over how ridiculous men look when they're bottomless but not topless!
+0-female_chest_will_be_visible,count-role;target&character;twilight&stage;6&saying;tickle:=happy.png,Ah, so <i>that's</i> why you kept your shirt so long!... Hmm, I'll have to see what the tickle is like for myself later...
 0-female_chest_will_be_visible,count-role;target&character;twilight&stage;1:=happy.png,Aw yeah! Another excellent choice! You're a real blast!
+0-female_chest_will_be_visible,count-role;target&character;twilight&stage;6:=happy.png,Hah! Now you've got no choice! Drop the top, pork chop!
 0-female_small_chest_is_visible,count-robot&role;target:=happy.png,Ah, I see you were built by an individual of good tastes!
+0-female_medium_chest_is_visible,count-role;target&character;twilight&stage;7:=calm.png,... Say, have you met Moxxi yet? I think you two would get along pretty well... Just, uh, make sure she pays you good if she asks you to do something for her.
 0-female_medium_chest_is_visible,count-role;target&character;twilight&stage;2:=sad.png,Aw, you're not going to spread your shirt open for us? That's slightly less of a blast.
 0-female_medium_chest_is_visible,count-robot&role;target:=happy.png,Heh heh. Robot titties...
 0-female_large_chest_is_visible,count-robot&role;target:=happy.png,Y'know, something about giving a robot large tits seems pretty pervy, but you make it work!
@@ -1275,8 +1581,11 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 1-male_medium_crotch_is_visible,count-robot&role;target:=excited.png,Aw yeah, robot dick!
 1-male_medium_crotch_is_visible,count-robot&role;target:=excited.png,Dude, I've <i>got</i> to know what that feels like!
 1-male_large_crotch_is_visible,count-robot&role;target:=embarrassed.png,Woah... Giant robot dick...
+1-female_chest_will_be_visible,count-role;target&character;twilight&stage;6&saying;tickle:=happy.png,Ah, so <i>that's</i> why you kept your shirt so long!... Hmm, I'll have to see what the tickle is like for myself later...
 1-female_chest_will_be_visible,count-role;target&character;twilight&stage;1:=happy.png,Aw yeah! Another excellent choice! You're a real blast!
+1-female_chest_will_be_visible,count-role;target&character;twilight&stage;6:=happy.png,Hah! Now you've got no choice! Drop the top, pork chop!
 1-female_small_chest_is_visible,count-robot&role;target:=happy.png,Ah, I see you were built by an individual of good tastes!
+1-female_medium_chest_is_visible,count-role;target&character;twilight&stage;7:=calm.png,... Say, have you met Moxxi yet? I think you two would get along pretty well... Just, uh, make sure she pays you good if she asks you to do something for her.
 1-female_medium_chest_is_visible,count-role;target&character;twilight&stage;2:=sad.png,Aw, you're not going to spread your shirt open for us? That's slightly less of a blast.
 1-female_medium_chest_is_visible,count-robot&role;target:=happy.png,Heh heh. Robot titties...
 1-female_large_chest_is_visible,count-robot&role;target:=happy.png,Y'know, something about giving a robot large tits seems pretty pervy, but you make it work!
@@ -1292,8 +1601,11 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 2-male_medium_crotch_is_visible,count-robot&role;target:=excited.png,Aw yeah, robot dick!
 2-male_medium_crotch_is_visible,count-robot&role;target:=excited.png,Dude, I've <i>got</i> to know what that feels like!
 2-male_large_crotch_is_visible,count-robot&role;target:=embarrassed.png,Woah... Giant robot dick...
+2-female_chest_will_be_visible,count-role;target&character;twilight&stage;6&saying;tickle:=happy.png,Ah, so <i>that's</i> why you kept your shirt so long!... Hmm, I'll have to see what the tickle is like for myself later...
 2-female_chest_will_be_visible,count-role;target&character;twilight&stage;1:=happy.png,Aw yeah! Another excellent choice! You're a real blast!
+2-female_chest_will_be_visible,count-role;target&character;twilight&stage;6:=happy.png,Hah! Now you've got no choice! Drop the top, pork chop!
 2-female_small_chest_is_visible,count-robot&role;target:=happy.png,Ah, I see you were built by an individual of good tastes!
+2-female_medium_chest_is_visible,count-role;target&character;twilight&stage;7:=calm.png,... Say, have you met Moxxi yet? I think you two would get along pretty well... Just, uh, make sure she pays you good if she asks you to do something for her.
 2-female_medium_chest_is_visible,count-role;target&character;twilight&stage;2:=sad.png,Aw, you're not going to spread your shirt open for us? That's slightly less of a blast.
 2-female_medium_chest_is_visible,count-robot&role;target:=happy.png,Heh heh. Robot titties...
 2-female_large_chest_is_visible,count-robot&role;target:=happy.png,Y'know, something about giving a robot large tits seems pretty pervy, but you make it work!
@@ -1309,8 +1621,11 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 3-male_medium_crotch_is_visible,count-robot&role;target:=excited.png,Aw yeah, robot dick!
 3-male_medium_crotch_is_visible,count-robot&role;target:=excited.png,Dude, I've <i>got</i> to know what that feels like!
 3-male_large_crotch_is_visible,count-robot&role;target:=embarrassed.png,Woah... Giant robot dick...
+3-female_chest_will_be_visible,count-role;target&character;twilight&stage;6&saying;tickle:=happy.png,Ah, so <i>that's</i> why you kept your shirt so long!... Hmm, I'll have to see what the tickle is like for myself later...
 3-female_chest_will_be_visible,count-role;target&character;twilight&stage;1:=happy.png,Aw yeah! Another excellent choice! You're a real blast!
+3-female_chest_will_be_visible,count-role;target&character;twilight&stage;6:=happy.png,Hah! Now you've got no choice! Drop the top, pork chop!
 3-female_small_chest_is_visible,count-robot&role;target:=happy.png,Ah, I see you were built by an individual of good tastes!
+3-female_medium_chest_is_visible,count-role;target&character;twilight&stage;7:=calm.png,... Say, have you met Moxxi yet? I think you two would get along pretty well... Just, uh, make sure she pays you good if she asks you to do something for her.
 3-female_medium_chest_is_visible,count-role;target&character;twilight&stage;2:=sad.png,Aw, you're not going to spread your shirt open for us? That's slightly less of a blast.
 3-female_medium_chest_is_visible,count-robot&role;target:=happy.png,Heh heh. Robot titties...
 3-female_large_chest_is_visible,count-robot&role;target:=happy.png,Y'know, something about giving a robot large tits seems pretty pervy, but you make it work!
@@ -1326,8 +1641,11 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 4-male_medium_crotch_is_visible,count-robot&role;target:=excited.png,Aw yeah, robot dick!
 4-male_medium_crotch_is_visible,count-robot&role;target:=excited.png,Dude, I've <i>got</i> to know what that feels like!
 4-male_large_crotch_is_visible,count-robot&role;target:=embarrassed.png,Woah... Giant robot dick...
+4-female_chest_will_be_visible,count-role;target&character;twilight&stage;6&saying;tickle:=happy.png,Ah, so <i>that's</i> why you kept your shirt so long!... Hmm, I'll have to see what the tickle is like for myself later...
 4-female_chest_will_be_visible,count-role;target&character;twilight&stage;1:=happy.png,Aw yeah! Another excellent choice! You're a real blast!
+4-female_chest_will_be_visible,count-role;target&character;twilight&stage;6:=happy.png,Hah! Now you've got no choice! Drop the top, pork chop!
 4-female_small_chest_is_visible,count-robot&role;target:=happy.png,Ah, I see you were built by an individual of good tastes!
+4-female_medium_chest_is_visible,count-role;target&character;twilight&stage;7:=calm.png,... Say, have you met Moxxi yet? I think you two would get along pretty well... Just, uh, make sure she pays you good if she asks you to do something for her.
 4-female_medium_chest_is_visible,count-role;target&character;twilight&stage;2:=sad.png,Aw, you're not going to spread your shirt open for us? That's slightly less of a blast.
 4-female_medium_chest_is_visible,count-robot&role;target:=happy.png,Heh heh. Robot titties...
 4-female_large_chest_is_visible,count-robot&role;target:=happy.png,Y'know, something about giving a robot large tits seems pretty pervy, but you make it work!
@@ -1344,7 +1662,7 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 5-male_chest_is_visible=happy.png,Aw yeah, look at those pecks, and, uh... delts!
 5-male_crotch_will_be_visible=wink.png,Is that a pistol in your ~clothing~ or are you just having a good time?
 5-male_crotch_will_be_visible=happy.png,Time to drop trou!
-5-male_small_crotch_is_visible=claptrap.png,(<i>Don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises."</i>)
+5-male_small_crotch_is_visible=claptrap.png,<i>(Don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises.")</i>
 5-male_small_crotch_is_visible=happy.png,Um... Hey, some of my best guns have been hand guns! As opposed to bigger, heavier guns... Uh, never mind...
 5-male_small_crotch_is_visible=happy.png,You know what they say: it's not the size of the wingnut that counts, it's, uh... the fact that you can turn it without a wrench!
 5-male_small_crotch_is_visible,count-robot&role;target:=sad.png,Aw man! What kind of person builds a robot with a tiny dick?
@@ -1358,12 +1676,15 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 5-male_large_crotch_is_visible=embarrassed.png,That's big, inelegant, and I totally love it...
 5-male_large_crotch_is_visible,count-robot&role;target:=embarrassed.png,Woah... Giant robot dick...
 5-female_chest_will_be_visible=happy.png,Great, now we can compare our boobs!... That's a thing girls do together, right...?
+5-female_chest_will_be_visible,count-role;target&character;twilight&stage;6&saying;tickle:=happy.png,Ah, so <i>that's</i> why you kept your shirt so long!... Hmm, I'll have to see what the tickle is like for myself later...
 5-female_chest_will_be_visible,count-role;target&character;twilight&stage;1:=happy.png,Aw yeah! Another excellent choice! You're a real blast!
+5-female_chest_will_be_visible,count-role;target&character;twilight&stage;6:=happy.png,Hah! Now you've got no choice! Drop the top, pork chop!
 5-female_small_chest_is_visible=wink.png,Don't even <i>think</i> of geting implants, because <i>those</i> are already perfect!
-5-female_small_chest_is_visible=happy.png,That reminds me, I read about this woman who had this conceiled holster on her chest. People thought she had big bazoombas, but she actually had a big <i>bazooka</i>! Her chest was actually flat!
+5-female_small_chest_is_visible=happy.png,That reminds me, I read about this woman who had this concealed holster on her chest. People thought she had big bazoombas, but she actually had a big <i>bazooka</i>! Her chest was actually flat!
 5-female_small_chest_is_visible,count-robot&role;target:=happy.png,Ah, I see you were built by an individual of good tastes!
 5-female_medium_chest_is_visible=happy.png,Look like yours are <i>slightly</i> bigger than mine. Or maybe not. Who cares? They're both great!
 5-female_medium_chest_is_visible=excited.png,Aw man, we're like, <i>titty twins</i> or something!
+5-female_medium_chest_is_visible,count-role;target&character;twilight&stage;7:=calm.png,... Say, have you met Moxxi yet? I think you two would get along pretty well... Just, uh, make sure she pays you good if she asks you to do something for her.
 5-female_medium_chest_is_visible,count-role;target&character;twilight&stage;2:=sad.png,Aw, you're not going to spread your shirt open for us? That's slightly less of a blast.
 5-female_medium_chest_is_visible,count-robot&role;target:=happy.png,Heh heh. Robot titties...
 5-female_large_chest_is_visible=excited.png,Oh man, those are <i>huge</i>! Can I feel? I bet they're soft!
@@ -1374,7 +1695,7 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 5-female_crotch_will_be_visible,count-role;target&character;twilight&stage;0:=turboexcited.png,Hell yeah! Underwear first! <i>Smash the system!</i>
 5-female_crotch_will_be_visible,count-role;target&character;twilight&stage;2:=thinking.png,Y'know, your skirt's like my skirt, except drawn better. Isn't that weird?
 5-female_crotch_will_be_visible,count-not_chest_visible&role;target:,id:5=turboexcited.png,Hell yeah, that's the way to do it! Bottom first! Screw conventions!
-5-female_crotch_is_visible=wink.png,Um... Nice clam taco! (<i>Damn it, Moxxi makes this seem easy...</i>)
+5-female_crotch_is_visible=wink.png,Um... Nice clam taco! <i>(Damn it, Moxxi makes this seem easy...)</i>
 5-female_crotch_is_visible,count-role;target&character;twilight&stage;1:,id:13=happy.png,I hope you plan to keep going against the grain!
 5-female_crotch_is_visible,count-role;target&character;twilight&stage;3:=happy.png,Woah, I didn't notice before, but your pubes have a color streak on them! Did you dye them or do they just grow like that?
 
@@ -1385,7 +1706,7 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 6-male_chest_is_visible=happy.png,Aw yeah, look at those pecks, and, uh... delts!
 6-male_crotch_will_be_visible=wink.png,Is that a pistol in your ~clothing~ or are you just having a good time?
 6-male_crotch_will_be_visible=happy.png,Time to drop trou!
-6-male_small_crotch_is_visible=claptrap.png,(<i>Don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises."</i>)
+6-male_small_crotch_is_visible=claptrap.png,<i>(Don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises.")</i>
 6-male_small_crotch_is_visible=happy.png,Um... Hey, some of my best guns have been hand guns! As opposed to bigger, heavier guns... Uh, never mind...
 6-male_small_crotch_is_visible=happy.png,You know what they say: it's not the size of the wingnut that counts, it's, uh... the fact that you can turn it without a wrench!
 6-male_small_crotch_is_visible,count-robot&role;target:=sad.png,Aw man! What kind of person builds a robot with a tiny dick?
@@ -1399,12 +1720,15 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 6-male_large_crotch_is_visible=embarrassed.png,That's big, inelegant, and I totally love it...
 6-male_large_crotch_is_visible,count-robot&role;target:=embarrassed.png,Woah... Giant robot dick...
 6-female_chest_will_be_visible=happy.png,Great, now we can compare our boobs!... That's a thing girls do together, right...?
+6-female_chest_will_be_visible,count-role;target&character;twilight&stage;6&saying;tickle:=happy.png,Ah, so <i>that's</i> why you kept your shirt so long!... Hmm, I'll have to see what the tickle is like for myself later...
 6-female_chest_will_be_visible,count-role;target&character;twilight&stage;1:=happy.png,Aw yeah! Another excellent choice! You're a real blast!
+6-female_chest_will_be_visible,count-role;target&character;twilight&stage;6:=happy.png,Hah! Now you've got no choice! Drop the top, pork chop!
 6-female_small_chest_is_visible=wink.png,Don't even <i>think</i> of geting implants, because <i>those</i> are already perfect!
-6-female_small_chest_is_visible=happy.png,That reminds me, I read about this woman who had this conceiled holster on her chest. People thought she had big bazoombas, but she actually had a big <i>bazooka</i>! Her chest was actually flat!
+6-female_small_chest_is_visible=happy.png,That reminds me, I read about this woman who had this concealed holster on her chest. People thought she had big bazoombas, but she actually had a big <i>bazooka</i>! Her chest was actually flat!
 6-female_small_chest_is_visible,count-robot&role;target:=happy.png,Ah, I see you were built by an individual of good tastes!
 6-female_medium_chest_is_visible=happy.png,Look like yours are <i>slightly</i> bigger than mine. Or maybe not. Who cares? They're both great!
 6-female_medium_chest_is_visible=excited.png,Aw man, we're like, <i>titty twins</i> or something!
+6-female_medium_chest_is_visible,count-role;target&character;twilight&stage;7:=calm.png,... Say, have you met Moxxi yet? I think you two would get along pretty well... Just, uh, make sure she pays you good if she asks you to do something for her.
 6-female_medium_chest_is_visible,count-role;target&character;twilight&stage;2:=sad.png,Aw, you're not going to spread your shirt open for us? That's slightly less of a blast.
 6-female_medium_chest_is_visible,count-robot&role;target:=happy.png,Heh heh. Robot titties...
 6-female_large_chest_is_visible=excited.png,Oh man, those are <i>huge</i>! Can I feel? I bet they're soft!
@@ -1415,7 +1739,7 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 6-female_crotch_will_be_visible,count-role;target&character;twilight&stage;0:=turboexcited.png,Hell yeah! Underwear first! <i>Smash the system!</i>
 6-female_crotch_will_be_visible,count-role;target&character;twilight&stage;2:=thinking.png,Y'know, your skirt's like my skirt, except drawn better. Isn't that weird?
 6-female_crotch_will_be_visible,count-not_chest_visible&role;target:,id:5=turboexcited.png,Hell yeah, that's the way to do it! Bottom first! Screw conventions!
-6-female_crotch_is_visible=wink.png,Um... Nice clam taco! (<i>Damn it, Moxxi makes this seem easy...</i>)
+6-female_crotch_is_visible=wink.png,Um... Nice clam taco! <i>(Damn it, Moxxi makes this seem easy...)</i>
 6-female_crotch_is_visible,count-role;target&character;twilight&stage;1:,id:13=happy.png,I hope you plan to keep going against the grain!
 6-female_crotch_is_visible,count-role;target&character;twilight&stage;3:=happy.png,Woah, I didn't notice before, but your pubes have a color streak on them! Did you dye them or do they just grow like that?
 
@@ -1426,7 +1750,7 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 -3-male_chest_is_visible=happy.png,Aw yeah, look at those pecks, and, uh... delts!
 -3-male_crotch_will_be_visible=wink.png,Is that a pistol in your ~clothing~ or are you just having a good time?
 -3-male_crotch_will_be_visible=happy.png,Time to drop trou!
--3-male_small_crotch_is_visible=claptrap.png,(<i>Don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises."</i>)
+-3-male_small_crotch_is_visible=claptrap.png,<i>(Don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises.")</i>
 -3-male_small_crotch_is_visible=happy.png,Um... Hey, some of my best guns have been hand guns! As opposed to bigger, heavier guns... Uh, never mind...
 -3-male_small_crotch_is_visible=happy.png,You know what they say: it's not the size of the wingnut that counts, it's, uh... the fact that you can turn it without a wrench!
 -3-male_small_crotch_is_visible,count-robot&role;target:=sad.png,Aw man! What kind of person builds a robot with a tiny dick?
@@ -1440,12 +1764,15 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 -3-male_large_crotch_is_visible=embarrassed.png,That's big, inelegant, and I totally love it...
 -3-male_large_crotch_is_visible,count-robot&role;target:=embarrassed.png,Woah... Giant robot dick...
 -3-female_chest_will_be_visible=happy.png,Great, now we can compare our boobs!... That's a thing girls do together, right...?
+-3-female_chest_will_be_visible,count-role;target&character;twilight&stage;6&saying;tickle:=happy.png,Ah, so <i>that's</i> why you kept your shirt so long!... Hmm, I'll have to see what the tickle is like for myself later...
 -3-female_chest_will_be_visible,count-role;target&character;twilight&stage;1:=happy.png,Aw yeah! Another excellent choice! You're a real blast!
+-3-female_chest_will_be_visible,count-role;target&character;twilight&stage;6:=happy.png,Hah! Now you've got no choice! Drop the top, pork chop!
 -3-female_small_chest_is_visible=wink.png,Don't even <i>think</i> of geting implants, because <i>those</i> are already perfect!
--3-female_small_chest_is_visible=happy.png,That reminds me, I read about this woman who had this conceiled holster on her chest. People thought she had big bazoombas, but she actually had a big <i>bazooka</i>! Her chest was actually flat!
+-3-female_small_chest_is_visible=happy.png,That reminds me, I read about this woman who had this concealed holster on her chest. People thought she had big bazoombas, but she actually had a big <i>bazooka</i>! Her chest was actually flat!
 -3-female_small_chest_is_visible,count-robot&role;target:=happy.png,Ah, I see you were built by an individual of good tastes!
 -3-female_medium_chest_is_visible=happy.png,Look like yours are <i>slightly</i> bigger than mine. Or maybe not. Who cares? They're both great!
 -3-female_medium_chest_is_visible=excited.png,Aw man, we're like, <i>titty twins</i> or something!
+-3-female_medium_chest_is_visible,count-role;target&character;twilight&stage;7:=calm.png,... Say, have you met Moxxi yet? I think you two would get along pretty well... Just, uh, make sure she pays you good if she asks you to do something for her.
 -3-female_medium_chest_is_visible,count-role;target&character;twilight&stage;2:=sad.png,Aw, you're not going to spread your shirt open for us? That's slightly less of a blast.
 -3-female_medium_chest_is_visible,count-robot&role;target:=happy.png,Heh heh. Robot titties...
 -3-female_large_chest_is_visible=excited.png,Oh man, those are <i>huge</i>! Can I feel? I bet they're soft!
@@ -1456,7 +1783,7 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 -3-female_crotch_will_be_visible,count-role;target&character;twilight&stage;0:=turboexcited.png,Hell yeah! Underwear first! <i>Smash the system!</i>
 -3-female_crotch_will_be_visible,count-role;target&character;twilight&stage;2:=thinking.png,Y'know, your skirt's like my skirt, except drawn better. Isn't that weird?
 -3-female_crotch_will_be_visible,count-not_chest_visible&role;target:,id:5=turboexcited.png,Hell yeah, that's the way to do it! Bottom first! Screw conventions!
--3-female_crotch_is_visible=wink.png,Um... Nice clam taco! (<i>Damn it, Moxxi makes this seem easy...</i>)
+-3-female_crotch_is_visible=wink.png,Um... Nice clam taco! <i>(Damn it, Moxxi makes this seem easy...)</i>
 -3-female_crotch_is_visible,count-role;target&character;twilight&stage;1:,id:13=happy.png,I hope you plan to keep going against the grain!
 -3-female_crotch_is_visible,count-role;target&character;twilight&stage;3:=happy.png,Woah, I didn't notice before, but your pubes have a color streak on them! Did you dye them or do they just grow like that?
 
@@ -1467,7 +1794,7 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 -2-male_chest_is_visible=happy.png,Aw yeah, look at those pecks, and, uh... delts!
 -2-male_crotch_will_be_visible=wink.png,Is that a pistol in your ~clothing~ or are you just having a good time?
 -2-male_crotch_will_be_visible=happy.png,Time to drop trou!
--2-male_small_crotch_is_visible=claptrap.png,(<i>Don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises."</i>)
+-2-male_small_crotch_is_visible=claptrap.png,<i>(Don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises.")</i>
 -2-male_small_crotch_is_visible=happy.png,Um... Hey, some of my best guns have been hand guns! As opposed to bigger, heavier guns... Uh, never mind...
 -2-male_small_crotch_is_visible=happy.png,You know what they say: it's not the size of the wingnut that counts, it's, uh... the fact that you can turn it without a wrench!
 -2-male_small_crotch_is_visible,count-robot&role;target:=sad.png,Aw man! What kind of person builds a robot with a tiny dick?
@@ -1481,12 +1808,15 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 -2-male_large_crotch_is_visible=embarrassed.png,That's big, inelegant, and I totally love it...
 -2-male_large_crotch_is_visible,count-robot&role;target:=embarrassed.png,Woah... Giant robot dick...
 -2-female_chest_will_be_visible=happy.png,Great, now we can compare our boobs!... That's a thing girls do together, right...?
+-2-female_chest_will_be_visible,count-role;target&character;twilight&stage;6&saying;tickle:=happy.png,Ah, so <i>that's</i> why you kept your shirt so long!... Hmm, I'll have to see what the tickle is like for myself later...
 -2-female_chest_will_be_visible,count-role;target&character;twilight&stage;1:=happy.png,Aw yeah! Another excellent choice! You're a real blast!
+-2-female_chest_will_be_visible,count-role;target&character;twilight&stage;6:=happy.png,Hah! Now you've got no choice! Drop the top, pork chop!
 -2-female_small_chest_is_visible=wink.png,Don't even <i>think</i> of geting implants, because <i>those</i> are already perfect!
--2-female_small_chest_is_visible=happy.png,That reminds me, I read about this woman who had this conceiled holster on her chest. People thought she had big bazoombas, but she actually had a big <i>bazooka</i>! Her chest was actually flat!
+-2-female_small_chest_is_visible=happy.png,That reminds me, I read about this woman who had this concealed holster on her chest. People thought she had big bazoombas, but she actually had a big <i>bazooka</i>! Her chest was actually flat!
 -2-female_small_chest_is_visible,count-robot&role;target:=happy.png,Ah, I see you were built by an individual of good tastes!
 -2-female_medium_chest_is_visible=happy.png,Look like yours are <i>slightly</i> bigger than mine. Or maybe not. Who cares? They're both great!
 -2-female_medium_chest_is_visible=excited.png,Aw man, we're like, <i>titty twins</i> or something!
+-2-female_medium_chest_is_visible,count-role;target&character;twilight&stage;7:=calm.png,... Say, have you met Moxxi yet? I think you two would get along pretty well... Just, uh, make sure she pays you good if she asks you to do something for her.
 -2-female_medium_chest_is_visible,count-role;target&character;twilight&stage;2:=sad.png,Aw, you're not going to spread your shirt open for us? That's slightly less of a blast.
 -2-female_medium_chest_is_visible,count-robot&role;target:=happy.png,Heh heh. Robot titties...
 -2-female_large_chest_is_visible=excited.png,Oh man, those are <i>huge</i>! Can I feel? I bet they're soft!
@@ -1497,7 +1827,7 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 -2-female_crotch_will_be_visible,count-role;target&character;twilight&stage;0:=turboexcited.png,Hell yeah! Underwear first! <i>Smash the system!</i>
 -2-female_crotch_will_be_visible,count-role;target&character;twilight&stage;2:=thinking.png,Y'know, your skirt's like my skirt, except drawn better. Isn't that weird?
 -2-female_crotch_will_be_visible,count-not_chest_visible&role;target:,id:5=turboexcited.png,Hell yeah, that's the way to do it! Bottom first! Screw conventions!
--2-female_crotch_is_visible=wink.png,Um... Nice clam taco! (<i>Damn it, Moxxi makes this seem easy...</i>)
+-2-female_crotch_is_visible=wink.png,Um... Nice clam taco! <i>(Damn it, Moxxi makes this seem easy...)</i>
 -2-female_crotch_is_visible,count-role;target&character;twilight&stage;1:,id:13=happy.png,I hope you plan to keep going against the grain!
 -2-female_crotch_is_visible,count-role;target&character;twilight&stage;3:=happy.png,Woah, I didn't notice before, but your pubes have a color streak on them! Did you dye them or do they just grow like that?
 
@@ -1508,7 +1838,7 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 -1-male_chest_is_visible=happy.png,Aw yeah, look at those pecks, and, uh... delts!
 -1-male_crotch_will_be_visible=wink.png,Is that a pistol in your ~clothing~ or are you just having a good time?
 -1-male_crotch_will_be_visible=happy.png,Time to drop trou!
--1-male_small_crotch_is_visible=claptrap.png,(<i>Don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises."</i>)
+-1-male_small_crotch_is_visible=claptrap.png,<i>(Don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises," don't say "It's the Claptrap of penises.")</i>
 -1-male_small_crotch_is_visible=happy.png,Um... Hey, some of my best guns have been hand guns! As opposed to bigger, heavier guns... Uh, never mind...
 -1-male_small_crotch_is_visible=happy.png,You know what they say: it's not the size of the wingnut that counts, it's, uh... the fact that you can turn it without a wrench!
 -1-male_small_crotch_is_visible,count-robot&role;target:=sad.png,Aw man! What kind of person builds a robot with a tiny dick?
@@ -1522,12 +1852,15 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 -1-male_large_crotch_is_visible=embarrassed.png,That's big, inelegant, and I totally love it...
 -1-male_large_crotch_is_visible,count-robot&role;target:=embarrassed.png,Woah... Giant robot dick...
 -1-female_chest_will_be_visible=happy.png,Great, now we can compare our boobs!... That's a thing girls do together, right...?
+-1-female_chest_will_be_visible,count-role;target&character;twilight&stage;6&saying;tickle:=happy.png,Ah, so <i>that's</i> why you kept your shirt so long!... Hmm, I'll have to see what the tickle is like for myself later...
 -1-female_chest_will_be_visible,count-role;target&character;twilight&stage;1:=happy.png,Aw yeah! Another excellent choice! You're a real blast!
+-1-female_chest_will_be_visible,count-role;target&character;twilight&stage;6:=happy.png,Hah! Now you've got no choice! Drop the top, pork chop!
 -1-female_small_chest_is_visible=wink.png,Don't even <i>think</i> of geting implants, because <i>those</i> are already perfect!
--1-female_small_chest_is_visible=happy.png,That reminds me, I read about this woman who had this conceiled holster on her chest. People thought she had big bazoombas, but she actually had a big <i>bazooka</i>! Her chest was actually flat!
+-1-female_small_chest_is_visible=happy.png,That reminds me, I read about this woman who had this concealed holster on her chest. People thought she had big bazoombas, but she actually had a big <i>bazooka</i>! Her chest was actually flat!
 -1-female_small_chest_is_visible,count-robot&role;target:=happy.png,Ah, I see you were built by an individual of good tastes!
 -1-female_medium_chest_is_visible=happy.png,Look like yours are <i>slightly</i> bigger than mine. Or maybe not. Who cares? They're both great!
 -1-female_medium_chest_is_visible=excited.png,Aw man, we're like, <i>titty twins</i> or something!
+-1-female_medium_chest_is_visible,count-role;target&character;twilight&stage;7:=calm.png,... Say, have you met Moxxi yet? I think you two would get along pretty well... Just, uh, make sure she pays you good if she asks you to do something for her.
 -1-female_medium_chest_is_visible,count-role;target&character;twilight&stage;2:=sad.png,Aw, you're not going to spread your shirt open for us? That's slightly less of a blast.
 -1-female_medium_chest_is_visible,count-robot&role;target:=happy.png,Heh heh. Robot titties...
 -1-female_large_chest_is_visible=excited.png,Oh man, those are <i>huge</i>! Can I feel? I bet they're soft!
@@ -1538,7 +1871,7 @@ female_crotch_is_visible=wink.png,(*Crap, I forgot my clever euphamism... Just k
 -1-female_crotch_will_be_visible,count-role;target&character;twilight&stage;0:=turboexcited.png,Hell yeah! Underwear first! <i>Smash the system!</i>
 -1-female_crotch_will_be_visible,count-role;target&character;twilight&stage;2:=thinking.png,Y'know, your skirt's like my skirt, except drawn better. Isn't that weird?
 -1-female_crotch_will_be_visible,count-not_chest_visible&role;target:,id:5=turboexcited.png,Hell yeah, that's the way to do it! Bottom first! Screw conventions!
--1-female_crotch_is_visible=wink.png,Um... Nice clam taco! (<i>Damn it, Moxxi makes this seem easy...</i>)
+-1-female_crotch_is_visible=wink.png,Um... Nice clam taco! <i>(Damn it, Moxxi makes this seem easy...)</i>
 -1-female_crotch_is_visible,count-role;target&character;twilight&stage;1:,id:13=happy.png,I hope you plan to keep going against the grain!
 -1-female_crotch_is_visible,count-role;target&character;twilight&stage;3:=happy.png,Woah, I didn't notice before, but your pubes have a color streak on them! Did you dye them or do they just grow like that?
 
@@ -1667,7 +2000,7 @@ female_finished_masturbating=thinking.png,I wonder if I can modify my Blood-Soak
 
 
 #lost shirt
-5-male_start_masturbating=happy.png,Well? Hope to it! Spank that snake or whatever!
+5-male_start_masturbating=happy.png,Well? Hop to it! Spank that snake or whatever!
 5-female_start_masturbating=wink.png,So yeah, flick that bean... you.
 5-female_masturbating,oneShotId:1,count-uses_toy&role;target:=thinking.png,Say, would you be willing to replace an arm with a mechanical one for convenient dildo storage?... <i>Uh, yeah, me either...</i>
 5-female_heavy_masturbating,oneShotId:2,count-role;target&character;rainbow_dash:=claptrap.png,Uh, you doing alright over there? You're, uh, <i>glowing</i>. In my experience, that means there's going to be an explosion... the fiery kind.
@@ -1675,7 +2008,7 @@ female_finished_masturbating=thinking.png,I wonder if I can modify my Blood-Soak
 
 
 #lost panties
-6-male_start_masturbating=happy.png,Well? Hope to it! Spank that snake or whatever!
+6-male_start_masturbating=happy.png,Well? Hop to it! Spank that snake or whatever!
 6-female_start_masturbating=wink.png,So yeah, flick that bean... you.
 6-female_masturbating,oneShotId:1,count-uses_toy&role;target:=thinking.png,Say, would you be willing to replace an arm with a mechanical one for convenient dildo storage?... <i>Uh, yeah, me either...</i>
 6-female_heavy_masturbating,oneShotId:2,count-role;target&character;rainbow_dash:=claptrap.png,Uh, you doing alright over there? You're, uh, <i>glowing</i>. In my experience, that means there's going to be an explosion... the fiery kind.
@@ -1683,7 +2016,7 @@ female_finished_masturbating=thinking.png,I wonder if I can modify my Blood-Soak
 
 
 #naked
--3-male_start_masturbating=happy.png,Well? Hope to it! Spank that snake or whatever!
+-3-male_start_masturbating=happy.png,Well? Hop to it! Spank that snake or whatever!
 -3-female_start_masturbating=wink.png,So yeah, flick that bean... you.
 -3-female_masturbating,oneShotId:1,count-uses_toy&role;target:=thinking.png,Say, would you be willing to replace an arm with a mechanical one for convenient dildo storage?... <i>Uh, yeah, me either...</i>
 -3-female_heavy_masturbating,oneShotId:2,count-role;target&character;rainbow_dash:=claptrap.png,Uh, you doing alright over there? You're, uh, <i>glowing</i>. In my experience, that means there's going to be an explosion... the fiery kind.
@@ -1691,7 +2024,7 @@ female_finished_masturbating=thinking.png,I wonder if I can modify my Blood-Soak
 
 
 #masturbating
--2-male_start_masturbating=happy.png,Well? Hope to it! Spank that snake or whatever!
+-2-male_start_masturbating=happy.png,Well? Hop to it! Spank that snake or whatever!
 -2-female_start_masturbating=wink.png,So yeah, flick that bean... you.
 -2-female_masturbating,oneShotId:1,count-uses_toy&role;target:=thinking.png,Say, would you be willing to replace an arm with a mechanical one for convenient dildo storage?... <i>Uh, yeah, me either...</i>
 -2-female_heavy_masturbating,oneShotId:2,count-role;target&character;rainbow_dash:=claptrap.png,Uh, you doing alright over there? You're, uh, <i>glowing</i>. In my experience, that means there's going to be an explosion... the fiery kind.
@@ -1699,7 +2032,7 @@ female_finished_masturbating=thinking.png,I wonder if I can modify my Blood-Soak
 
 
 #finished
--1-male_start_masturbating=happy.png,Well? Hope to it! Spank that snake or whatever!
+-1-male_start_masturbating=happy.png,Well? Hop to it! Spank that snake or whatever!
 -1-female_start_masturbating=wink.png,So yeah, flick that bean... you.
 -1-female_masturbating,oneShotId:1,count-uses_toy&role;target:=thinking.png,Say, would you be willing to replace an arm with a mechanical one for convenient dildo storage?... <i>Uh, yeah, me either...</i>
 -1-female_heavy_masturbating,oneShotId:2,count-role;target&character;rainbow_dash:=claptrap.png,Uh, you doing alright over there? You're, uh, <i>glowing</i>. In my experience, that means there's going to be an explosion... the fiery kind.
@@ -1730,8 +2063,6 @@ female_finished_masturbating=thinking.png,I wonder if I can modify my Blood-Soak
 -3-must_masturbate=defeat.png,So much for that bonus objective...
 -3-must_masturbate=defeat.png,Damn. Winning would've gotten me a bonus...
 -3-must_masturbate=defeat.png,Er... Damn it... Guess I'm not getting that bonus...
--3-must_masturbate,totalAlive:3=sad.png,Damn it! Third place <i>again</i>!
--3-must_masturbate,totalAlive:3=sad.png,Third place <i>again</i>? Son of a whore!
 -3-must_masturbate,totalAlive:3,totalMasturbating:1,totalFinished:1=sad.png,Damn it! Third place <i>again</i>!
 -3-must_masturbate,totalAlive:3,totalMasturbating:1,totalFinished:1=sad.png,Third place <i>again</i>? Son of a whore!
 -3-must_masturbate,totalAlive:3,totalMasturbating:2=sad.png,Damn it! Third place <i>again</i>!
@@ -1750,6 +2081,7 @@ female_finished_masturbating=thinking.png,I wonder if I can modify my Blood-Soak
 -2-masturbating=thinking.png,Did I remember to put more hydrophobic polygrease on my arm today...?
 -2-masturbating,one-shot-id:17=happy.png,Y'know, it's pretty great being a technophile with a robot arm... Uh, not that <i>I am</i> a technophile, just sayin'...
 -2-masturbating,count-role;self&timeinstage;3:=calm.png,Ah... My fingers finally warmed up...
+-2-masturbating,oneShotId:6,count-role;other&character;yuelia:=calm.png,I'm not sensitive to cold, I just wasn't expecting my fingers to be so cold.
 -2-masturbating,priority:0,count-exposed:1,count-naked:1=claptrap.png,So, uh... any chance I can get a little... <i>motivation</i> soon?
 -2-masturbating,priority:0,count-exposed:1,count-naked:1=claptrap.png,Maybe I should've borrowed one of Axton's porno mags...? I mean, not that I know he has some, but c'mon, <i>he has some</i>.
 -2-masturbating,priority:0,count-exposed:1,count-naked:1=calm.png,Gotta say, this game isn't really that fun when you're the first one out and no one's showing anything exciting. I might as well just be at home watching ECHO porn...

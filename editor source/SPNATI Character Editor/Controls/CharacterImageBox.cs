@@ -94,20 +94,17 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		private bool _showText;
 		public bool ShowTextBox
 		{
-			get { return _showText; }
-			set
+			get
 			{
-				_showText = value;
-				UpdateSceneTransform();
-				canvas.Invalidate();
+				return Config.GetBoolean(Settings.ShowPreviewText);
 			}
 		}
 
 		private void OnToggleImages()
 		{
+			UpdateSceneTransform();
 			canvas.Invalidate();
 		}
 
@@ -265,13 +262,14 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 
 			Graphics g = e.Graphics;
-
+			
 			//text box
 			int screenHeight = canvas.Height - ScreenMargin * 2;
 
-			if (_showText && !string.IsNullOrEmpty(_text))
+			bool showText = Config.GetBoolean(Settings.ShowPreviewText);
+			if (showText && !string.IsNullOrEmpty(_text))
 			{
-
+				bool formatText = !Config.GetBoolean(Settings.DisablePreviewFormatting);
 				int textboxHeight = (int)(screenHeight * TextPercent);
 				int topPadding = (int)(textboxHeight * TextBuffer);
 				textboxHeight -= topPadding;
@@ -303,7 +301,7 @@ namespace SPNATI_Character_Editor.Controls
 						Font font = (italics ? _italicFont : _textFont);
 						SizeF textSize = g.MeasureString(text, font);
 						word.Width = textSize.Width;
-						height = Math.Max(textSize.Height, height);
+						height = Math.Max(textSize.Height, height) - 2;
 
 						if (word.Width >= remainingWidth)
 						{
@@ -352,45 +350,51 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					g.FillRectangle(br, TextMargin, topPadding + TopOffset, canvas.Width - TextMargin * 2, textboxHeight - TopOffset);
 
-					using (SolidBrush fr = new SolidBrush(SkinManager.Instance.CurrentSkin.Surface.ForeColor))
+					if (formatText)
 					{
-						//print each line
-						float requiredHeight = height * lines.Count;
-						float lineY = bounds.Y + bounds.Height / 2 - requiredHeight / 2;
-						italics = false;
-						foreach (List<Word> workingLine in lines)
+						using (SolidBrush fr = new SolidBrush(SkinManager.Instance.CurrentSkin.Surface.ForeColor))
 						{
-							float totalWidth = workingLine.Sum(w => w.Width);
-							float lineX = bounds.X + bounds.Width / 2 - totalWidth / 2;
-							for (int j = 0; j < workingLine.Count; j++)
+							//print each line
+							float requiredHeight = height * lines.Count;
+							float lineY = bounds.Y + bounds.Height / 2 - requiredHeight / 2;
+							italics = false;
+							foreach (List<Word> workingLine in lines)
 							{
-								Word word = workingLine[j];
-								switch (word.Formatter)
+								float totalWidth = workingLine.Sum(w => w.Width);
+								float lineX = bounds.X + bounds.Width / 2 - totalWidth / 2;
+								for (int j = 0; j < workingLine.Count; j++)
 								{
-									case FormatMarker.ItalicOn:
-										italics = true;
-										break;
-									case FormatMarker.ItalicOff:
-										italics = false;
-										break;
-									case FormatMarker.None:
-										string text = word.Text;
-										float width = word.Width;
-										Font font = (italics ? _italicFont : _textFont);
-										g.DrawString(text, font, fr, lineX, lineY);
-										lineX += width;
-										break;
-								}
+									Word word = workingLine[j];
+									switch (word.Formatter)
+									{
+										case FormatMarker.ItalicOn:
+											italics = true;
+											break;
+										case FormatMarker.ItalicOff:
+											italics = false;
+											break;
+										case FormatMarker.None:
+											string text = word.Text;
+											float width = word.Width;
+											Font font = (italics ? _italicFont : _textFont);
+											g.DrawString(text, font, fr, lineX, lineY);
+											lineX += width;
+											break;
+									}
 
+								}
+								lineY += height;
 							}
-							lineY += height;
+						}
+					}
+					else
+					{
+						using (SolidBrush fr = new SolidBrush(SkinManager.Instance.CurrentSkin.Surface.ForeColor))
+						{
+							g.DrawString(_text, _textFont, fr, bounds, sf);
 						}
 					}
 
-					//using (SolidBrush fr = new SolidBrush(SkinManager.Instance.CurrentSkin.Surface.ForeColor))
-					//{
-					//	g.DrawString(_text, _textFont, fr, bounds, sf);
-					//}
 					g.DrawRectangle(_textBorder, TextMargin, topPadding + TopOffset, canvas.Width - TextMargin * 2, textboxHeight - TopOffset);
 					Point[] triangle = new Point[] {
 						new Point((int)(canvas.Width * _percent) - ArrowSize, topPadding  + textboxHeight - 1),

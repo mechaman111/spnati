@@ -46,7 +46,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls.VariableControls
 				cboOperator.SelectedItem = "==";
 			}
 			cboValue.Text = _expression.Value;
-			if (_expression.Value == "true" && (_expression.Value == "==" || string.IsNullOrEmpty(_expression.Value)))
+			if (_expression.Value == "true" && (_expression.Operator == "==" || string.IsNullOrEmpty(_expression.Operator)))
 			{
 				radTrue.Checked = true;
 			}

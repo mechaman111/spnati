@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Desktop.Providers
 {
 	public abstract class CategoryProvider<T> : IRecordProvider<T> where T : Category
 	{
-		private T[] _categoryValues;
+		private List<T> _categoryValues;
 
-		public bool AllowsNew
+		public virtual bool AllowsNew
 		{
 			get { return false; }
 		}
@@ -18,7 +19,7 @@ namespace Desktop.Providers
 			get { return false; }
 		}
 
-		public IRecord Create(string key)
+		public virtual IRecord Create(string key)
 		{
 			throw new NotImplementedException();
 		}
@@ -39,6 +40,11 @@ namespace Desktop.Providers
 			return new string[] { "Key", "Value" };
 		}
 
+		public virtual int[] GetColumnWidths()
+		{
+			return null;
+		}
+
 		public abstract string GetLookupCaption();
 
 		protected abstract T[] GetCategoryValues();
@@ -47,7 +53,7 @@ namespace Desktop.Providers
 		{
 			if (_categoryValues == null)
 			{
-				_categoryValues = GetCategoryValues();
+				_categoryValues = GetCategoryValues().ToList();
 			}
 
 			text = text.ToLower();
@@ -60,6 +66,11 @@ namespace Desktop.Providers
 				}
 			}
 			return list;
+		}
+
+		protected void Add(T category)
+		{
+			_categoryValues.Add(category);
 		}
 
 		public void SetContext(object context)

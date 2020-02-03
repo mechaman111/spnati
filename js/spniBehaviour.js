@@ -799,7 +799,27 @@ function expandDialogue (dialogue, self, target, bindings) {
                 }
                 break;
             case 'weekday':
-                substitution = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()];
+                if (fn == 'number') {
+                    substitution = new Date().getDay() || 7;
+                } else if (fn === undefined) {
+                    substitution = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()];
+                }
+                break;
+            case 'day':
+                if (fn == 'number') {
+                    substitution = new Date().getDate();
+                } else if (fn === undefined) {
+                    var day = new Date().getDate();
+                    substitution = day + ((day - 1) % 10 < 3 && (day < 4 || day > 13) ? ['st', 'nd', 'rd'][day % 10 - 1] : 'th');
+                }
+                break;
+            case 'month':
+                if (fn == 'number') {
+                    substitution = new Date().getMonth() + 1;
+                } else if (fn === undefined) {
+                    substitution = ['January', 'February', 'March', 'April', 'May', 'June',
+                                    'July', 'August', 'September', 'November', 'December'][new Date().getMonth()];
+                }
                 break;
             case 'target':
             case 'self':
@@ -1797,7 +1817,7 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
         console.log("Current case priority for player "+this.slot+": "+bestMatchPriority);
 
         var rnd = Math.random() * weightSum;
-        for (var i = 0, x = 0; x < rnd; x += states[i++].weight);
+        for (var i = 0, x = 0; x <= rnd && i < states.length; x += states[i++].weight);
         
         /* Clean up mutable state on cases not selected. */
         var chosenState = states[i-1];
@@ -1844,7 +1864,7 @@ Opponent.prototype.clearChosenState = function () {
  ************************************************************/
 Opponent.prototype.updateBehaviour = function(tags, opp) {
     /* determine if the AI is dialogue locked */
-    if (this.out && this.forfeit[1] == CANNOT_SPEAK) {
+    if (this.out && this.forfeit[1] == CANNOT_SPEAK && tags !== DEALING_CARDS) {
         /* their is restricted to this only */
         tags = [this.forfeit[0]];
     }
@@ -1855,7 +1875,12 @@ Opponent.prototype.updateBehaviour = function(tags, opp) {
     if (!Array.isArray(tags)) {
         tags = [tags];
     }
-    tags.push(GLOBAL_CASE);
+    
+    /* Global lines play in any phase except DEALING_CARDS */
+    if (tags[0] !== DEALING_CARDS) {
+        tags.push(GLOBAL_CASE);
+    }
+    
     this.currentTarget = opp;
     this.currentTags = tags;
 

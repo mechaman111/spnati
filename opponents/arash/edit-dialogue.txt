@@ -1,0 +1,1707 @@
+#required for behaviour.xml
+first=Arash
+last=Kamangir
+label=Arash
+gender=male
+size=medium
+intelligence=best
+intelligence=good,1
+intelligence=average,3
+intelligence=bad,5
+intelligence=throw,8
+
+#Number of phases to "finish" masturbating
+timer=15
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=black_hair
+tag=short_hair
+tag=messy_hair
+tag=dark_eyes
+tag=olive-skinned
+tag=athletic
+tag=tall
+tag=trimmed
+tag=pubic_hair
+tag=medium_penis,from:0,to:8
+tag=medium_penis,from:10,to:10
+tag=large_penis,from:8,to:9
+tag=uncircumcised
+tag=cheerful
+tag=confident
+tag=kind
+tag=lonely
+tag=bisexual
+tag=single
+tag=arabian
+tag=fantasy
+tag=post-apocalyptic
+tag=video_game
+tag=fighter
+tag=magic
+tag=hero
+
+#required for meta.xml
+#select screen image
+pic=0-Neutral
+height=
+from=Fate/Grand Order
+writer=moony
+artist=moony
+description=Arash is a cheerful and friendly Servant from Fate/Grand Order. He's a supernaturally skilled archer, able to shoot for miles and even fire meteors. Always quick with a hug or a kind word, he's grateful for a break from the busy life of a Servant in Chaldea.
+z-layer=0
+dialogue-layer=over
+
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=gloves,gloves,minor,hands,plural
+clothes=boots,boots,extra,feet,plural
+clothes=sweater,sweater,major,upper
+clothes=belt,belt,extra,waist
+clothes=socks,socks,minor,feet,plural
+clothes=shirt,shirt,important,upper
+clothes=pants,pants,major,lower,plural
+clothes=boxers,boxers,important,lower,plural
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermione=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#INTRODUCTION
+#These lines are used to say different things depending on which other characters are present when the character
+#is selected and when the game starts.
+	
+
+#fully clothed
+0-selected,priority:100=Happy.png,Nice to meet you! I'm Arash!
+0-selected,priority:100=Thoughtful.png,Looking forward to the game!
+0-selected,priority:100=Neutral.png,Hey! I'm Arash. Let's play!
+0-selected,priority:100=C'mere.png,Ooh, new faces! C'mere!
+0-game_start,priority:1=Horny.png,Strip poker's a great way to unwind after a long day, isn't it?
+0-game_start,count-role;other&character;yuelia:,id:16=Horny.png,A butterfly?
+
+
+
+
+#POKER PLAY
+#This is what a character says while they're exchanging cards and commenting on their hands afterwards.
+#When swapping cards, the game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+swap_cards=Thoughtful.png,Hmm, I think I'll go with ~cards~.
+good_hand=Happy.png,I like the look of this.
+okay_hand=Neutral.png,I've won with this before. I've lost with this before. Let's see what happens.
+bad_hand=Thoughtful.png,Meh. Not really enthusiastic about this hand, y'know?
+hand,oneShotId:1,priority:1,id:42,marker:drinks=Neutral.png,Anyone else hungry? I'll buy us some snacks and drinks.
+hand,oneShotId:1,priority:1,id:42=Neutral.png,I'm a little hungry. Anyone else want food? This round's on me.
+hand,oneShotId:1,priority:1,id:42,marker:drinks=Neutral.png,This place serves snacks, right? Let's get some food and drinks. First round's on me.
+hand,oneShotId:1,priority:1,id:42,marker:hummus=Neutral.png,Mmm, some hummus sounds good right about now. I'll buy a round of snacks for the table.
+hand,oneShotId:1,priority:1,id:42,marker:drinks=Neutral.png,First round of snacks and drinks is on me!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-good_hand=Happy.png,Starting off strong!
+0-okay_hand=Neutral.png,Alright. I can work with this.
+0-bad_hand,collectible:arash_annoyed=Annoyed.png,Not great.
+0-hand,count-role;other&character;sei&stage;1&timeinstage;0&sayingmarker;drinks_anyone:=Thoughtful.png,Does this place have snacks? Pita chips and hummus sound good right now. Maybe a beer, too?
+0-hand,count-role;other&character;sei&stage;5-8&timeinstage;3&sayingmarker;sei_anal:=Horny.png,Tried it a few times. Prep's a hassle, but it's nice once you can get going.
+0-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,I love hummus!
+0-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,Anything as long as I can dip it in hummus.
+0-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28,collectible:arash_annoyed=Annoyed.png,Fidget, be polite. I'm hard to tick off, but I'm not a fan of throwing insults around for no reason, y'know?
+0-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=C'mere.png,I like the hat!
+0-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=Thoughtful.png,The hat's not my style, sure, but Dust makes it work!
+0-hand,totalRounds:7,priority:117,count-alive:4-5,count-role;other&character;mary&notsaidmarker;insanetrigger&sayingmarker;mfk:,id:38=Horny.png,Not to sound like Merlin, but can I just answer "fuck" for everyone? I'm not really interested in committing to someone right now, and I don't exactly want to kill anyone either...
+
+
+#lost gloves
+1-good_hand=Happy.png,Starting off strong!
+1-okay_hand=Neutral.png,Alright. I can work with this.
+1-bad_hand,collectible:arash_annoyed=Annoyed.png,Not great.
+1-hand,count-role;other&character;sei&stage;1&timeinstage;0&sayingmarker;drinks_anyone:=Thoughtful.png,Does this place have snacks? Pita chips and hummus sound good right now. Maybe a beer, too?
+1-hand,count-role;other&character;sei&stage;5-8&timeinstage;3&sayingmarker;sei_anal:=Horny.png,Tried it a few times. Prep's a hassle, but it's nice once you can get going.
+1-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,I love hummus!
+1-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,Anything as long as I can dip it in hummus.
+1-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28,collectible:arash_annoyed=Annoyed.png,Fidget, be polite. I'm hard to tick off, but I'm not a fan of throwing insults around for no reason, y'know?
+1-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=C'mere.png,I like the hat!
+1-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=Thoughtful.png,The hat's not my style, sure, but Dust makes it work!
+1-hand,totalRounds:7,priority:117,count-alive:4-5,count-role;other&character;mary&notsaidmarker;insanetrigger&sayingmarker;mfk:,id:38=Horny.png,Not to sound like Merlin, but can I just answer "fuck" for everyone? I'm not really interested in committing to someone right now, and I don't exactly want to kill anyone either...
+
+
+#lost boots
+2-hand,count-role;other&character;sei&stage;1&timeinstage;0&sayingmarker;drinks_anyone:=Thoughtful.png,Does this place have snacks? Pita chips and hummus sound good right now. Maybe a beer, too?
+2-hand,count-role;other&character;sei&stage;5-8&timeinstage;3&sayingmarker;sei_anal:=Horny.png,Tried it a few times. Prep's a hassle, but it's nice once you can get going.
+2-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,I love hummus!
+2-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,Anything as long as I can dip it in hummus.
+2-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28,collectible:arash_annoyed=Annoyed.png,Fidget, be polite. I'm hard to tick off, but I'm not a fan of throwing insults around for no reason, y'know?
+2-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=C'mere.png,I like the hat!
+2-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=Thoughtful.png,The hat's not my style, sure, but Dust makes it work!
+2-hand,totalRounds:7,priority:117,count-alive:4-5,count-role;other&character;mary&notsaidmarker;insanetrigger&sayingmarker;mfk:,id:38=Horny.png,Not to sound like Merlin, but can I just answer "fuck" for everyone? I'm not really interested in committing to someone right now, and I don't exactly want to kill anyone either...
+
+
+#lost sweater
+3-hand,count-role;other&character;sei&stage;1&timeinstage;0&sayingmarker;drinks_anyone:=Thoughtful.png,Does this place have snacks? Pita chips and hummus sound good right now. Maybe a beer, too?
+3-hand,count-role;other&character;sei&stage;5-8&timeinstage;3&sayingmarker;sei_anal:=Horny.png,Tried it a few times. Prep's a hassle, but it's nice once you can get going.
+3-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,I love hummus!
+3-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,Anything as long as I can dip it in hummus.
+3-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28,collectible:arash_annoyed=Annoyed.png,Fidget, be polite. I'm hard to tick off, but I'm not a fan of throwing insults around for no reason, y'know?
+3-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=C'mere.png,I like the hat!
+3-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=Thoughtful.png,The hat's not my style, sure, but Dust makes it work!
+3-hand,totalRounds:7,priority:117,count-alive:4-5,count-role;other&character;mary&notsaidmarker;insanetrigger&sayingmarker;mfk:,id:38=Horny.png,Not to sound like Merlin, but can I just answer "fuck" for everyone? I'm not really interested in committing to someone right now, and I don't exactly want to kill anyone either...
+
+
+#lost belt
+4-hand,count-role;other&character;sei&stage;1&timeinstage;0&sayingmarker;drinks_anyone:=Thoughtful.png,Does this place have snacks? Pita chips and hummus sound good right now. Maybe a beer, too?
+4-hand,count-role;other&character;sei&stage;5-8&timeinstage;3&sayingmarker;sei_anal:=Horny.png,Tried it a few times. Prep's a hassle, but it's nice once you can get going.
+4-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,I love hummus!
+4-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,Anything as long as I can dip it in hummus.
+4-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28,collectible:arash_annoyed=Annoyed.png,Fidget, be polite. I'm hard to tick off, but I'm not a fan of throwing insults around for no reason, y'know?
+4-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=C'mere.png,I like the hat!
+4-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=Thoughtful.png,The hat's not my style, sure, but Dust makes it work!
+4-hand,totalRounds:7,priority:117,count-alive:4-5,count-role;other&character;mary&notsaidmarker;insanetrigger&sayingmarker;mfk:,id:38=Horny.png,Not to sound like Merlin, but can I just answer "fuck" for everyone? I'm not really interested in committing to someone right now, and I don't exactly want to kill anyone either...
+
+
+#lost socks
+5-good_hand=Happy.png,Second wind when I need it most! Nice!
+5-okay_hand=Neutral.png,It's all up to fate now.
+5-bad_hand=Thoughtful.png,Not a strong hand, but is a strong hand what I really need right now?
+5-hand,count-role;other&character;sei&stage;1&timeinstage;0&sayingmarker;drinks_anyone:=Thoughtful.png,Does this place have snacks? Pita chips and hummus sound good right now. Maybe a beer, too?
+5-hand,count-role;other&character;sei&stage;5-8&timeinstage;3&sayingmarker;sei_anal:=Horny.png,Tried it a few times. Prep's a hassle, but it's nice once you can get going.
+5-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,I love hummus!
+5-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,Anything as long as I can dip it in hummus.
+5-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28,collectible:arash_annoyed=Annoyed.png,Fidget, be polite. I'm hard to tick off, but I'm not a fan of throwing insults around for no reason, y'know?
+5-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=C'mere.png,I like the hat!
+5-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=Thoughtful.png,The hat's not my style, sure, but Dust makes it work!
+5-hand,totalRounds:7,priority:117,count-alive:4-5,count-role;other&character;mary&notsaidmarker;insanetrigger&sayingmarker;mfk:,id:38=Horny.png,Not to sound like Merlin, but can I just answer "fuck" for everyone? I'm not really interested in committing to someone right now, and I don't exactly want to kill anyone either...
+
+
+#lost shirt
+6-good_hand=Happy.png,Second wind when I need it most! Nice!
+6-okay_hand=Neutral.png,It's all up to fate now.
+6-bad_hand=Thoughtful.png,Not a strong hand, but is a strong hand what I really need right now?
+6-hand,count-role;other&character;sei&stage;1&timeinstage;0&sayingmarker;drinks_anyone:=Thoughtful.png,Does this place have snacks? Pita chips and hummus sound good right now. Maybe a beer, too?
+6-hand,count-role;other&character;sei&stage;5-8&timeinstage;3&sayingmarker;sei_anal:=Horny.png,Tried it a few times. Prep's a hassle, but it's nice once you can get going.
+6-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,I love hummus!
+6-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,Anything as long as I can dip it in hummus.
+6-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28,collectible:arash_annoyed=Annoyed.png,Fidget, be polite. I'm hard to tick off, but I'm not a fan of throwing insults around for no reason, y'know?
+6-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=C'mere.png,I like the hat!
+6-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=Thoughtful.png,The hat's not my style, sure, but Dust makes it work!
+6-hand,totalRounds:7,priority:117,count-alive:4-5,count-role;other&character;mary&notsaidmarker;insanetrigger&sayingmarker;mfk:,id:38=Horny.png,Not to sound like Merlin, but can I just answer "fuck" for everyone? I'm not really interested in committing to someone right now, and I don't exactly want to kill anyone either...
+
+
+#lost pants
+7-good_hand=Happy.png,Second wind when I need it most! Nice!
+7-okay_hand=Neutral.png,It's all up to fate now.
+7-bad_hand=Thoughtful.png,Not a strong hand, but is a strong hand what I really need right now?
+7-hand,count-role;other&character;sei&stage;1&timeinstage;0&sayingmarker;drinks_anyone:=Thoughtful.png,Does this place have snacks? Pita chips and hummus sound good right now. Maybe a beer, too?
+7-hand,count-role;other&character;sei&stage;5-8&timeinstage;3&sayingmarker;sei_anal:=Horny.png,Tried it a few times. Prep's a hassle, but it's nice once you can get going.
+7-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,I love hummus!
+7-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,Anything as long as I can dip it in hummus.
+7-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28,collectible:arash_annoyed=Annoyed.png,Fidget, be polite. I'm hard to tick off, but I'm not a fan of throwing insults around for no reason, y'know?
+7-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=C'mere.png,I like the hat!
+7-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=Thoughtful.png,The hat's not my style, sure, but Dust makes it work!
+7-hand,totalRounds:7,priority:117,count-alive:4-5,count-role;other&character;mary&notsaidmarker;insanetrigger&sayingmarker;mfk:,id:38=Horny.png,Not to sound like Merlin, but can I just answer "fuck" for everyone? I'm not really interested in committing to someone right now, and I don't exactly want to kill anyone either...
+
+
+#naked
+-3-good_hand=Horny.png,A strong hand now, when I'm ready to just get this done with...
+-3-okay_hand,collectible:arash_annoyed=Annoyed.png,I really hope this is enough to lose me the round.
+-3-bad_hand=Happy.png,Phew! Hopefully this is lowest!
+-3-hand,count-role;other&character;sei&stage;1&timeinstage;0&sayingmarker;drinks_anyone:=Thoughtful.png,Does this place have snacks? Pita chips and hummus sound good right now. Maybe a beer, too?
+-3-hand,count-role;other&character;sei&stage;5-8&timeinstage;3&sayingmarker;sei_anal:=Horny.png,Tried it a few times. Prep's a hassle, but it's nice once you can get going.
+-3-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,I love hummus!
+-3-hand,priority:101,count-role;other&character;dust&sayingmarker;fidgetQA_snacks:,id:40=Happy.png,Anything as long as I can dip it in hummus.
+-3-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28,collectible:arash_annoyed=Annoyed.png,Fidget, be polite. I'm hard to tick off, but I'm not a fan of throwing insults around for no reason, y'know?
+-3-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=C'mere.png,I like the hat!
+-3-hand,priority:141,count-role;other&character;dust&stage;0-5&sayingmarker;fidgetQA_stupidhat:,id:28=Thoughtful.png,The hat's not my style, sure, but Dust makes it work!
+-3-hand,totalRounds:7,priority:117,count-alive:4-5,count-role;other&character;mary&notsaidmarker;insanetrigger&sayingmarker;mfk:,id:38=Horny.png,Not to sound like Merlin, but can I just answer "fuck" for everyone? I'm not really interested in committing to someone right now, and I don't exactly want to kill anyone either...
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+must_strip_winning=Thoughtful.png,I'm not here to win. I'm here to have fun and blow off some steam.
+must_strip_normal=Horny.png,Another layer off, then, huh?
+must_strip_losing=C'mere.png,Great job, guys!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#losing gloves
+0-must_strip,count-role;other&character;palutena:,test:~self.tag.fighter~:true=Thoughtful.png,I am! I'm a Servant, the ghost of a hero of old.
+0-must_strip_winning=Thoughtful.png,Let's get this show on the road.
+0-must_strip_normal=Horny.png,Let's do this, then.
+0-must_strip_losing,collectible:arash_annoyed=Annoyed.png,I'm not here to win, but it's still annoying to start off with a bad run.
+0-stripping=Stripping.png,I'll start with my gloves. Can't go too fast right off the bat, y'know?
+0-stripping=Stripping.png,Gloves first. No sense rushing, y'know?
+
+
+#losing boots
+1-stripped=Happy.png,Let's keep playing!
+1-stripped=Thoughtful.png,Shall we continue? I'm looking forward to the rest of the game.
+1-must_strip,count-role;other&character;palutena:,test:~self.tag.fighter~:true=Thoughtful.png,I am! I'm a Servant, the ghost of a hero of old.
+1-must_strip_winning=Thoughtful.png,Let's get this show on the road.
+1-must_strip_normal=Horny.png,Let's do this, then.
+1-must_strip_losing,collectible:arash_annoyed=Annoyed.png,I'm not here to win, but it's still annoying to start off with a bad run.
+1-stripping=Stripping.png,These boots are really comfy, but I can go without.
+1-stripping=Stripping.png,Just a moment while I take off my boots...
+
+
+#losing sweater
+2-stripped=Thoughtful.png,You guys are good at this game, y'know?
+2-stripped=Happy.png,I'm impressed! You're really good at poker.
+2-must_strip,count-role;other&character;palutena:,test:~self.tag.fighter~:true=Thoughtful.png,I am! I'm a Servant, the ghost of a hero of old.
+2-stripping=Stripping.png,This sweater's starting to get a little stuffy. I'll need to wash it later.
+2-stripping=Stripping.png,It's a little warm in here. I'll take off my sweater.
+
+
+#losing belt
+3-stripped,id:3=C'mere.png,C'mere, guys. I'm in a huggy mood.
+3-stripped,id:3=C'mere.png,C'mere, guys. Anyone want a hug? Oh, no reason, I just felt like it.
+3-must_strip,count-role;other&character;palutena:,test:~self.tag.fighter~:true=Thoughtful.png,I am! I'm a Servant, the ghost of a hero of old.
+3-stripping=Stripping.png,The belt doesn't serve much purpose when I'm not in my armor, but I like wearing it anyway.
+3-stripping=Stripping.png,Usually I've got pouches on my belt, but right now it's just decorative.
+
+
+#losing socks
+4-stripped=Neutral.png,Let's keep playing!
+4-stripped=Horny.png,Things are heating up now, y'know?
+4-must_strip,count-role;other&character;palutena:,test:~self.tag.fighter~:true=Thoughtful.png,I am! I'm a Servant, the ghost of a hero of old.
+4-stripping=Stripping.png,This is my last small thing, y'know?
+4-stripping=Stripping.png,You guys are good at this game. I'm out of small stuff.
+
+
+#losing shirt
+5-stripped,id:2,collectible:arash_fan=Horny.png,...is it just me, or is it kinda hot in here? And where'd this fan come from?
+5-stripped,id:2,collectible:arash_fan=Horny.png,...a fan? I don't know where that came from, but I'm not complaining. It's getting kinda hot in here, y'know?
+5-must_strip,count-role;other&character;palutena:,test:~self.tag.fighter~:true=Thoughtful.png,I am! I'm a Servant, the ghost of a hero of old.
+5-must_strip_winning=Thoughtful.png,Honestly, I don't mind losing my lead. If I don't win I'll get to get off, y'know?
+5-must_strip_normal=Horny.png,...is it just me, or is it hot in here?
+5-must_strip_losing=Happy.png,Phew! More clothes off!
+5-stripping=Stripping.png,And let's take this off...
+5-stripping=Stripping.png,How are you guys liking the game?
+
+
+#losing pants
+6-stripped=Happy.png,I'm really impressed with how well you guys are playing!
+6-stripped=Neutral.png,Wow! You guys are good at this game, y'know?
+6-must_strip,count-role;other&character;palutena:,test:~self.tag.fighter~:true=Thoughtful.png,I am! I'm a Servant, the ghost of a hero of old.
+6-must_strip_winning=Thoughtful.png,Honestly, I don't mind losing my lead. If I don't win I'll get to get off, y'know?
+6-must_strip_normal=Horny.png,...is it just me, or is it hot in here?
+6-must_strip_losing=Happy.png,Phew! More clothes off!
+6-stripping=Stripping.png,Pants off! Finally!
+6-stripping=Stripping.png,Mmm...leggings are comfy, but I'd rather not wear them all day, y'know?
+
+
+#losing boxers
+7-stripped=Thoughtful.png,If I lose, I am not going to mind at all.
+7-stripped=Horny.png,This is why I don't play to win.
+7-must_strip,count-role;other&character;palutena:,test:~self.tag.fighter~:true=Thoughtful.png,I am! I'm a Servant, the ghost of a hero of old.
+7-must_strip_winning=Thoughtful.png,Honestly, I don't mind losing my lead. If I don't win I'll get to get off, y'know?
+7-must_strip_normal=Horny.png,...is it just me, or is it hot in here?
+7-must_strip_losing=Happy.png,Phew! More clothes off!
+7-stripping=Stripping.png,Ahh. These were starting to get tight, y'know?
+7-stripping=Stripping.png,Boxers are comfy, but they'll just get in the way here.
+
+
+#naked
+-3-stripped,id:1=Horny.png,...fuck it, I'm going to throw the game until I lose again. I'm ready to kick back and stroke off.
+-3-stripped,id:1=Horny.png,I need to do something about this, y'know? ...I'm not allowed to forfeit early? Guess I'll just throw, then.
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_strip=Horny.png,What now, then?
+female_must_strip=Horny.png,What now, then?
+tie=Thoughtful.png,Huh. That's a tiny miracle right there!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bot:,id:31=Horny.png,Heh. I'm actually a switch.
+0-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Merlin, but I've gotten some compliments...
+0-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Fergus, but I've gotten some compliments...
+0-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Medb, but I've gotten some compliments...
+0-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Cu, but I've gotten some compliments...
+0-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Gilgamesh, but I've gotten some compliments...
+0-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_jaune:,id:37=Horny.png,I've never actually tried it, but I'm not exactly a picky lover...
+0-female_must_strip,count-role;target&character;joey&stage;2:,id:21=Happy.png,That's pretty cool!
+0-female_must_strip,count-role;target&character;joey&stage;5:,id:24=Thoughtful.png,You're good at these vanishing tricks.
+
+
+#lost gloves
+1-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bot:,id:31=Horny.png,Heh. I'm actually a switch.
+1-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Merlin, but I've gotten some compliments...
+1-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Fergus, but I've gotten some compliments...
+1-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Medb, but I've gotten some compliments...
+1-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Cu, but I've gotten some compliments...
+1-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Gilgamesh, but I've gotten some compliments...
+1-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_jaune:,id:37=Horny.png,I've never actually tried it, but I'm not exactly a picky lover...
+1-female_must_strip,count-role;target&character;joey&stage;2:,id:21=Happy.png,That's pretty cool!
+1-female_must_strip,count-role;target&character;joey&stage;5:,id:24=Thoughtful.png,You're good at these vanishing tricks.
+
+
+#lost boots
+2-male_must_strip=Thoughtful.png,Don't mind me. I'll look or not, whichever you want.
+2-female_must_strip=Thoughtful.png,Don't mind me. I'll look or not, whichever you want.
+2-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bot:,id:31=Horny.png,Heh. I'm actually a switch.
+2-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Merlin, but I've gotten some compliments...
+2-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Fergus, but I've gotten some compliments...
+2-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Medb, but I've gotten some compliments...
+2-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Cu, but I've gotten some compliments...
+2-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Gilgamesh, but I've gotten some compliments...
+2-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_jaune:,id:37=Horny.png,I've never actually tried it, but I'm not exactly a picky lover...
+2-female_must_strip,count-role;target&character;joey&stage;2:,id:21=Happy.png,That's pretty cool!
+2-female_must_strip,count-role;target&character;joey&stage;5:,id:24=Thoughtful.png,You're good at these vanishing tricks.
+
+
+#lost sweater
+3-male_must_strip=Thoughtful.png,Don't mind me. I'll look or not, whichever you want.
+3-female_must_strip=Thoughtful.png,Don't mind me. I'll look or not, whichever you want.
+3-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bot:,id:31=Horny.png,Heh. I'm actually a switch.
+3-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Merlin, but I've gotten some compliments...
+3-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Fergus, but I've gotten some compliments...
+3-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Medb, but I've gotten some compliments...
+3-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Cu, but I've gotten some compliments...
+3-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Gilgamesh, but I've gotten some compliments...
+3-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_jaune:,id:37=Horny.png,I've never actually tried it, but I'm not exactly a picky lover...
+3-female_must_strip,count-role;target&character;joey&stage;2:,id:21=Happy.png,That's pretty cool!
+3-female_must_strip,count-role;target&character;joey&stage;5:,id:24=Thoughtful.png,You're good at these vanishing tricks.
+
+
+#lost belt
+4-male_must_strip=Thoughtful.png,Don't mind me. I'll look or not, whichever you want.
+4-female_must_strip=Thoughtful.png,Don't mind me. I'll look or not, whichever you want.
+4-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bot:,id:31=Horny.png,Heh. I'm actually a switch.
+4-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Merlin, but I've gotten some compliments...
+4-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Fergus, but I've gotten some compliments...
+4-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Medb, but I've gotten some compliments...
+4-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Cu, but I've gotten some compliments...
+4-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Gilgamesh, but I've gotten some compliments...
+4-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_jaune:,id:37=Horny.png,I've never actually tried it, but I'm not exactly a picky lover...
+4-female_must_strip,count-role;target&character;joey&stage;2:,id:21=Happy.png,That's pretty cool!
+4-female_must_strip,count-role;target&character;joey&stage;5:,id:24=Thoughtful.png,You're good at these vanishing tricks.
+
+
+#lost socks
+5-male_must_strip=Horny.png,Well, well...
+5-female_must_strip=Horny.png,Well, well...
+5-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bot:,id:31=Horny.png,Heh. I'm actually a switch.
+5-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Merlin, but I've gotten some compliments...
+5-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Fergus, but I've gotten some compliments...
+5-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Medb, but I've gotten some compliments...
+5-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Cu, but I've gotten some compliments...
+5-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Gilgamesh, but I've gotten some compliments...
+5-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_jaune:,id:37=Horny.png,I've never actually tried it, but I'm not exactly a picky lover...
+5-female_must_strip,count-role;target&character;joey&stage;2:,id:21=Happy.png,That's pretty cool!
+5-female_must_strip,count-role;target&character;joey&stage;5:,id:24=Thoughtful.png,You're good at these vanishing tricks.
+
+
+#lost shirt
+6-male_must_strip=Horny.png,Well, well...
+6-female_must_strip=Horny.png,Well, well...
+6-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bot:,id:31=Horny.png,Heh. I'm actually a switch.
+6-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Merlin, but I've gotten some compliments...
+6-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Fergus, but I've gotten some compliments...
+6-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Medb, but I've gotten some compliments...
+6-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Cu, but I've gotten some compliments...
+6-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Gilgamesh, but I've gotten some compliments...
+6-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_jaune:,id:37=Horny.png,I've never actually tried it, but I'm not exactly a picky lover...
+6-female_must_strip,count-role;target&character;joey&stage;2:,id:21=Happy.png,That's pretty cool!
+6-female_must_strip,count-role;target&character;joey&stage;5:,id:24=Thoughtful.png,You're good at these vanishing tricks.
+
+
+#lost pants
+7-male_must_strip=Horny.png,Well, well...
+7-female_must_strip=Horny.png,Well, well...
+7-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bot:,id:31=Horny.png,Heh. I'm actually a switch.
+7-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Merlin, but I've gotten some compliments...
+7-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Fergus, but I've gotten some compliments...
+7-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Medb, but I've gotten some compliments...
+7-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Cu, but I've gotten some compliments...
+7-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Gilgamesh, but I've gotten some compliments...
+7-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_jaune:,id:37=Horny.png,I've never actually tried it, but I'm not exactly a picky lover...
+7-female_must_strip,count-role;target&character;joey&stage;2:,id:21=Happy.png,That's pretty cool!
+7-female_must_strip,count-role;target&character;joey&stage;5:,id:24=Thoughtful.png,You're good at these vanishing tricks.
+
+
+#naked
+-3-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bot:,id:31=Horny.png,Heh. I'm actually a switch.
+-3-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Merlin, but I've gotten some compliments...
+-3-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Fergus, but I've gotten some compliments...
+-3-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Medb, but I've gotten some compliments...
+-3-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Cu, but I've gotten some compliments...
+-3-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Gilgamesh, but I've gotten some compliments...
+-3-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_jaune:,id:37=Horny.png,I've never actually tried it, but I'm not exactly a picky lover...
+-3-female_must_strip,count-role;target&character;joey&stage;2:,id:21=Happy.png,That's pretty cool!
+-3-female_must_strip,count-role;target&character;joey&stage;5:,id:24=Thoughtful.png,You're good at these vanishing tricks.
+
+
+#masturbating
+-2-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bot:,id:31=Horny.png,Heh. I'm actually a switch.
+-2-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Merlin, but I've gotten some compliments...
+-2-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Fergus, but I've gotten some compliments...
+-2-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Medb, but I've gotten some compliments...
+-2-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Cu, but I've gotten some compliments...
+-2-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Gilgamesh, but I've gotten some compliments...
+-2-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_jaune:,id:37=Horny.png,I've never actually tried it, but I'm not exactly a picky lover...
+-2-female_must_strip,count-role;target&character;joey&stage;2:,id:21=Happy.png,That's pretty cool!
+-2-female_must_strip,count-role;target&character;joey&stage;5:,id:24=Thoughtful.png,You're good at these vanishing tricks.
+
+
+#finished
+-1-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bot:,id:31=Horny.png,Heh. I'm actually a switch.
+-1-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Merlin, but I've gotten some compliments...
+-1-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Fergus, but I've gotten some compliments...
+-1-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Medb, but I've gotten some compliments...
+-1-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Cu, but I've gotten some compliments...
+-1-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_bed:,id:36=Horny.png,I'm no Gilgamesh, but I've gotten some compliments...
+-1-female_must_strip,count-role;other&character;streaming-chan&sayingmarker;gen_jaune:,id:37=Horny.png,I've never actually tried it, but I'm not exactly a picky lover...
+-1-female_must_strip,count-role;target&character;joey&stage;2:,id:21=Happy.png,That's pretty cool!
+-1-female_must_strip,count-role;target&character;joey&stage;5:,id:24=Thoughtful.png,You're good at these vanishing tricks.
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_accessory=Thoughtful.png,A perfectly valid choice.
+male_removed_accessory=Neutral.png,Shall we continue?
+female_removing_accessory=Thoughtful.png,A perfectly valid choice.
+female_removed_accessory=Neutral.png,Shall we continue?
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=Thoughtful.png,Gah! You startled me!
+0-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=C'mere.png,You okay, Brock?
+0-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:13=Happy.png,That was stunning!
+0-female_removing_accessory,count-role;target&character;larachel&stage;1:,id:6=C'mere.png,There, there, there's bound to be a way to fix the staff, y'know?
+0-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Need me to steady you?
+0-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,C'mere, Shimakaze. I'll spot you while you get your balance.
+0-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Are you alright, Shimakaze? You can lean on me if you need to brace yourself.
+
+
+#lost gloves
+1-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=Thoughtful.png,Gah! You startled me!
+1-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=C'mere.png,You okay, Brock?
+1-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:13=Happy.png,That was stunning!
+1-female_removing_accessory,count-role;target&character;larachel&stage;1:,id:6=C'mere.png,There, there, there's bound to be a way to fix the staff, y'know?
+1-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Need me to steady you?
+1-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,C'mere, Shimakaze. I'll spot you while you get your balance.
+1-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Are you alright, Shimakaze? You can lean on me if you need to brace yourself.
+
+
+#lost boots
+2-male_removing_accessory=Horny.png,It's kind of fun, how slow things start.
+2-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=Thoughtful.png,Gah! You startled me!
+2-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=C'mere.png,You okay, Brock?
+2-male_removed_accessory=C'mere.png,You're doing great!
+2-female_removing_accessory=Horny.png,It's kind of fun, how slow things start.
+2-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:13=Happy.png,That was stunning!
+2-female_removing_accessory,count-role;target&character;larachel&stage;1:,id:6=C'mere.png,There, there, there's bound to be a way to fix the staff, y'know?
+2-female_removed_accessory=C'mere.png,You're doing great!
+2-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Need me to steady you?
+2-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,C'mere, Shimakaze. I'll spot you while you get your balance.
+2-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Are you alright, Shimakaze? You can lean on me if you need to brace yourself.
+
+
+#lost sweater
+3-male_removing_accessory=Horny.png,It's kind of fun, how slow things start.
+3-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=Thoughtful.png,Gah! You startled me!
+3-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=C'mere.png,You okay, Brock?
+3-male_removed_accessory=C'mere.png,You're doing great!
+3-female_removing_accessory=Horny.png,It's kind of fun, how slow things start.
+3-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:13=Happy.png,That was stunning!
+3-female_removing_accessory,count-role;target&character;larachel&stage;1:,id:6=C'mere.png,There, there, there's bound to be a way to fix the staff, y'know?
+3-female_removed_accessory=C'mere.png,You're doing great!
+3-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Need me to steady you?
+3-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,C'mere, Shimakaze. I'll spot you while you get your balance.
+3-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Are you alright, Shimakaze? You can lean on me if you need to brace yourself.
+
+
+#lost belt
+4-male_removing_accessory=Horny.png,It's kind of fun, how slow things start.
+4-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=Thoughtful.png,Gah! You startled me!
+4-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=C'mere.png,You okay, Brock?
+4-male_removed_accessory=C'mere.png,You're doing great!
+4-female_removing_accessory=Horny.png,It's kind of fun, how slow things start.
+4-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:13=Happy.png,That was stunning!
+4-female_removing_accessory,count-role;target&character;larachel&stage;1:,id:6=C'mere.png,There, there, there's bound to be a way to fix the staff, y'know?
+4-female_removed_accessory=C'mere.png,You're doing great!
+4-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Need me to steady you?
+4-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,C'mere, Shimakaze. I'll spot you while you get your balance.
+4-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Are you alright, Shimakaze? You can lean on me if you need to brace yourself.
+
+
+#lost socks
+5-male_removing_accessory=Neutral.png,Whatever you think is a good idea.
+5-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=Thoughtful.png,Gah! You startled me!
+5-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=C'mere.png,You okay, Brock?
+5-male_removed_accessory=Horny.png,Honestly, I wouldn't mind picking up the pace...
+5-female_removing_accessory=Neutral.png,Whatever you think is a good idea.
+5-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:13=Happy.png,That was stunning!
+5-female_removing_accessory,count-role;target&character;larachel&stage;1:,id:6=C'mere.png,There, there, there's bound to be a way to fix the staff, y'know?
+5-female_removed_accessory=Horny.png,Honestly, I wouldn't mind picking up the pace...
+5-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Need me to steady you?
+5-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,C'mere, Shimakaze. I'll spot you while you get your balance.
+5-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Are you alright, Shimakaze? You can lean on me if you need to brace yourself.
+
+
+#lost shirt
+6-male_removing_accessory=Neutral.png,Whatever you think is a good idea.
+6-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=Thoughtful.png,Gah! You startled me!
+6-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=C'mere.png,You okay, Brock?
+6-male_removed_accessory=Horny.png,Honestly, I wouldn't mind picking up the pace...
+6-female_removing_accessory=Neutral.png,Whatever you think is a good idea.
+6-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:13=Happy.png,That was stunning!
+6-female_removing_accessory,count-role;target&character;larachel&stage;1:,id:6=C'mere.png,There, there, there's bound to be a way to fix the staff, y'know?
+6-female_removed_accessory=Horny.png,Honestly, I wouldn't mind picking up the pace...
+6-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Need me to steady you?
+6-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,C'mere, Shimakaze. I'll spot you while you get your balance.
+6-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Are you alright, Shimakaze? You can lean on me if you need to brace yourself.
+
+
+#lost pants
+7-male_removing_accessory=Neutral.png,Whatever you think is a good idea.
+7-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=Thoughtful.png,Gah! You startled me!
+7-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=C'mere.png,You okay, Brock?
+7-male_removed_accessory=Horny.png,Honestly, I wouldn't mind picking up the pace...
+7-female_removing_accessory=Neutral.png,Whatever you think is a good idea.
+7-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:13=Happy.png,That was stunning!
+7-female_removing_accessory,count-role;target&character;larachel&stage;1:,id:6=C'mere.png,There, there, there's bound to be a way to fix the staff, y'know?
+7-female_removed_accessory=Horny.png,Honestly, I wouldn't mind picking up the pace...
+7-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Need me to steady you?
+7-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,C'mere, Shimakaze. I'll spot you while you get your balance.
+7-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Are you alright, Shimakaze? You can lean on me if you need to brace yourself.
+
+
+#naked
+-3-male_removing_accessory,collectible:arash_annoyed=Annoyed.png,Normally I'd be fine with that, but a guy's got to take care of his needs, y'know?
+-3-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=Thoughtful.png,Gah! You startled me!
+-3-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=C'mere.png,You okay, Brock?
+-3-male_removed_accessory=C'mere.png,Oh, there, there...I really shouldn't have blown up like that. I promise I'm not usually like that.
+-3-female_removing_accessory,collectible:arash_annoyed=Annoyed.png,Normally I'd be fine with that, but a guy's got to take care of his needs, y'know?
+-3-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:13=Happy.png,That was stunning!
+-3-female_removing_accessory,count-role;target&character;larachel&stage;1:,id:6=C'mere.png,There, there, there's bound to be a way to fix the staff, y'know?
+-3-female_removed_accessory=C'mere.png,Oh, there, there...I really shouldn't have blown up like that. I promise I'm not usually like that.
+-3-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Need me to steady you?
+-3-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,C'mere, Shimakaze. I'll spot you while you get your balance.
+-3-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Are you alright, Shimakaze? You can lean on me if you need to brace yourself.
+
+
+#masturbating
+-2-male_removing_accessory,collectible:arash_annoyed=Annoyed.png,Give me something to work with here!
+-2-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=Thoughtful.png,Gah! You startled me!
+-2-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=C'mere.png,You okay, Brock?
+-2-male_removed_accessory=C'mere.png,Oh, there, there...I really shouldn't have blown up like that. I promise I'm not usually like that.
+-2-female_removing_accessory,collectible:arash_annoyed=Annoyed.png,Give me something to work with here!
+-2-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:13=Happy.png,That was stunning!
+-2-female_removing_accessory,count-role;target&character;larachel&stage;1:,id:6=C'mere.png,There, there, there's bound to be a way to fix the staff, y'know?
+-2-female_removed_accessory=C'mere.png,Oh, there, there...I really shouldn't have blown up like that. I promise I'm not usually like that.
+-2-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Need me to steady you?
+-2-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,C'mere, Shimakaze. I'll spot you while you get your balance.
+-2-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Are you alright, Shimakaze? You can lean on me if you need to brace yourself.
+
+
+#finished
+-1-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=Thoughtful.png,Gah! You startled me!
+-1-male_removing_accessory,count-role;target&character;brock&stage;3:,id:8=C'mere.png,You okay, Brock?
+-1-female_removing_accessory,count-role;target&character;yuelia&stage;0&sayingmarker;transformation:,id:13=Happy.png,That was stunning!
+-1-female_removing_accessory,count-role;target&character;larachel&stage;1:,id:6=C'mere.png,There, there, there's bound to be a way to fix the staff, y'know?
+-1-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Need me to steady you?
+-1-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,C'mere, Shimakaze. I'll spot you while you get your balance.
+-1-female_removed_accessory,count-role;target&character;shimakaze&stage;4&saidmarker;dizzy:,id:34=C'mere.png,Are you alright, Shimakaze? You can lean on me if you need to brace yourself.
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_minor=Happy.png,You got this!
+male_removed_minor=Happy.png,Let's keep playing!
+female_removing_minor=Happy.png,You got this!
+female_removed_minor=Happy.png,Let's keep playing!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,What's going on?
+0-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,Dust? What are you doing?
+
+
+#lost gloves
+1-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,What's going on?
+1-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,Dust? What are you doing?
+
+
+#lost boots
+2-male_removing_minor=Thoughtful.png,A perfectly good choice.
+2-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,What's going on?
+2-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,Dust? What are you doing?
+2-male_removed_minor=Horny.png,Looking sharp!
+2-female_removing_minor=Thoughtful.png,A perfectly good choice.
+2-female_removed_minor=Horny.png,Looking sharp!
+
+
+#lost sweater
+3-male_removing_minor=Thoughtful.png,A perfectly good choice.
+3-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,What's going on?
+3-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,Dust? What are you doing?
+3-male_removed_minor=Horny.png,Looking sharp!
+3-female_removing_minor=Thoughtful.png,A perfectly good choice.
+3-female_removed_minor=Horny.png,Looking sharp!
+
+
+#lost belt
+4-male_removing_minor=Thoughtful.png,A perfectly good choice.
+4-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,What's going on?
+4-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,Dust? What are you doing?
+4-male_removed_minor=Horny.png,Looking sharp!
+4-female_removing_minor=Thoughtful.png,A perfectly good choice.
+4-female_removed_minor=Horny.png,Looking sharp!
+
+
+#lost socks
+5-male_removing_minor=Horny.png,Jeez, I'm on a hair trigger...
+5-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,What's going on?
+5-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,Dust? What are you doing?
+5-male_removed_minor=Neutral.png,Let's keep going. I'm excited to see how the game goes!
+5-female_removing_minor=Horny.png,Jeez, I'm on a hair trigger...
+5-female_removed_minor=Neutral.png,Let's keep going. I'm excited to see how the game goes!
+
+
+#lost shirt
+6-male_removing_minor=Horny.png,Jeez, I'm on a hair trigger...
+6-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,What's going on?
+6-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,Dust? What are you doing?
+6-male_removed_minor=Neutral.png,Let's keep going. I'm excited to see how the game goes!
+6-female_removing_minor=Horny.png,Jeez, I'm on a hair trigger...
+6-female_removed_minor=Neutral.png,Let's keep going. I'm excited to see how the game goes!
+
+
+#lost pants
+7-male_removing_minor=Horny.png,Jeez, I'm on a hair trigger...
+7-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,What's going on?
+7-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,Dust? What are you doing?
+7-male_removed_minor=Neutral.png,Let's keep going. I'm excited to see how the game goes!
+7-female_removing_minor=Horny.png,Jeez, I'm on a hair trigger...
+7-female_removed_minor=Neutral.png,Let's keep going. I'm excited to see how the game goes!
+
+
+#naked
+-3-male_removing_minor=Horny.png,Even the little things count at this point, y'know? I'm impressed you still had that on too.
+-3-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,What's going on?
+-3-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,Dust? What are you doing?
+-3-male_removed_minor=Horny.png,Mmm...
+-3-female_removing_minor=Horny.png,Even the little things count at this point, y'know? I'm impressed you still had that on too.
+-3-female_removed_minor=Horny.png,Mmm...
+
+
+#masturbating
+-2-male_removing_minor=Horny.png,Even the little things count at this point, y'know? I'm impressed you still had that on too.
+-2-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,What's going on?
+-2-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,Dust? What are you doing?
+-2-male_removed_minor=Horny.png,Mmm...
+-2-female_removing_minor=Horny.png,Even the little things count at this point, y'know? I'm impressed you still had that on too.
+-2-female_removed_minor=Horny.png,Mmm...
+
+
+#finished
+-1-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,What's going on?
+-1-male_removing_minor,count-role;other&character;chazz&stage;0-6:,count-role;target&character;dust&stage;1:,id:5=Thoughtful.png,Dust? What are you doing?
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_major=C'mere.png,Take your time, if you need it.
+male_removed_major=Horny.png,Ooh, we're getting to the fun part! Well, the especially fun part, y'know? Poker's fun too.
+female_removing_major=C'mere.png,Take your time, if you need it.
+female_removed_major=Horny.png,Ooh, we're getting to the fun part! Well, the especially fun part, y'know? Poker's fun too.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removed_major=Happy.png,I hope everyone's enjoying the game!
+0-female_removing_major,count-role;target&character;emi&stage;7:,id:20=Happy.png,I like that attitude! Push for your dreams, even the little ones!
+0-female_removed_major=Happy.png,I hope everyone's enjoying the game!
+0-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,I'd love to hear the story behind that scar someday, if you're willing to tell it.
+0-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,You wear it well.
+
+
+#lost gloves
+1-male_removed_major=Happy.png,I hope everyone's enjoying the game!
+1-female_removing_major,count-role;target&character;emi&stage;7:,id:20=Happy.png,I like that attitude! Push for your dreams, even the little ones!
+1-female_removed_major=Happy.png,I hope everyone's enjoying the game!
+1-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,I'd love to hear the story behind that scar someday, if you're willing to tell it.
+1-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,You wear it well.
+
+
+#lost boots
+2-male_removing_major=Thoughtful.png,Is it okay if I look?
+2-female_removing_major=Thoughtful.png,Is it okay if I look?
+2-female_removing_major,count-role;target&character;emi&stage;7:,id:20=Happy.png,I like that attitude! Push for your dreams, even the little ones!
+2-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,I'd love to hear the story behind that scar someday, if you're willing to tell it.
+2-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,You wear it well.
+
+
+#lost sweater
+3-male_removing_major=Thoughtful.png,Is it okay if I look?
+3-female_removing_major=Thoughtful.png,Is it okay if I look?
+3-female_removing_major,count-role;target&character;emi&stage;7:,id:20=Happy.png,I like that attitude! Push for your dreams, even the little ones!
+3-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,I'd love to hear the story behind that scar someday, if you're willing to tell it.
+3-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,You wear it well.
+
+
+#lost belt
+4-male_removing_major=Thoughtful.png,Is it okay if I look?
+4-female_removing_major=Thoughtful.png,Is it okay if I look?
+4-female_removing_major,count-role;target&character;emi&stage;7:,id:20=Happy.png,I like that attitude! Push for your dreams, even the little ones!
+4-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,I'd love to hear the story behind that scar someday, if you're willing to tell it.
+4-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,You wear it well.
+
+
+#lost socks
+5-male_removing_major=Happy.png,Now we're talking!
+5-male_removed_major=Thoughtful.png,I'm excited to see where this goes next.
+5-female_removing_major=Happy.png,Now we're talking!
+5-female_removing_major,count-role;target&character;emi&stage;7:,id:20=Happy.png,I like that attitude! Push for your dreams, even the little ones!
+5-female_removed_major=Thoughtful.png,I'm excited to see where this goes next.
+5-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,I'd love to hear the story behind that scar someday, if you're willing to tell it.
+5-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,You wear it well.
+
+
+#lost shirt
+6-male_removing_major=Happy.png,Now we're talking!
+6-male_removed_major=Thoughtful.png,I'm excited to see where this goes next.
+6-female_removing_major=Happy.png,Now we're talking!
+6-female_removing_major,count-role;target&character;emi&stage;7:,id:20=Happy.png,I like that attitude! Push for your dreams, even the little ones!
+6-female_removed_major=Thoughtful.png,I'm excited to see where this goes next.
+6-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,I'd love to hear the story behind that scar someday, if you're willing to tell it.
+6-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,You wear it well.
+
+
+#lost pants
+7-male_removing_major=Happy.png,Now we're talking!
+7-male_removed_major=Thoughtful.png,I'm excited to see where this goes next.
+7-female_removing_major=Happy.png,Now we're talking!
+7-female_removing_major,count-role;target&character;emi&stage;7:,id:20=Happy.png,I like that attitude! Push for your dreams, even the little ones!
+7-female_removed_major=Thoughtful.png,I'm excited to see where this goes next.
+7-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,I'd love to hear the story behind that scar someday, if you're willing to tell it.
+7-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,You wear it well.
+
+
+#naked
+-3-male_removing_major=Horny.png,!!!
+-3-male_removed_major=Horny.png,!!!
+-3-female_removing_major=Horny.png,!!!
+-3-female_removing_major,count-role;target&character;emi&stage;7:,id:20=Happy.png,I like that attitude! Push for your dreams, even the little ones!
+-3-female_removed_major=Horny.png,!!!
+-3-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,I'd love to hear the story behind that scar someday, if you're willing to tell it.
+-3-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,You wear it well.
+
+
+#masturbating
+-2-male_removing_major=Horny.png,!!!
+-2-male_removed_major=Horny.png,!!!
+-2-female_removing_major=Horny.png,!!!
+-2-female_removing_major,count-role;target&character;emi&stage;7:,id:20=Happy.png,I like that attitude! Push for your dreams, even the little ones!
+-2-female_removed_major=Horny.png,!!!
+-2-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,I'd love to hear the story behind that scar someday, if you're willing to tell it.
+-2-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,You wear it well.
+
+
+#finished
+-1-male_removed_major=Horny.png,I don't think I've got another round in me, but...
+-1-female_removing_major,count-role;target&character;emi&stage;7:,id:20=Happy.png,I like that attitude! Push for your dreams, even the little ones!
+-1-female_removed_major=Horny.png,I don't think I've got another round in me, but...
+-1-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,I'd love to hear the story behind that scar someday, if you're willing to tell it.
+-1-female_removed_major,count-role;target&character;misato&stage;4:,id:19=Neutral.png,You wear it well.
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character to have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_chest_will_be_visible=Horny.png,...is it okay if I look? I don't want to make you uncomfortable.
+male_chest_is_visible=Happy.png,I like the view, y'know?
+male_crotch_will_be_visible=Thoughtful.png,Ready? Take your time if you need it.
+male_small_crotch_is_visible=Happy.png,Cute, but in a sexy way!
+male_medium_crotch_is_visible=Horny.png,That's a nice size, y'know? Nice and versatile.
+male_large_crotch_is_visible=Happy.png,Impressive!
+female_chest_will_be_visible=Horny.png,...is it okay if I look? I don't want to make you uncomfortable.
+female_small_chest_is_visible=C'mere.png,You're pretty.
+female_medium_chest_is_visible=Thoughtful.png,You're pretty.
+female_large_chest_is_visible=Thoughtful.png,You don't feel like a Servant, but how would you be able to handle those otherwise? Do you have Presence Concealment?
+female_crotch_will_be_visible=Horny.png,...do you mind if I look?
+female_crotch_is_visible=Happy.png,I like!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_chest_will_be_visible=C'mere.png,You got this!
+0-male_chest_will_be_visible,target:brock,targetStage:4,id:17=C'mere.png,Are you alright, Brock?
+0-male_chest_will_be_visible,target:chazz,targetStage:5,id:23=C'mere.png,We're all in this together, Chazz.
+0-male_chest_is_visible=Thoughtful.png,You look nice.
+0-male_chest_is_visible,count-role;target&character;chazz&stage;6:,id:11,collectible:arash_annoyed=Annoyed.png,Cool it, Chazz! I can't feel any magic coming from ~player~!
+0-male_small_crotch_is_visible=Thoughtful.png,You're lucky you don't have to struggle to cram that into your pants. I like leggings, but they're tricky to fit in sometimes, and I'm not even enormous.
+0-male_medium_crotch_is_visible=Thoughtful.png,Hey, we match.
+0-male_large_crotch_is_visible=Thoughtful.png,I wonder where you were hiding that...
+0-female_chest_will_be_visible=Thoughtful.png,Ready? Take your time if you need it.
+0-female_small_chest_is_visible=Thoughtful.png,Nice and unobtrusive. Practicality is good.
+0-female_medium_chest_is_visible=C'mere.png,A nice size. Big enough to snuggle up to, not so big they'll get in the way. Or so the women in Chaldea tell me, y'know?
+0-female_large_chest_is_visible,count-role;other&character;tharja&saidmarker;TharjaJessieBoobs:,count-role;target&character;jessie&sayingmarker;TharjaShrink:,id:22,collectible:arash_annoyed=Annoyed.png,Tharja. Was that really necessary?
+0-female_crotch_will_be_visible=C'mere.png,You've got this!
+0-female_crotch_will_be_visible,count-role;target&character;joey:,id:25=Horny.png,Nice! You're very skilled.
+0-female_crotch_is_visible=Thoughtful.png,Very pretty.
+0-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=Thoughtful.png,Yang? What are you doing?
+0-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35,collectible:arash_annoyed=Annoyed.png,At least ask first.
+0-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=C'mere.png,You alright, Blake?
+
+
+#lost gloves
+1-male_chest_will_be_visible=C'mere.png,You got this!
+1-male_chest_will_be_visible,target:brock,targetStage:4,id:17=C'mere.png,Are you alright, Brock?
+1-male_chest_will_be_visible,target:chazz,targetStage:5,id:23=C'mere.png,We're all in this together, Chazz.
+1-male_chest_is_visible=Thoughtful.png,You look nice.
+1-male_chest_is_visible,count-role;target&character;chazz&stage;6:,id:11,collectible:arash_annoyed=Annoyed.png,Cool it, Chazz! I can't feel any magic coming from ~player~!
+1-male_small_crotch_is_visible=Thoughtful.png,You're lucky you don't have to struggle to cram that into your pants. I like leggings, but they're tricky to fit in sometimes, and I'm not even enormous.
+1-male_medium_crotch_is_visible=Thoughtful.png,Hey, we match.
+1-male_large_crotch_is_visible=Thoughtful.png,I wonder where you were hiding that...
+1-female_chest_will_be_visible=Thoughtful.png,Ready? Take your time if you need it.
+1-female_small_chest_is_visible=Thoughtful.png,Nice and unobtrusive. Practicality is good.
+1-female_medium_chest_is_visible=C'mere.png,A nice size. Big enough to snuggle up to, not so big they'll get in the way. Or so the women in Chaldea tell me, y'know?
+1-female_large_chest_is_visible,count-role;other&character;tharja&saidmarker;TharjaJessieBoobs:,count-role;target&character;jessie&sayingmarker;TharjaShrink:,id:22,collectible:arash_annoyed=Annoyed.png,Tharja. Was that really necessary?
+1-female_crotch_will_be_visible=C'mere.png,You've got this!
+1-female_crotch_will_be_visible,count-role;target&character;joey:,id:25=Horny.png,Nice! You're very skilled.
+1-female_crotch_is_visible=Thoughtful.png,Very pretty.
+1-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=Thoughtful.png,Yang? What are you doing?
+1-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35,collectible:arash_annoyed=Annoyed.png,At least ask first.
+1-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=C'mere.png,You alright, Blake?
+
+
+#lost boots
+2-male_chest_will_be_visible=Thoughtful.png,Take all the time you need.
+2-male_chest_will_be_visible,target:brock,targetStage:4,id:17=C'mere.png,Are you alright, Brock?
+2-male_chest_will_be_visible,target:chazz,targetStage:5,id:23=C'mere.png,We're all in this together, Chazz.
+2-male_chest_is_visible,count-role;target&character;chazz&stage;6:,id:11,collectible:arash_annoyed=Annoyed.png,Cool it, Chazz! I can't feel any magic coming from ~player~!
+2-male_crotch_will_be_visible=Happy.png,Things are heating up!
+2-female_chest_will_be_visible=Thoughtful.png,Close your eyes if it helps...
+2-female_large_chest_is_visible,count-role;other&character;tharja&saidmarker;TharjaJessieBoobs:,count-role;target&character;jessie&sayingmarker;TharjaShrink:,id:22,collectible:arash_annoyed=Annoyed.png,Tharja. Was that really necessary?
+2-female_crotch_will_be_visible=Thoughtful.png,Take all the time you need.
+2-female_crotch_will_be_visible,count-role;target&character;joey:,id:25=Horny.png,Nice! You're very skilled.
+2-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=Thoughtful.png,Yang? What are you doing?
+2-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35,collectible:arash_annoyed=Annoyed.png,At least ask first.
+2-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=C'mere.png,You alright, Blake?
+
+
+#lost sweater
+3-male_chest_will_be_visible=Thoughtful.png,Take all the time you need.
+3-male_chest_will_be_visible,target:brock,targetStage:4,id:17=C'mere.png,Are you alright, Brock?
+3-male_chest_will_be_visible,target:chazz,targetStage:5,id:23=C'mere.png,We're all in this together, Chazz.
+3-male_chest_is_visible,count-role;target&character;chazz&stage;6:,id:11,collectible:arash_annoyed=Annoyed.png,Cool it, Chazz! I can't feel any magic coming from ~player~!
+3-male_crotch_will_be_visible=Happy.png,Things are heating up!
+3-female_chest_will_be_visible=Thoughtful.png,Close your eyes if it helps...
+3-female_large_chest_is_visible,count-role;other&character;tharja&saidmarker;TharjaJessieBoobs:,count-role;target&character;jessie&sayingmarker;TharjaShrink:,id:22,collectible:arash_annoyed=Annoyed.png,Tharja. Was that really necessary?
+3-female_crotch_will_be_visible=Thoughtful.png,Take all the time you need.
+3-female_crotch_will_be_visible,count-role;target&character;joey:,id:25=Horny.png,Nice! You're very skilled.
+3-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=Thoughtful.png,Yang? What are you doing?
+3-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35,collectible:arash_annoyed=Annoyed.png,At least ask first.
+3-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=C'mere.png,You alright, Blake?
+
+
+#lost belt
+4-male_chest_will_be_visible=Thoughtful.png,Take all the time you need.
+4-male_chest_will_be_visible,target:brock,targetStage:4,id:17=C'mere.png,Are you alright, Brock?
+4-male_chest_will_be_visible,target:chazz,targetStage:5,id:23=C'mere.png,We're all in this together, Chazz.
+4-male_chest_is_visible,count-role;target&character;chazz&stage;6:,id:11,collectible:arash_annoyed=Annoyed.png,Cool it, Chazz! I can't feel any magic coming from ~player~!
+4-male_crotch_will_be_visible=Happy.png,Things are heating up!
+4-female_chest_will_be_visible=Thoughtful.png,Close your eyes if it helps...
+4-female_large_chest_is_visible,count-role;other&character;tharja&saidmarker;TharjaJessieBoobs:,count-role;target&character;jessie&sayingmarker;TharjaShrink:,id:22,collectible:arash_annoyed=Annoyed.png,Tharja. Was that really necessary?
+4-female_crotch_will_be_visible=Thoughtful.png,Take all the time you need.
+4-female_crotch_will_be_visible,count-role;target&character;joey:,id:25=Horny.png,Nice! You're very skilled.
+4-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=Thoughtful.png,Yang? What are you doing?
+4-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35,collectible:arash_annoyed=Annoyed.png,At least ask first.
+4-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=C'mere.png,You alright, Blake?
+
+
+#lost socks
+5-male_chest_will_be_visible,target:brock,targetStage:4,id:17=C'mere.png,Are you alright, Brock?
+5-male_chest_will_be_visible,target:chazz,targetStage:5,id:23=C'mere.png,We're all in this together, Chazz.
+5-male_chest_is_visible=Horny.png,Mmm...
+5-male_chest_is_visible,count-role;target&character;chazz&stage;6:,id:11,collectible:arash_annoyed=Annoyed.png,Cool it, Chazz! I can't feel any magic coming from ~player~!
+5-male_crotch_will_be_visible=Horny.png,*fans self*
+5-male_small_crotch_is_visible=Horny.png,Is it true that smaller guys have more nerve density? That they feel pleasure more strongly?
+5-male_medium_crotch_is_visible=Happy.png,Now that's what I like to see!
+5-male_large_crotch_is_visible=Neutral.png,How do you handle that?
+5-female_small_chest_is_visible=Horny.png,Mmm...
+5-female_medium_chest_is_visible=Horny.png,Mmm...
+5-female_large_chest_is_visible,count-role;other&character;tharja&saidmarker;TharjaJessieBoobs:,count-role;target&character;jessie&sayingmarker;TharjaShrink:,id:22,collectible:arash_annoyed=Annoyed.png,Tharja. Was that really necessary?
+5-female_crotch_will_be_visible,count-role;target&character;joey:,id:25=Horny.png,Nice! You're very skilled.
+5-female_crotch_is_visible=Horny.png,Who turned off the AC?
+5-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=Thoughtful.png,Yang? What are you doing?
+5-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35,collectible:arash_annoyed=Annoyed.png,At least ask first.
+5-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=C'mere.png,You alright, Blake?
+
+
+#lost shirt
+6-male_chest_will_be_visible,target:brock,targetStage:4,id:17=C'mere.png,Are you alright, Brock?
+6-male_chest_will_be_visible,target:chazz,targetStage:5,id:23=C'mere.png,We're all in this together, Chazz.
+6-male_chest_is_visible=Horny.png,Mmm...
+6-male_chest_is_visible,count-role;target&character;chazz&stage;6:,id:11,collectible:arash_annoyed=Annoyed.png,Cool it, Chazz! I can't feel any magic coming from ~player~!
+6-male_crotch_will_be_visible=Horny.png,*fans self*
+6-male_small_crotch_is_visible=Horny.png,Is it true that smaller guys have more nerve density? That they feel pleasure more strongly?
+6-male_medium_crotch_is_visible=Happy.png,Now that's what I like to see!
+6-male_large_crotch_is_visible=Neutral.png,How do you handle that?
+6-female_small_chest_is_visible=Horny.png,Mmm...
+6-female_medium_chest_is_visible=Horny.png,Mmm...
+6-female_large_chest_is_visible,count-role;other&character;tharja&saidmarker;TharjaJessieBoobs:,count-role;target&character;jessie&sayingmarker;TharjaShrink:,id:22,collectible:arash_annoyed=Annoyed.png,Tharja. Was that really necessary?
+6-female_crotch_will_be_visible,count-role;target&character;joey:,id:25=Horny.png,Nice! You're very skilled.
+6-female_crotch_is_visible=Horny.png,Who turned off the AC?
+6-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=Thoughtful.png,Yang? What are you doing?
+6-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35,collectible:arash_annoyed=Annoyed.png,At least ask first.
+6-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=C'mere.png,You alright, Blake?
+
+
+#lost pants
+7-male_chest_will_be_visible,target:brock,targetStage:4,id:17=C'mere.png,Are you alright, Brock?
+7-male_chest_will_be_visible,target:chazz,targetStage:5,id:23=C'mere.png,We're all in this together, Chazz.
+7-male_chest_is_visible=Horny.png,Mmm...
+7-male_chest_is_visible,count-role;target&character;chazz&stage;6:,id:11,collectible:arash_annoyed=Annoyed.png,Cool it, Chazz! I can't feel any magic coming from ~player~!
+7-male_crotch_will_be_visible=Horny.png,*fans self*
+7-male_small_crotch_is_visible=Horny.png,Is it true that smaller guys have more nerve density? That they feel pleasure more strongly?
+7-male_medium_crotch_is_visible=Happy.png,Now that's what I like to see!
+7-male_large_crotch_is_visible=Neutral.png,How do you handle that?
+7-female_small_chest_is_visible=Horny.png,Mmm...
+7-female_medium_chest_is_visible=Horny.png,Mmm...
+7-female_large_chest_is_visible,count-role;other&character;tharja&saidmarker;TharjaJessieBoobs:,count-role;target&character;jessie&sayingmarker;TharjaShrink:,id:22,collectible:arash_annoyed=Annoyed.png,Tharja. Was that really necessary?
+7-female_crotch_will_be_visible,count-role;target&character;joey:,id:25=Horny.png,Nice! You're very skilled.
+7-female_crotch_is_visible=Horny.png,Who turned off the AC?
+7-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=Thoughtful.png,Yang? What are you doing?
+7-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35,collectible:arash_annoyed=Annoyed.png,At least ask first.
+7-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=C'mere.png,You alright, Blake?
+
+
+#naked
+-3-male_chest_will_be_visible,target:brock,targetStage:4,id:17=C'mere.png,Are you alright, Brock?
+-3-male_chest_will_be_visible,target:chazz,targetStage:5,id:23=C'mere.png,We're all in this together, Chazz.
+-3-male_chest_is_visible=Horny.png,I like...
+-3-male_chest_is_visible,count-role;target&character;chazz&stage;6:,id:11,collectible:arash_annoyed=Annoyed.png,Cool it, Chazz! I can't feel any magic coming from ~player~!
+-3-male_crotch_will_be_visible=Horny.png,I'm excited to see...
+-3-male_small_crotch_is_visible=Happy.png,Ooh, I like the view, y'know?
+-3-male_medium_crotch_is_visible=Horny.png,Mmm, I like...
+-3-male_large_crotch_is_visible=Horny.png,Ahhhh...I want...wanna feel that, y'know?
+-3-female_small_chest_is_visible=Happy.png,Now that's a treat to see!
+-3-female_medium_chest_is_visible=Happy.png,Now that's a treat to see!
+-3-female_large_chest_is_visible=Horny.png,Those look...inviting, y'know?
+-3-female_large_chest_is_visible,count-role;other&character;tharja&saidmarker;TharjaJessieBoobs:,count-role;target&character;jessie&sayingmarker;TharjaShrink:,id:22,collectible:arash_annoyed=Annoyed.png,Tharja. Was that really necessary?
+-3-female_crotch_will_be_visible,count-role;target&character;joey:,id:25=Horny.png,Nice! You're very skilled.
+-3-female_crotch_is_visible=Horny.png,...I want...wanna be buried in warmth, y'know?
+-3-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=Thoughtful.png,Yang? What are you doing?
+-3-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35,collectible:arash_annoyed=Annoyed.png,At least ask first.
+-3-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=C'mere.png,You alright, Blake?
+
+
+#masturbating
+-2-male_chest_will_be_visible,target:brock,targetStage:4,id:17=C'mere.png,Are you alright, Brock?
+-2-male_chest_will_be_visible,target:chazz,targetStage:5,id:23=C'mere.png,We're all in this together, Chazz.
+-2-male_chest_is_visible=Horny.png,I like...
+-2-male_chest_is_visible,count-role;target&character;chazz&stage;6:,id:11,collectible:arash_annoyed=Annoyed.png,Cool it, Chazz! I can't feel any magic coming from ~player~!
+-2-male_crotch_will_be_visible=Horny.png,I'm excited to see...
+-2-male_small_crotch_is_visible=Happy.png,Ooh, I like the view, y'know?
+-2-male_medium_crotch_is_visible=Horny.png,Mmm, I like...
+-2-male_large_crotch_is_visible=Horny.png,Ahhhh...I want...wanna feel that, y'know?
+-2-female_small_chest_is_visible=Happy.png,Now that's a treat to see!
+-2-female_medium_chest_is_visible=Happy.png,Now that's a treat to see!
+-2-female_large_chest_is_visible=Horny.png,Those look...inviting, y'know?
+-2-female_large_chest_is_visible,count-role;other&character;tharja&saidmarker;TharjaJessieBoobs:,count-role;target&character;jessie&sayingmarker;TharjaShrink:,id:22,collectible:arash_annoyed=Annoyed.png,Tharja. Was that really necessary?
+-2-female_crotch_will_be_visible,count-role;target&character;joey:,id:25=Horny.png,Nice! You're very skilled.
+-2-female_crotch_is_visible=Horny.png,...I want...wanna be buried in warmth, y'know?
+-2-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=Thoughtful.png,Yang? What are you doing?
+-2-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35,collectible:arash_annoyed=Annoyed.png,At least ask first.
+-2-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=C'mere.png,You alright, Blake?
+
+
+#finished
+-1-male_chest_will_be_visible=C'mere.png,You got this!
+-1-male_chest_will_be_visible,target:brock,targetStage:4,id:17=C'mere.png,Are you alright, Brock?
+-1-male_chest_will_be_visible,target:chazz,targetStage:5,id:23=C'mere.png,We're all in this together, Chazz.
+-1-male_chest_is_visible=Horny.png,I don't think I've got another round in me, but...
+-1-male_chest_is_visible,count-role;target&character;chazz&stage;6:,id:11,collectible:arash_annoyed=Annoyed.png,Cool it, Chazz! I can't feel any magic coming from ~player~!
+-1-male_small_crotch_is_visible=Horny.png,I don't think I've got another round in me, but...
+-1-male_medium_crotch_is_visible=Horny.png,I don't think I've got another round in me, but...
+-1-male_large_crotch_is_visible=Horny.png,I don't think I've got another round in me, but...
+-1-female_chest_will_be_visible=Thoughtful.png,Ready? Take your time if you need it.
+-1-female_small_chest_is_visible=Horny.png,I don't think I've got another round in me, but...
+-1-female_medium_chest_is_visible=Horny.png,I don't think I've got another round in me, but...
+-1-female_large_chest_is_visible=Horny.png,I don't think I've got another round in me, but...
+-1-female_large_chest_is_visible,count-role;other&character;tharja&saidmarker;TharjaJessieBoobs:,count-role;target&character;jessie&sayingmarker;TharjaShrink:,id:22,collectible:arash_annoyed=Annoyed.png,Tharja. Was that really necessary?
+-1-female_crotch_will_be_visible=C'mere.png,You've got this!
+-1-female_crotch_will_be_visible,count-role;target&character;joey:,id:25=Horny.png,Nice! You're very skilled.
+-1-female_crotch_is_visible=Horny.png,I don't think I've got another round in me, but...
+-1-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=Thoughtful.png,Yang? What are you doing?
+-1-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35,collectible:arash_annoyed=Annoyed.png,At least ask first.
+-1-female_crotch_is_visible,count-role;target&character;blake:,count-role;other&character;yang&stage;8-10:,id:35=C'mere.png,You alright, Blake?
+
+
+
+
+#OPPONENT STRIPPING IN GENERAL
+#Lines that trigger when a player is strips regardless of gender or what they are removing.
+#It's useful to put all lines targeting a specific character and stage here, so they won't be affected if the
+#type of clothing should have to be changed.
+    
+
+#fully clothed
+0-opponent_stripping,count-role;target&stage;1-3:,count-role;other&character;emi&saidmarker;emi_hero&notsaidmarker;pirate&sayingmarker;emi_hero2:,id:39=Thoughtful.png,Servants don't really need money. Helping my Master is enough - they're really sweet.
+0-opponent_stripping,count-shy&role;target:=C'mere.png,Take all the time you need, ~name~.  There's no rush.
+0-opponent_stripping,count-shy&role;target:,collectible:arash_annoyed=Annoyed.png,Look, it takes a lot to get on my nerves. But anyone who harasses ~name~ is going to tick me off.
+0-opponent_stripping,count-shy&role;target:=Thoughtful.png,Deep breaths, ~name~. You can do this!
+0-opponent_stripping,count-shy&role;target:=Neutral.png,I was shy my first few times playing strip poker too. You're alright.
+0-opponent_stripping,count-shy&role;target:=C'mere.png,I was shy my first few times playing strip poker too. You'll be okay, trust me.
+0-opponent_stripped,totalRounds:0,count-role;other&character;misato&stage;0&sayingmarker;Misato_Beer_Offer:,id:33=Happy.png,Ooh, what kind? I've always been a light lager kind of guy.
+0-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,I hope Chihiro's okay.
+0-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Chihiro? Is something wrong?
+0-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Are you okay, Chihiro?
+0-opponent_chest_is_visible,count-athletic&role;target:=Neutral.png,I can see you take care of yourself, ~name~.
+0-opponent_chest_is_visible,count-athletic&role;target:=Thoughtful.png,Are you a warrior too, ~name~?
+0-opponent_chest_is_visible,count-athletic&role;target:=Happy.png,I like that figure, ~name~!
+0-opponent_crotch_is_visible,count-role;target&character;chihiro:,id:12=C'mere.png,Thank you for trusting us with this.
+0-opponent_masturbating,count-shy&role;target:=Neutral.png,Let's leave ~name~ to it, shall we? 
+0-opponent_masturbating,count-shy&role;target:=Thoughtful.png,I don't want people uncomfortable. Let's leave ~name~ to it and get on with the game.
+
+
+#lost gloves
+1-opponent_stripping,count-role;target&stage;1-3:,count-role;other&character;emi&saidmarker;emi_hero&notsaidmarker;pirate&sayingmarker;emi_hero2:,id:39=Thoughtful.png,Servants don't really need money. Helping my Master is enough - they're really sweet.
+1-opponent_stripping,count-shy&role;target:=C'mere.png,Take all the time you need, ~name~.  There's no rush.
+1-opponent_stripping,count-shy&role;target:,collectible:arash_annoyed=Annoyed.png,Look, it takes a lot to get on my nerves. But anyone who harasses ~name~ is going to tick me off.
+1-opponent_stripping,count-shy&role;target:=Thoughtful.png,Deep breaths, ~name~. You can do this!
+1-opponent_stripping,count-shy&role;target:=Neutral.png,I was shy my first few times playing strip poker too. You're alright.
+1-opponent_stripping,count-shy&role;target:=C'mere.png,I was shy my first few times playing strip poker too. You'll be okay, trust me.
+1-opponent_stripped,totalRounds:0,count-role;other&character;misato&stage;0&sayingmarker;Misato_Beer_Offer:,id:33=Happy.png,Ooh, what kind? I've always been a light lager kind of guy.
+1-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,I hope Chihiro's okay.
+1-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Chihiro? Is something wrong?
+1-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Are you okay, Chihiro?
+1-opponent_chest_is_visible,count-athletic&role;target:=Neutral.png,I can see you take care of yourself, ~name~.
+1-opponent_chest_is_visible,count-athletic&role;target:=Thoughtful.png,Are you a warrior too, ~name~?
+1-opponent_chest_is_visible,count-athletic&role;target:=Happy.png,I like that figure, ~name~!
+1-opponent_crotch_is_visible,count-role;target&character;chihiro:,id:12=C'mere.png,Thank you for trusting us with this.
+1-opponent_masturbating,count-shy&role;target:=Neutral.png,Let's leave ~name~ to it, shall we? 
+1-opponent_masturbating,count-shy&role;target:=Thoughtful.png,I don't want people uncomfortable. Let's leave ~name~ to it and get on with the game.
+
+
+#lost boots
+2-opponent_stripping,count-role;target&stage;1-3:,count-role;other&character;emi&saidmarker;emi_hero&notsaidmarker;pirate&sayingmarker;emi_hero2:,id:39=Thoughtful.png,Servants don't really need money. Helping my Master is enough - they're really sweet.
+2-opponent_stripping,count-shy&role;target:=C'mere.png,Take all the time you need, ~name~.  There's no rush.
+2-opponent_stripping,count-shy&role;target:,collectible:arash_annoyed=Annoyed.png,Look, it takes a lot to get on my nerves. But anyone who harasses ~name~ is going to tick me off.
+2-opponent_stripping,count-shy&role;target:=Thoughtful.png,Deep breaths, ~name~. You can do this!
+2-opponent_stripping,count-shy&role;target:=Neutral.png,I was shy my first few times playing strip poker too. You're alright.
+2-opponent_stripping,count-shy&role;target:=C'mere.png,I was shy my first few times playing strip poker too. You'll be okay, trust me.
+2-opponent_stripped,totalRounds:0,count-role;other&character;misato&stage;0&sayingmarker;Misato_Beer_Offer:,id:33=Happy.png,Ooh, what kind? I've always been a light lager kind of guy.
+2-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,I hope Chihiro's okay.
+2-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Chihiro? Is something wrong?
+2-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Are you okay, Chihiro?
+2-opponent_chest_is_visible,count-athletic&role;target:=Neutral.png,I can see you take care of yourself, ~name~.
+2-opponent_chest_is_visible,count-athletic&role;target:=Thoughtful.png,Are you a warrior too, ~name~?
+2-opponent_chest_is_visible,count-athletic&role;target:=Happy.png,I like that figure, ~name~!
+2-opponent_crotch_is_visible,count-role;target&character;chihiro:,id:12=C'mere.png,Thank you for trusting us with this.
+2-opponent_masturbating,count-shy&role;target:=Neutral.png,Let's leave ~name~ to it, shall we? 
+2-opponent_masturbating,count-shy&role;target:=Thoughtful.png,I don't want people uncomfortable. Let's leave ~name~ to it and get on with the game.
+
+
+#lost sweater
+3-opponent_stripping,count-role;target&stage;1-3:,count-role;other&character;emi&saidmarker;emi_hero&notsaidmarker;pirate&sayingmarker;emi_hero2:,id:39=Thoughtful.png,Servants don't really need money. Helping my Master is enough - they're really sweet.
+3-opponent_stripping,count-shy&role;target:=C'mere.png,Take all the time you need, ~name~.  There's no rush.
+3-opponent_stripping,count-shy&role;target:,collectible:arash_annoyed=Annoyed.png,Look, it takes a lot to get on my nerves. But anyone who harasses ~name~ is going to tick me off.
+3-opponent_stripping,count-shy&role;target:=Thoughtful.png,Deep breaths, ~name~. You can do this!
+3-opponent_stripping,count-shy&role;target:=Neutral.png,I was shy my first few times playing strip poker too. You're alright.
+3-opponent_stripping,count-shy&role;target:=C'mere.png,I was shy my first few times playing strip poker too. You'll be okay, trust me.
+3-opponent_stripped,totalRounds:0,count-role;other&character;misato&stage;0&sayingmarker;Misato_Beer_Offer:,id:33=Happy.png,Ooh, what kind? I've always been a light lager kind of guy.
+3-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,I hope Chihiro's okay.
+3-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Chihiro? Is something wrong?
+3-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Are you okay, Chihiro?
+3-opponent_chest_is_visible,count-athletic&role;target:=Neutral.png,I can see you take care of yourself, ~name~.
+3-opponent_chest_is_visible,count-athletic&role;target:=Thoughtful.png,Are you a warrior too, ~name~?
+3-opponent_chest_is_visible,count-athletic&role;target:=Happy.png,I like that figure, ~name~!
+3-opponent_crotch_is_visible,count-role;target&character;chihiro:,id:12=C'mere.png,Thank you for trusting us with this.
+3-opponent_masturbating,count-shy&role;target:=Neutral.png,Let's leave ~name~ to it, shall we? 
+3-opponent_masturbating,count-shy&role;target:=Thoughtful.png,I don't want people uncomfortable. Let's leave ~name~ to it and get on with the game.
+
+
+#lost belt
+4-opponent_stripping,count-role;target&stage;1-3:,count-role;other&character;emi&saidmarker;emi_hero&notsaidmarker;pirate&sayingmarker;emi_hero2:,id:39=Thoughtful.png,Servants don't really need money. Helping my Master is enough - they're really sweet.
+4-opponent_stripping,count-shy&role;target:=C'mere.png,Take all the time you need, ~name~.  There's no rush.
+4-opponent_stripping,count-shy&role;target:,collectible:arash_annoyed=Annoyed.png,Look, it takes a lot to get on my nerves. But anyone who harasses ~name~ is going to tick me off.
+4-opponent_stripping,count-shy&role;target:=Thoughtful.png,Deep breaths, ~name~. You can do this!
+4-opponent_stripping,count-shy&role;target:=Neutral.png,I was shy my first few times playing strip poker too. You're alright.
+4-opponent_stripping,count-shy&role;target:=C'mere.png,I was shy my first few times playing strip poker too. You'll be okay, trust me.
+4-opponent_stripped,totalRounds:0,count-role;other&character;misato&stage;0&sayingmarker;Misato_Beer_Offer:,id:33=Happy.png,Ooh, what kind? I've always been a light lager kind of guy.
+4-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,I hope Chihiro's okay.
+4-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Chihiro? Is something wrong?
+4-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Are you okay, Chihiro?
+4-opponent_chest_is_visible,count-athletic&role;target:=Neutral.png,I can see you take care of yourself, ~name~.
+4-opponent_chest_is_visible,count-athletic&role;target:=Thoughtful.png,Are you a warrior too, ~name~?
+4-opponent_chest_is_visible,count-athletic&role;target:=Happy.png,I like that figure, ~name~!
+4-opponent_crotch_is_visible,count-role;target&character;chihiro:,id:12=C'mere.png,Thank you for trusting us with this.
+4-opponent_masturbating,count-shy&role;target:=Neutral.png,Let's leave ~name~ to it, shall we? 
+4-opponent_masturbating,count-shy&role;target:=Thoughtful.png,I don't want people uncomfortable. Let's leave ~name~ to it and get on with the game.
+
+
+#lost socks
+5-opponent_stripping,count-role;target&stage;1-3:,count-role;other&character;emi&saidmarker;emi_hero&notsaidmarker;pirate&sayingmarker;emi_hero2:,id:39=Thoughtful.png,Servants don't really need money. Helping my Master is enough - they're really sweet.
+5-opponent_stripping,count-shy&role;target:=C'mere.png,Take all the time you need, ~name~.  There's no rush.
+5-opponent_stripping,count-shy&role;target:,collectible:arash_annoyed=Annoyed.png,Look, it takes a lot to get on my nerves. But anyone who harasses ~name~ is going to tick me off.
+5-opponent_stripping,count-shy&role;target:=Thoughtful.png,Deep breaths, ~name~. You can do this!
+5-opponent_stripping,count-shy&role;target:=Neutral.png,I was shy my first few times playing strip poker too. You're alright.
+5-opponent_stripping,count-shy&role;target:=C'mere.png,I was shy my first few times playing strip poker too. You'll be okay, trust me.
+5-opponent_stripped,totalRounds:0,count-role;other&character;misato&stage;0&sayingmarker;Misato_Beer_Offer:,id:33=Happy.png,Ooh, what kind? I've always been a light lager kind of guy.
+5-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,I hope Chihiro's okay.
+5-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Chihiro? Is something wrong?
+5-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Are you okay, Chihiro?
+5-opponent_chest_is_visible,count-athletic&role;target:=Neutral.png,I can see you take care of yourself, ~name~.
+5-opponent_chest_is_visible,count-athletic&role;target:=Thoughtful.png,Are you a warrior too, ~name~?
+5-opponent_chest_is_visible,count-athletic&role;target:=Happy.png,I like that figure, ~name~!
+5-opponent_crotch_is_visible,count-role;target&character;chihiro:,id:12=C'mere.png,Thank you for trusting us with this.
+5-opponent_masturbating,count-shy&role;target:=Neutral.png,Let's leave ~name~ to it, shall we? 
+5-opponent_masturbating,count-shy&role;target:=Thoughtful.png,I don't want people uncomfortable. Let's leave ~name~ to it and get on with the game.
+
+
+#lost shirt
+6-opponent_stripping,count-role;target&stage;1-3:,count-role;other&character;emi&saidmarker;emi_hero&notsaidmarker;pirate&sayingmarker;emi_hero2:,id:39=Thoughtful.png,Servants don't really need money. Helping my Master is enough - they're really sweet.
+6-opponent_stripping,count-shy&role;target:=C'mere.png,Take all the time you need, ~name~.  There's no rush.
+6-opponent_stripping,count-shy&role;target:,collectible:arash_annoyed=Annoyed.png,Look, it takes a lot to get on my nerves. But anyone who harasses ~name~ is going to tick me off.
+6-opponent_stripping,count-shy&role;target:=Thoughtful.png,Deep breaths, ~name~. You can do this!
+6-opponent_stripping,count-shy&role;target:=Neutral.png,I was shy my first few times playing strip poker too. You're alright.
+6-opponent_stripping,count-shy&role;target:=C'mere.png,I was shy my first few times playing strip poker too. You'll be okay, trust me.
+6-opponent_stripped,totalRounds:0,count-role;other&character;misato&stage;0&sayingmarker;Misato_Beer_Offer:,id:33=Happy.png,Ooh, what kind? I've always been a light lager kind of guy.
+6-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,I hope Chihiro's okay.
+6-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Chihiro? Is something wrong?
+6-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Are you okay, Chihiro?
+6-opponent_chest_is_visible,count-athletic&role;target:=Neutral.png,I can see you take care of yourself, ~name~.
+6-opponent_chest_is_visible,count-athletic&role;target:=Thoughtful.png,Are you a warrior too, ~name~?
+6-opponent_chest_is_visible,count-athletic&role;target:=Happy.png,I like that figure, ~name~!
+6-opponent_crotch_is_visible,count-role;target&character;chihiro:,id:12=C'mere.png,Thank you for trusting us with this.
+6-opponent_masturbating,count-shy&role;target:=Neutral.png,Let's leave ~name~ to it, shall we? 
+6-opponent_masturbating,count-shy&role;target:=Thoughtful.png,I don't want people uncomfortable. Let's leave ~name~ to it and get on with the game.
+
+
+#lost pants
+7-opponent_stripping,count-role;target&stage;1-3:,count-role;other&character;emi&saidmarker;emi_hero&notsaidmarker;pirate&sayingmarker;emi_hero2:,id:39=Thoughtful.png,Servants don't really need money. Helping my Master is enough - they're really sweet.
+7-opponent_stripping,count-shy&role;target:=C'mere.png,Take all the time you need, ~name~.  There's no rush.
+7-opponent_stripping,count-shy&role;target:,collectible:arash_annoyed=Annoyed.png,Look, it takes a lot to get on my nerves. But anyone who harasses ~name~ is going to tick me off.
+7-opponent_stripping,count-shy&role;target:=Thoughtful.png,Deep breaths, ~name~. You can do this!
+7-opponent_stripping,count-shy&role;target:=Neutral.png,I was shy my first few times playing strip poker too. You're alright.
+7-opponent_stripping,count-shy&role;target:=C'mere.png,I was shy my first few times playing strip poker too. You'll be okay, trust me.
+7-opponent_stripped,totalRounds:0,count-role;other&character;misato&stage;0&sayingmarker;Misato_Beer_Offer:,id:33=Happy.png,Ooh, what kind? I've always been a light lager kind of guy.
+7-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,I hope Chihiro's okay.
+7-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Chihiro? Is something wrong?
+7-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Are you okay, Chihiro?
+7-opponent_chest_is_visible,count-athletic&role;target:=Neutral.png,I can see you take care of yourself, ~name~.
+7-opponent_chest_is_visible,count-athletic&role;target:=Thoughtful.png,Are you a warrior too, ~name~?
+7-opponent_chest_is_visible,count-athletic&role;target:=Happy.png,I like that figure, ~name~!
+7-opponent_crotch_is_visible,count-role;target&character;chihiro:,id:12=C'mere.png,Thank you for trusting us with this.
+7-opponent_masturbating,count-shy&role;target:=Neutral.png,Let's leave ~name~ to it, shall we? 
+7-opponent_masturbating,count-shy&role;target:=Thoughtful.png,I don't want people uncomfortable. Let's leave ~name~ to it and get on with the game.
+
+
+#naked
+-3-opponent_stripping,count-role;target&stage;1-3:,count-role;other&character;emi&saidmarker;emi_hero&notsaidmarker;pirate&sayingmarker;emi_hero2:,id:39=Thoughtful.png,Servants don't really need money. Helping my Master is enough - they're really sweet.
+-3-opponent_stripping,count-shy&role;target:=C'mere.png,Take all the time you need, ~name~.  There's no rush.
+-3-opponent_stripping,count-shy&role;target:,collectible:arash_annoyed=Annoyed.png,Look, it takes a lot to get on my nerves. But anyone who harasses ~name~ is going to tick me off.
+-3-opponent_stripping,count-shy&role;target:=Thoughtful.png,Deep breaths, ~name~. You can do this!
+-3-opponent_stripping,count-shy&role;target:=Neutral.png,I was shy my first few times playing strip poker too. You're alright.
+-3-opponent_stripping,count-shy&role;target:=C'mere.png,I was shy my first few times playing strip poker too. You'll be okay, trust me.
+-3-opponent_stripped,totalRounds:0,count-role;other&character;misato&stage;0&sayingmarker;Misato_Beer_Offer:,id:33=Happy.png,Ooh, what kind? I've always been a light lager kind of guy.
+-3-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,I hope Chihiro's okay.
+-3-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Chihiro? Is something wrong?
+-3-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Are you okay, Chihiro?
+-3-opponent_chest_is_visible,count-athletic&role;target:=Neutral.png,I can see you take care of yourself, ~name~.
+-3-opponent_chest_is_visible,count-athletic&role;target:=Thoughtful.png,Are you a warrior too, ~name~?
+-3-opponent_chest_is_visible,count-athletic&role;target:=Happy.png,I like that figure, ~name~!
+-3-opponent_crotch_is_visible,count-role;target&character;chihiro:,id:12=C'mere.png,Thank you for trusting us with this.
+-3-opponent_masturbating,count-shy&role;target:=Neutral.png,Let's leave ~name~ to it, shall we? 
+-3-opponent_masturbating,count-shy&role;target:=Thoughtful.png,I don't want people uncomfortable. Let's leave ~name~ to it and get on with the game.
+
+
+#masturbating
+-2-opponent_stripping,count-role;target&stage;1-3:,count-role;other&character;emi&saidmarker;emi_hero&notsaidmarker;pirate&sayingmarker;emi_hero2:,id:39=Thoughtful.png,Servants don't really need money. Helping my Master is enough - they're really sweet.
+-2-opponent_stripping,count-shy&role;target:=C'mere.png,Take all the time you need, ~name~.  There's no rush.
+-2-opponent_stripping,count-shy&role;target:,collectible:arash_annoyed=Annoyed.png,Look, it takes a lot to get on my nerves. But anyone who harasses ~name~ is going to tick me off.
+-2-opponent_stripping,count-shy&role;target:=Thoughtful.png,Deep breaths, ~name~. You can do this!
+-2-opponent_stripping,count-shy&role;target:=Neutral.png,I was shy my first few times playing strip poker too. You're alright.
+-2-opponent_stripping,count-shy&role;target:=C'mere.png,I was shy my first few times playing strip poker too. You'll be okay, trust me.
+-2-opponent_stripped,totalRounds:0,count-role;other&character;misato&stage;0&sayingmarker;Misato_Beer_Offer:,id:33=Happy.png,Ooh, what kind? I've always been a light lager kind of guy.
+-2-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,I hope Chihiro's okay.
+-2-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Chihiro? Is something wrong?
+-2-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Are you okay, Chihiro?
+-2-opponent_chest_is_visible,count-athletic&role;target:=Neutral.png,I can see you take care of yourself, ~name~.
+-2-opponent_chest_is_visible,count-athletic&role;target:=Thoughtful.png,Are you a warrior too, ~name~?
+-2-opponent_chest_is_visible,count-athletic&role;target:=Happy.png,I like that figure, ~name~!
+-2-opponent_crotch_is_visible,count-role;target&character;chihiro:,id:12=C'mere.png,Thank you for trusting us with this.
+-2-opponent_masturbating,count-shy&role;target:=Neutral.png,Let's leave ~name~ to it, shall we? 
+-2-opponent_masturbating,count-shy&role;target:=Thoughtful.png,I don't want people uncomfortable. Let's leave ~name~ to it and get on with the game.
+
+
+#finished
+-1-opponent_stripping,count-role;target&stage;1-3:,count-role;other&character;emi&saidmarker;emi_hero&notsaidmarker;pirate&sayingmarker;emi_hero2:,id:39=Thoughtful.png,Servants don't really need money. Helping my Master is enough - they're really sweet.
+-1-opponent_stripping,count-shy&role;target:=C'mere.png,Take all the time you need, ~name~.  There's no rush.
+-1-opponent_stripping,count-shy&role;target:,collectible:arash_annoyed=Annoyed.png,Look, it takes a lot to get on my nerves. But anyone who harasses ~name~ is going to tick me off.
+-1-opponent_stripping,count-shy&role;target:=Thoughtful.png,Deep breaths, ~name~. You can do this!
+-1-opponent_stripping,count-shy&role;target:=Neutral.png,I was shy my first few times playing strip poker too. You're alright.
+-1-opponent_stripping,count-shy&role;target:=C'mere.png,I was shy my first few times playing strip poker too. You'll be okay, trust me.
+-1-opponent_stripped,totalRounds:0,count-role;other&character;misato&stage;0&sayingmarker;Misato_Beer_Offer:,id:33=Happy.png,Ooh, what kind? I've always been a light lager kind of guy.
+-1-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,I hope Chihiro's okay.
+-1-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Chihiro? Is something wrong?
+-1-opponent_chest_will_be_visible,count-role;target&character;chihiro&stage;4:,id:15=C'mere.png,Are you okay, Chihiro?
+-1-opponent_chest_is_visible,count-athletic&role;target:=Neutral.png,I can see you take care of yourself, ~name~.
+-1-opponent_chest_is_visible,count-athletic&role;target:=Thoughtful.png,Are you a warrior too, ~name~?
+-1-opponent_chest_is_visible,count-athletic&role;target:=Happy.png,I like that figure, ~name~!
+-1-opponent_crotch_is_visible,count-role;target&character;chihiro:,id:12=C'mere.png,Thank you for trusting us with this.
+-1-opponent_masturbating,count-shy&role;target:=Neutral.png,Let's leave ~name~ to it, shall we? 
+-1-opponent_masturbating,count-shy&role;target:=Thoughtful.png,I don't want people uncomfortable. Let's leave ~name~ to it and get on with the game.
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_masturbate=C'mere.png,You got this! Just relax and enjoy yourself, y'know?
+male_start_masturbating=Horny.png,I like your technique.
+male_masturbating=Thoughtful.png,Deep breaths, ~name~. Relax and enjoy it.
+male_finished_masturbating=Thoughtful.png,Hope it was good for you!
+female_must_masturbate=C'mere.png,You got this! Just relax and enjoy yourself, y'know?
+female_start_masturbating=Horny.png,I like your technique.
+female_masturbating=Thoughtful.png,Deep breaths, ~name~. Relax and enjoy it.
+female_finished_masturbating=Thoughtful.png,Hope it was good for you!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Shimakaze? Are you alright?
+0-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Gah! Shimakaze, you startled me! Are you okay?
+0-female_must_masturbate,count-role;target&character;nami:,id:7=Horny.png,Whatever you're into!
+0-female_start_masturbating,count-role;target&character;nami:,id:18=Horny.png,You know, that's not a bad idea.
+0-female_start_masturbating,count-role;target&character;nami:,count-role;other&character;caulifla&stage;2-7:,id:14=Thoughtful.png,Hey, where'd she go?
+0-female_start_masturbating,count-role;target&character;sayaka&sayingmarker;soulgem:,count-role;other&character;caulifla:,id:10=Thoughtful.png,Whoa, whoa! What?
+0-female_masturbating,count-role;target&character;florina:,id:32=Thoughtful.png,I like your song, Florina.
+
+
+#lost gloves
+1-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Shimakaze? Are you alright?
+1-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Gah! Shimakaze, you startled me! Are you okay?
+1-female_must_masturbate,count-role;target&character;nami:,id:7=Horny.png,Whatever you're into!
+1-female_start_masturbating,count-role;target&character;nami:,id:18=Horny.png,You know, that's not a bad idea.
+1-female_start_masturbating,count-role;target&character;nami:,count-role;other&character;caulifla&stage;2-7:,id:14=Thoughtful.png,Hey, where'd she go?
+1-female_start_masturbating,count-role;target&character;sayaka&sayingmarker;soulgem:,count-role;other&character;caulifla:,id:10=Thoughtful.png,Whoa, whoa! What?
+1-female_masturbating,count-role;target&character;florina:,id:32=Thoughtful.png,I like your song, Florina.
+
+
+#lost boots
+2-male_must_masturbate=Horny.png,Can I watch? Never know where you might pick up some useful tricks.
+2-male_start_masturbating=Happy.png,Have fun!
+2-male_masturbating=Thoughtful.png,It's always a treat to see this. Do you mind if I watch?
+2-male_finished_masturbating=Horny.png,I'm not here to win...
+2-female_must_masturbate=Horny.png,Can I watch? Never know where you might pick up some useful tricks. Yeah, I'm a guy, but ideas are ideas!
+2-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Shimakaze? Are you alright?
+2-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Gah! Shimakaze, you startled me! Are you okay?
+2-female_must_masturbate,count-role;target&character;nami:,id:7=Horny.png,Whatever you're into!
+2-female_start_masturbating=Happy.png,Have fun!
+2-female_start_masturbating,count-role;target&character;nami:,id:18=Horny.png,You know, that's not a bad idea.
+2-female_start_masturbating,count-role;target&character;nami:,count-role;other&character;caulifla&stage;2-7:,id:14=Thoughtful.png,Hey, where'd she go?
+2-female_start_masturbating,count-role;target&character;sayaka&sayingmarker;soulgem:,count-role;other&character;caulifla:,id:10=Thoughtful.png,Whoa, whoa! What?
+2-female_masturbating=Thoughtful.png,It's always a treat to see this. Do you mind if I watch?
+2-female_masturbating,count-role;target&character;florina:,id:32=Thoughtful.png,I like your song, Florina.
+2-female_finished_masturbating=Horny.png,I'm not here to win...
+
+
+#lost sweater
+3-male_must_masturbate=Horny.png,Can I watch? Never know where you might pick up some useful tricks.
+3-male_start_masturbating=Happy.png,Have fun!
+3-male_masturbating=Thoughtful.png,It's always a treat to see this. Do you mind if I watch?
+3-male_finished_masturbating=Horny.png,I'm not here to win...
+3-female_must_masturbate=Horny.png,Can I watch? Never know where you might pick up some useful tricks. Yeah, I'm a guy, but ideas are ideas!
+3-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Shimakaze? Are you alright?
+3-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Gah! Shimakaze, you startled me! Are you okay?
+3-female_must_masturbate,count-role;target&character;nami:,id:7=Horny.png,Whatever you're into!
+3-female_start_masturbating=Happy.png,Have fun!
+3-female_start_masturbating,count-role;target&character;nami:,id:18=Horny.png,You know, that's not a bad idea.
+3-female_start_masturbating,count-role;target&character;nami:,count-role;other&character;caulifla&stage;2-7:,id:14=Thoughtful.png,Hey, where'd she go?
+3-female_start_masturbating,count-role;target&character;sayaka&sayingmarker;soulgem:,count-role;other&character;caulifla:,id:10=Thoughtful.png,Whoa, whoa! What?
+3-female_masturbating=Thoughtful.png,It's always a treat to see this. Do you mind if I watch?
+3-female_masturbating,count-role;target&character;florina:,id:32=Thoughtful.png,I like your song, Florina.
+3-female_finished_masturbating=Horny.png,I'm not here to win...
+
+
+#lost belt
+4-male_must_masturbate=Horny.png,Can I watch? Never know where you might pick up some useful tricks.
+4-male_start_masturbating=Happy.png,Have fun!
+4-male_masturbating=Thoughtful.png,It's always a treat to see this. Do you mind if I watch?
+4-male_finished_masturbating=Horny.png,I'm not here to win...
+4-female_must_masturbate=Horny.png,Can I watch? Never know where you might pick up some useful tricks. Yeah, I'm a guy, but ideas are ideas!
+4-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Shimakaze? Are you alright?
+4-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Gah! Shimakaze, you startled me! Are you okay?
+4-female_must_masturbate,count-role;target&character;nami:,id:7=Horny.png,Whatever you're into!
+4-female_start_masturbating=Happy.png,Have fun!
+4-female_start_masturbating,count-role;target&character;nami:,id:18=Horny.png,You know, that's not a bad idea.
+4-female_start_masturbating,count-role;target&character;nami:,count-role;other&character;caulifla&stage;2-7:,id:14=Thoughtful.png,Hey, where'd she go?
+4-female_start_masturbating,count-role;target&character;sayaka&sayingmarker;soulgem:,count-role;other&character;caulifla:,id:10=Thoughtful.png,Whoa, whoa! What?
+4-female_masturbating=Thoughtful.png,It's always a treat to see this. Do you mind if I watch?
+4-female_masturbating,count-role;target&character;florina:,id:32=Thoughtful.png,I like your song, Florina.
+4-female_finished_masturbating=Horny.png,I'm not here to win...
+
+
+#lost socks
+5-male_must_masturbate=Thoughtful.png,This is my favorite part. Not that the poker bit isn't fun too, y'know?
+5-male_start_masturbating=Horny.png,I wouldn't mind joining in...I'm not here to win, just to have fun.
+5-male_masturbating=Horny.png,Who turned off the AC?
+5-male_finished_masturbating=Happy.png,Nice!
+5-female_must_masturbate=Thoughtful.png,This is my favorite part. Not that the poker bit isn't fun too, y'know?
+5-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Shimakaze? Are you alright?
+5-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Gah! Shimakaze, you startled me! Are you okay?
+5-female_must_masturbate,count-role;target&character;nami:,id:7=Horny.png,Whatever you're into!
+5-female_start_masturbating=Horny.png,I wouldn't mind joining in...I'm not here to win, just to have fun.
+5-female_start_masturbating,count-role;target&character;nami:,id:18=Horny.png,You know, that's not a bad idea.
+5-female_start_masturbating,count-role;target&character;nami:,count-role;other&character;caulifla&stage;2-7:,id:14=Thoughtful.png,Hey, where'd she go?
+5-female_start_masturbating,count-role;target&character;sayaka&sayingmarker;soulgem:,count-role;other&character;caulifla:,id:10=Thoughtful.png,Whoa, whoa! What?
+5-female_masturbating=Horny.png,Who turned off the AC?
+5-female_masturbating,count-role;target&character;florina:,id:32=Thoughtful.png,I like your song, Florina.
+5-female_finished_masturbating=Happy.png,Nice!
+
+
+#lost shirt
+6-male_must_masturbate=Thoughtful.png,This is my favorite part. Not that the poker bit isn't fun too, y'know?
+6-male_start_masturbating=Horny.png,I wouldn't mind joining in...I'm not here to win, just to have fun.
+6-male_masturbating=Horny.png,Who turned off the AC?
+6-male_finished_masturbating=Happy.png,Nice!
+6-female_must_masturbate=Thoughtful.png,This is my favorite part. Not that the poker bit isn't fun too, y'know?
+6-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Shimakaze? Are you alright?
+6-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Gah! Shimakaze, you startled me! Are you okay?
+6-female_must_masturbate,count-role;target&character;nami:,id:7=Horny.png,Whatever you're into!
+6-female_start_masturbating=Horny.png,I wouldn't mind joining in...I'm not here to win, just to have fun.
+6-female_start_masturbating,count-role;target&character;nami:,id:18=Horny.png,You know, that's not a bad idea.
+6-female_start_masturbating,count-role;target&character;nami:,count-role;other&character;caulifla&stage;2-7:,id:14=Thoughtful.png,Hey, where'd she go?
+6-female_start_masturbating,count-role;target&character;sayaka&sayingmarker;soulgem:,count-role;other&character;caulifla:,id:10=Thoughtful.png,Whoa, whoa! What?
+6-female_masturbating=Horny.png,Who turned off the AC?
+6-female_masturbating,count-role;target&character;florina:,id:32=Thoughtful.png,I like your song, Florina.
+6-female_finished_masturbating=Happy.png,Nice!
+
+
+#lost pants
+7-male_must_masturbate=Thoughtful.png,This is my favorite part. Not that the poker bit isn't fun too, y'know?
+7-male_start_masturbating=Horny.png,I wouldn't mind joining in...I'm not here to win, just to have fun.
+7-male_masturbating=Horny.png,Who turned off the AC?
+7-male_finished_masturbating=Happy.png,Nice!
+7-female_must_masturbate=Thoughtful.png,This is my favorite part. Not that the poker bit isn't fun too, y'know?
+7-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Shimakaze? Are you alright?
+7-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Gah! Shimakaze, you startled me! Are you okay?
+7-female_must_masturbate,count-role;target&character;nami:,id:7=Horny.png,Whatever you're into!
+7-female_start_masturbating=Horny.png,I wouldn't mind joining in...I'm not here to win, just to have fun.
+7-female_start_masturbating,count-role;target&character;nami:,id:18=Horny.png,You know, that's not a bad idea.
+7-female_start_masturbating,count-role;target&character;nami:,count-role;other&character;caulifla&stage;2-7:,id:14=Thoughtful.png,Hey, where'd she go?
+7-female_start_masturbating,count-role;target&character;sayaka&sayingmarker;soulgem:,count-role;other&character;caulifla:,id:10=Thoughtful.png,Whoa, whoa! What?
+7-female_masturbating=Horny.png,Who turned off the AC?
+7-female_masturbating,count-role;target&character;florina:,id:32=Thoughtful.png,I like your song, Florina.
+7-female_finished_masturbating=Happy.png,Nice!
+
+
+#naked
+-3-male_must_masturbate=Horny.png,Lucky...
+-3-male_start_masturbating=Happy.png,Well, a little anticipation makes pleasure all the sweeter!
+-3-male_masturbating=Horny.png,I absolutely cannot wait to join in, ~name~.
+-3-male_finished_masturbating=Horny.png,That's better, isn't it?
+-3-female_must_masturbate=Horny.png,Lucky...
+-3-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Shimakaze? Are you alright?
+-3-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Gah! Shimakaze, you startled me! Are you okay?
+-3-female_must_masturbate,count-role;target&character;nami:,id:7=Horny.png,Whatever you're into!
+-3-female_start_masturbating=Happy.png,Well, a little anticipation makes pleasure all the sweeter!
+-3-female_start_masturbating,count-role;target&character;nami:,id:18=Horny.png,You know, that's not a bad idea.
+-3-female_start_masturbating,count-role;target&character;nami:,count-role;other&character;caulifla&stage;2-7:,id:14=Thoughtful.png,Hey, where'd she go?
+-3-female_start_masturbating,count-role;target&character;sayaka&sayingmarker;soulgem:,count-role;other&character;caulifla:,id:10=Thoughtful.png,Whoa, whoa! What?
+-3-female_masturbating=Horny.png,I absolutely cannot wait to join in, ~name~.
+-3-female_masturbating,count-role;target&character;florina:,id:32=Thoughtful.png,I like your song, Florina.
+-3-female_finished_masturbating=Horny.png,That's better, isn't it?
+
+
+#masturbating
+-2-male_must_masturbate=C'mere.png,Hey, we're in this together.
+-2-male_start_masturbating=Thoughtful.png,Do you want me to chat with you while we do this? Or should I stay quiet? I want to make the game fun for everyone.
+-2-male_masturbating=Happy.png,Now this is nice.
+-2-male_finished_masturbating=Happy.png,You wear bliss well, ~name~.
+-2-female_must_masturbate=C'mere.png,Hey, we're in this together.
+-2-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Shimakaze? Are you alright?
+-2-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Gah! Shimakaze, you startled me! Are you okay?
+-2-female_must_masturbate,count-role;target&character;nami:,id:7=Horny.png,Whatever you're into!
+-2-female_start_masturbating=Thoughtful.png,Do you want me to chat with you while we do this? Or should I stay quiet? I want to make the game fun for everyone.
+-2-female_start_masturbating,count-role;target&character;nami:,id:18=Horny.png,You know, that's not a bad idea.
+-2-female_start_masturbating,count-role;target&character;nami:,count-role;other&character;caulifla&stage;2-7:,id:14=Thoughtful.png,Hey, where'd she go?
+-2-female_start_masturbating,count-role;target&character;sayaka&sayingmarker;soulgem:,count-role;other&character;caulifla:,id:10=Thoughtful.png,Whoa, whoa! What?
+-2-female_masturbating=Happy.png,Now this is nice.
+-2-female_masturbating,count-role;target&character;florina:,id:32=Thoughtful.png,I like your song, Florina.
+-2-female_finished_masturbating=Happy.png,You wear bliss well, ~name~.
+
+
+#finished
+-1-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Shimakaze? Are you alright?
+-1-female_must_masturbate,count-role;target&character;shimakaze:,id:30=C'mere.png,Gah! Shimakaze, you startled me! Are you okay?
+-1-female_must_masturbate,count-role;target&character;nami:,id:7=Horny.png,Whatever you're into!
+-1-female_start_masturbating,count-role;target&character;nami:,id:18=Horny.png,You know, that's not a bad idea.
+-1-female_start_masturbating,count-role;target&character;nami:,count-role;other&character;caulifla&stage;2-7:,id:14=Thoughtful.png,Hey, where'd she go?
+-1-female_start_masturbating,count-role;target&character;sayaka&sayingmarker;soulgem:,count-role;other&character;caulifla:,id:10=Thoughtful.png,Whoa, whoa! What?
+-1-female_masturbating,count-role;target&character;florina:,id:32=Thoughtful.png,I like your song, Florina.
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+
+#naked
+-3-must_masturbate_first=Forfeit.png,Let's get the fun started, shall we?
+-3-must_masturbate_first=Forfeit.png,I've been looking forward to this.
+-3-must_masturbate=Forfeit.png,I've been looking forward to this part.
+-3-must_masturbate=Forfeit.png,Finally!
+-3-start_masturbating=Forfeit.png,Mmm, this is nice.
+-3-start_masturbating=Forfeit.png,Yeah...
+
+
+#masturbating
+-2-masturbating=Thoughtful.png,Ooh, yeah, that's good. Just a little bit here...
+-2-masturbating=Neutral.png,So relaxing...
+-2-masturbating=Happy.png,Mmm, been needing this.
+-2-masturbating=Horny.png,Hah, it's good to relax, y'know?
+-2-masturbating=Horny.png,I'm usually pretty busy...it's good to find some time to do this, y'know?
+-2-masturbating=Thoughtful.png,Gentle here...I've got a sensitive pouch, a little stimulation there is nice but it's easy to overdo it, y'know?
+-2-masturbating=Happy.png,Okay, yeah. This feels good.
+-2-masturbating=Neutral.png,Losing can be fun too!
+-2-masturbating=Thoughtful.png,Being a grower's nice, y'know? More than enough to work with, and it still fits in my pants.
+-2-heavy_masturbating=Close.png,Hah...
+-2-heavy_masturbating=Close.png,Ooh, that's the spot...
+-2-heavy_masturbating=Close.png,Gonna be nice to unload...
+-2-finishing_masturbating,id:4=Blissed.png,Stella!
+-2-finishing_masturbating,id:4=Blissed.png,The Lone Meteor, Stella!
+-2-finishing_masturbating,id:4=Blissed.png,STELLA!
+-2-finishing_masturbating,id:4=Blissed.png,STELLAAAAAA!
+-2-finishing_masturbating,count-role;other&character;chazz:,id:27=C'mere.png,Anyone have a washcloth?
+-2-finishing_masturbating,count-role;other&character;chazz:,id:27=C'mere.png,Heh, it happens to the best of us. I think the bathroom's over there if you'd like to clean up.
+-2-finishing_masturbating,count-role;other&character;caulifla:,id:26=Thoughtful.png,What was that?
+
+
+#finished
+-1-finished_masturbating=Catch Breath.png,Hah...yeah, I needed that.
+-1-finished_masturbating=Catch Breath.png,Mmm. Balls needed emptying, y'know?
+-1-finished_masturbating,count-role;other&character;jasmine&stage;2-10:,test:~self.tag.single~:true=Catch Breath.png,My wife? I'm happily single, actually.
+-1-finished_masturbating,count-role;other&character;jasmine&stage;2-10:,test:~self.tag.single~:true=Catch Breath.png,I'm not married, actually.
+-1-finished_masturbating,count-role;other&character;jasmine&stage;2-10:,test:~self.tag.single~:true=Catch Breath.png,I don't have a wife.
+
+
+
+
+#GAME OVER
+#Lines spoken after the overall winner has been decided and all the losers have finished their forfeits.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+game_over_victory=C'mere.png,Good game, everyone!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-game_over_victory=Happy.png,Good game, everyone!
+
+
+#lost gloves
+1-game_over_victory=Happy.png,Good game, everyone!
+
+
+#lost socks
+5-game_over_victory=Neutral.png,Good game, everyone!
+
+
+#lost shirt
+6-game_over_victory=Neutral.png,Good game, everyone!
+
+
+#lost pants
+7-game_over_victory=Neutral.png,Good game, everyone!
+
+
+#naked
+-3-game_over_victory=Horny.png,Good game, everyone! Now, if you'll excuse me...
+
+
+#finished
+game_over_defeat=C'mere.png,Hey, congrats.
+game_over_defeat,priority:116,count-role;other&character;nami&timeinstage;5-&sayingmarker;stealing:,id:41,collectible:arash_annoyed=Annoyed.png,Really, Nami?
+game_over_defeat,priority:116,count-role;other&character;nami&timeinstage;5-&sayingmarker;stealing:,id:41,collectible:arash_annoyed=Annoyed.png,Get back here, Nami!
+game_over_defeat,priority:116,count-role;other&character;nami&timeinstage;5-&sayingmarker;stealing:,id:41,collectible:arash_annoyed=Annoyed.png,Nami, why?
+game_over_defeat,priority:116,count-role;other&character;nami&timeinstage;5-&sayingmarker;stealing:,id:41,collectible:arash_annoyed=Annoyed.png,Nami, I'm usually pretty chill. But I don't like when people are just randomly mean, y'know?
+game_over_defeat,priority:116,count-role;other&character;nami&timeinstage;5-&sayingmarker;stealing:,id:41,collectible:arash_annoyed=Annoyed.png,Congrats, Nami. You managed to tick me off. I'm actually impressed - that's difficult.
+game_over_defeat,count-not_alive&character;n:,id:43,collectible:arash_sweater=C'mere.png,Tired, N? I know the feeling. You can borrow my sweater if you'd like to warm up - where'd I put it?
+game_over_defeat,count-not_alive&character;n:,id:43,collectible:arash_sweater=C'mere.png,Are you cold, N? Give me a moment to track down my sweater...
+game_over_defeat,count-not_alive&character;n:,id:43,collectible:arash_sweater=C'mere.png,Do you want a blanket, N? Let me find my sweater and you can borrow it while you warm up.
+game_over_defeat,count-not_alive&character;n:,id:43,collectible:arash_sweater=C'mere.png,Do you want a blanket, N? Where'd my sweater go?
+
+
+
+
+#GLOBAL
+#If your character is saying a set of lines in sequence where it doesn't matter what phase of the game it's at, you can use this area to avoid duplicating lines across cases. These lines are considered for every case in the game.
+
+#fully clothed
+0-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going? I'm impressed, Kamina.
+0-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,How do you have that kind of stamina?
+0-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going, Kamina? How do you do that?
+0-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,Kamina's energetic. I'm impressed.
+0-global,priority:142,count-role;other&character;mary&stage;0-5&saidmarker;insanetriggercont&sayingmarker;insanetrigger:,id:9=Thoughtful.png,I'm confused...
+
+
+#lost gloves
+1-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going? I'm impressed, Kamina.
+1-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,How do you have that kind of stamina?
+1-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going, Kamina? How do you do that?
+1-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,Kamina's energetic. I'm impressed.
+1-global,priority:142,count-role;other&character;mary&stage;0-5&saidmarker;insanetriggercont&sayingmarker;insanetrigger:,id:9=Thoughtful.png,I'm confused...
+
+
+#lost boots
+2-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going? I'm impressed, Kamina.
+2-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,How do you have that kind of stamina?
+2-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going, Kamina? How do you do that?
+2-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,Kamina's energetic. I'm impressed.
+2-global,priority:142,count-role;other&character;mary&stage;0-5&saidmarker;insanetriggercont&sayingmarker;insanetrigger:,id:9=Thoughtful.png,I'm confused...
+
+
+#lost sweater
+3-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going? I'm impressed, Kamina.
+3-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,How do you have that kind of stamina?
+3-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going, Kamina? How do you do that?
+3-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,Kamina's energetic. I'm impressed.
+3-global,priority:142,count-role;other&character;mary&stage;0-5&saidmarker;insanetriggercont&sayingmarker;insanetrigger:,id:9=Thoughtful.png,I'm confused...
+
+
+#lost belt
+4-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going? I'm impressed, Kamina.
+4-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,How do you have that kind of stamina?
+4-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going, Kamina? How do you do that?
+4-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,Kamina's energetic. I'm impressed.
+4-global,priority:142,count-role;other&character;mary&stage;0-5&saidmarker;insanetriggercont&sayingmarker;insanetrigger:,id:9=Thoughtful.png,I'm confused...
+
+
+#lost socks
+5-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going? I'm impressed, Kamina.
+5-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,How do you have that kind of stamina?
+5-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going, Kamina? How do you do that?
+5-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,Kamina's energetic. I'm impressed.
+5-global,priority:142,count-role;other&character;mary&stage;0-5&saidmarker;insanetriggercont&sayingmarker;insanetrigger:,id:9=Thoughtful.png,I'm confused...
+
+
+#lost shirt
+6-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going? I'm impressed, Kamina.
+6-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,How do you have that kind of stamina?
+6-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going, Kamina? How do you do that?
+6-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,Kamina's energetic. I'm impressed.
+6-global,priority:142,count-role;other&character;mary&stage;0-5&saidmarker;insanetriggercont&sayingmarker;insanetrigger:,id:9=Thoughtful.png,I'm confused...
+
+
+#lost pants
+7-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going? I'm impressed, Kamina.
+7-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,How do you have that kind of stamina?
+7-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going, Kamina? How do you do that?
+7-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,Kamina's energetic. I'm impressed.
+7-global,priority:142,count-role;other&character;mary&stage;0-5&saidmarker;insanetriggercont&sayingmarker;insanetrigger:,id:9=Thoughtful.png,I'm confused...
+
+
+#naked
+-3-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going? I'm impressed, Kamina.
+-3-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,How do you have that kind of stamina?
+-3-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going, Kamina? How do you do that?
+-3-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,Kamina's energetic. I'm impressed.
+-3-global,priority:142,count-role;other&character;mary&stage;0-5&saidmarker;insanetriggercont&sayingmarker;insanetrigger:,id:9=Thoughtful.png,I'm confused...
+
+
+#masturbating
+-2-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going? I'm impressed, Kamina.
+-2-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,How do you have that kind of stamina?
+-2-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going, Kamina? How do you do that?
+-2-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,Kamina's energetic. I'm impressed.
+-2-global,priority:142,count-role;other&character;mary&stage;0-5&saidmarker;insanetriggercont&sayingmarker;insanetrigger:,id:9=Thoughtful.png,I'm confused...
+
+
+#finished
+-1-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going? I'm impressed, Kamina.
+-1-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,How do you have that kind of stamina?
+-1-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,You're still going, Kamina? How do you do that?
+-1-global,count-role;other&character;kamina&stage;8&saidmarker;part1&sayingmarker;part2:,id:29=Horny.png,Kamina's energetic. I'm impressed.
+-1-global,priority:142,count-role;other&character;mary&stage;0-5&saidmarker;insanetriggercont&sayingmarker;insanetrigger:,id:9=Thoughtful.png,I'm confused...
+
+#EPILOGUE/ENDING
+
+#CUSTOM POSES

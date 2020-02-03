@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using SPNATI_Character_Editor.Providers;
 using System;
 using System.IO;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
@@ -110,26 +111,44 @@ namespace SPNATI_Character_Editor
 			recipe.Case.Tag = "hand";
 		}
 
+		public override ListViewItem FormatItem(IRecord record)
+		{
+			Definition def = record as Definition;
+			Recipe recipe = def as Recipe;
+			Character character = Context as Character;
+			bool used = false;
+			if (character != null)
+			{
+				CharacterEditorData editorData = CharacterDatabase.GetEditorData(character);
+				used = editorData.IsRecipeInUse(recipe);
+			}
+			return new ListViewItem(new string[] { used ? "✓" : "", def.Name, def.Description });
+		}
+
+		public override string[] GetColumns()
+		{
+			return new string[] { "", "Name", "Description" };
+		}
+
+		public override int[] GetColumnWidths()
+		{
+			return new int[] { 30, 150, -2 };
+		}
+
 		public static void Load()
 		{
 			string dir = Path.Combine(Config.ExecutableDirectory, "Resources", "Recipes");
-			if (Directory.Exists(dir))
-			{
-				foreach (string file in Directory.EnumerateFiles(dir, "*.txt"))
-				{
-					try
-					{
-						string json = File.ReadAllText(file);
-						Recipe recipe = Json.Deserialize<Recipe>(json);
-						recipe.FileName = Path.GetFileName(file);
-						recipe.Core = true;
-						Definitions.Instance.Add(recipe);
-					}
-					catch { }
-				}
-			}
+			LoadRecipes(dir, true);
+
+			dir = Path.Combine(Config.SpnatiDirectory, "tools/character_editor/recipes");
+			LoadRecipes(dir, true);
 
 			dir = Path.Combine(Config.AppDataDirectory, "Recipes");
+			LoadRecipes(dir, false);
+		}
+
+		private static void LoadRecipes(string dir, bool core)
+		{
 			if (Directory.Exists(dir))
 			{
 				foreach (string file in Directory.EnumerateFiles(dir, "*.txt"))
@@ -139,12 +158,12 @@ namespace SPNATI_Character_Editor
 						string json = File.ReadAllText(file);
 						Recipe recipe = Json.Deserialize<Recipe>(json);
 						recipe.FileName = Path.GetFileName(file);
+						recipe.Core = core;
 						Definitions.Instance.Add(recipe);
 					}
 					catch { }
 				}
 			}
-
 		}
 	}
 }

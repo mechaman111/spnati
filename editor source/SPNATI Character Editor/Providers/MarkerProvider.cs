@@ -56,6 +56,11 @@ namespace SPNATI_Character_Editor.Providers
 			return new string[] { "Name", "Description" };
 		}
 
+		public int[] GetColumnWidths()
+		{
+			return null;
+		}
+
 		public string GetLookupCaption()
 		{
 			return "Select a Marker";

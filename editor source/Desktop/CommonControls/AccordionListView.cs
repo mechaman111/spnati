@@ -10,6 +10,8 @@ namespace Desktop.CommonControls
 {
 	public partial class AccordionListView : UserControl, ISkinControl
 	{
+		private const string DragData = "avReorder";
+
 		private StringFormat _sf = new StringFormat() { LineAlignment = StringAlignment.Center, Trimming = StringTrimming.EllipsisCharacter, FormatFlags = StringFormatFlags.NoWrap };
 		private bool _resizing;
 		private bool _suspendFormatting;
@@ -22,8 +24,11 @@ namespace Desktop.CommonControls
 		public event EventHandler<FormatRowEventArgs> FormatRow;
 		public event EventHandler<FormatGroupEventArgs> FormatGroup;
 		public event EventHandler<AccordionListViewEventArgs> RightClick;
+		public event EventHandler<AccordionListViewDragEventArgs> MoveItem;
 
 		public bool ShowIndicators { get; set; }
+
+		public bool AllowRowReorder { get; set; }
 
 		private object _movingObject;
 		private bool _directSelection;
@@ -37,6 +42,10 @@ namespace Desktop.CommonControls
 			pi.SetValue(view, true);
 			view.ColumnWidthChanged += View_ColumnWidthChanged;
 			view.KeyDown += View_KeyDown;
+			view.ItemDrag += View_ItemDrag;
+			view.DragEnter += View_DragEnter;
+			view.DragOver += View_DragOver;
+			view.DragDrop += View_DragDrop;
 		}
 
 		private void View_KeyDown(object sender, KeyEventArgs e)
@@ -171,7 +180,7 @@ namespace Desktop.CommonControls
 			item.Tag = groupItem.Data;
 			UpdateRow(item, groupItem.Data);
 			e.Item = item;
-		} 
+		}
 
 		private void UpdateRow(AccordionListViewItem item, object model)
 		{
@@ -513,6 +522,100 @@ namespace Desktop.CommonControls
 					}
 				}
 			}
+		}
+
+		private void View_ItemDrag(object sender, ItemDragEventArgs e)
+		{
+			if (!AllowRowReorder)
+			{
+				return;
+			}
+			ListViewItem item = e.Item as AccordionListViewItem;
+			if (item == null || item.Tag is GroupedListGrouper)
+			{
+				return;
+			}
+			view.DoDragDrop(DragData, DragDropEffects.Move);
+		}
+
+		private void View_DragEnter(object sender, DragEventArgs e)
+		{
+			if (!AllowRowReorder)
+			{
+				e.Effect = DragDropEffects.None;
+				return;
+			}
+			if (!e.Data.GetDataPresent(DataFormats.Text))
+			{
+				e.Effect = DragDropEffects.None;
+				return;
+			}
+			string text = (string)e.Data.GetData(typeof(string));
+			if (text == DragData)
+			{
+				e.Effect = DragDropEffects.Move;
+			}
+			else
+			{
+				e.Effect = DragDropEffects.None;
+			}
+		}
+
+		private void View_DragOver(object sender, DragEventArgs e)
+		{
+			if (!AllowRowReorder)
+			{
+				e.Effect = DragDropEffects.None;
+				return;
+			}
+			if (!e.Data.GetDataPresent(DataFormats.Text))
+			{
+				e.Effect = DragDropEffects.None;
+				return;
+			}
+			Point pt = PointToClient(new Point(e.X, e.Y));
+			AccordionListViewItem hoverItem = view.GetItemAt(pt.X, pt.Y) as AccordionListViewItem;
+			if (hoverItem == null)
+			{
+				e.Effect = DragDropEffects.None;
+				return;
+			}
+
+			AccordionListViewItem selectedItem = view.SelectedIndices.Count > 0 ? view.Items[view.SelectedIndices[0]] as AccordionListViewItem : null;
+			if (selectedItem.Index == hoverItem.Index)
+			{
+				e.Effect = DragDropEffects.None;
+				hoverItem.EnsureVisible();
+				return;
+			}
+			string text = e.Data.GetData(typeof(string))?.ToString();
+			if (text == DragData)
+			{
+				e.Effect = DragDropEffects.Move;
+				hoverItem.EnsureVisible();
+			}
+			else
+			{
+				e.Effect = DragDropEffects.None;
+			}
+		}
+
+		private void View_DragDrop(object sender, DragEventArgs e)
+		{
+			object item = SelectedItem;
+			if (!AllowRowReorder || item == null)
+			{
+				return;
+			}
+			Point pt = PointToClient(new Point(e.X, e.Y));
+			AccordionListViewItem listItem = view.GetItemAt(pt.X, pt.Y) as AccordionListViewItem;
+			if (listItem == null)
+			{
+				return;
+			}
+			bool before = pt.Y < listItem.Bounds.Y + listItem.Bounds.Height / 2;
+
+			MoveItem?.Invoke(this, new AccordionListViewDragEventArgs(item, listItem.Tag, before));
 		}
 	}
 

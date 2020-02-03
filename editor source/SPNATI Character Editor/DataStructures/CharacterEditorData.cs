@@ -70,6 +70,11 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public MarkerData Markers;
 
+		[XmlArray("recipes")]
+		[XmlArrayItem("recipe")]
+		public List<CaseRecipe> UsedRecipes = new List<CaseRecipe>();
+		private Dictionary<string, CaseRecipe> _recipes = new Dictionary<string, CaseRecipe>();
+
 		private HashSet<string> _usedFolders = new HashSet<string>();
 		[XmlIgnore]
 		public AutoCompleteStringCollection Folders
@@ -194,6 +199,18 @@ namespace SPNATI_Character_Editor
 
 				_notes.Remove(deletedCase.Id);
 				_labels.Remove(deletedCase.Id);
+				foreach (KeyValuePair<string, CaseRecipe> kvp in _recipes)
+				{
+					if (kvp.Value.CaseIds.Contains(deletedCase.Id))
+					{
+						kvp.Value.CaseIds.Remove(deletedCase.Id);
+						if (kvp.Value.CaseIds.Count == 0)
+						{
+							_recipes.Remove(kvp.Key);
+						}
+						break;
+					}
+				}
 			}
 		}
 
@@ -237,6 +254,12 @@ namespace SPNATI_Character_Editor
 			{
 				Labels.Add(kvp.Value);
 			}
+
+			UsedRecipes.Clear();
+			foreach (KeyValuePair<string, CaseRecipe> kvp in _recipes)
+			{
+				UsedRecipes.Add(kvp.Value);
+			}
 		}
 
 		public void OnAfterDeserialize(string source)
@@ -258,6 +281,12 @@ namespace SPNATI_Character_Editor
 				{
 					_usedFolders.Add(label.Folder);
 				}
+			}
+
+			_recipes.Clear();
+			foreach (CaseRecipe recipe in UsedRecipes)
+			{
+				_recipes[recipe.Key] = recipe;
 			}
 
 			Markers?.OnAfterDeserialize(source);
@@ -388,14 +417,16 @@ namespace SPNATI_Character_Editor
 			return text;
 		}
 
-		public void SetLabel(Case workingCase, string text, string colorCode, string folder)
+		public CaseLabel SetLabel(Case workingCase, string text, string colorCode, string folder)
 		{
 			if (string.IsNullOrEmpty(text) && (colorCode == null || colorCode == "0") && string.IsNullOrEmpty(folder))
 			{
 				_labels.Remove(workingCase.Id);
-				return;
+				return null;
 			}
+			CaseLabel oldLabel = GetLabel(workingCase);
 			AssignId(workingCase);
+
 			CaseLabel label = new CaseLabel()
 			{
 				Id = workingCase.Id,
@@ -403,12 +434,17 @@ namespace SPNATI_Character_Editor
 				Text = text,
 				Folder = folder,
 			};
+			if (oldLabel != null)
+			{
+				label.SortId = oldLabel.SortId;
+			}
 			_labels[workingCase.Id] = label;
 			if (!string.IsNullOrEmpty(folder))
 			{
 				_usedFolders.Add(folder);
 			}
 			workingCase.NotifyPropertyChanged(nameof(workingCase.Id));
+			return label;
 		}
 
 		public CaseLabel GetLabel(Case workingCase)
@@ -420,6 +456,105 @@ namespace SPNATI_Character_Editor
 			CaseLabel label = null;
 			_labels.TryGetValue(workingCase.Id, out label);
 			return label;
+		}
+
+		public CaseLabel SetSortId(Case workingCase, string folder, int sortId)
+		{
+			CaseLabel label = GetLabel(workingCase);
+			if (label == null)
+			{
+				if (folder == null)
+				{
+					return null;
+				}
+				label = SetLabel(workingCase, null, null, folder);
+			}
+			label.Folder = folder;
+			label.SortId = sortId;
+			return label;
+		}
+
+		public int GetSortId(Case workingCase)
+		{
+			CaseLabel label = GetLabel(workingCase);
+			if (label == null)
+			{
+				return 0;
+			}
+			return label.SortId;
+		}
+
+		public List<CaseLabel> GetCasesInFolder(string path)
+		{
+			int id = 2;
+			List<CaseLabel> list = new List<CaseLabel>();
+			foreach (CaseLabel l in _labels.Values)
+			{
+				if (l.Folder == path)
+				{
+					if (l.SortId == 0)
+					{
+						l.SortId = id;
+						id += 2;
+					}
+					list.Add(l);
+				}
+			}
+			list.Sort((l1, l2) => { return l1.SortId.CompareTo(l2.SortId); });
+			return list;
+		}
+
+		/// <summary>
+		/// Tracks a case as having originated from a recipe
+		/// </summary>
+		/// <param name="recipe"></param>
+		/// <param name="caseFromRecipe"></param>
+		public void AddRecipeUsage(Recipe recipe, Case caseFromRecipe)
+		{
+			AssignId(caseFromRecipe);
+			CaseRecipe list = null;
+			if (!_recipes.TryGetValue(recipe.Key, out list))
+			{
+				list = new CaseRecipe();
+				list.Key = recipe.Key;
+				_recipes[recipe.Key] = list;
+			}
+			list.CaseIds.Add(caseFromRecipe.Id);
+		}
+
+		/// <summary>
+		/// Gets whether any case came from a recipe. If the conditions were later modified, it still considers it as being used
+		/// </summary>
+		/// <param name="recipe"></param>
+		/// <returns></returns>
+		public bool IsRecipeInUse(Recipe recipe)
+		{
+			return _recipes.ContainsKey(recipe.Key);
+		}
+
+		/// <summary>
+		/// Gets a case that originated from a recipe
+		/// </summary>
+		/// <param name="recipe"></param>
+		/// <returns></returns>
+		public Case GetRecipeUsage(Recipe recipe)
+		{
+			CaseRecipe usage;
+			if (_recipes.TryGetValue(recipe.Key, out usage) && usage.CaseIds.Count > 0)
+			{
+				for (int i = 0; i < usage.CaseIds.Count; i++)
+				{
+					int id = usage.CaseIds[i];
+					foreach (Case c in _character.Behavior.GetWorkingCases())
+					{
+						if (c.Id == id)
+						{
+							return c;
+						}
+					}
+				}
+			}
+			return null;
 		}
 	}
 

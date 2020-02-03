@@ -257,9 +257,9 @@ namespace SPNATI_Character_Editor.Controls
 			return gridDialogue.FindText(text, startIndex, args);
 		}
 
-		public void SelectTextInRow(int rowIndex, int startIndex, int length)
+		public void SelectTextInRow(int rowIndex, int startIndex, int length, bool selectMarker)
 		{
-			gridDialogue.SelectTextInRow(rowIndex, startIndex, length);
+			gridDialogue.SelectTextInRow(rowIndex, startIndex, length, selectMarker);
 		}
 
 		/// <summary>
@@ -430,6 +430,9 @@ namespace SPNATI_Character_Editor.Controls
 
 			//Game-wide
 			table.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
+			table.AddSpeedButton("Game", "Month", (data) => { return AddVariableTest("~month.number~", data); });
+			table.AddSpeedButton("Game", "Day", (data) => { return AddVariableTest("~day.number~", data); });
+			table.AddSpeedButton("Game", "Weekday", (data) => { return AddVariableTest("~weekday.number~", data); });
 
 			//Filters
 			table.AddSpeedButton("Filter", "Anyone", (data) => { return AddFilter("", data); });
@@ -452,6 +455,7 @@ namespace SPNATI_Character_Editor.Controls
 			table.AddSpeedButton("Player", "Collectible", (data) => { return AddVariableTest("~_.collectible.*~", data); });
 			table.AddSpeedButton("Player", "Collectible (Counter)", (data) => { return AddVariableTest("~_.collectible.*.counter~", data); });
 			table.AddSpeedButton("Player", "Costume", (data) => { return AddVariableTest("~_.costume~", data); });
+			table.AddSpeedButton("Player", "Gender", (data) => { return AddVariableTest("~_.gender~", data); });
 			table.AddSpeedButton("Player", "Hand Quality", (data) => { return AddVariableTest("~_.hand.score~", data); });
 			table.AddSpeedButton("Player", "Largest Lead", (data) => { return AddVariableTest("~_.biggestlead~", data); });
 			table.AddSpeedButton("Player", "Layer Difference", (data) => { return AddVariableTest("~_.diff~", data); });
@@ -491,6 +495,7 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					table.AddSpeedButton("Clothing", "Clothing Position", (data) => { return AddVariableTest("~clothing.position~", data); });
 					table.AddSpeedButton("Clothing", "Clothing Type", (data) => { return AddVariableTest("~clothing.type~", data); });
+					table.AddSpeedButton("Clothing", "Clothing Category", (data) => { return AddVariableTest("~clothing.generic~", data); });
 				}
 			}
 		}

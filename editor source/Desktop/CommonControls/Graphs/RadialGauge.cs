@@ -94,6 +94,20 @@ namespace Desktop.CommonControls
 			}
 		}
 
+		private bool _overcapacity;
+		public bool HighlightOverCapacity
+		{
+			get { return _overcapacity; }
+			set
+			{
+				if (_overcapacity != value)
+				{
+					_overcapacity = value;
+					Invalidate();
+				}
+			}
+		}
+
 		public RadialGauge()
 		{
 			InitializeComponent();
@@ -177,13 +191,27 @@ namespace Desktop.CommonControls
 			{
 				Color good = _flippedCapacity ? skin.BadForeColor : skin.GoodForeColor;
 				Color bad = _flippedCapacity ? skin.GoodForeColor : skin.BadForeColor;
-				if (amount < 0.5f)
+				if (_overcapacity)
 				{
-					_pen.Color = MathUtils.Lerp(good, skin.CautionForeColor, amount / 0.5f);
+					if (_value > Maximum)
+					{
+						_pen.Color = bad;
+					}
+					else
+					{
+						_pen.Color = good;
+					}
 				}
 				else
 				{
-					_pen.Color = MathUtils.Lerp(skin.CautionForeColor, bad, (amount - 0.5f) / 0.5f);
+					if (amount < 0.5f)
+					{
+						_pen.Color = MathUtils.Lerp(good, skin.CautionForeColor, amount / 0.5f);
+					}
+					else
+					{
+						_pen.Color = MathUtils.Lerp(skin.CautionForeColor, bad, (amount - 0.5f) / 0.5f);
+					}
 				}
 			}
 

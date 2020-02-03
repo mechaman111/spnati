@@ -46,6 +46,11 @@ namespace SPNATI_Character_Editor.Providers
 			return new string[] { "Name", "Folder", "Description" };
 		}
 
+		public int[] GetColumnWidths()
+		{
+			return null;
+		}
+
 		public string GetLookupCaption()
 		{
 			return "Target Select";

@@ -294,7 +294,6 @@
 			// 
 			this.preview.Location = new System.Drawing.Point(326, 71);
 			this.preview.Name = "preview";
-			this.preview.ShowTextBox = false;
 			this.preview.Size = new System.Drawing.Size(197, 493);
 			this.preview.TabIndex = 10;
 			this.preview.Visible = false;

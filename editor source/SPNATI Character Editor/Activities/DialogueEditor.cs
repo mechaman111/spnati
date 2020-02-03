@@ -462,38 +462,67 @@ namespace SPNATI_Character_Editor.Activities
 				Case c = otherCases[i];
 				for (int l = 0; l < c.Lines.Count; l++)
 				{
-					string text = c.Lines[l].Text;
-					if (!string.IsNullOrEmpty(text))
+					if (args.SearchMarkers)
 					{
-						int index = caseControl.FindText(text, 0, args);
-						if (index >= 0)
+						string marker = c.Lines[l].Marker;
+						if (!string.IsNullOrEmpty(marker))
 						{
-							args.Success = true;
-
-							if (args.DoReplace)
+							int index = caseControl.FindText(marker, 0, args);
+							if (index >= 0)
 							{
-								text = text.ReplaceAt(index, args.FindText, args.ReplaceText);
-								args.ReplaceCount++;
-								c.Lines[l].Text = text;
-							}
-							else
-							{
-								//Select the case
+								args.Success = true;
+								//select the case
 								if (treeDialogue.SelectNode(_selectedStage?.Id ?? c.Stages[0], c))
 								{
 									//Select the line
-									caseControl.SelectTextInRow(l, index, args.FindText.Length);
+									caseControl.SelectTextInRow(l, index, args.FindText.Length, true);
 								}
 								else
 								{
 									args.Success = false;
 								}
+								if (args.Success)
+								{
+									return;
+								}
 							}
-
-							if (!args.ReplaceAll && args.Success)
-								return;
 						}
 					}
+					else
+					{
+						string text = c.Lines[l].Text;
+						if (!string.IsNullOrEmpty(text))
+						{
+							int index = caseControl.FindText(text, 0, args);
+							if (index >= 0)
+							{
+								args.Success = true;
+
+								if (args.DoReplace)
+								{
+									text = text.ReplaceAt(index, args.FindText, args.ReplaceText);
+									args.ReplaceCount++;
+									c.Lines[l].Text = text;
+								}
+								else
+								{
+									//Select the case
+									if (treeDialogue.SelectNode(_selectedStage?.Id ?? c.Stages[0], c))
+									{
+										//Select the line
+										caseControl.SelectTextInRow(l, index, args.FindText.Length, args.SearchMarkers);
+									}
+									else
+									{
+										args.Success = false;
+									}
+								}
+
+								if (!args.ReplaceAll && args.Success)
+									return;
+							}
+						}
+					}					
 				}
 			}
 		}

@@ -999,28 +999,17 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         this.altCostumeSelector.hide();
         if (ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0) {
             this.altCostumeSelector.empty();
-            if (!FORCE_ALT_COSTUME) {
-                this.altCostumeSelector.append($('<option>', {
-                    val: '',
-                    text: 'Default Costume'
-                }));
+            
+            this.altCostumeSelector.append($('<option>', {
+                val: '',
+                text: 'Default Costume'
+            }));
 
-                player.alternate_costumes.forEach(function (alt) {
-                    this.altCostumeSelector.append(getCostumeOption(alt, player.selected_costume));
-                }.bind(this));
+            player.alternate_costumes.forEach(function (alt) {
+                this.altCostumeSelector.append(getCostumeOption(alt, player.selected_costume));
+            }.bind(this));
 
-                this.altCostumeSelector.show();
-            } else {
-                player.alternate_costumes.some(function (alt) {
-                    if (alt.set === FORCE_ALT_COSTUME) {
-                        this.altCostumeSelector
-                            .append(getCostumeOption(alt, player.selected_costume))
-                            .prop('disabled', true)
-                            .show();
-                        return true;
-                    }
-                }.bind(this));
-            }
+            this.altCostumeSelector.show();
         }
     }
 }
@@ -1545,10 +1534,9 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
             }));
         }.bind(this));
         
-        /* Force-set and lock the selector if FORCE_ALT_COSTUME is set */
+        /* Change the default on the selector if DEFAULT_COSTUME_SET is set */
         opponent.alternate_costumes.some(function (alt) {
-            if (alt.set === FORCE_ALT_COSTUME) {
-                this.costumeSelector.val(alt.folder).prop('disabled', true);
+            if (alt.set === DEFAULT_COSTUME_SET) {
                 return true;
             }
         }.bind(this));

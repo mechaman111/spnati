@@ -51,4 +51,18 @@ namespace Desktop.CommonControls
 			}
 		}
 	}
+
+	public class AccordionListViewDragEventArgs : EventArgs
+	{
+		public object Source;
+		public object Target;
+		public bool Before;
+
+		public AccordionListViewDragEventArgs(object source, object target, bool before)
+		{
+			Source = source;
+			Target = target;
+			Before = before;
+		}
+	}
 }

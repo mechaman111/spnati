@@ -69,6 +69,11 @@ namespace SPNATI_Character_Editor.Providers
 			return new string[] { "Name", "Description" };
 		}
 
+		public int[] GetColumnWidths()
+		{
+			return null;
+		}
+
 		public ListViewItem FormatItem(IRecord record)
 		{
 			FilterRole role = record as FilterRole;

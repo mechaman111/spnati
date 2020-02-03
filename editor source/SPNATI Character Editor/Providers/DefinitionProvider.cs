@@ -9,6 +9,7 @@ namespace SPNATI_Character_Editor.Providers
 	{
 		public bool AllowsNew { get { return false; } }
 		protected bool SearchDescription { get; set; }
+		protected object Context { get; set; }
 
 		public bool TrackRecent
 		{
@@ -32,15 +33,20 @@ namespace SPNATI_Character_Editor.Providers
 		public abstract void ApplyDefaults(T definition);
 
 		public void Delete(IRecord record) { }
-		public ListViewItem FormatItem(IRecord record)
+		public virtual ListViewItem FormatItem(IRecord record)
 		{
 			Definition def = record as Definition;
 			return new ListViewItem(new string[] { def.Name, def.Description });
 		}
 
-		public string[] GetColumns()
+		public virtual string[] GetColumns()
 		{
 			return new string[] { "Name", "Description" };
+		}
+
+		public virtual int[] GetColumnWidths()
+		{
+			return null;
 		}
 
 		public abstract string GetLookupCaption();
@@ -62,7 +68,7 @@ namespace SPNATI_Character_Editor.Providers
 
 		public void SetContext(object context)
 		{
-
+			Context = context;
 		}
 
 		public void Sort(List<IRecord> list)

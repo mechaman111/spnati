@@ -16,7 +16,7 @@ var COLLECTIBLES_UNLOCKED = false;
 var EPILOGUE_BADGES_ENABLED = true;
 var COSTUME_BADGES_ENABLED = true;
 var ALT_COSTUMES_ENABLED = false;
-var FORCE_ALT_COSTUME = null;
+var DEFAULT_COSTUME_SET = null;
 var USAGE_TRACKING = undefined;
 var SENTRY_INITIALIZED = false;
 var RESORT_ACTIVE = false;
@@ -593,7 +593,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
      */
     this.baseTags = $metaXml.find('tags').children().map(function() { return canonicalizeTag($(this).text()); }).get();
     this.updateTags();
-    this.searchTags = this.baseTags.slice();
+    this.searchTags = expandTagsList(this.baseTags);
     
     this.cases = new Map();
 
@@ -620,7 +620,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
                 'status': status,
             };
             
-            if (set === FORCE_ALT_COSTUME) {
+            if (set === DEFAULT_COSTUME_SET) {
                 this.selection_image = costume_descriptor['folder'] + costume_descriptor['image'];
                 this.selectAlternateCostume(costume_descriptor);
             }
@@ -1489,21 +1489,21 @@ function loadConfigFile () {
                     COSTUME_BADGES_ENABLED = true;
                 }
                 
-                FORCE_ALT_COSTUME = $(xml).find('force-alternate-costume').text();
-                if (FORCE_ALT_COSTUME) {
-                    console.log("Forcing alternate costume set: "+FORCE_ALT_COSTUME);
-                    alternateCostumeSets[FORCE_ALT_COSTUME] = true;
-                } else {
-                    $(xml).find('alternate-costume-sets').each(function () {
-                        var set = $(this).text();
-                        alternateCostumeSets[set] = true;
-                        if (set === 'all') {
-                            console.log("Including all alternate costume sets");
-                        } else {
-                            console.log("Including alternate costume set: "+set);
-                        }
-                    });
+                DEFAULT_COSTUME_SET = $(xml).find('default-costume-set').text();
+                if (DEFAULT_COSTUME_SET) {
+                    console.log("Defaulting to alternate costume set: "+DEFAULT_COSTUME_SET);
+                    alternateCostumeSets[DEFAULT_COSTUME_SET] = true;
                 }
+
+                $(xml).find('alternate-costume-sets').each(function () {
+                    var set = $(this).text();
+                    alternateCostumeSets[set] = true;
+                    if (set === 'all') {
+                        console.log("Including all alternate costume sets");
+                    } else {
+                        console.log("Including alternate costume set: "+set);
+                    }
+                });
             } else {
                 ALT_COSTUMES_ENABLED = false;
                 console.log("Alternate costumes disabled");
@@ -2149,8 +2149,7 @@ function showHelpModal () {
     $helpModal.modal('show');
 }
 
-$('.help-page-select').click(function (ev) {
-    var toPage = $(ev.target).attr('data-select-page');
+function gotoHelpPage (toPage) {
     var curPage = $helpModal.attr('data-current-page');
     curPage = parseInt(curPage, 10) || 1;
     
@@ -2167,6 +2166,10 @@ $('.help-page-select').click(function (ev) {
     $('.help-page[data-page="'+curPage+'"]').show();
     $('.help-page-select').removeClass('active');
     $('.help-page-select[data-page="'+curPage+'"]').addClass('active');
+}
+
+$('.help-page-select').click(function (ev) {
+    gotoHelpPage($(ev.target).attr('data-select-page'));
 })
 
 /************************************************************
