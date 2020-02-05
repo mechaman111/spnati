@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 9:11:18 p. m. on febrero 02, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 6:33:34 p. m. on febrero 04, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Rarity</first>
@@ -166,16 +166,30 @@
                 <keyframe time="1.5" alpha="0" />
             </directive>
         </pose>
-        <pose id="blank">
-            <sprite id="shield" src="rarity_eg/shield.png" x="0" y="0" alpha="0" />
-        </pose>
         <pose id="7-ponyend">
             <sprite id="aaend" src="rainbow_dash/9-ponyend.png" x="0" y="0" scalex="1" scaley="1" alpha="100" />
+        </pose>
+        <pose id="blank">
+            <sprite id="shield" src="rarity_eg/shield.png" x="0" y="0" alpha="0" />
         </pose>
     </poses>
 
     <behaviour>
         <trigger id="selected">
+            <case stage="0">
+                <condition role="other" character="pinkie_pie" />
+                <condition role="other" character="twilight" />
+                <state img="#-start.png">Pinkie? Twilight? you're here too? I'm so glad to see some friendly faces.</state>
+                <state img="#-start.png">Pinkie? Twilight? Are those you, darlings? We haven't seen each other in ages!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="pinkie_pie" />
+                <state img="#-start.png">I would never turn down an invitation to one of your parties Pinkie, even if it is... One like... &lt;i&gt;this&lt;/i&gt;...</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="rainbow_dash" />
+                <state img="#-start.png">Oh... I... Wasn't expecting you to be here, Rainbow... Hehe...</state>
+            </case>
             <case stage="0">
                 <state img="#-start.png">An occasion like this deserves nothing but my best outfit, give me a second...</state>
                 <state img="#-start.png">I'm not going to play in such a common outfit! Give me a moment while I change...</state>
@@ -185,20 +199,6 @@
         </trigger>
 
         <trigger id="opponent_selected">
-            <case stage="0">
-                <condition role="other" character="pinkie_pie" />
-                <condition role="other" character="twilight" />
-                <state img="#-start.png">Pinkie? Twilight? you're here too? I'm so glad to see some friendly faces.</state>
-                <state img="#-start.png">Pinkie? Twilight? Are those you, darlings? We haven't seen each other in ages!</state>
-            </case>
-            <case stage="0">
-                <condition role="other" character="rainbow_dash" />
-                <state img="#-start.png">Oh... I... Wasn't expecting you to be here, Rainbow... Hehe...</state>
-            </case>
-            <case stage="0">
-                <condition role="other" character="pinkie_pie" />
-                <state img="#-start.png">I would never turn down an invitation to one of your parties Pinkie, even if it is... One like... &lt;i&gt;this&lt;/i&gt;...</state>
-            </case>
             <case stage="0">
                 <condition role="other" character="twilight" />
                 <state img="#-start.png">Don't worry dear, with all you've helped us in the past, this is the least I can do.</state>
@@ -8719,7 +8719,7 @@
                 <condition role="other" character="rainbow_dash" saidMarker="pony_table" />
                 <test expr="~rarity_eg.slot~" value="3" />
                 <state img="custom:#-ponyend" marker="pony_end" location="10%">{Rarity}Great game, let's do this again next week?{!reset}&lt;br&gt; {Twilight}For sure!{!reset}&lt;br&gt; {Rainbow}You got it!{!reset}&lt;br&gt;{Pinkie}Yay!{!reset}</state>
-                <state img="custom:#-ponyend" marker="pony_end" location="10%">{Rarity}Everyone say goodbye to ~player~ girls...{!reset}&lt;br&gt;{Pinkie}Unless of course, you prefer to join us in the next part of this party?{!reset}&lt;br&gt;</state>
+                <state img="custom:#-ponyend" marker="pony_end" location="10%">{Rarity}Everyone say goodbye to ~player~, girls...{!reset}&lt;br&gt;{Pinkie}Unless, of course, you prefer to join us in the next part of this party?{!reset}&lt;br&gt;</state>
                 <state img="custom:#-ponyend" marker="pony_end" location="10%">{Twilight}Thanks for all your help girls, but I still need more information for my report{!reset}&lt;br&gt;{Rainbow}No prob, Princess! I'm sure we'll all be happy to help more, right ~player~?{!reset}</state>
             </case>
             <case stage="7" id="40">
