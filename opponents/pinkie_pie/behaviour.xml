@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 6:33:43 p. m. on febrero 04, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 5:45:45 p. m. on febrero 05, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Pinkie</first>
@@ -222,10 +222,6 @@
                 <state img="#-what.png">I feel there's a bit of a disparity between males and females in this party...</state>
                 <state img="#-annoyed.png">C'mon, I have no problem with playing with girls, but I'd really like there to be more than one guy in this game!</state>
             </case>
-            <case stage="0" totalRounds="0" priority="900">
-                <condition role="self" notSaidMarker="presentation" />
-                <state img="#-happy.png" marker="presentation">Hi everyone! My name is Pinkie Pie. I can't wait to have some fun with everyone here!</state>
-            </case>
             <case stage="4-6" alsoPlaying="monika" notSaidMarker="pinka_start" alsoPlayingSaidMarker="did_i_break_anything" priority="405">
                 <state img="#-pinka1.png" marker="pinka_start">Huh?... This is unexpected... seems someone in this game has been messing around with stuff they shouldn't... Isn't that right Moinka?</state>
             </case>
@@ -356,7 +352,8 @@
             <case stage="0" alsoPlaying="rarity" totalRounds="0-1" notSaidMarker="presentation" priority="901">
                 <state img="#-happy.png" marker="presentation">Looks really nice, Rarity. Classy, just like you!</state>
             </case>
-            <case stage="0" totalFemales="1" totalRounds="0" priority="900">
+            <case stage="0" totalRounds="0" priority="900">
+                <condition count="1" gender="female" />
                 <state img="#-horny.png">Am I really the only girl here? Oh boy I can already tell this is going to be a fun night!</state>
                 <state img="#-whatever.png">I get to be the only girl here? Well, more fun for me!</state>
                 <state img="#-embarassed.png">Surrounded by handsome men and playing a strip poker game with them? This is going to be a fun night isn't it?</state>
@@ -366,9 +363,6 @@
                 <state img="#-happy.png">Only one male for us girls, I don't know who is luckier, him or us!</state>
                 <state img="#-what.png">I feel there's a bit of a disparity between males and females in this party...</state>
                 <state img="#-annoyed.png">C'mon, I have no problem with playing with girls, but I'd really like there to be more than one guy in this game!</state>
-            </case>
-            <case stage="0" totalRounds="0-1" notSaidMarker="presentation" priority="900">
-                <state img="#-hi.png" marker="presentation">Hi everyone! My name is Pinkie Pie. I can't wait to have some fun with everyone here!</state>
             </case>
             <case stage="4-6" alsoPlaying="monika" notSaidMarker="pinka_start" alsoPlayingSaidMarker="did_i_break_anything" priority="405">
                 <state img="#-pinkathreat.png" marker="pinka_start">Hmm...well, thank you Monika! You messing around with what you shouldn't has managed to free me...</state>
@@ -515,9 +509,6 @@
                 <state img="#-what.png">I feel there's a bit of a disparity between males and females in this party...</state>
                 <state img="#-annoyed.png">C'mon, I have no problem with playing with girls, but I'd really like there to be more than one guy in this game!</state>
             </case>
-            <case stage="0" totalRounds="1" notSaidMarker="presentation" priority="900">
-                <state img="#-hi.png" marker="presentation">Hi everyone! My name is Pinkie Pie. I can't wait to have some fun with everyone here!</state>
-            </case>
             <case stage="4-6" alsoPlaying="monika" notSaidMarker="pinka_start" alsoPlayingSaidMarker="did_i_break_anything" priority="405">
                 <state img="#-pinkathreat.png" marker="pinka_start">Hmm...well, thank you Monika! You messing around with what you shouldn't has managed to free me...</state>
             </case>
@@ -554,7 +545,8 @@
             <case stage="4-6" saidMarker="pinka_start" notSaidMarker="pinkaout" priority="400">
                 <state img="#-pinkathreat.png" marker="pinkaout">I hope Pinkie won't mind me coming out for a bit, but I can't stand seeing her getting abused by all you guys in this game.</state>
             </case>
-            <case stage="0" alsoPlaying="monika" totalRounds="0-0">
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="monika" />
                 <state img="#-surprised.png">Wait. Does that mean you can see the menus in front of us too Monika?</state>
             </case>
             <case stage="0" alsoPlaying="rainbow_mika" timeInStage="0-1">
@@ -686,6 +678,15 @@
                 <condition role="self" notSaidMarker="presentation" />
                 <condition count="0-1" filter="my_little_pony" role="opp" />
                 <state img="#-happy.png" marker="presentation">Where are my manners? One round in and I haven't introduced myself! My name is Pinkie Pie. Pleasure to meet you all!</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="901">
+                <condition role="self" notSaidMarker="presentation" />
+                <condition role="other" character="rainbow_dash" saidMarker="pony_table" />
+                <state img="#-happy.png" marker="presentation">Hi ~player~! My name is Pinkie Pie. I can't wait to have some fun with you and my friends here!</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="900">
+                <condition role="self" notSaidMarker="presentation" />
+                <state img="#-happy.png" marker="presentation">Hi everyone! My name is Pinkie Pie. I can't wait to have some fun with everyone here!</state>
             </case>
             <case stage="1" totalRounds="1" priority="900">
                 <condition role="self" notSaidMarker="presentation" />
@@ -1370,7 +1371,8 @@
                 <condition count="0" filter="equestria_girls" role="target" />
                 <state img="#-happy.png" marker="muscian">You're a musician too? Maybe you should come and play some songs along with the rainbooms!</state>
             </case>
-            <case stage="0-8" filter="robot" targetStage="0">
+            <case stage="0-8">
+                <condition filter="robot" role="target" stage="0" />
                 <state img="#-smart.png">So... You are a robot?  That probably means I gotta talk to you in robot speech so you can understand me. Beep! Boop! My name is Pinkie Pie.</state>
             </case>
             <case stage="0-8">
@@ -3765,6 +3767,7 @@
         <trigger id="game_over_defeat">
             <case stage="8" priority="700">
                 <condition role="other" character="rainbow_dash" saidMarker="pony_table" />
+                <condition role="target" character="human" />
                 <test expr="~pinkie_pie.slot~" value="3" />
                 <state img="custom:#-pony_end" marker="pony_end" location="10%">{Rarity}Great game, let's do this again next week?{!reset}&lt;br&gt; {Twilight}For sure!{!reset}&lt;br&gt; {Rainbow}You got it!{!reset}&lt;br&gt;{Pinkie}Yay!{!reset}</state>
                 <state img="custom:#-pony_end" marker="pony_end" location="10%">{Rarity}Everyone say goodbye to ~player~, girls...{!reset}&lt;br&gt;{Pinkie}Unless, of course, you prefer to join us in the next part of this party?{!reset}&lt;br&gt;</state>
