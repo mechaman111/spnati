@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 2:13:30  on Januar 05, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 9:13:17  on Februar 05, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.4</version>
+    <version>v5.5</version>
     <first>Estelle</first>
     <last>Sidos Heurassein</last>
     <label>Estelle</label>
@@ -39,11 +39,11 @@
     <start />
 
     <wardrobe>
-        <clothing name="panties" generic="panties" position="lower" type="important" plural="true" />
+        <clothing name="panties" generic="underwear" position="lower" type="important" plural="true" />
         <clothing name="bra" generic="bra" position="upper" type="important" />
         <clothing name="dress" generic="dress" position="both" type="major" />
         <clothing name="pantyhose" generic="pantyhose" position="lower" type="major" plural="true" />
-        <clothing name="boots" generic="boots" position="feet" type="extra" plural="true" />
+        <clothing name="boots" generic="shoes" position="feet" type="extra" plural="true" />
         <clothing name="overdress" generic="overdress" position="both" type="minor" />
         <clothing name="gloves" generic="gloves" position="hands" type="extra" plural="true" />
     </wardrobe>
@@ -389,26 +389,36 @@
             <case stage="2" priority="800">
                 <condition role="self" notSaidMarker="messyend" />
                 <condition role="other" character="yuelia" stage="1" />
+                <test expr="~estelle.costume~" value="default" />
+                <test expr="~yuelia.costume~" value="default" />
                 <state img="#-yueliaBrush0.png" marker="messyend">Here! I'll help you geting your hair straight again.&lt;hr&gt;Oh, thank you! That reminds me when my maids used to brush my hair.</state>
             </case>
             <case stage="2" priority="800">
                 <condition role="self" notSaidMarker="messyend" />
                 <condition role="other" character="yuelia" stage="2" />
+                <test expr="~estelle.costume~" value="default" />
+                <test expr="~yuelia.costume~" value="default" />
                 <state img="#-yueliaBrush1.png" marker="messyend">Here! I'll help you geting your hair straight again.&lt;hr&gt;Oh, thank you! That reminds me when my maids used to brush my hair.</state>
             </case>
             <case stage="2" priority="800">
                 <condition role="self" notSaidMarker="messyend" />
                 <condition role="other" character="yuelia" stage="3" />
+                <test expr="~estelle.costume~" value="default" />
+                <test expr="~yuelia.costume~" value="default" />
                 <state img="#-yueliaBrush2.png" marker="messyend">Here! I'll help you geting your hair straight again.&lt;hr&gt;Oh, thank you! That reminds me when my maids used to brush my hair.</state>
             </case>
             <case stage="2" priority="800">
                 <condition role="self" notSaidMarker="messyend" />
                 <condition role="other" character="yuelia" stage="4" />
+                <test expr="~estelle.costume~" value="default" />
+                <test expr="~yuelia.costume~" value="default" />
                 <state img="#-yueliaBrush3.png" marker="messyend">Here! I'll help you geting your hair straight again.&lt;hr&gt;Oh, thank you! That reminds me when my maids used to brush my hair.</state>
             </case>
             <case stage="2" priority="800">
                 <condition role="self" notSaidMarker="messyend" />
                 <condition role="other" character="yuelia" stage="5" />
+                <test expr="~yuelia.costume~" value="default" />
+                <test expr="~estelle.costume~" value="default" />
                 <state img="#-yueliaBrush4.png" marker="messyend">Here! I'll help you geting your hair straight again.&lt;hr&gt;Oh, thank you! That reminds me when my maids used to brush my hair.</state>
             </case>
             <case stage="2">
@@ -898,6 +908,20 @@
         </trigger>
 
         <trigger id="male_must_strip">
+            <case stage="0-9">
+                <condition role="target" character="chazz" stage="0" />
+                <state img="#-interested.png">
+                    <alt-img stage="2-3">custom:#-interested_m</alt-img>
+                    <text>You said you're some kind of nobleman...? Your outfit looks more like something Yuri would wear, though... But I'm in my casual clothes too, so I don't mind. I'm just curious.</text>
+                </state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="chazz" stage="5" />
+                <state img="#-pouting.png">
+                    <alt-img stage="2-3">custom:#-pouting_m</alt-img>
+                    <text>You want to leave already? What a shame... I wanted to hear more about your female side!</text>
+                </state>
+            </case>
             <case stage="0-1">
                 <state img="#-surprised.png">~Name~ lost? Does that mean he'll strip in front of us?</state>
             </case>
@@ -1091,6 +1115,20 @@
         </trigger>
 
         <trigger id="male_removing_accessory">
+            <case stage="0-9">
+                <condition role="target" character="chazz" stage="0" />
+                <state img="#-interested.png">
+                    <alt-img stage="2-3">custom:#-interested_m</alt-img>
+                    <text>So this device on your arm is necessary to play your card game? But you don't need it to play poker, do you...?</text>
+                </state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="chazz" stage="2" />
+                <state img="#-happy.png">
+                    <alt-img stage="2-3">custom:#-happy_m</alt-img>
+                    <text>You prefer to wear casual clothes rather than fancy attire as well, right? They look good, but they aren't suited for an adventure at all.</text>
+                </state>
+            </case>
             <case stage="0-4">
                 <state img="#-lecture.png">
                     <alt-img stage="2-3">custom:#-lecture_m</alt-img>
@@ -1176,6 +1214,13 @@
         </trigger>
 
         <trigger id="male_removed_accessory">
+            <case stage="0-9">
+                <condition role="target" character="chazz" stage="1" />
+                <state img="#-happy.png">
+                    <alt-img stage="2-3">custom:#-happy_m</alt-img>
+                    <text>I'd be happy to learn how your game works as well. Will you teach me how to play it later?</text>
+                </state>
+            </case>
             <case stage="7">
                 <condition status="not_crotch_visible" role="target" />
                 <state img="#-pouting.png">...I can't be too mad. I don't want anyone else in my compromising position. &lt;i&gt;(I'd like to see it, though.)&lt;/i&gt;</state>
@@ -2381,6 +2426,13 @@
 
         <trigger id="male_removed_major">
             <case stage="0-9">
+                <condition role="target" character="chazz" stage="5" />
+                <state img="#-interested.png">
+                    <alt-img stage="2-3">custom:#-interested_m</alt-img>
+                    <text>So this is what men your age are wearing...? Is this the fabled "man's feminine side" I read about?</text>
+                </state>
+            </case>
+            <case stage="0-9">
                 <condition filter="small_penis" role="target" />
                 <test expr="~clothing.position~" value="lower" />
                 <state img="#-surprised.png">
@@ -2898,6 +2950,13 @@
         </trigger>
 
         <trigger id="male_chest_will_be_visible">
+            <case stage="0-9">
+                <condition role="target" character="chazz" />
+                <state img="#-fear.png">
+                    <alt-img stage="2-3">#-fear.png</alt-img>
+                    <text>An evil aura? Is this the work of a g-ghost? Is there anything I can do?</text>
+                </state>
+            </case>
             <case stage="0-7">
                 <state img="#-interested.png">
                     <alt-img stage="2-3">custom:#-interested_m</alt-img>
@@ -2944,6 +3003,13 @@
         </trigger>
 
         <trigger id="male_chest_is_visible">
+            <case stage="0-9">
+                <condition role="target" character="chazz" />
+                <state img="#-surprised.png">
+                    <alt-img stage="2-3">custom:#-surpised_m</alt-img>
+                    <text>If it was a ghost, it must have been a rather lewd one. He undressed you and left... Does this happen very often?</text>
+                </state>
+            </case>
             <case stage="0-9" filter="athletic">
                 <state img="#-interested.png">
                     <alt-img stage="2-3">custom:#-interested_m</alt-img>
@@ -3003,6 +3069,13 @@
                     <text>You're going to...? O-of course I've seen naked men before! Even if it was only in a book...</text>
                 </state>
             </case>
+            <case stage="0-9">
+                <condition role="target" character="chazz" />
+                <state img="#-fear.png">
+                    <alt-img stage="2-3">custom:#-fear_m</alt-img>
+                    <text>You're happy to take off your pants? Are you... what did Rita call it again? An exhibitionist?</text>
+                </state>
+            </case>
             <case stage="0-7" filter="shy">
                 <state img="#-pushing.png">
                     <alt-img stage="2-3">custom:#-pushing_m</alt-img>
@@ -3059,6 +3132,13 @@
         </trigger>
 
         <trigger id="male_medium_crotch_is_visible">
+            <case stage="0-9">
+                <condition role="target" character="chazz" />
+                <state img="#-happy.png">
+                    <alt-img stage="2-3">custom:#-happy_m</alt-img>
+                    <text>Don't worry, Chazz! I'll accept you, and any kinks you have! But if you want to show us your penis that badly, you certainly wouldn't mind if I took a closer look, would you?</text>
+                </state>
+            </case>
             <case stage="0-7">
                 <state img="#-insecure.png">
                     <alt-img stage="2-3">custom:#-insecure_m</alt-img>
@@ -4201,6 +4281,12 @@
             <case stage="8">
                 <state img="#-surprised.png">You finished before me? But one of my books said that the man has to wait for the woman before he finishes...</state>
                 <state img="#-insecure.png">I kinda want to examine it, but I'm not sure if I should go closer to it in a situation like this...</state>
+            </case>
+            <case stage="0-9">
+                <state img="#-surprised.png">
+                    <alt-img stage="2-3">custom:#-surpised_m</alt-img>
+                    <text>It's all over you... I didn't know men made such a mess when they finished... Or is this just another one of your kinks?</text>
+                </state>
             </case>
         </trigger>
 
