@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 3:34:34 AM on January 07, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 5:06:14 PM on February 05, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.6</version>
     <first>Saki</first>
@@ -588,7 +588,8 @@
                 <condition count="2" status="alive" />
                 <state img="#-Happy.png">There’s no way in hell I’m dying.</state>
             </case>
-            <case stage="1" timeInStage="0">
+            <case stage="1">
+                <condition role="self" timeInStage="0" />
                 <state img="#-Smug.png">This hand is shit, unlike the idol group Franchouchou, which is performing later and you should go to their concert.</state>
             </case>
             <case stage="3" timeInStage="0">
@@ -632,6 +633,11 @@
             <case stage="6-8" notSaidMarker="nobodytoldme" priority="0">
                 <state img="#-Singing.png" marker="nobodytoldme">&lt;i&gt;Nobody told me there’d be days like these. Strange days indeed!&lt;/i&gt;</state>
             </case>
+            <case stage="0-8" id="12" priority="0">
+                <condition role="self" notSaidMarker="q_saki_badluck" />
+                <state img="#-Annoyed.png" oneShotId="1" marker="q_saki_badluck">Just my luck, a shit hand. You people think ya got worse luck than a bitch who died? Out with it then. What was the unluckiest thing that ever happened to &lt;i&gt;you&lt;/i&gt;?</state>
+                <state img="#-Laughing.png" oneShotId="2" marker="q_saki_badluck">This hand, man. Is my luck that shitty? What am I sayin’ I &lt;i&gt;died&lt;/i&gt;! What about you folks, any bad luck stories you got to share?</state>
+            </case>
         </trigger>
 
         <trigger id="hand">
@@ -651,6 +657,16 @@
                 <condition count="1" character="sakura" />
                 <state img="#-Happy.png">Check it Egghead, looks like Scissors brought backup too. Good thing I’m always up for a fair fight. Nice to meet ya, Shortstack.</state>
             </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskNoelia" />
+                <condition role="other" character="sakura" />
+                <state img="#-Smug.png" marker="Yuelia_Noelia_resp">Bugger, which one a’ my sisters d’ya think is the troublemaker? Ya guessed it: that Egghead’s a real hellion!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskWoody" />
+                <condition role="other" character="sakura" />
+                <state img="#-Excited.png" marker="Yuelia_Woody_resp">Sounds like someone we know, huh Egghead? Even though you’re a force onstage n’ got a body thicker n’ mochi, ya got to thinkin’ you weren’t all that, huh?</state>
+            </case>
             <case stage="0-7" alsoPlaying="mulan" alsoPlayingStage="2-4" alsoPlayingTimeInStage="1" totalNaked="0" totalMasturbating="0" totalFinished="0" alsoPlayingSayingMarker="mulan_duel">
                 <state img="#-Excited.png">Ha, yer on, Miss Musou! Good luck… gettin’ creamed!</state>
             </case>
@@ -659,8 +675,10 @@
                 <condition role="other" character="meia" stage="5" timeInStage="0" />
                 <state img="#-Serious.png">If you were both girls in my gang, I’d kick your ass for fighting! But since you’re not: Hell yeah, that was awesome!</state>
             </case>
-            <case stage="7" alsoPlaying="sakura" alsoPlayingStage="4-7" timeInStage="0">
+            <case stage="7">
                 <condition count="2" filter="zombieland_saga" />
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="sakura" stage="4-7" />
                 <state img="#-Happy.png">Nah, these dudes ain’t look like they ever got horribly mutilated. Listen kids, drivin’ off cliffs don’t make ya cool!</state>
             </case>
             <case stage="0-8" alsoPlaying="mulan" alsoPlayingStage="1" alsoPlayingTimeInStage="0" alsoPlayingSayingMarker="honorable_others">
@@ -682,7 +700,8 @@
             <case stage="0-8" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
                 <state img="#-Shocked.png">This beep-boop thing’s talking to me! Why’re you green, Micro-Softie? You a zombie computer?</state>
             </case>
-            <case stage="0-8" alsoPlaying="miko" alsoPlayingStage="1" alsoPlayingTimeInStage="0">
+            <case stage="0-8">
+                <condition role="other" character="miko" stage="1" timeInStage="0" />
                 <state img="#-Shocked.png">Woah, Greenie there’s your &lt;i&gt;WIFE&lt;/i&gt;? She got big tits, nice.</state>
             </case>
             <case stage="0-8">
@@ -726,11 +745,18 @@
                 <condition count="1" filter="meia" />
                 <state img="#-Thinking.png" marker="jura_seduction04_resp">That’s an easy one, Blondie. You n’ Captain just gotta intimidate them into submission! …Though thinkin’ ‘bout it now, I don’t think I’ve ever had success with guys.</state>
             </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskWoody" />
+                <condition count="0" filter="sakura" />
+                <state img="#-Serious.png" marker="Yuelia_Woody_resp">Sounds like Egghead. Poor girl had rotten luck, suffered failure after failure through no fault a’ her own. I guess after a while, she just stopped tryin’.</state>
+            </case>
             <case stage="0" totalRounds="0">
                 <condition role="other" character="sakura" />
                 <state img="#-Happy.png">So you just goin’ by “Number One” here, Egghead? I thought I’d drum up support, &lt;i&gt;incognito&lt;/i&gt;! No one knows “Saki Nikaidou,” ‘cept as a broken body at the bottom of a cliff.</state>
             </case>
-            <case stage="1" alsoPlaying="futaba" timeInStage="0" alsoPlayingSaying="rebel">
+            <case stage="1">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="futaba" saying="rebel" />
                 <state img="#-Smug.png">Yer a rebel, Little Miss Javascript? What, you borrow floppy disks from friends and copy ‘em?</state>
             </case>
             <case stage="2" alsoPlaying="futaba" timeInStage="0" alsoPlayingSaying="codename">
@@ -773,6 +799,11 @@
             </case>
             <case stage="0-8" alsoPlaying="sakura" saidMarker="jessie_resp_slept" alsoPlayingSaidMarker="no1_jessie_12">
                 <state img="#-Horny.png" oneShotId="6" marker="no1_jessie_12_resp">Damn, Egghead. Didn’t know you was wunna them NTR freaks! Seriously though, I can’t condone any tomfoolery unless you got yer partner’s okay. But you’d get my approval… hint, hint.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="miko" saidMarker="saki_badluck_resp" />
+                <condition role="self" saidMarker="q_saki_badluck" />
+                <state img="#-Annoyed.png">Phones, that just sounded like when shit’s goin’ good it’s all you, but when it goes bad it’s all bad luck. N’ wait, why does Greenie need a jar? I’d ask, but I feel like you’ll be tellin’ your life story anyway…</state>
             </case>
             <case stage="0-8" alsoPlaying="akko" alsoPlayingSayingMarker="shiny_rod">
                 <state img="#-Annoyed.png">Clive Sollish? How the hell you spell that shit?</state>
@@ -898,6 +929,94 @@
             <case stage="0-8">
                 <condition role="other" character="amy" sayingMarker="strange_harmonies" />
                 <state img="#-Thinking.png">Hm? Music? Might be the others practicin’ in the back. Franchouchou’s supposed to do a show here in a bit.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskAndy" />
+                <state img="#-Laughing.png" marker="Yuelia_Andy_resp">Shit, ain’t no one ever tried to give me no reward. Well, I did get free Drive-In Tori for doin’ a commercial for ‘em, but I accepted as much as I could fit down my gullet.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskCervantes" />
+                <state img="#-Happy.png" marker="Yuelia_Cervantes_resp">I’m glad you asked, Bugger. I love the idol group Franchouchou, the best in all Japan, to which I am not affiliated despite being as sexy as the mysterious hottie Number Two.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskDamien" />
+                <state img="#-Happy.png" marker="Yuelia_Damien_resp">My sister Shrimpy’s only twelve, n’ did acting at even younger, but she’s as talented as any of us in Franchouchou.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskDuglas" />
+                <state img="#-Annoyed.png" marker="Yuelia_Duglas_resp">What’s with the tone Bugger? I ain’t never done anything wrong, ever. Well, I guess maybe there’s the whole “not a zombie” thing… n’ the “not an idol” thing….</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskFern" />
+                <state img="#-Happy.png" marker="Yuelia_Fern_resp">Aw, we got a cute lil’ doggy at our place, name a’ Romero. Poodle I think. Eats anything he can get his jaws around, but his favorite is dried squid. Also, he’s a zombie.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskFizz" />
+                <state img="#-Excited.png" marker="Yuelia_Fizz_resp">I ain’t one for fancy jewelry. Shockin’ I know. Oh, but sometimes Shades gets us crap for our performances. Like my chicken costume!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskFlamel" />
+                <state img="#-Smug.png" marker="Yuelia_Flamel_resp">Bugger, yer lookin’ at ‘er— oh, you said they turn out fine. Nevermind, then.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskHazel" />
+                <state img="#-Thinking.png" marker="Yuelia_Hazel_resp">Hmmm… patience, I guess. Egghead’s a real good teacher, though she wouldn’t admit it. Always willin’ to help Tae with learnin’ the dance moves.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskIsaac" />
+                <state img="#-Thinking.png" marker="Yuelia_Isaac_resp">I never done much finshin’. That’s more Junko’s wheelhouse. I can’t sit still that long.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskJinx" />
+                <state img="#-Horny.png" marker="Yuelia_Jinx_resp">Hm. Well, I did re-meet n’ old friend a’ mine, long after we, ah, parted ways. She changed a good bit, but she still had a mean right hook.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskJude" />
+                <state img="#-Annoyed.png" marker="Yuelia_Jude_resp">You expectin’ &lt;i&gt;me&lt;/i&gt; to know a ton a’ people with jobs, Bugger? Well, I know a guy who thinks he can design t-shirts n’ websites all on his own. Hardly say he’s “stuck” though.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskLaura" />
+                <state img="#-Smug.png" marker="Yuelia_Laura_resp">Bugger, who d’ya think yer talkin’ to? I’m &lt;i&gt;dead&lt;/i&gt; and that ain’t even stop me.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskMonika" />
+                <state img="#-Serious.png" marker="Yuelia_Monika_resp">One a’ my sisters, Junko, felt down in the dumps cause she didn’t think she could be an idol in today’s world. I’m team captain but even I couldn’t do much to help. Girl got through it eventually, though.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskNoelia" />
+                <state img="#-Smug.png" marker="Yuelia_Noelia_resp">Bugger, which one a’ my sisters d’ya think is the troublemaker? I’ll give ya a hint: it ain’t Shrimpy.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskOdin" />
+                <state img="#-Thinking.png" marker="Yuelia_Odin_resp">Well, all a’ us in Franchouchou were gurglin’ zombies at one point, which &lt;i&gt;I guess&lt;/i&gt; is scary if yer Egghead. Junko’s the only shy one of our bunch, though.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskOlivia" />
+                <state img="#-Serious.png" marker="Yuelia_Olivia_resp">Me, a’ course! Or, that’s what I’d used to say, back in the day. Clearly didn’t do me much good, huh Bugger? I’m wiser these days. I got a second chance and ain’t gonna hurt my sisters.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskOphelia" />
+                <state img="#-Excited.png" marker="Yuelia_Ophelia_resp">Hell yeah! I love the Black Mont Blanc ice cream bar! You can only get it in Kyushu, ya know!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskPorthos" />
+                <state img="#-Horny.png" marker="Yuelia_Porthos_resp">Back when me n’ my gang Dorami used ta hit up Drive-in Tori, we’d always order the Number One Meal, with a side of lettuce.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskPurl" />
+                <state img="#-Thinking.png" marker="Yuelia_Purl_resp">Shades makes us costumes, they’re surprisingly easy to move around in despite bein’ all fancy n’ shit. Now that I think about it, I never gave ‘im my measurements. Hmmm….</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskRobin" />
+                <state img="#-Thinking.png" marker="Yuelia_Robin_resp">Y’know… sometimes I feel like Shades can be a bit of a softie when dealin’ with Egghead. I’d joke he’s got a crush on her, but that’d be gross.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="yuelia" sayingMarker="promptAskRupert" />
+                <state img="#-Thinking.png" marker="Yuelia_Rupert_resp">Ha! Terrible luck? Everyone in Franchouchou &lt;i&gt;died&lt;/i&gt;, Bugger. Beat that.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="miko" sayingMarker="q_miko_desires" />
+                <state img="#-Smug.png" marker="miko_desires_resp">Aw, that’s easy, Phones! I’m gonna take over Japan and make people everywhere happy! N’ not just me, my sisters are gonna be there as well!</state>
             </case>
             <case stage="0">
                 <condition count="3" filter="street_fighter" />
@@ -1120,7 +1239,7 @@
             </case>
             <case stage="0">
                 <condition role="other" character="megumin" />
-                <state img="#-Lost.png">Darkness? That wunna yer bandmates? Yer producer gave you guys the &lt;i&gt;chunni&lt;/i&gt;-est names.</state>
+                <state img="#-Lost.png" marker="Meg_Dark_1">Darkness? That wunna yer bandmates? Yer producer gave you guys the &lt;i&gt;chuuni&lt;/i&gt;-est names.</state>
             </case>
             <case stage="0">
                 <condition role="other" character="rainbow_dash" />
@@ -1240,23 +1359,27 @@
         </trigger>
 
         <trigger id="stripping">
-            <case stage="7" alsoPlaying="mahiru" priority="501">
+            <case stage="7" priority="700">
+                <condition role="other" character="miko" stage="8" />
+                <state img="custom:#-Attack_Hit" marker="SpecialAttacked">Wha— &lt;i&gt;whaaaaaag&lt;/i&gt;!!!</state>
+            </case>
+            <case stage="7" priority="501">
                 <condition count="0" filter="sakura" />
+                <condition role="other" character="mahiru" />
                 <alternative alsoPlaying="mahiru" alsoPlayingStage="7" />
                 <alternative alsoPlaying="mahiru" alsoPlayingStage="9" />
                 <state img="#-Excited.png">Hold up. Snaps! Howsabout we use this chance to show off yer skills? I’m game for nude selfies if you are!</state>
             </case>
-            <case stage="7" alsoPlaying="mahiru" priority="501">
-                <condition count="1" filter="sakura" status="not_naked" character="sakura" />
+            <case stage="7" priority="501">
+                <condition filter="sakura" status="not_naked" character="sakura" />
+                <condition role="other" character="mahiru" />
                 <state img="#-Stripping.png">My pussy musta been blown up during my bike accident. Shades had ta sow a piece on from another cadaver— to bad he picked a dude!</state>
             </case>
-            <case stage="7" alsoPlaying="sakura" alsoPlayingStage="7-9" priority="501">
+            <case stage="7" priority="501">
+                <condition role="other" character="sakura" stage="7-9" />
                 <alternative alsoPlaying="mahiru" alsoPlayingStage="7" />
                 <alternative alsoPlaying="mahiru" alsoPlayingStage="9" />
                 <state img="#-Happy.png">Hold up— Egghead, whaddya say about joinin’ in? It ain’t a Franchouchou glamour shoot without the group’s eggy heart!</state>
-            </case>
-            <case stage="7" alsoPlaying="miko" alsoPlayingStage="8" priority="500">
-                <state img="custom:#-Attack_Hit" marker="SpecialAttacked">Wha— &lt;i&gt;whaaaaaag&lt;/i&gt;!!!</state>
             </case>
             <case stage="6" priority="300">
                 <condition role="other" character="yuelia" />
@@ -1353,10 +1476,12 @@
             <case stage="6" alsoPlaying="nugi-chan">
                 <state img="#-Stripping.png" location="10%">Oh, guess it turns out I need those bandages. Summa them, at least. Hey Nugs, mind sweepin’ me up?</state>
             </case>
-            <case stage="6" alsoPlaying="sakura">
+            <case stage="6">
+                <condition role="other" character="sakura" />
                 <state img="#-Stripping.png">Oh, shit, you meant literally. Didn’t realize that was all holdin’ me together. Little help?</state>
             </case>
-            <case stage="7" alsoPlaying="miko">
+            <case stage="7">
+                <condition role="other" character="miko" />
                 <state img="#-Stripping.png">But I bet you think I’m gonna admit defeat, huh Phones? Well, too bad!</state>
             </case>
             <case stage="0" alsoPlaying="pit">
@@ -1450,22 +1575,27 @@
         </trigger>
 
         <trigger id="stripped">
-            <case stage="8" alsoPlaying="mahiru" priority="501">
+            <case stage="8" priority="501">
                 <condition count="0" filter="sakura" />
+                <condition role="other" character="mahiru" />
                 <alternative alsoPlaying="mahiru" alsoPlayingStage="7" />
                 <alternative alsoPlaying="mahiru" alsoPlayingStage="9" />
                 <state img="xxxBlank.png"></state>
             </case>
-            <case stage="8" alsoPlaying="mahiru" priority="501">
-                <condition count="1-1" filter="sakura" status="not_naked" />
+            <case stage="8" priority="501">
+                <condition count="1" filter="sakura" status="not_naked" />
+                <condition role="other" character="mahiru" />
                 <state img="#-Stripped.png">Ha! Nah, the pussy’s still there. You all bought it though! I saw Snaps had her camera at the ready.</state>
             </case>
-            <case stage="8" alsoPlaying="sakura" alsoPlayingStage="7-9" priority="501">
+            <case stage="8" priority="501">
+                <condition role="other" character="sakura" stage="7-9" />
                 <alternative alsoPlaying="mahiru" alsoPlayingStage="7" />
                 <alternative alsoPlaying="mahiru" alsoPlayingStage="9" />
                 <state img="xxxBlank.png"></state>
             </case>
-            <case stage="8" alsoPlaying="miko" alsoPlayingStage="8" saidMarker="SpecialAttacked" priority="500">
+            <case stage="8" priority="500">
+                <condition role="self" saidMarker="SpecialAttacked" />
+                <condition role="other" character="miko" stage="8" />
                 <state img="#-Excited.png">Wahaha! That was awesome, Phones! Now I’m fired up more’n ever! Ain’t no way I’m givin’ up on Franchouchou takin’ the country now!</state>
             </case>
             <case stage="7" priority="300">
@@ -1612,6 +1742,10 @@
                 <condition role="other" character="amy" />
                 <state img="#-Stripped.png">Uh, no glue needed, four eyes. Jammin’ it back on there usually does the trick.</state>
             </case>
+            <case stage="7">
+                <condition role="other" character="rainbow_dash" />
+                <state img="#-Stripped.png">Aw shit, sorry Rainbow. Well no worries, if I ain’t yer gal I ain’t yer gal. Plenty of horse in the sea.</state>
+            </case>
             <case stage="1">
                 <state img="#-Stripped.png">Nah, I’ll throw in my socks too. Don’t wanna beat you losers too hard.</state>
                 <state img="#-Stripped.png">Okay, I feel something wet seepin’ into my socks. Barefoot it is.</state>
@@ -1645,13 +1779,13 @@
                 <state img="#-Stripped.png">Nah, just kidding, it’s fully intact. Still got most a’ the hairs on it too!</state>
                 <state img="#-Stripped.png">Haha, gotcha! Nah, it’s still here. Doesn’t smell either. I, uh, made sure a’ that.</state>
             </case>
-            <case stage="7">
-                <state img="#-Stripped.png">Aw shit, sorry Rainbow. Well no worries, if I ain’t yer gal I ain’t yer gal. Plenty of horse in the sea.</state>
-            </case>
         </trigger>
 
         <trigger id="male_human_must_strip">
-            <case stage="0-10" targetStage="0" alsoPlaying="sakura" alsoPlayingStage="0" notSaidMarker="ss_threesome" priority="500">
+            <case stage="0-10" priority="500">
+                <condition role="target" stage="0" />
+                <condition role="self" notSaidMarker="ss_threesome" />
+                <condition role="other" character="sakura" stage="0" />
                 <state img="#-Horny.png">Heeey ~player~, I been seein’ you eyeball Egghead over here. Guess I can’t blame someone for wanting to get with a babe like her. I do too.</state>
             </case>
         </trigger>
@@ -1780,7 +1914,10 @@
         </trigger>
 
         <trigger id="female_human_must_strip">
-            <case stage="0-10" targetStage="0" alsoPlaying="sakura" alsoPlayingStage="0" notSaidMarker="ss_threesome" priority="500">
+            <case stage="0-10" priority="500">
+                <condition role="target" stage="0" />
+                <condition role="self" notSaidMarker="ss_threesome" />
+                <condition role="other" character="sakura" stage="0" />
                 <state img="#-Horny.png">Heeey ~player~, I been seein’ you eyeball Egghead over here. Guess I can’t blame someone for wanting to get with a babe like her. I do too.</state>
             </case>
         </trigger>
@@ -2248,11 +2385,11 @@
             </case>
             <case stage="0-10">
                 <condition role="target" character="megumin" stage="0" />
-                <state img="#-Laughing.png">Ha! What’s with the cringey, middle-schooler schtick, Meg? “I’m the crimson demon of soul darkness,” even my kid sister Shrimpy don’t talk like that.</state>
+                <state img="#-Laughing.png" marker="Meg_Cape_1">Ha! What’s with the cringey middle-schooler schtick, Meg? “I’m the crimson demon of soul darkness,” even my kid sister Shrimpy don’t talk like that.</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="megumin" stage="1" />
-                <state img="#-Confused.png">Look Meg, ya don’t hafta keep bein’ in character. I’m an idol too. We’re all friends here.</state>
+                <state img="#-Confused.png" marker="Meg_Gloves_1">Look Meg, ya don’t hafta keep bein’ in character. I’m an idol too. We’re all friends here.</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="yuelia" stage="1" />
@@ -2679,11 +2816,11 @@
             </case>
             <case stage="0-10">
                 <condition role="target" character="megumin" stage="0" />
-                <state img="#-Laughing.png">N’ that outfit. Your car crash into a cheapo Halloween shop on your way over here?</state>
+                <state img="#-Laughing.png" marker="Meg_Cape_2">N’ that outfit. Your car crash into a cheapo Halloween shop on your way over here?</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="megumin" stage="1" />
-                <state img="#-Serious.png">I an’t this rough n’ tumble when meetin’ with fans… well, most of ‘em. But we’re incognito now, Meg. Take ‘er easy!</state>
+                <state img="#-Serious.png" marker="Meg_Gloves_2">I an’t this rough n’ tumble when meetin’ with fans… well, most of ‘em. But we’re incognito now, Meg. Take ‘er easy!</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="yuelia" stage="0" />
@@ -2938,11 +3075,11 @@
             </case>
             <case stage="0-10">
                 <condition role="target" character="megumin" stage="1" />
-                <state img="#-Happy.png">Oh, shit. I get it! This is a persona— you’re an idol, like me!</state>
+                <state img="#-Happy.png" marker="Meg_Cape_3">Oh, shit. I get it! This is a persona— you’re an idol, like me!</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="megumin" stage="2" />
-                <state img="#-Confused.png">&lt;i&gt;Sigh…&lt;/i&gt; Sure, whatever Meg. Crimson devil dicks, jeweled nipples of chaos, yadda yadda. Just take it easy on the explosive pyrotechnics, will ya?</state>
+                <state img="#-Confused.png" marker="Meg_Gloves_3">&lt;i&gt;Sigh…&lt;/i&gt; Sure, whatever Meg. Crimson devil dicks, jeweled nipples of chaos, yadda yadda. Just take it easy on the explosive pyrotechnics, will ya?</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="yuelia" stage="1" />
@@ -2993,9 +3130,10 @@
                 <condition count="0" filter="sakura" />
                 <state img="#-Happy.png">Lame. Bet Egghead used to wear some nerd crap like ~clothing.ifPlural(those|that)~ ~clothing~ 'fore her shell got cracked.</state>
             </case>
-            <case stage="0-10" filter="fancy" priority="0">
+            <case stage="0-10" priority="0">
+                <condition filter="fancy" role="target" />
                 <state img="#-Happy.png">~clothing.ifPlural(Those|That)~ kinda ~clothing~ ain’t really my thing. Too nice for me. I bet Big Sis Yuugiri’d look bomb in ‘em, though.</state>
-                <state img="#-Smug.png">Say, how much is ~clothing.ifPlural(those|that)~ ~clothing~ worth? Looks expensive. Aw chill, I’m not gonna shake ya down, ~name~.</state>
+                <state img="#-Smug.png">Say, how much ~clothing.ifPlural(are those ~clothing~ worth? Look|is that ~clothing~ worth? Looks)~ expensive. Aw chill, I’m not gonna shake ya down, ~name~.</state>
             </case>
             <case stage="0-10" priority="0">
                 <condition role="self" notSaidMarker="maybejustonce" />
@@ -3386,7 +3524,8 @@
             <case stage="0-2">
                 <state img="#-Smug.png">I coulda got naked in the time it took to remove your ~clothing~! Don’t stall in front of the second fastest biker chick in Dorami.</state>
             </case>
-            <case stage="0-10" filter="drunk" priority="0">
+            <case stage="0-10" priority="0">
+                <condition filter="drunk" role="target" />
                 <state img="#-Happy.png">While yer at it, ~name~, why don’tcha pour one out for every member of Dorami who got gone? Grand total of one, so far as I know….</state>
             </case>
             <case stage="0-10" filter="shy" priority="0">
@@ -4002,7 +4141,7 @@
             </case>
             <case stage="0-10">
                 <condition role="target" character="megumin" />
-                <state img="#-Thinking.png">I’ve forgotten to wear a bra or my wraps before, too. It’s easy when you got, uh, a slender frame.</state>
+                <state img="#-Thinking.png" marker="Meg_Chest_Vis">I’ve forgotten to wear a bra or my wraps before, too. It’s easy when you got, uh, a slender frame.</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="yuelia" />
@@ -4737,7 +4876,7 @@
             </case>
             <case stage="0-10">
                 <condition role="target" character="megumin" />
-                <state img="#-Confused.png">“Explosion”? Ugh, that brings back some bad memories.</state>
+                <state img="#-Confused.png" marker="Meg_Finished">“Explosion”? Ugh, that brings back some bad memories.</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="rainbow_dash" />
@@ -4998,6 +5137,11 @@
             <directive type="fade" ease="ease-out" time="1" color="#000000" alpha="100" />
             <directive type="text" id="text31" width="45%" arrow="right" alignmentx="right" alignmenty="bottom" x="55%" y="40%">It’ll be far greater than &lt;i&gt;that&lt;/i&gt;, but I shan't say that aloud.</directive>
         </scene>
+
+    </epilogue>
+
+    <epilogue hint="Win a game with Saki in." gender="any" markers="SakiSoloEp" status="offline">
+        <title>Backstage Pass</title>
 
     </epilogue>
 
