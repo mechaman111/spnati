@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 6:33:31 p. m. on febrero 04, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 5:52:15 p. m. on febrero 05, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Rainbow</first>
@@ -91,13 +91,13 @@
 
         <trigger id="opponent_selected">
             <case stage="0">
-                <condition role="target" character="yuelia" />
-                <state img="#-laughing.png">Woah, woah, wait a sec.  A butterfly called "Flutter"? You wouldn't have any type of relation to my friend Fluttershy, right?</state>
-            </case>
-            <case stage="0">
-                <condition role="other" character="miko" />
+                <condition role="target" character="miko" />
                 <condition count="1-3" gender="male" />
                 <state img="#-laughing.png">Heh, you'll find balls in this table, that's for sure...</state>
+            </case>
+            <case stage="0">
+                <condition role="target" character="yuelia" />
+                <state img="#-laughing.png">Woah, woah, wait a sec.  A butterfly called "Flutter"? You wouldn't have any type of relation to my friend Fluttershy, right?</state>
             </case>
         </trigger>
 
@@ -3380,6 +3380,7 @@
         <trigger id="game_over_defeat">
             <case stage="9" priority="700">
                 <condition role="self" saidMarker="pony_table" />
+                <condition role="target" character="human" />
                 <test expr="~rainbow_dash.slot~" value="3" />
                 <state img="#-ponyend.png" marker="pony_end" location="10%">{Rarity}Great game, let's do this again next week?{!reset}&lt;br&gt; {Twilight}For sure!{!reset}&lt;br&gt; {Rainbow}You got it!{!reset}&lt;br&gt;{Pinkie}Yay!{!reset}</state>
                 <state img="#-ponyend.png" marker="pony_end" location="10%">{Rarity}Everyone say goodbye to ~player~, girls...{!reset}&lt;br&gt;{Pinkie}Unless, of course, you prefer to join us in the next part of this party?{!reset}&lt;br&gt;</state>
@@ -3450,4 +3451,227 @@
         </trigger>
 
     </behaviour>
+    <epilogue hint="Win a game with Rainbow, Rarity, Pinkie and Twilight." gender="any" markers="pony_table" status="Unlisted">
+        <title>The ride never ends</title>
+        <scene id="Wideshotpost" name="Wideshotpost" background="epilogue-bgfullroom.png" width="1000" height="750" />
+        <scene id="Explanation" name="Explanation" background="/opponents/pinkie_pie/bg2.png" width="1000" height="750">
+            <directive type="sprite" id="Twidisappointed" src="/opponents/twilight/0-disappointed.png" x="488" y="-29" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="sunsetsad" src="epilogue-sssad.png" x="-147" y="-30" pivotx="50%" pivoty="50%" />
+            <directive type="fade" alpha="0" />
+            <directive type="wait" />
+            <directive type="text" id="text4" width="20%" arrow="right" x="48%" y="41%">I'm so sorry everyone.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text4" />
+            <directive type="text" id="text6" width="20%" arrow="right" x="48%" y="38%">It seems that Spike mixed up the books back in Equestria.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text9" width="20%" arrow="right" x="48%" y="40%">This wasn't a spell to make new magic users.</directive>
+            <directive type="clear" id="text6" />
+            <directive type="pause" />
+            <directive type="clear" id="text9" />
+            <directive type="text" id="text12" width="20%" arrow="right" x="48%" y="31%">It was a spell that was used to repopulate the world after the windigo disaster during the foundation of Equestria</directive>
+            <directive type="pause" />
+            <directive type="sprite" id="sunsetembarassed" src="0-Emberrassed.png" x="-151" y="-46" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="sunsetsad" alpha="0" />
+            <directive type="clear" id="text12" />
+            <directive type="text" id="text19" width="20%" arrow="left" x="30%" y="34%">That's why ~player~ was able to last for so long.</directive>
+            <directive type="pause" />
+            <directive type="sprite" id="sunsetexplain" src="epilogue-ss-explaining.png" x="-147" y="-31" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="sunsetembarassed" alpha="0" />
+            <directive type="clear" id="text19" />
+            <directive type="text" id="text24" width="20%" arrow="left" x="28%" y="34%">It's basically a super-breeding spell</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text24" />
+            <directive type="sprite" id="twiembarrased" layer="2" src="/opponents/twilight/0-awkward.png" x="518" y="-52" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="Twidisappointed" alpha="0" />
+            <directive type="text" id="text29" width="20%" arrow="right" x="48%" y="31%">And it seems that one of the side-effects was to make everyone in the room horny as well.</directive>
+            <directive type="pause" />
+            <directive type="sprite" id="sunset confident" layer="2" src="epilogue-ssconfident.png" x="-146" y="-37" pivotx="50%" pivoty="50%" />
+            <directive type="clear" id="text29" />
+            <directive type="text" id="text33" width="20%" arrow="left" x="30%" y="26%">But according to the translation that Starswirl gave us when we asked him about it, the effects should be wearing off by now.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text33" />
+            <directive type="sprite" id="pinkie" src="/opponents/pinkie_pie/0-sad.png" x="926" y="-156" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="pinkie" ease="smooth" time="1" x="330" />
+            <directive type="wait" />
+            <directive type="text" id="text39" width="20%" arrow="right" x="31%" y="31%">Awww... And I didn't get to have fun with ~player~ before that...</directive>
+            <directive type="pause" />
+        </scene>
+        <scene transition="true" effect="push-right" time="0.5" />
+        <scene id="Twifreakout" name="Twifreakout" background="epilogue-bgfullroom.png" width="1000" height="750">
+            <directive type="sprite" id="sci-twiscared" src="/opponents/twilight/epilogue_2-sci-twi2.png" x="-64" y="-29" pivotx="50%" pivoty="50%" />
+            <directive type="text" id="text42" width="20%" arrow="left" x="41%" y="33%">Wait a second, did you just say it was a spell specifically for &lt;i&gt;breeding&lt;/i&gt;?!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text42" />
+            <directive type="text" id="text45" width="20%" arrow="right" x="74%" y="18%">Oh... Yeah... I hope you girls weren't ovulating...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text45" />
+            <directive type="text" id="text48" width="20%" arrow="right" x="76%" y="29%">Because this spell pretty much &lt;i&gt;guarantees&lt;/i&gt; to fertilize any ovum the spell's sperm enters on contact...</directive>
+        </scene>
+        <scene id="Credits" name="Credits" color="#000000" width="120" height="62">
+            <directive type="fade" alpha="0" />
+            <directive type="sprite" id="waves" src="epilogue-waves.png" x="-537" y="-150" scalex="0.2" scaley="0.1" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="waves" loop="true" clamp="clamp" time="6" x="-442" y="-150" />
+            <directive type="sprite" id="twi-frame" src="epilogue-twi-frame.png" x="-119" y="-164" scalex="0.1" scaley="0.1" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="sprite35" src="epilogue-twi-credits.png" x="-67" y="-69" scalex="0.2" scaley="0.2" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="pinkie credits" src="epilogue-pinkie-credits.png" x="-115" y="-66" scalex="0.2" scaley="0.2" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="pinkie frame" width="35" height="45" layer="1" src="epilogue-pinkie-frame.png" x="73" y="9" scalex="1" scaley="1" alpha="0" />
+            <directive type="move" id="sprite35">
+                <keyframe time="0.5" alpha="100" />
+                <keyframe time="2.75" alpha="100" />
+                <keyframe time="3" alpha="0" />
+            </directive>
+            <directive type="move" id="twi-frame">
+                <keyframe time="0.5" x="-118" y="-163" alpha="100" />
+                <keyframe time="2.75" x="-116" y="-162" alpha="100" />
+                <keyframe time="3" alpha="0" />
+            </directive>
+            <directive type="move" id="pinkie credits">
+                <keyframe time="3" alpha="0" />
+                <keyframe time="3.5" alpha="100" />
+                <keyframe time="5.75" alpha="100" />
+                <keyframe time="6" alpha="0" />
+            </directive>
+            <directive type="move" id="pinkie frame">
+                <keyframe time="3" alpha="0" />
+                <keyframe time="3.5" x="72" y="9" alpha="100" />
+                <keyframe time="5.75" x="70" y="9" alpha="100" />
+                <keyframe time="6" alpha="0" />
+            </directive>
+            <directive type="wait" />
+            <directive type="fade" time="0.25" color="#000000" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene id="Credits2" name="Credits2" color="#000000" width="120" height="62">
+            <directive type="fade" time="0.25" alpha="0" />
+            <directive type="sprite" id="waves" src="epilogue-waves.png" x="-537" y="-150" scalex="0.2" scaley="0.1" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="waves" loop="true" clamp="clamp" time="6" x="-442" y="-150" />
+            <directive type="sprite" id="rarity-frame" width="31" height="41" src="epilogue-rarity-frame.png" x="7" y="11" scalex="1" scaley="1" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="rarity credits" src="epilogue-rarity-credits.png" x="-63" y="-66" scalex="0.2" scaley="0.2" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="rainbow credits" src="epilogue-rd-credits.png" x="-115" y="-62" scalex="0.2" scaley="0.2" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="rainbow frame" width="35" height="45" layer="1" src="epilogue-rd-frame.png" x="73" y="9" scalex="1" scaley="1" alpha="0" />
+            <directive type="move" id="rarity credits">
+                <keyframe time="0.5" alpha="100" />
+                <keyframe time="2.75" alpha="100" />
+                <keyframe time="3" alpha="0" />
+            </directive>
+            <directive type="move" id="rarity-frame">
+                <keyframe time="0.5" x="8" y="11" alpha="100" />
+                <keyframe time="2.75" x="9" y="12" alpha="100" />
+                <keyframe time="3" alpha="0" />
+            </directive>
+            <directive type="move" id="rainbow credits">
+                <keyframe time="3" alpha="0" />
+                <keyframe time="3.5" alpha="100" />
+                <keyframe time="5.75" alpha="100" />
+                <keyframe time="6" alpha="0" />
+            </directive>
+            <directive type="move" id="rainbow frame">
+                <keyframe time="3" alpha="0" />
+                <keyframe time="3.5" x="72" y="9" alpha="100" />
+                <keyframe time="5.75" x="70" y="9" alpha="100" />
+                <keyframe time="6" alpha="0" />
+            </directive>
+            <directive type="wait" />
+            <directive type="fade" time="0.5" color="#000000" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene id="Credits3" name="Credits3" color="#000000" width="120" height="62">
+            <directive type="fade" time="0.5" alpha="0" />
+            <directive type="sprite" id="waves" src="epilogue-waves.png" x="-537" y="-150" scalex="0.2" scaley="0.1" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="waves" loop="true" clamp="clamp" time="6" x="-442" y="-150" />
+            <directive type="sprite" id="sunset-frame" width="31" height="41" src="epilogue-sunset-frame.png" x="12" y="11" scalex="1" scaley="1" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="sunset credits" src="epilogue-sunset-credits.png" x="-69" y="-62" scalex="0.2" scaley="0.2" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="others credits" src="epilogue-others-credits.png" x="-117" y="-69" scalex="0.2" scaley="0.2" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="flutter frame" width="25" height="37" layer="2" src="epilogue-fs-frame.png" x="64" y="6" scalex="1" scaley="1" alpha="0" />
+            <directive type="sprite" id="apple frame" width="26" height="37" layer="1" src="epilogue-aj-frame.png" x="89" y="17" scalex="1" scaley="1" alpha="0" />
+            <directive type="move" id="sunset credits">
+                <keyframe time="0.5" alpha="100" />
+                <keyframe time="2.75" alpha="100" />
+                <keyframe time="3" alpha="0" />
+            </directive>
+            <directive type="move" id="sunset-frame">
+                <keyframe time="0.5" x="13" y="11" alpha="100" />
+                <keyframe time="2.75" x="15" y="12" alpha="100" />
+                <keyframe time="3" alpha="0" />
+            </directive>
+            <directive type="move" id="others credits">
+                <keyframe time="3" alpha="0" />
+                <keyframe time="3.5" alpha="100" />
+                <keyframe time="5.75" alpha="100" />
+                <keyframe time="6" alpha="0" />
+            </directive>
+            <directive type="move" id="flutter frame">
+                <keyframe time="3" alpha="0" />
+                <keyframe time="3.5" x="64" y="7" alpha="100" />
+                <keyframe time="5.75" x="64" y="8" alpha="100" />
+                <keyframe time="6" alpha="0" />
+            </directive>
+            <directive type="move" id="apple frame">
+                <keyframe time="3" alpha="0" />
+                <keyframe time="3.5" x="89" y="17" alpha="100" />
+                <keyframe time="5.75" x="89" y="15" alpha="100" />
+                <keyframe time="6" alpha="0" />
+            </directive>
+            <directive type="wait" />
+            <directive type="fade" time="0.5" color="#000000" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene id="Credits4" name="Credits4" color="#000000" width="120" height="62">
+            <directive type="fade" time="0.5" alpha="0" />
+            <directive type="sprite" id="waves" src="epilogue-waves.png" x="-537" y="-150" scalex="0.2" scaley="0.1" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="waves" loop="true" clamp="clamp" time="6" x="-442" y="-150" />
+            <directive type="sprite" id="end credits1" width="69" height="47" src="epilogue-end-credits.png" x="21" y="8" scalex="1" scaley="1" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="end credits2" width="69" height="47" src="epilogue-end-credits2.png" x="21" y="8" scalex="1" scaley="1" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="move" id="end credits2">
+                <keyframe time="2" alpha="100" />
+                <keyframe time="7.75" alpha="100" />
+                <keyframe time="8" alpha="0" />
+            </directive>
+            <directive type="move" id="end credits1">
+                <keyframe time="2" alpha="100" />
+                <keyframe time="5.25" alpha="100" />
+                <keyframe time="5.5" alpha="0" />
+            </directive>
+            <directive type="wait" />
+            <directive type="fade" time="0.5" color="#000000" alpha="100" />
+            <directive type="pause" />
+        </scene>
+        <scene id="Post credits" name="Post credits" color="#000000" x="100%" y="100" width="120" height="62" zoom="0.11">
+            <directive type="fade" alpha="0" />
+            <directive type="sprite" id="angry pinkie" src="/opponents/pinkie_pie/6-annoyed.png" x="626" y="-403" scalex="0.4" scaley="0.4" pivotx="50%" pivoty="50%" rotation="-24.91671" />
+            <directive type="text" id="text3" width="20%" arrow="right" alignmentx="left" x="77%" y="54%">Hey!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text3" />
+            <directive type="move" id="angry pinkie" time="1" x="449" />
+            <directive type="wait" />
+            <directive type="pause" />
+            <directive type="move" id="angry pinkie" time="2" x="-138" scalex="0.7" scaley="0.7" rotation="0" />
+            <directive type="wait" />
+            <directive type="text" id="text7" width="20%" arrow="left" x="60%" y="34%">You are not ending this epilogue without giving me some fun too!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text7" />
+            <directive type="sprite" id="sprite12" src="/opponents/pinkie_pie/6-horny.png" x="-169" y="-337" scalex="0.9" scaley="0.9" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="angry pinkie" alpha="0" />
+            <directive type="wait" />
+            <directive type="text" id="text15" width="20%" x="57%" y="90%">**unzip**</directive>
+            <directive type="move" id="sprite12">
+                <keyframe time="0.5" x="-169" y="-315" />
+                <keyframe time="1.5" x="-169" y="-337" />
+            </directive>
+            <directive type="wait" />
+            <directive type="clear" id="text15" />
+            <directive type="text" id="text23" width="20%" arrow="right" x="11%" y="34%">Here we go!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text23" />
+            <directive type="sprite" id="sprite19" src="/opponents/pinkie_pie/epilogue-pinkiemount.png" x="-155" y="-217" scalex="1" scaley="1" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="sprite12" alpha="0" />
+            <directive type="move" id="sprite19" loop="true" clamp="mirror" time="0.5" y="-193" />
+            <directive type="pause" />
+            <directive type="fade" time="1" color="#000000" alpha="100" />
+            <directive type="wait" />
+            <directive type="text" id="text27" width="20%" x="11%" y="37%">Weee!!</directive>
+        </scene>
+
+    </epilogue>
+
 </opponent>
