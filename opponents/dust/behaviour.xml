@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 2:08:04 AM on January 26, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 1:12:48 AM on February 07, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Dust</first>
@@ -1271,6 +1271,10 @@
                 <state img="custom:#-calm-fidget" marker="yuelia_snack">Fidget tried that once, and then she went careening off the walls and prophesizing about a great plague.</state>
                 <state img="custom:#-fidget-snark" marker="yuelia_snack">Fidget actually tried drinking sugar water once. I have to make sure she doesn't again.</state>
                 <state img="custom:#-fidget-snark" marker="yuelia_snack" location="20%">{fidget}I actually tried drinking that once, and then the next thing I remember I woke up and Dust was apologizing to Mordecai a lot.</state>
+            </case>
+            <case stage="0-7" oneShotId="88">
+                <condition role="other" character="hk416" saidMarker="dust_ahrahwho" />
+                <state img="custom:#-um-ahrah" marker="hk_no-soul" location="20%">{ahrah}Strange-- I don't feel the presence of a soul in HK416... how can this be?</state>
             </case>
             <case stage="0-7" oneShotId="61" priority="100">
                 <condition role="other" character="meia" saidMarker="laser_ring" />
@@ -2564,6 +2568,9 @@
         </trigger>
 
         <trigger id="female_removing_minor">
+            <case stage="0-9" id="67" target="shantae" targetStage="1" targetSayingMarker="monkey">
+                <state img="#-um.png">Oh! You can transform?</state>
+            </case>
             <case stage="0-9">
                 <condition role="target" character="megumin" stage="3" />
                 <state img="#-um.png">I've been meaning to ask... why only one stocking?</state>
@@ -2733,6 +2740,13 @@
                 <condition role="target" character="chazz" stage="6" />
                 <state img="#-um.png">...Funny, ~player~ doesn't look like the mage type. </state>
                 <state img="custom:#-fidget-snark" location="20%">{fidget}You sure it wasn't the management?</state>
+            </case>
+            <case stage="0-9" id="68" target="merlin" targetStage="4">
+                <state img="#-wat.png">Er... Your "little warrior" is sticking out.</state>
+            </case>
+            <case stage="0-9" id="69">
+                <condition role="target" character="brock" stage="5" />
+                <state img="#-facepalm.png">That's good. I'm unsure on whether Resurrection Stones act on... people like you.</state>
             </case>
             <case stage="0-9">
                 <condition filter="muscular" role="target" />
@@ -2909,6 +2923,10 @@
         </trigger>
 
         <trigger id="female_crotch_is_visible">
+            <case stage="0-9" id="66" target="amy" targetSayingMarker="planar_form">
+                <condition role="target" character="amy" saidMarker="strange_harmonies&gt;=50" sayingMarker="planar_form" />
+                <state img="#-wat.png">WHAT IN ELYSIUM'S NAME?!</state>
+            </case>
             <case stage="0-9" id="15">
                 <condition role="target" character="revy" />
                 <condition role="other" character="meia" stage="5" sayingMarker="revyfight" />
@@ -3193,6 +3211,7 @@
             <case stage="0-9" oneShotId="28">
                 <condition filter="uses_toy" role="target" />
                 <state img="#-wat.png">Where were you keeping that?</state>
+                <state img="#-wat.png">O-oh... it's one of those things.</state>
             </case>
             <case stage="0-9" oneShotId="58">
                 <condition filter="tandem" role="target" />
@@ -3590,6 +3609,15 @@
         </trigger>
 
         <trigger id="after_masturbating">
+            <case stage="9">
+                <condition role="self" timeInStage="10-" />
+                <state img="#-facepalm.png">This is taking a long time.</state>
+                <state img="#-embarrassed.png">There are things I should be doing right now...</state>
+                <state img="#-annoyed.png">I'm not usually one to wait out long situations.</state>
+                <state img="custom:#-fidget-snark" location="20%">{fidget}Wow. What a drag. Can you hurry this up please?!</state>
+                <state img="custom:#-fidget-snark">{fidget}You finished too fast, Dust. {!reset}&lt;br&gt;Shh!</state>
+                <state img="#-pensive.png">Oh, this is going to be a hassle to clean out of my fur if this dries...</state>
+            </case>
             <case stage="9" oneShotId="30">
                 <condition role="self" saidMarker="cassius_talked&gt;3" />
                 <state img="#-c-standoffish.png">There... are you happy NOW?</state>
