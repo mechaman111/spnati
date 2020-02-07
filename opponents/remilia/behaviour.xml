@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 7:32:36 PM on November 11, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 10:32:40 PM on February 07, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.8</version>
+    <version>v5.5</version>
     <first>Remilia</first>
     <last>Scarlet</last>
     <label>Remilia</label>
@@ -2489,7 +2489,9 @@
         </trigger>
 
         <trigger id="swap_cards">
-            <case stage="3" alsoPlaying="miko" timeInStage="0">
+            <case stage="3">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="miko" />
                 <state img="custom:#-boredwait">...</state>
             </case>
             <case stage="0" totalRounds="0">
@@ -2641,7 +2643,8 @@
             <case stage="0-6" alsoPlaying="shimakaze" alsoPlayingStage="1" alsoPlayingTimeInStage="0" totalRounds="2-50" saidMarker="remifire">
                 <state img="custom:#-questioningbemused">Are you both blind &lt;i&gt;and&lt;/i&gt; deaf, fire girl? Have you not noticed that stripping is the punishment for &lt;i&gt;losing&lt;/i&gt;?</state>
             </case>
-            <case stage="0-6" alsoPlaying="miko" alsoPlayingStage="0" alsoPlayingTimeInStage="0" alsoPlayingNotSaidMarker="Miko" alsoPlayingSayingMarker="Miko">
+            <case stage="0-6">
+                <condition role="other" character="miko" stage="0" timeInStage="0" sayingMarker="Miko" notSaidMarker="Miko" />
                 <state img="custom:#-boredwait">Eh? &lt;i&gt;"Obviously"&lt;/i&gt;? Don't get ahead of yourself, human.</state>
             </case>
             <case stage="0-5" alsoPlaying="shimakaze" alsoPlayingStage="1" alsoPlayingTimeInStage="0" saidMarker="sakufire">
@@ -2664,10 +2667,12 @@
             <case stage="0-6" alsoPlaying="meia" alsoPlayingStage="3" alsoPlayingTimeInStage="0">
                 <state img="#-angry.png">I am quite interested to hear about the life of a being from another planet, bl- no, it is about time I address you as Meia.</state>
             </case>
-            <case stage="0-6" alsoPlaying="miko" alsoPlayingStage="1" alsoPlayingTimeInStage="0">
+            <case stage="0-6">
+                <condition role="other" character="miko" stage="1" timeInStage="0" />
                 <state img="custom:#-embarrassedmoe">Her name is Tojiko, and she's your ghost consort? I suppose female relationships &lt;i&gt;are&lt;/i&gt; quite the norm in Gensokyo.</state>
             </case>
-            <case stage="0-6" alsoPlaying="miko" alsoPlayingStage="2" alsoPlayingTimeInStage="0">
+            <case stage="0-6">
+                <condition role="other" character="miko" stage="2" timeInStage="0" />
                 <state img="custom:#-questioningbemused">What a shame. I would have relished the opportunity to test the legendary sword against dear Gungnir.</state>
             </case>
             <case stage="0-6" alsoPlaying="nugi-chan" alsoPlayingStage="3" alsoPlayingTimeInStage="0">
@@ -2707,20 +2712,31 @@
             <case stage="0" alsoPlaying="larachel" totalRounds="0">
                 <state img="custom:#-deliciousconcerned">A wandering, monster-slaying priestess? How amusing! Do you expect me to cower in fear, oh holy woman?</state>
             </case>
-            <case stage="1" alsoPlaying="miko" timeInStage="0">
+            <case stage="1">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="miko" />
                 <state img="custom:#-boredwait">Apparently, it was far too presumptuous of me to revise my opinion of you, Taoist. What a poor attempt at an insult.</state>
                 <state img="custom:#-boredwait">Was that supposed to be an insult, Taoist? You will need to try much harder than that to get under my skin.</state>
             </case>
             <case stage="1" alsoPlaying="sei" timeInStage="0">
                 <state img="custom:#-pleasedcalm" location="83%">There's no need for flattery, Miss Asagiri. And yes, I have been trained for combat - it is just one of the skills required to serve under Milady.</state>
             </case>
-            <case stage="2" alsoPlaying="miko" timeInStage="0">
+            <case stage="2">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="miko" />
                 <state img="custom:#-angryangry">&lt;i&gt;You're helping that blonde kleptomaniac&lt;/i&gt;? I should cut you down where you stand, you damn hermit.</state>
                 <state img="custom:#-angryangry">Your pathetic gags I can put up with, but &lt;i&gt;assisting that witch?&lt;/i&gt; You are treading on thin ice, hermit...</state>
             </case>
             <case stage="3" alsoPlaying="miko" timeInStage="0">
                 <state img="custom:#-smuggiersmug">You're certainly old enough to nag, &lt;i&gt;oh wise and ancient hermit&lt;/i&gt;.</state>
                 <state img="custom:#-smuggiersmug">Me? Young? Well, I suppose to a 1400-year-old hag, &lt;i&gt;anyone&lt;/i&gt; would seem young to you.</state>
+            </case>
+            <case stage="0-6" id="2" priority="102">
+                <condition role="other" character="miko" saidMarker="no_convo" sayingMarker="q_miko_desires" />
+                <state img="custom:#-smugdoubt" marker="miko_prompt">
+                    <alt-img stage="0-6">custom:#-smugdoubt</alt-img>
+                    <text>"Desire" is a concept that only pitiful humans would embrace. But, if you insist, I would love nothing more than for your head to be presented to me on a silver platter.</text>
+                </state>
             </case>
             <case stage="0-6" alsoPlaying="alice_mgq" alsoPlayingSayingMarker="MG">
                 <state img="custom:#-questioningcalm">What's the point in hiding your true form if you're going to casually reveal yourself like that?</state>
@@ -2786,7 +2802,8 @@
                 <state img="custom:#-smuggloat">A noblewoman wouldn't dare go unattended to a private function such as this, little girl. As for my powers, well, take a guess.</state>
                 <state img="custom:#-smuggloat">I am a &lt;i&gt;vampire&lt;/i&gt;, girl. Surely you can guess my powers from that alone? As for Sakuya, it is her duty to accompany me. Of course I would bring her along.</state>
             </case>
-            <case stage="3" alsoPlaying="miko" alsoPlayingStage="1-8">
+            <case stage="3">
+                <condition role="other" character="miko" stage="1-8" />
                 <state img="custom:#-smuggiersmug">Oh, yes, of course. I'm &lt;i&gt;quite&lt;/i&gt; sure she is, Hermit.</state>
             </case>
             <case stage="0" alsoPlaying="jotaro">
@@ -2963,8 +2980,9 @@
         </trigger>
 
         <trigger id="stripping">
-            <case stage="3" alsoPlaying="miko">
+            <case stage="3">
                 <condition count="1" filter="mavis" />
+                <condition role="other" character="miko" />
                 <state img="custom:#-strip" location="83%">Regardless of whether or not Milady's origins are true or not, my master is still Remilia.</state>
             </case>
             <case stage="4" alsoPlaying="miko">
@@ -6398,7 +6416,8 @@
         </trigger>
 
         <trigger id="female_must_masturbate">
-            <case stage="0-6 8" target="miko" targetStage="8">
+            <case stage="0-6 8">
+                <condition role="target" character="miko" stage="8" />
                 <state img="custom:#-disgusteddisgusted">
                     <alt-img stage="8">#-disgusted.png</alt-img>
                     <text>...You are, by far, the most pathetic excuse for royalty I have ever witnessed. Have you no shame, so-called Saint?</text>
@@ -6770,7 +6789,9 @@
         </trigger>
 
         <trigger id="finished_masturbating">
-            <case stage="8" alsoPlaying="miko" alsoPlayingStage="0-7" notSaidMarker="mikobitter">
+            <case stage="8">
+                <condition role="self" notSaidMarker="mikobitter" />
+                <condition role="other" character="miko" stage="0-7" />
                 <state img="#-embarrassed.png" marker="mikobitter">&lt;i&gt;Tch.&lt;/i&gt; To think I would end up losing before that utter &lt;i&gt;buffoon&lt;/i&gt; who calls herself a saint...</state>
             </case>
             <case stage="8">
@@ -6789,7 +6810,8 @@
         </trigger>
 
         <trigger id="game_over_victory">
-            <case stage="6" alsoPlaying="miko">
+            <case stage="6">
+                <condition role="other" character="miko" />
                 <state img="custom:#-angryangry">Now then, it was a pleasure playing with you all, but I must return before my younger sister destroys my home. Again.</state>
             </case>
             <case stage="0">
@@ -6820,7 +6842,9 @@
                 <state img="#-angry.png" collectible="wineglass">&lt;i&gt;Did you just call me "Remi"? Do not act so familiar, brat.&lt;/i&gt;</state>
                 <state img="#-angry.png" collectible="wineglass">&lt;i&gt;Winning a game of luck does not grant you the privilege of calling me "Remi", insolent whelp.&lt;/i&gt;</state>
             </case>
-            <case stage="8" alsoPlaying="miko" saidMarker="chair">
+            <case stage="8">
+                <condition role="self" saidMarker="chair" />
+                <condition role="other" character="miko" />
                 <state img="#-angry.png" collectible="wineglass">Done? Finally. &lt;i&gt;Miko, may I have a word with you?&lt;/i&gt;</state>
                 <state img="#-angry.png" collectible="wineglass">Now then, Saint, &lt;i&gt;don't say I don't keep my promises.&lt;/i&gt;</state>
                 <state img="#-angry.png" collectible="wineglass">If you're all done with this game, I suggest leaving. Except &lt;i&gt;you&lt;/i&gt;, Miko. &lt;i&gt;We have unfinished business.&lt;/i&gt;</state>
