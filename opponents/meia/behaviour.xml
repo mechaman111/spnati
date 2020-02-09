@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 11:37:08 PM on February 03, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 1:31:16 PM on February 09, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Meia</first>
@@ -1003,6 +1003,11 @@
                 <state img="#-explaining.png" marker="jura_seduction_sei_rin">I am &lt;i&gt;not&lt;/i&gt; about to date this woman, Jura, even if you bring up men by comparison.  Look how she's bringing children into the mix.</state>
                 <state img="#-annoyed.png" marker="jura_seduction_sei_rin">...What's this really about, Jura?  Is bringing up men supposed to make Sei look better by comparison?  She wants some bizarre threesome with me and Rin.</state>
             </case>
+            <case stage="5">
+                <condition role="other" character="aella" saying="goblins and trolls" />
+                <condition role="other" character="revy" stage="7" timeInStage="2" />
+                <state img="#-critical.png" marker="aella_slaughter">...I've only heard of such things in fantasy, Aella.  But if your idea of fun is to slaughter creatures you consider beneath you, then Earth is even crueler than I imagined. </state>
+            </case>
             <case stage="0-5">
                 <condition role="other" character="jura" stage="0-6" sayingMarker="seduction" />
                 <condition character="sei" />
@@ -1011,6 +1016,20 @@
                 <state img="#-bored.png" marker="jura_seduction_sei">...Jura, I understand that you want me to date Sei, but bringing up men just makes them look better.  Male soldiers seem &lt;i&gt;disciplined.&lt;/i&gt;</state>
                 <state img="#-explaining.png" marker="jura_seduction_sei">I am &lt;i&gt;not&lt;/i&gt; about to date this woman, Jura, even if you bring up men by comparison.  In fact, I might actually prefer a man...they're more principled.</state>
                 <state img="#-busy.png" marker="jura_seduction_sei">...What's this really about, Jura?  Are you trying to compare Sei to a man?  Because my opinion of male soldiers has actually improved lately...</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="arash" saidMarker="bringer-of-peace" />
+                <condition role="other" character="revy" stage="7" />
+                <condition role="self" notSaidMarker="arash_peace" />
+                <state img="#-disappointed.png" marker="arash_peace">...If an archer's role is to swiftly end fights, Arash, then why didn't you step between me and Revy?</state>
+                <state img="#-annoyed.png" marker="arash_peace">...I suppose if your role as an archer is to end fights, Arash, then Revy and I fighting must have been too entertaining for you to have done so.</state>
+                <state img="#-disappointed.png" marker="arash_peace">Arash...if archers bring peace to a fight, is that only between men?  You showed no interest in my fight with Revy.</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="arash" saidMarker="servant" />
+                <condition role="other" character="revy" stage="7" />
+                <condition role="self" />
+                <state img="#-annoyed.png" marker="arash_servant">"Aggressive men and calm women"...my homeworld would have you believe men and women are each monoliths of personality.</state>
             </case>
             <case stage="0" id="7" totalRounds="0">
                 <condition role="other" character="jura" sayingMarker="meia_birthday" />
@@ -2524,6 +2543,11 @@
                 <state img="#-interested.png">I can see why you're popular with men, Misato.  If you were more willing to flirt with women, you'd be popular on Mejare, too.</state>
                 <state img="#-happy.png">Perhaps Earth isn't so foreign after all, then.  Whether that was flirting or just compliments, you're quite beautiful yourself.</state>
             </case>
+            <case stage="1">
+                <condition role="other" character="aella" saying="women to love each other" />
+                <condition role="self" timeInStage="1" />
+                <state img="#-stoic.png" marker="aella_children">A child can be created from the DNA of any two people, Aella.  Women's eggs suffice for this purpose--I believe men's sperm works, as well.</state>
+            </case>
             <case stage="1" alsoPlaying="captain_america" timeInStage="0-0">
                 <state img="#-disappointed.png">...For a man, you're very polite, Steve.</state>
                 <state img="#-disappointed.png">Didn't expect this kind of politeness from a man.  Maybe there's depths to your sex yet.</state>
@@ -3663,6 +3687,10 @@
                 <state img="#-bored.png" marker="amy_first">...It sounds more like there is a stigma here against same-sex cell combination.  You and your family would be welcome on Mejare.</state>
                 <state img="#-bored.png" marker="amy_first">Based on the ships I've seen, Earth is capable of anything Mejare is, including egg-splicing.  I suppose using men and women's cells is just ingrained here.</state>
             </case>
+            <case stage="1">
+                <condition role="other" character="gaige" sayingMarker="Meia_ECHO2" />
+                <state img="#-disappointed.png" marker="gaige_echo2">...Earlier, you were trying to convince me to use an ECHO.  Yet you only have yours by coincidence?  Make up your mind.</state>
+            </case>
             <case stage="0-3" totalRounds="3">
                 <test expr="~background~" value="inventory" />
                 <state img="#-stretching.png">...At least this bar is clean and comfortable.  I don't care for bright lights...or constant chatter.</state>
@@ -3763,19 +3791,23 @@
                 <state img="#-thinking.png">Can't make any more mistakes...</state>
                 <state img="#-thinking.png">This is good...and I need good.</state>
             </case>
-            <case stage="3" timeInStage="0">
+            <case stage="3">
+                <condition role="self" timeInStage="0" />
                 <state img="#-disarming.png">...</state>
                 <state img="#-disarming.png">...Maybe I don't need this...</state>
                 <state img="#-disarming.png">...I suppose...this planet is trustworthy.</state>
                 <state img="#-disarming.png">...Perhaps I...should show more trust.</state>
                 <state img="#-disarming.png">...I can't make a scene of taking this off...</state>
                 <state img="#-disarming.png">Perhaps I can disarm... I'm no stranger to using my fists anyway.</state>
+                <state img="#-disarming.png">...I can't keep this on forever...an attacker would have struck by now.</state>
             </case>
-            <case stage="3" timeInStage="1">
+            <case stage="3">
+                <condition role="self" timeInStage="1" />
                 <state img="#-stretch.png">It's a bit breezy in here...the Nirvana's gym is heated.</state>
                 <state img="#-bored.png">I could use more sets of this underwear...I'd have to steal them from a soldier.</state>
                 <state img="#-thinking.png">I thought we all had to wear the same amount of clothing...a careless mistake.</state>
                 <state img="#-stretch.png">I hope I'm looking toned.  Exercise is something every woman can do to improve her beauty...</state>
+                <state img="#-stretching.png">...I'm still feeling comfortable.  You may be strangers, but my crewmates see me &lt;i&gt;sweating&lt;/i&gt; in this underwear...</state>
             </case>
             <case stage="0-5" priority="6">
                 <condition role="self" notSaidMarker="one_on_one" />
@@ -5074,6 +5106,12 @@
             <case stage="1">
                 <condition role="other" character="saki" saying="Meia" />
                 <state img="#-thinking.png">...I have had relationships.  To call any of them "girlfriends" would be quite generous.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="saki" saying="periods" />
+                <state img="#-confused.png">...No, Saki, I didn't.  If women's bodies operate on a cycle of reproductive viability, it only seemed natural that men's would, as well.</state>
+                <state img="#-confused.png">...If men and women are really part of the same species, Saki, I'd expect our bodies to have similar cycles.</state>
+                <state img="#-awkward.png">...Saki, the period is an integral part of women's reproductive cycles.  For men to have no analog to that makes them seem so...&lt;i&gt;alien.&lt;/i&gt;</state>
             </case>
             <case stage="0" alsoPlaying="9s">
                 <state img="#-disappointed.png">...Is there something wrong with any of those things?</state>
@@ -7643,6 +7681,12 @@
                 <state img="#-losing-armor.png">...Mejare and Tarak represent the ultimate breakdown in communication between men and women.  Still, there's more to relationships than sharing a sex.</state>
                 <state img="#-losing-armor.png">I suppose I have no place to talk when it comes to understanding men, nor does any Mejarian.  But if they're really human like you and me, then it must be possible.</state>
             </case>
+            <case stage="2">
+                <condition role="other" character="saki" saying="uterus" />
+                <state img="#-losing-bodysuit.png">I knew men don't have uteri--our male doctor was apparently baffled when he first scanned one.  But I figured those egglike sperm-holders had cycles...</state>
+                <state img="#-losing-bodysuit.png">I knew men don't carry their children, but they have those dangling sphere-organs that hold sperm.  I assumed it'd function like a uterus wall...</state>
+                <state img="#-losing-bodysuit.png">...Men have those round ball-like organs hanging near their rods, don't they?  If they hold sperm, I assumed they'd behave like the organs that hold our eggs...</state>
+            </case>
             <case stage="0" alsoPlaying="9s">
                 <state img="#-losing-eyepiece.png">I see.  I'll try not to pry as to what she's your partner &lt;i&gt;in,&lt;/i&gt; exactly.</state>
                 <state img="#-losing-eyepiece.png">And what is it you two do together?  Actually, maybe it's best that I don't pry.</state>
@@ -9995,9 +10039,15 @@
             </case>
             <case stage="2">
                 <condition role="other" character="saki" saying="irritable" />
-                <state img="#-confused.png">...Wait.  Do men...not menstruate?  When is their seed viable to produce a child--&lt;i&gt;always?&lt;/i&gt;</state>
+                <state img="#-shocked.png">...Wait.  Do men...not menstruate?  When is their seed viable to produce a child--&lt;i&gt;always?&lt;/i&gt;</state>
                 <state img="#-confused.png">...Men don't have a period?  If they're constantly producing viable seed, and the only way to flush it out is sex, then...no wonder they're intense.</state>
                 <state img="#-impressed.png">...Men don't menstruate?  No wonder they're so aggressive-- their bodies have a constant urge to reproduce!</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="saki" saying="really good shape" />
+                <state img="#-lost-bodysuit.png">...Thank you, Saki.  This is only from simple cardio and strength training exercises, however--there's no need to flatter me.</state>
+                <state img="#-lost-bodysuit.png">...I keep myself fit enough to pilot effectively.  "Really good shape" is excessive praise...but thank you.</state>
+                <state img="#-lost-bodysuit.png">...Thank you, Saki.  It's difficult for me to put on muscle, but I've at least managed to tone my abs and backside.  I could be built much better...</state>
             </case>
             <case stage="1" alsoPlaying="9s">
                 <state img="#-lost-eyepiece.png">Well, isn't that sweet.  You remind me of a short, excitable pain-in-the-neck man I work with.</state>
@@ -10616,14 +10666,15 @@
                 <state img="#-lost-bodysuit.png">I really should have worn a more elaborate outfit...</state>
                 <state img="#-lost-bodysuit.png">This is what I get for just hurrying over here in my flightsuit.</state>
                 <state img="#-lost-bodysuit.png">I should have worn more clothing...not that I own very much.</state>
-                <state img="#-lost-bodysuit.png">No sense wearing anything but training gear underneath the flightsuit.</state>
+                <state img="#-lost-bodysuit.png">There's no sense wearing anything but training gear underneath my flightsuit...except for playing this game.</state>
                 <state img="#-lost-bodysuit.png">We call this training gear, though it's really glorified underwear...</state>
-                <state img="#-lost-bodysuit.png">I wasn't exactly hiding my body anyway.</state>
+                <state img="#-lost-bodysuit.png">I wasn't exactly &lt;i&gt;hiding&lt;/i&gt; my body in that suit...but my abs are more visible now.  I hope you find them respectable.</state>
                 <state img="#-lost-bodysuit.png">Now I'm dressed like my crewmate Barnette is all the time...on the edge of exposure.</state>
-                <state img="#-lost-bodysuit.png">&lt;i&gt;Hoo...&lt;/i&gt;OK.  Deal me in.</state>
+                <state img="#-lost-bodysuit.png">&lt;i&gt;Hoo...&lt;/i&gt;my whole body can breathe now.  Peeling that suit off at night always relieves tension...even if it smells a bit.</state>
                 <state img="#-lost-bodysuit.png">I certainly get stares from some of my pilots thanks to that suit.  But at least that means they pay attention to me.</state>
-                <state img="#-lost-bodysuit.png">If you were hoping for lingerie, I'm not the Mejarian for you.</state>
+                <state img="#-lost-bodysuit.png">If you were hoping for lingerie, I'm not the Mejarian for you...though she certainly exists.</state>
                 <state img="#-lost-bodysuit.png">My crewmates see me in my underwear all the time.  This doubles as my exercise gear.</state>
+                <state img="#-lost-bodysuit.png">&lt;i&gt;...Mm.&lt;/i&gt;  I've never built muscle well, so I've focused on toning my figure.  Abs, thighs, calves, backside...how do I look?</state>
             </case>
             <case stage="4">
                 <state img="#-lost-bra.png">There's no need for you to comment on size...</state>
@@ -18513,7 +18564,7 @@
             </case>
             <case stage="0-5">
                 <condition role="target" character="amy" stage="1" />
-                <state img="#-thinking.png">Women &lt;i&gt;would&lt;/i&gt; do well to look out for each other, but I won't impose on a girl who didn't want my help.</state>
+                <state img="#-thinking.png">Women &lt;i&gt;would&lt;/i&gt; do well to look out for each other, but I won't impose on a girl who doesn't want my help.</state>
                 <state img="#-thinking.png">...It's not my place to look out for you if you don't want my help.  I've always believed you can't force yourself into the hearts of others.</state>
                 <state img="#-thinking.png">...You're not one of my pilots, Amy.  I offered my help, and you denied it--it would be wrong for me to keep bothering you.</state>
             </case>
