@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 11:09:56 PM on January 31, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 9:59:43 PM on February 01, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Amy</first>
@@ -154,9 +154,34 @@
 
     <behaviour>
         <trigger id="selected">
-            <case stage="0" id="227">
-                <condition role="self" saidMarker="amy_persist_lost_last" notSaidMarker="amy_t4tm" />
+            <case stage="0" id="261" priority="999">
+                <condition role="self" saidMarker="amy_persist_lost_last" />
+                <condition role="other" character="monika" />
                 <state img="#-singing.png" marker="+amy_t4tm" weight="0.001">♫ One night yeah and one more time / Thanks for the memories, thanks for the memories / Even though they weren't so great~ ♫</state>
+            </case>
+            <case stage="0" id="227">
+                <condition role="self" saidMarker="amy_persist_lost_last" notSaidMarker="amy_ds" />
+                <state img="#-singing.png" marker="+amy_ds" weight="0.001" persist-marker="true">♫ Let's make a toast / to the damned / Waiting for tomorrow~ / When we're played out by the band~  ♫</state>
+            </case>
+            <case stage="0" id="262">
+                <condition role="self" saidMarker="amy_persist_lost_last" notSaidMarker="amy_t4tm" />
+                <state img="#-singing.png" marker="+amy_t4tm" weight="0.001" persist-marker="true">♫ One night yeah and one more time / Thanks for the memories, thanks for the memories / Even though they weren't so great~ ♫</state>
+            </case>
+            <case stage="0" id="270">
+                <condition role="self" saidMarker="amy_persist_lost_last" notSaidMarker="amy_dy" />
+                <state img="#-singing.png" marker="+amy_dy" weight="0.001" persist-marker="true">♫ Let's make the most of the night like we're gonna die young~ ♫</state>
+            </case>
+            <case stage="0" id="278">
+                <condition role="self" saidMarker="amy_persist_won_last" notSaidMarker="amy_roughdraft" />
+                <state img="#-singing.png" marker="+amy_roughdraft" weight="0.001" persist-marker="true">♫ I'm just a rough draft~ ♫</state>
+            </case>
+            <case stage="0" id="280">
+                <condition role="self" saidMarker="amy_persist_won_last" notSaidMarker="amy_collarfull" />
+                <state img="#-singing.png" marker="+amy_collarfull" weight="0.001" persist-marker="true">♫ We've waited so dang long / We're sick and tired~  ♫</state>
+            </case>
+            <case stage="0" id="281">
+                <condition role="self" saidMarker="amy_persist_won_last" notSaidMarker="amy_gp" />
+                <state img="#-singing.png" marker="+amy_gp" weight="0.001" persist-marker="true">♫ And I came here to make you dance tonight / And I don't care about my guilty pleasure for you~  ♫</state>
             </case>
             <case stage="0">
                 <state img="#-start.png">Oh, shoot, ~player~, I'm not sure I'll be ready for the meeting, can you stall a bit? </state>
@@ -165,6 +190,39 @@
         </trigger>
 
         <trigger id="opponent_selected">
+            <case stage="0" id="228" priority="1000">
+                <condition role="self" saidMarker="amy_persist_lost_last==1" notSaidMarker="amy_persist_continue" />
+                <state img="#-happy.png" marker="+amy_persist_continue" persist-marker="true">You got me last time, ~player~, but your luck's not going to hold out! I'm so happy you picked me, though!&lt;br&gt;Play more games with me! I'd love to sing for you! </state>
+            </case>
+            <case stage="0" id="233" priority="505">
+                <condition role="other" character="monika" />
+                <condition role="self" saidMarker="amy_t4tm&gt;=1" />
+                <state img="#-singing.png" marker="+amy_t4tm" weight="0.001">♫ I'm gonna make her bend and break / Say a prayer but let the good times roll / In case God doesn't show... / And I want these words to make things right... ♫</state>
+            </case>
+            <case stage="0" id="263" priority="499">
+                <condition role="self" saidMarker="amy_ds==1" />
+                <state img="#-happy.png" marker="+amy_ds" persist-marker="true">♫ Drownin' out our sorrrrrows~ / What will become / Of us now / At the end of time? / We'll be fine~ / You and I~ ♫</state>
+            </case>
+            <case stage="0" id="268" priority="499">
+                <condition role="self" saidMarker="amy_t4tm==1" />
+                <state img="#-happy.png" marker="+amy_t4tm" persist-marker="true">♫ &lt;i&gt;I'm gonna make It bend and break / Say a prayer but let the good times roll / In case God doesn't show... / And I want these words to make things right... &lt;/i&gt;♫</state>
+            </case>
+            <case stage="0" id="271" priority="499">
+                <condition role="self" saidMarker="amy_dy==1" />
+                <state img="#-happy.png" marker="+amy_dy" persist-marker="true">♫ I heaaar your heart beat to the beat of the drums / Oh what a shame you came here with someone~  ♫</state>
+            </case>
+            <case stage="0" id="283" priority="499">
+                <condition role="self" saidMarker="amy_gp==1" />
+                <state img="#-happy.png" marker="+amy_gp" persist-marker="true">♫ &lt;i&gt;And I don't even know-- / What kinda fool you're taking me for~? / So you got some brand new clothes / You never could afford beforeeee &lt;/i&gt;♫</state>
+            </case>
+            <case stage="0" id="284" priority="499">
+                <condition role="self" saidMarker="amy_roughdraft==1" />
+                <state img="#-happy.png" marker="+amy_roughdraft" persist-marker="true">♫ &lt;i&gt;Ink on every page / 'Couple stains and stripes / Where tears were wiped away...  There's a lot I have to say / But I'm not organized~ &lt;/i&gt;♫</state>
+            </case>
+            <case stage="0" id="285" priority="499">
+                <condition role="self" saidMarker="amy_collarfull==1" />
+                <state img="#-happy.png" marker="+amy_collarfull" persist-marker="true">♫ &lt;i&gt;I won't leave any doubt / Or stone unturned / I've got a collar full-- of chemistry / From your company / So maybe tonight I'll be... / Delivered to me~&lt;/i&gt;♫</state>
+            </case>
             <case stage="0">
                 <condition role="target" character="natsuki" />
                 <condition role="other" character="monika" />
@@ -217,30 +275,16 @@
                 <state img="#-happy.png">Oh hey, Sayori, did we both actually remember our poems today? Ehehe~ --Riri? You… do remember me today, don't you?</state>
             </case>
             <case stage="0" priority="300">
-                <condition count="1" filter="yuri" />
+                <condition filter="yuri" role="target" />
                 <state img="#-surprise.png">Wow! Yuri, I'm surprised you're so late! You're normally the first one here... say, is this a ~background~?</state>
-            </case>
-            <case stage="0" id="233">
-                <condition role="other" character="monika" />
-                <condition role="self" saidMarker="amy_t4tm==1" />
-                <state img="#-singing.png" marker="+amy_t4tm" weight="0.001">♫ I'm gonna make her bend and break / Say a prayer but let the good times roll / In case God doesn't show... / And I want these words to make things right... ♫</state>
             </case>
         </trigger>
 
         <trigger id="game_start">
             <case stage="0" id="232" priority="1002">
                 <condition role="other" character="monika" />
-                <condition role="self" saidMarker="amy_t4tm==2" />
-                <state img="#-sarcastic.png">♫ ...But it's the wrongs that make the words come to life~ / Who does she think she is? ♫ Let's play, Monika. </state>
-            </case>
-            <case stage="0" id="228" priority="1000">
-                <condition role="self" saidMarker="amy_persist_lost_last==1" />
-                <state img="#-happy.png">You got me last time, ~player~, but your luck's not going to hold out! I'm so happy you picked me, though! </state>
-            </case>
-            <case stage="0" id="229" priority="1000">
-                <condition role="self" saidMarker="amy_persist_lost_last&gt;=2" />
-                <state img="#-sarcastic.png" marker="amy_hardmode" set-intelligence="best">You know, I'm no Monika, but I've got a &lt;i&gt;few&lt;/i&gt; tricks up my sleeve. Let's see how we do &lt;i&gt;this&lt;/i&gt; time.</state>
-                <state img="#-sarcastic.png" marker="amy_hardmode" set-intelligence="best">I'm getting a little tired of masturbating for you. Let's give &lt;i&gt;me&lt;/i&gt; a show this time. &lt;br&gt; Here you come, ~player~.</state>
+                <condition role="self" saidMarker="amy_t4tm&gt;=2" />
+                <state img="#-sarcastic.png">♫ &lt;i&gt;...But it's the wrongs that make the words come to life~ / Who does she think she is?&lt;/i&gt; ♫&lt;br&gt;Let's play, Monika. </state>
             </case>
             <case stage="0" priority="999">
                 <condition count="4" filter="ddlc" />
@@ -264,21 +308,8 @@
                 <state img="#-annoyed.png">Fine. I'll say it. &lt;i&gt;Just Amy.&lt;/i&gt; It's a shorter name than Monika. &lt;i&gt;Sigh.&lt;/i&gt;</state>
             </case>
             <case stage="0">
-                <condition role="other" character="amy_rose" />
-                <state img="#-focused.png">Wait a second, this Amy's a hedgehog! </state>
-                <state img="#-focused.png">You know, my real name's not Amy, it's-- Okay, fine, you can have two Amy's, ~player~!</state>
-            </case>
-            <case stage="0">
                 <condition role="other" character="natsuki" />
                 <state img="#-surprise.png">Huh? C'mon, Natsuki, why are you going to bully me? I'm as confused as you are, but don't pretend I'm someone you made up!</state>
-            </case>
-            <case stage="0">
-                <condition role="other" character="ami" />
-                <state img="#-annoyed.png" marker="amy_fake_name">Well, it's not like Amy is my &lt;i&gt;real&lt;/i&gt; name... but I think she prefers &lt;i&gt;Ahh&lt;/i&gt;-miiiii.  I'm &lt;i&gt;Ayyyy&lt;/i&gt;-me.</state>
-            </case>
-            <case stage="0">
-                <condition role="other" character="aimee" />
-                <state img="#-surprise.png">Oh, I get it. Aimee. Because she has a gun. &lt;i&gt;Why does she have a gun, ~player~?&lt;/i&gt;</state>
             </case>
             <case stage="0">
                 <condition role="other" character="sayori" />
@@ -292,9 +323,50 @@
                 <condition role="other" character="miko" />
                 <state img="#-singing.png">♫ &lt;i&gt; The lie of the chosen would would be seen through / Life, shining in gold / The figure whose hands / There are things nobody can stop&lt;/i&gt; ♫</state>
             </case>
+            <case stage="0" priority="99">
+                <condition role="other" character="amy_rose" />
+                <state img="#-focused.png">Wait a second, this Amy's a hedgehog! </state>
+                <state img="#-focused.png">You know, my real name's not Amy, it's-- Okay, fine, you can have two Amy's, ~player~!</state>
+            </case>
+            <case stage="0" priority="99">
+                <condition role="other" character="ami" />
+                <state img="#-annoyed.png" marker="amy_fake_name">Well, it's not like Amy is my &lt;i&gt;real&lt;/i&gt; name... but I think she prefers &lt;i&gt;Ahh&lt;/i&gt;-miiiii.  I'm &lt;i&gt;Ayyyy&lt;/i&gt;-me.</state>
+            </case>
+            <case stage="0" priority="99">
+                <condition role="other" character="aimee" />
+                <state img="#-surprise.png">Oh, I get it. Aimee. Because she has a gun. &lt;i&gt;Why does she have a gun, ~player~?&lt;/i&gt;</state>
+            </case>
+            <case stage="0" priority="99">
+                <condition role="other" character="yuelia" />
+                <state img="#-hmm.png">Hmm... ~player~, is that... butterfly going to play? Well, okay, I guess. </state>
+            </case>
             <case stage="0" priority="55">
                 <condition count="4" gender="male" />
                 <state img="#-sarcastic.png">Strip poker? With four men? I'll... stick around for the tip, anyway. Of the game. </state>
+            </case>
+            <case stage="0" id="264" priority="15">
+                <condition role="self" saidMarker="amy_ds==2" />
+                <state img="#-singing.png" marker="+amy_ds" persist-marker="true">♫ &lt;i&gt;Let's draw a line in the saaand~ / Keep it straight and narrow~ / We had it allll in our hands~ / We begged and then we borrrrrrowed~ / What will become us all / At the end of love?&lt;/i&gt;  ♫</state>
+            </case>
+            <case stage="0" id="267" priority="15">
+                <condition role="self" saidMarker="amy_t4tm==2" />
+                <state img="#-singing.png" marker="+amy_t4tm" persist-marker="true">♫ &lt;i&gt;...But it's the wrongs that make the words come to life~ / Who does he think he is? / One night and one more toy / Thanks for the memories / Even though they weren't so greaaaaaaaaaaat~&lt;/i&gt; ♫</state>
+            </case>
+            <case stage="0" id="272" priority="15">
+                <condition role="self" saidMarker="amy_dy==2" />
+                <state img="#-singing.png" marker="+amy_dy" persist-marker="true">♫ &lt;i&gt; So while you're here in my arms / Let's make the most of the night / Like we're gonna die young~&lt;/i&gt; ♫</state>
+            </case>
+            <case stage="0" id="286" priority="15">
+                <condition role="self" saidMarker="amy_gp==2" />
+                <state img="#-singing.png" marker="+amy_gp" persist-marker="true">♫ &lt;i&gt;Oh brother / Spare us all / We don't care anymore / We just wanna get down on the floor / You sell yourself / To make it / You dish it / But can you really take it?&lt;/i&gt;  ♫</state>
+            </case>
+            <case stage="0" id="287" priority="15">
+                <condition role="self" saidMarker="amy_roughdraft==2" />
+                <state img="#-singing.png" marker="+amy_roughdraft" persist-marker="true">♫ &lt;i&gt;I'm a product of a sleep-deprived / Worked up mind-- / Still an idea / I can bend and break / 'Might be a mistake / But I'm a risk you gotta take~ &lt;/i&gt; ♫</state>
+            </case>
+            <case stage="0" id="288" priority="15">
+                <condition role="self" saidMarker="amy_collarfull==2" />
+                <state img="#-singing.png" marker="+amy_collarfull" persist-marker="true">♫ &lt;i&gt; Oh show me your love! / Your love! / Your love! / Give you more but it's not enough / Before the world catches up~ &lt;/i&gt;  ♫</state>
             </case>
             <case stage="0">
                 <condition count="4" filter="ginger" />
@@ -494,6 +566,15 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0" id="229" totalRounds="0" priority="1000">
+                <condition role="self" saidMarker="amy_persist_lost_last&gt;=2" notSaidMarker="amy_hardmode" />
+                <state img="#-sarcastic.png" marker="amy_hardmode" set-intelligence="best">You know, I'm no Monika, but I've got a &lt;i&gt;few&lt;/i&gt; tricks up my sleeve. Let's see how we do &lt;i&gt;this&lt;/i&gt; time.</state>
+                <state img="#-sarcastic.png" marker="amy_hardmode" set-intelligence="best">I'm getting a little tired of masturbating for you. Let's give &lt;i&gt;me&lt;/i&gt; a show this time. &lt;br&gt; Here you come, ~player~.</state>
+            </case>
+            <case stage="0" id="282" totalRounds="0" priority="1000">
+                <condition role="self" saidMarker="amy_persist_won_last&gt;=2" notSaidMarker="amy_persist_lost_last" />
+                <state img="#-horny.png" marker="amy_easymode" set-intelligence="throw" weight="0.001">...I really, really want to cum. So, I'm going to throw &lt;i&gt;really&lt;/i&gt; hard. Okay? </state>
+            </case>
             <case stage="8" priority="900">
                 <condition role="self" saidMarker="planar_form" />
                 <state img="#-transcend4.png" oneShotId="72" marker="strange_harmonies=0">...That was really embarrassing. I guess part of my... {ddlc}awareness{!reset} is leaking. That's no fun.&lt;br&gt;Um... I'll fix that. It's kind of nauseating to be so {ddlc}awake.{~reset}</state>
@@ -507,7 +588,7 @@
             </case>
             <case stage="0-8" priority="880">
                 <condition role="self" saidMarker="strange_harmonies&gt;25" />
-                <state img="#-singing.png" oneShotId="22">Oh... that's the melody~... I'm starting to... hm... </state>
+                <state img="#-singing.png" oneShotId="22" marker="+strange_harmonies" persist-marker="true">Oh... that's the melody~... I'm starting to... hm... </state>
             </case>
             <case stage="0" id="230" totalRounds="10" priority="880">
                 <condition role="self" saidMarker="amy_hardmode" />
@@ -772,6 +853,10 @@
                 <condition role="other" character="natsuki" />
                 <condition count="1" filter="monika" />
                 <state img="#-annoyed.png">Monika, are we the only moderately physically fit people here? </state>
+            </case>
+            <case stage="0-8" id="260" alsoPlaying="rin" totalRounds="5-" notSaidMarker="amy_rin_words" alsoPlayingSayingMarker="rinprompt_weirdwords">
+                <condition role="other" character="rin" sayingMarker="rinprompt_weirdwords" />
+                <state img="#-hmm.png" marker="amy_rin_words">It's kind of a &lt;i&gt;dirty&lt;/i&gt; weird, but doesn't "pussy" just sound super dumb the more you say it? It's the "ussy" but that you have to purse your lips makes you sound dumb.</state>
             </case>
             <case stage="0-8" totalRounds="10">
                 <condition role="other" character="natsuki" />
@@ -1061,7 +1146,11 @@
                 <condition role="other" character="panty" stage="0" sayingMarker="Intro" />
                 <state img="#-focused.png">You seem kind of short for a Victoria's Secret model, but they're doing a real diversity push these days, so I'm not surprised! </state>
             </case>
-            <case stage="0" id="62" totalRounds="0">
+            <case stage="0-8" totalRounds="5-">
+                <condition role="other" character="elesa" stage="2-6" sayingMarker="elesa_ensemble" />
+                <state img="#-happy.png" marker="amy_elesa_outfit">It was kind of an impulse buy, but I like this cute sundress that has a web pattern. For some reason, I could only find it during Halloween though. Then a nice sun hat... a comfy, collared jacket... </state>
+            </case>
+            <case stage="0-1" id="62" totalRounds="1">
                 <condition role="other" character="sayori" stage="0" />
                 <state img="#-ooooh.png">...Oooo~! Riri has a crush on ~player~~ </state>
             </case>
@@ -1206,6 +1295,10 @@
                 <condition role="other" character="yuelia" stage="8" saidMarker="amy_kinkyMeaning" />
                 <state img="#-happy.png" oneShotId="60">You know, something &lt;i&gt;sexy&lt;/i&gt;? Like... when you whisper in someone's ear that you want them inside of you, or you really want to feel them squeeze your breasts, or feel how wet and aroused you are! Like that!</state>
             </case>
+            <case stage="0-8" priority="141">
+                <condition role="other" character="pit" stage="3" sayingMarker="pit_favfood" />
+                <state img="#-chat.png" marker="amy_favfood">Gosh... my &lt;i&gt;favorite&lt;/i&gt; food? I like crispy, crunchy stuff. Fried chicken's pretty good, but chips and stuff like that is excellent, especially slathered in hot sauce! </state>
+            </case>
             <case stage="0-6" priority="140">
                 <condition role="other" character="natsuki" stage="2" timeInStage="0" />
                 <condition count="2" filter="ddlc" />
@@ -1255,10 +1348,6 @@
                 <condition role="other" character="miko" />
                 <condition role="self" notSaidMarker="miko_boss_theme" />
                 <state img="#-sad.png" marker="miko_boss_theme">If I &lt;i&gt;were&lt;/i&gt; a boss, wouldn't the melody be way less creepy?  ...Actually, don't answer that. </state>
-            </case>
-            <case stage="0" totalRounds="0">
-                <condition role="other" character="yuelia" />
-                <state img="#-hmm.png">Hmm... ~player~, is that... butterfly going to play? Well, okay, I guess. </state>
             </case>
             <case stage="0-8" totalRounds="10-">
                 <condition role="other" character="saki" />
@@ -1310,6 +1399,10 @@
                 <condition role="other" character="megumin" saidMarker="megumin_learnShave" />
                 <condition role="self" notSaidMarker="megumin_shave" />
                 <state img="#-happy.png" marker="megumin_shave">Megumin! Shaving's just another way to feel sexy! I bet you could shave a cute explosion or something down there if you were just a little patient! </state>
+            </case>
+            <case stage="0-8" priority="102">
+                <condition role="other" character="futaba" saidMarker="futaba_jukebox" sayingMarker="futaba_juke_ask" />
+                <state img="#-chat.png" marker="amy_futaba_music">...I'm pretty sure I'm hearing something here... but if we can change the track, I'd just like something like pop punk that I can sing along to! </state>
             </case>
             <case stage="0-8" id="3">
                 <condition role="other" character="jessie" sayingMarker="JessieQA_DarkSecrets" />
@@ -1460,14 +1553,20 @@
                 <state img="#-sad.png">If you could be nice and not mean, I'd appreciate it. I'm going to hold onto it, but I &lt;i&gt;did&lt;/i&gt; take it off. &lt;br&gt;But if you do need to be mean, it's okay. I'm used to it...</state>
             </case>
             <case stage="7-8">
-                <condition count="3-4" filter="small_breasts" status="topless" />
+                <condition count="3-4" filter="small_breasts" status="naked" />
                 <condition role="self" saidMarker="amy_biggest" />
                 <state img="#-cheer.png" oneShotId="13">...I was thinking &lt;i&gt;one of you&lt;/i&gt; would be padding, but wow, mine are really the biggest? Ehehe~</state>
             </case>
             <case stage="7-8">
-                <condition count="3-4" filter="large_breasts" status="topless" />
+                <condition count="3-4" filter="large_breasts" status="naked" />
                 <condition role="self" saidMarker="amy_smallest" />
                 <state img="#-annoyed.png" oneShotId="16">...This is like finding a cool spider and it's only a husk. I thought one of you would be padding your bra, or something! Gosh! </state>
+            </case>
+            <case stage="0" id="276" totalRounds="0">
+                <condition role="self" notSaidMarker="amy_persist_lost_last" />
+                <state img="#-singing.png" marker="+amy_a4ns" weight="0.001" persist-marker="true">♫ &lt;i&gt;I must apologize for not participating in symmetry / But it's been such a struggle to win entry to this industry / &lt;/i&gt; ♫</state>
+                <state img="#-singing.png" marker="+amy_modernage" weight="0.001" persist-marker="true">♫ &lt;i&gt;Why so afraid to fall? / That was then and this is now~ &lt;/i&gt; ♫</state>
+                <state img="#-singing.png" marker="+amy_cf" weight="0.001" persist-marker="true">♫ &lt;i&gt;We've waited so dang looooong~ &lt;/i&gt; ♫</state>
             </case>
             <case stage="3">
                 <condition role="self" timeInStage="0" />
@@ -1485,9 +1584,64 @@
                 <condition role="self" saidMarker="amy_anal" />
                 <state img="#-butt.png">...So, I'm guessing you're kind of into butts, ~player~? Well... how's &lt;i&gt;mine,&lt;/i&gt; senpai? &lt;br&gt; Can you imagine having your way with it? Ehehe~  </state>
             </case>
+            <case stage="0-8" id="266" priority="0">
+                <condition role="self" saidMarker="amy_ds" />
+                <state img="#-singing.png" oneShotId="78" marker="amy_ds">♫ &lt;i&gt; Tell the truth / Just for once~ / Asking for an answer / Now that it's alllll / Said and done &lt;/i&gt;♫</state>
+                <state img="#-singing.png" oneShotId="79" marker="amy_ds">♫ &lt;i&gt;You can taaaake my heart / And hold it together / As we faaallll  apart~ &lt;/i&gt;♫</state>
+                <state img="#-singing.png" oneShotId="80" marker="amy_ds">♫ &lt;i&gt; Maybe together we can make our mark / In the stars / We embark / And keep us together / As the lights go dark~ &lt;/i&gt;♫ </state>
+                <state img="#-singing.png" oneShotId="81" marker="amy_ds">♫ &lt;i&gt; Nothing reallllly matters / What will become of us all / If we dare to dream / At the end / Of our scene? &lt;/i&gt; ♫</state>
+                <state img="#-singing.png" oneShotId="83" marker="amy_ds">♫ &lt;i&gt; Let's open up to the sky / Asking just for closure / 'Least we can say / That we tried... / But it's never really over~ &lt;/i&gt;♫ </state>
+                <state img="#-singing.png" oneShotId="82" marker="amy_ds">♫ &lt;i&gt; What will become of us all / At the end of the line / Will we live? / Will we die?&lt;/i&gt;♫ </state>
+            </case>
+            <case stage="0-8" id="269" priority="0">
+                <condition role="self" saidMarker="amy_t4tm" />
+                <state img="#-singing.png" oneShotId="84" marker="amy_t4tm">♫ &lt;i&gt; See? / He / Tastes like youuuuuuuuu only sweeeeeeeter! &lt;/i&gt;♫</state>
+                <state img="#-singing.png" oneShotId="85" marker="amy_t4tm">♫ &lt;i&gt; Been looking forward to the future / But my eyesight is gro~o~o~wing bad... / And the~e~e~se crystal balls / Are always cloudy / Except when you look / Into the past &lt;/i&gt;♫</state>
+                <state img="#-singing.png" oneShotId="86" marker="amy_t4tm">♫ &lt;i&gt; One night / Yeah / And one more toy / Thanks for the memories / Thanks for the memories / See? / He tastes like you / Only sweeeter!&lt;/i&gt;♫ </state>
+                <state img="#-singing.png" oneShotId="87" marker="amy_t4tm">♫ &lt;i&gt; Get me out of mind / I'll get you out of those clothes / I'm a headliner away / From getting you into the moo~oo~ooo~d~&lt;/i&gt; ♫</state>
+                <state img="#-singing.png" oneShotId="88" marker="amy_t4tm">♫ &lt;i&gt; One more night / One more time / Thanks for the memories / Even though--Even though they weren't so great~&lt;/i&gt;♫ </state>
+            </case>
+            <case stage="0-8" id="273" priority="0">
+                <condition role="self" saidMarker="amy_dy" />
+                <state img="#-singing.png" oneShotId="90" marker="amy_dy">♫ &lt;i&gt; Young hearts, out our minds / Runnin' like we out of time / Wild child's lookin' good / Livin' hard just like we should &lt;/i&gt;♫</state>
+                <state img="#-singing.png" oneShotId="91" marker="amy_dy">♫ &lt;i&gt; Don't care who's watching / When we tearin' it up / That magic we got / Nobody can touch &lt;/i&gt;♫</state>
+                <state img="#-singing.png" oneShotId="92" marker="amy_dy">♫ &lt;i&gt; Lookin' for some trouble tonight? / Take my hand and I'll show you the wild side~ / Like it's the last night of our lives / We'll keep dancin' til' we die!&lt;/i&gt;♫ </state>
+                <state img="#-singing.png" oneShotId="93" marker="amy_dy">♫ &lt;i&gt; So while you're here in my arms / Let's make the most of the night / Like we're gonna die young~ &lt;/i&gt; ♫</state>
+                <state img="#-singing.png" oneShotId="94" marker="amy_dy">♫ &lt;i&gt;  I hear your heart beat / To the beat of the drums / Oh what a shame you came here / With some~one~&lt;/i&gt;♫ </state>
+                <state img="#-singing.png" oneShotId="95" marker="amy_dy">♫ &lt;i&gt; Music up / Gettin' hot / Kiss me / Gimme all you got / It's pretty obvious that you got a crush / Y'know / That magic in your pants is makin' me blush~ &lt;/i&gt;♫ </state>
+            </case>
+            <case stage="0-8" id="289" priority="0">
+                <condition role="self" saidMarker="amy_gp" />
+                <state img="#-singing.png" oneShotId="99" marker="amy_gp">♫ &lt;i&gt; You're never gonna get her with nothing / 'Cause nothing's what you got in your head / So stop pre-ten-din'  &lt;/i&gt;♫</state>
+                <state img="#-singing.png" oneShotId="100" marker="amy_gp">♫ &lt;i&gt; I came here to make you dance tonight / I don't care about my guilty pleasure for you! &lt;/i&gt;♫</state>
+                <state img="#-singing.png" oneShotId="101" marker="amy_gp">♫ &lt;i&gt; Shut up! / 'Cause we won't stop / The word gettin' out 'til the sun's comin' up!  &lt;/i&gt;♫ </state>
+                <state img="#-singing.png" oneShotId="102" marker="amy_gp">♫ &lt;i&gt; So butt out please-- / Don't talk anymore. / Shut you're mouth and get down on the floor / Oh baby~ So cy~ni~cal~ &lt;/i&gt; ♫</state>
+                <state img="#-singing.png" oneShotId="103" marker="amy_gp">♫ &lt;i&gt; And maybe someday I'll believe~ / And maybe someday I'll believe~ / That we are all a part of some little plan~ / But tonight I just don't give a damn~  &lt;/i&gt;♫ </state>
+                <state img="#-singing.png" oneShotId="104" marker="amy_gp">♫ &lt;i&gt; I came here to make you dance tonight / I don't care about my guilty pleasure for you!  &lt;/i&gt;♫</state>
+            </case>
+            <case stage="0-8" id="291" priority="0">
+                <condition role="self" saidMarker="amy_roughdraft" />
+                <state img="#-singing.png" oneShotId="106" marker="amy_roughdraft">♫ &lt;i&gt; Might be a mistake but I'm a risk you gotta take~ &lt;/i&gt;♫</state>
+                <state img="#-singing.png" oneShotId="107" marker="amy_roughdraft">♫ &lt;i&gt; You gotta deal with me to make me go away / So baby reach out and touch me / No need to like me or love me / Tod~a~a~a~y~ &lt;/i&gt;♫</state>
+                <state img="#-singing.png" oneShotId="108" marker="amy_roughdraft">♫ &lt;i&gt;But all these pieces and parts of me / Could be something quite larger than me / One day~ &lt;/i&gt;♫ </state>
+                <state img="#-singing.png" oneShotId="109" marker="amy_roughdraft">♫ &lt;i&gt;So if you want me you got me-- / Granted I'm scattered and sloppy / But you can't send me back / I'm just a rough draft&lt;/i&gt; ♫</state>
+                <state img="#-singing.png" oneShotId="110" marker="amy_roughdraft">♫ &lt;i&gt;So baby cut me and crop me / And when I'm ready make copies / And one day-- / The real thing might blow you away.  &lt;/i&gt;♫ </state>
+                <state img="#-singing.png" oneShotId="117" marker="amy_roughdraft">♫ &lt;i&gt;I'm just a few thoughts / Some fragments and memories / Shaped by your imagination / Your love and your patience / And I know you're afraid of what I could mean / A public diary~&lt;/i&gt;♫ </state>
+            </case>
+            <case stage="0-8" id="293" priority="0">
+                <condition role="self" saidMarker="amy_collarfull" />
+                <state img="#-singing.png" oneShotId="112" marker="amy_collarfull">♫ &lt;i&gt; 'Cause there's always time for second guesses~ / I don't wanna know / If you're gone it'll be the death of me / That's how I wanna go~ &lt;/i&gt;♫</state>
+                <state img="#-singing.png" oneShotId="113" marker="amy_collarfull">♫ &lt;i&gt; You've got it all worked out / So little time / Memories that I'd black out / If you were mine&lt;/i&gt;♫</state>
+                <state img="#-singing.png" oneShotId="114" marker="amy_collarfull">♫ &lt;i&gt;You've got a pocket full of reasons why / You're here tonight / So baby tonight just be / The death of one me~ &lt;/i&gt;♫ </state>
+                <state img="#-singing.png" oneShotId="115" marker="amy_collarfull">♫ &lt;i&gt;Gimme more but it's not enough / Show me your love / Before the world catches up / Show me your love / Give you more but it's enough~ &lt;/i&gt; ♫</state>
+            </case>
         </trigger>
 
         <trigger id="must_strip">
+            <case stage="6" priority="800">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-horny.png">So... have you gotten this far before, ~player~? </state>
+            </case>
             <case stage="0" priority="300">
                 <condition role="other" character="miko" />
                 <state img="#-chat.png">Are any of us &lt;i&gt;really&lt;/i&gt; human? Or are we just pixels and ink on someone's screen, Miko? #deepthoughts</state>
@@ -1885,6 +2039,18 @@
                 <condition role="other" character="saki" />
                 <state img="#-happy.png">Oh yeah! Almost every night! </state>
             </case>
+            <case stage="0">
+                <condition role="other" character="pit" />
+                <state img="#-happy.png">You'd be surprised, but I get that a &lt;i&gt;bunch&lt;/i&gt;, Pit! </state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="pit" />
+                <state img="#-hmm.png">...Is that the music I'm hearing...? A glitch...? </state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="pit" />
+                <state img="#-loss.png">O-oh gosh, this is kind of-- um... yeah! I do, I write a lot... I try to write songs, too! </state>
+            </case>
             <case stage="6">
                 <condition count="2-" filter="mean" />
                 <condition count="0" status="exposed" />
@@ -1895,6 +2061,34 @@
                 <condition count="1" filter="ddlc" />
                 <state img="#-hmm.png">I wonder how literally any of my club members would react up here... Sorry, I've thought about this kind of at random during their poems. </state>
                 <state img="#-surprise.png">Do you ever wonder if you could be someone else? Or how someone else would react if they were you?</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-sarcastic.png">&lt;i&gt;Oh no, I lost.&lt;/i&gt; Whatever will I do? </state>
+            </case>
+            <case stage="1">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-happy.png">Shoot. AD Amy strikes again. Oopsie. Time for my shoes! </state>
+            </case>
+            <case stage="2">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-focused.png">&lt;i&gt;Gooooooooooooooosh&lt;/i&gt;. ~Player~, you're &lt;i&gt;sooooo&lt;/i&gt; good! You've &lt;i&gt;totally&lt;/i&gt; earned this... </state>
+            </case>
+            <case stage="3">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-horny.png">You know, senpai~? I'm being a little bit of a jerk now so~ you can take out that frustation on me later~ </state>
+            </case>
+            <case stage="4">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-loss.png">&lt;i&gt;Yes!&lt;/i&gt; I mean-- &lt;i&gt;shoot!&lt;/i&gt; </state>
+            </case>
+            <case stage="5">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-happy.png">Socks time! I'd leave them on at this point, but rules are rules. </state>
+            </case>
+            <case stage="7">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-surprise.png">Wait a second-- I totally forgot. I don't have genitals--! </state>
             </case>
             <case stage="3">
                 <state img="#-sarcastic.png">Getting a little comfy in here, huh? Well... I think I'll take my skirt off. It's not like I'd be the first girl to ever take one off here, right?</state>
@@ -1931,6 +2125,10 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="6" priority="800">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-strip.png">You know, I'm not going to pretend like I know you super well. But you're really trying if you keep playing with me. Who doesn't want to feel wanted? </state>
+            </case>
             <case stage="4" priority="300">
                 <condition count="0" character="monika" />
                 <condition role="other" character="miko" />
@@ -2230,6 +2428,30 @@
                 <condition role="other" character="saki" />
                 <state img="#-strip.png">I have a few pet spiders, so... oh um... my ribbon's kind of important so I'm going to hold onto... wow, a worm goddess? </state>
             </case>
+            <case stage="0">
+                <condition role="other" character="pit" />
+                <state img="#-strip.png">Don't think about it &lt;i&gt;too&lt;/i&gt; much or you'll miss out on the cute girl taking her clothes off, Pit~ </state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="pit" />
+                <state img="#-strip.png">&lt;i&gt;Ohhhh!&lt;/i&gt; That's what you mean by {ddlc}bugs.{!reset} ...I just like spiders! What's so weird about that? </state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="pit" />
+                <state img="#-strip.png">I think they're really useful, actually. You can tell what year someone's in, even if they're tiny like Natsuki. ...Plus it gives me something to fiddle with which isn't bad at all... </state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="pit" />
+                <state img="#-strip.png">You know, Pit, girls can be &lt;i&gt;kind&lt;/i&gt; of squishy. Maybe I &lt;i&gt;want&lt;/i&gt;... </state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="pit" />
+                <state img="#-strip.png">But I always sort of meander a bunch and say things that don't really make sense... oh &lt;i&gt;sugar.&lt;/i&gt; </state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="pit" />
+                <state img="#-strip.png">I &lt;i&gt;thought&lt;/i&gt; about saving them for last, Pit... but I think that's probably a little extra. </state>
+            </case>
             <case stage="6" priority="30">
                 <condition count="2-" filter="mean" />
                 <condition count="0" status="exposed" />
@@ -2255,6 +2477,34 @@
                 <condition count="0" filter="yuri" />
                 <state img="#-strip.png">Yuri's like a goliath spider. And I don't just mean because of her big boobs. Well, I do, but she just can lunge and crush you with personality, right?</state>
                 <state img="#-strip.png">Yuri's kind of like a trapdoor spider. She builds this elaborate web but then just springs on you! Fun, right?</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-strip.png">&lt;i&gt;I have to take off my clothes? How awful...&lt;/i&gt; </state>
+            </case>
+            <case stage="1">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-strip.png">So... do you ever think I'll get to try out different outfits for this? </state>
+            </case>
+            <case stage="2">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-strip.png">...This ribbon's actually really important to me. Have you heard of how red strings are supposed to tie soulmates together? </state>
+            </case>
+            <case stage="3">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-strip.png">You know, I'd like to say I practiced this a bunch... </state>
+            </case>
+            <case stage="4">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-strip.png">Hm. Let's hope nothing weird happens this playthrough, huh, ~player~? </state>
+            </case>
+            <case stage="5">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-strip.png">I'll be honest. I've masturbated a &lt;i&gt;lot&lt;/i&gt; in my socks. My feet just get really cold, and it's hard to get in the mood-- </state>
+            </case>
+            <case stage="7">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-strip.png">...Just kidding. Napsu?'d probably not want to repeat the same joke. &lt;br&gt;This is the part where I tell you to go play Kizuna and get mad she doesn't masturbate the way you want. </state>
             </case>
             <case stage="0">
                 <state img="#-strip.png">Well... it's not terribly exciting, but the first part of a poem shouldn't be, right?</state>
@@ -2287,6 +2537,16 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="7" priority="800">
+                <condition role="self" saidMarker="amy_easymode" />
+                <condition count="1" filter="human_male" />
+                <state img="#-horny.png">Why don't you take a good, &lt;i&gt;hard&lt;/i&gt; look. </state>
+            </case>
+            <case stage="7" priority="800">
+                <condition role="self" saidMarker="amy_easymode" />
+                <condition count="1" filter="human_female" />
+                <state img="#-horny.png">Why don't you take a &lt;i&gt;hot&lt;/i&gt;, wet look? </state>
+            </case>
             <case stage="3" priority="550">
                 <condition role="other" character="ini" stage="0-4" />
                 <state img="#-stripped.png" marker="+amy_ini_spider_facts">Hm...? I'm going to hold onto the ribbon a little longer... but if you want to know about spiders, I can definitely tell you, Ini! </state>
@@ -2695,6 +2955,26 @@
                 <condition role="other" character="saki" />
                 <state img="#-happy.png">Whoa... you totally &lt;i&gt;get me&lt;/i&gt;, don't you, Saki? That's so rare! We're going to be the best of friends, aren't we? </state>
             </case>
+            <case stage="1">
+                <condition role="other" character="pit" />
+                <state img="#-stripped.png">...Why does it always feel like people forget about me, anyway? It's not like I'm a reboot or something... </state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="pit" />
+                <state img="#-horny.png">If you think &lt;i&gt;that&lt;/i&gt;'s a secret weapon, wait until you see what's hiding in my panties, Pit~ Ehehe~ ♪</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="pit" />
+                <state img="#-stripped.png">...So, does this mean you picked your own outfit, or did someone tell you what to wear? I totally agree though. I'd definitely have a lot of cute spider stuff. </state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="pit" />
+                <state img="custom:stripped">&lt;i&gt;Someone&lt;/i&gt; tonight to make a &lt;i&gt;deep, stretchy impression&lt;/i&gt; on me. Ehehe~ </state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="pit" />
+                <state img="#-stripped.png">I-I'll just take the shirt off... it's like you distracted me or something, Pit... kind of a mean trick! </state>
+            </case>
             <case stage="7" priority="30">
                 <condition count="1-" filter="mean" />
                 <condition count="1" status="exposed" />
@@ -2719,6 +2999,34 @@
             <case stage="8" id="259">
                 <condition role="self" saidMarker="strange_harmonies&gt;=50" />
                 <state img="custom:ascend" marker="planar_form" collectible="cord">I hear it! I hear it! &lt;br&gt;{ddlc}&lt;i&gt;What is that melody!?&lt;/i&gt; {!reset}&lt;br&gt;It's okay. &lt;br&gt;I'm okay. {ddlc}I can hear it! I can hear &lt;i&gt;all of it&lt;/i&gt;!{!reset}&lt;br&gt;I'm here. &lt;br&gt;I'm just Amy. &lt;br&gt;I'm {ddlc}me.{!reset}&lt;br&gt;And nobody else is me. &lt;br&gt;I'm me. I'm Amy. </state>
+            </case>
+            <case stage="3">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-stripped.png">I think it's a lot of hoo-hah, but I'm going to keep this in hand. You probably know that already though, huh? </state>
+            </case>
+            <case stage="1">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-stripped.png">I kind of hate the implication that a girl has to be forced to undress to do it. By the time she strips for you, she should be really excited for it... </state>
+            </case>
+            <case stage="2">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-hmm.png">...I really hope I get a different costume someday. I'm too cute to just be a schoolgirl forever. &lt;br&gt;(&lt;i&gt;Whatever it is, it better be weird as heck, though.&lt;/i&gt;) </state>
+            </case>
+            <case stage="4">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="custom:stripped">B~u~u~u~t... I'm just talented like this. Seriously. I want to not be able to walk tomorrow with how hard you've made me edge the last few games. </state>
+            </case>
+            <case stage="5">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-stripped.png">Can you imagine if I transformed into some kind of monster because I'm throwing the game? Wouldn't that be &lt;i&gt;craaaazy&lt;/i&gt;? </state>
+            </case>
+            <case stage="6">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-stripped.png">...Though if you want to think of what my feet'd feel like in nylons or soft socks... be my guest. </state>
+            </case>
+            <case stage="8">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-stripped.png">...Anyway. Life's easier when you play the role. Doesn't my pubic hair look super cute like that? The best of both worlds, you know? </state>
             </case>
             <case stage="1">
                 <state img="#-stripped.png">It's just like a hot day. Or a cold one. After you come in from outside. I guess if you're a boy you usually want to come inside? Uh. Sorry, it's weird being on the spot... </state>
@@ -6322,7 +6630,7 @@
             </case>
             <case stage="0-10">
                 <condition role="target" character="tomoko" stage="5" />
-                <state img="#-happy.png">...Plus, if you go out on a date, at least it's a chance to go out. ♫ &lt;i&gt;Dress up real nice-- / And fight someone! / Who's ready to run~ ♫</state>
+                <state img="#-happy.png">...Plus, if you go out on a date, at least it's a chance to go out. ♫ &lt;i&gt;Dress up real nice-- / And fight someone! / Who's ready to run~ &lt;/i&gt;♫</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="shantae" stage="1" />
@@ -8430,9 +8738,18 @@
                 <condition role="target" character="chihiro" />
                 <state img="#-surprise.png">O-oh! I... W-well, you can &lt;i&gt;still&lt;/i&gt; be a girl if that's... what'd make you happy? No judgment here. </state>
             </case>
+            <case stage="0-7">
+                <condition filter="big_butt" role="target" />
+                <condition role="self" saidMarker="baby_got_back" />
+                <state img="#-annoyed.png" marker="+baby_got_back" persist-marker="true">I've got a pretty good butt myself. But there's enormous asses here tonight! ...Assets! I didn't swear!</state>
+            </case>
             <case stage="8">
                 <condition filter="big_butt" role="target" />
                 <state img="#-butt.png">Whoa! What a great butt. And one butt deserves another!</state>
+            </case>
+            <case stage="0-7">
+                <condition filter="big_butt" role="target" />
+                <state img="#-singing.png" marker="+baby_got_back" persist-marker="true">♫ &lt;i&gt;I like big butts and I cannot lie / You other brothers can't deny / When a girl walks in with an itty bitty waist and shoves it your face you get&lt;/i&gt; sprung.♫</state>
             </case>
         </trigger>
 
@@ -8677,6 +8994,11 @@
         </trigger>
 
         <trigger id="male_finished_masturbating">
+            <case stage="9-10">
+                <condition role="other" character="monika" />
+                <condition role="target" character="human" />
+                <state img="#-horny.png">All of that belongs to &lt;i&gt;me.&lt;/i&gt; Monika, you can't have &lt;i&gt;any&lt;/i&gt;. &lt;br&gt;And I'd &lt;i&gt;love&lt;/i&gt; to see you try. </state>
+            </case>
             <case stage="0-2">
                 <state img="#-happy.png">Gosh, ~name~, how long've you been holding back? </state>
                 <state img="#-hmm.png">You know, I think you made that handjob look pretty fantastic. I bet with practice I could better, though~</state>
@@ -9322,6 +9644,10 @@
 
         <trigger id="must_masturbate_first">
             <case stage="8">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-happy.png">There you go. You beat me fair and square, ~player~! </state>
+            </case>
+            <case stage="8">
                 <state img="#-sad.png">I'm no shrinking violet... I'll enjoy myself, but it feels mean you're making the outcast girl do this first...</state>
                 <state img="#-surprise.png">...No... I get it. I'm just thinking about how I'm doomed to finger-fu--dge... myself in front of everyone...</state>
                 <state img="#-hmm.png">It &lt;i&gt;could&lt;/i&gt; be worse. I could have to do this with strangers. Um... like, the full thing. Not... you know, I'm just going to start, okay?</state>
@@ -9332,6 +9658,10 @@
             <case stage="8">
                 <condition role="other" character="miko" />
                 <state img="#-sarcastic.png">You know, ~player~, you sure like crazy, huh? </state>
+            </case>
+            <case stage="8">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-happy.png">There you go. You beat me fair and square, ~player~! </state>
             </case>
             <case stage="8">
                 <state img="#-happy.png">Well, I wasn't the first person, so at least I've got a friend!</state>
@@ -9474,37 +9804,62 @@
         </trigger>
 
         <trigger id="game_over_victory">
+            <case stage="0-8" priority="999">
+                <condition role="self" saidMarker="amy_persist_won_last&gt;=2" />
+                <state img="#-annoyed.png">How the hell? ~Player~, quit messing around! I was throwing and everything! Good grief! </state>
+            </case>
             <case stage="0-8">
                 <condition role="self" saidMarker="amy_persist_lost_last" />
-                <state img="#-happy.png" marker="amy_persist_lost_last=0" weight="0.001">All good things come to an end, ~player~, even your win streak. See you next time, and thanks for bringing me out to &lt;i&gt;play&lt;/i&gt;. </state>
+                <state img="#-happy.png" marker="amy_persist_lost_last=0" weight="0.001" persist-marker="true">All good things come to an end, ~player~, even your win streak. See you next time, and thanks for bringing me out to &lt;i&gt;play&lt;/i&gt;. </state>
+                <state img="#-cheer.png" marker="amy_persist_lost_last=0">I can't complain, ~player~, but~ let's &lt;i&gt;definitely&lt;/i&gt; keep playing. Have you figured out all  my naughty secrets yet? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="self" saidMarker="amy_hardmode" />
+                <state img="#-horny.png" marker="amy_persist_lost_last=0" weight="1.001" collectible="hardmode">...I kind of get why Monika does it. It's so &lt;i&gt;fun&lt;/i&gt; to feel powerful... but I think I'll just try to forget this. &lt;br&gt;Fresh start next time, okay, ~player~?</state>
+                <state img="#-horny.png" marker="amy_persist_lost_last=0" collectible="hardmode">Time to give you a fresh start, ~player~... it doesn't feel good to cheat, but I was tired of losing. &lt;br&gt;Time to go back to the first game we played, huh? </state>
+            </case>
+            <case stage="7-8">
+                <condition role="self" saidMarker="amy_persist_won_last==1" />
+                <state img="#-sarcastic.png" marker="+amy_persist_won_last" persist-marker="true">I'm tempted to just let you win next time... </state>
+                <state img="#-sarcastic.png" marker="+amy_persist_won_last" persist-marker="true">A win's a win but... I'd really rather lose. Next time, ~player~, I'll go easy on you. </state>
+            </case>
+            <case stage="0-3">
+                <condition role="self" saidMarker="amy_persist_won_last==1" />
+                <state img="#-singing.png" marker="+amy_persist_won_last" persist-marker="true">Are you throwing the game to make me dance to your tune, ~player~? No strings on &lt;i&gt;this&lt;/i&gt; girl~ </state>
+                <state img="#-focused.png" marker="+amy_persist_won_last" persist-marker="true">What the heck? What went wrong there, ~player~? Two in a row and I'm still so dressed! </state>
+            </case>
+            <case stage="4-6">
+                <condition role="self" saidMarker="amy_persist_won_last==1" />
+                <state img="#-happy.png" marker="+amy_persist_won_last" persist-marker="true">Well, you got me down to my underwear &lt;i&gt;this&lt;/i&gt; time. Again, ~player~?</state>
+                <state img="#-happy.png" marker="+amy_persist_won_last" persist-marker="true">Wow! You must really like me to have lost twice! Ehehe~ Want to try again?</state>
             </case>
             <case stage="5">
-                <state img="#-singing.png">It's pretty amazing that I wasn't even paying attention for the first half the game, took off an extra piece of clothing, and still won. </state>
-                <state img="#-singing.png">Wow, I took off two pieces last time, and you still didn't beat me...! Have you considered having Monika tutor you in math? Because I just took you to school, ~player~. </state>
+                <state img="#-singing.png" marker="+amy_persist_won_last" persist-marker="true">It's pretty amazing that I wasn't even paying attention for the first half the game, took off an extra piece of clothing, and still won. </state>
+                <state img="#-singing.png" marker="+amy_persist_won_last" persist-marker="true">Wow, I took off two pieces last time, and you still didn't beat me...! Have you considered having Monika tutor you in math? Because I just took you to school, ~player~. </state>
             </case>
             <case stage="0-2">
-                <state img="#-surprise.png" persist-marker="true">...Huh? How'd I win? </state>
-                <state img="#-surprise.png">...Wait, what? That's it? </state>
-                <state img="#-horny.png">Ehehe~, looks like I win, ~player~. It can be our secret... or maybe a dirty, naughty rumor. </state>
+                <state img="#-surprise.png" marker="amy_persist_won_last" persist-marker="true">...Huh? How'd I win? </state>
+                <state img="#-surprise.png" marker="+amy_persist_won_last" persist-marker="true">...Wait, what? That's it? </state>
+                <state img="#-horny.png" marker="+amy_persist_won_last" persist-marker="true">Ehehe~, looks like I win, ~player~. It can be our secret... or maybe a dirty, naughty rumor. </state>
             </case>
             <case stage="3">
-                <state img="#-sad.png">...Can I get my ribbon back? You can keep the shoes I guess. </state>
-                <state img="#-surprise.png">As long as I can get my ribbon back... Uh... I guess I'd need my blazer, and my shoes... </state>
+                <state img="#-sad.png" marker="+amy_persist_won_last" persist-marker="true">...Can I get my ribbon back? You can keep the shoes I guess. </state>
+                <state img="#-surprise.png" marker="+amy_persist_won_last" persist-marker="true">As long as I can get my ribbon back... Uh... I guess I'd need my blazer, and my shoes... </state>
             </case>
             <case stage="4">
-                <state img="#-annoyed.png">Great, so now I'm going to be wet &lt;i&gt;and&lt;/i&gt; everyone can see it. Please, let me have my skirt.</state>
-                <state img="#-horny.png">Well... round two soon, hm? ...Also can I please get a new pair of panties? These are &lt;i&gt;soaked&lt;/i&gt;.</state>
+                <state img="#-annoyed.png" marker="+amy_persist_won_last" persist-marker="true">Great, so now I'm going to be wet &lt;i&gt;and&lt;/i&gt; everyone can see it. Please, let me have my skirt.</state>
+                <state img="#-horny.png" marker="+amy_persist_won_last" persist-marker="true">Well... round two soon, hm? ...Also can I please get a new pair of panties? These are &lt;i&gt;soaked&lt;/i&gt;.</state>
             </case>
             <case stage="6">
-                <state img="#-chat.png">Hope you like feet, everyone...!</state>
-                <state img="#-cheer.png">Just think, I could've stalled with my glasses. Not even close. Ehehe~ I won! I won~! </state>
+                <state img="#-chat.png" marker="+amy_persist_won_last" persist-marker="true">Hope you like feet, everyone...!</state>
+                <state img="#-cheer.png" marker="+amy_persist_won_last" persist-marker="true">Just think, I could've stalled with my glasses. Not even close. Ehehe~ I won! I won~! </state>
             </case>
             <case stage="7">
-                <state img="#-horny.png">Thank you, boobs, for distracting them. Thank you brain, for distracting me. See, perfectly even. </state>
+                <state img="#-horny.png" marker="+amy_persist_won_last" persist-marker="true">Thank you, boobs, for distracting them. Thank you brain, for distracting me. See, perfectly even. </state>
             </case>
             <case stage="8">
-                <state img="#-sarcastic.png">That was a close one...! Kind of two close... I'm... is there like, somewhere I can finish here?</state>
-                <state img="#-horny.png">Can... can I just go ahead and get off? This is such a tease...</state>
+                <state img="#-sarcastic.png" marker="+amy_persist_won_last" persist-marker="true">That was a close one...! Kind of two close... I'm... is there like, somewhere I can finish here?</state>
+                <state img="#-horny.png" marker="+amy_persist_won_last" persist-marker="true">Can... can I just go ahead and get off? This is such a tease...</state>
             </case>
         </trigger>
 
@@ -9514,11 +9869,15 @@
                 <condition count="4" filter="ddlc" />
                 <state img="#-happy.png" marker="+" collectible="Imperfect Circle">Ehehe~ you know, it feels like a missed shot for the four of us not to return the favor for ~player~... and each other... this is what dreams are made of. Right, ladies? </state>
             </case>
-            <case stage="10">
-                <condition role="target" character="human" />
-                <state img="#-hmm.png" marker="+amy_persist_lost_last" collectible="panties">Come to think of it, I never got to think about ~Player~ cumming. We should fix that. Round two, senpai~? </state>
-                <state img="#-happy.png" marker="+amy_persist_lost_last" collectible="panties" persist-marker="true">This was actually a bunch of fun! ~Player~, are you angling for a threesome? Because I get the feeling a two-some's not out of the question~~</state>
-                <state img="#-horny.png" marker="+amy_persist_lost_last" collectible="panties" persist-marker="true">So, ~player~, the rumor's going to be that the weird spider chick got off in front of you~ shouldn't we make it a rumor that &lt;i&gt;you&lt;/i&gt; got me off? </state>
+            <case stage="10" priority="301">
+                <condition role="self" saidMarker="amy_persist_lost_last==2" notSaidMarker="amy_hardmode" />
+                <state img="#-annoyed.png" marker="+amy_persist_lost_last">Three? Dang it, ~player~. I'm going to have to do some really cheatyface things next time.&lt;br&gt;I want to watch you get off. There, I said it. </state>
+                <state img="#-happy.png" marker="+amy_persist_lost_last" persist-marker="true">That makes three, doesn't it? Well~ I have a feeling I'll get &lt;i&gt;really&lt;/i&gt; next time. </state>
+                <state img="#-singing.png" marker="+amy_persist_lost_last" persist-marker="true">♪ &lt;i&gt;All I do is win win win no matter  what~ &lt;/i&gt; ♪ Is what I'll say next time! </state>
+            </case>
+            <case stage="10" priority="301">
+                <condition role="self" saidMarker="amy_hardmode==1" />
+                <state img="#-surprise.png" marker="amy_persist_lost_last=0">Whoa! How'd you beat me?! I really worked hard for that! ...I'll tone it down next time, but... ehehe~, fun, huh?</state>
             </case>
             <case stage="10">
                 <condition role="target" character="natsuki" />
@@ -9527,7 +9886,7 @@
             </case>
             <case stage="10">
                 <condition role="target" character="monika" />
-                <state img="#-annoyed.png" marker="+amy_persist_lost_last" persist-marker="true">Funny. &lt;i&gt;Monika-senpai&lt;/i&gt; won. I can't believe it. </state>
+                <state img="#-annoyed.png" marker="+amy_persist_lost_last">Funny. &lt;i&gt;Monika-senpai&lt;/i&gt; won. I can't believe it. </state>
                 <state img="#-sarcastic.png" marker="+amy_persist_lost_last" persist-marker="true">Hey, ~player~, what do you prefer, girls that &lt;i&gt;want&lt;/i&gt; you? Or girls that &lt;i&gt;need&lt;/i&gt; you. Either way, I hear some of us are to &lt;i&gt;die&lt;/i&gt; for.</state>
             </case>
             <case stage="10">
@@ -9539,11 +9898,21 @@
                 <condition filter="yuri" role="target" />
                 <state img="#-happy.png" marker="+amy_persist_lost_last" persist-marker="true">Well, I didn't &lt;i&gt;expect&lt;/i&gt; Yuri to beat me. But I wouldn't mind a &lt;i&gt;yuri&lt;/i&gt; lowercase scene with her. </state>
             </case>
-            <case stage="10">
+            <case stage="10" priority="2">
                 <condition role="self" saidMarker="amy_persist_lost_last==1" />
                 <state img="#-ooooh.png" marker="+amy_persist_lost_last">Huh, how many does that make now, two? Not bad, ~player~, but I'm coming back for you! </state>
                 <state img="#-horny.png" marker="+amy_persist_lost_last" persist-marker="true">I appreciate the extra attention, ~player~, but third time's the charm. </state>
                 <state img="#-happy.png" marker="+amy_persist_lost_last" persist-marker="true">This is &lt;i&gt;still&lt;/i&gt; pretty fun. But I'll get you next time, ~player~. That's a promise! </state>
+            </case>
+            <case stage="10" priority="1">
+                <condition role="target" character="human" />
+                <state img="#-hmm.png" marker="+amy_persist_lost_last" collectible="panties">Come to think of it, I never got to think about ~Player~ cumming. We should fix that. Round two, senpai~? </state>
+                <state img="#-happy.png" marker="+amy_persist_lost_last" collectible="panties" persist-marker="true">This was actually a bunch of fun! ~Player~, are you angling for a threesome? Because I get the feeling a two-some's not out of the question~~</state>
+                <state img="#-horny.png" marker="+amy_persist_lost_last" collectible="panties" persist-marker="true">So, ~player~, the rumor's going to be that the weird spider chick got off in front of you~ shouldn't we make it a rumor that &lt;i&gt;you&lt;/i&gt; got me off? </state>
+            </case>
+            <case stage="10">
+                <condition role="self" saidMarker="amy_easymode" />
+                <state img="#-happy.png" marker="amy_persist_won_last=0" collectible="easymode" persist-marker="true">&lt;i&gt;Finally&lt;/i&gt;. Do you know how badly I wanted to do that? Prettttty bad considering I used a bunch of persistent markers to get there! </state>
             </case>
             <case stage="10">
                 <state img="#-ooooh.png" marker="+amy_persist_lost_last">Nice game, name. Oh, huh, that's weird. ~Name~? Good job! I must have really really came... </state>
@@ -9553,6 +9922,30 @@
         </trigger>
 
         <trigger id="global">
+            <case stage="10" id="279" priority="992">
+                <condition role="self" saidMarker="amy_persist_won_last" />
+                <state img="#-undo_b.png" oneShotId="98" marker="amy_persist_won_last=0" persist-marker="true">Well, a win was a win, but that was &lt;i&gt;much&lt;/i&gt; more fun. </state>
+            </case>
+            <case stage="10" id="265" priority="991">
+                <condition role="self" saidMarker="amy_ds" />
+                <state img="#-undo_a.png" oneShotId="77" marker="amy_ds=0">♫ ...hold it together as we fall apart... / Maybe together we can mark our mark / In the stars... as the lights go dark... ♫</state>
+            </case>
+            <case stage="10" id="274" priority="991">
+                <condition role="self" saidMarker="amy_dy" />
+                <state img="#-undo_a.png" oneShotId="96" marker="amy_ds=0">♫ &lt;i&gt; So while you're here in my arms.... / Oh what a shame you came here... / Like we're gonna die young~&lt;/i&gt; ♫</state>
+            </case>
+            <case stage="10" id="275" priority="991">
+                <condition role="self" saidMarker="amy_t4tm" />
+                <state img="#-undo_a.png" oneShotId="97" marker="amy_t4tm=0">♫ &lt;i&gt; Thanks for the memories / Thanks for the memories/ Even though they weren't so greaaaaaaaaaaat~ / See... he  tastes like you only... &lt;/i&gt; ♫</state>
+            </case>
+            <case stage="10" id="290" priority="991">
+                <condition role="self" saidMarker="amy_gp" />
+                <state img="#-undo_a.png" oneShotId="105" marker="amy_gp=0">♫ &lt;i&gt; Stop pretending~ / I came here to make you dance tonight / I don't care about my guilty pleasure for you~ / Shut up...~ &lt;/i&gt; ♫</state>
+            </case>
+            <case stage="10" id="292" priority="991">
+                <condition role="self" saidMarker="amy_roughdraft" />
+                <state img="#-undo_a.png" oneShotId="111" marker="amy_roughdraft=0">♫ &lt;i&gt; Baby reach out and touch me / No need to like me or love me / No nee~eee~d~ / But take me apart / Finish what you start and you'll see...&lt;/i&gt; ♫</state>
+            </case>
             <case stage="10" id="244" priority="990">
                 <condition role="self" saidMarker="undoing_braids&lt;3" />
                 <state img="#-undo_a.png" marker="+undoing_braids">So... hm... I'm going to just... </state>

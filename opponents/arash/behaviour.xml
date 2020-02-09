@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 1:15:45 PM on February 07, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 12:29:38 PM on February 08, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Arash</first>
@@ -560,6 +560,12 @@
 
         <trigger id="must_strip">
             <case stage="0-7">
+                <condition status="not_lost_some" role="target" />
+                <condition role="other" character="jessie" />
+                <test expr="~self.tag.messy_hair~" value="true" />
+                <state img="#-Thoughtful.png">No matter what I do my hair always seems to end up messy. I'm used to it at this point.</state>
+            </case>
+            <case stage="0-7">
                 <condition role="other" character="palutena" />
                 <test expr="~self.tag.fighter~" value="true" />
                 <state img="#-Thoughtful.png">I am! I'm a Servant, the ghost of a hero of old.</state>
@@ -568,6 +574,14 @@
             <case stage="0">
                 <condition role="other" character="meia" stage="0-5" />
                 <state img="#-Neutral.png" marker="servant">"Soldier" wouldn't be the word I'd use, I'm not in a structured army anymore. But I'm a warrior. And...most of the Servants aren't this chill, I'm afraid. There are a &lt;i&gt;lot&lt;/i&gt; of shenanigans in Chaldea, most of the time.</state>
+            </case>
+            <case stage="0-1">
+                <condition role="other" character="megumin" sayingMarker="megumin_arash_monster" />
+                <state img="#-Happy.png">I mean, I couldn't do it singlehandedly, but I've helped take down dragons before!</state>
+            </case>
+            <case stage="0-1">
+                <condition role="other" character="megumin" sayingMarker="megumin_arash_occupation" />
+                <state img="#-Neutral.png">That's actually pretty similar to what I do, Megumin. I travel with the other Servants to stop people from messing up the timestream. It's a long story.</state>
             </case>
             <case stage="0-7">
                 <state img="#-Thoughtful.png">Looks like I'm up.</state>
@@ -715,10 +729,25 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="1 5">
+                <condition role="other" character="sei" stage="4-6" />
+                <test expr="~self.tag.messy_hair~" value="true" />
+                <state img="#-Neutral.png">Heh, thanks, Sei. Somehow my hair doesn't ever seem to want to do anything else.</state>
+            </case>
             <case stage="8" id="128">
                 <condition role="other" character="roxie" />
                 <test expr="~self.tag.trimmed~" value="true" />
                 <state img="#-Horny.png">Heh, thanks...now I'm ready to just get off already. Just so you guys know, I'm going to start throwing the game.</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="sheena" />
+                <test expr="~self.tag.athletic~" value="true" />
+                <state img="#-Happy.png">Heh. Do you have any clue how much draw weight it takes to shoot meteors? I couldn't get out of shape if I tried.</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="wiifitfemale" />
+                <test expr="~self.tag.athletic~" value="true" />
+                <state img="#-Neutral.png">Heh, thanks, Trainer. Archery's tougher than it looks, y'know?</state>
             </case>
             <case stage="2">
                 <state img="#-Thoughtful.png">You guys are good at this game, y'know?</state>
