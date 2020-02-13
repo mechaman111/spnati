@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 2:12:05 AM on January 11, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 1:19:00 AM on February 10, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.8</version>
+    <version>v5.5</version>
     <first>Brock</first>
     <last />
     <label>Brock</label>
@@ -257,6 +257,29 @@
                 <condition role="other" character="rin" />
                 <state img="#-holup.png">(Hol' up...Does that girl over there not have any hands?)</state>
             </case>
+            <case stage="0">
+                <test expr="~player~" value="Master" />
+                <state img="#-annoyed.png">...Really?...Master?</state>
+                <state img="#-laughing.png">So what's yo specialty, O Master Playa'?</state>
+                <state img="#-c'mon.png">...Are you fuckin' with me right now?</state>
+                <state img="#-annoyed.png">...Is this some kind of racist joke I'm too black to understand?</state>
+                <state img="#-angry.png">...Is it because I'm black?</state>
+            </case>
+            <case stage="0">
+                <test expr="~player~" value="Mister" />
+                <state img="#-confused.png">Nice to meet'cha Mister...uh...what?</state>
+            </case>
+            <case stage="0">
+                <test expr="~player~" value="Nicklas" />
+                <state img="#-cheering.png">Oh shit, it's Nicky! How ya doin' dawg?</state>
+                <state img="#-pleased.png">Nicky, mah &lt;i&gt;man!&lt;/i&gt;</state>
+                <state img="#-determined.png">Yo, Nicky! Ready to blast the competition?</state>
+            </case>
+            <case stage="0">
+                <test expr="~player~" value="Daddy" />
+                <state img="#-horny.png">...Not gonna lie, that name is kinda hot.</state>
+                <state img="#-laughing.png">By the end of this game, we'll see who's the &lt;i&gt;real&lt;/&gt; Daddy!</state>
+            </case>
             <case stage="0" priority="20">
                 <condition role="other" character="aimee" />
                 <state img="#-confused.png">Hol' up...Is that another new brawler coming or- oh...never mind.</state>
@@ -293,7 +316,7 @@
                 <state img="#-calm.png">~Cards.text~ should do the trick.</state>
                 <state img="#-pleased.png">~Cards.text~ for the win!</state>
                 <state img="#-cool.png">Show me what'cha got!</state>
-                <state img="#-cheering.png">Gotta loot ~cards.text~ cards!</state>
+                <state img="#-cheering.png">Gotta loot ~cards.text~ </state>
                 <state img="#-calm.png">~Cards.text~ cards, dealer!</state>
                 <state img="#-cool.png">Alright, show me the cards!</state>
                 <state img="#-pleased.png">Big money, big money!</state>
@@ -477,6 +500,19 @@
                 <state img="#-awkward.png" marker="brock_dust_companions">Ah, seems like you're not the only one with companions. A lot of my friends has someone to lean on. All I got here is my boom box.</state>
             </case>
             <case stage="0-7">
+                <condition role="self" saying="you're most skilled with" />
+                <condition role="other" character="meia" sayingMarker="brock_dread" />
+                <state img="#-confused.png" marker="brock_meia_dreadfighterdo">Dread...fighter? I mean, I &lt;i&gt;guess&lt;/i&gt; that counts as a weapon, what does it do?</state>
+                <state img="#-cool.png" marker="brock_meia_dreadfightership">Dread fighter? Definitely &lt;i&gt;sounds&lt;/i&gt; likes a weapon. and y'all are saying it's a kind of ship?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="self" saying="you're most skilled with" />
+                <condition role="other" character="meia" sayingMarker="brock_laserring" />
+                <state img="#-pleased.png" marker="brock_meia_crazyring">A laser ring? So what, you just point and it shoots out deadly lasers? Well, if it's as crazy as it sounds, you'd make for a pretty damn good Brawler.</state>
+                <state img="#-laughing.png" marker="brock_meia_bulkyweapons">Ah, I don't judge. I know of some people that use the bulky kind of weapons like you say 'men' only do. Take Shelly for example, that effin' shotgun ain't no joke.</state>
+                <state img="#-calm.png" marker="brock_meia_oddgender">Odd of y'all to assume that certain weapons should be assigned to gender. I mean, you do you, girl, that ring is unique to you anyhow!</state>
+            </case>
+            <case stage="0-7">
                 <condition role="other" character="rin" saidMarker="rin_brock_scars" />
                 <state img="#-awkward.png" oneShotId="33">Ah, that? Well...I guess they heal pretty quickly, to be honest.</state>
             </case>
@@ -494,8 +530,10 @@
             </case>
             <case stage="0-7" priority="1">
                 <condition count="2" status="alive" />
-                <state img="#-determined.png" oneShotId="44">Showdown time.</state>
-                <state img="#-determined.png">This is it! The final showdown.</state>
+                <condition role="self" notSaidMarker="brock_showdown" />
+                <state img="#-cheering.png" oneShotId="44" marker="brock_showdown">Showdown time.</state>
+                <state img="#-pleased.png" oneShotId="66" marker="brock_showdown">This is it! The final showdown.</state>
+                <state img="#-determined.png" marker="brock_showdown">Showdown!</state>
             </case>
             <case stage="0-7" totalRounds="0" priority="0">
                 <condition role="other" character="aimee" />
@@ -653,6 +691,45 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="0">
+                <condition role="self" saidMarker="brock_meia_nokill" />
+                <condition role="other" character="meia" stage="0-5" saying="If you're here to eliminate a few Mejarian aggressors" />
+                <state img="#-strip.png" marker="brock_meia_deservefire">Girl, were you even listening? I'm here to party and shit, not deal with this kind of bullshit.</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="brock_meia_nokill" />
+                <condition role="other" character="meia" stage="0-5" saying="And what might drive you to kill someone?" />
+                <state img="#-strip.png" marker="brock_meia_deservefire">Oh, just loosen up already. I really only fire this thing if they deserve to be fired on. It's not y'all are threatening to kill me.</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="brock_meia_notreckless" />
+                <condition role="other" character="meia" stage="5" saying="why" />
+                <state img="#-strip.png" marker="brock_meia_wouldyourather">Look, would y'all rather have me keep this with me safely, or do you want some thug like Bull to just blow this place up without any reason?</state>
+                <state img="#-strip.png" marker="brock_meia_notbringit">...I've had this boombox for almost my entire life...and y'all want me to just not bring it with me?</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="brock_meia_oldgeezer" />
+                <condition role="other" character="meia" stage="0-5" saying="As if I'd let my guard down" />
+                <state img="#-strip.png" marker="brock_meia_ruckus">Look, I ain't here to cause a ruckus...Feel free to have your panties in a knot around me, but I jus' wanna enjoy my time here.</state>
+                <state img="#-strip.png" marker="brock_meia_testme">Look, you can be as uptight as you wanna be, but know that I won't try to fire this thing at you unless you tryna test me.</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="brock_meia_oldgeezer" />
+                <condition role="other" character="meia" stage="0-5" saying="you expect me to listen to a man with explosives on his shoulder" />
+                <state img="#-strip.png" marker="brock_meia_touche">Touché. Explosives can be pretty dangerous on anyone, but I'm telling you, I ain't like that.</state>
+                <state img="#-strip.png" marker="brock_meia_testme">...As ridiculous the name sounds, I ain't lyin'. Y'all need a moment to just relax?</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="brock_meia_terrorist" />
+                <condition role="other" character="meia" stage="0-5" saying="A rocket launcher goes far beyond" />
+                <state img="#-strip.png" marker="brock_meia_forssure">Well, one thing's for sure, they wouldn't mess with a guy with a rocket launcher.</state>
+                <state img="#-strip.png" marker="brock_meia_toylauncher">I guess so, but trust me, if you've seen some of the fights I've been in, it'd make my boombox seem like a kid's toy.</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="brock_meia_terrorist" />
+                <condition role="other" character="meia" stage="0-5" saying="Don't insult my intelligence!" />
+                <state img="#-strip.png" marker="brock_meia_thinkbullshit">That, and I don't want it to get stolen. What, you think I'm bullshittin' you?</state>
+            </case>
             <case stage="0" priority="100">
                 <condition role="other" character="dust" saying="What is that large thing you're carrying around?" />
                 <state img="#-strip.png" marker="brock_dust_nobiggie">Oh, my rocket launcher? Eh, it's just something I keep with me at all times, it's no biggie...</state>
@@ -802,18 +879,19 @@
             <case stage="0-9">
                 <condition role="other" character="dust" />
                 <condition role="target" character="chazz" stage="1" />
-                <state img="#-confused.png">...I'm pretty sure that's not how werewolves work, dude...Though, then again, maybe Leon may actually know a thing or two about werewolves.</state>
+                <state img="#-confused.png" oneShotId="65">...I'm pretty sure that's not how werewolves work, dude...Though, then again, maybe Leon may actually know a thing or two about werewolves.</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="dust" stage="0-1" saidMarker="ahrahwho" />
-                <state img="#-thinking.png" marker="brock_dust_fidgetorigins">What about your flying friend? How long have y'all known each other?</state>
+                <state img="#-thinking.png" oneShotId="64" marker="brock_dust_fidgetorigins">What about your flying friend? How long have y'all known each other?</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="dust" stage="2-3" saidMarker="fidgetwho" />
-                <state img="#-calm.png" marker="brock_dust_ahrahorigins">Yo dawg, gotta question. How'd y'all meet? That sword of yours has got to have some sort of secret past or sumthin'!</state>
+                <state img="#-calm.png" oneShotId="63" marker="brock_dust_ahrahorigins">Yo dawg, gotta question. How'd y'all meet? That sword of yours has got to have some sort of secret past or sumthin'!</state>
             </case>
             <case stage="0" priority="1">
-                <state img="#-pleased.png" oneShotId="49">I'm likin' this game already!</state>
+                <condition role="self" notSaidMarker="brock_likingthisgame" />
+                <state img="#-pleased.png" oneShotId="49" marker="brock_likingthisgame">I'm likin' this game already!</state>
             </case>
             <case stage="0-7">
                 <state img="#-cheering.png">Woo! Take the L!</state>
@@ -950,8 +1028,8 @@
                 <condition role="target" character="moon" stage="6" />
                 <state img="#-pleased.png">Awwww shit, here it comes!</state>
             </case>
-            <case stage="0" priority="1">
-                <state img="#-pleased.png" oneShotId="51">I'm likin' this game already!</state>
+            <case stage="0" notSaidMarker="brock_likingthisgame" priority="1">
+                <state img="#-pleased.png" oneShotId="51" marker="brock_likingthisgame">I'm likin' this game already!</state>
             </case>
             <case stage="0-7">
                 <state img="#-cheering.png">Woo! Take the L!</state>
@@ -1214,7 +1292,7 @@
                 <state img="#-laughing.png">Woot woot! That's more like it!</state>
                 <state img="#-pleased.png">Strip! It! Off!</state>
                 <state img="#-pleased.png">Yeah man! That's what I'm talkin' about!</state>
-                <state img="#-cool.png">Wooooo-eeee! off ~clothing.ifPlural(them|that there)~ ~clothing~ is outta here!</state>
+                <state img="#-cool.png">Wooooo-eeee! ~clothing.ifPlural(them|that there)~ ~clothing~ is outta here!</state>
                 <state img="#-laughing.png">Let's take that shit off!</state>
                 <state img="#-laughing.png">Yay-uh! Strip ya down and go to town!</state>
             </case>
@@ -1261,7 +1339,7 @@
                 <state img="#-laughing.png">Woot woot! That's more like it!</state>
                 <state img="#-pleased.png">Strip! It! Off!</state>
                 <state img="#-pleased.png">Yeah girl! That's what I'm talkin' about!</state>
-                <state img="#-cool.png">Wooooo-eeee! off ~clothing.ifPlural(them|that there)~ ~clothing~ is outta here!</state>
+                <state img="#-cool.png">Wooooo-eeee! ~clothing.ifPlural(them|that there)~ ~clothing~ is outta here!</state>
                 <state img="#-laughing.png">Let's take that shit off!</state>
                 <state img="#-laughing.png">Yay-uh! Strip ya down and go to town!</state>
             </case>
@@ -1481,6 +1559,7 @@
                 <state img="#-pleased.png">Wooo! I'm on a roll!</state>
                 <state img="#-cool.png">I'm on top of my game, AND this game!</state>
                 <state img="#-cheering.png">Streaking time! And I don't just mean my winning streak!</state>
+                <state img="#-awkward.png">Don't get salty now!</state>
             </case>
             <case stage="0-7" priority="0">
                 <condition role="self" hasHand="High Card" />
@@ -1637,6 +1716,7 @@
                 <state img="#-annoyed.png" marker="brock_mean">...Y'all deserve this.</state>
                 <state img="#-angry.png" marker="brock_mean">How does it feel getting wrecked? Asshole.</state>
                 <state img="#-annoyed.png" marker="brock_mean">I don't tolerate assholes like you.</state>
+                <state img="#-annoyed.png" marker="brock_mean">...Asshole.</state>
             </case>
             <case stage="0-7" priority="0">
                 <condition filter="model" role="target" />
