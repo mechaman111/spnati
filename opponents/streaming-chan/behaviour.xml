@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 7:54:58 PM on January 16, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 11:44:19 AM on February 12, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.4</version>
+    <version>v5.5</version>
     <first>Streaming-chan</first>
     <last />
     <label>Streaming-chan</label>
@@ -1706,6 +1706,18 @@
                 <condition role="other" character="jessie" timeInStage="4-" />
                 <condition role="self" notSaidMarker="jessie_viewers" />
                 <state img="#-interview.png" marker="jessie_viewers">Hey, Jessie! We have some viewers that aren't here physically tonight with some specific questions. You mind answering them as they come up? </state>
+            </case>
+            <case stage="0-7" id="35" totalRounds="2-" priority="112">
+                <condition role="other" character="megumin" saidMarker="megumin_streamingChan_interviewFear" sayingMarker="megumin_streamingChan_interviewShame" />
+                <state img="#-peeved.png">...I kind of wish that I'd gotten a real education. It's hard to make ends meet in this career, and while I love it, it'd be nice to have a fallback in like... customer relations. Or something. </state>
+            </case>
+            <case stage="0-7" id="36" totalRounds="2-" priority="112">
+                <condition role="other" character="megumin" saidMarker="megumin_streamingChan_interviewFear" sayingMarker="megumin_streamingChan_interviewExplosionProof" />
+                <state img="#-terms.png">...Not very explosion-proof, but I &lt;i&gt;do&lt;/i&gt; have a pretty cushy maiming and dismemberment policy. This isn't my first pussy, but don't tell anyone else I'm augmented! </state>
+            </case>
+            <case stage="0-7" id="37" totalRounds="2-">
+                <condition role="other" character="megumin" sayingMarker="megumin_streamingChan_interviewFear" />
+                <state img="#-serious.png">...Honestly, I fear that I'm going to die unremembered. I do &lt;i&gt;all&lt;/i&gt; of this for popularity, or money, or something... and... it kind of sucks to think I'm a blip on someone's timeline, you know? </state>
             </case>
             <case stage="7">
                 <condition role="other" character="megumin" />
@@ -6129,10 +6141,11 @@
         </trigger>
 
         <trigger id="male_removed_accessory">
-            <case stage="0-7 9" saidMarker="viewers&gt;=8" priority="2">
+            <case stage="0-7 9" priority="2">
+                <condition role="self" saidMarker="viewers&gt;=8" />
                 <state img="#-peeved.png" marker="-viewers">It's peak viewing hours, let's hurry this up!</state>
                 <state img="custom:#-viewsdown" marker="-viewers">One down, some more to go! C'mon, guys, don't you like the holdouts?</state>
-                <state img="#-excited.png" marker="-viewers">Off comes the ~clothing~!</state>
+                <state img="#-excited.png" marker="-viewers">Off comes ~clothing.ifPlural(those|the)~ ~clothing~! </state>
                 <state img="custom:#-viewsdown" marker="-viewers">Donations are starting to slow, so let's go, let's go! Keep it up!</state>
                 <state img="custom:#-viewsdown" marker="-viewers">And this game claims another clothing casualty! C'mon, stick around, guys!</state>
                 <state img="#-peeved.png" marker="-viewers">Chat, I can't accept strip requests for other people. If I could, I'd agree with you.</state>
@@ -6150,10 +6163,11 @@
                 <state img="#-neutral.png" marker="-viewers">~name~'s ~clothing~ fought valiantly, but the show must go on!</state>
                 <state img="#-neutral.png" marker="-viewers">Alright, cool. Let's keep going!</state>
             </case>
-            <case stage="0-7 9" saidMarker="viewers&lt;4">
+            <case stage="0-7 9">
+                <condition role="self" saidMarker="viewers&lt;4" />
                 <state img="#-peeved.png" marker="-viewers">It's peak viewing hours, let's hurry this up! Seriously.</state>
                 <state img="#-kawaii.png" marker="-viewers">Phew. Glad you took that off before they really started looking.</state>
-                <state img="custom:#-viewsdown" marker="-viewers">Off comes the ~clothing~! ...and down goes my viewercount.</state>
+                <state img="custom:#-viewsdown" marker="-viewers">Off comes ~clothing.ifPlural(those|the)~ ~clothing~!  ...and down goes my viewercount.</state>
                 <state img="custom:#-viewsdown" marker="-viewers">Donations are starting to &lt;i&gt;stop&lt;/i&gt;, let's go let's go!</state>
                 <state img="#-neutral.png" marker="-viewers">And this game claims another clothing casualty! So does my viewcount!</state>
                 <state img="custom:#-viewsdown" marker="-viewers">Chat, I can't accept strip requests for other people. I wish I could, trust me!</state>
@@ -6176,7 +6190,7 @@
                 <alternative saidMarker="viewers&gt;=4" />
                 <state img="#-peeved.png" marker="-viewers">It's peak viewing hours, let's hurry this up!</state>
                 <state img="#-kawaii.png" marker="-viewers">One down, some more to go!</state>
-                <state img="#-excited.png" marker="-viewers">Off comes the ~clothing~!</state>
+                <state img="#-excited.png" marker="-viewers">Off comes ~clothing.ifPlural(those|the)~ ~clothing~! </state>
                 <state img="#-peeved.png" marker="-viewers">Donations are starting to slow, let's go let's go!</state>
                 <state img="#-neutral.png" marker="-viewers">And this game claims another clothing casualty!</state>
                 <state img="#-peeved.png" marker="-viewers">Chat, I can't accept strip requests for other people.</state>
@@ -6310,10 +6324,11 @@
             <case stage="0-7 9" target="shimakaze" targetStage="1">
                 <state img="#-excited.png">I’m putting my life on the line for my loyal viewers, and so is this adorable jailbait! Tell your friends, chat, and remember to go premium to see the explosions in real time!</state>
             </case>
-            <case stage="0-7 9" saidMarker="viewers&gt;=8" priority="2">
+            <case stage="0-7 9" priority="2">
+                <condition role="self" saidMarker="viewers&gt;=8" />
                 <state img="#-peeved.png" marker="-viewers">It's peak viewing hours, let's hurry this up!</state>
                 <state img="custom:#-viewsdown" marker="-viewers">One down, some more to go! C'mon, guys, don't you like the holdouts?</state>
-                <state img="#-excited.png" marker="-viewers">Off comes the ~clothing~!</state>
+                <state img="#-excited.png" marker="-viewers">Off comes ~clothing.ifPlural(those|the)~ ~clothing~! </state>
                 <state img="custom:#-viewsdown" marker="-viewers">Donations are starting to slow, so let's go, let's go! Keep it up!</state>
                 <state img="custom:#-viewsdown" marker="-viewers">And this game claims another clothing casualty! C'mon, stick around, guys!</state>
                 <state img="#-peeved.png" marker="-viewers">Chat, I can't accept strip requests for other people. If I could, I'd agree with you.</state>
@@ -6331,10 +6346,11 @@
                 <state img="#-neutral.png" marker="-viewers">~name~'s ~clothing~ fought valiantly, but the show must go on!</state>
                 <state img="#-neutral.png" marker="-viewers">Alright, cool. Let's keep going!</state>
             </case>
-            <case stage="0-7 9" saidMarker="viewers&lt;4">
+            <case stage="0-7 9">
+                <condition role="self" saidMarker="viewers&lt;4" />
                 <state img="#-peeved.png" marker="-viewers">It's peak viewing hours, let's hurry this up! Seriously.</state>
                 <state img="#-kawaii.png" marker="-viewers">Phew. Glad you took that off before they really started looking.</state>
-                <state img="custom:#-viewsdown" marker="-viewers">Off comes the ~clothing~! ...and down goes my viewercount.</state>
+                <state img="custom:#-viewsdown" marker="-viewers">Off comes ~clothing.ifPlural(those|the)~ ~clothing~!  ...and down goes my viewercount.</state>
                 <state img="custom:#-viewsdown" marker="-viewers">Donations are starting to &lt;i&gt;stop&lt;/i&gt;, let's go let's go!</state>
                 <state img="#-neutral.png" marker="-viewers">And this game claims another clothing casualty! So does my viewcount!</state>
                 <state img="custom:#-viewsdown" marker="-viewers">Chat, I can't accept strip requests for other people. I wish I could, trust me!</state>
@@ -6352,10 +6368,11 @@
                 <state img="#-neutral.png" marker="-viewers">~Name~'s ~clothing~ fought valiantly, but the show must go on!</state>
                 <state img="#-neutral.png" marker="-viewers">Alright, cool. Let's keep going! A loss here and there... uh... really does affect my bottom line.</state>
             </case>
-            <case stage="0-7 9" saidMarker="viewers&gt;=4">
+            <case stage="0-7 9">
+                <condition role="self" saidMarker="viewers&gt;=4" />
                 <state img="#-peeved.png" marker="-viewers">It's peak viewing hours, let's hurry this up!</state>
                 <state img="#-kawaii.png" marker="-viewers">One down, some more to go!</state>
-                <state img="#-excited.png" marker="-viewers">Off comes the ~clothing~!</state>
+                <state img="#-excited.png" marker="-viewers">Off comes ~clothing.ifPlural(those|the)~ ~clothing~! </state>
                 <state img="#-peeved.png" marker="-viewers">Donations are starting to slow, let's go let's go!</state>
                 <state img="#-neutral.png" marker="-viewers">And this game claims another clothing casualty!</state>
                 <state img="#-peeved.png" marker="-viewers">Chat, I can't accept strip requests for other people.</state>
@@ -6376,7 +6393,7 @@
             <case stage="0-7 9">
                 <state img="#-peeved.png">It's peak viewing hours, let's hurry this up!</state>
                 <state img="#-kawaii.png">One down, some more to go!</state>
-                <state img="#-excited.png">Off comes the ~clothing~!</state>
+                <state img="#-excited.png">Off comes ~clothing.ifPlural(those|the)~ ~clothing~! </state>
                 <state img="#-peeved.png">Donations are starting to slow, let's go let's go!</state>
                 <state img="#-neutral.png">And this game claims another clothing casualty!</state>
                 <state img="#-peeved.png">Chat, I can't accept strip requests for other people.</state>
