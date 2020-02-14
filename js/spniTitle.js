@@ -58,6 +58,10 @@ var CANDY_LIST = [
     "reskins/zizou_valentine/1-excited.png",
     "reskins/zizou_valentine/2-appreciative.png",
     "reskins/zizou_valentine/2-puzzled.png",
+    "reskins/nagisa_maid_cafe/0-happy.png",
+    "reskins/nagisa_maid_cafe/1-xstripping.png",
+    "reskins/nagisa_maid_cafe/2-wink.png",
+    "reskins/nagisa_maid_cafe/3-veryembarrassed.png",
 
 /*
     "9s/0-happy.png",
