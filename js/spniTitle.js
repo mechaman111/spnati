@@ -22,6 +22,48 @@ $titleCandy = [$("#left-title-candy"), $("#right-title-candy")];
  **********************************************************************/
 
 var CANDY_LIST = [
+    "reskins/meia_cupid/0-disappointed.png",
+    "reskins/meia_cupid/1-busy.png",
+    "reskins/meia_cupid/2-pleased.png",
+    "reskins/meia_cupid/2-addressing.png",
+    "reskins/cheerleaderochako/0-calm.png",
+    "reskins/cheerleaderochako/1-heroic.png",
+    "reskins/cheerleaderochako/2-happy.png",
+    "reskins/cheerleaderochako/3-embarrassed.png",
+    "reskins/monika_love_bug/0-writing-tip.png",
+    "reskins/monika_love_bug/1-interested.png",
+    "reskins/monika_love_bug/2-happy.png",
+    "reskins/monika_love_bug/3-shy-happy.png",
+    "reskins/d.va_cruiser/0-winking.png",
+    "reskins/d.va_cruiser/1-excited.png",
+    "reskins/d.va_cruiser/2-peace.png",
+    "reskins/d.va_cruiser/3-shocked.png",
+    "reskins/flower_girl_ini/0-sleepy.png",
+    "reskins/flower_girl_ini/1-excited.png",
+    "reskins/flower_girl_ini/2-dumb.png",
+    "reskins/flower_girl_ini/3-cracker.png",
+    "reskins/dapper_date/0-calm.png",
+    "reskins/dapper_date/1-joyful.png",
+    "reskins/dapper_date/2-pleasant.png",
+    "reskins/dapper_date/3-perky.png",
+    "reskins/festival_aella/0-happy.png",
+    "reskins/festival_aella/1-flustered.png",
+    "reskins/festival_aella/2-interested.png",
+    "reskins/festival_aella/2-happy.png",
+    "reskins/lynbride/0-calm.png",
+    "reskins/lynbride/1-happy.png",
+    "reskins/lynbride/2-interested.png",
+    "reskins/lynbride/3-happy.png",
+    "reskins/chiakimaid/0-sleepy.png",
+    "reskins/chiakimaid/1-happy.png",
+    "reskins/chiakimaid/2-excited.png",
+    "reskins/chiakimaid/3-embarrassed.png",
+    "reskins/zizou_valentine/0-happy.png",
+    "reskins/zizou_valentine/1-excited.png",
+    "reskins/zizou_valentine/2-appreciative.png",
+    "reskins/zizou_valentine/2-puzzled.png",
+
+/*
     "9s/0-happy.png",
     "9s/1-excited.png",
     "9s/2-clever.png",
@@ -178,6 +220,7 @@ var CANDY_LIST = [
     "zone-tan/1-explain.png",
     "zone-tan/1-smirk.png",
     "zone-tan/2-stroking.png",
+*/
 ];
 
 var clothingChoices = [];
