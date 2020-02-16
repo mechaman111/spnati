@@ -281,6 +281,7 @@
             delete players[sayori.slot];
 
             updateAllBehaviours(monika_pl.slot, PLAYER_START_MASTURBATING, FEMALE_MASTURBATING);
+            updateGameVisual(sayori.slot);
             monika_pl.stage = 9;
         }, 0);
     });
