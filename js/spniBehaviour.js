@@ -282,7 +282,6 @@ function State($xml_or_state, parentCase) {
     
     var collectibleId = $xml.attr('collectible') || undefined;
     var collectibleOp = $xml.attr('collectible-value') || undefined;
-    var persistMarker = $xml.attr('persist-marker') === 'true';
     var markerOp = $xml.attr('marker');
 
     if (collectibleId) {
@@ -311,7 +310,7 @@ function State($xml_or_state, parentCase) {
         var match = markerOp.match(/^(?:(\+|-)([\w-]+)(\*?)|([\w-]+)(\*?)\s*=\s*(.*?)\s*)$/);
         var name;
         
-        this.marker = {name: null, perTarget: false, persistent: persistMarker, op: null, val: null};
+        this.marker = {name: null, perTarget: false, op: null, val: null};
         
         if (match) {
             this.marker.perTarget = !!(match[3] || match[5]);
@@ -346,31 +345,29 @@ State.prototype.evaluateMarker = function (self, opp) {
     if (this.marker.perTarget && opp) {
         name = getTargetMarker(name, opp);
     }
-    if (this.marker.op === '+') {
-        if (this.marker.persistent) {
-            var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
-        } else {
-            var curVal = parseInt(self.markers[name], 10) || 0;
-        }
-        
-        return !curVal ? 1 : curVal + 1;
-    } else if (this.marker.op === '-') {
-        if (this.marker.persistent) {
-            var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
-        } else {
-            var curVal = parseInt(self.markers[name], 10) || 0;
-        }
-        
-        return !curVal ? 0 : curVal - 1;
-    } else if (this.marker.op === '=') {
+
+    if (this.marker.op === '=') {
         if (typeof(this.marker.val) === 'number') return this.marker.val;
         
-        var val = expandDialogue(this.marker.val, self, opp, this.parentCase && this.parentCase.variableBindings);
+        var val = expandDialogue(
+            this.marker.val, self, opp, 
+            this.parentCase && this.parentCase.variableBindings
+        );
         
-        if (!isNaN(parseInt(val, 10))) {
-            return parseInt(val, 10);
+        var cast = parseInt(val, 10);
+        if (!isNaN(cast)) {
+            return cast;
         } else {
             return val;
+        }
+    } else {
+        /* Process + and - ops */
+        var curVal = self.getMarker(name, true);
+
+        if (this.marker.op === '+') {
+            return !curVal ? 1 : curVal + 1;
+        } else if (this.marker.op === '-') {
+            return !curVal ? 0 : curVal - 1;
         }
     }
 }
@@ -384,11 +381,7 @@ State.prototype.applyMarker = function (self, opp) {
     }
     
     var newVal = this.evaluateMarker(self, opp);
-    if (this.marker.persistent) {
-        save.setPersistentMarker(self, name, newVal);
-    } else {
-        self.markers[name] = newVal;
-    }
+    self.setMarker(name, newVal);
 }
 
 State.prototype.expandDialogue = function(self, target) {
@@ -563,7 +556,7 @@ function findVariablePlayer(variable, self, target, bindings) {
  ************************************************************/
 function expandNicknames (self, target) {
     if (self) {
-        var nickmarker = self.markers[getTargetMarker('nickname', target)];
+        var nickmarker = self.getMarker(getTargetMarker('nickname', target));
         if (nickmarker) return nickmarker;
         if (target.id in self.nicknames || '*' in self.nicknames) {
             var nickList = self.nicknames[target.id] || self.nicknames['*'];
@@ -605,23 +598,20 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
     case 'persistent':
         var markerName = split_fn[1];
         if (markerName) {
-            var marker;
+            var value = undefined;
+
             if (player) {
+                /* Look up targeted marker first. */
                 var targetedName = getTargetMarker(markerName, player);
-                if (fn === 'persistent') {
-                    marker = save.getPersistentMarker(player, targetedName);
-                } else {
-                    marker = player.markers[targetedName];
-                }
+                value = player.getMarker(targetedName, false);
             }
-            if (!marker) {
-                if (fn === 'persistent') {
-                    marker = save.getPersistentMarker(player, markerName);
-                } else {
-                    marker = player.markers[markerName];
-                }
+
+            if (!value) {
+                /* If that didn't turn up anything, check the untargeted name. */
+                value = player.getMarker(markerName, false);
             }
-            return marker || "";
+
+            return value || "";
         } else {
             return fn; //didn't supply a marker name
         }
@@ -762,23 +752,17 @@ function expandDialogue (dialogue, self, target, bindings) {
             case 'persistent':
                 fn = fn_parts[0];  // make sure to keep the original string case intact 
                 if (fn) {
-                    var marker;
+                    var marker = undefined;
                     
                     if (target) {
+                        /* Check targeted marker first: */
                         var targetedName = getTargetMarker(fn, target);
-                        if (variable.toLowerCase() === 'persistent') {
-                            marker = save.getPersistentMarker(self, targetedName);
-                        } else {
-                            marker = self.markers[targetedName];
-                        }
+                        marker = self.getMarker(targetedName, false);
                     }
                     
                     if (!marker) {
-                        if (variable.toLowerCase() === 'persistent') {
-                            marker = save.getPersistentMarker(self, fn);
-                        } else {
-                            marker = self.markers[fn];
-                        }
+                        /* If the targeted marker wasn't set, check the regular marker name: */
+                        marker = self.getMarker(fn, false);
                     }
                     
                     substitution = marker || "";
@@ -1024,10 +1008,10 @@ function checkMarker(predicate, self, target, currentOnly) {
             && evalOperator(self.chosenState.evaluateMarker(self, target), op, cmpVal);
     }
     if (perTarget && target) {
-        val = self.markers[getTargetMarker(name, target)];
+        val = self.getMarker(getTargetMarker(name, target));
     }
     if (!val) {
-        val = self.markers[name];
+        val = self.getMarker(name);
     }
     if (!val) {
         val = 0;

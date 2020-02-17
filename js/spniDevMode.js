@@ -317,7 +317,7 @@ DevModeDialogueBox.prototype.saveEdits = function () {
                         markerName = getTargetMarker(curState.marker.name, player.currentTarget);
                     }
                     
-                    info.state.marker.value = player.markers[markerName];
+                    info.state.marker.value = player.getMarker(markerName);
                 }
             }
             

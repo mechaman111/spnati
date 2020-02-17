@@ -321,6 +321,7 @@ function Player (id) {
     this.tags = this.baseTags = [];
     this.xml = null;
     this.metaXml = null;
+    this.persistentMarkers = {};
 
     this.resetState();
 }
@@ -509,6 +510,51 @@ Player.prototype.checkStatus = function(status) {
 	case STATUS_FINISHED:
 		return this.finished;
 	}
+}
+
+/**
+ * Get the value of a marker set on this Player.
+ * 
+ * This method always attempts to parse stored marker values as integers,
+ * but if this isn't possible then the raw string will be returned instead
+ * (unless `numeric` is set to `true`).
+ * 
+ * @param {string} name The name of the marker to look up.
+ * @param {boolean} numeric If `true`, then stored marker values that cannot
+ * be converted to number values will be returned as 0 instead of as strings.
+ * @returns {number | string}
+ */
+Player.prototype.getMarker = function (name, numeric) {
+    var val = 0;
+    if (!this.persistentMarkers[name]) {
+        val = this.markers[name];
+    } else {
+        val = save.getPersistentMarker(this, name);
+    }
+
+    var cast = parseInt(val, 10);
+    
+    if (!isNaN(cast)) {
+        return cast;
+    } else if (numeric) {
+        return 0;
+    } else {
+        return val;
+    }
+}
+
+/**
+ * Set the value of a marker on this Player.
+ * 
+ * @param {string} name The name of the marker to set.
+ * @param {string | number} value The value to set for the marker.
+ */
+Player.prototype.setMarker = function (name, value) {
+    if (!this.persistentMarkers[name]) {
+        this.markers[name] = value;
+    } else {
+        save.setPersistentMarker(this, name, value);
+    }
 }
 
 
@@ -964,6 +1010,15 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             }
 
             this.default_costume.tags = tagsArray;
+
+            /* Load forward-declarations for persistent markers. */
+            var persistentMarkers = $xml.find('persistent-markers');
+            if (typeof persistentMarkers !== typeof undefined && persistentMarkers) {
+                $(persistentMarkers).find('marker').each(function (i, elem) {
+                    var markerName = $(elem).text();
+                    this.persistentMarkers[markerName] = true;
+                }.bind(this));
+            }
 
             this.targetedLines = {};
 
