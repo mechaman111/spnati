@@ -282,6 +282,17 @@ function State($xml_or_state, parentCase) {
     
     var collectibleId = $xml.attr('collectible') || undefined;
     var collectibleOp = $xml.attr('collectible-value') || undefined;
+    
+    /* Keep track of the old persist-marker flag.
+     * recordTargetedCase() (in spniCore.js) checks this flag and, if set,
+     * will add the marker name attached to this State to the character's
+     * persistentMarkers list.
+     *
+     * TODO: Remove this once all characters using persistent markers
+     * have migrated over to the system in #74.
+     */
+    this.legacyPersistentFlag = ($xml.attr('persist-marker') === 'true');
+
     var markerOp = $xml.attr('marker');
 
     if (collectibleId) {
