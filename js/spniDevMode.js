@@ -311,13 +311,11 @@ DevModeDialogueBox.prototype.saveEdits = function () {
                         'name': curState.marker.name,
                         'perTarget': curState.marker.perTarget,
                     };
-                    
-                    var markerName = curState.marker.name;
-                    if (curState.marker.perTarget) {
-                        markerName = getTargetMarker(curState.marker.name, player.currentTarget);
-                    }
-                    
-                    info.state.marker.value = player.getMarker(markerName);
+
+                    info.state.marker.value = player.getMarker(
+                        curState.marker.name,
+                        curState.marker.perTarget ? player.currentTarget : null
+                    );
                 }
             }
             

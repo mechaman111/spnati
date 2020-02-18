@@ -519,17 +519,43 @@ Player.prototype.checkStatus = function(status) {
  * but if this isn't possible then the raw string will be returned instead
  * (unless `numeric` is set to `true`).
  * 
- * @param {string} name The name of the marker to look up.
+ * If a `target` is passed, the marker value will be read from a per-target
+ * marker first, if possible. By default (if `targeted_only` is not `true`),
+ * if the per-target marker is not found, the base marker's value will be
+ * used as a default.
+ * 
+ * @param {string} baseName The name of the marker to look up.
+ * @param {Player} target If passed, the value will be loaded on a per-target
+ * basis.
  * @param {boolean} numeric If `true`, then stored marker values that cannot
  * be converted to number values will be returned as 0 instead of as strings.
+ * @param {boolean} targeted_only If `true`, then per-target markers will
+ * _not_ default to using their base names if not found.
  * @returns {number | string}
  */
-Player.prototype.getMarker = function (name, numeric) {
+Player.prototype.getMarker = function (baseName, target, numeric, targeted_only) {
     var val = 0;
-    if (!this.persistentMarkers[name]) {
+
+    var name = baseName;
+    if (target && target.id) {
+        name = getTargetMarker(baseName, target);
+    }
+
+    if (!this.persistentMarkers[baseName]) {
         val = this.markers[name];
+
+        if (!val && target && !targeted_only) {
+            /* If the per-target marker wasn't found, attempt to default
+             * to the nonspecific marker.
+             */
+            val = this.markers[baseName];
+        }
     } else {
         val = save.getPersistentMarker(this, name);
+
+        if (!val && target && !targeted_only) {
+            val = save.getPersistentMarker(this, baseName);
+        }
     }
 
     var cast = parseInt(val, 10);
@@ -546,11 +572,18 @@ Player.prototype.getMarker = function (name, numeric) {
 /**
  * Set the value of a marker on this Player.
  * 
- * @param {string} name The name of the marker to set.
+ * @param {string} baseName The name of the marker to set.
+ * @param {Player} target If passed, the value will be set on a per-target
+ * basis.
  * @param {string | number} value The value to set for the marker.
  */
-Player.prototype.setMarker = function (name, value) {
-    if (!this.persistentMarkers[name]) {
+Player.prototype.setMarker = function (baseName, target, value) {
+    var name = baseName;
+    if (target && target.id) {
+        name = getTargetMarker(baseName, target);
+    }
+
+    if (!this.persistentMarkers[baseName]) {
         this.markers[name] = value;
     } else {
         save.setPersistentMarker(this, name, value);

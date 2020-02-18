@@ -351,11 +351,6 @@ function State($xml_or_state, parentCase) {
 
 State.prototype.evaluateMarker = function (self, opp) {
     if (!this.marker) return;
-    
-    var name = this.marker.name;
-    if (this.marker.perTarget && opp) {
-        name = getTargetMarker(name, opp);
-    }
 
     if (this.marker.op === '=') {
         if (typeof(this.marker.val) === 'number') return this.marker.val;
@@ -373,7 +368,7 @@ State.prototype.evaluateMarker = function (self, opp) {
         }
     } else {
         /* Process + and - ops */
-        var curVal = self.getMarker(name, true);
+        var curVal = self.getMarker(this.marker.name, opp, true);
 
         if (this.marker.op === '+') {
             return !curVal ? 1 : curVal + 1;
@@ -386,13 +381,12 @@ State.prototype.evaluateMarker = function (self, opp) {
 State.prototype.applyMarker = function (self, opp) {
     if (!this.marker) return;
     
-    var name = this.marker.name;
-    if (this.marker.perTarget && opp) {
-        name = getTargetMarker(name, opp);
-    }
-    
     var newVal = this.evaluateMarker(self, opp);
-    self.setMarker(name, newVal);
+    self.setMarker(
+        this.marker.name,
+        this.marker.perTarget ? opp : null,
+        newVal
+    );
 }
 
 State.prototype.expandDialogue = function(self, target) {
@@ -567,7 +561,7 @@ function findVariablePlayer(variable, self, target, bindings) {
  ************************************************************/
 function expandNicknames (self, target) {
     if (self) {
-        var nickmarker = self.getMarker(getTargetMarker('nickname', target));
+        var nickmarker = self.getMarker('nickname', target, false, true);
         if (nickmarker) return nickmarker;
         if (target.id in self.nicknames || '*' in self.nicknames) {
             var nickList = self.nicknames[target.id] || self.nicknames['*'];
@@ -609,20 +603,7 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
     case 'persistent':
         var markerName = split_fn[1];
         if (markerName) {
-            var value = undefined;
-
-            if (player) {
-                /* Look up targeted marker first. */
-                var targetedName = getTargetMarker(markerName, player);
-                value = player.getMarker(targetedName, false);
-            }
-
-            if (!value) {
-                /* If that didn't turn up anything, check the untargeted name. */
-                value = player.getMarker(markerName, false);
-            }
-
-            return value || "";
+            return player.getMarker(markerName, target, false) || "";
         } else {
             return fn; //didn't supply a marker name
         }
@@ -762,21 +743,8 @@ function expandDialogue (dialogue, self, target, bindings) {
             case 'marker':
             case 'persistent':
                 fn = fn_parts[0];  // make sure to keep the original string case intact 
-                if (fn) {
-                    var marker = undefined;
-                    
-                    if (target) {
-                        /* Check targeted marker first: */
-                        var targetedName = getTargetMarker(fn, target);
-                        marker = self.getMarker(targetedName, false);
-                    }
-                    
-                    if (!marker) {
-                        /* If the targeted marker wasn't set, check the regular marker name: */
-                        marker = self.getMarker(fn, false);
-                    }
-                    
-                    substitution = marker || "";
+                if (fn) {                    
+                    substitution = self.getMarker(fn, target, false) || "";
                 } else {
                     console.error("No marker name specified");
                 }
@@ -1018,15 +986,8 @@ function checkMarker(predicate, self, target, currentOnly) {
             && ((perTarget && target) || !self.chosenState.marker.perTarget)
             && evalOperator(self.chosenState.evaluateMarker(self, target), op, cmpVal);
     }
-    if (perTarget && target) {
-        val = self.getMarker(getTargetMarker(name, target));
-    }
-    if (!val) {
-        val = self.getMarker(name);
-    }
-    if (!val) {
-        val = 0;
-    }
+
+    val = self.getMarker(name, perTarget ? target : null) || 0;
     return evalOperator(val, op, cmpVal);
 }
 
