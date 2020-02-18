@@ -5,20 +5,11 @@ var epilogueContainer = document.getElementById('epilogue-container');
 /* Epilogue selection modal elements */
 $epilogueSelectionModal = $('#epilogue-modal'); //the modal box
 $epilogueHeader = $('#epilogue-header-text'); //the header text for the epilogue selection box
+$epilogueTip = $('#epilogue-header-tip');
 $epilogueList = $('#epilogue-list'); //the list of epilogues
 $epilogueAcceptButton = $('#epilogue-modal-accept-button'); //click this button to go with the chosen ending
 
 var epilogueSelections = []; //references to the epilogue selection UI elements
-
-var winStr = "You've won the game, and possibly made some friends. Who among these players did you become close with?"; //Winning the game, with endings available
-var winStrNone = "You've won the game, and possibly made some friends? Unfortunately, none of your competitors are ready for a friend like you.<br>(None of the characters you played with have an ending written.)"; //Player won the game, but none of the characters have an ending written
-var lossStr = "Well you lost. And you didn't manage to make any new friends. But you saw some people strip down and show off, and isn't that what life is all about?<br>(You may only view an ending when you win.)"; //Player lost the game. Currently no support for ending scenes when other players win
-
-// Player won the game, but epilogues are disabled.
-var winEpiloguesDisabledStr = "You won... but epilogues have been disabled.";
-
-// Player lost the game with epilogues disabled.
-var lossEpiloguesDisabledStr = "You lost... but epilogues have been disabled.";
 
 var epilogues = []; //list of epilogue data objects
 var chosenEpilogue = null;
@@ -53,6 +44,32 @@ epilogueContainer.addEventListener('click', function () {
     moveEpilogueForward();
   }
 });
+
+// Winning the game, with endings available.
+var winStr = "You've won the game, and some of your competitors might be ready for something <i>extra</i>...<br>Who among these players did you become close with?";
+
+// Player won the game, but none of the characters have an ending written.
+var winStrNone = "You've won the game!<br>We hope you enjoyed the game!  Be sure to play again sometime!";
+
+// Player lost the game. Currently no support for ending scenes when other players win.
+var lossStr = "We hope you enjoyed the game!  Be sure to play again sometime!";
+
+// Player won the game, but epilogues are disabled.
+var winEpiloguesDisabledStr = winStrNone; // "You won... but epilogues have been disabled.";
+
+// Player lost the game with epilogues disabled.
+var lossEpiloguesDisabledStr = lossStr; // "You lost... but epilogues have been disabled.";
+
+/* Random tips displayed at game end. */
+var endingTips = [
+  "Keeping pairs is usually better than going for rare hands.",
+  "Sit back and enjoy the game, maybe you'll find something new!",
+  "Some characters have special interactions with each other. How many have you found?",
+  "Found a cool, sexy, or funny scene? Share it with us!",
+  "Really stuck and don't know how to play well? Give Card Suggest a try!",
+  "Curious about the game or have any questions? Check out our FAQ!",
+  "SPNATI is an open-source project, and it's brought to life by people like you. Why not give making your own characters a shot?"
+];
 
 /************************************************************
  * Animation class. Used instead of CSS animations for the control over stopping/rewinding/etc.
@@ -941,6 +958,9 @@ function doEpilogueModal() {
   //are there any epilogues available for the player to see?
   var haveEpilogues = (epilogues.length >= 1); //whether or not there are any epilogues available
   $epilogueAcceptButton.css("visibility", haveEpilogues ? "visible" : "hidden");
+
+  var randomTip = endingTips[getRandomNumber(0, endingTips.length)];
+  $epilogueTip.html(randomTip);
 
   if (EPILOGUES_ENABLED) {
     //decide which header string to show the player. This describes the situation.
