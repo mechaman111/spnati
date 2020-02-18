@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 8:01:33 PM on February 16, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 10:30:43 PM on February 17, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Revy</first>
@@ -595,6 +595,17 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0-7" totalRounds="10-">
+                <condition role="other" character="florina" sayingMarker="revy_mean" />
+                <condition role="other" character="lucina" stage="0" />
+                <state img="#-pissed.png">Oh, shut up, you simpering bitch.  You're ruining this game for &lt;i&gt;me--&lt;/i&gt;and stay outta this, Mars!  White-knight this girl when you can look me in the eye!</state>
+            </case>
+            <case stage="0-7" totalRounds="10-">
+                <condition role="other" character="florina" sayingMarker="revy_mean" />
+                <condition role="other" character="lucina" stage="1-10" />
+                <state img="#-bored.png">What is the fucking &lt;i&gt;deal&lt;/i&gt; with you Ren-fair types?  I'm tryin' to enjoy my strip poker, Flower-Girl's whining, and now Crossdresser's on my ass for it.</state>
+                <state img="#-pissed.png">Would you fuckin' &lt;i&gt;can it,&lt;/i&gt; Flowy?  Your whining is what's got me so pissed--oh, &lt;i&gt;what,&lt;/i&gt; Lucy, I can't use big-girl words around her?</state>
+            </case>
             <case stage="6">
                 <condition role="self" timeInStage="0" />
                 <condition role="other" character="misato" stage="0-6" saying="rum" />
@@ -665,6 +676,12 @@
                 <condition role="other" character="rin" />
                 <state img="#-disgusted.png" marker="megumin_murder">...Nothin' about that &lt;i&gt;killing&lt;/i&gt; conversation went how I thought it would.  Minnie spears demons through the ass, and Legs has fever dreams about them?</state>
                 <state img="#-bored.png" marker="megumin_murder">...I guess this is what I get for asking a midget in a Halloween costume and a girl with no arms whether they've killed people.  Dreamy nerdo demon horseshit.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="megumin" saidMarker="megumin_mass_murder" />
+                <condition role="self" notSaidMarker="megumin_murder" />
+                <condition role="other" character="tomoko" />
+                <state img="#-bored.png" marker="megumin_murder">...Well, I asked two middle-schoolers whether they've killed anyone, and neither's me.  Should've expected some nerd shit and clamming up.</state>
             </case>
             <case stage="7">
                 <condition count="1" filter="alice_mgq" stage="7" />
@@ -1560,10 +1577,16 @@
                 <state img="#-mellow.png" marker="dust_killing">I already knew &lt;i&gt;you're&lt;/i&gt; a killer, Lassie.  Any Chinatown kid knows how nasty those stray-dog throwdowns can get under the bridge. </state>
                 <state img="#-bored.png" marker="dust_killing">I grew up on Mott Street, Scrappy.  You didn't need to tell me that dogs kill each other.  Damn yelps from the alleyway used to lull me to sleep.</state>
             </case>
-            <case stage="0-7" alsoPlaying="larachel" notSaidMarker="larachel_music" alsoPlayingSaidMarker="revy_trumpet">
-                <state img="#-smug.png" marker="larachel_music">I shoulda figured your Medieval ass would like that classical horseshit.  Music should pump you up!</state>
+            <case stage="0-3">
+                <condition role="other" character="tomoko" saidMarker="cheatingtomoko" notSaidMarker="revyguns" saying="Revy will shoot me" />
+                <state img="#-incredulous.png" marker="tomoko_frogeye">...What's got you pissing yourself this time, Motown?  You're staring at my Berettas with that one baggy frog-eye of yours.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="self" notSaidMarker="larachel_music" />
+                <condition role="other" character="larachel" saidMarker="revy_trumpet" />
+                <state img="#-grinning.png" marker="larachel_music">I shoulda figured your Medieval ass would like that classical horseshit.  Music should pump you up!</state>
                 <state img="#-miffed.png" marker="larachel_music">"Trumpeters."  What kinda tea-sipping little bitch listens to orchestra crap?  Music should be loud n' wild.</state>
-                <state img="#-smug.png" marker="larachel_music">Yeah, I'm not sure they &lt;i&gt;have&lt;/i&gt; electric guitars in whatever fairytale castle you hang out in, LaRaeRae.  I want &lt;i&gt;energy!&lt;/i&gt;</state>
+                <state img="#-grinning.png" marker="larachel_music">Yeah, I'm not sure they &lt;i&gt;have&lt;/i&gt; electric guitars in whatever fairytale castle you hang out in, LaRaeRae.  I want &lt;i&gt;energy!&lt;/i&gt;</state>
                 <state img="#-interested.png" marker="larachel_music">I guess classical shit is good for shoving staffs up your ass to, yeah.  But I can't shoot up a bar to &lt;i&gt;trumpets.&lt;/i&gt;</state>
             </case>
             <case stage="0-7">
@@ -1684,7 +1707,64 @@
                 <condition role="self" notSaidMarker="mary_pop" />
                 <state img="#-awkward.png" marker="mary_pop">..."Jap pop," you said, kid?  Lagoon Company's got a Japanese businessman who told me about "anime" shit.  It &lt;i&gt;sounded&lt;/i&gt; like it was for little girls.</state>
             </case>
-            <case stage="0-7" alsoPlaying="florina" alsoPlayingSayingMarker="revy_mean">
+            <case stage="0-3">
+                <condition role="other" character="tomoko" saidMarker="cheatingtomoko" saying="If Revy finds out" />
+                <state img="#-explaining.png" marker="tomoko_cheating">...Somethin' buggin' you, Tommy?  You got a real shifty-eyes look about you, like a rookie hiding some aces.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="tomoko" notSaidMarker="revyguns" saying="Revy talks" />
+                <state img="#-explaining.png" marker="tomoko_staring">...I'm gettin' real fuckin' sick of you staring at me, Moko.  God knows where your &lt;i&gt;other&lt;/i&gt; eye is looking.</state>
+                <state img="#-disgusted.png" marker="tomoko_staring">...Seriously, kid, are you gonna pipe up, or what?  It's the same stare, turn-away, shit-yourself, stare routine every time I catch your eye.</state>
+                <state img="#-disgusted.png" marker="tomoko_staring">...Can I help you, kid?  Is this just how little Japanese schoolgirls act, bein' all shy and then looking away?  It ain't charming.</state>
+                <state img="#-incredulous.png" marker="tomoko_staring">...Hello?  Earth to Tommy-jap?  Stop fuckin' giving me the pug-eyes like I'm gonna give you a treat for bein' ugly.  &lt;i&gt;Say something.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="tomoko" notSaidMarker="revyguns" saying="Smoking might" />
+                <state img="#-explaining.png" marker="tomoko_staring">...I'm gettin' real fuckin' sick of you staring at me, Moko.  God knows where your &lt;i&gt;other&lt;/i&gt; eye is looking.</state>
+                <state img="#-disgusted.png" marker="tomoko_staring">...Seriously, kid, are you gonna pipe up, or what?  It's the same stare, turn-away, shit-yourself, stare routine every time I catch your eye.</state>
+                <state img="#-disgusted.png" marker="tomoko_staring">...Can I help you, kid?  Is this just how little Japanese schoolgirls act, bein' all shy and then looking away?  It ain't charming.</state>
+                <state img="#-incredulous.png" marker="tomoko_staring">...Hello?  Earth to Tommy-jap?  Stop fuckin' giving me the pug-eyes like I'm gonna give you a treat for bein' ugly.  &lt;i&gt;Say something.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="tomoko" notSaidMarker="revyguns" saying="If Revy keeps" />
+                <state img="#-explaining.png" marker="tomoko_staring">...I'm gettin' real fuckin' sick of you staring at me, Moko.  God knows where your &lt;i&gt;other&lt;/i&gt; eye is looking.</state>
+                <state img="#-disgusted.png" marker="tomoko_staring">...Seriously, kid, are you gonna pipe up, or what?  It's the same stare, turn-away, shit-yourself, stare routine every time I catch your eye.</state>
+                <state img="#-disgusted.png" marker="tomoko_staring">...Can I help you, kid?  Is this just how little Japanese schoolgirls act, bein' all shy and then looking away?  It ain't charming.</state>
+                <state img="#-incredulous.png" marker="tomoko_staring">...Hello?  Earth to Tommy-jap?  Stop fuckin' giving me the pug-eyes like I'm gonna give you a treat for bein' ugly.  &lt;i&gt;Say something.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="tomoko" notSaidMarker="revyguns" saying="Revy is so angry" />
+                <state img="#-explaining.png" marker="tomoko_staring">...I'm gettin' real fuckin' sick of you staring at me, Moko.  God knows where your &lt;i&gt;other&lt;/i&gt; eye is looking.</state>
+                <state img="#-disgusted.png" marker="tomoko_staring">...Seriously, kid, are you gonna pipe up, or what?  It's the same stare, turn-away, shit-yourself, stare routine every time I catch your eye.</state>
+                <state img="#-disgusted.png" marker="tomoko_staring">...Can I help you, kid?  Is this just how little Japanese schoolgirls act, bein' all shy and then looking away?  It ain't charming.</state>
+                <state img="#-incredulous.png" marker="tomoko_staring">...Hello?  Earth to Tommy-jap?  Stop fuckin' giving me the pug-eyes like I'm gonna give you a treat for bein' ugly.  &lt;i&gt;Say something.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-4">
+                <condition role="other" character="tomoko" sayingMarker="revy_flyundone" notSaidMarker="revyguns" />
+                <state img="#-sleepy.png" marker="tomoko_flyundone">I know.  What's a belt for?  You get a little sneak peek of my panties, and I don't have to bother zipping up.</state>
+                <state img="#-sleepy.png" marker="tomoko_flyundone">Why bother zipping up when you've got a belt?  It might even distract some dipshit about to pop me--guys like a little panty glimpse.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="tomoko" saidMarker="revyguns" saying="female with guns" />
+                <state img="#-calm.png" marker="tomoko_guns">Hey, Tommy, for once, you actually stared at me and &lt;i&gt;smiled.&lt;/i&gt;  What changed--did you picture me with one gun up my ass?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="tomoko" saidMarker="revyguns" sayingMarker="revy_armsdealer" />
+                <state img="#-smoking.png" marker="tomoko_armsdealer">Guess you wanted to make it to thirty, right?  Yeah, I'm a gun runner, among other things.  Well, I'm the &lt;i&gt;guns&lt;/i&gt; for gun runners.</state>
+                <state img="#-mellow.png" marker="tomoko_armsdealer">Let's say I'm more of an &lt;i&gt;enforcer&lt;/i&gt; for arms dealers.  I don't handle much of the business side a' things...what made you quit the dream?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="tomoko" saidMarker="revyguns" sayingMarker="revy_guns" />
+                <state img="#-happy.png" marker="tomoko_guns1">...I don't know if you're ready to handle a Cutlass, kid.  Maybe start with a .22, or a BB gun?  ...Eh, y'know what, fuck it, sure.</state>
+                <state img="#-bored.png" marker="tomoko_guns1">&lt;i&gt;My Cutlasses aren't your personal toy, damn i--&lt;/i&gt;mmgh.  You're like a pug with stuffed-up nose...sure.  I'll help you hold it steady.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="tomoko" saidMarker="revyguns" sayingMarker="revy_weirdway" />
+                <state img="#-happy.png" marker="tomoko_weirdway">Do ya, now?  Suddenly I'm interested, kiddo.  What's your favorite make?</state>
+                <state img="#-happy.png" marker="tomoko_weirdway">I know a lotta girls who're gun nuts, but they're not so shy about it.  C'mon, kid, you've got my attention-- what's your favorite?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="florina" sayingMarker="revy_mean" />
                 <state img="#-bored.png">Oh, good, Flower Girl is fuckin' whining again.  Why don't you be useful and spread your ass instead?</state>
                 <state img="#-bored.png">&lt;i&gt;Blah, blah, blah, I'm a simpering little bitch and I pee myself when Revy uses big-girl words.&lt;/i&gt;  That's you, Flo.</state>
                 <state img="#-annoyed.png">You ever had to dig your first gun out of a dumpster, Princess?  Kiss my ass, and quit the fuckin' moaning.</state>
@@ -4196,6 +4276,11 @@
                 <condition role="other" character="spooky" saying="mansion" />
                 <state img="#-strip.png">I think I'll take a rain check on going anywhere a fuckin' ghost invites me to.  Not bein' scared of death doesn't mean I got a death wish.</state>
                 <state img="#-strip.png">How's going through a haunted house gonna make me rich?  I'm not goin' anywhere a ghost invites me to with a big shit-eating grin on her face.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="rainbow_dash" saying="bring" />
+                <state img="#-strip.png">I bring these babies &lt;i&gt;wherever&lt;/i&gt; I go, Rainbow.  They're part a' my work uniform--and I'm always on the job.</state>
+                <state img="#-strip.png">These're my work tools, Spats.  You never know when the next paycheck is gonna be for, say, popping an annoying rainbow-haired bitch.</state>
             </case>
             <case stage="0" alsoPlaying="9s">
                 <state img="#-strip.png">Nah, I'm your standard-issue Chinatown cunt.  I just picked up a gun and learned the hard way.</state>
@@ -11700,10 +11785,11 @@
                 <state img="#-laughing.png">See, Coyote?  You don't need fancy trick shot shit to win me over--just get your tits out!  I'm a simple girl!</state>
                 <state img="#-smug.png">Now &lt;i&gt;tits&lt;/i&gt; always make me feel better about a girl.  At least your Indian stripper outfit was light.</state>
             </case>
-            <case stage="0-9" target="florina">
+            <case stage="0-9">
+                <condition role="target" character="florina" />
                 <state img="#-pissed.png">What's so hard about it?  It's just tits!  I got 'em, too, and I didn't always get the fuckin' option to leave!</state>
                 <state img="#-serious.png">Listen up, Twinkletoes, life gets &lt;i&gt;way&lt;/i&gt; fuckin' harder than showing your tits off.  Sometimes people &lt;i&gt;make&lt;/i&gt; you get them out.</state>
-                <state img="#-serious.png">Undoing your bra is not fuckin' hard, Flowergirl.  Better that than a cop ripping it off of you.</state>
+                <state img="#-serious.png">Undoing your bra is not fuckin' hard, Flowergirl.  Better that than someone ripping it off of you.</state>
                 <state img="#-pissed.png">If you're really too pussy to show 'em, then just fuckin' beat it!  And remember that &lt;i&gt;some&lt;/i&gt; of us didn't always have that luxury!</state>
             </case>
             <case stage="0-9" target="jolyne">
@@ -11964,6 +12050,11 @@
         </trigger>
 
         <trigger id="female_medium_chest_is_visible">
+            <case stage="0-9">
+                <condition role="target" character="florina" />
+                <condition role="other" character="lucina" />
+                <state img="#-bored.png">&lt;i&gt;You--&lt;/i&gt;fine, fuckin' whatever.  As long as your crossdressing girlfriend's here, I'm not gonna get you to toughen up.</state>
+            </case>
             <case stage="0-9" target="amalia" targetStage="4">
                 <state img="#-smug.png">Yo, you gonna look me in the eye or what?  Is Haughty Princess Bitch suddenly fuckin' scared of me?</state>
                 <state img="#-annoyed.png">Looks like Jolly Green Buttslut is a little camera-shy.  &lt;i&gt;Or maybe she's just learning her place.&lt;/i&gt;</state>
@@ -12025,6 +12116,10 @@
             </case>
             <case stage="8" target="zone-tan">
                 <state img="#-interested.png">If you're going to just watch me, you may as well come over so I can grab a tit.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="florina" />
+                <state img="#-miffed.png">&lt;i&gt;Fuckin'--&lt;/i&gt;ugh.  This girl's supposed to ride a flying horse and skewer guys, and she's this sugary-sweet?  Makes no goddamn sense...</state>
             </case>
             <case stage="0">
                 <state img="#-interested.png">Okay, you ain't a slouch, but nothing I haven't seen.</state>
