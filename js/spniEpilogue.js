@@ -52,7 +52,7 @@ var winStr = "You've won the game, and some of your competitors might be ready f
 var winStrNone = "You've won the game!<br>We hope you enjoyed the game!  Be sure to play again sometime!";
 
 // Player lost the game. Currently no support for ending scenes when other players win.
-var lossStr = "We hope you enjoyed the game!  Be sure to play again sometime!";
+var lossStr = "Although you didn't win this time, we hope you had a good time anyway.<br>You were probably just unlucky, so be sure to give it another try soon!";
 
 // Player won the game, but epilogues are disabled.
 var winEpiloguesDisabledStr = winStrNone; // "You won... but epilogues have been disabled.";
