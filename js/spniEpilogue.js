@@ -54,6 +54,18 @@ epilogueContainer.addEventListener('click', function () {
   }
 });
 
+var $epilogueSkipSelector = $('#epilogue-skip-scene');
+$('#epilogue-skip').click(function (ev) {
+  ev.preventDefault();
+  ev.stopPropagation();
+  skipToEpilogueScene();
+});
+
+$epilogueSkipSelector.click(function (ev) {
+  ev.preventDefault();
+  ev.stopPropagation();
+})
+
 /************************************************************
  * Animation class. Used instead of CSS animations for the control over stopping/rewinding/etc.
  ************************************************************/
@@ -1034,6 +1046,18 @@ function loadEpilogue(epilogue) {
   $("#epilogue-spinner").show();
   epiloguePlayer = new EpiloguePlayer(epilogue);
   epiloguePlayer.load();
+
+  if (DEBUG) {
+    $('#epilogue-buttons .debug-only').addClass('debug-active');
+    $epilogueSkipSelector.empty();
+    for (var i = 0; i < epiloguePlayer.epilogue.scenes.length; i++) {
+      $epilogueSkipSelector.append($('<option>', {val: i, text: i+1}));
+    }
+  } else {
+    $('#epilogue-buttons .debug-only').removeClass('debug-active');
+
+  }
+
   updateEpilogueButtons();
 }
 
@@ -1065,6 +1089,14 @@ function moveEpilogueBack() {
     epiloguePlayer.revertDirective();
     updateEpilogueButtons();
   }
+}
+
+function skipToEpilogueScene () {
+  var scene = parseInt($epilogueSkipSelector.val(), 10);
+
+  if (isNaN(scene) || !epiloguePlayer || !epiloguePlayer.loaded) return;
+  epiloguePlayer.skipToScene(scene);
+  updateEpilogueButtons();
 }
 
 /************************************************************
@@ -1367,6 +1399,24 @@ EpiloguePlayer.prototype.revertDirective = function () {
       this.advanceDirective();
     }
   }
+}
+
+/**
+ * Skips to the start of a specific scene in an epilogue.
+ * 
+ * Intended only for use with Debug Mode.
+ */
+EpiloguePlayer.prototype.skipToScene = function (scene) {
+  if (this.activeTransition) { return; }
+
+  if (scene < 0) scene = 0;
+  if (scene >= this.epilogue.scenes.length) scene = this.epilogue.scenes.length-1;
+
+  this.waitingForAnims = false;
+  this.activeScene.view.haltAnimations(false);
+  this.sceneIndex = scene;
+  
+  this.setupScene(this.sceneIndex, true);
 }
 
 fromHex = function (hex) {
