@@ -342,8 +342,8 @@ function State($xml_or_state, parentCase) {
             }
         } else {
             this.marker.op = '=';
-            this.marker.name = markerOp;
-            this.marker.perTarget = (markerOp.substring(markerOp.length - 1, markerOp.length) === "*");
+            this.marker.perTarget = markerOp.endsWith('*');
+            this.marker.name = this.marker.perTarget ? markerOp.slice(0, -1) : markerOp;
             this.marker.val = 1;
         }
     }
@@ -601,9 +601,10 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         }
     case 'marker':
     case 'persistent':
+    case 'targetmarker':
         var markerName = split_fn[1];
         if (markerName) {
-            return player.getMarker(markerName, target, false) || "";
+            return player.getMarker(markerName, target, false, fn === 'targetmarker') || "";
         } else {
             return fn; //didn't supply a marker name
         }
@@ -742,9 +743,11 @@ function expandDialogue (dialogue, self, target, bindings) {
                 break;
             case 'marker':
             case 'persistent':
+            case 'targetmarker':
                 fn = fn_parts[0];  // make sure to keep the original string case intact 
-                if (fn) {                    
-                    substitution = self.getMarker(fn, target, false) || "";
+                if (fn) {
+                    /* if variable is 'targetmarker', specifically only look for per-target markers */
+                    substitution = self.getMarker(fn, target, false, variable.toLowerCase() === 'targetmarker') || "";
                 } else {
                     console.error("No marker name specified");
                 }
@@ -1572,7 +1575,7 @@ Case.prototype.checkConditions = function (self, opp) {
                 // The human player can't talk, and using
                 // saying/sayingMarker/pose on self would be circular.
                 if (p == self || p == humanPlayer) return false;
-                if (checkMarker(ctr.sayingMarker, p, ctr.role == "other" ? opp : null, true)) {
+                if (checkMarker(ctr.sayingMarker, p, p != opp ? opp : null, true)) {
                     volatileDependencies.add(p);
                 } else {
                     /* In case the condition could be violated by some
