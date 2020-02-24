@@ -1566,8 +1566,8 @@ Case.prototype.checkConditions = function (self, opp) {
                 && (ctr.timeInStage === undefined || inInterval(p.timeInStage, ctr.timeInStage))
                 && (ctr.hand === undefined || (handStrengthToString(p.hand.strength).toLowerCase() == ctr.hand.toLowerCase()))
                 && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, ctr.consecutiveLosses))
-                && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null))
-                && (ctr.notSaidMarker === undefined || !checkMarker(ctr.notSaidMarker, p, ctr.role == "other" ? opp : null));
+                && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, opp))
+                && (ctr.notSaidMarker === undefined || !checkMarker(ctr.notSaidMarker, p, opp));
         });
         var hasUpperBound = (ctr.count.max !== null && ctr.count.max < matches.length);
         if (ctr.sayingMarker !== undefined || ctr.saying !== undefined || ctr.pose !== undefined) matches = matches.filter(function(p) {
@@ -1575,7 +1575,7 @@ Case.prototype.checkConditions = function (self, opp) {
                 // The human player can't talk, and using
                 // saying/sayingMarker/pose on self would be circular.
                 if (p == self || p == humanPlayer) return false;
-                if (checkMarker(ctr.sayingMarker, p, p != opp ? opp : null, true)) {
+                if (checkMarker(ctr.sayingMarker, p, opp, true)) {
                     volatileDependencies.add(p);
                 } else {
                     /* In case the condition could be violated by some
