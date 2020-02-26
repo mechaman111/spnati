@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 5:52:15 p. m. on febrero 05, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 7:38:44 p. m. on febrero 25, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Rainbow</first>
@@ -92,7 +92,7 @@
         <trigger id="opponent_selected">
             <case stage="0">
                 <condition role="target" character="miko" />
-                <condition count="1-3" gender="male" />
+                <condition gender="male" />
                 <state img="#-laughing.png">Heh, you'll find balls in this table, that's for sure...</state>
             </case>
             <case stage="0">
@@ -2773,7 +2773,7 @@
                 <state img="#-bored.png">Sure, play this thing the boring way.</state>
                 <state img="#-whatever.png">I guess those have to come off before the good stuff, but couldn't you just keep 'em at home instead?</state>
                 <state img="#-whatever.png">We need to do something to make this game move faster...</state>
-                <state img="#-bored.png">I'll be able to do 10 laps to the running field before you take off something good at this rate...</state>
+                <state img="#-bored.png">I'll be able to do 10 laps on the running field before you take off something good at this rate...</state>
                 <state img="#-smug.png">Wanna see me go up that mountain and back?... Wanna see me do it again? It would be more fun than watching ~name~ take off another small thing...</state>
                 <state img="#-bored.png">Can you try &lt;i&gt;not&lt;/i&gt; being lame next time?</state>
                 <state img="#-whatever.png">Are you even counting that thing? &lt;i&gt;Lame&lt;/i&gt;</state>
@@ -3378,13 +3378,25 @@
         </trigger>
 
         <trigger id="game_over_defeat">
-            <case stage="9" priority="700">
+            <case stage="9" priority="999">
                 <condition role="self" saidMarker="pony_table" />
                 <condition role="target" character="human" />
                 <test expr="~rainbow_dash.slot~" value="3" />
                 <state img="#-ponyend.png" marker="pony_end" location="10%">{Rarity}Great game, let's do this again next week?{!reset}&lt;br&gt; {Twilight}For sure!{!reset}&lt;br&gt; {Rainbow}You got it!{!reset}&lt;br&gt;{Pinkie}Yay!{!reset}</state>
                 <state img="#-ponyend.png" marker="pony_end" location="10%">{Rarity}Everyone say goodbye to ~player~, girls...{!reset}&lt;br&gt;{Pinkie}Unless, of course, you prefer to join us in the next part of this party?{!reset}&lt;br&gt;</state>
                 <state img="#-ponyend.png" marker="pony_end" location="10%">{Twilight}Thanks for all your help girls, but I still need more information for my report{!reset}&lt;br&gt;{Rainbow}No prob, Princess! I'm sure we'll all be happy to help more, right ~player~?{!reset}</state>
+            </case>
+            <case stage="9" priority="999">
+                <condition role="other" character="pinkie_pie" sayingMarker="pony_end" />
+                <state img="custom:blank"></state>
+            </case>
+            <case stage="9" priority="999">
+                <condition role="other" character="twilight" sayingMarker="pony_end" />
+                <state img="custom:blank"></state>
+            </case>
+            <case stage="9" priority="999">
+                <condition role="other" character="rarity_eg" sayingMarker="pony_end" />
+                <state img="custom:blank"></state>
             </case>
             <case stage="9" priority="502">
                 <condition role="target" character="human" />
@@ -3418,18 +3430,6 @@
                 <state img="#-mybad.png">Well... today not only did I learn that zombies exist... but that they are pretty good at poker... That's one thing I never thought I'd say.</state>
             </case>
             <case stage="9">
-                <condition role="other" character="pinkie_pie" sayingMarker="pony_end" />
-                <state img="custom:blank"></state>
-            </case>
-            <case stage="9">
-                <condition role="other" character="twilight" sayingMarker="pony_end" />
-                <state img="custom:blank"></state>
-            </case>
-            <case stage="9">
-                <condition role="other" character="rarity_eg" sayingMarker="pony_end" />
-                <state img="custom:blank"></state>
-            </case>
-            <case stage="9">
                 <condition role="self" saidMarker="pony_table" />
                 <state img="#-glad.png">Well, I may have lost, but at least I did it in front of my friends. Good game everyone!</state>
                 <state img="#-oyeah.png">Great game, let's do this again next week?</state>
@@ -3451,12 +3451,1478 @@
         </trigger>
 
     </behaviour>
-    <epilogue hint="Win a game with Rainbow, Rarity, Pinkie and Twilight." gender="any" markers="pony_table" status="Unlisted">
+    <epilogue hint="Win a game with Rainbow, Rarity, Pinkie and Twilight." gender="any" markers="pony_table" img="epilogue-thumbnail.png">
         <title>The ride never ends</title>
-        <scene id="Wideshotpost" name="Wideshotpost" background="epilogue-bgfullroom.png" width="1000" height="750" />
-        <scene id="Explanation" name="Explanation" background="/opponents/pinkie_pie/bg2.png" width="1000" height="750">
-            <directive type="sprite" id="Twidisappointed" src="/opponents/twilight/0-disappointed.png" x="488" y="-29" pivotx="50%" pivoty="50%" />
-            <directive type="sprite" id="sunsetsad" src="epilogue-sssad.png" x="-147" y="-30" pivotx="50%" pivoty="50%" />
+        <scene id="Start" name="Start" background="epilogue-bgtable.png" width="1000" height="750">
+            <directive type="fade" color="#000000" alpha="100" />
+            <directive type="sprite" id="book" layer="1" src="epilogue-openbook.png" x="424" y="259" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="rd" layer="2" src="0-glad.png" x="-568" y="-347" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rarity" layer="2" src="/opponents/rarity_eg/0-start.png" x="953" y="-413" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="pinkie" layer="2" src="/opponents/pinkie_pie/0-happy.png" x="241" y="553" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="princesstwi" layer="3" src="/opponents/twilight/0-calm.png" x="1016" y="-187" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="sunset" layer="3" src="epilogue-ssintro.png" x="887" y="229" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="scitwi" layer="3" src="epilogue-sciintro.png" x="-496" y="-193" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="aj" layer="2" src="epilogue-ajintro.png" x="-450" y="-371" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="fs" src="epilogue-fsintro.png" x="956" y="-288" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="fade" time="2" alpha="0" />
+            <directive type="move" id="rd" time="1.5" x="644" y="-383" />
+            <directive type="move" id="rarity" delay="0.1" time="2" x="252" y="-345" />
+            <directive type="move" id="fs" delay="0.1" time="2" x="376" y="-397" />
+            <directive type="move" id="aj" delay="0.2" time="2" x="-26" y="-369" />
+            <directive type="move" id="pinkie">
+                <keyframe time="0.5" x="127" y="207" />
+                <keyframe time="1" x="127" y="207" />
+                <keyframe time="1.5" x="165" y="487" />
+                <keyframe time="1.51" src="/opponents/pinkie_pie/0-glad.png" x="-493" y="437" />
+                <keyframe time="1.52" x="-537" y="-345" />
+                <keyframe time="2" x="-206" y="-389" />
+            </directive>
+            <directive type="move" id="princesstwi" delay="0.3" time="2" x="444" y="-287" />
+            <directive type="move" id="sunset" time="2.5" x="116" y="-291" />
+            <directive type="move" id="scitwi" time="2" x="-112" y="-229" />
+            <directive type="wait" />
+            <directive type="text" id="text93" width="20%" arrow="up" x="7%" y="48%">Thanks for coming everyone!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text93" />
+            <directive type="text" id="text106" width="20%" arrow="up" x="66%" y="41%">And thanks for lending us your house for today Pinkie.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text106" />
+            <directive type="text" id="text136" width="20%" arrow="down" x="3%" y="1%">No problem!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text136" />
+            <directive type="text" id="text139" width="20%" arrow="up" x="32%" y="36%">So, did you bring the spellbook from Equestria, Twilight?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text139" />
+            <directive type="move" id="princesstwi" src="/opponents/twilight/0-happy.png" />
+            <directive type="text" id="text142" width="20%" arrow="up" x="64%" y="41%">Yeah, and you wouldn't believe how excited I got when Spike found it in the castle’s secret library room.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text142" />
+            <directive type="text" id="text148" width="20%" arrow="up" x="33%" y="42%">Same secret library than the one where we found out about the memory stone?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text148" />
+            <directive type="text" id="text151" width="20%" arrow="up" x="64%" y="43%">Exactly!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text151" />
+            <directive type="text" id="text160" width="20%" arrow="up" x="19%" y="26%">'Ah can tell that you're excited. But don't ya feel some introductions are still pending?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text160" />
+            <directive type="move" id="princesstwi" src="/opponents/twilight/0-interested.png" />
+            <directive type="text" id="text163" width="27%" arrow="up" x="60%" y="41%">Oh, right! Sorry about that. Applejack, Fluttershy, Sunset, this is ~player~!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text163" />
+            <directive type="text" id="text167" width="20%" arrow="up" x="64%" y="42%">The rest of you already know him.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text167" />
+            <directive type="text" id="text170" width="15%" arrow="down" x="47%" y="1%">Indeed</directive>
+            <directive type="text" id="text171" width="15%" arrow="up" x="78%" y="24%">Sure do!</directive>
+            <directive type="text" id="text172" width="15%" arrow="down" x="6%" y="1%">Yup!</directive>
+            <directive type="text" id="text173" width="20%" arrow="up" x="7%" y="47%">Correct!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="2" x="-184" y="-167" zoom="1.81" />
+            <directive type="wait" />
+            <directive type="text" id="text180" width="24%" arrow="down" x="34%" y="1%">Well then, my name is Applejack, pleasure to meet ya’.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text180" />
+            <directive type="camera" time="2" x="181" y="-251" zoom="3.01" />
+            <directive type="wait" />
+            <directive type="text" id="text187" width="20%" arrow="up" x="37%" y="60%">Hmmm… I’m… Fluttershy…</directive>
+            <directive type="pause" />
+            <directive type="move" id="sunset" src="epilogue-ssintro2.png" />
+            <directive type="clear" id="text187" />
+            <directive type="camera" time="2" x="-68" y="-108" zoom="1.81" />
+            <directive type="wait" />
+            <directive type="text" id="text194" width="20%" arrow="up" x="38%" y="60%">Hmmm… I don’t know, something about him feels sketchy, are you sure we can trust him, Twilight?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text194" />
+            <directive type="camera" time="2" x="0" y="0" zoom="1" />
+            <directive type="wait" />
+            <directive type="text" id="text200" width="20%" arrow="down" x="7%" y="19%">Of course!</directive>
+            <directive type="text" id="text201" width="20%" arrow="up" x="64%" y="42%">Of course!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="wait" />
+            <directive type="text" id="text204" width="20%" arrow="up" x="76%" y="24%">Don’t worry about it Sunset, we met ~player~ at one of Pinkie’s parties, and he is a pretty chill guy.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text204" />
+            <directive type="text" id="text207" width="20%" arrow="up" x="44%" y="29%">He indeed is, and you read what Twilight sent to you on your magical journal, we need someone who doesn’t have magic to make the spell work.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text207" />
+            <directive type="text" id="text211" width="52%" arrow="down" x="17%" y="2%">Alright then, but I’m keeping my eye on you in case you do something weird, alright?</directive>
+            <directive type="pause" />
+        </scene>
+        <scene transition="true" color="#000000" effect="fade" time="2" />
+        <scene id="spell" name="spell" background="epilogue-bgtable.png" y="-68" width="1000" height="750" zoom="4.61">
+            <directive type="sprite" id="book" src="epilogue-openbook.png" x="421" y="268" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="scitwi" src="epilogue-scimyst.png" x="-92" y="-360" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="princesstwi" src="/opponents/twilight/0-smart.png" x="18" y="-421" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rarity" src="/opponents/rarity_eg/0-start.png" x="-126" y="-177" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rainbow" layer="2" src="0-confident.png" x="568" y="-245" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="pinkie" src="/opponents/pinkie_pie/0-excited.png" x="616" y="-365" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="sunset" src="epilogue-ssintro2.png" x="372" y="-404" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="fs" src="epilogue-fsintro.png" x="315" y="-60" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="aj" src="epilogue-ajintro.png" x="82" y="-66" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="camera" delay="0.5" time="2" y="-177" zoom="1.91" />
+            <directive type="wait" />
+            <directive type="text" id="text220" width="24%" arrow="right" x="46%" y="15%">Are you sure this is the right one Twilight? Usually Equestrian spells don’t sound like a bunch of random gargling…</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text220" />
+            <directive type="text" id="text222" width="31%" arrow="left" x="34%" y="22%">It’s an incredibly old spell Sunset, pre-equestrian society had a lot of different languages, this must be one of those.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text222" />
+            <directive type="camera" time="2" x="257" y="-18" zoom="2.11" />
+            <directive type="wait" />
+            <directive type="text" id="text226" width="20%" arrow="right" x="26%" y="32%">Besides, what’s the worst thing that can…</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text226" />
+            <directive type="camera" ease="elastic" time="1" x="-257" y="-190" />
+            <directive type="text" id="text230" width="20%" arrow="down" x="15%" y="2%">Don’t say it! That’s usually when things go wrong!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text230" />
+            <directive type="camera" time="2" x="-236" y="82" />
+            <directive type="wait" />
+            <directive type="text" id="text234" width="20%" arrow="right" x="43%" y="46%">Ugh… let’s just give this thing a go already.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text234" />
+            <directive type="text" id="text237" width="20%" arrow="left" x="52%" y="9%">I agree, that's why we are all here for anyways...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text237" />
+            <directive type="move" id="sunset" src="epilogue-ssintro.png" />
+            <directive type="camera" delay="0.5" time="2" x="0" y="-177" zoom="1.91" />
+            <directive type="wait" />
+            <directive type="text" id="text243" width="20%" arrow="right" x="52%" y="27%">Alrighty then, here it goes...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text243" />
+            <directive type="move" id="sunset" src="epilogue-sscasting.png" scalex="0.58" />
+            <directive type="text" id="text249" width="20%" arrow="right" x="52%" y="26%">Ghuka, ghma laizetma…</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text249" />
+            <directive type="camera" time="2" x="0" y="0" zoom="1" />
+            <directive type="wait" />
+            <directive type="text" id="text255" width="20%" arrow="down" x="51%" y="29%">So Princess, mind if I ask what the spell is, and why do we need to be here?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text255" />
+            <directive type="text" id="text258" width="64%" arrow="up" x="1%" y="27%">Celestia says this is the spell that was used to give magic to non magic earth ponies millennia ago, we believe that with the boost of our 7 geodes combined, we can make it happen in this world too.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text258" />
+            <directive type="text" id="text262" width="20%" arrow="up" x="6%" y="60%">So you are saying that if this suceeds…</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text262" />
+            <directive type="text" id="text265" width="20%" arrow="up" x="79%" y="31%">~player~ is going to be able to do magically shooty things and stuff!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text265" />
+            <directive type="text" id="text268" width="20%" arrow="left" x="40%" y="8%">Hopefully more than that, Pinkie, but yeah.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text268" />
+            <directive type="camera" time="2" x="117" y="-231" zoom="3" />
+            <directive type="move" id="rainbow" delay="0.5" time="1.5" x="631" />
+            <directive type="wait" />
+            <directive type="text" id="text274" width="20%" arrow="right" x="22%" y="34%">Igman hornian SAAAAHH!!!</directive>
+            <directive type="pause" />
+            <directive type="move" id="princesstwi" x="-151" y="-419" />
+            <directive type="move" id="fs" x="333" y="111" />
+            <directive type="move" id="aj" x="120" y="127" />
+            <directive type="move" id="sunset" time="2" x="568" />
+            <directive type="clear" id="text274" />
+            <directive type="camera" time="2" x="11" y="-105" zoom="3.5" />
+            <directive type="wait" />
+            <directive type="move" id="book">
+                <keyframe time="0.5" x="421" y="264" rotation="2" />
+                <keyframe time="1" y="260" rotation="-2" />
+                <keyframe time="1.5" y="256" rotation="4" />
+                <keyframe time="1.6" y="252" rotation="-4" />
+                <keyframe time="1.65" rotation="2" />
+                <keyframe time="1.7" rotation="-2" />
+                <keyframe time="1.75" rotation="2" />
+                <keyframe time="1.8" rotation="-2" />
+                <keyframe time="1.85" rotation="2" />
+                <keyframe time="1.9" rotation="-2" />
+                <keyframe time="1.95" rotation="2" />
+                <keyframe time="2" rotation="-2" />
+            </directive>
+            <directive type="fade" delay="1" time="1" color="#FEFFFF" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene id="postspell" name="postspell" background="epilogue-bgtable.png" x="0" width="1000" height="750">
+            <directive type="fade" time="1.5" alpha="0" />
+            <directive type="sprite" id="table" src="epilogue-blownuptable.png" x="149" y="11" pivotx="50%" pivoty="50%" alpha="100" />
+            <directive type="sprite" id="book" layer="1" src="epilogue-openbook.png" x="423" y="254" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="playerbody" src="epilogue-playerbodybelow.png" x="307" y="329" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="playerboxers" layer="1" src="epilogue-playerboxers.png" x="333" y="517" scalex="0.9821429" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="blinkup" layer="15" src="epilogue-blink.png" x="470" y="500" scalex="35" scaley="33" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="blinkdown" layer="15" src="epilogue-blink.png" x="470" y="500" scalex="35" scaley="-33" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rainbow" src="0-sad.png" x="494" y="-377" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" rotation="-13" />
+            <directive type="sprite" id="rarity" src="epilogue-rarityworried.png" x="-109" y="-422" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="pinkie" layer="1" src="/opponents/pinkie_pie/0-sad.png" x="644" y="-343" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="fs" layer="1" src="epilogue-fsworried.png" x="-29" y="-354" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" rotation="13" />
+            <directive type="sprite" id="aj" layer="2" src="epilogue-ajworried.png" x="495" y="-231" scalex="0.65" scaley="0.65" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="scitwi" layer="2" src="epilogue-sciworried.png" x="-188" y="-265" scalex="0.65" scaley="0.65" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="Sunset" layer="3" src="epilogue-sunsetworried.png" x="-149" y="81" scalex="1.1" scaley="1.1" pivotx="50%" pivoty="50%" rotation="23" />
+            <directive type="sprite" id="twilight" layer="3" src="/opponents/twilight/0-sad.png" x="527" y="29" scalex="1.1" scaley="1.1" pivotx="50%" pivoty="50%" rotation="-23" />
+            <directive type="camera" x="0" y="119" zoom="1.51" />
+            <directive type="move" id="blinkup" delay="1.5">
+                <keyframe time="0.5" y="0" />
+                <keyframe time="1" y="500" />
+                <keyframe time="2" y="-453" />
+            </directive>
+            <directive type="move" id="blinkdown" delay="1.5">
+                <keyframe time="0.5" y="1000" />
+                <keyframe time="1" y="500" />
+                <keyframe time="2" y="1000" />
+            </directive>
+            <directive type="wait" />
+            <directive type="camera" time="1" x="0" y="0" zoom="1" />
+            <directive type="wait" />
+            <directive type="text" id="text73" width="20%" arrow="left" x="38%" y="15%">Oh no, oh no, oh no!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text73" />
+            <directive type="text" id="text92" width="20%" arrow="left" x="21%" y="24%">I told you not to say it, Rainbow!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text92" />
+            <directive type="text" id="text105" width="20%" arrow="right" x="41%" y="11%">Ugh, now this is my fault?!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text105" />
+            <directive type="text" id="text132" width="20%" arrow="right" x="49%" y="25%">Ya'll right down there, ~player~?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text132" />
+            <directive type="text" id="text135" width="20%" arrow="down" x="40%" y="86%">Don't worry girls, I'm fine.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text135" />
+            <directive type="text" id="text138" width="20%" arrow="right" x="0%" y="41%">That magic beam hit you directly, you blacked out for a couple minutes there...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text138" />
+            <directive type="text" id="text141" width="36%" arrow="left" x="26%" y="1%">And it destroyed your clothes... for the most part... </directive>
+            <directive type="pause" />
+            <directive type="clear" id="text141" />
+            <directive type="text" id="text145" width="20%" arrow="left" x="78%" y="48%">Are you sure you are ok, ~player~?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text145" />
+            <directive type="camera" time="2" x="0" y="-90" zoom="3.11" />
+            <directive type="move" id="fs" time="1" x="-106" />
+            <directive type="move" id="rainbow" time="2" x="526" />
+            <directive type="move" id="Sunset" time="2" x="-291" y="181" />
+            <directive type="move" id="twilight" time="2" x="642" y="187" />
+            <directive type="move" id="playerbody" time="2" y="424" />
+            <directive type="move" id="playerboxers" time="2" y="621" />
+            <directive type="wait" />
+            <directive type="text" id="test148" width="20%" arrow="down" x="38%" y="91%">I'm fine.</directive>
+            <directive type="sprite" id="myst" src="epilogue-pinkmist.png" x="274" y="212" scalex="0.3" scaley="0.2" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="myst" time="2" x="277" y="203" scalex="0.9" scaley="0.9" />
+            <directive type="pause" />
+            <directive type="clear" id="test148" />
+            <directive type="fade" time="1" color="#FEBCDB" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene id="Myst" name="Myst" background="epilogue-bgfullroomhigh.png" x="-58" y="-246" width="1000" height="750" zoom="3.01">
+            <directive type="fade">
+                <keyframe time="1" alpha="0" />
+            </directive>
+            <directive type="wait" />
+            <directive type="sprite" id="fs" src="epilogue-fsmysthead.png" x="537" y="-33" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="myst" layer="1" src="epilogue-pinkmist.png" x="-189" y="81" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="fs" ease="ease-out">
+                <keyframe time="2.3" x="264" />
+                <keyframe time="2.31" src="epilogue-fsmysthead2.png" />
+            </directive>
+            <directive type="move" id="myst" time="2" x="224" y="77" alpha="60" />
+            <directive type="wait" />
+            <directive type="text" id="text176" width="20%" arrow="right" x="75%" y="54%">Sure wasn't what I was expecting from the spell. Did you think it worked?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text176" />
+            <directive type="move" id="fs" time="2" x="-31" />
+            <directive type="sprite" id="princesstwi" src="epilogue-twimysthead.png" x="541" y="-33" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="princesstwi" delay="1" ease="ease-out" time="2.3">
+                <keyframe time="2.3" x="264" />
+                <keyframe time="2.31" src="epilogue-twimysthead2.png" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="text182" width="20%" arrow="right" x="78%" y="49%">Oh yeah! Do you think you can do the shooty magic-y stuff now?!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text182" />
+            <directive type="sprite" id="pinkie" src="epilogue-pinkiemysthead.png" x="546" y="-61" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="princesstwi" time="2" x="-2" />
+            <directive type="move" id="pinkie" delay="1" ease="ease-out">
+                <keyframe time="2.3" x="264" />
+                <keyframe time="2.31" src="epilogue-pinkiemysthead2.png" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="text188" width="20%" arrow="right" x="76%" y="59%">Well, he certainly doesn't look any more magic to me.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text188" />
+            <directive type="sprite" id="ss" src="epilogue-ssmysthead.png" x="541" y="-33" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="pinkie" time="2" x="-24" />
+            <directive type="move" id="ss" delay="1" ease="ease-out">
+                <keyframe time="2.3" x="264" />
+                <keyframe time="2.31" src="epilogue-ssmysthead2.png" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="text195" width="20%" arrow="right" x="77%" y="57%">Well am' just glad that he seems to be ok.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text195" />
+            <directive type="sprite" id="aj" src="epilogue-ajmysthead.png" x="541" y="-33" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="ss" time="2" x="-24" />
+            <directive type="move" id="aj" delay="1" ease="ease-out">
+                <keyframe time="2.3" x="264" />
+                <keyframe time="2.31" src="epilogue-ajmysthead2.png" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="text203" width="20%" arrow="right" x="77%" y="48%">I say whatever that spell was, it's evil, who could think of making a spell that destroys clothes!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text203" />
+            <directive type="sprite" id="rarity" src="epilogue-raritymysthead.png" x="541" y="-33" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="aj" time="2" x="-2" />
+            <directive type="move" id="rarity" delay="1" ease="ease-out">
+                <keyframe time="2.3" x="264" />
+                <keyframe time="2.31" src="epilogue-raritymysthead2.png" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="text210" width="20%" arrow="right" x="78%" y="52%">I personally find more suspicious the specific item that it &lt;i&gt;didn't&lt;/i&gt; destroy...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text210" />
+            <directive type="sprite" id="rd" src="epilogue-rdmysthead.png" x="541" y="-33" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="rarity" time="2" x="-39" />
+            <directive type="move" id="rd" delay="1" ease="ease-out">
+                <keyframe time="2.3" x="264" />
+                <keyframe time="2.31" src="epilogue-rdmysthead2.png" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="text217" width="20%" arrow="down" x="41%" y="5%">That said, I do think the spell had another effect...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text217" />
+            <directive type="move" id="rd" time="2" x="-2" />
+            <directive type="wait" />
+            <directive type="sprite" id="OwO" layer="3" src="epilogue-playerbulge.png" x="371" y="250" scalex="1.3" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="sci" src="epilogue-scimyst.png" x="218" y="-166" scalex="0.4" scaley="0.4" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="sci" ease="ease-out" time="2" x="212" y="-448" />
+            <directive type="move" id="OwO" ease="ease-out" time="2" y="147" scalex="1.3" scaley="1.3" />
+            <directive type="move" id="rd" x="460" y="157" scalex="0.5" scaley="0.5" />
+            <directive type="move" id="rarity" x="537" y="101" scalex="0.5" scaley="0.5" />
+            <directive type="move" id="aj" x="561" y="-8" scalex="0.5" scaley="0.5" />
+            <directive type="move" id="pinkie" x="3" y="172" scalex="0.5" scaley="0.5" />
+            <directive type="move" id="princesstwi" x="241" y="170" scalex="0.5" scaley="0.5" />
+            <directive type="move" id="fs" x="7" y="163" scalex="0.5" scaley="0.5" />
+            <directive type="wait" />
+            <directive type="move" id="ss" x="283" y="-27" scalex="0.3" scaley="0.3" />
+            <directive type="move" id="sci" time="1" scalex="0.3" scaley="0.3" />
+            <directive type="move" id="pinkie" time="1" x="143" y="9" scalex="0.3" scaley="0.3" />
+            <directive type="move" id="princesstwi" time="1" x="198" y="33" scalex="0.3" scaley="0.3" rotation="-18" />
+            <directive type="move" id="fs" time="1" x="177" y="-39" scalex="0.3" scaley="0.3" rotation="9.544525" />
+            <directive type="move" id="sci" src="epilogue-scimyst2.png" />
+            <directive type="move" id="ss" time="1" x="348" y="-47" scalex="0.3" scaley="0.3" rotation="23.54453" />
+            <directive type="move" id="rd" time="1" x="335" y="32" scalex="0.3" scaley="0.3" />
+            <directive type="move" id="rarity" time="1" x="395" y="31" scalex="0.3" scaley="0.3" />
+            <directive type="move" id="aj" time="1" x="406" y="-44" scalex="0.3" scaley="0.3" rotation="-13" />
+            <directive type="pause" />
+            <directive type="text" id="text235" width="20%" arrow="down" x="79%" y="41%">Rainbow, remind me, was he that… Ehem… Developed… back at Pinkie’s party…</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text235" />
+            <directive type="text" id="text238" width="20%" arrow="down" x="61%" y="60%">I don’t think so…</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text238" />
+            <directive type="text" id="text241" width="20%" arrow="down" x="3%" y="59%">Looks like you did grow a horn after all!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text241" />
+            <directive type="text" id="text244" width="20%" arrow="down" x="64%" y="12%">I think we’re going to investigate… A little closer…</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text244" />
+            <directive type="text" id="text248" width="20%" arrow="down" x="13%" y="19%">Y… Yes… I wan’t… to see it… too…</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text248" />
+            <directive type="text" id="text250" width="27%" arrow="down" x="16%" y="43%">I’m sorry ~player~, you know I’m usually more self restrained in public, but now I just can’t hold myself anymore.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text250" />
+            <directive type="fade" time="1.5" color="#FEBCDB" alpha="100" />
+            <directive type="wait" />
+            <directive type="text" id="text256" width="26%" alignmentx="right" alignmenty="top" x="65%" y="37%">Y’know, those 2 are probably gonna keep ~player~ busy for a while. In the meanwhile....
+</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text256" />
+            <directive type="text" id="text259" width="20%" alignmentx="right" alignmenty="top" x="62%" y="41%">Why don’t we have some fun ourselves?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text259" />
+            <directive type="text" id="text254" width="20%" alignmentx="right" alignmenty="top" x="96%" y="6%">Not much later...</directive>
+            <directive type="pause" />
+        </scene>
+        <scene id="fullroom" name="fullroom" background="epilogue-bgfullroom.png" x="-16" y="84" width="1000" height="750" zoom="1.31">
+            <directive type="sprite" id="playerbody" src="epilogue-player45body.png" x="162" y="459" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="playerdong" layer="1" src="epilogue-player45dong.png" x="355" y="550" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="Sunset" layer="2" src="epilogue-sunsetcowgirlmain.png" x="71" y="-186" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="sunsethead" layer="1" src="epilogue-sunsetcowgirlhead.png" x="189" y="132" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="sunsetchin" layer="3" src="epilogue-sunsetcowgirlchin.png" x="284" y="338" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="princess" layer="4" src="epilogue-princesscunn.png" x="353" y="178" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="leftlip" layer="5" src="epilogue-princesslips.png" x="559" y="690" scalex="0.9" scaley="0.8" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rightlip" layer="5" src="epilogue-princesslips.png" x="573" y="690" scalex="-0.9" scaley="0.8" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="tongue" layer="6" src="epilogue-playertongue.png" x="561" y="690" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="fsraritymain" layer="2" src="epilogue-fsspread.png" x="422" y="263" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="leftrarityleg" layer="3" src="epilogue-raritysanwichlowleg.png" x="708" y="70" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rightrarityleg" layer="3" src="epilogue-raritysanwichlowleg.png" x="882" y="70" scalex="-0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="leftfslip" layer="3" src="epilogue-fsclosedcrotch.png" x="822" y="437" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rightfslip" layer="3" src="epilogue-fsclosedcrotch.png" x="837" y="437" scalex="-0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="fspant" layer="4" src="epilogue-fspant.png" x="779" y="397" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rarityhair" layer="1" src="epilogue-raritybackhair.png" x="710" y="184" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="ajrd" src="epilogue-scissorend.png" x="-212" y="-83" scalex="0.4" scaley="0.4" pivotx="50%" pivoty="50%" />
+            <directive type="fade" time="2.5" alpha="0" />
+            <directive type="move" id="Sunset" loop="true" clamp="mirror" time="0.3" y="-162" />
+            <directive type="move" id="sunsethead" loop="true" clamp="mirror" time="0.3" y="147" />
+            <directive type="move" id="sunsetchin" loop="true" clamp="mirror" time="0.3" y="354" />
+            <directive type="move" id="princess" loop="true">
+                <keyframe time="1" y="176" />
+                <keyframe time="1.5" y="178" />
+            </directive>
+            <directive type="move" id="tongue" loop="true">
+                <keyframe time="1" y="667" alpha="100" />
+                <keyframe time="1.5" alpha="0" />
+            </directive>
+            <directive type="move" id="leftlip" loop="true" ease="ease-in">
+                <keyframe time="0.5" x="557" y="689" />
+                <keyframe time="1" x="559" y="689" />
+                <keyframe time="1.5" x="559" y="690" />
+            </directive>
+            <directive type="move" id="rightlip" loop="true" ease="ease-in">
+                <keyframe time="0.5" x="575" y="689" />
+                <keyframe time="1" x="573" y="689" />
+                <keyframe time="1.5" x="573" y="690" />
+            </directive>
+            <directive type="pause" />
+            <directive type="text" id="text60" width="20%" arrow="right" x="2%" y="29%">Oh yeah!</directive>
+            <directive type="text" id="text61" width="20%" arrow="left" x="73%" y="34%">Hmmm... Yes...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text60" />
+            <directive type="clear" id="text61" />
+            <directive type="text" id="text17" width="20%" arrow="left" x="72%" y="30%">You are even better than usual, ~player~.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text17" />
+            <directive type="text" id="text72" width="20%" arrow="right" x="1%" y="27%">Think this may be part of the spell?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text72" />
+            <directive type="text" id="text91" width="20%" arrow="left" x="73%" y="32%">Maybe, we'll need to keep investigating...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text91" />
+            <directive type="text" id="text104" width="20%" arrow="right" x="0%" y="20%">In the meanwhile, don't stop, ~player~. I feel like I'm about to...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text104" />
+            <directive type="fade" time="2" color="#FEFFFF" alpha="100" />
+            <directive type="wait" />
+            <directive type="text" id="text62" width="20%" arrow="right" x="7%" y="50%">OH YEAH!!!</directive>
+            <directive type="text" id="text63" width="20%" arrow="left" x="78%" y="50%">OH YEAH!!!</directive>
+            <directive type="clear" id="text62" />
+            <directive type="clear" id="text63" />
+            <directive type="fade" time="2" color="#FEFFFF" alpha="0" />
+            <directive type="sprite" id="cum" layer="1" src="/opponents/pinkie_pie/epiloguecum3points.png" x="349" y="598" scaley="-0.8" pivotx="50%" pivoty="50%" />
+            <directive type="stop" id="Sunset" />
+            <directive type="stop" id="tongue" />
+            <directive type="stop" id="leftlip" />
+            <directive type="stop" id="rightlip" />
+            <directive type="stop" id="princess" />
+            <directive type="stop" id="sunsethead" />
+            <directive type="stop" id="sunsetchin" />
+            <directive type="wait" />
+            <directive type="move" id="cum" ease="ease-in-out-cubic" time="2.5" x="352" y="625" />
+            <directive type="pause" />
+            <directive type="text" id="text115" width="20%" arrow="right" x="1%" y="23%">That was amazing...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text115" />
+            <directive type="text" id="text121" width="20%" arrow="left" x="75%" y="35%">It sure was...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text121" />
+            <directive type="text" id="text130" width="20%" arrow="right" x="60%" y="27%">Hey!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text130" />
+            <directive type="camera" time="2.5" x="230" y="-2" zoom="2.01" />
+            <directive type="move" id="ajrd" time="2.5" x="-610" />
+            <directive type="move" id="Sunset" time="2.5" x="-114" />
+            <directive type="move" id="sunsethead" time="2.5" x="5" />
+            <directive type="move" id="sunsetchin" time="2.5" x="100" />
+            <directive type="move" id="princess" time="2.5" x="113" />
+            <directive type="move" id="leftlip" time="2.5" x="321" />
+            <directive type="move" id="rightlip" time="2.5" x="335" />
+            <directive type="wait" />
+            <directive type="move" id="rarityhair" src="epilogue-raritysideface.png" x="705" y="182" scalex="0.7" />
+            <directive type="text" id="text133" width="20%" arrow="right" x="29%" y="30%">Don't think you're done yet, ~player~. You still haven't satisfied us...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text133" />
+            <directive type="sprite" id="fsface" src="epilogue-fluttershyface3.png" x="700" y="191" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="fsface" time="2" x="768" y="184" />
+            <directive type="wait" />
+            <directive type="text" id="text146" width="20%" arrow="down" x="77%" y="5%">... Yeah... If that's ok with you...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text146" />
+            <directive type="move" id="Sunset" src="epilogue-3somesunset.png" x="59" y="-642" scalex="0.3" scaley="0.4" />
+            <directive type="move" id="princess" src="epilogue-scitwiscared.png" x="96" y="-307" scalex="0.55" />
+            <directive type="wait" />
+            <directive type="move" id="Sunset" time="1.5" x="379" y="-646" />
+            <directive type="move" id="princess" time="1.5" x="355" y="-266" />
+            <directive type="wait" />
+            <directive type="text" id="text157" width="20%" arrow="up" x="22%" y="8%">Sorry girls, but I think we squeezed all of his fun for a bit.</directive>
+            <directive type="pause" />
+        </scene>
+        <scene transition="true" effect="push-down" time="1" />
+        <scene id="suntwileave" name="suntwileave" background="epilogue-bgfullroomhigh.png" x="230" y="-120" width="999" height="750" zoom="2.01">
+            <directive type="sprite" id="sunset" src="epilogue-sunsetpost.png" x="544" y="-387" scalex="0.4" scaley="0.4" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="hand" layer="1" src="epilogue-sunsetposthand.png" x="686" y="26" scalex="0.4" scaley="0.4" pivotx="50%" pivoty="50%" rotation="-23" />
+            <directive type="sprite" id="twi" layer="2" src="epilogue-twipost.png" x="375" y="-359" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="dong" layer="4" src="epilogue-playerdong.png" x="715" y="401" pivotx="50%" pivoty="50%" rotation="-81" />
+            <directive type="wait" />
+            <directive type="move" id="dong" time="1.5" y="347" rotation="0" />
+            <directive type="text" id="text169" width="20%" arrow="left" x="76%" y="23%">Or... I guess not.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text169" />
+            <directive type="move" id="hand" ease="ease-out">
+                <keyframe time="2" x="673" rotation="-140" />
+            </directive>
+            <directive type="text" id="text172" width="20%" arrow="right" x="6%" y="17%">Fascinating, it appears that the spell has increased ~player~'s stamina and semen production.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text172" />
+            <directive type="text" id="text175" width="20%" arrow="right" x="6%" y="17%">Come with me, Sunset, I’ll be taking some of the samples he's left inside your body for study.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text175" />
+            <directive type="text" id="text179" width="20%" arrow="right" x="5%" y="14%">As for your ~player~... Well if you want to go ahead, it would be hypocritical of us to deny it after we’ve already made you pleasure us.</directive>
+            <directive type="pause" />
+        </scene>
+        <scene transition="true" color="#000000" effect="fade" time="2" />
+        <scene id="sidekiss" name="sidekiss" background="epilogue-bgfullroomhigh.png" x="139" y="167" width="1000" height="750" zoom="4.51">
+            <directive type="sprite" id="raritybody" src="epilogue-raritysidebody.png" x="693" y="460" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="fsbody" layer="1" src="epilogue-fssidebody.png" x="677" y="526" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="fshead" layer="2" src="epilogue-fluttershysidehead.png" x="457" y="421" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rarityhead" layer="3" src="epilogue-raritysidefacekiss.png" x="500" y="322" pivotx="50%" pivoty="50%" rotation="-4" />
+            <directive type="sprite" id="fsarm" layer="3" src="epilogue-fssidearm.png" x="537" y="635" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rarityarm" layer="4" src="epilogue-raritysideupperarm.png" x="720" y="421" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rarityhand" layer="5" src="epilogue-raritysidehand.png" x="985" y="479" pivotx="50%" pivoty="50%" />
+            <directive type="wait" />
+            <directive type="move" id="rarityhead" time="2" x="502" y="334" rotation="0" />
+            <directive type="move" id="rarityhand" delay="1" time="2" x="843" />
+            <directive type="camera" delay="0.5" time="2" x="218" y="162" zoom="1.81" />
+            <directive type="wait" />
+            <directive type="stop" id="rarityhand" />
+            <directive type="stop" id="rarityhead" />
+            <directive type="pause" />
+            <directive type="text" id="text18" width="20%" arrow="up" x="23%" y="91%">Hmmm....</directive>
+            <directive type="move" id="fshead" loop="true" clamp="mirror" time="1" rotation="-1" />
+            <directive type="move" id="rarityhead" loop="true" clamp="mirror" time="1" rotation="2" />
+            <directive type="move" id="rarityhand" loop="true" clamp="mirror" time="1.5" x="841" rotation="-4" />
+            <directive type="move" id="fsarm" loop="true" clamp="mirror" time="1.3" rotation="-3" />
+            <directive type="pause" />
+            <directive type="clear" id="text18" />
+            <directive type="text" id="text58" width="20%" arrow="down" x="26%" y="0%">You make such wonderful faces when you are embarassed my dear...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text58" />
+            <directive type="text" id="text66" width="20%" arrow="down" x="24%" y="1%">I can't wait to see the face you make...</directive>
+            <directive type="stop" id="rarityhand" />
+            <directive type="wait" />
+            <directive type="move" id="rarityhand" time="2" x="986" rotation="-20" />
+            <directive type="pause" />
+        </scene>
+        <scene transition="true" effect="push-up" time="1" />
+        <scene id="flutterturn" name="flutterturn" background="epilogue-bgfullroom.png" x="203" y="145" width="1000" height="750" zoom="1.91">
+            <directive type="sprite" id="main" layer="2" src="epilogue-fsspread.png" x="268" y="374" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="crotchtop" layer="10" src="epilogue-fstopcrotch.png" x="268" y="374" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="leftlip" layer="7" src="epilogue-fsclosedcrotch.png" x="667" y="546" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rightlip" layer="7" src="epilogue-fsclosedcrotch.png" x="683" y="546" scalex="-0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="fshead" src="epilogue-fsface3.png" x="555" y="268" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rarityhead" src="epilogue-raritybackhair.png" x="548" y="281" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="leftleg" layer="3" src="epilogue-raritysanwichlowleg.png" x="545" y="185" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rightleg" layer="3" src="epilogue-raritysanwichlowleg.png" x="730" y="185" scalex="-0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="dong" layer="8" src="epilogue-playerdong.png" x="667" y="540" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="dong" loop="true" clamp="mirror">
+                <keyframe time="0.5" rotation="5" />
+                <keyframe time="1" rotation="0" />
+                <keyframe time="1.5" rotation="-5" />
+                <keyframe time="2" rotation="0" />
+            </directive>
+            <directive type="move" id="leftlip" loop="true" clamp="mirror">
+                <keyframe time="1" x="667" />
+                <keyframe time="1.5" x="665" />
+                <keyframe time="2" x="667" />
+            </directive>
+            <directive type="move" id="rightlip" loop="true" clamp="mirror">
+                <keyframe time="0.5" x="685" />
+                <keyframe time="1" x="683" />
+                <keyframe time="2" x="683" />
+            </directive>
+            <directive type="move" id="leftleg" loop="true" clamp="mirror" time="1" rotation="3" />
+            <directive type="move" id="rightleg" loop="true" clamp="mirror" time="1" rotation="-3" />
+            <directive type="move" id="fshead" loop="true" clamp="mirror" time="1.5" y="263" />
+            <directive type="move" id="rarityhead" loop="true" clamp="mirror" time="1.5" y="285" />
+            <directive type="text" id="text76" width="20%" arrow="right" x="7%" y="22%">When ~player~ actually puts it inside you...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text76" />
+            <directive type="text" id="text87" width="20%" arrow="right" x="8%" y="16%">So stop teasing her and show me how beautiful she looks while you are inside...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text87" />
+            <directive type="text" id="text102" width="20%" arrow="left" x="70%" y="24%">EEP!!!</directive>
+            <directive type="stop" id="rightlip" />
+            <directive type="stop" id="leftlip" />
+            <directive type="stop" id="dong" />
+            <directive type="stop" id="rarityhead" />
+            <directive type="stop" id="fshead" />
+            <directive type="wait" />
+            <directive type="move" id="fshead" src="epilogue-sandwichfsface2.png" x="539" y="236" scalex="0.5" scaley="0.38" />
+            <directive type="move" id="crotchtop" delay="0.1" alpha="100" />
+            <directive type="move" id="dong" ease="ease-out-in-cubic" time="2" y="504" />
+            <directive type="move" id="leftlip" ease="ease-out-in-cubic" time="1.5" x="655" scalex="-0.1" alpha="0" />
+            <directive type="move" id="rightlip" ease="ease-out-in-cubic" time="1.5" x="690" scalex="-0.1" alpha="0" />
+            <directive type="wait" />
+            <directive type="move" id="rarityhead" src="epilogue-raritysideface.png" x="521" y="292" scalex="0.65" scaley="0.55" />
+            <directive type="clear" id="text102" />
+            <directive type="text" id="text112" width="20%" arrow="right" x="5%" y="17%">Try to not go too hard on her, ~player~, you'll have me after her if you want to play rude...</directive>
+            <directive type="pause" />
+            <directive type="stop" id="fshead" />
+            <directive type="stop" id="crotchtop" />
+            <directive type="stop" id="dong" />
+            <directive type="stop" id="rarityhead" />
+            <directive type="wait" />
+            <directive type="move" id="rarityhead" src="epilogue-raritybackhair.png" x="548" y="285" scalex="0.6" scaley="0.6" />
+            <directive type="wait" />
+            <directive type="stop" id="rarityhead" />
+            <directive type="wait" />
+            <directive type="move" id="dong" loop="true" clamp="mirror" time="1" y="485" />
+            <directive type="move" id="main" loop="true" clamp="mirror" time="1" y="372" />
+            <directive type="move" id="crotchtop" loop="true" clamp="mirror" time="1" y="372" />
+            <directive type="move" id="rarityhead" delay="0.2" loop="true" clamp="mirror" time="1" y="283" />
+            <directive type="move" id="fshead" delay="0.3" loop="true" clamp="mirror" time="1" y="234" alpha="100" />
+            <directive type="clear" id="text112" />
+            <directive type="text" id="text128" width="20%" arrow="right" x="6%" y="20%">Just as beautiful as I expected, my dear</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text128" />
+            <directive type="text" id="text131" width="20%" arrow="left" x="69%" y="24%">Oh... This... Feels good...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text131" />
+            <directive type="text" id="text134" width="20%" arrow="right" x="7%" y="14%">You heard that, ~player~? I think that means you can go a little harder with her...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text134" />
+            <directive type="text" id="text137" width="20%" arrow="left" x="69%" y="30%">W... Wait... Wha...?!</directive>
+            <directive type="stop" id="rarityhead" />
+            <directive type="stop" id="fshead" />
+            <directive type="stop" id="main" />
+            <directive type="stop" id="crotchtop" />
+            <directive type="stop" id="leftleg" />
+            <directive type="stop" id="rightleg" />
+            <directive type="stop" id="dong" />
+            <directive type="wait" />
+            <directive type="move" id="dong" time="1" y="507" />
+            <directive type="wait" />
+            <directive type="stop" id="dong" />
+            <directive type="pause" />
+            <directive type="clear" id="text137" />
+            <directive type="move" id="dong" loop="true" clamp="mirror" time="0.15" y="482" />
+            <directive type="move" id="main" loop="true" clamp="mirror" time="0.15" y="370" />
+            <directive type="move" id="crotchtop" loop="true" clamp="mirror" time="0.15" y="370" />
+            <directive type="move" id="rarityhead" delay="0.1" loop="true" clamp="mirror" time="0.15" y="281" />
+            <directive type="move" id="fshead" delay="0.05" loop="true" clamp="mirror" time="0.15" y="232" />
+            <directive type="move" id="leftleg" loop="true" ease="ease-out-sin" clamp="mirror" time="0.3" rotation="-2" />
+            <directive type="move" id="rightleg" loop="true" ease="ease-out-sin" clamp="mirror" time="0.3" rotation="2" />
+            <directive type="text" id="text156" width="20%" arrow="left" x="71%" y="30%">GYYAAAHHH!!!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text156" />
+            <directive type="text" id="text159" width="20%" arrow="right" x="7%" y="18%">I think you may be overdoing it a bit dear, you should slow do...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text159" />
+            <directive type="text" id="text161" width="20%" arrow="left" x="72%" y="24%">NO!!! Don't you DARE slow down, ~player~...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text161" />
+            <directive type="text" id="text164" width="20%" arrow="left" x="74%" y="23%">JUST KEEP ON FUCKING ME LIKE THE &lt;i&gt;ANIMAL&lt;/i&gt; I AM!!!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text164" />
+            <directive type="text" id="text168" width="25%" arrow="right" x="2%" y="16%">Oh, Fluttershy! Such languange, I never would had expected you to be like this...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text168" />
+            <directive type="fade" time="2" color="#FEFFFF" alpha="100" />
+            <directive type="text" id="text171" width="20%" arrow="left" x="73%" y="29%">AAAAAHHHH!!!</directive>
+            <directive type="pause" />
+        </scene>
+        <scene id="Postflutter" name="Postflutter" background="epilogue-bgfullroom.png" x="203" y="145" width="1000" height="750" zoom="1.91">
+            <directive type="sprite" id="main" src="epilogue-sandwichmain.png" x="268" y="233" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="leftleg" src="epilogue-raritysanwichlowleg.png" x="541" y="180" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rightleg" src="epilogue-raritysanwichlowleg.png" x="728" y="180" scalex="-0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="dong" src="epilogue-playerdong.png" x="667" y="553" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="fade" time="2" alpha="0" />
+            <directive type="move" id="dong" ease="ease-in" time="2" y="598" />
+            <directive type="wait" />
+            <directive type="text" id="text178" width="20%" arrow="left" x="71%" y="25%">Oh dear! I... I'm sorry, I... I just don't know what got into me...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text178" />
+            <directive type="text" id="text181" width="20%" arrow="right" x="1%" y="16%">There's nothing to be sorry for, darling, you simply got caught in the moment...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text181" />
+            <directive type="text" id="text186" width="20%" arrow="right" x="1%" y="16%">And now that you've had your fun... I think is time for &lt;i&gt;my&lt;/i&gt; turn...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text186" />
+            <directive type="move" id="dong" ease="ease-in" time="2" y="501" />
+            <directive type="text" id="text191" width="20%" arrow="right" delay="2" x="2%" y="28%">Wait!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text191" />
+            <directive type="move" id="main" src="epilogue-sandwichmainspread.png" />
+            <directive type="text" id="text196" width="20%" arrow="right" x="1%" y="24%">I want it... &lt;i&gt;Here&lt;/i&gt;...</directive>
+            <directive type="pause" />
+        </scene>
+        <scene transition="true" effect="dissolve" time="2" />
+        <scene id="buttstuff" name="buttstuff" background="epilogue-bgfullroom.png" x="203" y="145" width="1000" height="750" zoom="1.91">
+            <directive type="sprite" id="main" layer="2" src="epilogue-analmain.png" x="268" y="374" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rarityface" layer="1" src="epilogue-raritysideface2.png" x="496" y="291" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="fsface" src="epilogue-sandwichfsface2.png" x="599" y="284" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="leftleg" layer="3" src="epilogue-raritysanwichlowleg.png" x="544" y="183" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rightleg" layer="3" src="epilogue-raritysanwichlowleg.png" x="731" y="183" scalex="-0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="butthole" layer="2" src="epilogue-analinserted.png" x="677" y="489" scalex="0.8" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="playerdong" layer="3" src="epilogue-playerdong.png" x="669" y="404" scalex="0.6" scaley="-0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="crotch" layer="4" src="epilogue-analcrotch.png" x="631" y="469" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" alpha="100" />
+            <directive type="move" id="playerdong" loop="true" clamp="mirror" time="1" y="438" />
+            <directive type="move" id="butthole" loop="true" clamp="mirror" time="1" y="489" scalex="1.1" scaley="0.7" />
+            <directive type="move" id="main" loop="true" clamp="mirror">
+                <keyframe time="1" y="376" />
+            </directive>
+            <directive type="move" id="crotch" loop="true" clamp="mirror" time="1" y="472" />
+            <directive type="move" id="rarityface" loop="true" clamp="mirror" time="1" rotation="3" />
+            <directive type="move" id="rightleg" loop="true" clamp="mirror" time="1" y="186" rotation="4" />
+            <directive type="move" id="leftleg" loop="true" clamp="mirror" time="1" y="186" rotation="-4" />
+            <directive type="move" id="fsface" loop="true" clamp="mirror" time="1" y="287" />
+            <directive type="text" id="text75" width="20%" arrow="left" x="77%" y="26%">Oh my...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text75" />
+            <directive type="text" id="text79" width="20%" arrow="left" x="76%" y="21%">Doesn't that hurt, Rarity?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text79" />
+            <directive type="text" id="text86" width="20%" arrow="right" x="0%" y="21%">Not at all dear, ~player~ is great at doing it like this, just as I expected...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text86" />
+            <directive type="text" id="text89" width="20%" arrow="right" x="0%" y="24%">In fact, ~player~, do me a favor...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text89" />
+            <directive type="camera" time="1.5" x="131" y="71" zoom="3.31" />
+            <directive type="wait" />
+            <directive type="stop" id="main" />
+            <directive type="stop" id="rarityface" />
+            <directive type="stop" id="fsface" />
+            <directive type="stop" id="rightleg" />
+            <directive type="stop" id="leftleg" />
+            <directive type="stop" id="playerdong" />
+            <directive type="stop" id="butthole" />
+            <directive type="stop" id="crotch" />
+            <directive type="wait" />
+            <directive type="move" id="rarityface" src="epilogue-raritysideface.png" x="498" y="300" />
+            <directive type="text" id="text99" width="20%" arrow="right" x="1%" y="39%">And go harder on me...</directive>
+            <directive type="move" id="fsface" src="epilogue-fluttershyface3.png" />
+            <directive type="pause" />
+            <directive type="clear" id="text99" />
+            <directive type="text" id="text122" width="20%" arrow="up" x="78%" y="72%">A... are you sure about that, Rarity?!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text122" />
+            <directive type="text" id="text125" width="20%" arrow="right" x="8%" y="44%">Do it.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text125" />
+            <directive type="camera" time="1" x="203" y="145" zoom="1.91" />
+            <directive type="wait" />
+            <directive type="move" id="rarityface" src="epilogue-raritysideface2.png" x="496" y="291" />
+            <directive type="wait" />
+            <directive type="move" id="main" loop="true" clamp="mirror" time="0.3" y="378" />
+            <directive type="move" id="rarityface" loop="true" clamp="mirror" time="0.3" rotation="0" />
+            <directive type="move" id="fsface" loop="true" clamp="mirror" time="0.3" y="290" />
+            <directive type="move" id="rightleg" loop="true" clamp="mirror" time="0.3" rotation="0" />
+            <directive type="move" id="leftleg" loop="true" clamp="mirror" time="0.3" rotation="0" />
+            <directive type="move" id="playerdong" loop="true" clamp="mirror" time="0.3" y="465" />
+            <directive type="move" id="crotch" loop="true" clamp="mirror" time="0.3" y="475" />
+            <directive type="move" id="butthole" loop="true" clamp="mirror" time="0.3" y="494" scalex="1.2" />
+            <directive type="pause" />
+            <directive type="text" id="text109" width="20%" arrow="right" x="2%" y="24%">My dear, you are a natural at this...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text109" />
+            <directive type="text" id="text113" width="20%" arrow="right" x="2%" y="25%">Now don't stop, I feel like I'm gonna..</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text113" />
+            <directive type="fade" time="1" color="#FEFFFF" alpha="100" />
+            <directive type="text" id="text118" width="20%" arrow="right" x="2%" y="29%">CUM!!!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text118" />
+        </scene>
+        <scene id="scissorend" name="scissorend" background="epilogue-bgfullroom.png" x="203" y="83" width="1000" height="750" zoom="3.11">
+            <directive type="fade" time="1" alpha="0" />
+            <directive type="sprite" id="main" layer="1" src="epilogue-sandwichmain.png" x="268" y="233" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="left leg" layer="2" src="epilogue-raritysanwichlowleg.png" x="543" y="182" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" rotation="9.385944" />
+            <directive type="sprite" id="right leg" layer="2" src="epilogue-raritysanwichlowleg.png" x="735" y="182" scalex="-0.6" scaley="0.6" pivotx="50%" pivoty="50%" rotation="-8.614056" />
+            <directive type="sprite" id="sprite4" layer="2" src="epilogue-analpie.png" x="674" y="471" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="right leg" loop="true" clamp="mirror" time="3" x="733" rotation="12" />
+            <directive type="move" id="left leg" loop="true" clamp="mirror" time="3" x="549" rotation="-12" />
+            <directive type="sprite" id="sprite95" src="epilogue-scissorend.png" x="-183" y="-107" scalex="0.45" scaley="0.45" pivotx="50%" pivoty="50%" />
+            <directive type="camera">
+                <keyframe time="2" x="203" y="145" zoom="1.91" />
+            </directive>
+            <directive type="wait" />
+            <directive type="text" id="text16" width="20%" arrow="right" x="0%" y="18%">Thank you very much, darling...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text16" />
+            <directive type="text" id="text37" width="20%" arrow="up" x="4%" y="5%">GAAAHH!!!</directive>
+            <directive type="text" id="text38" width="26%" arrow="up" x="45%" y="5%">OOOOHHH!!!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text37" />
+            <directive type="clear" id="text38" />
+            <directive type="camera" time="2" x="27" y="-154" zoom="1.71" />
+            <directive type="wait" />
+            <directive type="text" id="text97" width="20%" arrow="down" x="7%" y="11%">That was great...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text97" />
+            <directive type="text" id="text101" width="20%" arrow="down" x="75%" y="13%">Of course it was, I'm the best at everything!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text101" />
+            <directive type="text" id="text103" width="20%" arrow="down" x="76%" y="13%">Including this of course...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text103" />
+            <directive type="text" id="text107" width="26%" arrow="down" x="4%" y="5%">Hah! Don't get yourself too high there, Rainbow...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text107" />
+            <directive type="text" id="text111" width="30%" arrow="down" x="3%" y="5%">'Cuz I'm pretty sure 'ah made ya cum before you made &lt;i&gt;me&lt;/i&gt; cum...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text111" />
+            <directive type="text" id="text114" width="20%" arrow="down" x="76%" y="19%">You wish!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text114" />
+            <directive type="text" id="text117" width="51%" arrow="down" x="1%" y="3%">Hey! ~player~. Since it seems ya'll done there and your thing still seems to be wantin' more, why don't ya come 'ere and settle this score between us?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text117" />
+            <directive type="text" id="text120" width="26%" arrow="down" x="70%" y="4%">Yeah! I bet I can make him cum twice as fast as you can. Just watch and learn!</directive>
+            <directive type="pause" />
+        </scene>
+        <scene transition="true" color="#000000" effect="fade" time="3" />
+        <scene id="iwtcird" name="iwtcird" background="epilogue-bgfullroom.png" x="141" y="-142" width="1000" height="750" zoom="3.71">
+            <directive type="sprite" id="rainbowleftleg" layer="1" src="epilogue-iwtcirdlegs.png" x="609" y="-85" scalex="0.65" scaley="0.65" pivotx="50%" pivoty="50%" rotation="5" />
+            <directive type="sprite" id="rainbowrightleg" layer="1" src="epilogue-iwtcirdlegs.png" x="739" y="-85" scalex="-0.65" scaley="0.65" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rainbowbody" layer="2" src="epilogue-iwtcirdbody.png" x="552" y="-59" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rainbowcheek" layer="4" src="epilogue-iwtcirdcheek.png" x="729" y="0" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rainbowarms" layer="3" src="epilogue-iwtcirdarms.png" x="250" y="77" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rainbowhead" layer="5" src="epilogue-iwtcirdhead.png" x="427" y="19" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="player" src="epilogue-playernelsonbody.png" x="646" y="-706" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="playerdong" layer="3" src="epilogue-threequarterdong.png" x="709" y="19" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" rotation="-15" />
+            <directive type="sprite" id="rightsidearm" layer="5" src="epilogue-playerarm.png" x="856" y="-276" scalex="-0.6" scaley="0.6" pivotx="50%" pivoty="50%" rotation="204" />
+            <directive type="sprite" id="leftsidearm" layer="1" src="epilogue-playerarm.png" x="694" y="-293" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" rotation="-183" />
+            <directive type="sprite" id="sprite56" x="0" y="0" pivotx="50%" pivoty="50%" />
+            <directive type="text" id="text36" width="22%" arrow="left" x="75%" y="51%">What do you say, ~player~. Enjoying the view back there?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text36" />
+            <directive type="camera" time="3" x="206" y="-155" zoom="1.71" />
+            <directive type="wait" />
+            <directive type="text" id="text44" width="20%" arrow="right" x="2%" y="47%">Well, are you just gonna stand there or are you gonna do something, big boy?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text44" />
+            <directive type="move" id="playerdong" loop="true" clamp="mirror" time="1.5" x="687" y="19" rotation="1" />
+            <directive type="move" id="rainbowbody" loop="true" clamp="mirror" time="1.5" x="548" y="-59" rotation="-3" />
+            <directive type="move" id="rainbowcheek" loop="true" clamp="mirror" time="1.5" x="722" />
+            <directive type="move" id="rainbowrightleg" loop="true" clamp="mirror" time="1.5" rotation="-2" />
+            <directive type="move" id="rainbowleftleg" loop="true" clamp="mirror" time="1.5" rotation="6" />
+            <directive type="move" id="rainbowarms" loop="true" clamp="mirror" time="1.5" y="78" />
+            <directive type="move" id="rainbowhead" loop="true" clamp="mirror" time="1.5" x="425" y="23" />
+            <directive type="move" id="player" loop="true" clamp="mirror" time="1.5" x="641" y="-706" />
+            <directive type="move" id="rightsidearm" loop="true" clamp="mirror" time="1.5" rotation="208" />
+            <directive type="move" id="leftsidearm" loop="true" clamp="mirror" time="1.5" x="685" rotation="-183" />
+            <directive type="pause" />
+            <directive type="text" id="text55" width="20%" arrow="right" x="2%" y="52%">I bet you lack the flexibility to do something like this, AJ.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text55" />
+            <directive type="camera" time="2" x="198" y="-149" zoom="1.67" />
+            <directive type="sprite" id="aj" src="epilogue-ajiwtcird.png" x="130" y="-635" scalex="0.4" scaley="0.4" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="aj" time="2" x="287" />
+            <directive type="wait" />
+            <directive type="text" id="text65" width="21%" arrow="left" x="26%" y="1%">Perhaps, but just bein' able to do somethin' doesn't mean it's better...
+I don't even think ~player~ is liking it that much... </directive>
+            <directive type="pause" />
+            <directive type="clear" id="text65" />
+            <directive type="stop" id="rainbowarms" />
+            <directive type="stop" id="rainbowbody" />
+            <directive type="stop" id="rainbowcheek" />
+            <directive type="stop" id="rainbowhead" />
+            <directive type="stop" id="rainbowleftleg" />
+            <directive type="stop" id="rainbowrightleg" />
+            <directive type="stop" id="rightsidearm" />
+            <directive type="stop" id="leftsidearm" />
+            <directive type="stop" id="player" />
+            <directive type="stop" id="playerdong" />
+            <directive type="text" id="text70" width="20%" arrow="right" x="0%" y="57%">Oh yeah? Then how about...</directive>
+            <directive type="pause" />
+            <directive type="sprite" id="rdears" layer="5" src="epilogue-rdears.png" x="466" y="155" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="clear" id="text70" />
+            <directive type="move" id="playerdong" loop="true" clamp="mirror" time="0.3" x="709" y="19" rotation="-15" />
+            <directive type="move" id="rainbowbody" loop="true" clamp="mirror" time="0.3" x="552" y="-59" rotation="0" />
+            <directive type="move" id="rainbowcheek" loop="true" clamp="mirror" time="0.3" x="729" />
+            <directive type="move" id="rainbowrightleg" loop="true" clamp="mirror" time="0.3" rotation="0" />
+            <directive type="move" id="rainbowleftleg" loop="true" clamp="mirror" time="0.3" rotation="5" />
+            <directive type="move" id="rainbowarms" loop="true" clamp="mirror" time="0.3" y="77" />
+            <directive type="move" id="rainbowhead" loop="true" clamp="mirror" time="0.3" x="427" y="19" />
+            <directive type="move" id="player" loop="true" clamp="mirror" time="0.3" x="646" y="-706" />
+            <directive type="move" id="rightsidearm" loop="true" clamp="mirror" time="0.3" rotation="204" />
+            <directive type="move" id="leftsidearm" loop="true" clamp="mirror" time="0.3" x="694" rotation="-183" />
+            <directive type="text" id="text74" width="20%" arrow="right" x="4%" y="57%">This...</directive>
+            <directive type="pause" />
+            <directive type="move" id="rdears" loop="true" clamp="mirror">
+                <keyframe time="0.3" alpha="78" />
+                <keyframe time="0.6" alpha="0" />
+            </directive>
+            <directive type="clear" id="text74" />
+            <directive type="text" id="text85" width="13%" arrow="right" x="10%" y="57%">Ohh...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text85" />
+            <directive type="fade" time="1" color="#FEFFFF" alpha="100" />
+            <directive type="wait" />
+            <directive type="text" id="text90" width="20%" arrow="right" x="4%" y="57%">YEAH!</directive>
+            <directive type="pause" />
+        </scene>
+        <scene id="rainbownelson" name="rainbownelson" background="epilogue-bgfullroomhigh.png" x="206" y="-154" width="1000" height="750" zoom="1.71">
+            <directive type="sprite" id="rainbowbody" layer="1" src="9-mybad.png" x="364" y="-428" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" rotation="-10" />
+            <directive type="fade" time="1" alpha="0" />
+            <directive type="text" id="text63" width="20%" arrow="right" x="17%" y="24%">Oh whoops!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text63" />
+            <directive type="text" id="text67" width="20%" arrow="right" x="20%" y="21%">That wasn't supposed to happen...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text67" />
+            <directive type="camera" time="2" x="206" y="-273" zoom="3.91" />
+            <directive type="wait" />
+            <directive type="text" id="text69" width="20%" arrow="right" x="18%" y="25%">~player~, I hope you don't mi...</directive>
+            <directive type="clear" id="text69" delay="1.5" />
+            <directive type="sprite" id="rightarm" layer="3" src="epilogue-playerarm.png" x="764" y="106" scalex="-0.6" scaley="0.6" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="leftarm" layer="3" src="epilogue-playerarm.png" x="595" y="103" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="sprite" id="player" src="epilogue-playernelsonbody.png" x="655" y="-419" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="move" id="player" time="1" x="553" alpha="100" />
+            <directive type="move" id="rainbowbody" delay="1.5" src="epilogue-dashnelsonbody.png" x="364" y="-539" scalex="0.4" scaley="0.2" rotation="0" />
+            <directive type="move" id="rightarm" delay="1" time="0.5" x="754" y="1" alpha="100" rotation="-14.394" />
+            <directive type="move" id="leftarm" delay="1" time="0.5" x="594" y="-7" alpha="100" rotation="24.04062" />
+            <directive type="sprite" id="leftleg" delay="1.5" layer="3" src="epilogue-dashnelsonleg.png" x="198" y="37" scalex="0.4" scaley="0.5" pivotx="50%" pivoty="50%" rotation="-19" />
+            <directive type="sprite" id="rightleg" delay="1.5" layer="3" src="epilogue-dashnelsonleg.png" x="328" y="37" scalex="-0.4" scaley="0.5" pivotx="50%" pivoty="50%" rotation="19" />
+            <directive type="text" id="text88" width="20%" arrow="left" delay="1.5" x="71%" y="54%">WOAH!</directive>
+            <directive type="pause" />
+            <directive type="camera" time="1.5" y="-215" zoom="2.41" />
+            <directive type="sprite" id="playerpeen" layer="3" src="epilogue-playerdong.png" x="691" y="227" scalex="0.5" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="pusstop" layer="4" src="epilogue-dashnelsonpuss.png" x="679" y="192" scalex="0.45" scaley="0.52" pivotx="50%" pivoty="50%" />
+            <directive type="pause" />
+            <directive type="clear" id="text88" />
+            <directive type="move" id="rainbowbody" ease="ease-out-in-cubic" time="1.5" y="-503" />
+            <directive type="move" id="pusstop" ease="ease-out-in-cubic" time="1.5" y="228" />
+            <directive type="move" id="rightleg" ease="ease-out-in-cubic" time="1.5" y="74" rotation="35" />
+            <directive type="move" id="leftleg" ease="ease-out-in-cubic" time="1.5" y="74" rotation="-35" />
+            <directive type="move" id="rightarm" ease="ease-out-in-cubic" time="1.5" x="767" y="11" rotation="-23" />
+            <directive type="move" id="leftarm" ease="ease-out-in-cubic" time="1.5" x="598" y="11" rotation="23" />
+            <directive type="text" id="text100" width="20%" arrow="right" x="12%" y="39%">Wait... ~player~, I gotta...</directive>
+            <directive type="clear" id="text100" delay="1" />
+            <directive type="text" id="text154" width="20%" arrow="right" delay="1" x="15%" y="42%">AHHHH!!!...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text154" />
+            <directive type="move" id="rainbowbody" src="epilogue-dashnelsonbody2.png" />
+            <directive type="wait" />
+            <directive type="move" id="rainbowbody" loop="true" clamp="mirror" time="1" y="-521" />
+            <directive type="move" id="pusstop" loop="true" clamp="mirror" time="1" y="210" />
+            <directive type="move" id="rightleg" loop="true" clamp="mirror" time="1" y="56" rotation="45" />
+            <directive type="move" id="leftleg" loop="true" clamp="mirror" time="1" y="56" rotation="-45" />
+            <directive type="move" id="rightarm" loop="true" clamp="mirror" time="1" y="-7" rotation="-27" />
+            <directive type="move" id="leftarm" loop="true" clamp="mirror" time="1" y="-7" rotation="27" />
+            <directive type="move" id="player" loop="true" clamp="mirror" time="1" y="-440" />
+            <directive type="move" id="playerpeen" loop="true" clamp="mirror" time="1" y="225" scaley="0.9" />
+            <directive type="text" id="text110" width="20%" arrow="left" x="67%" y="38%">Oh my gosh, oh my gosh oh my gosh!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text110" />
+            <directive type="sprite" id="aj" src="epilogue-ajnelson.png" x="180" y="-477" scalex="0.4" scaley="0.4" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="aj" time="2" x="363" />
+            <directive type="wait" />
+            <directive type="text" id="text116" width="16%" arrow="right" x="1%" y="18%">Heh, enjoying yourself, sugarcube?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text116" />
+            <directive type="text" id="text124" width="20%" arrow="left" x="67%" y="33%">It's...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text127" width="20%" arrow="left" x="70%" y="39%">so...</directive>
+            <directive type="pause" />
+            <directive type="stop" id="rainbowbody" />
+            <directive type="stop" id="pusstop" />
+            <directive type="stop" id="rightleg" />
+            <directive type="stop" id="leftleg" />
+            <directive type="stop" id="rightarm" />
+            <directive type="stop" id="leftarm" />
+            <directive type="stop" id="player" />
+            <directive type="stop" id="playerpeen" />
+            <directive type="wait" />
+            <directive type="text" id="text119" width="20%" arrow="left" x="74%" y="45%">AWESOME!</directive>
+            <directive type="move" id="rainbowbody" loop="true" clamp="mirror" time="0.3" y="-503" />
+            <directive type="move" id="pusstop" loop="true" clamp="mirror" time="0.3" y="228" />
+            <directive type="move" id="rightleg" loop="true" clamp="mirror" time="0.3" y="74" rotation="35" />
+            <directive type="move" id="leftleg" loop="true" clamp="mirror" time="0.3" y="74" rotation="-35" />
+            <directive type="move" id="rightarm" loop="true" clamp="mirror" time="0.3" y="11" rotation="-23" />
+            <directive type="move" id="leftarm" loop="true" clamp="mirror" time="0.3" y="11" rotation="23" />
+            <directive type="move" id="player" loop="true" clamp="mirror" time="0.3" y="-419" />
+            <directive type="move" id="playerpeen" loop="true" clamp="mirror" time="0.3" y="227" scaley="0.6" />
+            <directive type="pause" />
+            <directive type="clear" id="text127" />
+            <directive type="clear" id="text119" />
+            <directive type="clear" id="text124" />
+            <directive type="fade" time="1" color="#FEFFFF" alpha="100" />
+            <directive type="wait" />
+            <directive type="stop" id="player" />
+            <directive type="stop" id="playerpeen" />
+            <directive type="stop" id="playerpeen" />
+            <directive type="stop" id="rainbowbody" />
+            <directive type="stop" id="rainbowbody" />
+            <directive type="stop" id="rightarm" />
+            <directive type="stop" id="rightleg" />
+            <directive type="stop" id="leftarm" />
+            <directive type="stop" id="leftleg" />
+            <directive type="move" id="player" x="649" y="-545" scalex="0.5" scaley="0.5" />
+            <directive type="fade" time="1" color="#FEFFFF" alpha="0" />
+            <directive type="camera" y="103" />
+            <directive type="sprite" id="sprite139" src="epilogue-rainbowpostnelson.png" x="38" y="196" scalex="0.4" scaley="0.4" pivotx="50%" pivoty="50%" />
+            <directive type="wait" />
+            <directive type="text" id="text140" width="20%" arrow="up" x="9%" y="8%">Hah! Looks like ~player~ was the one to make &lt;i&gt;you&lt;/i&gt; cum after all.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text140" />
+            <directive type="text" id="text144" width="20%" arrow="up" x="76%" y="77%">Oh...
+Shut...
+Up...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text144" />
+            <directive type="text" id="text147" width="20%" arrow="up" x="71%" y="74%">I wanna...
+See you...
+Try...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text147" />
+            <directive type="text" id="text150" width="20%" arrow="up" x="9%" y="17%">With pleasure.</directive>
+            <directive type="pause" />
+        </scene>
+        <scene transition="true" color="#000000" effect="fade" time="3" />
+        <scene id="AJboobjob" name="AJboobjob" background="epilogue-bgfullroom.png" x="208" y="-155" width="1000" height="750" zoom="1.71">
+            <directive type="sprite" id="playerbody" layer="1" src="epilogue-playerbodybelow.png" x="529" y="82" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rainbow" src="9-whatever.png" x="-100" y="-425" scalex="0.4" scaley="0.4" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="playerdeek" layer="3" src="epilogue-playerdong.png" x="698" y="214" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="boob" layer="4" src="epilogue-ajboob.png" x="689" y="193" scalex="0.45" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="boob2" layer="4" src="epilogue-ajboob.png" x="626" y="193" scalex="-0.45" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="arm" layer="5" src="epilogue-ajboobhand.png" x="616" y="182" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" rotation="38.03458" />
+            <directive type="sprite" id="arm2" layer="5" src="epilogue-ajboobhand.png" x="726" y="182" scalex="-0.8" scaley="0.8" pivotx="50%" pivoty="50%" rotation="-38.22043" />
+            <directive type="sprite" id="face" layer="2" src="epilogue-ajface2.png" x="603" y="-52" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="body" layer="1" src="epilogue-ajbody2.png" x="596" y="121" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="boob" loop="true" ease="smooth">
+                <keyframe time="0.5" x="684" y="193" />
+                <keyframe time="1.5" x="684" y="210" />
+                <keyframe time="2" x="684" y="196" />
+                <keyframe time="2.5" x="689" y="193" />
+            </directive>
+            <directive type="move" id="boob2" loop="true" ease="smooth">
+                <keyframe time="0.5" x="632" y="193" />
+                <keyframe time="1.5" x="632" y="210" />
+                <keyframe time="2" x="632" y="196" />
+                <keyframe time="2.5" x="626" y="193" />
+            </directive>
+            <directive type="move" id="arm" loop="true" ease="smooth">
+                <keyframe time="0.5" y="182" rotation="44" />
+                <keyframe time="1.5" y="199" rotation="44" />
+                <keyframe time="2" y="182" rotation="44" />
+                <keyframe time="2.5" y="182" rotation="38" />
+            </directive>
+            <directive type="move" id="arm2" loop="true" ease="smooth">
+                <keyframe time="0.5" y="182" rotation="-44" />
+                <keyframe time="1.5" y="199" rotation="-44" />
+                <keyframe time="2" y="182" rotation="-44" />
+                <keyframe time="2.5" y="182" rotation="-38" />
+            </directive>
+            <directive type="move" id="body" loop="true" ease="smooth">
+                <keyframe time="1.5" y="130" />
+                <keyframe time="2.5" y="121" />
+            </directive>
+            <directive type="move" id="face" loop="true">
+                <keyframe time="1.5" y="-28" />
+                <keyframe time="2.5" y="-52" />
+            </directive>
+            <directive type="text" id="text14" width="20%" arrow="left" x="67%" y="27%">For starters, I have a couple advantages that ya' can't use.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text14" />
+            <directive type="move" id="rainbow" time="2" src="9-whatever.png" x="99" y="-474" />
+            <directive type="text" id="text22" width="20%" arrow="left" x="16%" y="14%">Who cares...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text22" />
+            <directive type="text" id="text28" width="23%" arrow="left" x="69%" y="28%">Are ya' saying that you wouldn't give it a shot if you had the... assets to try it?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text28" />
+            <directive type="move" id="rainbow" src="9-annoyed.png" x="100" y="-443" />
+            <directive type="wait" />
+            <directive type="move" id="rainbow" delay="1" src="9-mybad.png" y="-523" />
+            <directive type="text" id="text57" width="20%" arrow="left" x="19%" y="16%">...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text57" />
+            <directive type="text" id="text32" width="25%" arrow="left" x="69%" y="30%">Thought so, but that said, you are right...
+They won't do the job alone...</directive>
+            <directive type="pause" />
+            <directive type="stop" id="face" />
+            <directive type="stop" id="body" />
+            <directive type="stop" id="boob" />
+            <directive type="stop" id="boob2" />
+            <directive type="stop" id="arm" />
+            <directive type="stop" id="arm2" />
+            <directive type="clear" id="text32" />
+            <directive type="move" id="face" src="epilogue-ajface3.png" />
+            <directive type="wait" />
+            <directive type="move" id="boob" loop="true" ease="smooth">
+                <keyframe time="0" x="684" y="196" />
+                <keyframe time="0.75" x="684" y="210" />
+                <keyframe time="1" x="684" y="196" />
+            </directive>
+            <directive type="move" id="boob2" loop="true" ease="smooth">
+                <keyframe time="0" x="632" y="196" />
+                <keyframe time="0.75" x="632" y="210" />
+                <keyframe time="1" x="632" y="196" />
+            </directive>
+            <directive type="move" id="arm" loop="true" ease="smooth">
+                <keyframe time="0" y="182" rotation="44" />
+                <keyframe time="0.75" y="199" rotation="44" />
+                <keyframe time="1" y="182" rotation="44" />
+            </directive>
+            <directive type="move" id="arm2" loop="true" ease="smooth">
+                <keyframe time="0" y="182" rotation="-44" />
+                <keyframe time="0.75" y="199" rotation="-44" />
+                <keyframe time="1" y="182" rotation="-44" />
+            </directive>
+            <directive type="move" id="body" loop="true" ease="smooth">
+                <keyframe time="0.75" y="130" />
+                <keyframe time="1" y="121" />
+            </directive>
+            <directive type="move" id="face" loop="true">
+                <keyframe time="0" y="-32" />
+                <keyframe time="0.75" y="-11" />
+                <keyframe time="1" y="-32" />
+            </directive>
+            <directive type="pause" />
+            <directive type="text" id="text43" width="20%" arrow="down" x="44%" y="87%">Ahh...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text43" />
+            <directive type="text" id="text51" width="20%" arrow="left" x="68%" y="37%">See? I don't remember him moaning while you were working him.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text51" />
+            <directive type="text" id="text54" width="20%" arrow="left" x="68%" y="34%">But before ya' think of finishing early on me...</directive>
+            <directive type="pause" />
+        </scene>
+        <scene transition="true" color="#FEFFFF" effect="fade" time="3" />
+        <scene id="AJcowgirl" name="AJcowgirl" background="epilogue-bgfullroom.png" x="208" y="-155" width="1000" height="750" zoom="1.71">
+            <directive type="fade" alpha="0" />
+            <directive type="sprite" id="rainbow" layer="1" src="9-bored.png" x="65" y="-485" scalex="0.4" scaley="0.4" pivotx="50%" pivoty="50%" rotation="17" />
+            <directive type="sprite" id="playerbody" src="epilogue-playerbodybelow.png" x="509" y="155" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="playerdong" layer="2" src="epilogue-playerdong.png" x="678" y="286" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="butt" layer="1" src="epilogue-ajcowgirlbutt.png" x="615" y="257" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="lowerbody" layer="3" src="epilogue-ajcowgirllowerbody.png" x="593" y="173" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="leftsidethight" layer="4" src="epilogue-ajcowgirltight.png" x="349" y="235" scalex="-0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rightsidethight" layer="4" src="epilogue-ajcowgirltight.png" x="577" y="235" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rightsideleg" layer="5" src="epilogue-ajcowgirllowerleg.png" x="703" y="174" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="leftsideleg" layer="5" src="epilogue-ajcowgirllowerleg.png" x="436" y="174" scalex="-0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="upperbody" layer="5" src="epilogue-AJcowgirlupper.png" x="400" y="-334" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rightboob" layer="6" src="epilogue-ajboob.png" x="607" y="144" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="leftboob" layer="6" src="epilogue-ajboob.png" x="667" y="144" scalex="-0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="emitter" id="emitter72" lifetime="1:2" startScaleX="0.1:0.5" speed="1:2" forceY="1:500" startAlpha="100" endAlpha="0" rate="0.5" x="448" y="233" pivotx="50%" pivoty="50%" rotation="-180.4712" />
+            <directive type="pause" />
+            <directive type="move" id="butt" ease="ease-out-in" time="2" y="297" />
+            <directive type="move" id="lowerbody" ease="ease-out-in" time="2" y="219" />
+            <directive type="move" id="rightsidethight" ease="ease-out-in" time="2" scalex="0.6" rotation="-26" />
+            <directive type="move" id="leftsidethight" ease="ease-out-in" time="2" scalex="-0.6" rotation="26" />
+            <directive type="move" id="leftsideleg" ease="ease-out-in" time="2" y="180" />
+            <directive type="move" id="rightsideleg" ease="ease-out-in" time="2" y="180" />
+            <directive type="move" id="upperbody" ease="ease-out-in" time="2" y="-293" />
+            <directive type="move" id="leftboob" ease="linear">
+                <keyframe time="1" y="167" />
+                <keyframe time="1.1" y="166" />
+                <keyframe time="1.3" y="167" />
+                <keyframe time="1.5" y="169" />
+                <keyframe time="2.1" y="185" />
+            </directive>
+            <directive type="move" id="rightboob" ease="linear">
+                <keyframe time="1" y="167" />
+                <keyframe time="1.1" y="166" />
+                <keyframe time="1.3" y="167" />
+                <keyframe time="1.5" y="169" />
+                <keyframe time="2.1" y="185" />
+            </directive>
+            <directive type="wait" />
+            <directive type="pause" />
+            <directive type="text" id="text78" width="20%" arrow="left" x="62%" y="22%">Oooohh... this is great...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text78" />
+            <directive type="text" id="text80" width="20%" arrow="left" x="62%" y="24%">Ready?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text80" />
+            <directive type="camera">
+                <keyframe time="0.5" y="-139" />
+                <keyframe time="1" y="-155" />
+            </directive>
+            <directive type="pause" />
+            <directive type="move" id="lowerbody" loop="true" ease="ease-out" clamp="mirror" time="1" y="209" />
+            <directive type="move" id="butt" loop="true" ease="ease-out" clamp="mirror" time="1" y="286" />
+            <directive type="move" id="rightsidethight" loop="true" ease="ease-out" clamp="mirror" time="1" scalex="0.55" rotation="-20" />
+            <directive type="move" id="leftsidethight" loop="true" ease="ease-out" clamp="mirror" time="1" scalex="-0.55" rotation="20" />
+            <directive type="move" id="leftsideleg" loop="true" ease="ease-out" clamp="mirror" time="1" y="178" />
+            <directive type="move" id="rightsideleg" loop="true" ease="ease-out" clamp="mirror" time="1" y="178" />
+            <directive type="move" id="upperbody" loop="true" ease="ease-out" clamp="mirror" time="1" y="-297" />
+            <directive type="move" id="rightboob" delay="0.2" loop="true" ease="ease-out" clamp="wrap">
+                <keyframe time="1" y="176" />
+                <keyframe time="1.1" y="175" />
+                <keyframe time="2" y="185" />
+            </directive>
+            <directive type="move" id="leftboob" delay="0.2" loop="true" ease="ease-out" clamp="wrap">
+                <keyframe time="1" y="176" />
+                <keyframe time="1.1" y="175" />
+                <keyframe time="2" y="185" />
+            </directive>
+            <directive type="pause" />
+            <directive type="text" id="text94" width="20%" arrow="right" x="15%" y="26%">Ahh...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text95" width="20%" arrow="down" x="39%" y="88%">Hmmm...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text96" width="20%" arrow="left" x="65%" y="26%">Oh...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="rainbow" src="9-annoyed.png" />
+            <directive type="move" id="emitter72" x="429" y="199" />
+            <directive type="wait" />
+            <directive type="text" id="text98" width="20%" arrow="left" x="18%" y="2%">Oh come on! You're barely even moving! I'm getting bored just watching you two...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text98" />
+            <directive type="stop" id="leftboob" />
+            <directive type="stop" id="rightboob" />
+            <directive type="stop" id="upperbody" />
+            <directive type="stop" id="lowerbody" />
+            <directive type="stop" id="leftsidethight" />
+            <directive type="stop" id="leftsideleg" />
+            <directive type="stop" id="rightsideleg" />
+            <directive type="stop" id="rightsidethight" />
+            <directive type="stop" id="butt" />
+            <directive type="text" id="text108" width="20%" arrow="left" x="62%" y="15%">Is that so? Then I guess we better step it up...</directive>
+            <directive type="move" id="upperbody" delay="0.5" time="1" y="-288" />
+            <directive type="move" id="rightboob" delay="0.5" time="1" y="194" />
+            <directive type="move" id="leftboob" delay="0.5" time="1" y="194" />
+            <directive type="pause" />
+            <directive type="clear" id="text108" />
+            <directive type="move" id="lowerbody" loop="true" clamp="mirror" time="0.2" y="225" />
+            <directive type="move" id="butt" loop="true" clamp="mirror" time="0.2" y="302" />
+            <directive type="move" id="leftsidethight" loop="true" clamp="mirror" time="0.2" scalex="-0.6" rotation="28" />
+            <directive type="move" id="rightsidethight" loop="true" clamp="mirror" time="0.2" scalex="0.6" rotation="-28" />
+            <directive type="move" id="leftsideleg" loop="true" clamp="mirror" time="0.2" y="181" />
+            <directive type="move" id="rightsideleg" loop="true" clamp="mirror" time="0.2" y="181" />
+            <directive type="move" id="rightboob" delay="0.1" loop="true" clamp="mirror" time="0.2" y="197" />
+            <directive type="move" id="leftboob" delay="0.1" loop="true" clamp="mirror" time="0.2" y="197" />
+            <directive type="move" id="upperbody" loop="true" clamp="mirror" time="0.2" y="-283" />
+            <directive type="text" id="text123" width="20%" arrow="left" x="64%" y="24%">AH...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text123" />
+            <directive type="text" id="text126" width="20%" arrow="left" x="67%" y="24%">AHH...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text126" />
+            <directive type="text" id="text129" width="20%" arrow="left" x="63%" y="23%">AAAAAHHHHH....!!!</directive>
+            <directive type="fade" delay="0.5" time="1" color="#F5F5F5" alpha="100" />
+            <directive type="pause" />
+            <directive type="clear" id="text129" />
+            <directive type="fade" time="1" alpha="0" />
+            <directive type="stop" id="lowerbody" />
+            <directive type="stop" id="upperbody" />
+            <directive type="stop" id="rightboob" />
+            <directive type="stop" id="leftboob" />
+            <directive type="stop" id="rightsidethight" />
+            <directive type="stop" id="leftsidethight" />
+            <directive type="stop" id="rightsideleg" />
+            <directive type="stop" id="leftsideleg" />
+            <directive type="stop" id="butt" />
+            <directive type="wait" />
+            <directive type="move" id="playerdong" src="epilogue-playerdongcum.png" />
+            <directive type="sprite" id="sprite136" layer="2" src="/opponents/pinkie_pie/epiloguecumlong.png" x="691" y="296" pivotx="50%" pivoty="50%" rotation="180" />
+            <directive type="sprite" id="sprite137" layer="2" src="/opponents/pinkie_pie/epiloguecumlong.png" x="694" y="296" scalex="-0.3" scaley="0.4" pivotx="50%" pivoty="50%" rotation="180" />
+            <directive type="move" id="sprite136" time="2" y="342" rotation="189" />
+            <directive type="move" id="sprite137" time="1.5" x="700" y="349" rotation="181" />
+            <directive type="pause" />
+            <directive type="move" id="lowerbody" time="2" y="167" />
+            <directive type="move" id="butt" time="2" y="244" />
+            <directive type="move" id="leftsidethight" time="2" x="347" y="234" scalex="-0.5" rotation="-3" />
+            <directive type="move" id="rightsidethight" time="2" scalex="0.5" rotation="3" />
+            <directive type="move" id="leftsideleg" time="2" y="173" />
+            <directive type="move" id="rightsideleg" time="2" y="173" />
+            <directive type="move" id="upperbody" time="2" y="-335" />
+            <directive type="move" id="leftboob" time="2" y="139" />
+            <directive type="move" id="rightboob" time="2" y="139" />
+            <directive type="wait" />
+            <directive type="emitter" id="emitter151" lifetime="0.5:1.1" startScaleX="0.1:0.5" startScaleY="2:3" forceY="200" startAlpha="100" endAlpha="0" rate="0.4" x="699" y="291" pivotx="50%" pivoty="50%" rotation="177.9546" />
+            <directive type="text" id="text153" width="20%" arrow="left" x="62%" y="11%">Yee-haw! That was great!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text153" />
+            <directive type="text" id="text155" width="20%" arrow="left" x="64%" y="11%">So who was better?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text155" />
+            <directive type="move" id="rainbow" src="9-laughing.png" x="77" y="-489" />
+            <directive type="move" id="emitter72" x="461" y="200" />
+            <directive type="text" id="text158" width="20%" arrow="left" x="19%" y="8%">Pfff... It's obious it was me.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text158" />
+            <directive type="text" id="text5" width="20%" arrow="left" x="66%" y="9%">I'm not sure that ~player~ agrees with you there...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text5" />
+            <directive type="text" id="text10" width="20%" arrow="left" x="21%" y="9%">Well I...</directive>
+            <directive type="text" id="text162" width="20%" arrow="left" delay="0.5" x="3%" y="54%">AAAH!!!
+</directive>
+            <directive type="clear" id="text10" delay="1.5" />
+            <directive type="pause" />
+            <directive type="clear" id="text162" />
+            <directive type="text" id="text11" width="20%" arrow="left" x="3%" y="54%">Not there Pinkie!</directive>
+        </scene>
+        <scene transition="true" effect="slide-right" time="0.5" />
+        <scene id="spreadingtwi" name="spreadingtwi" background="epilogue-bgfullroom.png" x="206" y="-155" width="1000" height="750" zoom="1.71">
+            <directive type="sprite" id="sprite14" src="epilogue-twispreadbase.png" x="268" y="-271" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="sprite15" layer="1" src="epilogue-twispreadlegs.png" x="493" y="326" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rightsidehand" src="epilogue-pinkehand.png" x="672" y="320" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="leftsidehand" src="epilogue-pinkehand.png" x="588" y="320" scalex="-0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="text" id="text21" width="20%" arrow="right" x="1%" y="38%">Hey, hate to interrupt you three...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text21" />
+            <directive type="text" id="text26" width="20%" arrow="right" x="-1%" y="37%">But I warmed her up for you, ~player~!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text26" />
+            <directive type="move" id="rightsidehand" time="2" x="685" />
+            <directive type="move" id="leftsidehand" time="2" x="579" />
+            <directive type="wait" />
+            <directive type="text" id="text31" width="20%" arrow="left" x="68%" y="15%">W... WHAT?! I can't take both at the same time!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text31" />
+            <directive type="text" id="text35" width="20%" arrow="right" x="0%" y="41%">Don't knock it till you try it!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text35" />
+            <directive type="text" id="text41" width="20%" arrow="right" x="1%" y="34%">And speaking of knocking stuff up, are you coming, ~player~?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text41" />
+            <directive type="fade" time="1" color="#000000" alpha="100" />
+            <directive type="text" id="text46" width="20%" arrow="right" x="77%" y="18%">Oh come on, you can't just leave us without an answer like that!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text46" />
+            <directive type="text" id="text49" width="20%" arrow="right" x="77%" y="49%">Let 'em have fun, Dash. I know another way we can settle this score. Now come here...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text49" />
+            <directive type="text" id="text52" width="20%" arrow="right" x="77%" y="27%">Oh... Applejack...</directive>
+            <directive type="pause" />
+        </scene>
+        <scene id="Pinkie/Player/Sci-Twi" name="Pinkie/Player/Sci-Twi" background="epilogue-bgfullroom.png" x="206" y="-155" width="1000" height="750" zoom="1.71">
+            <directive type="sprite" id="twibody" layer="3" src="epilogue-3sometwibody.png" x="629" y="142" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="glasses" layer="4" src="sci-twi_glasses.png" x="659" y="74" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="twilegs" layer="4" src="epilogue-3sometwileg.png" x="434" y="-22" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="playermeat" layer="5" src="epilogue-3somepeen.png" x="649" y="221" scalex="0.65" scaley="0.8" pivotx="50%" pivoty="50%" rotation="-4.056738" />
+            <directive type="sprite" id="pussupper" layer="5" src="epilogue-3someupperpuss.png" x="664" y="250" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" rotation="8" />
+            <directive type="sprite" id="twiface" layer="3" src="epilogue-twiface.png" x="618" y="-123" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="pinkieleftleg" layer="1" src="epilogue-3somepinkieleg.png" x="333" y="303" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="pinkierightleg" layer="1" src="epilogue-3somepinkieleg.png" x="619" y="304" scalex="-0.7" scaley="0.7" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="pinkiehead" src="epilogue-dppinkie.png" x="497" y="-65" scalex="0.6" scaley="0.6" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="basespread" layer="4" src="epilogue-3sometwispreadpussnass.png" x="661" y="217" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" rotation="6.814075" />
+            <directive type="sprite" id="dildo" layer="2" src="epilogue-3somedildo.png" x="622" y="162" scalex="0.8" scaley="0.7" pivotx="50%" pivoty="50%" rotation="4" />
+            <directive type="sprite" id="pinkiebody" src="epilogue-3somepinkiebody.png" x="599" y="251" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" rotation="3.142496" />
+            <directive type="move" id="dildo" loop="true" clamp="mirror" time="1" y="176" />
+            <directive type="move" id="pinkieleftleg" loop="true" clamp="mirror" time="1" rotation="5.150082" />
+            <directive type="move" id="pinkierightleg" loop="true" clamp="mirror" time="1" y="304" rotation="-5" />
+            <directive type="move" id="twilegs" loop="true" clamp="mirror" time="1" y="4" />
+            <directive type="move" id="twibody" loop="true" clamp="mirror" time="1" y="153" />
+            <directive type="move" id="twiface" loop="true" clamp="mirror" time="1" y="-107" />
+            <directive type="move" id="basespread" loop="true" clamp="mirror" time="1" y="238" />
+            <directive type="move" id="pussupper" loop="true" clamp="mirror" time="1" y="270" />
+            <directive type="move" id="pinkiehead" loop="true" clamp="mirror" time="1" y="-54" />
+            <directive type="move" id="playermeat" loop="true" clamp="mirror" time="1" y="215" />
+            <directive type="move" id="glasses" loop="true" clamp="mirror" time="1" y="93" rotation="-3" />
+            <directive type="fade" time="2" alpha="0" />
+            <directive type="text" id="text34" width="20%" arrow="right" x="3%" y="24%">Hehe! You took him like you were already used to him, Twily...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text34" />
+            <directive type="sprite" id="sprite37" src="/opponents/twilight/7-laughing.png" x="958" y="-515" scalex="0.4" scaley="0.4" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="sprite42" src="epilogue-3somesunset.png" x="26" y="-471" scalex="0.4" scaley="0.4" pivotx="50%" pivoty="50%" />
+            <directive type="camera" time="2" x="198" y="-148" zoom="1.66" />
+            <directive type="move" id="sprite37" time="2" x="642" y="-515" />
+            <directive type="move" id="sprite42" time="2" x="210" y="-498" />
+            <directive type="text" id="text40" width="20%" arrow="right" x="58%" y="6%">That's because she is!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text40" />
+            <directive type="text" id="text50" width="20%" arrow="right" x="4%" y="27%">Oooohhh, Twily!
+And I thought this would had been your first.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text50" />
+            <directive type="text" id="text47" width="20%" arrow="left" x="26%" y="7%">Hey everyone, we're back.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text47" />
+            <directive type="text" id="text53" width="20%" arrow="right" x="61%" y="2%">Remember that day at the beach, Pinkie? ~player~ took her first time that day...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text53" />
+            <directive type="text" id="text56" width="20%" arrow="right" x="25%" y="17%">But I had never taken it in the butt, even less from both places at the same &lt;i&gt;taaahhhime!&lt;/i&gt;</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text56" />
+            <directive type="text" id="text59" width="20%" arrow="right" x="5%" y="26%">Sounds like you are loving it though.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text59" />
+            <directive type="text" id="text64" width="20%" arrow="right" x="26%" y="26%">YEEESSS!!!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text64" />
+            <directive type="text" id="text68" width="20%" arrow="left" x="26%" y="1%">Good, cause the spell will force you to go until both parties cum once ~player~'s dick has entered someone</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text68" />
+            <directive type="text" id="text71" width="20%" arrow="right" x="23%" y="23%">What do you... Ahhh...</directive>
+            <directive type="stop" id="dildo" />
+            <directive type="stop" id="pinkieleftleg" />
+            <directive type="stop" id="pinkierightleg" />
+            <directive type="stop" id="twilegs" />
+            <directive type="stop" id="twibody" />
+            <directive type="stop" id="twiface" />
+            <directive type="stop" id="basespread" />
+            <directive type="stop" id="pussupper" />
+            <directive type="stop" id="pinkiehead" />
+            <directive type="stop" id="playermeat" />
+            <directive type="stop" id="glasses" />
+            <directive type="pause" />
+            <directive type="clear" id="text71" />
+            <directive type="move" id="twiface" time="0" src="epilogue-3sometwiface2.png" x="616" y="-121" scalex="0.8" scaley="0.8" />
+            <directive type="move" id="glasses" x="665" />
+            <directive type="wait" />
+            <directive type="move" id="dildo" loop="true" clamp="mirror" time="0.3" y="162" />
+            <directive type="move" id="glasses" loop="true" clamp="mirror">
+                <keyframe time="0.4" x="665" y="74" rotation="8" />
+                <keyframe time="0.6" x="665" y="93" rotation="-4" />
+            </directive>
+            <directive type="move" id="pinkieleftleg" loop="true" clamp="mirror" time="0.3" rotation="0.150082" />
+            <directive type="move" id="pinkierightleg" loop="true" clamp="mirror" time="0.3" y="304" rotation="0" />
+            <directive type="move" id="twilegs" loop="true" clamp="mirror" time="0.3" y="-22" />
+            <directive type="move" id="twibody" loop="true" clamp="mirror" time="0.3" y="142" />
+            <directive type="move" id="twiface" loop="true" clamp="mirror" time="0.3" src="epilogue-3sometwiface2.png" x="616" y="-136" scalex="0.8" scaley="0.8" />
+            <directive type="move" id="basespread" loop="true" clamp="mirror" time="0.3" y="217" />
+            <directive type="move" id="pussupper" loop="true" clamp="mirror" time="0.3" y="250" />
+            <directive type="move" id="pinkiehead" loop="true" clamp="mirror" time="0.3" y="-65" />
+            <directive type="move" id="playermeat" loop="true" clamp="mirror" time="0.3" y="221" />
+            <directive type="text" id="text77" width="20%" arrow="right" x="24%" y="16%">MEEEEAAAAAHHHNNN!!!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text77" />
+            <directive type="text" id="text81" width="20%" arrow="right" x="25%" y="28%">Ah!</directive>
+            <directive type="text" id="text82" width="20%" arrow="left" delay="0.5" x="74%" y="14%">Ah!</directive>
+            <directive type="text" id="text83" width="20%" arrow="right" delay="1" x="26%" y="16%">Ah!</directive>
+            <directive type="text" id="text83" width="20%" arrow="right" delay="1" x="26%" y="16%">Ah!</directive>
+            <directive type="text" id="text84" width="20%" arrow="left" delay="1.5" x="71%" y="31%">Ah!</directive>
+            <directive type="clear" id="text81" delay="1.5" />
+            <directive type="clear" id="text82" delay="2" />
+            <directive type="clear" id="text83" delay="2.5" />
+            <directive type="clear" id="text84" delay="3" />
+            <directive type="fade" delay="2" time="1" color="#FCFCFC" alpha="100" />
+            <directive type="pause" />
+        </scene>
+        <scene id="Wideshotpost" name="Wideshotpost" background="epilogue-bgfullroom.png" width="1000" height="750">
+            <directive type="camera" x="-273" y="-12" zoom="5.91" />
+            <directive type="wait" />
+            <directive type="fade" time="2" alpha="0" />
+            <directive type="camera" time="3" x="-35" y="-20" zoom="1.1" />
+            <directive type="sprite" id="pinkie" layer="5" src="epilogue-pinkiend.png" x="-214" y="-365" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="emitter" id="emitter8" layer="1" startScaleX="0.2" startScaleY="0.4" forceY="0:200" startAlpha="100" endAlpha="0" rate="0.5" x="84" y="473" pivotx="50%" pivoty="50%" rotation="-176.4237" />
+            <directive type="sprite" id="twi" src="epilogue-wideshottwi.png" x="-190" y="67" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="aj" layer="1" src="epilogue-ajwideshot.png" x="311" y="-118" scalex="0.45" scaley="0.45" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rd" layer="2" src="9-glad.png" x="30" y="-494" scalex="0.45" scaley="0.45" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rdcumpuddle" src="epilogue-cumpuddle.png" x="367" y="509" scalex="1.818182" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rdcumstring" layer="3" src="/opponents/pinkie_pie/epiloguecumlong.png" x="392" y="259" scaley="0" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="ajcum" src="epilogue-cumpuddle2.png" x="567" y="291" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="sandwich" layer="2" src="epilogue-sandwichmain.png" x="333" y="130" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="sandwichleftleg" layer="3" src="epilogue-raritysanwichlowleg.png" x="622" y="70" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" rotation="-7" />
+            <directive type="sprite" id="sandwichrightleg" layer="3" src="epilogue-raritysanwichlowleg.png" x="784" y="70" scalex="-0.5" scaley="0.5" pivotx="50%" pivoty="50%" rotation="7" />
+            <directive type="sprite" id="analpie" layer="3" src="epilogue-analpie.png" x="741" y="369" scalex="0.5" scaley="0.5" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="rdcumstring" delay="2" loop="true">
+                <keyframe time="1" x="392" y="266" scalex="0.6" scaley="-0.5" />
+                <keyframe time="2" x="393" y="495" />
+            </directive>
+            <directive type="wait" />
+            <directive type="pause" />
+        </scene>
+        <scene transition="true" color="#F4F4F4" effect="fade" time="3" />
+        <scene id="Explanation" name="Explanation" background="epilogue-bgtable.png" width="1000" height="750">
+            <directive type="sprite" id="Twidisappointed" layer="2" src="/opponents/twilight/7-sad.png" x="488" y="-29" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="table" src="epilogue-blownuptable.png" x="145" y="15" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="book" src="epilogue-openbook.png" x="420" y="270" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="sunsetsad" layer="2" src="epilogue-sssad.png" x="-85" y="-29" pivotx="50%" pivoty="50%" />
             <directive type="fade" alpha="0" />
             <directive type="wait" />
             <directive type="text" id="text4" width="20%" arrow="right" x="48%" y="41%">I'm so sorry everyone.</directive>
@@ -3470,27 +4936,28 @@
             <directive type="clear" id="text9" />
             <directive type="text" id="text12" width="20%" arrow="right" x="48%" y="31%">It was a spell that was used to repopulate the world after the windigo disaster during the foundation of Equestria</directive>
             <directive type="pause" />
-            <directive type="sprite" id="sunsetembarassed" src="0-Emberrassed.png" x="-151" y="-46" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="sunsetembarassed" src="epilogue-ssembarassed.png" x="-78" y="-32" pivotx="50%" pivoty="50%" />
             <directive type="move" id="sunsetsad" alpha="0" />
             <directive type="clear" id="text12" />
-            <directive type="text" id="text19" width="20%" arrow="left" x="30%" y="34%">That's why ~player~ was able to last for so long.</directive>
+            <directive type="text" id="text19" width="20%" arrow="left" x="35%" y="34%">That's why ~player~ has been able to last for so long.</directive>
             <directive type="pause" />
-            <directive type="sprite" id="sunsetexplain" src="epilogue-ss-explaining.png" x="-147" y="-31" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="sunsetexplain" src="epilogue-ss-explaining.png" x="-22" y="-25" pivotx="50%" pivoty="50%" />
             <directive type="move" id="sunsetembarassed" alpha="0" />
             <directive type="clear" id="text19" />
-            <directive type="text" id="text24" width="20%" arrow="left" x="28%" y="34%">It's basically a super-breeding spell</directive>
+            <directive type="text" id="text24" width="20%" arrow="left" x="35%" y="35%">It's basically a super-breeding spell</directive>
             <directive type="pause" />
             <directive type="clear" id="text24" />
-            <directive type="sprite" id="twiembarrased" layer="2" src="/opponents/twilight/0-awkward.png" x="518" y="-52" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="twiembarrased" layer="2" src="/opponents/twilight/7-awkward.png" x="518" y="-52" pivotx="50%" pivoty="50%" />
             <directive type="move" id="Twidisappointed" alpha="0" />
             <directive type="text" id="text29" width="20%" arrow="right" x="48%" y="31%">And it seems that one of the side-effects was to make everyone in the room horny as well.</directive>
             <directive type="pause" />
-            <directive type="sprite" id="sunset confident" layer="2" src="epilogue-ssconfident.png" x="-146" y="-37" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="sunsetexplain" alpha="0" />
+            <directive type="sprite" id="sunset confident" layer="2" src="epilogue-ssconfident.png" x="-36" y="-26" pivotx="50%" pivoty="50%" />
             <directive type="clear" id="text29" />
             <directive type="text" id="text33" width="20%" arrow="left" x="30%" y="26%">But according to the translation that Starswirl gave us when we asked him about it, the effects should be wearing off by now.</directive>
             <directive type="pause" />
             <directive type="clear" id="text33" />
-            <directive type="sprite" id="pinkie" src="/opponents/pinkie_pie/0-sad.png" x="926" y="-156" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="pinkie" src="/opponents/pinkie_pie/6-sad.png" x="926" y="-156" scalex="0.7" scaley="0.7" pivotx="50%" pivoty="50%" />
             <directive type="move" id="pinkie" ease="smooth" time="1" x="330" />
             <directive type="wait" />
             <directive type="text" id="text39" width="20%" arrow="right" x="31%" y="31%">Awww... And I didn't get to have fun with ~player~ before that...</directive>
@@ -3498,14 +4965,53 @@
         </scene>
         <scene transition="true" effect="push-right" time="0.5" />
         <scene id="Twifreakout" name="Twifreakout" background="epilogue-bgfullroom.png" width="1000" height="750">
-            <directive type="sprite" id="sci-twiscared" src="/opponents/twilight/epilogue_2-sci-twi2.png" x="-64" y="-29" pivotx="50%" pivoty="50%" />
-            <directive type="text" id="text42" width="20%" arrow="left" x="41%" y="33%">Wait a second, did you just say it was a spell specifically for &lt;i&gt;breeding&lt;/i&gt;?!</directive>
+            <directive type="emitter" id="emitter8" layer="2" lifetime="1.1:2.1" startScaleX="0.3" startScaleY="1" forceY="0:190" startAlpha="100" endAlpha="0" rate="0.5" x="485" y="289" pivotx="50%" pivoty="50%" rotation="179.076" />
+            <directive type="emitter" id="emitter9" delay="0.2" layer="1" lifetime="1.1:2.1" startScaleX="0.3" startScaleY="1" forceY="0:100" startAlpha="100" endAlpha="0" rate="0.5" x="610" y="302" pivotx="50%" pivoty="50%" rotation="179.076" />
+            <directive type="sprite" id="sci-twiscared" layer="3" src="epilogue-scitwiscared.png" x="-76" y="-21" pivotx="51%" pivoty="49%" />
+            <directive type="sprite" id="sprite11" src="epilogue-cumpuddle2.png" x="469" y="543" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rainbow" width="300" height="600" layer="2" src="9-bored.png" x="303" y="-27" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="rarity" width="230" height="450" layer="1" src="epilogue-rarityend.png" x="772" y="274" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="AJ" width="230" height="500" layer="1" src="epilogue-ajend.png" x="496" y="-66" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="flutter" width="350" height="800" layer="2" src="epilogues-flutterend.png" x="541" y="-94" pivotx="50%" pivoty="50%" />
+            <directive type="text" id="text42" width="20%" arrow="down" x="13%" y="6%">Wait a second, did you just say it was a spell specifically for &lt;i&gt;breeding&lt;/i&gt;?!</directive>
             <directive type="pause" />
             <directive type="clear" id="text42" />
             <directive type="text" id="text45" width="20%" arrow="right" x="74%" y="18%">Oh... Yeah... I hope you girls weren't ovulating...</directive>
             <directive type="pause" />
             <directive type="clear" id="text45" />
-            <directive type="text" id="text48" width="20%" arrow="right" x="76%" y="29%">Because this spell pretty much &lt;i&gt;guarantees&lt;/i&gt; to fertilize any ovum the spell's sperm enters on contact...</directive>
+            <directive type="text" id="text48" width="20%" arrow="right" x="76%" y="5%">Because this spell pretty much &lt;i&gt;guarantees&lt;/i&gt; to fertilize any ovum the spell's sperm enters on contact...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text48" />
+            <directive type="text" id="text8" width="20%" arrow="right" x="77%" y="17%">Were any of you on risky days?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text8" />
+            <directive type="camera" time="2" x="200" y="-14" zoom="3.572727" />
+            <directive type="wait" />
+            <directive type="text" id="text13" width="20%" arrow="right" x="11%" y="49%">I... Don't think so...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text13" />
+            <directive type="camera" time="2" x="-58" y="-276" zoom="4.5" />
+            <directive type="wait" />
+            <directive type="text" id="text20" width="20%" arrow="right" x="11%" y="43%">Nah...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text20" />
+            <directive type="camera" time="2" x="116" y="-227" zoom="5.3" />
+            <directive type="wait" />
+            <directive type="text" id="text25" width="20%" arrow="left" x="71%" y="42%">Phew... Close one.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text25" />
+            <directive type="camera" time="2" x="389" y="-10" zoom="4.51" />
+            <directive type="wait" />
+            <directive type="text" id="text30" width="20%" arrow="left" x="77%" y="45%">Can't get pregnant from the butt...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text30" />
+            <directive type="move" id="sci-twiscared" src="epilogue-scitwiend.png" />
+            <directive type="camera" time="2" x="0" y="0" zoom="1" />
+            <directive type="wait" />
+            <directive type="fade" time="3" color="#000000" alpha="100" />
+            <directive type="wait" />
+            <directive type="text" id="text38" width="20%" arrow="left" x="37%" y="42%">GAAAAAAAHHHHH!!!!</directive>
+            <directive type="pause" />
         </scene>
         <scene id="Credits" name="Credits" color="#000000" width="120" height="62">
             <directive type="fade" alpha="0" />
@@ -3572,11 +5078,11 @@
                 <keyframe time="6" alpha="0" />
             </directive>
             <directive type="wait" />
-            <directive type="fade" time="0.5" color="#000000" alpha="100" />
+            <directive type="fade" time="0.25" color="#000000" alpha="100" />
             <directive type="wait" />
         </scene>
         <scene id="Credits3" name="Credits3" color="#000000" width="120" height="62">
-            <directive type="fade" time="0.5" alpha="0" />
+            <directive type="fade" time="0.25" alpha="0" />
             <directive type="sprite" id="waves" src="epilogue-waves.png" x="-537" y="-150" scalex="0.2" scaley="0.1" pivotx="50%" pivoty="50%" />
             <directive type="move" id="waves" loop="true" clamp="clamp" time="6" x="-442" y="-150" />
             <directive type="sprite" id="sunset-frame" width="31" height="41" src="epilogue-sunset-frame.png" x="12" y="11" scalex="1" scaley="1" pivotx="50%" pivoty="50%" alpha="0" />
@@ -3613,11 +5119,11 @@
                 <keyframe time="6" alpha="0" />
             </directive>
             <directive type="wait" />
-            <directive type="fade" time="0.5" color="#000000" alpha="100" />
+            <directive type="fade" time="0.25" color="#000000" alpha="100" />
             <directive type="wait" />
         </scene>
         <scene id="Credits4" name="Credits4" color="#000000" width="120" height="62">
-            <directive type="fade" time="0.5" alpha="0" />
+            <directive type="fade" time="0.25" alpha="0" />
             <directive type="sprite" id="waves" src="epilogue-waves.png" x="-537" y="-150" scalex="0.2" scaley="0.1" pivotx="50%" pivoty="50%" />
             <directive type="move" id="waves" loop="true" clamp="clamp" time="6" x="-442" y="-150" />
             <directive type="sprite" id="end credits1" width="69" height="47" src="epilogue-end-credits.png" x="21" y="8" scalex="1" scaley="1" pivotx="50%" pivoty="50%" alpha="0" />
@@ -3633,6 +5139,11 @@
                 <keyframe time="5.5" alpha="0" />
             </directive>
             <directive type="wait" />
+            <directive type="text" id="text2" width="100%" x="0%" y="0%">My Little Pony: Friendship is Magic and Equestria Girls belong to Hasbro Entertainment. Characters are fair use.</directive>
+            <directive type="text" id="text1" width="100%" x="0%" y="80%">Credit for graphics DHX Media, Rainbow Rocks (2014)</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text1" />
+            <directive type="clear" id="text2" />
             <directive type="fade" time="0.5" color="#000000" alpha="100" />
             <directive type="pause" />
         </scene>
@@ -3642,10 +5153,17 @@
             <directive type="text" id="text3" width="20%" arrow="right" alignmentx="left" x="77%" y="54%">Hey!</directive>
             <directive type="pause" />
             <directive type="clear" id="text3" />
-            <directive type="move" id="angry pinkie" time="1" x="449" />
+            <directive type="move" id="angry pinkie">
+                <keyframe time="1" x="449" />
+            </directive>
             <directive type="wait" />
             <directive type="pause" />
-            <directive type="move" id="angry pinkie" time="2" x="-138" scalex="0.7" scaley="0.7" rotation="0" />
+            <directive type="move" id="angry pinkie">
+                <keyframe time="1" x="587" scalex="0.4" scaley="0.4" rotation="-25" />
+                <keyframe time="1.01" x="592" y="112" scalex="0.7" scaley="0.7" rotation="0" />
+                <keyframe time="1.02" x="-138" y="112" scalex="0.7" scaley="0.7" rotation="0" />
+                <keyframe time="2" x="-138" y="-403" scalex="0.7" scaley="0.7" rotation="0" />
+            </directive>
             <directive type="wait" />
             <directive type="text" id="text7" width="20%" arrow="left" x="60%" y="34%">You are not ending this epilogue without giving me some fun too!</directive>
             <directive type="pause" />
