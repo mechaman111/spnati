@@ -368,7 +368,11 @@ State.prototype.evaluateMarker = function (self, opp) {
         }
     } else {
         /* Process + and - ops */
-        var curVal = self.getMarker(this.marker.name, opp, true);
+        var curVal = self.getMarker(
+            this.marker.name,
+            this.marker.perTarget ? opp : null,
+            true
+        );
 
         if (this.marker.op === '+') {
             return !curVal ? 1 : curVal + 1;
