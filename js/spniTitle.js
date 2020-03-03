@@ -22,6 +22,7 @@ $titleCandy = [$("#left-title-candy"), $("#right-title-candy")];
  **********************************************************************/
 
 var CANDY_LIST = [
+/*
     "reskins/meia_cupid/0-disappointed.png",
     "reskins/meia_cupid/1-busy.png",
     "reskins/meia_cupid/2-pleased.png",
@@ -62,8 +63,7 @@ var CANDY_LIST = [
     "reskins/nagisa_maid_cafe/1-xstripping.png",
     "reskins/nagisa_maid_cafe/2-wink.png",
     "reskins/nagisa_maid_cafe/3-veryembarrassed.png",
-
-/*
+*/
     "9s/0-happy.png",
     "9s/1-excited.png",
     "9s/2-clever.png",
@@ -220,7 +220,6 @@ var CANDY_LIST = [
     "zone-tan/1-explain.png",
     "zone-tan/1-smirk.png",
     "zone-tan/2-stroking.png",
-*/
 ];
 
 var clothingChoices = [];
