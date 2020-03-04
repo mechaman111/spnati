@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 11:59:35 AM on March 04, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 6:55:22 PM on March 04, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Megumin</first>
@@ -605,10 +605,6 @@
                 <condition role="other" character="revy" notSaidMarker="megumin_mary" saying="talkin' goblins" />
                 <state img="#-fearful.png" marker="megumin_revy_mary_wrongQuestion">What was wrong with my answer? You asked, didn't you?!</state>
             </case>
-            <case stage="0-8" id="244" alsoPlaying="saki_zls" alsoPlayingSayingMarker="q_saki_badluck">
-                <condition role="other" character="saki_zls" sayingMarker="q_saki_badluck" />
-                <state img="#-awkward.png" marker="megumin_saki_badLuck">My party is quite well known for it's bad luck. Well, besides Kazuma that is. Aqua has the worst luck I've ever seen, however. I can't name any specific moment, because she's always having bad luck.</state>
-            </case>
             <case stage="0-8" oneShotId="39">
                 <condition role="other" character="nami" saidMarker="pirate" />
                 <condition role="other" character="revy" />
@@ -1191,6 +1187,10 @@
                 <condition role="self" saidMarker="megumin_learnShave" />
                 <condition role="other" character="natsuki" sayingMarker="megumin_shave" />
                 <state img="#-embarrassed.png" marker="megumin_natsuki_shaveDiscovery">I suppose that would help, It would be silly not to take advantage of a chance to learn something important. Perhaps we can talk later...</state>
+            </case>
+            <case stage="0-8" id="244" priority="101">
+                <condition role="other" character="saki_zls" sayingMarker="q_saki_badluck" />
+                <state img="#-awkward.png" marker="megumin_saki_badLuck">My party is quite well known for its bad luck. Well, besides Kazuma, that is. Aqua has the worst luck I've ever seen, however. I can't name any specific moment, because she's always having bad luck.</state>
             </case>
             <case stage="0-8">
                 <condition role="self" notSaidMarker="megumin_JuraBabies" />
@@ -6803,11 +6803,11 @@
         </trigger>
 
         <trigger id="female_crotch_will_be_visible">
-            <case stage="0-10" id="243" alsoPlaying="jura" alsoPlayingStage="6" alsoPlayingSayingMarker="tharja1">
+            <case stage="0-10" id="243" priority="542">
                 <condition role="target" character="tharja" sayingMarker="TharjaJuraBoob2" />
                 <condition role="other" character="meia" />
-                <condition role="other" character="jura" sayingMarker="tharja1" />
-                <state img="#-surprised.png" marker="megumin_jura_tharja_boobShrink">Amazing! What an amazing spell! I've never been so tempted to learn another spell beofre in my life!</state>
+                <condition role="other" character="jura" stage="6" sayingMarker="tharja1" />
+                <state img="#-surprised.png" marker="megumin_jura_tharja_boobShrink">Amazing! What an amazing spell! I've never been so tempted to learn another spell before in my life!</state>
             </case>
             <case stage="0-10" priority="500">
                 <condition role="target" character="shimakaze" />
@@ -7360,10 +7360,7 @@
                 <state img="#-awkward.png">Not another one...</state>
                 <state img="#-fearful.png">Again?!</state>
             </case>
-            <case stage="9" priority="0">
-                <state img="#-embarrassed.png">Ah... I see you are joining in?...</state>
-            </case>
-            <case stage="10">
+            <case stage="9-10" priority="0">
                 <state img="#-embarrassed.png">Ah... I see you are joining in?...</state>
             </case>
         </trigger>
@@ -7371,7 +7368,7 @@
         <trigger id="male_start_masturbating">
             <case stage="0-10">
                 <condition role="target" character="kazuma" />
-                <state img="#-horny.png">A&lt;i&gt;(This is embarrassing but exhilarating at the same time!... I can't believe I'm seeing this!)&lt;/i&gt;</state>
+                <state img="#-horny.png">&lt;i&gt;(This is embarrassing but exhilarating at the same time!... I can't believe I'm seeing this!)&lt;/i&gt;</state>
             </case>
             <case stage="0-10">
                 <state img="#-embarrassed.png">Oh jeez, I can’t believe this… I... suppose I might as well watch.</state>
@@ -8162,7 +8159,8 @@
         </trigger>
 
         <trigger id="finishing_masturbating">
-            <case stage="9" id="246" alsoPlaying="caulifla">
+            <case stage="9" id="246">
+                <condition role="other" character="caulifla" />
                 <state img="#-fearful.png" marker="megumin_caulifla_sayanExplode">W-What the?! What's with this power I'm sensing?! Is she going to explode?!</state>
             </case>
             <case stage="9">
