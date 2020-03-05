@@ -54,6 +54,38 @@ epilogueContainer.addEventListener('click', function () {
   }
 });
 
+var $epilogueSkipSelector = $('#epilogue-skip-scene');
+var $epilogueHotReloadBtn = $('#epilogue-reload');
+
+$epilogueHotReloadBtn.click(function (ev) {
+  ev.preventDefault();
+  ev.stopPropagation();
+  hotReloadEpilogue();
+})
+
+$('#epilogue-skip').click(function (ev) {
+  ev.preventDefault();
+  ev.stopPropagation();
+  skipToEpilogueScene();
+});
+
+$('#epilogue-exit').click(function (ev) {
+  ev.preventDefault();
+  ev.stopPropagation();
+  showRestartModal();
+});
+
+$epilogueSkipSelector.click(function (ev) {
+  ev.preventDefault();
+  ev.stopPropagation();
+});
+
+$(document).keyup(function (ev) {
+  if (epiloguePlayer && epiloguePlayer.loaded && ev.keyCode == 81 && DEBUG) {
+    $('#epilogue-debug-group').toggleClass('debug-active');
+  }
+});
+
 /************************************************************
  * Animation class. Used instead of CSS animations for the control over stopping/rewinding/etc.
  ************************************************************/
@@ -516,6 +548,7 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
         var width = parseInt($scene.attr("width"), 10);
         var height = parseInt($scene.attr("height"), 10);
         scene = {
+          name: $scene.attr("name") || null,
           background: $scene.attr("background"),
           width: width,
           height: height,
@@ -1030,10 +1063,31 @@ function doEpilogue() {
 /************************************************************
 * Starts up an epilogue, pre-fetching all its images before displaying anything in order to handle certain computations that rely on the image sizes
 ************************************************************/
-function loadEpilogue(epilogue) {
+function loadEpilogue(epilogue, loadToScene) {
   $("#epilogue-spinner").show();
   epiloguePlayer = new EpiloguePlayer(epilogue);
+  if (typeof loadToScene === "number") epiloguePlayer.hotReloadScene = loadToScene;
+
   epiloguePlayer.load();
+
+  if (DEBUG) {
+    $('#epilogue-debug-group').addClass('debug-active');
+    $epilogueSkipSelector.empty();
+    for (var i = 0; i < epiloguePlayer.epilogue.scenes.length; i++) {
+      var label = (i+1).toString();
+      if (epiloguePlayer.epilogue.scenes[i].name) {
+        label = label + ": " + epiloguePlayer.epilogue.scenes[i].name;
+      }
+
+      $epilogueSkipSelector.append($('<option>', {
+        val: i,
+        text: label
+      }));
+    }
+  } else {
+    $('#epilogue-debug-group').removeClass('debug-active');
+  }
+
   updateEpilogueButtons();
 }
 
@@ -1067,6 +1121,56 @@ function moveEpilogueBack() {
   }
 }
 
+function skipToEpilogueScene () {
+  var scene = parseInt($epilogueSkipSelector.val(), 10);
+
+  if (isNaN(scene) || !epiloguePlayer || !epiloguePlayer.loaded) return;
+  epiloguePlayer.skipToScene(scene);
+  updateEpilogueButtons();
+}
+
+/* Reloads an epilogue by re-fetching behaviour.xml, and reparsing the
+ * epilogue XML data.
+ */
+function hotReloadEpilogue () {
+  if (!epiloguePlayer || !epiloguePlayer.loaded) return;
+
+  $epilogueHotReloadBtn.attr('disabled', true);
+
+  /* Make sure to save state from the old EpiloguePlayer that we will need later.
+   */
+  var curScene = epiloguePlayer.sceneIndex;
+  var epilogueTitle = epiloguePlayer.epilogue.title;
+  var epilogueGender = epiloguePlayer.epilogue.gender;
+  var player = epiloguePlayer.epilogue.player;
+
+  /* Clean up the old EpiloguePlayer. */
+  clearEpilogue();
+
+  fetchCompressedURL('opponents/' + player.id + "/behaviour.xml")
+    /* Success callback.
+    * 'this' is bound to the Opponent object.
+    */
+    .then(function(xml) {
+      var $xml = $(xml);
+      var endingElem = null;
+
+      $xml.find('epilogue').each(function () {
+        if ($(this).find('title').html() === epilogueTitle && $(this).attr('gender') === epilogueGender) {
+          endingElem = this;
+        }
+      });
+
+      epilogue = parseEpilogue(player, endingElem);
+
+      epilogueContainer.dataset.background = -1;
+      epilogueContainer.dataset.scene = -1;
+
+      loadEpilogue(epilogue, curScene);
+      $epilogueHotReloadBtn.attr('disabled', false);
+    });
+}
+
 /************************************************************
  * Updates enabled state of buttons
  ************************************************************/
@@ -1082,6 +1186,12 @@ function updateEpilogueButtons() {
   $epiloguePrevButton.prop("disabled", !epiloguePlayer.hasPreviousDirectives());
   $epilogueNextButton.prop("disabled", !epiloguePlayer.hasMoreDirectives());
   $epilogueRestartButton.prop("disabled", epiloguePlayer.hasMoreDirectives());
+
+  if (DEBUG) {
+    $epilogueSkipSelector.val(
+      epiloguePlayer.sceneIndex < 0 ? 0 : epiloguePlayer.sceneIndex
+    );
+  }
 }
 
 /************************************************************
@@ -1102,6 +1212,7 @@ function EpiloguePlayer(epilogue) {
   this.views = [];
   this.viewIndex = 0;
   this.activeTransition = null;
+  this.hotReloadScene = null;
 }
 
 EpiloguePlayer.prototype.load = function () {
@@ -1148,7 +1259,19 @@ EpiloguePlayer.prototype.onLoadComplete = function () {
     this.views.push(new SceneView(container, 1, this.assetMap));
     container.append($("<div id='scene-fade' class='epilogue-overlay' style='z-index: 10000'></div>")); //scene transition overlay
     this.loaded = true;
-    this.advanceScene();
+    
+    if (
+      typeof this.hotReloadScene === "number" &&
+      this.hotReloadScene < this.epilogue.scenes.length
+    ) {
+      this.sceneIndex = this.hotReloadScene;
+      this.setupScene(this.sceneIndex, true);
+      this.hotReloadScene = null;
+      updateEpilogueButtons();
+    } else {
+      this.advanceScene();
+    }
+
     window.requestAnimationFrame(this.loop.bind(this));
   }
 }
@@ -1367,6 +1490,24 @@ EpiloguePlayer.prototype.revertDirective = function () {
       this.advanceDirective();
     }
   }
+}
+
+/**
+ * Skips to the start of a specific scene in an epilogue.
+ * 
+ * Intended only for use with Debug Mode.
+ */
+EpiloguePlayer.prototype.skipToScene = function (scene) {
+  if (this.activeTransition) { return; }
+
+  if (scene < 0) scene = 0;
+  if (scene >= this.epilogue.scenes.length) scene = this.epilogue.scenes.length-1;
+
+  this.waitingForAnims = false;
+  this.activeScene.view.haltAnimations(false);
+  this.sceneIndex = scene;
+  
+  this.setupScene(this.sceneIndex, true);
 }
 
 fromHex = function (hex) {
