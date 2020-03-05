@@ -17,5 +17,7 @@ git fetch upstream '+refs/heads/*:refs/remotes/upstream/*' '+refs/merge-requests
 
 # For some reason, git-merge doesn't support reading commit messages from stdin via '-F -'?
 git merge --no-ff --no-commit "${@/#/upstream\/merge-requests\/}"
-{ echo -e "Pull merge requests ${joined:2}\n" && git shortlog "${@/#/upstream\/master..upstream\/merge-requests\/}"; } | git commit -e --file=-
+{ echo -e "Pull merge requests ${joined:2}\n" && git shortlog "${@/#/upstream\/master..upstream\/merge-requests\/}"; } > .commit-msg
+git commit -eF .commit-msg
+rm .commit-msg
 
