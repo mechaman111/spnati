@@ -1869,6 +1869,8 @@ $('#bug-report-type').change(updateBugReportOutput);
 $('#bug-report-desc').change(updateBugReportOutput);
 $('#bug-report-copy-btn').click(copyBugReportOutput);
 
+$('.title-fullscreen-button, .table-fullscreen-button').on('click', toggleFullscreen);
+
  /************************************************************
   * The player clicked a bug-report button. Shows the bug reports modal.
   ************************************************************/
@@ -2464,6 +2466,14 @@ function forceTableVisibility(state) {
 		$gameTable.fadeIn();
 		tableOpacity = 1;
 	}
+}
+
+function toggleFullscreen() {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else {
+        document.documentElement.requestFullscreen();
+    }
 }
 
 /************************************************************
