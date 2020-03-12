@@ -1869,7 +1869,11 @@ $('#bug-report-type').change(updateBugReportOutput);
 $('#bug-report-desc').change(updateBugReportOutput);
 $('#bug-report-copy-btn').click(copyBugReportOutput);
 
-$('.title-fullscreen-button, .table-fullscreen-button').on('click', toggleFullscreen);
+if (document.fullscreenEnabled) {
+    $('.title-fullscreen-button, .table-fullscreen-button').on('click', toggleFullscreen);
+} else {
+    $('.title-fullscreen-button, .table-fullscreen-button').hide();
+}
 
  /************************************************************
   * The player clicked a bug-report button. Shows the bug reports modal.
