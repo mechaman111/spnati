@@ -19,46 +19,17 @@
 </head>
 
 <body onload="initialSetup()">
-    <!-- Warning Screen -->
-    <div id="warning-screen" class="screen-container" hidden>
+
+    <!-- Warning / Title Screen -->
+    <div id="title-screen" class="screen-container" hidden>
         <div class="screen">
 
-            <!-- Banner Flair -->
-            <button class="title-settings-button bordered smooth-button red banner-flair" onclick="showGameSettingsModal()">
-                <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-            </button>
-            <button class="bordered smooth-button red banner-flair title-bug-report-button"
-                onclick="showBugReportModal()">
-                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-            </button>
-            <a class="bordered reddit-button smooth-button red banner-flair" href="https://www.reddit.com/r/spnati/">
-                <img class="reddit-logo" src="img/reddit.png" alt="reddit" />
-            </a>
-            <button class="title-load-button bordered smooth-button red banner-flair"
-                onclick="showImportModal()">
-                <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
-            </button>
-            <button class="title-fullscreen-button bordered smooth-button red banner-flair">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-            </button>
-
-            <button id="warning-version-button" class="bordered smooth-button red banner-flair version-button">
-                <span class="substitute-version">Unknown Version</span><br>
-                <span class="substitute-version-time"></span>
-            </button>
-            <button class="title-help-button bordered smooth-button red banner-flair" onclick="showHelpModal()">
-                Help &amp; FAQ
-            </button>
-
-            <!-- Banner -->
-            <div class="title-banner-container">
-                <div class="bordered title-banner-area">
-                    <img class="bordered title-banner" src="img/title.png" alt="Strip Poker Night at the Inventory">
-                </div>
-            </div>
+            <!-- Title Candy -->
+            <img id="left-title-candy" class="title-candy" src="img/blank.png" alt="" hidden />
+            <img id="right-title-candy" class="title-candy" src="img/blank.png" alt="" hidden />
 
             <!-- Content -->
-            <div class="warning-container">
+            <div id="warning-container">
 
                 <div class="warning-text">
                     <p>This game contains material that is only suitable for adults.<br /><b style="color:#DD3333">If
@@ -98,55 +69,7 @@
 
             </div>
 
-
-        </div>
-    </div>
-
-
-    <!-- Title Screen -->
-    <div id="title-screen" class="screen-container" hidden>
-        <div class="screen">
-
-            <!-- Title Candy -->
-            <img id="left-title-candy" class="title-candy" src="img/blank.png" alt="" />
-            <img id="right-title-candy" class="title-candy" src="img/blank.png" alt="" />
-
-            <!-- Banner Flair -->
-            <button class="title-settings-button bordered smooth-button red banner-flair" onclick="showGameSettingsModal()">
-                <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-            </button>
-            <button class="bordered smooth-button red banner-flair title-bug-report-button"
-                onclick="showBugReportModal()">
-                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-            </button>
-            <a class="bordered reddit-button smooth-button red banner-flair" href="https://www.reddit.com/r/spnati/">
-                <img class="reddit-logo" src="img/reddit.png" alt="reddit" />
-            </a>
-            <button class="title-load-button bordered smooth-button red banner-flair"
-                onclick="showImportModal()">
-                <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
-            </button>
-            <button class="title-fullscreen-button bordered smooth-button red banner-flair">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-            </button>
-
-            <button id="title-version-button" class="bordered smooth-button red banner-flair version-button">
-                <span class="substitute-version">Unknown Version</span><br>
-                <span class="substitute-version-time"></span>
-            </button>
-            <button class="title-help-button bordered smooth-button red banner-flair" onclick="showHelpModal()">
-                Help / FAQ
-            </button>
-
-            <!-- Banner -->
-            <div class="title-banner-container">
-                <div class="bordered title-banner-area">
-                    <img class="bordered title-banner" src="img/title.png" alt="Strip Poker Night at the Inventory">
-                </div>
-            </div>
-
-            <!-- Content -->
-            <div class="main-title-container male">
+            <div id="main-title-container" class="male" style="display: none">
 
                 <!-- Player Name -->
                 <div id="title-name-block">
@@ -342,6 +265,41 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Banner Flair -->
+            <button class="title-settings-button bordered smooth-button red banner-flair" onclick="showGameSettingsModal()">
+                <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+            </button>
+            <button class="bordered smooth-button red banner-flair title-bug-report-button"
+                onclick="showBugReportModal()">
+                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+            </button>
+            <a class="bordered reddit-button smooth-button red banner-flair" href="https://www.reddit.com/r/spnati/">
+                <img class="reddit-logo" src="img/reddit.png" alt="reddit" />
+            </a>
+            <button class="title-load-button bordered smooth-button red banner-flair"
+                onclick="showImportModal()">
+                <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+            </button>
+            <button class="title-fullscreen-button bordered smooth-button red banner-flair">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+            </button>
+
+            <button id="title-version-button" class="bordered smooth-button red banner-flair version-button">
+                <span class="substitute-version">Unknown Version</span><br>
+                <span class="substitute-version-time"></span>
+            </button>
+            <button class="title-help-button bordered smooth-button red banner-flair" onclick="showHelpModal()">
+                Help &amp; FAQ
+            </button>
+
+            <!-- Banner -->
+            <div class="title-banner-container">
+                <div class="bordered title-banner-area">
+                    <img class="bordered title-banner" src="img/title.png" alt="Strip Poker Night at the Inventory">
+                </div>
+            </div>
+
         </div>
     </div>
 

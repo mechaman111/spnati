@@ -10,7 +10,8 @@
 
 $titlePanels = [$("#title-panel-1"), $("#title-panel-2")];
 $nameField = $("#player-name-field");
-$titleContainer = $('.main-title-container');
+$warningContainer = $('#warning-container');
+$titleContainer = $('#main-title-container');
 $sizeBlocks = $('.title-size-block');
 $clothingTable = $("#title-clothing-table");
 $warningLabel = $("#title-warning-label");

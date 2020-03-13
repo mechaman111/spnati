@@ -1412,7 +1412,7 @@ function initialSetup () {
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
 
 	/* show the title screen */
-	$warningScreen.show();
+	$titleScreen.show();
 	$('#warning-start-button').focus();
     autoResizeFont();
 
@@ -1697,8 +1697,9 @@ function detectBrokenOffline() {
 }
 
 function enterTitleScreen() {
-    $warningScreen.hide();
-    $titleScreen.show();
+    $warningContainer.hide();
+    $titleContainer.show();
+    $('.title-candy').show();
     $('#title-start-button').focus();
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
 }
