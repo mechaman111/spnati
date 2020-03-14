@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 3:47:31 AM on January 27, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 4:32:15 AM on March 04, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Marth</first>
     <last />
     <label>Marth</label>
     <label stage="1">Lucina</label>
-    <gender>male</gender>
+    <gender>female</gender>
     <size>small</size>
     <timer>25</timer>
     <intelligence stage="1">good</intelligence>
@@ -83,35 +83,43 @@
         <trigger id="game_start">
             <case stage="0" priority="200">
                 <test expr="~background~" value="beach" />
-                <state img="#-interested.png">O-oh? This game involves undressing? I guess that makes sense, we are at the beach after all.</state>
-                <state img="#-interested.png">Hmmm... this game is just an unusual way to get ourselves ready for swimming, correct?</state>
+                <state img="#-interested.png" set-gender="male">O-oh? This game involves undressing? I guess that makes sense, we are at the beach after all.</state>
+                <state img="#-interested.png" set-gender="male">Hmmm... this game is just an unusual way to get ourselves ready for swimming, correct?</state>
             </case>
             <case stage="0" priority="101">
                 <condition count="1" filter="florina" />
                 <condition count="1" filter="catria" />
-                <state img="#-calm.png">It seems I find myself in the company of two pegasus knights. You may call me Marth.</state>
-                <state img="#-calm.png">Hmm... your uniform's nationality may be unknown to me, but I know pegasus knights when I see them.</state>
-                <state img="#-calm.png">You two are both pegasus knights, are you not? I have some experience fighting alongside them on the battlefield where I come from.</state>
+                <state img="#-calm.png" set-gender="male">It seems I find myself in the company of two pegasus knights. You may call me Marth.</state>
+                <state img="#-calm.png" set-gender="male">Hmm... your uniform's nationality may be unknown to me, but I know pegasus knights when I see them.</state>
+                <state img="#-calm.png" set-gender="male">You two are both pegasus knights, are you not? I have some experience fighting alongside them on the battlefield where I come from.</state>
             </case>
-            <case stage="0" alsoPlaying="captain_falcon" notSaidMarker="cap_f_notice_0" priority="100">
-                <state img="#-angry.png" marker="cap_f_notice_0">Wait... C-Captain Falcon? What's this dastard doing here?</state>
+            <case stage="0" priority="100">
+                <condition role="self" notSaidMarker="cap_f_notice_0" />
+                <condition role="other" character="captain_falcon" />
+                <state img="#-angry.png" marker="cap_f_notice_0" set-gender="male">Wait... C-Captain Falcon? What's this dastard doing here?</state>
             </case>
-            <case stage="0" alsoPlaying="catria">
-                <state img="#-shocked.png">Yes, I am indeed Marth. Hmm... I'm sorry, but have we met before?</state>
-                <state img="#-happy.png">Yes, you stand before Marth himself. ...If you don't mind me asking, should I know you?</state>
+            <case stage="0">
+                <condition role="other" character="catria" />
+                <state img="#-shocked.png" set-gender="male">Yes, I am indeed Marth. Hmm... I'm sorry, but have we met before?</state>
+                <state img="#-happy.png" set-gender="male">Yes, you stand before Marth himself. ...If you don't mind me asking, should I know you?</state>
             </case>
             <case stage="0">
                 <condition role="other" character="florina" />
-                <state img="#-calm.png">&lt;i&gt;(Interesting, that girl is clearly a pegasus knight, and yet her uniform is not of a style I have ever seen before.)&lt;/i&gt;</state>
-                <state img="#-calm.png">&lt;i&gt;(Hmm... if I'm not mistaken, based on her clothing that girl seems to be a pegasus knight of some foreign nation.)&lt;/i&gt;</state>
-                <state img="#-appreciative.png">Ah, you wouldn't happen to be a pegasus knight, would you? My name is Marth.</state>
-                <state img="#-happy.png">Ah, a pegasus knight? The name's Marth, I'm pleased to make your acquaintance.</state>
+                <state img="#-calm.png" set-gender="male">&lt;i&gt;(Interesting, that girl is clearly a pegasus knight, and yet her uniform is not of a style I have ever seen before.)&lt;/i&gt;</state>
+                <state img="#-calm.png" set-gender="male">&lt;i&gt;(Hmm... if I'm not mistaken, based on her clothing that girl seems to be a pegasus knight of some foreign nation.)&lt;/i&gt;</state>
+                <state img="#-appreciative.png" set-gender="male">Ah, you wouldn't happen to be a pegasus knight, would you? My name is Marth.</state>
+                <state img="#-happy.png" set-gender="male">Ah, a pegasus knight? The name's Marth, I'm pleased to make your acquaintance.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="palutena" />
+                <state img="#-shocked.png" set-gender="male">L-lucina? No... you must have me confused for someone else, my name is Marth.</state>
             </case>
             <case stage="0" priority="50">
-                <state img="#-happy.png">I'm no stranger to traveling between worlds, so you can rest assured I will not waste this opportunity. Tell me, what exactly is our mission here today?</state>
-                <state img="#-calm.png">I'm afraid that for now, I cannot remove my mask. I have my reasons.</state>
-                <state img="#-calm.png">I was searching for someone and then somehow ended up here. I will say no more than that.</state>
-                <state img="#-happy.png">If you all care to duel, I'd be happy to test myself against you.</state>
+                <state img="#-interested.png" set-gender="male">I'm no stranger to traveling between worlds, but this realm seems... different than the ones I have visited previously.</state>
+                <state img="#-calm.png" set-gender="male">I'm afraid that for now, I cannot remove my mask. I have my reasons.</state>
+                <state img="#-calm.png" set-gender="male">I was searching for aid in my fight against the Tempest, and then somehow ended up here. I will say no more than that.</state>
+                <state img="#-happy.png" set-gender="male">I hadn't been planning on doing this, but if you all care to duel, I'd be happy to test myself against you.</state>
+                <state img="#-calm.png" set-gender="male">I came here seeking allies in my fight against the Tempest... but that will clearly have to wait for now.</state>
             </case>
         </trigger>
 
@@ -205,7 +213,9 @@
                 <state img="#-interested.png">Is this the right place? I'm almost afraid to ask why I was summoned here...</state>
                 <state img="#-angry.png">A contest? Of who can remain clothed the longest? I'd rather not... but if you insist. I will not hold back.</state>
             </case>
-            <case stage="0-1" alsoPlaying="captain_falcon" alsoPlayingTimeInStage="0-10" notSaidMarker="cap_f_notice_0">
+            <case stage="0-1">
+                <condition role="self" notSaidMarker="cap_f_notice_0" />
+                <condition role="other" character="captain_falcon" timeInStage="0-10" />
                 <state img="#-angry.png" marker="cap_f_notice_0">C-Captain Falcon? What's this dastard doing here?</state>
             </case>
             <case stage="0-2" timeInStage="1-10" saidMarker="cap_f_notice_0">
@@ -322,6 +332,23 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0" totalRounds="1-2" priority="600">
+                <condition count="0-" role="other" character="palutena" />
+                <condition role="self" notSaidMarker="Luci_Palutena1" />
+                <state img="#-angry.png" marker="Luci_Palutena1">&lt;i&gt;(Pssst... Lady Palutena. Please just play along for now, I promise I'll explain later.)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-8" priority="331">
+                <condition role="other" character="florina" stage="6-8" sayingMarker="exposed_lyn" />
+                <condition role="other" character="lyn" stage="0-5" />
+                <test expr="~florina.costume~" value="default" />
+                <state img="#-appreciative.png">I don't think you have anything to worry about Florina, a good friend like Lady Lyn certainly wouldn't end her relationship with you over something like this.</state>
+            </case>
+            <case stage="1-5" priority="282">
+                <condition role="other" character="florina" stage="7-8" saidMarker="underwear_wins" sayingMarker="underwear_over" />
+                <condition role="other" character="catria" stage="6-9" />
+                <state img="#-loss.png">Hey now Florina, no need to be so down on yourself about it. I'd even bet that my sister would have been happy to join you two. I mean, she is a little.. odd sometimes, but...</state>
+                <state img="#-appreciative.png">Florina, you don't need to be so embarrassed about the whole Underwear Knights thing, I really do think you two were cute together while it lasted.</state>
+            </case>
             <case stage="0-8" totalRounds="0-4">
                 <condition role="self" consecutiveLosses="3" />
                 <condition role="other" character="florina" stage="2" />
@@ -358,6 +385,12 @@
                 <condition role="self" consecutiveLosses="5" />
                 <condition role="other" character="florina" stage="5" />
                 <state img="#-angry.png">I'm suspicious as well. Dealer, you're not giving Florina bad cards on purpose, are you?</state>
+            </case>
+            <case stage="0-8" priority="197">
+                <condition role="other" character="florina" stage="7" saidMarker="bee3" sayingMarker="bee4" />
+                <condition count="1" status="exposed" />
+                <test expr="~florina.costume~" value="florina_easter" />
+                <state img="#-sword.png">That lecherous bee seems intent on stripping your bunnysuit from your body.. this is most unusual. I apologize for my failure to stop it.</state>
             </case>
             <case stage="8">
                 <condition count="4" status="naked" />
@@ -416,11 +449,20 @@
                 <condition role="other" character="florina" stage="6" timeInStage="6" saidMarker="fast_undies" />
                 <state img="#-appreciative.png">Florina, I'm glad to see that your luck seems to have turned around for the better, at least for now.</state>
             </case>
+            <case stage="0-4" totalRounds="7-9" priority="166">
+                <condition role="other" character="florina" stage="7" timeInStage="0" sayingMarker="expose_chest" />
+                <state img="#-angry.png">To be completely honest, you getting a good hand only now seems like a rather cruel joke. Dealer, you aren't messing with Florina... are you?</state>
+            </case>
             <case stage="0-8" priority="165">
                 <condition count="0" filter="florina_easter" />
                 <condition role="other" character="florina" stage="6" timeInStage="10" />
                 <state img="#-shocked.png">Florina, you say have another good hand? Wow, at this rate, you might just win after all!</state>
                 <state img="#-shocked.png">Florina, you've got another great hand? Your luck has really turned around for the better!</state>
+            </case>
+            <case stage="0-7" priority="165">
+                <condition count="0" filter="florina_easter" />
+                <condition role="other" character="florina" stage="7" timeInStage="5-9" />
+                <state img="#-excited.png">It seems Florina is putting up a solid last-ditch defense! Good for her, I say.</state>
             </case>
             <case stage="0-4">
                 <condition count="1" filter="corrin_m" />
@@ -442,6 +484,17 @@
                 <state img="#-shy.png">I don't want to have to remove my underwear either... Florina, why did we end up in this dire situation anyway?</state>
                 <state img="#-embarrassed.png">Florina... If it makes you feel any better, I'm rooting for you to keep your bra on as well.</state>
             </case>
+            <case stage="0-8" priority="161">
+                <condition role="other" character="florina" stage="7-8" timeInStage="5-10" sayingMarker="naked_fun" />
+                <condition count="3-5" status="exposed" />
+                <state img="#-horny.png">To be perfectly honest, I am finding a l&lt;i&gt;little&lt;/i&gt; excitement in this activity as well. The tension is incredible, and this whole game is most novel.</state>
+            </case>
+            <case stage="5-6" priority="161">
+                <condition role="other" character="florina" stage="7" timeInStage="5-10" sayingMarker="topless_long" />
+                <condition status="exposed" />
+                <state img="#-interested.png">If it makes you feel any better Florina, I could be joining you any round now.</state>
+                <state img="#-interested.png">You know, I wouldn't actually object to you putting your bra back on until someone else loses theirs, but I doubt the others here would agree to that...</state>
+            </case>
             <case stage="0-8" totalRounds="0">
                 <condition count="2-3" filter="gun" />
                 <condition role="other" character="florina" stage="0" />
@@ -461,6 +514,21 @@
             <case stage="0-8" alsoPlaying="florina" alsoPlayingStage="0" totalRounds="0">
                 <condition count="2-3" filter="weapon" />
                 <state img="#-calm.png">You forgot your weapon? Where I come from, we needed to always be ready for combat, no matter the time or place.</state>
+            </case>
+            <case stage="5-6" priority="160">
+                <condition role="other" character="florina" stage="7" timeInStage="0-1" />
+                <condition count="1" status="exposed" />
+                <state img="#-embarrassed.png">Florina, I hate to say this, but it is entirely possible that I will be joining you in the near future.</state>
+            </case>
+            <case stage="1-5" priority="160">
+                <condition role="other" character="florina" stage="7" timeInStage="0-1" />
+                <condition count="1" status="exposed" />
+                <state img="#-shy.png">I would rather not join you in exsposing my breasts if at all possible. Sorry about that.</state>
+            </case>
+            <case stage="7-8" priority="160">
+                <condition role="other" character="florina" stage="7" timeInStage="3-99" />
+                <condition count="2-5" status="exposed" />
+                <state img="#-calm.png">I guess it's not so nerve-racking  for you now when pretty much everyone else is in the same perdicament, right Florina?</state>
             </case>
             <case stage="0-8" alsoPlaying="florina" alsoPlayingStage="4" alsoPlayingTimeInStage="0" alsoPlayingSaying="Wait! I traded the wrong card!">
                 <state img="#-calm.png">I'm sorry Florina, but I don't think the rules allow for take backs.</state>
@@ -550,6 +618,11 @@
                 <state img="#-appreciative.png">A ride with you on your pegasus? I'd love that Florina.</state>
                 <state img="#-shy.png">Speaking of pegasus rides, back when I was a young child, I used to go riding with mother before she... well... sorry, never mind.</state>
             </case>
+            <case stage="0-8" priority="147">
+                <condition role="other" character="florina" stage="7" saidMarker="bee3" sayingMarker="bee4" />
+                <condition count="1" status="exposed" />
+                <state img="#-sword.png">Not again! Damn, at this rate this perverted bee will have Florina completely naked and vulnerable to its lewd intent. </state>
+            </case>
             <case stage="8" alsoPlaying="florina" alsoPlayingStage="2-5" totalNaked="4">
                 <state img="#-calm.png">I... hate to admit it, but it seems you've likely won this game.</state>
                 <state img="#-angry.png">I hate to say this, but I think you've won this game. That said, I'll fight on to the end!</state>
@@ -558,6 +631,27 @@
                 <condition count="4" status="naked" />
                 <condition role="other" character="florina" stage="6" />
                 <state img="#-shocked.png">I agree with Florina, how about we call this game and say that Florina won? ...What do you mean the answer is "no"?</state>
+            </case>
+            <case stage="5-6">
+                <condition count="1" status="exposed" />
+                <condition role="other" character="florina" stage="7" />
+                <state img="#-shy.png">Honestly, I would like my breasts covered, at least for a little longer. ... Maybe even for a lot longer.</state>
+                <state img="#-embarrassed.png">I'll join you if I have to Florina, but for now I'm going to appreciate my clothing while I still have it.</state>
+            </case>
+            <case stage="7-8">
+                <condition count="2-5" status="exposed" />
+                <condition role="other" character="florina" stage="7-8" />
+                <state img="#-shy.png">I guess being topless doesn't seem quite as bad when it's together like this.</state>
+                <state img="#-embarrassed.png">We may be topless together, but that still doesn't make me fully comfortable with this...</state>
+                <state img="#-calm.png">At this rate, surely this game will be over soon, yes?</state>
+                <state img="#-interested.png">I can't say I expected to be in this situation with other women when I came here... seems I really didnt know what I was getting myself into.</state>
+            </case>
+            <case stage="5-6">
+                <condition count="1" status="exposed" />
+                <condition role="other" character="florina" stage="7-8" />
+                <state img="#-embarrassed.png">I hate to say this, but I doubt you'll be the only one topless here for much longer Florina.</state>
+                <state img="#-shy.png">No need to be so selfconcious Florina, at this rate I'm sure that there will be plenty more exsposed bodies right along side yours.</state>
+                <state img="#-stripped.png">Florina, I hate to say this, but I'll probably be joining you soon. </state>
             </case>
             <case stage="0-8">
                 <condition role="other" character="florina" stage="4" saidMarker="bee" sayingMarker="bee_again" notSaidMarker="bee_again" saying="Are... are you &lt;i&gt;sure&lt;/i&gt; there's no bee in here?" />
@@ -579,11 +673,13 @@
                 <condition role="other" character="florina" stage="0" sayingMarker="marth_reveal" notSaidMarker="marth_reveal" saying="So why were you pretending to be a male, Lucina? Oh, so other men wouldn't try talking to you here, right?" />
                 <state img="#-calm.png">Florina, I use that mask when traveling the Outrealms to keep the brand in my eye hidden. Having my identity as Ylissean royalty be kept a secret helps to avoid... unnecessary questions.</state>
             </case>
-            <case stage="0" alsoPlaying="catria" alsoPlayingStage="0" alsoPlayingNotSaidMarker="marthMask" alsoPlayingSayingMarker="marthMask">
+            <case stage="0">
+                <condition role="other" character="catria" stage="0" sayingMarker="marthMask" notSaidMarker="marthMask" />
                 <state img="#-calm.png">This mask was given to me by a dear friend in the case that I ever needed to conceal my identity. That's all I'll say on the matter.</state>
                 <state img="#-calm.png">That's... classified. Anyway, I'm afraid that for the time being, I cannot remove my mask. I have my reasons.</state>
             </case>
-            <case stage="0" alsoPlaying="catria" alsoPlayingStage="5" alsoPlayingNotSaidMarker="marthButt" alsoPlayingSayingMarker="marthButt">
+            <case stage="0">
+                <condition role="other" character="catria" stage="5" sayingMarker="marthButt" notSaidMarker="marthButt" />
                 <state img="#-embarrassed.png">&lt;i&gt;(How in Naga's name does one answer a question like that!?)&lt;/i&gt; I... uh... maybe?</state>
                 <state img="#-embarrassed.png">Wh-what? Like it? Y-you can't just ask someone a question like that...</state>
             </case>
@@ -598,6 +694,23 @@
             <case stage="0-8">
                 <condition role="other" character="florina" stage="5" saidMarker="bee2" notSaidMarker="bee2b" />
                 <state img="#-sword.png">If it returns, I'll do my utmost to kill it. I swear this to you!</state>
+            </case>
+            <case stage="0-8" priority="142">
+                <condition role="other" character="florina" stage="7" saidMarker="bee3" sayingMarker="bee4" />
+                <state img="#-angry.png">Not again! We cannot just allow this lewd insect to continue striking Florina with impunity.</state>
+            </case>
+            <case stage="1-8" priority="142">
+                <condition role="other" character="florina" stage="7-8" saidMarker="dumb" sayingMarker="dumb_over" />
+                <state img="#-embarrassed.png">... If it makes you feel any better Florina, I... I don't really know how to properly respond to seeing a man's... &lt;i&gt;ahem&lt;/i&gt;... privates either.</state>
+            </case>
+            <case stage="0-8" priority="142">
+                <condition role="other" character="florina" stage="7-8" saidMarker="dumb2" sayingMarker="dumb2_over" />
+                <state img="#-interested.png">&lt;i&gt;(W-wow, I didn't think that Florina was that type of girl.)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6">
+                <condition role="self" sayingMarker="florina_ask1" notSaidMarker="florina_ask1" />
+                <condition role="other" character="florina" stage="7-8" />
+                <state img="#-shy.png">N-no, that wasn't really what I meant Florina... </state>
             </case>
             <case stage="0-5" alsoPlaying="catria" alsoPlayingStage="0-4" alsoPlayingSaying=" this shape on the cards with my hands when I'm nervous in front of strangers">
                 <state img="#-calm.png">Hmmm... I'm not really sure what it means. Could it be some sort of signal for use on the battlefield?</state>
@@ -676,6 +789,12 @@
                 <state img="#-loss.png">Ah, another bad hand? Sorry to hear that Florina, it seems this game just wasn't yours to win.</state>
                 <state img="#-interested.png">Sorry to ask this, but you wouldn't mind staying around for a little while longer, would you? I was hoping we get to know each other a bit better.</state>
             </case>
+            <case stage="0-4">
+                <condition role="other" character="florina" stage="7" />
+                <state img="#-shocked.png">Oh no! Hang in their Florina!</state>
+                <state img="#-loss.png">I-it's not decided yet Florina, dont give up!</state>
+                <state img="#-shy.png">&lt;i&gt;(Looks like Florina is in trouble. Poor girl...)&lt;/i&gt;</state>
+            </case>
             <case stage="0-8" totalRounds="10-99">
                 <condition count="1" filter="revy" />
                 <condition role="other" character="florina" sayingMarker="revy_mean" notSaidMarker="revy_mean" />
@@ -718,7 +837,8 @@
                 <test expr="~background~" value="beach" />
                 <state img="#-shocked.png" marker="beach1">Anyway, I'm going to go swimming, the rest of you are welcome to join me once you finish undres... wait, what do you mean I'm not done here?</state>
             </case>
-            <case stage="0-1" totalRounds="1-10" notSaidMarker="beach0">
+            <case stage="0-1" totalRounds="1-10">
+                <condition role="self" notSaidMarker="beach0" />
                 <test expr="~background~" value="beach" />
                 <state img="#-calm.png" marker="beach0">Hmmm... if I've ended up at a beach, does it mean that this place is another Hotrealm?</state>
             </case>
@@ -728,6 +848,33 @@
             </case>
             <case stage="0-8" notSaidMarker="covered">
                 <state img="#-embarrassed.png" marker="covered">Ugh... working with these cards is making keeping myself modest more difficult than I had expected.</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip">
+            <case stage="5" priority="101">
+                <condition role="other" character="palutena" saying="bodysuit" />
+                <state img="#-loss.png">I guess that would be fine... but I will need it back once the game ends.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="palutena" />
+                <state img="#-strip.png">Oh... about that, Lady Palutena. I had heard heroes from many different worlds congregated here, but didn't know why until just moments ago... </state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="palutena" />
+                <state img="#-embarrassed.png">L-lady P-palutana? W-w-what do you mean by that?</state>
+            </case>
+            <case stage="7">
+                <condition role="other" character="palutena" />
+                <state img="#-loss.png">I don't seem to have any choice, do I?</state>
+            </case>
+            <case stage="8">
+                <condition role="other" character="palutena" />
+                <state img="#-angry.png">Palutena?!? What do you mean &lt;i&gt;"better"&lt;/i&gt;? This is the most humiliating thing I'll have done in... a very long time!</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="palutena" />
+                <state img="#-loss.png">L-Lady Palutena? Are you saying you want me to lose?</state>
             </case>
         </trigger>
 
@@ -852,6 +999,14 @@
             <case stage="5" alsoPlaying="catria" alsoPlayingStage="0-4">
                 <state img="#-strip.png">It's surprisingly comfortable, and it certainly has helped keep me warm on many an occasion. I'm... going to be missing it.</state>
             </case>
+            <case stage="1" priority="101">
+                <condition role="other" character="palutena" saying="Blackmail," />
+                <state img="#-interested.png">Blackmail? No, nothing like that. I'm just here due to an Outrealm trip going... not exactly as I had forseen. I'll be fine though. Probably.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="palutena" />
+                <state img="#-interested.png">Step on them? Hmmm.... Why would somebody want me to do that to them? </state>
+            </case>
             <case stage="5">
                 <test expr="~background~" value="beach" />
                 <state img="#-strip.png">I didn't want to have to take this off... but at the same time, I'll admit my bodysuit is not suited for this warm weather.</state>
@@ -900,8 +1055,8 @@
         <trigger id="stripped">
             <case stage="1">
                 <condition role="other" character="catria" stage="8" sayingMarker="lostMask" />
-                <state img="#-shocked.png">Wait, what? No! Catria, I'm a woman and my name is Lucina. I'm not really... wait, are you even listening? Hello?</state>
-                <state img="#-embarrassed.png">P-p-prince Marth? Just who are you fantasying about, Catria?</state>
+                <state img="#-shocked.png" set-gender="female">Wait, what? No! Catria, I'm a woman and my name is Lucina. I'm not really... wait, are you even listening? Hello?</state>
+                <state img="#-embarrassed.png" set-gender="female">P-p-prince Marth? Just who are you fantasying about, Catria?</state>
             </case>
             <case stage="6" alsoPlaying="catria" alsoPlayingStage="0-7" alsoPlayingSaying="Oh, no need to be ashamed, Lucina. There are Pegasus Knights in Macedonia that wear even less than that as uniform...">
                 <state img="#-angry.png">Catria, the difference me and them is that this is my underwear, not my uniform.</state>
@@ -916,17 +1071,45 @@
             </case>
             <case stage="1">
                 <condition role="other" character="catria" stage="0-4" />
-                <state img="#-shy.png">W-wait? You know my real name? Mmmm... it seems we really have met in the past and I must have forgotten about it. My apologies.</state>
+                <state img="#-shy.png" set-gender="female">W-wait? You know my real name? Mmmm... it seems we really have met in the past and I must have forgotten about it. My apologies.</state>
             </case>
             <case stage="1">
                 <condition role="other" character="catria" stage="5-9" />
-                <state img="#-embarrassed.png">Y-yes, it seems quite a few awkward things have been said. Uhh... sorry?</state>
-                <state img="#-shy.png">Honestly, I'm surprised you didn't figure it out until just now...</state>
+                <state img="#-embarrassed.png" set-gender="female">Y-yes, it seems quite a few awkward things have been said. Uhh... sorry?</state>
+                <state img="#-shy.png" set-gender="female">Honestly, I'm surprised you didn't figure it out until just now...</state>
             </case>
             <case stage="8">
                 <alternative alsoPlaying="catria" alsoPlayingStage="0-7" />
                 <alternative alsoPlaying="catria" alsoPlayingStage="9" />
                 <state img="#-stripped.png">I... uh... thanks Catria, I guess?</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="palutena" />
+                <state img="#-interested.png">Ah, you flatter me, Lady Palutena. </state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="palutena" />
+                <state img="#-embarrassed.png">P-pervert! Me? H-h-how could you slander me like that?</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="palutena" />
+                <state img="#-excited.png">I would have to remove my bodysuit in order to show my arms... and for the time being have no intention of doing that!</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="palutena" />
+                <state img="#-appreciative.png">Lady Palutena, while I appreciate the offer, I need to keep it close by... just in case.</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="palutena" />
+                <state img="#-shocked.png">Awww... you like them too? They really are the best! Maybe being in them in front of everyone right now isn't so bad after all...</state>
+            </case>
+            <case stage="7">
+                <condition role="other" character="palutena" />
+                <state img="#-appreciative.png">Aww... thanks Lady Palutena, you're the &lt;i&gt;best&lt;/i&gt;.</state>
+            </case>
+            <case stage="8">
+                <condition role="other" character="palutena" />
+                <state img="#-shy.png">I... don't see much reason to feel proud right now.</state>
             </case>
             <case stage="6">
                 <test expr="~background~" value="beach" />
@@ -941,8 +1124,8 @@
                 <state img="#-sword.png">I may no longer be allowed to wear it, but I'll be keeping Falchion nearby... just in case.</state>
             </case>
             <case stage="1" id="1">
-                <state img="#-stripped.png">Perhaps proper introductions are in order. My true name is Lucina, Princess of Ylisse.</state>
-                <state img="#-stripped.png">In truth, I am Lucina, daughter of Chrom, Exalt of the Halidom of Ylisse.</state>
+                <state img="#-stripped.png" set-gender="female">Perhaps proper introductions are in order. My true name is Lucina, Princess of Ylisse.</state>
+                <state img="#-stripped.png" set-gender="female">In truth, I am Lucina, daughter of Chrom, Exalt of the Halidom of Ylisse.</state>
             </case>
             <case stage="2">
                 <state img="#-stripped.png">There are no guarantees of victory in war… nor in poker, it would seem. Let us carry on.</state>
@@ -1035,6 +1218,11 @@
                 <condition role="target" character="link" stage="4" />
                 <condition role="other" character="florina" stage="0-6" />
                 <state img="#-loss.png">The fact that he can talk is news to me too. I don't think I've ever heard him speak a word up until now...</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="link" stage="4" />
+                <condition role="other" character="florina" stage="7-8" />
+                <state img="#-shocked.png">Scary? No, Link may be a man of few words, but I can assure you that he is a very kind hearted and heroic young man. He's the type of man I want by my side on the battlefield.</state>
             </case>
             <case stage="0-6" target="captain_falcon" totalRounds="1-">
                 <state img="#-angry.png">Captain Falcon lost? Good.</state>
@@ -1211,6 +1399,11 @@
                 <state img="#-appreciative.png">Oh! Florina, you know Ninian? I must say I agree, her outfit resembles Ninian's dress a great deal.</state>
                 <state img="#-appreciative.png">Ninian? I met a girl in Askr who went by that name, she was a dancer of much grace and beauty.</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="5" />
+                <condition role="other" character="florina" stage="7-8" />
+                <state img="#-angry.png">I... don't really understand Moon either. She's a strange girl, that one.</state>
+            </case>
             <case stage="0-8" priority="490">
                 <condition role="target" character="florina" stage="6" consecutiveLosses="6-7" />
                 <test expr="~target.costume~" cmp="!=" value="florina_easter" />
@@ -1258,13 +1451,23 @@
                 <condition role="target" character="florina" stage="3" consecutiveLosses="3-4" />
                 <state img="#-calm.png">Yes, I hate to say it but Florina has little chance of winning at this point. Surely we can let her simply forfeit, yes?</state>
             </case>
-            <case stage="0-10" target="palutena" alsoPlaying="florina" alsoPlayingStage="0-2" alsoPlayingNotSaidMarker="greet_palutena" alsoPlayingSayingMarker="greet_palutena">
-                <state img="#-loss.png">"Like"? No Florina, Lady Palutena is much more than just "like" a goddess...</state>
+            <case stage="0-10">
+                <condition role="target" character="palutena" />
+                <condition role="other" character="florina" stage="0-2" sayingMarker="greet_palutena" notSaidMarker="greet_palutena" />
+                <state img="#-loss.png">"Like"? No Florina, Lady Palutena is much more than just "like" a goddess... </state>
             </case>
             <case stage="0-3">
                 <condition role="target" character="florina" stage="4" consecutiveLosses="4-5" sayingMarker="bee_stop" />
                 <state img="#-embarrassed.png">Florina, h-how do you keep losing like this?</state>
                 <state img="#-shocked.png">Errr... don't you guys think we could give Florina a mulligan, just this once?</state>
+            </case>
+            <case stage="0-10" priority="441">
+                <condition role="target" character="florina" stage="7" consecutiveLosses="2" sayingMarker="panties_butt" />
+                <state img="#-interested.png">Oh dear... Florina's undergarments didn't even get a chance of retaining what little remained of her modesty.</state>
+            </case>
+            <case stage="0-10" priority="441">
+                <condition role="target" character="florina" stage="7" consecutiveLosses="8" sayingMarker="panties_butt" />
+                <state img="#-angry.png">Ok... if it wasn't clear enough before that something fishy was going on here... no further proof is needed.</state>
             </case>
             <case stage="0-5">
                 <condition role="target" character="florina" stage="1" consecutiveLosses="2" />
@@ -1276,6 +1479,12 @@
                 <test expr="~target.costume~" value="florina_easter" />
                 <state img="#-embarrassed.png"> Undressing in front of other women is one thing, but... but there's a man here! </state>
             </case>
+            <case stage="0-7">
+                <condition count="1" status="exposed" />
+                <condition role="target" character="florina" stage="7" sayingMarker="panties_butt" />
+                <test expr="~target.costume~" value="florina_easter" />
+                <state img="#-embarrassed.png">Y-you don't have anything on underneath that leotard, do you? Oh dear... </state>
+            </case>
             <case stage="0-8 10" priority="435">
                 <condition role="target" character="florina" stage="5" />
                 <condition count="2-4" status="exposed" />
@@ -1286,6 +1495,16 @@
                 <condition role="target" character="florina" stage="6" saidMarker="early_exit" sayingMarker="early_exit_end" notSaidMarker="rules" />
                 <test expr="~target.costume~" value="florina_easter" />
                 <state img="#-shocked.png">Ehh?!?! W-what? There must be some mistake here... </state>
+            </case>
+            <case stage="0-7" priority="432">
+                <condition role="target" character="florina" stage="7" saidMarker="expose_chest" sayingMarker="exposed_chest" />
+                <test expr="~target.costume~" value="florina_easter" />
+                <state img="#-shy.png">I... I'm afraid so, yes. </state>
+            </case>
+            <case stage="8-10" priority="432">
+                <condition role="target" character="florina" stage="7" saidMarker="expose_chest" sayingMarker="exposed_chest" />
+                <test expr="~target.costume~" value="florina_easter" />
+                <state img="#-shy.png">It looks like yet another herowill be loosing the entirity of their clothing.</state>
             </case>
             <case stage="0-6" priority="431">
                 <condition role="target" character="florina" stage="6" notSaidMarker="rules" />
@@ -1312,6 +1531,10 @@
             </case>
             <case stage="7-10" target="florina" targetStage="1-3" targetTimeInStage="6-99" totalExposed="1-4">
                 <state img="#-calm.png">Florina, if you don't want to join us, all you need to do is win... and at this rate I'd say your odds are looking pretty solid.</state>
+            </case>
+            <case stage="0-10" priority="406">
+                <condition role="target" character="florina" stage="7" timeInStage="6-99" sayingMarker="panties_butt" />
+                <state img="#-shy.png">Ah... Florina, in a high stakes game like this, you really need to give it your full attention.</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="florina" stage="0" timeInStage="0" />
@@ -1354,6 +1577,11 @@
                 <state img="#-shy.png">S-surely there must be some sort of mistake, this isn't the type of game we should be playing with men... Dear Naga, what have I gotten myself into?</state>
                 <state img="#-shy.png">&lt;i&gt;(This is not the type of game a princess should be playing...)&lt;/i&gt;</state>
             </case>
+            <case stage="0-7">
+                <condition count="1" status="exposed" />
+                <condition role="target" character="florina" stage="7" sayingMarker="panties_butt" />
+                <state img="#-angry.png">Hmmm... it seems this game pulls no punchs when it comes to punishing the losers. This... I... Oh dear.</state>
+            </case>
             <case stage="0-7" target="florina" targetStage="1" totalExposed="1-5">
                 <state img="#-happy.png">You've got a lot left Florina, no need to worry... at least not yet.</state>
             </case>
@@ -1362,6 +1590,22 @@
                 <state img="#-embarrassed.png">W-w-wait just a second, what sort of indecent game was I roped into playing?!?</state>
                 <state img="#-embarrassed.png">... Oh no.</state>
                 <state img="#-shy.png">&lt;i&gt;(This is not the type of game a princess should be playing...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7" priority="382">
+                <condition role="target" character="florina" stage="7" saidMarker="expose_chest" sayingMarker="exposed_chest" />
+                <state img="#-embarrassed.png">I... I hate to say this, but yeah, you do Florina.</state>
+            </case>
+            <case stage="8-10" priority="382">
+                <condition role="target" character="florina" stage="7" saidMarker="expose_chest" sayingMarker="exposed_chest" />
+                <state img="#-shy.png">It looks like yet another hero will be loosing the entirity of their clothing.</state>
+            </case>
+            <case stage="0-7" priority="382">
+                <condition role="target" character="florina" stage="7" saidMarker="man" sayingMarker="panties_butt" />
+                <state img="#-calm.png">I'm not exactly comfortable withthe thought of exposing myself in front of a man I've never met before either...  but that is the situation we currently find ourselves in.</state>
+            </case>
+            <case stage="0-6" priority="382">
+                <condition role="target" character="florina" stage="7" saidMarker="man" sayingMarker="panties_butt" />
+                <state img="#-shocked.png">Errr... yes. Think of it as a way to show that you aren't afraid of men like you say you used to be.</state>
             </case>
             <case stage="0-5" target="catria" targetStage="0" targetSaying="I haven't even undressed once and yet you all have more clothes">
                 <state img="#-angry.png">W-wait, you don't have 8 articles of clothing to remove? Huh, it seems this battle was rigged from the start.</state>
@@ -1399,6 +1643,15 @@
                 <state img="#-embarrassed.png">W-w-wait just a second, what sort of indecent game was I roped into playing?!?</state>
                 <state img="#-embarrassed.png">... Oh dear, this isn't what I thought I was getting myself into.</state>
                 <state img="#-shy.png">&lt;i&gt;(This is not the type of game a princess should be playing...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="florina" stage="7" sayingMarker="panties_butt" />
+                <state img="#-shy.png">I for one would have no problem with letting you keep them on, but unless the others here can agree to that as well... I'm afraid they likely have to go.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="florina" stage="7" sayingMarker="panties_butt" />
+                <state img="#-embarrassed.png">Sorry Florina, but the rules here do seem pretty clear about how this game is supposed to work.</state>
+                <state img="#-shy.png">Florina, I don't really want to make you take them off either, but from what I understand, we don't really have much of a choice here...</state>
             </case>
             <case stage="0-5" target="catria" targetStage="0-4">
                 <state img="#-calm.png">Huh. Catria, it seems you lost this round. You have my sincere sympathy.</state>
@@ -1451,6 +1704,11 @@
                 <condition role="target" character="florina" stage="6" />
                 <state img="#-calm.png">&lt;I&gt;(Time for the moment of truth, will be be brave enough to do it?)&lt;/i&gt;</state>
                 <state img="#-calm.png">&lt;I&gt;(Is it just me, or does Florina look like shes about to bolt?)&lt;/i&gt;</state>
+            </case>
+            <case stage="8-10">
+                <condition role="target" character="florina" stage="7" />
+                <state img="#-interested.png">Truth be told, I didn't expect the game to become this close... nor everyone to end up naked. </state>
+                <state img="#-shocked.png">W-well Florina, it looks like you'll be joining the rest of us in shedding our clothes. I almost thought for a minute that you might not have to...</state>
             </case>
             <case stage="0-5" priority="342">
                 <condition role="target" character="catria" saying="Minerva" />
@@ -1609,6 +1867,10 @@
                 <state img="#-calm.png">There's no need to get so worked up over something small like that Florina.</state>
                 <state img="#-shocked.png">Florina, do you get nervous around men? I know a certain myrmidon who happens to have a similar issue...</state>
             </case>
+            <case stage="0-10" id="4">
+                <test expr="~clothing~" value="headphones" />
+                <state img="#-interested.png">If you don't mind me asking, what exactly are those things you removed from your head?</state>
+            </case>
             <case stage="0-5">
                 <state img="#-happy.png">If the others complain, feel free to ignore them.</state>
                 <state img="#-calm.png">Now that that's over, let us continue playing.</state>
@@ -1648,6 +1910,11 @@
                 <condition role="other" character="florina" stage="6" />
                 <state img="#-calm.png">I would count my beloved Falchion if I could, but it seems the rules limit us to no more than 8 items.</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="jura" stage="0" />
+                <condition role="other" character="florina" stage="7" />
+                <state img="#-shocked.png">Come to think of it, why is it allowed for some players of this game to have more articles than others? Surely that isn't very fair...</state>
+            </case>
             <case stage="0" target="catria" targetStage="0" targetSaying="I-is it okay to start with my sword, Prince Marth?" priority="400">
                 <state img="#-shy.png">I... uh... your sword is a perfectly fine choice. &lt;i&gt;(Why does this girl care so much about my opinion?)&lt;/i&gt;</state>
             </case>
@@ -1675,6 +1942,11 @@
                 <condition role="target" character="catria" saying="accesso" />
                 <state img="#-shocked.png">Speaking of accessories, I happen to have this &lt;i&gt;totally cute&lt;/i&gt; bear hat. Maybe I'll get a chance to show it to you someday.</state>
                 <state img="#-shocked.png">Ah yes. Back when I was still in Askr, my summoner gave me all sorts of wonderful accessories to wear.</state>
+            </case>
+            <case stage="0-10" priority="211">
+                <condition status="decent" role="target" />
+                <condition role="other" character="florina" stage="7-10" saidMarker="streak_extra*&gt;2" />
+                <state img="#-shy.png">W-well, now that you know that you can have a better strategy nex... wait, I don't think either of us plan on returning here anytime soon.</state>
             </case>
             <case stage="0-8">
                 <condition role="other" character="florina" stage="6-10" />
@@ -1794,6 +2066,10 @@
                 <condition role="self" notSaidMarker="minerva_ask2" />
                 <state img="#-shocked.png" marker="minerva_ask2">This Princess Minerva you speak of... did she perchance ride a wyvern into combat?</state>
             </case>
+            <case stage="0-10" id="3">
+                <test expr="~clothing~" value="headphones" />
+                <state img="#-interested.png">If you don't mind me asking, what exactly are those things you removed from your head?</state>
+            </case>
             <case stage="0-5">
                 <state img="#-happy.png">If the others complain, feel free to ignore them.</state>
                 <state img="#-calm.png">Now that that's over, let us continue playing.</state>
@@ -1833,6 +2109,12 @@
         </trigger>
 
         <trigger id="male_removing_minor">
+            <case stage="0-10">
+                <condition role="other" character="florina" stage="7-8" />
+                <state img="#-calm.png">&lt;i&gt;(Well... Florina's temperament around guys seems to be improving, at least a little bit.)&lt;/i&gt;</state>
+                <state img="#-calm.png">&lt;i&gt;(Florina is definitely adjusting to this game. )&lt;/i&gt;</state>
+                <state img="#-calm.png">&lt;i&gt;(This may still be awkward, but at least she's handling this situation better now.)&lt;/i&gt;</state>
+            </case>
             <case stage="0-8">
                 <condition status="naked" role="target" />
                 <state img="#-loss.png">Wait, if you still had that, why did you...</state>
@@ -2141,6 +2423,10 @@
         </trigger>
 
         <trigger id="male_removing_major">
+            <case stage="0-10">
+                <condition role="other" character="florina" stage="7" />
+                <state img="#-shocked.png">Woah now Florina! We don't need you dashing away again, ok?</state>
+            </case>
             <case stage="0-1">
                 <state img="#-excited.png">At this rate, I don't see how I can lose!</state>
                 <state img="#-interested.png">Running out of clothing ~name~?</state>
@@ -2442,11 +2728,20 @@
         </trigger>
 
         <trigger id="male_chest_is_visible">
+            <case stage="0-7 9-10">
+                <condition role="target" character="corrin_m" />
+                <condition role="other" character="florina" stage="7-9" />
+                <state img="#-horny.png">Oh, I very much agree, Lord Hector's physique makes Corrin here look like a little boy.</state>
+            </case>
             <case stage="0-10" priority="251">
                 <condition status="not_crotch_visible" role="target" layers="1" />
                 <condition role="other" character="florina" stage="6" saidMarker="rules" />
                 <alternative />
                 <state img="#-calm.png">Is seeing a guy's bare chest really all that scandalous? It is common for the berserkers I fight alongside on the battlefield to expose their chest.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="other" character="florina" stage="7" />
+                <state img="#-angry.png">Florina... you're not about to run off, are you? You know we can't do that, right? It's in the contract we signed.</state>
             </case>
             <case stage="0-5">
                 <state img="#-interested.png">For some reason, I can't help but think of Vaike right now...</state>
@@ -2709,6 +3004,11 @@
                 <state img="#-calm.png">You can do it Florina, I know you've got it in you. Let's power through this game and get our clothes back.</state>
                 <state img="#-shy.png">Don't you worry Florina, you won't catch me staring at you.</state>
             </case>
+            <case stage="6">
+                <condition count="1" status="exposed" />
+                <condition role="other" character="florina" stage="7" />
+                <state img="#-interested.png">Y-yep, and looks like I'll likely be joining you soon as well. Oh boy...</state>
+            </case>
             <case stage="0-5">
                 <state img="#-shy.png">Y-you're not seriously going to remove your ~clothing~, are you?</state>
                 <state img="#-embarrassed.png">I can't believe you really have nothing left... My apologies.</state>
@@ -2804,10 +3104,59 @@
         </trigger>
 
         <trigger id="female_medium_chest_is_visible">
+            <case stage="0-10">
+                <condition role="other" character="catria" stage="6-7" />
+                <condition role="target" character="florina" sayingMarker="exposed_chest" />
+                <state img="#-appreciative.png">Ah, now this is the esprit de corps I expect from pegasus knights, even those from two different worlds.</state>
+            </case>
             <case stage="1-7">
                 <condition role="target" character="moon" />
                 <condition role="other" character="florina" stage="6" />
                 <state img="#-interested.png">You know, I wouldn't mind Moon taking my place either...</state>
+            </case>
+            <case stage="0-10">
+                <condition role="other" character="corrin_m" stage="0-8" />
+                <condition role="target" character="florina" />
+                <state img="#-angry.png">Corrin, I am only going to ask this once. Please turn your attention away from Florina right now.</state>
+            </case>
+            <case stage="0-8 10">
+                <condition role="other" character="lyn" />
+                <condition role="target" character="florina" />
+                <state img="#-appreciative.png">Yes, that's the spirit Florina! The bonds we share with our allies allow us to overcome any obstacle.</state>
+            </case>
+            <case stage="0-10" priority="352">
+                <condition role="target" character="florina" saidMarker="bee3" sayingMarker="exposed_chest" />
+                <test expr="~target.costume~" value="florina_easter" />
+                <state img="#-embarrassed.png">W-well, you finally got it. I appolgize that I was not of more aid to you.</state>
+                <state img="#-shocked.png">Ah! You killed it! Truth be told, I was worried it was going to attack me next.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="florina" />
+                <test expr="~target.costume~" value="florina_easter" />
+                <state img="#-calm.png">If you want this... meeting of ours here today to be a secret, I promise that I won't let either of them know about it if I run into them again.</state>
+            </case>
+            <case stage="0-10">
+                <condition count="0" filter="florina_easter" />
+                <condition role="target" character="florina" />
+                <state img="#-appreciative.png">I'm more than capable of keeping a secret, so you have nothing to fear from me letting them know about this if I run into them later in Askr. </state>
+            </case>
+            <case stage="0-6">
+                <condition count="1" status="exposed" />
+                <condition role="target" character="florina" />
+                <state img="#-interested.png">If it makes you feel any better, it's apparently guaranteed that all but one player will be naked by the time this game is over, so you won't be alone like that for long.</state>
+            </case>
+            <case stage="0-10" targetSaying="bra" priority="302">
+                <condition role="target" character="florina" saidMarker="bee3" sayingMarker="exposed_chest" />
+                <state img="#-angry.png">Eh? Florina, bras are expensive. You can just clean it off after the game, it'll be good as new.</state>
+                <state img="#-excited.png">Yes! The foul insect has ben slain! Pegasus knights reign supreme once more.</state>
+            </case>
+            <case stage="1-10" priority="301">
+                <condition role="target" character="florina" saidMarker="man" />
+                <state img="#-calm.png">It's no problem Florina, your timidness right now is perfectly understandable given his presence here.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="florina" />
+                <state img="#-appreciative.png">Well... you worked up the nerve to do it. I know that can't have been easy.</state>
             </case>
             <case stage="0-5">
                 <state img="#-appreciative.png">How charming!</state>
@@ -2853,7 +3202,7 @@
                 </state>
             </case>
             <case stage="6-8">
-                <state img="#-shy.png">&lt;i&gt;(I certainty couldn't disguise myself as a man with breasts like that...)&lt;/i&gt;</state>
+                <state img="#-shy.png">&lt;i&gt;(I certaintly couldn't disguise myself as a man with breasts like that...)&lt;/i&gt;</state>
             </case>
             <case stage="9-10">
                 <state img="#-loss.png">Wow, I knew you were large, but...</state>
@@ -2865,6 +3214,61 @@
         </trigger>
 
         <trigger id="female_crotch_will_be_visible">
+            <case stage="0-10">
+                <condition role="other" character="lyn" stage="8-10" />
+                <condition role="target" character="florina" sayingMarker="panties_butt=0" />
+                <state img="#-interested.png">Ahhh... you two really are close, aren't you? </state>
+            </case>
+            <case stage="0-10" priority="441">
+                <condition role="target" character="florina" saidMarker="panties_butt" />
+                <condition role="other" character="lyn" stage="7" />
+                <state img="#-happy.png">Ah, how noble of you Florina, This is what wholesome friendship looks like... I think? </state>
+            </case>
+            <case stage="0-10">
+                <condition role="other" character="lyn" />
+                <condition role="target" character="florina" sayingMarker="panties_butt=0" />
+                <state img="#-calm.png">&lt;i&gt;(Huh, Lady Lyndis may be Florina's best friend, but she is still showing her no mercy.)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="florina" />
+                <test expr="~target.costume~" cmp="!=" value="florina_easter" />
+                <state img="#-loss.png">... I can't say I enjoy seeing a pegasus knight having  to do this.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="florina" />
+                <test expr="~target.costume~" value="florina_easter" />
+                <state img="#-loss.png">Well... this is it, the adorable spring bunnysuit is officially no more. </state>
+            </case>
+            <case stage="8-10">
+                <condition count="2-4" filter="hairy" status="crotch_visible" />
+                <condition count="0" filter="shaved" status="crotch_visible" />
+                <condition role="target" character="florina" sayingMarker="panties_butt=0" />
+                <state img="#-calm.png">Personally, I've just never felt shaving down there was a good use of my time when it's taken so much effort just to survive the Fell Dragon's onslaught. </state>
+                <state img="#-calm.png">I'm not opposed to shaving my privates, but until my world is safe I can not afford to waste my time on such trivial concerns.</state>
+            </case>
+            <case stage="0" totalRounds="7">
+                <condition role="target" character="florina" sayingMarker="panties_butt" />
+                <state img="#-interested.png">On the bright side... at least you wont have to worry about playing the game much longer? </state>
+            </case>
+            <case stage="8-10" priority="307">
+                <condition role="target" character="florina" saidMarker="first_nude" sayingMarker="panties_butt" />
+                <condition count="1" status="naked" />
+                <state img="#-interested.png">Well, it seems another girl is joining me in being au naturel.</state>
+                <state img="#-interested.png">If you need a tip, I'd suggest just biting the bullet and... oh, sorry, that's a phrase I learned from battling other heroes while in another world.</state>
+            </case>
+            <case stage="0-5" priority="307">
+                <condition role="target" character="florina" saidMarker="first_nude" sayingMarker="panties_butt" />
+                <condition count="1" status="naked" />
+                <state img="#-calm.png">&lt;i&gt;(Well, that makes two of them. Things seem to be going well enough, although I do feel sorry for Florina...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6" priority="302">
+                <condition role="target" character="florina" saidMarker="man" sayingMarker="panties_butt" />
+                <state img="#-angry.png">A woman deserves her privacy. Please respect her wishes and look away ~marker.man~.</state>
+            </case>
+            <case stage="0-8" priority="301">
+                <condition role="target" character="florina" saidMarker="panties_butt" />
+                <state img="#-calm.png">Ah, turning around isn't a bad idea. Don't worry, I won't watch you remove them.</state>
+            </case>
             <case stage="0" target="catria">
                 <state img="#-embarrassed.png">W-w-wait, you've &lt;i&gt;dreamed&lt;/i&gt; of this moment? &lt;i&gt;Romantic&lt;/i&gt;? W-what are you saying Catria?</state>
             </case>
@@ -3443,6 +3847,10 @@
                 <state img="#-interested.png">Bunny suits are... embarrassing? Really? What could be embarrassing about such wearing a cute outfit? Ummm... I guess I'll get started now.</state>
             </case>
             <case stage="8">
+                <condition role="other" character="palutena" />
+                <state img="#-interested.png">Palutena, this may surprise you, but I might be more experienced at doing "it" than I'm normally willing to admit...</state>
+            </case>
+            <case stage="8">
                 <state img="#-starting.png">Ah… it’s been quite some time since I last did this.</state>
                 <state img="#-starting.png">Father, please forgive me… please forgive me...</state>
             </case>
@@ -3457,6 +3865,11 @@
             </case>
             <case stage="9" alsoPlaying="catria" alsoPlayingSaying="A-are you doing all right, Lucina? You're as red as a tomato...">
                 <state img="#-loss.png">I... um... I think I'm doing fine. Thanks for your concern Catria, I'll... &lt;i&gt;gasp!&lt;/i&gt; I'll manage.</state>
+            </case>
+            <case stage="9">
+                <condition role="other" character="palutena" />
+                <condition role="self" notSaidMarker="training_Palutena" />
+                <state img="#-interested.png" marker="training_Palutena">A training match? I... I suppose I can do that.</state>
             </case>
             <case stage="9">
                 <state img="#-interested.png">T-t-to be honest, I’ve done this from time to time to burn off some stress…</state>
@@ -3579,6 +3992,10 @@
                 <condition role="target" character="florina" stage="6" />
                 <state img="#-interested.png" collectible="Lucina's_mask">I may have lost, but seeing you not have to suffer any further does bring a smile to my face. Congratulations!</state>
             </case>
+            <case stage="10">
+                <condition role="target" character="florina" stage="7" />
+                <state img="#-appreciative.png">Congratulations on the win, Florina. You had to fight hard even up till the end to pull that victory off.</state>
+            </case>
             <case stage="10" priority="102">
                 <test expr="~background~" value="beach" />
                 <state img="#-shocked.png" collectible="Lucina's_mask">Well, that's the game. Would anyone like to join me in swimming now? I'm sure it will be lots of fun!</state>
@@ -3594,32 +4011,34 @@
     </behaviour>
     <epilogue hint="Beat Lucina" gender="male" img="epilogue/background1cropped.png">
         <title>Hot-spring Shenanigans (WIP)</title>
+        <scene name="Xenologue Hot-Spring Shenanigans" x="-223" y="-160" width="1600" height="960" zoom="0.9983361">
+            <directive type="sprite" id="sprite43" src="epilogue/titlebackground.png" x="177" y="79" scalex="2" scaley="2" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="xenologueTitle" src="epilogue/xenologueTitle.png" x="321" y="282" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="xenologueTitle" ease="ease-in" interpolation="linear" />
+            <directive type="fade" delay="6.5" ease="ease-out" interpolation="linear" time="3" color="#FFFFFF" />
+            <directive type="pause" />
+        </scene>
         <scene name="Intro1" background="epilogue/FE-A lower screen wallpaper.jpg" width="1600" height="900" zoom="1.003764">
             <directive type="text" width="48%" delay="1.5" x="1%" y="5%">After the game, Lucina and the rest of the players made a visit to the local hotspring.</directive>
-            <directive type="sprite" id="sprite16" src="1-calm.png" x="862" y="8" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="LucinaOpening1" src="1-calm.png" x="965" y="6" scalex="1" scaley="1" pivotx="50%" pivoty="50%" />
             <directive type="pause" />
-            <directive type="remove" id="sprite16" />
-            <directive type="text" id="text1" width="52%" x="1%" y="25%">Lucina greatly enjoyed this chance to simply relax with others, but she knew that she would soon have to return to her own world.</directive>
-            <directive type="sprite" id="sprite18" src="1-excited.png" x="878" y="2" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="LucinaOpening1" src="1-excited.png" scalex="1.051118" scaley="1" />
+            <directive type="text" id="text1" width="52%" alignmentx="left" alignmenty="top" x="1%" y="25%">Lucina greatly enjoyed this chance to simply relax with others, but she knew that she would soon have to return to her own world.</directive>
             <directive type="pause" />
-            <directive type="remove" id="sprite18" />
             <directive type="text" id="text2" width="56%" alignmentx="left" alignmenty="top" delay="0" x="1%" y="50%">Unsure if she would ever get to see her newly made friend again, Lucina gave you a hug before heading through the Outrealm portal that would transport her back to Ylisse for her final showdown with the Fell Dragon Grima.</directive>
-            <directive type="sprite" id="sprite20" src="1-appreciative.png" x="863" y="0" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="LucinaOpening1" src="1-appreciative.png" x="969" y="8" scalex="0.9680511" scaley="1" />
             <directive type="pause" />
         </scene>
         <scene name="Intro 2" background="epilogue/FE-A lower screen wallpaper.jpg" width="1600" height="900">
-            <directive type="text" id="text3" width="45%" arrow="right" x="2%" y="5%">Lucina and her allies emerged victorious, changing the fate of her previously doomed world. </directive>
-            <directive type="sprite" id="sprite23" src="1-happy.png" x="862" y="6" pivotx="50%" pivoty="50%" />
+            <directive type="text" id="text3" width="45%" arrow="right" alignmentx="left" alignmenty="top" x="2%" y="5%">Lucina and her allies emerged victorious, changing the fate of her previously doomed world. </directive>
+            <directive type="sprite" id="LucinaOpening1" src="1-happy.png" x="862" y="6" pivotx="50%" pivoty="50%" />
             <directive type="pause" />
-            <directive type="remove" id="sprite23" />
+            <directive type="move" id="LucinaOpening1" src="1-loss.png" x="825" y="7" scalex="1.121951" />
             <directive type="text" id="text4" width="50%" x="2%" y="23%">However, after the climatic battle, when Lucina went to confess her love to the tactician who had led their army to victory, she was devasted to hear that he had already given his heart to a different woman.</directive>
-            <directive type="sprite" id="sprite25" src="1-loss.png" x="878" y="-4" pivotx="50%" pivoty="50%" />
             <directive type="pause" />
-            <directive type="remove" id="sprite25" />
             <directive type="text" id="text5" width="51%" arrow="down" x="2%" y="49%">Feeling out of place in a world that no longer needed her, Lucina disappeared after whispering these words to her infant self: "Yours will be a happy future.".</directive>
-            <directive type="sprite" id="sprite27" src="1-shy.png" x="838" y="4" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="LucinaOpening1" src="1-shy.png" x="890" y="9" scalex="0.9054878" />
             <directive type="pause" />
-            <directive type="remove" id="sprite27" />
             <directive type="text" id="text6" width="53%" x="2%" y="71%">Did she journey to another land or back to her own time? No one knows for certain...</directive>
             <directive type="pause" />
             <directive type="text" id="text7" width="20%" x="2%" y="82%">... Except for you!</directive>
@@ -3628,16 +4047,15 @@
         <scene transition="true" effect="dissolve" time="5" />
         <scene name="Hotsprings Outside 1" background="epilogue/background0 cropped.png" width="1600" height="900">
             <directive type="text" id="text8" width="20%" x="1%" y="8%">One and a half years later...</directive>
-            <directive type="sprite" id="snowred" src="epilogue/snow.png" x="4" y="-1778" pivotx="50%" pivoty="50%" />
-            <directive type="sprite" id="snowblue" layer="1" src="epilogue/snow.png" x="7" y="-1779" pivotx="50%" pivoty="50%" />
-            <directive type="move" id="snowred" loop="true" time="10" x="2" y="903" />
-            <directive type="move" id="snowblue" delay="5" loop="true" time="10" x="5" y="902" />
+            <directive type="sprite" id="snow1" src="epilogue/snow.png" x="4" y="-1778" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="snow2" layer="1" src="epilogue/snow.png" x="7" y="-1779" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="snow1" loop="true" time="10" x="2" y="903" />
+            <directive type="move" id="snow2" delay="5" loop="true" time="10" x="5" y="902" />
             <directive type="pause" />
             <directive type="pause" />
             <directive type="clear" id="text8" />
-            <directive type="sprite" id="sprite1" layer="1" src="epilogue/textpngs/txtbox01.png" x="553" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="textbox" layer="1" src="epilogue/textpngs/txtbox01.png" x="553" y="740" pivotx="50%" pivoty="50%" />
             <directive type="pause" />
-            <directive type="clear" id="text9" />
             <directive type="sprite" id="sprite2" src="epilogue/Lucina kimono/Yukata.png" x="1291" y="-91" scalex="0.4" scaley="0.4" pivotx="50%" pivoty="50%" />
             <directive type="move" id="sprite2" delay="0" ease="linear" time="4" x="945" y="-83" rotation="0" />
             <directive type="wait" />
@@ -3647,77 +4065,54 @@
             <directive type="sprite" id="sprite11" src="epilogue/Lucina kimono/Yukata no eyes.png" x="289" y="15" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="sprite12" src="epilogue/Lucina kimono/longblink1.gif" x="750" y="322" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" />
             <directive type="pause" />
-            <directive type="remove" id="sprite1" />
-            <directive type="sprite" id="sprite4" src="epilogue/textpngs/txtbox02.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox02.png" x="659" y="741" scalex="1.41502" />
             <directive type="pause" />
-            <directive type="remove" id="sprite4" />
-            <directive type="sprite" id="sprite6" src="epilogue/textpngs/txtbox03.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox03.png" x="659" y="741" scalex="1.41502" />
             <directive type="pause" />
-            <directive type="remove" id="sprite6" />
-            <directive type="sprite" id="sprite8" src="epilogue/textpngs/txtbox04.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox04.png" x="663" y="741" scalex="1.45" />
             <directive type="pause" />
-            <directive type="remove" id="sprite8" />
-            <directive type="sprite" id="sprite13" src="epilogue/textpngs/txtbox05.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox05.png" x="659" y="741" scalex="1.41502" />
             <directive type="pause" />
-            <directive type="remove" id="sprite13" />
-            <directive type="sprite" id="sprite17" src="epilogue/textpngs/txtbox06.png" x="453" y="740" pivotx="50%" pivoty="50%" />
-            <directive type="pause" />
-            <directive type="clear-all" />
             <directive type="remove" id="sprite2" />
             <directive type="remove" id="sprite11" />
             <directive type="sprite" id="sprite3" src="epilogue/Lucina kimono/Yukata appreciative no eyes.png" x="288" y="15" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" />
-            <directive type="remove" id="sprite17" />
-            <directive type="sprite" id="sprite10" src="epilogue/textpngs/txtbox07.png" x="453" y="740" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="sprite7" src="epilogue/Lucina kimono/longblink1.gif" x="747" y="321" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox06.png" x="659" y="741" scalex="1.41502" />
             <directive type="pause" />
-            <directive type="remove" id="sprite10" />
-            <directive type="sprite" id="sprite14" src="epilogue/textpngs/txtbox08.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox07.png" x="659" y="741" scalex="1.41502" />
             <directive type="pause" />
-            <directive type="remove" id="sprite14" />
-            <directive type="sprite" id="sprite19" src="epilogue/textpngs/txtbox09.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox8.png" x="659" y="741" scalex="1.41502" scaley="1" />
             <directive type="pause" />
-            <directive type="remove" id="sprite19" />
-            <directive type="sprite" id="sprite21" layer="1" src="epilogue/textpngs/txtbox10.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox09.png" x="659" y="741" scalex="1.41502" />
             <directive type="pause" />
-            <directive type="remove" id="sprite21" />
-            <directive type="sprite" id="sprite24" src="epilogue/textpngs/txtbox11.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox10.png" x="659" y="741" scalex="1.41502" />
             <directive type="pause" />
-            <directive type="remove" id="sprite24" />
-            <directive type="sprite" id="sprite26" src="epilogue/textpngs/txtbox12.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox11.png" x="659" y="741" scalex="1.41502" />
             <directive type="pause" />
-            <directive type="remove" id="sprite26" />
-            <directive type="sprite" id="sprite29" src="epilogue/textpngs/txtbox13.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox12.png" x="659" y="741" scalex="1.41502" />
             <directive type="pause" />
-            <directive type="remove" id="sprite29" />
-            <directive type="sprite" id="sprite34" src="epilogue/textpngs/txtbox14.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox13.png" x="659" y="741" scalex="1.41502" />
             <directive type="pause" />
-            <directive type="remove" id="sprite34" />
-            <directive type="sprite" id="sprite37" src="epilogue/textpngs/txtbox15.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox14.png" x="659" y="741" scalex="1.41502" />
             <directive type="pause" />
-            <directive type="remove" id="sprite37" />
-            <directive type="sprite" id="sprite39" src="epilogue/textpngs/txtbox16.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox15.png" x="582" y="741" scalex="1.11502" />
             <directive type="pause" />
-            <directive type="remove" id="sprite39" />
-            <directive type="sprite" id="sprite42" src="epilogue/textpngs/txtbox17.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox16.png" x="659" y="741" scalex="1.41502" />
             <directive type="pause" />
-            <directive type="clear-all" />
             <directive type="remove" id="sprite3" />
             <directive type="remove" id="sprite42" />
             <directive type="sprite" id="sprite5" src="epilogue/Lucina kimono/Yukata no eyes.png" x="289" y="15" scalex="0.8" scaley="0.8" pivotx="47%" pivoty="50%" />
             <directive type="sprite" id="sprite9" src="epilogue/Lucina kimono/longblink1.gif" x="745" y="322" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" />
-            <directive type="sprite" id="sprite44" src="epilogue/textpngs/txtbox18.png" x="553" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox18.png" x="518" y="741" scalex="0.85" scaley="1" />
             <directive type="pause" />
-            <directive type="remove" id="sprite44" />
-            <directive type="sprite" id="sprite47" src="epilogue/textpngs/txtbox19.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox19.png" x="659" y="741" scalex="1.41502" />
             <directive type="pause" />
-            <directive type="remove" id="sprite47" />
-            <directive type="sprite" id="sprite49" src="epilogue/textpngs/txtbox20.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox20.png" x="659" y="741" scalex="1.41502" />
             <directive type="pause" />
-            <directive type="remove" id="sprite49" />
-            <directive type="sprite" id="sprite51" src="epilogue/textpngs/txtbox21.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox" src="epilogue/textpngs/txtbox21.png" x="631" y="741" scalex="1.3" />
             <directive type="pause" />
         </scene>
-        <scene background="epilogue/background1cropped.png" width="1600" height="900">
+        <scene name="Hotsprings Inside 1" background="epilogue/background1cropped.png" width="1600" height="900">
             <directive type="text" id="text10" width="39%" arrow="right" x="1%" y="9%">As the two of you enter the bathhouse together, you feel yourself quickly beginning to feel more comfortable in the warm, misty air of the hot spring.</directive>
             <directive type="sprite" id="steam1" layer="1" src="epilogue/steamfixed.png" x="-2034" y="13" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="steam2" layer="2" src="epilogue/steamfixed.png" x="274" y="4" scalex="1.263672" pivotx="50%" pivoty="50%" />
@@ -3738,13 +4133,11 @@
             <directive type="wait" />
             <directive type="pause" />
             <directive type="clear-all" />
-            <directive type="sprite" id="sprite51" layer="4" src="epilogue/textpngs/txtbox22.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="textbox2" layer="6" src="epilogue/textpngs/txtbox22.png" x="553" y="740" pivotx="50%" pivoty="50%" />
             <directive type="pause" />
-            <directive type="remove" id="sprite51" />
-            <directive type="sprite" id="sprite52" layer="5" src="epilogue/textpngs/txtbox23.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox2" src="epilogue/textpngs/txtbox23.png" x="553" y="741" scalex="1" />
             <directive type="pause" />
             <directive type="text" id="text32" width="26%" x="1%" y="9%">Could she possibly be talking about... &lt;i&gt;that&lt;/i&gt;?</directive>
-            <directive type="remove" id="sprite52" />
             <directive type="pause" />
             <directive type="text" id="text34" width="26%" x="1%" y="25%">Suddenly relaxing in the bath is the last thing on you mind.</directive>
             <directive type="pause" />
@@ -3752,11 +4145,10 @@
             <directive type="remove" id="sprite2" />
             <directive type="sprite" id="sprite40" layer="4" src="epilogue/Lucina kimono/Yukata no eyes.png" x="25%" y="3" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="sprite41" layer="4" src="epilogue/Lucina kimono/longblink1.gif" x="852" y="214" pivotx="50%" pivoty="50%" />
-            <directive type="sprite" id="sprite53" layer="5" src="epilogue/textpngs/txtbox24.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox2" src="epilogue/textpngs/txtbox24.png" x="553" y="741" scalex="1" />
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="text" id="text43" width="27%" x="1%" y="9%">Having a pretty good idea of where your wife is going with this, you quickly comply with her request.</directive>
-            <directive type="remove" id="sprite53" />
             <directive type="pause" />
             <directive type="clear-all" />
             <directive type="sprite" id="eyelid" layer="5" src="epilogue/eyelid1.png" x="602" y="-900" scalex="100" scaley="100" pivotx="50%" pivoty="50%" />
@@ -3767,13 +4159,14 @@
             <directive type="text" id="text57" width="25%" x="centered" y="31%">&lt;i&gt;*Rustle rustle rustle*&lt;/i&gt;</directive>
             <directive type="pause" />
             <directive type="clear-all" />
-            <directive type="sprite" id="txtbox25" layer="5" src="epilogue/textpngs/txtbox25.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox2" src="epilogue/textpngs/txtbox25.png" x="553" y="741" scalex="1" />
             <directive type="pause" />
             <directive type="remove" id="sprite54" />
             <directive type="move" id="eyelid" delay="0" ease="linear" time="2" x="750" y="-1000" />
             <directive type="sprite" id="sprite63" src="epilogue/Lucina kimono/Yukata open no eyes.png" x="414" y="-11" pivotx="50%" pivoty="50%" />
             <directive type="sprite" id="sprite22" src="epilogue/Lucina kimono/longblink1.gif" x="861" y="199" pivotx="50%" pivoty="50%" />
-            <directive type="sprite" id="txtbox26" layer="5" src="epilogue/textpngs/txtbox26.png" x="453" y="740" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="textbox2" src="epilogue/textpngs/txtbox26.png" x="553" y="741" scalex="1" />
+            <directive type="sprite" id="sprite28" src="epilogue/Tlp_Ev_026_ED1_A_2_6580(FIN).png" x="1297" y="740" scalex="2" scaley="2" pivotx="50%" pivoty="50%" />
         </scene>
 
     </epilogue>

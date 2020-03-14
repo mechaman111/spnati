@@ -711,7 +711,8 @@ OpponentDisplay.prototype.update = function(player) {
         this.hideBubble();
     } else {
         this.bubble.show();
-        this.bubble.removeClass('arrow-down arrow-left arrow-right arrow-up').addClass('arrow-'+chosenState.direction);
+        this.bubble.removeClass('arrow-down arrow-left arrow-right arrow-up');
+        if (chosenState.direction != 'none') this.bubble.addClass('arrow-'+chosenState.direction);
         bubbleArrowOffsetRules[this.slot-1][0].style.left = chosenState.location;
         bubbleArrowOffsetRules[this.slot-1][1].style.top = chosenState.location;
     }

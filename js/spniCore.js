@@ -321,6 +321,7 @@ function Player (id) {
     this.tags = this.baseTags = [];
     this.xml = null;
     this.metaXml = null;
+    this.persistentMarkers = {};
 
     this.resetState();
 }
@@ -509,6 +510,84 @@ Player.prototype.checkStatus = function(status) {
 	case STATUS_FINISHED:
 		return this.finished;
 	}
+}
+
+/**
+ * Get the value of a marker set on this Player.
+ * 
+ * This method always attempts to parse stored marker values as integers,
+ * but if this isn't possible then the raw string will be returned instead
+ * (unless `numeric` is set to `true`).
+ * 
+ * If a `target` is passed, the marker value will be read from a per-target
+ * marker first, if possible. By default (if `targeted_only` is not `true`),
+ * if the per-target marker is not found, the base marker's value will be
+ * used as a default.
+ * 
+ * @param {string} baseName The name of the marker to look up.
+ * @param {Player} target If passed, the value will be loaded on a per-target
+ * basis.
+ * @param {boolean} numeric If `true`, then stored marker values that cannot
+ * be converted to number values will be returned as 0 instead of as strings.
+ * @param {boolean} targeted_only If `true`, then per-target markers will
+ * _not_ default to using their base names if not found.
+ * @returns {number | string}
+ */
+Player.prototype.getMarker = function (baseName, target, numeric, targeted_only) {
+    var val = 0;
+
+    var name = baseName;
+    if (target && target.id) {
+        name = getTargetMarker(baseName, target);
+    }
+
+    if (!this.persistentMarkers[baseName]) {
+        val = this.markers[name];
+
+        if (!val && target && !targeted_only) {
+            /* If the per-target marker wasn't found, attempt to default
+             * to the nonspecific marker.
+             */
+            val = this.markers[baseName];
+        }
+    } else {
+        val = save.getPersistentMarker(this, name);
+
+        if (!val && target && !targeted_only) {
+            val = save.getPersistentMarker(this, baseName);
+        }
+    }
+
+    var cast = parseInt(val, 10);
+    
+    if (!isNaN(cast)) {
+        return cast;
+    } else if (numeric) {
+        return 0;
+    } else {
+        return val;
+    }
+}
+
+/**
+ * Set the value of a marker on this Player.
+ * 
+ * @param {string} baseName The name of the marker to set.
+ * @param {Player} target If passed, the value will be set on a per-target
+ * basis.
+ * @param {string | number} value The value to set for the marker.
+ */
+Player.prototype.setMarker = function (baseName, target, value) {
+    var name = baseName;
+    if (target && target.id) {
+        name = getTargetMarker(baseName, target);
+    }
+
+    if (!this.persistentMarkers[baseName]) {
+        this.markers[name] = value;
+    } else {
+        save.setPersistentMarker(this, name, value);
+    }
 }
 
 
@@ -965,6 +1044,15 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             this.default_costume.tags = tagsArray;
 
+            /* Load forward-declarations for persistent markers. */
+            var persistentMarkers = $xml.find('persistent-markers');
+            if (typeof persistentMarkers !== typeof undefined && persistentMarkers) {
+                $(persistentMarkers).find('marker').each(function (i, elem) {
+                    var markerName = $(elem).text();
+                    this.persistentMarkers[markerName] = true;
+                }.bind(this));
+            }
+
             this.targetedLines = {};
 
             /* Clone cases with alternative conditions/test, keeping
@@ -1046,7 +1134,19 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
     });
 
     var lines = new Set();
-    caseObj.states.forEach(function (s) { lines.add(s.rawDialogue); });
+    caseObj.states.forEach(function (s) {
+        lines.add(s.rawDialogue);
+
+        /* Handle the old persist-marker flag by adding all markers set with
+         * persist-marker="true" to the persistentMarkers list.
+         *
+         * TODO: Remove this once all characters using persistent markers
+         * have migrated over to the system in #74.
+         */
+        if (s.legacyPersistentFlag && s.marker && s.marker.name) {
+            this.persistentMarkers[s.marker.name] = true;
+        }
+    }.bind(this));
 
     entities.forEach(function (ent) {
         if (!(ent in this.targetedLines)) {
