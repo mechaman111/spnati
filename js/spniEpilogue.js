@@ -5,20 +5,11 @@ var epilogueContainer = document.getElementById('epilogue-container');
 /* Epilogue selection modal elements */
 $epilogueSelectionModal = $('#epilogue-modal'); //the modal box
 $epilogueHeader = $('#epilogue-header-text'); //the header text for the epilogue selection box
+$epilogueTip = $('#epilogue-header-tip');
 $epilogueList = $('#epilogue-list'); //the list of epilogues
 $epilogueAcceptButton = $('#epilogue-modal-accept-button'); //click this button to go with the chosen ending
 
 var epilogueSelections = []; //references to the epilogue selection UI elements
-
-var winStr = "You've won the game, and possibly made some friends. Who among these players did you become close with?"; //Winning the game, with endings available
-var winStrNone = "You've won the game, and possibly made some friends? Unfortunately, none of your competitors are ready for a friend like you.<br>(None of the characters you played with have an ending written.)"; //Player won the game, but none of the characters have an ending written
-var lossStr = "Well you lost. And you didn't manage to make any new friends. But you saw some people strip down and show off, and isn't that what life is all about?<br>(You may only view an ending when you win.)"; //Player lost the game. Currently no support for ending scenes when other players win
-
-// Player won the game, but epilogues are disabled.
-var winEpiloguesDisabledStr = "You won... but epilogues have been disabled.";
-
-// Player lost the game with epilogues disabled.
-var lossEpiloguesDisabledStr = "You lost... but epilogues have been disabled.";
 
 var epilogues = []; //list of epilogue data objects
 var chosenEpilogue = null;
@@ -53,6 +44,53 @@ epilogueContainer.addEventListener('click', function () {
     moveEpilogueForward();
   }
 });
+
+// Winning the game, with endings available.
+var winStr = "You've won the game, and some of your competitors might be ready for something <i>extra</i>...<br>Who among these players did you become close with?";
+
+// Player won the game, but none of the characters have an ending written.
+var winStrNone = "You've won the game!<br>We hope you enjoyed the game!  Be sure to play again sometime!";
+
+// Player lost the game. Currently no support for ending scenes when other players win.
+var lossStr = "Although you didn't win this time, we hope you had a good time anyway.<br>You were probably just unlucky, so be sure to give it another try soon!";
+
+// Player won the game, but epilogues are disabled.
+var winEpiloguesDisabledStr = winStrNone; // "You won... but epilogues have been disabled.";
+
+// Player lost the game with epilogues disabled.
+var lossEpiloguesDisabledStr = lossStr; // "You lost... but epilogues have been disabled.";
+
+/* Random tips displayed at game end. */
+var endingTips = [
+  "Keeping pairs is usually better than going for rare hands.",
+  "Sit back and enjoy the game, maybe you'll find something new!",
+  "Some characters have special interactions with each other. How many have you found?",
+  "Found a cool, sexy, or funny scene? Share it with us!",
+  "Really stuck and don't know how to play well? Give Card Suggest a try!",
+  "Curious about the game or have any questions? Check out our FAQ!",
+  "SPNATI is an open-source project, and it's brought to life by people like you. Why not give making your own characters a shot?",
+  "All of these characters were made by someone like you!",
+  "One of your favorite opponents might turn out to be someone you've never heard of before. Try some new characters; you might end up falling in love!",
+  "Some characters have secret interactions. See if you can uncover the conditions to trigger these events.",
+  "Bug reports are sent to publicly viewable channels on Discord. They are not sent to the characters in-game. If you use the bug report function to RP, you will be openly made fun of, then blocked for spam.",
+  "Card suggest is useful when you don't feel like thinking, but it isn't perfect.",
+  "Enjoying a character? Let us know in the Discord! We love to get praise!",
+  "Cant find a character? It may have been moved to the offline version.",
+  "Have a character you want to see in the game? Make them!",
+  "Poker is mostly a game of luck. If you don't win the first time, try again!",
+  "If you have no other hand, then you're dependent on your high card. Good luck.",
+  "If you have two cards of the same rank, that is called a Pair. Pairs are the easiest and most efficient hand to go for. Get them whenever you can!",
+  "The Two Pair hand is pretty self explanatory: It's when you have two sets of two of the same rank card. These are stronger than a Pair, and you don't have to risk losing a 0air to get it.",
+  "The Three of a Kind hand is, naturally, what having three of the same rank card is called. This is stronger than the Two Pair hand, and if you go for it and fail you might still get a Pair.",
+  "Five cards in a sequence (for example, 2/3/4/5/6) is called a Straight. Straights beat Three of a Kind and lower. Remember that, even if you are only one card away from a Straight, you still only have at best a nearly one in thirteen chance of getting it.",
+  "Five cards of the same suit with no other hand is called a Flush, and it's stronger than a Straight. Remember that, even if you are only card away, you still only have at best a nearly one in four chance of getting this hand.",
+  "A Full House isn't just a great two word horror story, but also the term for the hand you have when you have both a set of three cards of the same rank, and another set of two cards of the same rank. It is stronger than a flush.",
+  "A Four of a Kind is the name for a hand with four cards of the same rank. It's stronger than a full house, and one of the highest hands you can go for while still having a pair to fall back on.",
+  "A Straight Flush is a combination of a Straight and a Flush, all five cards in sequence and of the same suit, and is stronger than a Four of a Kind. Remember that, even if you are only one away, there is literally only one card in the deck that will give this hand to you.",
+  "A Royal Flush is specifically an Ace, King, Queen, Jack, and 10, all of the same suit. It is the rarest and strongest hand. It is never really worth going for if you want to win, but it's still pretty damn cool if you can get it.",
+  "Despite what a certain spiky haired protagonist might say, believing in the heart of the cards is not a great strategy. Going for safe hands is usually the way to go.",
+  "Remember, you don't need the best hand: you just need to not have the worst. Getting any hand above a high card is usually enough to survive a round.",
+];
 
 var $epilogueSkipSelector = $('#epilogue-skip-scene');
 var $epilogueHotReloadBtn = $('#epilogue-reload');
@@ -974,6 +1012,9 @@ function doEpilogueModal() {
   //are there any epilogues available for the player to see?
   var haveEpilogues = (epilogues.length >= 1); //whether or not there are any epilogues available
   $epilogueAcceptButton.css("visibility", haveEpilogues ? "visible" : "hidden");
+
+  var randomTip = endingTips[getRandomNumber(0, endingTips.length)];
+  $epilogueTip.html(randomTip);
 
   if (EPILOGUES_ENABLED) {
     //decide which header string to show the player. This describes the situation.
