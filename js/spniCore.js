@@ -1870,10 +1870,8 @@ $('#bug-report-type').change(updateBugReportOutput);
 $('#bug-report-desc').change(updateBugReportOutput);
 $('#bug-report-copy-btn').click(copyBugReportOutput);
 
-if (document.fullscreenEnabled) {
-    $('.title-fullscreen-button, .table-fullscreen-button').on('click', toggleFullscreen);
-} else {
-    $('.title-fullscreen-button, .table-fullscreen-button').hide();
+if (!document.fullscreenEnabled) {
+    $('.title-fullscreen-button, .game-menu-dropup li:has(#game-fullscreen-button)').hide();
 }
 
  /************************************************************
