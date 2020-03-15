@@ -1647,6 +1647,7 @@ Case.prototype.checkConditions = function (self, opp) {
     /* In the trivial case with no condition variables, we get a single binding combination of {}.
        And with no tests, this.tests.every() trivially returns true. */
     for (var i = 0; i < bindingCombinations.length; i++) {
+        addExtraNumberedBindings(bindingCombinations[i], Object.entries(counterMatches));
         if (this.tests.every(function(test) {
             var expr = expandDialogue(test.attr('expr'), self, opp, bindingCombinations[i]);
             var value = test.attr('value');
@@ -2057,6 +2058,21 @@ function getAllBindingCombinations (variableMatches) {
     } else return [{}];
 }
 
+/*
+ * Adds additional numbered variables from 2 and up binding to the
+ * remaining variable matches not already used in bindings.
+ */
+function addExtraNumberedBindings (bindings, variableMatches) {
+    variableMatches.forEach(function(pair) {
+        var variable = pair[0], matches = pair[1];
+        var otherMatches = matches.filter(function(match) { return match != bindings[variable]; });
+        shuffleArray(otherMatches);
+        otherMatches.forEach(function(match, i) {
+            bindings[variable + (i + 2)] = match;
+        });
+    });
+}
+
 function shuffleArray (array) {
     for (var i = array.length - 1; i > 0; i--) {
         var j = getRandomNumber(0, i);
@@ -2064,4 +2080,24 @@ function shuffleArray (array) {
         array[i] = array[j];
         array[j] = tmp;
     }
+}
+
+/*
+ * Given an array arr, return an array containing all arr.length!
+ * permutations of arr. Not used at the moment, but may be later.
+ * (Since there are at most five players, the number of permutations
+ * will be at most 5! = 120).
+ */
+function getAllArrayPermutations (arr) {
+    if (arr.length == 1) return [arr];
+    var ret = [];
+    for (var i = 0; i < arr.length; i++) {
+        var copy = arr.slice();
+        var el = copy.splice(i, 1)[0];
+        getAllArrayPermutations(copy).forEach(function(permutation) {
+            permutation.push(el);
+            ret.push(permutation);
+        });
+    }
+    return ret;
 }
