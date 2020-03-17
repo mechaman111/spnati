@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 12:46:07  on marts 05, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.8 at 9:03:06  on marts 17, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.8</version>
     <first>Weiss</first>
@@ -60,7 +60,7 @@
     <wardrobe>
         <clothing name="panties" position="lower" type="important" plural="true" />
         <clothing name="bra" position="upper" type="important" />
-        <clothing name="hairpins" position="head" type="extra" plural="true" />
+        <clothing name="hairpin" generic="hairpin" position="head" type="extra" />
         <clothing name="dress" generic="dress" position="both" type="major" />
         <clothing name="jacket" position="upper" type="minor" />
         <clothing name="boots" position="other" type="extra" plural="true" />
@@ -565,6 +565,10 @@
                 <condition character="lucina" />
                 <condition character="mulan" />
                 <state img="#-interested.png">So many cute boys here tonight.</state>
+            </case>
+            <case stage="0" id="2" oneShotId="28" priority="200">
+                <condition character="weiss" />
+                <state img="#-sad.png">Who is she? Could somebody please explain to me who this other Weiss is?</state>
             </case>
             <case stage="0-7" totalRounds="0">
                 <condition role="self" timeInStage="0" />
@@ -1269,10 +1273,10 @@
                 <state img="#-strip.png">Just keep your minds about you, it's only my shoulders.</state>
                 <state img="#-strip.png">Elegant, no?</state>
             </case>
-            <case stage="4">
-                <state img="#-strip.png">I was certain I could win without taking out these hairpins.</state>
-                <state img="#-strip.png">I was convinced I would have won before having to remove my hairpins.</state>
-                <state img="#-strip.png">I really wanted to avoid taking off my hair pins.</state>
+            <case stage="4" id="1">
+                <state img="#-strip.png">I was certain I could win without taking out my hairpin.</state>
+                <state img="#-strip.png">I was convinced I would have won before having to remove my hairpin.</state>
+                <state img="#-strip.png">I really wanted to avoid taking off my hairpin.</state>
             </case>
             <case stage="5">
                 <state img="#-strip.png" marker="weiss_attempts_bribery">Please don't make me do this! My family is very wealthy, and I could give all of you some money! I mean, I don't have access to the bank account but...</state>
@@ -1672,9 +1676,9 @@
                 <state img="#-stripped_2.png">I can't believe this. You just wanted to bully me because I'm rich, right?</state>
             </case>
             <case stage="5">
-                <state img="#-stripped.png">Do you have any idea how long it takes to put these pins in properly?</state>
+                <state img="#-stripped.png">Do you have any idea how long it takes to set up my hair properly?</state>
                 <state img="#-stripped.png">Now I have to spend the rest of the day with my hair like this.</state>
-                <state img="#-stripped.png">It's going to take forever to put them back in.</state>
+                <state img="#-stripped.png">It's going to take forever to fix my hair again.</state>
             </case>
             <case stage="6">
                 <state img="#-stripped.png">T-there... How long do I have to show them off for? Ugh, this is so stupid!</state>
@@ -2083,7 +2087,8 @@
             <case stage="1-5" target="blake" targetStage="1">
                 <state img="#-embarrassed.png">(This game is harder than I thought... even Blake seems to be struggling.)</state>
             </case>
-            <case stage="1-5" target="weiss" targetStage="0">
+            <case stage="1-5">
+                <condition role="target" character="weiss" stage="0" />
                 <state img="#-confused.png">Who allowed this Weiss clone in here?</state>
             </case>
             <case stage="1-3" target="winter" targetStage="0">
@@ -2108,7 +2113,8 @@
             <case stage="6-9" target="blake" targetStage="1">
                 <state img="#-embarrassed.png">Heh heh... At least you aren't doing as bad as me, Blake.</state>
             </case>
-            <case stage="6-9" target="weiss" targetStage="0">
+            <case stage="6-9">
+                <condition role="target" character="weiss" stage="0" />
                 <state img="#-confused.png">Have my clone really not lost yet?</state>
             </case>
             <case stage="6-8" target="winter" targetStage="0">
@@ -5761,7 +5767,8 @@
             <case stage="8" target="ruby">
                 <state img="#-sad.png">This isn't anything like our usual combo attacks... Wait, what did I just say?</state>
             </case>
-            <case stage="8" target="weiss">
+            <case stage="8">
+                <condition role="target" character="weiss" />
                 <state img="#-disgusted.png">This is some crazy Mirror Mirror situation.</state>
             </case>
             <case stage="8" target="winter">
