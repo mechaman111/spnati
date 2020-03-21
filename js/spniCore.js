@@ -1443,6 +1443,12 @@ function initialSetup () {
     $(document).mousedown(function(ev) {
         $("body").removeClass('focus-indicators-enabled');
     });
+    $(window).on('beforeunload', function() {
+        if (inGame) {
+            event.preventDefault();
+            event.returnValue = '';
+        }
+    });
 
     $('[data-toggle="tooltip"]').tooltip({ delay: { show: 200 } });
 }
