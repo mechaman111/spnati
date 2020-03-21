@@ -1880,7 +1880,7 @@ $('#bug-report-desc').change(updateBugReportOutput);
 $('#bug-report-copy-btn').click(copyBugReportOutput);
 
 if (!document.fullscreenEnabled) {
-    $('.title-fullscreen-button, .game-menu-dropup li:has(#game-fullscreen-button)').hide();
+    $('.title-fullscreen-button, .game-menu-dropup li:has(#game-fullscreen-button), #epilogue-fullscreen-button').hide();
 }
 
  /************************************************************
@@ -2488,10 +2488,10 @@ function toggleFullscreen() {
     }
 }
 
-$(':root').on('dblclick', toggleFullscreen);
-$(':root').on('dblclick', ':input, .dialogue-bubble, .modal-dialog, .selection-card, .bordered', function(ev) {
+$(':root').on('dblclick', ':input, .dialogue-bubble, .modal-dialog, .selection-card, .bordered, #epilogue-screen', function(ev) {
     ev.stopPropagation();
 });
+$(':root').on('dblclick', toggleFullscreen);
 
 /************************************************************
  * The player clicked on a Load/Save button.
