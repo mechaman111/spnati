@@ -1415,6 +1415,8 @@ function initialSetup () {
 	$titleScreen.show();
 	$('#warning-start-button').focus();
     autoResizeFont();
+	/* set up future resizing */
+	window.onresize = autoResizeFont;
 
     /* Construct a CSS rule for every combination of arrow direction, screen, and pseudo-element */
     bubbleArrowOffsetRules = [];
@@ -1806,6 +1808,7 @@ function restartGame () {
 	$epilogueScreen.hide();
 	clearEpilogue();
     $titleScreen.show();
+    autoResizeFont();
 }
 
 /**********************************************************************
@@ -2631,8 +2634,8 @@ function autoResizeFont ()
         $(':root').css('font-size', ($('.screen:visible').width() / 4 * 3 / 100)+'px');
     } else if ($('.screen:visible').width()) {
         $(':root').css('font-size', ($('.screen:visible').width() / 100)+'px');
-    } else if ($('.epilogue-viewport:visible').height()) {
-        $(':root').css('font-size', ($('.epilogue-viewport:visible').height() / 75)+'px');
+    } else {
+        return;
     }
 
 	if (backgroundImage && backgroundImage.height && backgroundImage.width) {
@@ -2658,8 +2661,6 @@ function autoResizeFont ()
             $("body").css("background-position-y", '');
         }
 	}
-	/* set up future resizing */
-	window.onresize = autoResizeFont;
 }
 
 $('.modal').on('show.bs.modal', function() {
