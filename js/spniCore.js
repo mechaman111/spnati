@@ -1439,7 +1439,11 @@ function initialSetup () {
             $("body").addClass('focus-indicators-enabled');
         }
     });
-    $(document).keyup(groupSelectKeyToggle);
+    $(document).on('keyup', function(ev) {
+        if (ev.keyCode == 112) { // F1
+            showHelpModal();
+        }
+    });
     $(document).mousedown(function(ev) {
         $("body").removeClass('focus-indicators-enabled');
     });
