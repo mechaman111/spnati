@@ -961,11 +961,11 @@ function changeGroupPage (skip, page) {
  ************************************************************/
 
 
-function groupSelectKeyToggle(e)
+function groupSelectScreen_keyUp(e)
 {
     console.log(e)
-    if ($('#group-select-screen:visible').length > 0
-        && selectableGroups[groupSelectScreen].length > 0) {
+    if ($('#group-select-screen').is(':visible')
+        && !$groupButton.prop('disabled')) {
         if (e.keyCode == 37) { // left arrow
             changeGroupPage(false, -1);
         }
@@ -976,7 +976,8 @@ function groupSelectKeyToggle(e)
             selectGroup();
         }
     }
-} 
+}
+$groupSelectScreen.data('keyhandler', groupSelectScreen_keyUp);
 
 /************************************************************
  * The player clicked on the back button on the individual or

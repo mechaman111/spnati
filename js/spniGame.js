@@ -205,9 +205,6 @@ function loadGameScreen () {
 
     /* enable and set up the main button */
 	allowProgression(eGamePhase.DEAL);
-
-    $(document).keyup(game_keyUp);
-    $(document).keyup(groupSelectKeyToggle);
 }
 
 /**********************************************************************
@@ -1083,7 +1080,7 @@ function game_keyUp(e)
         }
     }
 }
-
+$gameScreen.data('keyhandler', game_keyUp);
 
 function selectDebug(player)
 {
