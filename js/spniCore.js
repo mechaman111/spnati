@@ -2479,6 +2479,11 @@ function toggleFullscreen() {
     }
 }
 
+$(':root').on('dblclick', toggleFullscreen);
+$(':root').on('dblclick', ':input, .dialogue-bubble, .modal-dialog, .selection-card, .bordered', function(ev) {
+    ev.stopPropagation();
+});
+
 /************************************************************
  * The player clicked on a Load/Save button.
  ************************************************************/
