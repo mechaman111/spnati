@@ -1070,12 +1070,12 @@ function game_keyUp(e)
         else if (e.keyCode == 53 && !$cardButtons[4].prop('disabled')) { // 5
             selectCard(4);
         }
-        else if (e.keyCode == 81 && DEBUG) {
+        else if (e.keyCode == 81 && DEBUG) { // Q
             showDebug = !showDebug;
             updateDebugState(showDebug);
             setDevSelectorVisibility(showDebug);
         }
-        else if (e.keyCode == 84) {
+        else if (e.keyCode == 84) { // T
             toggleTableVisibility();
         }
     }
