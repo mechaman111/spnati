@@ -36,31 +36,119 @@ All messages transmitted between client and server begin with the following 9-by
 
 ### Command Messages
 
-The payload of a Command message is a UTF-8 string containing a JSON-serialized object, with the following schema:
+The payload of a Command message is a UTF-8 string containing a JSON-serialized object.
 
+The following fields are common to all Command types:
+
+| Field Name | Data Type        | Description |
+| ---------- | ---------------- | ----------- |
+| `type`     | string           | The command to issue to KKL. See below for info on each command.
+| `id`       | number, optional | Will not affect processing on its own, but the server will attach it to all outgoing messages related to this request.
+
+The following is a quick overview of currently implemented Command types and their parameters:
+
+| Command        | `type` Field Values           | Parameters  |
+| -------------- | ----------------------------- | ----------- |
+| Version        | `version`                     | None
+| Full Import    | `import`                      | `code`
+| Partial Import | `import_partial`              | `code`
+| Screenshot     | `screenshot`                  | `bg`
+| Reset          | `reset_full`, `reset_partial` | None 
+| Peek/Poke      | `character_data`              | `character`, `op`, `tabName`, `tabParameter`, `value`, `internalNames`
+| Set Alpha      | `alpha`                       | `character`, `colorIndex`, `part`, `alpha`
+| Dump Character | `dump_character`              | `character`
+
+#### Version Command
+
+This command retrieves the major and minor version of the remote KKL server.
+The `data` field of the server response will be a subobject; the server version numbers will be within the `major` and `minor` fields of this subobject.
+
+#### Full and Partial Import Commands
+
+These commands instruct KKL to import a code into the Kisekae workspace.
+A "full import" will additionally take a screenshot immediately afterwards, similarly to the traditional file-based image export flow.
+
+A full import command will return its response as an Image Data message (type `0x03`), however a partial import command
+will use a regular Command Response message to report completion.
+
+The code to import must be specified as a string-valued `code` field within the Command object.
+For the full Import command (that takes screenshots), alpha parameters can be prepended to the code just as in regular file-based imports.
+(Alpha parameters aren't supported for partial imports yet.)
+
+#### Screenshot Command
+
+Screenshot commands take a screenshot of the Kisekae workspace.
+
+A boolean `bg` parameter can be passed as an optional field within the Command object; if `true`, then the scene background will be included
+within the returned image. By default, scene backgrounds will not be included in screenshots.
+
+This command will always return its response as an Image Data message (type `0x03`).
+
+#### Reset Commands
+
+Reset commands instruct KKL to reset the scene prop, background, and camera settings.
+A "full" reset will also hide all but the first character in the Kisekae lineup. This is useful for making standard pose images.
+
+#### Peek / Poke (aka Character Data) Commands
+
+These commands can be used to directly inspect and modify the data of characters within the Kisekae workspace.
+
+| Parameter         | Data Type                 | Description |
+| ----------------- | ------------------------- | ----------- |
+| `character`       | number                    | The zero-based index of the character to inspect or modify. Valid range is 0-8, inclusive.
+| `op`              | string                    | Either `get` or `set`.
+| `tabName`         | string                    | The name of the data group (or "tab") to inspect / modify.
+| `tabParameter`    | string or number          | The numeric index or internal name of the parameter within the group to inspect / modify.
+| `value`           | number / boolean / string | If `op` == `set`, then this is the value that the named parameter will be set to.
+| `internalNames`   | boolean, optional         | If `true`, then `tabName` and `tabParameter` will be interpreted as direct string keys within the Kisekae-internal `charaData` structure. (not recommended)
+
+When `internalNames` is `false` (the default), `tabName` as the prefix for an import/export data group, and `tabParameter` is interpreted as an index
+within that data group.
+
+For example, consider the following Kisekae code fragment (containing information related to character positioning):
 ```
+100**bc410.500.0.0.1.0
+```
+
+The prefix for this data group is `bc`, and the elements within the group are `[410, 500, 0, 0, 1, 0]`.
+
+The element at index 4 corresponds to the flag controlling the visibility of the character's shadow.
+Therefore, if we wanted to determine whether the first loaded character's shadow was visible or not, we could issue the command:
+```json
 {
-    "type": "import" | "import_partial" | "screenshot" | "reset_full" | "reset_partial",  (required)
-    "id": number, (optional)
-    "code": string, (required if type == "import" or "import_partial", ignored otherwise)
-    "bg": boolean, (optional, only used if type == "screenshot")
+    "type": "character_data",
+    "op": "get",
+    "character": 0,
+    "tabName": "bc",
+    "tabParameter": 4
 }
 ```
 
- * **Import** commands instruct KKL to import a code and generate a screenshot of it, similarly to the traditional file-based image export flow.
- * **Partial Import** commands only cause a code to be imported into the Kisekae workspace. They do not cause a screenshot to be taken.
- * **Screenshot** commands take a screenshot of the Kisekae workspace.
- * **Reset** commands instruct KKL to reset the scene prop, background, and camera settings. A "full" reset will also hide all but the first character in the Kisekae lineup. This is useful for making standard pose images.
+If we wanted to disable that same character's shadow without using the Import command or having to resort to Kisekae code
+manipulation, we can issue the command:
+```json
+{
+    "type": "character_data",
+    "op": "set",
+    "character": 0,
+    "tabName": "bc",
+    "tabParameter": 4,
+    "value": false
+}
+```
 
-The `"id"` parameter does not affect processing on its own, but the server will attach it to all outgoing messages related to the request.
+The same command could also be used to enable the character's shadow, by setting the `value` field to `true`.
 
-The `"code"` parameter, for Import commands, is a Kisekae code. For the full Import command (that takes screenshots), adding alpha parameters should work just as in regular file-based imports.
-(Alpha parameters aren't supported for partial imports yet.)
+#### Part Transparency Control Commands
 
-The `"bg"` parameter, for Screenshot commands, controls whether to show the background in the screenshot or not.
-By default, the background will be hidden (i.e. the default is `"bg": false`).
+(documentation coming soon)
 
-Commands that take screenshots will send them back to the client via an Image Data message; all other responses take the form of Command Response messages.
+#### Dump Character Command
+
+This command dumps the entire internal character data structure for the given `character` within the Kisekae workspace
+and returns it as the response `data`.
+
+This command is relatively fast, but produces a _lot_ of output.
 
 ### Command Response Messages
 
@@ -69,8 +157,10 @@ These objects have the following schema:
 
 ```
 {
-    "status": "in_progress" | "done",
-    "id": number (optional)
+    "status": "in_progress" | "done" | "error",
+    "id": number (optional),
+    "data": <any type>,
+    "reason": string (only if status == "error"),
 }
 ```
 
@@ -78,7 +168,12 @@ The `"id"` parameter indicates what request this response corresponds to; if the
 
 Upon receiving a request, the server will first send a response with `"status": "in_progress"` to indicate that it has received the request. 
 
-Once a given request is complete, the server will send another response with `"status": "done"` to indicate success for Reset commands.
+Once a given request is complete, the server will send another response with `"status": "done"` or `"status": "error"` as appropriate.
+Commands that return image data (such as Full Import or Screenshot commands) will instead return an Image Data message on successful completion.
+
+For responses with `"status": "error"`, a `reason` string will also be provided with a human-friendly description of the error.
+
+For commands that return some kind of data response, the `data` field will contain that information for successful responses.
 
 ### Image Data Messages
 
