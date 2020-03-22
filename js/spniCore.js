@@ -1412,9 +1412,11 @@ function initialSetup () {
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
 
 	/* show the title screen */
-	$warningScreen.show();
+	$titleScreen.show();
 	$('#warning-start-button').focus();
     autoResizeFont();
+	/* set up future resizing */
+	window.onresize = autoResizeFont;
 
     /* Construct a CSS rule for every combination of arrow direction, screen, and pseudo-element */
     bubbleArrowOffsetRules = [];
@@ -1446,6 +1448,12 @@ function initialSetup () {
     });
     $(document).mousedown(function(ev) {
         $("body").removeClass('focus-indicators-enabled');
+    });
+    $(window).on('beforeunload', function() {
+        if (inGame) {
+            event.preventDefault();
+            event.returnValue = '';
+        }
     });
 
     $('[data-toggle="tooltip"]').tooltip({ delay: { show: 200 } });
@@ -1701,8 +1709,9 @@ function detectBrokenOffline() {
 }
 
 function enterTitleScreen() {
-    $warningScreen.hide();
-    $titleScreen.show();
+    $warningContainer.hide();
+    $titleContainer.show();
+    $('.title-candy').show();
     $('#title-start-button').focus();
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
 }
@@ -1803,6 +1812,7 @@ function restartGame () {
     $epilogueScreen.hide();
     clearEpilogue();
     screenTransition($gameScreen, $titleScreen);
+    autoResizeFont();
 }
 
 /**********************************************************************
@@ -1872,6 +1882,10 @@ function sendBugReport() {
 $('#bug-report-type').change(updateBugReportOutput);
 $('#bug-report-desc').change(updateBugReportOutput);
 $('#bug-report-copy-btn').click(copyBugReportOutput);
+
+if (!document.fullscreenEnabled) {
+    $('.title-fullscreen-button, .game-menu-dropup li:has(#game-fullscreen-button), #epilogue-fullscreen-button').hide();
+}
 
  /************************************************************
   * The player clicked a bug-report button. Shows the bug reports modal.
@@ -2470,6 +2484,19 @@ function forceTableVisibility(state) {
 	}
 }
 
+function toggleFullscreen() {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else {
+        document.documentElement.requestFullscreen();
+    }
+}
+
+$(':root').on('dblclick', ':input, .dialogue-bubble, .modal-dialog, .selection-card, .bordered, #epilogue-screen', function(ev) {
+    ev.stopPropagation();
+});
+$(':root').on('dblclick', toggleFullscreen);
+
 /************************************************************
  * The player clicked on a Load/Save button.
  ************************************************************/
@@ -2611,8 +2638,8 @@ function autoResizeFont ()
         $(':root').css('font-size', ($('.screen:visible').width() / 4 * 3 / 100)+'px');
     } else if ($('.screen:visible').width()) {
         $(':root').css('font-size', ($('.screen:visible').width() / 100)+'px');
-    } else if ($('.epilogue-viewport:visible').height()) {
-        $(':root').css('font-size', ($('.epilogue-viewport:visible').height() / 75)+'px');
+    } else {
+        return;
     }
 
 	if (backgroundImage && backgroundImage.height && backgroundImage.width) {
@@ -2638,8 +2665,6 @@ function autoResizeFont ()
             $("body").css("background-position-y", '');
         }
 	}
-	/* set up future resizing */
-	window.onresize = autoResizeFont;
 }
 
 $('.modal').on('show.bs.modal', function() {

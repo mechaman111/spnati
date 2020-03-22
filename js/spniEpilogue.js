@@ -1176,7 +1176,8 @@ function updateEpilogueButtons() {
 * Class for playing through an epilogue
 ************************************************************/
 function EpiloguePlayer(epilogue) {
-  $(window).resize(this.resizeViewport.bind(this));
+  this.resizeHandler = this.resizeViewport.bind(this);
+  $(window).resize(this.resizeHandler);
   this.epilogue = epilogue;
   this.lastUpdate = performance.now();
   this.sceneIndex = -1;
@@ -1273,6 +1274,7 @@ EpiloguePlayer.prototype.fetchImage = function (path) {
 }
 
 EpiloguePlayer.prototype.destroy = function () {
+    $(window).off('resize', this.resizeHandler);
   for (var i = 0; i < this.views.length; i++) {
     this.views[i].destroy();
   }
@@ -1367,15 +1369,15 @@ EpiloguePlayer.prototype.setupScene = function (index, skipTransition) {
 }
 
 EpiloguePlayer.prototype.resizeViewport = function () {
-  if (!this.activeScene) {
-    return;
-  }
+    if (!this.activeScene) {
+        return;
+    }
 
-  for (var i = 0; i < this.views.length; i++) {
-    this.views[i].resize();
-  }
-
-  this.draw();
+    for (var i = 0; i < this.views.length; i++) {
+        this.views[i].resize();
+    }
+    $(':root').css('font-size', (this.activeScene.view.viewportHeight / 75)+'px');
+    this.draw();
 }
 
 EpiloguePlayer.prototype.advanceDirective = function () {
