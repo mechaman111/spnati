@@ -3,11 +3,11 @@ $epilogueScreen = $('#epilogue-screen');
 var epilogueContainer = document.getElementById('epilogue-container');
 
 /* Epilogue selection modal elements */
-$epilogueSelectionModal = $('#epilogue-modal'); //the modal box
-$epilogueHeader = $('#epilogue-header-text'); //the header text for the epilogue selection box
-$epilogueTip = $('#epilogue-header-tip');
-$epilogueList = $('#epilogue-list'); //the list of epilogues
-$epilogueAcceptButton = $('#epilogue-modal-accept-button'); //click this button to go with the chosen ending
+var $epilogueSelectionModal = $('#epilogue-modal'); //the modal box
+var $epilogueHeader = $('#epilogue-header-text'); //the header text for the epilogue selection box
+var $epilogueTip = $('#epilogue-header-tip');
+var $epilogueList = $('#epilogue-list'); //the list of epilogues
+var $epilogueAcceptButton = $('#epilogue-modal-accept-button'); //click this button to go with the chosen ending
 
 var epilogueSelections = []; //references to the epilogue selection UI elements
 
@@ -16,34 +16,12 @@ var chosenEpilogue = null;
 var epiloguePlayer = null;
 var epilogueSuffix = 0;
 
-// Attach some event listeners
-var previousButton = document.getElementById('epilogue-previous');
-var nextButton = document.getElementById('epilogue-next');
-previousButton.addEventListener('click', function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  moveEpilogueBack();
-});
-nextButton.addEventListener('click', function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  moveEpilogueForward();
-});
-document.getElementById('epilogue-restart').addEventListener('click', function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  showRestartModal();
-});
-document.getElementById('epilogue-buttons').addEventListener('click', function () {
-  if (!previousButton.disabled) {
-    moveEpilogueBack();
-  }
-});
-epilogueContainer.addEventListener('click', function () {
-  if (!nextButton.disabled) {
-    moveEpilogueForward();
-  }
-});
+var $epiloguePrevButton = $('#epilogue-buttons > #epilogue-previous');
+var $epilogueNextButton = $('#epilogue-buttons > #epilogue-next');
+var $epilogueRestartButton = $('#epilogue-buttons > #epilogue-restart');
+
+var $epilogueSkipSelector = $('#epilogue-skip-scene');
+var $epilogueHotReloadBtn = $('#epilogue-reload');
 
 // Winning the game, with endings available.
 var winStr = "You've won the game, and some of your competitors might be ready for something <i>extra</i>...<br>Who among these players did you become close with?";
@@ -91,38 +69,6 @@ var endingTips = [
   "Despite what a certain spiky haired protagonist might say, believing in the heart of the cards is not a great strategy. Going for safe hands is usually the way to go.",
   "Remember, you don't need the best hand: you just need to not have the worst. Getting any hand above a high card is usually enough to survive a round.",
 ];
-
-var $epilogueSkipSelector = $('#epilogue-skip-scene');
-var $epilogueHotReloadBtn = $('#epilogue-reload');
-
-$epilogueHotReloadBtn.click(function (ev) {
-  ev.preventDefault();
-  ev.stopPropagation();
-  hotReloadEpilogue();
-})
-
-$('#epilogue-skip').click(function (ev) {
-  ev.preventDefault();
-  ev.stopPropagation();
-  skipToEpilogueScene();
-});
-
-$('#epilogue-exit').click(function (ev) {
-  ev.preventDefault();
-  ev.stopPropagation();
-  showRestartModal();
-});
-
-$epilogueSkipSelector.click(function (ev) {
-  ev.preventDefault();
-  ev.stopPropagation();
-});
-
-$(document).keyup(function (ev) {
-  if (epiloguePlayer && epiloguePlayer.loaded && ev.keyCode == 81 && DEBUG) {
-    $('#epilogue-debug-group').toggleClass('debug-active');
-  }
-});
 
 /************************************************************
  * Animation class. Used instead of CSS animations for the control over stopping/rewinding/etc.
@@ -1092,9 +1038,6 @@ function doEpilogue() {
     });
   }
 
-  epilogueContainer.dataset.background = -1;
-  epilogueContainer.dataset.scene = -1;
-
   loadEpilogue(chosenEpilogue);
 
   screenTransition($gameScreen, $epilogueScreen);
@@ -1132,8 +1075,8 @@ function loadEpilogue(epilogue, loadToScene) {
   updateEpilogueButtons();
 }
 
-function moveEpilogueForward() {
-  if (epiloguePlayer && epiloguePlayer.loaded) {
+function moveEpilogueForward(ev) {
+  if (epiloguePlayer && epiloguePlayer.loaded && epiloguePlayer.hasMoreDirectives()) {
     if (SENTRY_INITIALIZED) {
       Sentry.addBreadcrumb({
         category: 'epilogue',
@@ -1147,8 +1090,8 @@ function moveEpilogueForward() {
   }
 }
 
-function moveEpilogueBack() {
-  if (epiloguePlayer && epiloguePlayer.loaded) {
+function moveEpilogueBack(ev) {
+  if (epiloguePlayer && epiloguePlayer.loaded && epiloguePlayer.hasPreviousDirectives()) {
     if (SENTRY_INITIALIZED) {
       Sentry.addBreadcrumb({
         category: 'epilogue',
@@ -1204,9 +1147,6 @@ function hotReloadEpilogue () {
 
       epilogue = parseEpilogue(player, endingElem);
 
-      epilogueContainer.dataset.background = -1;
-      epilogueContainer.dataset.scene = -1;
-
       loadEpilogue(epilogue, curScene);
       $epilogueHotReloadBtn.attr('disabled', false);
     });
@@ -1221,9 +1161,6 @@ function updateEpilogueButtons() {
     return;
   }
 
-  var $epiloguePrevButton = $('#epilogue-buttons > #epilogue-previous');
-  var $epilogueNextButton = $('#epilogue-buttons > #epilogue-next');
-  var $epilogueRestartButton = $('#epilogue-buttons > #epilogue-restart');
   $epiloguePrevButton.prop("disabled", !epiloguePlayer.hasPreviousDirectives());
   $epilogueNextButton.prop("disabled", !epiloguePlayer.hasMoreDirectives());
   $epilogueRestartButton.prop("disabled", epiloguePlayer.hasMoreDirectives());
@@ -1350,7 +1287,7 @@ EpiloguePlayer.prototype.hasMoreDirectives = function () {
 }
 
 EpiloguePlayer.prototype.hasPreviousDirectives = function () {
-  return this.sceneIndex > 0 || this.directiveIndex > 0;
+  return this.sceneIndex > 0 || this.directiveIndex > 1;
 }
 
 EpiloguePlayer.prototype.loop = function (timestamp) {
@@ -3137,3 +3074,37 @@ SceneTransition.prototype.flyThrough = function (t) {
     "opacity": t,
   });
 }
+
+// Event handlers
+$('#epilogue-buttons').on('click', ':input', function(ev) {
+    ev.stopPropagation();
+});
+$('#epilogue-container').click(moveEpilogueForward);
+$epilogueNextButton.click(moveEpilogueForward);
+$epiloguePrevButton.click(moveEpilogueBack);
+$('#epilogue-buttons').click(moveEpilogueBack);
+$epilogueRestartButton.click(showRestartModal);
+
+$epilogueHotReloadBtn.click(hotReloadEpilogue);
+$('#epilogue-skip').click(skipToEpilogueScene);
+$('#epilogue-exit').click(showRestartModal);
+
+function epilogue_keyUp(ev) {
+    if (epiloguePlayer && epiloguePlayer.loaded) {
+        switch (ev.keyCode) {
+        case 81:
+            if (DEBUG) {
+                $('#epilogue-debug-group').toggle();
+            }
+            break;
+        case 37:
+            moveEpilogueBack(); break;
+        case 32:
+        case 39:
+            moveEpilogueForward(); break;
+        }
+        ev.preventDefault();
+    }
+}
+
+$epilogueScreen.data('keyhandler', epilogue_keyUp);

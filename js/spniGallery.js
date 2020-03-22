@@ -593,9 +593,6 @@ function doEpilogueFromGallery(){
 				});
 			}
 		
-			epilogueContainer.dataset.background = -1;
-			epilogueContainer.dataset.scene = -1;
-		
 			loadEpilogue(epilogue); //initialise buttons and text boxes
 			screenTransition($galleryScreen, $epilogueScreen);
             $galleryStartButton.attr('disabled', false);

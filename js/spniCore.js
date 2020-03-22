@@ -1439,7 +1439,11 @@ function initialSetup () {
             $("body").addClass('focus-indicators-enabled');
         }
     });
-    $(document).keyup(groupSelectKeyToggle);
+    $(document).on('keyup', function(ev) {
+        if (ev.keyCode == 112) { // F1
+            showHelpModal();
+        }
+    });
     $(document).mousedown(function(ev) {
         $("body").removeClass('focus-indicators-enabled');
     });
@@ -1707,8 +1711,14 @@ function enterTitleScreen() {
  * Transitions between two screens.
  ************************************************************/
 function screenTransition (first, second) {
-	first.hide();
-	second.show();
+    if (first.data('keyhandler')) {
+        $(document).off('keyup', first.data('keyhandler'));
+    }
+    first.hide();
+    second.show();
+    if (second.data('keyhandler')) {
+        $(document).on('keyup', second.data('keyhandler'));
+    }
     autoResizeFont();
 }
 
@@ -1718,12 +1728,11 @@ function screenTransition (first, second) {
 function advanceToNextScreen (screen) {
     if (screen == $titleScreen) {
         /* advance to the select screen */
-		screenTransition($titleScreen, $selectScreen);
+        screenTransition(screen, $selectScreen);
     } else if (screen == $selectScreen) {
         /* advance to the main game screen */
-        $selectScreen.hide();
-		loadGameScreen();
-        $gameScreen.show();
+        loadGameScreen();
+        screenTransition(screen, $gameScreen);
         $mainButton.focus();
     }
 }
@@ -1734,8 +1743,7 @@ function advanceToNextScreen (screen) {
 function returnToPreviousScreen (screen) {
     if (screen == $selectScreen) {
         /* return to the title screen */
-        $selectScreen.hide();
-        $titleScreen.show();
+        screenTransition($selectScreen, $titleScreen);
     }
 }
 
@@ -1766,9 +1774,6 @@ function restartGame () {
         Sentry.setTag("epilogue_gallery", undefined);
     }
 
-    $(document).off('keyup');
-    $(document).keyup(groupSelectKeyToggle);
-
 	clearTimeout(timeoutID); // No error if undefined or no longer valid
 	timeoutID = autoForfeitTimeoutID = undefined;
 	stopCardAnimations();
@@ -1793,12 +1798,11 @@ function restartGame () {
 
     forceTableVisibility(true);
 
-	/* there is only one call to this right now */
-	$epilogueSelectionModal.hide();
-	$gameScreen.hide();
-	$epilogueScreen.hide();
-	clearEpilogue();
-    $titleScreen.show();
+    /* there is only one call to this right now */
+    $epilogueSelectionModal.hide();
+    $epilogueScreen.hide();
+    clearEpilogue();
+    screenTransition($gameScreen, $titleScreen);
 }
 
 /**********************************************************************
