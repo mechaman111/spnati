@@ -11,9 +11,59 @@ directory as itself.
 If this file exists, KKL will attempt to bind to port `8008` on `127.0.0.1`. If it fails to bind to the port, the server will
 silently disable itself for that session.
 
+## Reference Client
+
+A reference protocol client library written in Python 3 can be found alongside this document.
+
+Here's an example of how to use it:
+```python
+import asyncio
+import sys
+
+from kkl_client import KisekaeLocalClient, KisekaeServerRequest
+
+async def main():
+    # Read a Kisekae code from a file specified on the command line:
+    with open(sys.argv[2], "r", encoding="utf-8") as in_file:
+        code = in_file.read()
+    
+    # Connect to the local KKL instance.
+    # Try to connect five times before giving up.
+    client = await KisekaeLocalClient.connect(5)
+
+    # Run the loop for reading server responses in a parallel Task.
+    asyncio.create_task(client.run())
+
+    # Prepare our import request.
+    request = KisekaeServerRequest.import_full(code)
+
+    # Send our request to the server.
+    resp = await client.send_command(request)
+
+    if resp.is_success():
+        # Our import succeeded.
+        image_data = resp.get_data()
+
+        # Write the received image data to a file specified on command line.
+        with open(sys.argv[2], "wb") as out_file:
+            out_file.write(image_data)
+
+        print("Code successfully converted.")
+    else:
+        # There was an error.
+        print("Server reported error: " + resp.get_reason())
+
+asyncio.run(main())
+```
+
+It can also be used directly to interact with local KKL instances from the command-line:
+```bash
+python3 kkl_client.py import-full [in_file] [out_file]
+```
+
 ## Protocol Overview
 
-_Note: a simple example of a protocol client implementation (in Python) can be found alongside this document._
+_Note: a reference protocol client implementation (in Python) can be found alongside this document._
 
 In the following documentation, the _server_ refers to the KKL instance.
 
@@ -47,16 +97,17 @@ The following fields are common to all Command types:
 
 The following is a quick overview of currently implemented Command types and their parameters:
 
-| Command        | `type` Field Values           | Parameters  |
-| -------------- | ----------------------------- | ----------- |
-| Version        | `version`                     | None
-| Full Import    | `import`                      | `code`
-| Partial Import | `import_partial`              | `code`
-| Screenshot     | `screenshot`                  | `bg`
-| Reset          | `reset_full`, `reset_partial` | None 
-| Peek/Poke      | `character_data`              | `character`, `op`, `tabName`, `tabParameter`, `value`, `internalNames`
-| Set Alpha      | `alpha`                       | `character`, `colorIndex`, `part`, `alpha`
-| Dump Character | `dump_character`              | `character`
+| Command             | `type` Field Values           | Parameters  |
+| ------------------- | ----------------------------- | ----------- |
+| Version             | `version`                     | None
+| Full Import         | `import`                      | `code`
+| Partial Import      | `import_partial`              | `code`
+| Screenshot          | `screenshot`                  | `bg`
+| Reset               | `reset_full`, `reset_partial` | None 
+| Peek/Poke           | `character_data`              | `character`, `op`, `tabName`, `tabParameter`, `value`, `internalNames`
+| Set Alpha           | `alpha_direct`                | `character`, `op`, `path`, `value`, `multiplier`
+| Set Alpha (testing) | `alpha`                       | `character`, `colorIndex`, `part`, `alpha`
+| Dump Character      | `dump_character`              | `character`
 
 #### Version Command
 
@@ -140,6 +191,47 @@ manipulation, we can issue the command:
 The same command could also be used to enable the character's shadow, by setting the `value` field to `true`.
 
 #### Part Transparency Control Commands
+
+| Parameter         | Data Type              | Description |
+| ----------------- | ---------------------- | ----------- |
+| `character`       | number                 | The index of the character to inspect or modify. Valid range is 0-8, inclusive. Ignored for `reset_all` ops.
+| `op`              | string                 | Either `get`, `set`, `reset`, or `reset_all`.
+| `path`            | string                 | The sprite to inspect or modify; see the Alpha Transparency documentation for example values. Ignored for `reset_all` ops.
+| `value`           | integer (0-255)        | If `op` == `set`, then this is the alpha value the part will use. Ignored for `get`, `reset`, and `reset_all` ops.
+| `multiplier`      | float (0-1), default 0 | A multiplier value that allows for controlled mixing of parent part alpha values. Doesn't seem to have much of an effect?
+
+These commands can be used to get and set part transparency for characters in the Kisekae workspace, using the same mechanisms as the
+alpha value settings that can be attached to import requests.
+
+Issuing a `set` operation will change the alpha transparency for a part, and a `reset` operation will clear any transparency changes made to it in turn.
+A `reset_all` operation will reset all alpha transparency settings to their defaults, across all characters.
+
+`get` operations can be used to probe alpha transparency settings for parts; within the returned data object, the `alpha` and `multiplier` fields will list the 
+queried part's alpha channel value and alpha transform multiplier. For parts that have had custom transparency set, this corresponds to the `value` and `multiplier` command fields, respectively.
+For parts that have not had custom transparency set, `value` is usually equal to `0` and `multiplier` is usually `1.0`, though this is not guaranteed.
+
+For example, to hide the first character's left foot, we can issue the command:
+```json
+{
+    "type": "alpha_direct",
+    "op": "set",
+    "character": 0,
+    "path": "ashi0.foot.foot",
+    "value": 0
+}
+```
+
+We can subsequently reset it by issuing the command:
+```json
+{
+    "type": "alpha_direct",
+    "op": "reset",
+    "character": 0,
+    "path": "ashi0.foot.foot",
+}
+```
+
+#### Experimental Transparency Control
 
 (documentation coming soon)
 
