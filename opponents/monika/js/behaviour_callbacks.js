@@ -197,8 +197,14 @@
         gameDisplays[monika_pl.slot - 1].update(monika_pl);
 
         setTimeout(function () {
-            monika_pl.chosenState.dialogue = "S-Sorry about that... your answer kinda caught me by surprise. A-And, uhm, I think I just messed up something in the code...";
+            if (monika_pl.alt_costume && monika_pl.alt_costume.id === 'monika_love_bug') {
+                monika_pl.chosenState.dialogue = "Oh, I think I just messed up something in the code... A-Ahaha. <br> Eh? Some of these files are missing. I'll just replace them with working versions, hang on...";
+            } else {
+                monika_pl.chosenState.dialogue = "S-Sorry about that... your answer kinda caught me by surprise. A-And, uhm, I think I just messed up something in the code...";
+            }
+            
             monika_pl.chosenState.image = '2-awkward-question.png';
+            
             gameDisplays[monika_pl.slot - 1].update(monika_pl);
         }, 1500);
     })
@@ -275,6 +281,7 @@
             delete players[sayori.slot];
 
             updateAllBehaviours(monika_pl.slot, PLAYER_START_MASTURBATING, FEMALE_MASTURBATING);
+            updateGameVisual(sayori.slot);
             monika_pl.stage = 9;
         }, 0);
     });

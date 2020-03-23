@@ -321,6 +321,7 @@ function Player (id) {
     this.tags = this.baseTags = [];
     this.xml = null;
     this.metaXml = null;
+    this.persistentMarkers = {};
 
     this.resetState();
 }
@@ -509,6 +510,84 @@ Player.prototype.checkStatus = function(status) {
 	case STATUS_FINISHED:
 		return this.finished;
 	}
+}
+
+/**
+ * Get the value of a marker set on this Player.
+ * 
+ * This method always attempts to parse stored marker values as integers,
+ * but if this isn't possible then the raw string will be returned instead
+ * (unless `numeric` is set to `true`).
+ * 
+ * If a `target` is passed, the marker value will be read from a per-target
+ * marker first, if possible. By default (if `targeted_only` is not `true`),
+ * if the per-target marker is not found, the base marker's value will be
+ * used as a default.
+ * 
+ * @param {string} baseName The name of the marker to look up.
+ * @param {Player} target If passed, the value will be loaded on a per-target
+ * basis.
+ * @param {boolean} numeric If `true`, then stored marker values that cannot
+ * be converted to number values will be returned as 0 instead of as strings.
+ * @param {boolean} targeted_only If `true`, then per-target markers will
+ * _not_ default to using their base names if not found.
+ * @returns {number | string}
+ */
+Player.prototype.getMarker = function (baseName, target, numeric, targeted_only) {
+    var val = 0;
+
+    var name = baseName;
+    if (target && target.id) {
+        name = getTargetMarker(baseName, target);
+    }
+
+    if (!this.persistentMarkers[baseName]) {
+        val = this.markers[name];
+
+        if (!val && target && !targeted_only) {
+            /* If the per-target marker wasn't found, attempt to default
+             * to the nonspecific marker.
+             */
+            val = this.markers[baseName];
+        }
+    } else {
+        val = save.getPersistentMarker(this, name);
+
+        if (!val && target && !targeted_only) {
+            val = save.getPersistentMarker(this, baseName);
+        }
+    }
+
+    var cast = parseInt(val, 10);
+    
+    if (!isNaN(cast)) {
+        return cast;
+    } else if (numeric) {
+        return 0;
+    } else {
+        return val;
+    }
+}
+
+/**
+ * Set the value of a marker on this Player.
+ * 
+ * @param {string} baseName The name of the marker to set.
+ * @param {Player} target If passed, the value will be set on a per-target
+ * basis.
+ * @param {string | number} value The value to set for the marker.
+ */
+Player.prototype.setMarker = function (baseName, target, value) {
+    var name = baseName;
+    if (target && target.id) {
+        name = getTargetMarker(baseName, target);
+    }
+
+    if (!this.persistentMarkers[baseName]) {
+        this.markers[name] = value;
+    } else {
+        save.setPersistentMarker(this, name, value);
+    }
 }
 
 
@@ -965,6 +1044,15 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             this.default_costume.tags = tagsArray;
 
+            /* Load forward-declarations for persistent markers. */
+            var persistentMarkers = $xml.find('persistent-markers');
+            if (typeof persistentMarkers !== typeof undefined && persistentMarkers) {
+                $(persistentMarkers).find('marker').each(function (i, elem) {
+                    var markerName = $(elem).text();
+                    this.persistentMarkers[markerName] = true;
+                }.bind(this));
+            }
+
             this.targetedLines = {};
 
             /* Clone cases with alternative conditions/test, keeping
@@ -1046,7 +1134,19 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
     });
 
     var lines = new Set();
-    caseObj.states.forEach(function (s) { lines.add(s.rawDialogue); });
+    caseObj.states.forEach(function (s) {
+        lines.add(s.rawDialogue);
+
+        /* Handle the old persist-marker flag by adding all markers set with
+         * persist-marker="true" to the persistentMarkers list.
+         *
+         * TODO: Remove this once all characters using persistent markers
+         * have migrated over to the system in #74.
+         */
+        if (s.legacyPersistentFlag && s.marker && s.marker.name) {
+            this.persistentMarkers[s.marker.name] = true;
+        }
+    }.bind(this));
 
     entities.forEach(function (ent) {
         if (!(ent in this.targetedLines)) {
@@ -1312,9 +1412,11 @@ function initialSetup () {
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
 
 	/* show the title screen */
-	$warningScreen.show();
+	$titleScreen.show();
 	$('#warning-start-button').focus();
     autoResizeFont();
+	/* set up future resizing */
+	window.onresize = autoResizeFont;
 
     /* Construct a CSS rule for every combination of arrow direction, screen, and pseudo-element */
     bubbleArrowOffsetRules = [];
@@ -1339,9 +1441,19 @@ function initialSetup () {
             $("body").addClass('focus-indicators-enabled');
         }
     });
-    $(document).keyup(groupSelectKeyToggle);
+    $(document).on('keyup', function(ev) {
+        if (ev.keyCode == 112) { // F1
+            showHelpModal();
+        }
+    });
     $(document).mousedown(function(ev) {
         $("body").removeClass('focus-indicators-enabled');
+    });
+    $(window).on('beforeunload', function() {
+        if (inGame) {
+            event.preventDefault();
+            event.returnValue = '';
+        }
     });
 
     $('[data-toggle="tooltip"]').tooltip({ delay: { show: 200 } });
@@ -1597,8 +1709,9 @@ function detectBrokenOffline() {
 }
 
 function enterTitleScreen() {
-    $warningScreen.hide();
-    $titleScreen.show();
+    $warningContainer.hide();
+    $titleContainer.show();
+    $('.title-candy').show();
     $('#title-start-button').focus();
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
 }
@@ -1607,8 +1720,14 @@ function enterTitleScreen() {
  * Transitions between two screens.
  ************************************************************/
 function screenTransition (first, second) {
-	first.hide();
-	second.show();
+    if (first.data('keyhandler')) {
+        $(document).off('keyup', first.data('keyhandler'));
+    }
+    first.hide();
+    second.show();
+    if (second.data('keyhandler')) {
+        $(document).on('keyup', second.data('keyhandler'));
+    }
     autoResizeFont();
 }
 
@@ -1618,12 +1737,11 @@ function screenTransition (first, second) {
 function advanceToNextScreen (screen) {
     if (screen == $titleScreen) {
         /* advance to the select screen */
-		screenTransition($titleScreen, $selectScreen);
+        screenTransition(screen, $selectScreen);
     } else if (screen == $selectScreen) {
         /* advance to the main game screen */
-        $selectScreen.hide();
-		loadGameScreen();
-        $gameScreen.show();
+        loadGameScreen();
+        screenTransition(screen, $gameScreen);
         $mainButton.focus();
     }
 }
@@ -1634,8 +1752,7 @@ function advanceToNextScreen (screen) {
 function returnToPreviousScreen (screen) {
     if (screen == $selectScreen) {
         /* return to the title screen */
-        $selectScreen.hide();
-        $titleScreen.show();
+        screenTransition($selectScreen, $titleScreen);
     }
 }
 
@@ -1666,9 +1783,6 @@ function restartGame () {
         Sentry.setTag("epilogue_gallery", undefined);
     }
 
-    $(document).off('keyup');
-    $(document).keyup(groupSelectKeyToggle);
-
 	clearTimeout(timeoutID); // No error if undefined or no longer valid
 	timeoutID = autoForfeitTimeoutID = undefined;
 	stopCardAnimations();
@@ -1693,12 +1807,12 @@ function restartGame () {
 
     forceTableVisibility(true);
 
-	/* there is only one call to this right now */
-	$epilogueSelectionModal.hide();
-	$gameScreen.hide();
-	$epilogueScreen.hide();
-	clearEpilogue();
-    $titleScreen.show();
+    /* there is only one call to this right now */
+    $epilogueSelectionModal.hide();
+    $epilogueScreen.hide();
+    clearEpilogue();
+    screenTransition($gameScreen, $titleScreen);
+    autoResizeFont();
 }
 
 /**********************************************************************
@@ -1768,6 +1882,10 @@ function sendBugReport() {
 $('#bug-report-type').change(updateBugReportOutput);
 $('#bug-report-desc').change(updateBugReportOutput);
 $('#bug-report-copy-btn').click(copyBugReportOutput);
+
+if (!document.fullscreenEnabled) {
+    $('.title-fullscreen-button, .game-menu-dropup li:has(#game-fullscreen-button), #epilogue-fullscreen-button').hide();
+}
 
  /************************************************************
   * The player clicked a bug-report button. Shows the bug reports modal.
@@ -2366,6 +2484,19 @@ function forceTableVisibility(state) {
 	}
 }
 
+function toggleFullscreen() {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else {
+        document.documentElement.requestFullscreen();
+    }
+}
+
+$(':root').on('dblclick', ':input, .dialogue-bubble, .modal-dialog, .selection-card, .bordered, #epilogue-screen', function(ev) {
+    ev.stopPropagation();
+});
+$(':root').on('dblclick', toggleFullscreen);
+
 /************************************************************
  * The player clicked on a Load/Save button.
  ************************************************************/
@@ -2507,8 +2638,8 @@ function autoResizeFont ()
         $(':root').css('font-size', ($('.screen:visible').width() / 4 * 3 / 100)+'px');
     } else if ($('.screen:visible').width()) {
         $(':root').css('font-size', ($('.screen:visible').width() / 100)+'px');
-    } else if ($('.epilogue-viewport:visible').height()) {
-        $(':root').css('font-size', ($('.epilogue-viewport:visible').height() / 75)+'px');
+    } else {
+        return;
     }
 
 	if (backgroundImage && backgroundImage.height && backgroundImage.width) {
@@ -2534,8 +2665,6 @@ function autoResizeFont ()
             $("body").css("background-position-y", '');
         }
 	}
-	/* set up future resizing */
-	window.onresize = autoResizeFont;
 }
 
 $('.modal').on('show.bs.modal', function() {

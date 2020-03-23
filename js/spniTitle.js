@@ -10,7 +10,8 @@
 
 $titlePanels = [$("#title-panel-1"), $("#title-panel-2")];
 $nameField = $("#player-name-field");
-$titleContainer = $('.main-title-container');
+$warningContainer = $('#warning-container');
+$titleContainer = $('#main-title-container');
 $sizeBlocks = $('.title-size-block');
 $clothingTable = $("#title-clothing-table");
 $warningLabel = $("#title-warning-label");
@@ -22,6 +23,48 @@ $titleCandy = [$("#left-title-candy"), $("#right-title-candy")];
  **********************************************************************/
 
 var CANDY_LIST = [
+/*
+    "reskins/meia_cupid/0-disappointed.png",
+    "reskins/meia_cupid/1-busy.png",
+    "reskins/meia_cupid/2-pleased.png",
+    "reskins/meia_cupid/2-addressing.png",
+    "reskins/cheerleaderochako/0-calm.png",
+    "reskins/cheerleaderochako/1-heroic.png",
+    "reskins/cheerleaderochako/2-happy.png",
+    "reskins/cheerleaderochako/3-embarrassed.png",
+    "reskins/monika_love_bug/0-writing-tip.png",
+    "reskins/monika_love_bug/1-interested.png",
+    "reskins/monika_love_bug/2-happy.png",
+    "reskins/monika_love_bug/3-shy-happy.png",
+    "reskins/d.va_cruiser/0-winking.png",
+    "reskins/d.va_cruiser/1-excited.png",
+    "reskins/d.va_cruiser/2-peace.png",
+    "reskins/d.va_cruiser/3-shocked.png",
+    "reskins/flower_girl_ini/0-sleepy.png",
+    "reskins/flower_girl_ini/1-excited.png",
+    "reskins/flower_girl_ini/2-dumb.png",
+    "reskins/flower_girl_ini/3-cracker.png",
+    "reskins/festival_aella/0-happy.png",
+    "reskins/festival_aella/1-flustered.png",
+    "reskins/festival_aella/2-interested.png",
+    "reskins/festival_aella/2-happy.png",
+    "reskins/lynbride/0-calm.png",
+    "reskins/lynbride/1-happy.png",
+    "reskins/lynbride/2-interested.png",
+    "reskins/lynbride/3-happy.png",
+    "reskins/chiakimaid/0-sleepy.png",
+    "reskins/chiakimaid/1-happy.png",
+    "reskins/chiakimaid/2-excited.png",
+    "reskins/chiakimaid/3-embarrassed.png",
+    "reskins/zizou_valentine/0-happy.png",
+    "reskins/zizou_valentine/1-excited.png",
+    "reskins/zizou_valentine/2-appreciative.png",
+    "reskins/zizou_valentine/2-puzzled.png",
+    "reskins/nagisa_maid_cafe/0-happy.png",
+    "reskins/nagisa_maid_cafe/1-xstripping.png",
+    "reskins/nagisa_maid_cafe/2-wink.png",
+    "reskins/nagisa_maid_cafe/3-veryembarrassed.png",
+*/
     "9s/0-happy.png",
     "9s/1-excited.png",
     "9s/2-clever.png",

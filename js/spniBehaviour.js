@@ -282,7 +282,17 @@ function State($xml_or_state, parentCase) {
     
     var collectibleId = $xml.attr('collectible') || undefined;
     var collectibleOp = $xml.attr('collectible-value') || undefined;
-    var persistMarker = $xml.attr('persist-marker') === 'true';
+    
+    /* Keep track of the old persist-marker flag.
+     * recordTargetedCase() (in spniCore.js) checks this flag and, if set,
+     * will add the marker name attached to this State to the character's
+     * persistentMarkers list.
+     *
+     * TODO: Remove this once all characters using persistent markers
+     * have migrated over to the system in #74.
+     */
+    this.legacyPersistentFlag = ($xml.attr('persist-marker') === 'true');
+
     var markerOp = $xml.attr('marker');
 
     if (collectibleId) {
@@ -311,7 +321,7 @@ function State($xml_or_state, parentCase) {
         var match = markerOp.match(/^(?:(\+|-)([\w-]+)(\*?)|([\w-]+)(\*?)\s*=\s*(.*?)\s*)$/);
         var name;
         
-        this.marker = {name: null, perTarget: false, persistent: persistMarker, op: null, val: null};
+        this.marker = {name: null, perTarget: false, op: null, val: null};
         
         if (match) {
             this.marker.perTarget = !!(match[3] || match[5]);
@@ -332,8 +342,8 @@ function State($xml_or_state, parentCase) {
             }
         } else {
             this.marker.op = '=';
-            this.marker.name = markerOp;
-            this.marker.perTarget = (markerOp.substring(markerOp.length - 1, markerOp.length) === "*");
+            this.marker.perTarget = markerOp.endsWith('*');
+            this.marker.name = this.marker.perTarget ? markerOp.slice(0, -1) : markerOp;
             this.marker.val = 1;
         }
     }
@@ -341,36 +351,33 @@ function State($xml_or_state, parentCase) {
 
 State.prototype.evaluateMarker = function (self, opp) {
     if (!this.marker) return;
-    
-    var name = this.marker.name;
-    if (this.marker.perTarget && opp) {
-        name = getTargetMarker(name, opp);
-    }
-    if (this.marker.op === '+') {
-        if (this.marker.persistent) {
-            var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
-        } else {
-            var curVal = parseInt(self.markers[name], 10) || 0;
-        }
-        
-        return !curVal ? 1 : curVal + 1;
-    } else if (this.marker.op === '-') {
-        if (this.marker.persistent) {
-            var curVal = parseInt(save.getPersistentMarker(self, name), 10) || 0;
-        } else {
-            var curVal = parseInt(self.markers[name], 10) || 0;
-        }
-        
-        return !curVal ? 0 : curVal - 1;
-    } else if (this.marker.op === '=') {
+
+    if (this.marker.op === '=') {
         if (typeof(this.marker.val) === 'number') return this.marker.val;
         
-        var val = expandDialogue(this.marker.val, self, opp, this.parentCase && this.parentCase.variableBindings);
+        var val = expandDialogue(
+            this.marker.val, self, opp, 
+            this.parentCase && this.parentCase.variableBindings
+        );
         
-        if (!isNaN(parseInt(val, 10))) {
-            return parseInt(val, 10);
+        var cast = parseInt(val, 10);
+        if (!isNaN(cast)) {
+            return cast;
         } else {
             return val;
+        }
+    } else {
+        /* Process + and - ops */
+        var curVal = self.getMarker(
+            this.marker.name,
+            this.marker.perTarget ? opp : null,
+            true
+        );
+
+        if (this.marker.op === '+') {
+            return !curVal ? 1 : curVal + 1;
+        } else if (this.marker.op === '-') {
+            return !curVal ? 0 : curVal - 1;
         }
     }
 }
@@ -378,17 +385,12 @@ State.prototype.evaluateMarker = function (self, opp) {
 State.prototype.applyMarker = function (self, opp) {
     if (!this.marker) return;
     
-    var name = this.marker.name;
-    if (this.marker.perTarget && opp) {
-        name = getTargetMarker(name, opp);
-    }
-    
     var newVal = this.evaluateMarker(self, opp);
-    if (this.marker.persistent) {
-        save.setPersistentMarker(self, name, newVal);
-    } else {
-        self.markers[name] = newVal;
-    }
+    self.setMarker(
+        this.marker.name,
+        this.marker.perTarget ? opp : null,
+        newVal
+    );
 }
 
 State.prototype.expandDialogue = function(self, target) {
@@ -563,7 +565,7 @@ function findVariablePlayer(variable, self, target, bindings) {
  ************************************************************/
 function expandNicknames (self, target) {
     if (self) {
-        var nickmarker = self.markers[getTargetMarker('nickname', target)];
+        var nickmarker = self.getMarker('nickname', target, false, true);
         if (nickmarker) return nickmarker;
         if (target.id in self.nicknames || '*' in self.nicknames) {
             var nickList = self.nicknames[target.id] || self.nicknames['*'];
@@ -603,25 +605,10 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         }
     case 'marker':
     case 'persistent':
+    case 'targetmarker':
         var markerName = split_fn[1];
         if (markerName) {
-            var marker;
-            if (player) {
-                var targetedName = getTargetMarker(markerName, player);
-                if (fn === 'persistent') {
-                    marker = save.getPersistentMarker(player, targetedName);
-                } else {
-                    marker = player.markers[targetedName];
-                }
-            }
-            if (!marker) {
-                if (fn === 'persistent') {
-                    marker = save.getPersistentMarker(player, markerName);
-                } else {
-                    marker = player.markers[markerName];
-                }
-            }
-            return marker || "";
+            return player.getMarker(markerName, target, false, fn === 'targetmarker') || "";
         } else {
             return fn; //didn't supply a marker name
         }
@@ -760,28 +747,11 @@ function expandDialogue (dialogue, self, target, bindings) {
                 break;
             case 'marker':
             case 'persistent':
+            case 'targetmarker':
                 fn = fn_parts[0];  // make sure to keep the original string case intact 
                 if (fn) {
-                    var marker;
-                    
-                    if (target) {
-                        var targetedName = getTargetMarker(fn, target);
-                        if (variable.toLowerCase() === 'persistent') {
-                            marker = save.getPersistentMarker(self, targetedName);
-                        } else {
-                            marker = self.markers[targetedName];
-                        }
-                    }
-                    
-                    if (!marker) {
-                        if (variable.toLowerCase() === 'persistent') {
-                            marker = save.getPersistentMarker(self, fn);
-                        } else {
-                            marker = self.markers[fn];
-                        }
-                    }
-                    
-                    substitution = marker || "";
+                    /* if variable is 'targetmarker', specifically only look for per-target markers */
+                    substitution = self.getMarker(fn, target, false, variable.toLowerCase() === 'targetmarker') || "";
                 } else {
                     console.error("No marker name specified");
                 }
@@ -1023,15 +993,8 @@ function checkMarker(predicate, self, target, currentOnly) {
             && ((perTarget && target) || !self.chosenState.marker.perTarget)
             && evalOperator(self.chosenState.evaluateMarker(self, target), op, cmpVal);
     }
-    if (perTarget && target) {
-        val = self.markers[getTargetMarker(name, target)];
-    }
-    if (!val) {
-        val = self.markers[name];
-    }
-    if (!val) {
-        val = 0;
-    }
+
+    val = self.getMarker(name, perTarget ? target : null) || 0;
     return evalOperator(val, op, cmpVal);
 }
 
@@ -1607,8 +1570,8 @@ Case.prototype.checkConditions = function (self, opp) {
                 && (ctr.timeInStage === undefined || inInterval(p.timeInStage, ctr.timeInStage))
                 && (ctr.hand === undefined || (handStrengthToString(p.hand.strength).toLowerCase() == ctr.hand.toLowerCase()))
                 && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, ctr.consecutiveLosses))
-                && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, ctr.role == "other" ? opp : null))
-                && (ctr.notSaidMarker === undefined || !checkMarker(ctr.notSaidMarker, p, ctr.role == "other" ? opp : null));
+                && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, opp))
+                && (ctr.notSaidMarker === undefined || !checkMarker(ctr.notSaidMarker, p, opp));
         });
         var hasUpperBound = (ctr.count.max !== null && ctr.count.max < matches.length);
         if (ctr.sayingMarker !== undefined || ctr.saying !== undefined || ctr.pose !== undefined) matches = matches.filter(function(p) {
@@ -1616,7 +1579,7 @@ Case.prototype.checkConditions = function (self, opp) {
                 // The human player can't talk, and using
                 // saying/sayingMarker/pose on self would be circular.
                 if (p == self || p == humanPlayer) return false;
-                if (checkMarker(ctr.sayingMarker, p, ctr.role == "other" ? opp : null, true)) {
+                if (checkMarker(ctr.sayingMarker, p, opp, true)) {
                     volatileDependencies.add(p);
                 } else {
                     /* In case the condition could be violated by some
@@ -1684,6 +1647,7 @@ Case.prototype.checkConditions = function (self, opp) {
     /* In the trivial case with no condition variables, we get a single binding combination of {}.
        And with no tests, this.tests.every() trivially returns true. */
     for (var i = 0; i < bindingCombinations.length; i++) {
+        addExtraNumberedBindings(bindingCombinations[i], Object.entries(counterMatches));
         if (this.tests.every(function(test) {
             var expr = expandDialogue(test.attr('expr'), self, opp, bindingCombinations[i]);
             var value = test.attr('value');
@@ -2094,6 +2058,21 @@ function getAllBindingCombinations (variableMatches) {
     } else return [{}];
 }
 
+/*
+ * Adds additional numbered variables from 2 and up binding to the
+ * remaining variable matches not already used in bindings.
+ */
+function addExtraNumberedBindings (bindings, variableMatches) {
+    variableMatches.forEach(function(pair) {
+        var variable = pair[0], matches = pair[1];
+        var otherMatches = matches.filter(function(match) { return match != bindings[variable]; });
+        shuffleArray(otherMatches);
+        otherMatches.forEach(function(match, i) {
+            bindings[variable + (i + 2)] = match;
+        });
+    });
+}
+
 function shuffleArray (array) {
     for (var i = array.length - 1; i > 0; i--) {
         var j = getRandomNumber(0, i);
@@ -2101,4 +2080,24 @@ function shuffleArray (array) {
         array[i] = array[j];
         array[j] = tmp;
     }
+}
+
+/*
+ * Given an array arr, return an array containing all arr.length!
+ * permutations of arr. Not used at the moment, but may be later.
+ * (Since there are at most five players, the number of permutations
+ * will be at most 5! = 120).
+ */
+function getAllArrayPermutations (arr) {
+    if (arr.length == 1) return [arr];
+    var ret = [];
+    for (var i = 0; i < arr.length; i++) {
+        var copy = arr.slice();
+        var el = copy.splice(i, 1)[0];
+        getAllArrayPermutations(copy).forEach(function(permutation) {
+            permutation.push(el);
+            ret.push(permutation);
+        });
+    }
+    return ret;
 }

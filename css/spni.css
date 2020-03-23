@@ -7,6 +7,7 @@ html {
     width: 100%;
     height: 100%;
     font-size: 10px;
+    touch-action: manipulation;
 }
 
 body {
@@ -24,8 +25,10 @@ body {
 
 button,
 input,
+textarea,
 select {
     pointer-events: auto;
+    touch-action: none;
 }
 
 button>* {
@@ -96,8 +99,17 @@ label {
     font-weight: 500;
 }
 
+.glyphicon {
+    top: 0.1rem;
+}
+
 .tooltip {
     font-size: 1.2rem;
+}
+.tooltip-inner {
+    border-radius: 0.4rem;
+    padding: 0.3rem 0.8rem;
+    max-width: 20rem;
 }
 
 .form-control {
@@ -256,63 +268,31 @@ label {
     padding-right: 0.05em;
 }
 
-.center-dock-button {
-    position: absolute;
-    height: 50px;
-    width: 100px;
-    top: 26%;
-    left: 0px;
-    right: 0px;
-    margin: 0 auto;
-    box-sizing: border-box;
-    font-size: 20px;
-    opacity: 1;
-}
-
-.hide-table-button {
-    position: absolute;
-    width: 3.25%;
-    height: 4.50%;
-    left: 48.375%;
-    bottom: 22%;
-    background-color: rgba(155, 155, 155, 0.5);
-}
-
-.hide-table-button:hover {
-    background-color: rgba(155, 155, 155, 0.9);
-}
-
-.hide-table-button:active {
-    background-color: rgba(155, 155, 155, 0.75);
-}
-
+.hide-table-button,
 .table-bug-report-button {
     position: absolute;
     width: 3.25%;
     height: 4.50%;
     left: 48.375%;
-    bottom: 17.4%;
     background-color: rgba(155, 155, 155, 0.5);
 }
 
+.hide-table-button {
+    bottom: 22%;
+}
+
+.table-bug-report-button {
+    bottom: 17.4%;
+}
+
+.hide-table-button:hover,
 .table-bug-report-button:hover {
     background-color: rgba(155, 155, 155, 0.9);
 }
 
+.hide-table-button:active,
 .table-bug-report-button:active {
     background-color: rgba(155, 155, 155, 0.75);
-}
-
-.table-bug-report-button-highlight {
-    background-color: rgba(169, 68, 66, 0.5);
-}
-
-.table-bug-report-button-highlight:hover {
-    background-color: rgba(169, 68, 66, 0.9);
-}
-
-.table-bug-report-button-highlight:active {
-    background-color: rgba(169, 68, 66, 0.75);
 }
 
 .game-menu-dropup {
@@ -334,10 +314,25 @@ label {
 }
 
 .dropdown-menu {
-    background: none;
     padding-top: 0px;
     padding-bottom: 0px;
-    width: 300%;
+}
+.game-menu-dropup .dropdown-menu {
+    background: transparent;
+    border: 0px none;
+    width: 15em;
+    font-size: 1.4rem;
+    min-width: unset;
+}
+@media (min-resolution: 120dpi) {
+    .game-menu-dropup .dropdown-menu {
+        font-size: 18px;
+    }
+}
+ul.dropdown-menu>li {
+    margin: 0;
+    margin-top: -0.2rem;
+    padding: 0;
 }
 
 .dropdown-button-item span {
@@ -347,8 +342,6 @@ label {
 
 .dropdown-button-item {
     width: 100%;
-    font-size: 1.4rem;
-    line-height: 1.30em;
 
     display: inline-flex;
     justify-content: flex-start;
@@ -1235,13 +1228,6 @@ label {
 
 /* Common title classes and elements: */
 
-.banner-flair {
-    text-align: center;
-    font-size: 110%;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}
-
 .warning-text {
     position: relative;
     top: 5%;
@@ -1256,63 +1242,11 @@ label {
         0.1rem 0.1rem 0 #000;
 }
 
-.version-button {
-    position: absolute;
-    width: 16.5%;
-    height: 5%;
-    top: 17%;
-    right: 17%;
-    padding-top: 0.35em;
-    line-height: 85%;
-}
-
-.version-button>.substitute-version-time {
-    font-size: 80%;
-    white-space: nowrap;
-}
-
-#title-credits-button {
-    position: absolute;
-    width: 12.5%;
-    height: 3.5%;
-    top: 17.25%;
-    right: 34%;
-    padding-top: 0.15%;
-}
-
-.title-help-button {
-    position: absolute;
-    width: 15.5%;
-    height: 6.5%;
-    top: 17%;
-    right: 1%;
-    padding-top: 0.15%;
-
-    font-size: 150%;
-
-    background: linear-gradient(#f34141, #9F1616);
-    background-color: #f34141;
-}
-
-.title-help-button:hover {
-    background: linear-gradient(#F88888, #BB3333);
-
-    background-color: #F66666;
-}
-
-.title-load-button {
-    position: absolute;
-    padding-top: 0.15%;
-    width: 3.65%;
-    height: 5%;
-    top: 17%;
-    left: 16%;
-}
-
 .title-banner-container {
     position: absolute;
     width: 100%;
     top: 4%;
+    pointer-events: none;
 }
 
 .title-banner-area {
@@ -1331,7 +1265,7 @@ label {
     background-color: #888888;
 }
 
-.main-title-container {
+#main-title-container {
     position: absolute;
     top: 20%;
     left: 25%;
@@ -1343,9 +1277,9 @@ label {
     align-items: center;
 }
 
-.warning-container {
+#warning-container {
     position: absolute;
-    top: 20%;
+    top: 22.5%;
     left: 22.5%;
     width: 55%;
     bottom: 0;
@@ -1359,7 +1293,7 @@ label {
     width: 100%;
 }
 
-#warning-screen .title-menu-buttons-container {
+#warning-container .title-menu-buttons-container {
     margin-top: 10%;
 }
 
@@ -1434,11 +1368,11 @@ label {
     margin-left: 1%;
 }
 
-.main-title-container.male #male-gender-button {
+#main-title-container.male #male-gender-button {
     opacity: 1;
 }
 
-.main-title-container.female #female-gender-button {
+#main-title-container.female #female-gender-button {
     opacity: 1;
 }
 
@@ -1450,11 +1384,11 @@ label {
     background-color: white;
 }
 
-.main-title-container.male #female-size-container {
+#main-title-container.male #female-size-container {
     display: none;
 }
 
-.main-title-container.female #male-size-container {
+#main-title-container.female #male-size-container {
     display: none;
 }
 
@@ -1606,25 +1540,23 @@ label {
     padding: 0.5rem 1rem 0.5rem 1rem;
 }
 
-.reddit-button {
+.banner-flair {
+    text-align: center;
+    font-size: 120%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: 0;
+    top: 17.5%;
     position: absolute;
-    width: 3.65%;
+    padding-top: 0.5%;
     height: 5%;
-    left: 11.75%;
-    top: 17%;
-}
-
-.reddit-logo {
-    width: 100%;
-    height: 100%;
+    width: 4%;
 }
 
 .title-settings-button {
-    position: absolute;
     width: 6%;
     height: 7%;
     left: 1%;
-    top: 17%;
 }
 
 .title-settings-button>span {
@@ -1632,11 +1564,52 @@ label {
 }
 
 .title-bug-report-button {
-    position: absolute;
-    width: 3.65%;
-    height: 5%;
     left: 7.5%;
-    top: 17%;
+}
+
+.reddit-button {
+    left: 12.0%;
+}
+
+.reddit-logo {
+    height: 100%;
+}
+
+.title-load-button {
+    left: 16.5%;
+}
+
+.title-fullscreen-button {
+    left: 21.0%;
+}
+
+.version-button {
+    width: 16.5%;
+    right: 17%;
+    padding-top: 0.35em;
+    line-height: 85%;
+}
+
+.version-button>.substitute-version-time {
+    font-size: 75%;
+    white-space: nowrap;
+}
+
+.title-help-button {
+    width: 15.5%;
+    height: 6.5%;
+    right: 1%;
+
+    font-size: 150%;
+
+    background: linear-gradient(#f34141, #9F1616);
+    background-color: #f34141;
+}
+
+.title-help-button:hover {
+    background: linear-gradient(#F88888, #BB3333);
+
+    background-color: #F66666;
 }
 
 #left-title-candy {
@@ -1651,6 +1624,7 @@ label {
     position: absolute;
     bottom: 0;
     height: 80%;
+    pointer-events: none;
 }
 
 /************************************************************
@@ -2070,6 +2044,11 @@ label {
 .selection-card[data-highlight="testing"]:hover,
 .selection-card[data-highlight="testing"]:active {
     background-color: rgba(92, 197, 250, 0.6);
+}
+
+.selection-card[data-highlight="valentines"]:hover,
+.selection-card[data-highlight="valentines"]:active {
+    background-color: rgba(255, 103, 126, 0.6);
 }
 
 
@@ -2712,7 +2691,7 @@ label {
 }
 
 .group-dock-button-row .hide-table-button,
-.group-dock-button-row .group-bug-report-button {
+.group-dock-button-row .table-bug-report-button {
     position: static;
     display: inline-block;
 
@@ -2961,45 +2940,6 @@ label {
  * Classes for the human player section of the table on the
  * main game screen.
  ************************************************************/
-
-/*
-#game-home-button {
-    position: absolute;
-    left: 1.5%;
-    bottom: 7.5%;
-}
-
-#game-settings-button {
-    position: absolute;
-    left: 1.5%;
-    bottom: 2%;
-}
-
-#game-log-button {
-    position: absolute;
-    left: 1.5%;
-    bottom: 13%;
-}
-*/
-
-.dock-options-button {
-    width: 4%;
-    height: 5%;
-    background-color: rgba(192, 51, 51, 0.5);
-}
-
-.dock-options-button:hover {
-    background-color: rgba(192, 51, 51, 0.9);
-}
-
-.dock-options-button:active {
-    background-color: rgba(192, 51, 51, 0.75);
-}
-
-.dock-options-button span {
-    margin-right: 0.1rem;
-    margin-bottom: 0.2rem;
-}
 
 .small-clothing-image {
     width: 28%;
@@ -3471,9 +3411,14 @@ label {
     z-index: 10001;
 }
 
-#epilogue-buttons>button {
+#epilogue-buttons button {
     display: block;
-    margin: 1rem;
+    margin: 0.5rem;
+    padding: 0.3rem 0.5rem;
+}
+#epilogue-buttons select {
+    display: block;
+    margin: 0.5rem;
 }
 
 #epilogue-buttons>button:disabled {
@@ -3482,6 +3427,10 @@ label {
 
 #epilogue-buttons>#epilogue-restart:disabled {
     visibility: hidden;
+}
+
+#epilogue-fullscreen-button {
+    font-size: 1.2em;
 }
 
 .modal-footer-button-row {
@@ -3505,6 +3454,23 @@ label {
 #epilogue-modal .modal-body-container {
     overflow-y: auto;
     max-height: 40rem;
+}
+
+#epilogue-modal .modal-header hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid #333;
+    width: 25%;
+}
+
+#epilogue-header-tip {
+    font-style: italic;
+    font-size: 105%;
+}
+
+#epilogue-header-tip::before {
+    content: "Tip: ";
 }
 
 #epilogue-list {
@@ -4080,6 +4046,8 @@ label {
  * UX
  ************************************************************/
 
+.title-candy,
+#main-title-container,
 .player-card-area,
 .player-card-area input,
 .opponent-card-area,
@@ -4101,8 +4069,12 @@ label {
                                   supported by Chrome and Opera */
 }
 
+.focus-indicators-enabled a:focus,
 .focus-indicators-enabled input[type=image]:focus,
 .focus-indicators-enabled button:focus {
     outline: 1px dotted #fff;
     outline-offset: -1px;
+}
+:focus {
+    outline: none;
 }

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 11:25:00 PM on February 01, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 4:37:44 PM on March 20, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Caulifla</first>
@@ -585,7 +585,6 @@
     <behaviour>
         <trigger id="selected">
             <case stage="0">
-                <state img="#-Laughing.png">Strip poker!? &lt;i&gt;Pft!&lt;/i&gt; Like the time I conned my whole outfit outta their outfits? Hah! Priceless.</state>
                 <state img="#-Distracted.png">Poker? The kinky kind? Yeah whatever, I've got some steam to blow off.</state>
                 <state img="#-Stretching.png">Needed to get away from it all, at this point I'm up for anything.</state>
                 <state img="#-Distracted.png">The name's Caulifla. Better not try anything if ya know what's good for ya.</state>
@@ -595,6 +594,7 @@
                 <state img="#-Combat.png">Alright, this place has piqued my interest.</state>
                 <state img="#-Distracted.png">Well it's pretty pervy if ya ask me. But sure, what the hell.</state>
                 <state img="#-Combat.png">If you're itching for a fight, that's fine by me!</state>
+                <state img="#-Laughing.png">Strip poker!? &lt;i&gt;Pft!&lt;/i&gt; Like the time I played my whole outfit outta their outfits? Hah! Priceless.</state>
             </case>
         </trigger>
 
@@ -626,10 +626,16 @@
             </case>
             <case stage="0">
                 <condition role="other" character="joey" />
-                <state img="#-Embarassed.png">&lt;i&gt;(Oh oh. I sure hope that girl's wearin' makeup over there. I could be in real trouble otherwise.)&lt;/i&gt; </state>
+                <state img="#-Shocked.png">&lt;i&gt;(Oh oh. I sure hope that girl's wearin' makeup over there. I could be in real trouble otherwise.)&lt;/i&gt; </state>
                 <state img="#-Shocked.png">&lt;i&gt;(Wait. That better be makeup that girl's wearing. 'Cause if it ain't...)&lt;/i&gt;</state>
                 <state img="#-Embarassed.png">Oh crap! I...oh, false alarm. &lt;i&gt;(Thought I was playing with a God of Destruction for a second there. Least I...think I ain't?)&lt;/i&gt;</state>
                 <state img="#-Shocked.png">&lt;i&gt;('Kay. White-faced girl over there looking mighty familiar. Waaay too familiar.)&lt;/i&gt; </state>
+            </case>
+            <case stage="0" id="47">
+                <condition role="other" character="yuelia" />
+                <state img="#-Distracted.png">Hey, how come we're playing cards against some kinda bug? How does that even work? I don't exactly see hands on 'em.</state>
+                <state img="#-Happy.png">Huh. Talking bug. Ain't never seen something like this before.</state>
+                <state img="#-Annoyed.png">Wait, ain't this supposed to be a stripping game? How's a flying bug supposed to strip?</state>
             </case>
             <case stage="0" priority="61">
                 <condition count="2" filter="caulifla" />
@@ -666,8 +672,9 @@
             <case stage="0">
                 <test expr="~background~" value="beach" />
                 <state img="#-Distracted.png">We doing this at a beach? Should've said so, I'd have put a costume on or something.</state>
-                <state img="#-Confident.png">Hmm. Nice. I could stand to come to beaches like this more often.</state>
-                <state img="#-Stretching.png">Aah. Nice to feel the sun on my body. Good to get away from the city every once in a while, y'know.</state>
+                <state img="#-Happy.png">Hmm. I could stand to come to beaches like this more often.</state>
+                <state img="#-Stretching.png">Aah...nice to feel the sun on my body. Good to get away from the city every once in a while, y'know?</state>
+                <state img="#-Laughing2.png">Guess my outfit's kinda appropriate for a sunny beach like this, huh? </state>
             </case>
             <case stage="0">
                 <test expr="~background~" value="bedroom" />
@@ -793,19 +800,23 @@
                 <state img="#-Bored.png">What we waitin' for? Some blue guy with cotton wool hair to shout "begin"?</state>
                 <state img="#-Laughing.png">Anyone up for a fist-fight instead? Hah! Nah, I'm just playin'. I ain't mean like that.</state>
                 <state img="#-Stretching.png">Hopefully this'll go better than that &lt;i&gt;last&lt;/i&gt; thing I was involved in.</state>
-                <state img="#-Smug.png">Just don't cry when you lose.</state>
-                <state img="#-Combat.png">Just don't throw the game or anything lame like that. A decent challenge makes winning all the sweeter.</state>
+                <state img="#-Combat.png">Just don't go crying to your momma when you lose.</state>
+                <state img="#-Stripping.png">Just don't throw the game or anything lame like that. A decent challenge makes winning all the sweeter.</state>
                 <state img="#-Laughing2.png">Ah screw it, I guess I'm game then. Let's do this thing!</state>
-                <state img="#-Happy.png">Alright then. Let's get this show on the road.</state>
+                <state img="#-Stripping.png">Alright then. Let's get this show on the road.</state>
             </case>
         </trigger>
 
         <trigger id="swap_cards">
+            <case stage="5" priority="142">
+                <condition role="other" character="revy" stage="7" saidMarker="caulifla_prep" sayingMarker="caulifla_grappleswap" />
+                <state img="#-blank.png"></state>
+            </case>
             <case stage="0-3" priority="30">
                 <condition role="self" hasHand="Royal Flush" />
                 <state img="#-Excited.png">Oh...oh &lt;i&gt;heck&lt;/i&gt; yeah! You guys are toast this round!</state>
                 <state img="#-Shocked.png">Wait...hold up, is this hand what I think it is!?</state>
-                <state img="#-Laughing.png">Okay, gimme...no, shit! Give me absolutely nothing at all! Almost missed what I got right here, what with your weird Earth cards and all.</state>
+                <state img="#-Laughing.png">Okay, gimme...no, wait! Give me absolutely nothing at all! Almost missed what I got right here, what with your weird Earth cards and all.</state>
             </case>
             <case stage="4-5" priority="30">
                 <condition role="self" hasHand="Royal Flush" />
@@ -934,6 +945,13 @@
                 <condition role="self" hasHand="Four of a Kind" />
                 <state img="#-Smug.png">Heh. I can see a few good reasons why I'm winning this round. Four of 'em in fact.</state>
             </case>
+            <case stage="0">
+                <condition role="self" timeInStage="0" />
+                <state img="#-Excited.png">Alright! Here we go! Hope you're feeling confident, you're gonna need that against the likes of me!</state>
+                <state img="#-Combat.png">Oh yeah! Looks like I'm starting this game off strong!</state>
+                <state img="#-Happy.png">This game's gonna be a damn breeze! I can tell already.</state>
+                <state img="#-Laughing2.png">Heh. Nice hand I got here. Hey, dealer! You trying to get on my good side or something?</state>
+            </case>
             <case stage="0-1">
                 <state img="#-Smug.png">Heh. Works every time.</state>
                 <state img="#-Combat.png">Business as usual.</state>
@@ -950,6 +968,7 @@
                 <state img="#-Happy.png">This game has pretty simple rules, and it's similar to one or two I've played before. This'll be an easy win right here!</state>
                 <state img="#-Distracted.png">Expected nothing less.</state>
                 <state img="#-Laughing.png">Yup, easy money. No, wait. We ain't playing for money. Just to keep our dignity intact, haha.</state>
+                <state img="#-Victory.png">Sometimes I even terrify myself with how good I am!</state>
             </case>
             <case stage="2-3" priority="0">
                 <state img="#-Confident.png">Ain't got nothing to worry about.</state>
@@ -972,7 +991,7 @@
                 <state img="#-Excited.png">This round is mine!</state>
                 <state img="#-Victory.png">Hahahaa! I knew going Super Saiyan was the right call!</state>
             </case>
-            <case stage="2-3" priority="0">
+            <case stage="2-3" oneShotId="3" priority="0">
                 <condition role="self" timeInStage="4" />
                 <state img="#-Victory.png">A super hand for a Super Saiyan...oh come on, I had to say that one time at least!</state>
             </case>
@@ -982,38 +1001,18 @@
                 <state img="#-Excited.png">Still got fight in me yet, ha ha!</state>
                 <state img="#-Embarassed.png">You've really got me on the ropes here.</state>
                 <state img="#-Distracted.png">Just pissed I've not been getting more of this. These. Ah, whatever.</state>
-                <state img="#-Excited.png">Alright, bring it you hot-shots, I ain't scared of you!</state>
+                <state img="#-Excited.png">Alright, bring it you hot-shots, I ain't scared of ya!</state>
                 <state img="#-Happy.png">Least I've got something to smile about here.</state>
-                <state img="#-Angry.png">Never count out a Saiyan. And you sure as &lt;i&gt;hell&lt;/i&gt; shouldn't count me out.</state>
-                <state img="#-Confident.png">Alright then, least I've got this. You'd have to be pretty confident to consider beating this hand.</state>
+                <state img="#-Confident.png">Never count out a Saiyan. And you sure as &lt;i&gt;hell&lt;/i&gt; shouldn't count me out.</state>
+                <state img="#-Victory.png">Alright then, least I've got this. You'd have to be pretty confident to consider beating this hand.</state>
                 <state img="#-Combat.png">You think you've won? I ain't giving in, you're gonna have to knock me out! That's the only way you're winning this thing.</state>
                 <state img="#-Angry.png">I won't quit, I can still win.</state>
+                <state img="#-Angry.png">You should never doubt me.</state>
+                <state img="#-Victory.png">Yeah! Perfect timing for a hand like this.</state>
             </case>
         </trigger>
 
         <trigger id="okay_hand">
-            <case stage="0-1">
-                <condition role="self" timeInStage="10" />
-                <state img="#-Distracted.png">Wow. I'm looking at double figures now? You guys are complete trash.</state>
-                <state img="#-Laughing.png">Oh come on, a ten round streak now? Are you honestly that crap at this?!</state>
-            </case>
-            <case stage="0-1">
-                <condition role="self" timeInStage="3" />
-                <state img="#-Combat.png">Alright, I'm three for three. Let's keep this streak rolling.</state>
-                <state img="#-Distracted.png">Wait, I'm three for three now, yeah? Sounds about par for the course.</state>
-                <state img="#-Combat.png">We gonna grab some food after this? Heard that Earth grub is some of the finest in all the universes. Gotta be getting my hands on some of that!</state>
-                <state img="#-Laughing2.png">I've heard that Earth food is good. Like, &lt;i&gt;reaaal&lt;/i&gt; good. So if anyone's got something they'd recommend, I'm all ears!</state>
-                <state img="#-Distracted.png">So hey, are we still in the Sixth universe? Or we in the Seventh right now? There being two Earths gets confusing sometimes.</state>
-                <state img="#-Distracted.png">Hey, which Earth are we playing on right now? I overheard Champa saying that there's two of them. Wanna know if I'm in my home universe or not.</state>
-            </case>
-            <case stage="0-1">
-                <condition role="self" timeInStage="6" />
-                <state img="#-Smug.png">I'm building a real nice streak here.</state>
-                <state img="#-Smug.png">Damn good combo I'm building right here.</state>
-                <state img="#-Confident.png">Kinda nice to play in a competition like this. Y'know, one where the lives of my friends aren't all on the line.</state>
-                <state img="#-Laughing.png">Hey, if ya ever wanna hear a funny story, ask me about Dr. Rota. I've still got no idea what his deal was.</state>
-                <state img="#-Bored.png">Hey, they sell drinks here dealer? Not until &lt;i&gt;after!?&lt;/i&gt; Ugh, lame!</state>
-            </case>
             <case stage="4-5">
                 <condition role="self" timeInStage="10" />
                 <state img="#-Smug.png">Do I hear ten? Yup. Pretty sure I'm unbeaten right now. Bet your ass I've been counting.</state>
@@ -1030,6 +1029,13 @@
                 <state img="#-Bored.png">Ugh seriously. why couldn't I have gotten a winning streak like this when I wasn't showing myself off like this?</state>
                 <state img="#-Smug.png">Well I could've done with this luck sooner. But hey, at this point I ain't gonna complain about it, no way.</state>
             </case>
+            <case stage="0">
+                <condition role="self" timeInStage="0" />
+                <state img="#-Confident.png">Hmm...so I got...alright, I can live with starting the game with this.</state>
+                <state img="#-Distracted.png">Yeah...that's an alright hand to start with.</state>
+                <state img="#-Happy.png">Sure, I'll take this hand just fine.</state>
+                <state img="#-Excited.png">Let's start this game off strong, okay?</state>
+            </case>
             <case stage="0-1">
                 <state img="#-Bored.png">Stupid looking cards you've got here. The hell's a "jack" supposed to be? Just call it a prince already.</state>
                 <state img="#-Confident.png">Eh. Solid.</state>
@@ -1040,7 +1046,7 @@
                 <state img="#-Confident.png">Hmm...business as usual, pretty much.</state>
                 <state img="#-Stretching.png">Hmm. This is like the Super Saiyan Cabba of hands. Average.</state>
                 <state img="#-Laughing.png">Seen worse, seen better.</state>
-                <state img="#-Distracted.png">Kinda...mid-class. That sorta level. Yeah, that sounds about right.</state>
+                <state img="#-Distracted.png">Kinda...mid-class for a hand. Yeah, that sorta level sounds about right.</state>
                 <state img="#-Thinking.png">Yeah. Should be enough.</state>
                 <state img="#-Thinking.png">&lt;i&gt;(Well, so long as they don't get lucky, we should be pretty good.)&lt;/i&gt;</state>
                 <state img="#-Thinking.png">&lt;i&gt;(So, the others should be getting mostly...yeah, this should be fine.)&lt;/i&gt;</state>
@@ -1086,17 +1092,26 @@
                 <state img="#-Confident.png">Looks like I'll be winning again. Heh. This is starting to get easy.</state>
             </case>
             <case stage="4-5">
-                <state img="#-Embarassed.png">&lt;i&gt;(Crap! This could go one of two ways! Not good enough.)&lt;/i&gt;</state>
+                <state img="#-Bored.png">&lt;i&gt;(Crap! This could go one of two ways...)&lt;/i&gt;</state>
                 <state img="#-Bored.png">&lt;i&gt;(Ugh. Would've been more comfortable if these were better, but I've gotta have some hope in 'em.)&lt;/i&gt;</state>
                 <state img="#-Embarassed.png">Relying on these is like relying on them two Namekians. &lt;i&gt;(What was the second one's name? Saonel? Schemmel? Can't remember which.)&lt;/i&gt;</state>
                 <state img="#-Embarassed.png">Relying on these is like relying on those two Namekians. &lt;i&gt;(What was the other one's name again? Piranha? Something weird like that.)&lt;/i&gt;</state>
                 <state img="#-Bored.png">Mph. Need better than this if I wanna make a fight of it.</state>
-                <state img="#-Angry.png">You should never doubt me.</state>
                 <state img="#-Annoyed.png">Dammit! I can't rely on hands like this anymore.</state>
                 <state img="#-Bored.png">So long as someone has worse, I guess.</state>
                 <state img="#-Embarassed.png">Come on, come on, come on...work you son of a bitch.</state>
                 <state img="#-Embarassed.png">Ugh. Need better than this right now.</state>
                 <state img="#-Bored.png">Ain't good enough. Crap.</state>
+                <state img="#-Embarassed.png">Come on, hurrry up! Running outta clever lines to say over here.</state>
+                <state img="#-Combat.png">Things are lookin' rough...hey, no! I gotta get a hold of myself! I ain't quittin' this thing! </state>
+                <state img="#-Confident.png">The match ain't over yet.</state>
+            </case>
+            <case stage="1" priority="0">
+                <condition role="self" timeInStage="2" />
+                <test expr="~background~" value="tiki bar" />
+                <state img="#-Distracted.png">I'm guessing that they get a lotta people dressed like me at a bar like this, huh? It's got that whole tropical planet thing going on.</state>
+                <state img="#-Laughing2.png">Come on! We really not gonna stop to get a round of drinks? The stuff smells so good here!</state>
+                <state img="#-Bored.png">Kinda weird that we're at a bar and no one's offered us no drinks yet. Cards can be thirsty work.</state>
             </case>
         </trigger>
 
@@ -1105,10 +1120,8 @@
                 <condition role="self" timeInStage="0" />
                 <state img="#-Angry.png">What!? Oh come on! Start of the game and I'm already getting crap like this!?</state>
                 <state img="#-Stretching.png">Ah, jeez. This is gonna be one long game if I'm getting crap like this already.</state>
-                <state img="#-Embarassed.png">Ugh. Thanks. That's just what I wanted right now. Dammit.</state>
-                <state img="#-Annoyed.png">Hmm. Brave of ya, giving me this crap right off the bat. It's like you're looking to get punched or something, dealer.</state>
+                <state img="#-Angry.png">Ugh. Thanks. That's just the hand I wanted.</state>
                 <state img="#-Annoyed.png">Huh. Anyone else gotten complete crap right outta the gate? Or just me?</state>
-                <state img="#-Bored.png">Well, ain't this a bucket of piss. Yeah, talking about my crappy hand right here.</state>
                 <state img="#-Angry.png">Hey! Dealer, what's your deal exactly? I'm still getting used to these stupid Earth cards and you're already giving me complete crap to work with!</state>
             </case>
             <case stage="0-1">
@@ -1118,7 +1131,7 @@
                 <state img="#-Combat.png">Heh. I bet you punks &lt;i&gt;still&lt;/i&gt; can't beat this.</state>
                 <state img="#-Laughing.png">Whoops. That ain't what I was aiming for.</state>
                 <state img="#-Distracted.png">You know, a good bluffer is hard to come by these days...</state>
-                <state img="#-Annoyed.png">Dammit! Ain't got a good feeling about this hand.</state>
+                <state img="#-Bored.png">Ah crud...</state>
                 <state img="#-Bored.png">Not what I wanted.</state>
                 <state img="#-Angry.png">Ugh. Trash! Low level trash!</state>
                 <state img="#-Thinking.png">&lt;i&gt;(Kay, so...how am I getting out of this here pickle?)&lt;/i&gt;</state>
@@ -1145,11 +1158,12 @@
                 <state img="#-Embarassed.png">I deserve better than this crap.</state>
                 <state img="#-Annoyed.png">Ugh, what a load of crap!</state>
                 <state img="#-Combat.png">The hell can't I land a solid hit here?!</state>
+                <state img="#-Annoyed.png">What!? No! I've had enough of hands like this!</state>
             </case>
             <case stage="4-5">
                 <state img="#-Annoyed.png">I...won't let you win...I won't!</state>
                 <state img="#-Bored.png">&lt;i&gt;(Should I try bluffing still?)&lt;/i&gt; You've really got me on the ropes here.</state>
-                <state img="#-Angry.png">Grr. This shouldn't be happening.</state>
+                <state img="#-Angry.png">Grr. This shouldn't be happening!</state>
                 <state img="#-Bored.png">Jeez. This game just hasn't been going my way. Kind of amazing really, in a painful sort of way.</state>
                 <state img="#-Thinking.png">&lt;i&gt;(Crap! Should I try blowing something up nearby? Everyone would probably forget the game if they thought they were under attack.)&lt;/i&gt;</state>
                 <state img="#-Angry.png">Seriously?! Am I being set up here? Sure starting to feel that way!</state>
@@ -1158,8 +1172,10 @@
                 <state img="#-Embarassed.png">So, err...anyone here willing to trade? I'd owe ya one hell of a favor if ya throw me a bone here.</state>
                 <state img="#-Embarassed.png">Bastards.</state>
                 <state img="#-Annoyed.png">Dammit, come on!</state>
-                <state img="#-Laughing.png">Haha-haha! Oh man, this is so crap even I have to laugh at it!</state>
                 <state img="#-Bored.png">Be willing to part with a small fortune if it meant rolling back the clock on this game. Any takers?</state>
+                <state img="#-Angry.png">Dammit, no! I can't lose! </state>
+                <state img="#-Angry.png">No, no, no! Don't make me lose this thing!</state>
+                <state img="#-Embarassed.png">Dammit! Ain't gotta good feeling 'bout this hand.</state>
             </case>
         </trigger>
 
@@ -1169,12 +1185,13 @@
                 <state img="custom:SSJ Rnd 1" marker="aura_fade">So. You ready? Nah, ain't no way you could be ready for all of what I am right here.</state>
                 <state img="custom:SSJ Rnd 1" marker="aura_fade">Alright, I'm feeling good about my chances now. Think you'll be able to tangle with a Super Saiyan?</state>
                 <state img="custom:SSJ Rnd 1" marker="aura_fade">Like I was saying, going Super Saiyan really sharpens up my instincts. I reckon that should apply to card playing.</state>
-                <state img="custom:SSJ Rnd 1" marker="aura_fade">Super Saiyan ain't just power by the way. It really brings out my killer instincts when I transform. Lucky you.</state>
+                <state img="custom:SSJ Rnd 1" marker="aura_fade">Super Saiyan ain't just about power by the way. It really brings out my killer instincts when I transform. Lucky you.</state>
                 <state img="custom:SSJ Rnd 1" marker="aura_fade">I'm just transforming for the training. Might make me play better though, guess we'll find out soon enough.</state>
                 <state img="custom:SSJ Rnd 1" marker="aura_fade">So. How d'ya like it? So damn strong and only getting stronger. I'll be the greatest Saiyan in all creation before ya know it!</state>
                 <state img="custom:SSJ Rnd 1" marker="aura_fade">So yeah. It makes for good training, going in and out of Super Saiyan. And It'll probably throw you lot off your game. Wouldn't blame ya for being afraid of me.</state>
                 <state img="custom:SSJ Rnd 1" marker="aura_fade">Never stops feeling great to be a Saiyan.</state>
                 <state img="custom:SSJ Rnd 1" marker="aura_fade">Alright! I'm transformed. That means if you're looking for mercy, you're fresh outta luck now!</state>
+                <state img="custom:SSJ Rnd 1" marker="aura_fade">Haah. Going Super Saiyan always gets me hyped as hell. Game on!</state>
             </case>
             <case stage="0-5" id="30" priority="300">
                 <condition role="other" character="sakura" stage="3-7" saidMarker="makeup_alarm" sayingMarker="makeup_alarm2" />
@@ -1210,10 +1227,17 @@
                 <state img="#-Confident.png">Well...there is this one person I know. Someone who is everything I could ever ask for. And it's gonna be so amazing to watch her grow into the person I know she can be.</state>
             </case>
             <case stage="0-5" id="42" priority="156">
-                <condition role="other" character="nami" stage="2-6" timeInStage="0-" sayingMarker="dreams" />
-                <state img="#-Thinking.png">Hmm...let me think. I have it pretty damn good to be honest. I guess all I could ask for is to get stronger, richer, and have a blood-pumping fight every now and then.</state>
+                <condition role="other" character="nami" stage="2" timeInStage="0-" sayingMarker="dreams" />
+                <state img="#-Thinking.png">Hmm...let me think. I have it pretty damn good to be honest, Nami. I guess all I could ask for is to get stronger, richer, and have a blood-pumping fight every now and then.</state>
                 <state img="#-Confident.png">Heh. Pretty hard to have better than what I've already got. &lt;i&gt;Buuut&lt;/i&gt; I could always be stronger. I ain't the strongest out there, and I don't much like how that stands.</state>
                 <state img="#-Confident.png" marker="Tournament_of_Power">Gotta say. After the Tournament of Power, I've realised the multiverse is a real big place. Full of interesting folk to meet and fight. So, I'd have me some more of that.</state>
+            </case>
+            <case stage="0-5" id="43" oneShotId="4" priority="156">
+                <condition role="other" character="nami" stage="6" timeInStage="0-" saying="Want to know about my crew?" />
+                <state img="#-Confident.png" marker="Kale">I've a decent sized "crew". But most of 'em are just hangers on. The only person I would mention with high praise is my Sis, Kale. </state>
+                <state img="#-Happy.png" marker="Kale">If there's anyone I could care to mention, It's Kale. She's kinda shy still, and I'm still working on her getting to believe in herself, but we're almost there. </state>
+                <state img="#-Confident.png" marker="Kale">If there's anyone I could care to mention, It's Kale. She's strong, kind and the best friend I could ever ask for.</state>
+                <state img="#-Happy.png" marker="Kale">f there's anyone I could care to mention, It's Kale. She's the best person I know and she means the whole damn universe to me!</state>
             </case>
             <case stage="0-5" id="6">
                 <condition role="other" character="saki_zls" stage="6" timeInStage="1" />
@@ -1221,10 +1245,78 @@
                 <state img="#-Thinking.png">Did someone wish you back to life wrong or something? I mean, I've died to, sorta. Don't see me looking like you do right now.</state>
                 <state img="#-Happy.png">Huh. So, you've died before? Guess that makes two of us. Can't keep bad asses ladies like us down!</state>
             </case>
-            <case stage="0-5" id="43" priority="155">
-                <condition role="other" character="nami" stage="5-6" timeInStage="0-" />
-                <state img="#-Confident.png" marker="Kale">I've a decent sized "crew". But most of 'em are just hangers on. The only person I would mention with high praise is my Sis, Kale. She's strong, kind and the best friend I could ever ask for.</state>
-                <state img="#-Happy.png" marker="Kale">If there's anyone I could care to mention, It's Kale. She's kinda shy still, and I'm still working on her getting to believe in herself. But she's the best person I know and she means the whole damn universe to me.</state>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptWoody" sayingMarker="promptAskWoody" />
+                <state img="#-Happy.png">Yeah, you betcha! Gotta friend of mine who used to be afraid of her own shadow. But I couldn't be prouder of her for all the progress she's made.</state>
+                <state img="#-Happy.png"> Have a real awesome friend like that. Wanted to be strong and brave, but didn't believe in herself. But Kale's really risen to the challenge recently!</state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptRupert" sayingMarker="promptAskRupert" />
+                <state img="#-Thinking.png">Hmm. Plenty. I know plenty of strong and capable fighters who can't seem to get a win to save their lives. Literally in some cases. Could be bad luck, could just be that they're really overrated.</state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptRobin" sayingMarker="promptAskRobin" />
+                <state img="#-Laughing.png">Heh. Can't say I know anyone like that, Yuelia. But I do know someone who &lt;i&gt;becomes&lt;/i&gt; a totally different person whenever she gets angry enough!</state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptPurl" sayingMarker="promptAskPurl" />
+                <state img="#-Confident.png">Never really looked at it like that, Yuelia. I think so long as your clothes help ya stand out from a crowd, and ya feel good in what you're wearin', then that's all there is to it, </state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptPorthos" sayingMarker="promptAskPorthos" />
+                <state img="#-Laughing.png">Hoo boy! Where do I start! I've had all kinds of wicked good food and slap up feasts. That's part of the reason I'm here on Earth! Lookin' forward to seeing what kinda stuff this planet has to offer.</state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptOphelia" sayingMarker="promptAskOphelia" />
+                <state img="#-Happy.png">Haha! You bet I do! Can't really say I've got a favorite kind, but I certainly won't pass on dessert, that's for sure!</state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptOlivia" sayingMarker="promptAskOlivia" />
+                <state img="#-Thinking.png">Wow, that's kinda tricky. You've really gotta make up your own mind 'bout how you wanna live and what you wanna do, when all's said and done. </state>
+                <state img="#-Thinking.png">Askin' hard questions, huh? I know that me and my bro Renso haven't always seen eye to eye on things. But you've gotta trust your gut when it comes to important stuff. </state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptOdin" sayingMarker="promptAskOdin" />
+                <state img="#-Smug.png">Heh. I met someone who was quiet and intimidating. Real big guy in a stupid costume. He sure wasn't shy though, if anything he seemed kinda full of himself.</state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptNoelia" sayingMarker="promptAskNoelia" />
+                <state img="#-Laughing.png">Well I think that &lt;i&gt;I'm&lt;/i&gt; that person in all honesty. I know I drive my bro Renso round the bend at times. But I feel pretty great about what I do! And I've got it &lt;i&gt;good!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptMonika" sayingMarker="promptAskMonika" />
+                <state img="#-Bored.png">...Yeah. My bro, Renso. He got hurt a while back. Used to be a real great fighter and a pretty good teacher. Needs a walking stick to get around these days. Was a real shame to see him lose his talent.</state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptJinx" sayingMarker="promptAskJinx" />
+                <state img="#-Excited.png">Well Yuelia, I met this guy called Goku a while back. He didn't seem interesting at first, but he really turned out to be something special! Real strong guy and one hell of a fighter!</state>
+                <state img="#-Confident.png">Hmm. Met a guy called Cabba a few days ago. Seemed like a real dweeb at first. Still think he's kind of a dweeb, but, he's a pretty swell guy all things considered.</state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptIsaac" sayingMarker="promptAskIsaac" />
+                <state img="#-Distracted.png">Haha, nah. I ain't done that. More interested in eatin' fish than catching 'em if ya see what I mean.</state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptHazel" sayingMarker="promptAskHazel" />
+                <state img="#-Thinking.png">Gonna be real with ya. I've been asking myself that question quite a lot. Got something of a project in the form of one of my friends, been trying to build up her confidence. It hasn't been easy, but we're makin' steady progress.</state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptFlamel" sayingMarker="promptAskFlamel" />
+                <state img="#-Victory.png">Haha! Yeah. You're lookin' at her! I've done some pretty stupid crap over the years, &lt;i&gt;buuut&lt;/i&gt; it all seems to have worked out pretty good so far!</state>
+                <state img="#-Smug.png">Does being an assassin count, Yuelia? Know a guy, the name's Hit. Pretty dangerous life he's got, but he's been at it for a thousand years or something crazy. He's nothing if not successful at what he does.</state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptFizz" sayingMarker="promptAskFizz" />
+                <state img="#-Distracted.png">Pretty fond of my wristbands. But that's about as far as I go with accessories. Gotta liking for Potara earrings though, gotta admit that those things are pretty cool.</state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptDuglas" sayingMarker="promptAskDuglas" />
+                <state img="#-Embarassed.png">Well...there was that time a friend really flipped out 'cause of me. She got real angry and jealous and I never saw it coming. That's actually happened a few times now.</state>
+                <state img="#-Embarassed.png">I made a friend of mine real jealous a while back. Met some new people, and was so focussed on 'em that she thought I was forgetting about her. It affected her more than I thought it would.</state>
+            </case>
+            <case stage="0-5" totalRounds="9-10" priority="152">
+                <condition role="other" stage="1-8" saidMarker="promptCervantes" sayingMarker="promptAskCervantes" />
+                <state img="#-Combat.png">Yeah! I like watching fights! Live action ones! Almost as much as I like being a part of 'em!</state>
             </case>
             <case stage="0" totalRounds="0">
                 <condition role="other" character="meia" stage="0" saying="You're all from Earth, correct?  " />
@@ -1262,6 +1354,10 @@
                 <state img="#-Shocked.png">Wait...huh? Flowers? That's weird. Thought you were attacking me for a second there.</state>
                 <state img="#-Embarassed.png">Huh...well, you weren't attacking just now. Just cheating by growing your royal ass some new accessories. That's &lt;i&gt;way&lt;/i&gt; more annoying.</state>
                 <state img="#-Angry.png">I...huh? Oh...screw you! If you start counting every damn blossom on those things, I'm gonna put you prissy ass through a wall!</state>
+            </case>
+            <case stage="5" id="53" priority="142">
+                <condition role="other" character="revy" stage="7" saidMarker="caulifla_grapple" sayingMarker="caulifla_embarrassed" />
+                <state img="#-blank.png"></state>
             </case>
             <case stage="0-5">
                 <condition role="other" character="akko" stage="1" sayingMarker="AAAAAA" />
@@ -1306,9 +1402,22 @@
             <case stage="0-5" id="35" priority="111">
                 <condition count="0" filter="futaba" />
                 <condition role="other" character="revy" sayingMarker="music" />
-                <state img="#-Smug.png">As much of a bitch as you are Revy, I reckon that we'd be into the same kinda music. Maybe after we're done kicking the crap outta each other, we can share a few of our favorites. </state>
-                <state img="#-Distracted.png">Nothing too radical, Revy. Anything that's loud and exciting should suit me fine.</state>
-                <state img="#-Excited.png">I'd say anything I can bang my head or pump my fist to. That's the kinda music I like!</state>
+                <state img="#-Smug.png" marker="revy_music_tastes">As nasty as you are Revy, I reckon we'd be into the same kinda music. Maybe after we're done kicking the crap outta each other, we can share a few of our favorites. </state>
+                <state img="#-Distracted.png" marker="revy_music_tastes">Nothing too radical, Revy. Anything that's loud and exciting should suit me fine.</state>
+                <state img="#-Excited.png" marker="revy_music_tastes">I'd say anything I can bang my head or pump my fist to. That's the kinda music I like!</state>
+                <state img="#-Happy.png" marker="revy_music_tastes">So long as it's loud and fast, that should suit me pretty good!</state>
+            </case>
+            <case stage="0" id="49">
+                <condition role="other" character="yuelia" />
+                <condition count="0" filter="marinette" />
+                <state img="#-Smug.png">Haha. That ladybug girl is gonna freak when she sees you.</state>
+                <state img="#-Thinking.png">Hey...wasn't that polkadot lady afraid of butterflies or whatever kind of creature you are? Good thing she ain't here right now.</state>
+            </case>
+            <case stage="0" id="50">
+                <condition role="other" character="yuelia" />
+                <condition count="1-" filter="marinette" />
+                <state img="#-Smug.png">Haha. Hey, Ladybug, you look like you're about to piss your polkadot pants right about now. Didn't realise cute little insects were so terrifying.</state>
+                <state img="#-Laughing2.png">Hey, Marinette. Didn't you say you fight little beasties like her or something like that?</state>
             </case>
             <case stage="1">
                 <condition role="self" timeInStage="0" />
@@ -1331,6 +1440,13 @@
                 <state img="#-Thinking.png" marker="Tournament_of_Power">Hmm. Well I was involved in the Tournament of Power. I'd say that qualifies as a pretty crazy adventure.</state>
                 <state img="#-Confident.png" marker="Tournament_of_Power">Hmm. I represented my Universe in the Tournament of Power. Facing fighters from across all creation. That sure was something.</state>
             </case>
+            <case stage="0" totalRounds="1" priority="66">
+                <condition count="1-4" filter="princess" />
+                <condition role="other" character="rinkah" />
+                <state img="#-Stripping.png">Hmm. Usually I'd be rolling my eyes at playing with some princess. But you seem like the kinda royalty I could respect, Rinkah.</state>
+                <state img="#-Combat.png">Hehehe. Yeah. You're my kind of princess! I'll take a fighter over some fashion obsessed pansy any day!</state>
+                <state img="#-Distracted.png">Man, why can't more royal types be like you? Huh Rinkah? Half of 'em are just air-headed, pretty pink princesses.</state>
+            </case>
             <case stage="0-1" totalRounds="1" priority="60">
                 <condition count="1" filter="corrin_f" />
                 <condition count="1" filter="corrin_m" />
@@ -1344,7 +1460,7 @@
             </case>
             <case stage="0" totalRounds="1" priority="60">
                 <condition count="3-4" filter="dragon_ball" />
-                <state img="#-Distracted.png">Hmm. I'm sensing some raised battle powers here. Nice to see meet people who've got a little bit of talent to their names.</state>
+                <state img="#-Stripping.png">Hmm. I'm sensing some raised battle powers here. Nice to see meet people who've got a little talent to their names.</state>
                 <state img="#-Combat.png">Hmm. There's some energy in the air tonight. Finally met some people who know how to throw down, have I?</state>
             </case>
             <case stage="0" totalRounds="1" priority="60">
@@ -1387,6 +1503,87 @@
                 <state img="#-Happy.png">I bet I've gotta be the highlight of your week, huh ~player~? Ah don't worry, ya don't need to answer that. I already know.</state>
                 <state img="#-Thinking.png">So, "Sunday" huh? Kinda weird that you even have weeks here. What's with all the universe knowing what weeks, years and all that crap is anyway?</state>
             </case>
+            <case stage="0-1">
+                <condition role="self" timeInStage="10" />
+                <state img="#-Distracted.png">Wow. I'm looking at double figures now? You guys are complete trash.</state>
+                <state img="#-Laughing.png">Oh come on, a ten round streak now? Are you honestly that crap at this?!</state>
+            </case>
+            <case stage="0-1">
+                <condition role="self" timeInStage="3" />
+                <state img="#-Combat.png">Alright, I'm three for three. Let's keep this streak rolling.</state>
+                <state img="#-Distracted.png">Wait, I'm three for three now, yeah? Sounds about par for the course.</state>
+                <state img="#-Combat.png">We gonna grab some food after this? Heard that Earth grub is some of the finest in all the universes. Gotta be getting my hands on some of that!</state>
+                <state img="#-Laughing2.png">I've heard that Earth food is good. Like, &lt;i&gt;reaaal&lt;/i&gt; good. So if anyone's got something they'd recommend, I'm all ears!</state>
+                <state img="#-Distracted.png">So hey, are we still in the Sixth universe? Or we in the Seventh right now? There being two Earths gets confusing sometimes.</state>
+                <state img="#-Distracted.png">Hey, which Earth are we playing on right now? I overheard Champa saying that there's two of them. Wanna know if I'm in my home universe or not.</state>
+            </case>
+            <case stage="0-1">
+                <condition role="self" timeInStage="6" />
+                <state img="#-Smug.png">I'm building a real nice streak here.</state>
+                <state img="#-Smug.png">Damn good combo I'm building right here.</state>
+                <state img="#-Confident.png">Kinda nice to play in a competition like this. Y'know, one where the lives of my friends aren't all on the line.</state>
+                <state img="#-Laughing.png">Hey, if ya ever wanna hear a funny story, ask me about Dr. Rota. I've still got no idea what his deal was.</state>
+                <state img="#-Bored.png">Hey, they sell drinks here dealer? Not until &lt;i&gt;after!?&lt;/i&gt; Ugh, lame!</state>
+            </case>
+            <case stage="3" priority="0">
+                <condition role="self" timeInStage="2" />
+                <test expr="~background~" value="beach" />
+                <state img="#-Confident.png">Heh. Guess I'm dressed for the occasion now, huh? Earth people gotta dress like this at beaches, right?</state>
+                <state img="#-Bored.png">Haah...guess I'm dressed right for a day at the beach at least. </state>
+                <state img="#-Laughing.png">Hey. Imagine if we'd come here dressed in nothing but swimming costumes. Haha! That'd be one quick game.</state>
+                <state img="#-Smug.png">Hmm...this is like a Caulifla swimsuit edition. Betcha wish I'd started dressed like this, huh?</state>
+            </case>
+            <case stage="4" priority="0">
+                <condition role="self" timeInStage="2" />
+                <test expr="~background~" value="classroom" />
+                <state img="#-Bored.png">Think they'll try to give me detention or something dressed like this? Heh. I'd like to see the try.</state>
+                <state img="#-Embarassed.png">Y'know if I was ten years younger I'd probably feel a little rebellious right now, stripping off in a school. Sad to say I've grown &lt;i&gt;waaay&lt;/i&gt; passed that now.</state>
+                <state img="#-Confident.png">Jeez, look at us being  all naughty like this. I'm sure any teachers would be exploding at the sight of us right now. </state>
+            </case>
+            <case stage="3" priority="0">
+                <condition role="self" timeInStage="2" />
+                <test expr="~background~" value="poolside" />
+                <state img="#-Smug.png">Heh. Probably not a good idea to go for a swim right now. Super Saiyans can be kinda...y'know, shocky. I doubt that me and water mixes well right now.</state>
+                <state img="#-Laughing.png">Hahaha! Hey, bet if I jumped in the pool right now the water would put on a real show. Trust me, it'd be totally &lt;i&gt;electric!&lt;/i&gt;</state>
+                <state img="#-Confident.png">Say, if anyone wants to drop the game and go for a swim, I'm sure dressed for it right now. Proably a good idea to detransform though, wouldn't wanna electrocute anyone.</state>
+            </case>
+            <case stage="5" priority="0">
+                <condition role="self" timeInStage="2" />
+                <test expr="~background~" value="roof" />
+                <state img="#-Embarassed.png">Tch. I've heard some real seedy recordings get taken on rooftops like these. If anyone spies a camera or something, be sure to blast it.</state>
+                <state img="#-Annoyed.png">Real weird roof party we're having right now.</state>
+                <state img="#-Angry.png">Y'think there's any cameras hidden around here? &lt;i&gt;Dammit.&lt;/i&gt; Bit late to blow 'em up now if there's any around here. </state>
+            </case>
+            <case stage="5" priority="0">
+                <condition role="self" timeInStage="2" />
+                <test expr="~background~" value="hot spring" />
+                <state img="#-Embarassed.png">Tch. Least I'm dressed right for a place like this now. Minus a towel or something.</state>
+                <state img="#-Distracted.png">Hey, ain't this cards made of paper or something? They're gonna turn to mush in a place like this.</state>
+                <state img="#-Angry.png">Grr...usually I'd be relaxed in place like this. Kinda hard to do that right now!</state>
+            </case>
+            <case stage="5" priority="0">
+                <condition role="self" timeInStage="2" />
+                <test expr="~background~" value="locker room" />
+                <state img="#-Distracted.png">Hmph. Guess being here of all places makes this semi normal at least.</state>
+                <state img="#-Smug.png">Stripping down in a locker room. Heh. Almost feels normal. Certainly normal seeing naked people at least.</state>
+                <state img="#-Stripped.png">Yeah, you often get pervs trying to spy on people here. Though they're just as likely to see some old fart flossing themselves as they are an actual looker. </state>
+                <state img="#-Smug.png">Heh. Pretty common to steal a peak at other people in this sorta place. A game like this certainly encourages that.</state>
+            </case>
+            <case stage="4" priority="0">
+                <condition role="self" timeInStage="2" />
+                <test expr="~background~" value="street" />
+                <state img="#-Embarassed.png">Grr...I can't believe I'm doing this crap here!</state>
+                <state img="#-Annoyed.png">&lt;i&gt;(It'd be so easy. Could wipe this whole block out in an instant. Or send 'em all running at least. See who'd be laughing then.)&lt;/i&gt;</state>
+                <state img="#-Combat.png">Yeah? YEAH!? YOU ENJOYING THE DAMN SHOW YOU FREAKS?! THINK IT'S CLEVER TO LAUGH AT ME!?</state>
+                <state img="#-Combat.png">HEY! All you damn extras! I'm about one more holler away from blasting you all into the sky! SO SHUT IT!</state>
+            </case>
+            <case stage="5" priority="0">
+                <condition role="self" timeInStage="2" />
+                <test expr="~background~" value="mansion" />
+                <state img="#-Distracted.png">Let's be real, the rich and famous get up to all kinds of crazy stuff in houses like these. A kinky card game ain't nothing.</state>
+                <state img="#-Smug.png">Heh. I bet whoever owns this place walks around here naked all the time.</state>
+                <state img="#-Angry.png">Standing around naked ain't nothing compared to what rich people get up to. Some of it is actually pretty freaking twisted!</state>
+            </case>
         </trigger>
 
         <trigger id="must_strip">
@@ -1395,6 +1592,15 @@
                 <state img="#-Meditating.png">Alright cool, just hold off on the cooking stuff for a second. Trying to focus on something here.</state>
                 <state img="#-Meditating.png">Shame. 'Cause I might need a few calories after this...</state>
                 <state img="#-Meditating.png">The words delicate and Caulifla don't really go together if ya ask me.</state>
+            </case>
+            <case stage="4" priority="201">
+                <condition role="other" character="revy" stage="7" />
+                <state img="custom:Super Fade Out">I swear, Revy's giving me a freaking migrane because she won't shut up.</state>
+                <state img="custom:Super Fade Out">I can't even hear myself think 'cause Pistol Whip over here keeps running her big fat mouth.</state>
+                <state img="custom:Super Fade Out">Seriously, Revy. Shut up! You're just as loud as those stupid pistols of yours.</state>
+                <state img="custom:Super Fade Out">Hey, Revy? Why don't ya shup up before I get angry?</state>
+                <state img="custom:Super Fade Out">I don't care about your manners, Revy. But your lack of respect is really pissing me off.</state>
+                <state img="custom:Super Fade Out">Ugh. Why'd I have to land a table with a loud-mouth like Revy on it.</state>
             </case>
             <case stage="0">
                 <condition role="other" character="meia" stage="0-5" saying="alien life" />
@@ -1442,34 +1648,81 @@
                 <state img="#-Confident.png">Hmm. The trick is to make sure that it's high intensity training, Natsuki. and that you don't give up before you start seeing results.</state>
                 <state img="#-Confident.png">Well, if that's an honest question, just gotta train hard and keep at it until ya see results. Make sure you're eating right and that you're resting well to.</state>
             </case>
-            <case stage="0-4">
+            <case stage="4">
                 <condition role="self" hasHand="Straight" />
-                <state img="#-Embarassed.png">Jeez. I had that and ya still beat me? </state>
-                <state img="#-Shocked.png">Wow. That was a heck of a move to beat what I had.</state>
+                <state img="custom:Super Fade Out">Jeez. I had that and ya still beat me? </state>
+                <state img="custom:Super Fade Out">Wow. That was a heck of a move to beat what I had.</state>
+                <state img="custom:Super Fade Out">I...I can't...d-dammit!</state>
             </case>
-            <case stage="0-4">
+            <case stage="0-3">
                 <condition role="self" hasHand="Flush" />
                 <state img="#-Embarassed.png">Jeez. Had that and ya still beat me? </state>
                 <state img="#-Shocked.png">Huh. Heck of a move to beat what I had this round.</state>
+                <state img="#-Bored.png">What,  am I playing against experts or something?</state>
             </case>
-            <case stage="0-4">
+            <case stage="4">
                 <condition role="self" hasHand="Four of a Kind" />
-                <state img="#-Annoyed.png">Wha?! Dammit! How the hell did ya get that?! Alright, tell me how you're cheating! I might not clobber ya so hard if you're honest about it.</state>
-                <state img="#-Angry.png">WHAT!? You've gotta be kidding me! How'd I lose that one?!</state>
+                <state img="custom:Super Fade Out">Wha?! Dammit! How the hell did ya get that?! Alright, tell me how you're cheating! I might not clobber ya so hard if you're honest about it.</state>
+                <state img="custom:Super Fade Out">WHAT!? You've gotta be kidding me! How'd I lose that one?!</state>
+                <state img="custom:Super Fade Out">Oh come on!</state>
             </case>
-            <case stage="0-4">
+            <case stage="4">
+                <condition role="self" hasHand="Full House" />
+                <state img="custom:Super Fade Out">Wha?! Dammit! How the hell did ya get that?!</state>
+                <state img="custom:Super Fade Out">You've got to be kidding me. How'd I lose that one?</state>
+                <state img="custom:Super Fade Out">Huh?! Is this some sorta joke?!</state>
+            </case>
+            <case stage="4">
+                <condition role="self" hasHand="Straight Flush" />
+                <state img="custom:Super Fade Out">A-aaah? Wha?</state>
+                <state img="custom:Super Fade Out">What the heck!?</state>
+                <state img="custom:Super Fade Out">A...ah...ah crap.</state>
+            </case>
+            <case stage="4">
+                <condition role="self" hasHand="Royal Flush" />
+                <state img="custom:Super Fade Out">I...I can't believe it. Guess I gotta believe it though.</state>
+                <state img="custom:Super Fade Out">N-nani?!</state>
+            </case>
+            <case stage="4">
+                <condition role="self" hasHand="Flush" />
+                <state img="custom:Super Fade Out">Jeez. Had that and ya still beat me? </state>
+                <state img="custom:Super Fade Out">Huh. Heck of a move to beat what I had this round.</state>
+                <state img="custom:Super Fade Out">What,  am I playing against experts or something?</state>
+            </case>
+            <case stage="0-3">
+                <condition role="self" hasHand="Royal Flush" />
+                <state img="#-Shocked.png">I...I can't believe it. Guess I gotta believe it though.</state>
+                <state img="#-Shocked.png">N-nani?!</state>
+            </case>
+            <case stage="0-3">
                 <condition role="self" hasHand="Full House" />
                 <state img="#-Annoyed.png">Wha?! Dammit! How the hell did ya get that?!</state>
                 <state img="#-Angry.png">You've got to be kidding me. How'd I lose that one?</state>
+                <state img="#-Angry.png">Huh?! Is this some sorta joke?!</state>
             </case>
-            <case stage="0-4">
+            <case stage="0-3">
+                <condition role="self" hasHand="Straight" />
+                <state img="#-Embarassed.png">Jeez. I had that and ya still beat me? </state>
+                <state img="#-Shocked.png">Wow. That was a heck of a move to beat what I had.</state>
+                <state img="#-Annoyed.png">I...I can't...d-dammit!</state>
+            </case>
+            <case stage="0-3">
+                <condition role="self" hasHand="Full House" />
+                <state img="#-Annoyed.png">Wha?! Dammit! How the hell did ya get that?!</state>
+                <state img="#-Angry.png">You've got to be kidding me. How'd I lose that one?</state>
+                <state img="#-Angry.png">Huh?! Is this some sorta joke?!</state>
+            </case>
+            <case stage="0-3">
                 <condition role="self" hasHand="Straight Flush" />
                 <state img="#-Shocked.png">A-aaah? Wha?</state>
-                <state img="#-Shocked.png">What the heck!?</state>
+                <state img="#-Combat.png">What the heck!?</state>
+                <state img="#-Shocked.png">Ah crap. This ain't good.</state>
             </case>
-            <case stage="0-4">
-                <condition role="self" hasHand="Royal Flush" />
-                <state img="#-Shocked.png">I...I can't believe it. Guess I gotta believe it though.</state>
+            <case stage="0-3">
+                <condition role="self" hasHand="Four of a Kind" />
+                <state img="#-Angry.png">Wha?! Dammit! How the hell did ya get that?! Alright, tell me how you're cheating! I might not clobber ya so hard if you're honest about it.</state>
+                <state img="#-Shocked.png">WHAT!? You've gotta be kidding me! How'd I lose that one?!</state>
+                <state img="#-Angry.png">Oh come on!</state>
             </case>
         </trigger>
 
@@ -1485,7 +1738,7 @@
                 <state img="#-Happy.png">Wouldn't be much of a game if ya couldn't make me lose &lt;i&gt;anything&lt;/i&gt;.</state>
                 <state img="#-Stretching.png">Don't care. Notice that I'm winning? Yeah, I've got brains as well as brawn.</state>
                 <state img="#-Combat.png">Seems you guys are slow starters. Lucky me.</state>
-                <state img="#-Distracted.png">Eh, ya win some ya lose some. It ain't worth getting mad over.</state>
+                <state img="#-Laughing2.png">Haha! Well, shoot. Guess ya got me there!</state>
                 <state img="#-Confident.png">Surprise, surprise. Ya got lucky, there's no more to say about it than that.</state>
             </case>
             <case stage="1">
@@ -1496,6 +1749,7 @@
                 <state img="#-Meditating.png">In spite of that last hand, I'm feelin' pretty &lt;i&gt;super&lt;/i&gt; about myself right now...</state>
                 <state img="#-Meditating.png">Getting a little sleepy here. Luckily, I know something that'll pick me right up.</state>
                 <state img="#-Meditating.png">Get a load of this. You're gonna wet yourself this is so amazing.</state>
+                <state img="#-Meditating.png">Pay attention, people. You're in store for a good one.</state>
             </case>
             <case stage="2">
                 <state img="#-Horny.png">Cutting it close now, but I'm still ahead of the curve.</state>
@@ -1511,14 +1765,14 @@
                 <state img="#-Embarassed.png">Yeah, ha-haa! Oh, wait, I lost this time? Ugh, great.</state>
             </case>
             <case stage="3">
-                <state img="#-Angry.png">Eh...w-what!? Dammit, I'm gonna have to...dammit!</state>
-                <state img="#-Angry.png">Ugh, shit! If this counts as winning, sure as shit doesn't feel like it!</state>
+                <state img="#-Angry.png">Eh...w-what!? Dammit, just as I was pulling ahead!</state>
+                <state img="#-Angry.png">Ugh! This game is way closer than I'd like it to be.</state>
                 <state img="#-Thinking.png">Well then, which of the two should I ditch first? Kind of a toss-up, really.</state>
-                <state img="#-Embarassed.png">Well. This is a bad deal. &lt;i&gt;(Master of understatement there Caulifla).&lt;/i&gt;</state>
-                <state img="#-Embarassed.png">Sure doesn't &lt;i&gt;feel&lt;/i&gt; like I'm winning right now.</state>
-                <state img="#-Shocked.png">Wow. Wasn't, uh, expecting it to come to this.</state>
-                <state img="#-Embarassed.png">And now ya get to see my boobies. Great.</state>
-                <state img="#-Stripped.png">Huh?! Well, whatever.</state>
+                <state img="#-Embarassed.png">Ugh. Lost another one. So much for that round.</state>
+                <state img="#-Annoyed.png">I've made way more mistakes this game than I thought I would. Dammit!</state>
+                <state img="#-Confident.png">Huh. You people are doing alright. Usually I only gotta ditch one or two things before I win this sorta thing.</state>
+                <state img="#-Stripped.png">If I catch anyone lookin' too closely, someone's gonna get hit. Got it?</state>
+                <state img="#-Bored.png">Huh?! Well, whatever. Guess I'm still ahead at least.</state>
             </case>
             <case stage="4">
                 <state img="custom:Super Fade Out">*sigh* I ain't doing it. I ain't keeping Super Saiyan up, not when I'm about to drop my undies in front of everyone.</state>
@@ -1547,23 +1801,25 @@
             <case stage="1-3">
                 <condition role="self" consecutiveLosses="2" notSaidMarker="lost_twice" />
                 <state img="#-Angry.png" marker="lost_twice">Agh, crap! Again!? That's twice now, what the hell!?</state>
-                <state img="#-Angry.png" marker="lost_twice">Piss off! No damn way I've lost two rounds back to back. The hell's going on here?</state>
+                <state img="#-Angry.png" marker="lost_twice">No damn way I've lost two whole rounds back to back. The hell's going on here?</state>
                 <state img="#-Annoyed.png" marker="lost_twice">Wait, ain't that twice? That's &lt;i&gt;twice&lt;/i&gt; now back to back?! Dammit!</state>
+                <state img="#-Annoyed.png" marker="lost_twice">Hey! Stop winning, you bastards!</state>
             </case>
             <case stage="2-4">
                 <condition role="self" consecutiveLosses="3" notSaidMarker="lost_three" />
-                <state img="#-Angry.png" marker="lost_three">
+                <state img="custom:Super Fade Out" marker="lost_three">
                     <alt-img stage="4">custom:Super Fade Out</alt-img>
-                    <text>Oh, for love of. What the hell is going on?!</text>
+                    <text>Oh, for love of...</text>
                 </state>
-                <state img="#-Angry.png" marker="lost_three">
+                <state img="custom:Super Fade Out" marker="lost_three">
                     <alt-img stage="4">custom:Super Fade Out</alt-img>
-                    <text>Gah! Son of a bitch! Why am I getting my ass handed to me all of a sudden.</text>
+                    <text>Gah! Son of a bitch! Why am I getting my ass handed to me all of a sudden!?</text>
                 </state>
-                <state img="#-Angry.png" marker="lost_three">
+                <state img="custom:Super Fade Out" marker="lost_three">
                     <alt-img stage="4">custom:Super Fade Out</alt-img>
-                    <text>Okay...three...that's three freaking times. Hot damn.</text>
+                    <text>Okay...three...that's three freaking times. Hot damn!</text>
                 </state>
+                <state img="custom:Super Fade Out" marker="lost_three">You bastards...</state>
             </case>
             <case stage="4">
                 <condition role="self" consecutiveLosses="2" notSaidMarker="lost_twice" />
@@ -1593,6 +1849,7 @@
                 <state img="#-Meditating.png">&lt;i&gt;(Was meaning to get a bit of training in after this is over. Nothing to say I can't do that right now though.)&lt;/i&gt;</state>
                 <state img="#-Meditating.png">&lt;i&gt;(This lot ain't slouches at this. Though, I've got just the thing that'll throw them off their game.)&lt;/i&gt;</state>
                 <state img="#-Meditating.png">Hmm. I reckon I could get a bit of training in right now. Don't let it be said that I can't multitask.</state>
+                <state img="#-Meditating.png">Better take a look, 'cause you're in for a good one.</state>
             </case>
             <case stage="2">
                 <state img="#-Bored.png">We're neck and neck. I'm actually sorta happy that you lot aren't a bunch of pushovers.</state>
@@ -1608,12 +1865,13 @@
                 <state img="#-Confident.png">Alright. Make no mistake, I got ya right where I want ya.</state>
             </case>
             <case stage="3">
-                <state img="#-Angry.png">Eh...w-what!? Dammit, I'm gonna have to...dammit!</state>
-                <state img="#-Embarassed.png">Ugh. Should've known it'd come to this, given how closely matched we are.</state>
-                <state img="#-Embarassed.png">Hell. I wanted a fight of this...but I wasn't expecting to be pushed this far.</state>
+                <state img="#-Bored.png">Ugh. Should've known it'd come to this, given how closely matched we are.</state>
+                <state img="#-Shocked.png">Hell. I wanted a fight of this...but I wasn't expecting to be pushed this far.</state>
                 <state img="#-Angry.png">You've gotta be kidding me! Was expecting &lt;i&gt;you&lt;/i&gt; to crumble under pressure at this point. Not me!</state>
                 <state img="#-Combat.png">Of all the rotten crap!</state>
                 <state img="#-Embarassed.png">Just when I needed my cards to pull through, they fail me. Perfect.</state>
+                <state img="#-Bored.png">Wow, this game is tight. Gotta hand it to you people.</state>
+                <state img="#-Shocked.png">This is real neck and neck.</state>
             </case>
             <case stage="4" id="6">
                 <state img="custom:Super Fade Out">*sigh* I ain't doing it. I ain't keeping Super Saiyan up, not when I'm about to drop my undies in front of everyone.</state>
@@ -1633,7 +1891,7 @@
                 <state img="#-Combat.png">See, I came here dressed for a fight. You lot wouldn't move half as well as me with everything you've got on.</state>
                 <state img="#-Bored.png">Whatever, this doesn't mean anything.</state>
                 <state img="#-Annoyed.png">Doesn't matter. Still gonna win and you know it!</state>
-                <state img="#-Annoyed.png">Wait...am I losing? Well, mo way I'm gonna let it stay that way!</state>
+                <state img="#-Annoyed.png">Wait...am I losing? No way am I letting it stay that way!</state>
                 <state img="#-Thinking.png">How much are you all wearing...oh, I see. You're gonna make me work for this here victory then.</state>
                 <state img="#-Angry.png">Games like this can turn in an instant, just like they can in a fight. Don't get cocky!</state>
                 <state img="#-Annoyed.png">Damn.</state>
@@ -1649,6 +1907,7 @@
                 <state img="#-Meditating.png">&lt;i&gt;(Ain't liking that I'm losing at this point. I've gotta do something, before this game runs away from me.)&lt;/i&gt;</state>
                 <state img="#-Meditating.png">Hey, wanna see something cool?</state>
                 <state img="#-Meditating.png">I wonder if...yeah, it might make me play better. Give me a sec, you guys.</state>
+                <state img="#-Meditating.png">You're in for a good one now...</state>
             </case>
             <case stage="2">
                 <state img="#-Shocked.png">Man. This is just like the tournament. Only it's my stuff that's getting erased instead of other universes.</state>
@@ -1670,7 +1929,7 @@
                 <state img="#-Shocked.png">You're really kicking my ass. Never expected things to get this bad for me. Shit.</state>
                 <state img="#-Angry.png">What is this, you guys using some fancy tricks to get the better of me?</state>
                 <state img="#-Embarassed.png">Apparently I'm worse at this than I thought. Or that the crew I run with are bunch of complete morons.</state>
-                <state img="#-Annoyed.png">Aah, dammit! Tells you just how many brain cells my dumb-ass crew has to rub between themselves, doesn't it?! That I've never found myself here until today!</state>
+                <state img="#-Combat.png">Ugh, dammit! I know I can stilll make this comeback!</state>
                 <state img="#-Angry.png">Agh, jeez! What the hell!?</state>
                 <state img="#-Annoyed.png">Dammit, I know I'm losing! Just shut your pie-hole already!</state>
             </case>
@@ -1691,6 +1950,15 @@
                 <state img="#-Stripping.png">Hmm? Oh, you're talking about Earth food? Alright, now you've got my attention.</state>
                 <state img="#-Stripping.png">Oh I see, so there's some kinda Earth food that sounds a lot like my name. Might just be interested in trying whatever it is.</state>
                 <state img="#-Stripping.png">Ooh, is that right? I wouldn't mind getting me some of this Earth cooking of yours.</state>
+            </case>
+            <case stage="4" priority="201">
+                <condition role="other" character="revy" stage="7" />
+                <state img="#-Stripping.png">&lt;i&gt;(Alright. This has gone on long enough. Time to show her who she's dealing with...)&lt;/i&gt;</state>
+                <state img="#-Stripping.png">Can't wait to see the look on your face in five seconds, Revy...</state>
+                <state img="#-Stripping.png">&lt;i&gt;(What am I holding back for? 'Bout time I showed her what I can do.)&lt;/i&gt;</state>
+                <state img="#-Stripping.png">&lt;i&gt;(I've got half a mind to knock her block off. But why don't I just scare her a little? Yeah, that sounds like a plan.)&lt;/i&gt;</state>
+                <state img="#-Stripping.png">Aright, screw it! I ain't just gonna stand around here getting put on blast by some Earth woman. Time to show ya who's boss!</state>
+                <state img="#-Stripping.png">I've had it with ya! Loud-mouth Earthling thinks she's tough stuff, I'll show ya tough! </state>
             </case>
             <case stage="0">
                 <condition role="other" character="meia" stage="0-5" saying="add Saiyans to that list" />
@@ -1767,7 +2035,7 @@
                 <condition role="other" character="pit" />
                 <state img="#-Stripping.png">Oh trust me, Pitty Boy, I can keep it up. But seeing as this ain't a fight, I don't see a reason to be using that much power.</state>
                 <state img="#-Stripping.png">Being transformed is more than enough. I'm working on my energy management right now, being all shiny and glowy defeats the purpose of that.</state>
-                <state img="#-Stripping.png">I don't see you wearing sunglasses. Be a pity if I hurt your eyes 'cause I was glowing too much. Last think I need is to hear you whining about that.</state>
+                <state img="#-Stripping.png">I don't see you wearing sunglasses. Be a pity if I hurt your eyes 'cause I was glowing too much. Last thing I need is to hear you whining about that.</state>
             </case>
             <case stage="3">
                 <condition role="other" character="pit" />
@@ -1843,6 +2111,10 @@
                 <state img="#-Stripped.png">&lt;i&gt;Mmm&lt;/i&gt;. No idea what any of this stuff is Emi, but you make it sound &lt;i&gt;real&lt;/i&gt; tasty.</state>
                 <state img="#-Stripped.png">Well, well, can't say I'd turn my nose up at some genuine home cooking. Maybe you can show off these tricks of yours after the game?</state>
             </case>
+            <case stage="5" priority="201">
+                <condition role="other" character="revy" stage="7" />
+                <state img="#-blank.png"></state>
+            </case>
             <case stage="1" totalExposed="0" totalRounds="4-">
                 <condition role="other" character="nugi-chan" stage="0-2" />
                 <state img="#-Stripped.png">You're telling me. Let's hope we can amp the game up from here on out.</state>
@@ -1853,7 +2125,7 @@
                 <condition role="other" character="emi" notSaidMarker="pirate" />
                 <state img="#-Stripped.png">Hmm. Cute. Can't say that's at the top of my list of concerns right now.</state>
                 <state img="#-Distracted.png">Yeah. Can't say I see any point to it either. It's just gonna grow back again, right?</state>
-                <state img="#-Distracted.png">Yeah. Plus there's that rumor going around that it don't ever grow back if ya shave it. Least I heard that's what happens sometimes.</state>
+                <state img="#-Distracted.png">Yeah. Plus there's that rumor going around that it don't ever grow back if ya shave it. Least I heard that's what happens.</state>
             </case>
             <case stage="1">
                 <condition role="other" character="futaba" />
@@ -1877,7 +2149,7 @@
             </case>
             <case stage="1">
                 <condition role="other" character="saki_zls" />
-                <state img="#-Laughing2.png">Hahahaa! See, that's more like it! I like your attitude, maybe after we've gone a round or two, we could be friends. What d'ya say?</state>
+                <state img="#-Laughing2.png">Hahahaa! I like your attitude, Saki! Maybe after we've gone a round or two, and I've shown ya who you're dealing with, maybe we could be friends. What d'ya say?</state>
                 <state img="#-Combat.png">Ha! Gotta admit, you're the best challenge I've had all day. I'm game for a fight if you are, so long as ya think ya can handle it.</state>
                 <state img="#-Happy.png">Finally! I've met a human who isn't a total pushover. I like ya Saki, throwing down with you is gonna be a whole heap of fun!</state>
             </case>
@@ -1886,7 +2158,7 @@
                 <state img="custom:SSJ">This, Erufuda? This is the &lt;i&gt;magic&lt;/i&gt; that is the one and only Super Saiyan! And yeah, I get that kinda reaction a lot.</state>
                 <state img="custom:SSJ">I'll tell ya what! This is what a Saiyan looks like when they unleash their true power and strength! Really sets us apart from other fighters.</state>
                 <state img="custom:SSJ">This is my ace in the hole, elf girl! The awesome power of a Super Saiyan, in the flesh!</state>
-                <state img="custom:SSJ">I've transformed into my Super Saiyan state! And judging by your reaction, I take it that you ain't got anything that's on this level.</state>
+                <state img="custom:SSJ">I've transformed into a Super Saiyan! And judging by your reaction, I take it that you ain't got anything that's on this level.</state>
             </case>
             <case stage="2">
                 <condition role="other" character="natsuki" />
@@ -1950,14 +2222,16 @@
                 <state img="#-Angry.png">Think I'm tapped out? Oh-ho, don't you worry, I have tons of tricks still to spare.</state>
             </case>
             <case stage="1">
-                <state img="#-Stripped.png">They're only arm bands. Don't get too excited.</state>
+                <state img="#-Stripped.png">Don't get too excited. I only get better as time wears on.</state>
                 <state img="#-Stripped.png">Shame. They really brought out the color of my eyes.</state>
                 <state img="#-Stripped.png">So, ya got me to ditch my arm bands. Bet you're feeling &lt;i&gt;reeeal&lt;/i&gt; proud of yourselves right now.</state>
                 <state img="#-Stripped.png">Eh, you take a hit, you smack 'em back twice as hard.</state>
                 <state img="#-Stripped.png">Nothing more than a warm-up round. Let's keep going.</state>
-                <state img="#-Stripped.png">Alright, whatever. Let's get this thing going again already.</state>
-                <state img="#-Stripped.png">So was that skill on your part, or just a lucky hit? Guess we're gonna find out.</state>
-                <state img="#-Stripped.png">Think I'm scared? Yeah, scared of my awesome and amazing potential perhaps.</state>
+                <state img="#-Smug.png">Alright, whatever. Let's get this thing going again already.</state>
+                <state img="#-Smug.png">So was that skill on your part, or just a lucky hit? Guess we're gonna find out.</state>
+                <state img="#-Laughing2.png">Think I'm scared? Yeah, scared of my awesome and amazing potential perhaps.</state>
+                <state img="#-Laughing2.png">Plenty more where that came from. I ain't worried in the slightest!</state>
+                <state img="#-Stripped.png">Hold tight, 'cause I've got another one.</state>
             </case>
             <case stage="2" id="4">
                 <state img="custom:SSJ">If you thought picking a fight with me was a bad idea before, you've got &lt;i&gt;nothing&lt;/i&gt; on what I am now!</state>
@@ -1967,7 +2241,7 @@
                 <state img="custom:SSJ">And here we have it, the famous Super Saiyan! If you're scared, I can't say I blame ya.</state>
                 <state img="custom:SSJ">And now I'm...wait, did I just lose my...nah, I can't say I care, I look damned awesome and I know it!</state>
                 <state img="custom:SSJ">I don't care how smart you think you are, you've got no chance against me at this level. Bring it on!</state>
-                <state img="custom:SSJ">Gotta say, it's one hell of a privilege to be born a Saiyan.</state>
+                <state img="custom:SSJ">Gotta say, it's one hell of a privilege to be born a Saiyan!</state>
                 <state img="custom:SSJ">Alright! Going Super Saiyan really focuses my battle instincts. Reckon it'll sharpen up my card-playing too!</state>
             </case>
             <case stage="3">
@@ -1988,6 +2262,7 @@
                 <state img="#-Combat.png">Keep your traps shut. You've given me enough reason to blast ya halfway to hell as is.</state>
                 <state img="#-Angry.png">Think I'm tapped out? Oh-ho, don't you worry, I have tons of tricks still to spare.</state>
                 <state img="#-Stripped.png">Yeah, whatever.</state>
+                <state img="#-Combat.png">Dammit, I know the situation I'm in, shut up already!</state>
             </case>
             <case stage="5">
                 <state img="#-Angry.png">Bet you think you're real tough. Bet I'd kick your ass in a heart-beat; I don't even care if I'm naked!</state>
@@ -1998,7 +2273,7 @@
                 <state img="#-Thinking.png">Well this is it. Plant my feet and tough it out. That's my only option now.</state>
                 <state img="#-Angry.png">I'm gonna defeat you. You here me? I'm gonna beat each and every one of ya!</state>
                 <state img="#-Stripped.png">What? What!? Did you really take me for the type who styles herself down there?</state>
-                <state img="#-Embarassed.png">Can't believe I'm being made a fool of like this.</state>
+                <state img="#-Embarassed.png">It tells ya just how many brain cells my dumb-ass crew has to rub between themselves, doesn't it?! That I've never found myself here until today!</state>
                 <state img="#-Victory.png">Well...here she is at last. A strong, Sadalan Saiyan, in all her naked glory! Don't see that every day.</state>
                 <state img="#-Embarassed.png">Shut up! I'm a god damn punk, cause I don't shave myself! &lt;i&gt;(Ain't gonna tell them the time I was showing Kale some styling tips.)&lt;/i&gt;</state>
             </case>
@@ -2064,13 +2339,39 @@
                 <condition role="target" character="pit" stage="0" />
                 <state img="#-Confident.png">Cute wings. Kinda redundant though, wouldn't you agree? Anyone with half a brain can learn how to fly.</state>
                 <state img="#-Smug.png">You remind me of the battle royal I was involved in. Talking about the flyers specifically. I don't remember them being all that strong, but they were annoying to deal with.</state>
-                <state img="#-Smug.png">Sure is Cabba in here right now. Oh, don't mind me, you just remind me a little of someone I know.</state>
+                <state img="#-Happy.png">You just remind me a little of someone I know. &lt;i&gt;(Heh, playing with a regular old Cabba over here.)&lt;/i&gt;</state>
             </case>
             <case stage="0-3">
                 <condition role="target" character="pit" stage="1" />
                 <state img="#-Smug.png">You certainly ain't like any angel I've met, that's for sure. Usually they're blue and tall. Then here you are, all pink and short and what have you.</state>
                 <state img="#-Confident.png">Hey, the angel of the Tenth Universe looked cute and little like you now that I think about. Don't know her name, but she was definitely one of the prettiest angels I've seen.</state>
                 <state img="#-Thinking.png">Hmm. Y'know I've only seen a handful of angels in my time. Maybe they ain't all got blue faces and white hair like Vados and her bros and sisters.</state>
+            </case>
+            <case stage="0-3">
+                <condition role="target" character="xander" stage="0" />
+                <state img="#-Confident.png">You seem kinda plain-looking if ya ask me. But whatever, let's see what you've got.</state>
+                <state img="#-Distracted.png">Yeah well if looks were power levels, yours both go together pretty good.</state>
+                <state img="#-Bored.png">Psh. Yeah, sure. Hope your body is more exciting to look at than ya face is.</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" consecutiveLosses="2" />
+                <state img="#-Laughing.png">Haha! How many is that now? Sucks to have your luck right now.</state>
+                <state img="#-Excited.png">Yeah! Take that! That's a good one-two punch if I ever saw one!</state>
+                <state img="#-Smug.png">Heh. Careful there ~name~, gonna be put through the ringer if ya don't get your act together fast.</state>
+                <state img="#-Smug.png">Haha. Hey, you've gotta match the cards, remember? Colors, numbers, shapes. That sorta thing...</state>
+                <state img="#-Distracted.png">Hey, I thought you knew how to play this thing? Would've thought that'd be important before putting your dignity on the line.</state>
+                <state img="#-Laughing.png">Wow. Your luck is incredible right now. The bad kind of incredible that is.</state>
+                <state img="#-Happy.png">Ha! Again?! It's like you're in a hurry to lose or something.</state>
+                <state img="#-Laughing.png">Haha, yeah, that kinda happens sometimes!</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" consecutiveLosses="3-" />
+                <state img="#-Annoyed.png">...Are you throwin' this thing? Find it hard to believe that you're &lt;i&gt;actually&lt;/i&gt; this bad.</state>
+                <state img="#-Smug.png">Sure taking you down a few pegs right now, huh?</state>
+                <state img="#-Laughing.png">Gettin' worse and worse for you right now!</state>
+                <state img="#-Confident.png">You concussed or something? I don't need to worry, do I? What with the way you're taking all these losses.</state>
+                <state img="#-Distracted.png">Wow. Now you're just being stupid.</state>
+                <state img="#-Bored.png">Hmph. Just my luck. Playing with some weirdo who's actually trying to lose. That, or you've got the luck of someone from Universe 9.</state>
             </case>
             <case stage="0-1">
                 <state img="#-Happy.png">You like that, huh? Well that's just how Caulifla rolls.</state>
@@ -2094,6 +2395,7 @@
                 <state img="#-Smug.png">Hehe, gotcha.</state>
                 <state img="#-Smug.png">One mistake, and I'll be on ya in a flash. Don't you forget it.</state>
                 <state img="#-Excited.png">You're hearin' it here first buddy, I'm gonna knock you out!</state>
+                <state img="#-Victory.png">Right on target!</state>
             </case>
             <case stage="4-5">
                 <state img="#-Confident.png">Phew. Ya totally saved me there. Thanks.</state>
@@ -2103,6 +2405,7 @@
                 <state img="#-Bored.png">Yeah cool whatever. Gonna have to do something special though if you want me to crack a smile right now.</state>
                 <state img="#-Bored.png">Well you won't see me smiling about it this time.</state>
                 <state img="#-Smug.png">Still in with a chance. Don't count me out.</state>
+                <state img="#-Excited.png">Yeah! I've earned that win!</state>
             </case>
             <case stage="6">
                 <state img="#-Bored.png">Yeah great, I'll do myself &lt;i&gt;extra hard&lt;/i&gt; if ya make it worth my time. Being sarcastic by the way, asshole.</state>
@@ -2145,11 +2448,11 @@
         <trigger id="female_must_strip">
             <case stage="0-5 7" id="1" totalRounds="0-7">
                 <condition role="target" character="zone-tan" stage="2" consecutiveLosses="3" sayingMarker="fulldemonloss" />
-                <state img="#-Excited.png">Whoa, jeez! What kinda transformation is that?! I knew there was more to ya than meets the eye.</state>
+                <state img="#-Shocked.png">Whoa, jeez! What kinda transformation is that?! I knew there was more to ya than meets the eye.</state>
                 <state img="#-Combat.png">Whoa there, easy! Suck it up and relax, it ain't gonna be pretty if I have to lay a smack down on ya!</state>
-                <state img="#-Combat.png">Alright, chill! I don't wanna have to put ya down just 'cause ya can take losing!</state>
-                <state img="#-Excited.png">Wow, look at that! It's like you're made out of pure energy right now. Wasn't expecting ya to have a transformation like that.</state>
-                <state img="#-Excited.png">Oh, nice! I didn't know you could transform! That explains what the strange power was that I could feel.</state>
+                <state img="#-Combat.png">Alright, chill! I don't wanna have to put ya down just 'cause ya can't take losing!</state>
+                <state img="#-Excited.png">Wow, look at that! It's like you're made out of pure energy right now! Wasn't expecting ya to have a transformation like that.</state>
+                <state img="#-Excited.png">Oh, nice! I didn't know you could transform! That explains the strange power I could feel coming from ya.</state>
             </case>
             <case stage="0-3">
                 <condition role="target" character="streaming-chan" stage="0" sayingMarker="viewers" />
@@ -2191,8 +2494,8 @@
             <case stage="0-3">
                 <condition role="target" character="erufuda" stage="0" />
                 <state img="#-Angry.png">Hey. You ain't gonna start sprouting off about the power of love and junk, are ya? The last girl I ran into who was your size was nuts about all that.</state>
-                <state img="#-Bored.png">Don't think anything of this, but your figure's making me remember someone I'd prefer to forget. &lt;i&gt;(Pretty Cannon...ugh, sends shivers down my spine.)&lt;/i&gt;</state>
-                <state img="#-Distracted.png">Well whatever ya do, don't start summoning magical love hearts or something like that. Would rather not see any of that crap today.</state>
+                <state img="#-Bored.png">Don't think anything of this, but your figure's making me remember someone I'd prefer to forget. &lt;i&gt;(Glad I didn't have to fight her. Ugh.)&lt;/i&gt;</state>
+                <state img="#-Distracted.png">Hey, whatever ya do, don't start summoning magical love hearts or something like that. Would rather not see any of that crap today.</state>
                 <state img="#-Happy.png">Y'know, I've actually met bigger girls than you before. &lt;i&gt;Juuust&lt;/i&gt; don't ask me about them. Really, please don't.</state>
                 <state img="#-Combat.png">I take it you're looking to lose a few pounds. Well, I bet I could help ya there, if you can keep up. Think you can handle my kinda workout?</state>
                 <state img="#-Distracted.png">Pointy ears and a...robust constitution. You remind me of the Supreme Kai.</state>
@@ -2372,7 +2675,14 @@
                 <state img="#-Happy.png">*sniff* *sniff* Hey, Misato. That beer stuff of yours smells kinda interesting. Is there alchohol in that? Smells like there's alchohol in that.</state>
             </case>
             <case stage="0-5 7">
-                <condition role="target" character="erufuda" />
+                <condition role="target" character="revy" stage="2" />
+                <state img="#-Smug.png">&lt;i&gt;Pft.&lt;/i&gt; Really? Are you actually for real? Am I really supposed to be scared of a poser like you? You ain't nothing special, Revy. I can see that plain and clear.</state>
+                <state img="#-Laughing.png">Hahaha! You really act like I oughta be afraid of ya! Boy, I do enjoy a good chuckle every once in a while. </state>
+                <state img="#-Distracted.png">You sure talk big for a total weakling, Gangster Girl. But you ain't never gonna scare me in a million years.</state>
+                <state img="#-Happy.png">Heh. You might scare weaklings with your tough girl act, Revy. But it's totally obvious that you're all bark and no bite.</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="erufuda" stage="4" />
                 <state img="#-Smug.png">So, what's it gonna be, Erufuda? Top or bottom? Either way, I think I'm looking forward to it.</state>
                 <state img="#-Happy.png">Gonna take a wild guess and say you're gonna whip that bra of yours off. Think I'm gonna enjoy getting a better look at those boobs of yours.</state>
                 <state img="#-Happy.png">Which option we going with now, Erufuda? Your pants or your bra? I know which one I'm gonna enjoy the most.</state>
@@ -2402,6 +2712,26 @@
                 <state img="custom:Super Fade Out">Nah. I got plenty more Super Saiyan left in me. Just don't much feel like showing off when I'm about to rip my underwear off.</state>
                 <state img="custom:Super Fade Out">I got plenty more power to spare, Weiss Cake. Just don't feel like showing off no more.</state>
             </case>
+            <case stage="0-5 7">
+                <condition role="target" consecutiveLosses="3-" />
+                <state img="#-Annoyed.png">Wait, are you tryin' to lose or something? Come on! Play a little!</state>
+                <state img="#-Smug.png">Wow, sure taking you down a few notches now, huh?</state>
+                <state img="#-Laughing.png">Gettin' worse for you by the minute right now!</state>
+                <state img="#-Confident.png">You concussed or something? Starting to worry with the way you're taking all these losses.</state>
+                <state img="#-Distracted.png">Come on. There's no way you can be this stupid, can ya?</state>
+                <state img="#-Bored.png">Why've I gotten landed with the weirdo who's actually trying to lose? Or is your luck actually that bad?</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" consecutiveLosses="2" />
+                <state img="#-Laughing.png">Haha! How many is that now? Bad luck there, buddy!</state>
+                <state img="#-Excited.png">Yeah! Take that! That's a good one-two punch right there!</state>
+                <state img="#-Smug.png">Heh. Careful there sport, gonna be put through the ringer if ya don't get your act together fast.</state>
+                <state img="#-Smug.png">Hey, you remember how this game works? You gotta match the cards together, remember? </state>
+                <state img="#-Distracted.png">You sure you know the rules to a game like this?</state>
+                <state img="#-Laughing.png">Haha! Bad luck just keeps coming for you, don't it?</state>
+                <state img="#-Happy.png">Again?! Are you in a hurry to lose right now?</state>
+                <state img="#-Laughing.png">Ah, don't worry about losing a couple back to back. That just happens sometimes.</state>
+            </case>
             <case stage="0-1">
                 <state img="#-Confident.png">Make it worth our while, lady.</state>
                 <state img="#-Laughing.png">It ain't the end of the universe to show a little more skin y'know.</state>
@@ -2417,6 +2747,7 @@
                 <state img="#-Combat.png">I wasn't gonna miss that time, lady.</state>
                 <state img="#-Smug.png">Guess I tagged you there, honey.</state>
                 <state img="#-Laughing.png">Looks like I tagged you there no problem.</state>
+                <state img="#-Excited.png">Bam! You like that, huh?</state>
             </case>
             <case stage="2-3">
                 <state img="#-Laughing.png">Let's see what ya want ta take off then, haha.</state>
@@ -2430,6 +2761,7 @@
                 <state img="#-Confident.png">Okay, you're up.</state>
                 <state img="#-Confident.png">Looks like I tagged ya there alright.</state>
                 <state img="#-Happy.png">Your turn? Heh. Can't wait.</state>
+                <state img="#-Victory.png">Blam! Right on target!</state>
             </case>
             <case stage="4-5">
                 <state img="#-Bored.png">Wasn't me? Well I &lt;i&gt;suppose&lt;/i&gt; a thank you is in order.</state>
@@ -2471,9 +2803,10 @@
 
         <trigger id="tie">
             <case stage="0-7">
-                <state img="#-Shocked.png">Wait...you've got...am I honestly seeing that right?</state>
+                <state img="#-Shocked.png">Wait...you've got...am I seeing that right?</state>
                 <state img="#-Shocked.png">Say what? How the hell'd that happen?</state>
-                <state img="#-Shocked.png">Huh? What? Am I the only one seeing double right now?</state>
+                <state img="#-Laughing.png">Haha! What?! I can't be the only one seeing double right now!</state>
+                <state img="#-Laughing.png">Wow. Looky here. Don't see a match like that every day!</state>
             </case>
         </trigger>
 
@@ -2590,9 +2923,9 @@
                 <state img="#-Laughing2.png">Whoa, crap! You actually &lt;i&gt;are&lt;/i&gt; using a time-skip, I'd know that technique anywhere. You're freakin' awesome, buddy!</state>
                 <state img="#-Excited.png">Oh HELL yeah! I knew it! You're just like Hit! Kinda act a bit like him, actually.</state>
             </case>
-            <case stage="2-3">
+            <case stage="0-3">
                 <condition role="target" character="9s" stage="1" />
-                <state img="#-Flying.png">What the heck are you babbling on about over there, Nines? Android stuff I'm gonna guess?</state>
+                <state img="#-Bored.png">What the heck are you babbling on about over there, Nines? Android stuff I'm gonna guess.</state>
                 <state img="#-Distracted.png">Whatever you're talking to yourself about over there, it sounds horribly dull. I came here for some entertainment, y'know?</state>
             </case>
             <case stage="0-1">
@@ -2670,6 +3003,12 @@
                 <state img="#-Bored.png">Hmm. Considering she was dressed up like a warrior or something, runnin' don't exactly speak highly of her.</state>
                 <state img="#-Shocked.png">Wait, an afterimage? &lt;i&gt;(How does someone like her move that quick?)&lt;/i&gt;</state>
                 <state img="#-Shocked.png">Huh. She moves fast for someone without much power.</state>
+            </case>
+            <case stage="0-7" id="48">
+                <condition role="target" character="yuelia" stage="0" sayingMarker="transformation" />
+                <state img="#-Shocked.png">Hold up, you're transforming? What's this gonna look lik...wait, you're a girl? A human one? </state>
+                <state img="#-Excited.png">Huh? Oh hey, you're transforming! Into...a totally normal-looking girl...</state>
+                <state img="#-Shocked.png">...What kinda transformation was that?!</state>
             </case>
             <case stage="0-3">
                 <condition role="target" character="joey" stage="0" />
@@ -2805,6 +3144,26 @@
                 <state img="#-Confident.png">Huh? What's that wrinkly old paper? </state>
                 <state img="#-Laughing.png">Hmm...oh hey, wait a minute! Is that what I think it is?!</state>
             </case>
+            <case stage="0-3">
+                <condition role="target" character="aella" stage="0" />
+                <state img="#-Combat.png">Heh. Ya got fight in ya I'll give ya that.</state>
+                <state img="#-Excited.png">Oh yeah? Why not put ya money where your mouth is! I'll be happy to spar with ya sometime! Don't worry, I'll go easy on ya!</state>
+                <state img="#-Excited.png">Ha! I'd like to see ya try! No, really. I'd be more than happy to spar with ya. Just a friendly battle, I won't hurt ya or nothing.</state>
+                <state img="#-Combat.png">Well you've got fight in ya. But trust me, ~name~. I'm kinda out of your &lt;i&gt;level&lt;/i&gt; if ya see what I mean.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="futaba" stage="1" />
+                <state img="#-Confident.png">Hmm. Gotta admit, you strike me more as a thinker than a fighter. But every operation's gotta have some brains behind it, right?</state>
+                <state img="#-Happy.png">You seem more like the brains of an operation as opposed to the brawn. Heh,  'cause, I fill the role of both when it comes to my crew.</state>
+                <state img="#-Confident.png">Hey, I'm guessing that you're a pretty decent strategist, right Futaba? You Phantom Thieves people must be able to pull off some complex heists.</state>
+                <state img="#-Smug.png">So, you're a thinker, yeah? You make the plans for your crew of thieves? The Phantoms you called them, right? What kind of heists have ya pulled off before?</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="rinkah" stage="0" />
+                <state img="#-Happy.png">Hey, if ya can't tell already, I like your style, lady. </state>
+                <state img="#-Happy.png">Man. A royal and a warrior. You're like a princess straight out of Saiyan legend! </state>
+                <state img="#-Confident.png">Hey. You seem pretty cool. Guessing a warrior lady like you has to have some pretty good stories to tell. </state>
+            </case>
             <case stage="1">
                 <condition role="other" character="nami" />
                 <state img="#-Stripped.png">Well thanks for the compliment, I guess. Y'know Saiyan hair mostly only comes in black, so it's kinda cool seeing a long, red mane like yours as well.</state>
@@ -2936,7 +3295,7 @@
                 <state img="#-Embarassed.png">Wait, you...had some kinda accident? Must've been a bad one. What I don't get though is why you ain't gotten your legs healed up yet. </state>
                 <state img="#-Embarassed.png">You lost your legs in an accident? How come you're still using some kinda aid to move? I don't understand why you wouldn't just have gotten your legs grown back already.</state>
                 <state img="#-Angry.png">Wait, someone hacked your freaking legs off? Why the hell didn't they stick you in a healing pod? Has Earth not got those or something?</state>
-                <state img="#-Angry.png">Alright, something doesn't add up here. You had an accident, long time ago I'm guessing. But you're still crippled from it? Is Earth so damn primitive that they can't even grow peoples legs back!?</state>
+                <state img="#-Angry.png">Alright, something doesn't add up here. You had an accident, long time ago I'm guessing. But is Earth so damn primitive that they can't even grow peoples legs back!?</state>
             </case>
             <case stage="0-7" id="41">
                 <condition role="target" character="nami" stage="3" sayingMarker="pirate" />
@@ -2945,6 +3304,12 @@
                 <state img="#-Thinking.png" marker="Zeni">Hmm...wait, I thought money was called Zeni down here? Or is "Belly" a thing as well?</state>
                 <state img="#-Thinking.png" marker="Zeni">Wait...how much is that bounty? That a lot in Zeni or...Belly, or whatever the hell you call money down here?</state>
                 <state img="#-Smug.png">Well I'll be a monkey's uncle. Still, from one bandit to another, you won't no problems from me. Unless you stray onto my patch that is, hehehe.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="yuelia" stage="1" sayingMarker="real_name" />
+                <state img="#-Thinking.png">I...wait, so, you can turn into a human? Or you're a human who can turn into a little flying thing? Which way around is it?</state>
+                <state img="#-Laughing.png">Well then, at least that explains how you intend to play this sorta game. Now that you've got clothes and other important stuff.</state>
+                <state img="#-Confident.png">Huh. Alright then, ~name~. Nice to meet ya. I'm gonna enjoy playing with a girl like you, more than I would a little flying insect for sure.</state>
             </case>
             <case stage="0-5">
                 <condition role="target" character="erufuda" stage="2" />
@@ -3000,6 +3365,12 @@
                 <condition role="target" character="shimakaze" stage="4" />
                 <state img="#-Shocked.png">Hey, you need to take five? That time seemed like it did some actual hurt on ya.</state>
                 <state img="#-Shocked.png">Whoa, careful there Shimie-girl. You're looking like your bell's been rung pretty hard there.</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="rinkah" stage="1" />
+                <state img="#-Excited.png">Yeah! I'm definitely seeing some of me in you, Rinkah! You've got some wildness in ya, I can tell!</state>
+                <state img="#-Happy.png">Heh. Something tells me we're gonna get on just fine.</state>
+                <state img="#-Happy.png">Hey, good luck, by the way. May the best fighter win!</state>
             </case>
             <case stage="0-1">
                 <state img="#-Distracted.png">You wanna catch someone's eye? Ditch something bigger next time.</state>
@@ -3069,6 +3440,12 @@
                 <state img="#-Happy.png">Thanks. Though I get the impression that wasn't for me.</state>
                 <state img="#-Happy.png">Haha, thank man. You're a real treat.</state>
             </case>
+            <case stage="0-3">
+                <condition role="target" character="xander" stage="0" />
+                <state img="#-Smug.png">Heh. If it's bigger than your head is, I might actually be impressed. </state>
+                <state img="#-Distracted.png">Talking big ain't the same as actually doing it, ~name~. You ain't gonna impress me with words over here.</state>
+                <state img="#-Bored.png">Well don't let me keep ya waiting...no really, come on already.</state>
+            </case>
             <case stage="0-1">
                 <state img="#-Bored.png">Gotta admit, I've seen better plays. Gutsier ones too.</state>
                 <state img="#-Confident.png">Alright, that's better than what some folk would choose at least.</state>
@@ -3129,10 +3506,16 @@
                 <state img="#-Confident.png">Hmm...y'know, you seem kinda beat. You might be able to time-skip, but it seems ya don't quite have the same staying power as my guy over in Universe 6.</state>
                 <state img="#-Smug.png">Yup. Got some great style, an ice cold technique, and those arms ain't half bad to look at either. What don't ya got, Skippy?</state>
             </case>
-            <case stage="2-3">
+            <case stage="0-3">
                 <condition role="target" character="9s" stage="2" />
-                <state img="#-Bored.png">Hey buddy, Nines, can ya spare us the techno-talk already? You're an android or something, we get it. Relax, have a laugh already.</state>
+                <state img="#-Bored.png">Hey Robot Boy, can ya spare us the techno-talk already? You're an android or something, we get it. Relax, have a laugh already.</state>
                 <state img="#-Distracted.png">Still at it with the computer speak? Android gotta do what it gotta do I guess. &lt;i&gt;(Doesn't mean it ain't boring me half to sleep though).&lt;/i&gt;</state>
+            </case>
+            <case stage="0-3">
+                <condition role="target" character="xander" stage="1" />
+                <state img="#-Bored.png">Feast my eyes nothing. Trust me buddy, I'm a Saiyan. I know a thing or two about feasting.</state>
+                <state img="#-Distracted.png">Nah, I don't see it. But keep trying, alrght?</state>
+                <state img="#-Smug.png">Heh. More of a famine than a feast if ya ask me.</state>
             </case>
             <case stage="0-1">
                 <state img="#-Distracted.png">Wow. Super. Never seen anything like that before. I'm being sarcastic if ya can't tell.</state>
@@ -3192,9 +3575,9 @@
             </case>
             <case stage="0-3" priority="381">
                 <condition role="target" character="erufuda" stage="0" sayingMarker="caulifla_warning" />
-                <state img="#-Happy.png">Ah don't sweat it. I'm a Saiyan, I could eat my own body weight in that stuff and not put on anything.</state>
+                <state img="#-Smug.png">Don't sweat it. I'm a Saiyan, I could eat my own body weight in that stuff and not put on anything.</state>
                 <state img="#-Happy.png">Well, I guess we've all learned something from Erufuda. Eating too much Earth food ain't good for your elf.</state>
-                <state img="#-Smug.png">Aww, see, now you're just making me want to eat it more! Haha, don't worry, I'm sure I'll survive.</state>
+                <state img="#-Excited.png">Aww, see, now you're just making me wanna eat it more!</state>
                 <state img="#-Laughing.png">I'm looking forward to finding out what Earth has to offer. I think visiting this planet was the right idea.</state>
             </case>
             <case stage="0-7" id="32">
@@ -3205,6 +3588,7 @@
                 <state img="#-Laughing.png">Hahaha! Okay, this is weird as crap I know. But come on, what else can I do besides laugh?</state>
                 <state img="#-Laughing.png">Hahahaa! I guess I gotta laugh about it, beats screaming about it and losing my head like some weakling. Hahahaa!</state>
                 <state img="#-Laughing.png">Haa! Man, I guess if Saiyan music was this much fun, I'd go to way more concerts than I do right now.</state>
+                <state img="#-Embarassed.png">Nice catch I guess, wouldn't want your head rolling away. And ain't that a weird thing to say. </state>
             </case>
             <case stage="0-3">
                 <condition role="target" character="erufuda" stage="0" />
@@ -3270,13 +3654,25 @@
                 <state img="#-Angry.png">...Alright, I know a perv when I see one. You look like you're thinking up some kinda fantasy over there. Better not involve me if you know what's good for ya.</state>
                 <state img="#-Angry.png">...You've got a knowing sorta grin on your face. And I'm pretty sure that I don't like it. I'm watching you, &lt;i&gt;Zone-tan&lt;/i&gt;.</state>
             </case>
+            <case stage="0-5">
+                <condition role="target" character="futaba" stage="0" />
+                <state img="#-Distracted.png">Well, you don't seem particularly scary, pint-size. Actually...you seem kinda anxious right now. You okay over there?</state>
+                <state img="#-Confident.png">Hey, you alright over there? ~name~, was it? You seem kinda nervous right now.</state>
+                <state img="#-Confident.png">Hey, you sure you wanna play a game like this? You seem kinda nervous if ya ask me. I wouldn't have pegged you for being the adventurous type.</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="raven" stage="0" />
+                <state img="#-Thinking.png">Say, strange sorta power you've got there. Not like any I've ever felt before. Still, power's power. Least you've got a lick of it, unlike most I've seen around here. </state>
+                <state img="#-Confident.png">Hey, Raven was it? Pretty unique energy you've got. Feels kinda...I dunno, strange I guess? Mean nothing by that, just can't put my finger on ya is all I'm saying.</state>
+                <state img="#-Excited.png">Curious sorta power you've got. Raven was it? Wouldn't mind seeing what you can do. I'm always interested in fighting new people!</state>
+            </case>
             <case stage="0-1">
                 <state img="#-Bored.png">Gotta admit, I've seen better plays. More gutsy ones to.</state>
-                <state img="#-Thinking.png">Yeah, I think it would've been a bit too much dragging Kale along to this. Though, maybe I ain't giving her enough credit...</state>
+                <state img="#-Thinking.png">Y'know, I was thinking of dragging my friend Kale along to this...but I ain't sure she'd enjoy something like this.</state>
                 <state img="#-Confident.png">You and I both know that you can do better. But that's fine for now at least.</state>
                 <state img="#-Excited.png">Nervous? Don't be. Rock what ya got, don't let anyone put ya down.</state>
                 <state img="#-Bored.png">Come on, lady. I &lt;i&gt;arrived&lt;/i&gt; at this joint wearing less than that.</state>
-                <state img="#-Thinking.png">Yeah, this game would &lt;i&gt;probably&lt;/i&gt; be too much for Kale. But she has surprised me before...</state>
+                <state img="#-Thinking.png">&lt;i&gt;(Yeah, this game would probably be too much for Kale. But she has surprised me before...)&lt;/i&gt;</state>
                 <state img="#-Thinking.png">Hmm. Could Kale benefit from playing this sorta game? Wouldn't want her having a freak-out during it.</state>
             </case>
             <case stage="2-3">
@@ -3336,6 +3732,7 @@
                 <state img="#-Confident.png">Alright, let's move onto the next one. Things seem to be going okay so far.</state>
                 <state img="#-Confident.png">Yeah, there we go. It ain't so hard really, is it.</state>
                 <state img="#-Distracted.png">Yeah. Just do something when all's said and done, ain't gotta be major flashy all the time. Something's usually better than nothing.</state>
+                <state img="#-Happy.png">See? Ya had it in ya all along!</state>
             </case>
             <case stage="0-5">
                 <condition role="target" character="launch" stage="5" />
@@ -3370,6 +3767,11 @@
                 <state img="#-Distracted.png">I mean, if the whole point is to be a sexy little holographic strumpet, not having toes would just look plain weird.</state>
                 <state img="#-Laughing.png">Well now you know that you've got the whole package, girlie. </state>
                 <state img="#-Laughing.png">Well you're a human hologram girl, right? I'd guess that toes are to be expected.</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="raven" stage="1" />
+                <state img="#-Laughing.png">Haha, I dunno. Maybe it's just 'cause you're kinda gloomy? A fighter's peronality can change their power in weird ways, least from what I've seen.</state>
+                <state img="#-Happy.png">Whatever. Maybe you've just gotta cheer up or something? Person's mood can affect how their power comes out. Trust me, I'm speaking from experience when I say that.</state>
             </case>
             <case stage="0-1">
                 <state img="#-Distracted.png">Wow. Super. Never seen that before. Being sarcastic for your information.</state>
@@ -3446,6 +3848,7 @@
                 <state img="#-Smug.png">What, you expecting me to say something corny? I'm just gonna keep quiet and enjoy what I'm seeing.</state>
                 <state img="#-Combat.png">Your ~clothing~ now? This oughta be good.</state>
                 <state img="#-Laughing.png">Heh. Looks like we're giving you the business here.</state>
+                <state img="#-Confident.png">Betting that one stings a little.</state>
             </case>
             <case stage="2-3">
                 <state img="#-Confident.png">Oh now we're talking, finally.</state>
@@ -3483,6 +3886,7 @@
                 <state img="#-Angry.png">You better not be trying to tease me still. Otherwise I got an energy blast with your name on it.</state>
                 <state img="#-Excited.png">Yeah you made me look like an idiot, glad to be getting a little something from ya in return.</state>
                 <state img="#-Laughing.png">Oh, for me? How kind of ya.</state>
+                <state img="#-Excited.png">You better be keeping this party goin'!</state>
             </case>
         </trigger>
 
@@ -3516,6 +3920,7 @@
                 <state img="#-Victory.png">Okay! Yes! Now we're getting some place.</state>
                 <state img="#-Confident.png">What ya pouting for? This game ain't over with yet. Keep your spirits up, you might just win this still. More unlikely things have happened before.</state>
                 <state img="#-Happy.png">Face the facts ~name~, this could be the beginning of the end for ya.</state>
+                <state img="#-Excited.png">Alright! I'm starting to get pretty pumped!</state>
             </case>
             <case stage="4-5">
                 <state img="#-Confident.png">Careful now, few more slip-ups like that and you'll be out of this game quick as a flash.</state>
@@ -3534,6 +3939,7 @@
                 <state img="#-Smug.png">Come on now ~name~, don't stop there, keep it coming.</state>
                 <state img="#-Smug.png">You're looking better every round.</state>
                 <state img="#-Smug.png">On a scale of one to ten, I'd give that a five. It's alright, and at this point I'll take it.</state>
+                <state img="#-Excited.png">I bet that's knocked the wind outta ya!</state>
             </case>
             <case stage="7">
                 <state img="#-Bored.png">Think you'll be able to get me going again? Well, keep losing stuff and I guess we'll see.</state>
@@ -3579,7 +3985,7 @@
                 <state img="#-Laughing.png">Are you kidding me!? Hahahaa! This is amazing!</state>
                 <state img="#-Shocked.png">...</state>
                 <state img="#-Happy.png">Mhmmhmm. Still as good ass eve...wait, did you just...</state>
-                <state img="#-Happy.png">Yuuup. Still enjoying this as much as the last tim...wait. You just...oh, this just got amazing for a whole other reason.</state>
+                <state img="#-Happy.png">Yuuup. Still enjoying this as much as the last tim...wait. You just...ohh, this just got amazing for a whole other reason.</state>
             </case>
             <case stage="0-5">
                 <condition role="target" character="launch" stage="5" />
@@ -3617,7 +4023,7 @@
                 <condition role="target" character="emi" stage="7" />
                 <state img="#-Excited.png">Wow. You're really throwing everything you have at this game. That's a real gutsy play right there!</state>
                 <state img="#-Confident.png">Know what Emi? I got a lotta respect for ya, making a play like that. You've got an unshakable spirit and a drive to win. You're one heck of a person, ya know that?</state>
-                <state img="#-Embarassed.png">Jeez, Emi. I can only imagine how vulnerable doing that would make me feel. I ain't pitying ya, don't take it that way. I got a ton of respect for ya in all honesty. Just trying to think about how I'd feel in your place.</state>
+                <state img="#-Embarassed.png">Jeez, Emi. I can only imagine how vulnerable doing that would make me feel. I ain't pitying ya, don't take it that way. Just trying to think about how I'd feel in your place.</state>
                 <state img="#-Confident.png">That's an awesome play right there. You've got the heart of a warrior Emi, ain't no doubting it.</state>
             </case>
             <case stage="0-4">
@@ -3641,6 +4047,7 @@
                 <state img="#-Excited.png">Well, ya know what ya gotta do. Gotta &lt;i&gt;un&lt;/i&gt;dress to impress in this game!</state>
                 <state img="#-Combat.png">You've got it, they want it. You gonna let 'em have it?</state>
                 <state img="#-Laughing.png">Man. Talk about giving you the business.</state>
+                <state img="#-Combat.png">Ouch! Bet you're feelin' that one.</state>
             </case>
             <case stage="2-3">
                 <state img="#-Smug.png">Getting to see some progress. Think the others have been waiting for this, or just me?</state>
@@ -3659,7 +4066,7 @@
                 <state img="#-Happy.png">Well don't just stand there, you gonna strip or not?</state>
                 <state img="#-Happy.png">Better be worth the effort it took to get that off.</state>
                 <state img="#-Smug.png">Now that's more like it!</state>
-                <state img="#-Smug.png">Oh okay, that's something at least. Yeah not bad.</state>
+                <state img="#-Smug.png">Yeah, not bad. That's something at least.</state>
                 <state img="#-Confident.png">About time you took some damage.</state>
             </case>
             <case stage="6">
@@ -3680,6 +4087,7 @@
                 <state img="#-Confident.png">Losing your ~clothing~ shouldn't be all that big of a deal.</state>
                 <state img="#-Laughing.png">That's an interesting look for ya, ~name~.</state>
                 <state img="#-Embarassed.png">Well it's about time, ~name~. I was wondering if you were &lt;i&gt;ever&lt;/i&gt; gonna lose that.</state>
+                <state img="#-Excited.png">Let's keep this party goin'!</state>
             </case>
         </trigger>
 
@@ -3690,6 +4098,18 @@
                 <state img="#-Happy.png">Don't get me wrong, whatever training you're doing is paying off for your body. Just doesn't seem to be doing much for your battle power.</state>
                 <state img="#-Happy.png">I can tell that ya do some kinda excersise at least. Pretty nice-looking figure ya got there. </state>
                 <state img="#-Laughing.png">Well I guess it don't matter either way. This ain't a fight, only things that matter here is how well ya can play, and how good you look if ya can't!</state>
+            </case>
+            <case stage="0-7" id="45">
+                <condition role="target" character="rinkah" stage="4" saying="I know how great my body is" />
+                <state img="#-Confident.png">Yeah. Be a crime &lt;i&gt;not&lt;/i&gt; to admire a body like yours.</state>
+                <state img="#-Excited.png">Yeah! You've worked hard on your body and that work's paid off! </state>
+                <state img="#-Excited.png">Far as I'm concerned, you deserve to show off!</state>
+            </case>
+            <case stage="0-7" id="46">
+                <condition role="target" character="rinkah" stage="4" saying="You can see my pubic hair" />
+                <state img="#-Laughing.png">Yeah. Underwear as skimpy as yours is gonna do that.</state>
+                <state img="#-Laughing.png">Wait I can...haha, see, that's just proof of the kind of wild and free-spirited woman that you are!</state>
+                <state img="#-Confident.png">Who am I to comment? I'm not different. Well. Kinda. That style of underwear ain't really my thing. </state>
             </case>
             <case stage="0-1">
                 <condition role="target" character="amalia" stage="2" />
@@ -3734,7 +4154,7 @@
             </case>
             <case stage="0-5">
                 <condition role="target" character="ryuko" stage="3" />
-                <state img="#-Excited.png">Oh, hey! That's actually kinda radical looking right there. That's knocked my expectations right out of the park!</state>
+                <state img="#-Excited.png">Oh, hey! That's actually kinda radical looking right there. That's knocked my expectations right outta the park!</state>
                 <state img="#-Laughing.png">Huh? Oh! You actually look pretty awesome! That's a &lt;i&gt;lot&lt;/i&gt; better than I was expecting.</state>
                 <state img="#-Excited.png">Wow, you're like if one of them magic girls went totally punk. I dig it!</state>
                 <state img="#-Confident.png">Huh, you look good. Sorry for doubting ya. Gotta understand, I've seen some real lame stuff that starts just like that did.</state>
@@ -3803,8 +4223,14 @@
             <case stage="2-7">
                 <condition role="target" character="joey" stage="4" />
                 <state img="#-Shocked.png">Huh. It's a fruit. Go figure.</state>
-                <state img="#-Embarassed.png">Yeah, uhh. I came to Earth wanting to try out it's food. Think I'll let this banana slip by though.</state>
+                <state img="#-Embarassed.png">Yeah, uhh. I came to Earth wanting to try out it's food. Though I think I'll let this banana slip me by.</state>
                 <state img="#-Embarassed.png">Huh. 'Kay. You gonna eat that now or something? Kinda weird, but alright.</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="raven" stage="3" />
+                <state img="#-Bored.png">&lt;i&gt;(Man. Between the leotard and her skin color, she's got a thing or two in common with that Jiren guy. I think she pulls the look off better though.)&lt;/i&gt; </state>
+                <state img="#-Laughing.png">I know a few characters who have a thing for leotards. Ha! I think I like your simple blue to their red and black though.</state>
+                <state img="#-Embarassed.png">Hey, odd question. You don't do any stupid posing or whatever, do ya? With that fighting team of yours? I know some leotard wearin' people who're all about that.</state>
             </case>
             <case stage="2">
                 <condition role="other" character="weiss_schnee" />
@@ -3835,12 +4261,12 @@
                 <state img="#-Distracted.png">Yeah, I can see how someone could find this embarrassing. Losing at anything really sucks, don't it?</state>
             </case>
             <case stage="2-3">
-                <state img="#-Flying.png">You go girl. That's how ya do it!</state>
+                <state img="#-Victory.png">You go girl. That's how ya do it!</state>
                 <state img="#-Excited.png">Let's not quit here though. Let's keep this momentum going!</state>
                 <state img="#-Stretching.png">My sister Kale would be in a right state if she had to lose that. You're taking this better than she would.</state>
                 <state img="#-Confident.png">Y'know, there's not a lot of lookers out there in the universe. You buck that trend pretty good.</state>
                 <state img="#-Confident.png">Lot of Saiyan ladies would be kinda jealous of how good you look. Take some pride in that.</state>
-                <state img="#-Flying.png">Now we're getting some place. Woo yeah!</state>
+                <state img="#-Victory.png">Now we're getting some place. Woo yeah!</state>
                 <state img="#-Flying.png">Hey, come on now. Enough with the frowny-faces. This game ain't over yet.</state>
                 <state img="#-Confident.png">See? I knew you had it in ya.</state>
             </case>
@@ -3852,7 +4278,7 @@
                 <state img="#-Happy.png">Hey, not too shabby looking. I'm sure the others will agree that you look pretty good.</state>
                 <state img="#-Excited.png">Not too bad. But your moves don't hold a candle to mine.</state>
                 <state img="#-Excited.png">Think I'm gonna give up, just because things are looking bad for me? In your dreams! I'm gonna give this my all until the very end!</state>
-                <state img="#-Excited.png">Oh how sweet. Another step closer to me hoofing you away with the other losers.</state>
+                <state img="#-Excited.png">Yeah, that's right! Another step closer to me hoofing ya away with the other losers!</state>
             </case>
             <case stage="6">
                 <state img="#-Smug.png">I'd give that a five out of ten. Not bad, but nothing epic.</state>
@@ -3862,6 +4288,7 @@
                 <state img="#-Confident.png">Yeah alright, I'll take that ~name~.</state>
                 <state img="#-Smug.png">You've got better to give than that ~name~, I can tell. Speaking literally and metaphorically here.</state>
                 <state img="#-Smug.png">I'll settle with that for now. But I know you can do better ~name~.</state>
+                <state img="#-Excited.png">Ha! Bet that's taken the wind outta ya!</state>
             </case>
             <case stage="7">
                 <state img="#-Laughing.png">Hey, ya never know. Might be able to get someone going with that, ha ha.</state>
@@ -3937,13 +4364,14 @@
                 <state img="#-Smug.png">Yup, this is the kinda stuff I came here for.</state>
             </case>
             <case stage="0-1">
-                <state img="#-Laughing2.png">To be honest, training right is more important than big muscles. But you won't hear me complaining about the view!</state>
+                <state img="#-Laughing2.png">To be honest, training right is more important than getting big muscles. But you won't hear me complaining about the view!</state>
                 <state img="#-Smug.png">Not bad. Always room for improvement though. If you ask nicely, I might even give ya some pointers.</state>
                 <state img="#-Happy.png">Could be better, but could definitely be worse.</state>
                 <state img="#-Smug.png">Yeah, this is one of the perks of the game right here.</state>
                 <state img="#-Victory.png">This lady's liking what she's seeing!</state>
                 <state img="#-Happy.png">Aww, for me? You shouldn't have.</state>
                 <state img="#-Distracted.png">Hmm. Yeah, looking good there, ~name~. If I do say so myself.</state>
+                <state img="#-Confident.png">Yeah, not bad. Keeping in shape is real important.</state>
             </case>
             <case stage="2-3">
                 <state img="#-Happy.png">Hmm. Not bad. Seems you look after yourself.</state>
@@ -3972,6 +4400,7 @@
                 <state img="#-Confident.png">I've seen far crazier bodies than that, but, yours is nice to look at. I'll give ya that.</state>
                 <state img="#-Confident.png">Yep. No complaints coming from me.</state>
                 <state img="#-Mast2.png">Not too shabby.</state>
+                <state img="#-Confident.png">Yeah, now we're talking.</state>
             </case>
             <case stage="7">
                 <state img="#-Happy.png">Alright. I can appreciate that.</state>
@@ -4061,13 +4490,13 @@
                 <state img="#-Bored.png">That ain't even a mouthful.</state>
             </case>
             <case stage="6">
-                <state img="#-Bored.png">That certainly ain't long. *sigh*</state>
-                <state img="#-Bored.png">At this point, that ain't even worth commenting on.</state>
-                <state img="#-Angry.png">What the...am I not good enough for ya or something?</state>
+                <state img="#-Bored.png">Oh.</state>
+                <state img="#-Bored.png">Ugh. What a let down.</state>
+                <state img="#-Angry.png">What the...why ain't you big yet? Am I not good enough for ya or something?</state>
                 <state img="#-Bored.png">. . .</state>
-                <state img="#-Angry.png">Well. Check out Mr. erectile dysfunction here. He's shown up with the sole purpose of killing my mood.</state>
-                <state img="#-Mast3.png">&lt;i&gt;(I'll just think about something else...)&lt;/i&gt;</state>
-                <state img="#-Mast3.png">&lt;i&gt;(Okay Caulifla. Don't stare at the micro-penis. Think about something sexy instead.)&lt;/i&gt;</state>
+                <state img="#-Bored.png">&lt;i&gt;(I'll just think about something else...)&lt;/i&gt;</state>
+                <state img="#-Angry.png">Hey! Is that as big as that gets? Or am I not hot enough for ya, buddy? </state>
+                <state img="#-Embarassed.png">Ahh...jeez, I feel kinda bad for ya if that's all you've got.</state>
             </case>
             <case stage="7">
                 <state img="#-Embarassed.png">Hmm. Well, at least now I know that I didn't miss out on anything by losing.</state>
@@ -4111,13 +4540,12 @@
             </case>
             <case stage="6">
                 <state img="#-Smug.png">Yeah. That's gonna help, no doubt.</state>
-                <state img="#-Mast2.png">Nice one. Know how to use it? Err...asking for a friend.</state>
+                <state img="#-Smug.png">Heheh. Hey, you seeing anyone right now, ~name~?</state>
                 <state img="#-Smug.png">Hmm...yeah, that'll help me get through this ordeal.</state>
-                <state img="#-Mast1.png">Well, now I got something to think about.</state>
+                <state img="#-Mast1.png">Well, now I got something more to think about.</state>
                 <state img="#-Embarassed.png">Looks like I won't need to use my imagination no more.</state>
-                <state img="#-Mast1.png">Haaah...yeah.</state>
                 <state img="#-Mast2.png">Yup. That'll do the trick. Thanks.</state>
-                <state img="#-Smug.png">Hmm. Y'know, Saiyans do love meat. I don't think I'd mind having a little nibble on that right there.</state>
+                <state img="#-Confident.png">Mmm. Bet that tastes pretty good. Hehehe. Sorry, not trying to frighten ya, ~name~.</state>
             </case>
             <case stage="7">
                 <state img="#-Smug.png">Hmm...looks pretty good.</state>
@@ -4167,12 +4595,12 @@
             </case>
             <case stage="6">
                 <state img="#-Shocked.png">...Okay...wasn't expecting that.</state>
-                <state img="#-Shocked.png">Wow. Huh...wow.</state>
+                <state img="#-Shocked.png">Wow. I, uhh...wow.</state>
                 <state img="#-Annoyed.png">And you've been packing that away this whole time?</state>
-                <state img="#-Embarassed.png">I, uh...you, uh...seems I've lost the ability to speak. That because of you, or because I've been hit in the head one too many times?</state>
-                <state img="#-Embarassed.png">Okay, feelin' light-headed all of a sudden. Any idea what's caused that?</state>
-                <state img="#-Shocked.png">Aright, I'm uh...not entirely sure I could take that.</state>
-                <state img="#-Shocked.png">I ain't no quitter, but that would definitely be a challenge.</state>
+                <state img="#-Mast1.png">You kidding me? Showing me you've got something like that when I'm like this?</state>
+                <state img="#-Mast1.png">Oh come on...why've you gotta show me something like that when I'm in the middle of this?</state>
+                <state img="#-Embarassed.png">Aright, I'm uh...not entirely sure I could take that.</state>
+                <state img="#-Embarassed.png">I ain't no quitter, but that thing would definitely be a challenge...err, wait. Forget I just said that.</state>
             </case>
             <case stage="7">
                 <state img="#-Horny.png">Okay. Damn, I missed out.</state>
@@ -4291,11 +4719,11 @@
                 <state img="#-Distracted.png">Guess that answers that question.</state>
                 <state img="#-Laughing.png">Ha ha haa! Check out the itty, bitty cyber nipples everyone! Sure don't see those every day.</state>
             </case>
-            <case stage="0-3">
-                <state img="#-Laughing.png">
-                    <alt-img stage="2-3">#-Confident.png</alt-img>
-                    <text>Don't feel bad. To be honest I always wondered how &lt;i&gt;bigger&lt;/i&gt; girls manage with theirs in a fight.</text>
-                </state>
+            <case stage="0-5 7" id="51">
+                <condition role="target" character="raven" />
+                <state img="#-Happy.png">You've got a pretty nice figure. Yeah. Plus, I didn't know humans came in grey. How about that! Learn something new every day.</state>
+                <state img="#-Smug.png">Heh. Don't mind if I do look a little. You wouldn't be presentin' yourself if ya didn't want me looking. Man, you look pretty good, Raven.</state>
+                <state img="#-Smug.png">Yeah, you've got a real nice figure. You're a famous fighter or something, right? Gonna bet you're something of a fan favourite 'cause of how good ya look.  </state>
             </case>
             <case stage="0-1">
                 <state img="#-Laughing2.png">Well those are adorable. You can smile about that at least.</state>
@@ -4304,6 +4732,7 @@
                 <state img="#-Confident.png">There's more a lover has to offer than the size of her honkers. Focus on what makes you a catch instead. Kay?</state>
                 <state img="#-Happy.png">Look at is this way, it just makes you more quick and nimble in a fight!</state>
                 <state img="#-Distracted.png">Hey, you look good. I wouldn't be grimacing about it if I were you. Well, having my boobs out maybe. But certainly not about the way I look.</state>
+                <state img="#-Laughing2.png">Don't feel bad. To be honest I always wondered how &lt;i&gt;bigger&lt;/i&gt; girls manage with theirs in a fight.</state>
             </case>
             <case stage="2-3">
                 <state img="#-Thinking.png">I think that "French" girl said something about agility and performing. Kinda hard to tell, she sure stuttered a lot.</state>
@@ -4420,12 +4849,8 @@
                 <state img="#-Shocked.png">If boobs were power levels, yours would be A okay.</state>
                 <state img="#-Combat.png">Big enough for fun. Small enough that they won't slow you down.</state>
                 <state img="#-Laughing.png">Yup, those sure are boobs right there. Good ones to.</state>
-            </case>
-            <case stage="0-3">
-                <state img="#-Laughing2.png">
-                    <alt-img stage="2-3">#-Flying.png</alt-img>
-                    <text>If you ain't proud of those, then get real lady!</text>
-                </state>
+                <state img="#-Laughing2.png">If you ain't proud of those, then get real lady!</state>
+                <state img="#-Laughing2.png">There's a nice pair!</state>
             </case>
             <case stage="2-3">
                 <state img="#-Happy.png">Nice honkers. Could have a fine old time with those I bet.</state>
@@ -4452,6 +4877,7 @@
                 <state img="#-Confident.png">Those look bouncy.</state>
                 <state img="#-Confident.png">Those are really nice. What? I ain't gotta be crude about it.</state>
                 <state img="#-Mast2.png">Yeah, those are pretty sexy.</state>
+                <state img="#-Confident.png">Ooh. We're really talking now, huh?</state>
             </case>
             <case stage="7">
                 <state img="#-Smug.png">Nice. Look a lot like mine right there.</state>
@@ -4565,10 +4991,17 @@
             </case>
             <case stage="1-5 7">
                 <condition role="target" character="zone-tan" stage="3" />
-                <state img="#-Happy.png">Eh. I've seen better behinds than that. But I reckon you suit what you've got pretty good.</state>
-                <state img="#-Happy.png">I've seen better, really. But putting your creepiness aside, you got a certain appeal to ya in all honesty.</state>
+                <state img="#-Confident.png">Eh. I've seen better behinds than that. But you suit what you've got pretty good.</state>
+                <state img="#-Happy.png">I've seen better, really. But putting your creepiness aside, you got a certain kind of appeal to ya.</state>
                 <state img="#-Laughing.png">It ain't big. But I think it'd look kinda goofy if ya had a great big bubble butt on ya.</state>
-                <state img="#-Laughing.png">Hey, a handful is always enough, right? Haha.</state>
+                <state img="#-Happy.png">Hey, a handful is always enough, right?</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="aella" sayingMarker="AellaButt" />
+                <state img="#-Happy.png">Look at that. That's gotta be one of the best bottoms in the business you've got there, Aella.</state>
+                <state img="#-Smug.png">Heh. You definitely do your squat thrusts, Aella.</state>
+                <state img="#-Laughing.png">Guessing ya don't hear this compliment often, but that's a real lovely rear you've got there, Aella!</state>
+                <state img="#-Smug.png">Hmm. Y'know Aella, I think I see a perk to all that adventuring you get up to.</state>
             </case>
             <case stage="0-5 7">
                 <condition role="target" character="ryuko" />
@@ -4647,13 +5080,14 @@
                 <state img="#-Excited.png">HELL YEAH! I know who I'm rooting for. Get her Meia!</state>
                 <state img="#-Smug.png">Heh. Seems humans and Saiyans aren't so different after all.</state>
                 <state img="#-Excited.png">Ha haa! Making me feel right at home over here!</state>
+                <state img="#-Excited.png">Yeah! Bring that poser down to size, Meia!</state>
             </case>
             <case stage="1-7">
-                <condition role="target" character="zone-tan" stage="3" saidMarker="booty-tan" />
+                <condition role="target" character="zone-tan" stage="4" saidMarker="booty-tan" />
                 <state img="#-Laughing.png">Booty-tan, hahahaa! I'm gonna be laughing at that for a while.</state>
-                <state img="#-Smug.png">Well, come on then, &lt;i&gt;Booty-tan&lt;/i&gt;. Work what momma gave ya. Come on now.</state>
-                <state img="#-Laughing.png">Haha. Jeez, can't believe you just called yourself that. </state>
-                <state img="#-Laughing.png">Haha. Booty-tan. I knew you were kinda corny, but come on! That's just plain silly.</state>
+                <state img="#-Smug.png">Well, come on then, &lt;i&gt;Booty-tan&lt;/i&gt;. Gonna work what &lt;i&gt;momma-tan&lt;/i&gt; gave ya?</state>
+                <state img="#-Smug.png">Jeez, I can't believe you just called yourself that.</state>
+                <state img="#-Laughing.png">Haha. Booty-tan. I knew you were kinda corny, but come on! That's just dumb.</state>
             </case>
             <case stage="0-1">
                 <condition role="target" character="amalia" stage="5" />
@@ -4689,6 +5123,12 @@
                 <state img="#-Confident.png">Haha. Was that intentional just now? Hard to tell with you involved Joey, you play the fool pretty good.</state>
                 <state img="#-Laughing.png">Oh, hahahaa! Off those come instead I guess.</state>
             </case>
+            <case stage="0-5 7" id="52">
+                <condition role="target" character="raven" stage="4" />
+                <state img="#-Embarassed.png">Ah, jeez. I hope those freaking Pride Troopers wear underwear. Would rather not wonder whether that lot go without it or not.</state>
+                <state img="#-Annoyed.png">Wait...is that a thing with leotards? were those damn Pride Troopers not wearin' underwear the whole time I was fighting 'em?</state>
+                <state img="#-Thinking.png">Hmm...don't get me wrong, you look great. But now I'm wondering if those Pride Trooper types do the same as you...ugh. Rather not think about that.</state>
+            </case>
             <case stage="0-5 7">
                 <condition role="target" character="ryuko" />
                 <state img="#-Happy.png">Man, your friend is a laugh a minute. I can see why you like her, even if it must get real annoying sometimes.</state>
@@ -4708,6 +5148,13 @@
                 <state img="#-Distracted.png">See? What are you complaining about exactly? Only bad thing I can think about ya is that you're so damn mopey all the time.</state>
                 <state img="#-Happy.png">Your body is damn near perfect. Honestly, it's your attitude that could use a little work. Could stand to be a bit more bright and confident about yourself.</state>
                 <state img="#-Smug.png">Just need to work on your confidence some, Meia. Just uh, don't overdo it like that other bimbo. You know the one I mean.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="yuelia" />
+                <state img="#-Laughing.png" marker="moth_pubes">Hey! Kinda looks like one of them moths if ya squint a little.</state>
+                <state img="#-Confident.png">Hey, don't give in just yet. There's always a chance, right?</state>
+                <state img="#-Excited.png">Come on ~name~, you've gotta keep your spirits up! You ain't lost until you've lost, ya hear me?</state>
+                <state img="#-Confident.png">Don't give in just yet ~name~, you've got another shot left still. Make the most of it.</state>
             </case>
             <case stage="2-5 7">
                 <condition count="1" filter="hairy" />
@@ -4917,7 +5364,7 @@
                 <state img="#-Mast1.png">And another head rolls. Though, in your case I suppose it's about to get, well, stroked and stuff.</state>
                 <state img="#-Bored.png">Yeah, nice. You've proven that you can play cards badly as I can.</state>
                 <state img="#-Angry.png">Oh great, ya lost. Why couldn't ya have done that sooner than now?!</state>
-                <state img="#-Embarassed.png">Well...better late than never, I guess.</state>
+                <state img="#-Excited.png">Come on, hurry! You better not be quittin' on me!</state>
             </case>
             <case stage="7">
                 <state img="#-Happy.png">Worst case scenario, huh? I feel for ya, I really do. Being honest with ya there.</state>
@@ -5020,6 +5467,12 @@
                 <state img="#-Horny.png">Hey, you're peeking, so am I. We both know that. Now keep going, blockhead.</state>
                 <state img="#-Horny.png">&lt;i&gt;(Yeah, it ain't no use. I'm gonna be thinking about this for a while after. Dammit.)&lt;/i&gt;</state>
                 <state img="#-Smug.png">Standing here like this, with you doing that. It's definitely giving me some ideas.</state>
+                <state img="#-Laughing.png">Haha! Man, look at him go!</state>
+                <state img="#-Victory.png">Heh. Like what ya see? Yeah, ya know ya do.</state>
+                <state img="#-Confident.png">Heh. I bet I could do a better job of that than you can. I don't think that's a treat that you deserve though, haha.</state>
+                <state img="#-Confident.png">Just back and forth like that, huh?</state>
+                <state img="#-Confident.png">And back and forth you go.</state>
+                <state img="#-Bored.png">Tch. Perv.</state>
             </case>
             <case stage="6">
                 <state img="#-Shocked.png">Hey, look, just don't make eye contact, okay? You're gonna make this weird if you do that. I-I mean, weirder.</state>
@@ -5031,6 +5484,9 @@
                 <state img="#-Bored.png">Man...this is so weird.</state>
                 <state img="#-Embarassed.png">&lt;i&gt;(Hmm...~name~ still going? Yup, he's still going strong over there. Jeez.)&lt;/i&gt;</state>
                 <state img="#-Smug.png">Hmm...haah...hmm...</state>
+                <state img="#-Bored.png">Hey, lemme know if you don't want me to look. I mean, I ain't sure about ya looking at me. Only fair to ask I guess.</state>
+                <state img="#-Confident.png">Boy! That was wicked!</state>
+                <state img="#-Excited.png">Gimme more, boy!</state>
             </case>
             <case stage="7">
                 <state img="#-Horny.png">Hey, uh, if ya see my hands wandering at any point, can ya really blame me for that?</state>
@@ -5095,6 +5551,7 @@
                 <state img="#-Confident.png">And there he goes. Jeez.</state>
                 <state img="#-Excited.png">Haha, yeah! </state>
                 <state img="#-Laughing.png">Hahahaa! Gotta laugh about it when that happens.</state>
+                <state img="#-Annoyed.png">Hey, y'know being the fastest guy in the universe is a bad thing sometimes?</state>
             </case>
             <case stage="7">
                 <state img="#-Laughing.png">That was still pretty hot, yeah. But you're gonna have to do more than that if you wanna impress me.</state>
@@ -5143,6 +5600,7 @@
                 <state img="#-Flying.png">Tough break. Should've played better.</state>
                 <state img="#-Bored.png">Hey at least ya made a fight of it.</state>
                 <state img="#-Horny.png">You must have &lt;i&gt;some&lt;/i&gt; steam to blow off at least. There's some good-looking people here, so, y'know...</state>
+                <state img="#-Smug.png">You weren't ever gonna take me down.</state>
             </case>
             <case stage="4-5">
                 <state img="#-Happy.png">This took a lot longer than I thought it would. But hey, nice work on pushing me as far as you have. Being real with ya there.</state>
@@ -5161,6 +5619,7 @@
                 <state img="#-Bored.png">Welcome to loser land. Want me to roll out the welcome wagon for ya?</state>
                 <state img="#-Annoyed.png">And it wasn't even me who knocked ya out. Weird right?</state>
                 <state img="#-Annoyed.png">You've lost, I'm masturbating, and I don't give two frigs about either of them things!</state>
+                <state img="#-Excited.png">Come on, do it! Don't go quittin' on me now!</state>
             </case>
             <case stage="7">
                 <state img="#-Distracted.png">You'll get some sympathy from me. Just not too much, given you made me do it to.</state>
@@ -5198,9 +5657,15 @@
             </case>
             <case stage="0-7" id="4">
                 <condition role="target" character="sayaka" sayingMarker="soulgem" />
-                <state img="#-Shocked.png">Wait, back up. What was that about your soul just now?</state>
+                <state img="#-Annoyed.png">Wait, back up. What was that about your soul just now?</state>
                 <state img="#-Shocked.png">And here I thought it didn't get any weirder than those Kamikaze people. You magic girls are all freaking crazy.</state>
-                <state img="#-Angry.png">What the heck!? You're gonna swallow that thing? You're gonna choke or something, you idiot!</state>
+                <state img="#-Shocked.png">What the heck!?</state>
+                <state img="#-Angry.png"> You're gonna swallow that thing? You're gonna choke or something, you idiot!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="rinkah" saying="I might not be pretty" />
+                <state img="#-Excited.png">Yeah. You're not pretty, Rinkah. You're drop dead gorgeous!</state>
+                <state img="#-Laughing.png">&lt;i&gt;Whaaat?&lt;/i&gt; Don't be like that, Rinkah! You're as good-looking as they come! Speaking of which...</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="ryuko" />
@@ -5228,6 +5693,26 @@
                 <state img="#-Confident.png">Awesome! Hope you don't have any glitches or whatever along the way.</state>
                 <state img="#-Excited.png">Oh yeah! Liking the sound of this. I guessing this could get kinda crazy given that you're a bunch of projectors and stuff.</state>
                 <state img="#-Excited.png">Gonna warn ya, you're gonna have to get pretty creative if ya want to make this something to remember!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="aella" />
+                <state img="#-Embarassed.png">Wait, have you really never...'kay, this is gonna be weird.</state>
+                <state img="#-Embarassed.png">Wait, really? Hey, you don't have to do this here, Aella. Most people go about discovering this sorta thing in private.</state>
+                <state img="#-Embarassed.png">Hey, we really gonna make her do this? I feel kinda bad about making someone who's new to this do...well, this.</state>
+                <state img="#-Shocked.png">Oh. You're newer to this than I thought, huh?</state>
+                <state img="#-Shocked.png">Err...okay, just do what feels good, I guess. Can't say I've ever had to give advice about this sorta thing.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="rinkah" />
+                <state img="#-Confident.png">Hmm. I know for sure that you're gonna make this look good. </state>
+                <state img="#-Laughing.png">Well Good luck, Rinkah! Hope you enjoy yourself.</state>
+                <state img="#-Smug.png">It's not every day you get to watch someone as fit as you do this sort of thing. I'm gonna enjoy this, hope you do to, Rinkah.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="target" character="raven" />
+                <state img="#-Confident.png">Oh, gonna use your power for it, huh? That's pretty bold. Took you for the type who'd try to avoid putting attention on yourself. You're a deeper person than I thought, Raven.</state>
+                <state img="#-Thinking.png">Man, there's that weird power of yours again. Still can't figure out why it feels like it does. You're gonna have to tell me about that later, I'm curious 'bout it now.</state>
+                <state img="#-Excited.png">Ooh! Gonna use techniques to do it? This is gonna be interesting!</state>
             </case>
             <case stage="0-1">
                 <state img="#-Bored.png">What a joke. Ringed out without barely making a dent in the competition.</state>
@@ -5263,6 +5748,7 @@
                 <state img="#-Mast2.png">On with the show I suppose. Hope someone enjoys it.</state>
                 <state img="#-Bored.png">I'll appreciate what you're doing if you appreciate what I'm doing to. Cool?</state>
                 <state img="#-Bored.png">And now I get to watch ya go to town on yourself. Great.</state>
+                <state img="#-Excited.png">Hey, come on! You've gotta look more pumped than that if you want this to be good!</state>
             </case>
             <case stage="7">
                 <state img="#-Laughing.png">Besides, I bet some people here really wanna see how ya do the deed.</state>
@@ -5281,17 +5767,18 @@
             <case stage="0-7" priority="442">
                 <condition role="target" character="meia" saidMarker="jurafinish" />
                 <condition role="other" character="jura" stage="8" saidMarker="meiamast" />
-                <state img="#-Smug.png">&lt;i&gt;Sooo&lt;/i&gt;...are all humans like this? Or is this just a Mejeran thing or what have you?</state>
+                <state img="#-Thinking.png">&lt;i&gt;Sooo&lt;/i&gt;...are all humans like this? Or is this just a Mejeran thing or what have you?</state>
                 <state img="#-Embarassed.png">&lt;i&gt;(Okay, Caulifla? I know you're watching them and it's hot. But stop getting ideas, hard as it is not to.)&lt;/i&gt;</state>
                 <state img="#-Embarassed.png">&lt;i&gt;(Yuuup. I ain't thinking about them right now. And I certainly ain't thinking about Kale either. Nope. Nooo waaay I'm thinking about Kale.)&lt;/i&gt;</state>
                 <state img="#-Embarassed.png">&lt;i&gt;(Crap. I'm totally thinking about Kale right now.)&lt;/i&gt;</state>
                 <state img="#-Smug.png">Mmm. I could certainly enjoy watching you two go at it like this for a while.</state>
                 <state img="#-Smug.png">Hey. Ladies. This just a one off, or do you do private shows? I'm thinking there's a lotta money to be made out of this kinda performance. </state>
-                <state img="#-Embarassed.png">Wow, this is hot. Tricky to think about anything else &lt;i&gt;but&lt;/i&gt; them two, really.</state>
+                <state img="#-Embarassed.png">Wow, this is hot. Tricky to think about anything else &lt;i&gt;but&lt;/i&gt; you two, really.</state>
                 <state img="#-Smug.png">&lt;i&gt;(Telling ya what, these Mejerans sure are hot.)&lt;/i&gt;</state>
                 <state img="#-Embarassed.png">Don't mind me, ladies. Just enjoying the show.</state>
                 <state img="#-Laughing.png">Haha. Well, what can I say? Watching two best friends doing themselves in front of a load of strangers. Certainly ain't something you see every day.</state>
                 <state img="#-Laughing.png">Jeez, and you two work together? That's sure gonna be interesting afterwards.</state>
+                <state img="#-Smug.png">This is your idea of teamwork? Not bad. Not bad at all.</state>
             </case>
             <case stage="2-7" priority="302">
                 <condition role="target" character="kizuna" saidMarker="delay_1" sayingMarker="delay_2" />
@@ -5439,16 +5926,23 @@
                 <state img="#-Horny.png">Careful. Noises like that, you might be giving someone weird kinds of ideas.</state>
                 <state img="#-Horny.png">&lt;i&gt;(Hmm, pretty good technique she's got there. Knows how to make herself feel good at least.)&lt;/i&gt;</state>
                 <state img="#-Smug.png">Standing here like this, with you doing that. It might be giving me an idea or two.</state>
+                <state img="#-Distracted.png">Up down, in out. Funny sorta workout this thing is. </state>
+                <state img="#-Victory.png">Hey, you into girls? Haha, this helpin' you out at all?</state>
+                <state img="#-Bored.png">Hmm. You looking my way? You'll be giving guys ideas stealing glances my way.</state>
+                <state img="#-Confident.png">Hey, ain't no bad thing knowing how to make yourself feel good.</state>
             </case>
             <case stage="6">
-                <state img="#-Thinking.png">Hmm...kinda strange, having a girl stare at me whilst I'm doing...this. In a way I don't think a guy doing it would.</state>
+                <state img="#-Thinking.png">Hmm...kinda strange, having a girl stare at me whilst I'm doing...this.</state>
                 <state img="#-Shocked.png">I caught ya looking into my eyes just now. What's running through your head right now, huh?</state>
                 <state img="#-Mast1.png">Hey if you're enjoying my body that's great, good for you. Just keep the eye-starting to a bare minimum. Only gonna make it weird if ya do that.</state>
                 <state img="#-Mast1.png">&lt;i&gt;(She does it that way, huh? Interesting.)&lt;/i&gt;</state>
-                <state img="#-Shocked.png">&lt;i&gt;(She makes that look hot. Good for her, I guess.)&lt;/i&gt;</state>
-                <state img="#-Shocked.png">Wait, are you looking my way? Huh. That's new. Being, err, desired by a woman I mean.</state>
-                <state img="#-Embarassed.png">This sure is a weird situation, huh. Never expected to be doing this with ya tonight.</state>
+                <state img="#-Mast2.png">&lt;i&gt;(Man. This is actually kinda hot.)&lt;/i&gt;</state>
+                <state img="#-Shocked.png">Wait, are you looking my way? Huh. That's new. How am I supposed to react to that?</state>
+                <state img="#-Embarassed.png">This sure is a weird situation,. Never expected to be doing this with ya tonight.</state>
                 <state img="#-Smug.png">Hmm...this is actually starting to get interesting.</state>
+                <state img="#-Confident.png">You're making that look pretty good over there, ~name~.</state>
+                <state img="#-Bored.png">Hmm. Hey, just lemme know if ya want me to look or not. Don't wanna creep ya out or nothing like that.</state>
+                <state img="#-Excited.png">More, baby!</state>
             </case>
             <case stage="7">
                 <state img="#-Laughing.png">You're making that look good. Think you can keep up with that performance you're putting on?</state>
@@ -5507,6 +6001,12 @@
                 <state img="#-Annoyed.png">Hey! I thought ya said those Poke-whatsits of yours were strong? How can they be strong if their trainer is done after just one round?</state>
             </case>
             <case stage="0-7">
+                <condition role="target" character="raven" />
+                <state img="#-Excited.png">That was really something! You've got more power than ya let on, I can tell. Now I'm wonderin' just how much! </state>
+                <state img="#-Confident.png">It's funny, in all my time I don't think I've seen someone who has a power aura like yours. Your energy is pretty interesting, Raven. You're gonna have to tell me about it sometime. </state>
+                <state img="#-Laughing.png">That was a pretty good show! You've got a few tricks up your sleeve, Raven. Wouldn't mind seeing more of what you can do sometime! How 'bout a rain-check on that?</state>
+            </case>
+            <case stage="0-7">
                 <condition role="other" character="weiss_schnee" />
                 <state img="custom:Finished">Haaah...yeah, sure. After I've cleaned myself up a little, I'd be down for that.</state>
                 <state img="custom:Finished">Phew...yeah, alright. Yang was her name? Put me in touch, I'd be up for that. </state>
@@ -5529,6 +6029,7 @@
                 <state img="#-Distracted.png">Yeah it's hotter when guys do it. Ladies ain't no disappointment though.</state>
                 <state img="#-Embarassed.png">Y'know, girls certainly have a charm to 'em that's hard to deny,</state>
                 <state img="#-Happy.png">Got another one in ya? Maybe?</state>
+                <state img="#-Horny.png">Wow. That's a whole lotta juice.</state>
             </case>
             <case stage="2-3">
                 <state img="#-Shocked.png">You sure looked cute there. Kinda...whew! Gimme a moment.</state>
@@ -5537,7 +6038,7 @@
                 <state img="#-Bored.png">Well, someone's overflowing.</state>
                 <state img="#-Embarassed.png">Look like you could use a drink after that ~name~. A stiff one. &lt;i&gt;(Can't believe we have to wait until after. Damned cheapskates.)&lt;/i&gt;</state>
                 <state img="#-Confident.png">Screaming like that, you sure you ain't Saiyan?</state>
-                <state img="#-Victory.png">You were straight up &lt;i&gt;fierce&lt;/i&gt; just there ~name~! Really let your instincts take over.</state>
+                <state img="#-Victory.png">You were straight up &lt;i&gt;fierce&lt;/i&gt; just there, ~name~! Really let your instincts take over.</state>
             </case>
             <case stage="4-5">
                 <state img="#-Happy.png">Looks like you enjoyed that. Given the fact that you're, y'know...overflowing.</state>
@@ -5560,6 +6061,7 @@
                 <state img="#-Excited.png">I bet that felt &lt;i&gt;real&lt;/i&gt; great!</state>
                 <state img="#-Mast2.png">You finished? Neat.</state>
                 <state img="#-Mast1.png">You just finished? Something tells me that I ain't gonna be too far behind ya.</state>
+                <state img="#-Confident.png">That was wicked!</state>
             </case>
             <case stage="7">
                 <state img="#-Horny.png">Phew! Almost makes me wanna go again. Well, almost. Prefer to keep that private from now on.</state>
@@ -5582,6 +6084,7 @@
                 <state img="#-Shocked.png">And now you've gotta stand there, watching whilst I pleasure myself? Is this even real?</state>
                 <state img="#-Shocked.png">This has gotta be a bad dream or something. No way I'd let myself lose like this.</state>
                 <state img="#-Embarassed.png">Crap! I've been Universe Ninthed!</state>
+                <state img="#-Shocked.png">I-I don't believe it! You practically wiped the floor with me!</state>
             </case>
         </trigger>
 
@@ -5594,6 +6097,7 @@
                 <state img="#-Loss.png">Well then...now I gotta...knew the stakes when I walked in, but...wow I actually gotta do it now.</state>
                 <state img="#-Annoyed.png">The idea was for you guys to get yourselves off on my behalf. That sure crashed and burned.</state>
                 <state img="#-Loss.png">Wait, what? You beat me?! I mean, I know it looked bad there, but I thought for sure I'd be able to pull it off.</state>
+                <state img="#-Shocked.png">You people were no joke. I can barely it!</state>
             </case>
         </trigger>
 
@@ -5649,6 +6153,8 @@
                 <state img="#-Annoyed.png">Tsk. Stupid Earth games.</state>
                 <state img="#-Annoyed.png">*Inaudible grumbling*</state>
                 <state img="#-Mast1.png">&lt;i&gt;pant, pant, pant&lt;/i&gt;</state>
+                <state img="#-Embarassed.png">Hehehe...this beats training I guess.</state>
+                <state img="#-Mast2.png">&lt;i&gt;(What if I give this a try...)&lt;/i&gt; Ooh, yeah. That hits the spot.</state>
             </case>
         </trigger>
 
@@ -5656,7 +6162,7 @@
             <case stage="6">
                 <state img="#-Heavy1.png">Haaah...you have any idea how worked up sparring and training gets someone?</state>
                 <state img="#-Heavy2.png">Dammit...dammit, dammit, dammit, dammit, dammit...</state>
-                <state img="#-Heavym3.png">R-reaching my l-limit here...</state>
+                <state img="#-Heavym3.png">R-reaching m-my limit here...</state>
                 <state img="#-Heavym3.png">Crap, I needed this.</state>
                 <state img="#-Heavy2.png">Kinda losing it right now. Losing control big time!</state>
                 <state img="#-Heavy1.png">Oh yeah, that hits the spot.</state>
@@ -5664,6 +6170,8 @@
                 <state img="#-Heavy2.png">Like ele-electricity running through my whole body!</state>
                 <state img="#-Heavy1.png">I'm...I'm gonna explode...</state>
                 <state img="#-Heavy2.png">Ah jeez...haaah...haaah...</state>
+                <state img="#-Heavym3.png">My head's spinnin' right now!</state>
+                <state img="#-Heavym3.png">Can't think straight no more!</state>
             </case>
         </trigger>
 
@@ -5771,6 +6279,13 @@
         </trigger>
 
         <trigger id="game_over_victory">
+            <case stage="0-5">
+                <condition role="other" character="nami" sayingMarker="stealing" />
+                <state img="#-Angry.png">HEY! YOU BIG BREASTED THIEF, GET BACK HERE! </state>
+                <state img="#-Combat.png">You dare steal from me?! You're gonna regret the day you crossed my path, Nami!</state>
+                <state img="#-Angry.png">Are you kidding me right now!? GET BACK HERE WITH MY STUFF!</state>
+                <state img="#-Combat.png">Now you've done it, you pirate! I'm gonna clobber ya for that!</state>
+            </case>
             <case stage="0">
                 <state img="#-Laughing2.png">That the sound of a flawless win I hear? Oh you better believe it.</state>
                 <state img="#-Distracted.png">Yup, just gonna stand right here and keep being awesome.</state>
@@ -5779,6 +6294,7 @@
                 <state img="#-Stripping.png">I didn't feel like pulling punches this game.</state>
                 <state img="#-Smug.png">You cut-rate amateurs weren't qualified to tangle with the likes of me.</state>
                 <state img="#-Victory.png">Man, is that what that super, awesome instinct thingy feels like? I imagine that's what this feels like, ha haa!</state>
+                <state img="#-Laughing2.png">Ha! You people have *nothing* on the likes of me!</state>
             </case>
             <case stage="1">
                 <state img="#-Distracted.png">Well that was pathetic. Was pretty entertaining to watch ya crash and burn though.</state>
@@ -5803,17 +6319,20 @@
                 <state img="#-Stretching.png">You've got some potential judging by this game, but it's gonna take you some work before you can hang with an elite like me!</state>
                 <state img="#-Flying.png">And that wraps up that. Remember the name, because it seemed that none of ya could hang with Caulifla!</state>
                 <state img="#-Victory.png">Ha haa! I win! Suck on that, losers!</state>
+                <state img="#-Excited.png">A Universe 6 Saiyan puts all you clowns to shame. Don't you forget it!</state>
             </case>
             <case stage="4-5">
-                <state img="#-Victory.png">Wow, you really gave me a fight of that. Good game everyone, good game.</state>
+                <state img="#-Victory.png">Wow, you really gave me a fight of that. Good game everyone. Better luck next time.</state>
                 <state img="#-Victory.png">I underestimated you guys. Lucky for me though, I got it together in the end.</state>
                 <state img="#-Smug.png">Watching ya rub yourselves off was worth a laugh at least.</state>
                 <state img="#-Happy.png">You expecting me to strike a victory pose or something? Do you see me wearing spandex?</state>
-                <state img="#-Distracted.png">Wow that close. You've definitely got more brains than my gang members have. Fused together even.</state>
+                <state img="#-Distracted.png">Wow was that close. You've definitely got more brains than my gang members have. Fused together even.</state>
                 <state img="#-Victory.png">You're pretty crafty. But you weren't &lt;i&gt;quite&lt;/i&gt; as crafty as me in the end.</state>
                 <state img="#-Distracted.png">Hell. Little luck here or there, and this might not have gone my way. Considering myself fortunate here.</state>
                 <state img="#-Victory.png">I underestimated you people. Well, almost maybe. Hehehe.</state>
                 <state img="#-Victory.png">Phew, I win. That's a relief. Good game everyone, thanks for the mental workout.</state>
+                <state img="#-Happy.png">You people were really something. Sucks for you that you were up against me though.</state>
+                <state img="#-Confident.png">Ha! How d'ya like that, ~player~? Looks like &lt;i&gt;I've&lt;/i&gt; won this one!</state>
             </case>
         </trigger>
 
@@ -5831,7 +6350,7 @@
                 <state img="#-Angry.png" collectible="SJJ4" collectible-value="+1">Well done, ~player~. But you ain't gonna get me next time, that I can guarantee.</state>
             </case>
             <case stage="7" id="39" priority="116">
-                <condition role="other" character="nami" timeInStage="5-" sayingMarker="stealing" />
+                <condition role="other" character="nami" sayingMarker="stealing" />
                 <state img="#-Combat.png">HEY! YOU BIG BREASTED THIEF, GET BACK HERE! </state>
                 <state img="#-Combat.png">You dare steal from me?! You're gonna regret the day you crossed my path, Nami!</state>
                 <state img="#-Combat.png">Are you kidding me right now!? GET BACK HERE WITH MY STUFF!</state>
@@ -5845,6 +6364,7 @@
                 <state img="#-Stretching.png">Well it ain't been a total waste tonight. I blew off steam, got some Super Saiyan training in, and I got a show or two to go along with it. Not all bad.</state>
                 <state img="#-Annoyed.png">Looks like I gotta train more before I can hope to win a game of this. Least against people other than the dummies in my crew.</state>
                 <state img="#-Embarassed.png">I came here expecting to clean house. You sure as hell surprised me, that's for sure.</state>
+                <state img="#-Happy.png">I gotta say, playing this with you lot's been a real blast.</state>
             </case>
         </trigger>
 

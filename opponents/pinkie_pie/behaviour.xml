@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 9:09:14 p. m. on noviembre 09, 2019. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 8:07:15 p. m. on febrero 25, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.8</version>
+    <version>v5.5</version>
     <first>Pinkie</first>
     <last>Pie</last>
     <label>Pinkie</label>
@@ -37,6 +37,7 @@
         <nickname for="natsuki">Nat</nickname>
         <nickname for="panty">Undies</nickname>
     </nicknames>
+    <stylesheet>styles.css</stylesheet>
 
     <start />
 
@@ -49,17 +50,28 @@
         <clothing name="top" generic="top" position="upper" type="major" />
     </wardrobe>
 
-    <poses />
+    <poses>
+        <pose id="8-pony_end">
+            <sprite id="aaend" src="rainbow_dash/9-ponyend.png" x="0" y="0" scalex="1" scaley="1" alpha="100" />
+        </pose>
+        <pose id="blank">
+            <sprite id="epiloguecum2points" src="pinkie_pie/epiloguecum2points.png" x="0" y="0" alpha="0" />
+        </pose>
+    </poses>
 
     <behaviour>
         <trigger id="selected">
             <case stage="0">
-                <condition role="other" character="rarity" />
+                <condition role="other" character="rainbow_dash" />
+                <state img="#-laughing.png">Oh hi Rainbow! I knew you wouldn't be able to resist wanting to play.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="rarity_eg" />
                 <state img="#-surprised.png">Rarity?! You are the last person I expected to see here!</state>
             </case>
             <case stage="0">
-                <condition role="other" character="rainbow_dash" />
-                <state img="#-laughing.png">Oh hi Rainbow! I knew you wouldn't be able to resist wanting to play.</state>
+                <condition role="other" character="twilight" />
+                <state img="#-hi.png">Oooh! What a nice surprise to find you here, Twilight! Thanks for the invitation by the way!</state>
             </case>
             <case stage="0">
                 <state img="#-excited.png">A game of strip poker? Hee hee, so it's going to be just like the goodbye party I organized at CHS!</state>
@@ -90,10 +102,6 @@
             <case stage="0">
                 <condition role="other" character="rarity" />
                 <state img="#-what.png">Uh Rarity... I know you like to show off all the clothes you make but don't you think it is a bit excessive to do it here?</state>
-            </case>
-            <case stage="0">
-                <condition role="other" character="twilight" />
-                <state img="#-hi.png" marker="presentation">Oooh! What a nice surprise to find you here, Twilight! Thanks for the invitation by the way!</state>
             </case>
             <case stage="0">
                 <condition role="other" character="uravity" />
@@ -214,10 +222,6 @@
                 <state img="#-what.png">I feel there's a bit of a disparity between males and females in this party...</state>
                 <state img="#-annoyed.png">C'mon, I have no problem with playing with girls, but I'd really like there to be more than one guy in this game!</state>
             </case>
-            <case stage="0" totalRounds="0" priority="900">
-                <condition role="self" notSaidMarker="presentation" />
-                <state img="#-happy.png" marker="presentation">Hi everyone! My name is Pinkie Pie. I can't wait to have some fun with everyone here!</state>
-            </case>
             <case stage="4-6" alsoPlaying="monika" notSaidMarker="pinka_start" alsoPlayingSaidMarker="did_i_break_anything" priority="405">
                 <state img="#-pinka1.png" marker="pinka_start">Huh?... This is unexpected... seems someone in this game has been messing around with stuff they shouldn't... Isn't that right Moinka?</state>
             </case>
@@ -289,7 +293,9 @@
                 <condition count="3" filter="ddlc" />
                 <state img="#-hi.png">So, you girls are all from the same school huh? I can tell from the uniforms, though I hadn't seen uniforms like that before...</state>
             </case>
-            <case stage="6" totalAlive="2" totalNaked="5">
+            <case stage="6" priority="10">
+                <condition count="0" status="not_lost_all" />
+                <condition count="2" status="alive" />
                 <state img="#-smug.png" marker="final_hand">So, this is it. Last hand of the game, I'm ready.</state>
                 <state img="#-happy.png" marker="final_hand">Final hand then? good luck, and may the best hand win!</state>
                 <state img="#-embarassed.png" marker="final_hand">Just one more round left, the tension is palpable, I can't wait!</state>
@@ -346,7 +352,8 @@
             <case stage="0" alsoPlaying="rarity" totalRounds="0-1" notSaidMarker="presentation" priority="901">
                 <state img="#-happy.png" marker="presentation">Looks really nice, Rarity. Classy, just like you!</state>
             </case>
-            <case stage="0" totalFemales="1" totalRounds="0" priority="900">
+            <case stage="0" totalRounds="0" priority="900">
+                <condition count="1" gender="female" />
                 <state img="#-horny.png">Am I really the only girl here? Oh boy I can already tell this is going to be a fun night!</state>
                 <state img="#-whatever.png">I get to be the only girl here? Well, more fun for me!</state>
                 <state img="#-embarassed.png">Surrounded by handsome men and playing a strip poker game with them? This is going to be a fun night isn't it?</state>
@@ -356,9 +363,6 @@
                 <state img="#-happy.png">Only one male for us girls, I don't know who is luckier, him or us!</state>
                 <state img="#-what.png">I feel there's a bit of a disparity between males and females in this party...</state>
                 <state img="#-annoyed.png">C'mon, I have no problem with playing with girls, but I'd really like there to be more than one guy in this game!</state>
-            </case>
-            <case stage="0" totalRounds="0-1" notSaidMarker="presentation" priority="900">
-                <state img="#-hi.png" marker="presentation">Hi everyone! My name is Pinkie Pie. I can't wait to have some fun with everyone here!</state>
             </case>
             <case stage="4-6" alsoPlaying="monika" notSaidMarker="pinka_start" alsoPlayingSaidMarker="did_i_break_anything" priority="405">
                 <state img="#-pinkathreat.png" marker="pinka_start">Hmm...well, thank you Monika! You messing around with what you shouldn't has managed to free me...</state>
@@ -470,7 +474,7 @@
                 <state img="#-wink.png">So is this anyone's first party at the Inventory?</state>
                 <state img="#-smart.png" marker="cheese_sandwich">I've heard Cheese Sandwich from Crystal Prep wants to take my crown as best party planner, he is kinda cute, but no one is better than Pinkie, am I right?</state>
                 <state img="#-glad.png">This little geode I wear is a trinket me and my friends got at Camp Everfree, and they give us all special abilities! For example, I can make sprinkles explode!</state>
-                <state img="#-wink.png">What do you think, ~player~? Will this hand be enough? Oh right you can't see our cards from over there...</state>
+                <state img="#-wink.png">What do you think, ~player~? Will this hand be enough? Oh right, you can't see our cards from over there...</state>
                 <state img="#-excited.png" marker="sugar_cube_discount">Maybe some of you could come and visit me another day while I'm working at Sugar Cube Corner, I'll give you a special discount!</state>
                 <state img="#-glad.png">These aren't bad! I think I'll keep them.</state>
                 <state img="#-embarassed.png">All you can eat wasabi sounded like a better idea in my head...my tongue hurts just thinking about it!</state>
@@ -504,9 +508,6 @@
                 <state img="#-happy.png">Only one male for us girls, I don't know who is luckier, him or us!</state>
                 <state img="#-what.png">I feel there's a bit of a disparity between males and females in this party...</state>
                 <state img="#-annoyed.png">C'mon, I have no problem with playing with girls, but I'd really like there to be more than one guy in this game!</state>
-            </case>
-            <case stage="0" totalRounds="1" notSaidMarker="presentation" priority="900">
-                <state img="#-hi.png" marker="presentation">Hi everyone! My name is Pinkie Pie. I can't wait to have some fun with everyone here!</state>
             </case>
             <case stage="4-6" alsoPlaying="monika" notSaidMarker="pinka_start" alsoPlayingSaidMarker="did_i_break_anything" priority="405">
                 <state img="#-pinkathreat.png" marker="pinka_start">Hmm...well, thank you Monika! You messing around with what you shouldn't has managed to free me...</state>
@@ -544,7 +545,8 @@
             <case stage="4-6" saidMarker="pinka_start" notSaidMarker="pinkaout" priority="400">
                 <state img="#-pinkathreat.png" marker="pinkaout">I hope Pinkie won't mind me coming out for a bit, but I can't stand seeing her getting abused by all you guys in this game.</state>
             </case>
-            <case stage="0" alsoPlaying="monika" totalRounds="0-0">
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="monika" />
                 <state img="#-surprised.png">Wait. Does that mean you can see the menus in front of us too Monika?</state>
             </case>
             <case stage="0" alsoPlaying="rainbow_mika" timeInStage="0-1">
@@ -677,6 +679,15 @@
                 <condition count="0-1" filter="my_little_pony" role="opp" />
                 <state img="#-happy.png" marker="presentation">Where are my manners? One round in and I haven't introduced myself! My name is Pinkie Pie. Pleasure to meet you all!</state>
             </case>
+            <case stage="0" totalRounds="0" priority="901">
+                <condition role="self" notSaidMarker="presentation" />
+                <condition role="other" character="rainbow_dash" saidMarker="pony_table" />
+                <state img="#-happy.png" marker="presentation">Hi ~player~! My name is Pinkie Pie. I can't wait to have some fun with you and my friends here!</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="900">
+                <condition role="self" notSaidMarker="presentation" />
+                <state img="#-happy.png" marker="presentation">Hi everyone! My name is Pinkie Pie. I can't wait to have some fun with everyone here!</state>
+            </case>
             <case stage="1" totalRounds="1" priority="900">
                 <condition role="self" notSaidMarker="presentation" />
                 <condition count="0-1" filter="my_little_pony" />
@@ -732,7 +743,7 @@
         </trigger>
 
         <trigger id="must_strip">
-            <case stage="3-5" oneShotId="4" priority="800">
+            <case stage="3-5" id="6" oneShotId="4" priority="800">
                 <condition role="self" consecutiveLosses="3-4" saidMarker="dizzy_pre_pinka2" notSaidMarker="pinka_end2" />
                 <state img="#-pinka2.png" marker="pinka_start" set-label="Pinkamena">That does it! I won't let you treat little Pinkie like that anymore...</state>
             </case>
@@ -741,6 +752,11 @@
                 <state img="#-pinka2.png">Dealer... I would like to invite you to my basement after this game is done...</state>
                 <state img="#-pinkahappy.png">No, I'm fine I swear!</state>
                 <state img="#-pinkainterested.png">Oh I will strip something out of someone after this game alright...</state>
+            </case>
+            <case stage="0-5" priority="143">
+                <condition role="self" saidMarker="cheese_sandwich" />
+                <condition role="other" character="rarity_eg" stage="0-2" sayingMarker="pinkie_cheese" />
+                <state img="#-embarassed.png" marker="rarity_cheese2">W... What do you mean, Rarity? I mean... He is always so nice and we do share our passion for party planning but...</state>
             </case>
             <case stage="0" alsoPlaying="pit">
                 <state img="#-excited.png">Serene? I can be serene, but not here silly, this is a party after all!</state>
@@ -752,7 +768,8 @@
             <case stage="1" alsoPlaying="natsuki">
                 <state img="#-wink.png">The skirt you said Nat? I can do that!</state>
             </case>
-            <case stage="4" alsoPlaying="rarity">
+            <case stage="4">
+                <condition role="other" character="rarity" />
                 <state img="#-whatever.png">C'mon Rarity, you know I only do it for the sake of the party!</state>
             </case>
         </trigger>
@@ -1101,6 +1118,15 @@
                 <condition role="other" character="jessie" />
                 <state img="#-strip.png">I dunno, I was just born like this! It's not like I chose to be Pink, even if I love it!</state>
             </case>
+            <case stage="3">
+                <condition role="other" character="panty" />
+                <state img="#-strip.png">Hey Undies, this one is dedicated to you.</state>
+            </case>
+            <case stage="0-5" priority="100">
+                <condition role="self" saidMarker="rarity_cheese2" notSaidMarker="rarity_cheese3" />
+                <condition role="other" character="rarity_eg" />
+                <state img="#-strip.png" marker="rarity_cheese3">Alright... Sure, I do like him a bit, but let's not talk about this now, Rarity. It's gonna distract me from this party!</state>
+            </case>
             <case stage="0" totalRounds="0">
                 <state img="#-strip.png">Let's start strong, after all someone has to do it right?</state>
             </case>
@@ -1131,9 +1157,6 @@
             </case>
             <case stage="5">
                 <state img="#-strip.png">I think we can agree this has been a fun night so far...</state>
-            </case>
-            <case stage="3">
-                <state img="#-strip.png">Hey Undies, this one is dedicated to you.</state>
             </case>
         </trigger>
 
@@ -1342,18 +1365,26 @@
             <case stage="0-8" target="pit" targetStage="4">
                 <state img="#-wink.png">Tee hee...Looks like the cute winged boy has to show everything now...</state>
             </case>
-            <case stage="0-8" filter="robot" targetStage="0">
-                <state img="#-smart.png">So... You are a robot?  That probably means I gotta talk to you in robot speech so you can understand me. Beep! Boop! My name is Pinkie Pie.</state>
+            <case stage="0-8">
+                <condition filter="musician" role="target" />
+                <condition role="self" notSaidMarker="musician" />
+                <condition count="0" filter="equestria_girls" role="target" />
+                <state img="#-happy.png" marker="muscian">You're a musician too? Maybe you should come and play some songs along with the rainbooms!</state>
             </case>
-            <case stage="0-8" filter="student" notSaidMarker="student_party">
-                <condition count="0" filter="twilight" />
+            <case stage="0-8">
+                <condition count="0" filter="equestria_girls" role="target" />
+                <condition filter="student" role="target" />
+                <condition role="self" notSaidMarker="student_party" />
                 <state img="#-wink.png" marker="student_party">So you're still a student, huh? well you know now who to contact when planning your graduation party!</state>
             </case>
-            <case stage="0-8" filter="gamer" notSaidMarker="gamer">
-                <state img="#-excited.png" marker="gamer">You like games too? We should play a couple of stages of "attack of the mane-iac" on another day.</state>
+            <case stage="0-8">
+                <condition filter="robot" role="target" stage="0" />
+                <state img="#-smart.png">So... You are a robot?  That probably means I gotta talk to you in robot speech so you can understand me. Beep! Boop! My name is Pinkie Pie.</state>
             </case>
-            <case stage="0-8" filter="musician" notSaidMarker="musician">
-                <state img="#-happy.png" marker="muscian">You're a musician too? Maybe you come and play some songs along with the rainbooms!</state>
+            <case stage="0-8">
+                <condition filter="gamer" role="target" />
+                <condition role="self" notSaidMarker="gamer" />
+                <state img="#-excited.png" marker="gamer">You like games too? We should play a couple of stages of "attack of the mane-iac" on another day.</state>
             </case>
             <case stage="6-8" targetStatus="decent">
                 <state img="#-wink.png">You've seen my panties fall and my bra fly, time to give something in return don't you think?</state>
@@ -1521,6 +1552,18 @@
                 <condition role="target" character="panty" stage="3" />
                 <state img="#-laughing.png">I know what you mean, when we fought Demon Sunset during the fall formal I could barely stand the heels of my high boots.</state>
             </case>
+            <case stage="0-8">
+                <condition filter="musician" role="target" />
+                <condition role="self" notSaidMarker="musician" />
+                <condition count="0" filter="equestria_girls" role="target" />
+                <state img="#-happy.png" marker="musician">You're a musician too? Maybe you come and play some songs along with the rainbooms!</state>
+            </case>
+            <case stage="0-8">
+                <condition filter="student" role="target" />
+                <condition role="self" notSaidMarker="student_party" />
+                <condition count="0" filter="equestria_girls" role="target" />
+                <state img="#-wink.png" marker="student_party">So you're still a student huh? Well, now you know who to contact when planning your graduation party!</state>
+            </case>
             <case stage="0-8" target="jasmine">
                 <state img="#-happy.png">No more Ms. Mystery girl, time to reveal yourself!</state>
             </case>
@@ -1549,9 +1592,6 @@
                 <condition role="self" notSaidMarker="glasses" />
                 <state img="#-smart.png" marker="glasses">Your glasses remind me of the ones our Twilight uses all the time.</state>
             </case>
-            <case stage="0-8" filter="musician" notSaidMarker="musician">
-                <state img="#-happy.png" marker="musician">You're a musician too? Maybe you come and play some songs along with the rainbooms!</state>
-            </case>
             <case stage="0-8" filter="scantily-clad" notSaidMarker="scanty-clad">
                 <state img="#-happy.png" marker="scanty-clad">That's a really interesting outfit right there, I guess you came prepared for this party after all!</state>
             </case>
@@ -1560,9 +1600,6 @@
             </case>
             <case stage="0-8" filter="shy" notSaidMarker="fears_song">
                 <state img="#-glad.png" marker="fears_song">♪♫♬ She said 'Pinkie, you've gotta stand up tall, learn to face your fears. ♪♫♬</state>
-            </case>
-            <case stage="0-8" filter="student" notSaidMarker="student_party">
-                <state img="#-wink.png" marker="student_party">So you're still a student huh? Well, now you know who to contact when planning your graduation party!</state>
             </case>
             <case stage="0-8" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="twi_food1">
                 <state img="#-happy.png">Oooh! Oooh! Ask me Streaming-chan! Ask me! I know that one!</state>
@@ -1847,7 +1884,7 @@
             <case stage="0-8">
                 <condition role="target" character="twilight" stage="5" sayingMarker="twilight_not_human" />
                 <state img="#-laughing.png">You really are just taking stuff out at random aren't you Twily?</state>
-                <state img="#-whatever.png">Well, they had to come out eventually. Do you even wear stuff on your feet back at your world, Twilight?</state>
+                <state img="#-whatever.png">Well, they had to come off eventually. Do you even wear stuff on your feet back at your world, Twilight?</state>
             </case>
             <case stage="0-8" target="blake" targetStage="1">
                 <state img="#-laughing.png">I think you are confusing games, Blake. The one where weapons count as forfeits is Poker Night at the Inventory, this is STRIP Poker Night at the Inventory.</state>
@@ -2675,13 +2712,16 @@
                 <state img="#-sad.png">...But looking at you, all I can think of is how badly I want to give you a hug!</state>
             </case>
             <case stage="0-8">
-                <state img="#-happy.png">Flat can be fun too!</state>
+                <condition count="0" filter="rainbow_dash" role="target" />
                 <state img="#-what.png">Are you an athlete? Rainbow Dash says that athletes tend to have small breasts.</state>
+                <state img="#-what.png">This reminds me, I still have to buy Rainbow Dash a new surf board to replace the one I broke the other day...</state>
+            </case>
+            <case stage="0-8">
+                <state img="#-happy.png">Flat can be fun too!</state>
                 <state img="#-glad.png">They're fun-sized!</state>
                 <state img="#-excited.png">Can I boop those?</state>
                 <state img="#-glad.png">Such cute little things! Can I hold them?</state>
                 <state img="#-laughing.png">Is that a mole? Oh no wait that's a nipple! Sorry!</state>
-                <state img="#-what.png">This reminds me, I still have to buy Rainbow Dash a new surf board to replace the one I broke the other day...</state>
             </case>
         </trigger>
 
@@ -2998,6 +3038,11 @@
             <case stage="0-8" target="human" notSaidMarker="metaeasteregg">
                 <test expr="~player~" value="Tavi959" />
                 <state img="#-glad.png" marker="metaeasteregg">Oh,hi Tavi! How is Ruby doing? It's been a while since I last saw her.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="rarity_eg" saidMarker="pinkie_naked_sleepover" />
+                <condition role="self" notSaidMarker="rarity_naked_sleepover" />
+                <state img="#-laughing.png" marker="rarity_naked_sleepover">Now that you brought it up earlier, I can't stop thinking about that sleepover...</state>
             </case>
         </trigger>
 
@@ -3726,7 +3771,28 @@
         </trigger>
 
         <trigger id="game_over_defeat">
-            <case stage="8" alsoPlaying="pit">
+            <case stage="8" priority="700">
+                <condition role="other" character="rainbow_dash" saidMarker="pony_table" />
+                <condition role="target" character="human" />
+                <test expr="~pinkie_pie.slot~" value="3" />
+                <state img="custom:#-pony_end" marker="pony_end" location="10%">{Rarity}Great game, let's do this again next week?{!reset}&lt;br&gt; {Twilight}For sure!{!reset}&lt;br&gt; {Rainbow}You got it!{!reset}&lt;br&gt;{Pinkie}Yay!{!reset}</state>
+                <state img="custom:#-pony_end" marker="pony_end" location="10%">{Rarity}Everyone say goodbye to ~player~, girls...{!reset}&lt;br&gt;{Pinkie}Unless, of course, you prefer to join us in the next part of this party?{!reset}&lt;br&gt;</state>
+                <state img="custom:#-pony_end" marker="pony_end" location="10%">{Twilight}Thanks for all your help girls, but I still need more information for my report{!reset}&lt;br&gt;{Rainbow}No prob, Princess! I'm sure we'll all be happy to help more, right ~player~?{!reset}</state>
+            </case>
+            <case stage="8">
+                <condition role="other" character="rainbow_dash" sayingMarker="pony_end" />
+                <state img="custom:blank"></state>
+            </case>
+            <case stage="8">
+                <condition role="other" character="twilight" sayingMarker="pony_end" />
+                <state img="custom:blank"></state>
+            </case>
+            <case stage="8">
+                <condition role="other" character="rarity_eg" sayingMarker="pony_end" />
+                <state img="custom:blank"></state>
+            </case>
+            <case stage="8">
+                <condition role="other" character="pit" />
                 <state img="#-wink.png">So, Pit... Now that this game is over... How about you and me go on and have some fun in our own "private party" now...</state>
             </case>
             <case stage="8">

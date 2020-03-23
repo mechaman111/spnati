@@ -3,56 +3,72 @@ $epilogueScreen = $('#epilogue-screen');
 var epilogueContainer = document.getElementById('epilogue-container');
 
 /* Epilogue selection modal elements */
-$epilogueSelectionModal = $('#epilogue-modal'); //the modal box
-$epilogueHeader = $('#epilogue-header-text'); //the header text for the epilogue selection box
-$epilogueList = $('#epilogue-list'); //the list of epilogues
-$epilogueAcceptButton = $('#epilogue-modal-accept-button'); //click this button to go with the chosen ending
+var $epilogueSelectionModal = $('#epilogue-modal'); //the modal box
+var $epilogueHeader = $('#epilogue-header-text'); //the header text for the epilogue selection box
+var $epilogueTip = $('#epilogue-header-tip');
+var $epilogueList = $('#epilogue-list'); //the list of epilogues
+var $epilogueAcceptButton = $('#epilogue-modal-accept-button'); //click this button to go with the chosen ending
 
 var epilogueSelections = []; //references to the epilogue selection UI elements
-
-var winStr = "You've won the game, and possibly made some friends. Who among these players did you become close with?"; //Winning the game, with endings available
-var winStrNone = "You've won the game, and possibly made some friends? Unfortunately, none of your competitors are ready for a friend like you.<br>(None of the characters you played with have an ending written.)"; //Player won the game, but none of the characters have an ending written
-var lossStr = "Well you lost. And you didn't manage to make any new friends. But you saw some people strip down and show off, and isn't that what life is all about?<br>(You may only view an ending when you win.)"; //Player lost the game. Currently no support for ending scenes when other players win
-
-// Player won the game, but epilogues are disabled.
-var winEpiloguesDisabledStr = "You won... but epilogues have been disabled.";
-
-// Player lost the game with epilogues disabled.
-var lossEpiloguesDisabledStr = "You lost... but epilogues have been disabled.";
 
 var epilogues = []; //list of epilogue data objects
 var chosenEpilogue = null;
 var epiloguePlayer = null;
 var epilogueSuffix = 0;
 
-// Attach some event listeners
-var previousButton = document.getElementById('epilogue-previous');
-var nextButton = document.getElementById('epilogue-next');
-previousButton.addEventListener('click', function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  moveEpilogueBack();
-});
-nextButton.addEventListener('click', function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  moveEpilogueForward();
-});
-document.getElementById('epilogue-restart').addEventListener('click', function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  showRestartModal();
-});
-document.getElementById('epilogue-buttons').addEventListener('click', function () {
-  if (!previousButton.disabled) {
-    moveEpilogueBack();
-  }
-});
-epilogueContainer.addEventListener('click', function () {
-  if (!nextButton.disabled) {
-    moveEpilogueForward();
-  }
-});
+var $epiloguePrevButton = $('#epilogue-buttons > #epilogue-previous');
+var $epilogueNextButton = $('#epilogue-buttons > #epilogue-next');
+var $epilogueRestartButton = $('#epilogue-buttons > #epilogue-restart');
+
+var $epilogueSkipSelector = $('#epilogue-skip-scene');
+var $epilogueHotReloadBtn = $('#epilogue-reload');
+
+// Winning the game, with endings available.
+var winStr = "You've won the game, and some of your competitors might be ready for something <i>extra</i>...<br>Who among these players did you become close with?";
+
+// Player won the game, but none of the characters have an ending written.
+var winStrNone = "You've won the game!<br>We hope you enjoyed the game!  Be sure to play again sometime!";
+
+// Player lost the game. Currently no support for ending scenes when other players win.
+var lossStr = "Although you didn't win this time, we hope you had a good time anyway.<br>You were probably just unlucky, so be sure to give it another try soon!";
+
+// Player won the game, but epilogues are disabled.
+var winEpiloguesDisabledStr = winStrNone; // "You won... but epilogues have been disabled.";
+
+// Player lost the game with epilogues disabled.
+var lossEpiloguesDisabledStr = lossStr; // "You lost... but epilogues have been disabled.";
+
+/* Random tips displayed at game end. */
+var endingTips = [
+  "Keeping pairs is usually better than going for rare hands.",
+  "Sit back and enjoy the game, maybe you'll find something new!",
+  "Some characters have special interactions with each other. How many have you found?",
+  "Found a cool, sexy, or funny scene? Share it with us!",
+  "Really stuck and don't know how to play well? Give Card Suggest a try!",
+  "Curious about the game or have any questions? Check out our FAQ!",
+  "SPNATI is an open-source project, and it's brought to life by people like you. Why not give making your own characters a shot?",
+  "All of these characters were made by someone like you!",
+  "One of your favorite opponents might turn out to be someone you've never heard of before. Try some new characters; you might end up falling in love!",
+  "Some characters have secret interactions. See if you can uncover the conditions to trigger these events.",
+  "Bug reports are sent to publicly viewable channels on Discord. They are not sent to the characters in-game. If you use the bug report function to RP, you will be openly made fun of, then blocked for spam.",
+  "Card suggest is useful when you don't feel like thinking, but it isn't perfect.",
+  "Enjoying a character? Let us know in the Discord! We love to get praise!",
+  "Cant find a character? It may have been moved to the offline version.",
+  "Have a character you want to see in the game? Make them!",
+  "Poker is mostly a game of luck. If you don't win the first time, try again!",
+  "If you have no other hand, then you're dependent on your high card. Good luck.",
+  "If you have two cards of the same rank, that is called a Pair. Pairs are the easiest and most efficient hand to go for. Get them whenever you can!",
+  "The Two Pair hand is pretty self explanatory: It's when you have two sets of two of the same rank card. These are stronger than a Pair, and you don't have to risk losing a 0air to get it.",
+  "The Three of a Kind hand is, naturally, what having three of the same rank card is called. This is stronger than the Two Pair hand, and if you go for it and fail you might still get a Pair.",
+  "Five cards in a sequence (for example, 2/3/4/5/6) is called a Straight. Straights beat Three of a Kind and lower. Remember that, even if you are only one card away from a Straight, you still only have at best a nearly one in thirteen chance of getting it.",
+  "Five cards of the same suit with no other hand is called a Flush, and it's stronger than a Straight. Remember that, even if you are only card away, you still only have at best a nearly one in four chance of getting this hand.",
+  "A Full House isn't just a great two word horror story, but also the term for the hand you have when you have both a set of three cards of the same rank, and another set of two cards of the same rank. It is stronger than a flush.",
+  "A Four of a Kind is the name for a hand with four cards of the same rank. It's stronger than a full house, and one of the highest hands you can go for while still having a pair to fall back on.",
+  "A Straight Flush is a combination of a Straight and a Flush, all five cards in sequence and of the same suit, and is stronger than a Four of a Kind. Remember that, even if you are only one away, there is literally only one card in the deck that will give this hand to you.",
+  "A Royal Flush is specifically an Ace, King, Queen, Jack, and 10, all of the same suit. It is the rarest and strongest hand. It is never really worth going for if you want to win, but it's still pretty damn cool if you can get it.",
+  "Despite what a certain spiky haired protagonist might say, believing in the heart of the cards is not a great strategy. Going for safe hands is usually the way to go.",
+  "Remember, you don't need the best hand: you just need to not have the worst. Getting any hand above a high card is usually enough to survive a round.",
+];
 
 /************************************************************
  * Animation class. Used instead of CSS animations for the control over stopping/rewinding/etc.
@@ -516,6 +532,7 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
         var width = parseInt($scene.attr("width"), 10);
         var height = parseInt($scene.attr("height"), 10);
         scene = {
+          name: $scene.attr("name") || null,
           background: $scene.attr("background"),
           width: width,
           height: height,
@@ -942,6 +959,9 @@ function doEpilogueModal() {
   var haveEpilogues = (epilogues.length >= 1); //whether or not there are any epilogues available
   $epilogueAcceptButton.css("visibility", haveEpilogues ? "visible" : "hidden");
 
+  var randomTip = endingTips[getRandomNumber(0, endingTips.length)];
+  $epilogueTip.html(randomTip);
+
   if (EPILOGUES_ENABLED) {
     //decide which header string to show the player. This describes the situation.
     var headerStr = '';
@@ -1018,9 +1038,6 @@ function doEpilogue() {
     });
   }
 
-  epilogueContainer.dataset.background = -1;
-  epilogueContainer.dataset.scene = -1;
-
   loadEpilogue(chosenEpilogue);
 
   screenTransition($gameScreen, $epilogueScreen);
@@ -1030,15 +1047,36 @@ function doEpilogue() {
 /************************************************************
 * Starts up an epilogue, pre-fetching all its images before displaying anything in order to handle certain computations that rely on the image sizes
 ************************************************************/
-function loadEpilogue(epilogue) {
+function loadEpilogue(epilogue, loadToScene) {
   $("#epilogue-spinner").show();
   epiloguePlayer = new EpiloguePlayer(epilogue);
+  if (typeof loadToScene === "number") epiloguePlayer.hotReloadScene = loadToScene;
+
   epiloguePlayer.load();
+
+  if (DEBUG) {
+    $('#epilogue-debug-group').addClass('debug-active');
+    $epilogueSkipSelector.empty();
+    for (var i = 0; i < epiloguePlayer.epilogue.scenes.length; i++) {
+      var label = (i+1).toString();
+      if (epiloguePlayer.epilogue.scenes[i].name) {
+        label = label + ": " + epiloguePlayer.epilogue.scenes[i].name;
+      }
+
+      $epilogueSkipSelector.append($('<option>', {
+        val: i,
+        text: label
+      }));
+    }
+  } else {
+    $('#epilogue-debug-group').removeClass('debug-active');
+  }
+
   updateEpilogueButtons();
 }
 
-function moveEpilogueForward() {
-  if (epiloguePlayer && epiloguePlayer.loaded) {
+function moveEpilogueForward(ev) {
+  if (epiloguePlayer && epiloguePlayer.loaded && epiloguePlayer.hasMoreDirectives()) {
     if (SENTRY_INITIALIZED) {
       Sentry.addBreadcrumb({
         category: 'epilogue',
@@ -1052,8 +1090,8 @@ function moveEpilogueForward() {
   }
 }
 
-function moveEpilogueBack() {
-  if (epiloguePlayer && epiloguePlayer.loaded) {
+function moveEpilogueBack(ev) {
+  if (epiloguePlayer && epiloguePlayer.loaded && epiloguePlayer.hasPreviousDirectives()) {
     if (SENTRY_INITIALIZED) {
       Sentry.addBreadcrumb({
         category: 'epilogue',
@@ -1067,6 +1105,53 @@ function moveEpilogueBack() {
   }
 }
 
+function skipToEpilogueScene () {
+  var scene = parseInt($epilogueSkipSelector.val(), 10);
+
+  if (isNaN(scene) || !epiloguePlayer || !epiloguePlayer.loaded) return;
+  epiloguePlayer.skipToScene(scene);
+  updateEpilogueButtons();
+}
+
+/* Reloads an epilogue by re-fetching behaviour.xml, and reparsing the
+ * epilogue XML data.
+ */
+function hotReloadEpilogue () {
+  if (!epiloguePlayer || !epiloguePlayer.loaded) return;
+
+  $epilogueHotReloadBtn.attr('disabled', true);
+
+  /* Make sure to save state from the old EpiloguePlayer that we will need later.
+   */
+  var curScene = epiloguePlayer.sceneIndex;
+  var epilogueTitle = epiloguePlayer.epilogue.title;
+  var epilogueGender = epiloguePlayer.epilogue.gender;
+  var player = epiloguePlayer.epilogue.player;
+
+  /* Clean up the old EpiloguePlayer. */
+  clearEpilogue();
+
+  fetchCompressedURL('opponents/' + player.id + "/behaviour.xml")
+    /* Success callback.
+    * 'this' is bound to the Opponent object.
+    */
+    .then(function(xml) {
+      var $xml = $(xml);
+      var endingElem = null;
+
+      $xml.find('epilogue').each(function () {
+        if ($(this).find('title').html() === epilogueTitle && $(this).attr('gender') === epilogueGender) {
+          endingElem = this;
+        }
+      });
+
+      epilogue = parseEpilogue(player, endingElem);
+
+      loadEpilogue(epilogue, curScene);
+      $epilogueHotReloadBtn.attr('disabled', false);
+    });
+}
+
 /************************************************************
  * Updates enabled state of buttons
  ************************************************************/
@@ -1076,19 +1161,23 @@ function updateEpilogueButtons() {
     return;
   }
 
-  var $epiloguePrevButton = $('#epilogue-buttons > #epilogue-previous');
-  var $epilogueNextButton = $('#epilogue-buttons > #epilogue-next');
-  var $epilogueRestartButton = $('#epilogue-buttons > #epilogue-restart');
   $epiloguePrevButton.prop("disabled", !epiloguePlayer.hasPreviousDirectives());
   $epilogueNextButton.prop("disabled", !epiloguePlayer.hasMoreDirectives());
   $epilogueRestartButton.prop("disabled", epiloguePlayer.hasMoreDirectives());
+
+  if (DEBUG) {
+    $epilogueSkipSelector.val(
+      epiloguePlayer.sceneIndex < 0 ? 0 : epiloguePlayer.sceneIndex
+    );
+  }
 }
 
 /************************************************************
 * Class for playing through an epilogue
 ************************************************************/
 function EpiloguePlayer(epilogue) {
-  $(window).resize(this.resizeViewport.bind(this));
+  this.resizeHandler = this.resizeViewport.bind(this);
+  $(window).resize(this.resizeHandler);
   this.epilogue = epilogue;
   this.lastUpdate = performance.now();
   this.sceneIndex = -1;
@@ -1102,6 +1191,7 @@ function EpiloguePlayer(epilogue) {
   this.views = [];
   this.viewIndex = 0;
   this.activeTransition = null;
+  this.hotReloadScene = null;
 }
 
 EpiloguePlayer.prototype.load = function () {
@@ -1148,7 +1238,19 @@ EpiloguePlayer.prototype.onLoadComplete = function () {
     this.views.push(new SceneView(container, 1, this.assetMap));
     container.append($("<div id='scene-fade' class='epilogue-overlay' style='z-index: 10000'></div>")); //scene transition overlay
     this.loaded = true;
-    this.advanceScene();
+    
+    if (
+      typeof this.hotReloadScene === "number" &&
+      this.hotReloadScene < this.epilogue.scenes.length
+    ) {
+      this.sceneIndex = this.hotReloadScene;
+      this.setupScene(this.sceneIndex, true);
+      this.hotReloadScene = null;
+      updateEpilogueButtons();
+    } else {
+      this.advanceScene();
+    }
+
     window.requestAnimationFrame(this.loop.bind(this));
   }
 }
@@ -1172,6 +1274,7 @@ EpiloguePlayer.prototype.fetchImage = function (path) {
 }
 
 EpiloguePlayer.prototype.destroy = function () {
+    $(window).off('resize', this.resizeHandler);
   for (var i = 0; i < this.views.length; i++) {
     this.views[i].destroy();
   }
@@ -1186,7 +1289,7 @@ EpiloguePlayer.prototype.hasMoreDirectives = function () {
 }
 
 EpiloguePlayer.prototype.hasPreviousDirectives = function () {
-  return this.sceneIndex > 0 || this.directiveIndex > 0;
+  return this.sceneIndex > 0 || this.directiveIndex > 1;
 }
 
 EpiloguePlayer.prototype.loop = function (timestamp) {
@@ -1266,15 +1369,15 @@ EpiloguePlayer.prototype.setupScene = function (index, skipTransition) {
 }
 
 EpiloguePlayer.prototype.resizeViewport = function () {
-  if (!this.activeScene) {
-    return;
-  }
+    if (!this.activeScene) {
+        return;
+    }
 
-  for (var i = 0; i < this.views.length; i++) {
-    this.views[i].resize();
-  }
-
-  this.draw();
+    for (var i = 0; i < this.views.length; i++) {
+        this.views[i].resize();
+    }
+    $(':root').css('font-size', (this.activeScene.view.viewportHeight / 75)+'px');
+    this.draw();
 }
 
 EpiloguePlayer.prototype.advanceDirective = function () {
@@ -1367,6 +1470,24 @@ EpiloguePlayer.prototype.revertDirective = function () {
       this.advanceDirective();
     }
   }
+}
+
+/**
+ * Skips to the start of a specific scene in an epilogue.
+ * 
+ * Intended only for use with Debug Mode.
+ */
+EpiloguePlayer.prototype.skipToScene = function (scene) {
+  if (this.activeTransition) { return; }
+
+  if (scene < 0) scene = 0;
+  if (scene >= this.epilogue.scenes.length) scene = this.epilogue.scenes.length-1;
+
+  this.waitingForAnims = false;
+  this.activeScene.view.haltAnimations(false);
+  this.sceneIndex = scene;
+  
+  this.setupScene(this.sceneIndex, true);
 }
 
 fromHex = function (hex) {
@@ -1901,7 +2022,6 @@ SceneView.prototype.clearAllText = function (directive, context) {
 SceneView.prototype.clearText = function (directive, context, keepObject) {
   context.boxes = context.boxes || [];
   var boxContext = {};
-  context.boxes.push(boxContext);
 
   var id = directive.id || this.lastTextId;
   boxContext.id = lastTextId = id;
@@ -1912,6 +2032,7 @@ SceneView.prototype.clearText = function (directive, context, keepObject) {
   }
 
   boxContext.directive = box.data("directive");
+  context.boxes.push(boxContext);
   this.$textContainer.get(0).removeChild(box[0]);
   if (!keepObject) {
     delete this.textObjects[id];
@@ -2955,3 +3076,37 @@ SceneTransition.prototype.flyThrough = function (t) {
     "opacity": t,
   });
 }
+
+// Event handlers
+$('#epilogue-buttons').on('click', ':input', function(ev) {
+    ev.stopPropagation();
+});
+$('#epilogue-container').click(moveEpilogueForward);
+$epilogueNextButton.click(moveEpilogueForward);
+$epiloguePrevButton.click(moveEpilogueBack);
+$('#epilogue-buttons').click(moveEpilogueBack);
+$epilogueRestartButton.click(showRestartModal);
+
+$epilogueHotReloadBtn.click(hotReloadEpilogue);
+$('#epilogue-skip').click(skipToEpilogueScene);
+$('#epilogue-exit').click(showRestartModal);
+
+function epilogue_keyUp(ev) {
+    if (epiloguePlayer && epiloguePlayer.loaded) {
+        switch (ev.keyCode) {
+        case 81:
+            if (DEBUG) {
+                $('#epilogue-debug-group').toggle();
+            }
+            break;
+        case 37:
+            moveEpilogueBack(); break;
+        case 32:
+        case 39:
+            moveEpilogueForward(); break;
+        }
+        ev.preventDefault();
+    }
+}
+
+$epilogueScreen.data('keyhandler', epilogue_keyUp);

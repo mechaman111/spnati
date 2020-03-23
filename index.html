@@ -12,46 +12,24 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="css/spni.css" id="spniStyleSheet">
     <link rel="stylesheet" type="text/css" href="css/spniDialogueUtilities.css">
+    <meta name="application-name" content="SPNatI">
+    <meta name="apple-mobile-web-app-title" content="SPNatI">
+    <meta name="theme-color" content="#BB3333">
+    <link rel="apple-touch-icon-precomposed" href="img/brighterlogoicon.png">
 </head>
 
 <body onload="initialSetup()">
-    <!-- Warning Screen -->
-    <div id="warning-screen" class="screen-container" hidden>
+
+    <!-- Warning / Title Screen -->
+    <div id="title-screen" class="screen-container" hidden>
         <div class="screen">
 
-            <!-- Banner Flair -->
-            <button class="title-settings-button bordered smooth-button red" onclick="showGameSettingsModal()">
-                <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-            </button>
-            <button class="bordered smooth-button red bug-report-button title-bug-report-button"
-                onclick="showBugReportModal()">
-                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-            </button>
-            <a class="bordered reddit-button smooth-button red" href="https://www.reddit.com/r/spnati/">
-                <img class="reddit-logo" src="img/reddit.png" alt="reddit" />
-            </a>
-            <button class="title-load-button bordered smooth-button red banner-flair toolbar-button"
-                onclick="showImportModal()">
-                <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
-            </button>
-
-            <button id="warning-version-button" class="bordered smooth-button red banner-flair version-button">
-                <span class="substitute-version">Unknown Version</span><br>
-                <span class="substitute-version-time"></span>
-            </button>
-            <button class="title-help-button bordered smooth-button red banner-flair" onclick="showHelpModal()">
-                Help &amp; FAQ
-            </button>
-
-            <!-- Banner -->
-            <div class="title-banner-container">
-                <div class="bordered title-banner-area">
-                    <img class="bordered title-banner" src="img/title.png" alt="Strip Poker Night at the Inventory">
-                </div>
-            </div>
+            <!-- Title Candy -->
+            <img id="left-title-candy" class="title-candy" src="img/blank.png" alt="" hidden />
+            <img id="right-title-candy" class="title-candy" src="img/blank.png" alt="" hidden />
 
             <!-- Content -->
-            <div class="warning-container">
+            <div id="warning-container">
 
                 <div class="warning-text">
                     <p>This game contains material that is only suitable for adults.<br /><b style="color:#DD3333">If
@@ -64,7 +42,7 @@
                         original owners.</p>
 
                     <p>The latest version of the game can be played at
-                        <br><a href="https://spnati.net" target="_blank"><b>spnati.net</b></a></p>
+                        <br><a href="https://spnati.net/"><b>spnati.net</b></a></p>
 
                     <br>
 
@@ -91,52 +69,7 @@
 
             </div>
 
-
-        </div>
-    </div>
-
-
-    <!-- Title Screen -->
-    <div id="title-screen" class="screen-container" hidden>
-        <div class="screen">
-
-            <!-- Title Candy -->
-            <img id="left-title-candy" class="title-candy" src="img/blank.png" alt="" />
-            <img id="right-title-candy" class="title-candy" src="img/blank.png" alt="" />
-
-            <!-- Banner Flair -->
-            <button class="title-settings-button bordered smooth-button red" onclick="showGameSettingsModal()">
-                <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-            </button>
-            <button class="bordered smooth-button red bug-report-button title-bug-report-button"
-                onclick="showBugReportModal()">
-                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-            </button>
-            <a class="bordered reddit-button smooth-button red" href="https://www.reddit.com/r/spnati/">
-                <img class="reddit-logo" src="img/reddit.png" alt="reddit" />
-            </a>
-            <button class="title-load-button bordered smooth-button red banner-flair toolbar-button"
-                onclick="showImportModal()">
-                <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
-            </button>
-
-            <button id="title-version-button" class="bordered smooth-button red banner-flair version-button">
-                <span class="substitute-version">Unknown Version</span><br>
-                <span class="substitute-version-time"></span>
-            </button>
-            <button class="title-help-button bordered smooth-button red banner-flair" onclick="showHelpModal()">
-                Help / FAQ
-            </button>
-
-            <!-- Banner -->
-            <div class="title-banner-container">
-                <div class="bordered title-banner-area">
-                    <img class="bordered title-banner" src="img/title.png" alt="Strip Poker Night at the Inventory">
-                </div>
-            </div>
-
-            <!-- Content -->
-            <div class="main-title-container male">
+            <div id="main-title-container" class="male" style="display: none">
 
                 <!-- Player Name -->
                 <div id="title-name-block">
@@ -332,6 +265,42 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Banner Flair -->
+            <button class="title-settings-button bordered smooth-button red banner-flair" onclick="showGameSettingsModal()">
+                <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+            </button>
+            <button class="bordered smooth-button red banner-flair title-bug-report-button"
+                onclick="showBugReportModal()">
+                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+            </button>
+            <a class="bordered reddit-button smooth-button red banner-flair" target="_blank" href="https://www.reddit.com/r/spnati/">
+                <img class="reddit-logo" src="img/reddit.png" alt="reddit" />
+            </a>
+            <button class="title-load-button bordered smooth-button red banner-flair"
+                onclick="showImportModal()">
+                <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+            </button>
+            <button class="title-fullscreen-button bordered smooth-button red banner-flair"
+		    onclick="toggleFullscreen()">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+            </button>
+
+            <button id="title-version-button" class="bordered smooth-button red banner-flair version-button">
+                <span class="substitute-version">Unknown Version</span><br>
+                <span class="substitute-version-time"></span>
+            </button>
+            <button class="title-help-button bordered smooth-button red banner-flair" onclick="showHelpModal()">
+                Help &amp; FAQ
+            </button>
+
+            <!-- Banner -->
+            <div class="title-banner-container">
+                <div class="bordered title-banner-area">
+                    <img class="bordered title-banner" src="img/title.png" alt="Strip Poker Night at the Inventory">
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -339,21 +308,6 @@
     <!-- Main Select Screen -->
     <div id="main-select-screen" class="screen-container" hidden>
         <div class="screen">
-
-
-            <!-- Opponent Dialogues -->
-            <div id="select-bubble-1" class="left bordered dialogue-bubble arrow-down">
-                <span id="select-dialogue-1" class="dialogue"></span>
-            </div>
-            <div id="select-bubble-2" class="halfLeft bordered dialogue-bubble arrow-down">
-                <span id="select-dialogue-2" class="dialogue"></span>
-            </div>
-            <div id="select-bubble-3" class="halfRight bordered dialogue-bubble arrow-down">
-                <span id="select-dialogue-3" class="dialogue"></span>
-            </div>
-            <div id="select-bubble-4" class="right bordered dialogue-bubble arrow-down">
-                <span id="select-dialogue-4" class="dialogue"></span>
-            </div>
 
             <div id="selection-badge-row-1" class="left selection-badge-row">
                 <img data-badge="new" class="badge-icon" src="img/new_icon.png" alt="New character" style="display:none;"/>
@@ -374,6 +328,20 @@
                 <img data-badge="new" class="badge-icon" src="img/new_icon.png" alt="New character" style="display:none;"/>
                 <img data-badge="epilogue" class="badge-icon" src="img/epilogue_icon.png" alt="SPNatI Epilogue available" style="display:none;"/>
                 <img data-badge="costume" class="badge-icon" src="img/costume_icon.png" alt="SPNatI Alternate Costume available" style="display:none;"/>
+            </div>
+
+            <!-- Opponent Dialogues -->
+            <div id="select-bubble-1" class="left bordered dialogue-bubble arrow-down">
+                <span id="select-dialogue-1" class="dialogue"></span>
+            </div>
+            <div id="select-bubble-2" class="halfLeft bordered dialogue-bubble arrow-down">
+                <span id="select-dialogue-2" class="dialogue"></span>
+            </div>
+            <div id="select-bubble-3" class="halfRight bordered dialogue-bubble arrow-down">
+                <span id="select-dialogue-3" class="dialogue"></span>
+            </div>
+            <div id="select-bubble-4" class="right bordered dialogue-bubble arrow-down">
+                <span id="select-dialogue-4" class="dialogue"></span>
             </div>
 
             <!-- Opponent Images -->
@@ -999,7 +967,7 @@
                             onclick="hideGroupSelectionTable()">
                             <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                         </button>
-                        <button class='bordered table-bug-report-button group-bug-report-button'
+                        <button class='bordered table-bug-report-button'
                             onclick="showBugReportModal()">
                             <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
                         </button>
@@ -1681,12 +1649,12 @@
                                     To submit an issue report <em>manually</em>:
                                     <ol>
                                         <li>Copy the Issue Report Data above into a text-sharing service such as <a
-                                                href="https://pastebin.com/">Pastebin</a> or <a
-                                                href="https://gist.github.com">Gist</a>.</li>
+                                                target="_blank" href="https://pastebin.com/">Pastebin</a> or <a
+                                                target="_blank" href="https://gist.github.com">Gist</a>.</li>
                                         <li>Submit your issue report (with the Data above!) to the developers on our
-                                            subreddit, <a href="https://www.reddit.com/r/spnati">/r/spnati</a> or
+                                            subreddit, <a target="_blank" href="https://www.reddit.com/r/spnati">/r/spnati</a> or
                                             through our <a
-                                                href="https://reddit.com/r/spnati/comments/98k7s4/reminder_95_percent_of_the_discussion_about_this/">Discord
+                                                target="_blank" href="https://reddit.com/r/spnati/comments/98k7s4/reminder_95_percent_of_the_discussion_about_this/">Discord
                                                 server</a>.</li>
                                     </ol>
                                     Keep in mind that bug reports sent to us are publically viewable!
@@ -1865,7 +1833,7 @@
                                     You can vote in the Re-Sort Poll here:
                                 </p>
                                 <a class="bordered smooth-button green resort-link-button"
-                                    href="https://old.reddit.com/r/spnati/comments/egnhr3/resort_ix_the_rise_of_resort/"
+                                    target="_blank" href="https://old.reddit.com/r/spnati/comments/egnhr3/resort_ix_the_rise_of_resort/"
                                     target="_blank" rel="noreferrer">Roster
                                     Re-Sort Poll 9</a>
                             </div>
@@ -1999,10 +1967,10 @@
                                         </p>
                                         <ul>
                                             <li><a
-                                                    href="https://old.reddit.com/r/spnati/">https://old.reddit.com/r/spnati/</a>
+                                                    target="_blank" href="https://old.reddit.com/r/spnati/">https://old.reddit.com/r/spnati/</a>
                                             </li>
                                             <li><a
-                                                    href="https://old.reddit.com/r/spnati/comments/ccuy2s/discussion_and_suggestion_thread/">https://old.reddit.com/r/spnati/comments/ccuy2s/discussion_and_suggestion_thread/</a>
+                                                    target="_blank" href="https://old.reddit.com/r/spnati/comments/ccuy2s/discussion_and_suggestion_thread/">https://old.reddit.com/r/spnati/comments/ccuy2s/discussion_and_suggestion_thread/</a>
                                             </li>
                                         </ul>
                                         <p>The majority of community and development discussion takes place on the
@@ -2014,7 +1982,7 @@
                                             the moderators for SPNATI have editing privileges, and being listed on it is
                                             not a rite-of-passage.</p>
                                         <p><a
-                                                href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRejQBHSnenImBLUEX5qlmxdopG0c_O9uWklerYr6v5yJ00_UUcQiOvqC6t6CUeKsRAkd2769YzA67P/pubhtml#">https://docs.google.com/spreadsheets/d/e/2PACX-1vRejQBHSnenImBLUEX5qlmxdopG0c_O9uWklerYr6v5yJ00_UUcQiOvqC6t6CUeKsRAkd2769YzA67P/pubhtml#</a>
+                                                target="_blank" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRejQBHSnenImBLUEX5qlmxdopG0c_O9uWklerYr6v5yJ00_UUcQiOvqC6t6CUeKsRAkd2769YzA67P/pubhtml#">https://docs.google.com/spreadsheets/d/e/2PACX-1vRejQBHSnenImBLUEX5qlmxdopG0c_O9uWklerYr6v5yJ00_UUcQiOvqC6t6CUeKsRAkd2769YzA67P/pubhtml#</a>
                                         </p>
                                     </div>
                                 </div>
@@ -2278,13 +2246,13 @@
                                         different sites, even with the same version number?</h4>
                                     <div class="faq-answer">
                                         <p>Versions of SPNATI with more characters tend to be rehosted versions on
-                                            proprietary porn sites. While <a href="https://spnati.net/">spnati.net</a>
+                                            proprietary porn sites. While <a target="_blank" href="https://spnati.net/">spnati.net</a>
                                             uses free hosting space, many porn sites that rehost it pay for their own
                                             server space through advertisements, so they can afford to host all of the
                                             characters online.</p>
                                         <p>However, rehosted versions are slow to update, meaning brand-new characters
                                             and bugfixes might not be present there. <a
-                                                href="https://spnati.net/">spnati.net</a> is the official version of the
+                                                target="_blank" href="https://spnati.net/">spnati.net</a> is the official version of the
                                             game and will always be the most up-to-date (including changes to this FAQ),
                                             and you can still download the offline version to play with the older and
                                             incomplete characters. The version number rarely updates and usually does
@@ -2297,7 +2265,7 @@
                                         <p>You can request that certain characters be made on the Discord servers or the
                                             following discussion thread:</p>
                                         <p><a
-                                                href="https://old.reddit.com/r/spnati/comments/ccuy2s/discussion_and_suggestion_thread/">https://old.reddit.com/r/spnati/comments/ccuy2s/discussion_and_suggestion_thread/</a>
+                                                target="_blank" href="https://old.reddit.com/r/spnati/comments/ccuy2s/discussion_and_suggestion_thread/">https://old.reddit.com/r/spnati/comments/ccuy2s/discussion_and_suggestion_thread/</a>
                                         </p>
                                         <p>However, because of the time and effort making a character requires, you are
                                             very unlikely to find someone willing to make a character for you. Instead,
@@ -2312,7 +2280,7 @@
                                     <div class="faq-answer">
                                         <p>You can download bundles for the offline version from here:</p>
                                         <p><a
-                                                href="https://spnati.net/bundles/download-bundles.html">https://spnati.net/bundles/download-bundles.html</a>
+                                                target="_blank" href="https://spnati.net/bundles/download-bundles.html">https://spnati.net/bundles/download-bundles.html</a>
                                         </p>
                                         <p>Follow the instructions on that page to download and set up the offline
                                             version. This will allow you to download the entire game and all its files;
@@ -2337,7 +2305,7 @@
                                             Also remember to use the included <code>start_offline</code> executable or
                                             script, or alternately use the workaround here:
                                             <a
-                                                href="https://old.reddit.com/r/spnati/comments/cd7h0f/possible_firefox_68_workaround_without_hosting/">https://old.reddit.com/r/spnati/comments/cd7h0f/possible_firefox_68_workaround_without_hosting/</a>
+                                                target="_blank" href="https://old.reddit.com/r/spnati/comments/cd7h0f/possible_firefox_68_workaround_without_hosting/">https://old.reddit.com/r/spnati/comments/cd7h0f/possible_firefox_68_workaround_without_hosting/</a>
                                         </p>
                                         <p>It's also possible you forgot to extract the game files from the .zip you
                                             downloaded.</p>
@@ -2349,7 +2317,7 @@
                                         <p>You can do this very easily without redownloading the game every time. Follow
                                             the instructions here:</p>
                                         <p><a
-                                                href="https://old.reddit.com/r/spnati/comments/824j7p/keep_your_offline_version_up_to_date_with_github/">https://old.reddit.com/r/spnati/comments/824j7p/keep_your_offline_version_up_to_date_with_github/</a>
+                                                target="_blank" href="https://old.reddit.com/r/spnati/comments/824j7p/keep_your_offline_version_up_to_date_with_github/">https://old.reddit.com/r/spnati/comments/824j7p/keep_your_offline_version_up_to_date_with_github/</a>
                                         </p>
                                     </div>
                                 </div>
@@ -2589,7 +2557,7 @@
                                             <li>Try running the game using the provided <code>start-offline</code>
                                                 program, located in the SPNATI directory.</li>
                                             <li>Alternatively, follow the instructions from <a
-                                                    href="https://old.reddit.com/r/spnati/comments/cd7h0f/possible_firefox_68_workaround_without_hosting/">this
+                                                    target="_blank" href="https://old.reddit.com/r/spnati/comments/cd7h0f/possible_firefox_68_workaround_without_hosting/">this
                                                     post on Reddit.</a>
                                             </li>
                                         </ul>
@@ -2604,12 +2572,12 @@
                                         <h4>Suggested Solutions:</h4>
                                         <ul>
                                             <li>Download the game using our <a
-                                                    href="https://spnati.net/bundles/download-bundles.html">bundle
+                                                    target="_blank" href="https://spnati.net/bundles/download-bundles.html">bundle
                                                     system</a>. You can extract those bundles directly into this copy of
                                                 SPNATI.</li>
                                             <li>If you're using Git to download the game, make sure that <a
-                                                    href="https://git-lfs.github.com/">Git LFS</a> is <a
-                                                    href="https://github.com/git-lfs/git-lfs/wiki/Installation">properly
+                                                    target="_blank" href="https://git-lfs.github.com/">Git LFS</a> is <a
+                                                    target="_blank" href="https://github.com/git-lfs/git-lfs/wiki/Installation">properly
                                                     installed</a> on your system.<br>Afterwards, you can run <code>git
                                                     lfs
                                                     pull</code> or re-clone to get the correct images.</li>
@@ -3091,12 +3059,16 @@
             </div>
 
             <div id="game-hidden-area" class="centred-deck-area">
+                <img id="deck" class="bordered dock-card" src="img/unknown.jpg" alt="Deck">
+                <div id="player-countdown" class="bordered" hidden>1</div>
+
                 <!-- Option Buttons -->
                 <button id="debug-button-0" class="bordered debug-button" onclick="selectDebug(0)" hidden>
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </button>
+
                 <div class="btn-group dropup game-menu-dropup" data-toggle="tooltip" data-placement="right"
-                    title="Game Menu">
+                    title="Game Menu" onclick="$(this).tooltip('hide')">
                     <button type="button" class="bordered smooth-button red dropdown-toggle menu-dropdown-button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
                             class="glyphicon glyphicon-th-list" aria-hidden="true"></span></button>
@@ -3133,11 +3105,14 @@
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                                 <span class="game-menu-label">Options</span>
                             </button></li>
+                        <li><button id="game-fullscreen-button" class="dropdown-button-item bordered smooth-button red"
+                                onclick="toggleFullscreen()">
+                                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                                <span class="game-menu-label">Toggle full screen mode</span>
+                            </button></li>
                     </ul>
                 </div>
 
-                <img id="deck" class="bordered dock-card" src="img/unknown.jpg" alt="Deck">
-                <div id="player-countdown" class="bordered" hidden>1</div>
                 <!-- Main Game Button -->
                 <button id="main-game-button" class="bordered smooth-button red" onclick="advanceGame()">Deal</button>
 
@@ -3150,7 +3125,7 @@
 
     <!-- Start of Epilogue Screen -->
     <div id="epilogue-screen" role="dialog" hidden>
-        <div id='epilogue-container' data-background='-1' data-scene='-1'>
+        <div id="epilogue-container">
             <div id="epilogue-spinner" class="spinner" style="display: none">
                 <div class="spinner-pip"></div>
                 <div class="spinner-pip"></div>
@@ -3168,6 +3143,19 @@
             <button type="button" id='epilogue-restart' class="bordered smooth-button">
                 Restart?
             </button>
+            <button type="button" id="epilogue-fullscreen-button" class="bordered smooth-button" onclick="toggleFullscreen()">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+            </button>
+            <div id="epilogue-debug-group" hidden>
+                <select id="epilogue-skip-scene"></select>
+                <button type="button" id="epilogue-skip" class="bordered smooth-button green">Skip to Scene</button>
+                <button type="button" id='epilogue-reload' class="bordered smooth-button red">
+                    Reload Epilogue
+                </button>
+                <button type="button" id='epilogue-exit' class="bordered smooth-button">
+                    Exit Epilogue
+                </button>
+	        </div>
         </div>
     </div>
     <!-- End of Epilogue Screen -->
@@ -3183,6 +3171,8 @@
                             <div class="modal-header">
                                 <h3 class="modal-title text-center">The game is now over...</h3>
                                 <h5 id="epilogue-header-text" class="modal-title text-center"></h5>
+                                <hr>
+                                <h5 id="epilogue-header-tip" class="modal-title text-center"></h5>
                             </div>
                             <div class="modal-body">
                                 <div class="modal-body-container" style="width:100%">
