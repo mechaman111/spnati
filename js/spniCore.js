@@ -87,7 +87,6 @@ var codeImportEnabled = false;
  **********************************************************************/
 
 /* Screens */
-$warningScreen = $('#warning-screen');
 $titleScreen = $('#title-screen');
 $selectScreen = $('#main-select-screen');
 $individualSelectScreen = $('#individual-select-screen');
@@ -96,7 +95,7 @@ $gameScreen = $('#game-screen');
 $epilogueScreen = $('#epilogue-screen');
 $galleryScreen = $('#gallery-screen');
 
-var allScreens = [$warningScreen, $titleScreen, $selectScreen, $individualSelectScreen, $groupSelectScreen, $gameScreen, $epilogueScreen, $galleryScreen];
+var allScreens = [$titleScreen, $selectScreen, $individualSelectScreen, $groupSelectScreen, $gameScreen, $epilogueScreen, $galleryScreen];
 
 /* Modals */
 $helpModal = $('#help-modal');
