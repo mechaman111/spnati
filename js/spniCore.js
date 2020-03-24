@@ -2273,7 +2273,7 @@ function gotoHelpPage (toPage) {
     if (toPage === 'prev') {
         curPage = (curPage > 1) ? curPage-1 : 1;
     } else if (toPage === 'next') {
-        curPage = (curPage < 7) ? curPage+1 : 7;
+        curPage = (curPage < 8) ? curPage+1 : 8;
     } else {
         curPage = toPage;
     }
