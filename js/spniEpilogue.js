@@ -1192,6 +1192,7 @@ function EpiloguePlayer(epilogue) {
   this.viewIndex = 0;
   this.activeTransition = null;
   this.hotReloadScene = null;
+  this.startingDirectiveIndex = 1;
 }
 
 EpiloguePlayer.prototype.load = function () {
@@ -1247,8 +1248,14 @@ EpiloguePlayer.prototype.onLoadComplete = function () {
       this.setupScene(this.sceneIndex, true);
       this.hotReloadScene = null;
       updateEpilogueButtons();
+
+      /* We won't be able to set startingDirectiveIndex here.
+       * It's not worth going through the trouble to remedy this, though, since it's such
+       * a minor detail in the scheme of things.
+       */
     } else {
       this.advanceScene();
+      this.startingDirectiveIndex = this.directiveIndex;
     }
 
     window.requestAnimationFrame(this.loop.bind(this));
@@ -1289,7 +1296,7 @@ EpiloguePlayer.prototype.hasMoreDirectives = function () {
 }
 
 EpiloguePlayer.prototype.hasPreviousDirectives = function () {
-  return this.sceneIndex > 0 || this.directiveIndex > 1;
+  return this.sceneIndex > 0 || this.directiveIndex > this.startingDirectiveIndex;
 }
 
 EpiloguePlayer.prototype.loop = function (timestamp) {
