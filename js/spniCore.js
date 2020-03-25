@@ -2487,7 +2487,17 @@ function toggleFullscreen() {
     if (document.fullscreenElement) {
         document.exitFullscreen();
     } else {
-        document.documentElement.requestFullscreen();
+        /* handle vendor prefixes for out of date browsers
+         * (probably don't need -moz- prefix though, according to Sentry data)
+         */
+        var d = document.documentElement;
+        if (d.requestFullscreen) {
+            d.requestFullscreen();
+        } else if (d.webkitRequestFullScreen) {
+            d.webkitRequestFullScreen();
+        } else if (d.msRequestFullscreen) {
+            d.msRequestFullscreen();
+        }
     }
 }
 
