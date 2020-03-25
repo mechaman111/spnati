@@ -492,7 +492,7 @@ function validateTitleScreen () {
 	/* count clothing */
 	var clothingCount = [0, 0, 0, 0];
 	var genderClothingChoices = clothingChoices[humanPlayer.gender];
-	for (i = 0; i < genderClothingChoices.length; i++) {
+	for (var i = 0; i < genderClothingChoices.length; i++) {
 		if (selectedChoices[i]) {
 			if (genderClothingChoices[i].position == UPPER_ARTICLE) {
 				clothingCount[0]++;
