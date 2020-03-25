@@ -3371,6 +3371,15 @@ ul.dropdown-menu>li {
     font-size: 1.05em;
 }
 
+#epilogue-left-edge {
+  left: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20%;
+  z-index: 10001;
+}
+
 .epilogue-content {
     width: 100%;
     height: 100%;
@@ -3404,33 +3413,52 @@ ul.dropdown-menu>li {
 
 #epilogue-buttons {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
-    height: 100%;
-    text-align: center;
     z-index: 10001;
+    width: 100%;
+    height: 2em;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.2s;
 }
-
+#epilogue-buttons:not(.debug-active) .debug {
+    display: none;
+}
+#epilogue-buttons>div {
+    position: absolute;
+    bottom: 0;
+}
+#epilogue-buttons>div:first-child {
+    left: 1em;
+}
+#epilogue-buttons>div:last-child {
+    right: 1em;
+}
+#epilogue-buttons.show, #epilogue-buttons.force-show, #epilogue-buttons.debug-active {
+    opacity: 1;
+}
 #epilogue-buttons button {
-    display: block;
-    margin: 0.5rem;
-    padding: 0.3rem 0.5rem;
+    display: inline-block;
+    padding: 0.3em;
+    border: 0 none;
+    vertical-align: middle;
+    background: transparent;
+    color: #ccc;
+    transition-property: color;
+    transition-duration: 0.5s;
+}
+#epilogue-buttons button:hover:enabled {
+    color: #fff;
 }
 #epilogue-buttons select {
-    display: block;
-    margin: 0.5rem;
+    display: inline-block;
+    font-size: 0.8em;
 }
 
-#epilogue-buttons>button:disabled {
+#epilogue-buttons button:disabled {
     opacity: 0.4;
-}
-
-#epilogue-buttons>#epilogue-restart:disabled {
-    visibility: hidden;
-}
-
-#epilogue-fullscreen-button {
-    font-size: 1.2em;
 }
 
 .modal-footer-button-row {
