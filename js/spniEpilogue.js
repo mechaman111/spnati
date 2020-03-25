@@ -3078,18 +3078,36 @@ SceneTransition.prototype.flyThrough = function (t) {
 }
 
 // Event handlers
-$('#epilogue-buttons').on('click', ':input', function(ev) {
-    ev.stopPropagation();
-});
-$('#epilogue-container').click(moveEpilogueForward);
-$epilogueNextButton.click(moveEpilogueForward);
-$epiloguePrevButton.click(moveEpilogueBack);
-$('#epilogue-buttons').click(moveEpilogueBack);
-$epilogueRestartButton.click(showRestartModal);
+$("#epilogue-buttons").on('click', ':input', function(ev) {
+  ev.stopImmediatePropagation();
 
-$epilogueHotReloadBtn.click(hotReloadEpilogue);
-$('#epilogue-skip').click(skipToEpilogueScene);
-$('#epilogue-exit').click(showRestartModal);
+  var action = $(ev.target).attr("data-action");
+  switch (action) {
+    case "next":
+      moveEpilogueForward();
+      break;
+    case "prev":
+      moveEpilogueBack();
+      break;
+    case "exit":
+      showRestartModal();
+      break;
+    case "reload":
+      hotReloadEpilogue();
+      break;
+    case "skip":
+      skipToEpilogueScene();
+      break;
+    case "fullscreen":
+      toggleFullscreen();
+      break;
+    default:
+      break;
+  }
+});
+
+$('#epilogue-container').click(moveEpilogueForward);
+$('#epilogue-buttons').click(moveEpilogueBack);
 
 function epilogue_keyUp(ev) {
     if (epiloguePlayer && epiloguePlayer.loaded) {
