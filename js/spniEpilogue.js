@@ -3119,8 +3119,13 @@ $("#epilogue-buttons").on('click', ':input', function(ev) {
   }
 });
 
-$('#epilogue-container').click(moveEpilogueForward);
-$('#epilogue-left-edge').click(moveEpilogueBack);
+$('#epilogue-container').click(function(ev) {
+    if (ev.pageX < window.innerWidth * 0.2) {
+        moveEpilogueBack();
+    } else {
+        moveEpilogueForward();
+    }
+});
 
 function epilogue_keyUp(ev) {
     if (epiloguePlayer && epiloguePlayer.loaded) {
