@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 2:52:09 AM on March 13, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 4:14:11 AM on March 16, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.6</version>
     <first>Toyosatomimi no</first>
@@ -2508,11 +2508,20 @@
         </trigger>
 
         <trigger id="hand">
-            <case stage="1" alsoPlaying="ryuko" alsoPlayingStage="0" timeInStage="0" totalRounds="1" notSaidMarker="Tojiko_Intro" priority="501">
+            <case stage="1" totalRounds="1" priority="501">
+                <condition role="self" timeInStage="0" notSaidMarker="Tojiko_Intro" />
+                <condition role="other" character="ryuko" stage="0" />
                 <state img="#-Nervous.png" marker="Tojiko_Intro">Ah, did your wife come along as well, Lady Ryuko? That is to say, the woman who was here earlier is my consort, Soga no Tojiko.</state>
             </case>
-            <case stage="1" alsoPlaying="saki_zls" timeInStage="0" notSaidMarker="Tojiko_Intro" priority="501">
+            <case stage="1" priority="501">
+                <condition role="self" timeInStage="0" notSaidMarker="Tojiko_Intro" />
+                <condition role="other" character="saki_zls" />
                 <state img="#-Nervous.png" marker="Tojiko_Intro">Ah, Soga no Tojiko is my consort from my time as Imperial Regent. Or, to use the modern parlance, my wife.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="saki_zls" stage="7" timeInStage="0" />
+                <condition role="other" character="sakura" stage="0-7" />
+                <state img="#-Happy.png">Oh? Then forgive me, Lady Sakura. I know better than to provoke a maiden with a heart firm as yours.</state>
             </case>
             <case stage="0-8" alsoPlaying="mulan" alsoPlayingStage="2-4" alsoPlayingTimeInStage="1" totalNaked="0" totalMasturbating="0" totalFinished="0" alsoPlayingSayingMarker="mulan_duel">
                 <state img="#-Smug.png">You must be quite confident in your abilities, Lady Mulan. Very well, we shall see which one of us the the superior cross-dresser of legend!</state>
@@ -2532,10 +2541,12 @@
             <case stage="0-8" alsoPlaying="remilia" alsoPlayingStage="8" alsoPlayingTimeInStage="0" alsoPlayingSaidMarker="chair">
                 <state img="#-Pensive.png">Odd, that chair wasn’t here &lt;i&gt;before&lt;/i&gt; you started. When did Miss Sakuya come back?</state>
             </case>
-            <case stage="0-8" alsoPlaying="chihiro" alsoPlayingStage="5" alsoPlayingTimeInStage="0">
+            <case stage="0-8">
+                <condition role="other" character="chihiro" stage="5" timeInStage="0" />
                 <state img="#-Smug.png">Greetings second, greener Chihiro.</state>
             </case>
-            <case stage="0-8" alsoPlaying="saki_zls" alsoPlayingStage="6" alsoPlayingTimeInStage="0">
+            <case stage="0-8">
+                <condition role="other" character="saki_zls" stage="6" timeInStage="0" />
                 <state img="#-Nervous.png">Wait, you were keeping that a secret, Miss Nikaidou?</state>
             </case>
             <case stage="0-8" alsoPlaying="jessie" alsoPlayingSayingMarker="JessieQA_Backdoor">
@@ -4536,7 +4547,7 @@
 
         <trigger id="tie">
             <case stage="8">
-                <condition count="0-" status="not_naked" />
+                <condition count="0-" status="not_lost_all" />
                 <condition count="2-" status="alive" />
                 <state img="#-Angry.png">This was to be the moment of truth! I demand a do over!</state>
             </case>
