@@ -1389,7 +1389,11 @@ EpiloguePlayer.prototype.resizeViewport = function () {
         this.views[i].resize();
     }
     $(':root').css('font-size', (this.activeScene.view.viewportHeight / 75)+'px');
-    $('#epilogue-buttons').css('font-size', (window.innerHeight / 45) + 'px');
+
+    $('#epilogue-buttons').css('font-size', Math.max(window.innerHeight / 50,
+                                                     Math.min(30 * (window.devicePixelRatio || 1),
+                                                              window.innerWidth / 20,
+                                                              window.innerHeight / 12)) + 'px');
     this.draw();
 }
 
@@ -3150,7 +3154,15 @@ $('#epilogue-screen').on('mouseleave', function() {
 });
 
 $('#epilogue-screen').on('mousemove', function(ev) {
-    $('#epilogue-buttons').toggleClass('show', ev.pageY / window.innerHeight > 0.85);
+    $('#epilogue-buttons').toggleClass('show', ev.pageY >= 0.75 * window.innerHeight);
+});
+$('#epilogue-screen').on('touchstart touchmove', function(ev) {
+    var show = false;
+    for (var i = 0; i < ev.originalEvent.changedTouches.length; i++) {
+        if (ev.originalEvent.touches[0].pageY
+            >= 0.75 * window.innerHeight) show = true;
+    }
+    $('#epilogue-buttons').toggleClass('show', show);
 });
 
 $epilogueScreen.data('keyhandler', epilogue_keyUp);
