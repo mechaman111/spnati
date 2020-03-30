@@ -128,9 +128,6 @@ var selectableOpponents = loadedOpponents;
 var hiddenOpponents = [];
 var loadedGroups = [[], []];
 var selectableGroups = [loadedGroups[0], loadedGroups[1]];
-var tagSet = {};
-var sourceSet = {};
-var creatorSet = {};
 
 /* page variables */
 var groupSelectScreen = 0; /** testing = 1, released presets = 0 */
@@ -221,12 +218,16 @@ function loadListingFile () {
 	var outstandingLoads = 0;
 	var opponentGroupMap = {};
 	var opponentMap = {};
+    var tagSet = {};
+    var sourceSet = {};
+    var creatorSet = {};
+
 	var onComplete = function(opp, index) {
 		if (opp) {
 			if (opp.id in opponentMap) {
 				loadedOpponents[opponentMap[opp.id]] = opp;
-                opp.tags.forEach(function(tag) {
-                    tagSet[canonicalizeTag(tag)] = true;
+                opp.searchTags.forEach(function(tag) {
+                    tagSet[tag] = true;
                 });
                 sourceSet[opp.source] = true;
                 
