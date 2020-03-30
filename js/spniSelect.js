@@ -259,8 +259,8 @@ function loadListingFile () {
             updateSelectionVisuals();
         }
         if (outstandingLoads == 0) {
-            $tagList.append(Object.keys(tagSet).sort().map(function(tag) {
-                return new Option(canonicalizeTag(tag));
+            $tagList.append(Object.keys(TAG_ALIASES).concat(Object.keys(tagSet)).sort().map(function(tag) {
+                return new Option(tag);
             }));
             $sourceList.append(Object.keys(sourceSet).sort().map(function(source) {
                 return new Option(source);
