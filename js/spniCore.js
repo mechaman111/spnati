@@ -1441,7 +1441,8 @@ function initialSetup () {
         }
     });
     $(document).keyup(function(ev) {
-        if (ev.key == 'f') {
+        if ((ev.key == 'f' || (ev.key == 'F' && !ev.shiftKey))
+            && !$(document.activeElement).is('input, select, textarea')) {
             toggleFullscreen();
         } else if (ev.keyCode == 112) { // F1
             showHelpModal();
