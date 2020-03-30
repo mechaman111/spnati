@@ -1436,12 +1436,14 @@ function initialSetup () {
         bubbleArrowOffsetRules.push(pair);
     }
     $(document).keydown(function(ev) {
-        if (ev.keyCode == 9) {
+        if (ev.keyCode == 9) {  // Tab
             $("body").addClass('focus-indicators-enabled');
         }
     });
-    $(document).on('keyup', function(ev) {
-        if (ev.keyCode == 112) { // F1
+    $(document).keyup(function(ev) {
+        if (ev.key == 'f') {
+            toggleFullscreen();
+        } else if (ev.keyCode == 112) { // F1
             showHelpModal();
         }
     });
