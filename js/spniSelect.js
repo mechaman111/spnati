@@ -219,8 +219,10 @@ function splitCreatorField (field) {
 function loadListingFile () {
 	/* clear the previous meta information */
 	var outstandingLoads = 0;
-	var opponentGroupMap = {};
-	var opponentMap = {};
+    var totalLoads = 0;
+    var opponentGroupMap = {};
+    var opponentMap = {};
+    
 	var onComplete = function(opp, index) {
 		if (opp) {
 			if (opp.id in opponentMap) {
@@ -249,6 +251,7 @@ function loadListingFile () {
 				});
 			}
 		}
+        
         if (--outstandingLoads % 16 == 0) {
             updateSelectableOpponents();
             updateIndividualSelectScreen();
@@ -257,7 +260,11 @@ function loadListingFile () {
             updateGroupSelectScreen(true);
             updateSelectionVisuals();
         }
+
         if (outstandingLoads == 0) {
+            $("#warning-start-container").removeAttr("hidden");
+            $("#warning-load-container").hide();
+
             $tagList.append(Object.keys(tagSet).sort().map(function(tag) {
                 return new Option(canonicalizeTag(tag));
             }));
@@ -267,6 +274,9 @@ function loadListingFile () {
             $creatorList.append(Object.keys(creatorSet).sort().map(function(source) {
                 return new Option(source);
             }));
+        } else {
+            var progress = Math.floor(100 * (totalLoads - outstandingLoads) / totalLoads);
+            $(".game-load-progress").text(progress.toString(10));
         }
 	}
 
@@ -321,6 +331,7 @@ function loadListingFile () {
 
                 if (available[id]) {
                     outstandingLoads++;
+                    totalLoads++;
 					if (doInclude) {
 						opponentMap[id] = oppDefaultIndex++;
 					}
