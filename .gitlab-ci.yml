@@ -1,6 +1,28 @@
 stages:
+    - test
     - deploy
     - bundle
+
+run_tests:
+    stage: test
+    tags:
+        - testing
+    only:
+        refs:
+            - branches
+            - merge_requests
+        changes:
+            - .gitlab-ci.yml
+            - config.xml
+            - index.html
+            - css/*
+            - js/*
+            - tests/**/*
+    script:
+        - cd tests/ # note: should probably do something like prepare-online.sh, but that would take a long time...
+        - pipenv sync
+        - pipenv run pytest --headless --driver Firefox tests/
+        - pipenv run pytest --headless --driver Chrome tests/
 
 deploy_production:
     stage: deploy
