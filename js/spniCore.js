@@ -20,6 +20,7 @@ var DEFAULT_COSTUME_SET = null;
 var USAGE_TRACKING = undefined;
 var SENTRY_INITIALIZED = false;
 var RESORT_ACTIVE = false;
+var TESTING_ACTIVE = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
@@ -1526,7 +1527,7 @@ function loadConfigFile () {
             }
 
             var _epilogues_unlocked = $(xml).find('epilogues-unlocked').text().trim();
-            if (_epilogues_unlocked.toLowerCase() === 'true') {
+            if (_epilogues_unlocked.toLowerCase() === 'true' || TESTING_ACTIVE) {
                 EPILOGUES_UNLOCKED = true;
                 console.error('All epilogues unlocked in config file. You better be using this for development only and not cheating!');
             } else {
@@ -1629,7 +1630,7 @@ function loadConfigFile () {
                 COLLECTIBLES_ENABLED = true;
                 console.log("Collectibles enabled");
                 
-                if ($(xml).find('collectibles-unlocked').text() === 'true') {
+                if ($(xml).find('collectibles-unlocked').text() === 'true' || TESTING_ACTIVE) {
                     COLLECTIBLES_UNLOCKED = true;
                     console.log("All collectibles force-unlocked");
                 }
@@ -1670,6 +1671,16 @@ function loadGeneralCollectibles () {
             console.error("Error loading general collectibles: "+status+" - "+err);
         }
 	});
+}
+
+/* This is executed by Selenium-controlled browsers before running test cases.
+ * Note that this function may be called before / concurrently with loadConfigFile!
+ */
+function initializeTestingMode() {
+    TESTING_ACTIVE = true;
+    DEBUG = true;
+    EPILOGUES_UNLOCKED = true;
+    COLLECTIBLES_UNLOCKED = true;
 }
 
 /**
