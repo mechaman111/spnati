@@ -19,10 +19,12 @@ run_tests:
             - js/*
             - tests/**/*
     script:
-        - cd tests/ # note: should probably do something like prepare-online.sh, but that would take a long time...
+         # note: should probably do something like prepare-online.sh, but that would take a long time...
+        - cd tests/
         - pipenv sync
-        - pipenv run pytest --headless --driver Firefox tests/
-        - pipenv run pytest --headless --driver Chrome tests/
+        # Note: for some reason, leaving the screen resolution at default causes Chrome to crash during tests.
+        - xvfb-run -a --server-args "-screen 0 1024x768x16" ./run-tests.sh
+    interruptible: true
 
 deploy_production:
     stage: deploy
