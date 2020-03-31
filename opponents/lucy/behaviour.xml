@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.8 at 12:46:09  on marts 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 6:03:56 PM on March 31, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.2.8</version>
+    <version>v5.5</version>
     <first>Lucy</first>
     <last>Heartfilia</last>
     <label>Lucy</label>
@@ -24,11 +24,8 @@
         <tag>athletic</tag>
         <tag>shaved</tag>
         <tag>large_breasts</tag>
-        <tag>fairy</tag>
-        <tag>supernatural</tag>
-        <tag>spirit</tag>
         <tag>tattoo</tag>
-        <tag>weapon</tag>
+        <tag from="0" to="3">weapon</tag>
         <tag>no_bra</tag>
         <tag from="0" to="2">thigh_highs</tag>
         <tag>cheerful</tag>
@@ -44,6 +41,7 @@
         <tag from="5" to="9">cheater</tag>
         <tag from="5" to="5">assisted_strip</tag>
         <tag>magic</tag>
+        <tag>fairy_tail</tag>
     </tags>
     <nicknames />
 
@@ -131,6 +129,15 @@
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0">
+                <condition role="other" character="gray" />
+                <state img="#-happy.png">Oh, Gray! Thanks for coming, it'll be good to have a friend here!</state>
+            </case>
+            <case stage="0" id="47" priority="5">
+                <condition count="3" status="alive" />
+                <condition role="other" character="gray" />
+                <state img="#-nervous.png">Uh, is there a reason you only picked Fairy Tail members to play with?</state>
+            </case>
             <case stage="0">
                 <state img="#-start.png">I know the job request you posted asked for Cana Alberona because of her card skills but she was too, er...hungover to come, so here I am.</state>
             </case>
@@ -321,6 +328,14 @@
         </trigger>
 
         <trigger id="must_strip_losing">
+            <case stage="5">
+                <condition role="other" character="gray" />
+                <state img="#-loss.png">Don't you dare look, Gray!</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="gray" />
+                <state img="#-loss.png">Naked in front of a guildmate...again. Why me?!</state>
+            </case>
             <case stage="0">
                 <state img="#-loss.png">So...any chance you were just joking about this being strip poker? Please?</state>
             </case>
@@ -430,7 +445,8 @@
                 <condition role="other" character="streaming-chan" sayingMarker="gen_talent" />
                 <state img="#-embarrassed.png">S-sexual?! Uh...to be honest...well, I've never really had a boyfriend.</state>
             </case>
-            <case stage="0-9" id="35" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="gen_bed">
+            <case stage="0-9" id="35">
+                <condition role="other" character="streaming-chan" sayingMarker="gen_bed" />
                 <state img="#-angry_goofy.png">What I do in my bed is no one else's business! Not that my guildmates ever stay out of my bedroom.</state>
             </case>
             <case stage="4-7">
@@ -958,6 +974,14 @@
         </trigger>
 
         <trigger id="male_medium_crotch_is_visible">
+            <case stage="0-9">
+                <condition role="target" character="gray" stage="1" />
+                <state img="#-angry_goofy.png">No Gray, you can't! And for the last time, stop taking all your clothes off!</state>
+            </case>
+            <case stage="7-9">
+                <condition role="target" character="gray" />
+                <state img="#-afraid.png">Juvia is going to kill me if she finds out we both got naked in a game of strip poker!</state>
+            </case>
             <case stage="0-6">
                 <state img="#-naked_boy.png">I'm glad I'm not naked, but I don't want to see you naked either!</state>
                 <state img="#-annoyed.png">For the record, you can not borrow my panties to cover up. I didn't think I had to say that until I met Gray Fullbuster.</state>
@@ -1127,6 +1151,10 @@
         </trigger>
 
         <trigger id="male_must_masturbate">
+            <case stage="0-9">
+                <condition role="target" character="gray" />
+                <state img="#-naked_boy.png">Gray! You've been getting naked in public since the day I met you but this is ridiculous!</state>
+            </case>
             <case stage="0" oneShotId="6">
                 <condition filter="exhibitionist" role="target" />
                 <state img="#-crying.png">I can't believe I couldn't beat you when you were trying to lose on purpose ~name~.</state>
@@ -1196,6 +1224,10 @@
         </trigger>
 
         <trigger id="male_finished_masturbating">
+            <case stage="0-9">
+                <condition role="target" character="gray" />
+                <state img="#-naked_boy.png">And now I've seen one of my best friends do that. Great.</state>
+            </case>
             <case stage="0-7">
                 <state img="#-shocked.png">I can't believe I just watched that!</state>
                 <state img="#-angry.png">Hey! Watch where you're pointing that thing!</state>
@@ -1363,6 +1395,10 @@
         </trigger>
 
         <trigger id="masturbating">
+            <case stage="8" oneShotId="12">
+                <condition role="other" character="gray" />
+                <state img="#-embarrassed.png">I swear I'm not thinking about you Gray!</state>
+            </case>
             <case stage="8">
                 <state img="#-horny1.png">I should be humiliated to do this in front of people, so what is this feeling?</state>
                 <state img="#-horny2.png">W-what? I-it's not like I enjoy you watching this.</state>
@@ -1391,6 +1427,10 @@
         </trigger>
 
         <trigger id="finished_masturbating">
+            <case stage="9">
+                <condition role="other" character="gray" />
+                <state img="#-finished.png">Gray, if anyone ever finds out what just happened you're a dead man.</state>
+            </case>
             <case stage="9">
                 <state img="#-finished.png">I will never ever tell anyone at the guild I just did that.</state>
             </case>
