@@ -671,6 +671,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
      * including implied tags.
      */
     this.baseTags = $metaXml.find('tags').children().map(function() { return canonicalizeTag($(this).text()); }).get();
+    this.removeTag(this.id);
     this.updateTags();
     this.searchTags = expandTagsList(this.baseTags);
     
@@ -1442,7 +1443,8 @@ function initialSetup () {
         }
     });
     $(document).keyup(function(ev) {
-        if (ev.key == 'f') {
+        if ((ev.key == 'f' || (ev.key == 'F' && !ev.shiftKey))
+            && !$(document.activeElement).is('input, select, textarea')) {
             toggleFullscreen();
         } else if (ev.keyCode == 112) { // F1
             showHelpModal();
@@ -1821,8 +1823,8 @@ function restartGame () {
 
     /* there is only one call to this right now */
     $epilogueSelectionModal.hide();
-    $epilogueScreen.hide();
     clearEpilogue();
+    screenTransition($epilogueScreen, $titleScreen);
     screenTransition($gameScreen, $titleScreen);
     autoResizeFont();
 }

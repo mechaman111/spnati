@@ -128,9 +128,6 @@ var selectableOpponents = loadedOpponents;
 var hiddenOpponents = [];
 var loadedGroups = [[], []];
 var selectableGroups = [loadedGroups[0], loadedGroups[1]];
-var tagSet = {};
-var sourceSet = {};
-var creatorSet = {};
 
 /* page variables */
 var groupSelectScreen = 0; /** testing = 1, released presets = 0 */
@@ -218,17 +215,20 @@ function splitCreatorField (field) {
  ************************************************************/
 function loadListingFile () {
 	/* clear the previous meta information */
-	var outstandingLoads = 0;
+    var outstandingLoads = 0;
     var totalLoads = 0;
-    var opponentGroupMap = {};
-    var opponentMap = {};
-    
+	var opponentGroupMap = {};
+	var opponentMap = {};
+    var tagSet = {};
+    var sourceSet = {};
+    var creatorSet = {};
+
 	var onComplete = function(opp, index) {
 		if (opp) {
 			if (opp.id in opponentMap) {
 				loadedOpponents[opponentMap[opp.id]] = opp;
-                opp.tags.forEach(function(tag) {
-                    tagSet[canonicalizeTag(tag)] = true;
+                opp.searchTags.forEach(function(tag) {
+                    tagSet[tag] = true;
                 });
                 sourceSet[opp.source] = true;
                 
@@ -264,9 +264,9 @@ function loadListingFile () {
         if (outstandingLoads == 0) {
             $("#warning-start-container").removeAttr("hidden");
             $("#warning-load-container").hide();
-
-            $tagList.append(Object.keys(tagSet).sort().map(function(tag) {
-                return new Option(canonicalizeTag(tag));
+            
+            $tagList.append(Object.keys(TAG_ALIASES).concat(Object.keys(tagSet)).sort().map(function(tag) {
+                return new Option(tag);
             }));
             $sourceList.append(Object.keys(sourceSet).sort().map(function(source) {
                 return new Option(source);

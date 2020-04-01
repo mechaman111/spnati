@@ -108,6 +108,13 @@ var GLOBAL_CASE = "global";
 var TAG_ALIASES = {
     // Add new aliases as follows:
     // 'alias_name': 'tag_name',
+    // Franchise abbreviations
+    'jojos_bizarre_adventure':    'jjba',
+    'mlp':   'my_little_pony',
+    'tengen_toppa_gurren_lagann': 'ttgl',
+    // Other aliases
+    'redhead': 'ginger',
+    'sword':   'blade',
 };
 
 /* Tag implications list, mapping tags to lists of implied tags. */
