@@ -492,11 +492,7 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
   var markers = [];
   $epilogue.children("markers").children("marker").each(function() {
     var $elem = $(this);
-    var name = $elem.attr("name");
-    var op = $elem.attr("op") || "=";
-    var rhs = $elem.attr("value");
-
-    var markerOp = new MarkerOperation(name, op[0], rhs, parentCase);
+    var markerOp = parseMarkerXML(this, null);
 
     /* By default, execute marker ops only when playing from the game end modal. */
     var run_on = $elem.attr('when');

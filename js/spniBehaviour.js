@@ -342,6 +342,22 @@ function parseMarkerOp(operationSpec, parentCase) {
 }
 
 /**
+ * Construct a MarkerOperation from an XML `<marker>` element. 
+ * 
+ * @param {HTMLElement} xml 
+ * @param {Case} parentCase 
+ * @returns {MarkerOperation}
+ */
+function parseMarkerXML(xml, parentCase) {
+    var $elem = $(xml);
+    var name = $elem.attr("name");
+    var op = $elem.attr("op") || "=";
+    var rhs = $elem.attr("value");
+
+    return new MarkerOperation(name, op[0], rhs, parentCase);
+}
+
+/**
  * Evaluate the new value of the referenced marker after carrying out
  * this operation.
  * 
@@ -468,12 +484,7 @@ function State($xml_or_state, parentCase) {
     if (this.rawDialogue = $xml.children('text').html()) {
         this.alt_images = $xml.children('alt-img');
         $xml.children('markers').children('marker').each(function (idx, elem) {
-            var $elem = $(elem);
-            var name = $elem.attr("name");
-            var op = $elem.attr("op") || "=";
-            var rhs = $elem.attr("value");
-
-            this.markers.push(new MarkerOperation(name, op[0], rhs, parentCase));
+            this.markers.push(parseMarkerXML(elem, parentCase));
         }.bind(this));
     } else {
         this.rawDialogue = $xml.html();
