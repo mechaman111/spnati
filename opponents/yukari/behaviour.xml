@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 11:51:38 PM on March 31, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 3:48:11 PM on April 01, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Yukari</first>
@@ -66,14 +66,14 @@
 
     <poses>
         <pose id="0-greet" baseHeight="1520">
-            <sprite id="back" src="yukari/0-back.png" x="0" y="0" />
+            <sprite id="back" src="yukari/0-back.png" x="0" y="-110" />
             <directive type="animation" id="back" ease="smooth" interpolation="linear">
                 <keyframe time="0" x="0" />
                 <keyframe time="2" x="0" />
             </directive>
             <directive type="animation" id="back" ease="smooth" interpolation="none">
-                <keyframe time="0" y="0" />
-                <keyframe time="2" y="120" />
+                <keyframe time="0" y="-110" />
+                <keyframe time="2" y="0" />
             </directive>
             <directive type="animation" id="back" ease="linear" interpolation="none">
                 <keyframe time="0" src="yukari/0-back.png" />
@@ -156,13 +156,19 @@
     <behaviour>
         <trigger id="selected">
             <case stage="0">
-                <state img="custom:#-greet"></state>
+                <state img="custom:#-greet">Ara~ Good day to you, ~player~.</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_selected">
+            <case stage="0">
+                <state img="#-ara.png">Ara~ Good day to you, ~player~.</state>
             </case>
         </trigger>
 
         <trigger id="game_start">
             <case stage="0">
-                <state img="#-excited.png">Ara~ Good day to you,~Player~. Are you ready to start?</state>
+                <state img="#-excited.png">Are we all ready to start?</state>
             </case>
         </trigger>
 
