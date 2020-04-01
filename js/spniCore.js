@@ -68,9 +68,6 @@ var humanPlayer;
 /* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
 var timeoutID;
 
-/* Modal to return to from the feedback modal, or null if not returning to any modal. */
-var feedbackModalReturn = null;
-
 /**********************************************************************
  * Game Wide Global Variables
  **********************************************************************/
@@ -1992,16 +1989,10 @@ function updateFeedbackMessage() {
 
 $("#feedback-report-character").change(updateFeedbackMessage);
 
-function showFeedbackReportModal(fromModal) {
+function showFeedbackReportModal($fromModal) {
     $('#feedback-report-character').empty().append(
         $('<option value="" disabled data-load-indicator="">Loading...</option>'),
     ).val("");
-
-    if (!fromModal) {
-        feedbackModalReturn = null;
-    } else {
-        feedbackModalReturn = fromModal;
-    }
 
     for (let i = 1; i < 5; i++) {
         if (players[i]) {
@@ -2035,17 +2026,17 @@ function showFeedbackReportModal(fromModal) {
         $('<option value="-1" data-general-option="">General Game Feedback</option>')
     );
 
-    if (fromModal) fromModal.modal('hide');
+    if ($fromModal) {
+        $fromModal.modal('hide');
+        $feedbackReportModal.one('hide.bs.modal', function() {
+            $fromModal.modal('show');
+        });
+    }
     $feedbackReportModal.modal('show');
 }
 
 function closeFeedbackReportModal() {
     $feedbackReportModal.modal('hide');
-
-    if (feedbackModalReturn) {
-        feedbackModalReturn.modal('show');
-        feedbackModalReturn = null;
-    }
 }
 
 $feedbackReportModal.on('shown.bs.modal', function () {
