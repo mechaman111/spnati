@@ -377,8 +377,6 @@ MarkerOperation.prototype.evaluate = function (self, opp) {
             this.rhs, self, opp, 
             this.parentCase && this.parentCase.variableBindings
         );
-    } else if (typeof(rhs) !== 'number') {
-        rhs = rhs.toString();
     }
 
     var parsed = parseInt(rhs, 10);
@@ -396,6 +394,10 @@ MarkerOperation.prototype.evaluate = function (self, opp) {
             this.perTarget ? opp : null,
             true
         );
+
+        if (typeof(rhs) !== 'number' || isNaN(rhs)) {
+            rhs = 0;
+        }
 
         switch (this.op) {
         case '+':
