@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 11:51:38 PM on March 31, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 10:03:12 PM on April 01, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Yukari</first>
@@ -16,40 +16,42 @@
 
     <tags>
         <tag from="0" to="2">blonde</tag>
-        <tag from="3" to="6">blue_hair</tag>
-        <tag from="3" to="6">exotic_hair</tag>
-        <tag from="0" to="6">short_hair</tag>
-        <tag from="3" to="6">messy_hair</tag>
-        <tag from="0" to="6">blue_eyes</tag>
-        <tag from="3" to="6">red_eyes</tag>
-        <tag from="3" to="6">heterochromia</tag>
+        <tag from="3" to="5">blue_hair</tag>
+        <tag from="3" to="5">exotic_hair</tag>
+        <tag from="0" to="5">short_hair</tag>
+        <tag from="3" to="5">messy_hair</tag>
+        <tag from="0" to="3">blue_eyes</tag>
+        <tag from="6" to="7">red_eyes</tag>
+        <tag from="3" to="5">heterochromia</tag>
         <tag from="0" to="2">fair-skinned</tag>
-        <tag from="3" to="6">pale-skinned</tag>
+        <tag from="3" to="5">pale-skinned</tag>
         <tag from="0" to="2">tall</tag>
-        <tag from="3" to="6">shaved</tag>
-        <tag from="3" to="6">medium_breasts</tag>
+        <tag from="3" to="5">shaved</tag>
+        <tag from="0" to="2">hairy</tag>
+        <tag from="0" to="2">pubic_hair</tag>
+        <tag from="3" to="5">medium_breasts</tag>
         <tag from="0" to="2">large_breasts</tag>
-        <tag from="5" to="5">non-human</tag>
-        <tag from="3" to="6">supernatural</tag>
-        <tag from="3" to="6">spirit</tag>
+        <tag from="6" to="7">monster</tag>
+        <tag from="3" to="7">non-human</tag>
+        <tag from="3" to="7">supernatural</tag>
+        <tag from="3" to="7">spirit</tag>
+        <tag from="0" to="2">formal_attire</tag>
         <tag from="0" to="0">hat</tag>
-        <tag from="3" to="7">no_bra</tag>
-        <tag from="2" to="2">thigh_highs</tag>
-        <tag from="3" to="6">cheerful</tag>
+        <tag from="3" to="5">no_bra</tag>
+        <tag from="3" to="5">cheerful</tag>
         <tag from="0" to="2">confident</tag>
-        <tag from="3" to="6">ditzy</tag>
+        <tag from="3" to="5">ditzy</tag>
         <tag from="0" to="2">fancy</tag>
-        <tag from="3" to="6">kind</tag>
-        <tag from="3" to="6">moe</tag>
+        <tag from="3" to="5">kind</tag>
+        <tag from="3" to="5">moe</tag>
         <tag from="0" to="2">smart</tag>
-        <tag from="0" to="2">bisexual</tag>
-        <tag from="3" to="6">japanese</tag>
-        <tag from="0" to="6">fantasy</tag>
+        <tag from="0" to="5">bisexual</tag>
+        <tag>japanese</tag>
+        <tag>fantasy</tag>
         <tag from="0" to="6">video_game</tag>
         <tag from="0" to="6">touhou_project</tag>
-        <tag from="3" to="6">bottomless_first</tag>
-        <tag from="5" to="5">flies</tag>
-        <tag from="0" to="6">magic</tag>
+        <tag from="6" to="7">flies</tag>
+        <tag>magic</tag>
     </tags>
     <nicknames />
     <stylesheet>styles.css</stylesheet>
@@ -66,14 +68,14 @@
 
     <poses>
         <pose id="0-greet" baseHeight="1520">
-            <sprite id="back" src="yukari/0-back.png" x="0" y="0" />
+            <sprite id="back" src="yukari/0-back.png" x="0" y="-110" />
             <directive type="animation" id="back" ease="smooth" interpolation="linear">
                 <keyframe time="0" x="0" />
                 <keyframe time="2" x="0" />
             </directive>
             <directive type="animation" id="back" ease="smooth" interpolation="none">
-                <keyframe time="0" y="0" />
-                <keyframe time="2" y="120" />
+                <keyframe time="0" y="-110" />
+                <keyframe time="2" y="0" />
             </directive>
             <directive type="animation" id="back" ease="linear" interpolation="none">
                 <keyframe time="0" src="yukari/0-back.png" />
@@ -156,13 +158,19 @@
     <behaviour>
         <trigger id="selected">
             <case stage="0">
-                <state img="custom:#-greet"></state>
+                <state img="custom:#-greet">Ara~ Good day to you, ~player~.</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_selected">
+            <case stage="0">
+                <state img="#-ara.png">Ara~ Good day to you, ~player~.</state>
             </case>
         </trigger>
 
         <trigger id="game_start">
             <case stage="0">
-                <state img="#-excited.png">Ara~ Good day to you,~Player~. Are you ready to start?</state>
+                <state img="#-excited.png">Are we all ready to start?</state>
             </case>
         </trigger>
 
@@ -1073,22 +1081,19 @@
 
         <trigger id="must_masturbate_first">
             <case stage="5">
-                <state img="#-shocked.png">You want me to &lt;i&gt;masturbate&lt;/i&gt;!? </state>
+                <state img="#-shocked.png">You want me to &lt;i&gt;masturbate&lt;/i&gt;!? Are you kidding me!?</state>
             </case>
         </trigger>
 
         <trigger id="must_masturbate">
             <case stage="5">
-                <state img="#-shocked.png">E-eeeeh? Wait, uh, hold on! I didn't know this would happen!</state>
+                <state img="#-shocked.png">You want me to &lt;i&gt;masturbate&lt;/i&gt;!? Are you kidding me!?</state>
             </case>
         </trigger>
 
         <trigger id="start_masturbating">
             <case stage="5">
-                <state img="custom:#-escape"></state>
-            </case>
-            <case stage="5">
-                <state img="custom:#-escape"></state>
+                <state img="custom:#-escape">Everyone knows that if you do sexy things in a horror movie you're going to get killed! I'm leaving!</state>
             </case>
         </trigger>
 

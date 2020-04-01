@@ -404,7 +404,7 @@ function startDealPhase () {
     /* April Fool's: rig the deck. Sometimes. */
     var numPlayers = getNumPlayersInStage(STATUS_ALIVE);
     var rigDeckFor = -1;
-    if (numPlayers >= 2 && getRandomNumber(0, 100) >= 75) {
+    if (numPlayers >= 2 && getRandomNumber(0, 100) >= 85) {
         var j = getRandomNumber(0, numPlayers);
         for (var i = 0; i < players.length; i++) {
             if (players[i] && !players[i].out && j-- === 0) {
