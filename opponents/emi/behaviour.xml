@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 6:25:27 PM on March 31, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 1:43:58 PM on April 01, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Emi</first>
@@ -843,6 +843,17 @@
                 <condition role="self" saidMarker="pirate" notSaidMarker="captain" />
                 <state img="#-annoyed.png" marker="captain" set-label="Captain Ibarazaki">Yarr, me hearties, give 'em a broadside wit' th' long guns! Ahoy! Me name be cap'n Ibarazaki t' ye!</state>
             </case>
+            <case stage="0-8" oneShotId="47" priority="699">
+                <condition role="other" character="megumin" />
+                <test expr="~megumin.costume~" value="megu" />
+                <state img="#-interested.png" marker="megu_beauty">Megumin, what happened? I've never seen you look so &lt;i&gt;gorgeous!&lt;/i&gt; </state>
+                <state img="#-interested.png" marker="megu_beauty">Wow, Megumin! Is this some magic spell you've learned? I'm in &lt;i&gt;awe&lt;/i&gt; of your new found beauty!</state>
+                <state img="#-interested.png" marker="megu_beauty">Can we stop for a moment and recognize how drop-dead gorgeous Megumin looks today? I can't believe it!</state>
+            </case>
+            <case stage="0-8" oneShotId="45" priority="500">
+                <condition role="other" character="scm" sayingMarker="scm_emi" />
+                <state img="#-annoyed.png" marker="emi_scm">You'll be calling &lt;i&gt;me&lt;/i&gt; "daddy" if you keep it up, you sad little man. </state>
+            </case>
             <case stage="0-8" oneShotId="39">
                 <condition role="other" character="rin" stage="0" sayingMarker="name_stated" />
                 <alternative alsoPlaying="rin" alsoPlayingStage="0" totalRounds="0" alsoPlayingNotSaidMarker="name_stated">
@@ -852,6 +863,11 @@
                     <condition count="1" filter="hanako" />
                 </alternative>
                 <state img="#-calm.png">Well, I &lt;i&gt;didn't know&lt;/i&gt; you were going to be auditioning to be the Inventory's next womanizing intelligence officer. You're always full of surprises!</state>
+            </case>
+            <case stage="0" oneShotId="49">
+                <condition role="other" character="astolfo_bean_plushie" />
+                <condition role="other" character="freddie" />
+                <state img="#-pout.png">With company like this, ~player~ must &lt;i&gt;really hate me...&lt;/i&gt;</state>
             </case>
             <case stage="0-8">
                 <condition role="other" character="rin" stage="0-2" sayingMarker="rin_emi_drained" />
@@ -1197,6 +1213,13 @@
                 <state img="#-happy.png" oneShotId="48">Better watch your back, ~leader~! I'm not about to let you keep that lead!</state>
                 <state img="#-pout.png" oneShotId="49">~leader~'s certainly having some great luck right now. Must be nice.</state>
             </case>
+            <case stage="0-8">
+                <condition role="other" character="astolfo_bean_plushie" />
+                <state img="#-confused.png" oneShotId="217">This bean thing is going to kill us all. I blame you, ~player~. </state>
+                <state img="#-confused.png" oneShotId="218">Why did you have to invite this bean thing to play with us, ~player~? Do you hate yourself that much? </state>
+                <state img="#-confused.png" oneShotId="220">Why did you put the bean with us, ~player~? There are other ways to torment yourself that don't bring &lt;i&gt;us&lt;/i&gt; along...</state>
+                <state img="#-pout.png" oneShotId="219">I wouldn't mind if the bean sucked my dick, but I don't want it to call me &lt;i&gt;gay!&lt;/i&gt; I've still got some major hang ups about that...</state>
+            </case>
             <case stage="0-2">
                 <condition count="1-4" filter="lonely" stage="4" />
                 <condition role="self" notSaidMarker="lonely" />
@@ -1304,7 +1327,7 @@
                 <state img="#-shrug.png" oneShotId="198">Who needs a tanning booth? Just run really, really fast! Apparently, that works!</state>
                 <state img="#-frustrated.png" oneShotId="199">Everyone at school is going to think I fell in soot or something!</state>
                 <state img="#-interested.png" oneShotId="200">How dark do you like your toast, ~player~?</state>
-                <state img="#-frustrated.png" oneShotId="201" weight="3">I'd rather screw a cactus than deal with this right now. Can't I just have a normal gave of strip poker?!</state>
+                <state img="#-frustrated.png" oneShotId="201" weight="3">I'd rather screw a cactus than deal with this right now. Can't I just have a normal game of strip poker?!</state>
             </case>
             <case stage="4-5" priority="0">
                 <test expr="~self.costume~" value="AprilFools" />
@@ -2312,6 +2335,11 @@
         </trigger>
 
         <trigger id="female_must_strip">
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="0-2" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-frustrated.png">I don't think I can handle her taking anything off in her current, gorgeous state. I might have to leave the room and cool down! </state>
+            </case>
             <case stage="0-10" totalRounds="5-">
                 <condition role="target" character="rin" stage="0" />
                 <condition role="self" notSaidMarker="pirate" />
@@ -2671,6 +2699,10 @@
                 <condition role="self" notSaidMarker="pirate" />
                 <state img="#-laughing.png">Make it good, Michelangelo!</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="glass_joe" stage="0" />
+                <state img="#-content.png">Well, you better find &lt;i&gt;something&lt;/i&gt; to take off, buddy. </state>
+            </case>
             <case stage="0">
                 <condition filter="creepy" role="target" />
                 <state img="#-confused.png">You remind me of Kenji.</state>
@@ -2724,6 +2756,17 @@
                 <state img="#-bored.png">I expected better than a couple of fancy wrist bands.</state>
                 <state img="#-bored.png">I'd prefer you enlighten us with a better view next time, Pit. I'm sure you're capable.</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="scm" stage="1" />
+                <state img="#-annoyed.png">Really? One shoe at a time? You're pathetic. </state>
+                <state img="#-annoyed.png">Seriously? You're gonna play it &lt;i&gt;that&lt;/i&gt; way? </state>
+                <state img="#-annoyed.png">You've &lt;i&gt;got&lt;/i&gt; to be kidding me. One shoe at a time? Seriously?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="scm" stage="3" />
+                <state img="#-annoyed.png">I can't &lt;i&gt;believe&lt;/i&gt; this idiot.</state>
+                <state img="#-annoyed.png" marker="scm_pluck">You gonna start plucking your eyebrows one by one to stay in the game? </state>
+            </case>
             <case stage="5-10">
                 <test expr="~clothing~" value="belt" />
                 <state img="#-bored.png">I hope this means your pants are coming off soon!</state>
@@ -2766,6 +2809,21 @@
         </trigger>
 
         <trigger id="female_removing_accessory">
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="0" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-shocked.png">Careful, Megumin! I can't take it! </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="1" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-shocked.png">&lt;i&gt;No!&lt;/i&gt; Not the rocket hands! You're making this really difficult! I can't hold my lust back much longer!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="4" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-shocked.png">Could you delete my uncontrollable arousal while you're at it? It's making me feel uncomfortable!</state>
+            </case>
             <case stage="0-10" totalRounds="0">
                 <condition role="target" character="megumin" stage="0" sayingMarker="firstever" />
                 <state img="#-bored.png">Just don't have a boom boom tonight and we'll get along just fine. </state>
@@ -2887,6 +2945,10 @@
                 <state img="#-interested.png">Yarr! I'll race ye t' th' plunder! </state>
                 <state img="#-excited.png">Bet on the fastest girl on no legs to find it first! </state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="zenobia" stage="0" />
+                <state img="#-annoyed.png">I don't like sand. It's all coarse, and rough, and irritating. And it gets everywhere.</state>
+            </case>
             <case stage="0-1">
                 <condition role="target" character="kim" />
                 <state img="#-happy.png">You run too, right Kim?</state>
@@ -2938,6 +3000,21 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="1" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-frustrated.png">Hold it together...hold it together...hold it together...!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="2" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-frustrated.png">I can do this...I can do this! Just look away...look away from her &lt;i&gt;perfection...&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="5" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-frustrated.png">If only she would pop my cherry like that...with those...stubby little hands of hers...</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="rin" stage="2" sayingMarker="emi_friend" />
                 <condition role="self" notSaidMarker="pirate" />
@@ -3040,6 +3117,10 @@
             <case stage="0-10">
                 <condition role="target" character="megumin" stage="5" />
                 <state img="#-excited.png">Aww! You look so &lt;i&gt;cute&lt;/i&gt; without the hat!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="zenobia" stage="1" />
+                <state img="#-content.png">Or what? You'll bury us at the beach? </state>
             </case>
             <case stage="8" priority="302">
                 <condition role="target" character="kyu" saidMarker="wordsanddeeds" />
@@ -3214,6 +3295,10 @@
         </trigger>
 
         <trigger id="male_removed_minor">
+            <case stage="0-10">
+                <condition role="target" character="ae86" stage="3" />
+                <state img="#-content.png">I don't think it's taking anything off. Can we just consider that maybe a car shouldn't be playing strip poker? Am I the crazy one here? </state>
+            </case>
             <case stage="5-8 10">
                 <condition role="target" layers="2-" />
                 <state img="#-laughing.png" oneShotId="50">Don't worry, ~name~! I'll help you lose a couple more rounds so you can keep going.</state>
@@ -3260,6 +3345,16 @@
                 <condition role="target" character="erufuda" stage="0" sayingMarker="akko_shapeshift" />
                 <condition role="other" character="akko" saying="Why not just use magic? I shapeshift all the time and it burns tons of calories!" />
                 <state img="#-content.png">Yeah, practice what you preach...</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="3" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-sad.png">Okay...okay...it's only socks. I think my phantom pains can override my inner confusions...</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="5" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-shocked.png">I didn't know you had such a voluptuous neck, Megumin! Incredible!</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="juri" stage="1" saying="I'll take off my gloves. Boring, I know. But I have to keep things interesting." />
@@ -3372,6 +3467,10 @@
                 <state img="#-laughing.png">Sorry, buddy, the puns aren't going to stop! </state>
                 <state img="#-laughing.png">If you can't take the heat...get out of the inventory! </state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="1" />
+                <state img="#-confused.png">This lady gives me the creeps...</state>
+            </case>
             <case stage="8">
                 <condition role="self" saidMarker="pirate" />
                 <state img="#-content.png">I be a wee upset ye still 'ave yer ~clothing~ on in th' first place.</state>
@@ -3421,6 +3520,16 @@
                 <condition role="self" notSaidMarker="pirate" />
                 <test expr="~background.location~" value="outdoors" />
                 <state img="#-laughing.png">I hope you brought some sunscreen with you, Futaba!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="4" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-bored.png">I don't know &lt;i&gt;how&lt;/i&gt; you look in the mirror with that incredible face of yours, Megumin. How did you get so pretty? </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="6" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-shocked.png">And now you're leaving nothing to my imagination. &lt;i&gt;I can see it all!&lt;/i&gt; </state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="sonya" stage="6" sayingMarker="commando" />
@@ -3484,6 +3593,10 @@
                 <condition role="target" character="zone-tan" stage="1" />
                 <state img="#-calm.png">You can do anything with a pair of squeaky boots!</state>
                 <state img="#-calm.png" weight="2">You won't see me in boots very often. I don't have a need for ankle support!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="2" />
+                <state img="#-confused.png">Please say something, ~player~. Anything that'll make her shut up...I don't like this...</state>
             </case>
             <case stage="2-4" oneShotId="2">
                 <condition count="0" status="masturbating" />
@@ -4160,6 +4273,11 @@
                 <state img="#-interested.png">Maybe if you let the turtle out of his shell he'd look a little more remarkable!</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="scm" />
+                <state img="#-content.png">Is that a prosthetic? There's no way that's real. </state>
+                <state img="#-laughing.png">No wonder you've been hiding that thing! It's &lt;i&gt;hideous!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10">
                 <test expr="~self.costume~" value="shadow_emi" />
                 <state img="#-content.png">Am I supposed to be impressed by that? Get real. </state>
                 <state img="#-bored.png">Cool. A dick. Everyone's seen a million of 'em. </state>
@@ -4205,6 +4323,16 @@
         </trigger>
 
         <trigger id="male_large_crotch_is_visible">
+            <case stage="0-10">
+                <condition role="target" character="kool-aid" stage="3" />
+                <state img="#-happy.png">Finally. A &lt;i&gt;real&lt;/i&gt; man has joined the game! </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="glass_joe" />
+                <state img="#-interested.png">Just like a fresh baguette!</state>
+                <state img="#-interested.png">Got a cheese board to go with that? </state>
+                <state img="#-interested.png">Do you have any wine recommendations to go with this lovely baguette? </state>
+            </case>
             <case stage="0-10">
                 <test expr="~self.costume~" value="shadow_emi" />
                 <state img="#-shocked.png">That's...umm...you know...manageable. I'm &lt;i&gt;not&lt;/i&gt; perturbed!</state>
@@ -4261,6 +4389,11 @@
         </trigger>
 
         <trigger id="female_chest_will_be_visible">
+            <case stage="0-10">
+                <condition role="target" character="megumin" stage="6" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-shocked.png">She's exploding with &lt;i&gt;raw seductive power!&lt;/i&gt; Will we survive?!</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="streaming-chan" stage="5" sayingMarker="viewers" />
                 <condition role="self" notSaidMarker="pirate" />
@@ -4383,6 +4516,11 @@
 
         <trigger id="female_small_chest_is_visible">
             <case stage="0-10">
+                <condition role="target" character="megumin" stage="7" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-frustrated.png">I can't look! I can't look!! Seeing &lt;i&gt;that&lt;/i&gt; beautiful body in the nude would be blinding! I'd have &lt;i&gt;two&lt;/i&gt; disabilities!</state>
+            </case>
+            <case stage="0-10">
                 <condition role="target" character="streaming-chan" stage="6" sayingMarker="viewers" />
                 <condition role="self" notSaidMarker="pirate" />
                 <state img="#-interested.png">Proud of you, Nicole.</state>
@@ -4407,6 +4545,13 @@
             <case stage="0-4">
                 <condition role="target" character="futaba" />
                 <state img="#-happy.png">I &lt;i&gt;would&lt;/i&gt; join your for moral support, Futaba, but I'm not going to lose on purpose!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" />
+                <state img="#-shocked.png">&lt;i&gt;Omigosh&lt;/i&gt; I'm going to vomit!!</state>
+                <state img="#-shocked.png">&lt;i&gt;Please&lt;/i&gt; tell me I'm in some sick nightmare! This can't be real!</state>
+                <state img="#-shocked.png">What the hell is &lt;i&gt;that!?&lt;/i&gt;</state>
+                <state img="#-shocked.png">Dude, put that thing away! There are like, &lt;i&gt;people&lt;/i&gt; here! </state>
             </case>
             <case stage="0-10">
                 <test expr="~self.costume~" value="shadow_emi" />
@@ -4668,6 +4813,11 @@
                 <state img="#-confused.png">What is that red blob on your shirt supposed to be, anyway?</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="megumin" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-shocked.png">Is this it? Is this the day I die? How can anyone survive the sight of a perfect goddess revealing her womanhood for all to see?!</state>
+            </case>
+            <case stage="0-10">
                 <condition role="target" character="erufuda" saying="Curious what elves look like &lt;i&gt;down there?&lt;/i&gt;" />
                 <condition role="self" notSaidMarker="pirate" />
                 <state img="#-confused.png">I hope it isn't a deep fryer...</state>
@@ -4744,6 +4894,10 @@
                 <condition role="target" character="nami" />
                 <state img="#-calm.png">♩ &lt;i&gt;Hey, ho, below, below! Stowing sugar in the hold below!&lt;/i&gt; ♬</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" />
+                <state img="#-frustrated.png">Please just go away...please just go away...please just go away...</state>
+            </case>
             <case stage="6-10">
                 <condition filter="shy" role="target" />
                 <condition role="self" notSaidMarker="pirate" />
@@ -4809,6 +4963,16 @@
                 <condition role="target" character="twilight" stage="1" />
                 <condition role="self" notSaidMarker="pirate" />
                 <state img="#-excited.png">How audacious of you, Twilight! I like it!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="zenobia" stage="2" />
+                <state img="#-content.png">You probably got sand in their eye, so they left you. </state>
+                <state img="#-content.png">In a better place without a sand monster looming over them. I envy them. </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="megumin" />
+                <test expr="~target.costume~" value="megu" />
+                <state img="#-excited.png">That's it! I've done it! &lt;i&gt;I have seen my salvation!&lt;/i&gt; My lord and savior, the perfect beauty! Thank you, Megumin! </state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="coco" saying="That little strip there? That itty bitty line of hair I kept? That's telling you where you're gonna put your tongue if I lose another hand. Fair?" />
@@ -4910,6 +5074,10 @@
             <case stage="0-10">
                 <condition role="target" character="nami" />
                 <state img="#-happy.png">♩ &lt;i&gt;Stem to stern she's mighty fine! Staring at you with a mighty red shine!&lt;/i&gt; ♬ </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" />
+                <state img="#-shocked.png">...I wanna die...</state>
             </case>
             <case stage="8">
                 <condition role="self" saidMarker="pirate" />
@@ -5176,6 +5344,14 @@
                 <condition filter="gloomy" role="target" />
                 <condition role="self" notSaidMarker="gloomy" />
                 <state img="#-sad.png" marker="gloomy">Is there something I can do to cheer you up, ~name~? You don't seem to be having that much fun.</state>
+            </case>
+            <case stage="0-10" id="79" priority="141">
+                <condition role="other" character="nami_szs" stage="0" notSaidMarker="goodBye" />
+                <state img="#-content.png">Ummm, yes you did. Did you not read the flier? </state>
+            </case>
+            <case stage="0-10">
+                <condition role="other" character="nami_szs" stage="7" />
+                <state img="#-bored.png">Did the doll just...move?</state>
             </case>
             <case stage="4-10" oneShotId="11">
                 <condition status="not_naked" role="target" />
@@ -5452,6 +5628,10 @@
                 <condition role="other" character="juri" stage="0" />
                 <state img="#-content.png">Try not to strangle anyone with that belt while you're at it.</state>
             </case>
+            <case stage="0-10" id="80" priority="141">
+                <condition role="other" character="nami_szs" stage="0" sayingMarker="goodBye" />
+                <state img="#-annoyed.png">Weak. Come back when you've grown a pair, Nami! </state>
+            </case>
             <case stage="0-10">
                 <condition role="other" character="streaming-chan" saidMarker="emi_pick1" sayingMarker="emi_pick2" />
                 <state img="#-pout.png">Bug report this line if you see it!</state>
@@ -5560,6 +5740,12 @@
                 <condition role="target" character="ryuji" stage="7" />
                 <condition role="self" notSaidMarker="pirate" />
                 <state img="#-laughing.png">Is this your all out attack? Because it's &lt;i&gt;all out&lt;/i&gt; now! </state>
+            </case>
+            <case stage="0-10" oneShotId="46" priority="142">
+                <condition role="other" character="scm" stage="0-4" saidMarker="guitarinsult==2" sayingMarker="guitarinsult=0" />
+                <state img="#-content.png">Did you really need a guitar to say that? Little much. </state>
+                <state img="#-shrug.png">A little crass, but the execution was there. </state>
+                <state img="#-shrug.png">Don't quit your day job, suction boy. </state>
             </case>
             <case stage="0-10" oneShotId="13" priority="125">
                 <condition status="exposed" role="target" />
@@ -5923,6 +6109,10 @@
                 <state img="#-laughing.png">Gee, Pit. &lt;i&gt;You think?&lt;/i&gt;</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="glass_joe" />
+                <state img="#-laughing.png">Are you seriously about to do that &lt;i&gt;with your boxing gloves on?!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10">
                 <test expr="~self.costume~" value="shadow_emi" />
                 <state img="#-content.png">Don't make a mess, ~name~. Swallow that shit when you're done. </state>
                 <state img="#-interested.png">Want me to leave the room, ~name~? We don't want you finishing too early! </state>
@@ -6021,8 +6211,23 @@
 
         <trigger id="male_finished_masturbating">
             <case stage="0-10">
+                <condition role="target" character="freddie" saying="$2 to call!" />
+            </case>
+            <case stage="0-10">
                 <condition role="target" character="ryuji" />
                 <state img="#-confused.png">I have this strange feeling that I've "acquired a new vow." </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="scm" />
+                <state img="#-shocked.png">He looked like a damn &lt;i&gt;fire hose...&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10" oneShotId="48">
+                <condition role="target" character="freddie" />
+                <state img="#-confused.png">What's going to happen if I call that number? Will I regret it?</state>
+                <state img="#-confused.png">If I call that number, will I get my dad back?</state>
+                <state img="#-confused.png">If I call that number, will I turn into a pickle?</state>
+                <state img="#-confused.png">If I call that number, will I gain the ability to let others get close to me?</state>
+                <state img="#-confused.png">If I call that number, will I grow a sixth finger on my right hand?</state>
             </case>
             <case stage="8">
                 <condition role="self" saidMarker="pirate" />
@@ -6454,6 +6659,14 @@
                 <condition role="target" character="megumin" />
                 <state img="#-laughing.png">&lt;i&gt;Tharrr' she blows!!&lt;/i&gt;</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" />
+                <state img="#-confused.png">I'm just glad she's &lt;i&gt;gone!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="zenobia" />
+                <state img="#-annoyed.png">Are you telling me we're allowed to build sand castles when we lose? Nobody told me that was part of the rules! </state>
+            </case>
             <case stage="8">
                 <condition role="self" saidMarker="pirate" />
                 <state img="#-confused.png">Be that wha' I be in store fer? I needs t' win this game.</state>
@@ -6647,7 +6860,7 @@
             <case stage="10" priority="107">
                 <condition role="self" saidMarker="pirate" notSaidMarker="akko_pirate" />
                 <condition role="other" character="akko" />
-                <condition count="2" status="alive" />
+                <condition count="2-5" status="alive" />
                 <state img="#-bored.png" marker="akko_pirate">Do you know any pirate transformations, Akko? Would be nice when the game is over. I'd like to lose in style.</state>
             </case>
             <case stage="10">
@@ -6793,7 +7006,7 @@
                 <test expr="~player~" value="Anakin" />
                 <state img="shadow.png">Did you ever hear the tragedy of Dark Pit The Wise? I thought not. It’s not a story the Mods would tell you. It’s a SPNATI legend. Dark Pit was a Dark Angel of the Inventory, so powerful and so wise he could use the CE to influence the game’s code to create characters… He had such a knowledge of python that he could even keep the ones he cared about from getting culled. The dark side of the CE is a pathway to many abilities some consider to be unnatural. He became so powerful… the only thing he was afraid of was losing his power, which eventually, of course, he did. Unfortunately, he taught Moon everything he knew, then she culled him in his sleep. Ironic. He could save others from getting culled, but not himself.</state>
             </case>
-            <case stage="10">
+            <case stage="10" priority="420">
                 <condition role="self" saidMarker="akko_pirate" />
                 <condition role="other" character="akko" />
                 <test expr="~self.costume~" value="default" />
