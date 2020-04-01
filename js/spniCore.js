@@ -2003,16 +2003,22 @@ function showFeedbackReportModal(fromModal) {
         feedbackModalReturn = fromModal;
     }
 
+    var characterSelector = $("#feedback-report-character");
     for (let i = 1; i < 5; i++) {
         if (players[i]) {
             let mixedCaseID = players[i].id.charAt(0).toUpperCase() + players[i].id.substring(1);
             let selectorOption = $('<option value="' + players[i].slot + '">' + mixedCaseID + '</option>');
-            $("#feedback-report-character").append(selectorOption);
 
             if (players[i].feedbackData) {
                 $("#feedback-report-character option[data-load-indicator]").remove();
-                 updateFeedbackMessage();
+                if (players[i].feedbackData.enabled) {
+                    characterSelector.append(selectorOption);
+                }
+
+                updateFeedbackMessage();
             } else {
+                characterSelector.append(selectorOption);
+
                 $.ajax({
                     url: FEEDBACK_ROUTE + players[i].id,
                     type: "GET",
@@ -2020,6 +2026,10 @@ function showFeedbackReportModal(fromModal) {
                     success: function (data) {
                         players[i].feedbackData = data;
                         
+                        if (!data.enabled) {
+                            selectorOption.remove();
+                        }
+
                         $("#feedback-report-character option[data-load-indicator]").remove();
                         updateFeedbackMessage();
                     },
