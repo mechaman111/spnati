@@ -401,16 +401,28 @@ function startDealPhase () {
         }
     }
 
+    /* April Fool's: rig the deck. Sometimes. */
+    var numPlayers = getNumPlayersInStage(STATUS_ALIVE);
+    var rigDeckFor = -1;
+    if (numPlayers >= 2 && getRandomNumber(0, 100) >= 90) {
+        var j = getRandomNumber(0, numPlayers);
+        for (var i = 0; i < players.length; i++) {
+            if (players[i] && !players[i].out && j-- === 0) {
+                rigDeckFor = i;
+                break;
+            }
+        }
+    }
+
     setupDeck();
 
-    var numPlayers = getNumPlayersInStage(STATUS_ALIVE);
     var n = 0;
     for (var i = 0; i < players.length; i++) {
         if (players[i]) {
             console.log(players[i] + " "+ i);
             if (!players[i].out) {
                 /* deal out a new hand to this player */
-                dealHand(i, numPlayers, n++);
+                dealHand(i, numPlayers, n++, rigDeckFor === i);
             } else {
                 if (HUMAN_PLAYER == i) {
                     $gamePlayerCardArea.hide();

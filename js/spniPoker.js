@@ -267,14 +267,26 @@ function setupDeck () {
 /************************************************************
  * Deals new cards to the given player.
  ************************************************************/
-function dealHand (player, numPlayers, playersBefore) {
+function dealHand (player, numPlayers, playersBefore, shouldRigDeck) {
 	/* collect their old hand */
-	clearHand(player);
+    clearHand(player);
+    
+    var rigSuit = getRandomNumber(0, 4);
 
 	/* deal the new cards */
 	for (var i = 0; i < CARDS_PER_HAND; i++) {
 		players[player].hand.tradeIns[i] = false;
-		players[player].hand.cards[i] = activeDeck.dealCard();
+        
+        if (shouldRigDeck) {
+            players[player].hand.cards[i] = new Card(
+                rigSuit,
+                14 - i
+            );
+        } else {
+            players[player].hand.cards[i] = activeDeck.dealCard();
+        }
+        
+
 		// Simulate dealing one card to each player, then another to
 		// each player, and so on.
 		animateDealtCard(player, i, numPlayers * i + playersBefore);
