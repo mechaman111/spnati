@@ -1,7 +1,3 @@
-/* Epilogue UI elements */
-$epilogueScreen = $('#epilogue-screen');
-var epilogueContainer = document.getElementById('epilogue-container');
-
 /* Epilogue selection modal elements */
 var $epilogueSelectionModal = $('#epilogue-modal'); //the modal box
 var $epilogueHeader = $('#epilogue-header-text'); //the header text for the epilogue selection box
@@ -15,6 +11,10 @@ var epilogues = []; //list of epilogue data objects
 var chosenEpilogue = null;
 var epiloguePlayer = null;
 var epilogueSuffix = 0;
+
+/* Epilogue UI elements */
+var $epilogueScreen = $('#epilogue-screen');
+var $epilogueButtons = $('#epilogue-buttons');
 
 var $epiloguePrevButton = $('#epilogue-buttons #epilogue-previous');
 var $epilogueNextButton = $('#epilogue-buttons #epilogue-next');
@@ -1163,7 +1163,7 @@ function updateEpilogueButtons() {
     /* Force button bar visible at end of epilogue, un-force it if
      * going back, but avoid un-forcing it at the start. */
     if (epiloguePlayer.hasPreviousDirectives()) {
-        $('#epilogue-buttons').toggleClass('force-show', !epiloguePlayer.hasMoreDirectives());
+        $epilogueButtons.toggleClass('force-show', !epiloguePlayer.hasMoreDirectives());
     }
 
   if (DEBUG) {
@@ -1240,9 +1240,9 @@ EpiloguePlayer.prototype.onLoadComplete = function () {
     this.views.push(new SceneView(container, 1, this.assetMap));
     container.append($("<div id='scene-fade' class='epilogue-overlay' style='z-index: 10000'></div>")); //scene transition overlay
       this.loaded = true;
-      $('#epilogue-buttons').addClass('force-show');
+      $epilogueButtons.addClass('force-show');
       setTimeout(function() {
-          $('#epilogue-buttons').removeClass('force-show');
+          $epilogueButtons.removeClass('force-show');
       }, 3000);
     
     if (
@@ -1390,7 +1390,7 @@ EpiloguePlayer.prototype.resizeViewport = function () {
     }
     $(':root').css('font-size', (this.activeScene.view.viewportHeight / 75)+'px');
 
-    $('#epilogue-buttons').css('font-size', Math.max(window.innerHeight / 50,
+    $epilogueButtons.css('font-size', Math.max(window.innerHeight / 50,
                                                      Math.min(30 * (window.devicePixelRatio || 1),
                                                               window.innerWidth / 20,
                                                               window.innerHeight / 12)) + 'px');
@@ -3095,7 +3095,7 @@ SceneTransition.prototype.flyThrough = function (t) {
 }
 
 // Event handlers
-$("#epilogue-buttons").on('click', ':input', function(ev) {
+$epilogueButtons.on('click', ':input', function(ev) {
   ev.stopImmediatePropagation();
 
   var action = $(ev.target).attr("data-action");
@@ -3136,7 +3136,7 @@ function epilogue_keyUp(ev) {
         switch (ev.keyCode) {
         case 81:
             if (DEBUG) {
-                $('#epilogue-buttons').toggleClass('debug-active');
+                $epilogueButtons.toggleClass('debug-active');
             }
             break;
         case 37:
@@ -3149,20 +3149,20 @@ function epilogue_keyUp(ev) {
     }
 }
 
-$('#epilogue-screen').on('mouseleave', function() {
-    $('#epilogue-buttons').removeClass('show');
+$epilogueScreen.on('mouseleave', function() {
+    $epilogueButtons.removeClass('show');
 });
 
-$('#epilogue-screen').on('mousemove', function(ev) {
-    $('#epilogue-buttons').toggleClass('show', ev.pageY >= 0.75 * window.innerHeight);
+$epilogueScreen.on('mousemove', function(ev) {
+    $epilogueButtons.toggleClass('show', ev.pageY >= 0.75 * window.innerHeight);
 });
-$('#epilogue-screen').on('touchstart touchmove', function(ev) {
+$epilogueScreen.on('touchstart touchmove', function(ev) {
     var show = false;
     for (var i = 0; i < ev.originalEvent.changedTouches.length; i++) {
         if (ev.originalEvent.touches[0].pageY
             >= 0.75 * window.innerHeight) show = true;
     }
-    $('#epilogue-buttons').toggleClass('show', show);
+    $epilogueButtons.toggleClass('show', show);
 });
 
 $epilogueScreen.data('keyhandler', epilogue_keyUp);
