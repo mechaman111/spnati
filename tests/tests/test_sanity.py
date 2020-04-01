@@ -11,37 +11,31 @@ from selenium.common import exceptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.remote.webdriver import WebDriver
 import time
 
 
-def wait_for_clickable(
-    driver: webdriver.remote.webdriver.WebDriver, by: By, sel: str, timeout=10
-) -> webdriver.remote.webelement.WebElement:
+def wait_for_clickable(driver: WebDriver, by: By, sel: str, timeout=10) -> WebElement:
     """Wait for an element to become displayed and clickable."""
     return WebDriverWait(driver, timeout).until(EC.element_to_be_clickable((by, sel)))
 
 
-def wait_for_visible(
-    driver: webdriver.remote.webdriver.WebDriver, by: By, sel: str, timeout=10
-) -> webdriver.remote.webelement.WebElement:
+def wait_for_visible(driver: WebDriver, by: By, sel: str, timeout=10) -> WebElement:
     """Wait for an element to become displayed."""
     return WebDriverWait(driver, timeout).until(
         EC.visibility_of_element_located((by, sel))
     )
 
 
-def wait_for_hidden(
-    driver: webdriver.remote.webdriver.WebDriver, by: By, sel: str, timeout=10
-) -> webdriver.remote.webelement.WebElement:
+def wait_for_hidden(driver: WebDriver, by: By, sel: str, timeout=10) -> WebElement:
     """Wait for an element to become hidden."""
     return WebDriverWait(driver, timeout).until(
         EC.invisibility_of_element_located((by, sel))
     )
 
 
-def visible_element(
-    driver: webdriver.remote.webdriver.WebDriver, by: By, sel: str
-) -> webdriver.remote.webelement.WebElement:
+def visible_element(driver: WebDriver, by: By, sel: str) -> WebElement:
     """Get an element and assert that it is visible."""
     elem = driver.find_element(by, sel)
     assert elem.is_displayed(), "Element {} not visible".format(sel)
@@ -49,19 +43,42 @@ def visible_element(
     return elem
 
 
+def click_element(driver: WebDriver, by: By, sel: str, timeout=10) -> WebElement:
+    """Click on an element in the page."""
+
+    # Wait for the element to be visible and enabled first:
+    element = wait_for_clickable(driver, by, sel, timeout=timeout)
+
+    # Attempt to click the element.
+    # Dialog box fade effects and other transitions may cause clicks to be
+    # seemingly intercepted, so try a couple of times before giving up.
+    for _ in range(int(timeout) - 1):
+        try:
+            element.click()
+            break
+        except exceptions.ElementClickInterceptedException:
+            time.sleep(1)
+            continue
+    else:
+        # Last-ditch attempt, exceptions thrown here propagate upwards
+        element.click()
+
+    return element
+
+
 #
 # Sanity tests for Warning / Title screen + attached modal dialogs
 #
 
 
-def test_warning_screen(driver: webdriver.remote.webdriver.WebDriver):
+def test_warning_screen(driver: WebDriver):
     start_button = wait_for_clickable(driver, By.ID, "warning-start-button")
     assert start_button.is_displayed(), "Warning screen enter button not displayed"
 
 
-def test_title_screen(driver: webdriver.remote.webdriver.WebDriver):
+def test_title_screen(driver: WebDriver):
     # Enter title screen
-    wait_for_clickable(driver, By.ID, "warning-start-button").click()
+    click_element(driver, By.ID, "warning-start-button")
 
     # Wait for warning screen to be displayed
     wait_for_clickable(driver, By.ID, "title-start-button")
@@ -79,7 +96,7 @@ def test_title_screen(driver: webdriver.remote.webdriver.WebDriver):
         visible_element(driver, By.ID, "male-clothing-option-" + str(i))
 
     # Look for female-specific options
-    visible_element(driver, By.ID, "female-gender-button").click()
+    click_element(driver, By.ID, "female-gender-button")
 
     wait_for_clickable(driver, By.ID, "small-boobs-button")
     visible_element(driver, By.ID, "medium-boobs-button")
@@ -89,11 +106,9 @@ def test_title_screen(driver: webdriver.remote.webdriver.WebDriver):
         visible_element(driver, By.ID, "female-clothing-option-" + str(i))
 
 
-def test_background_modal(driver: webdriver.remote.webdriver.WebDriver):
+def test_background_modal(driver: WebDriver):
     # Go to background modal
-    wait_for_clickable(
-        driver, By.CSS_SELECTOR, "#title-screen .title-settings-button"
-    ).click()
+    click_element(driver, By.CSS_SELECTOR, "#title-screen .title-settings-button")
 
     # Wait for it to show up
     wait_for_visible(driver, By.ID, "game-settings-modal")
@@ -104,21 +119,17 @@ def test_background_modal(driver: webdriver.remote.webdriver.WebDriver):
     )
 
     # Look for at least one background option
-    opt = visible_element(
+    opt = click_element(
         driver, By.CSS_SELECTOR, "#game-settings-modal .background-option"
     )
-
-    opt.click()
 
     # Wait for element to become invisible
     WebDriverWait(driver, 5).until(EC.invisibility_of_element(opt))
 
 
-def test_bug_report_modal(driver: webdriver.remote.webdriver.WebDriver):
+def test_bug_report_modal(driver: WebDriver):
     # Go to bug report modal
-    wait_for_clickable(
-        driver, By.CSS_SELECTOR, "#title-screen .title-bug-report-button"
-    ).click()
+    click_element(driver, By.CSS_SELECTOR, "#title-screen .title-bug-report-button")
     wait_for_visible(driver, By.ID, "bug-report-modal")
 
     # Test "Send" button
@@ -126,15 +137,13 @@ def test_bug_report_modal(driver: webdriver.remote.webdriver.WebDriver):
     assert not send_btn.is_enabled(), "Bug report 'send' button incorrectly enabled"
 
     # Test "Close" button
-    visible_element(driver, By.ID, "bug-report-modal-button").click()
+    click_element(driver, By.ID, "bug-report-modal-button")
     wait_for_hidden(driver, By.ID, "bug-report-modal")
 
 
-def test_save_load_modal(driver: webdriver.remote.webdriver.WebDriver):
+def test_save_load_modal(driver: WebDriver):
     # Go to save/load modal
-    wait_for_clickable(
-        driver, By.CSS_SELECTOR, "#title-screen .title-load-button"
-    ).click()
+    click_element(driver, By.CSS_SELECTOR, "#title-screen .title-load-button")
     wait_for_visible(driver, By.ID, "io-modal")
 
     # Test Import button
@@ -144,33 +153,26 @@ def test_save_load_modal(driver: webdriver.remote.webdriver.WebDriver):
     ), "Save/Load modal 'import' button incorrectly enabled"
 
     # Test Close button
-    visible_element(
-        driver, By.CSS_SELECTOR, '#io-modal button[data-dismiss="modal"]'
-    ).click()
+    click_element(driver, By.CSS_SELECTOR, '#io-modal button[data-dismiss="modal"]')
     wait_for_hidden(driver, By.ID, "io-modal")
 
 
-def test_help_modal(driver: webdriver.remote.webdriver.WebDriver):
+def test_help_modal(driver: WebDriver):
     # Go to FAQ modal
-    wait_for_clickable(
-        driver, By.CSS_SELECTOR, "#title-screen .title-help-button"
-    ).click()
+    click_element(driver, By.CSS_SELECTOR, "#title-screen .title-help-button")
     wait_for_visible(driver, By.ID, "help-modal")
 
     # Test Close button
-    visible_element(
-        driver, By.CSS_SELECTOR, '#help-modal button[data-dismiss="modal"]'
-    ).click()
+    click_element(driver, By.CSS_SELECTOR, '#help-modal button[data-dismiss="modal"]')
     wait_for_hidden(driver, By.ID, "help-modal")
 
 
-def test_version_modal(driver: webdriver.remote.webdriver.WebDriver):
+def test_version_modal(driver: WebDriver):
     # Try to open the version modal
     # For some reason, this is finicky.
     for _ in range(5):
         try:
-            wait_for_clickable(driver, By.ID, "title-version-button").click()
-
+            click_element(driver, By.ID, "title-version-button")
             wait_for_visible(driver, By.ID, "version-modal")
             break
         except selenium.common.exceptions.TimeoutException:
@@ -179,19 +181,17 @@ def test_version_modal(driver: webdriver.remote.webdriver.WebDriver):
         assert False, "Could not enter version modal"
 
     # Test Close button
-    visible_element(
+    click_element(
         driver, By.CSS_SELECTOR, '#version-modal button[data-dismiss="modal"]'
-    ).click()
+    )
     wait_for_hidden(driver, By.ID, "version-modal")
 
 
-def test_tags_modal(driver: webdriver.remote.webdriver.WebDriver):
-    wait_for_clickable(driver, By.ID, "warning-start-button").click()
+def test_tags_modal(driver: WebDriver):
+    click_element(driver, By.ID, "warning-start-button")
 
     # Go to tags modal from title screen
-    wait_for_clickable(
-        driver, By.CSS_SELECTOR, "#title-screen .title-tags-button"
-    ).click()
+    click_element(driver, By.CSS_SELECTOR, "#title-screen .title-tags-button")
 
     # Look for choice inputs
     wait_for_visible(driver, By.ID, "player-tag-choice-hair_color")
@@ -208,7 +208,7 @@ def test_tags_modal(driver: webdriver.remote.webdriver.WebDriver):
     visible_element(driver, By.CSS_SELECTOR, "#player-tags-modal .clearSelections")
 
     # Test Confirm button
-    visible_element(driver, By.ID, "player-tags-confirm").click()
+    click_element(driver, By.ID, "player-tags-confirm")
     wait_for_hidden(driver, By.ID, "player-tags-modal")
 
 
@@ -217,45 +217,34 @@ def test_tags_modal(driver: webdriver.remote.webdriver.WebDriver):
 #
 
 
-def test_gallery_collectibles(driver: webdriver.remote.webdriver.WebDriver):
-    wait_for_clickable(driver, By.ID, "warning-start-button").click()
+def test_gallery_collectibles(driver: WebDriver):
+    click_element(driver, By.ID, "warning-start-button")
 
     # Go to gallery from title screen
-    wait_for_clickable(
-        driver, By.CSS_SELECTOR, "#title-screen .title-gallery-button"
-    ).click()
+    click_element(driver, By.CSS_SELECTOR, "#title-screen .title-gallery-button")
 
     # Look for some clickable item
     wait_for_visible(driver, By.ID, "collectible-gallery-screen")
-    elem = wait_for_clickable(
-        driver, By.CSS_SELECTOR, "#gallery-screen .collectibles-list-item"
-    )
 
-    elem.click()
+    click_element(driver, By.CSS_SELECTOR, "#gallery-screen .collectibles-list-item")
     wait_for_visible(driver, By.ID, "collectibles-text-pane")
     wait_for_visible(driver, By.ID, "collectibles-image-pane")
 
 
-def test_gallery_epilogues(driver: webdriver.remote.webdriver.WebDriver):
-    wait_for_clickable(driver, By.ID, "warning-start-button").click()
+def test_gallery_epilogues(driver: WebDriver):
+    click_element(driver, By.ID, "warning-start-button")
 
     # Go to gallery from title screen
-    wait_for_clickable(
-        driver, By.CSS_SELECTOR, "#title-screen .title-gallery-button"
-    ).click()
+    click_element(driver, By.CSS_SELECTOR, "#title-screen .title-gallery-button")
 
     # Go to Epilogues view
-    wait_for_clickable(
+    click_element(
         driver, By.CSS_SELECTOR, "#collectible-gallery-screen .gallery-switch-button"
-    ).click()
+    )
 
     # Look for some clickable item
     wait_for_visible(driver, By.ID, "epilogue-gallery-screen")
-    elem = wait_for_clickable(
-        driver, By.CSS_SELECTOR, "#gallery-screen .gallery-ending"
-    )
-
-    elem.click()
+    click_element(driver, By.CSS_SELECTOR, "#gallery-screen .gallery-ending")
     wait_for_visible(driver, By.ID, "gallery-selected-ending-block")
 
 
@@ -264,19 +253,19 @@ def test_gallery_epilogues(driver: webdriver.remote.webdriver.WebDriver):
 #
 
 
-def go_to_selection_screen(driver: webdriver.remote.webdriver.WebDriver):
-    wait_for_clickable(driver, By.ID, "warning-start-button").click()
+def go_to_selection_screen(driver: WebDriver):
+    click_element(driver, By.ID, "warning-start-button")
     visible_element(driver, By.ID, "player-name-field").send_keys("Selenium")
-    wait_for_clickable(driver, By.ID, "title-start-button").click()
+    click_element(driver, By.ID, "title-start-button")
 
     try:
-        wait_for_clickable(driver, By.ID, "usage-reporting-deny", timeout=7).click()
+        click_element(driver, By.ID, "usage-reporting-deny", timeout=7)
         wait_for_hidden(driver, By.ID, "usage-reporting-modal")
     except exceptions.TimeoutException:
         pass
 
 
-def test_main_select(driver: webdriver.remote.webdriver.WebDriver):
+def test_main_select(driver: WebDriver):
     go_to_selection_screen(driver)
 
     # Check for main opponent selection buttons
@@ -284,13 +273,9 @@ def test_main_select(driver: webdriver.remote.webdriver.WebDriver):
         wait_for_clickable(driver, By.ID, "select-slot-button-" + str(i))
 
     # Test UI hide button
-    visible_element(
-        driver, By.CSS_SELECTOR, "#main-select-screen .hide-table-button"
-    ).click()
+    click_element(driver, By.CSS_SELECTOR, "#main-select-screen .hide-table-button")
     wait_for_hidden(driver, By.ID, "select-slot-button-1")
-    visible_element(
-        driver, By.CSS_SELECTOR, "#main-select-screen .hide-table-button"
-    ).click()
+    click_element(driver, By.CSS_SELECTOR, "#main-select-screen .hide-table-button")
 
     for i in range(1, 5):
         visible_element(driver, By.ID, "select-slot-button-" + str(i))
@@ -321,9 +306,9 @@ def test_main_select(driver: webdriver.remote.webdriver.WebDriver):
     ), "Select screen 'Start' button incorrectly enabled"
 
 
-def test_group_select(driver: webdriver.remote.webdriver.WebDriver):
+def test_group_select(driver: WebDriver):
     go_to_selection_screen(driver)
-    wait_for_clickable(driver, By.ID, "select-group-testing-button").click()
+    click_element(driver, By.ID, "select-group-testing-button")
     wait_for_visible(driver, By.ID, "group-select-screen")
 
     # Main "select group" button:
@@ -352,9 +337,9 @@ def test_group_select(driver: webdriver.remote.webdriver.WebDriver):
     visible_element(driver, By.ID, "group-hide-button")
 
 
-def test_individual_select(driver: webdriver.remote.webdriver.WebDriver):
+def test_individual_select(driver: WebDriver):
     go_to_selection_screen(driver)
-    wait_for_clickable(driver, By.ID, "select-slot-button-2").click()
+    click_element(driver, By.ID, "select-slot-button-2")
     wait_for_visible(driver, By.ID, "individual-select-screen")
 
     # Look for top controls:
@@ -401,12 +386,12 @@ def test_individual_select(driver: webdriver.remote.webdriver.WebDriver):
 #
 
 
-def test_enter_game(driver: webdriver.remote.webdriver.WebDriver):
+def test_enter_game(driver: WebDriver):
     go_to_selection_screen(driver)
 
     # Fill all slots with opponents:
     for i in range(1, 5):
-        wait_for_clickable(driver, By.ID, "select-slot-button-" + str(i)).click()
+        click_element(driver, By.ID, "select-slot-button-" + str(i))
         wait_for_visible(driver, By.ID, "individual-select-screen")
 
         opponents = driver.find_elements(
@@ -422,9 +407,9 @@ def test_enter_game(driver: webdriver.remote.webdriver.WebDriver):
             assert False, "Could not find opponents on select screen"
 
         # Select this opponent:
-        visible_element(
+        click_element(
             driver, By.CSS_SELECTOR, "#individual-select-screen .select-button"
-        ).click()
+        )
         wait_for_visible(driver, By.ID, "main-select-screen")
 
         # Use opponent dialogue bubble visibility as a proxy for determining
@@ -432,7 +417,7 @@ def test_enter_game(driver: webdriver.remote.webdriver.WebDriver):
         wait_for_visible(driver, By.ID, "select-bubble-" + str(i), timeout=30)
 
     # Start the game.
-    wait_for_clickable(driver, By.ID, "main-select-button").click()
+    click_element(driver, By.ID, "main-select-button")
     wait_for_visible(driver, By.ID, "game-screen")
 
     # Look for game UI elements:
@@ -456,7 +441,7 @@ def test_enter_game(driver: webdriver.remote.webdriver.WebDriver):
     visible_element(driver, By.CSS_SELECTOR, "#game-screen .table-bug-report-button")
 
     # Game menus:
-    visible_element(driver, By.CSS_SELECTOR, "#game-screen .game-menu-dropup").click()
+    click_element(driver, By.CSS_SELECTOR, "#game-screen .game-menu-dropup")
     visible_element(driver, By.ID, "game-fullscreen-button")
     visible_element(driver, By.ID, "game-settings-button")
     visible_element(driver, By.ID, "game-home-button")
@@ -465,27 +450,21 @@ def test_enter_game(driver: webdriver.remote.webdriver.WebDriver):
     visible_element(driver, By.ID, "game-faq-button")
 
 
-def test_enter_epilogue(driver: webdriver.remote.webdriver.WebDriver):
-    wait_for_clickable(driver, By.ID, "warning-start-button").click()
+def test_enter_epilogue(driver: WebDriver):
+    click_element(driver, By.ID, "warning-start-button")
 
     # Go to gallery from title screen
-    wait_for_clickable(
-        driver, By.CSS_SELECTOR, "#title-screen .title-gallery-button"
-    ).click()
+    click_element(driver, By.CSS_SELECTOR, "#title-screen .title-gallery-button")
 
     # Go to Epilogues view:
-    wait_for_clickable(
+    click_element(
         driver, By.CSS_SELECTOR, "#collectible-gallery-screen .gallery-switch-button"
-    ).click()
+    )
 
     # Select an epilogue:
     wait_for_visible(driver, By.ID, "epilogue-gallery-screen")
-    elem = wait_for_clickable(
-        driver, By.CSS_SELECTOR, "#gallery-screen .gallery-ending"
-    )
-
-    elem.click()
-    visible_element(driver, By.ID, "gallery-start-ending-button").click()
+    click_element(driver, By.CSS_SELECTOR, "#gallery-screen .gallery-ending")
+    click_element(driver, By.ID, "gallery-start-ending-button")
 
     # Wait for epilogue to load:
     wait_for_visible(driver, By.ID, "epilogue-screen", timeout=30)
