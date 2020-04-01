@@ -670,6 +670,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
      * including implied tags.
      */
     this.baseTags = $metaXml.find('tags').children().map(function() { return canonicalizeTag($(this).text()); }).get();
+    this.removeTag(this.id);
     this.updateTags();
     this.searchTags = expandTagsList(this.baseTags);
     
