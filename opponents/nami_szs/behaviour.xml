@@ -1,0 +1,404 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--This file was machine generated using the Character Editor v5.5 at 10:32:17  on März 26, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<opponent>
+    <version>v5.5</version>
+    <first>Nami</first>
+    <last>Hito</last>
+    <label>Nami</label>
+    <gender>female</gender>
+    <size>medium</size>
+    <timer>1</timer>
+    <intelligence>average</intelligence>
+
+    <tags>
+        <tag>black_hair</tag>
+        <tag>short_hair</tag>
+        <tag>dark_eyes</tag>
+        <tag>fair-skinned</tag>
+        <tag>medium_breasts</tag>
+        <tag from="1" to="7">non-human</tag>
+        <tag>school_uniform</tag>
+        <tag>japanese</tag>
+        <tag>anime</tag>
+        <tag>manga</tag>
+        <tag>student</tag>
+    </tags>
+    <nicknames />
+
+    <start />
+
+    <wardrobe>
+        <clothing name="underwear I just made up" position="lower" type="important" />
+        <clothing name="suggestive underwear" position="upper" type="important" />
+        <clothing name="imagined item" position="other" type="extra" />
+        <clothing name="item I think that is small" position="other" type="extra" />
+        <clothing name="not existend piece of clothes" position="both" type="major" />
+    </wardrobe>
+
+    <poses>
+        <pose id="fall">
+            <sprite id="chair" src="nami_szs/chair.png" x="0" y="497" pivoty="47%" />
+            <sprite id="dollSolo" src="nami_szs/dollSolo.png" x="1" y="621" pivotx="49%" pivoty="77%" rotation="0" />
+            <directive type="animation" id="dollSolo" ease="bounce" interpolation="linear">
+                <keyframe time="0" rotation="0" />
+                <keyframe time="2" rotation="-90" />
+            </directive>
+        </pose>
+        <pose id="fallen">
+            <sprite id="chair" src="nami_szs/chair.png" x="0" y="497" pivoty="47%" />
+            <sprite id="dollSolo" src="nami_szs/dollSolo.png" x="-97" y="715" rotation="-90" />
+        </pose>
+        <pose id="goodBye">
+            <sprite id="serious" src="nami_szs/serious.png" x="0" y="0" alpha="100" />
+            <directive type="animation" id="serious" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="0" y="0" alpha="100" />
+                <keyframe time="3" x="-600" alpha="0" />
+            </directive>
+        </pose>
+    </poses>
+
+    <behaviour>
+        <trigger id="selected">
+            <case stage="0" id="1">
+                <state img="allright.png">My name is Nami Hito. I may not look so but I'm actually a truant. ...A truant who goes to school occasionally. Isn't that special?</state>
+            </case>
+        </trigger>
+
+        <trigger id="game_start">
+            <case stage="0" id="2">
+                <state img="serious.png">Are you even listening? I see... Compared to you guys that's not that special, huh?</state>
+            </case>
+        </trigger>
+
+        <trigger id="swap_cards">
+            <case stage="0-5" priority="100">
+                <condition role="self" notSaidMarker="goodBye" />
+                <test expr="~cards~" value="1" />
+                <state img="normal.png">I don't get all the rules by now, but I only exchange one card.</state>
+            </case>
+            <case stage="0-5" priority="100">
+                <condition role="self" notSaidMarker="goodBye" />
+                <test expr="~cards~" value="0" />
+                <state img="normal.png">I better keep my cards for the start and look if I need to exchange them later</state>
+            </case>
+            <case stage="0-5" priority="99">
+                <condition role="self" notSaidMarker="goodBye" />
+                <state img="normal.png">For the start I'll exchange ~cards~ cards.</state>
+            </case>
+            <case stage="0-5">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="good_hand">
+            <case stage="0-5">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="okay_hand">
+            <case stage="0-5">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="bad_hand">
+            <case stage="0-5">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="hand">
+            <case stage="0" id="3" priority="100">
+                <condition role="self" notSaidMarker="goodBye" />
+                <state img="allright.png">I'm pretty good at card games you know? I even won a few rounds when I played Old Maid on a class trip with my friends.</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip">
+            <case stage="0" id="4" priority="100">
+                <condition role="self" notSaidMarker="goodBye" />
+                <state img="shocked.png">Eeeeeeeeeeeeeeeeeeeeeh? Did I hear that right? Stripping? This is strip poker!? I didn't assign for that.</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip_winning">
+            <case stage="0-4">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip_normal">
+            <case stage="0-4">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip_losing">
+            <case stage="0-4">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="stripping">
+            <case stage="0" id="5">
+                <condition role="self" notSaidMarker="goodBye" />
+                <state img="custom:goodBye" marker="goodBye">Sorry, if I was disturbing you... I'm leaving. But if you like, pretend I'm still there, okay?</state>
+            </case>
+            <case stage="0-4" id="8">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="stripped">
+            <case stage="1-5">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="tie">
+            <case stage="0-7">
+                <state img="doll.png">I'm in despair! A tie has left me in despair!!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_chest_will_be_visible">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="male_chest_is_visible">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="male_crotch_will_be_visible">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="male_small_crotch_is_visible">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="male_medium_crotch_is_visible">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="male_large_crotch_is_visible">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="female_chest_will_be_visible">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="female_chest_is_visible">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="female_crotch_will_be_visible">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="female_crotch_is_visible">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_lost">
+            <case stage="0" id="6" priority="100">
+                <condition role="self" notSaidMarker="goodBye" />
+                <state img="shocked.png">Eeeeeeeeeeeeeeeeeeeeeh? Did I hear that right? Stripping? This is strip poker!? I didn't assign for that.</state>
+            </case>
+            <case stage="0-6" priority="99">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_stripping">
+            <case stage="0" id="7" priority="100">
+                <condition role="self" notSaidMarker="goodBye" />
+                <state img="custom:goodBye" marker="goodBye">Sorry, if I was disturbing you... I'm leaving. But if you like, pretend I'm still there, okay?</state>
+            </case>
+            <case stage="0-6" priority="99">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_stripped">
+            <case stage="0" priority="100">
+                <condition role="self" notSaidMarker="goodBye" />
+                <state img="custom:goodBye" marker="goodBye">Sorry, if I was disturbing you... I'm leaving. But if you like, pretend I'm still there, okay?</state>
+            </case>
+            <case stage="0-6" priority="99">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="male_start_masturbating">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="male_masturbating">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="male_finished_masturbating">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="female_start_masturbating">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="female_masturbating">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="female_finished_masturbating">
+            <case stage="0-6">
+                <state img="doll.png"></state>
+            </case>
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="must_masturbate_first">
+            <case stage="5">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="must_masturbate">
+            <case stage="5">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="start_masturbating">
+            <case stage="5">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="masturbating">
+            <case stage="6">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="heavy_masturbating">
+            <case stage="6">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="finishing_masturbating">
+            <case stage="6">
+                <state img="custom:fall"></state>
+            </case>
+        </trigger>
+
+        <trigger id="finished_masturbating">
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+        <trigger id="game_over_victory">
+            <case stage="0-5">
+                <state img="doll.png"></state>
+            </case>
+        </trigger>
+
+        <trigger id="game_over_defeat">
+            <case stage="7">
+                <state img="custom:fallen"></state>
+            </case>
+        </trigger>
+
+    </behaviour>
+</opponent>
