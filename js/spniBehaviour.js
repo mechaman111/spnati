@@ -244,6 +244,167 @@ function expandTagsList(input_tags) {
     return output_tags;
 }
 
+/* Marker Operation Objects */
+
+/**
+ * Represents an operation on a marker.
+ * @param {string} operationSpec
+ * @param {Case} parentCase
+ */
+function MarkerOperation(operationSpec, parentCase) {
+    var match = operationSpec.match(/^(?:(\+|-)([\w-]+\*?)|([\w-]+\*?)\s*([-+*%\/]?=)\s*(.*?)\s*)$/);
+    var base_name = operationSpec;
+
+    /**
+     * The operation to perform on the referenced marker.
+     * One of '=', '+', '-', '*', '/', '%'.
+     */
+    this.op = '=';
+
+    /**
+     * The right-hand side value for this marker operation.
+     */
+    this.rhs = 1;
+
+    if (match) {
+        if (match[1]) {
+            /* First alternative: increment or decrement ops
+             *  match[1] = operation type ('+' or '-')
+             *  match[2] = marker name, incl. per-target signifier
+             */
+            base_name = match[2];
+
+            this.op = match[1];
+            this.rhs = 1;
+        } else {
+            /* second alternative: set operation
+             *  match[3] = marker name, incl. per-target signifier
+             *  match[4] = operation
+             *  match[5] = value
+             * 
+             * match[4] is either going to be a two-character operation
+             * (+=, -=, *=, etc.) or just '='.
+             * Either way, we only need the first character of match[4].
+             */
+            base_name = match[3];
+
+            this.op = match[4][0];
+            this.rhs = match[5];
+        }
+    } else {
+        base_name = operationSpec;
+    }
+
+    /**
+     * Whether this marker operation works with perTarget markers or not.
+     */
+    this.perTarget = base_name.endsWith('*');
+
+    /**
+     * The base name of the marker affected by this operation.
+     */
+    this.name = this.perTarget ? base_name.slice(0, -1) : base_name;
+
+    /**
+     * The parent Case that will be used for expanding variables
+     * in the right-hand side of this operation, if necessary.
+     * (used for e.g. variable bindings)
+     */
+    this.parentCase = parentCase || null;
+}
+
+/**
+ * Evaluate the new value of the referenced marker after carrying out
+ * this operation.
+ * 
+ * @param {Player} self
+ * @param {Player} opp
+ * @returns {number | string}
+ */
+MarkerOperation.prototype.evaluate = function (self, opp) {
+    if (!self) return;
+
+    /* Convert this.rhs to either a number value if possible.
+     * Otherwise make it a string.
+     */
+    var rhs = this.rhs;
+    if (typeof(rhs) === 'string') {
+        rhs = expandDialogue(
+            this.rhs, self, opp, 
+            this.parentCase && this.parentCase.variableBindings
+        );
+    } else if (typeof(rhs) !== 'number') {
+        rhs = rhs.toString();
+    }
+
+    var parsed = parseInt(rhs, 10);
+    if (!isNaN(parsed)) {
+        rhs = parsed;
+    }
+
+    if (this.op === '=') {
+        /* For = ops, just return the RHS directly */
+        return rhs;
+    } else {
+        /* For arithmetic ops, convert the current marker value to a number first */
+        var lhs = self.getMarker(
+            this.name,
+            this.perTarget ? opp : null,
+            true
+        );
+
+        switch (this.op) {
+        case '+':
+        default:
+            return lhs + rhs;
+        case '-':
+            return lhs - rhs;
+        case '*':
+            return lhs * rhs;
+        case '/':
+            return (rhs === 0) ? 0 : Math.round(lhs / rhs);
+        case '%':
+            return (rhs === 0) ? 0 : lhs % rhs;
+        }
+    }
+}
+
+/**
+ * Evaluate this operation and apply the new calculated marker
+ * value.
+ * 
+ * @param {Player} self
+ * @param {Player} opp
+ */
+MarkerOperation.prototype.apply = function (self, opp) {
+    if (!self) return;
+
+    var new_val = this.evaluate(self, opp);
+    self.setMarker(
+        this.name,
+        this.perTarget ? opp : null,
+        new_val
+    );
+}
+
+/**
+ * Make a snapshot of this marker operation that can be serialized as
+ * JSON.
+ * 
+ * @param {Player} self
+ * @param {Player} opp
+ * @param {Case} contextCase
+ */
+MarkerOperation.prototype.serialize = function (self, opp) {
+    return {
+        name: this.name,
+        op: this.op,
+        perTarget: this.perTarget,
+        value: this.evaluate(self, opp)
+    };
+}
+
+
 /**********************************************************************
  *****                  State Object Specification                *****
  **********************************************************************/
@@ -268,8 +429,19 @@ function State($xml_or_state, parentCase) {
     this.location = $xml.attr('location') || '';
     this.alt_images = null;
 
+    /** @type {MarkerOperation[]} */
+    this.markers = [];
+    
+    var markerOp = $xml.attr('marker');
+    if (markerOp) {
+        this.markers.push(new MarkerOperation(markerOp, parentCase));
+    }
+
     if (this.rawDialogue = $xml.children('text').html()) {
         this.alt_images = $xml.children('alt-img');
+        $xml.children('marker').each(function (idx, elem) {
+            this.markerOps.push(new MarkerOperation($(elem).text(), parentCase));
+        }.bind(this));
     } else {
         this.rawDialogue = $xml.html();
     }
@@ -300,8 +472,6 @@ function State($xml_or_state, parentCase) {
      */
     this.legacyPersistentFlag = ($xml.attr('persist-marker') === 'true');
 
-    var markerOp = $xml.attr('marker');
-
     if (collectibleId) {
         this.collectible = {id: collectibleId, op: 'unlock', val: null};
         
@@ -323,81 +493,43 @@ function State($xml_or_state, parentCase) {
             }
         }
     }
-    
-    if (markerOp) {
-        var match = markerOp.match(/^(?:(\+|-)([\w-]+)(\*?)|([\w-]+)(\*?)\s*=\s*(.*?)\s*)$/);
-        var name;
-        
-        this.marker = {name: null, perTarget: false, op: null, val: null};
-        
-        if (match) {
-            this.marker.perTarget = !!(match[3] || match[5]);
-            
-            if (match[1] === '+') {
-                // increment marker value
-                this.marker.op = '+';
-                this.marker.name = match[2];
-            } else if (match[1] === '-') {
-                // decrement marker value
-                this.marker.op = '-';
-                this.marker.name = match[2];
-            } else {
-                // set marker value
-                this.marker.op = '=';
-                this.marker.name = match[4];
-                this.marker.val = match[6];
-            }
-        } else {
-            this.marker.op = '=';
-            this.marker.perTarget = markerOp.endsWith('*');
-            this.marker.name = this.marker.perTarget ? markerOp.slice(0, -1) : markerOp;
-            this.marker.val = 1;
+}
+
+/**
+ * Evaluate a particular marker change tied to this state.
+ * 
+ * @param {string} name
+ * @param {Player} self
+ * @param {Player} opp
+ * @param {boolean} perTarget
+ */
+State.prototype.evaluateMarker = function (name, self, opp, perTarget) {
+    for (var i = 0; i < this.markers.length; i++) {
+        var marker = this.markers[i];
+
+        if (marker.name === name && ((perTarget && opp) || !marker.perTarget)) {
+            return marker.evaluate(self, opp);
         }
     }
 }
 
-State.prototype.evaluateMarker = function (self, opp) {
-    if (!this.marker) return;
+/**
+ * Apply all marker changes tied to this state.
+ * 
+ * @param {Player} self
+ * @param {Player} opp
+ */
+State.prototype.applyMarkers = function (self, opp) {
+    for (var i = 0; i < this.markers.length; i++) {
+        var marker = this.markers[i];
 
-    if (this.marker.op === '=') {
-        if (typeof(this.marker.val) === 'number') return this.marker.val;
-        
-        var val = expandDialogue(
-            this.marker.val, self, opp, 
-            this.parentCase && this.parentCase.variableBindings
+        var newVal = marker.evaluate(self, opp);
+        self.setMarker(
+            marker.name,
+            marker.perTarget ? opp : null,
+            newVal
         );
-        
-        var cast = parseInt(val, 10);
-        if (!isNaN(cast)) {
-            return cast;
-        } else {
-            return val;
-        }
-    } else {
-        /* Process + and - ops */
-        var curVal = self.getMarker(
-            this.marker.name,
-            this.marker.perTarget ? opp : null,
-            true
-        );
-
-        if (this.marker.op === '+') {
-            return !curVal ? 1 : curVal + 1;
-        } else if (this.marker.op === '-') {
-            return !curVal ? 0 : curVal - 1;
-        }
     }
-}
-
-State.prototype.applyMarker = function (self, opp) {
-    if (!this.marker) return;
-    
-    var newVal = this.evaluateMarker(self, opp);
-    self.setMarker(
-        this.marker.name,
-        this.marker.perTarget ? opp : null,
-        newVal
-    );
 }
 
 State.prototype.expandDialogue = function(self, target) {
@@ -496,7 +628,7 @@ State.prototype.checkUnwanteds = function (self, target) {
     var ok = !players.some(function(p) { // Check that none of the other players' unwanted lists are violated,
         if (p == self) return false;  // Shouldn't happen
         if (!p.chosenState || !p.updatePending || !p.chosenState.parentCase) return false; // Ignore if they don't have a case
-        if (this.marker && p.chosenState.parentCase.unwantedMarkers
+        if (this.markers.length > 0 && p.chosenState.parentCase.unwantedMarkers
             && p.chosenState.parentCase.unwantedMarkers.some(function(item) {
                 if (self == item[0]) {
                     self.chosenState = this;  // Temporarily set chosenState to this state to be able to use checkMarker()
@@ -993,12 +1125,17 @@ function checkMarker(predicate, self, target, currentOnly) {
     }
     
     if (currentOnly) {
-        return !self.updatePending
-            && self.chosenState
-            && self.chosenState.marker
-            && self.chosenState.marker.name === name
-            && ((perTarget && target) || !self.chosenState.marker.perTarget)
-            && evalOperator(self.chosenState.evaluateMarker(self, target), op, cmpVal);
+        if (self.updatePending || !self.chosenState) {
+            return false;
+        }
+
+        var evaluated = self.chosenState.evaluateMarker(name, self, target, perTarget);
+        if (evaluated === undefined) {
+            /* Could not find any marker matching criteria */
+            return false;
+        } 
+
+        return evalOperator(evaluated, op, cmpVal);
     }
 
     val = self.getMarker(name, perTarget ? target : null) || 0;
@@ -1912,8 +2049,8 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     
     this.chosenState.expandDialogue(this, this.currentTarget);
 
-    if (this.chosenState.marker) {
-        this.chosenState.applyMarker(this, this.currentTarget);
+    if (this.chosenState.markers.length > 0) {
+        this.chosenState.applyMarkers(this, this.currentTarget);
     }
     
     if (this.chosenState.setLabel) {
@@ -1960,7 +2097,7 @@ Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
     var self = this;
     chosenCase.applyOneShot(self);
     chosenCase.states.forEach(function (c) {
-        c.applyMarker(self, opp);
+        c.applyMarkers(self, opp);
         c.applyCollectible(self);
         c.applyOneShot(self);
     });

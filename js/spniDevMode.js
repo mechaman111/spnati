@@ -306,16 +306,10 @@ DevModeDialogueBox.prototype.saveEdits = function () {
                 info.case = curCase.serializeConditions();
                 info.state = {'text': curState.rawDialogue, 'image': curState.image, 'marker': null};
                 
-                if (curState.marker) {
-                    info.state.marker = {
-                        'name': curState.marker.name,
-                        'perTarget': curState.marker.perTarget,
-                    };
-
-                    info.state.marker.value = player.getMarker(
-                        curState.marker.name,
-                        curState.marker.perTarget ? player.currentTarget : null
-                    );
+                if (curState.markers) {
+                    info.state.markers = curState.markers.map(function (marker) {
+                        return marker.serialize(player, player.currentTarget);
+                    });
                 }
             }
             

@@ -1143,8 +1143,10 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
          * TODO: Remove this once all characters using persistent markers
          * have migrated over to the system in #74.
          */
-        if (s.legacyPersistentFlag && s.marker && s.marker.name) {
-            this.persistentMarkers[s.marker.name] = true;
+        if (s.legacyPersistentFlag) {
+            s.markers.forEach(function (marker) {
+                this.persistentMarkers[marker.name] = true;
+            }.bind(this));
         }
     }.bind(this));
 
