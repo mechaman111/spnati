@@ -490,7 +490,7 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
   var gender = $epilogue.attr("gender") || 'any';
 
   var markers = [];
-  $epilogue.find("marker").each(function() {
+  $epilogue.children("markers").children("marker").each(function() {
     var $elem = $(this);
     var name = $elem.attr("name");
     var op = $elem.attr("op") || "=";

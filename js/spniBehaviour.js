@@ -467,13 +467,13 @@ function State($xml_or_state, parentCase) {
 
     if (this.rawDialogue = $xml.children('text').html()) {
         this.alt_images = $xml.children('alt-img');
-        $xml.children('marker').each(function (idx, elem) {
+        $xml.children('markers').children('marker').each(function (idx, elem) {
             var $elem = $(elem);
             var name = $elem.attr("name");
             var op = $elem.attr("op") || "=";
             var rhs = $elem.attr("value");
 
-            this.markerOps.push(new MarkerOperation(name, op[0], rhs, parentCase));
+            this.markers.push(new MarkerOperation(name, op[0], rhs, parentCase));
         }.bind(this));
     } else {
         this.rawDialogue = $xml.html();
