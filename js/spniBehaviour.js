@@ -244,27 +244,72 @@ function expandTagsList(input_tags) {
     return output_tags;
 }
 
-/* Marker Operation Objects */
-
 /**
  * Represents an operation on a marker.
- * @param {string} operationSpec
- * @param {Case} parentCase
+ * 
+ * @param {string} base_name 
+ * @param {string} op 
+ * @param {any} rhs 
+ * @param {Case} parentCase 
  */
-function MarkerOperation(operationSpec, parentCase) {
-    var match = operationSpec.match(/^(?:(\+|-)([\w-]+\*?)|([\w-]+\*?)\s*([-+*%\/]?=)\s*(.*?)\s*)$/);
-    var base_name = operationSpec;
-
+function MarkerOperation(base_name, op, rhs, parentCase) {
     /**
      * The operation to perform on the referenced marker.
      * One of '=', '+', '-', '*', '/', '%'.
+     * @type {string}
      */
-    this.op = '=';
+    this.op = op;
+
+    if (typeof(rhs) === 'number') {
+        /**
+         * The right-hand side value for this marker operation.
+         * @type {number | string}
+         */
+        this.rhs = rhs;
+    } else if (typeof(rhs) === 'string') {
+        var parsed = parseInt(rhs, 10);
+        if (!isNaN(parsed)) {
+            this.rhs = parsed;
+        } else {
+            this.rhs = rhs;
+        }
+    } else {
+        this.rhs = !!rhs ? 1 : 0;
+    }
 
     /**
-     * The right-hand side value for this marker operation.
+     * Whether this marker operation works with perTarget markers or not.
+     * @type {boolean}
      */
-    this.rhs = 1;
+    this.perTarget = base_name.endsWith('*');
+
+    /**
+     * The base name of the marker affected by this operation.
+     * @type {string}
+     */
+    this.name = this.perTarget ? base_name.slice(0, -1) : base_name;
+
+    /**
+     * The parent Case that will be used for expanding variables
+     * in the right-hand side of this operation, if necessary.
+     * (used for e.g. variable bindings)
+     * @type {Case}
+     */
+    this.parentCase = parentCase || null;
+}
+
+/**
+ * Parse a MarkerOperation from a string.
+ * 
+ * @param {string} operationSpec
+ * @param {Case} parentCase
+ * @returns {MarkerOperation}
+ */
+function parseMarkerOp(operationSpec, parentCase) {
+    var match = operationSpec.match(/^(?:(\+|-)([\w-]+\*?)|([\w-]+\*?)\s*([-+*%\/]?=)\s*(.*?)\s*)$/);
+    var base_name = operationSpec;
+    var op = '=';
+    var rhs = 1;
 
     if (match) {
         if (match[1]) {
@@ -273,9 +318,8 @@ function MarkerOperation(operationSpec, parentCase) {
              *  match[2] = marker name, incl. per-target signifier
              */
             base_name = match[2];
-
-            this.op = match[1];
-            this.rhs = 1;
+            op = match[1];
+            rhs = 1;
         } else {
             /* second alternative: set operation
              *  match[3] = marker name, incl. per-target signifier
@@ -287,30 +331,14 @@ function MarkerOperation(operationSpec, parentCase) {
              * Either way, we only need the first character of match[4].
              */
             base_name = match[3];
-
-            this.op = match[4][0];
-            this.rhs = match[5];
+            op = match[4][0];
+            rhs = match[5];
         }
     } else {
         base_name = operationSpec;
     }
 
-    /**
-     * Whether this marker operation works with perTarget markers or not.
-     */
-    this.perTarget = base_name.endsWith('*');
-
-    /**
-     * The base name of the marker affected by this operation.
-     */
-    this.name = this.perTarget ? base_name.slice(0, -1) : base_name;
-
-    /**
-     * The parent Case that will be used for expanding variables
-     * in the right-hand side of this operation, if necessary.
-     * (used for e.g. variable bindings)
-     */
-    this.parentCase = parentCase || null;
+    return new MarkerOperation(base_name, op, rhs, parentCase);
 }
 
 /**
@@ -434,13 +462,18 @@ function State($xml_or_state, parentCase) {
     
     var markerOp = $xml.attr('marker');
     if (markerOp) {
-        this.markers.push(new MarkerOperation(markerOp, parentCase));
+        this.markers.push(parseMarkerOp(markerOp, parentCase));
     }
 
     if (this.rawDialogue = $xml.children('text').html()) {
         this.alt_images = $xml.children('alt-img');
         $xml.children('marker').each(function (idx, elem) {
-            this.markerOps.push(new MarkerOperation($(elem).text(), parentCase));
+            var $elem = $(elem);
+            var name = $elem.attr("name");
+            var op = $elem.attr("op") || "=";
+            var rhs = $elem.attr("value");
+
+            this.markerOps.push(new MarkerOperation(name, op[0], rhs, parentCase));
         }.bind(this));
     } else {
         this.rawDialogue = $xml.html();
