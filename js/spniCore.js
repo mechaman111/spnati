@@ -63,6 +63,11 @@ var BLANK_PLAYER_IMAGE = "opponents/blank.png";
 
 /* player array */
 var players = Array(5);
+Object.defineProperty(players, 'opponents', {
+    get: function() {
+        return this.slice(1);
+    }
+});
 var humanPlayer;
 
 /* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
@@ -1933,17 +1938,11 @@ function sendFeedbackReport() {
     }
 
     var desc = $('#feedback-report-desc').val();
-    var slot = parseInt($('#feedback-report-character').val(), 10);
+    var character = $('#feedback-report-character option:selected').data('character');
     var report = compileBaseErrorReport(desc, "feedback");
 
-    if (slot > 0) {
-        var character = players[slot].id;
-    } else {
-        var character = "";
-    }
-
     $.ajax({
-        url: FEEDBACK_ROUTE + character,
+        url: FEEDBACK_ROUTE + (character ? character.id : ""),
         method: 'POST',
         data: JSON.stringify(report),
         contentType: 'application/json',
@@ -1973,15 +1972,15 @@ function updateFeedbackSendButton() {
 $('#feedback-report-desc').keyup(updateFeedbackSendButton).change(updateFeedbackSendButton);
 
 function updateFeedbackMessage() {
-    var slot = parseInt($('#feedback-report-character').val(), 10);
+    var player = $('#feedback-report-character option:selected').data('character');
 
-    if (players[slot] && players[slot].feedbackData && 
-        players[slot].feedbackData.enabled && 
-        players[slot].feedbackData.message
+    if (player && player.feedbackData &&
+        player.feedbackData.enabled &&
+        player.feedbackData.message
     ) {
         $(".feedback-message-container").show();
-        $(".feedback-character-name").text(players[slot].label);
-        $(".feedback-message").text(players[slot].feedbackData.message);
+        $(".feedback-character-name").text(player.label);
+        $(".feedback-message").text(player.feedbackData.message);
     } else {
         $(".feedback-message-container").hide();
     }
@@ -1994,36 +1993,32 @@ function showFeedbackReportModal($fromModal) {
         $('<option value="" disabled data-load-indicator="">Loading...</option>'),
     ).val("");
 
-    for (let i = 1; i < 5; i++) {
-        if (players[i]) {
-            let mixedCaseID = players[i].id.charAt(0).toUpperCase() + players[i].id.substring(1);
-            let selectorOption = $('<option value="' + players[i].slot + '">' + mixedCaseID + '</option>');
-            $("#feedback-report-character").append(selectorOption);
+    var feedbackCharacters = epiloguePlayer ? [ epiloguePlayer.epilogue.player ] : players.opponents;
 
-            if (players[i].feedbackData) {
-                $("#feedback-report-character option[data-load-indicator]").remove();
-                 updateFeedbackMessage();
-            } else {
-                $.ajax({
-                    url: FEEDBACK_ROUTE + players[i].id,
-                    type: "GET",
-                    dataType: "json",
-                    success: function (data) {
-                        players[i].feedbackData = data;
-                        
-                        $("#feedback-report-character option[data-load-indicator]").remove();
-                        updateFeedbackMessage();
-                    },
-                    error: function () {
-                        console.error("Failed to get feedback message data for " + players[i].id);
-                    },
-                });
-            }
+    $.when.apply($, feedbackCharacters.map(function(p) {
+        $("#feedback-report-character").append($('<option>', { text: p.id.initCap() }).data('character', p));
+        if (p.feedbackData) {
+            return $.Deferred().resolve().promise();
+        } else {
+            return $.ajax({
+                url: FEEDBACK_ROUTE + p.id,
+                type: "GET",
+                dataType: "json",
+            }).then(function(data) {
+                p.feedbackData = data;
+            }, function() {
+                console.error("Failed to get feedback message data for " + p.id);
+                return $.Deferred().resolve().promise(); /* This is meant to avoid hiding the "Loading..." 
+                                                            entry right away if one GET fails. */
+            });
         }
-    }
+    })).always(function() {
+        $("#feedback-report-character option[data-load-indicator]").remove();
+        updateFeedbackMessage();
+    });
 
     $("#feedback-report-character").append(
-        $('<option value="-1" data-general-option="">General Game Feedback</option>')
+        $('<option>General Game Feedback</option>')
     );
 
     if ($fromModal) {
