@@ -1978,15 +1978,17 @@ $('#feedback-report-desc').keyup(updateFeedbackSendButton).change(updateFeedback
 function updateFeedbackMessage() {
     var slot = parseInt($('#feedback-report-character').val(), 10);
 
-    if (players[slot] && players[slot].feedbackData && 
-        players[slot].feedbackData.enabled && 
-        players[slot].feedbackData.message
-    ) {
-        $(".feedback-message-container").show();
-        $(".feedback-character-name").text(players[slot].label);
-        $(".feedback-message").text(players[slot].feedbackData.message);
-    } else {
-        $(".feedback-message-container").hide();
+    $(".feedback-message-container").hide();
+    $("#feedback-disabled-warning").hide();
+
+    if (players[slot] && players[slot].feedbackData) {
+        if (players[slot].feedbackData.enabled && players[slot].feedbackData.message) {
+            $(".feedback-message-container").show();
+            $(".feedback-character-name").text(players[slot].label);
+            $(".feedback-message").text(players[slot].feedbackData.message);
+        } else if (!players[slot].feedbackData.enabled) {
+            $("#feedback-disabled-warning").show();
+        }
     }
 }
 
