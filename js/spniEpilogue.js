@@ -3109,6 +3109,9 @@ $epilogueButtons.on('click', ':input', function(ev) {
     case "exit":
       showRestartModal();
       break;
+    case "bug":
+      showBugReportModal();
+      break;
     case "reload":
       hotReloadEpilogue();
       break;
@@ -3132,7 +3135,7 @@ $('#epilogue-container').click(function(ev) {
 });
 
 function epilogue_keyUp(ev) {
-    if (epiloguePlayer && epiloguePlayer.loaded) {
+    if (epiloguePlayer && epiloguePlayer.loaded && $('.modal:visible').length == 0) {
         switch (ev.keyCode) {
         case 81:
             if (DEBUG) {

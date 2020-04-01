@@ -133,65 +133,19 @@ function getReportedOrigin () {
 
 /* Gathers most of the generic information for an error report. */
 function compileBaseErrorReport(userDesc, bugType) {
-    var tableReports = [];
-    for (let i=1;i<players.length;i++) {
-        if (players[i]) {
-            playerData = {
-                'id': players[i].id,
-                'slot': i,
-                'stage': players[i].stage,
-                'timeInStage': players[i].timeInStage,
-                'markers': players[i].markers,
-                'oneShotCases': players[i].oneShotCases,
-                'oneShotStates': players[i].oneShotStates,
-            }
-
-            if (players[i].chosenState) {
-                playerData.currentLine    = players[i].chosenState.rawDialogue;
-                if (players[i].chosenState.image) {
-                    playerData.currentImage   = players[i].folder + players[i].chosenState.image.replace('#', players[i].stage);
-                }
-            }
-
-            tableReports[i-1] = playerData;
-        } else {
-            tableReports[i-1] = null;
-        }
-    }
-
-    var circumstances = {
-        'userAgent': navigator.userAgent,
-        'origin': getReportedOrigin(),
-        'currentRound': currentRound,
-        'currentTurn': currentTurn,
-        'previousLoser': previousLoser,
-        'recentLoser': recentLoser,
-        'gameOver': gameOver,
-        'visibleScreens': [],
-        'rollback': inRollback()
-    }
-
-    if (gamePhase) {
-        if (inRollback()) {
-            circumstances.gamePhase = rolledBackGamePhase[0];
-        } else {
-            circumstances.gamePhase = gamePhase[0];
-        }
-    }
-
-    for (let i=0;i<allScreens.length;i++) {
-        if (allScreens[i].css('display') !== 'none') {
-            circumstances.visibleScreens.push(allScreens[i].attr('id'));
-        }
-    }
-
     var bugCharacter = null;
     if (bugType.startsWith('character')) {
         bugCharacter = bugType.split(':', 2)[1];
         bugType = 'character';
     }
 
-    return {
+    var circumstances = {
+        'userAgent': navigator.userAgent,
+        'origin': getReportedOrigin(),
+        'visibleScreens': [],
+    };
+
+    var data = {
         'date': (new Date()).toISOString(),
         'commit': VERSION_COMMIT,
         'session': sessionID,
@@ -200,13 +154,75 @@ function compileBaseErrorReport(userDesc, bugType) {
         'character': bugCharacter,
         'description': userDesc,
         'circumstances': circumstances,
-        'table': tableReports,
         'player': {
             'gender': humanPlayer.gender,
             'size': humanPlayer.size,
         },
         'jsErrors': jsErrors,
     };
+
+    if (epiloguePlayer) {
+        data.epilogue = {
+            epilogue: epiloguePlayer.epilogue.title,
+            player: epiloguePlayer.epilogue.player.id,
+            gender: epiloguePlayer.epilogue.gender,
+            scene: epiloguePlayer.sceneIndex,
+            view: epiloguePlayer.viewIndex,
+            directive: epiloguePlayer.directiveIndex,
+        };
+    } else {
+        var gameState = {
+            'currentRound': currentRound,
+            'currentTurn': currentTurn,
+            'previousLoser': previousLoser,
+            'recentLoser': recentLoser,
+            'gameOver': gameOver,
+            'rollback': inRollback()
+        };
+        mergeObjects(circumstances, gameState);
+        if (gamePhase) {
+            if (inRollback()) {
+                circumstances.gamePhase = rolledBackGamePhase[0];
+            } else {
+                circumstances.gamePhase = gamePhase[0];
+            }
+        }
+
+        var tableReports = [];
+        for (let i=1;i<players.length;i++) {
+            if (players[i]) {
+                playerData = {
+                    'id': players[i].id,
+                    'slot': i,
+                    'stage': players[i].stage,
+                    'timeInStage': players[i].timeInStage,
+                    'markers': players[i].markers,
+                    'oneShotCases': players[i].oneShotCases,
+                    'oneShotStates': players[i].oneShotStates,
+                }
+
+                if (players[i].chosenState) {
+                    playerData.currentLine    = players[i].chosenState.rawDialogue;
+                    if (players[i].chosenState.image) {
+                        playerData.currentImage   = players[i].folder + players[i].chosenState.image.replace('#', players[i].stage);
+                    }
+                }
+
+                tableReports[i-1] = playerData;
+            } else {
+                tableReports[i-1] = null;
+            }
+        }
+        data.table = tableReports;
+    }
+
+    for (let i=0;i<allScreens.length;i++) {
+        if (allScreens[i].css('display') !== 'none') {
+            circumstances.visibleScreens.push(allScreens[i].attr('id'));
+        }
+    }
+
+    return data;
 }
 
 window.addEventListener('error', function (ev) {
@@ -1901,17 +1917,12 @@ function showBugReportModal () {
         ['freeze', 'Game Freeze or Crash'],
         ['display', 'Game Graphical Problem'],
         ['other', 'Other Game Issue'],
-    ]
+    ].concat((epiloguePlayer ? [ epiloguePlayer.epilogue.player ] : players.opponents).map(function(p) {
+        return [ 'character:'+p.id, 'Character Defect ('+p.id.initCap()+')'];
+    }));
 
-    for (var i=1;i<5;i++) {
-        if (players[i]) {
-            var mixedCaseID = players[i].id.charAt(0).toUpperCase()+players[i].id.substring(1);
-            bugReportTypes.push(['character:'+players[i].id, 'Character Defect ('+mixedCaseID+')']);
-        }
-    }
-
-    $('#bug-report-type').empty().append(bugReportTypes.map(function (t) {
-        return $('<option value="'+t[0]+'">'+t[1]+'</option>');
+    $('#bug-report-type').empty().append(bugReportTypes.map(function(item) {
+        return $('<option>', { value: item[0], text: item[1] });
     }));
 
     updateBugReportOutput();
@@ -2556,6 +2567,23 @@ function showResortModal() {
  ************************************************************/
 function getRandomNumber (min, max) {
 	return Math.floor(Math.random() * (max - min) + min);
+}
+
+function mergeObjects(a, b){
+	if(b === undefined || b === null){
+		return a;
+	}
+	else if(a === undefined || a === null){
+		return b;
+	}
+	for(var v in b){
+		if (typeof a[v] === 'object') {
+			a[v] = mergeObjects(a[v], b[v])
+		} else {
+			a[v] = b[v];
+		}
+	}
+	return a;
 }
 
 /************************************************************
