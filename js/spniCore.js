@@ -1812,8 +1812,8 @@ function restartGame () {
 
     /* there is only one call to this right now */
     $epilogueSelectionModal.hide();
-    $epilogueScreen.hide();
     clearEpilogue();
+    screenTransition($epilogueScreen, $titleScreen);
     screenTransition($gameScreen, $titleScreen);
     autoResizeFont();
 }
