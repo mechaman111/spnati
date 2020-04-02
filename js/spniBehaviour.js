@@ -696,7 +696,7 @@ function expandDialogue (dialogue, self, target, bindings) {
         try {
             switch (variable.toLowerCase()) {
             case 'player':
-                substitution = expandNicknames(self, humanPlayer);
+                substitution = expandPlayerVariable(fn_parts, args, humanPlayer, self, target, bindings);
                 break;
             case 'name':
                 substitution = expandNicknames(self, target);
