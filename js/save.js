@@ -99,7 +99,7 @@ Save.prototype.getItem = function (key, acceptBareString) {
             this.setItem(key, serialized); // Convert the string into a properly serialized JSON value.
             return serialized;
         } else {
-            console.error("Failed to parse saved data for '"+key+"'");
+            console.error("Failed to parse saved data for '"+key+"': ", ex);
             if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
     }
@@ -123,7 +123,7 @@ Save.prototype.setItem = function (key, value) {
     try {
         serialized = JSON.stringify(value);
     } catch (ex) {
-        console.error("Failed to serialize saved data for '"+key+"'");
+        console.error("Failed to serialize saved data for '"+key+"': ", ex);
         if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         return;
     }
@@ -133,7 +133,7 @@ Save.prototype.setItem = function (key, value) {
     try {
         localStorage.setItem(this.prefix + key, serialized);
     } catch (ex) {
-        console.error("Failed to save data '"+key+"' to localStorage");
+        console.error("Failed to save data '"+key+"' to localStorage: ", ex);
         if (SENTRY_INITIALIZED) Sentry.captureException(ex);
     }
 }
@@ -150,7 +150,7 @@ Save.prototype.removeItem = function (key) {
     try {
         localStorage.removeItem(this.prefix + key);
     } catch (ex) {
-        console.error("Failed to remove data '"+key+"' from localStorage");
+        console.error("Failed to remove data '"+key+"' from localStorage: ", ex);
         if (SENTRY_INITIALIZED) Sentry.captureException(ex);
     }
 }
@@ -176,24 +176,25 @@ Save.prototype.deserializeStorage = function (code) {
         }
     }
 
+    /* Load data into storage cache first: */
     this.storageCache = {};
+    for (var key in data) {
+        if (key.startsWith(this.prefix)) {
+            var suffix = key.substring(this.prefix.length);
+            this.storageCache[suffix] = data[key];
+        } else {
+            this.storageCache[key] = data[key];
+        }
+    }
 
+    /* Then try to load data into localStorage: */
     try {
         localStorage.clear();
-        
-        for (var key in data) {
-            if (key.startsWith(this.prefix)) {
-                var suffix = key.substring(this.prefix.length);
-
-                this.storageCache[suffix] = data[key];
-                localStorage.setItem(key, data[key]);
-            } else {
-                this.storageCache[key] = data[key];
-                localStorage.setItem(this.prefix + key, data[key]);
-            }
-        }
+        Object.keys(this.storageCache).forEach(function (key) {
+            localStorage.setItem(this.prefix + key, this.storageCache[key]);
+        }.bind(this));
     } catch (ex) {
-        console.error('Failed to write save code data to localStorage');
+        console.error('Failed to write save code data to localStorage: ', ex);
         if (SENTRY_INITIALIZED) Sentry.captureException(ex);
     }
 
