@@ -59,8 +59,8 @@ function Save() {
     this.endings = {};
 
     /* Load data from LocalStorage. */
-    for (var i = 0; i < localStorage.length; i++) {
-        try {
+    try {
+        for (var i = 0; i < localStorage.length; i++) {
             var key = localStorage.key(i);
             if (!key.startsWith(this.prefix)) {
                 continue;
@@ -68,10 +68,12 @@ function Save() {
 
             var suffix = key.substring(this.prefix.length);
             this.storageCache[suffix] = localStorage.getItem(key);
-        } catch (ex) {
-            console.error("Failed to load localStorage key "+i, ex);
-            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
         }
+    } catch (ex) {
+        console.error("Failed to load save data from localStorage: ", ex);
+        /* Don't send error data to Sentry, because SENTRY_INITIALIZED
+         * may not be defined when this is called
+         */
     }
 }
 
