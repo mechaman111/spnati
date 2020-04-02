@@ -562,8 +562,8 @@ function doEpilogueFromGallery(){
 			if (typeof persistentMarkers !== typeof undefined && persistentMarkers) {
 				$(persistentMarkers).find('marker').each(function (i, elem) {
 					var markerName = $(elem).text();
-					this.persistentMarkers[markerName] = true;
-				}.bind(this));
+					player.persistentMarkers[markerName] = true;
+				});
 			}
 
 			/* Execute marker operations. */
