@@ -2514,7 +2514,7 @@ $(':root').on('dblclick', toggleFullscreen);
  * The player clicked on a Load/Save button.
  ************************************************************/
 function showImportModal() {
-    $("#export-code").text(save.serializeLocalStorage());
+    $("#export-code").val(save.serializeStorage());
     
     $('#import-invalid-code').hide();
 
@@ -2539,7 +2539,7 @@ function showImportModal() {
             });
         }
 
-        if (save.deserializeLocalStorage(code)) {
+        if (save.deserializeStorage(code)) {
             $ioModal.modal('hide');
         } else {
             $('#import-invalid-code').show();
