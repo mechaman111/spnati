@@ -405,11 +405,6 @@ function startDealPhase () {
 
     var numPlayers = getNumPlayersInStage(STATUS_ALIVE);
 
-    /* April Fool's: rig the deck. Sometimes. */
-    if (Math.random() < 0.15) {
-        activeDeck.rigFor(getRandomNumber(0, numPlayers));
-    }
-
     var n = 0;
     for (var i = 0; i < players.length; i++) {
         if (players[i]) {
