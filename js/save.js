@@ -1,22 +1,5 @@
 //Class for saving user's progress and preferences
 
-function mergeObjects(a, b){
-	if(b === undefined || b === null){
-		return a;
-	}
-	else if(a === undefined || a === null){
-		return b;
-	}
-	for(var v in b){
-		if (typeof a[v] === 'object') {
-			a[v] = mergeObjects(a[v], b[v])
-		} else {
-			a[v] = b[v];
-		}
-	}
-	return a;
-}
-
 var DEFAULT_WARDROBES = {
     'male': [ 'jacket', 't-shirt', 'belt', 'pants', 'boxers', 'gloves', 'socks', 'boots' ],
     'female': [ 'jacket', 'tank top', 'bra', 'belt', 'pants', 'panties', 'stockings', 'shoes' ],

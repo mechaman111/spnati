@@ -63,13 +63,15 @@ var BLANK_PLAYER_IMAGE = "opponents/blank.png";
 
 /* player array */
 var players = Array(5);
+Object.defineProperty(players, 'opponents', {
+    get: function() {
+        return this.slice(1);
+    }
+});
 var humanPlayer;
 
 /* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
 var timeoutID;
-
-/* Modal to return to from the feedback modal, or null if not returning to any modal. */
-var feedbackModalReturn = null;
 
 /**********************************************************************
  * Game Wide Global Variables
@@ -131,65 +133,19 @@ function getReportedOrigin () {
 
 /* Gathers most of the generic information for an error report. */
 function compileBaseErrorReport(userDesc, bugType) {
-    var tableReports = [];
-    for (let i=1;i<players.length;i++) {
-        if (players[i]) {
-            playerData = {
-                'id': players[i].id,
-                'slot': i,
-                'stage': players[i].stage,
-                'timeInStage': players[i].timeInStage,
-                'markers': players[i].markers,
-                'oneShotCases': players[i].oneShotCases,
-                'oneShotStates': players[i].oneShotStates,
-            }
-
-            if (players[i].chosenState) {
-                playerData.currentLine    = players[i].chosenState.rawDialogue;
-                if (players[i].chosenState.image) {
-                    playerData.currentImage   = players[i].folder + players[i].chosenState.image.replace('#', players[i].stage);
-                }
-            }
-
-            tableReports[i-1] = playerData;
-        } else {
-            tableReports[i-1] = null;
-        }
-    }
-
-    var circumstances = {
-        'userAgent': navigator.userAgent,
-        'origin': getReportedOrigin(),
-        'currentRound': currentRound,
-        'currentTurn': currentTurn,
-        'previousLoser': previousLoser,
-        'recentLoser': recentLoser,
-        'gameOver': gameOver,
-        'visibleScreens': [],
-        'rollback': inRollback()
-    }
-
-    if (gamePhase) {
-        if (inRollback()) {
-            circumstances.gamePhase = rolledBackGamePhase[0];
-        } else {
-            circumstances.gamePhase = gamePhase[0];
-        }
-    }
-
-    for (let i=0;i<allScreens.length;i++) {
-        if (allScreens[i].css('display') !== 'none') {
-            circumstances.visibleScreens.push(allScreens[i].attr('id'));
-        }
-    }
-
     var bugCharacter = null;
     if (bugType.startsWith('character')) {
         bugCharacter = bugType.split(':', 2)[1];
         bugType = 'character';
     }
 
-    return {
+    var circumstances = {
+        'userAgent': navigator.userAgent,
+        'origin': getReportedOrigin(),
+        'visibleScreens': [],
+    };
+
+    var data = {
         'date': (new Date()).toISOString(),
         'commit': VERSION_COMMIT,
         'session': sessionID,
@@ -198,13 +154,75 @@ function compileBaseErrorReport(userDesc, bugType) {
         'character': bugCharacter,
         'description': userDesc,
         'circumstances': circumstances,
-        'table': tableReports,
         'player': {
             'gender': humanPlayer.gender,
             'size': humanPlayer.size,
         },
         'jsErrors': jsErrors,
     };
+
+    if (epiloguePlayer) {
+        data.epilogue = {
+            epilogue: epiloguePlayer.epilogue.title,
+            player: epiloguePlayer.epilogue.player.id,
+            gender: epiloguePlayer.epilogue.gender,
+            scene: epiloguePlayer.sceneIndex,
+            view: epiloguePlayer.viewIndex,
+            directive: epiloguePlayer.directiveIndex,
+        };
+    } else {
+        var gameState = {
+            'currentRound': currentRound,
+            'currentTurn': currentTurn,
+            'previousLoser': previousLoser,
+            'recentLoser': recentLoser,
+            'gameOver': gameOver,
+            'rollback': inRollback()
+        };
+        mergeObjects(circumstances, gameState);
+        if (gamePhase) {
+            if (inRollback()) {
+                circumstances.gamePhase = rolledBackGamePhase[0];
+            } else {
+                circumstances.gamePhase = gamePhase[0];
+            }
+        }
+
+        var tableReports = [];
+        for (let i=1;i<players.length;i++) {
+            if (players[i]) {
+                playerData = {
+                    'id': players[i].id,
+                    'slot': i,
+                    'stage': players[i].stage,
+                    'timeInStage': players[i].timeInStage,
+                    'markers': players[i].markers,
+                    'oneShotCases': players[i].oneShotCases,
+                    'oneShotStates': players[i].oneShotStates,
+                }
+
+                if (players[i].chosenState) {
+                    playerData.currentLine    = players[i].chosenState.rawDialogue;
+                    if (players[i].chosenState.image) {
+                        playerData.currentImage   = players[i].folder + players[i].chosenState.image.replace('#', players[i].stage);
+                    }
+                }
+
+                tableReports[i-1] = playerData;
+            } else {
+                tableReports[i-1] = null;
+            }
+        }
+        data.table = tableReports;
+    }
+
+    for (let i=0;i<allScreens.length;i++) {
+        if (allScreens[i].css('display') !== 'none') {
+            circumstances.visibleScreens.push(allScreens[i].attr('id'));
+        }
+    }
+
+    return data;
 }
 
 window.addEventListener('error', function (ev) {
@@ -1899,17 +1917,12 @@ function showBugReportModal () {
         ['freeze', 'Game Freeze or Crash'],
         ['display', 'Game Graphical Problem'],
         ['other', 'Other Game Issue'],
-    ]
+    ].concat((epiloguePlayer ? [ epiloguePlayer.epilogue.player ] : players.opponents).map(function(p) {
+        return [ 'character:'+p.id, 'Character Defect ('+p.id.initCap()+')'];
+    }));
 
-    for (var i=1;i<5;i++) {
-        if (players[i]) {
-            var mixedCaseID = players[i].id.charAt(0).toUpperCase()+players[i].id.substring(1);
-            bugReportTypes.push(['character:'+players[i].id, 'Character Defect ('+mixedCaseID+')']);
-        }
-    }
-
-    $('#bug-report-type').empty().append(bugReportTypes.map(function (t) {
-        return $('<option value="'+t[0]+'">'+t[1]+'</option>');
+    $('#bug-report-type').empty().append(bugReportTypes.map(function(item) {
+        return $('<option>', { value: item[0], text: item[1] });
     }));
 
     updateBugReportOutput();
@@ -1936,17 +1949,11 @@ function sendFeedbackReport() {
     }
 
     var desc = $('#feedback-report-desc').val();
-    var slot = parseInt($('#feedback-report-character').val(), 10);
+    var character = $('#feedback-report-character option:selected').data('character');
     var report = compileBaseErrorReport(desc, "feedback");
 
-    if (slot > 0) {
-        var character = players[slot].id;
-    } else {
-        var character = "";
-    }
-
     $.ajax({
-        url: FEEDBACK_ROUTE + character,
+        url: FEEDBACK_ROUTE + (character ? character.id : ""),
         method: 'POST',
         data: JSON.stringify(report),
         contentType: 'application/json',
@@ -1976,15 +1983,15 @@ function updateFeedbackSendButton() {
 $('#feedback-report-desc').keyup(updateFeedbackSendButton).change(updateFeedbackSendButton);
 
 function updateFeedbackMessage() {
-    var slot = parseInt($('#feedback-report-character').val(), 10);
+    var player = $('#feedback-report-character option:selected').data('character');
 
-    if (players[slot] && players[slot].feedbackData && 
-        players[slot].feedbackData.enabled && 
-        players[slot].feedbackData.message
+    if (player && player.feedbackData &&
+        player.feedbackData.enabled &&
+        player.feedbackData.message
     ) {
         $(".feedback-message-container").show();
-        $(".feedback-character-name").text(players[slot].label);
-        $(".feedback-message").text(players[slot].feedbackData.message);
+        $(".feedback-character-name").text(player.label);
+        $(".feedback-message").text(player.feedbackData.message);
     } else {
         $(".feedback-message-container").hide();
     }
@@ -1992,60 +1999,50 @@ function updateFeedbackMessage() {
 
 $("#feedback-report-character").change(updateFeedbackMessage);
 
-function showFeedbackReportModal(fromModal) {
+function showFeedbackReportModal($fromModal) {
     $('#feedback-report-character').empty().append(
         $('<option value="" disabled data-load-indicator="">Loading...</option>'),
     ).val("");
 
-    if (!fromModal) {
-        feedbackModalReturn = null;
-    } else {
-        feedbackModalReturn = fromModal;
-    }
+    var feedbackCharacters = epiloguePlayer ? [ epiloguePlayer.epilogue.player ] : players.opponents;
 
-    for (let i = 1; i < 5; i++) {
-        if (players[i]) {
-            let mixedCaseID = players[i].id.charAt(0).toUpperCase() + players[i].id.substring(1);
-            let selectorOption = $('<option value="' + players[i].slot + '">' + mixedCaseID + '</option>');
-            $("#feedback-report-character").append(selectorOption);
-
-            if (players[i].feedbackData) {
-                $("#feedback-report-character option[data-load-indicator]").remove();
-                 updateFeedbackMessage();
-            } else {
-                $.ajax({
-                    url: FEEDBACK_ROUTE + players[i].id,
-                    type: "GET",
-                    dataType: "json",
-                    success: function (data) {
-                        players[i].feedbackData = data;
-                        
-                        $("#feedback-report-character option[data-load-indicator]").remove();
-                        updateFeedbackMessage();
-                    },
-                    error: function () {
-                        console.error("Failed to get feedback message data for " + players[i].id);
-                    },
-                });
-            }
+    $.when.apply($, feedbackCharacters.map(function(p) {
+        $("#feedback-report-character").append($('<option>', { text: p.id.initCap() }).data('character', p));
+        if (p.feedbackData) {
+            return $.Deferred().resolve().promise();
+        } else {
+            return $.ajax({
+                url: FEEDBACK_ROUTE + p.id,
+                type: "GET",
+                dataType: "json",
+            }).then(function(data) {
+                p.feedbackData = data;
+            }, function() {
+                console.error("Failed to get feedback message data for " + p.id);
+                return $.Deferred().resolve().promise(); /* This is meant to avoid hiding the "Loading..." 
+                                                            entry right away if one GET fails. */
+            });
         }
-    }
+    })).always(function() {
+        $("#feedback-report-character option[data-load-indicator]").remove();
+        updateFeedbackMessage();
+    });
 
     $("#feedback-report-character").append(
-        $('<option value="-1" data-general-option="">General Game Feedback</option>')
+        $('<option>General Game Feedback</option>')
     );
 
-    if (fromModal) fromModal.modal('hide');
+    if ($fromModal) {
+        $fromModal.modal('hide');
+        $feedbackReportModal.one('hide.bs.modal', function() {
+            $fromModal.modal('show');
+        });
+    }
     $feedbackReportModal.modal('show');
 }
 
 function closeFeedbackReportModal() {
     $feedbackReportModal.modal('hide');
-
-    if (feedbackModalReturn) {
-        feedbackModalReturn.modal('show');
-        feedbackModalReturn = null;
-    }
 }
 
 $feedbackReportModal.on('shown.bs.modal', function () {
@@ -2570,6 +2567,23 @@ function showResortModal() {
  ************************************************************/
 function getRandomNumber (min, max) {
 	return Math.floor(Math.random() * (max - min) + min);
+}
+
+function mergeObjects(a, b){
+	if(b === undefined || b === null){
+		return a;
+	}
+	else if(a === undefined || a === null){
+		return b;
+	}
+	for(var v in b){
+		if (typeof a[v] === 'object') {
+			a[v] = mergeObjects(a[v], b[v])
+		} else {
+			a[v] = b[v];
+		}
+	}
+	return a;
 }
 
 /************************************************************
