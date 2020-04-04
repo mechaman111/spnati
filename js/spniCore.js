@@ -959,6 +959,15 @@ Opponent.prototype.unloadOpponent = function () {
     }
 }
 
+Opponent.prototype.fetchBehavior = function() {
+    // Optionally, replace with fetchCompressedURL(this.folder + "behaviour.xml")
+    return $.ajax({
+        type: "GET",
+        url: this.folder + "behaviour.xml",
+        dataType: "text",
+    });
+}
+
 /************************************************************
  * Loads and parses the start of the behaviour XML file of the
  * given opponent.
@@ -978,11 +987,11 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
         return;
     }
 
-    fetchCompressedURL('opponents/' + this.id + "/behaviour.xml")
 		/* Success callback.
          * 'this' is bound to the Opponent object.
          */
-		.then(function(xml) {
+    this.fetchBehavior()
+        .then(function(xml) {
             var $xml = $(xml);
 
             if (SENTRY_INITIALIZED) {

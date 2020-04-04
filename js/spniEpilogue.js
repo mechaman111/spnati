@@ -1128,7 +1128,7 @@ function hotReloadEpilogue () {
   /* Clean up the old EpiloguePlayer. */
   clearEpilogue();
 
-  fetchCompressedURL('opponents/' + player.id + "/behaviour.xml")
+  player.fetchBehavior()
     /* Success callback.
     * 'this' is bound to the Opponent object.
     */
