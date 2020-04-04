@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 10:32:40 PM on February 07, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 10:39:06 PM on April 04, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Remilia</first>
@@ -2444,9 +2444,9 @@
                 <state img="custom:#-pleasedconfident">Oho? Is that the far-eastern country's language? Sakuya, I may need to call upon you to translate at times.</state>
             </case>
             <case stage="0">
-                <state img="custom:#-portrait" location="83%">Presenting the Nocturnal Devil of Scarlet, Lady Remilia Scarlet.</state>
                 <state img="custom:#-portrait" location="83%">Lady Remilia Scarlet, The Scarlet Devil, has decided to grace you all with her presence.</state>
                 <state img="custom:#-portrait" location="83%">Presenting Lady Remilia Scarlet, Mistress of the Scarlet Devil Mansion.</state>
+                <state img="custom:#-portrait" location="83%">Presenting the Nocturnal Devil of Scarlet, Lady Remilia Scarlet.</state>
             </case>
         </trigger>
 
@@ -2457,6 +2457,10 @@
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0" priority="999">
+                <condition role="opp" character="yukari" />
+                <state img="custom:#-concernedcalm" marker="Remi_greets_Yukari">...&lt;i&gt;Surprise&lt;/i&gt;? A pleasant &lt;i&gt;surprise&lt;/i&gt;? You stupid, airheaded dullard of a gap youkai, &lt;i&gt;what about you dragging me here against my will is a &lt;/i&gt;surprise!?</state>
+            </case>
             <case stage="0" alsoPlaying="sanako" alsoPlayingSayingMarker="sanako_remilia_wings">
                 <state img="custom:#-smuggloat" marker="sanakowings">Costume? Was that some feeble attempt at an insult, woman? You'll need to try harder than that to rile me up.</state>
             </case>
@@ -2712,6 +2716,10 @@
             <case stage="0" alsoPlaying="larachel" totalRounds="0">
                 <state img="custom:#-deliciousconcerned">A wandering, monster-slaying priestess? How amusing! Do you expect me to cower in fear, oh holy woman?</state>
             </case>
+            <case stage="0" oneShotId="1" totalRounds="0">
+                <condition role="other" character="yukari" />
+                <state img="custom:#-concernedcalm">And what is this &lt;i&gt;ridiculous&lt;/i&gt; "-chan" nickname you keep calling me by? Has your age finally caught up to you, you senile old h-</state>
+            </case>
             <case stage="1">
                 <condition role="self" timeInStage="0" />
                 <condition role="other" character="miko" />
@@ -2780,7 +2788,8 @@
                 <state img="custom:#-smuggloat" marker="tstopmeido">&lt;i&gt;Oho&lt;/i&gt;? You all seem so surprised as to where my clothes went. Are you not amazed by this maid of mine?</state>
                 <state img="custom:#-smuggloat" marker="tstopmeido">You all seem so surprised as to where my clothes went. I suppose it's only natural that you would fail to comprehend this maid's true power.</state>
             </case>
-            <case stage="3" timeInStage="0">
+            <case stage="3">
+                <condition role="self" timeInStage="0" />
                 <state img="custom:#-concerneddoubt" location="83%">Please moderate your drinking, Milady. It would be a terrible shame if you lost control in the middle of the game.</state>
                 <state img="custom:#-concerneddoubt" location="83%">Lady Remilia, please make sure not to go overboard while drinking.</state>
                 <state img="custom:#-concerneddoubt" location="83%">I need not remind you, Lady Scarlet, but &lt;i&gt;do&lt;/i&gt; watch how much you drink while we are here in the human world.</state>
@@ -3721,6 +3730,14 @@
             <case stage="6" target="mavis" targetStage="5">
                 <state img="custom:#-embarrassedmoe">(&lt;i&gt;That should have been enough to convince her... probably.&lt;/i&gt;)</state>
             </case>
+            <case stage="0-6">
+                <condition role="target" character="yukari" stage="0" />
+                <state img="custom:#-boredconcerned">Let us put aside this tomfoolery, Yukari. Return us  to Gensokyo at once.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="yukari" stage="3" />
+                <state img="custom:#-waitcalm">Sakuya, you will have to enlighten me. Just who &lt;i&gt;is&lt;/i&gt; this cretin that was masquerading as that old hag?</state>
+            </case>
             <case stage="6" alsoPlaying="revy" alsoPlayingStage="1">
                 <state img="custom:#-interestedinterested">&lt;i&gt;Ufufu.&lt;/i&gt; You, girl with the guns, entertain me.</state>
             </case>
@@ -3856,7 +3873,9 @@
             <case stage="0-5" filter="fighter" notSaidMarker="fighter1">
                 <state img="custom:#-deliciousconcerned" marker="fighter1=1">It has been so long since I have last brought out my dear Gungnir. This peasant looks like they would struggle quite nicely, kuhuhu...</state>
             </case>
-            <case stage="0-5" filter="magic" notSaidMarker="magic1">
+            <case stage="0-5">
+                <condition filter="magic" role="target" />
+                <condition role="self" notSaidMarker="magic1" />
                 <state img="custom:#-pleasedcalm" marker="magic1=1">Magic? Well, I do suppose that it isn't &lt;i&gt;that&lt;/i&gt; uncommon to see humans with magical powers. After all, we &lt;i&gt;do&lt;/i&gt; have one such being under my employ.</state>
             </case>
             <case stage="0-5" filter="tall" notSaidMarker="tall1">
@@ -4137,6 +4156,10 @@
             <case stage="6" target="shimakaze" targetStage="0">
                 <state img="custom:#-questioningbemused">It's pretty clear you have no idea how to play this game, girl...</state>
             </case>
+            <case stage="0-5">
+                <condition role="target" character="yukari" stage="0" />
+                <state img="custom:#-angrycalm">Are you making fun of me, Yukari?</state>
+            </case>
             <case stage="0-5" filter="aggressive" notSaidMarker="aggressive1">
                 <state img="custom:#-concerneddoubt" marker="aggressive1=1" location="83%">I would suggest that you contain that temper of yours around Milady, ~name~. I cannot guarantee your safety otherwise.</state>
             </case>
@@ -4158,7 +4181,9 @@
             <case stage="0-5" filter="fighter" notSaidMarker="fighter1">
                 <state img="custom:#-deliciousconcerned" marker="fighter1=1">It has been so long since I have last brought out my dear Gungnir. This peasant looks like they would struggle quite nicely, kuhuhu...</state>
             </case>
-            <case stage="0-5" filter="magic" notSaidMarker="magic1">
+            <case stage="0-5">
+                <condition filter="magic" role="target" />
+                <condition role="self" notSaidMarker="magic1" />
                 <state img="custom:#-pleasedcalm" marker="magic1=1">Magic? Well, I do suppose that it isn't &lt;i&gt;that&lt;/i&gt; uncommon to see humans with magical powers. After all, we &lt;i&gt;do&lt;/i&gt; have one such being under my employ.</state>
             </case>
             <case stage="0-5" filter="submissive" notSaidMarker="submissive1">
@@ -4368,6 +4393,10 @@
             </case>
             <case stage="6" target="shimakaze" targetStage="1">
                 <state img="custom:#-shockeddoubt" marker="remifire">…and you just set yourself on fire, without so much as a scorch mark.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="yukari" stage="1" />
+                <state img="custom:#-concernedconcerned">I tire of your games, gap youkai. Don't say such slanderous things about my head maid.</state>
             </case>
             <case stage="0-6" target="human" saidMarker="interest" notSaidMarker="interest2">
                 <state img="custom:#-deliciousconcerned" marker="interest2">I will be keeping an eye on you, human. &lt;i&gt;Do&lt;/i&gt; try not to disappoint me.</state>
@@ -5047,6 +5076,10 @@
             <case stage="0-6" target="shimakaze" targetStage="6">
                 <state img="custom:#-deliciousconcerned">My apologies, Shi&lt;i&gt;ma&lt;/i&gt;kaze. You're simply too easy.</state>
             </case>
+            <case stage="0-5">
+                <condition role="target" character="yukari" stage="3" />
+                <state img="custom:#-what">Let us see how you squirm your way out of this... Umbrella girl?</state>
+            </case>
             <case stage="7" timeInStage="0">
                 <state img="custom:#-angry">Dealer. Continue the game. I wish to have this over with as soon as possible.</state>
                 <state img="custom:#-angry">Be glad I am showing tolerance towards your gloating for now, peasants, but don't push your luck.</state>
@@ -5699,6 +5732,10 @@
                     <text>I was beginning to like that nickname for you, though. However, if you insist, I suppose I can call you Shimakaze.</text>
                 </state>
             </case>
+            <case stage="0-5">
+                <condition role="target" character="yukari" />
+                <state img="custom:#-waitbemused" location="83%">She is Kogasa Tatara, Milady. An umbrella youkai.</state>
+            </case>
             <case stage="0-6 8" filter="drunk">
                 <state img="custom:#-shockeddoubt">
                     <alt-img stage="8">#-concerned.png</alt-img>
@@ -5802,6 +5839,10 @@
                     <alt-img stage="8">#-smugger.png</alt-img>
                     <text>What, did you take me for a fool? I knew how to say your name from the very start, tsukumogami.</text>
                 </state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="yukari" />
+                <state img="custom:#-smuggiercalm">And a bit of an idiot, it looks like.</state>
             </case>
             <case stage="5-6" filter="danganronpa" notSaidMarker="drfinale">
                 <state img="custom:#-interestedinterested" marker="drfinale">I have observed your fate, human. Show me that 'hope' you have so much pride in.</state>
@@ -6508,6 +6549,15 @@
                     <text>To think that once she ran out of clothes, her &lt;i&gt;body&lt;/i&gt; would explode instead! What a wonderful finale!</text>
                 </state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="yukari" />
+                <state img="custom:#-shockedcalm">
+                    <alt-img stage="0-5">custom:#-shockedcalm</alt-img>
+                    <alt-img stage="6">custom:#-shockeddoubt</alt-img>
+                    <alt-img stage="7-8">#-shocked.png</alt-img>
+                    <text>I-is she just going to run away? What an absurd little creature.</text>
+                </state>
+            </case>
             <case stage="7" timeInStage="0">
                 <state img="custom:#-frustrated">(&lt;i&gt;Curse that damned fate of &lt;/i&gt;my own&lt;i&gt;! Just a single round longer would have sufficed!&lt;/i&gt;)</state>
             </case>
@@ -6864,6 +6914,11 @@
             </case>
             <case stage="8" notSaidMarker="chair" priority="900">
                 <state img="custom:#-return" marker="chair" location="60%">W-well, it appears Sakuya left this chair outside for me...</state>
+            </case>
+            <case stage="0" priority="1">
+                <condition role="self" notSaidMarker="Remi_greets_Yukari" />
+                <condition role="opp" character="yukari" />
+                <state img="custom:#-concernedcalm">...&lt;i&gt;Surprise&lt;/i&gt;? A pleasant &lt;i&gt;surprise&lt;/i&gt;?</state>
             </case>
         </trigger>
 

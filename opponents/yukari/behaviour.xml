@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 10:03:12 PM on April 01, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 10:39:07 PM on April 04, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Yukari</first>
@@ -52,6 +52,7 @@
         <tag from="0" to="6">touhou_project</tag>
         <tag from="6" to="7">flies</tag>
         <tag>magic</tag>
+        <tag>april_fools</tag>
     </tags>
     <nicknames />
     <stylesheet>styles.css</stylesheet>
@@ -166,9 +167,16 @@
             <case stage="0">
                 <state img="#-ara.png">Ara~ Good day to you, ~player~.</state>
             </case>
+            <case stage="0">
+                <state img="#-gentle.png">Oh, Remilia-chan. What a pleasant surprise!</state>
+            </case>
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0" priority="999">
+                <condition role="opp" character="remilia" />
+                <state img="#-concerned.png" marker="Yukari_greets_remi">Ara... d-did I? Sorry Remilia-chan, silly me. I must have forgotten... yes...</state>
+            </case>
             <case stage="0">
                 <state img="#-excited.png">Are we all ready to start?</state>
             </case>
@@ -245,13 +253,55 @@
         </trigger>
 
         <trigger id="hand">
-            <case stage="3-5">
+            <case stage="3-5" oneShotId="6" priority="999">
                 <condition role="self" saidMarker="intro" />
                 <state img="#-interested.png">Y'know, since I'm here and all, I'm gonna try and pick up some spooky ideas from you all!</state>
+            </case>
+            <case stage="0" oneShotId="7" totalRounds="0">
+                <condition role="other" character="remilia" />
+                <state img="#-interested.png">&lt;i&gt;Re. Mi. Chan.&lt;/i&gt; Surely, you weren't about to call me an &lt;i&gt;"old hag"&lt;/i&gt;, were you? You know I won't forgive you if I hear that.</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="110">
+                <condition role="other" character="miko" stage="0" />
+                <state img="#-proud.png">Ara, it looks like my reputation preceeds me.</state>
+            </case>
+            <case stage="3">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="shimakaze" />
+                <state img="#-interested.png">Oh, it's a boat!</state>
+            </case>
+            <case stage="3">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="miko" />
+                <state img="#-slain.png">I-I'm Kogasa. I live in the Myouren Cemetary. I'm the scariest youkai in all of Gensokyo...</state>
             </case>
         </trigger>
 
         <trigger id="must_strip">
+            <case stage="0">
+                <condition role="other" character="miko" />
+                <state img="#-excited.png">Ara, if it isn't the Taoist Saint herself. Miko-san, it's a pleasure to properly make your acquaintance.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="miko" />
+                <state img="#-shocked.png">Goodness me, that simply isn't the case, Miko-san! I'm only here to... examine the human world a little. Now, if you'll excuse me...</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="miko" />
+                <state img="#-gentle.png">I apologise for ruining your fun, Miko-san. But, it simply couldn't be helped.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="miko" />
+                <state img="#-muststrip.png">I know, right? I was really proud of that disguise! You thought it was Yukari, but it was me, Koga-chan!</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="miko" />
+                <state img="#-interested.png">Finally, someone who understands me..! Miko!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="remilia" />
+                <state img="#-proud.png">Now now, Remilia-chan, where would the fun in that be?</state>
+            </case>
             <case stage="0">
                 <state img="#-ara.png">Oh, have I lost? Don't worry, I know very well what happens next.</state>
             </case>
@@ -271,6 +321,22 @@
 
         <trigger id="stripping">
             <case stage="0">
+                <condition role="other" character="miko" />
+                <state img="#-stripping.png">Ufufu, I'm sure that you and I would have plenty of things to talk about over a nice cup of tea.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="miko" />
+                <state img="#-stripping.png">Perhaps if we had met under different conditions, this could have gone differently. However, I don't have any choice but to remove my...</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="miko" />
+                <state img="#-stripping.png">I don't get what you're saying anymore, but I feel like it's really important.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="remilia" />
+                <state img="#-stripping.png">I simply can't help it. You're quite an adorable girl when you're angry.</state>
+            </case>
+            <case stage="0">
                 <state img="#-stripping.png">I can't imagine that you would have any issues with me removing my hat first, would you?</state>
             </case>
             <case stage="1">
@@ -288,6 +354,26 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="1">
+                <condition role="other" character="miko" />
+                <state img="#-laughing.png">Why, of course. A proper lady such as myself should always ensure that her desires are kept in check.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="miko" />
+                <state img="#-stripped.png">Ara, "ancient"? Now, Miko-san, surely you understand the implications of what you are saying?</state>
+            </case>
+            <case stage="4">
+                <condition role="other" character="miko" />
+                <state img="#-confused.png">"Pubic hair"? I'm an umbrella. Have you ever seen a hairy umbrella before? That sounds like a really dumb idea to me.</state>
+            </case>
+            <case stage="5">
+                <condition role="other" character="miko" />
+                <state img="#-slain.png">I-I thought you understood me, Miko...</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="remilia" />
+                <state img="#-laughing.png">See? I can tell that the maid behind you also agrees with me.</state>
+            </case>
             <case stage="1">
                 <state img="#-gentle.png">Now then, shall we continue?</state>
             </case>
@@ -886,15 +972,15 @@
         </trigger>
 
         <trigger id="opponent_stripping">
-            <case stage="3" oneShotId="4" priority="10">
-                <condition role="self" />
-                <state img="#-playful.png">What did you think of my disguise? Pretty cool, huh?</state>
+            <case stage="3" priority="10">
+                <condition role="self" notSaidMarker="intro0" />
+                <state img="#-playful.png" marker="intro0">What did you think of my disguise? Pretty cool, huh?</state>
             </case>
         </trigger>
 
         <trigger id="opponent_stripped">
             <case stage="3" oneShotId="5" priority="10">
-                <condition role="self" />
+                <condition role="self" saidMarker="intro0" />
                 <state img="#-happy.png" marker="intro" set-intelligence="average">Did you know I can change my appearance at will? I put together my normal outfit myself!</state>
             </case>
         </trigger>
@@ -1130,6 +1216,14 @@
         <trigger id="game_over_defeat">
             <case stage="7">
                 <state img="custom:#-float" collectible="kogasa_umbrella"></state>
+            </case>
+        </trigger>
+
+        <trigger id="global">
+            <case stage="0" priority="1">
+                <condition role="self" notSaidMarker="Yukari_greets_remi" />
+                <condition role="opp" character="remilia" />
+                <state img="#-gentle.png">Oh, Remilia-chan. What a pleasant surprise!</state>
             </case>
         </trigger>
 
