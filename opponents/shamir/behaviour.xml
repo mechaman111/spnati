@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 8:04:55 PM on March 30, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 4:36:58 PM on April 03, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Shamir</first>
@@ -16,7 +16,7 @@
     <intelligence stage="5">average</intelligence>
 
     <tags>
-        <tag>purple_hair</tag>
+        <tag>blue_hair</tag>
         <tag>exotic_hair</tag>
         <tag>short_hair</tag>
         <tag>violet_eyes</tag>
@@ -25,7 +25,6 @@
         <tag>hairy</tag>
         <tag>pubic_hair</tag>
         <tag>medium_breasts</tag>
-        <tag from="0" to="0">weapon</tag>
         <tag from="0" to="6">choker</tag>
         <tag>confident</tag>
         <tag>indifferent</tag>
@@ -39,8 +38,9 @@
         <tag>fire_emblem</tag>
         <tag>nintendo</tag>
         <tag>bounty_hunter</tag>
+        <tag>fighter</tag>
         <tag>military</tag>
-        <tag from="9" to="9">uses_toy</tag>
+        <tag>uses_toy</tag>
     </tags>
     <nicknames />
 
@@ -174,6 +174,11 @@
 
     <behaviour>
         <trigger id="selected">
+            <case stage="0">
+                <condition role="other" character="emi" saying="fastest" />
+                <state img="#-disinterested.png">So Emi, you're fast or something? Speed's crucial. Harder to hit fast opponents.</state>
+                <state img="#-smirk.png">I can see you have your priorities in order, Emi.</state>
+            </case>
             <case stage="0" id="461">
                 <test expr="~background~" value="alley" />
                 <state img="custom:arrowSpin" marker="employerExplained">Name's Shamir Nevrand. But keep your voice down. I'm in the alley for a contract. You don't mind if I join in on this game, do you? I need to blend in. Something to divert suspicions.</state>
@@ -289,6 +294,50 @@
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0">
+                <condition role="other" character="gaige" saying="mission" />
+                <state img="#-smirk.png">Hm? You're on a mission too, Gaige? That makes two of us.</state>
+                <state img="#-thinking.png">A mission, huh? I'm supposed to be watching for a target. And you are... ?</state>
+                <state img="#-thinking.png">You're on a mission too, huh? Seems like employers everywhere all had the same idea.</state>
+            </case>
+            <case stage="0" id="625">
+                <condition role="other" character="joey" />
+                <state img="#-disinterested.png">Joey? With that face paint... You almost remind me of Those Who Slither in the Dark. I trust you're unaffiliated. Don't worry.</state>
+                <state img="custom:#-sigh">Joey... Er, it's nothing. You just... You look like someone I know. Someone who did some very bad things. I apologize.</state>
+                <state img="#-surprised.png">Kronya?! Oh, er, Joey? Right, my apologies. </state>
+                <state img="#-disinterested.png">Joey, was it? Just a heads up: you best be careful around people from Fódlan. You resemble someone very dangerous with that face paint.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="brock" />
+                <state img="#-surprised.png">You're eager, Brock. That's good. Although... Is that a hammer? With red spikes at the end? Why would the handle be... so close to... Huh?</state>
+                <state img="#-disinterested.png">Brock, right? Is that... a hammer? With red spikes? I take it you're meant to counter armored opponents.</state>
+                <state img="#-happy.png">Is that a hammer you're carrying? With red spikes? Ah, so you must counter armored opponents. Since I check fliers, I'd say we'd make a great team.</state>
+            </case>
+            <case stage="0" id="626">
+                <test expr="~player~" value="Byleth" />
+                <test expr="~human.gender~" value="male" />
+                <state img="#-disinterested.png" marker="MaleByleth">Byleth? Oh, my apologies. I know a professor by the academy by that name. Didn't take it for a common name.</state>
+            </case>
+            <case stage="0" id="627">
+                <test expr="~player~" value="Byleth" />
+                <test expr="~human.gender~" value="female" />
+                <state img="#-disinterested.png" marker="FemaleByleth">Byleth? Oh, my apologies. I know a professor by the academy by that name. Didn't take it for a common name.</state>
+            </case>
+            <case stage="0" id="628">
+                <condition role="other" character="cynthia" />
+                <state img="#-disinterested.png">So, you're a &lt;i&gt;champion&lt;/i&gt; of something, Cynthia? Don't let it get to your head. Champions need to eat and sleep like anyone else. That's when they're vulnerable.</state>
+                <state img="custom:#-sigh">So you're some kind of &lt;i&gt;champion&lt;/i&gt;, Cynthia? People often make the mistake of thinking that just 'cause they earned some sort of title, it makes them untouchable. Watch out.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="maki" />
+                <state img="#-disinterested.png">You a student, Maki? You're dressed like one. But you're not from Garreg Mach, are you...</state>
+                <state img="#-thinking.png">You're a student, Maki? That doesn't look like the uniform at Garreg Mach...</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="erufuda" />
+                <state img="#-disinterested.png">I think there's some crests for dieting... You'll have to ask Hanneman about it.</state>
+                <state img="#-happy.png">If you want to lose weight, enroll in the Officer's Academy. We'll whip you in shape quick.</state>
+            </case>
             <case stage="0" id="491">
                 <state img="#-disinterested.png" marker="employerExplained">I'm to watch out for my target: a rebel serving Lonato. My employer works for the church. I don't know who they are, but they've sent with here with clear instructions.</state>
             </case>
@@ -405,7 +454,7 @@
                 <state img="#-smirk.png">This is the sort of hand where skill really matters.</state>
                 <state img="#-smirk.png">The key to gambling is knowing the situation better than your opponent.</state>
                 <state img="#-smirk.png">The key to gambling is knowing the situation better than your opponent. If you know something your opponent doesn't, capitalize on it.</state>
-                <state img="#-disinterested.png">After the Dagda and Brigid war, I traveled across Fodlan on my own. Lady Rhea took me in. I've owed her a debt ever since.</state>
+                <state img="#-disinterested.png">After the Dagda and Brigid war, I traveled across Fódlan on my own. Lady Rhea took me in. I've owed her a debt ever since.</state>
                 <state img="#-smirk.png">Yeah. This is okay.</state>
                 <state img="#-smirk.png">Yeah. This is fine.</state>
                 <state img="#-disappointed.png">It will have to suffice.</state>
@@ -433,6 +482,12 @@
                 <test expr="~month.number~" value="3" />
                 <test expr="~day.number~" value="27" />
                 <state img="#-disappointed.png">Trying to get the birthday girl in her birthday suit, I see.</state>
+            </case>
+            <case stage="0-8" id="629" oneShotId="41">
+                <test expr="~month.number~" value="2" />
+                <test expr="~day.number~" value="14" />
+                <state img="#-angry.png">Valentine's Day is a crock of shit, honestly. I'd rather spend it here than at Garreg Mach. Watching others engage in romance can be insufferable.</state>
+                <state img="#-disappointed.png">Valentine's Day can be a painful reminder to anyone without a date. It sucks.</state>
             </case>
             <case stage="1" id="504" oneShotId="23">
                 <test expr="~background.time~" value="day" />
@@ -510,17 +565,22 @@
 
         <trigger id="hand">
             <case stage="0-4" id="265" oneShotId="8" priority="999">
+                <condition count="3" status="alive" />
                 <state img="#-happy.png" marker="PartyCleared">My mission is very important, so I hope you'll forgive me if I keep to myself a bit. My target's description doesn't match either of you guys; so you're clear by me.</state>
+            </case>
+            <case stage="0-4" id="630" oneShotId="42" priority="999">
+                <condition count="4-5" status="alive" />
+                <state img="#-happy.png" marker="PartyCleared">My mission is very important, so I hope you'll forgive me if I keep to myself a bit. My target's description doesn't match any of you guys; so you're clear by me.</state>
             </case>
             <case stage="0-8" id="149" oneShotId="2" priority="900">
                 <condition role="self" notSaidMarker="MaleByleth" />
                 <test expr="~human.tag.human_female~" value="true" />
-                <state img="#-happy.png" marker="FemaleByleth">You know, ~player~, you remind me somewhat of a friend of mine. A professor at the academy named Byleth. She's the quiet type, like you. That means we'll get along.</state>
+                <state img="#-happy.png" marker="FemaleByleth">You know, ~player~, you remind me somewhat of a friend of mine. A professor at the academy named Byleth. She's the quiet type, like you. We'll get along.</state>
             </case>
             <case stage="0-8" id="152" oneShotId="5" priority="900">
                 <condition role="self" notSaidMarker="FemaleByleth" />
                 <test expr="~human.tag.human_male~" value="true" />
-                <state img="#-happy.png" marker="MaleByleth">You know, ~player~, you remind me somewhat of a friend of mine. A professor at the academy named Byleth. He's the quiet type, like you. That means we'll get along.</state>
+                <state img="#-happy.png" marker="MaleByleth">You know, ~player~, you remind me somewhat of a friend of mine. A professor at the academy named Byleth. He's the quiet type, like you. We'll get along.</state>
             </case>
             <case stage="0-8" id="495" oneShotId="15">
                 <condition role="other" character="arash" stage="0-7" saidMarker="smalltalk-cooking" />
@@ -575,7 +635,7 @@
         <trigger id="must_strip">
             <case stage="0" id="435">
                 <condition role="other" character="tharja" />
-                <state img="custom:#-sigh" marker="ShamirStripsTharjaReacts1">It's a contract, Tharja. I was approached by someone from the Church. They handed me a letter with my orders. Said it was from one of the Knights of Seiros, but my employer's exact identity is unknown.</state>
+                <state img="custom:#-sigh" marker="ShamirStripsTharjaReacts1">It's a contract, Tharja. I was approached by someone from the Church. They handed me my orders. Said it was from one of the Knights of Seiros, but my employer's exact identity is unknown.</state>
             </case>
             <case stage="1" id="439">
                 <condition role="other" character="tharja" />
@@ -1207,6 +1267,12 @@
                 <condition role="self" notSaidMarker="MastTransition" />
                 <state img="#-happyOral.png" marker="TharjaStripsShamirReacts9">You build walls around yourself, Tharja, and shoot down everyone who knocks at your door. That's no way to live life. Give others a chance.</state>
             </case>
+            <case stage="0-8 10" id="623">
+                <condition role="target" character="maki" stage="1" sayingMarker="makipiano" saying="musical instruments" />
+                <state img="#-happy.png">Instruments? No. The music I make is the screams of my targets... Ha, I'm just kidding! My targets die in silence.</state>
+                <state img="#-thinking.png">Instrumentssssss? No. But perhaps my skill with a bow might result in some talent with stringed instruments.</state>
+                <state img="#-disinterested2.png">Byleth often has us practicing choir by the alter of Saint Seiros. I hate it. And no, I have not gotten better.</state>
+            </case>
             <case stage="0-8 10" id="422">
                 <condition role="target" character="tharja" stage="1" sayingMarker="TharjaStripsShamirReacts3" />
                 <state img="#-smirk.png" marker="TharjaStripsShamirReacts3">I mean what I said, Tharja. I'm trying to look out for you. We can't have you going around depressed and unwell now, can we?</state>
@@ -1214,6 +1280,10 @@
             <case stage="0-8 10" id="428">
                 <condition role="target" character="tharja" stage="3" sayingMarker="TharjaStripsShamirReacts9" />
                 <state img="#-disinterested.png" marker="TharjaStripsShamirReacts9">You build walls around yourself, Tharja, and shoot down everyone who knocks at your door. That's no way to live life. Give others a chance.</state>
+            </case>
+            <case stage="0-8 10" id="624">
+                <condition role="target" character="maki" stage="1" sayingMarker="makipiano" />
+                <state img="#-disinterested2.png">Haven't tried the piano. Not interested in trying either. One of my contracts was a pianist though.</state>
             </case>
             <case stage="0-8 10">
                 <condition role="target" character="corrin_f" stage="1" />
@@ -2065,11 +2135,11 @@
             </case>
             <case stage="0-4" id="67">
                 <test expr="~clothing~" value="armor" />
-                <state img="#-disappointed.png">I'd be weary about removing any armor, ~name~. If the report is true, there could be rebels in the area.</state>
-                <state img="#-disappointed.png">I'd be weary about removing any armor, ~name~. With my target in the area, you never know when a fight might break out.</state>
+                <state img="#-disappointed.png">I'd be wary about removing any armor, ~name~. If the report is true, there could be rebels in the area.</state>
+                <state img="#-disappointed.png">I'd be waary about removing any armor, ~name~. With my target in the area, you never know when a fight might break out.</state>
                 <state img="#-disinterested2.png">Careful. If my target is in the area, he could strike at any moment. Removing your armor will leave you vulnerable.</state>
                 <state img="#-disinterested.png">Without your armor on, you'll be open for an attack. My target could easily strike you at any time.</state>
-                <state img="#-disinterested.png">There's a rebel in the area. Be weary, ~name~. Even if it's part of the game, you must understand how rip of a target you will be without your armor.</state>
+                <state img="#-disinterested.png">There's a rebel in the area. Be wary, ~name~. Even if it's part of the game, you must understand how rip of a target you will be without your armor.</state>
             </case>
             <case stage="0-8 10" id="70">
                 <test expr="~clothing~" value="bag" />
@@ -2460,7 +2530,7 @@
             <case stage="4" id="222" priority="1">
                 <test expr="~clothing.type~" value="extra" />
                 <state img="#-happy.png">The fewer distractions, the better.</state>
-                <state img="#-thinking.png">Your ~clothing~ shouldn't draw much attention. Then again, that just means there's more attention me.</state>
+                <state img="#-thinking.png">Your ~clothing~ shouldn't draw much attention. Then again, that just means there's more attention on me.</state>
             </case>
             <case stage="5" id="223" priority="1">
                 <test expr="~clothing.type~" value="extra" />
@@ -3164,8 +3234,8 @@
         <trigger id="masturbating">
             <case stage="9" id="217" oneShotId="6" priority="900">
                 <condition role="self" saidMarker="OralMastCount" notSaidMarker="MastTransition" />
-                <state img="#-disappointedVag.png" marker="MastTransition">That's enough of that. I'll be moving on now.</state>
-                <state img="#-disappointedVag.png" marker="MastTransition">I trust that's enough for Catherine... Time to get this over with.</state>
+                <state img="#-transition.png" marker="MastTransition">That's enough of that. I'll be moving on now.</state>
+                <state img="#-transition.png" marker="MastTransition">I trust that's enough for Catherine... Time to get this over with.</state>
             </case>
             <case stage="9" id="35">
                 <condition role="self" notSaidMarker="MastTransition" />
@@ -3274,7 +3344,23 @@
                 <state img="#-finished.png">I think I'll need a moment after that one. It felt great.</state>
                 <state img="#-finished.png">That felt awesome. I'm definitely going for round two when I get back to Garreg Mach.</state>
             </case>
-            <case stage="10" id="144">
+            <case stage="10" id="561" priority="1">
+                <state img="#-finished.png">Damn. That felt good. I let loose a little there.</state>
+                <state img="#-finished.png">Ha, mission accomplished.</state>
+                <state img="#-finished.png">That felt pretty nice.</state>
+                <state img="#-finished.png">For my first time with an audience, it went better than expected, I think.</state>
+                <state img="#-finished.png">I didn't think it would feel as nice with an audience. Fortunately, I was wrong.</state>
+                <state img="#-finished.png">I didn't think it would feel as nice with an audience. I was clearly mistaken.</state>
+                <state img="#-finished.png">It felt nicer than I expected, if not a little intimidating at first.</state>
+                <state img="#-finished.png">I think masturbating is still left doing alone, or with your partner. But I can see the benefits of doing it with others around.</state>
+                <state img="#-finished.png">I think I'll need a moment after that one. It felt great.</state>
+                <state img="#-finished.png">That felt awesome. I'm definitely going for round two when I get back to Garreg Mach.</state>
+            </case>
+            <case stage="10" id="145">
+                <state img="toy.png">This line should not play. Please send a bug report! To make it more obvious that something is wrong,  Shamir with a dildo.</state>
+            </case>
+            <case stage="10" id="144" hidden="1">
+                <condition role="self" saidMarker="MARKERTOMAKETHINGSNOTPLAYBECAUSETHEYAREWIP" />
                 <alternative>
                     <condition count="5" />
                     <condition count="0-3" status="finished" />
@@ -3297,21 +3383,6 @@
                 <state img="#-finished.png">I think masturbating is still left doing alone, or with your partner. But I can see the benefits of doing it with others around. Now, about my employer...</state>
                 <state img="#-finished.png">i think I'll need a moment after that one. It felt great. But, as for my employer...</state>
                 <state img="#-finished.png">That felt awesome. I'm definitely going for round two when I get back to Garreg Mach. My employer, on the other hand...</state>
-            </case>
-            <case stage="10" id="145">
-                <state img="toy.png">This line should not play. Please send a bug report! To make it more obvious that something is wrong, I replaced Shamir with a dildo.</state>
-            </case>
-            <case stage="10" id="561">
-                <state img="#-finished.png">Damn. That felt good. I let loose a little there.</state>
-                <state img="#-finished.png">Ha, mission accomplished.</state>
-                <state img="#-finished.png">That felt pretty nice.</state>
-                <state img="#-finished.png">For my first time with an audience, it went better than expected, I think.</state>
-                <state img="#-finished.png">I didn't think it would feel as nice with an audience. Fortunately, I was wrong.</state>
-                <state img="#-finished.png">I didn't think it would feel as nice with an audience. I was clearly mistaken.</state>
-                <state img="#-finished.png">It felt nicer than I expected, if not a little intimidating at first.</state>
-                <state img="#-finished.png">I think masturbating is still left doing alone, or with your partner. But I can see the benefits of doing it with others around.</state>
-                <state img="#-finished.png">I think I'll need a moment after that one. It felt great.</state>
-                <state img="#-finished.png">That felt awesome. I'm definitely going for round two when I get back to Garreg Mach.</state>
             </case>
         </trigger>
 
@@ -3346,7 +3417,7 @@
         <trigger id="game_over_victory">
             <case stage="0-4">
                 <state img="#-smirk.png" marker="MARKERTOMAKETHINGSNOTPLAYBECAUSETHEYAREWIP">Came in for the mission. This game wasn't my focus here tonight, but nonetheless, it's nice to walk away the victor.</state>
-                <state img="#-thinking.png">I didn't expect to win here tonight. Strange though; there's still no sign of my target... Do I play again to keep myself blended in? Or... well, my contractdidn'ttspecifyy what to do here.</state>
+                <state img="#-thinking.png">I didn't expect to win here tonight. Strange though; there's still no sign of my target... Do I play again to keep myself blended in? Or... well, my contract didn't tspecify what to do here.</state>
             </case>
             <case stage="5-8">
                 <state img="#-angry.png" marker="MARKERTOMAKETHINGSNOTPLAYBECAUSETHEYAREWIP">I won. Fortunate, for sure. Now, to give that damn Catherine what's coming to her.</state>
@@ -3478,7 +3549,7 @@
             <directive type="clear-all" />
             <directive type="text" id="text85" width="20%" arrow="left" x="30%" y="21%">~Player~... This isn't your fight.</directive>
             <directive type="pause" />
-            <directive type="text" id="text87" width="36%" arrow="left" x="31%" y="29%">I won't have the lives of innocent people caught in the crossfire of this fued between the Church and Lord Lonato.</directive>
+            <directive type="text" id="text87" width="36%" arrow="left" x="31%" y="29%">I won't have the lives of innocent people caught in the crossfire of this feud between the Church and Lord Lonato.</directive>
             <directive type="pause" />
             <directive type="text" id="text89" width="37%" arrow="left" x="30%" y="43%">This doesn't concern you, ~player~. Getting involved, it... it'll only make things worse.</directive>
             <directive type="pause" />
