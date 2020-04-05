@@ -255,46 +255,17 @@ window.addEventListener('error', function (ev) {
  * then fetches the uncompressed version of the file if that isn't found.
  */
 function fetchCompressedURL(baseUrl) {
-    /*
-     * The usual Jquery AJAX request function doesn't play nice with
-     * the binary-encoded data we'll get here, so we do the XHR manually.
-     * (I would use fetch() were it not for compatibility issues.)
-     */
-    var req = new XMLHttpRequest();
-    req.open('GET', baseUrl+'.gz', true);
-    req.responseType = 'arraybuffer';
-    var deferred = $.Deferred();
-
-    req.onload = function(ev) {
-        if (req.status < 400 && req.response) {
-            var data = new Uint8Array(req.response);
-            var decompressed = pako.inflate(data, { to: 'string' });
-            deferred.resolve(decompressed);
-        } else if (req.status === 404) {
-            $.ajax({
-                type: "GET",
-        		url: baseUrl,
-        		dataType: "text",
-                success: deferred.resolve.bind(deferred),
-                error: deferred.reject.bind(deferred),
+    return $.ajax(baseUrl+'.gz', {
+        xhrFields: { responseType: 'arraybuffer' },
+    }).then(function(data) {
+        return pako.inflate(new Uint8Array(data), { to: 'string' });
+    }, function(jqXHR) {
+        if (jqXHR.status == 404) {
+            return $.ajax(baseUrl, {
+                dataType: 'text',
             });
-        } else {
-            deferred.reject();
         }
-    }
-
-    req.onerror = function(err) {
-        $.ajax({
-            type: "GET",
-            url: baseUrl,
-            dataType: "text",
-            success: deferred.resolve.bind(deferred),
-            error: deferred.reject.bind(deferred),
-        });
-    }
-
-    req.send(null);
-    return deferred.promise();
+    });
 }
 
 
