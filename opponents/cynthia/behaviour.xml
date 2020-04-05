@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 9:53:50 PM on April 04, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 11:15:12 AM on April 05, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Cynthia</first>
@@ -676,9 +676,16 @@
                 <state img="#-sarcastic.png">Looking at us, you wouldn't have figured out that we're supposed to be playing a game of strip poker.</state>
             </case>
             <case stage="0-8" id="195" oneShotId="29">
-                <condition count="2-4" filter="tall" role="other" />
+                <alternative>
+                    <condition count="3" filter="tall" role="other" />
+                    <condition count="4" />
+                </alternative>
+                <alternative>
+                    <condition count="4" filter="tall" role="other" />
+                    <condition count="5" />
+                </alternative>
                 <state img="#-surprised.png">Pardon if I've realized this a bit late, but I've just noticed that everyone here is tall. That can't be a simple coincidence, can it?</state>
-                <state img="#-surprised.png">I don't think I've ever been in a room with  people my height before. I almost always tower over everyone.</state>
+                <state img="#-surprised.png">I don't think I've ever been in a room with people my height before. I almost always tower over everyone.</state>
             </case>
             <case stage="0-8" id="197" oneShotId="31">
                 <condition count="1-" filter="sinnoh" role="other" var="char" />
@@ -887,18 +894,18 @@
                 <state img="#-thinking.png">This mansion reminds me of my summer villa at Undella Town. Speaking of which, I wonder what Jervis has been up to.</state>
             </case>
             <case stage="0-2">
-                <state img="#-fingerup.png" oneShotId="5">Don't be intimidated by my presence here. This is a poker game rather than a Pokemon battle, so I'd say you have a decent chance of beating me.</state>
+                <state img="#-fingerup.png" oneShotId="5">Don't be intimidated by my presence here. This is a poker game rather than a Pokémon battle, so I'd say you have a decent chance of beating me.</state>
                 <state img="#-fingerup.png" oneShotId="6">I may be the Sinnoh League Champion, but I don't think my skills would translate to strip poker. If anything, you might have a better chance of winning than me.</state>
                 <state img="#-sarcastic.png" oneShotId="7">Strip poker - I don't think my years of experience as the Champion have done anything to prepare me for a possible defeat here.</state>
             </case>
             <case stage="6" oneShotId="39">
-                <state img="#-fingerup.png">If this was a battle, I would have already lost since we would only be allowed 6 Pokemon to fight with. Good thing this game allows 8 layers instead.</state>
-                <state img="#-sarcastic.png">I may have lost 6 times already, but this game is a lot more forgiving than Pokemon battles, so I still have 3 defeats remaining before I'm out.</state>
+                <state img="#-fingerup.png">If this was a battle, I would have already lost since we would only be allowed 6 Pokémon to fight with. Good thing this game allows 8 layers instead.</state>
+                <state img="#-sarcastic.png">I may have lost 6 times already, but this game is a lot more forgiving than Pokémon battles, so I still have 3 defeats remaining before I'm out.</state>
             </case>
             <case stage="8" oneShotId="40">
-                <state img="#-embarrassed.png">I... I don't think I've ever been naked in front of any of my Pokemon before... Not that I'd have a reason to...</state>
-                <state img="#-contemplative.png">Come to think of it, it would be weirder if I was naked in front of my Pokemon instead...</state>
-                <state img="#-thinking.png">Is it common for people to stand naked in front of their Pokemon?... Why would you even do that?</state>
+                <state img="#-embarrassed.png">I... I don't think I've ever been naked in front of any of my Pokémon before... Not that I'd have a reason to...</state>
+                <state img="#-contemplative.png">Come to think of it, it would be weirder if I was naked in front of my Pokémon instead...</state>
+                <state img="#-thinking.png">Is it common for people to stand naked in front of their Pokémon?... Why would you even do that?</state>
             </case>
             <case stage="0" id="280" oneShotId="41" priority="0">
                 <test expr="~background.temperature~" value="hot" />
@@ -981,7 +988,7 @@
                 <state img="#-disappointed.png">I see... So this might be a closer game than I had thought...</state>
                 <state img="#-aggressive.png">My second defeat... No matter, I still have some clothing to spare.</state>
                 <state img="#-surprised.png">Maybe... I should avoid taking unnecessary gambles in this game.</state>
-                <state img="#-aggressive.png">I don't mean to brag or anything, but I haven't lost two Pokemon in the same battle for quite a long time now. This game is quite different, ain't it?</state>
+                <state img="#-aggressive.png">I don't mean to brag or anything, but I haven't lost two Pokémon in the same battle for quite a long time now. This game is quite different, to say the least.</state>
             </case>
             <case stage="2">
                 <state img="#-disappointed.png">Ah, so careless! ...Very well, I'll remove my shoes.</state>
@@ -1289,34 +1296,23 @@
 
         <trigger id="stripped">
             <case stage="7">
-                <condition role="self" saidMarker="PlayerPenisExposed" />
-                <condition status="not_masturbating" role="other" character="human" />
-                <test expr="~human.tag.human_male~" value="true" />
+                <condition gender="male" status="not_masturbating" role="other" character="human" />
+                <condition status="crotch_visible" character="human" />
                 <test expr="~human.tag.gay~" value="false" />
                 <state img="#-stripped.png">H-hey! All it took was me taking off my bra and it made you &lt;i&gt;hard&lt;/i&gt;?</state>
                 <state img="#-stripped.png">&lt;i&gt;(Whoa... I just took off my bra and it was enough to get ~player~ hard...)&lt;/i&gt;</state>
-                <state img="#-stripped.png">~Player~! That made you hard? At least &lt;i&gt;try&lt;/i&gt; to cover it up, will you?</state>
             </case>
             <case stage="7" id="2">
-                <condition role="self" notSaidMarker="PlayerPenisExposed" />
-                <condition status="not_crotch_visible" role="other" character="human" />
-                <test expr="~human.tag.human_male~" value="true" />
+                <condition gender="male" status="not_crotch_visible" role="other" character="human" />
                 <test expr="~human.tag.gay~" value="false" />
-                <state img="#-stripped.png">...There, it wasn't easy, but I took off my br- w--h-he-hey! W-what is that in your pants, ~player~?!</state>
-                <state img="#-stripped.png">&lt;i&gt;(Hm? Could it be? Is that... slight lump in his pants... Is he hard?)&lt;/i&gt;</state>
-                <state img="#-stripped.png">&lt;i&gt;(Hm? Could it be? Is that... slight lump in his pants... Did exposing my breasts really make him hard?)&lt;/i&gt;</state>
                 <state img="#-stripped.png">&lt;i&gt;(Hm? Could it be? Is that... slight lump in his pants... Hm? I-I think I can see it pulsating...)&lt;/i&gt;</state>
                 <state img="#-stripped.png">&lt;i&gt;(Hm? Could it be? Is that... slight lump in his pants... Hm? It... Did it just... twitch?)&lt;/i&gt;</state>
-                <state img="#-stripped.png">~Player~... I know my breasts are exposed, but... you might want to hide your... &lt;i&gt;situation&lt;/i&gt; down below a little better...</state>
                 <state img="#-stripped.png">~Player~... I know my breasts are exposed, but... you might want to hide your... &lt;i&gt;situation&lt;/i&gt; a little better... It's... bulging through your clothes.</state>
                 <state img="#-stripped.png" marker="MalePlayerAdjustHimself">~Player~? You... you might want to... &lt;i&gt;adjust yourself&lt;/i&gt; down below... You can... &lt;i&gt;reach in there&lt;/i&gt; if you need to, just... take control of the situation, okay?</state>
                 <state img="#-stripped.png">~Player~, your... your dick is giving you away right now... I can see it though your clothes... Did... did I really get you that excited?</state>
-                <state img="#-stripped.png">Looks like something's &lt;i&gt;moving&lt;/i&gt; in your clothes, ~player~. You might wann- wai- hey, that's your dick! ~Player~! </state>
-                <state img="#-stripped.png">Looks like something's &lt;i&gt;moving&lt;/i&gt; in your clothes, ~player~. You might wann- wai- hey, that's your dick! ~Player~! That's gross!</state>
                 <state img="#-stripped.png" marker="MalePlayerAdjustHimself">Looks like something's &lt;i&gt;moving&lt;/i&gt; in your clothes, ~player~. You might wann- wai- hey, that's your dick! ~Player~! ... So? Are you going to adjust yourself?</state>
                 <state img="#-stripped.png">~Player~, you might wanna... &lt;i&gt;adjust yourself&lt;/i&gt; down there... We can see it pulsing through your clothes. &lt;i&gt;(Did taking off my bra really do that?)&lt;/i&gt;</state>
                 <state img="#-stripped.png" marker="MalePlayerAdjustHimself">Oh, ~player~... you're, uh... you're &lt;i&gt;hard&lt;/i&gt; beneath your clothes, aren't you? Yeah, I can see it... You can reach in there and adjust yourself, if you need to...</state>
-                <state img="#-stripped.png">~Player~... I know my breasts exposed, but... you might want to hide your, um... &lt;i&gt;situation&lt;/i&gt; going on downstairs... It's distracting, to say the least.</state>
             </case>
             <case stage="1">
                 <condition role="other" character="chazz" />
@@ -1434,7 +1430,7 @@
                 <state img="#-stripped.png">&lt;i&gt;(Wait, did I really just take off my pants in front of everyone? ... I didn't even realize; I was so absorbed by this match!)&lt;/i&gt;</state>
                 <state img="#-stripped.png">&lt;i&gt;(Did I really just space out and completely forgot that I was removing my pants? Either way, here I am!)&lt;/i&gt;</state>
                 <state img="#-stripped.png">You guys won't believe this, but I was so focused on the match, I didn't register that I was taking my pants off!</state>
-                <state img="#-stripped.png">If this was a Pokemon battle, I would be down to my final Pokemon now... Oh! I forgot that my pants are gone!</state>
+                <state img="#-stripped.png">If this was a Pokémon battle, I would be down to my final Pokemon now... Oh! I forgot that my pants are gone!</state>
             </case>
             <case stage="6">
                 <state img="#-stripped.png">Okay, that was the last defeat I can withstand &lt;i&gt;for real&lt;/i&gt;...</state>
@@ -1469,6 +1465,12 @@
         </trigger>
 
         <trigger id="male_must_strip">
+            <case stage="0-10">
+                <condition role="target" character="jotaro" stage="0" />
+                <test expr="~self.costume~" value="default" />
+                <state img="#-sarcastic.png">Well, would you look at that: we have the same outfit scheme, Jotaro. What are the odds of that happening?</state>
+                <state img="#-battleready.png">I'm not sure if you have noticed earlier, but we're wearing matching outfits. We have the same taste in clothes, it would seem.</state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="n" stage="0" />
                 <state img="#-battleready.png">Come on, N, you should really know what you're getting yourself into...</state>
@@ -2062,6 +2064,16 @@
                 <state img="#-excited.png">After Dialga and Palkia created &lt;i&gt;all matter&lt;/i&gt;, Arceus created Three &lt;i&gt;Lake Spirits&lt;/i&gt;, known as Uxie, Azelf, and Mesprit.</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="jotaro" stage="0" />
+                <state img="#-surprised.png">I did notice that the clothes store had a male... Hey, what was that flash?!</state>
+                <state img="#-surprised.png">You know, my taste of clothes had caught on in Sinnoh... Did anyone else see a flash?!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="jotaro" stage="1" />
+                <state img="#-shocked.png">There's that disembodied flash again! What in the world is going on here, Jotaro?!</state>
+                <state img="#-shocked.png">That flash is definitely originating from you, Jotaro! Please, explain yourself.</state>
+            </case>
+            <case stage="0-10">
                 <condition status="crotch_visible" role="target" />
                 <state img="#-surprised.png">You're only removing your ~clothing~ now? But your penis is already out!</state>
                 <state img="#-surprised.png">Why did you expose your penis but removing your ~clothing~?... Don't tell me you just wanted to show your penis to us!</state>
@@ -2233,6 +2245,10 @@
             <case stage="0-10">
                 <condition role="target" character="chazz" stage="3" />
                 <state img="#-fingerup.png">These three lake guardians taught humans the ability to feel emotions, gain knowledge, and use willpower!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="jotaro" stage="1" />
+                <state img="#-thinking.png">That flash appeared to have originated from you, Jotaro... Oh, your belt is gone... Perhaps, I was just blinded by reflection from your belt buckle.</state>
             </case>
             <case stage="0-10">
                 <condition status="crotch_visible" role="target" />
@@ -2978,8 +2994,8 @@
             </case>
             <case stage="4" id="274">
                 <state img="#-excited.png">I'll admit that I don't know much about men's fashion. How many ~clothing.ifPlural(|pieces of)~ ~clothing~ do you own, ~name~? I'm curious.</state>
-                <state img="#-happy.png">At least you wore underwear to this game. I've heard that some men don't wear underwear at all, even when out at public.</state>
-                <state img="#-embarrassed.png">Seeing your underwear is pretty nice...in a curiosity standpoint, I mean... &lt;i&gt;(That was awkward.)&lt;/i&gt;</state>
+                <state img="#-happy.png">At least you wore underwear to this game. I've heard that some men don't wear underwear at all, even when out in public.</state>
+                <state img="#-embarrassed.png">Seeing your underwear is pretty nice... from a curiosity standpoint, I mean... &lt;i&gt;(That was awkward.)&lt;/i&gt;</state>
             </case>
             <case stage="5" id="273">
                 <state img="#-fingerup.png">I do remember that the Historical Research Center at Celestic Town has an old ~clothing.ifPlural(|pair of)~ ~clothing~ on display. You should check it out sometime.</state>
@@ -3361,11 +3377,6 @@
                 <state img="#-embarrassed.png" marker="KazumaPenis">Oh, do you have, uh... &lt;i&gt;micropenis?&lt;/i&gt; That looks... that looks nothing like what I've seen in the ancient sketches.</state>
                 <state img="#-embarrassed.png" marker="KazumaPenis">Oh, i uh... I don't mean to question your manliness, but... well, nevermind...</state>
             </case>
-            <case stage="0-10">
-                <condition filter="human" role="target" />
-                <state img="#-disappointed.png" marker="PlayerPenisExposed">Hmmm... They appeared larger on the cave etchings...</state>
-                <state img="#-disappointed.png" marker="PlayerPenisExposed">Is that... normal-sized? Or were the ancient nude male sculptures of our past exaggerated?</state>
-            </case>
             <case stage="0-8">
                 <condition filter="exhibitionist" role="target" />
                 <state img="#-sarcastic.png">... That's it?!... You were very eager to show us your penis, and that's all of it?</state>
@@ -3397,10 +3408,6 @@
                 <state img="#-sarcastic.png">Ha ha, okay, okay Guzma. This would have been much more hilarious if it were smaller.</state>
                 <state img="#-sarcastic.png">Ha ha, okay, okay Guzma. This would have been much more hilarious if the &lt;i&gt;big bad&lt;/i&gt; leader of Team Skull turned out to have a tiny penis.</state>
             </case>
-            <case stage="0-10">
-                <condition filter="human" role="target" />
-                <state img="#-fingerup.png" marker="PlayerPenisExposed">A man uses his penis to make children. It is like a paintbrush for a man to imprint his influence upon the world.</state>
-            </case>
             <case stage="0-8">
                 <condition filter="exhibitionist" role="target" />
                 <state img="#-disappointed.png">This accomplishment doesn't feel quite as good when it's pretty much handed to me.</state>
@@ -3422,12 +3429,6 @@
         </trigger>
 
         <trigger id="male_large_crotch_is_visible">
-            <case stage="0-10">
-                <condition filter="human" role="target" />
-                <state img="#-aggressive.png" marker="PlayerPenisExposed">Ha, now this is what I like to see! I was hoping to see a big one tonight.</state>
-                <state img="#-aggressive.png" marker="PlayerPenisExposed">Oh, dear! That's... that's larger than the ones I've seen in the ancient cave paintings...</state>
-                <state img="#-aggressive.png" marker="PlayerPenisExposed">My, you sure seem to be gifted, ~name~. Isn't nature a wonderful thing to be blessing some of us with such gifts?</state>
-            </case>
             <case stage="0-8">
                 <condition filter="exhibitionist" role="target" />
                 <state img="#-shocked.png">No wonder you were so eager to show it to everybody! It's massive!</state>
@@ -3997,8 +3998,8 @@
                 <condition filter="blue_hair" status="not_lost_some" role="target" character="human" />
                 <condition filter="short_hair" character="human" />
                 <state img="#-aggressive.png">They not only wanted to destroy the Sinnoh region, but the entire world. Thank goodness I managed to close the portal before things got worst.</state>
-                <state img="#-aggressive.png">Long story short, they opened a portal to another dimension, and I had to venture inside to convince the Legendary Pokemon living inside to close it.</state>
-                <state img="#-aggressive.png">Long story short, they enslaved two Legendary Pokemon to create a new universe, but I managed to break the chains they were using, closing off the portal to the other universe.</state>
+                <state img="#-aggressive.png">Long story short, they opened a portal to another dimension, and I had to venture inside to convince the Legendary Pokémon living inside to close it.</state>
+                <state img="#-aggressive.png">Long story short, they enslaved two Legendary Pokémon to create a new universe, but I managed to break the chains they were using, closing off the portal to the other universe.</state>
             </case>
             <case stage="0-10" oneShotId="57">
                 <condition filter="long_hair" gender="male" role="target" character="human" />
@@ -4030,7 +4031,7 @@
                 <condition filter="ginger" character="human" />
                 <state img="#-embarrassed.png">Not that I'm telling you to ask me out, but I wouldn't oppose the idea either.</state>
                 <state img="#-embarrassed.png">I'm not forcing you to ask me out or anything like that. It's still up to your discretion.</state>
-                <state img="#-sarcastic.png">Well, I'll just let you process all of that.. and the fact that you just lost.</state>
+                <state img="#-sarcastic.png">Well, I'll just let you process all of that.., and the fact that you just lost.</state>
             </case>
         </trigger>
 
@@ -4284,7 +4285,7 @@
                 <state img="#-aggressive.png">None of the literature I've read does this justice... This is actually more entertaining to watch than I had been led to believe.</state>
                 <state img="#-thinking.png">It's more turgid than I thought... Can you bend like a glowstick, or is that anatomically impossible?</state>
                 <state img="#-thinking.png">It's really stiff, like a literal pillar... Isn't there a possibility of you breaking it when you go at it like that, ~name~?</state>
-                <state img="#-sarcastic.png">That hand motion is very simple. No wonder every men knows how to do it regardless of experience.</state>
+                <state img="#-sarcastic.png">That hand motion is very simple. No wonder every man knows how to do it, regardless of experience.</state>
                 <state img="#-contemplative.png">Some random thought: does doing that every day make your masturbation arm stronger? It has to... right?</state>
             </case>
             <case stage="6-8">
