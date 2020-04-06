@@ -1404,7 +1404,7 @@ function updateOpponentCountStats(opponentArr, uiElements) {
                 console.log("[LineImageCount] Fetching counts for " + opp.label + " in slot " + idx);
             }
 
-            fetchCompressedURL(opp.folder + 'behaviour.xml').then(countLinesImages).then(function(response) {
+            opp.fetchBehavior().then(countLinesImages).then(function(response) {
                 opp.uniqueLineCount = response.numUniqueLines;
                 opp.posesImageCount = response.numPoses;
 

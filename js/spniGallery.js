@@ -529,7 +529,7 @@ function doEpilogueFromGallery(){
     var player = epilogue.player;
     $galleryStartButton.attr('disabled', true);
 	
-	fetchCompressedURL('opponents/' + player.id + "/behaviour.xml")
+	player.fetchBehavior()
 		/* Success callback.
 		 * 'this' is bound to the Opponent object.
 		 */
