@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 3:26:41 AM on April 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 11:29:29 AM on April 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Kokichi</first>
@@ -8,7 +8,7 @@
     <label>Kokichi</label>
     <gender>male</gender>
     <size>medium</size>
-    <timer>25</timer>
+    <timer>18</timer>
     <intelligence>best</intelligence>
 
     <intelligence stage="8">throw</intelligence>
@@ -60,7 +60,11 @@
         <clothing name="cape" generic="cape" position="both" type="minor" />
     </wardrobe>
 
-    <poses />
+    <poses>
+        <pose id="left">
+            <sprite id="vibecheck" src="kokichi/0-vibecheck.png" x="-696" y="5998" />
+        </pose>
+    </poses>
 
     <behaviour>
         <trigger id="selected">
@@ -71,7 +75,27 @@
             </case>
         </trigger>
 
+        <trigger id="opponent_selected">
+            <case stage="0">
+                <condition role="target" character="glass_joe" />
+                <state img="#-shock.png">Oh my God! Is that Glass Joe?</state>
+            </case>
+        </trigger>
+
         <trigger id="game_start">
+            <case stage="0">
+                <condition role="other" character="megumin" />
+                <test expr="~megumin.costume~" value="megu" />
+                <state img="#-reprimand.png">Ugh. &lt;i&gt;So&lt;/i&gt; not cute, Megu! Have some dignity!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="glass_joe" />
+                <state img="#-excited.png">You're that French loser who loses every single match! The guys at D.I.C.E &lt;i&gt;love&lt;/i&gt; watching you get your ass get kicked! Soooooo funny!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="shou_tucker" />
+                <state img="#-upset.png">...Son of a &lt;i&gt;bitch!&lt;/i&gt;</state>
+            </case>
             <case stage="0">
                 <state img="#-huh.png">Heeeeeeeey, wait a minute! This isn't D.I.C.E headquarters?</state>
                 <state img="#-mock.png">Normally, only members of D.I.C.E can gamble away their possessions for a chance to see their leader naked. But I'll make an exception for you chumps since I'm so nice!</state>
@@ -81,10 +105,10 @@
 
         <trigger id="swap_cards">
             <case stage="0-7">
-                <state img="#-excited.png">Hey, dealer! Hey! Hey, hey, hey, hey, hey, hey, hey, hey, HEY! Gimmie ~cards.text~ cards!</state>
+                <state img="#-excited.png">Hey, dealer! Hey! Hey, hey, hey, hey, hey, hey, hey, hey, HEY! Gimme ~cards.text~ cards!</state>
                 <state img="#-lewd.png">Can I have ~cards.text~? Pleaaaaaaase?</state>
                 <state img="#-reprimand.png">You better make these ~cards.text~ good, dealer!</state>
-                <state img="#-grandiose.png">Alriiiiiight, gimmie ~cards.text~!</state>
+                <state img="#-grandiose.png">Alriiiiiight, gimme ~cards.text~!</state>
                 <state img="#-reprimand.png">I want ~cards.text~ cards!</state>
                 <state img="#-reprimand.png">~cards.text~ cards, dealer! And make it snappy!</state>
                 <state img="#-excited.png">~cards.text~ cards! ~cards.text~, ~cards.text~, ~cards.text~!</state>
@@ -92,7 +116,7 @@
             </case>
             <case stage="8">
                 <state img="#-neutral.png">I'll exchange ~cards.text~ ~cards.ifplural(cards|card)~. That should do it.</state>
-                <state img="#-bored.png">I don't care anymore. Just gimmie ~cards.text~ cards or whatever.</state>
+                <state img="#-bored.png">I don't care anymore. Just gimme ~cards.text~ cards or whatever.</state>
                 <state img="#-serious.png">~cards.text~.</state>
                 <state img="#-serious.png">Cards. Any kind. Doesn't matter.</state>
                 <state img="#-wehhhhh.png">Ughhhh, do I have to?</state>
@@ -106,7 +130,7 @@
                 <state img="#-wehhhhh.png">D-Dealer! Why did you give me this hand!?</state>
                 <state img="#-mock.png">Wooooow, do you want to see me naked &lt;i&gt;that&lt;/i&gt; badly.</state>
                 <state img="#-wail.png">NOOOOOOOOO! How could I get such a terrible hand! &lt;i&gt;Whhhhhhhhhhy?&lt;/i&gt;</state>
-                <state img="#-reprimand.png">C'mooooon, I want a good hand, ~dealer~!</state>
+                <state img="#-reprimand.png">C'mooooon, I want a good hand, dealer!</state>
                 <state img="#-excited.png">Hmmmmmm, I'll tell you my hand if you tell me yours, ~player~!</state>
                 <state img="#-grandiose.png">Noooooo, I wanted a good hand! &lt;br&gt; Just kidding, this hand is unbeatable!</state>
                 <state img="#-neutral.png">Oooooh, what a great hand! ...That's a lie, this hand is terrible! Or maybe I'm just lying about the quality of my hand!</state>
@@ -164,10 +188,82 @@
                 <state img="#-mock.png">I am totally winning this round. Just letting you know! Or maybe I have a bad hand! Who knows!</state>
                 <state img="#-menacing.png">Is this a joke, dealer?</state>
                 <state img="#-grandiose.png">Not gonna lie, this is a great hand!</state>
+                <state img="#-neutral.png">I've got a goooood hand!</state>
             </case>
-            <case stage="8-9">
-                <state img="#-neutral.png">I've got a bad hand. Nee hee hee.</state>
+            <case stage="8">
                 <state img="#-bored.png">Can we move onnnnnn?</state>
+                <state img="#-serious.png">Hmph.</state>
+                <state img="#-serious.png">...</state>
+                <state img="#-serious.png">Well?</state>
+                <state img="#-bored.png">On with it.</state>
+                <state img="#-serious.png">...Okay, I'm ready.</state>
+                <state img="#-bored.png">Just get it over with already.</state>
+            </case>
+        </trigger>
+
+        <trigger id="hand">
+            <case stage="0" totalRounds="0" priority="9998">
+                <condition role="other" character="astolfo_bean_plushie" />
+                <state img="#-excited.png" set-label="Kokichi but he's willing to get his dick sucked">Oh boy! I always wanted to get my dick sucked by an Astolfo Bean Plushie!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="azami" stage="4" timeInStage="0" />
+                <state img="#-bored.png">Meh. You look okay, I guess.</state>
+            </case>
+            <case stage="0" oneShotId="16" totalRounds="1">
+                <condition role="other" character="gay_spaghetti_chef" />
+                <state img="#-huh.png">Smells like spaghetti and homosexuality in here...</state>
+                <state img="#-mock.png">Pizza time.</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip">
+            <case stage="0-7" priority="9999">
+                <alternative>
+                    <condition role="self" hasHand="Royal Flush" />
+                </alternative>
+                <alternative>
+                    <condition role="self" hasHand="Straight Flush" />
+                    <condition count="0" role="winner" hasHand="Straight Flush" />
+                </alternative>
+                <alternative>
+                    <condition role="self" hasHand="Four of a Kind" />
+                    <condition count="0" role="winner" hasHand="Four of a Kind" />
+                </alternative>
+                <alternative>
+                    <condition role="self" hasHand="Full House" />
+                    <condition count="0" role="winner" hasHand="Full House" />
+                </alternative>
+                <alternative>
+                    <condition role="self" hasHand="Flush" />
+                    <condition count="0" role="winner" hasHand="Flush" />
+                </alternative>
+                <alternative>
+                    <condition role="self" hasHand="Straight" />
+                    <condition count="0" role="winner" hasHand="Straight" />
+                </alternative>
+                <alternative>
+                    <condition role="self" hasHand="Three of a Kind" />
+                    <condition count="0" role="winner" hasHand="Three of a Kind" />
+                </alternative>
+                <alternative>
+                    <condition role="self" hasHand="Two Pair" />
+                    <condition count="0" role="winner" hasHand="Two Pair" />
+                </alternative>
+                <alternative>
+                    <condition role="winner" character="kokichi" />
+                </alternative>
+                <state img="#-huh.png" marker="+debug">Huh? That's not right...</state>
+                <state img="#-upset.png" marker="+debug">
+                    <alt-img stage="6-7">#-serious.png</alt-img>
+                    <text>Hang on, I wasn't supposed to lose here!</text>
+                </state>
+                <state img="#-huh.png" marker="+debug">But I don't have the lowest hand now, do I?</state>
+                <state img="#-huh.png" marker="+debug">Hmmm... Something's up here.</state>
+            </case>
+            <case stage="1-7">
+                <condition role="self" saidMarker="debug&gt;1" />
+                <state img="#-reprimand.png" marker="foundout">~player~, are you cheating? You know I hate cheaters! That's it, I'm not playing with you anymore!</state>
             </case>
         </trigger>
 
@@ -178,14 +274,19 @@
                 <state img="#-wehhhhh.png">Nooooooo, my perfect victory!</state>
                 <state img="#-mock.png">Huh? I lost? &lt;i&gt;Who cares!?&lt;/i&gt; I've only lost once, after all!</state>
             </case>
-            <case stage="1-3 5">
+            <case stage="1-4">
                 <state img="#-neutral.png">Guess who's on top? Actually, don't guess that. You already know it's me.</state>
+                <state img="#-neutral.png">This is almost too easy.</state>
+                <state img="#-menacing.png">Oh? I lost again? Well, it doesn't matter; victory's mine, and there's nothing you can do about it.</state>
+                <state img="#-huh.png">Huh, and here I thought I'd win. Oh well.</state>
             </case>
-            <case stage="6-7">
+            <case stage="5-6">
                 <state img="#-mock.png">Look at you all. How pathetic.</state>
+                <state img="#-neutral.png">I'm down to my last few layers, and I'm &lt;i&gt;still&lt;/i&gt; winning. How sad.</state>
+                <state img="#-huh.png">Well, won't you look at that. You finally got me down to this level, despite your sorry state.</state>
             </case>
-            <case stage="4">
-                <state img="#-grandiose.png">This is almost too easy.</state>
+            <case stage="7">
+                <state img="#-serious.png">Hmmph.</state>
             </case>
         </trigger>
 
@@ -193,17 +294,18 @@
             <case stage="0">
                 <state img="#-grandiose.png">Watch this!</state>
             </case>
-            <case stage="1-3 5">
+            <case stage="1-5">
                 <state img="#-mock.png">At least I'm not a losing &lt;i&gt;scrub.&lt;/i&gt;</state>
+                <state img="#-grandiose.png">Check this out, pissbabies!</state>
+                <state img="#-mock.png">Nee hee hee!</state>
+                <state img="#-huh.png">Hmmm... What next to take off...?</state>
+                <state img="#-huh.png">...Who lost again?</state>
             </case>
-            <case stage="6-7">
+            <case stage="6">
                 <state img="#-huh.png">Well isn't this a fine pickle?</state>
             </case>
-            <case stage="2">
-                <state img="#-mock.png">Nee hee hee!</state>
-            </case>
-            <case stage="4">
-                <state img="#-neutral.png">Check this out, pissbabies!</state>
+            <case stage="7">
+                <state img="#-serious.png">...Shit.</state>
             </case>
         </trigger>
 
@@ -213,22 +315,29 @@
                 <state img="#-vibecheck.png">{menacing}This is just the beginning.{!reset}</state>
                 <state img="#-menacing.png">You think losing first will deter me? You're talking to a {menacing}Supreme Leader!{!reset}</state>
             </case>
-            <case stage="1-3 5">
+            <case stage="1-6">
                 <state img="#-shock.png">NO!</state>
                 <state img="#-shock.png">GAH!</state>
+                <state img="#-reprimand.png">Dammit! No, this is just a minor setback!</state>
             </case>
             <case stage="6-7">
-                <state img="#-upset.png">This is really pissin' me off!</state>
+                <state img="#-upset.png">This is really pissing me off!</state>
+                <state img="#-upset.png">This is bullshit! Really!?</state>
+                <state img="#-upset.png">Goddammit!</state>
             </case>
-            <case stage="4">
+            <case stage="5-6">
                 <state img="#-wehhhhh.png">WHYYYYY MEEEEE?!</state>
                 <state img="#-wail.png">NOOOOOOOO! THIS SUUUUUUUCKS!</state>
             </case>
         </trigger>
 
         <trigger id="stripping">
+            <case stage="0-7">
+                <condition role="self" saidMarker="foundout" />
+                <state img="#-mock.png" marker="leave">Byeeeeeee!</state>
+            </case>
             <case stage="0">
-                <state img="#-strip.png">This cape costed thousands of dollars to make. You lose it, and I'll have my henchmen break into your house to kill you.</state>
+                <state img="#-strip.png">This cape cost thousands of dollars to make. You lose it, and I'll have my henchmen break into your house to kill you.</state>
                 <state img="#-strip.png">A shame I needed to lose this cape. It makes me look like a leader.</state>
                 <state img="#-strip.png">I can still be the leader of D.I.C.E without my cape. It's just a formality, you know?</state>
                 <state img="#-strip.png">Nee hee hee! Looks like you've gotten me out of my cape. Oh noooo, what shall I do?</state>
@@ -251,7 +360,7 @@
             <case stage="3">
                 <state img="#-strip.png">If any of you have a foot fetish, I'm kinkshaming you! You're nasty!</state>
                 <state img="#-strip.png">Now I wish I wore socks. Oh well, I have about three layers left.</state>
-                <state img="#-strip.png">If the floor here is cold I'm sueing the building.</state>
+                <state img="#-strip.png">If the floor here is cold I'm suing the building.</state>
             </case>
             <case stage="4">
                 <state img="#-strip.png">See this part? Also part of our uniforms? It was my designer's idea. We're lucky to have her with us.</state>
@@ -269,13 +378,20 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="1-7" oneShotId="2">
+                <condition role="other" character="scm" sayingMarker="guitarinsult" />
+                <state img="#-vibecheck.png">
+                    <alt-img stage="1">#-stripped.png</alt-img>
+                    <text>Well fuck you too!</text>
+                </state>
+            </case>
             <case stage="5">
                 <condition role="self" saidMarker="scarfy" />
                 <state img="#-bored.png">It's just a regular collarbone. Whoop-dee-doo.</state>
             </case>
             <case stage="1">
-                <state img="#-stripped.png">{menacing}TIME TO GET SERIOUS!{!reset}</state>
-                <state img="#-stripped.png">Now... {menacing}LET THE GAMES BEGIN!!{!reset}</state>
+                <state img="#-stripped.png" location="15%">{menacing}TIME TO GET SERIOUS!{!reset}</state>
+                <state img="#-stripped.png" location="15%">Now... {menacing}LET THE GAMES BEGIN!!{!reset}</state>
             </case>
             <case stage="8">
                 <state img="#-bored.png">I've been feeling pretty pent-up anyways, so I'm just gonna throw.</state>
@@ -299,7 +415,7 @@
                 <state img="#-wehhhhh.png">If I hurt my poor feet, it's all your fault!</state>
             </case>
             <case stage="5">
-                <state img="#-lewd.png">Looking forward to the next time I lose? Naughter ~player~!</state>
+                <state img="#-lewd.png">Looking forward to the next time I lose? Naughty ~player~!</state>
                 <state img="#-neutral.png">I'm serious you got me this far. Maybe next round, I'll actually show some skin.</state>
                 <state img="#-wail.png">...It's just not the same without my scarf. I MISS MY SCARF!</state>
             </case>
@@ -317,51 +433,60 @@
         </trigger>
 
         <trigger id="male_must_strip">
-            <case stage="0-8">
+            <case stage="0">
+                <condition role="target" character="astolfo_bean_plushie" stage="0" />
+                <state img="#-menacing.png">&lt;i&gt;Show us your dick.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-3">
                 <state img="#-excited.png">See ya. Wouldn't wanna be ya.</state>
                 <state img="#-grandiose.png">Wow, you're terrible. Look everyone, look how terrible he is!</state>
                 <state img="#-neutral.png">Take your time, I'm just here for the gamer feet.</state>
             </case>
-            <case stage="1 5">
-                <state img="#-lewd.png">TAKE IT OFF! TAKE IT OFF!</state>
+            <case stage="4-6">
+                <state img="#-excited.png">TAKE IT OFF! TAKE IT OFF!</state>
+                <state img="#-lewd.png">This is where the fun begins.</state>
             </case>
             <case stage="6-7">
                 <state img="#-mock.png">Suckerrrr!</state>
+                <state img="#-mock.png">Hah! Loser!</state>
+                <state img="#-neutral.png">I showed you my nips, so make it good.</state>
             </case>
             <case stage="8">
                 <state img="#-menacing.png">Join me.</state>
             </case>
-            <case stage="2-3">
-                <state img="#-lewd.png">This is where the fun begins.</state>
-            </case>
-            <case stage="9">
+            <case stage="9-10">
                 <state img="#-grandiose.png">Nee-hee. Some feet pics would be appreciated right about now.</state>
-            </case>
-            <case stage="10">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-excited.png">Show us your dick!</state>
             </case>
         </trigger>
 
         <trigger id="female_must_strip">
-            <case stage="0-8">
+            <case stage="0-10">
+                <condition role="target" character="emi" stage="0" />
+                <test expr="~emi.costume~" value="AprilFools" />
+                <state img="#-excited.png">Ooooooh, &lt;i&gt;guuuurl&lt;/i&gt;, your outfit is SO cute right now! Can I get a copy? Pleaaaaaase?</state>
+            </case>
+            <case stage="0-7 9-10">
+                <condition role="target" character="monique" stage="0" />
+                <state img="#-bored.png">Meh. Mimes are just monochrome clowns. Not clearly as cool.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" stage="0" />
+                <state img="#-excited.png">Will you "ara ara" me, miss? I'm such a small little Supreme Leader!</state>
+            </case>
+            <case stage="0-7 10">
                 <state img="#-mock.png">No bonus points for strip teasing, just skip to the tiddies</state>
                 <state img="#-wehhhhh.png">Spare coochie ma'am?</state>
-            </case>
-            <case stage="1-3 5">
                 <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-excited.png">Take it off! Take it off!</state>
+                <state img="#-bored.png">Hurry up, I can't just sit around and watch you losers decide what you wanna remove, y'know?</state>
+                <state img="#-reprimand.png">Don't keep us waiting now!</state>
+                <state img="#-excited.png">I'll let you join my cool super secret organization if you take off something good!</state>
             </case>
-            <case stage="6-7">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="9">
+            <case stage="8-9">
                 <state img="#-lewd.png">Need... More... Coochie...</state>
                 <state img="#-vibecheck.png">Yup. That's going in my Mason jar collection.</state>
-            </case>
-            <case stage="10">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-excited.png">Join me! I'll let you join my cool super secret organization if you get naked!</state>
             </case>
         </trigger>
 
@@ -373,233 +498,187 @@
         </trigger>
 
         <trigger id="male_removing_accessory">
-            <case stage="0-7">
+            <case stage="0-10">
+                <condition role="target" character="glass_joe" stage="0" />
+                <state img="#-huh.png">
+                    <alt-img stage="0">#-strip.png</alt-img>
+                    <text>You can't even remove your gloves? Woooow, what a loser! As expected of you, of course!</text>
+                </state>
+            </case>
+            <case stage="0-4">
                 <state img="#-vibecheck.png">Your clothes. Hand them over.</state>
-                <state img="#-lewd.png">Daaaamn... Where'd you find those</state>
+                <state img="#-lewd.png">Daaaamn... Where'd you find those? &lt;br&gt; In the trash?</state>
             </case>
-            <case stage="1-3 5">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="9">
+            <case stage="8-10">
                 <state img="#-bored.png">It's a little bit late for that, don't you think?</state>
                 <state img="#-upset.png">This is a cruel and unusual punishment isn't it?</state>
+                <state img="#-upset.png">I hate you.</state>
             </case>
-            <case stage="10">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+            <case stage="5-7">
+                <state img="#-wehhhhh.png">I miss my scarf.</state>
+                <state img="#-huh.png">Cool. Not as cool as my scarf, though.</state>
             </case>
         </trigger>
 
         <trigger id="male_removed_accessory">
-            <case stage="0-9">
+            <case stage="0-10">
+                <condition role="target" character="glass_joe" stage="1" />
+                <state img="#-vibecheck.png">{menacing}Take off the fucking gloves.{!reset}</state>
+            </case>
+            <case stage="0-10">
                 <state img="#-bored.png">"A male character has just removed that small item." There. I said it. You're not even worth the effort to insult.</state>
                 <state img="#-mock.png">You can just chuck it into the clearance bin at Hot Topic. They'll never know.</state>
-            </case>
-            <case stage="1-3 5">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-upset.png">This is a placeholder line. Because it's not worth the effort write lines for this shit.</state>
             </case>
         </trigger>
 
         <trigger id="female_removing_accessory">
-            <case stage="0 4 9">
+            <case stage="0-10">
+                <condition role="target" character="emi" stage="0" />
+                <test expr="~emi.costume~" value="AprilFools" />
+                <state img="#-bored.png">I knooooow, right? &lt;i&gt;So&lt;/i&gt; tacky. Like, come on, seriously?</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="emi" stage="1" />
+                <test expr="~emi.costume~" value="AprilFools" />
+                <state img="#-shock.png">Oh no! She's going to break the sound barrier with how fast she's going! EMI, NO---!</state>
+            </case>
+            <case stage="0-10">
                 <state img="#-vibecheck.png">NO! Anything but that!</state>
                 <state img="#-upset.png">But WHY?!</state>
-            </case>
-            <case stage="1-3 5">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-reprimand.png">You had your chance to impress me and you blew it! </state>
+                <state img="#-wehhhhh.png">Stop being lame!</state>
+                <state img="#-vibecheck.png">I ought'a erase you from the face of the Earth for doing that.</state>
             </case>
         </trigger>
 
         <trigger id="female_removed_accessory">
-            <case stage="0-9">
+            <case stage="0-10">
+                <condition role="target" character="emi" stage="1" saying="panties were white" />
+                <test expr="~emi.costume~" value="AprilFools" />
+                <state img="#-upset.png">...I am a man of many fetishes, but piss isn't one of them.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="emi" stage="2" />
+                <test expr="~emi.costume~" value="AprilFools" />
+                <state img="#-wehhhhh.png">Aww, now she's crispy!</state>
+            </case>
+            <case stage="0-5">
                 <state img="#-wehhhhh.png">I don't appreciate you doing me like this, ~name~.</state>
                 <state img="#-reprimand.png">You're really doing me dirty here.</state>
+                <state img="#-wehhhhh.png">My balls have never been so bluer!</state>
+                <state img="#-wail.png">Just ~clothing.ifPlural(~clothing~|a ~clothing~)~!? YOU'RE SO MEAN! WAAAAAAAAAAAAAAH!</state>
             </case>
-            <case stage="1-3 5">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state img="#-wail.png">&lt;i&gt;WHY?!?!&lt;/i&gt;</state>
-            </case>
-            <case stage="8">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+            <case stage="6-10">
+                <state img="#-wehhhhh.png">
+                    <alt-img stage="6-8">#-wail.png</alt-img>
+                    <text>&lt;i&gt;WHY?!?!&lt;/i&gt;</text>
+                </state>
+                <state img="#-reprimand.png">~name~! At least take me out to dinner before you FUCK ME!</state>
             </case>
         </trigger>
 
         <trigger id="male_removing_minor">
-            <case stage="0-9">
+            <case stage="0-10">
                 <state img="#-bored.png">Strip poker's cool and all, but have you tried eternal devotion to your supreme evil overlords?</state>
                 <state img="#-grandiose.png">Sad!</state>
-            </case>
-            <case stage="1-3 5">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-wehhhhh.png">
+                    <alt-img stage="0-8">#-wail.png</alt-img>
+                    <text>But that's BOOOOOORING!</text>
+                </state>
+                <state img="#-bored.png">
+                    <alt-img stage="6-10">#-serious.png</alt-img>
+                    <text>Pathetic.</text>
+                </state>
             </case>
         </trigger>
 
         <trigger id="male_removed_minor">
-            <case stage="0-9">
+            <case stage="0-7">
                 <state img="#-neutral.png">This is so sad, Monokuma, play Debate Scrum.</state>
                 <state img="#-reprimand.png">I came here expecting to see some dick from you, but all I see is pussy right now.</state>
-            </case>
-            <case stage="1-3 5">
+                <state img="#-wail.png">WAAAAAAAAHHHH, YOU'RE SO BORING!!</state>
+                <state img="#-wail.png">WHHHHHHHHHHHHY!?</state>
                 <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
             </case>
-            <case stage="6-7">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+            <case stage="8-10">
+                <state img="#-serious.png">Bruh.</state>
+                <state img="#-reprimand.png">I came here expecting to see some dick from you, but all I see is pussy right now.</state>
+                <state img="#-bored.png">Ugh, man up.</state>
             </case>
         </trigger>
 
         <trigger id="female_removing_minor">
-            <case stage="0-9">
+            <case stage="0-10">
                 <state img="#-bored.png">Booooring. Wake me up when the tiddies arrive.</state>
                 <state img="#-vibecheck.png">I require more power.</state>
                 <state img="#-lewd.png">How much stolen Swiss gold is it gonna take to get you to skip to the good part?</state>
-            </case>
-            <case stage="1-3 5">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-wehhhhh.png">
+                    <alt-img stage="0-8">#-wail.png</alt-img>
+                    <text>HURRY UPPPPP!</text>
+                </state>
+                <state img="#-wehhhhh.png">~name~, I-I thought we had something together...</state>
             </case>
         </trigger>
 
         <trigger id="female_removed_minor">
-            <case stage="0-9">
+            <case stage="0-10">
                 <state img="#-mock.png">6/10. Needs more purple.</state>
                 <state img="#-grandiose.png">Ooh! Ooh! Can I keep it?</state>
-            </case>
-            <case stage="1-3 5">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-huh.png">I wonder how much that would cost...</state>
+                <state img="#-bored.png">Lame. Next time, throw it more dramatically. Strip with pizzazz! If you are, I'm not gonna bother targeting it.</state>
             </case>
         </trigger>
 
         <trigger id="male_removing_major">
-            <case stage="0-9">
+            <case stage="0-10">
                 <state img="#-lewd.png">Nee-hee-hee!</state>
                 <state img="#-mock.png">Dicks ahoy!</state>
-            </case>
-            <case stage="1-3 5">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-reprimand.png">No wimping out of this now, ~name~.</state>
+                <state img="#-huh.png">Can I offer you a Grape Panta in these trying times?</state>
+                <state img="#-reprimand.png">No crying in strip poker, weenie!</state>
+                <state img="#-grandiose.png">Dicks ahoy!</state>
             </case>
         </trigger>
 
         <trigger id="male_removed_major">
-            <case stage="0-9">
+            <case stage="0-10">
                 <state img="#-mock.png">Nee-hee-hee! 8/10, easily.</state>
-            </case>
-            <case stage="1-3 5">
                 <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-huh.png">Oooh... You had my curiosity, but now you've got my attention.</state>
+                <state img="#-menacing.png">Close... Closer... Yet Closer...</state>
+                <state img="#-excited.png">Wooooow... You suck!</state>
+                <state img="#-excited.png">Now that's a party!</state>
+                <state img="#-grandiose.png">Time to play a little game I call "guess my sexuality!"</state>
             </case>
         </trigger>
 
         <trigger id="female_removing_major">
-            <case stage="0-9">
+            <case stage="0-8">
+                <condition role="target" character="emi" stage="3" />
+                <test expr="~emi.costume~" value="AprilFools" />
+                <state img="#-shock.png">NO, &lt;i&gt;NO, NO, NO!&lt;/i&gt; NOT AGAIN!</state>
+            </case>
+            <case stage="0-10">
                 <state img="#-reprimand.png">No bitching out of this now, ~name~.</state>
                 <state img="#-huh.png">Can I offer you a Grape Panta in these trying times?</state>
-            </case>
-            <case stage="1-3 5">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-reprimand.png">No crying in strip poker!</state>
             </case>
         </trigger>
 
         <trigger id="female_removed_major">
-            <case stage="0-9">
+            <case stage="0-10">
+                <condition role="target" character="emi" />
+                <state img="#-mock.png">This is why you just take off like your clothes like a normal person! Then again, &lt;i&gt;are&lt;/i&gt; you even a normal person?</state>
+            </case>
+            <case stage="0-8">
                 <state img="#-lewd.png">Oooh... You had my curiosity, but now you've got my attention.</state>
                 <state img="#-menacing.png">Close... Closer... Yet Closer...</state>
+                <state img="#-vibecheck.png">Show me the tits, woman!</state>
+                <state img="#-excited.png">Now that's a party!</state>
+                <state img="#-mock.png">Nee-hee-hee! 6/10, easily.</state>
             </case>
-            <case stage="1-3 5">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
+            <case stage="9-10">
                 <state img="#-excited.png">One time for my LA sisters! One time for my LA hoes!</state>
             </case>
         </trigger>
@@ -608,414 +687,485 @@
             <case stage="0-9">
                 <state img="#-menacing.png">Look at this nerd.</state>
                 <state img="#-excited.png">Wow! I can almost see the sexual frustration on those nipples!</state>
-            </case>
-            <case stage="1-3 5">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-grandiose.png">Aww, it's easy to play strip poker. Just use both hands, both feet, and both nipples!</state>
+                <state img="#-neutral.png">Hips and nips. Gotta make it sexy.</state>
             </case>
             <case stage="10">
                 <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-neutral.png">Here we go!</state>
             </case>
         </trigger>
 
         <trigger id="male_chest_is_visible">
-            <case stage="0-9">
+            <case stage="0-10">
+                <condition filter="muscular" role="target" />
                 <state img="#-grandiose.png">Daaaamn! That's a thicc boi!</state>
                 <state img="#-grandiose.png">That's a thicc ass boi! DAMN!</state>
             </case>
-            <case stage="1-3 5">
+            <case stage="0-7">
                 <state img="#-bored.png">Eh. 6/10. Just like My Beautiful Dark Twisted Fantasy.</state>
+                <state img="#-reprimand.png">This weird guy's chest? It's NOT GOOD.</state>
             </case>
-            <case stage="6-7">
-                <state img="#-bored.png">This weird guy's chest? It's NOT GOOD.</state>
-            </case>
-            <case stage="8">
+            <case stage="8-10">
                 <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-lewd.png">Hmmm...</state>
             </case>
         </trigger>
 
         <trigger id="male_crotch_will_be_visible">
-            <case stage="0-9">
+            <case stage="0-7">
                 <state img="#-lewd.png">Oh yeah... This is big boy time.</state>
-            </case>
-            <case stage="1-3 5">
                 <state img="#-grandiose.png">It's Dick O'Clock!</state>
+                <state img="#-grandiose.png">Whip it out!</state>
             </case>
-            <case stage="6-7">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+            <case stage="8-10">
+                <state img="#-grandiose.png">Gentlemen, I propose the idea of the boner squad!</state>
+                <state img="#-lewd.png">Whip it out, daddy.</state>
             </case>
         </trigger>
 
         <trigger id="male_small_crotch_is_visible">
-            <case stage="0-9">
+            <case stage="0-10">
                 <state img="#-grandiose.png">A penis has been discovered.</state>
                 <state img="#-neutral.png">Have you considered becoming a robot. I think they get bigger dicks than that.</state>
-            </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-mock.png">Well, K1-B0 would still be jealous.</state>
+                <state img="#-neutral.png">
+                    <alt-img stage="0">#-lewd.png</alt-img>
+                    <text>Aww, cute!</text>
+                </state>
             </case>
         </trigger>
 
         <trigger id="male_medium_crotch_is_visible">
-            <case stage="0-9">
+            <case stage="0-10">
+                <condition role="target" character="scm" />
+                <state img="#-bored.png">That's it? Wow, how disappointing. I've been fucked by bigger.</state>
+            </case>
+            <case stage="0-10">
                 <state img="#-bored.png">Hmm... Kinda a let down from the 18 naked cowboys I was promised.</state>
                 <state img="#-neutral.png">Nice cock, bro.</state>
-            </case>
-            <case stage="1-3 5">
                 <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-menacing.png">Wow, ~name~! With how you play, I didn't think you'd have balls.</state>
             </case>
         </trigger>
 
         <trigger id="male_large_crotch_is_visible">
-            <case stage="0-9">
+            <case stage="0-7">
                 <state img="#-reprimand.png">Waiter, this cock appears to be overcooked. I'd like to speak to your manager.</state>
+                <state img="#-mock.png">Is this a coup? Talk about a dicktatorship.</state>
             </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="0">
-                <state img="#-grandiose.png">Is this a coup? Talk about a dicktatorship.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+            <case stage="8-10">
+                <state img="#-mock.png">Your dick may be big, but nobody gives me more big dick energy than I do!</state>
             </case>
         </trigger>
 
         <trigger id="female_chest_will_be_visible">
-            <case stage="0-9">
+            <case stage="0-10">
                 <state img="#-lewd.png">Show me the tits, woman! </state>
                 <state img="#-grandiose.png">Now this is strip poker!</state>
-            </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-excited.png">But are you as stacked as Kaito?</state>
             </case>
         </trigger>
 
         <trigger id="female_small_chest_is_visible">
-            <case stage="0-9">
+            <case stage="0-10">
                 <state img="#-excited.png">Chairman Ouma has promoted you to vice chairwoman of the itty-bitty-titty-committee.</state>
                 <state img="#-mock.png">Ah, I see you're a woman of culture.</state>
                 <state img="#-neutral.png">The best kind of chest, of course.</state>
-            </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-excited.png">Mini-milk!</state>
             </case>
         </trigger>
 
         <trigger id="female_medium_chest_is_visible">
-            <case stage="0-9">
+            <case stage="0-10">
                 <state img="#-lewd.png">Not too big, but you could totally waterboard someone between those.</state>
-                <state img="#-excited.png">AYYYYY!</state>
-            </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-grandiose.png">AYYYYY!</state>
+                <state img="#-excited.png">MELONS! GLOBES! ORBS! SACKS OF MILK!</state>
+                <state img="#-excited.png">Smother me in those breasts!</state>
             </case>
         </trigger>
 
         <trigger id="female_large_chest_is_visible">
-            <case stage="0-9">
+            <case stage="0-8 10">
                 <state img="#-lewd.png">It's about time the plot armor came off...</state>
                 <state img="#-grandiose.png">You could stop a bullet with those! Or maybe some projectile cum, at least.</state>
             </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+            <case stage="9">
+                <state img="#-lewd.png">Gimme that milk...</state>
             </case>
         </trigger>
 
         <trigger id="female_crotch_will_be_visible">
-            <case stage="0-9">
+            <case stage="0-10">
                 <state img="#-huh.png">You're not hiding any WMDs in there, are you? Would be a lot cooler if you were.</state>
                 <state img="#-lewd.png">Nee-hee-hee...</state>
-            </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-mock.png">This is a placeholder line. Or is it? Nee hee hee.</state>
             </case>
         </trigger>
 
         <trigger id="female_crotch_is_visible">
-            <case stage="0-9">
+            <case stage="0-10">
                 <state img="#-excited.png">What's new, pussycat?</state>
+                <state img="#-grandiose.png">There it is, folks!</state>
+                <state img="#-mock.png">
+                    <alt-img stage="0">#-strip.png</alt-img>
+                    <text>All you ladies pop your pussy like this!</text>
+                </state>
+                <state img="#-neutral.png">
+                    <alt-img stage="0">#-strip.png</alt-img>
+                    <text>My neck, my back, lick that pussy and that crack!</text>
+                </state>
+                <state img="#-bored.png">Ever wonder how there's so little words for "vagina" that actually sound sexy?</state>
             </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+        </trigger>
+
+        <trigger id="opponent_lost">
+            <case stage="0-8">
+                <condition role="target" character="freddie" stage="0" />
+                <state img="#-shock.png">Jesus Christ! Is that a fucking gremlin!?</state>
             </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+        </trigger>
+
+        <trigger id="opponent_stripping">
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="4" />
+                <state img="#-upset.png">
+                    <alt-img stage="1-5">#-shock.png</alt-img>
+                    <alt-img stage="6-10">#-serious.png</alt-img>
+                    <text>...</text>
+                </state>
             </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+            <case stage="0-10">
+                <condition role="target" character="freddie" stage="0" />
+                <state img="#-upset.png">Nobody feed that thing after midnight!</state>
             </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+            <case stage="0-10">
+                <condition role="target" character="derpy_hooves" />
+                <state img="#-lewd.png">...Oops!~</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_stripped">
+            <case stage="0-10">
+                <condition role="target" character="nami_szs" stage="1" />
+                <state img="#-bored.png">
+                    <alt-img stage="6-10">#-serious.png</alt-img>
+                    <text>...Coward.</text>
+                </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="2" />
+                <state img="#-huh.png">Hey, HEY! What's that thing on your face?</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="azami" stage="4" />
+                <state img="#-shock.png">
+                    <alt-img stage="0-8">#-shock.png</alt-img>
+                    <alt-img stage="9-10">#-serious.png</alt-img>
+                    <text>...</text>
+                </state>
+            </case>
+            <case stage="9-10">
+                <condition role="target" character="azami" stage="4" />
+                <state img="#-serious.png">
+                    <alt-img stage="0-8">#-shock.png</alt-img>
+                    <alt-img stage="9-10">#-serious.png</alt-img>
+                    <text>...</text>
+                </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="5" />
+                <state img="#-reprimand.png">
+                    <alt-img stage="6-10">#-serious.png</alt-img>
+                    <text>Okay, I came to play strip poker, &lt;i&gt;not&lt;/i&gt; to hang out with eldritch horrors.</text>
+                </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="derpy_hooves" />
+                <state img="#-mock.png">And here I thought Kaito was stupid! But no, somehow we managed to find someone even &lt;i&gt;dumber!&lt;/i&gt;</state>
             </case>
         </trigger>
 
         <trigger id="male_must_masturbate">
-            <case stage="0-9">
-                <state img="#-lewd.png">Kneel before your leader, inferior being.</state>
+            <case stage="0-8">
+                <state img="#-grandiose.png">Kneel before your leader, inferior being.</state>
+                <state img="#-mock.png">Another one bites the dust!</state>
+                <state img="#-mock.png">Uh-oh, looks like ~name~'s down for the count!</state>
+                <state img="#-menacing.png">Did you &lt;i&gt;really&lt;/i&gt; think you can beat the Ultimate Supreme Leader!</state>
+                <state img="#-grandiose.png">And so another falls before me!</state>
             </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+            <case stage="9-10">
+                <state img="#-neutral.png">Well, get on with it!</state>
+                <state img="#-bored.png">Boooooooring.</state>
             </case>
         </trigger>
 
         <trigger id="male_start_masturbating">
-            <case stage="0-9">
+            <case stage="0-10">
                 <state img="#-mock.png">Whack that thing like it's a political assassination target!</state>
-            </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-mock.png">Time to beat your meat! Spank the money! Make the bald man cry! Do the five finger shuffle!</state>
+                <state img="#-neutral.png">
+                    <alt-img stage="0">#-mock.png</alt-img>
+                    <text>Time for fapping! Poaching the egg! Milking the cow! Making it snow! Boxing the one-eyed champ! I have so much more, but my text box can only fit so much.</text>
+                </state>
+                <state img="#-lewd.png">
+                    <alt-img stage="9">#-neutral.png</alt-img>
+                    <alt-img stage="10">#-mock.png</alt-img>
+                    <text>You probably do this all the time, huh?</text>
+                </state>
+                <state img="#-neutral.png">Too bad you're not getting laid. Noope, you're just doing the night you probably do eveeeeery night!</state>
             </case>
         </trigger>
 
         <trigger id="male_masturbating">
-            <case stage="0-9">
+            <case stage="0-10" oneShotId="1">
+                <condition role="target" character="glass_joe" />
+                <state img="#-reprimand.png">Sit down, stupid!</state>
+            </case>
+            <case stage="0-8">
                 <state img="#-neutral.png">Try not to stain any of my clothes with that. Kirumi already has enough loads to deal with on laundry day.</state>
                 <state img="#-neutral.png">Don't get any on these threads. Kroom is busy enough as-is.</state>
+                <state img="#-menacing.png">You better not cum on me if you know what's good for you, soyboy.</state>
+                <state img="#-huh.png">Pffft, that's not hot at all.</state>
+                <state img="#-menacing.png">What’s it called when you cum in a Starbucks drink? A fappuccino. Keep an eye on your daily dose of caffeine next time.</state>
+                <state img="#-excited.png">DO IT! DO IT! DO IT!</state>
+                <state img="#-huh.png">How many cumsocks do you keep a day?</state>
+                <state img="#-grandiose.png">Beat! That! Meat!</state>
+                <state img="#-grandiose.png" oneShotId="1">Bet you can't aim it at ~player~!</state>
             </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+            <case stage="9-10">
+                <state img="#-neutral.png">Play with yourself! For my amusement, of course!</state>
+                <state img="#-huh.png">I wonder how many dick puns I can make here.</state>
+                <state img="#-bored.png">Don't go boring me now, ~name~. I got nothing else to do here.</state>
+                <state img="#-excited.png">PENIS! PENIS! PENIS! PENIS! PENIS!</state>
             </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+        </trigger>
+
+        <trigger id="male_heavy_masturbating">
+            <case stage="0-10">
+                <condition role="target" character="gay_spaghetti_chef" />
+                <state img="#-upset.png">Why is this taking so goddamn long!?</state>
+                <state img="#-vibecheck.png">{menacing}HURRY THE FUCK UP!{!reset}</state>
+                <state img="#-bored.png">...</state>
+                <state img="#-reprimand.png">
+                    <alt-img stage="6-10">#-serious.png</alt-img>
+                    <text>What the fuck.</text>
+                </state>
+                <state img="#-huh.png">What the fuck? Hey, guys? &lt;i&gt;What the fuck?&lt;/i&gt;</state>
             </case>
         </trigger>
 
         <trigger id="male_finished_masturbating">
-            <case stage="0-9">
+            <case stage="0">
+                <condition role="target" character="scm" />
+                <state img="#-excited.png">Wooooow! Look at how much he gushed, guys! He must be &lt;i&gt;reaaaaaaally&lt;/i&gt; pent up, huh?</state>
+            </case>
+            <case stage="0-8">
                 <state img="#-excited.png">It's all cumming together, just like I planned!</state>
                 <state img="#-huh.png">May I have some cummies, sir? It's for science.</state>
+                <state img="#-mock.png">You'll never see it cuuuuuuuuuuuming!</state>
             </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+            <case stage="9-10">
+                <state img="#-neutral.png">Spray that on someone else next time. Makes it more fun.</state>
+                <state img="#-mock.png">Get a load of this guy!</state>
+                <state img="#-reprimand.png">Cum jokes aren't funny! Cum on, guys!</state>
+                <state img="#-neutral.png">I wonder if you eat a lot of pineapple, ~name~.</state>
+                <state img="#-neutral.png">Have you been eating pizza? 'Cause that looks &lt;i&gt;disgusting&lt;/i&gt;.</state>
             </case>
         </trigger>
 
         <trigger id="female_must_masturbate">
+            <case stage="0-10">
+                <condition role="target" character="azami" />
+                <state img="#-huh.png">This is getting kind of freaky, even for me.</state>
+            </case>
             <case stage="0-9">
                 <state img="#-grandiose.png">Get to it. Your Supreme Leader demands it!</state>
-                <state img="#-lewd.png">Ooooh~. You so clumbsy girl! </state>
-            </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-reprimand.png">Ooooh~. You so clumsy girl! </state>
+                <state img="#-bored.png">What a fail. Do you even &lt;i&gt;know&lt;/i&gt; how to play poker?</state>
+                <state img="#-reprimand.png">Well? Get on it, whore!</state>
+                <state img="#-lewd.png">Well, this is interesting!~</state>
             </case>
             <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-excited.png">Your turn!</state>
             </case>
         </trigger>
 
         <trigger id="female_start_masturbating">
-            <case stage="0-9">
+            <case stage="0-10">
+                <condition role="target" character="azami" />
+                <state img="#-bored.png">Annnnnnnd there she goes.</state>
+            </case>
+            <case stage="0-8">
                 <state img="#-lewd.png">Maybe you should ask some of the whore bitchlets here for advice next time...</state>
-            </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-lewd.png">Awww, are you nervous?</state>
+                <state img="#-grandiose.png">Everybody look at ~name~! She's gonna put on a show for us!</state>
             </case>
             <case stage="10">
                 <state img="#-excited.png">FIN-GER FUCK! FIN-GER FUCK! (I'm chanting!)</state>
+                <state img="#-excited.png">WOOHOO, ENTERTAINMENT!</state>
+            </case>
+            <case stage="9">
+                <state img="#-neutral.png">Well, back to my own forfeit.</state>
             </case>
         </trigger>
 
         <trigger id="female_masturbating">
-            <case stage="0-9">
+            <case stage="0-10">
+                <condition role="target" character="azami" />
+                <condition count="1" status="masturbating" role="opp" />
+                <state img="#-neutral.png">....</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nami_szs" />
+                <condition count="1" status="masturbating" role="opp" />
+                <state img="#-neutral.png">....</state>
+            </case>
+            <case stage="0-8 10">
                 <state img="#-mock.png">Talk about in-house entertainment.</state>
+                <state img="#-excited.png">Ooooh, what a show!</state>
+                <state img="#-neutral.png">If only I could tie you up and leave you all helpless. It's more fun when they don't get to cum.</state>
+                <state img="#-bored.png">Don't act so embarrassed, I knew you were wanting to try this the whole time.</state>
+                <state img="#-wehhhhh.png">If you get the floor dirty, I'm telling Kirumi!</state>
+                <state img="#-bored.png">Need help with that? Too bad.</state>
+                <state img="#-neutral.png">That's right, let everyone here know how much of a slut you are, ~name~.</state>
+                <state img="#-lewd.png">How cuuuute.</state>
             </case>
-            <case stage="1-3 5">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="6-7">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
-            </case>
-            <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+            <case stage="9">
+                <state img="#-mock.png">Talk about in-house entertainment. Thanks for making this easier!</state>
+                <state img="#-neutral.png">Meh. You're not helping.</state>
+                <state img="#-mock.png">If only I could tie you up and leave you all helpless. It's more fun when I cum but they don't.</state>
+                <state img="#-bored.png">Don't act so embarrassed, I knew you were wanting to try this the whole time.</state>
+                <state img="#-mock.png">Nee hee hee!</state>
+                <state img="#-serious.png">You call &lt;i&gt;that&lt;/i&gt; fingering? A limbless horse can do better.</state>
+                <state img="#-menacing.png">That's right, let everyone here know how much of a slut you are, ~name~.</state>
+                <state img="#-reprimand.png">It's not like you're turning me on or anything, b-baka!</state>
             </case>
         </trigger>
 
         <trigger id="female_finished_masturbating">
-            <case stage="0-9">
-                <state img="#-excited.png">AWESOME!</state>
-                <state img="#-excited.png">Niiiiice.</state>
+            <case stage="0-10">
+                <condition role="target" character="azami" />
+                <state img="#-neutral.png">
+                    <alt-img stage="6-10">#-serious.png</alt-img>
+                    <text>Let's move on.</text>
+                </state>
             </case>
-            <case stage="1-3 5">
-                <state img="#-lewd.png">Oh, you &lt;i&gt;slut&lt;/i&gt;.</state>
+            <case stage="0-10">
+                <condition role="target" character="nami_szs" />
+                <state img="#-huh.png">If only someone recorded that. We could've put the video on YouTube and get millions of views!</state>
+            </case>
+            <case stage="0-5">
+                <state img="#-excited.png">AWESOME!</state>
+                <state img="#-lewd.png">Niiiiice.</state>
+                <state img="#-bored.png">Oh, you &lt;i&gt;slut&lt;/i&gt;.</state>
+                <state img="#-neutral.png">Awww, are you feeling pent up?</state>
+                <state img="#-huh.png">Bet you enjoyed that, didn't you? Dirty whore.</state>
+                <state img="#-mock.png">Groooooooss!</state>
             </case>
             <case stage="6-7">
-                <state img="#-neutral.png">Must be hell for the cleaners here. I wouldn't know. Nee hee hee.</state>
+                <state img="#-neutral.png">Must be hell for the cleaners here. I wouldn't know. Nee hee hee!</state>
+                <state img="#-mock.png">HEY MR. JANITOOOOOR!</state>
             </case>
-            <case stage="8">
+            <case stage="8-9">
                 <state img="#-mock.png">Did my stunning bod make you cum? </state>
+                <state img="#-excited.png">Sploooosh!</state>
             </case>
             <case stage="10">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-neutral.png">Welcome to the loser's side. I'm not in it because I'm counting me cumming as a victory for myself.</state>
+                <state img="#-shocked.png">Woaaaaaah... The janitor's gonna have to work overtime, huh?</state>
             </case>
         </trigger>
 
         <trigger id="must_masturbate_first">
-            <case stage="9">
-                <state img="#-wehhhhh.png">Aww... I can't hold it up anymore!</state>
-                <state img="#-reprimand.png">I-I'm only doing this because I'm the only person worthy to touch me, dummy!</state>
+            <case stage="8">
+                <condition count="1-3" filter="danganronpa" role="other" />
+                <state img="#-shock.png">Fucking...</state>
             </case>
             <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-wehhhhh.png">Aww... But I can't hold it up anymore!</state>
+                <state img="#-shock.png">No! Way! I'm first?</state>
             </case>
         </trigger>
 
         <trigger id="must_masturbate">
-            <case stage="9">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+            <case stage="8">
+                <condition count="1-3" filter="danganronpa" role="other" />
+                <state img="#-shock.png">Fucking...</state>
             </case>
             <case stage="8">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-excited.png">Oh BOY! Finally!</state>
+                <state img="#-wehhhhh.png">But I don't wannaaaa!</state>
+                <state img="#-shock.png">No! Way! You actually did it...</state>
+                <state img="#-serious.png">You know I can just leave...</state>
             </case>
         </trigger>
 
         <trigger id="start_masturbating">
             <case stage="8">
-                <state img="#-lewd.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <condition role="other" character="zone-tan" />
+                <state img="#-huh.png" marker="singing">You mind if I sing a song while I do this? Hmm, one of you might remember this.</state>
+            </case>
+            <case stage="8">
+                <condition count="1-3" filter="danganronpa" role="other" />
+                <state img="#-upset.png" marker="singing">Fuck... I mean... &lt;i&gt;shit...&lt;/i&gt; Gaaah... I'm just going to ignore everyone.</state>
+            </case>
+            <case stage="8">
+                <alternative>
+                    <condition role="self" saidMarker="kokichi_win3" />
+                </alternative>
+                <alternative>
+                    <condition role="self" saidMarker="kokichi_win4" />
+                </alternative>
+                <alternative>
+                    <condition role="self" saidMarker="kokichi_win5" />
+                </alternative>
+                <state img="#-bored.png">Goooosh, do you have any idea how pent up I was from winning all the time?</state>
+                <state img="#-neutral.png">You know what? I needed this. 'Cause seeing other people get off and just standing there is kind of frustrating,y'know? So thanks for winning.</state>
+            </case>
+            <case stage="8">
+                <state img="#-mock.png">Well, time to ruin both my life and my reputation! Let's do this!</state>
+                <state img="#-reprimand.png">I'm only doing this because I'm the only person worthy to touch me, dummy!</state>
             </case>
         </trigger>
 
         <trigger id="masturbating">
-            <case stage="4 9">
-                <state img="#-neutral.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+            <case stage="9" oneShotId="15">
+                <condition role="other" character="astolfo_bean_plushie" />
+                <state img="#-reprimand.png">Astolfoooooo! I want my dick sucked and I want you to call me gay! Your Supreme Leader demands it!</state>
             </case>
             <case stage="9">
-                <state>This is a placeholder line. Or is it? Nee hee hee.</state>
+                <condition role="self" saidMarker="singing" />
+                <state img="#-bored.png">Hmm...</state>
+                <state img="#-neutral.png">Mm...</state>
+                <state img="#-huh.png">How did it go again?</state>
+                <state img="#-neutral.png">♪ Hmmm, hmm-hmm-hmmmm, la la la laaaa... ♫</state>
+            </case>
+            <case stage="9">
+                <state img="#-menacing.png">This is a placeholder line. Or is it? Nee hee hee.</state>
+                <state img="#-neutral.png">Ugh, who does idle chatter during masturbation anyways.</state>
+                <state img="#-bored.png">You're probably not here to watch me. You just wanted to kick my ass, didn't you?</state>
+                <state img="#-lewd.png">Hhhhhhh... horses...</state>
+                <state img="#-mock.png">Were you there when the TV repairman got married? The reception was excellent.</state>
+                <state img="#-lewd.png">Why don't you just do this for me, &lt;i&gt;~player~?~&lt;/i&gt;</state>
+                <state img="#-mock.png">Ya like jazz?</state>
+                <state img="#-mock.png">It's hip to fuck bees, ya know?</state>
+                <state img="#-heavy_a.png">Uggghhhhhhh, this takes forever!</state>
+                <state img="#-neutral.png">I wonder if I should aim my cum at someone.</state>
+                <state img="#-bored.png">There's so many witty things you can say as you're masturbating. I can go on all day, but this dick isn't gonna stroke itself.</state>
+                <state img="#-wehhhhh.png">Guuuuys, I'm having trouble keeping it up!</state>
             </case>
         </trigger>
 
         <trigger id="heavy_masturbating">
+            <case stage="9">
+                <condition role="self" saidMarker="singing" />
+                <state img="#-heavy_a.png">I'd like to see... the world for once...</state>
+                <state img="#-heavy_b.png">Fuck... It's so hard to think now...</state>
+                <state img="#-lewd.png">&lt;i&gt;Fuuuck...&lt;/i&gt; Ahh, to hell with it... I'm close regardless...</state>
+                <state img="#-heavy_b.png">Come on, &lt;i&gt;come onnn...&lt;/i&gt;</state>
+            </case>
             <case stage="9">
                 <state img="#-heavy_a.png">Nnn...</state>
                 <state img="#-heavy_b.png">Come on, &lt;i&gt;come onnn...&lt;/i&gt;</state>
@@ -1032,60 +1182,70 @@
 
         <trigger id="finished_masturbating">
             <case stage="10">
-                <state>Good session. GG.</state>
+                <state img="#-mock.png">Good session. GG.</state>
+                <state img="#-excited.png">You bested ME, ~winner~? Wow, I met my soulmate!</state>
+                <state img="#-lewd.png">Fuuuuck, I needed this...</state>
+                <state img="#-neutral.png">Losing ain't so bad.</state>
+                <state img="#-excited.png">When is the next poker game, huh?</state>
+                <state img="#-bored.png">Enter some generic line here.</state>
+                <state img="#-lewd.png">Man, if only ~player~ were jerking me off. &lt;i&gt;Hoooo!~&lt;/i&gt;</state>
+                <state img="#-excited.png">Wow, I finally met my match!</state>
+                <state img="#-mock.png">Well, that was fun!</state>
             </case>
         </trigger>
 
         <trigger id="after_masturbating">
+            <case stage="10">
+                <condition count="2-3" filter="danganronpa" role="opp" />
+                <state img="#-serious.png" marker="bitter">...</state>
+                <state img="#-bitter.png" marker="bitter">Blab about this incident and &lt;i&gt;I swear to everything I know.&lt;/i&gt;</state>
+            </case>
             <case stage="10" addCharacterTags="gloomy,indifferent,quiet" removeCharacterTags="cheerful">
-                <condition count="1-3" filter="danganronpa" role="other" />
-                <state>...</state>
+                <state img="#-serious.png">...</state>
             </case>
         </trigger>
 
         <trigger id="game_over_victory">
-            <case stage="0-3 5-7 9">
-                <condition role="self" saidMarker="kokichi_win1" />
-                <state img="#-mock.png" marker="kokichi_win2" persist-marker="true">Oh? Won't you look at that! I won &lt;i&gt;again!&lt;/i&gt;</state>
-                <state img="#-grandiose.png" marker="kokichi_win2" persist-marker="true">Nee-hee-hee! Looks like victory is mine once again! Better luck next time!~</state>
-            </case>
-            <case stage="0-3 5-7 9">
+            <case stage="0-7">
                 <condition role="self" saidMarker="kokichi_win2" />
-                <state img="#-mock.png" marker="kokichi_win3" persist-marker="true">Aww, what's wrong, ~player~? Angry you can't win against me?</state>
-                <state img="#-mock.png" marker="kokichi_win3" persist-marker="true">This must be the third time you failed to beat me, huh? Tell me, ~player~, do you think this is time well spent?</state>
-                <state img="#-mock.png" marker="kokichi_win3" persist-marker="true">What's wrong, ~player~? What's wrong? Hey, what's wrong? Hey, hey, hey, hey, hey, hey, HEY, HEY! Don't tell me you're still angry that you lost a third time!</state>
-                <state img="#-mock.png" marker="kokichi_win3" persist-marker="true">You wanna beat me, ~player~? Get better at cards.</state>
+                <state img="#-lewd.png" marker="kokichi_win3" persist-marker="true">Aww, what's wrong, ~player~? Angry you can't win against me?</state>
+                <state img="#-huh.png" marker="kokichi_win3" persist-marker="true">This must be the third time you failed to beat me, huh? Tell me, ~player~, do you think this is time well spent?</state>
+                <state img="#-excited.png" marker="kokichi_win3" persist-marker="true">What's wrong, ~player~? What's wrong? Hey, what's wrong? Hey, hey, hey, hey, hey, hey, HEY, HEY! Don't tell me you're still angry that you lost a third time!</state>
+                <state img="#-bored.png" marker="kokichi_win3" persist-marker="true">You wanna beat me, ~player~? Get better at cards.</state>
             </case>
-            <case stage="0-3 5-7 9">
+            <case stage="0-7">
+                <condition role="self" saidMarker="kokichi_win1" />
+                <state img="#-grandiose.png" marker="kokichi_win2" persist-marker="true">Oh? Won't you look at that! I won &lt;i&gt;again!&lt;/i&gt;</state>
+                <state img="#-mock.png" marker="kokichi_win2" persist-marker="true">Nee-hee-hee! Looks like victory is mine once again! Better luck next time!~</state>
+            </case>
+            <case stage="0-7">
                 <condition role="self" saidMarker="kokichi_win3" />
-                <state img="#-reprimand.png" marker="kokichi_win4" persist-marker="true">Jeez, you're determined. I'll give you that.</state>
-                <state img="#-reprimand.png" marker="kokichi_win4" persist-marker="true">You're going so much effort to beat a fictional character in a game of strip poker. I'm not even a real character here, y'know?</state>
+                <state img="#-huh.png" marker="kokichi_win4" persist-marker="true">Jeez, you're determined. I'll give you that.</state>
+                <state img="#-huh.png" marker="kokichi_win4" persist-marker="true">You're going so much effort to beat a fictional character in a game of strip poker. I'm not even a real character here, y'know?</state>
             </case>
-            <case stage="0-3 5-7 9" oneShotId="1">
+            <case stage="0-7">
                 <condition role="self" saidMarker="kokichi_win4" />
-                <state img="#-upset.png" marker="kokichi_win5" persist-marker="true">I'm not even gonna comment on this anymore.</state>
-                <state img="#-huh.png" marker="kokichi_win5">At this time, I almost &lt;i&gt;want&lt;/i&gt; to lose. Watching hot people touch themselves to orgasm does things to me... &lt;br&gt; No, wait, that's a lie!</state>
+                <state img="#-bored.png" marker="kokichi_win5" persist-marker="true">Ugh, I'm not gonna comment anymore.</state>
+                <state img="#-bored.png" marker="kokichi_win5">How sad.</state>
             </case>
             <case stage="0">
-                <state img="#-huh.png" marker="kokichi_win1" persist-marker="true">That's it? You know the Panta barely counts, right? Riiiiight?</state>
+                <state img="#-mock.png" marker="kokichi_win1" persist-marker="true">That's it? You know that barely counts, right? Riiiiight?</state>
             </case>
-            <case stage="1-3 5">
-                <state marker="kokichi_win1" persist-marker="true">Awww, ~player~, are you sad because you couldn't beat me? Huh? Huuuuuh? Oh well, better luck next time! If you're not too mad, why not play with me again?</state>
-                <state marker="kokichi_win1" persist-marker="true">Looks like I'm victorious---not that it surprises me too much. I didn't expect to play with a bunch of losers!</state>
-                <state marker="kokichi_win1" persist-marker="true">To think you could've seen the Ultimate Supreme Leader naked and masturbating. My subcoordinates once gambled away aaaaall their money just for a chance to see me naked!</state>
-                <state marker="kokichi_win1" persist-marker="true">Don't be mad, ~player~! I knew you were going to lose anyways!</state>
-                <state marker="kokichi_win1" persist-marker="true">Why the shocked expression, ~player~? You know you can't win &lt;i&gt;all&lt;/i&gt; the time.</state>
+            <case stage="1-5">
+                <state img="#-mock.png" marker="kokichi_win1" persist-marker="true">Awww, ~player~, are you sad because you couldn't beat me? Huh? Huuuuuh? Oh well, better luck next time! If you're not too mad, why not play with me again?</state>
+                <state img="#-bored.png" marker="kokichi_win1" persist-marker="true">Looks like I'm victorious---not that it surprises me too much. I didn't expect to play with a bunch of losers!</state>
+                <state img="#-neutral.png" marker="kokichi_win1" persist-marker="true">To think you could've seen the Ultimate Supreme Leader naked and masturbating. My subordinates once gambled away aaaaall their money just for a chance to see me naked!</state>
+                <state img="#-mock.png" marker="kokichi_win1" persist-marker="true">Don't be mad, ~player~! I knew you were going to lose anyways!</state>
+                <state img="#-menacing.png" marker="kokichi_win1" persist-marker="true">Why the shocked expression, ~player~? You know you can't win &lt;i&gt;all&lt;/i&gt; the time.</state>
             </case>
             <case stage="6-7">
-                <state img="#-neutral.png" marker="kokichi_win1" persist-marker="true">Aww, you were sooooo close! So so so so so so so so so so close!</state>
+                <state img="#-excited.png" marker="kokichi_win1" persist-marker="true">Aww, you were sooooo close! So so so so so so so so so so close!</state>
                 <state img="#-mock.png" marker="kokichi_win1" persist-marker="true">Whew! I thought I was gonna lose there... &lt;br&gt; Just kidding, I knew I was gonna win here! Ahahaha!</state>
                 <state img="#-wehhhhh.png" marker="kokichi_win1" persist-marker="true">I showed you some skin, ~player~. A-Are you not excited to see me like this? I thought we &lt;i&gt;had&lt;/i&gt; something!</state>
+                <state img="#-grandiose.png" marker="kokichi_win1">I WIN! MY WIN!</state>
             </case>
-            <case stage="8-9">
-                <state img="#-upset.png" marker="kokichi_win1" persist-marker="true">...I was &lt;i&gt;throwing&lt;/i&gt;, and I still won. I knew you were an idiot, ~player~.</state>
-            </case>
-            <case stage="4 8">
-                <state img="#-grandiose.png">I WIN! MY WIN!</state>
+            <case stage="8">
+                <state img="#-serious.png">...I was &lt;i&gt;throwing&lt;/i&gt;, and I still won. I knew you were an idiot, ~player~.</state>
             </case>
         </trigger>
 
@@ -1101,14 +1261,74 @@
                 <alternative>
                     <condition role="self" saidMarker="kokichi_win5" />
                 </alternative>
-                <state img="#-bored.png" marker="kokichi_loss">Ugh, &lt;i&gt;about time!&lt;/i&gt; I was worried I was never gonna get off!</state>
+                <state img="#-reprimand.png" marker="kokichi_loss">Ugh, &lt;i&gt;about time!&lt;/i&gt; I was worried I was never gonna get off!</state>
             </case>
             <case stage="10">
                 <condition count="1-3" filter="danganronpa" role="other" var="dang" />
-                <state img="#-despondent.png" marker="kokichi_loss">Say a word about this, and I &lt;i&gt;will&lt;/i&gt; kill you, ~dang~.</state>
+                <state img="#-bitter.png" marker="kokichi_loss">Say a word about this, and I &lt;i&gt;will&lt;/i&gt; kill you, ~dang~.</state>
             </case>
             <case stage="10">
                 <state img="#-huh.png" marker="kokichi_loss">...Huh. I wasn't expecting this. Well played, ~name~. Well played.</state>
+            </case>
+        </trigger>
+
+        <trigger id="global">
+            <case stage="0-10" priority="10000">
+                <condition role="self" saidMarker="leave" />
+                <state img="custom:left"></state>
+            </case>
+            <case stage="10" priority="9998">
+                <condition role="self" saidMarker="bitter" />
+                <state img="#-bitter.png">...</state>
+                <state img="#-despondent.png">...</state>
+            </case>
+            <case stage="9" oneShotId="3" priority="9997">
+                <condition role="self" saidMarker="singing" />
+                <state img="#-neutral.png" marker="song1">♪ I want to build the world a site, and furnish it with porn... ♫</state>
+            </case>
+            <case stage="9" oneShotId="4" priority="9997">
+                <condition role="self" saidMarker="song1" />
+                <state img="#-grandiose.png" marker="song2">♪ Draw hentai pics and girls with dick and tentacles galore! ♫</state>
+            </case>
+            <case stage="9" oneShotId="6" priority="9997">
+                <condition role="self" saidMarker="song3" />
+                <state img="#-lewd.png" marker="song4">♪ I'd like to show you dirty tunes for all eternity! ♫</state>
+            </case>
+            <case stage="9" oneShotId="7" priority="9997">
+                <condition role="self" saidMarker="song4" />
+                <state img="#-bored.png" marker="song5">♪ I'd like to see the world for once... ♫</state>
+            </case>
+            <case stage="9" oneShotId="8" priority="9997">
+                <condition role="self" saidMarker="song5" />
+                <state img="#-mock.png" marker="song6">♪ All standing cock in hand ♫</state>
+            </case>
+            <case stage="9" oneShotId="9" priority="9997">
+                <condition role="self" saidMarker="song6" />
+                <state img="#-menacing.png" marker="song7">♪ And hear them jerk it far and wide ♫</state>
+            </case>
+            <case stage="9" oneShotId="10" priority="9997">
+                <condition role="self" saidMarker="song7" />
+                <state img="#-menacing.png" marker="song8">♪ And hear them jerk it far and wide ♫</state>
+            </case>
+            <case stage="9" oneShotId="11" priority="9997">
+                <condition role="self" saidMarker="song8" />
+                <state img="#-grandiose.png" marker="song9">♪ Spray jizz throughout the land! ♫</state>
+            </case>
+            <case stage="9" oneShotId="12" priority="9997">
+                <condition role="self" saidMarker="song9" />
+                <state img="#-huh.png" marker="song10">It's fucked up around here...</state>
+            </case>
+            <case stage="9" oneShotId="13" priority="9997">
+                <condition role="self" saidMarker="song10" />
+                <state img="#-grandiose.png" marker="song11">♪ I'd like to teach the world to fap, in perfect harmony! ♫</state>
+            </case>
+            <case stage="9" oneShotId="14" priority="9997">
+                <condition role="self" saidMarker="song11" />
+                <state img="#-neutral.png" marker="song12">♪ Do do do dooo, do do do doooo, do do do do do do! ♫</state>
+            </case>
+            <case stage="9" oneShotId="5" priority="9996">
+                <condition role="self" saidMarker="song2" />
+                <state img="#-mock.png" marker="song3">♪ I'd like to teach the world to fap in perfect harmony! ♫</state>
             </case>
         </trigger>
 
