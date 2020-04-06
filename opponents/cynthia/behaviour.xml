@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 11:15:12 AM on April 05, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 12:45:28 PM on April 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Cynthia</first>
@@ -919,6 +919,13 @@
                 <state img="#-happy.png">This air reminds me of my home in Celestic Town. Ironically, this cold air is giving me a warm, fuzzy feeling.</state>
                 <state img="#-happy.png">This place might not be as cold as back home at Sinnoh, but I like it nonetheless.</state>
                 <state img="#-sarcastic.png">Bringing my coat was the correct decision then. I don't think my summer blouse can handle this cold.</state>
+            </case>
+            <case stage="0-8" oneShotId="61" priority="0">
+                <test expr="~self.collectible.collectible_egg~" value="true" />
+                <state img="#-happy.png" weight="0.01">How is the Pokémon egg I gave you previously, ~player~? I hope you are taking good care of it. Everyone Pokémon deserves to be loved by its owner.</state>
+                <state img="#-happy.png" weight="0.01">Are you loving the Pokémon egg I gave you during the previous game, ~player~? Meeting all the Pokémon is an accomplishment, and I only want to lend you a little hand, that's all.</state>
+                <state img="#-fingerup.png" weight="0.01">That Egg I have you is special, ~player~. An Egg is the cradle of every being. The planet itself is an Egg in a sense... Life that comes from an Egg will come to an end in due course... to begin anew...</state>
+                <state img="#-happy.png" weight="0.01">I hope that Egg I gave you will come in handy, ~player~. A Pokémon will hatch from it while you are traveling. I would be happy to know that it will help you fill another page of your Pokédex.</state>
             </case>
         </trigger>
 
@@ -4974,14 +4981,14 @@
 
         <trigger id="finished_masturbating">
             <case stage="10">
-                <state img="#-happy.png">That... that felt stupendous.</state>
-                <state img="#-happy.png">... I need some quite to catch my breath... if you don't mind...</state>
-                <state img="#-embarrassed.png">Did... did I scream back there?... Apologies for that; I tried to contain myself.</state>
-                <state img="#-thinking.png">Somehow, being watched made it more pleasurable. Very interesting...</state>
-                <state img="#-sarcastic.png">Well, that's one thing off the bucket list. Not that it was part of my bucket list in the first place or anything...</state>
-                <state img="#-horny.png">I feel more fatigued than when I'm biking up the mountains.</state>
-                <state img="#-excited.png">I... I'm still quivering... What a rush!</state>
-                <state img="#-happy.png">You won't believe how much I needed that. I already feel lighter and less tense now.</state>
+                <state img="#-finished_b.png">That... that felt stupendous.</state>
+                <state img="#-finished_a.png">... I need some quite to catch my breath... if you don't mind...</state>
+                <state img="#-finished_b.png">Did... did I scream back there?... Apologies for that; I tried to contain myself.</state>
+                <state img="#-finished_b.png">Somehow, being watched made it more pleasurable. Very interesting...</state>
+                <state img="#-finished_b.png">Well, that's one thing off the bucket list. Not that it was part of my bucket list in the first place or anything...</state>
+                <state img="#-finished_a.png">I feel more fatigued than when I'm biking up the mountains.</state>
+                <state img="#-finished_a.png">I... I'm still quivering... What a rush!</state>
+                <state img="#-finished_b.png">You won't believe how much I needed that. I already feel lighter and less tense now.</state>
             </case>
         </trigger>
 
@@ -5072,6 +5079,11 @@
         </trigger>
 
         <trigger id="game_over_defeat">
+            <case stage="10" priority="9999">
+                <condition role="target" character="human" />
+                <test expr="~self.collectible.collectible_egg~" value="false" />
+                <state img="#-egg.png" collectible="collectible_egg">Before you go, ~player~, I've got something nice. I wanted you to have this Pokémon Egg. I'm just happy to give it an owner, and I'm sure the Pokémon inside the Egg is happy, too. See you again!</state>
+            </case>
             <case stage="10">
                 <state img="#-battleready.png">... It... it's fine... I've already come to terms with my defeat, &lt;i&gt;which is why I want a rematch!&lt;/i&gt;</state>
                 <state img="#-battleready.png">I don't handle defeat well, ~target~; perhaps you would be up for a rematch?</state>
