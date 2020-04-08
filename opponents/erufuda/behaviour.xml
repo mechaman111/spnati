@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 2:32:54 PM on April 01, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 4:34:22 PM on April 07, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Erufuda</first>
@@ -87,6 +87,11 @@
         </trigger>
 
         <trigger id="swap_cards">
+            <case stage="0-6" priority="106">
+                <condition role="other" character="rinkah" sayingMarker="1v1" />
+                <condition count="2" status="alive" />
+                <state img="#-pleased.png" marker="rinkah_1v1">Yes! Warrior versus Warrior! Strength versus Speed! Human versus Elf!</state>
+            </case>
             <case stage="0-6" priority="50">
                 <test expr="~cards~" value="0" />
                 <state img="#-taunting.png">I've already won.</state>
@@ -290,6 +295,10 @@
                 <state img="#-pleased.png" marker="meia_birthday">Awww, happy birthday, Meia! Remind me to treat you to something special. No dieting allowed!</state>
                 <state img="#-pleased.png" marker="meia_birthday">Happy birthday, Meia! Remember, calories don't count today, so let's order you something special!</state>
             </case>
+            <case stage="0-6" totalRounds="0-3" priority="151">
+                <condition role="other" character="sakura" stage="0-1" sayingMarker="saga_franchouchou" />
+                <state img="#-pleased.png" oneShotId="246" marker="sakura_commercial">It's so cool to get to meet you! I've always wanted to meet someone in the fast food industry! They made a commercial, ~player~!</state>
+            </case>
             <case stage="0-6" alsoPlaying="alice_mgq" alsoPlayingStage="0-5" notSaidMarker="alice_mgq_warning" alsoPlayingSayingMarker="MG">
                 <state img="#-taunting.png" marker="alice_mgq_warning">Careful, Alice. Monster girls seem to &lt;i&gt;inevitably&lt;/i&gt; run into fitness trouble in the human world.</state>
                 <state img="#-taunting.png" marker="alice_mgq_warning">Oh my, &lt;i&gt;another&lt;/i&gt; monster girl? Be careful. You bunch seem to have a hard time adapting to human food.</state>
@@ -339,6 +348,18 @@
                 <condition role="other" character="mulan" stage="0-7" saidMarker="erufuda_duel" sayingMarker="challenge_answer" />
                 <state img="#-pleased.png">Hmmm... I enjoy a nice run in the forest, but it sounds like all those squats are paying off!</state>
             </case>
+            <case stage="0-6" priority="142">
+                <condition role="other" character="sakura" stage="0-2" sayingMarker="sakura_invite" saying="So, why'd everyone come out tonight? I think I can guess, but... you could be like me and walk into the wrong room, right?" />
+                <state img="#-eating.png" oneShotId="244" marker="sakura_game_explaination">Well, I'm supposed to be on a diet, but... I &lt;i&gt;might&lt;/i&gt; have snuck out for some fries. Cards and attractive naked people are a bonus!</state>
+            </case>
+            <case stage="0-6" priority="142">
+                <condition role="other" character="sakura" stage="0-2" sayingMarker="sakura_invite" saying="So... I'm usually pretty good with names, but everyone is so... unique! What can you tell me about yourselves?" />
+                <state img="#-eating.png" oneShotId="245" marker="sakura_backstory_explanation">I came to the human world in search of french fries, but my love for them had...consequences. Don't tell anyone I'm actually an elf!</state>
+            </case>
+            <case stage="0-6" id="80" priority="142">
+                <condition role="other" character="sakura" stage="3-7" saidMarker="makeup_alarm" sayingMarker="makeup_alarm2" />
+                <state img="#-eating.png" oneShotId="248" marker="sakura_mulan_compare">Both disguises were good, but you won me over with your acting, Sakura. I was really glad Ping wasn't real, because he was &lt;i&gt;so weird.&lt;/i&gt;</state>
+            </case>
             <case stage="0-6" id="52">
                 <condition role="other" character="maki" stage="0-4" sayingMarker="makifood" />
                 <state img="#-eating.png" marker="maki_food">It may shock you, but I'm actually a big fan of french fries. Shoestring cut, if you have them.</state>
@@ -379,6 +400,15 @@
             <case stage="0-6">
                 <condition role="other" character="meia" stage="3" saying="My shorts are not cooperating today..." />
                 <state img="#-eating.png" oneShotId="111" marker="meia_shorts_cooperating">If your shorts aren't fitting right, you might need to go up a size or two. Gods know I've been there...</state>
+            </case>
+            <case stage="0-6">
+                <condition role="other" character="sakura" stage="0-2" />
+                <state img="#-worried.png" marker="sakura_hunger_worry">Are you ok? You look a little...faint? You're not hungry, are you?</state>
+            </case>
+            <case stage="0-6">
+                <condition role="other" character="sakura" stage="3-7" />
+                <state img="#-pleased.png" oneShotId="253" marker="sakura_safe">Don't worry, Sakura. You're secret is safe with us. If anyone bothers you, I'll put an arrow in their butt.</state>
+                <state img="#-pleased.png" oneShotId="254" marker="sakura_non_humans">We non-humans in disguise have to stick together, Sakura. I wonder how many more of us there are...</state>
             </case>
             <case stage="0-6" id="73" totalRounds="3-" priority="116">
                 <condition role="other" character="meia" sayingMarker="men_info" />
@@ -430,6 +460,11 @@
                 <condition role="other" character="tomoko" sayingMarker="erfuda_exercisehard" />
                 <state img="#-pleased.png" oneShotId="118" marker="tomoko_struggle">Finally, someone else who understands my struggle! So many people here seem to effortlessly avoid temptation...</state>
             </case>
+            <case stage="0-6">
+                <condition role="other" character="meia" saidMarker="erufuda_sightseeing" />
+                <condition role="self" notSaidMarker="meia_sightseeing2" />
+                <state img="#-pleased.png" marker="meia_sightseeing2">If you're into nature near Tokyo, Meia... Hmmm, there's Yoyogi Park, the portal between worlds, and...Oh! Mt. Takao! </state>
+            </case>
             <case stage="0-3" alsoPlaying="emi" notSaidMarker="emi_diet">
                 <state img="#-worried.png" marker="emi_diet">Say, Emi... what kind of diet does a track star follow? Are fries allowed?</state>
             </case>
@@ -472,6 +507,15 @@
                 <condition role="self" saidMarker="meia_butt_envy" />
                 <state img="#-miffed.png" oneShotId="116" marker="meia_hardass">Ugh. &lt;i&gt;Of course&lt;/i&gt; Commander Hardass has buns of steel...</state>
             </case>
+            <case stage="1-6">
+                <condition role="other" character="rinkah" />
+                <state img="#-pleased.png" oneShotId="235" marker="rinkah_warrior_easy">I'm glad to see I'm not the only warrior here tonight. Don't think I'll go easy on you though, Rinkah!</state>
+                <state img="#-weight_conscious.png" oneShotId="237" marker="rinkah_armor">You know, my battle armor looks a bit like Rinkah's! I...haven't worn it in a while.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="sakura" />
+                <state img="#-panic.png" oneShotId="243" marker="sakura_recognize">Wait! ~player~! ~player~! ~player~! That's Number One! From TV!</state>
+            </case>
             <case stage="0-6">
                 <condition count="1-5" filter="french" gender="female" />
                 <condition role="self" notSaidMarker="french_means_fries" />
@@ -485,7 +529,7 @@
             </case>
             <case stage="0-1">
                 <state img="#-eating.png" oneShotId="119" marker="backstory_temptation">Would you believe a proud warrior like myself could succumb to temptation?</state>
-                <state img="#-pleased.png" oneShotId="120" marker="backstory_worlds">I've travelled across worlds to be here. So this game better not be a waste of time.</state>
+                <state img="#-pleased.png" oneShotId="120" marker="backstory_worlds">I've traveled across worlds to be here. So this game better not be a waste of time.</state>
                 <state img="#-smug.png" oneShotId="121" marker="backstory_golden_tassel">After I heard the legend of the &lt;i&gt;Golden Tassel,&lt;/i&gt; I journeyed to the human world. Of course, my quest was a success.</state>
                 <state img="#-eating.png" oneShotId="122" marker="backstory_centuries">I've seen some &lt;i&gt;good&lt;/i&gt; bodies in my centuries, but I'm sure you'll all be fine.</state>
                 <state img="#-eating.png" oneShotId="123" marker="backstory_vegetarian">I'm glad they have healthy, vegetarian fries here. We elves would &lt;i&gt;never&lt;/i&gt; eat meat.</state>
@@ -515,6 +559,12 @@
             </case>
             <case stage="0-5" alsoPlaying="jin" alsoPlayingStage="0-4" notSaidMarker="jin_high_price" alsoPlayingSaying="If you take extra off I'll give you a rice cracker.">
                 <state img="#-miffed.png" marker="jin_high_price">My dignity is worth more than a rice cracker! It'd take potatoes or some other treasure to win me over.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="meia" stage="0-5" sayingMarker="erufuda1" />
+                <condition role="self" notSaidMarker="meia_erufuda_backstory" />
+                <state img="#-weight_conscious.png" marker="meia_erufuda_backstory">Well... I &lt;i&gt;used&lt;/i&gt; to be skinny, but then I came to the human world and ate too many french fries. It was unavoidable, really.</state>
+                <state img="#-weight_conscious.png" marker="meia_erufuda_backstory">I used to be a toned warrior like you, but then I discovered the human world and it's dangerously addictive french fries...</state>
             </case>
             <case stage="2">
                 <condition role="other" character="megumin" stage="0-4" sayingMarker="megumin_erufuda_bet" />
@@ -1058,6 +1108,17 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="6">
+                <condition role="other" character="rinkah" saying="Shaved, ~name~? I prefer a more natural state." />
+                <test expr="~self.tag.shaved~" value="true" />
+                <state img="#-frustrated.png" oneShotId="239" marker="rinkah_naturally_smooth">This &lt;i&gt;is&lt;/i&gt; my natural state. Do you want me to wear a wig?</state>
+            </case>
+            <case stage="1">
+                <condition role="self" saidMarker="meia_warrior" notSaidMarker="meia_combat_capability" />
+                <condition role="other" character="meia" stage="0-5" />
+                <state img="#-angry.png" marker="meia_combat_capability">I may be a little &lt;i&gt;better armored&lt;/i&gt; than usual, but don't think I can't still draw a bow or throw a punch. And I've been working out!</state>
+                <state img="#-angry.png" marker="meia_combat_capability">You'd be surprised at how quickly I can move! Even if I'm carrying a bit of fry-weight, I'm still an elf!</state>
+            </case>
             <case stage="2" alsoPlaying="caulifla" alsoPlayingStage="0-5" notSaidMarker="caulifla_nice">
                 <state img="#-pleased.png" marker="caulifla_nice">I guess you're not so bad yourself, Caulifla... &lt;i&gt;but don't think I'll go easy on you!&lt;/i&gt;</state>
             </case>
@@ -1087,6 +1148,10 @@
                 <condition role="other" character="meia" stage="0-5" />
                 <state img="#-angry.png" marker="meia_warrior_model">Hmph! Just because I might not look like a lingerie model, that doesn't mean I've forgotten how to draw a bow.</state>
                 <state img="#-angry.png" marker="meia_warrior_men">What!? You've never seen a warrior with a bit of bulk before? No wonder you haven't conquered the men!</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="sakura" stage="0-2" saying="Y-you're really hairless? Is... did I miss something the last ten years?" />
+                <state img="#-pleased.png" oneShotId="242" marker="sakura_naturally_smooth">Oh no! You see, elves don't usually grow hair there. It's just our biology...</state>
             </case>
             <case stage="3">
                 <condition role="other" character="misato" stage="0-4" />
@@ -1578,6 +1643,10 @@
                 <condition role="target" character="meia" stage="3-7" />
                 <state img="#-eating.png" oneShotId="115" marker="meia_pilot_butts">Maybe you should ease up on your pilots a bit. Or are you afraid their butts will get too big for their ships?</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="rinkah" stage="0" />
+                <state img="#-pleased.png" oneShotId="241" marker="rinkah_armor_warrior">I can see by your armor that you're a warrior like me. It's good to meet someone else who understands true strength.</state>
+            </case>
             <case stage="0" totalRounds="0">
                 <condition role="target" character="rainbow_dash" />
                 <state img="#-taunting.png" oneShotId="78" marker="rainbow_jock">Way to live up to the "dumb jock" stereotype, Rainbow. In this game, being first is &lt;i&gt;bad.&lt;/i&gt;</state>
@@ -1681,6 +1750,20 @@
                 <condition role="target" character="amy" />
                 <state img="#-pleased.png" oneShotId="62" marker="amy_spiders">You know, Amy, if you like spiders, I bet you'd &lt;i&gt;love&lt;/i&gt; the forest. We've got spiders everywhere!</state>
             </case>
+            <case stage="0-2">
+                <condition role="target" character="rinkah" />
+                <state img="#-pleased.png" oneShotId="229" marker="rinkah_warrior_type">So, Rinkah, what kind of warrior are you? I'm an archer, but I can swing a sword too.</state>
+                <state img="#-smug.png" oneShotId="230" marker="rinkah_protection">Don't worry, Rinkah. If anyone tries anything, I'll protect you.</state>
+                <state img="#-pleased.png" oneShotId="231" marker="rinkah_fitness_player">Now &lt;i&gt;this&lt;/i&gt; is a woman who's dedicated to her fitness! You could learn something from her, ~player~.</state>
+                <state img="#-smug.png" oneShotId="232" marker="rinkah_training_player">As you can see, ~player~, warriors like Rinkah and myself take training very seriously.</state>
+                <state img="#-pleased.png" oneShotId="233" marker="rinkah_warrior_player">The figure of a hardened warrior. Civilians like ~player~ just don't understand what we put ourselves through.</state>
+                <state img="#-eating.png" oneShotId="236" marker="rinkah_diet">So, Rinkah. What kind of diet does a Flame Tribe Princess follow? Clearly it's working for you.</state>
+                <state img="#-eating.png" oneShotId="240" marker="rinkah_flame_cooking">Do they have french fries where you're from, Rinkah? A group called "The Flame Tribe" must be good at cooking.</state>
+            </case>
+            <case stage="3-6">
+                <condition role="target" character="rinkah" />
+                <state img="#-pleased.png" oneShotId="238" marker="rinkah_video">You know, Rinkah. I bet you could make a lot of money with a fitness video. "Fat Burning with the Flame Princess."</state>
+            </case>
             <case stage="0-8">
                 <condition filter="bodysuit" role="target" stage="0-1" />
                 <condition role="self" notSaidMarker="nice_bodysuit" />
@@ -1711,6 +1794,12 @@
                 <state img="#-smug.png" marker="shy_encourage">Let me know if you need a hand, ~name~.</state>
                 <state img="#-smug.png" marker="shy_encourage">You're doing great, ~name~!</state>
                 <state img="#-smug.png" marker="shy_encourage">Don't worry, ~name~. I doubt anyone's even watching you with my chest on display.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="other" character="sakura" stage="0-2" />
+                <state img="#-worried.png" oneShotId="250" marker="sakura_plus_sized_idol">Say, Number One... Do you think there'll ever be a famous plus-sized idol?</state>
+                <state img="#-eating.png" oneShotId="251" marker="sakura_idol_diet">Oooh, I've always wanted to ask this... What kind of diet do you follow to stay in performing shape? Are fries allowed?</state>
+                <state img="#-pleased.png" oneShotId="252" marker="sakura_idol_routines">Idol performances are so complicated! How do you remember all the moves?</state>
             </case>
             <case stage="0-6 8">
                 <state img="#-eating.png">Talk about dinner with a view...</state>
@@ -1930,6 +2019,10 @@
                 <state img="#-taunting.png" marker="miko_out_of_shape">What kind of "legend" loses to an out of shape elf like me!?</state>
                 <state img="#-taunting.png" marker="miko_out_of_shape">You talk about your fitness, but it doesn't seem to be giving you an advantage over me!</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="sakura" stage="1" />
+                <state img="#-worried.png" marker="sakura_support">Ok Sakura, but remember you can go if you change your mind. This game is supposed to be fun for everyone!</state>
+            </case>
             <case stage="0-8" filter="fighter" notSaidMarker="sparring_partner">
                 <state img="#-smug.png" marker="sparring_partner">If you ever need a sparring partner, I'm an experienced warrior.</state>
                 <state img="#-smug.png" marker="sparring_partner">You know, I'm a warrior too... in case you'd ever like to spar.</state>
@@ -2046,6 +2139,10 @@
                 <condition role="target" character="tharja" stage="0" saying="I'm just going to take this off for you &lt;i&gt;nice&lt;/i&gt; and &lt;i&gt;slowly&lt;/i&gt; for y- Hey, ~player~, are you even watching? Watch me, dammit!" />
                 <state img="#-taunting.png" marker="tharja_player_watch">Don't worry, Tharja. I'll watch your little show even if ~player~'s distracted.</state>
             </case>
+            <case stage="0-8" id="79">
+                <condition role="target" character="sakura" stage="3" sayingMarker="headless" />
+                <state img="#-panic.png" oneShotId="247" marker="sakura_headless">Sakura! Your head!</state>
+            </case>
             <case stage="0-8" id="6" target="leggy" targetStage="2">
                 <state img="#-panic.png" marker="leggy_shave_panic">&lt;i&gt;AAAAA! What are you doing to yourself!?&lt;/i&gt;</state>
             </case>
@@ -2078,6 +2175,10 @@
         </trigger>
 
         <trigger id="female_removed_minor">
+            <case stage="0-8" priority="381">
+                <condition role="target" character="sakura" stage="3" />
+                <state img="#-pleased.png" marker="sakura_revealed">Of course! Don't worry, Sakura. It feels like every month I meet a new non-human in disguise. They're usually a little pudgy from eating human food though...</state>
+            </case>
             <case stage="0-8" target="miko" targetStage="1">
                 <state img="#-pleased.png">I'm not sure what you are, Tojiko, but I like the way you think!</state>
                 <state img="#-pleased.png">You should listen to whoever this is. She knows best.</state>
@@ -2312,6 +2413,11 @@
                 <condition role="target" character="saki_zls" stage="6" />
                 <state img="#-panic.png">Saki! Your skin! It's turning... blue!?</state>
             </case>
+            <case stage="0-8" id="78" oneShotId="3">
+                <condition role="target" character="rinkah" stage="4" />
+                <state img="#-worried.png" marker="rinkah_iron">&lt;i&gt;It's like she's made of iron or something!&lt;/i&gt;</state>
+                <state img="#-miffed.png" marker="rinkah_iron">How can she be so casual about those iron-hard muscles?</state>
+            </case>
             <case stage="0-8" filter="chubby" notSaidMarker="hypocritical_clothing_size_jab">
                 <state img="#-smug.png" marker="hypocritical_clothing_size_jab">Watch out, ~name~. Your ~clothing~~clothing.ifPlural( were| was)~ looking a little snug...</state>
                 <state img="#-smug.png" marker="hypocritical_clothing_size_jab">~Name~ might want to consider a new diet. Her ~clothing~~clothing.ifPlural( were| was)~ looking a little tight...</state>
@@ -2449,6 +2555,10 @@
             <case stage="0-8" target="miko" notSaidMarker="miko_mediocre_boobs">
                 <state img="#-taunting.png" marker="miko_mediocre_boobs">That sounds like loser talk to me. Admit it. Your boobs are mediocre!</state>
             </case>
+            <case stage="0-8" priority="301">
+                <condition role="target" character="sakura" saidMarker="6DN" />
+                <state img="#-panic.png" marker="sakura_bra_flying">Look out! Bra attack!</state>
+            </case>
             <case stage="0-8" id="1" target="cammy_white">
                 <state img="#-horny.png">Someone's been doing her squats!</state>
                 <state img="#-horny.png">Maybe I should take up street fighting. I'd &lt;i&gt;kill&lt;/i&gt; for an ass like that...</state>
@@ -2527,6 +2637,10 @@
                 <state img="#-worried.png" marker="kyu_fairy_magic">You're not a... &lt;i&gt;dark elf...&lt;/i&gt; are you, Kyu?</state>
                 <state img="#-worried.png" marker="kyu_fairy_magic">Watch out Human! I think Kyu might be a dark elf!</state>
                 <state img="#-angry.png" marker="kyu_fairy_magic">Clothing manipulation is dark elf magic!</state>
+            </case>
+            <case stage="0-8" priority="301">
+                <condition role="target" character="rinkah" saidMarker="WillShowButt" pose="butt" />
+                <state img="#-miffed.png" oneShotId="234" marker="rinkah_butt_envy">I remember when my butt looked just like that. Actually, mine was cuter!</state>
             </case>
             <case stage="0-8">
                 <state img="#-horny.png">Not bad, but it's hard be compared with me.</state>
@@ -2706,6 +2820,10 @@
             <case stage="0-8" filter="american" notSaidMarker="america_fries">
                 <state img="#-horny.png" marker="america_fries">Is it true, ~name~? Do they &lt;i&gt;really&lt;/i&gt; serve fries with every meal in America?</state>
             </case>
+            <case stage="0-8">
+                <condition role="other" character="sakura" stage="3-7" />
+                <state img="#-pleased.png" marker="sakura_zombie_diet">Important question! Do zombies eat? And if so, do they have to watch their diets?</state>
+            </case>
             <case stage="0" id="77" totalRounds="0">
                 <state img="#-pleased.png" marker="high_stakes">Don't you just love punishment games, ~name~? They're so exciting!</state>
                 <state img="#-pleased.png" marker="high_stakes">High-stakes games are so much fun! Wouldn't you agree, ~name~?</state>
@@ -2713,6 +2831,16 @@
         </trigger>
 
         <trigger id="opponent_stripping">
+            <case stage="0-8">
+                <condition role="target" character="meia" stage="3" saidMarker="erufuda_pilots1" />
+                <condition role="self" notSaidMarker="meia_pilots1" />
+                <state img="#-worried.png" marker="meia_pilots1">Do you ever worry that all that pressure might make your pilots weaker? I'd &lt;i&gt;hate&lt;/i&gt; to have to train with low blood sugar...</state>
+            </case>
+            <case stage="1-8">
+                <condition role="target" character="meia" stage="3" saidMarker="erufuda_pilots2" />
+                <condition role="self" notSaidMarker="meia_pilots2" />
+                <state img="#-weight_conscious.png" marker="meia_pilots2">Huh. I guess Meia's results speak for themselves... Perhaps I could use a little more structure too.</state>
+            </case>
             <case stage="0-8" target="natsuki" targetStage="1-2" notSaidMarker="natsuki_waste_time">
                 <state img="#-taunting.png" marker="natsuki_waste_time">Don't waste your time with Natsuki, ~player~. Can't you see she's not interested?</state>
             </case>
@@ -2735,6 +2863,10 @@
                 <state img="#-angry.png" oneShotId="11">She's still using dark magic!</state>
                 <state img="#-panic.png" oneShotId="12">AACK!</state>
                 <state img="#-frustrated.png" oneShotId="13">It was cute the &lt;i&gt;first&lt;/i&gt; time.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="meia" saidMarker="erufuda_resp0" />
+                <state img="#-pleased.png" marker="meia_artificial_gravity">Artificial gravity, huh... So if you turn it down, you'll weigh less? Sounds handy for checkups.</state>
             </case>
             <case stage="1-8" notSaidMarker="corset_wonder">
                 <test expr="~clothing~" value="corset" />
