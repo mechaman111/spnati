@@ -2,6 +2,22 @@
 {
 	public class KisekaeHairpiece : KisekaeClothes, IPoseable
 	{
+		public void Pose(IPoseable pose)
+		{
+			KisekaeHairpiece other = pose as KisekaeHairpiece;
+			if (other == null)
+			{
+				return;
+			}
+			ScaleX = other.ScaleX;
+			Rotation = other.Rotation;
+			Layer = other.Layer;
+			Side = other.Side;
+			Height = other.Height;
+			ScaleY = other.ScaleY;
+			Skew = other.Skew;
+		}
+
 		public int Side
 		{
 			get { return GetInt(4); }

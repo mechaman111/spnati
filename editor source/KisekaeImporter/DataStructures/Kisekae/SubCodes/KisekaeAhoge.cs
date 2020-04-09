@@ -12,13 +12,23 @@
 		{
 			Rotation = ahoge.Rotation;
 			Layer = ahoge.Layer;
-			Side = ahoge.Side;
 			X = ahoge.X;
 			Y = ahoge.Y;
 			Width = ahoge.Width;
 			Height = ahoge.Height;
 			Gravity = ahoge.Gravity;
 			RotationZ = ahoge.RotationZ;
+			RotationPreScale = ahoge.RotationPreScale;
+		}
+
+		public void Pose(IPoseable pose)
+		{
+			KisekaeAhoge other = pose as KisekaeAhoge;
+			if (other == null)
+			{
+				return;
+			}
+			CopyPositioningFrom(other);
 		}
 
 		public void SetColors(KisekaeColor color1, KisekaeColor color2, KisekaeColor color3)

@@ -2,6 +2,19 @@
 {
 	public class KisekaeGlobalDecoration : KisekaeSubCode, IPoseable, IMoveable
 	{
+		public void Pose(IPoseable pose)
+		{
+			KisekaeGlobalDecoration other = pose as KisekaeGlobalDecoration;
+			if (other == null)
+			{
+				return;
+			}
+			Scale = other.Scale;
+			X = other.X;
+			Y = other.Y;
+			Depth = other.Depth;
+		}
+
 		public int Type
 		{
 			get { return GetInt(0); }
