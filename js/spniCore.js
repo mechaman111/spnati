@@ -167,9 +167,16 @@ function compileBaseErrorReport(userDesc, bugType) {
             player: epiloguePlayer.epilogue.player.id,
             gender: epiloguePlayer.epilogue.gender,
             scene: epiloguePlayer.sceneIndex,
+            sceneName: epiloguePlayer.activeScene.name,
             view: epiloguePlayer.viewIndex,
             directive: epiloguePlayer.directiveIndex,
         };
+        for (let i = epiloguePlayer.directiveIndex; i >= 0; i--) {
+            if (epiloguePlayer.activeScene.directives[i].type == "text") {
+                data.epilogue.lastText = epiloguePlayer.activeScene.directives[i].text;
+                break;
+            }
+        }
     } else {
         var gameState = {
             'currentRound': currentRound,
