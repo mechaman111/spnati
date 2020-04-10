@@ -1882,6 +1882,7 @@ function sendBugReport() {
         success: function () {
             $('#bug-report-status').text("Bug report sent!");
             $('#bug-report-desc').val("");
+            $('#bug-report-type').empty();
             closeBugReportModal();
         }
     });
@@ -1899,18 +1900,24 @@ if (!document.fullscreenEnabled) {
   * The player clicked a bug-report button. Shows the bug reports modal.
   ************************************************************/
 function showBugReportModal () {
+    var prevVal = $('#bug-report-type').val();
     /* Set up possible bug report types. */
     var bugReportTypes = [
         ['freeze', 'Game Freeze or Crash'],
         ['display', 'Game Graphical Problem'],
         ['other', 'Other Game Issue'],
     ].concat((epiloguePlayer ? [ epiloguePlayer.epilogue.player ] : players.opponents).map(function(p) {
-        return [ 'character:'+p.id, 'Character Defect ('+p.id.initCap()+')'];
+        return [ 'character:'+p.id, (epiloguePlayer ? 'Epilogue' : 'Character') + ' Defect ('+p.id.initCap()+')'];
     }));
 
     $('#bug-report-type').empty().append(bugReportTypes.map(function(item) {
         return $('<option>', { value: item[0], text: item[1] });
     }));
+    if (prevVal && bugReportTypes.some(function(t) { return t[0] === prevVal; })) {
+        $('#bug-report-type').val(prevVal);
+    } else if (epiloguePlayer) {
+        $('#bug-report-type').val('character:'+epiloguePlayer.epilogue.player.id);
+    }
 
     updateBugReportOutput();
 
@@ -1936,11 +1943,11 @@ function sendFeedbackReport() {
     }
 
     var desc = $('#feedback-report-desc').val();
-    var character = $('#feedback-report-character option:selected').data('character');
+    var character = $('#feedback-report-character').val();
     var report = compileBaseErrorReport(desc, "feedback");
 
     $.ajax({
-        url: FEEDBACK_ROUTE + (character ? character.id : ""),
+        url: FEEDBACK_ROUTE + (character || ""),
         method: 'POST',
         data: JSON.stringify(report),
         contentType: 'application/json',
@@ -1951,6 +1958,7 @@ function sendFeedbackReport() {
         success: function () {
             $('#feedback-report-status').text("Feedback sent!");
             $('#feedback-report-desc').val("");
+            $('#feedback-report-character').empty()
             closeFeedbackReportModal();
         }
     });
@@ -1987,16 +1995,18 @@ function updateFeedbackMessage() {
 $("#feedback-report-character").change(updateFeedbackMessage);
 
 function showFeedbackReportModal($fromModal) {
+    var prevVal = $('#feedback-report-character').val();
     $('#feedback-report-character').empty().append(
-        $('<option value="" disabled data-load-indicator="">Loading...</option>'),
-    ).val("");
+        $('<option disabled data-load-indicator="">Loading...</option>'),
+        $('<option value="">General Game Feedback</option>')
+    );
 
-    var feedbackCharacters = epiloguePlayer ? [ epiloguePlayer.epilogue.player ] : players.opponents;
+    var feedbackCharacters = epiloguePlayer && !inGame ? [ epiloguePlayer.epilogue.player ] : players.opponents;
 
     $.when.apply($, feedbackCharacters.map(function(p) {
-        $("#feedback-report-character").append($('<option>', { text: p.id.initCap() }).data('character', p));
+        $("#feedback-report-character").append($('<option>', { text: p.id.initCap(), value: p.id }).data('character', p));
         if (p.feedbackData) {
-            return $.Deferred().resolve().promise();
+            return true;
         } else {
             return $.ajax({
                 url: FEEDBACK_ROUTE + p.id,
@@ -2010,14 +2020,15 @@ function showFeedbackReportModal($fromModal) {
                                                             entry right away if one GET fails. */
             });
         }
-    })).always(function() {
+    })).then(function() {
         $("#feedback-report-character option[data-load-indicator]").remove();
+        if (prevVal && feedbackCharacters.indexOf(prevVal) >= 0) {
+            $('#feedback-report-character').val(prevVal);
+        } else if (epiloguePlayer) {
+            $('#feedback-report-character').val(epiloguePlayer.epilogue.player.id);
+        }
         updateFeedbackMessage();
     });
-
-    $("#feedback-report-character").append(
-        $('<option>General Game Feedback</option>')
-    );
 
     if ($fromModal) {
         $fromModal.modal('hide');
