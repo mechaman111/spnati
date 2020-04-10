@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 4:05:40 PM on March 29, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 6:56:33 PM on April 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Shouko</first>
@@ -656,7 +656,7 @@
                 <condition role="other" character="revy" />
                 <condition role="self" notSaidMarker="revy_apology" />
                 <state img="#-dreadB.png" marker="revy_apology" location="12000%">Revy, I'm sorry if I somehow offended you earlier... Please don't mind me. I don't want trouble; I'm just very nervous.</state>
-                <state img="#-dreadB.png" marker="revy_apology" location="12000%">Revy, I'm sorry if I somehow offended you earlier. I'm just a bit intimidated... You seem like someone who shouldn't be crossed lightly.</state>
+                <state img="#-dreadB.png" marker="revy_apology" location="12000%">Revy, I'm sorry if I offended you earlier. I'm just a bit intimidated... You seem like someone who should not be crossed lightly.</state>
             </case>
             <case stage="0-6" priority="250">
                 <condition character="blake" stage="6" />
@@ -677,6 +677,14 @@
                 <condition role="self" saidMarker="preternatural_2" notSaidMarker="preternatural_3" />
                 <state img="#-dreadA.png" marker="preternatural_3" location="12000%">&lt;i&gt;Komi-san is reevaluating her perceptions of the metaphysical underpinnings of the universe.&lt;/i&gt;</state>
                 <state img="#-dreadA.png" marker="preternatural_3" location="12000%">&lt;i&gt;Suddenly wondering if this means Nakanaka-san wasn't kidding about all that "dragon force" and "blood oath" stuff after all.&lt;/i&gt;</state>
+            </case>
+            <case stage="1-6">
+                <condition role="self" notSaidMarker="revy_bullets" />
+                <condition role="other" character="revy" stage="4" />
+                <alternative>
+                    <condition role="self" saidMarker="revy_apology_retry" />
+                </alternative>
+                <state img="custom:#-inscrutableB-Alt" marker="revy_bullets" location="12000%">Please excuse my ignorance, but... How expensive are bullets, exactly? I can't imagine they're all that cheap...</state>
             </case>
             <case stage="0-6">
                 <condition role="other" character="natsuki" stage="5" saying="Good thing my shirt's long enough to cover my underwear..." />
@@ -700,14 +708,15 @@
                 <condition role="other" character="amy" sayingMarker="shouko_flirt" />
                 <state img="#-embarrassedB.png" marker="amy_flirt_reply" location="12000%">Thank you... I think. But I imagine using my notebook will leave less room for misunderstandings. {strike}...Wait. Are you flirting wi{!reset}</state>
             </case>
-            <case stage="1-6">
-                <condition role="self" saidMarker="revy_gunshot" notSaidMarker="revy_bullets" />
-                <condition role="other" character="revy" />
-                <condition />
-                <alternative>
-                    <condition role="self" saidMarker="revy_apology_retry" />
-                </alternative>
-                <state img="custom:#-dreadB-Alt" marker="revy_bullets" location="12000%">Please excuse my ignorance, but... How expensive are bullets, exactly? I can't imagine they're all that cheap...</state>
+            <case stage="1-6" priority="105">
+                <condition role="self" saidMarker="revy_apology_retry" />
+                <condition role="other" character="revy" sayingMarker="killing" />
+                <state img="custom:#-dreadB-Alt" marker="revy_killing_reply" location="12000%">I can't even &lt;i&gt;imagine&lt;/i&gt; what circumstances would bring me to kill someone. How did it first happen to you...?</state>
+            </case>
+            <case stage="1-6" priority="105">
+                <condition role="self" saidMarker="revy_apology_retry" />
+                <condition role="other" character="revy" sayingMarker="music" />
+                <state img="custom:#-calmB-Alt" marker="revy_music_reply" location="12000%">Although they're a bit closer to hard rock, you might enjoy Perro Rabioso... If you want, I'd be glad to give you a CD.</state>
             </case>
             <case stage="0-6">
                 <condition role="self" notSaidMarker="florina_dumb_admiration" />
@@ -724,6 +733,26 @@
                 <condition role="other" character="natsuki" />
                 <condition role="self" saidMarker="natsuki_true_friend" notSaidMarker="natsuki_signature" />
                 <state img="#-calmB.png" marker="natsuki_signature" location="12000%">Once this game is over, Natsuki, would you please sign your name in my Book of Friends? I would greatly appreciate it.</state>
+            </case>
+            <case stage="1-2" oneShotId="2">
+                <condition role="other" character="revy" />
+                <condition role="self" saidMarker="revy_apology_retry" notSaidMarker="revy_creeped_out" />
+                <state img="custom:#-calmB-Alt" marker="revy_creeped_out" location="12000%" weight="7">To be honest, Revy, I'm surprised that &lt;i&gt;I&lt;/i&gt; unnerved you somehow. You seem like the type of person who's not afraid of anything.</state>
+            </case>
+            <case stage="3-4" oneShotId="4">
+                <condition role="other" character="revy" />
+                <condition role="self" saidMarker="revy_apology_retry" notSaidMarker="revy_creeped_out" />
+                <state img="custom:#-embarrassedB-Alt" marker="revy_creeped_out" location="12000%" weight="7">To be honest, Revy, I'm surprised that &lt;i&gt;I&lt;/i&gt; could unnerve you. I promise that I'm more afraid of you than you are of me.</state>
+            </case>
+            <case stage="5-6" oneShotId="5">
+                <condition role="other" character="revy" />
+                <condition role="self" saidMarker="revy_apology_retry" notSaidMarker="revy_creeped_out" />
+                <state img="custom:#-embarrassedB-Alt" marker="revy_creeped_out" location="12000%" weight="7">To be honest, I'm surprised that &lt;i&gt;I&lt;/i&gt; unnerved you, Revy. If you chose to do something to me, I expect I'd be helpless to stop you.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="other" character="tomoko" saidMarker="poop_joke" />
+                <condition role="self" notSaidMarker="tomoko_poop_relief" />
+                <state img="#-bashful.png" marker="tomoko_poop_relief" location="12000%">&lt;i&gt;Komi-san imagines that Tomoko must still be really mortified over that joke. So she's trying to think of a way to make her feel better.&lt;/i&gt;</state>
             </case>
             <case stage="3">
                 <condition role="other" character="natsuki" saying="(&lt;i&gt;I'm... I'm matching right? Downstairs is strawberries and upstairs is...&lt;/i&gt;)" />
@@ -754,6 +783,33 @@
                 <condition role="other" character="akko" />
                 <condition role="self" notSaidMarker="akko_narration" />
                 <state img="#-inscrutableB.png" oneShotId="823" marker="akko_narration" location="12000%">Akko, you keep bringing up something about narration... What do you mean by that? I'm afraid I'm not sure I follow.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="other" character="meia" saidMarker="komi_sightseeing" />
+                <state img="#-inscrutableB.png" marker="meia_kyoto_history" location="12000%">As Japan's capital for 1,075 years, Kyoto built many temples, heavily shaped Japanese culture, and endured the Onin War.</state>
+            </case>
+            <case stage="1-6">
+                <condition role="other" character="meia" />
+                <condition role="self" notSaidMarker="meia_apology" />
+                <state img="#-embarrassedB.png" marker="meia_apology" location="12000%">Meia, I'm sorry I didn't reply to you earlier. Since I was busy stripping, I couldn't write, and speech is... a challenge for me.</state>
+            </case>
+            <case stage="3-4">
+                <condition role="other" character="tomoko" sayingMarker="komi_coolcollected" />
+                <state img="#-dreadA.png" location="12000%">&lt;i&gt;She's feeling neither cool nor collected.&lt;/i&gt;</state>
+            </case>
+            <case stage="3-4">
+                <condition role="other" character="tomoko" sayingMarker="komi_mentallybond" />
+                <state img="#-determined.png" location="12000%">&lt;i&gt;Since Tomoko's so quiet, Komi-san feels a great affinity with her.&lt;/i&gt;</state>
+            </case>
+            <case stage="2-6">
+                <condition role="other" character="tomoko" />
+                <condition role="self" notSaidMarker="tomoko_talking" />
+                <state img="#-embarrassedB.png" marker="tomoko_talking" location="12000%">I'm afraid that "talking words" is... harder for me than for most people, Tomoko. Is it alright if I keep using my notebook?</state>
+            </case>
+            <case stage="0-6">
+                <condition role="other" character="tomoko" />
+                <condition role="self" saidMarker="tomoko_poop_curry" />
+                <state img="#-embarrassedA.png" oneShotId="860" location="12000%">&lt;i&gt;On the one hand, she's &lt;/i&gt;mortified&lt;i&gt; with herself for actually asking someone that question. But on the other, stripping won't seem nearly so embarrassing in comparison.&lt;/i&gt;</state>
             </case>
             <case stage="5">
                 <condition role="other" character="natsuki" />
@@ -880,21 +936,6 @@
                 <condition role="self" notSaidMarker="apology_quiet" />
                 <state img="#-embarrassedB.png" oneShotId="683" marker="apology_quiet" location="12000%" weight="10">I'm sorry I'm not adding much to the conversation. I have trouble speaking to most people, and I'm not the fastest writer, either.</state>
             </case>
-            <case stage="1-2" oneShotId="2" priority="0">
-                <condition role="other" character="revy" />
-                <condition role="self" saidMarker="revy_apology_retry" notSaidMarker="revy_creeped_out" />
-                <state img="custom:#-calmB-Alt" marker="revy_creeped_out" location="12000%" weight="7">To be honest, Revy, I'm surprised that &lt;i&gt;I&lt;/i&gt; unnerved you somehow. You seem like the type of person who's not afraid of anything.</state>
-            </case>
-            <case stage="3-4" oneShotId="4" priority="0">
-                <condition role="other" character="revy" />
-                <condition role="self" saidMarker="revy_apology_retry" notSaidMarker="revy_creeped_out" />
-                <state img="custom:#-embarrassedB-Alt" marker="revy_creeped_out" location="12000%" weight="7">To be honest, Revy, I'm surprised that &lt;i&gt;I&lt;/i&gt; could unnerve you. I promise that I'm more afraid of you than you are of me.</state>
-            </case>
-            <case stage="5-6" oneShotId="5" priority="0">
-                <condition role="other" character="revy" />
-                <condition role="self" saidMarker="revy_apology_retry" notSaidMarker="revy_creeped_out" />
-                <state img="custom:#-embarrassedB-Alt" marker="revy_creeped_out" location="12000%" weight="7">To be honest, I'm surprised that &lt;i&gt;I&lt;/i&gt; unnerved you, Revy. If you chose to do something to me, I expect I'd be helpless to stop you.</state>
-            </case>
         </trigger>
 
         <trigger id="must_strip">
@@ -945,6 +986,10 @@
             <case stage="0">
                 <condition role="other" character="meia" />
                 <state img="#-dreadA.png" location="12000%">&lt;i&gt;Only slightly less anxious than if she were piloting a tiny, fragile craft through a perilous gauntlet in the vast and frigid void of space.&lt;/i&gt;</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="tomoko" />
+                <state img="#-dreadA.png" location="12000%">&lt;i&gt;A tall order.&lt;/i&gt;</state>
             </case>
             <case stage="0-5">
                 <condition role="self" consecutiveLosses="3-" />
@@ -1160,6 +1205,7 @@
                 <state img="#-embarrassedA.png" location="12000%">&lt;i&gt;Watching a boy undress... For Komi-san, it's a novel experience.&lt;/i&gt;</state>
                 <state img="#-embarrassedB.png" location="12000%">I never thought my first time playing strip poker would be with a boy. ...I never thought I'd play strip poker at &lt;i&gt;all,&lt;/i&gt; really.</state>
                 <state img="#-embarrassedB.png" location="12000%">This sort of game is not something I'm very familiar with, ~name~. I hope we can avoid making each other too uncomfortable.</state>
+                <state img="#-inscrutableB.png" location="12000%">The worst hand is... ~name~'s, right?</state>
             </case>
             <case stage="3-6">
                 <state img="#-dreadA.png" location="12000%">
@@ -1197,6 +1243,7 @@
                 <state img="#-inscrutableA.png" location="12000%">&lt;i&gt;Familiar territory.&lt;/i&gt;</state>
                 <state img="#-calmB.png" location="12000%">It's less awkward if it's between girls, yes? Although... Now that I really think about it, I suppose it depends on the girl.</state>
                 <state img="#-embarrassedB.png" location="12000%">It feels kind of like a slumber party, doesn't it? Even if the games Manbagi-san and her friends play aren't &lt;i&gt;usually&lt;/i&gt; this risqué...</state>
+                <state img="#-inscrutableB.png" location="12000%">The worst hand is... ~name~'s, right?</state>
             </case>
             <case stage="3-4">
                 <state img="#-calmA.png" location="12000%">&lt;i&gt;She feels a bit more relaxed if it's a girl.&lt;/i&gt;</state>
@@ -2807,6 +2854,11 @@
                 <state img="#-bashful.png" location="12000%">&lt;i&gt;Komi-san is pretty sure that Flutter is technically already naked. So she's not sure how this part is even supposed to work.&lt;/i&gt;</state>
             </case>
             <case stage="0-6 8">
+                <condition role="target" character="tomoko" stage="5" saidMarker="poop_joke" />
+                <condition role="self" saidMarker="tomoko_poop_relief" />
+                <state img="#-dreadA.png" location="12000%">&lt;i&gt;Komi-san thought of a way to make Tomoko feel better about her poop joke from earlier. But she's already regretting it.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6 8">
                 <condition role="target" character="pinkie_pie" stage="2" notSaidMarker="pinka_start" />
                 <state img="#-inscrutableB.png" location="12000%">You're very good at making friends, aren't you, Pinkie?</state>
             </case>
@@ -2823,6 +2875,16 @@
             <case stage="0-6 8">
                 <condition role="target" character="natsuki" stage="5" saying="Again!? I guess I'll-- Wait! My underwear was visible this whole time?? Why didn't you &lt;i&gt;tell&lt;/i&gt; me!?" />
                 <state img="#-heartbrokenB.png" location="12000%">I'm sorry, Natsuki... I didn't know if anyone else noticed, so I thought it might make things worse if I brought it up.</state>
+            </case>
+            <case stage="1-6 8">
+                <condition role="target" character="revy" stage="1" />
+                <condition role="self" saidMarker="revy_apology_retry" />
+                <state img="custom:#-calmB-Alt" location="12000%">Revy, earlier you mentioned someone called "Rock"... He's Japanese too, yes? What is he like? Do you two get along?</state>
+            </case>
+            <case stage="1-6 8">
+                <condition role="target" character="revy" stage="5" />
+                <condition role="self" saidMarker="revy_apology_retry" />
+                <state img="custom:#-embarrassedB-Alt" location="12000%">It's perfectly okay if you don't want to answer this, Revy, but... I have a bit of a personal question for you.</state>
             </case>
             <case stage="0-6">
                 <condition role="target" character="human" stage="0" />
@@ -2875,6 +2937,14 @@
             <case stage="0-6 8">
                 <condition role="target" character="saki_zls" stage="1" />
                 <state img="#-inscrutableB.png" location="12000%">You sound very passionate about supporting local indie music groups, Saki. Have you heard of Perro Rabioso before?</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="tomoko" stage="1" />
+                <state img="#-inscrutableB.png" location="12000%">Tomoko... What kind of hobbies are you into?</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="mary" stage="0" />
+                <state img="#-tilt.png" location="12000%">&lt;i&gt;Business attire with a hoodie and crocs...?&lt;/i&gt;</state>
             </case>
             <case stage="0" totalRounds="0" priority="375">
                 <state img="#-calmB.png" location="12000%">If ~name~'s lost this round, then what happens now?</state>
@@ -3039,7 +3109,8 @@
                 <state img="#-calmB.png" location="12000%">So that is what a bad hand looks like?</state>
                 <state img="#-tilt.png" location="12000%">&lt;i&gt;Komi-san is trying to figure out why ~name~'s hand is the worst one.&lt;/i&gt;</state>
                 <state img="#-calmA.png" location="12000%">&lt;i&gt;She's not sure why ~name~ lost, but she's taking everyone's word for it.&lt;/i&gt;</state>
-                <state img="#-inscrutableB.png" location="12000%">The worst hand is... ~name~'s, right?</state>
+                <state img="#-calmA.png" oneShotId="862" location="12000%" weight="2">&lt;i&gt;Beginner's luck.&lt;/i&gt;</state>
+                <state img="#-calmA.png" oneShotId="863" location="12000%" weight="2">&lt;i&gt;She's has no clue what she's doing. But somehow, it's working.&lt;/i&gt;</state>
             </case>
             <case stage="7" priority="10">
                 <condition role="self" timeInStage="0-1" />
@@ -3182,6 +3253,11 @@
                 <state img="#-calmB.png" marker="rd_athlete_2" location="12000%">I don't consider myself an athlete, but I do well on sprints. Only Netsuno-senpai can beat me -- and even then, just barely.</state>
             </case>
             <case stage="0-6 8">
+                <condition role="target" character="tomoko" stage="5" saidMarker="poop_joke" />
+                <condition role="self" saidMarker="tomoko_poop_relief" />
+                <state img="#-dreadB.png" location="12000%">Tomoko, {strike}would you rtha{!reset} ... {strike}would yuo{!reset} ...Give me a moment, please.</state>
+            </case>
+            <case stage="0-6 8">
                 <condition role="target" character="pinkie_pie" stage="2" notSaidMarker="pinka_start" />
                 <state img="#-calmB.png" marker="ponka_friend_tips" location="12000%">Over the past few years, I've gotten a little better at making friends on my own, but I still have trouble with it. Do you have any tips?</state>
             </case>
@@ -3197,6 +3273,30 @@
                 <condition role="target" character="jessie" stage="3" />
                 <condition role="self" saidMarker="jessie_manbagi_confirmation" />
                 <state img="#-bashful.png" location="12000%">&lt;i&gt;Despite herself, she's unexpectedly curious to see how Jessie's breasts compare to her (probable...?) daughter's.&lt;/i&gt;</state>
+            </case>
+            <case stage="1-6 8">
+                <condition role="target" character="revy" stage="4" />
+                <condition role="self" saidMarker="revy_apology_retry" />
+                <state img="custom:#-embarrassedB-Alt" location="12000%">I'd nearly forgotten, but... the smell of cigarette smoke is oddly nostalgic. It reminds me of my grandpa -- on my mom's side.</state>
+            </case>
+            <case stage="1-6 8">
+                <condition role="target" character="revy" stage="2" />
+                <condition role="self" saidMarker="revy_apology_retry" />
+                <state img="custom:#-embarrassedB-Alt" location="12000%">I'm not too fond of guns, but... You and I live in very different worlds. They protect your life and livelihood, correct?</state>
+            </case>
+            <case stage="1-6 8">
+                <condition role="target" character="revy" stage="3" />
+                <condition role="self" saidMarker="revy_apology_retry" />
+                <state img="#-bashful.png" location="12000%">&lt;i&gt;Glad that Revy won't be waving those around anymore.&lt;/i&gt;</state>
+            </case>
+            <case stage="1-6 8">
+                <condition role="target" character="revy" stage="5" />
+                <condition role="self" saidMarker="revy_apology_retry" />
+                <state img="custom:#-inscrutableB-Alt" location="12000%">If you could get a fresh start, knowing that the past would not catch up to you, where would you go? What would you do?</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="tomoko" stage="4" sayingMarker="poop_joke" />
+                <state img="#-dreadA.png">......!?!?</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="aimee" stage="0" />
@@ -3240,6 +3340,14 @@
             <case stage="0-6 8">
                 <condition role="target" character="saki_zls" stage="1" />
                 <state img="#-calmB.png" location="12000%">They're a rock band that my friend Nakanaka-san started. Shall I lend you a CD? I'll gladly listen to some Franchouchou in return.</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="tomoko" stage="0" />
+                <state img="#-bashful.png" location="12000%">&lt;i&gt;Tomoko seems so gloomy and withdrawn... Komi-san can't help but be a little reminded of herself, back before Tadano-kun reached out to her.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="mary" stage="0" />
+                <state img="#-dreadA.png" location="12000%"> &lt;i&gt;Komi-san can't tell if Mary is underdressed for the office or overdressed for staying home. But the longer she stares, the more it messes with her head.&lt;/i&gt;</state>
             </case>
             <case stage="0-6 8">
                 <condition role="target" character="akko" sayingMarker="akko_sailor" />
@@ -3648,6 +3756,16 @@
                 <state img="#-embarrassedB.png" marker="rd_calisthenics_2" location="12000%">Then again, it might be a bit too low-intensity for you... But it could still make for a good warm-up, at least.</state>
             </case>
             <case stage="0-6 8">
+                <condition role="target" character="tomoko" stage="6" saidMarker="poop_joke" />
+                <condition role="self" saidMarker="tomoko_poop_relief" />
+                <state img="custom:#-embarrassedB-Alt" marker="tomoko_poop_curry" location="12000%">If you &lt;i&gt;had&lt;/i&gt; to choose between one or the other... Would you rather eat curry-flavored poop or poop-flavored curry?</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="tomoko" stage="5" saidMarker="poop_joke" />
+                <state img="#-embarrassedA.png" location="12000%">&lt;i&gt;Komi-san still feels a little shaken. But mostly, she's relieved. ...No, not in &lt;/i&gt;that&lt;i&gt; way.&lt;/i&gt;</state>
+                <state img="#-embarrassedA.png" location="12000%">&lt;i&gt;Overwhelmed by second-hand embarrassment.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6 8">
                 <condition role="target" character="jessie" stage="2" />
                 <condition role="self" saidMarker="jessie_manbagi_confirmation" />
                 <state img="#-dreadA.png" location="12000%">&lt;i&gt;She wants to text Manbagi-san to make sure she's not mistaken. But there's no easy way to ask your best friend if her mom is an American porn star.&lt;/i&gt;</state>
@@ -3662,6 +3780,11 @@
                 <state img="#-dreadA.png" location="12000%">&lt;i&gt;Hoping for Akko's sake that she's usually not quite &lt;/i&gt;that&lt;i&gt; reckless in her day-to-day life.&lt;/i&gt;</state>
                 <state img="#-dreadA.png" location="12000%">&lt;i&gt;Wondering how someone so impulsively foolhardy as Akko has managed to live this long.&lt;/i&gt;</state>
                 <state img="#-dreadA.png" location="12000%">&lt;i&gt;She's thankful that she endured Horror Movie Night with the rest of her friends after all.&lt;/i&gt;</state>
+            </case>
+            <case stage="1-6 8">
+                <condition role="target" character="revy" stage="4" />
+                <condition role="self" saidMarker="revy_apology_retry" />
+                <state img="#-determined.png" location="12000%">&lt;i&gt;Komi-san knows that Revy could still pummel her into a fine paste if she wanted. But even so, she seems a little less scary now.&lt;/i&gt;</state>
             </case>
             <case stage="0-6">
                 <condition role="target" character="human" stage="1" />
@@ -3743,6 +3866,14 @@
             <case stage="0-6 8">
                 <condition role="target" character="saki_zls" stage="7" />
                 <state img="#-dreadA.png" location="12000%">&lt;i&gt;Komi-san feels about ready to fall to pieces, herself.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="tomoko" stage="1" />
+                <state img="#-thinking.png" location="12000%">&lt;i&gt;She's wondering if there's anything she can do to cheer Tomoko up.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="mary" stage="1" />
+                <state img="#-determined.png" location="12000%"> &lt;i&gt;She's developed some healthy respect for the level of psychological warfare that Mary brings to strip poker.&lt;/i&gt;</state>
             </case>
             <case stage="0-6 8">
                 <condition role="target" character="human" />
@@ -3958,7 +4089,7 @@
         <trigger id="opponent_crotch_is_visible">
             <case stage="0-6 8" id="17">
                 <condition role="target" character="chihiro" />
-                <state img="#-embarrassedA.png" marker="chihiro_boy_reveal" location="12000%">&lt;i&gt;Komi-san's lust just kicked into overdrive.&lt;/i&gt;</state>
+                <state img="#-embarrassedA.png" marker="chihiro_boy_reveal" location="12000%">&lt;i&gt;Komi-san's arousal just kicked into overdrive.&lt;/i&gt;</state>
                 <state img="#-neko.png" marker="chihiro_boy_reveal" location="12000%">&lt;i&gt;Komi-san just awakened a &lt;/i&gt;massive&lt;i&gt; fetish.&lt;/i&gt;</state>
                 <state img="#-embarrassedA.png" marker="chihiro_boy_reveal" location="12000%">&lt;i&gt;Komi-san never knew it was possible to be &lt;/i&gt;this&lt;i&gt; turned on.&lt;/i&gt;</state>
                 <state img="#-embarrassedA.png" marker="chihiro_boy_reveal" location="12000%">&lt;i&gt;Suddenly wrestling with a lot of very strong, very &lt;/i&gt;lewd&lt;i&gt; urges.&lt;/i&gt;</state>
@@ -5521,6 +5652,16 @@
                 <state img="#-calmB.png" marker="rd_animal_parts_2" location="12000%">Are those pegasus parts? That's very impressive. For me, it's just cat ears... Do you happen to know why it happens?</state>
             </case>
             <case stage="8">
+                <condition role="other" character="revy" />
+                <condition role="self" saidMarker="revy_apology_retry" notSaidMarker="revy_creeped_out" />
+                <state img="custom:#-embarrassedB-Alt" marker="revy_creeped_out" location="12000%" weight="7">To be honest, I'm surprised that &lt;i&gt;I&lt;/i&gt; unnerved you, Revy. If you chose to do something to me, I expect I'd be helpless to stop you.</state>
+            </case>
+            <case stage="8">
+                <condition role="other" character="tomoko" saidMarker="poop_joke" />
+                <condition role="self" notSaidMarker="tomoko_poop_relief" />
+                <state img="#-bashful.png" marker="tomoko_poop_relief" location="12000%">&lt;i&gt;Komi-san imagines that Tomoko must still be really mortified over that joke. So she's trying to think of a way to make her feel better.&lt;/i&gt;</state>
+            </case>
+            <case stage="8">
                 <condition role="other" character="rainbow_dash" sayingMarker="competition_question" />
                 <state img="#-calmB.png" marker="rd_animal_parts_2" location="12000%">I imagine I'd do well at a contest to see who could stay silent the longest.</state>
                 <state img="#-embarrassedB.png" marker="rd_competition_response" location="12000%">I imagine I'd do well at a contest to see who could stay silent the longest... But that's not really something I can take much pride in.</state>
@@ -5533,6 +5674,15 @@
             <case stage="8">
                 <condition role="other" character="nami" sayingMarker="dreams" />
                 <state img="#-embarrassedB.png" marker="nami_dreams_reply" location="12000%">It may sound silly, but... My dream is to have 100 friends. It's still a work in progress, but I've actually gotten surprisingly far.</state>
+            </case>
+            <case stage="8">
+                <condition role="other" character="meia" saidMarker="komi_sightseeing" />
+                <state img="#-inscrutableB.png" marker="meia_kyoto_history" location="12000%">As Japan's capital for 1,075 years, Kyoto built many temples, heavily shaped Japanese culture, and endured the Onin War.</state>
+            </case>
+            <case stage="8">
+                <condition role="self" saidMarker="tomoko_poop_curry" />
+                <condition role="other" character="tomoko" />
+                <state img="#-embarrassedA.png" oneShotId="861" location="12000%">&lt;i&gt;On the one hand, she's &lt;/i&gt;mortified&lt;i&gt; with herself for actually asking someone that question. But on the other, everything &lt;/i&gt;else&lt;i&gt; she's done this game feels far less troubling in comparison.&lt;/i&gt;</state>
             </case>
             <case stage="8">
                 <alternative>
@@ -5695,11 +5845,6 @@
                 <condition count="1-4" gender="male" status="crotch_visible" />
                 <condition role="self" notSaidMarker="popsicle_craving" />
                 <state img="#-calmA.png" marker="popsicle_craving" location="12000%" weight="10">&lt;i&gt;Out of nowhere, Komi-san is craving a popsicle. But she's not sure why.&lt;/i&gt;</state>
-            </case>
-            <case stage="8" priority="0">
-                <condition role="other" character="revy" />
-                <condition role="self" saidMarker="revy_apology_retry" notSaidMarker="revy_creeped_out" />
-                <state img="custom:#-embarrassedB-Alt" marker="revy_creeped_out" location="12000%" weight="7">To be honest, I'm surprised that &lt;i&gt;I&lt;/i&gt; unnerved you, Revy. If you chose to do something to me, I expect I'd be helpless to stop you.</state>
             </case>
         </trigger>
 
@@ -5921,7 +6066,7 @@
                 <state img="#-focusedE.png" marker="fantasizing_bi" location="12000%">&lt;i&gt;She's remembering the dance she shared with Manbagi-san at her second cultural festival.&lt;/i&gt;</state>
             </case>
             <case stage="7" priority="12">
-                <condition role="self" timeInStage="5" />
+                <condition role="self" timeInStage="4" />
                 <state img="#-focusedA.png" oneShotId="449" location="12000%">&lt;i&gt;She's picturing Tadano-kun wearing black cat lingerie.&lt;/i&gt;</state>
                 <state img="#-inscrutableA.png" oneShotId="450" location="12000%">&lt;i&gt;She's picturing a maid-cosplaying Tadano-kun shyly lifting his skirt, revealing the stiff erection poking out of his panties.&lt;/i&gt;</state>
                 <state img="#-focusedD.png" oneShotId="451" location="12000%">&lt;i&gt;She's picturing Tadano-kun vigorously stroking his cock, eyes closed as he moans Komi-san's name under his breath.&lt;/i&gt;</state>

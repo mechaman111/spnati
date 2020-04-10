@@ -1556,7 +1556,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         this.linecountLabel.text("Loading...");
         this.posecountLabel.text("Loading...");
 
-        fetchCompressedURL(opponent.folder + 'behaviour.xml').then(countLinesImages).then(function(response) {
+        opponent.fetchBehavior().then(countLinesImages).then(function(response) {
             opponent.uniqueLineCount = response.numUniqueLines;
             opponent.posesImageCount = response.numPoses;
 

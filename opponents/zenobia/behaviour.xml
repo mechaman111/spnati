@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 4:35:31 PM on March 31, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 10:48:04 PM on April 05, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Zenobia</first>
@@ -16,14 +16,15 @@
         <tag>long_hair</tag>
         <tag>very_long_hair</tag>
         <tag>messy_hair</tag>
-        <tag>heterochromia</tag>
         <tag>unusual_skin</tag>
         <tag>chubby</tag>
-        <tag>short</tag>
         <tag>large_breasts</tag>
         <tag>huge_breasts</tag>
         <tag>monster</tag>
+        <tag>supernatural</tag>
+        <tag>spirit</tag>
         <tag>formal_attire</tag>
+        <tag from="0" to="0">hat</tag>
         <tag>no_bra</tag>
         <tag>no_underwear</tag>
         <tag>aggressive</tag>
@@ -59,15 +60,58 @@
             </case>
         </trigger>
 
+        <trigger id="opponent_selected">
+            <case stage="0">
+                <state img="#-arrogant.png">Another visitor! Stay a while! Stay FOREVER!</state>
+                <state img="#-happy.png">Oh goodie! Mashed ~name~ for the main course!</state>
+                <state img="#-angry.png">I spy with my eye, someone who must die.</state>
+            </case>
+        </trigger>
+
         <trigger id="game_start">
             <case stage="0">
+                <condition count="1-" gender="female" />
+                <condition role="other" character="scm" />
+                <state img="#-happy.png">Oh my... Someone who fancies themselves to be strong. There's nothing like breaking someone's spirit before I eat them.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="nanoko-chan" />
+                <state img="#-sad.png">You're so normal that it's almost scary. Your flesh probably tastes like nothing.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="azami" />
+                <state img="#-angry.png">I smell something fishy.. and it's not just that pool float witch's familiars.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="astolfo_bean_plushie" />
+                <state img="#-bored.png">How am I supposed to feed my familiars a stuffed toy? They need nourishment. Human meat.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="yukari" />
+                <state img="#-arrogant.png">You're comparing yourself to me? Let's just hope that umbrella can survive a mountain of sand.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="ae86" />
+                <state img="#-bored.png">A sentient car? You better not try to run me over.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="derpy_hooves" />
+                <state img="#-bored.png">You're such an idiot. It's not fun eating people if they can't feel pain.</state>
+            </case>
+            <case stage="0">
+                <condition filter="magical_girl" />
+                <state img="#-angry.png">A Magical Girl?!?! We shall battle on different terms. You don't have a choice in this matter!</state>
+            </case>
+            <case stage="0">
                 <state img="#-angry.png">I shall enjoy devouring you all!</state>
+                <state img="#-arrogant.png">Destroy them, my familiars!</state>
             </case>
         </trigger>
 
         <trigger id="swap_cards">
             <case stage="0-2">
                 <state img="#-calm.png">~cards~ cards will do.</state>
+                <state img="#-arrogant.png">Familiar, fetch me ~cards~ new cards.</state>
             </case>
         </trigger>
 
@@ -75,6 +119,10 @@
             <case stage="0-2">
                 <state img="#-happy.png">This is easier than taking candy from a baby... and then eating the baby.</state>
                 <state img="#-arrogant.png">Who knew that abandoning my humanity would make me so powerful?</state>
+                <state img="#-calm.png">I knew from the start that I would win.</state>
+                <state img="#-arrogant.png">Humans don't stand a change against me.</state>
+                <state img="#-happy.png">I may be hideous, but after a year of torture, you will beg to be my dinner.</state>
+                <state img="#-bored.png">Your continued resistance annoys me.</state>
             </case>
         </trigger>
 
@@ -82,6 +130,9 @@
             <case stage="0-2">
                 <state img="#-bored.png">I could still win, as I should, because I'm superior to a human.</state>
                 <state img="#-arrogant.png">Who are you to give me an awful hand?</state>
+                <state img="#-happy.png">Humans, do you honestly think you can beat me?</state>
+                <state img="#-arrogant.png">Which one of you should I eat first?</state>
+                <state img="#-happy.png">Don't you all love sand? I know it's rough, coarse, and gets everywhere, but I can say the same about you lousy humans.</state>
             </case>
         </trigger>
 
@@ -89,30 +140,44 @@
             <case stage="0-2">
                 <state img="#-angry.png">Grrr! Why do you continue to resist?</state>
                 <state img="#-bored.png">Oh sure, give the witch the awful hand...</state>
+                <state img="#-arrogant.png">Even with this horrid hand, I shall still prevail.</state>
+                <state img="#-sad.png">It's almost like I'm a patheric monster who deserves to lose with a hand like this</state>
+                <state img="#-bored.png">Ugh. Remind me to cut your vile throats once the game is over.</state>
             </case>
         </trigger>
 
         <trigger id="hand">
-            <case stage="0">
-                <state>But that can wait. For now, I will humor you and your silly game.</state>
+            <case stage="0-2" totalRounds="0">
+                <condition role="other" character="ae86" stage="0-7" />
+                <state img="#-arrogant.png">It doesn't look like you have any sand tires.</state>
+            </case>
+            <case stage="0-2">
+                <condition role="other" character="derpy_hooves" stage="0" />
+                <state img="#-happy.png">You really are the dumbest person I ever met. This is brilliant.</state>
+            </case>
+            <case stage="0" totalRounds="0">
+                <state img="#-happy.png">But that can wait. For now, I will humor you and your silly game.</state>
             </case>
         </trigger>
 
         <trigger id="must_strip_winning">
             <case stage="0-1">
                 <state img="#-arrogant.png">A minor setback.</state>
+                <state img="#-happy.png">So waht if I strip? I'm still unstoppable!</state>
             </case>
         </trigger>
 
         <trigger id="must_strip_normal">
             <case stage="0-1">
                 <state img="#-bored.png">How annoying!</state>
+                <state img="#-sad.png">Must I bare my perfect body for you all? I'd prefer to just eat you.</state>
             </case>
         </trigger>
 
         <trigger id="must_strip_losing">
             <case stage="0-1">
                 <state img="#-angry.png">I'd sooner die than lose!</state>
+                <state img="#-sad.png">A perfect lifeform such as myself shoulnd't need to strip. But if you insist...</state>
             </case>
         </trigger>
 
@@ -136,7 +201,12 @@
 
         <trigger id="male_must_strip">
             <case stage="0-4">
+                <condition role="target" character="gray" stage="0" />
+                <state img="#-arrogant.png">You're making this too easy for me.</state>
+            </case>
+            <case stage="0-4">
                 <state img="#-sad.png">Poor, pitiful ~name~. They can't beat me.</state>
+                <state img="#-arrogant.png">You are merely a bacteria in comparison to me.</state>
             </case>
         </trigger>
 
@@ -144,115 +214,166 @@
             <case stage="0-4">
                 <state img="#-arrogant.png">Humanity is overrated! Witches are where it's at!</state>
                 <state img="#-happy.png">Drown in the heart-lorn world of nothingness!</state>
-                <state img="#-happy.png">Witches have abandoned clothing long ago... I suggest you do so too, ~name~.</state>
+                <state img="#-calm.png">Witches have abandoned clothing long ago... I suggest you do so too, ~name~.</state>
+                <state img="#-arrogant.png">The forces of the universe bend to me!</state>
             </case>
         </trigger>
 
         <trigger id="male_removing_accessory">
             <case stage="0-4">
+                <condition role="target" character="scm" stage="0" />
+                <state img="#-sad.png">I must ask, why suction cups? They won't help you with a witch.</state>
+            </case>
+            <case stage="0-4">
                 <state img="#-sad.png">Pathetic coward. Know that Magical girls aren't here to protect you.</state>
+                <state img="#-arrogant.png">Did your mommy make that for you or something?</state>
+                <state img="#-happy.png">I can't wait to see you naked... You'll taste better that way.</state>
             </case>
         </trigger>
 
         <trigger id="male_removed_accessory">
             <case stage="0-4">
+                <condition role="target" character="scm" stage="1" />
+                <state img="#-happy.png">You probably need a sword, or a machine gun. Not suction cups.</state>
+            </case>
+            <case stage="0-4">
                 <state img="#-angry.png">Take something off next time, or else!</state>
+                <state img="#-bored.png">You prolong the inevitable.</state>
+                <state img="#-arrogant.png">You don't have infinite clothing... But I do... I just don't need it.</state>
             </case>
         </trigger>
 
         <trigger id="female_removing_accessory">
             <case stage="0-4">
                 <state img="#-angry.png">Pitiful girl! Know your place!</state>
+                <state img="#-happy.png">I sense you'r embarassment. It makes me happy.</state>
+                <state img="#-arrogant.png">Useless girl can't even strip right.</state>
             </case>
         </trigger>
 
         <trigger id="female_removed_accessory">
             <case stage="0-4">
                 <state img="#-arrogant.png">Your memory's not so good these days, but these sands don't forget!</state>
+                <state img="#-angry.png">I will end you!</state>
+                <state img="#-bored.png">You are ignorant as to the rulses of this world. I will teach you that you are merely my food.</state>
             </case>
         </trigger>
 
         <trigger id="male_removing_minor">
             <case stage="0-4">
                 <state img="#-happy.png">Just a small morsel before the main course, not my concern.</state>
+                <state img="#-arrogant.png">You still don't get it do you? I am better than you.</state>
             </case>
         </trigger>
 
         <trigger id="male_removed_minor">
             <case stage="0-4">
                 <state img="#-happy.png">I never liked the taste of clothing anyway.</state>
+                <state img="#-arrogant.png">Your ~clothing~ won't help you!</state>
             </case>
         </trigger>
 
         <trigger id="female_removing_minor">
             <case stage="0-4">
                 <state img="#-bored.png">They can't all be winners.</state>
+                <state img="#-arrogant.png">I'm the bestest girl there ever was, ~name~.</state>
+                <state img="#-calm.png">We shall see your true form soon enough.</state>
             </case>
         </trigger>
 
         <trigger id="female_removed_minor">
             <case stage="0-4">
+                <condition role="target" character="azami" stage="2" />
+                <state img="#-arrogant.png">Ohoho, is that another witch's kiss?</state>
+            </case>
+            <case stage="0-4">
                 <state img="#-angry.png">But your next one had better be a winner!</state>
+                <state img="#-arrogant.png">It's almost funny thinking you can beat me with that.</state>
+                <state img="#-bored.png">You really don't want to bore a witch. I might just skip the game and gobble you up right here and now.</state>
             </case>
         </trigger>
 
         <trigger id="male_removing_major">
             <case stage="0-4">
                 <state img="#-calm.png">I wouldn't have it any other way.</state>
+                <state img="#-happy.png">You might actually make me horny for once!</state>
+                <state img="#-bored.png">Don't get your hopes up. You'll still lose.</state>
             </case>
         </trigger>
 
         <trigger id="male_removed_major">
             <case stage="0-4">
                 <state img="#-happy.png">I'd never imagine why you wouldn't take that off first, ~name~.</state>
+                <state img="#-arrogant.png">You silly humans and your silly clothing. I don't know why you wear that in the first place.</state>
+                <state img="#-bored.png">We can always do better. Like showing your genitals to me, ~name~.</state>
             </case>
         </trigger>
 
         <trigger id="female_removing_major">
             <case stage="0-4">
                 <state img="#-arrogant.png">At least you aren't a magical girl.</state>
+                <state img="#-happy.png">Regular humans cannot hope to beat me.</state>
+                <state img="#-bored.png">I'm the prettiest witch there ever was, but you ain't the prettiest human there ever was.</state>
             </case>
         </trigger>
 
         <trigger id="female_removed_major">
             <case stage="0-4">
+                <condition role="target" character="yukari" stage="3" />
+                <state img="#-bored.png">I saw that coming from a mile away. Witches can read emotions, you know, and I could read that you were hiding something.</state>
+            </case>
+            <case stage="0-4">
                 <state img="#-angry.png">If you were a magical girl, I'd have killed you on sight.</state>
+                <state img="#-bored.png">Human beings really are ugly.</state>
+                <state img="#-arrogant.png">Ohoho, I like your body, ~name~. I almost don't want to eat you.</state>
             </case>
         </trigger>
 
         <trigger id="male_chest_will_be_visible">
             <case stage="0-4">
                 <state img="#-arrogant.png">Oooh, if I were still human, than I might be interested in that.</state>
+                <state img="#-happy.png">Time to see your wonderful chest.</state>
+                <state img="#-sad.png">We're almost done here. That almost makes me sad.</state>
             </case>
         </trigger>
 
         <trigger id="male_chest_is_visible">
             <case stage="0-4">
                 <state img="#-sad.png">But I'm not, so I can't, and that's a shame. Still gonna have fun eating you, though.</state>
+                <state img="#-angry.png">Men really are so boring. But Magical Girls are so even worse. You better not be a Magical Girl's boyfriend...</state>
+                <state img="#-bored.png">How many uselss men are out there? Would anyone miss you?</state>
             </case>
         </trigger>
 
         <trigger id="male_crotch_will_be_visible">
             <case stage="0-4">
                 <state img="#-arrogant.png">Now you're finally done wasting my time.</state>
+                <state img="#-sad.png">The difficult part is over with... I wanted to watch you struggle for longer.</state>
             </case>
         </trigger>
 
         <trigger id="male_small_crotch_is_visible">
             <case stage="0-4">
                 <state img="#-arrogant.png">Hahahahaha! Utterly pathetic! You're not even worthy of being familiar food.</state>
+                <state img="#-calm.png">I don't have anything to say about that. It's just lame.</state>
             </case>
         </trigger>
 
         <trigger id="male_medium_crotch_is_visible">
             <case stage="0-4">
+                <condition role="target" character="gray" stage="1" />
+                <state img="#-happy.png">Now we can get to the fun stuff right away. Fun for me that is.</state>
+            </case>
+            <case stage="0-4">
                 <state img="#-arrogant.png">What are you expecting me to say about it? That I like it? I'm a horrid sand witch, give me a break!</state>
+                <state img="#-happy.png">That looks like a tool worthy of my attention.</state>
             </case>
         </trigger>
 
         <trigger id="male_large_crotch_is_visible">
             <case stage="0-4">
                 <state img="#-sad.png">I didn't even know humans were capable of being that big.</state>
+                <state img="#-bored.png">Did another witch give you that? I don't think a thing like that is possible.</state>
             </case>
         </trigger>
 
@@ -265,29 +386,34 @@
         <trigger id="female_chest_will_be_visible">
             <case stage="0-4">
                 <state img="#-arrogant.png">No matter what your breasts look like, they aren't as beautiful as mine.</state>
+                <state img="#-happy.png">My familiars love the taste of human breast milk, I'll have you know.</state>
+                <state img="#-bored.png">Your flat body is so boring. Real girls should have impossible curves.</state>
             </case>
         </trigger>
 
         <trigger id="female_small_chest_is_visible">
             <case stage="0-4">
-                <state img="#-arrogant.png">A flat magical girl once entered my barrier, trying to kill me. I used her bones to build my barrier.</state>
+                <state img="#-arrogant.png">A flat magical girl once entered my barrier, trying to kill me. I used her bones to build a sandcastle.</state>
+                <state img="#-sad.png">Flat magical girls are always the most insecure. I don't get it myself.</state>
             </case>
         </trigger>
 
         <trigger id="female_medium_chest_is_visible">
             <case stage="0-4">
                 <state img="#-calm.png">You could make a man happy with that. Preferably far away from here. Human mating is disgusting.</state>
+                <state img="#-arrogant.png">Against a normal girl, those might work, but I am not a normal girl, as  you can very clearly see.</state>
             </case>
         </trigger>
 
         <trigger id="female_large_chest_is_visible">
             <case stage="0-4">
                 <state img="#-arrogant.png">Ohoho, trying to compete with me, are you? I am not constrained by human anatomy, so mine are obviously better.</state>
+                <state img="#-happy.png">You might have the breasts, but do you have the sand manipulation powers?</state>
             </case>
         </trigger>
 
         <trigger id="female_chest_is_visible">
-            <case stage="0-4" priority="2">
+            <case stage="0-4" priority="0">
                 <state img="#-arrogant.png">As I thought. Totally pathetic.</state>
             </case>
         </trigger>
@@ -295,24 +421,30 @@
         <trigger id="female_crotch_will_be_visible">
             <case stage="0-4">
                 <state img="#-calm.png">The good thing about becoming a witch is that I've stopped caring about things like nudity.</state>
+                <state img="#-sad.png">The human form is so obsolete and ugly. True beauty can only be found with the power of darkness.</state>
             </case>
         </trigger>
 
         <trigger id="female_crotch_is_visible">
             <case stage="0-4">
                 <state img="#-arrogant.png">If you were a witch, than this would be a lot easier for you.</state>
+                <state img="#-sad.png">You humans all look the same.</state>
+                <state img="#-angry.png">Don't try and compare yourself to me! You'll always lose.</state>
             </case>
         </trigger>
 
         <trigger id="male_must_masturbate">
             <case stage="0-4">
                 <state img="#-happy.png">You had better enjoy it.</state>
+                <state img="#-arrogant.png">Human... you're useless, irrelevant, and pitiful.</state>
             </case>
         </trigger>
 
         <trigger id="male_start_masturbating">
             <case stage="0-4">
-                <state>Oh my...</state>
+                <state img="#-bored.png">Oh my...</state>
+                <state img="#-arrogant.png">This requires my attention.</state>
+                <state img="#-happy.png">There's nothing like seeing a pitiful human get what's coming to them.</state>
             </case>
         </trigger>
 
@@ -322,39 +454,72 @@
                 <state img="#-sad.png">I had a boyfriend back when I was still human, I wonder what happened to him? Oh right, I killed him and turn his skin into a rug.</state>
                 <state img="#-arrogant.png">I'm sure you can't resist playing with yourself when I'm around.</state>
                 <state img="#-calm.png">Am I not the epitome of beauty?</state>
+                <state img="#-arrogant.png">You're free to masturbate to my perfect body if you want.</state>
             </case>
         </trigger>
 
         <trigger id="male_finished_masturbating">
             <case stage="0-4">
                 <state img="#-happy.png">You're finally done?</state>
+                <state img="#-arrogant.png">I am your destiny, and my belly is your destination.</state>
             </case>
         </trigger>
 
         <trigger id="female_must_masturbate">
             <case stage="0-4">
-                <state img="#-arrogant.png">If only I could get those pitiful magical girls to do this for me!</state>
+                <condition role="target" character="azami" />
+                <state img="#-sad.png">What the? Your body is collapsing in on itself, just like my barrier will when I die, which I never will.</state>
+            </case>
+            <case stage="0-4">
+                <condition role="target" character="yukari" />
+                <state img="#-arrogant.png">Perhaps you could play with that umbrella of yours?</state>
+            </case>
+            <case stage="0-4">
+                <state img="#-arrogant.png" marker="magical_girl_mast1">If only I could get those pitiful magical girls to do this for me!</state>
+                <state img="#-angry.png">Your pitiful attempts at opposition have angered me!</state>
             </case>
         </trigger>
 
         <trigger id="female_start_masturbating">
             <case stage="0-4">
+                <condition role="target" character="azami" />
+                <state img="#-bored.png">Now I won't get to eat you. Such a shame.</state>
+            </case>
+            <case stage="0-4">
+                <condition role="target" character="yukari" />
+                <state img="#-angry.png">Or you could just warp away and leave me hungry, that's fine too!</state>
+            </case>
+            <case stage="0-4">
+                <condition role="self" saidMarker="magical_girl_mast1*" />
                 <state img="#-happy.png">Then they'd know their place in the world, food for me and my familiars!</state>
+            </case>
+            <case stage="0-4">
+                <state img="#-arrogant.png">That was the last card game you'll ever play, and you lost to me.</state>
             </case>
         </trigger>
 
         <trigger id="female_masturbating">
             <case stage="0-4">
+                <condition role="target" character="azami" />
+                <state img="#-bored.png">Whetever that power is, I must destroy it. That spiral witch cannot steal all my food.</state>
+            </case>
+            <case stage="0-4">
+                <condition role="target" character="yukari" />
+                <state img="#-sad.png">And stop floating around! I can snap you like a twig, I'll have you know.</state>
+            </case>
+            <case stage="0-4">
                 <state img="#-calm.png">I'm not actually aroused by it, but I like it regardless.</state>
                 <state img="#-bored.png">Are you not having fun with this?</state>
                 <state img="#-happy.png">Are you lost? Frightened? Confused? Good! Muahahahaha!</state>
                 <state img="#-arrogant.png">I'm having so much fun watching you squirm.</state>
+                <state img="#-sad.png">I almost wish I could actually get pleasure from that.</state>
             </case>
         </trigger>
 
         <trigger id="female_finished_masturbating">
             <case stage="0-4">
-                <state img="#-arrogant.png">I hope you had fun, ~name~. Bucause it'll be time for me to eat you soon.</state>
+                <state img="#-arrogant.png">I hope you had fun, ~name~. Bcause it'll be time for me to eat you soon.</state>
+                <state img="#-happy.png">And with that, your death is assured, ~name~.</state>
             </case>
         </trigger>
 
@@ -419,7 +584,8 @@
 
         <trigger id="game_over_defeat">
             <case stage="4">
-                <state img="#-arrogant.png">Tell no one of what you've seen. Especially not any Magical Girls.</state>
+                <state img="#-arrogant.png" collectible="Shovel">Tell no one of what you've seen. Especially not any Magical Girls.</state>
+                <state img="#-happy.png" collectible="Shovel">You gave me the perfect castle. How can I kill you now?</state>
             </case>
         </trigger>
 

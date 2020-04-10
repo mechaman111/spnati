@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 10:56:19 PM on March 25, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 12:06:49 AM on April 04, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Azami</first>
@@ -35,8 +35,11 @@
         <tag>manga</tag>
         <tag>student</tag>
         <tag from="2" to="5">creepy</tag>
+        <tag>april_fools</tag>
     </tags>
-    <nicknames />
+    <nicknames>
+        <nickname for="scm">Plunger Boy</nickname>
+    </nicknames>
 
     <start />
 
@@ -280,6 +283,30 @@
 
         <trigger id="game_start">
             <case stage="0">
+                <condition role="other" character="guzma" />
+                <state img="#-talking.png">So Guzma saying that to me gives me the full legal authority to beat him to death, right?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="nanoko-chan" />
+                <state img="#-talking.png">Well, at least I'll be playing with one other &lt;i&gt;normal&lt;/i&gt; girl.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="monique" />
+                <state img="#-upset.png">Is that a mime?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="kokichi" />
+                <state img="#-dismissive.png">Why is this tiny chef boy wearing a sea captain's hat and a cape?</state>
+            </case>
+            <case stage="0">
+                <test expr="~background.water~" value="true" />
+                <state img="#-talking.png">This place is pretty nice. I haven't been swimming since I played in Dragonfly Pond as a little kid!</state>
+            </case>
+            <case stage="0">
+                <test expr="~background~" value="street" />
+                <state img="#-aloof.png">First a town with no street and just a street... What's this world come to?</state>
+            </case>
+            <case stage="0">
                 <condition count="2-4" gender="male" />
                 <state img="#-glare.png">Hmph. You boys had better behave yourselves.</state>
                 <state img="#-talking.png">Seems I still attract all the boys.</state>
@@ -342,6 +369,16 @@
                     <alt-img stage="4">custom:#-flirty</alt-img>
                     <text>Are all of you obsessed with me yet?</text>
                 </state>
+                <state img="#-smug.png">
+                    <alt-img stage="2-3">#-smug.png</alt-img>
+                    <alt-img stage="4">custom:#-smug</alt-img>
+                    <text>Just a few cards swapped out and I can frankenstein together a pretty decent hand.</text>
+                </state>
+                <state img="#-obsessive.png">
+                    <alt-img stage="2-3">#-obsessive.png</alt-img>
+                    <alt-img stage="4">custom:#-obsessive</alt-img>
+                    <text>This hand is so good I'm getting chills. It's like air is blowing through every hole in my body!</text>
+                </state>
             </case>
             <case stage="0-1">
                 <state img="#-dismissive.png">I would've be swarmed by boys at this point, if I was playing this back home...</state>
@@ -349,6 +386,7 @@
                 <state img="#-sweetly.png">Good cards just seem drawn to me.</state>
                 <state img="#-bored.png">With the amount of times boys have tried to win a date from me by winning a poker game, yeah, it's no surprise I have a hand this good.</state>
                 <state img="#-aloof.png">I feel like there's a faint whisper in my ears, telling me all the right moves to make.</state>
+                <state img="#-upset.png">It's only a few rounds in and you're already looking at me like I have two heads.</state>
             </case>
         </trigger>
 
@@ -360,6 +398,8 @@
                 <state img="#-talking.png">♫&lt;i&gt;Everybody join hands now... Everybody join hearts now... We're an army of one...&lt;/i&gt;♫ &lt;br&gt; Sorry, it's just so catchy!</state>
                 <state img="#-aloof.png">About what I expected.</state>
                 <state img="#-aloof.png">Things &lt;i&gt;are&lt;/i&gt; going a bit slow for me. Still, I didn't bring much in terms of throw-away clothing items.</state>
+                <state img="#-aloof.png">I thought about wearing my red turtleneck here, but I guess you're all glad I don't have an extra layer, huh?</state>
+                <state img="#-dismissive.png">Ugh. This hand is &lt;i&gt;such&lt;/i&gt; a snooze fest. I feel like I could sleep forever.</state>
             </case>
             <case stage="2-4">
                 <state img="#-calm.png">
@@ -375,12 +415,17 @@
                 <state img="#-smug.png">
                     <alt-img stage="2-3">#-smug.png</alt-img>
                     <alt-img stage="4">custom:#-smug</alt-img>
-                    <text>I know you're all thinking "why ~player~? They haven't said anything yet!". Well, &lt;i&gt;clearly&lt;/i&gt; you haven't seen how amazing their many, &lt;i&gt;many&lt;/i&gt; qualities are.</text>
+                    <text>I know you're all thinking "why ~player~?" ~human.ifmale(He|She)~ haven't said anything yet!". Well, &lt;i&gt;clearly&lt;/i&gt; you haven't seen how amazing their many, &lt;i&gt;many&lt;/i&gt; qualities are.</text>
                 </state>
                 <state img="#-disinterest.png">
                     <alt-img stage="2-3">#-disinterest.png</alt-img>
                     <alt-img stage="4">custom:#-disinterest</alt-img>
                     <text>This hand should probably keep my game from spiraling out of control.</text>
+                </state>
+                <state img="#-soulmates.png">
+                    <alt-img stage="2-3">#-soulmates.png</alt-img>
+                    <alt-img stage="4">custom:#-soulmates</alt-img>
+                    <text>Oh ~player~! I remembered where I can get a device to help you stare at me! You won't be able to look away as long as you like having eardrums!</text>
                 </state>
             </case>
             <case stage="5">
@@ -392,12 +437,19 @@
         </trigger>
 
         <trigger id="bad_hand">
+            <case stage="5">
+                <condition role="other" character="nanoko-chan" />
+                <condition role="self" notSaidMarker="nanoko_farewell" />
+                <state img="#-hiss.png" marker="nanoko_farewell">You... were... right... Nanoko... Don't wanna... go...</state>
+            </case>
             <case stage="0-1">
                 <state img="#-aloof.png">Maybe I won't last long after all?</state>
                 <state img="#-bored.png">You're all better at this game than idiot school boys, if that mean anything...</state>
                 <state img="#-glare.png">I get bad hands, too. So, I'd rather not hear any rumors that I cheated here.</state>
                 <state img="#-aloof.png">I can't do many more rounds before I'll have to strip my dress.</state>
                 <state img="#-dismissive.png">Ugh. I could &lt;i&gt;swear&lt;/i&gt; I'm cursed.</state>
+                <state img="#-upset.png">Ugh, Is there a clogged drain around here? It just sounds like someone... erm excuse me... some&lt;i&gt;thing&lt;/i&gt; is stuck in a pipe near here.</state>
+                <state img="#-aloof.png">&lt;i&gt;(Stupid scar always makes people stare at me. Feels like I'm some monster with a twenty-foot neck or something.)&lt;/i&gt;</state>
             </case>
             <case stage="2-4">
                 <state img="#-rejection.png">
@@ -435,14 +487,31 @@
                 <condition role="self" notSaidMarker="meia_azami_sightseeing" />
                 <state img="#-aloof.png" marker="meia_azami_sightseeing">Hmmm... Recently, I've been hearing a lot about Amigara Fault. I haven't been there myself, but it seems everyone who's in there has been sucked in by the mysterious rock patterns.</state>
             </case>
+            <case stage="0-1" id="2" priority="111">
+                <condition count="0" filter="futaba" />
+                <condition role="other" character="revy" sayingMarker="music" />
+                <state img="#-talking.png" marker="revy_azami_music">I was a pretty big Yuu Kanade fan when she was popular. I went to one of her concerts and she smashed her head open. Kinda intense stuff.</state>
+            </case>
+            <case stage="0-1">
+                <condition role="other" character="scm" sayingMarker="scm_azami" />
+                <state img="#-bored.png">My scar has attracted some freaks, but I think you're a new low, Plunger Boy.</state>
+            </case>
             <case stage="2" oneShotId="1" priority="100">
                 <state img="#-soulmates.png">N-no one's ever treated me like this, ~player~! You'll see! &lt;i&gt;I'll make you care about me!&lt;/i&gt;</state>
             </case>
             <case stage="1" oneShotId="2" priority="100">
                 <state img="#-upset.png">&lt;i&gt;(It's strange that ~player~ didn't mention my scar... or anything else, for that matter. I'm sure ~player~ will say something to me next time I strip...)&lt;/i&gt;</state>
             </case>
+            <case stage="2" oneShotId="9">
+                <condition role="other" character="nanoko-chan" />
+                <state img="#-anger.png">Stay out of this Nanoko-chan! You're just trying to get in my way!</state>
+            </case>
             <case stage="5">
                 <state img="#-horny.png">~Player~... be... mine...</state>
+            </case>
+            <case stage="4">
+                <condition role="self" />
+                <state img="custom:#-calm">Gee thanks. Do you treat all the girls like this or am I special?</state>
             </case>
         </trigger>
 
@@ -450,6 +519,14 @@
             <case stage="3">
                 <condition status="alive" character="human" />
                 <state img="#-confused.png">Do you want to win, ~player~? But if you lose... then I can feel your naked embrace...</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="meia" />
+                <state img="#-must_strip.png">Have the rumors about me spread that quickly, Meia? Yes, I do have a scar I'm not particularly proud of showing...</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="nanoko-chan" />
+                <state img="#-must_strip.png">I don't know where you'd know me from, Nanoko-chan. I barely leave my hometown, as is.</state>
             </case>
             <case stage="0">
                 <state img="#-must_strip.png">Hmph. The clasp on this always gets stuck for some reason.</state>
@@ -488,6 +565,10 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="1">
+                <condition role="other" character="nanoko-chan" />
+                <state img="#-stripped.png">I don't see how having boys flock to me is a curse, much more than an annoyance at times.</state>
+            </case>
             <case stage="5">
                 <state img="custom:#-stripped">&lt;i&gt;Ha ha ha!&lt;/i&gt;</state>
             </case>
@@ -538,6 +619,21 @@
                     <alt-img stage="4">custom:#-rejection</alt-img>
                     <text>W-wait... ~player~... you aren't just a mute are you?</text>
                 </state>
+                <state img="#-obsessive.png">
+                    <alt-img stage="2-3">#-obsessive.png</alt-img>
+                    <alt-img stage="4">custom:#-obsessive</alt-img>
+                    <text>With me, you'll never have to move again! I can mouth feed you everything so you won't even have to chew!</text>
+                </state>
+                <state img="#-obsessive.png">
+                    <alt-img stage="2-3">#-obsessive.png</alt-img>
+                    <alt-img stage="4">custom:#-obsessive</alt-img>
+                    <text>Did you fall from heaven? 'Cause I want to see you do it! Rise up and fall again and again and again and again and again and again and again and again and again and again and again and again and again and again and again and again and again and again and again and again and again!</text>
+                </state>
+                <state img="#-flirty.png">
+                    <alt-img stage="2-3">#-flirty.png</alt-img>
+                    <alt-img stage="4">custom:#-flirty</alt-img>
+                    <text>I'm going to peel back every last one of your layers until I see what's at your core...</text>
+                </state>
             </case>
         </trigger>
 
@@ -555,6 +651,8 @@
                 <state img="#-bored.png">Are you going to remove &lt;i&gt;anything&lt;/i&gt; interesting?</state>
                 <state img="#-bored.png">Oh &lt;i&gt;joy&lt;/i&gt;...</state>
                 <state img="#-sweetly.png">Alright, I'll try to be nice for this one. Maybe...</state>
+                <state img="#-glare.png">Well? Don't just stand there like you're stuck to the Earth?</state>
+                <state img="#-talking.png">How about a grand gesture? Like something from Wintertime for Rene?</state>
             </case>
             <case stage="2-4">
                 <state img="#-confused.png">
@@ -617,6 +715,16 @@
                     <alt-img stage="2-3">#-soulmates.png</alt-img>
                     <alt-img stage="4">custom:#-soulmates</alt-img>
                     <text>Even if I don't get to hear you speak, I'll get to see &lt;i&gt;every&lt;/i&gt; inch of you!</text>
+                </state>
+                <state img="#-obsessive.png">
+                    <alt-img stage="2-3">#-obsessive.png</alt-img>
+                    <alt-img stage="4">custom:#-obsessive</alt-img>
+                    <text>I'm imagining you all oiled up. Oil dripping all over you, through your clothing, and coming out of your pores!</text>
+                </state>
+                <state img="#-soulmates.png">
+                    <alt-img stage="2-3">#-soulmates.png</alt-img>
+                    <alt-img stage="4">custom:#-soulmates</alt-img>
+                    <text>What if I got them to name a planet after you? Then would you love me?</text>
                 </state>
             </case>
         </trigger>
@@ -711,6 +819,7 @@
             <case stage="0-1">
                 <state img="#-aloof.png">Are we moving on now?</state>
                 <state img="#-bored.png">It's always the same. All boys want is my attention.</state>
+                <state img="#-bored.png">If you really want to impress, how about bringing me a precious stone like jade or paradoxical night?</state>
             </case>
             <case stage="2-4">
                 <state img="#-flirty.png">
@@ -731,6 +840,7 @@
                 <state img="#-dismissive.png">If the girls at school flocked to me like the boys do, I'd treat them just the same.</state>
                 <state img="#-sweetly.png">Huh, I didn't really notice 'til now, but you're kinda cute, ~name~.</state>
                 <state img="#-aloof.png">&lt;i&gt;(It's kinda strange that ~player~ isn't talking. Have they rejected me?)&lt;/i&gt;</state>
+                <state img="#-dismissive.png">In what parallel dimension do you think this is okay?</state>
             </case>
             <case stage="2-4">
                 <state img="#-anger.png">
@@ -742,6 +852,11 @@
                     <alt-img stage="2-3">#-flirty.png</alt-img>
                     <alt-img stage="4">custom:#-flirty</alt-img>
                     <text>Should I steal ~name~'s ~clothing~ for you, ~player~?</text>
+                </state>
+                <state img="#-anger.png">
+                    <alt-img stage="2-3">#-anger.png</alt-img>
+                    <alt-img stage="4">custom:#-anger</alt-img>
+                    <text>Hey! Copycat! I removed something small earlier! What? Are you going to steal my entire face next?</text>
                 </state>
             </case>
         </trigger>
@@ -789,6 +904,7 @@
             <case stage="0-1">
                 <state img="#-bored.png">Ho hum. How uneventful.</state>
                 <state img="#-glare.png">Did you only come here to see naked girls? You're pathetic.</state>
+                <state img="#-glare.png">Very nice. Now, how about you go home and write a letter to yourself about how good you were at strip poker and just keep sending them again and again until you believe you have friends.</state>
             </case>
             <case stage="2-4">
                 <state img="#-disinterest.png">
@@ -867,6 +983,7 @@
             <case stage="0-1">
                 <state img="#-dismissive.png">You want a compliment? Fine. Your ~clothing~ ~clothing.ifPlural(were|was)~ tacky and you look somewhat better now...</state>
                 <state img="#-aloof.png">&lt;i&gt;(Maybe there just weren't really any handsome boys in Kurōzu-cho.)&lt;/i&gt;</state>
+                <state img="#-bored.png">I'm not really &lt;i&gt;that&lt;/i&gt; interested, but if you want we can go on a date, break up, and then you can give me a video tape to remember you by, at four tomorrow.</state>
             </case>
             <case stage="2-4">
                 <state img="#-disinterest.png">
@@ -906,6 +1023,7 @@
             <case stage="0-1">
                 <state img="#-sweetly.png">I bet you could be a hearbreaker, if you truly wanted to.</state>
                 <state img="#-talking.png">Another win for the books.</state>
+                <state img="#-aloof.png">I'd like to say you look like a fashion model, but I have seen some horrifying looking fashion models.</state>
             </case>
             <case stage="2-4">
                 <state img="#-obsessive.png">
@@ -1025,6 +1143,11 @@
                     <alt-img stage="2-3">#-obsessive.png</alt-img>
                     <alt-img stage="4">custom:#-obsessive</alt-img>
                     <text>Maybe after this, we can go to some place that you like! You haven't said any of your interests or anything... But I'm sure I'll love it anyways!</text>
+                </state>
+                <state img="#-flirty.png">
+                    <alt-img stage="2-3">#-flirty.png</alt-img>
+                    <alt-img stage="4">custom:#-flirty</alt-img>
+                    <text>Soon as we get some privacy, I wanna show you a hole that was made just. for. &lt;i&gt;you.&lt;/i&gt;</text>
                 </state>
             </case>
             <case stage="0-1">
@@ -1222,6 +1345,54 @@
         </trigger>
 
         <trigger id="opponent_lost">
+            <case stage="0-1">
+                <condition role="target" character="scm" stage="0" />
+                <state img="#-dismissive.png">&lt;i&gt;Look out, girls.&lt;/i&gt; Plunger Boy here can climb &lt;i&gt;anything.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="scm" stage="1" />
+                <state img="#-bored.png">Plunger Boy is still here? Maybe I should put this in your type of language... &lt;i&gt;ahem...&lt;/i&gt;</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="monique" stage="0" />
+                <state img="#-aloof.png">Not a talker, huh?</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="nanoko-chan" stage="0" />
+                <state img="#-talking.png">As I was saying, it's good to find someone normal around here like you, Nanoko-chan.</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="nanoko-chan" stage="1" />
+                <state img="#-upset.png">&lt;i&gt;(Maybe I was a bit rash with calling her normal. There does seem to be something off about her...)&lt;/i&gt;</state>
+            </case>
+            <case stage="2-4">
+                <condition role="target" character="nanoko-chan" stage="3" />
+                <state img="#-rejection.png">
+                    <alt-img stage="2-3">#-rejection.png</alt-img>
+                    <alt-img stage="4">custom:#-rejection</alt-img>
+                    <text>I keep getting this strange feeling about you, Nanoko-chan. It's like two magnets put next to each other...</text>
+                </state>
+            </case>
+            <case stage="2-4">
+                <condition role="target" character="nanoko-chan" stage="4" />
+                <state img="#-anger.png">
+                    <alt-img stage="2-3">#-anger.png</alt-img>
+                    <alt-img stage="4">custom:#-anger</alt-img>
+                    <text>Seriously, ~player~? How can you be into Nanoko!</text>
+                </state>
+            </case>
+            <case stage="2-4">
+                <condition role="target" character="nanoko-chan" stage="5" />
+                <state img="#-rejection.png">
+                    <alt-img stage="2-3">#-rejection.png</alt-img>
+                    <alt-img stage="4">custom:#-rejection</alt-img>
+                    <text>Why are you still paying attention to her, ~player~? She lied and told everybody that I'm gonna die or something!</text>
+                </state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="kokichi" stage="0" />
+                <state img="#-aloof.png">&lt;i&gt;(Well, he's sort of cute... kinda...)&lt;/i&gt;</state>
+            </case>
             <case stage="2-4">
                 <condition status="lost_all" role="target" character="human" />
                 <state img="#-confused.png">
@@ -1271,6 +1442,15 @@
                     <text>No! No! I'm &lt;i&gt;sure&lt;/i&gt; my hand is worse!</text>
                 </state>
             </case>
+            <case stage="2-5" oneShotId="6">
+                <condition role="target" character="nami_szs" />
+                <state>
+                    <alt-img stage="2-3">#-smug.png</alt-img>
+                    <alt-img stage="4">custom:#-smug</alt-img>
+                    <alt-img stage="5">#-mischief.png</alt-img>
+                    <text>Just a dolly...</text>
+                </state>
+            </case>
             <case stage="5">
                 <state img="#-horny.png">Mmmm...</state>
                 <state img="#-fury.png">Not... ~player~!</state>
@@ -1290,6 +1470,67 @@
                     <alt-img stage="2-3">#-rejection.png</alt-img>
                     <alt-img stage="4">custom:#-rejection</alt-img>
                     <text>Wh... who brought in a car?</text>
+                </state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="nami_szs" stage="0" />
+                <state img="#-shock.png">Wait... is she just... leaving?</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="scm" stage="0" />
+                <state img="#-dismissive.png">Oh, you are &lt;i&gt;not&lt;/i&gt; backing up all your talk by taking off a single shoe.</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="scm" stage="1" />
+                <state img="#-dismissive.png">&lt;i&gt;FUCK YOU!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="monique" stage="0" />
+                <state img="#-bored.png">Well, at least it makes sense that you don't talk, you are a &lt;i&gt;mime&lt;/i&gt; after all.</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="nanoko-chan" stage="0" />
+                <state img="#-dismissive.png">I feel like so many of the other people here are either weirdos or are wildly outrageous!</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="nanoko-chan" stage="1" />
+                <state img="#-aloof.png">&lt;i&gt;(But maybe that's why I don't really have many friends. I should be nice to her, even if she is... quirky.)&lt;/i&gt;</state>
+            </case>
+            <case stage="2-4">
+                <condition role="target" character="nanoko-chan" stage="3" />
+                <state img="#-confused.png">
+                    <alt-img stage="2-3">#-confused.png</alt-img>
+                    <alt-img stage="4">custom:#-confused</alt-img>
+                    <text>Wait... the love of anime... a quirky yet crass personality... looking cute but not like you're trying too hard... y-you're... y-you're...</text>
+                </state>
+            </case>
+            <case stage="2-4">
+                <condition role="target" character="nanoko-chan" stage="4" />
+                <state img="#-rejection.png">
+                    <alt-img stage="2-3">#-rejection.png</alt-img>
+                    <alt-img stage="4">custom:#-rejection</alt-img>
+                    <text>She has so few things she talks about, it's all just anime... D-do you like anime, ~player~? Is that an interest of yours?</text>
+                </state>
+            </case>
+            <case stage="2-4">
+                <condition role="target" character="nanoko-chan" stage="5" />
+                <state img="#-smug.png">
+                    <alt-img stage="2-3">#-smug.png</alt-img>
+                    <alt-img stage="4">custom:#-smug</alt-img>
+                    <text>&lt;i&gt;Obviously&lt;/i&gt; I'm fine. I need to be, so I can be with you, my true love, for eternity.</text>
+                </state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="kokichi" stage="0" />
+                <state img="#-upset.png">&lt;i&gt;He's cute in the same way that a dog that just bit you is cute. The exterior is all there, but I'd prefer it on the other side of a fence.)&lt;/i&gt;</state>
+            </case>
+            <case stage="2-5" oneShotId="7">
+                <condition role="target" character="nami_szs" />
+                <state img="#-flirty.png">
+                    <alt-img stage="5">#-horny.png</alt-img>
+                    <alt-img stage="2-3">#-flirty.png</alt-img>
+                    <alt-img stage="4">custom:#-flirty</alt-img>
+                    <text>Here, ~player~. That's just a doll.</text>
                 </state>
             </case>
             <case stage="5">
@@ -1316,6 +1557,62 @@
                     <alt-img stage="2-3">#-disinterest.png</alt-img>
                     <alt-img stage="4">custom:#-disinterest</alt-img>
                     <text>A car... Well, I guess I'll just treat it like any other player... I guess...</text>
+                </state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="nami_szs" stage="1" />
+                <state img="#-shock.png">Is... is this that disease that turns people into dolls! I thought that was just a dumb myth!</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="scm" stage="1" />
+                <state img="#-bored.png">What a charmer...</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="scm" stage="2" />
+                <state img="#-aloof.png">I'm ignoring you, now.</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="monique" stage="1" />
+                <state img="#-glare.png">At least it makes more sense than &lt;i&gt;some&lt;/i&gt; people who won't talk to me... Right, &lt;i&gt;~player~&lt;/i&gt;?</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="nanoko-chan" stage="1" />
+                <state img="#-sweetly.png">At least we can get through this game together.</state>
+            </case>
+            <case stage="0-1">
+                <condition role="target" character="nanoko-chan" stage="2" />
+                <state img="#-talking.png">You made those shoes look super cute! I bet you get all the boys!</state>
+            </case>
+            <case stage="2-4">
+                <condition role="target" character="nanoko-chan" stage="4" />
+                <state img="#-anger.png">
+                    <alt-img stage="2-3">#-anger.png</alt-img>
+                    <alt-img stage="4">custom:#-anger</alt-img>
+                    <text>You're every ~human.ifmale(boy|girl)~'s dream girl! And you're going to steal ~player~ from me!</text>
+                </state>
+            </case>
+            <case stage="2-4">
+                <condition role="target" character="nanoko-chan" stage="5" />
+                <state img="#-confused.png">
+                    <alt-img stage="2-3">#-confused.png</alt-img>
+                    <alt-img stage="4">custom:#-confused</alt-img>
+                    <text>I guess I'm learning more about you... So, I'm going to watch as much anime as I can for you, Nano... um... ~player~...</text>
+                </state>
+            </case>
+            <case stage="2-4">
+                <condition role="target" character="nanoko-chan" stage="6" />
+                <state img="#-rejection.png">
+                    <alt-img stage="2-3">#-rejection.png</alt-img>
+                    <alt-img stage="4">custom:#-rejection</alt-img>
+                    <text>Just stop paying... attention... to... Wow...</text>
+                </state>
+            </case>
+            <case stage="2-4">
+                <condition role="target" character="kokichi" stage="8" />
+                <state img="#-smug.png">
+                    <alt-img stage="2-3">#-smug.png</alt-img>
+                    <alt-img stage="4">custom:#-smug</alt-img>
+                    <text>&lt;i&gt;Is someone mad?&lt;/i&gt; Not having fun anymore?</text>
                 </state>
             </case>
             <case stage="5">
@@ -1362,6 +1659,11 @@
                     <alt-img stage="4">custom:#-soulmates</alt-img>
                     <text>Oh, ~player~... When it's not your many great traits wooing me, it's always your &lt;i&gt;characteristics&lt;/i&gt;.</text>
                 </state>
+                <state img="#-soulmates.png">
+                    <alt-img stage="2-3">#-soulmates.png</alt-img>
+                    <alt-img stage="4">custom:#-soulmates</alt-img>
+                    <text>You're face... I just want a giant balloon of your face, so big that it can lift you off the ground and carry you into my arms!</text>
+                </state>
             </case>
             <case stage="0-1">
                 <condition role="target" character="human" />
@@ -1369,6 +1671,23 @@
                 <state img="#-upset.png">&lt;i&gt;(Something has to be wrong here. No one's gone this long without saying something to me.)&lt;/i&gt;</state>
                 <state img="#-glare.png">&lt;i&gt;(What game are you playing? I &lt;/i&gt;have&lt;i&gt; to know why ~player~ won't talk to me!)&lt;/i&gt;</state>
                 <state img="#-glare.png">&lt;i&gt;(Did someone tell ~player~ rumors about me? Is that why they haven't talked to me? That's why Kirie stopped hanging out with me...)&lt;/i&gt;</state>
+            </case>
+            <case stage="2-5" oneShotId="8">
+                <condition role="target" character="nami_szs" />
+                <state>
+                    <alt-img stage="2-3">#-rejection.png</alt-img>
+                    <alt-img stage="4">custom:#-rejection</alt-img>
+                    <alt-img stage="5">#-hiss.png</alt-img>
+                    <text>Look over here! It's literally just a doll! Why look at it?</text>
+                </state>
+            </case>
+            <case stage="2-4" oneShotId="5">
+                <condition gender="female" status="lost_all" role="target" />
+                <state img="#-obsessive.png">
+                    <alt-img stage="2-3">#-obsessive.png</alt-img>
+                    <alt-img stage="4">custom:#-obsessive</alt-img>
+                    <text>Ha! The only people who get naked like that are weirdos like that girl who wanted to be dissected! You'd never want to date a weirdo like that, right ~player~?</text>
+                </state>
             </case>
             <case stage="5">
                 <state img="#-hiss.png">Fine...</state>

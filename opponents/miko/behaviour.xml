@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 4:14:11 AM on March 16, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 3:19:17 AM on April 02, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.6</version>
     <first>Toyosatomimi no</first>
@@ -41,6 +41,7 @@
     <nicknames>
         <nickname for="amy">Amygdala</nickname>
         <nickname for="chazz">The Chazz</nickname>
+        <nickname for="nanoko-chan">Nanoko</nickname>
         <nickname for="sakura">Jiang-Shi Number One</nickname>
         <nickname for="starfire">Koriand’r</nickname>
         <nickname for="streaming-chan">Chen</nickname>
@@ -1875,14 +1876,43 @@
 
         <trigger id="swap_cards">
             <case stage="0-8">
-                <state img="#-Neutral.png">Deliver to me ~cards~ cards.</state>
-                <state img="#-Confident.png">~cards~ would be a viable strategy!</state>
-                <state img="#-Smug.png">~cards~ cards, at once!</state>
-                <state img="#-Happy.png">I desire ~cards~ cards.</state>
-                <state img="#-Happy.png">If you can't hear my desires, I would like ~cards~ cards.</state>
+                <condition role="other" character="yukari" stage="3" timeInStage="0" />
+                <state img="#-Shocked.png">…</state>
+            </case>
+            <case stage="0-8">
+                <test expr="~cards~" value="5" />
+                <state img="#-Nervous.png">Ah… perhaps it is best to start from scratch.</state>
+                <state img="#-Worried.png" location="25%" weight="0.25">Well, games need a bit of risk.</state>
+                <state img="#-Angry.png">Try again, dealer.</state>
+                <state img="#-Nervous.png">I’d rather take my chances with fate.</state>
+            </case>
+            <case stage="0-8">
+                <test expr="~cards~" value="0" />
+                <state img="#-Smug.png">Magnificent. I yield the floor, dealer.</state>
+                <state img="#-Smug.png">I am in want of nothing, dealer.</state>
+                <state img="#-Happy.png">None please. This hand shines as brightly as I do.</state>
+                <state img="#-Confident.png">Ahahaha! Pass.</state>
+            </case>
+            <case stage="0-8">
+                <state img="#-Neutral.png">Deliver to me ~cards.text~ card~cards.ifplural(s|)~.</state>
+                <state img="#-Confident.png">~cards.text~ would be a viable strategy!</state>
+                <state img="#-Smug.png">~cards.text~ card~cards.ifplural(s|)~, at once!</state>
+                <state img="#-Happy.png">I desire ~cards.text~ card~cards.ifplural(s|)~.</state>
+                <state img="#-Happy.png">If you can't hear my desires, I would like ~cards.text~ card~cards.ifplural(s|)~.</state>
+                <state img="#-Neutral.png">A simple matter of ~cards.text~ card~cards.ifplural(s|)~.</state>
+                <state img="#-Pensive.png">Hmm… I’ll trade in ~cards.ifplural(these|this)~ ~cards.text~.</state>
+                <state img="#-Pensive.png" oneShotId="1">I know what the others have, but not what the deck holds.</state>
+                <state img="#-Angry.png">Pathetic. I wish never to see ~cards.ifplural(these cards|this card)~ again.</state>
+                <state img="#-Pensive.png">~Cards.text~ could be of use.</state>
+                <state img="#-Horny.png" oneShotId="2" weight="0.25">~Player~, you even listen to me in the card swapping stage? I’m most flattered.</state>
+                <state img="#-Surprised.png">Hard to decide… Let’s go with ~cards.text~ card~cards.ifplural(s|)~.</state>
+                <state img="#-Confident.png">I’ll be bold here. ~Cards.text~ card~cards.ifplural(s|)~.</state>
+                <state img="#-Surprised.png">Perchance I’ll play it safe. Please exchange ~cards.text~ card~cards.ifplural(s|)~.</state>
+                <state img="#-Smug.png">I must have ~cards.text~ card~cards.ifplural(s|)~!</state>
+                <state img="#-Neutral.png">May I have ~cards.text~ card~cards.ifplural(s|)~? I’m not terribly confident, though.</state>
             </case>
             <case stage="8">
-                <state img="#-Confident.png">Spell Card: Honor "Ranks of ~cards~ Cards!"</state>
+                <state img="#-Confident.png" oneShotId="1" weight="3">Spell Card: Honor “Ranks of ~Cards.text~ ~cards.ifplural(Cards|Card)~!”</state>
             </case>
         </trigger>
 
@@ -1924,12 +1954,9 @@
             <case stage="0-8" alsoPlaying="remilia" alsoPlayingStage="3" alsoPlayingTimeInStage="0">
                 <state img="#-Happy.png">Are you suuuure you’re old enough to drink, Miss Remilia?</state>
             </case>
-            <case stage="0" alsoPlaying="ryuko" alsoPlayingStage="0" totalRounds="1-1">
+            <case stage="0" totalRounds="1">
+                <condition role="other" character="ryuko" stage="0" />
                 <state img="#-Surprised.png">Oh is this young woman your shikigami? An underling? Your betrothed?</state>
-            </case>
-            <case stage="0" alsoPlaying="navi" alsoPlayingStage="0" timeInStage="1">
-                <state img="#-Angry.png">Oh joy. Fairies. Don’t have enough of those back in Gensokyo.</state>
-                <state img="#-Smug.png">A Fairy couldn’t possibly compete with the Almighty Taoist Who Controls the Cosmos.</state>
             </case>
             <case stage="0-8" alsoPlaying="shimakaze" alsoPlayingStage="10" notSaidMarker="ShikiRen" alsoPlayingSaidMarker="rencatch">
                 <state img="#-Neutral.png" marker="ShikiRen">Oh, I forgot about your shikigami. Have him pledge his loyalty to me too.</state>
@@ -1937,10 +1964,13 @@
             <case stage="0-8" alsoPlaying="uravity" alsoPlayingTimeInStage="0" notSaidMarker="Ochako_response" alsoPlayingSaidMarker="call_me_ochako">
                 <state img="#-Neutral.png" marker="Ochako_response">A lovely name, Lady Ochako. I see within you a desire to help others- most commendable.</state>
             </case>
-            <case stage="0" alsoPlaying="pit" totalRounds="2">
+            <case stage="0" totalRounds="2">
+                <condition role="other" character="pit" />
                 <state img="#-Angry.png">An Angel? Hopefully you won't cause problems for me like that Celestial brat Tenshi.</state>
             </case>
-            <case stage="0" alsoPlaying="remilia" timeInStage="0" notSaidMarker="Miko">
+            <case stage="0">
+                <condition role="self" timeInStage="0" notSaidMarker="Miko" />
+                <condition role="other" character="remilia" />
                 <state img="#-Happy.png" marker="Miko">Oh, don’t I know you from somewhere, Miss? Well, you obviously know myself, the Shoutoku Taoist. You may call me Miko.</state>
             </case>
             <case stage="1">
@@ -1966,20 +1996,29 @@
             <case stage="0-8" alsoPlaying="sei" notSaidMarker="Miko_Drinks01" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="#-Happy.png" marker="Miko_Drinks01">Most gracious, Lady Sei. I shall have this establishment’s finest sake, please.</state>
             </case>
+            <case stage="0" priority="100">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="navi" stage="0" />
+                <state img="#-Angry.png">Oh joy. Fairies. Don’t have enough of those back in Gensokyo.</state>
+                <state img="#-Smug.png">A Fairy couldn’t possibly compete with the Almighty Taoist Who Controls the Cosmos.</state>
+            </case>
             <case stage="1-8">
                 <condition role="self" hasHand="Royal Flush" />
                 <state img="#-Yatteyanyo.png">I'll take you on!</state>
             </case>
-            <case stage="0" timeInStage="0">
+            <case stage="0">
                 <condition count="4" filter="touhou_project" />
+                <condition role="self" timeInStage="0" />
                 <state img="#-Angry.png">I came here to get away from you people!</state>
             </case>
-            <case stage="0" totalMales="4" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition count="4" gender="male" />
                 <state img="#-Nervous.png">Undressing? Fine but... why am I the only girl?</state>
                 <state img="#-Nervous.png">Undressing? Fine but... where are all the cute girls?</state>
                 <state img="#-Neutral.png">Ah, even though I call myself "Crown Prince" I'm really a woman. Sorry.</state>
             </case>
-            <case stage="0" timeInStage="0" notSaidMarker="Miko">
+            <case stage="0">
+                <condition role="self" timeInStage="0" notSaidMarker="Miko" />
                 <state img="#-Happy.png" marker="Miko">Ah, you needn't refer to me as "Crown Prince" in this setting. Just "Miko" will do.</state>
             </case>
             <case stage="0-7">
@@ -2094,8 +2133,9 @@
             <case stage="1" timeInStage="0-0" notSaidMarker="Tojiko_Intro" priority="500">
                 <state img="#-Nervous.png" marker="Tojiko_Intro">Ah, Tojiko? That would be my, um, consort.</state>
             </case>
-            <case stage="0-8" alsoPlaying="meia" alsoPlayingStage="4" alsoPlayingTimeInStage="0">
+            <case stage="0-8">
                 <condition count="1" filter="jura" />
+                <condition role="other" character="meia" stage="4" timeInStage="0" />
                 <state img="#-Surprised.png">How rude, Lady Jura. I would never cheat on Tojiko. Especially not with a married woman. Who’s also her mother. It’s complicated.</state>
             </case>
             <case stage="0-8" alsoPlaying="shimakaze" alsoPlayingStage="4" alsoPlayingTimeInStage="0" alsoPlayingSaidMarker="dizzy">
@@ -2124,12 +2164,9 @@
             <case stage="0-8" alsoPlaying="remilia" alsoPlayingStage="3" alsoPlayingTimeInStage="0">
                 <state img="#-Happy.png">Are you suuuure you’re old enough to drink, Miss Remilia?</state>
             </case>
-            <case stage="0" alsoPlaying="ryuko" alsoPlayingStage="0" totalRounds="1-1">
+            <case stage="0" totalRounds="1">
+                <condition role="other" character="ryuko" stage="0" />
                 <state img="#-Surprised.png">Oh is this young woman your shikigami? An underling? Your betrothed?</state>
-            </case>
-            <case stage="0" alsoPlaying="navi" alsoPlayingStage="0" timeInStage="1">
-                <state img="#-Angry.png">Oh joy. Fairies. Don’t have enough of those back in Gensokyo.</state>
-                <state img="#-Smug.png">A Fairy couldn’t possibly compete with the Almighty Taoist Who Controls the Cosmos.</state>
             </case>
             <case stage="0-8" alsoPlaying="shimakaze" alsoPlayingStage="10" notSaidMarker="ShikiRen" alsoPlayingSaidMarker="rencatch">
                 <state img="#-Neutral.png" marker="ShikiRen">Oh, I forgot about your shikigami. Have him pledge his loyalty to me too.</state>
@@ -2137,10 +2174,13 @@
             <case stage="0-8" alsoPlaying="uravity" alsoPlayingTimeInStage="0" notSaidMarker="Ochako_response" alsoPlayingSaidMarker="call_me_ochako">
                 <state img="#-Happy.png" marker="Ochako_response">A lovely name, Lady Ochako. I see within you a desire to help others- most commendable.</state>
             </case>
-            <case stage="0" alsoPlaying="pit" totalRounds="2">
+            <case stage="0" totalRounds="2">
+                <condition role="other" character="pit" />
                 <state img="#-Angry.png">An Angel? Hopefully you won't cause problems for me like that Celestial brat Tenshi.</state>
             </case>
-            <case stage="0" alsoPlaying="remilia" timeInStage="0" notSaidMarker="Miko">
+            <case stage="0">
+                <condition role="self" timeInStage="0" notSaidMarker="Miko" />
+                <condition role="other" character="remilia" />
                 <state img="#-Happy.png" marker="Miko">Oh, don’t I know you from somewhere, Miss? Well, you obviously know myself, the Shoutoku Taoist. You may call me Miko.</state>
             </case>
             <case stage="1" alsoPlaying="meia" timeInStage="1">
@@ -2162,16 +2202,24 @@
             <case stage="0-8" alsoPlaying="sei" notSaidMarker="Miko_Drinks01" alsoPlayingSaidMarker="drinks_anyone">
                 <state img="#-Happy.png" marker="Miko_Drinks01">Most gracious, Lady Sei. I shall have this establishment’s finest sake, please.</state>
             </case>
+            <case stage="0" priority="100">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="navi" stage="0" />
+                <state img="#-Angry.png">Oh joy. Fairies. Don’t have enough of those back in Gensokyo.</state>
+                <state img="#-Smug.png">A Fairy couldn’t possibly compete with the Almighty Taoist Who Controls the Cosmos.</state>
+            </case>
             <case stage="0-8" notSaidMarker="MissMargatroid">
                 <condition count="1" filter="alice" />
                 <condition count="1" filter="alice_mgq" />
                 <state img="#-Pensive.png" marker="MissMargatroid">So which one of you is Miss Margatroid again?</state>
             </case>
-            <case stage="0" timeInStage="0">
+            <case stage="0">
                 <condition count="4" filter="touhou_project" />
+                <condition role="self" timeInStage="0" />
                 <state img="#-Angry.png">I came here to get away from you people!</state>
             </case>
-            <case stage="0" totalMales="4" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition count="4" gender="male" />
                 <state img="#-Nervous.png">Undressing? Fine but... why am I the only girl?</state>
                 <state img="#-Nervous.png">Undressing? Fine but... where are all the cute girls?</state>
                 <state img="#-Neutral.png">Ah, even though I call myself "Crown Prince" I'm really a woman. Sorry.</state>
@@ -2187,7 +2235,8 @@
                 <state img="#-Angry.png" marker="No_humans">I’d rather have more humans around, so that I could cajole them into joining my religion.</state>
                 <state img="#-Angry.png" marker="No_humans">Youkai? I'm not interested in recruiting them. Are there any tables with human players?</state>
             </case>
-            <case stage="0" timeInStage="0" notSaidMarker="Miko">
+            <case stage="0">
+                <condition role="self" timeInStage="0" notSaidMarker="Miko" />
                 <state img="#-Happy.png" marker="Miko">Ah, you needn't refer to me as "Crown Prince" in this setting. Just "Miko" will do.</state>
             </case>
             <case stage="2" timeInStage="0-0">
@@ -2336,10 +2385,13 @@
             <case stage="0-8" alsoPlaying="remilia" alsoPlayingStage="3" alsoPlayingTimeInStage="0-0">
                 <state img="#-Happy.png">Are you suuuure you’re old enough to drink, Miss Remilia?</state>
             </case>
-            <case stage="0" alsoPlaying="ryuko" alsoPlayingStage="0" totalRounds="1-1">
+            <case stage="0" totalRounds="1">
+                <condition role="other" character="ryuko" stage="0" />
                 <state img="#-Surprised.png">Oh is this young woman your shikigami? An underling? Your betrothed?</state>
             </case>
-            <case stage="0" alsoPlaying="navi" alsoPlayingStage="0" timeInStage="1">
+            <case stage="0">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="navi" stage="0" />
                 <state img="#-Angry.png">Oh joy. Fairies. Don’t have enough of those back in Gensokyo.</state>
                 <state img="#-Smug.png">A Fairy couldn’t possibly compete with the Almighty Taoist Who Controls the Cosmos.</state>
             </case>
@@ -2349,10 +2401,13 @@
             <case stage="0-8" alsoPlaying="uravity" alsoPlayingTimeInStage="0" notSaidMarker="Ochako_response" alsoPlayingSaidMarker="call_me_ochako">
                 <state img="#-Happy.png" marker="Ochako_response">A lovely name, Lady Ochako. I see within you a desire to help others- most commendable.</state>
             </case>
-            <case stage="0" alsoPlaying="pit" totalRounds="2">
+            <case stage="0" totalRounds="2">
+                <condition role="other" character="pit" />
                 <state img="#-Angry.png">An Angel? Hopefully you won't cause problems for me like that Celestial brat Tenshi.</state>
             </case>
-            <case stage="0" alsoPlaying="remilia" timeInStage="0" notSaidMarker="Miko">
+            <case stage="0">
+                <condition role="self" timeInStage="0" notSaidMarker="Miko" />
+                <condition role="other" character="remilia" />
                 <state img="#-Happy.png" marker="Miko">Oh, don’t I know you from somewhere, Miss? Well, you obviously know myself, the Shoutoku Taoist. You may call me Miko.</state>
             </case>
             <case stage="1" alsoPlaying="meia" timeInStage="1">
@@ -2374,16 +2429,19 @@
             <case stage="1-8" alsoPlaying="meia" notSaidMarker="ScienceBabies01" alsoPlayingSaidMarker="oma_and_fama">
                 <state img="#-Surprised.png" marker="ScienceBabies01">Meia, you say two women from your realm can make babies? I think the Hourai Pharmacist of Gensokyo can do the same.</state>
             </case>
-            <case stage="0" timeInStage="0">
+            <case stage="0">
                 <condition count="4" filter="touhou_project" />
+                <condition role="self" timeInStage="0" />
                 <state img="#-Angry.png">I came here to get away from you people!</state>
             </case>
-            <case stage="0" totalMales="4" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition count="4" gender="male" />
                 <state img="#-Nervous.png">Undressing? Fine but... why am I the only girl?</state>
                 <state img="#-Nervous.png">Undressing? Fine but... where are all the cute girls?</state>
                 <state img="#-Neutral.png">Ah, even though I call myself "Crown Prince" I'm really a woman. Sorry.</state>
             </case>
-            <case stage="0" timeInStage="0" notSaidMarker="Miko">
+            <case stage="0">
+                <condition role="self" timeInStage="0" notSaidMarker="Miko" />
                 <state img="#-Happy.png" marker="Miko">Ah, you needn't refer to me as "Crown Prince" in this setting. Just "Miko" will do.</state>
             </case>
             <case stage="2" timeInStage="0-0">
@@ -2523,22 +2581,32 @@
                 <condition role="other" character="sakura" stage="0-7" />
                 <state img="#-Happy.png">Oh? Then forgive me, Lady Sakura. I know better than to provoke a maiden with a heart firm as yours.</state>
             </case>
-            <case stage="0-8" alsoPlaying="mulan" alsoPlayingStage="2-4" alsoPlayingTimeInStage="1" totalNaked="0" totalMasturbating="0" totalFinished="0" alsoPlayingSayingMarker="mulan_duel">
+            <case stage="0-8">
+                <condition role="other" character="mulan" stage="2-4" timeInStage="1" sayingMarker="mulan_duel" />
+                <condition count="0" status="naked" />
+                <condition count="0" status="masturbating" />
+                <condition count="0" status="finished" />
                 <state img="#-Smug.png">You must be quite confident in your abilities, Lady Mulan. Very well, we shall see which one of us the the superior cross-dresser of legend!</state>
             </case>
-            <case stage="0-8" alsoPlaying="shimakaze" alsoPlayingStage="4" alsoPlayingTimeInStage="0" alsoPlayingSaidMarker="japanese" alsoPlayingNotSaidMarker="japend" alsoPlayingSayingMarker="japend">
+            <case stage="0-8">
+                <condition role="other" character="shimakaze" stage="4" timeInStage="0" saidMarker="japanese" sayingMarker="japend" notSaidMarker="japend" />
                 <state img="#-Pensive.png">Hm? You seemed fine to me, Shimakaze. Though it's not like I listen to half the things you say, anyway.</state>
             </case>
-            <case stage="0-8" alsoPlaying="sei" alsoPlayingStage="1" alsoPlayingTimeInStage="0" notSaidMarker="Miko_Drinks01" alsoPlayingSayingMarker="drinks_anyone">
+            <case stage="0-8">
+                <condition role="self" notSaidMarker="Miko_Drinks01" />
+                <condition role="other" character="sei" stage="1" timeInStage="0" sayingMarker="drinks_anyone" />
                 <state img="#-Neutral.png" marker="Miko_Drinks01">Most gracious, Lady Sei. I shall have this establishment’s finest sake, please.</state>
             </case>
-            <case stage="0-8" alsoPlaying="mulan" alsoPlayingStage="1" alsoPlayingTimeInStage="0" alsoPlayingSayingMarker="honorable_others">
+            <case stage="0-8">
+                <condition role="other" character="mulan" stage="1" timeInStage="0" sayingMarker="honorable_others" />
                 <state img="#-Happy.png">A pleasant question, Lord Ping. I suppose I prefer someone who views me not as the Crown Prince or the Almighty Taoist, but as a person and human. A large, shapely bosom is also good.</state>
             </case>
-            <case stage="0-8" id="4" alsoPlaying="nami" alsoPlayingStage="2-6" alsoPlayingTimeInStage="0-" alsoPlayingSayingMarker="dreams">
+            <case stage="0-8" id="4">
+                <condition role="other" character="nami" stage="2-6" timeInStage="0-" sayingMarker="dreams" />
                 <state img="#-Smug.png">Oho, Miss Nami… though I don’t discuss my dreams with just anyone, I’ll admit I’m a simple woman at heart. One day, I shall rule over all humanity.</state>
             </case>
-            <case stage="0-8" alsoPlaying="remilia" alsoPlayingStage="8" alsoPlayingTimeInStage="0" alsoPlayingSaidMarker="chair">
+            <case stage="0-8">
+                <condition role="other" character="remilia" stage="8" timeInStage="0" saidMarker="chair" />
                 <state img="#-Pensive.png">Odd, that chair wasn’t here &lt;i&gt;before&lt;/i&gt; you started. When did Miss Sakuya come back?</state>
             </case>
             <case stage="0-8">
@@ -2549,28 +2617,47 @@
                 <condition role="other" character="saki_zls" stage="6" timeInStage="0" />
                 <state img="#-Nervous.png">Wait, you were keeping that a secret, Miss Nikaidou?</state>
             </case>
-            <case stage="0-8" alsoPlaying="jessie" alsoPlayingSayingMarker="JessieQA_Backdoor">
+            <case stage="0-8">
+                <condition role="other" character="yukari" stage="3" timeInStage="0" />
+                <state img="#-Surprised.png">Actually, I have no idea who you are.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Backdoor" />
                 <test expr="~background.location~" value="indoors" />
                 <state img="#-Surprised.png" marker="jessie_backdoor_resp_01">I think most of use came in through the backdoor, Madam Jessie. It would be problematic if we were seen entering through the front.</state>
             </case>
-            <case stage="0-8" alsoPlaying="jessie" alsoPlayingSayingMarker="JessieQA_Backdoor">
+            <case stage="0-8">
+                <condition role="other" character="jessie" sayingMarker="JessieQA_Backdoor" />
                 <test expr="~background.location~" value="outdoors" />
                 <state img="#-Surprised.png" marker="jessie_backdoor_resp_02">Back door? But Madam Jessie, we’re outside.</state>
             </case>
-            <case stage="8" alsoPlaying="mulan" alsoPlayingStage="2-8" notSaidMarker="mulan_duel_lost" alsoPlayingSaidMarker="miko_duel" alsoPlayingSayingMarker="challenge_answer">
+            <case stage="8">
+                <condition role="self" notSaidMarker="mulan_duel_lost" />
+                <condition role="other" character="mulan" stage="2-8" saidMarker="miko_duel" sayingMarker="challenge_answer" />
                 <state img="#-Horny.png" marker="mulan_duel_lost">Even in the modern world where I need not hide my true gender from men, my proclivities still favor the fairer sex. Now, whether my consort suffices is another matter &lt;i&gt;entirely&lt;/i&gt;.</state>
             </case>
-            <case stage="0-8" alsoPlaying="akko" alsoPlayingStage="0-2" alsoPlayingSayingMarker="shiny_rod">
+            <case stage="0-8">
+                <condition role="other" character="akko" stage="0-2" sayingMarker="shiny_rod" />
                 <state img="#-Surprised.png">Oho, what an amusing bauble! Though it may not measure up to my Seven-Star Sword, wielding that rod proves you are no ordinary magician.</state>
             </case>
-            <case stage="0-8" id="10" alsoPlaying="jura" totalFemales="4" alsoPlayingSayingMarker="seduction">
+            <case stage="0-8" id="10">
                 <condition count="1" filter="meia" />
+                <condition role="other" character="jura" sayingMarker="seduction" />
+                <condition count="4" gender="female" />
                 <state img="#-Confident.png" marker="jura_seduction04_resp">I suppose you two would expect me to fail to know the answer, seeing as I have never sought to seduce a man myself. But the answer is simple: have your father arrange your marriage.</state>
             </case>
-            <case stage="3" alsoPlaying="futaba" timeInStage="0">
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="yukari" />
+                <state img="#-Surprised.png">You... If I recall correctly, you're the one they say rules Gensokyo from the shadows.</state>
+            </case>
+            <case stage="3">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="futaba" />
                 <state img="#-Smug.png">Oho, but of course those in the outside world must have heard of our magnificence! I have no idea who you are however.</state>
             </case>
-            <case stage="0-8" id="8" alsoPlaying="jura" totalFemales="3-4" alsoPlayingSayingMarker="seduction">
+            <case stage="0-8" id="8">
+                <condition role="other" character="jura" sayingMarker="seduction" />
+                <condition count="3-4" gender="female" />
                 <state img="#-Confident.png" marker="jura_seduction01_resp">Ah, a wonderful question, Lady Jura. Though I have never seduced a man myself, I of course know their desires: to have their father arrange a marriage.</state>
             </case>
             <case stage="0-8" id="9">
@@ -3498,6 +3585,10 @@
                 <condition role="target" character="dust" stage="1" />
                 <state img="#-Surprised.png">It seems you brought youkai friends, Lord Dust. A sword &lt;i&gt;tsukumogami&lt;/i&gt; and… a flying squirrel? Nonetheless, welcome all.</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="astolfo_bean_plushie" stage="0" />
+                <state img="#-Surprised.png">What a queer little creature. It’s obsession with sucking seems not unlike that of the Western mansion’s elder vampire sister.</state>
+            </case>
             <case stage="0-10" filter="fire_emblem" saidMarker="FireEmblem01" notSaidMarker="FireEmblem02">
                 <state img="#-Happy.png" marker="FireEmblem02">I know! You’re ~name~, correct? From the "Electronic Game" that Sumireko girl was talking about?</state>
             </case>
@@ -4200,16 +4291,19 @@
             <case stage="1-10" target="nugi-chan" targetStage="2">
                 <state img="#-Happy.png">Nugi, was it? You seem a respectable sort. How would you like to serve me in my dojo?</state>
             </case>
-            <case stage="1-8" target="remilia" targetStage="3">
+            <case stage="1-8">
+                <condition role="target" character="remilia" stage="3" />
                 <state img="#-Nervous.png">Tojikoooooo! Fetch me some saké! … I’m sure she’s getting it right now.</state>
             </case>
             <case stage="8" target="saki_zls" targetStage="7">
                 <state img="#-Surprised.png">Oh, very well.</state>
             </case>
-            <case stage="9-10" target="remilia" targetStage="3">
+            <case stage="9-10">
+                <condition role="target" character="remilia" stage="3" />
                 <state img="#-Nervous.png">Tojikoooooo! Fetch me some saké! … Actually no, nevermind. You’re busy.</state>
             </case>
-            <case stage="9-10" target="saki_zls" targetStage="7">
+            <case stage="9-10">
+                <condition role="target" character="saki_zls" stage="7" />
                 <state img="#-Smug.png">Now do you see the fruits of my brilliant tactical mind? Even when I lose, I find a way to win. Such is the cunning of the Shoutoku Taoist.</state>
             </case>
             <case stage="9-10" target="shimakaze" targetStage="1-8">
@@ -4373,6 +4467,70 @@
                 <state img="#-Pensive.png">You keep yourself exceptionally fit, Lady Schnee. I was distracted by your expensive garments and obvious &lt;i&gt;Yuki-Onna&lt;/i&gt; heritage, but you are a Youkai Exterminator, are you not?</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="0" />
+                <state img="#-Surprised.png">Young Nanoko, wasn’t it? Well met. And you are… Oh my. You appear to be an ordinary human being.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="1" />
+                <state img="#-Surprised.png">You fascinate me in your plainness, Young Nanoko. At least ~player~ has the good sense to say as little as possible.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="2" />
+                <state img="#-Surprised.png">It seems such a pity to end our dialogue already, Young Nanoko. I am truly fascinated by your commonality.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="3" />
+                <state img="#-Neutral.png">Young Nanoko, as for your future plans: what hope you to accomplish with what little time your mortal body gives you?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="4" />
+                <state img="#-Happy.png">Our discussion today has been elucidating, young Nanoko. I feel I’ve been given a firm grasp of the state of the peasantry of the outside world.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="0" />
+                <state img="#-Happy.png">What a charming young lady we have with us today. I’m used to the bunch of cheating jerks we have in Gensokyo, so you are a breath of fresh air, Miss Azami.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="1" />
+                <state img="#-Happy.png">You’ve been just lovely, Miss Azami. ~Player~? Yes, ~human.ismale(he|she)~’s fine too.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="2" />
+                <state img="#-Horny.png">~Player~ is wonderful, truly. Say, Miss Azami, did I ever tell you how I was crucial in solving the Urban Legend incident?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="3" />
+                <state img="#-Surprised.png">If this game is causing you stress, Miss Azami, you’re welcome to recuse yourself.</state>
+            </case>
+            <case stage="0-3">
+                <condition role="target" character="azami" stage="4" />
+                <state img="#-Nervous.png">Miss Azami, your desires are &lt;i&gt;ear-splitting&lt;/i&gt;! This is why I always wear earmuffs.</state>
+            </case>
+            <case stage="4-10">
+                <condition role="target" character="azami" stage="4" />
+                <state img="#-Nervous.png">Miss Azami, your desires are &lt;i&gt;ear-splitting&lt;/i&gt;! Where did Tojiko put my earmuffs?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" stage="0" />
+                <state img="#-Happy.png">Yukari Yakumo, was it not? We didn’t get much of a chat during the Perfect Possession incident, given the circumstances.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" stage="1" />
+                <state img="#-Surprised.png">What are you here for? Surely you're not here to see the naked harlots, Lady Yakumo.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" stage="2" />
+                <state img="#-Angry.png">You weren't even serious, were you? I've lost interest.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" stage="3" />
+                <state img="#-Nervous.png">So, Miss Tatara. It seems your disguise was so complete, even your true desires were hidden from me.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" stage="4" />
+                <state img="#-Nervous.png">&lt;i&gt;Ahem&lt;/i&gt;. Perhaps I should not take a youkai as seemingly low-level as you lightly either.</state>
+            </case>
+            <case stage="0-10">
                 <condition role="target" character="felicia" />
                 <state img="#-Smug.png" oneShotId="1">It seems your church did not guide you for victory, nekomata.</state>
                 <state img="#-Smug.png" oneShotId="2">I don't know if humans can join your church, but clearly, they shouldn't.</state>
@@ -4397,6 +4555,10 @@
             </case>
             <case stage="0-10" filter="fire_emblem" notSaidMarker="FireEmblem01">
                 <state img="#-Pensive.png" marker="FireEmblem01">Something about this one seems familiar… though I don’t recognize their desires…</state>
+            </case>
+            <case stage="0-10">
+                <condition role="other" character="nanoko-chan" saying="That was my anime villain laugh" />
+                <state img="#-Surprised.png" oneShotId="3" marker="Nanoko_villian_laugh">My apologies, Young Nanoko, but I can only rate that laugh at a 4.5. You’re neglecting the importance of body language in both underscoring and projecting the laugh.</state>
             </case>
             <case stage="0-8" hasHand="Four of a Kind">
                 <state img="#-Confident.png">Four of a Kind? Wow! I'm as great as I think I am!</state>
@@ -4547,7 +4709,7 @@
 
         <trigger id="tie">
             <case stage="8">
-                <condition count="0-" status="not_lost_all" />
+                <condition count="0" status="not_lost_all" />
                 <condition count="2-" status="alive" />
                 <state img="#-Angry.png">This was to be the moment of truth! I demand a do over!</state>
             </case>
@@ -5019,6 +5181,22 @@
                 <state img="#-Happy.png" marker="MegCape2">Now that we’re understood on that front, Arch-Wizard Megumin, it is an honor to make your acquaintance.</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="0" />
+                <state img="#-Pensive.png">That &lt;i&gt;is&lt;/i&gt; odd. I’ve grown accustomed to Gensokyo’s magical beings as my bedfellows. All the humans I know are magicians and shrine maidens.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="1" />
+                <state img="#-Neutral.png">Perhaps this is a good idea to get to understand the common people better. To understand their hopes and concerns, so I might yet further improve myself as a leader.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="0" />
+                <state img="#-Horny.png">Never mind such a silly little thing, Miss Azami. You’re quite lovely.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" stage="0" />
+                <state img="#-Smug.png">It would be nice, given the opportunity, to pick your brain. You know Gensokyo as well as anyone, and such insights could help me to gather followers.</state>
+            </case>
+            <case stage="0-10">
                 <condition filter="clown" role="target" />
                 <state img="#-Angry.png" oneShotId="5" marker="ClownStrip01">Worry not, fellow players. I will protect you from her dark clown arts!</state>
             </case>
@@ -5193,7 +5371,8 @@
             <case stage="0-10" target="rinkah" targetStage="1">
                 <state img="#-Happy.png">I suppose I could find use for you as a soldier in an army. But should you die, you’ll stay dead.</state>
             </case>
-            <case stage="0" target="ryuko" targetStage="1">
+            <case stage="0">
+                <condition role="target" character="ryuko" stage="1" />
                 <state img="#-Smug.png">It appears your underling is undressing herself in solidarity. What a devoted servant.</state>
             </case>
             <case stage="0-10" target="ryuko" targetStage="4">
@@ -5236,13 +5415,16 @@
             <case stage="0-10" target="zizou" targetStage="2">
                 <state img="#-Confident.png">I’ll show you the majesty that humans can create! For I am Toyosatomimi no Miko, the greatest human of them all!</state>
             </case>
-            <case stage="1-4" target="ryuko" targetStage="1">
+            <case stage="1-4">
+                <condition role="target" character="ryuko" stage="1" />
                 <state img="#-Smug.png">It appears your servant is undressing herself in solidarity. Tojiko could learn from such devotion.</state>
             </case>
-            <case stage="5-10" target="ryuko" targetStage="1">
+            <case stage="5-10">
+                <condition role="target" character="ryuko" stage="1" />
                 <state img="#-Smug.png">It appears your wife is undressing herself in solidarity. Well, it can’t be helped.</state>
             </case>
-            <case stage="9-10" target="shimakaze" targetStage="1">
+            <case stage="9-10">
+                <condition role="target" character="shimakaze" stage="1" />
                 <state img="#-Angry.png">But somehow, I feel a real dislike of and rivalry with you. So keep your distance, shipgirl!</state>
             </case>
             <case stage="0-10">
@@ -5304,6 +5486,22 @@
             <case stage="0-10">
                 <condition role="target" character="amy" stage="3" />
                 <state img="#-Neutral.png">Know this, Lady Amygdala. I have been central to stopping multiple incidents within Gensokyo, and… she’s not even listening to me. Ah well, her loss.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="1" />
+                <state img="#-Happy.png">My interactions with the human village’s citizens are mostly limited to speeches and official business. Being with a… &lt;i&gt;normal person&lt;/i&gt; in so intimate a setting is new to me.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="2" />
+                <state img="#-Smug.png">Yes. Mmhmm. I see. Alright, I’m bored now. Thank you for your time, Young Nanoko.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="1" />
+                <state img="#-Happy.png">My own consort has no legs, and is also a ghost. A scar hardly bothers me. Yes, &lt;i&gt;boys&lt;/i&gt;. Quite.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" stage="1" />
+                <state img="#-Surprised.png">Fascinating, I can’t read your desires at all. I suppose I should have expected as much from one of Gensokyo’s sages. I shan’t take you lightly, Lady Yakumo.</state>
             </case>
             <case stage="0-10">
                 <condition filter="clown" role="target" />
@@ -5623,10 +5821,12 @@
                 <condition role="target" character="lucina" stage="1" />
                 <state img="#-Happy.png">I too would be loath to relinquish my cape.</state>
             </case>
-            <case stage="0-10" target="mae" targetStage="1">
+            <case stage="0-10">
+                <condition role="target" character="mae" stage="1" />
                 <state img="#-Happy.png">Many years ago, youkai all took on monstrous forms. However, in my land of Gensokyo, natural selection has forced them to camouflage themselves as cute girls.</state>
             </case>
-            <case stage="0-10" target="miko" targetStage="0">
+            <case stage="0-10">
+                <condition role="target" character="miko" stage="0" />
                 <state img="#-Shocked.png">Ack! Tojiko! Where did you come from? And uh, with whom, I should ask.</state>
             </case>
             <case stage="0-10" target="rainbow_mika" targetStage="0">
@@ -5638,13 +5838,16 @@
             <case stage="0-10" target="rarity" targetStage="1">
                 <state img="#-Angry.png">This barrier must be some sort of insidious youkai trick!</state>
             </case>
-            <case stage="0-10" target="remilia" targetStage="1">
+            <case stage="0-10">
+                <condition role="target" character="remilia" stage="1" />
                 <state img="#-Happy.png">Are you one of the Librarian’s assistants, small girl? Last time I was there, I saw another succubus.</state>
             </case>
-            <case stage="0-10" target="saki_zls" targetStage="0">
+            <case stage="0-10">
+                <condition role="target" character="saki_zls" stage="0" />
                 <state img="#-Happy.png">No problems, Miss Nikaidou! I am used to jiang-shi. Obviously, as a corpse, you didn’t bring yourself back to life. So, to whom do you belong to?</state>
             </case>
-            <case stage="0-10" target="saki_zls" targetStage="1">
+            <case stage="0-10">
+                <condition role="target" character="saki_zls" stage="1" />
                 <state img="#-Happy.png">Oho, how amusing. A jiang-shi with noble aspirations! Of course, as the Crown Prince Shoutoku, Regent of the Japanese Empire, those aspirations show you to be my rival.</state>
             </case>
             <case stage="0-10">
@@ -5725,6 +5928,14 @@
             <case stage="0-10">
                 <condition role="target" character="monika" stage="1" />
                 <state img="#-Pensive.png">Nor does it resemble the abilities of the amanojaku goddess of the moon.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="2" />
+                <state img="#-Neutral.png">What is your family’s line of work? Are you rice farmers? Fishermen? Those are peasant sort of jobs, yes?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="1" />
+                <state img="#-Neutral.png">I clearly hear your desire for companionship, Miss Azami, but I’d actually prefer ~player~ to speak as little as possible.</state>
             </case>
             <case stage="0-10">
                 <state img="#-Happy.png">You wish to remove something small. Might I get you to reconsider?</state>
@@ -5933,6 +6144,14 @@
                 <condition role="target" character="rin" stage="1" />
                 <state img="#-Confident.png">Lady Rin of the Clan Tezuka! Allow me to make use of my Taoist Hermit Arts, and fashion for you a new pair of magnificent arms!</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="3" />
+                <state img="#-Pensive.png">Wait, Young Sumireko tells me the serfs of the modern world all work in “IT Support.” How well supported are the ITs of your family?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="2" />
+                <state img="#-Smug.png">Too often my compatriots blather on, but I only need to hear a fraction of a sentence for one’s life story to be laid bare to me. So thank you for not boring me with unnecessary talking, ~player~.</state>
+            </case>
             <case stage="0-10" filter="clown" alsoPlaying="natsuki" alsoPlayingSaidMarker="down_with_the_clown">
                 <state img="#-Angry.png">Oh no! ~name~ has already driven Natsuki to madness with her Dark Clown Arts!</state>
             </case>
@@ -5995,6 +6214,10 @@
                 <condition role="target" character="chazz" stage="5" />
                 <state img="custom:#-Spellcard">Hold Still! I call this Spell Card {highlight}Hermit Sign "Emperor of the Land of the Rising Sun"{!reset}</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="astolfo_bean_plushie" stage="0" />
+                <state img="#-Smug.png">Call me gay all you want, Lord Astolfo Bean Plushie. Though you may be coarse, you are far from incorrect.</state>
+            </case>
             <case stage="0-10" filter="jjba" notSaidMarker="JoJoke01">
                 <state img="#-Confident.png" marker="JoJoke01">To understand the ten desires of a human is to know them fully. In the past, the present… and the future…</state>
             </case>
@@ -6003,7 +6226,7 @@
                 <state img="#-Surprised.png">Going for the ~clothing~, are you?</state>
                 <state img="#-Surprised.png">Oho! Seeing what you're going to remove... this should be interesting.</state>
                 <state img="#-Happy.png">I have no quarrel with you, sir. Take off whatever you wish.</state>
-                <state>Not an insignificant piece, that. Still think you can win, Lord ~name~?</state>
+                <state img="#-Happy.png">Not an insignificant piece, that. Still think you can win, Lord ~name~?</state>
             </case>
             <case stage="0-10" priority="0">
                 <condition status="lost_some" role="target" />
@@ -6024,6 +6247,10 @@
             <case stage="0-10">
                 <condition role="target" character="chazz" stage="6" />
                 <state img="#-Smug.png">Let it be known I did not miss. It was you who moved away from my spell.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="astolfo_bean_plushie" stage="1" />
+                <state img="#-Happy.png">Unfortunately, I have no dick to suck. I made sure during its creation that my perfect, immortal body was without penis.</state>
             </case>
             <case stage="0-10" filter="jjba" saidMarker="JoJoke01" notSaidMarker="JoJoke02">
                 <state img="#-Smug.png" marker="JoJoke02">Your next line is…</state>
@@ -6233,6 +6460,26 @@
                 <condition role="target" character="amy" stage="3" />
                 <state img="#-Happy.png">Perhaps it is indeed possible to foster good relationships between humans and youkai. This game may prove a trial for facilitating further bridge building.</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="3" />
+                <state img="#-Pensive.png">Young Sumireko oft tells of a place known as “University” that has abolished the use of rest and sleep. She intends to be exiled to there.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="4" />
+                <state img="#-Pensive.png">I had been worried that because Buddhism had fallen out of favor in Japan, the populace would not be sufficiently mollified.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="2" />
+                <state img="#-Horny.png">If you desire a partner who will always be willing to share their thoughts, I might be of service, Miss Azami. Though I have been known to prattle on at times.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" stage="1" />
+                <state img="#-Happy.png">A bold choice, Lady Yakumo. Let’s hope it’s not a mistake to cast off something you &lt;i&gt;so&lt;/i&gt; need the support of.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" stage="2" />
+                <state img="#-Pensive.png">It is annoying I cannot decipher her desires, though. In a friendly game such as this, though, I suppose I can let my guard down.</state>
+            </case>
             <case stage="0-10" filter="jjba" notSaidMarker="JoJoke01">
                 <state img="#-Confident.png" marker="JoJoke01">To understand the ten desires of a human is to know them fully. In the past, the present… and the future…</state>
             </case>
@@ -6428,6 +6675,26 @@
             <case stage="1-10">
                 <condition role="target" character="rin" stage="3" />
                 <state img="#-Worried.png" location="90%">Lady Rin, please forgive the Crown Prince for her prattling. If you’re content with yourself, that’s all that really matters.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="4" />
+                <state img="#-Smug.png">I’m glad. For society to function, the common-folk must strive to be hard-working, contributing, and sufficiently pacified.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nanoko-chan" stage="5" />
+                <state img="#-Smug.png">However, I needn’t fear. It seems in the modern world, religion has been replaced by that which you call “anime”. I thank you for your cooperation, Young Nanoko.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" stage="3" />
+                <state img="#-Surprised.png">Hmm… does my acute hearing detect a slight change? Your desires have become &lt;i&gt;far&lt;/i&gt; more focused on ~player~ than before.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" stage="2" />
+                <state img="#-Smug.png">You needn’t worry, I’m only yanking your chain. I know better than to underestimate Gensokyo’s most &lt;i&gt;ancient&lt;/i&gt; youkai.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" stage="3" />
+                <state img="#-Shocked.png">NOOOO!!! IT’S— IT’S—</state>
             </case>
             <case stage="0-10" filter="jjba" saidMarker="JoJoke01" notSaidMarker="JoJoke02">
                 <state img="#-Smug.png" marker="JoJoke02">Your next line is…</state>
@@ -6701,6 +6968,14 @@
             <case stage="0-10" target="twilight">
                 <state img="#-Horny.png">So you’re rushing right to the best parts, are you? I can appreciate such efficiency.</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" />
+                <state img="#-Pensive.png">It doesn’t sound as if you have any desire to give up this game, Miss Azami. In fact, I hear nothing but a howling chasm begging to become one with ~player~.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" />
+                <state img="#-Pensive.png">“The ability to surprise humans.” Rather, the ability to do anything, so long as it’s surprising. That could be a fearful power indeed, even if only as short lived as a shock.</state>
+            </case>
             <case stage="0-10" filter="succubus">
                 <state img="#-Pensive.png">I heard mention the vampire’s mansion had a succubus librarian. I wonder if that's true.</state>
             </case>
@@ -6748,6 +7023,10 @@
                     <alt-img stage="9-10">#-Angry.png</alt-img>
                     <text>I can see how much you like speed. You sure lose fast enough.</text>
                 </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" />
+                <state img="#-Neutral.png">I know enough to be able to tell when a lady isn’t interested in me. I wish ~player~ and you the best, Miss Azami.</state>
             </case>
             <case stage="0-10">
                 <state img="#-Smug.png">Smaller breasts are more sensitive anyway.</state>
@@ -6813,15 +7092,21 @@
         </trigger>
 
         <trigger id="female_chest_is_visible">
-            <case stage="0-10" target="sayaka" targetStage="4">
+            <case stage="0-10">
+                <condition role="target" character="sayaka" stage="4" />
                 <state img="#-Surprised.png">Oh, do women of your time period not normally wear undergarments? I didn’t realize.</state>
             </case>
-            <case stage="0-10" target="caulifla">
+            <case stage="0-10">
+                <condition role="target" character="caulifla" />
                 <state img="#-Confident.png">And of course there is I, The Great Toyosatomimi no Miko, THE PRINCE OF ALL HUMANS!</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="megumin" />
                 <state img="#-Horny.png" marker="MegBoobs">Fear not, Arch-Wizard. In my day women didn’t even have brassieres. Your teats look lovely, even if they are small!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" />
+                <state img="#-Nervous.png">Or perhaps I really am overestimating her. What a headache.</state>
             </case>
         </trigger>
 
@@ -6895,6 +7180,14 @@
                 <state img="#-Nervous.png">O-oh, styling &lt;i&gt;that&lt;/i&gt; bit of hair. Is such a thing a youkai custom?</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="azami" />
+                <state img="#-Neutral.png">Is that… &lt;i&gt;good&lt;/i&gt;? Is that supposed to happen?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" />
+                <state img="#-Angry.png">To cloud your desires from &lt;i&gt;me&lt;/i&gt; of all people, suggests you possess tremendous skill at deception and mimicry, yet you use your talents for mere &lt;i&gt;tomfoolery&lt;/i&gt;!? I’ve never seen someone more—</state>
+            </case>
+            <case stage="0-10">
                 <state img="#-Horny.png">It's about to appear! &lt;i&gt;The best organ of all.&lt;/i&gt;</state>
                 <state img="#-Horny.png">The walls have fallen. Now it's time to reveal your inner sanctum.</state>
                 <state img="#-Happy.png">Don't feel bad. I won't judge you for what you've got down there.</state>
@@ -6941,6 +7234,10 @@
             <case stage="0-10" target="nayru" saidMarker="Nayru_Drunk">
                 <state img="#-Happy.png">So don’t be afraid to enjoy yourself however you see fit, Lady Nayru.</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="amy" sayingMarker="planar_form" />
+                <state img="#-Surprised.png">Oh, are you revealing your youkai form? Well, so long as no harm comes to ~player~ when you two are fooling about.</state>
+            </case>
             <case stage="0" target="aimee">
                 <state img="#-Worried.png">Oh, but if I do that I’d have to return to Gensokyo in the nude. Tojiko wouldn’t like that…</state>
             </case>
@@ -6983,6 +7280,18 @@
             <case stage="0-10">
                 <condition role="target" character="amy" />
                 <state img="#-Horny.png">Strange, I’ve gazed long upon Byakuren in the hot springs. She most certainly did not have anything so &lt;i&gt;maintained&lt;/i&gt;.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nanoko-chan" />
+                <state img="#-Surprised.png">Oh dear, are you so poor you’ve been forced to sell the hair around your privates? If ever you have money problems, I’d be glad to lend any amount.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" />
+                <state img="#-Shocked.png">Good &lt;i&gt;Lord&lt;/i&gt;! This woman has no pubic hair!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" />
+                <state img="#-Shocked.png">GAAAAH!! WHERE DID YOUR PUBIC HAIR GO!!?</state>
             </case>
             <case stage="0-10" filter="shy" saidMarker="Kokoro01" notSaidMarker="Kokoro02">
                 <state img="#-Pensive.png" marker="Kokoro02">Note my daughter is over a thousand years old. Also a collection of 66 masks.</state>
@@ -7183,6 +7492,16 @@
         </trigger>
 
         <trigger id="female_must_masturbate">
+            <case stage="0-10">
+                <condition role="target" character="yukari" />
+                <condition count="0" status="masturbating" />
+                <state img="#-Angry.png">You spent all this effort to sneak in here disguised as the most powerful sage in Gensokyo, but you didn’t even read the rules posted at the front?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" />
+                <condition count="1-" status="masturbating" />
+                <state img="#-Neutral.png">…You aren’t terribly bright, are you?</state>
+            </case>
             <case stage="0-10" target="nayru" saidMarker="Nayru_Drunk" targetNotSaidMarker="v_forfeit">
                 <state img="#-Shocked.png">Woah! you sobered up fast!</state>
             </case>
@@ -7263,6 +7582,10 @@
             <case stage="0-10">
                 <condition role="target" character="amy" />
                 <state img="#-Smug.png">In the end, Lady Amygdala was no real threat to humanity. I’m humbled to have played a part in this victory.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" />
+                <state img="#-Surprised.png">I live in Gensokyo. This is only the &lt;i&gt;fourth&lt;/i&gt; strangest thing I’ve seen this week.</state>
             </case>
             <case stage="0-10" filter="touhou_project">
                 <state img="#-Nervous.png">Let’s both agree not to tell the newspaper Tengu about any of this.</state>
@@ -7372,6 +7695,14 @@
             <case stage="0-10">
                 <condition role="target" character="amy" />
                 <state img="#-Horny.png">Let us observe how a Youkai pleasures herself. I’m not opposed to learning anything new, no matter the source.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="azami" />
+                <state img="#-Nervous.png">The third was, of course, that she had no hair on her vulva.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" />
+                <state img="#-Happy.png">Go ahead, it would be unsavory to make people stay against their wills. Oh, no, wait, she left her main body behind. That’s the only part that truly matters.</state>
             </case>
             <case stage="0-10" saidMarker="Shy_Mast_start" notSaidMarker="Shy_Mast_02">
                 <state img="#-Nervous.png" marker="Shy_Mast_02">...Unless you get yourself off on fairies or animals or whatnot.</state>
@@ -7497,7 +7828,8 @@
             <case stage="0-10" target="kizuna">
                 <state img="#-Nervous.png">You know what, I think I’ll find a different way into Bhava-Agra.</state>
             </case>
-            <case stage="0-10" target="moon">
+            <case stage="0-10">
+                <condition role="target" character="moon" />
                 <state img="#-Neutral.png">Too be honest, this is actually refreshing. I don’t have to spend any effort reading the desires in your heart. You simply state them aloud.</state>
             </case>
             <case stage="0-10" target="palutena">
@@ -7509,6 +7841,10 @@
             <case stage="0-10">
                 <condition role="target" character="rainbow_dash" />
                 <state img="#-Surprised.png">As expected of a pegasus. It seems you must’ve quite enjoyed yourself, Lady Dash.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="yukari" />
+                <state img="#-Horny.png">So that’s how a Karakasa Obake pleasures herself. Wonderful.</state>
             </case>
             <case stage="0-10">
                 <state img="#-Happy.png">I hope I was of service.</state>
