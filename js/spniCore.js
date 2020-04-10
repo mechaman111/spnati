@@ -676,7 +676,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
         var status = $(elem).attr('status') || 'offline';
         
         if (alternateCostumeSets['all'] || alternateCostumeSets[set]) {
-            if (!includedOpponentStatuses[status]) {
+            if (!includedOpponentStatuses[status] && set !== DEFAULT_COSTUME_SET) {
                 return;
             }
 
