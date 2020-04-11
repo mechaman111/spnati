@@ -1980,15 +1980,17 @@ $('#feedback-report-desc').keyup(updateFeedbackSendButton).change(updateFeedback
 function updateFeedbackMessage() {
     var player = $('#feedback-report-character option:selected').data('character');
 
-    if (player && player.feedbackData &&
-        player.feedbackData.enabled &&
-        player.feedbackData.message
-    ) {
-        $(".feedback-message-container").show();
-        $(".feedback-character-name").text(player.label);
-        $(".feedback-message").text(player.feedbackData.message);
-    } else {
-        $(".feedback-message-container").hide();
+    $(".feedback-message-container").hide();
+    $("#feedback-disabled-warning").hide();
+
+    if (player && player.feedbackData) {
+        if (player.feedbackData.enabled && player.feedbackData.message) {
+            $(".feedback-message-container").show();
+            $(".feedback-character-name").text(player.label);
+            $(".feedback-message").text(player.feedbackData.message);
+        } else if (!player.feedbackData.enabled) {
+            $("#feedback-disabled-warning").show();
+        }
     }
 }
 
