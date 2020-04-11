@@ -72,6 +72,8 @@ namespace Desktop.Skinning
 					return skin.Group4Set;
 				case SkinnedBackgroundType.Group5:
 					return skin.Group5Set;
+				case SkinnedBackgroundType.Critical:
+					return skin.Critical;
 				default:
 					return skin.Surface;
 			}
@@ -161,6 +163,9 @@ namespace Desktop.Skinning
 						break;
 					case SkinnedBackgroundType.Group5:
 						textColor = skin.Group5;
+						break;
+					case SkinnedBackgroundType.Critical:
+						textColor = set.ForeColor;
 						break;
 					default:
 						textColor = skin.PrimaryForeColor;

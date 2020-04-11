@@ -67,6 +67,13 @@ namespace SPNATI_Character_Editor
 					ValidationContext context = new ValidationContext(new Stage(stageCase.Stages[0]), stageCase, null);
 					ValidateSaying(stageCase.Target, stageCase.TargetSaying, warnings, "targetSaying", stageCase.Tag, context);
 					ValidateSaying(stageCase.AlsoPlaying, stageCase.AlsoPlayingSaying, warnings, "alsoPlayingSaying", stageCase.Tag, context);
+					foreach (TargetCondition condition in stageCase.Conditions)
+					{
+						if (!string.IsNullOrEmpty(condition.Saying))
+						{
+							ValidateSaying(condition.Character, condition.Saying, warnings, "sayingText", stageCase.Tag, context);
+						}
+					}
 				}
 
 				foreach (int stageIndex in stageCase.Stages)

@@ -23,6 +23,7 @@ namespace SPNATI_Character_Editor.Activities
 			_priorities.Add(SituationPriority.MustTarget, "Must Target");
 			_priorities.Add(SituationPriority.Noteworthy, "Noteworthy");
 			_priorities.Add(SituationPriority.FYI, "FYI");
+			_priorities.Add(SituationPriority.Prompt, "Prompt");
 			foreach (KeyValuePair<SituationPriority, string> kvp in _priorities)
 			{
 				_prioritiesIndex[kvp.Value] = kvp.Key;

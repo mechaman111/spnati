@@ -15,6 +15,10 @@ namespace SPNATI_Character_Editor.Activities
 		public SkinEditor()
 		{
 			InitializeComponent();
+
+			cboStatus.Items.Add("");
+			cboStatus.Items.Add("online");
+			cboStatus.Items.Add("offline");
 		}
 
 		public override string Caption
@@ -64,6 +68,7 @@ namespace SPNATI_Character_Editor.Activities
 			if (link != null)
 			{
 				txtName.Text = link.Name;
+				cboStatus.Text = link.Status;
 			}
 
 			cboBaseStage.Items.Add("- None -");
@@ -111,7 +116,12 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_costume.Link != null)
 			{
-				if (txtName.Text != _costume.Link.Name)
+				string status = cboStatus.Text;
+				if (string.IsNullOrEmpty(status))
+				{
+					status = null;
+				}
+				if (txtName.Text != _costume.Link.Name || status != _costume.Link.Status)
 				{
 					_linkDataChanged = true;
 				}
@@ -119,6 +129,7 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					_linkDataChanged = false;
 					_costume.Link.Name = txtName.Text;
+					_costume.Link.Status = cboStatus.Text;
 					Serialization.ExportCharacter(_costume.Character);
 				}
 			}

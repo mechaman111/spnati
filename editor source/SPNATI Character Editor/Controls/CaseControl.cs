@@ -216,7 +216,7 @@ namespace SPNATI_Character_Editor.Controls
 					return;
 				else if (result == DialogResult.Yes)
 				{
-					gridDialogue.Clear();
+					gridDialogue.ClearLines();
 				}
 			}
 			gridDialogue.PasteLines(_lineClipboard);

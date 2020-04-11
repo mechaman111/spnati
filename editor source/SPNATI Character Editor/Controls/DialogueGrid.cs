@@ -575,16 +575,8 @@ namespace SPNATI_Character_Editor.Controls
 			DataGridViewColumn col = gridDialogue.Columns[e.ColumnIndex];
 			if (col == ColDelete)
 			{
-				DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
-				if (row != null && !row.IsNewRow)
-				{
-					DialogueLine line = row.Tag as DialogueLine;
-					_selectedCase.Lines.Remove(line);
-					gridDialogue.Rows.RemoveAt(e.RowIndex);
-					NotifyChange();
-					line.PropertyChanged -= Line_PropertyChanged;
-					row.Tag = null;
-				}
+				int rowIndex = e.RowIndex;
+				DeleteLine(rowIndex);
 			}
 			else if (col == ColTrophy)
 			{
@@ -606,6 +598,35 @@ namespace SPNATI_Character_Editor.Controls
 					StageImageSelection form = new StageImageSelection(_character, line, _selectedCase);
 					form.ShowDialog();
 				}
+			}
+		}
+
+		/// <summary>
+		/// Clears all lines
+		/// </summary>
+		public void ClearLines()
+		{
+			for (int i = gridDialogue.Rows.Count - 1; i >= 0; i--)
+			{
+				DeleteLine(i);
+			}
+		}
+
+		/// <summary>
+		/// Deletes a line
+		/// </summary>
+		/// <param name="rowIndex"></param>
+		public void DeleteLine(int rowIndex)
+		{
+			DataGridViewRow row = gridDialogue.Rows[rowIndex];
+			if (row != null && !row.IsNewRow)
+			{
+				DialogueLine line = row.Tag as DialogueLine;
+				_selectedCase.Lines.Remove(line);
+				gridDialogue.Rows.RemoveAt(rowIndex);
+				NotifyChange();
+				line.PropertyChanged -= Line_PropertyChanged;
+				row.Tag = null;
 			}
 		}
 
@@ -806,7 +827,7 @@ namespace SPNATI_Character_Editor.Controls
 				}
 				if (loadedLine.Text == line.Text && loadedLine.Marker == line.Marker)
 				{
-					row.Cells[1].Selected = true;
+					row.Cells[2].Selected = true;
 					return;
 				}
 			}

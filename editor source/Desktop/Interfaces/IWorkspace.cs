@@ -1,4 +1,5 @@
 ﻿using Desktop.Messaging;
+using Desktop.Skinning;
 using System;
 
 namespace Desktop
@@ -35,5 +36,6 @@ namespace Desktop
 		void SetData(string key, object value);
 		T GetData<T>(string key);
 		bool AllowAutoStart(Type activityType);
+		void ShowBanner(string text, SkinnedHighlight highlight);
 	}
 }

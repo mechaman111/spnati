@@ -1657,6 +1657,18 @@ namespace SPNATI_Character_Editor
 				response.TotalMasturbating = "0";
 				response.TotalFinished = "0";
 			}
+			else if (response.Tag == "must_masturbate")
+			{
+				//finished check
+				TargetCondition finished = response.Conditions.Find(c => c.ToString() == "0 finished");
+				TargetCondition finishing = response.Conditions.Find(c => c.ToString() == "0 masturbating");
+				if (finished != null && finishing != null)
+				{
+					response.Tag = "must_masturbate_first";
+					response.Conditions.Remove(finished);
+					response.Conditions.Remove(finishing);
+				}
+			}
 
 			foreach (Case alternate in AlternativeConditions)
 			{
@@ -2282,6 +2294,10 @@ namespace SPNATI_Character_Editor
 			{
 				return "hand";
 			}
+			else if (Tag == "selected")
+			{
+				return "opponent_selected";
+			}
 
 			string tag = Tag;
 			if (tag != null && tag.StartsWith("female_"))
@@ -2350,6 +2366,11 @@ namespace SPNATI_Character_Editor
 			if (tag == "good_hand" || tag == "okay_hand" || tag == "bad_hand")
 			{
 				return "hand";
+			}
+
+			if (tag == "finishing_masturbating")
+			{
+				return null;
 			}
 
 			return Tag; //if nothing above applied, the speaker is reacting to some event unrelated to the responder, so the responder can target the same thing

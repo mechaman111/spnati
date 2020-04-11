@@ -29,8 +29,10 @@
 		private void InitializeComponent()
 		{
 			this.splitContainer1 = new Desktop.Skinning.SkinnedSplitContainer();
-			this.stripActivities = new Desktop.Skinning.SkinnedTabStrip();
+			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+			this.grpBanner = new Desktop.Skinning.SkinnedGroupBox();
 			this.tabActivities = new Desktop.Skinning.SkinnedTabControl();
+			this.stripActivities = new Desktop.Skinning.SkinnedTabStrip();
 			this.sidebar = new Desktop.CommonControls.DBPanel();
 			this.stripSidebar = new Desktop.Skinning.SkinnedTabStrip();
 			this.tabSidebarActivities = new Desktop.Skinning.SkinnedTabControl();
@@ -38,6 +40,10 @@
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+			this.splitContainer2.Panel1.SuspendLayout();
+			this.splitContainer2.Panel2.SuspendLayout();
+			this.splitContainer2.SuspendLayout();
 			this.sidebar.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -49,8 +55,8 @@
 			// 
 			// splitContainer1.Panel1
 			// 
+			this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
 			this.splitContainer1.Panel1.Controls.Add(this.stripActivities);
-			this.splitContainer1.Panel1.Controls.Add(this.tabActivities);
 			// 
 			// splitContainer1.Panel2
 			// 
@@ -60,13 +66,71 @@
 			this.splitContainer1.SplitterDistance = 621;
 			this.splitContainer1.TabIndex = 1;
 			// 
+			// splitContainer2
+			// 
+			this.splitContainer2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.splitContainer2.IsSplitterFixed = true;
+			this.splitContainer2.Location = new System.Drawing.Point(100, 0);
+			this.splitContainer2.Margin = new System.Windows.Forms.Padding(0);
+			this.splitContainer2.Name = "splitContainer2";
+			this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// splitContainer2.Panel1
+			// 
+			this.splitContainer2.Panel1.Controls.Add(this.grpBanner);
+			this.splitContainer2.Panel1Collapsed = true;
+			this.splitContainer2.Panel1MinSize = 20;
+			// 
+			// splitContainer2.Panel2
+			// 
+			this.splitContainer2.Panel2.Controls.Add(this.tabActivities);
+			this.splitContainer2.Size = new System.Drawing.Size(522, 544);
+			this.splitContainer2.SplitterDistance = 25;
+			this.splitContainer2.TabIndex = 2;
+			// 
+			// grpBanner
+			// 
+			this.grpBanner.BackColor = System.Drawing.Color.White;
+			this.grpBanner.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.grpBanner.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.grpBanner.Image = null;
+			this.grpBanner.Location = new System.Drawing.Point(0, 0);
+			this.grpBanner.Name = "grpBanner";
+			this.grpBanner.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryDark;
+			this.grpBanner.ShowIndicatorBar = false;
+			this.grpBanner.Size = new System.Drawing.Size(150, 25);
+			this.grpBanner.TabIndex = 0;
+			this.grpBanner.TabStop = false;
+			// 
+			// tabActivities
+			// 
+			this.tabActivities.Alignment = System.Windows.Forms.TabAlignment.Left;
+			this.tabActivities.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabActivities.ItemSize = new System.Drawing.Size(25, 100);
+			this.tabActivities.Location = new System.Drawing.Point(0, 0);
+			this.tabActivities.Margin = new System.Windows.Forms.Padding(0);
+			this.tabActivities.Multiline = true;
+			this.tabActivities.Name = "tabActivities";
+			this.tabActivities.SelectedIndex = 0;
+			this.tabActivities.Size = new System.Drawing.Size(521, 544);
+			this.tabActivities.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+			this.tabActivities.TabIndex = 0;
+			this.tabActivities.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.OnSelectingTab);
+			// 
 			// stripActivities
 			// 
+			this.stripActivities.AddCaption = null;
+			this.stripActivities.DecorationText = null;
 			this.stripActivities.Dock = System.Windows.Forms.DockStyle.Left;
 			this.stripActivities.Location = new System.Drawing.Point(0, 0);
 			this.stripActivities.Margin = new System.Windows.Forms.Padding(0);
 			this.stripActivities.Name = "stripActivities";
 			this.stripActivities.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryLight;
+			this.stripActivities.ShowAddButton = false;
 			this.stripActivities.ShowCloseButton = false;
 			this.stripActivities.Size = new System.Drawing.Size(100, 544);
 			this.stripActivities.StartMargin = 10;
@@ -78,23 +142,6 @@
 			this.stripActivities.TabType = Desktop.Skinning.SkinnedBackgroundType.Background;
 			this.stripActivities.Text = "skinnedTabStrip1";
 			this.stripActivities.Vertical = true;
-			// 
-			// tabActivities
-			// 
-			this.tabActivities.Alignment = System.Windows.Forms.TabAlignment.Left;
-			this.tabActivities.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.tabActivities.ItemSize = new System.Drawing.Size(25, 100);
-			this.tabActivities.Location = new System.Drawing.Point(100, 0);
-			this.tabActivities.Margin = new System.Windows.Forms.Padding(0);
-			this.tabActivities.Multiline = true;
-			this.tabActivities.Name = "tabActivities";
-			this.tabActivities.SelectedIndex = 0;
-			this.tabActivities.Size = new System.Drawing.Size(521, 544);
-			this.tabActivities.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-			this.tabActivities.TabIndex = 0;
-			this.tabActivities.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.OnSelectingTab);
 			// 
 			// sidebar
 			// 
@@ -110,11 +157,14 @@
 			// 
 			// stripSidebar
 			// 
+			this.stripSidebar.AddCaption = null;
+			this.stripSidebar.DecorationText = null;
 			this.stripSidebar.Dock = System.Windows.Forms.DockStyle.Top;
 			this.stripSidebar.Location = new System.Drawing.Point(0, 0);
 			this.stripSidebar.Margin = new System.Windows.Forms.Padding(0);
 			this.stripSidebar.Name = "stripSidebar";
 			this.stripSidebar.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.stripSidebar.ShowAddButton = false;
 			this.stripSidebar.ShowCloseButton = false;
 			this.stripSidebar.Size = new System.Drawing.Size(278, 23);
 			this.stripSidebar.StartMargin = 20;
@@ -150,6 +200,10 @@
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
+			this.splitContainer2.Panel1.ResumeLayout(false);
+			this.splitContainer2.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+			this.splitContainer2.ResumeLayout(false);
 			this.sidebar.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -163,5 +217,7 @@
 		private Desktop.Skinning.SkinnedTabControl tabSidebarActivities;
 		private Skinning.SkinnedTabStrip stripActivities;
 		private Skinning.SkinnedTabStrip stripSidebar;
+		private System.Windows.Forms.SplitContainer splitContainer2;
+		private Skinning.SkinnedGroupBox grpBanner;
 	}
 }

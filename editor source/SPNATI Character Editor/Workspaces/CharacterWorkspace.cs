@@ -3,6 +3,7 @@ using SPNATI_Character_Editor.Activities;
 using SPNATI_Character_Editor.Services;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace SPNATI_Character_Editor.Workspaces
 {
@@ -34,6 +35,30 @@ namespace SPNATI_Character_Editor.Workspaces
 				if (Config.EnableDashboard && (Config.DevMode || Config.IncludesUserName(_character.Metadata.Writer)) && GlobalCache.HasChanges(_character.FolderName))
 				{
 					Shell.Instance.ShowToast("New Incoming Dialogue!", $"Some characters have had new lines written that target {_character}. Check out the Dashboard for a summary.");
+				}
+			}
+
+			bool knownVersion = _character.Source != EditorSource.CharacterEditor;
+			string version = _character.Version;
+			for (int i = 0; i < Config.VersionHistory.Length; i++)
+			{
+				if (version == Config.VersionHistory[i])
+				{
+					knownVersion = true;
+					break;
+				}
+			}
+			if (!knownVersion)
+			{
+				Match match = Regex.Match(version, @"v(\d+)");
+				if (match.Success)
+				{
+					string majorVersion = match.Groups[1].Value;
+					int versionNumber;
+					if (int.TryParse(majorVersion, out versionNumber) && versionNumber >= 5)
+					{
+						ShowBanner($"This character was saved in a later version of the editor ({_character.Version}). Some features may not work properly.", Desktop.Skinning.SkinnedHighlight.Bad);
+					}
 				}
 			}
 		}
