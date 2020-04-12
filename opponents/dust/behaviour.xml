@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 12:33:01 PM on February 17, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 3:20:47 AM on April 12, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Dust</first>
@@ -596,6 +596,22 @@
                 <condition role="target" character="elesa" />
                 <state img="#-laugh.png">Wow, what grace!</state>
             </case>
+            <case stage="0">
+                <condition role="target" character="tharja" />
+                <state img="custom:#-calm-ahrah" location="80%">{ahrah}Be on guard, Dust. Dark energies surround this woman.</state>
+            </case>
+            <case stage="0">
+                <condition role="target" character="komi-san" />
+                <state img="#-um.png">Huh. She seems a bit shy...</state>
+            </case>
+            <case stage="0">
+                <condition role="target" character="moon" />
+                <state img="#-annoyed.png">Something tells me I'm not going to enjoy this.</state>
+            </case>
+            <case stage="0">
+                <condition role="target" character="roll" />
+                <state img="custom:#-fidget-snark">{fidget}Roll... what an odd name.&lt;br&gt;{!reset}So is "Fidget," when you really think about it.</state>
+            </case>
         </trigger>
 
         <trigger id="game_start">
@@ -910,6 +926,11 @@
                 <state img="#-um.png" marker="meia_jura_outfit">Meia, Jura... you two work together, but your outfits are wildly different. Why's that?</state>
                 <state img="#-calm.png" marker="meia_jura_outfit">Hmm. Meia, if you're Jura's commander, why is she dressed a bit flashier?</state>
             </case>
+            <case stage="0-7" id="84" alsoPlaying="ribbon_girl" alsoPlayingStage="1" alsoPlayingSayingMarker="ArmPowerTalk">
+                <condition role="other" character="ribbon_girl" timeInStage="0" sayingMarker="ArmPowerTalk" />
+                <state img="custom:#-fidget-snark" location="20%">{fidget}What a hell of an ability to have.</state>
+                <state img="custom:#-fidget-snark">{fidget}Well, at least you're well-armed.</state>
+            </case>
             <case stage="0">
                 <condition role="other" character="revy" saidMarker="dust_guns" />
                 <condition role="other" character="aimee" stage="1-5" />
@@ -1068,6 +1089,9 @@
                 <state img="#-wat.png" marker="revy_guns">Revy, please put the guns down...</state>
                 <state img="#-wat.png" marker="revy_guns">Revy, there's no monsters around. Can you put down the guns, please?</state>
             </case>
+            <case stage="0-7" id="81" alsoPlaying="roll" alsoPlayingStage="4-7" alsoPlayingSayingMarker="ovenon1">
+                <state img="custom:#-calm-fidget">{fidget}Hey, you're not wimping out on this game, are you?</state>
+            </case>
             <case stage="0-7" oneShotId="51">
                 <condition role="other" character="lucina" stage="1-4" />
                 <state img="#-um.png" marker="lucinasword">So Lucina, what kind of a sword do you have there?</state>
@@ -1117,7 +1141,7 @@
             </case>
             <case stage="0-7" oneShotId="47" totalRounds="2-">
                 <condition role="other" character="cynthia" />
-                <state img="#-calm.png">So you're a champion, Cynthia? What kind of combat do you do?</state>
+                <state img="#-calm.png" marker="cynthia_champion">So you're a champion, Cynthia? What kind of combat do you do?</state>
             </case>
             <case stage="0-7" oneShotId="49" totalRounds="2-">
                 <condition role="other" character="megumin" />
@@ -1139,6 +1163,9 @@
                 <condition role="other" character="rainbow_dash" sayingMarker="dust_doggingup" />
                 <state img="custom:#-fidget-snark" marker="rd_dogged_down">{fidget}In a way, I kinda want to see what he looks like "dogged down" then.</state>
             </case>
+            <case stage="0-7" id="75" alsoPlaying="jura" totalMales="4" alsoPlayingSayingMarker="seduction">
+                <state img="custom:#-fidget-snark" marker="jura-seduction">{fidget}You're asking Dust? He's clueless about love!{!reset}&lt;br&gt;H-hey, Fidget... no.</state>
+            </case>
             <case stage="0-7" oneShotId="65">
                 <condition role="other" character="meia" saidMarker="dust_half" />
                 <condition role="self" saidMarker="meia_halfvirgin" />
@@ -1157,6 +1184,16 @@
                 <condition role="other" character="revy" sayingMarker="dust_music" />
                 <state img="#-wat.png" marker="revy_music2">How uncivilized do you think I am? I know of several bards around Falana.</state>
                 <state img="#-annoyed.png" marker="revy_music2">I am &lt;i&gt;not&lt;/i&gt; a feral wolf. I userstand what &lt;i&gt;actual&lt;/i&gt; music is.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="self" saidMarker="cynthia_ruins" />
+                <condition role="other" character="cynthia" sayingMarker="DustRuins1" />
+                <state img="#-um.png" marker="cynthia_ruins2">Just a small amount, I'm afraid. They were built centuries ago, probably during the Wars of Unification or earlier. The Moonbloods would probably know more, especially Elder Grey-Eyes.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="self" saidMarker="cynthia_hist-stories" />
+                <condition count="-1" role="other" character="cynthia" sayingMarker="DustStories1" />
+                <state img="custom:#-calm-ahrah" marker="cynthia_stories1">How did it go again? "In time of great need, when all seems lost, will come a warrior of two souls, bonded with an Elysian Blade, and they shall turn the tide." I'm the warrior, and Ahrah's the blade.</state>
             </case>
             <case stage="0-7" id="48" oneShotId="75">
                 <condition role="other" character="meia" saidMarker="dust_greyeyes" />
@@ -1327,6 +1364,20 @@
             <case stage="0-7" oneShotId="89">
                 <condition role="other" character="hk416" saidMarker="dust_fairy" />
                 <state img="custom:#-fidget-snark" marker="hk_fairy" location="20%">{fidget}Uh, no. I'm a nimbat. They don't have them where you're from, huh?</state>
+            </case>
+            <case stage="0" oneShotId="91">
+                <condition role="other" character="roll" saying="housekeeping robot" />
+                <state img="#-um.png" marker="roll-whatrobot">What's a robot?</state>
+            </case>
+            <case stage="0-7" id="76" alsoPlaying="megumin" alsoPlayingSayingMarker="megumin_vanir">
+                <state img="custom:#-calm-ahrah" marker="megumin_demons">Ahrah can sense stuff from far away, but I don't know if he's all-seeing. And he's hardly a demon.</state>
+            </case>
+            <case stage="0-7" id="82" alsoPlaying="megumin" alsoPlayingSayingMarker="megumin_biggestMonster">
+                <state img="custom:#-calm-fidget" marker="megumin_biggest">What was the biggest we tackled, Fidget? Probably Baron Kane's ghost?&lt;br&gt;{fidget}I think so. But she took out a fortress! So cool!</state>
+            </case>
+            <case stage="0" oneShotId="92">
+                <condition role="other" character="komi-san" saying="&lt;i&gt;" />
+                <state img="custom:#-calm-fidget">{fidget}Ummm, is anyone else hearing that?&lt;br&gt;{!reset}Hearing what?</state>
             </case>
             <case stage="0-7" oneShotId="61" priority="100">
                 <condition role="other" character="meia" saidMarker="laser_ring" />
@@ -1604,6 +1655,10 @@
             <case stage="1">
                 <condition role="other" character="saki_zls" />
                 <state img="custom:#-whole-gang">What's not "up with 'em?" I'm the fated bearer of the sword, and Fidget's its protector.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="miko" />
+                <state img="custom:#-fidget-snark" marker="miko-squirrel" location="20%">{fidget}SQUIRREL?!</state>
             </case>
             <case stage="0-6">
                 <condition count="1-" filter="cheater" status="alive" role="other" var="cheater" />
@@ -1991,10 +2046,6 @@
             <case stage="7">
                 <condition role="other" character="tomoko" saying="knotted" />
                 <state img="#-wat.png">Why does everyone keep assuming that?</state>
-            </case>
-            <case stage="1" priority="101">
-                <condition role="other" character="mary" notSaidMarker="insanetrigger" />
-                <state img="#-wat.png">Um... the knot? Ummm...</state>
             </case>
             <case stage="6">
                 <condition role="other" character="jessie" />
@@ -2492,6 +2543,9 @@
             <case stage="0-9" id="63" target="larachel" targetStage="1">
                 <state img="#-um.png">Oh! Royalty? I hope you don't mind if -- huh?!</state>
             </case>
+            <case stage="0-9" id="85" target="moon" targetStage="1">
+                <state img="#-facepalm.png">I'm getting a headache already...</state>
+            </case>
             <case stage="0-9">
                 <condition role="self" saidMarker="cassius_talked&gt;3" />
                 <state img="#-c-standoffish.png">Come on, quit making everyone wait.</state>
@@ -2669,6 +2723,9 @@
                 <condition count="0" filter="misty_hgss" />
                 <state img="#-calm.png">That's a nickname that suits you well.</state>
             </case>
+            <case stage="0-9" id="77" target="maki" targetStage="1" targetSayingMarker="makipiano">
+                <state img="#-embarrassed.png" marker="maki_piano">Uh... unfortunately, I'm too busy with the adventuring life to play any kind of instrument.</state>
+            </case>
             <case stage="0-9">
                 <condition role="target" character="rainbow_dash" stage="2" />
                 <state img="#-um.png" marker="rd_socks">Huh. Your socks match your hair.</state>
@@ -2757,6 +2814,14 @@
                 <state img="custom:#-fidget-scared" location="20%">{fidget}I hope when she says she likes spiders she means the tiny ones, and not the Stonecutters back home..</state>
                 <state img="custom:#-fidget-scared" location="20%">{fidget}Oh, why'd she have to be a fan of something THAT TERRIFIES ME?!</state>
             </case>
+            <case stage="0-9" id="83" target="tharja" targetStage="1">
+                <state img="custom:#-calm-ahrah">{ahrah}You might want to keep an eye on this one, Dust. Dark magic is very serious business.</state>
+                <state img="custom:#-calm-ahrah" location="80%">{ahrah}Of course... Be on guard, Dust. She may not use her magic solely to disrobe.</state>
+            </case>
+            <case stage="0-9" id="86" target="lucy" targetStage="4">
+                <state img="custom:#-fidget-snark" marker="lucy-cheat">{fidget}Hey, hey, hey, NOT FAIR!</state>
+                <state img="custom:#-fidget-snark" marker="lucy-cheat">{fidget}Oh come on, don't summon your maid just to cheat!</state>
+            </case>
             <case stage="0-9">
                 <state img="#-embarrassed.png">Oh, you're going for the ~clothing~ now?</state>
                 <state img="#-horny.png">O-oh... the ~clothing~ now...</state>
@@ -2782,6 +2847,13 @@
             <case stage="0-9">
                 <condition role="target" character="gaige" stage="7" />
                 <state img="#-um.png">So does that mean your arm is really metallic?</state>
+            </case>
+            <case stage="0-9" id="79">
+                <condition role="target" character="spooky" stage="2" />
+                <state img="custom:#-whole-gang">{fidget}Hey, that's cheating!{!reset}&lt;br&gt;Makes me wonder what Baron Kane would do if playing this?&lt;br&gt;{ahrah}Following that line of thought will lead to madness, Dust...</state>
+            </case>
+            <case stage="0-9" id="87" target="lucy" targetStage="5">
+                <state img="custom:#-calm-fidget">{fidget}Ha! Serves you right, Lucy!</state>
             </case>
             <case stage="0-9">
                 <state img="#-horny.png" marker="jin_talked">Now this is a game... I gotta see more.</state>
@@ -2921,6 +2993,9 @@
                 <state img="#-wat.png">This is the Sorrowing Mountains all over again.</state>
                 <state img="#-pensive.png">At least you're not trying to kill us.</state>
                 <state img="custom:#-fidget-scared" location="20%">{fidget}Dust, the zombie girl's making me very uncomfortable.</state>
+            </case>
+            <case stage="0-9" id="78" target="sakura">
+                <state img="custom:#-fidget-scared">{fidget}Hey, look out!{!reset}&lt;br&gt;I really hope you weren't aiming at Fidget...</state>
             </case>
             <case stage="0-9" oneShotId="10">
                 <state img="#-horny.png" marker="jin_talked">W-whoa... booooobs...</state>
@@ -3438,6 +3513,9 @@
         </trigger>
 
         <trigger id="female_must_masturbate">
+            <case stage="0-9" id="88" target="lucy" totalMasturbating="0" totalFinished="0">
+                <state img="custom:#-calm-ahrah" location="80%">{ahrah}Another familiar? Strange...</state>
+            </case>
             <case stage="0-9" id="6">
                 <condition role="target" character="revy" saidMarker="femplayerloss" notSaidMarker="femplayerfinish" />
                 <state img="#-wat.png">Uhh... is it too late to leave the game?</state>
@@ -3482,6 +3560,9 @@
                 <state img="#-whoa.png">That's something I haven't seen before.</state>
                 <state img="#-whoa.png">Oh! She's gonna use that vine to...?</state>
                 <state img="#-whoa.png">I knew something like this was possible, but I didn't expect to see it.</state>
+            </case>
+            <case stage="0-9" id="89" target="lucy">
+                <state img="#-wat.png">Oof. Remind me to never anger her.</state>
             </case>
             <case stage="7-9" oneShotId="16" priority="1">
                 <state img="#-horny.png">Oh wow, I'm actually gonna see a woman masturbate for real!</state>
@@ -3762,7 +3843,7 @@
         <trigger id="game_over_defeat">
             <case stage="9" id="18" priority="900">
                 <condition role="other" character="nami" timeInStage="5-" sayingMarker="stealing" />
-                <state img="#-wat.png">What!? HEY! THIEF!! ... Damn, I wish I had Ahrah with me...</state>
+                <state img="#-wat.png">What!? HEY! THIEF!! ... Damn, I'm glad she didn't take Ahrah...</state>
                 <state img="#-wat.png">My rings! My blueprints! My hat!</state>
                 <state img="custom:#-um-ahrah" location="20%">{ahrah}Master, unless you want to return to Falana naked, I suggest you give chase immediately.</state>
             </case>
