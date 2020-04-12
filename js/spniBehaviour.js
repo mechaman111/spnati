@@ -909,22 +909,49 @@ function poseNameMatches(nameA, nameB) {
  * separated by a dash, returns an array with the same number 
  * twice, or the first and second number as the case may be
  ************************************************************/
+function Interval (str) {
+    if (str === undefined) {
+        this.min = this.max = null; return;
+    }
+    var m = str.match(/^\s*(-?\d+)?\s*-\s*(-?\d+)?\s*$/);
+    if (m) {
+        this.min = m[1] ? parseInt(m[1]) : null;
+        this.max = m[2] ? parseInt(m[2]) : null;
+    } else if (str.match(/^\s*(\d+)\s*$/)) {
+        var val = parseInt(str);
+        this.min = this.max = val;
+    } else {
+        this.min = this.max = NaN;
+    }
+}
+
+Interval.prototype.contains = function (number) {
+    return (this.min === null || this.min <= number)
+        && (this.max === null || number <= this.max);
+};
+
+Interval.prototype.toString = Interval.prototype.toJSON = function(key) {
+    if (isNaN(this.min)) return '#ERR';
+    if (this.min === null && this.max === null) {
+        return undefined;
+    }
+    if (this.min == this.max && this.min >= 0) {
+        return this.min.toString();
+    } else {
+        return (this.min === null ? '' : this.min.toString()) + '-' +
+            (this.max === null ? '' : this.max.toString());
+    }
+};
+
 function parseInterval (str) {
-    if (!str) return undefined;
-    var pieces = str.split("-");
-    if (pieces.length > 2) return null;
-    var min = pieces[0].trim() == "" ? null : parseInt(pieces[0], 10);
-    if (isNaN(min)) return null;
-    var max = pieces.length == 1 ? min
-    : pieces[1].trim() == "" ? null : parseInt(pieces[1], 10);
-    if (isNaN(max)) return null;
-    return { min : min, max : max };
+    if (str) {
+        return new Interval(str);
+    }
+    return undefined;
 }
 
 function inInterval (value, interval) {
-    return interval
-        && (interval.min === null || interval.min <= value)
-        && (interval.max === null || value <= interval.max);
+    return !interval || interval.contains(value);
 }
 
 /************************************************************
