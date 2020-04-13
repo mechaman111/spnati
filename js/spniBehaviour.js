@@ -1121,7 +1121,7 @@ function Case($xml) {
     this.totalRounds =              parseInterval($xml.attr("totalRounds"));
     this.saidMarker =               $xml.attr("saidMarker");
     this.notSaidMarker =            $xml.attr("notSaidMarker");
-    this.customPriority =           parseInt($xml.attr("priority"), 10);
+    this.customPriority =           parseInt($xml.attr("priority"), 10) || undefined;
     this.hidden =                   $xml.attr("hidden");
     this.addTags =                  $xml.attr("addCharacterTags");
     this.removeTags =               $xml.attr("removeCharacterTags");
@@ -1156,7 +1156,7 @@ function Case($xml) {
     this.tests = tests;
     
     // Calculate case priority ahead of time.
-    if (!isNaN(this.customPriority)) {
+    if (this.customPriority !== undefined) {
         this.priority = this.customPriority;
     } else {
     	this.priority = 0;
@@ -1259,6 +1259,8 @@ Case.prototype.toJSON = function () {
     
     Object.keys(this).forEach(function (prop) {
         var val = this[prop];
+        if (prop == 'priority') return;
+        if (prop == 'customPriority') prop = 'priority';
         if (val === undefined || (typeof val === 'object' && !(val instanceof Interval))) return;
         ser[prop] = val;
     }, this);
