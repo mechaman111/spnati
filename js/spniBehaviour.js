@@ -1254,28 +1254,14 @@ Case.prototype.getPossibleImages = function (stage) {
 /* Convert this case's conditions into a plain object, into a format suitable
  * for e.g. JSON serialization.
  */
-Case.prototype.serializeConditions = function () {
-    var complexProps = ['states', 'tests', 'counters', 'addTags', 'removeTags', 'variableBindings', 'priority'];
+Case.prototype.toJSON = function () {
     var ser = {};
     
     Object.keys(this).forEach(function (prop) {
-        if (complexProps.indexOf(prop) >= 0) return;
         var val = this[prop];
-        
-        if (val && typeof val === "object" && (val.min !== undefined || val.max !== undefined)) {
-            // convert interval objects back into strings
-            var min = (val.min !== null) ? val.min : "";
-            var max = (val.max !== null) ? val.max : "";
-            
-            if (min === max) {
-                ser[prop] = (min !== "") ? min.toString() : null;
-            } else {
-                ser[prop] = min+"-"+max;
-            }
-        } else {
-            ser[prop] = val;
-        }
-    }.bind(this));
+        if (val === undefined || (typeof val === 'object' && !(val instanceof Interval))) return;
+        ser[prop] = val;
+    }, this);
     
     ser.tests = this.tests.map(function (test) {
         return {
@@ -1285,18 +1271,7 @@ Case.prototype.serializeConditions = function () {
         };
     });
     
-    ser.counters = this.counters.map(function (ctr) {
-        return {
-            'count': ctr.attr('count'),
-            'role': ctr.attr('role'),
-            'var': ctr.attr('var'),
-            'character': ctr.attr('character'),
-            'stage': ctr.attr('stage'),
-            'filter': ctr.attr('filter'),
-            'gender': ctr.attr('gender'),
-            'status': ctr.attr('status'),
-        };
-    });
+    ser.counters = this.counters;
     
     return ser;
 }

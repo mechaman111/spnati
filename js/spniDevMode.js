@@ -266,7 +266,7 @@ DevModeDialogueBox.prototype.saveEdits = function () {
             this.player.editLog.push({
                 'type': 'edit',
                 'stage': this.player.stage,
-                'case': this.currentCase.serializeConditions(),
+                'case': this.currentCase,
                 'oldState': {'text': this.currentState.text, 'image': this.currentState.image},
                 'state': {'text': this.editData.text, 'image': this.editData.image}
             });
@@ -303,7 +303,7 @@ DevModeDialogueBox.prototype.saveEdits = function () {
             if (curState) {
                 var curCase = curState.parentCase;
                     
-                info.case = curCase.serializeConditions();
+                info.case = curCase;
                 info.state = {'text': curState.rawDialogue, 'image': curState.image, 'marker': null};
                 
                 if (curState.marker) {
