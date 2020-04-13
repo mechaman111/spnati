@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 4:36:58 PM on April 03, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 11:11:00 PM on April 12, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Shamir</first>
@@ -36,6 +36,7 @@
         <tag>fantasy</tag>
         <tag>video_game</tag>
         <tag>fire_emblem</tag>
+        <tag>fe_three_houses</tag>
         <tag>nintendo</tag>
         <tag>bounty_hunter</tag>
         <tag>fighter</tag>
@@ -300,6 +301,10 @@
                 <state img="#-thinking.png">A mission, huh? I'm supposed to be watching for a target. And you are... ?</state>
                 <state img="#-thinking.png">You're on a mission too, huh? Seems like employers everywhere all had the same idea.</state>
             </case>
+            <case stage="0" priority="101">
+                <condition role="other" character="saki_zls" saidMarker="intro_01" />
+                <state img="#-thinking.png">&lt;i&gt;A zombie...&lt;/i&gt; Well, that at least clears you off my list of potential targets. Pretty sure the contract would have stated &lt;i&gt;that much&lt;/i&gt; if my target was undead.</state>
+            </case>
             <case stage="0" id="625">
                 <condition role="other" character="joey" />
                 <state img="#-disinterested.png">Joey? With that face paint... You almost remind me of Those Who Slither in the Dark. I trust you're unaffiliated. Don't worry.</state>
@@ -361,40 +366,36 @@
         </trigger>
 
         <trigger id="good_hand">
+            <case stage="2" id="635">
+                <condition role="other" character="tharja" />
+                <condition role="self" hasHand="Two Pair" />
+                <state img="#-surprised.png" marker="TharjaHandGood3">Ha! Got pretty lucky here to draw t-</state>
+            </case>
             <case stage="0-1" id="608" oneShotId="34">
                 <test expr="~month.number~" value="3" />
                 <test expr="~day.number~" value="27" />
                 <state img="#-happy.png">Come on, just cause it's my birthday doesn't mean you have to spoil me with good cards.</state>
             </case>
+            <case stage="0" id="632">
+                <condition role="other" character="tharja" />
+                <state img="#-smirk.png" marker="TharjaHandGood1">Ha, wait until you see what I got, ~player~.</state>
+            </case>
+            <case stage="1" id="634">
+                <condition role="other" character="tharja" />
+                <state img="#-smirk.png" marker="TharjaHandGood2">Did you use your magic to give me these cards, Tharja? I don't mind. Unless it's a bribe.</state>
+            </case>
             <case stage="0-8" id="23">
                 <state img="#-smirk.png">Yes. This is acceptable.</state>
-                <state img="#-smirk.png">Nice. Love it when a gamble pays off.</state>
                 <state img="#-smirk.png">Nice. Love it when a good gamble pays off.</state>
                 <state img="#-disinterested.png">These are pretty nice. </state>
-                <state img="#-disinterested2.png">These are fairly nice.</state>
                 <state img="#-disinterested.png">A fairly nice hand.</state>
                 <state img="#-thinking.png">Pretty nice hand, I would think.</state>
-                <state img="#-smirk.png">This hand is good. I wish Catherine were here to see it.</state>
-                <state img="#-thinking.png">This hand it pretty good. I wish Catherine were here to see it.</state>
+                <state img="#-smirk.png">This is good. I wish Catherine were here to see it.</state>
                 <state img="#-disappointed.png">At any rate, it's unlikely I'll lose with these.</state>
-                <state img="#-disappointed.png">At any rate, a loss is unlikely with these.</state>
-                <state img="#-disappointed.png">At any rate, a loss is unlikely with these cards.</state>
-                <state img="#-disappointed.png">At any rate, a loss is unlikely with this hand.</state>
-                <state img="#-disappointed.png">At any rate, it's unlikely I'll lose with this hand.</state>
                 <state img="#-smirk.png">Thanks dealer. The cards are appreciated.</state>
-                <state img="#-smirk.png">Thanks dealer. These cards are appreciated.</state>
-                <state img="#-smirk.png">Thanks dealer. The hand is appreciated.</state>
-                <state img="#-happy.png">The cards are appreciated. Thanks dealer.</state>
-                <state img="#-happy.png">These cards are appreciated. Thanks dealer.</state>
-                <state img="#-happy.png">The hand is appreciated. Thanks dealer.</state>
                 <state img="#-happy.png">This game may all come down to chance, but it's nice to think a good hand like this is a reflection of skill.</state>
-                <state img="#-happy.png">This game may all come down to chance, but it's nice to think a good hand like this is a reflection of your skill.</state>
-                <state img="#-happy.png">This game may all come down to chance, but it's still nice to think a good hand like this is a reflection of skill.</state>
-                <state img="#-happy.png">This game may all come down to chance, but it's still nice to think a good hand like this is a reflection of your skill.</state>
                 <state img="#-disinterested.png">Strength is all for a mercenary.</state>
-                <state img="#-disinterested.png">Strength is all for a merc.</state>
                 <state img="#-disinterested.png">Going for the kill.</state>
-                <state img="#-happy.png">A poker game is better when shared with good company.</state>
                 <state img="#-happy.png">Poker is better when shared with good company.</state>
                 <state img="#-disinterested.png">More weapons.</state>
                 <state img="#-disinterested.png">There's my opening.</state>
@@ -415,6 +416,13 @@
             </case>
             <case stage="8" id="280">
                 <state img="#-happy.png">I'm safe. For now.</state>
+            </case>
+            <case stage="0" id="631">
+                <state img="#-happy.png">Ha, things are looking good.</state>
+                <state img="#-disinterested.png">Hand doesn't look that bad.</state>
+                <state img="#-thinking.png">These look alright.</state>
+                <state img="#-smirk.png">Jackpot.</state>
+                <state img="#-smirk.png">Bullseye.</state>
             </case>
         </trigger>
 
@@ -453,9 +461,7 @@
                 <state img="#-thinking.png">This could get interesting.</state>
                 <state img="#-smirk.png">This is the sort of hand where skill really matters.</state>
                 <state img="#-smirk.png">The key to gambling is knowing the situation better than your opponent.</state>
-                <state img="#-smirk.png">The key to gambling is knowing the situation better than your opponent. If you know something your opponent doesn't, capitalize on it.</state>
                 <state img="#-disinterested.png">After the Dagda and Brigid war, I traveled across Fódlan on my own. Lady Rhea took me in. I've owed her a debt ever since.</state>
-                <state img="#-smirk.png">Yeah. This is okay.</state>
                 <state img="#-smirk.png">Yeah. This is fine.</state>
                 <state img="#-disappointed.png">It will have to suffice.</state>
                 <state img="#-disinterested.png">I'm a mercenary. I know how to make do.</state>
@@ -519,46 +525,28 @@
                 <state img="#-disappointed.png">Catherine surely had assistance from Claude in this whole thing. He has a gift for scheming.</state>
                 <state img="#-angry.png">If Catherine truly is behind this scheme, then Claude may have a new rival...</state>
             </case>
-            <case stage="0" id="502" oneShotId="22">
-                <state img="custom:#-sigh">Sometimes, you get lucky. Sometimes, you don't.</state>
-                <state img="custom:#-sigh">Sometimes, you get lucky. Others, you don't.</state>
-                <state img="custom:#-sigh">Sometimes, you get lucky. Sometimes, not so much.</state>
-                <state img="custom:#-sigh">Sometimes, you get lucky. others, not so much.</state>
-            </case>
             <case stage="0" id="503">
                 <state img="#-thinking.png">Perhaps I'm not the only one with a bad hand.</state>
                 <state img="custom:#-sigh">It's a miss...</state>
                 <state img="custom:#-sigh">I've seen better days.</state>
+                <state img="#-disappointed.png">Sometimes, you get lucky. Sometimes, you don't.</state>
             </case>
             <case stage="1" id="506">
                 <state img="#-disappointed.png">A miss...</state>
                 <state img="#-disappointed.png">Like having a low luck stat...</state>
                 <state img="#-disinterested2.png">Unlucky...</state>
             </case>
-            <case stage="2" id="507" oneShotId="25">
-                <state img="#-disappointed.png">Not every hand's a winner.</state>
-                <state img="#-disappointed.png">Not every hand is a winner.</state>
-            </case>
             <case stage="2" id="508">
                 <state img="#-disappointed.png">Perhaps there's someone else with an even worse hand.</state>
                 <state img="#-angry.png">Weeds must be cut at the root, like tyranny and vice.</state>
-            </case>
-            <case stage="3" id="509" oneShotId="26">
-                <state img="#-disappointed.png">Can't say this is what I was hoping for.</state>
-                <state img="#-disappointed.png">Can't say this is what I was looking for.</state>
+                <state img="#-disappointed.png">Not every hand's a winner.</state>
             </case>
             <case stage="3" id="510">
                 <state img="#-disappointed.png">Where's a goddess icon when you need one?</state>
                 <state img="#-stripped.png">(&lt;i&gt;Think this... through...&lt;/i&gt;)</state>
+                <state img="#-disappointed.png">Can't say this is what I was hoping for.</state>
             </case>
             <case stage="4" id="511" oneShotId="27">
-                <state img="#-disinterested.png">It helps that I've had some ale before starting...</state>
-                <state img="#-disinterested.png">It helps that I've had some mead before starting...</state>
-                <state img="#-disinterested.png">It helps that I've had some wine before starting...</state>
-                <state img="#-disinterested.png">It helps that I've had some liquor before starting...</state>
-                <state img="#-disinterested.png">It helps that I've had some ale before playing...</state>
-                <state img="#-disinterested.png">It helps that I've had some mead before playing...</state>
-                <state img="#-disinterested.png">It helps that I've had some wine before playing...</state>
                 <state img="#-disinterested.png">It helps that I've had some liquor before playing...</state>
             </case>
         </trigger>
@@ -674,11 +662,7 @@
                 <state img="#-disappointed.png">This farce can't end soon enough.</state>
             </case>
             <case stage="0" id="25">
-                <state img="#-disinterested.png">A loss? Oh, right. My apologies. I was so absorbed on the contract that I forgot to focus.</state>
-                <state img="custom:#-sigh">Oh, right. The poker game. To be honest, it slipped my mind we were even playing. That happens when you're focusing on more important things.</state>
-                <state img="#-disinterested.png">Ah, right. The poker game. My apologies, everyone. I was on the lookout for my target.</state>
-                <state img="#-thinking.png">Right, the poker match. Completing the contract is more important than this game, but perhaps I should focus more on the cards regardless.</state>
-                <state img="custom:#-sigh">I suppose it's rude to the game host if I don't follow the rules.</state>
+                <state img="#-disinterested2.png" marker="ShamirStripsCynthiaReacts1">Yes.</state>
             </case>
             <case stage="1" id="28">
                 <state img="#-disinterested.png">Another loss? Hmm. Right. I'll try not to make it a habit.</state>
@@ -707,6 +691,25 @@
             <case stage="7" id="204">
                 <state img="#-stripping.png">I'm confident that sly fox Catherine put me up to this. She's always been good at taking jokes too far.</state>
                 <state img="#-stripping.png">I fancy myself a bit of revenge. Catherine won't be getting away with this.</state>
+            </case>
+            <case stage="0" id="664">
+                <state img="#-disinterested.png">A loss? Oh, right. My apologies. I was so absorbed on the contract that I forgot to focus.</state>
+                <state img="custom:#-sigh">Oh, right. The poker game. To be honest, it slipped my mind we were even playing. That happens when you're focusing on more important things.</state>
+                <state img="#-disinterested.png">Ah, right. The poker game. My apologies, everyone. I was on the lookout for my target.</state>
+                <state img="#-thinking.png">Right, the poker match. Completing the contract is more important than this game, but perhaps I should focus more on the cards regardless.</state>
+                <state img="custom:#-sigh">I suppose it's rude to the game host if I don't follow the rules.</state>
+            </case>
+            <case stage="1" id="665">
+                <state img="#-disinterested.png" marker="ShamirStripsCynthiaReacts4">... I suppose you're right, Cynthia. As long as you let me focus on my contract when I need to.</state>
+            </case>
+            <case stage="2" id="666">
+                <state img="#-disappointed.png" marker="ShamirStripsCynthiaReacts7">So, Cynthia,there's some stuff a long time ago about Nemesis, The King of Liberation, and his battle against Serios</state>
+            </case>
+            <case stage="3" id="667">
+                <state img="#-disinterested2.png" marker="ShamirStripsCynthiaReacts10">Right. Let's start with the Dagda-Brigid War. In 1175, the forces of Brigid and my homeland of Dagda invaded the Adrestian Empire...</state>
+            </case>
+            <case stage="5" id="669">
+                <state marker="ShamirStripsCynthiaReacts16"></state>
             </case>
         </trigger>
 
@@ -792,6 +795,21 @@
                 <state img="#-stripping.png">Having to take off my jacket... It's a shame I can't refuse this order.</state>
                 <state img="#-stripping.png">This whole game is just a bunch of orders. You'd think I'd be better at it.</state>
                 <state img="#-stripping.png">Orders orders orders. That's all I ever seem to do. Following orders...</state>
+            </case>
+            <case stage="0" id="670">
+                <state img="#-stripping.png" marker="ShamirStripsCynthiaReacts2">Can't.</state>
+            </case>
+            <case stage="1" id="671">
+                <state img="#-stripping.png" marker="ShamirStripsCynthiaReacts5">Homeland? Dagda, or Fódlan?</state>
+            </case>
+            <case stage="2" id="674">
+                <state img="#-stripping.png" marker="ShamirStripsCynthiaReacts8">Nah. Not worth getting into, Cynthia. The real interesting stuff is about the Houses of Fódlan and the roal families.</state>
+            </case>
+            <case stage="3" id="675">
+                <state img="#-stripping.png" marker="ShamirStripsCynthiaReacts11">The war was one-sided. House Von Bergliez aided the Adrestian Empire and swiftly put down the invasion of my peoples.</state>
+            </case>
+            <case stage="4" id="676">
+                <state marker="ShamirStripsCynthiaReacts14"></state>
             </case>
         </trigger>
 
@@ -901,6 +919,18 @@
             <case stage="1" id="617" priority="0">
                 <state img="dildo.png">Should not play. Send bug report. (After Stripping 1 -&gt; Made for collectible branching)</state>
             </case>
+            <case stage="1" id="672">
+                <state img="#-stripped.png" marker="ShamirStripsCynthiaReacts3">Doesn't matter. I'm in the middle of a mission, Cynthia. See, I'm to blend in, and... Well, it's crucial I be convincing. So crucial that I was made to bring this in case I lose...</state>
+            </case>
+            <case stage="2" id="677">
+                <state img="#-stripped.png" marker="ShamirStripsCynthiaReacts6">Nothing to say about Dagda. Fódlan is where all the interesting stuff happens. Very well, I'll give you the &lt;i&gt;Travelers Digest&lt;/i&gt; version.</state>
+            </case>
+            <case stage="3" id="678">
+                <state img="#-stripped.png" marker="ShamirStripsCynthiaReacts9">I can either tell you about the political landscape of Fódlan, or focus of my contract. Your choice, Cynthia.</state>
+            </case>
+            <case stage="4" id="679">
+                <state img="#-stripped.png" marker="ShamirStripsCynthiaReacts9">... Come on, Cynthia, I can tell none of this interests you. You don't have to pretend.</state>
+            </case>
         </trigger>
 
         <trigger id="male_must_strip">
@@ -913,7 +943,7 @@
             <case stage="9" id="418">
                 <condition role="target" character="tharja" stage="0" saidMarker="TharjaStripsShamirReacts1" />
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-disappointedVag.png" marker="TharjaStripsShamirReacts1">Tharja, is it? Your obsession with ~player~ is... uncanny. Are you okay?</state>
+                <state img="#-thinking.png" marker="TharjaStripsShamirReacts1">Tharja, is it? Your obsession with ~player~ is... uncanny. Are you okay?</state>
             </case>
             <case stage="9" id="419">
                 <condition role="target" character="tharja" stage="0" saidMarker="TharjaStripsShamirReacts1" />
@@ -928,7 +958,7 @@
             <case stage="9" id="512">
                 <condition role="target" character="tharja" stage="4" sayingMarker="TharjaStripsShamirReacts13" />
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-happyVag.png" marker="TharjaStripsShamirReacts13">Very well. Glad I could get my point across, Tharja.</state>
+                <state img="#-smirk.png" marker="TharjaStripsShamirReacts13">Very well. Glad I could get my point across, Tharja.</state>
             </case>
             <case stage="9" id="513">
                 <condition role="target" character="tharja" stage="4" sayingMarker="TharjaStripsShamirReacts13" />
@@ -938,7 +968,7 @@
             <case stage="9" id="514">
                 <condition role="self" saidMarker="MastTransition" />
                 <condition role="target" character="tharja" stage="3" sayingMarker="TharjaStripsShamirReacts10" />
-                <state img="#-disinterested2Vag.png" marker="TharjaStripsShamirReacts10">It's not about lowering your walls around &lt;i&gt;me&lt;/i&gt;, Shamir. My aim here isn't to personally deepen my bond with you.</state>
+                <state img="#-disinterested.png" marker="TharjaStripsShamirReacts10">It's not about lowering your walls around &lt;i&gt;me&lt;/i&gt;, Tharja. My aim here isn't to personally deepen my bond with you.</state>
             </case>
             <case stage="9" id="515">
                 <condition role="self" notSaidMarker="MastTransition" />
@@ -953,12 +983,12 @@
             <case stage="9" id="518">
                 <condition role="target" character="tharja" stage="2" sayingMarker="TharjaStripsShamirReacts7" />
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-disinterested2Vag.png" marker="TharjaStripsShamirReacts7">I was not frightened by your spell earlier, Tharja. I know you to be above cursing others like that.</state>
+                <state img="#-disinterested.png" marker="TharjaStripsShamirReacts7">I was not frightened by your spell earlier, Tharja. I know you to be above cursing others like that.</state>
             </case>
             <case stage="9" id="519">
                 <condition role="target" character="tharja" stage="1" sayingMarker="TharjaStripsShamirReacts4" />
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-disinterestedVag.png" marker="TharjaStripsShamirReacts4">No, Tharja. You misunderstand. I don't think negatively of you. I just want you to be well.</state>
+                <state img="#-smirk.png" marker="TharjaStripsShamirReacts4">No, Tharja. You misunderstand. I don't think negatively of you. I just want you to be well.</state>
             </case>
             <case stage="9" id="520">
                 <condition role="target" character="tharja" stage="1" sayingMarker="TharjaStripsShamirReacts4" />
@@ -976,6 +1006,34 @@
             <case stage="0-8 10" id="432">
                 <condition role="target" character="tharja" stage="4" sayingMarker="TharjaStripsShamirReacts13" />
                 <state img="#-happy.png" marker="TharjaStripsShamirReacts13">Very well. Glad I could get my point across, Tharja.</state>
+            </case>
+            <case stage="0-10" id="642">
+                <condition role="target" character="cynthia" stage="0" sayingMarker="CynthiaStripsShamirReacts1" />
+                <state img="#-thinking.png" marker="CynthiaStripsShamirReacts1">&lt;i&gt;Cynthia&lt;/i&gt;, right? I think that's your name.</state>
+            </case>
+            <case stage="0-10" id="645">
+                <condition role="target" character="cynthia" stage="1" sayingMarker="CynthiaStripsShamirReacts4" />
+                <state img="#-smirk.png" marker="CynthiaStripsShamirReacts4">Worth my while, Cynthia? Whatever. I was just curious about these... &lt;i&gt;Pokémon battles&lt;/i&gt;. Sounds like there's money to be made. No heavy lifting required.</state>
+            </case>
+            <case stage="0-10" id="649">
+                <condition role="target" character="cynthia" stage="2" sayingMarker="CynthiaStripsShamirReacts7" />
+                <state img="#-disappointed.png" marker="CynthiaStripsShamirReacts7">Fódlan is a continent plauged with conflict and war, Cynthia. Thieves pillage, kill, and... worse... The turmoil is a paradise to those with malice in their hearts.</state>
+            </case>
+            <case stage="0-10" id="651">
+                <condition role="target" character="cynthia" stage="3" sayingMarker="CynthiaStripsShamirReacts10" />
+                <state img="#-disinterested.png" marker="CynthiaStripsShamirReacts10">Even the strongest of attackers in on an even playing field in something like a Pokémon battle, Cynthia. It's true equality. An end to tyranny of the powerful.</state>
+            </case>
+            <case stage="0-10" id="654">
+                <condition role="target" character="cynthia" stage="4" sayingMarker="CynthiaStripsShamirReacts13" />
+                <state img="#-happy.png" marker="CynthiaStripsShamirReacts13">Still, I can't help but think how owning a few Pokémon would improve my own life. I wouldn't need to do the heavy lifting as a merc.</state>
+            </case>
+            <case stage="0-10" id="658">
+                <condition role="target" character="cynthia" stage="5" sayingMarker="CynthiaStripsShamirReacts16" />
+                <state img="#-disinterested.png" marker="CynthiaStripsShamirReacts16">So, how about it, Cynthia? Can you spare me a few Pokémon? Or perhaps the people of Fódlan?  Just a small donation from you would mean so much f-</state>
+            </case>
+            <case stage="0-10" id="662">
+                <condition role="target" character="cynthia" stage="6" sayingMarker="CynthiaStripsShamirReacts19" />
+                <state img="#-angry.png" marker="CynthiaStripsShamirReacts19">Without some form of change, Fódlan will continue to be a place where the nobles step all over the common folk and those without crests.</state>
             </case>
             <case stage="0-8 10" id="417">
                 <condition role="target" character="tharja" stage="0" />
@@ -1014,8 +1072,8 @@
             </case>
             <case stage="9" id="245">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-surprisedVag.png">A tie? I don't know what that means...</state>
-                <state img="#-surprisedVag.png">A tie? So... what next?</state>
+                <state img="#-embarrassed.png">A tie? I don't know what that means...</state>
+                <state img="#-surprised.png">A tie? So... what next?</state>
             </case>
             <case stage="0-8 10" id="153">
                 <state img="#-surprised.png">A tie? I don't know what that means...</state>
@@ -1043,9 +1101,9 @@
             <case stage="9" id="248" totalRounds="10-">
                 <condition role="target" layers="4-" />
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-disinterestedVag.png">I can see you're doing okay for yourself, ~name~. </state>
-                <state img="#-thinkingVag.png">You still have accessories. </state>
-                <state img="#-happyVag.png">Having accessories left after this long isn't a bad look.</state>
+                <state img="#-smirk.png">I can see you're doing okay for yourself, ~name~. </state>
+                <state img="#-disappointed.png">You still have accessories. </state>
+                <state img="#-smirk.png">Having accessories left after this long isn't a bad look.</state>
             </case>
             <case stage="0-10" id="538">
                 <state img="dildo.png">SHOULD NOT PLAY. SEND BUG REPORT. (Removing accessory male, all stages)</state>
@@ -1059,6 +1117,10 @@
         </trigger>
 
         <trigger id="female_removing_accessory">
+            <case stage="0-10" id="647">
+                <condition role="target" character="cynthia" stage="1" sayingMarker="CynthiaStripsShamirReacts5" />
+                <state img="#-smirk.png" marker="CynthiaStripsShamirReacts5">Please, Cynthia. I'm a mercenary. Employers bark orders; I follow. Being the one ordering around Pokémon might be a nice change of pace. Perhaps more profitable as well.</state>
+            </case>
             <case stage="0-8 10">
                 <condition role="target" character="leggy" stage="0" />
                 <state img="#-thinking.png">Lamb was a delicacy in Dagda. We mostly had to trade with Fódlan to eat any. Oh, my apologies Leggy. Just thinking aloud.</state>
@@ -1116,6 +1178,10 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
+            <case stage="0-10" id="648">
+                <condition role="target" character="cynthia" stage="2" sayingMarker="CynthiaStripsShamirReacts6" />
+                <state img="#-disappointed.png" marker="CynthiaStripsShamirReacts6">I think you misundertand me, Cynthia. A tool is a tool; its use it dependent on the user.</state>
+            </case>
             <case stage="0-8 10">
                 <condition role="target" character="corrin_f" stage="2" />
                 <state img="#-smirk.png">Ultimately, I decided to cut it. Makes things much easier. Besides, I think short hair suits me.</state>
@@ -1179,7 +1245,7 @@
             <case stage="9" id="521">
                 <condition role="target" character="tharja" stage="0" sayingMarker="TharjaStripsShamirReacts2" />
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-smirkVag.png" marker="TharjaStripsShamirReacts2">Take it easy, Tharja.Just wanted to ask you a question. I'm trying to look out for you is all.</state>
+                <state img="#-disappointed.png" marker="TharjaStripsShamirReacts2">Take it easy, Tharja.Just wanted to ask you a question. I'm trying to look out for you is all.</state>
             </case>
             <case stage="9" id="522">
                 <condition role="target" character="tharja" stage="0" sayingMarker="TharjaStripsShamirReacts2" />
@@ -1189,7 +1255,7 @@
             <case stage="9" id="523">
                 <condition role="target" character="tharja" stage="2" sayingMarker="TharjaStripsShamirReacts8" />
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-disappointedVag.png" marker="TharjaStripsShamirReacts8">On the contrary, Tharja. I'm a mercenary. You learn how to read people in my line of work. Your life depends on it.</state>
+                <state img="#-smirk.png" marker="TharjaStripsShamirReacts8">On the contrary, Tharja. I'm a mercenary. You learn how to read people in my line of work. Your life depends on it.</state>
             </case>
             <case stage="9" id="524">
                 <condition role="target" character="tharja" stage="2" sayingMarker="TharjaStripsShamirReacts8" />
@@ -1203,6 +1269,18 @@
             <case stage="0-8 10" id="427">
                 <condition role="target" character="tharja" stage="2" sayingMarker="TharjaStripsShamirReacts8" />
                 <state img="#-disinterested.png" marker="TharjaStripsShamirReacts8">On the contrary, Tharja. I'm a mercenary. You learn how to read people in my line of work. Your life depends on it.</state>
+            </case>
+            <case stage="0-10" id="643">
+                <condition role="target" character="cynthia" stage="0" sayingMarker="CynthiaStripsShamirReacts2" />
+                <state img="#-disappointed.png" marker="CynthiaStripsShamirReacts2">Right. Don't care about your damned titles. Just making sure I knew how to address you, &lt;i&gt;Cynthia&lt;/i&gt;.</state>
+            </case>
+            <case stage="0-10" id="652">
+                <condition role="target" character="cynthia" stage="2" sayingMarker="CynthiaStripsShamirReacts5" />
+                <state img="#-thinking.png" marker="CynthiaStripsShamirReacts5">Think, Cynthia. For a champion, you're not that bright. What I'm getting at is: what if the guardians of peace had an edge in the matter? What if every knight had a team of strong Pokémon?</state>
+            </case>
+            <case stage="0-10" id="659">
+                <condition role="target" character="cynthia" stage="5" sayingMarker="CynthiaStripsShamirReacts17" />
+                <state img="#-disappointed.png" marker="CynthiaStripsShamirReacts17">So after all of that and you're still not ready to help the weak people of Fódlan. That's regrettable, Cynthia.</state>
             </case>
             <case stage="0-8 10" id="326">
                 <condition role="target" character="leggy" stage="2" />
@@ -1231,8 +1309,16 @@
                 <condition role="target" character="larachel" stage="3" />
                 <state img="#-happy.png">I used to be stuck up myself, L'Arachel. I thought life was all a chore and that entertainment was a weakness. But, if you know how, you can have fun in anything.</state>
             </case>
+            <case stage="0-8 10" id="636">
+                <condition role="target" character="saki_zls" stage="0" />
+                <state img="#-thinking.png">You may not be my target, Saki, but... I still think I should report this encounter to Archbishop Rhea. Apologies, but she'll undoutedly want this area cleansed of the undead.</state>
+            </case>
+            <case stage="0-8 10" id="638">
+                <condition role="target" character="saki_zls" stage="1" />
+                <state img="#-surprised.png">Are you perhaps some new breed of demonic beast, Saki?</state>
+            </case>
             <case stage="9" id="579">
-                <state img="dildo.png">Should not play. Please send bug report.</state>
+                <state img="dildo.png">Should not play. Please send bug report. (removing minor female)</state>
             </case>
         </trigger>
 
@@ -1250,7 +1336,7 @@
             <case stage="9" id="525">
                 <condition role="target" character="tharja" stage="1" sayingMarker="TharjaStripsShamirReacts3" />
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-smirkVag.png" marker="TharjaStripsShamirReacts3">I mean what I said, Tharja. I'm trying to look out for you. We can't have you going around depressed and unwell now, can we?</state>
+                <state img="#-thinking.png" marker="TharjaStripsShamirReacts3">I mean what I said, Tharja. I'm trying to look out for you. We can't have you going around depressed and unwell now, can we?</state>
             </case>
             <case stage="9" id="526">
                 <condition role="target" character="tharja" stage="1" sayingMarker="TharjaStripsShamirReacts3" />
@@ -1260,7 +1346,7 @@
             <case stage="9" id="527">
                 <condition role="target" character="tharja" stage="3" sayingMarker="TharjaStripsShamirReacts9" />
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-disinterested2Vag.png" marker="TharjaStripsShamirReacts9">You build walls around yourself, Tharja, and shoot down everyone who knocks at your door. That's no way to live life. Give others a chance.</state>
+                <state img="#-disinterested.png" marker="TharjaStripsShamirReacts9">You build walls around yourself, Tharja, and shoot down everyone who knocks at your door. That's no way to live life. Give others a chance.</state>
             </case>
             <case stage="9" id="528">
                 <condition role="target" character="tharja" stage="3" sayingMarker="TharjaStripsShamirReacts9" />
@@ -1285,6 +1371,14 @@
                 <condition role="target" character="maki" stage="1" sayingMarker="makipiano" />
                 <state img="#-disinterested2.png">Haven't tried the piano. Not interested in trying either. One of my contracts was a pianist though.</state>
             </case>
+            <case stage="0-10" id="650">
+                <condition role="target" character="cynthia" stage="3" sayingMarker="CynthiaStripsShamirReacts9" />
+                <state img="#-angry.png" marker="CynthiaStripsShamirReacts9">No, Cynthia. Ask the women and children if they feel safe against a thief in the night. Ask them if they wouldn't feel more comfortable with a strong Pokémon at their side.</state>
+            </case>
+            <case stage="0-10" id="660">
+                <condition role="target" character="cynthia" stage="6" sayingMarker="CynthiaStripsShamirReacts18" />
+                <state img="#-disinterested2.png" marker="CynthiaStripsShamirReacts18">Whatever, Cynthia. I guess you'd sooner have Fódlan erupt in war.</state>
+            </case>
             <case stage="0-8 10">
                 <condition role="target" character="corrin_f" stage="1" />
                 <state img="#-happy.png">Oh, right, you wield a sword as well, don't you Corrin? Well, that answers that question.</state>
@@ -1302,20 +1396,32 @@
                 <condition role="target" character="larachel" stage="4" />
                 <state img="#-smirk.png">Like this game, for instance. Sure, it might be embarrassing to lose, but at the end of the day, it's all a game and we'll forget about it tomorrow. Might as well savor it, right?</state>
             </case>
+            <case stage="0-4" id="637">
+                <condition role="target" character="saki_zls" stage="1" />
+                <state img="#-disappointed.png">I should honestly remove you on sight and save the time. Cut through the red tape. But, perhaps my employer was aware you'd be here... I'll just stick to my orders.</state>
+            </case>
+            <case stage="0-8 10" id="639">
+                <condition role="target" character="saki_zls" stage="2" />
+                <state img="#-thinking.png">Don't get the wrong idea, Saki. In Fodlan, demonic beasts are huge, terrible creatures.  Undead, animated dolls... That sort of thing. Was wondering if they maybe...</state>
+            </case>
+            <case stage="0-8 10" id="644">
+                <condition role="target" character="cynthia" stage="1" />
+                <state img="#-disinterested2.png" marker="CynthiaStripsShamirReacts3">You have &lt;i&gt;fans&lt;/i&gt; too, Cynthia? Gods, you're more annoying by the minute.</state>
+            </case>
             <case stage="0-10" id="570">
-                <state img="dildo.png">Should not play. Please send bug report.</state>
+                <state img="dildo.png">Should not play. Please send bug report. (Removed minor female)</state>
             </case>
         </trigger>
 
         <trigger id="male_removing_major">
             <case stage="9" id="573">
-                <state img="dildo.png">Should not play. Please send bug report.</state>
+                <state img="dildo.png">Should not play. Please send bug report. (Removing Major Male)</state>
             </case>
         </trigger>
 
         <trigger id="male_removed_major">
             <case stage="0-10" id="571">
-                <state img="dildo.png">Should not play. Please send bug report.</state>
+                <state img="dildo.png">Should not play. Please send bug report. (Removed Major Male)</state>
             </case>
         </trigger>
 
@@ -1324,10 +1430,22 @@
                 <condition role="target" character="tharja" stage="1" sayingMarker="TharjaStripsShamirReacts5" />
                 <state img="#-disinterested.png" marker="TharjaStripsShamirReacts5">Tharja...</state>
             </case>
+            <case stage="0-10" id="653">
+                <condition role="target" character="cynthia" stage="3" sayingMarker="CynthiaStripsShamirReacts11" />
+                <state img="#-disappointed.png" marker="CynthiaStripsShamirReacts11">In Fódlan, your status is determined by birth, and by crests, Cynthia. Edelgard in fact wishes to end this unfortunate truth and achieve a Fódlan where everyone is equal.</state>
+            </case>
+            <case stage="0-10" id="655">
+                <condition role="target" character="cynthia" stage="4" sayingMarker="CynthiaStripsShamirReacts14" />
+                <state img="#-happy.png" marker="CynthiaStripsShamirReacts14">They don't have to be hypothetical, Cynthia.</state>
+            </case>
             <case stage="0-8 10">
                 <condition role="target" character="lyn" stage="5" />
                 <state img="#-thinking.png">I've always wondered if you wear underwear beneath that dress. Looking at your thighs, it doesn't look like you do.</state>
                 <state img="#-thinking.png">I've always wondered if you wear underwear beneath that dress. Your thighs appear bare, after all, but would you really risk a draft of wind eliminating your modesty?</state>
+            </case>
+            <case stage="0-8 10" id="640">
+                <condition role="target" character="saki_zls" stage="2" />
+                <state img="#-disappointed.png">Well, at any rate, you appear hot-headed and life-like. Uncharacteristic for a demonic beast.</state>
             </case>
             <case stage="9" id="578">
                 <state img="dildo.png">Should not play. Please send bug report.</state>
@@ -1335,6 +1453,14 @@
         </trigger>
 
         <trigger id="female_removed_major">
+            <case stage="0-10" id="656">
+                <condition role="target" character="cynthia" stage="4" sayingMarker="CynthiaStripsShamirReacts12" />
+                <state img="#-disinterested.png" marker="CynthiaStripsShamirReacts12">Your apologies aren't needed, Cynthia. </state>
+            </case>
+            <case stage="0-10" id="657">
+                <condition role="target" character="cynthia" stage="5" sayingMarker="CynthiaStripsShamirReacts15" />
+                <state img="#-smirk.png" marker="CynthiaStripsShamirReacts15">Come on, Cynthia. You know what I'm getting at.</state>
+            </case>
             <case stage="5-8 10">
                 <condition role="target" character="lyn" stage="6" />
                 <state img="#-happy.png">So you are wearing underwear beneath your dress. Bummer.</state>
@@ -1348,6 +1474,10 @@
             <case stage="0-8 10" id="425">
                 <condition role="target" character="tharja" stage="2" />
                 <state img="#-disappointed.png" marker="TharjaStripsShamirReacts6">Of course not, Tharja. You do not scare me. My safety was assured.</state>
+            </case>
+            <case stage="0-8 10" id="641">
+                <condition role="target" character="saki_zls" stage="3" />
+                <state img="#-thinking.png">But maybe you're a Risen... Yeah, I remember learning about Risen at the Officer's Academy. They're from Yilisse.</state>
             </case>
             <case stage="0-10" id="572">
                 <state img="dildo.png">Should not play. Please send bug report.</state>
@@ -1394,9 +1524,9 @@
             </case>
             <case stage="9" id="350" priority="100">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-smirkVag.png">Right, I admit it, name. I've been looking forward to this point for a while, ~name~. Show me what you got.</state>
-                <state img="#-happyVag.png">Mmmm yeah, this is what I needed. More e-eye candy...</state>
-                <state img="#-smirkVag.png">Yeah, this is what I needed... Let's see it, ~name~.</state>
+                <state img="#-smirk.png">Right, I admit it, name. I've been looking forward to this point for a while, ~name~. Show me what you got.</state>
+                <state img="#-happy.png">Mmmm yeah, this is what I needed. More e-eye candy...</state>
+                <state img="#-happy.png">Yeah, this is what I needed... Let's see it, ~name~.</state>
             </case>
             <case stage="10" id="351" priority="100">
                 <state img="#-disappointed.png">You couldn't have done this earlier, ~name~? *sigh*</state>
@@ -1443,10 +1573,6 @@
                 <state img="#-disinterested.png">Well, that was a buzzkill...</state>
                 <state img="#-angry.png">Buzzkill...</state>
             </case>
-            <case stage="9" id="362" priority="100">
-                <condition filter="muscular" role="target" />
-                <condition role="self" notSaidMarker="MastTransition" />
-            </case>
             <case stage="0-8 10" id="363" priority="100">
                 <condition filter="muscular" role="target" />
                 <test expr="~background.time~" value="day" />
@@ -1469,18 +1595,18 @@
             <case stage="9" id="366" priority="100">
                 <condition filter="chubby" role="target" />
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-disappointedVag.png">Oh... Well, that was a let down.</state>
-                <state img="#-disinterestedVag.png">Oh, that's... That wasn't what I was expecting. Do you not have an active lifestyle?</state>
-                <state img="#-disinterestedVag.png">Oh, that... That wasn't what I was expecting. Do you loaf around all day, or...</state>
-                <state img="#-disappointedVag.png">Well, that was a buzzkill...</state>
-                <state img="#-disappointedVag.png">Buzzkill...</state>
+                <state img="#-disappointed.png">Oh... Well, that was a let down.</state>
+                <state img="#-thinking.png">Oh, that's... That wasn't what I was expecting. Do you not have an active lifestyle?</state>
+                <state img="#-thinking.png">Oh, that... That wasn't what I was expecting. Do you loaf around all day, or...</state>
+                <state img="#-disappointed.png">Well, that was a buzzkill...</state>
+                <state img="#-disinterested.png">Buzzkill...</state>
             </case>
             <case stage="9" id="367" priority="100">
                 <condition filter="muscular" role="target" />
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-smirkVag.png">You got some muscles on you. I might have to be careful if I find myself in bed with you... What? It's a possibility!</state>
-                <state img="#-thinkingVag.png">You're the kind of guy Catherine likely sent me here to pick up. Someone strong...</state>
-                <state img="#-happyVag.png">Catherine &lt;i&gt;did&lt;/i&gt; want me here to find a new lover... Or, at least, that's what I'm piecing together. Got to say, I might have an option.</state>
+                <state img="#-happy.png">You got some muscles on you. I might have to be careful if I find myself in bed with you... What? It's a possibility!</state>
+                <state img="#-thinking.png">You're the kind of guy Catherine likely sent me here to pick up. Someone strong...</state>
+                <state img="#-happy.png">Catherine &lt;i&gt;did&lt;/i&gt; want me here to find a new lover... Or, at least, that's what I'm piecing together. Got to say, I might have an option.</state>
             </case>
             <case stage="9" id="368" priority="100">
                 <condition filter="muscular" role="target" />
@@ -1492,10 +1618,10 @@
             <case stage="9" id="369" priority="100">
                 <condition filter="athletic" role="target" />
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-smirkVag.png">Looks like you have an active lifestyle. I respect it.</state>
-                <state img="#-smirkVag.png">You have a good build, ~name~. You look like you'd make a dependable ally.</state>
-                <state img="#-smirkVag.png">You look dependable, ~name~. Fancy yourself some mercenary work?</state>
-                <state img="#-smirkVag.png">You look dependable, ~name~. If you're ever in need of coin, Lady Rhea could point you to some mercenary work. Might be up your alley.</state>
+                <state img="#-happy.png">Looks like you have an active lifestyle. I respect it.</state>
+                <state img="#-smirk.png">You have a good build, ~name~. You look like you'd make a dependable ally.</state>
+                <state img="#-smirk.png">You look dependable, ~name~. Fancy yourself some mercenary work?</state>
+                <state img="#-smirk.png">You look dependable, ~name~. If you're ever in need of coin, Lady Rhea could point you to some mercenary work. Might be up your alley.</state>
             </case>
             <case stage="9" id="370" priority="100">
                 <condition filter="athletic" role="target" />
@@ -1515,10 +1641,10 @@
             </case>
             <case stage="9" id="358" priority="99">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-smirkVag.png">&lt;i&gt;This&lt;/i&gt; is what I needed.</state>
-                <state img="#-smirkVag.png">This is the kind of visual I was hoping for.</state>
-                <state img="#-smirkVag.png">You know just what a girl needs.</state>
-                <state img="#-smirkVag.png">This game has me feeling differently. Never imagined I'd be in such a position and actually enjoy myself.</state>
+                <state img="#-happy.png">&lt;i&gt;This&lt;/i&gt; is what I needed.</state>
+                <state img="#-disappointed.png">This is the kind of visual I was hoping for.</state>
+                <state img="#-happy.png">You know just what a girl needs.</state>
+                <state img="#-surprised.png">This game has me feeling differently. Never imagined I'd be in such a position and actually enjoy myself.</state>
             </case>
             <case stage="9" id="359" priority="99">
                 <condition role="self" notSaidMarker="MastTransition" />
@@ -1534,11 +1660,11 @@
         <trigger id="male_crotch_will_be_visible">
             <case stage="9" id="375">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-smirkVag.png">This is what I need. I want to hurry up and get this over with, so the easier it is to finishing getting off, the faster this can be over with.</state>
-                <state img="#-smirkVag.png">This should make it easier to cum. That's a good thing, really.</state>
-                <state img="#-smirkVag.png">This could be the help I've been wanting.</state>
-                <state img="#-smirkVag.png">This will undoubtedly be easier now. Let's not delay, ~name~.</state>
-                <state img="#-happyVag.png">This is what I was hoping for. Surely it'll be easier to cum now.</state>
+                <state img="#-embarrassed.png">This is what I need. I want to hurry up and get this over with, so the easier it is to finishing getting off, the faster this can be over with.</state>
+                <state img="#-happy.png">This should make it easier to cum. That's a good thing, really.</state>
+                <state img="#-happy.png">This could be the help I've been wanting.</state>
+                <state img="#-happy.png">This will undoubtedly be easier now. Let's not delay, ~name~.</state>
+                <state img="#-thinking.png">This is what I was hoping for. Surely it'll be easier to cum now.</state>
             </case>
             <case stage="9" id="376">
                 <condition role="self" notSaidMarker="MastTransition" />
@@ -1582,10 +1708,10 @@
             </case>
             <case stage="9" id="385">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-embarrassedVag.png">Eh, I think I'll stick with the phallus I was made to bring...</state>
-                <state img="#-disappointedVag.png">I suppose it &lt;i&gt;is&lt;/i&gt; a visual assistance...</state>
+                <state img="#-disappointed.png">Eh, I think I'll stick with the phallus I was made to bring...</state>
+                <state img="#-thinking.png">I suppose it &lt;i&gt;is&lt;/i&gt; a visual assistance...</state>
             </case>
-            <case stage="3-8" id="132">
+            <case stage="3-8" id="132" priority="1">
                 <state img="#-happy.png">It's not just about size, ~name~. It's how you use it that matters the most.</state>
                 <state img="#-disappointed.png">I prefer being licked anyway.</state>
                 <state img="#-smirk.png">A penis is only as useful as the depth of the vagina. Any extra length is just wasted.</state>
@@ -1595,11 +1721,11 @@
                 <state img="#-smirk.png">Even the smallest weapons can prove fatal, ~name~.</state>
                 <state img="#-surprised.png">Oh, they can get that small?</state>
             </case>
-            <case stage="10" id="392">
+            <case stage="10" id="392" priority="1">
                 <state img="#-disappointed.png">I don't care if it's small. It would have been nice to see it &lt;i&gt;before&lt;/i&gt; I came.</state>
                 <state img="#-disappointed.png">I don't care if it's small. It would have been nice to see it &lt;i&gt;before&lt;/i&gt; I finished masturbating.</state>
             </case>
-            <case stage="0-2" id="394">
+            <case stage="0-2" id="394" priority="1">
                 <state img="#-smirk.png">You have nothing to worry about, ~name~. My old partner wasn't that big either, but he still managed.</state>
                 <state img="#-smirk.png">You have nothing to worry about, ~name~. My old partner wasn't that big either. Yet, I still melted every time I saw it.</state>
                 <state img="#-smirk.png">You have nothing to worry about, ~name~. My old partner wasn't that big either, but he knew how to use it alright.</state>
@@ -1619,20 +1745,20 @@
             </case>
             <case stage="9" id="402">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-happyVag.png">Just what I need to get myself off.</state>
-                <state img="#-smirkVag.png">I can get off to that.</state>
-                <state img="#-smirkVag.png">If I'm using a phallus, it makes it easier to use my imagination.</state>
+                <state img="#-happy.png">Just what I need to get myself off.</state>
+                <state img="#-happy.png">I can get off to that.</state>
+                <state img="#-happy.png">If I'm using a phallus, it makes it easier to use my imagination.</state>
             </case>
             <case stage="9" id="403">
                 <condition role="self" notSaidMarker="MastTransition" />
                 <state img="#-smirkOral.png">Consider me interested.</state>
                 <state img="#-embarrassedOral.png">You know what a woman needs.</state>
             </case>
-            <case stage="0" id="399">
+            <case stage="0" id="399" priority="1">
                 <state img="#-angry.png">Perhaps I'm better at this game than I thought, but it almost looks like your goal is to throw this whole thing and show everyone your dick. &lt;i&gt;Not&lt;/i&gt; cool, ~name~.</state>
                 <state img="#-epilogueIrritated.png">Are you throwing this game, ~name~? Please understand: the last thing a woman wants is some perv using trickery to flaunt himself in front of them.</state>
             </case>
-            <case stage="1-4" id="400">
+            <case stage="1-4" id="400" priority="1">
                 <state img="#-disinterested.png">As I expected.</state>
                 <state img="#-disinterested.png">Right. Not surprising.</state>
                 <state img="#-disinterested.png">Right. It's the nature of the game.</state>
@@ -1645,7 +1771,7 @@
                 <state img="#-disinterested.png">Hope you're not expecting much of a reaction from me, ~name~. I have that contract to complete. I'm hardly paying this game any mind.</state>
                 <state img="#-smirk.png">Acceptable, by any standards.</state>
             </case>
-            <case stage="5-8 10" id="401">
+            <case stage="5-8 10" id="401" priority="1">
                 <state img="#-disinterested.png">Remembering that it's Catherine who probably put me up to this... She wanted me to see this, didn't she?</state>
                 <state img="#-smirk.png">It'll do... Relax, ~name~. Only saying what Catherine would want me to say.</state>
                 <state img="#-smirk.png">Doesn't look to bad.</state>
@@ -1670,11 +1796,11 @@
             </case>
             <case stage="9" id="406">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-smirkVag.png">It &lt;i&gt;has&lt;/i&gt; been quite some time since I've lost my partner. I should find a new partner... ~Name~?</state>
-                <state img="#-happyVag.png">Looking, but no touching, right? What, it's not like I'm being serious.</state>
-                <state img="#-happyVag.png">Looking, but no touching, right? That's a shame... Oh, come on. It's a joke.</state>
-                <state img="#-smirkVag.png">Shame we can't be as hands-on at the moment. It's fun to play a tease.</state>
-                <state img="#-happyVag.png">Ha, I think you might even have the warriors at Dagda beat.</state>
+                <state img="#-embarrassed.png">It &lt;i&gt;has&lt;/i&gt; been quite some time since I've lost my partner. I should find a new partner... ~Name~?</state>
+                <state img="#-happy.png">Looking, but no touching, right? What, it's not like I'm being serious.</state>
+                <state img="#-happy.png">Looking, but no touching, right? That's a shame... Oh, come on. It's a joke.</state>
+                <state img="#-smirk.png">Shame we can't be as hands-on at the moment. It's fun to play a tease.</state>
+                <state img="#-happy.png">Ha, I think you might even have the warriors at Dagda beat.</state>
             </case>
             <case stage="9" id="407">
                 <condition role="self" notSaidMarker="MastTransition" />
@@ -1684,7 +1810,7 @@
                 <state img="#-happyOral.png">Shame we can't be as hands-on at the moment. It's fun to play a tease.</state>
                 <state img="#-happyOral.png">Ha, I think you might even have the warriors at Dagda beat.</state>
             </case>
-            <case stage="0-4" id="131">
+            <case stage="0-4" id="131" priority="1">
                 <state img="#-smirk.png">Having children should be no problem for you.</state>
                 <state img="#-smirk.png">I take it having children wouldn't be a challenge, ~name~.</state>
                 <state img="#-surprised.png">That's... Even for a mercenary, something like this can feel intimidating.</state>
@@ -1698,7 +1824,7 @@
                 <state img="#-disappointed.png">If only I had located my target before you revealed yourself. There's no way I'll be able to concentrate now.</state>
                 <state img="#-thinking.png">I'm supposed to be watching for someone &lt;i&gt;suspicious&lt;/i&gt;. With that between your legs, I think you qualify. Ha, relax. I'm just teasing.</state>
             </case>
-            <case stage="5-8 10" id="405">
+            <case stage="5-8 10" id="405" priority="1">
                 <state img="#-thinking.png">It &lt;i&gt;has&lt;/i&gt; been quite some time since I've lost my partner. I should find a new partner... ~Name~?</state>
                 <state img="#-smirk.png">Looking, but no touching, right? What, it's not like I'm being serious.</state>
                 <state img="#-smirk.png">Looking, but no touching, right? That's a shame... Oh, come on. It's a joke.</state>
@@ -1715,11 +1841,15 @@
                 <condition role="target" character="tharja" sayingMarker="TharjaStripsShamirReacts11" />
                 <state img="#-disinterested.png" marker="TharjaStripsShamirReacts11">The point is simple, Tharja. Let me ask you something. How many friends do you have?</state>
             </case>
+            <case stage="0-10" id="661">
+                <condition role="target" character="cynthia" sayingMarker="CynthiaStripsShamirReacts20" />
+                <state img="#-thinking.png" marker="CynthiaStripsShamirReacts20">And? What are you proposing, Cynthia?</state>
+            </case>
             <case stage="9" id="539">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-smirkVag.png">Good. I could use the assistance.</state>
-                <state img="#-thinkingVag.png">I was starting to wonder if I'd even get to see 'em. What? I can't but feel a little excited.</state>
-                <state img="#-happyVag.png">This instrument feels pleasurable. But I'm sure it'll feel even better with you exposed.</state>
+                <state img="#-smirk.png">Good. I could use the assistance.</state>
+                <state img="#-disinterested2.png">I was starting to wonder if I'd even get to see 'em. What? I can't but feel a little excited.</state>
+                <state img="#-happy.png">This instrument feels pleasurable. But I'm sure it'll feel even better with you exposed.</state>
             </case>
             <case stage="9" id="540">
                 <condition role="self" notSaidMarker="MastTransition" />
@@ -1763,26 +1893,26 @@
         <trigger id="female_small_chest_is_visible">
             <case stage="9" id="558">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-happyVag.png">Breasts are breasts. Looking at the can help me cum, even if they're small.</state>
-                <state img="#-smirkVag.png">Kinda wish I could grab those right now. Maybe after the game.</state>
+                <state img="#-happy.png">Breasts are breasts. Looking at the can help me cum, even if they're small.</state>
+                <state img="#-smirk.png">Kinda wish I could grab those right now. Maybe after the game.</state>
             </case>
             <case stage="9" id="559">
                 <condition role="self" notSaidMarker="MastTransition" />
                 <state img="#-happyOral.png">Breasts are breasts. Looking at the can help me cum, even if they're small.</state>
                 <state img="#-smirkOral.png">Kinda wish I could grab those right now. Maybe after the game.</state>
             </case>
-            <case stage="0-1" id="555">
+            <case stage="0-1" id="555" priority="1">
                 <state img="#-smirk.png">It's easier to sneak around when they're small like that. You should count yourself fortunate.</state>
                 <state img="#-smirk.png">It's easier to sneak around when they're perky like that. You should count yourself fortunate.</state>
             </case>
-            <case stage="5-8 10" id="556">
+            <case stage="5-8 10" id="556" priority="1">
                 <state img="#-smirk.png">Smaller than I was expecting, but breasts are breasts.</state>
                 <state img="#-smirk.png">Makes it easier to move around, right ~name~?</state>
                 <state img="#-happy.png">Makes it easier to move around, right ~name~? Ha, I'm a little jealous.</state>
                 <state img="#-smirk.png">Small? I prefer &lt;i&gt;perky&lt;/i&gt;.</state>
                 <state img="#-smirk.png">Fun-sized. Cute.</state>
             </case>
-            <case stage="2-4" id="557">
+            <case stage="2-4" id="557" priority="1">
                 <state img="#-disinterested2.png">On the bright side, it'll be easier to pay attention to my contract.</state>
                 <state img="#-disappointed.png">I should still be able to focus on my contract, at least.</state>
             </case>
@@ -1796,30 +1926,34 @@
                 <condition role="target" character="tharja" sayingMarker="TharjaStripsShamirReacts12" />
                 <state img="#-disinterested2.png" marker="TharjaStripsShamirReacts12">Right. Zero. And how high do you build your walls? ... Do you see the connection yet, Tharja? Lower your guard a little.</state>
             </case>
+            <case stage="0-10" id="663">
+                <condition role="target" character="cynthia" sayingMarker="CynthiaStripsShamirReacts21" />
+                <state img="#-disappointed.png" marker="CynthiaStripsShamirReacts21">It seems your mind is made up. Fódlan will erupt in a long bitter war in the upcoming years. I hope the mothers will wipe their tears, knowing their sons will die in fruitless combat.</state>
+            </case>
             <case stage="9" id="541">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-happyVag.png">Don't think that just cause I'm a woman means I can't get off to breasts.</state>
+                <state img="#-disinterested.png">Don't think that just cause I'm a woman means I can't get off to breasts.</state>
             </case>
             <case stage="9" id="542">
                 <condition role="self" notSaidMarker="MastTransition" />
                 <state img="#-happyOral.png">Don't think that just cause I'm a woman means I can't get off to breasts.</state>
             </case>
-            <case stage="7" id="94">
+            <case stage="7" id="94" priority="1">
                 <state img="#-embarrassed.png">Maybe getting tricked into this wasn't so bad after all.</state>
                 <state img="#-disinterested2.png">I'll admit, you have my attention.</state>
             </case>
-            <case stage="0-3" id="95">
+            <case stage="0-3" id="95" priority="1">
                 <state img="#-embarrassed.png">No, I have a contact. I cannot give way to distractions... Two- &lt;i&gt;round&lt;/i&gt;- distractions...</state>
                 <state img="#-embarrassed.png">Your distractions are- I mean, your soft are- ...  Nevermind. I've said enough.</state>
                 <state img="#-happy.png">I'd love to stand and admire, but I have some surveillance to conduct.</state>
             </case>
-            <case stage="4-6" id="98">
+            <case stage="4-6" id="98" priority="1">
                 <state img="#-embarrassed.png">You've caught my attention, ~name~. Or should I say, &lt;i&gt;they&lt;/i&gt; have.</state>
                 <state img="#-smirk.png">I knew I'd like 'em. </state>
                 <state img="#-happy.png">I knew I'd like 'em. Ha, I'm so predictable.</state>
                 <state img="#-happy.png">Don't think that just cause I'm a woman means I appreciate a nice pair.</state>
             </case>
-            <case stage="8 10" id="99">
+            <case stage="8 10" id="99" priority="1">
                 <state img="#-happy.png">Maybe I'll have to cut my Catherine some slack. Getting to see those help make this all worth it.</state>
                 <state img="#-happy.png">I might have to forgive Catherine after this is all said and done. A woman who can introduce me to a pair like those deserves a second chance... Maybe.</state>
             </case>
@@ -1831,21 +1965,13 @@
         <trigger id="female_large_chest_is_visible">
             <case stage="9" id="552">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-smirkVag.png">You'd make a fine nurse, ~name~. We're always looking for wet nurses at Garreg Mach.</state>
-                <state img="#-disinterestedVag.png">Bigger breasts just tend to get in the way. I'm happy with the size mine are.</state>
-                <state img="#-disinterested2Vag.png">The bigger they are, the more weight you have to carry around. I'm happy with the size mine are.</state>
-                <state img="#-embarrassedVag.png">I have a contract to be focusing on. You're doing everything you can to detract my focus, aren't you ~name~?</state>
-                <state img="#-disappointedVag.png">Great. It's going to be even harder to focus on my contract now...</state>
+                <state img="#-happy.png">You'd make a fine nurse, ~name~. We're always looking for wet nurses at Garreg Mach.</state>
+                <state img="#-embarrassed.png">Bigger breasts just tend to get in the way. I'm happy with the size mine are.</state>
+                <state img="#-embarrassed.png">The bigger they are, the more weight you have to carry around. I'm happy with the size mine are.</state>
+                <state img="#-disappointed.png">I have a contract to be focusing on. You're doing everything you can to detract my focus, aren't you ~name~?</state>
+                <state img="#-surprised.png">Great. It's going to be even harder to focus on my contract now...</state>
             </case>
-            <case stage="9" id="554">
-                <condition role="self" notSaidMarker="MastTransition" />
-                <state img="#-smirkVag.png">You'd make a fine nurse, ~name~. We're always looking for wet nurses at Garreg Mach.</state>
-                <state img="#-disinterestedVag.png">Bigger breasts just tend to get in the way. I'm happy with the size mine are.</state>
-                <state img="#-disinterested2Vag.png">The bigger they are, the more weight you have to carry around. I'm happy with the size mine are.</state>
-                <state img="#-embarrassedVag.png">I have a contract to be focusing on. You're doing everything you can to detract my focus, aren't you ~name~?</state>
-                <state img="#-disappointedVag.png">Great. It's going to be even harder to focus on my contract now...</state>
-            </case>
-            <case stage="0-8 10" id="553">
+            <case stage="0-8 10" id="553" priority="1">
                 <state img="#-smirk.png">You'd make a fine nurse, ~name~. We're always looking for wet nurses at Garreg Mach.</state>
                 <state img="#-disinterested.png">Bigger breasts just tend to get in the way. I'm happy with the size mine are.</state>
                 <state img="#-disinterested2.png">The bigger they are, the more weight you have to carry around. I'm happy with the size mine are.</state>
@@ -1874,11 +2000,11 @@
             </case>
             <case stage="9" id="546">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-smirkVag.png">This is what I need. I want to hurry up and get this over with, so the easier it is to finishing getting off, the faster this can be over with.</state>
-                <state img="#-smirkVag.png">This should make it easier to cum. That's a good thing, really.</state>
-                <state img="#-smirkVag.png">This could be the help I've been wanting.</state>
-                <state img="#-smirkVag.png">This will undoubtedly be easier now. Let's not delay, ~name~.</state>
-                <state img="#-happyVag.png">This is what I was hoping for. Surely it'll be easier to cum now.</state>
+                <state img="#-disinterested.png">This is what I need. I want to hurry up and get this over with, so the easier it is to finishing getting off, the faster this can be over with.</state>
+                <state img="#-happy.png">This should make it easier to cum. That's a good thing, really.</state>
+                <state img="#-happy.png">This could be the help I've been wanting.</state>
+                <state img="#-happy.png">This will undoubtedly be easier now. Let's not delay, ~name~.</state>
+                <state img="#-thinking.png">This is what I was hoping for. Surely it'll be easier to cum now.</state>
             </case>
             <case stage="0-1" id="543">
                 <state img="#-smirk.png">I suppose if I'm going to be here, I might as well enjoy myself a little, right? </state>
@@ -1908,15 +2034,9 @@
             </case>
             <case stage="9" id="548">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-smirkVag.png">Ha! This beats having to use my imagination.</state>
-                <state img="#-happyVag.png">Seeing the real thing right in front of me... It's helps, more than you can imagine.</state>
-                <state img="#-thinkingVag.png">I was starting to think I'd be forced to use my imagination.</state>
-            </case>
-            <case stage="9" id="551">
-                <condition role="self" notSaidMarker="MastTransition" />
-                <state img="#-smirkVag.png">Ha! This beats having to use my imagination.</state>
-                <state img="#-happyVag.png">Seeing the real thing right in front of me... It's helps, more than you can imagine.</state>
-                <state img="#-thinkingVag.png">I was starting to think I'd be forced to use my imagination.</state>
+                <state img="#-happy.png">Ha! This beats having to use my imagination.</state>
+                <state img="#-smirk.png">Seeing the real thing right in front of me... It's helps, more than you can imagine.</state>
+                <state img="#-disappointed.png">I was starting to think I'd be forced to use my imagination.</state>
             </case>
             <case stage="5-8 10" id="549">
                 <state img="#-embarrassed.png">Are my eyes deceiving me, or are you already a little wet?...</state>
@@ -1944,24 +2064,19 @@
                 <condition role="target" character="lyn" />
                 <state img="#-happy.png">So Lady Lyndis is up first. </state>
             </case>
+            <case stage="0-8" id="633">
+                <condition role="self" hasHand="Straight" />
+                <state img="#-disinterested.png">Pulled an inside straight. Sorry.</state>
+            </case>
             <case stage="9" id="410">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-smirkVag.png">Good. I was hoping you would lose.</state>
-                <state img="#-smirkVag.png">I could use the inspiration.</state>
-                <state img="#-happyVag.png">More stripping.</state>
-                <state img="#-smirkVag.png">Keep it coming.</state>
-                <state img="#-smirkVag.png">Seeing you lose makes me happier than I'd like to admit.</state>
-                <state img="#-disappointedVag.png">Mmmm... I could get used to this.</state>
+                <state img="#-happy.png">Good. I was hoping you would lose.</state>
+                <state img="#-smirk.png">I could use the inspiration.</state>
+                <state img="#-disinterested2.png">More stripping.</state>
+                <state img="#-happy.png">Keep it coming.</state>
+                <state img="#-happy.png">Seeing you lose makes me happier than I'd like to admit.</state>
+                <state img="#-disappointed.png">Mmmm... I could get used to this.</state>
                 <state img="custom:dildo_fall_out">Shit! Need this to stay in.</state>
-            </case>
-            <case stage="9" id="412">
-                <condition role="self" notSaidMarker="MastTransition" />
-                <state img="#-smirkVag.png">Good. I was hoping you would lose.</state>
-                <state img="#-smirkVag.png">I could use the inspiration.</state>
-                <state img="#-happyVag.png">More stripping.</state>
-                <state img="#-smirkVag.png">Keep it coming.</state>
-                <state img="#-smirkVag.png">Seeing you lose makes me happier than I'd like to admit.</state>
-                <state img="#-disappointedVag.png">Mmmm... I could get used to this.</state>
             </case>
             <case stage="1-8 10" id="114">
                 <state img="#-disinterested.png">Right. A victory.</state>
@@ -2555,8 +2670,8 @@
             <case stage="9" id="227" priority="1">
                 <condition role="self" saidMarker="MastTransition" />
                 <test expr="~clothing.type~" value="extra" />
-                <state img="#-disappointedVag.png">You couldn't help a woman out a bit?</state>
-                <state img="#-disappointedVag.png">Such &lt;i&gt;courtesy&lt;/i&gt;...</state>
+                <state img="#-angry.png">You couldn't help a woman out a bit?</state>
+                <state img="#-angry.png">Such &lt;i&gt;courtesy&lt;/i&gt;...</state>
             </case>
             <case stage="10" id="228" priority="1">
                 <test expr="~clothing.type~" value="extra" />
@@ -2601,8 +2716,8 @@
             <case stage="9" id="258" priority="1">
                 <condition role="self" saidMarker="MastTransition" />
                 <test expr="~clothing.type~" value="minor" />
-                <state img="#-smirkVag.png">Mmmm damn.. Even the little things can get me going.</state>
-                <state img="#-smirkVag.png">Losing can be pretty fun too, I suppose. You should try it, ~name~. Let loose a little.</state>
+                <state img="#-happy.png">Mmmm damn.. Even the little things can get me going.</state>
+                <state img="#-smirk.png">Losing can be pretty fun too, I suppose. You should try it, ~name~. Let loose a little.</state>
             </case>
             <case stage="8" id="260" priority="1">
                 <test expr="~clothing.type~" value="minor" />
@@ -2663,8 +2778,8 @@
                 <condition role="self" saidMarker="MastTransition" />
                 <test expr="~clothing.type~" value="major" />
                 <state img="custom:dildo_fall_out" marker="+ToyFallsOut">Shit. It fell out.</state>
-                <state img="#-thinkingVag.png">It's getting down to the wire for you, ~name~. Perhaps you can show us something interesting next time.</state>
-                <state img="#-smirkVag.png">Mmmm this feels good. Feels even better with all the stripping going on.</state>
+                <state img="#-happy.png">It's getting down to the wire for you, ~name~. Perhaps you can show us something interesting next time.</state>
+                <state img="#-thinking.png">Mmmm this feels good. Feels even better with all the stripping going on.</state>
             </case>
             <case stage="0" id="383" priority="1">
                 <test expr="~clothing.type~" value="major" />
@@ -2690,8 +2805,8 @@
             <case stage="9" id="292">
                 <condition role="self" saidMarker="MastTransition" />
                 <test expr="~clothing.type~" value="major" />
-                <state img="#-disinterestedVag.png">Just a word of warning, ~name~: my employer may be watching us. It's not unlike her to do the sort of thing.</state>
-                <state img="#-smirkVag.png">I gotta thank Catherine later for the suggestion. Bringing a phallus makes all the difference.</state>
+                <state img="#-disinterested.png">Just a word of warning, ~name~: my employer may be watching us. It's not unlike her to do the sort of thing.</state>
+                <state img="#-happy.png">I gotta thank Catherine later for the suggestion. Bringing a phallus makes all the difference.</state>
             </case>
             <case stage="9" id="295">
                 <condition role="self" notSaidMarker="MastTransition" />
@@ -2709,9 +2824,9 @@
             <case stage="9" id="384">
                 <condition role="self" saidMarker="MastTransition" />
                 <test expr="~clothing.type~" value="minor" />
-                <state img="#-smirkVag.png">You look cuter without that on anyway, ~name~.</state>
-                <state img="#-smirkVag.png">Your ~clothing~ looked good on you, ~name~. ~clothing.ifPlural(They look|Looks)~ cuter on the floor.</state>
-                <state img="#-disappointedVag.png">Mmmm... &lt;i&gt;I need more.&lt;/i&gt;</state>
+                <state img="#-smirk.png">You look cuter without that on anyway, ~name~.</state>
+                <state img="#-embarrassed.png">Your ~clothing~ looked good on you, ~name~. ~clothing.ifPlural(They look|Looks)~ cuter on the floor.</state>
+                <state img="#-happy.png">Mmmm... &lt;i&gt;I need more.&lt;/i&gt;</state>
             </case>
             <case stage="5-8 10" id="536" oneShotId="32" priority="51">
                 <condition role="self" saidMarker="WouldntLookAtChub" />
@@ -2811,14 +2926,14 @@
                 <condition count="1-5" status="exposed" role="other" var="eyeCandy" />
                 <condition status="not_exposed" role="target" />
                 <test expr="~clothing.type~" value="extra" />
-                <state img="#-disappointedVag.png">Think I'll just use ~eyeCandy~ for the visual stimulation...</state>
+                <state img="#-embarrassed.png">Think I'll just use ~eyeCandy~ for the visual stimulation...</state>
             </case>
             <case stage="9" id="241" priority="49">
                 <condition role="self" saidMarker="MastTransition" />
                 <test expr="~clothing.type~" value="extra" />
-                <state img="#-embarrassedVag.png">You could've helped me out a little...</state>
-                <state img="#-disappointedVag.png">Was it too much to ask? For just a bit of visual stimulation?</state>
-                <state img="#-happyVag.png">Damn. Even if it wasn't a lot, I think... I can make it work...</state>
+                <state img="#-embarrassed.png">You could've helped me out a little...</state>
+                <state img="#-embarrassed.png">Was it too much to ask? For just a bit of visual stimulation?</state>
+                <state img="#-embarrassed.png">Damn. Even if it wasn't a lot, I think... I can make it work...</state>
             </case>
             <case stage="9" id="242" priority="49">
                 <condition role="self" notSaidMarker="MastTransition" />
@@ -2957,10 +3072,10 @@
         <trigger id="male_must_masturbate">
             <case stage="9" id="583">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-disinterested2Vag.png">End of the line, ~name~.</state>
-                <state img="#-happyVag.png">Gig's up, ~name~.</state>
-                <state img="#-disinterestedVag.png">Enemy down.</state>
-                <state img="#-disinterested2Vag.png">Down for the count.</state>
+                <state img="#-disappointed.png">End of the line, ~name~.</state>
+                <state img="#-disinterested.png">Gig's up, ~name~.</state>
+                <state img="#-disinterested2.png">Enemy down.</state>
+                <state img="#-disinterested.png">Down for the count.</state>
             </case>
             <case stage="9" id="584">
                 <condition role="self" notSaidMarker="MastTransition" />
@@ -2983,8 +3098,8 @@
         <trigger id="male_start_masturbating">
             <case stage="9" id="576">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-happyVag.png">So kind of you to join me, ~name~.</state>
-                <state img="#-happyVag.png">About time you gave me some company, ~name~.</state>
+                <state img="#-happy.png">So kind of you to join me, ~name~.</state>
+                <state img="#-embarrassed.png">About time you gave me some company, ~name~.</state>
                 <state img="custom:dildo_fall_out" marker="Fall Out">Ah, come on. Bad time for this to fall out.</state>
             </case>
             <case stage="9" id="577">
@@ -3028,8 +3143,8 @@
             </case>
             <case stage="9" id="218">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-embarrassedVag.png">I would have sex sometimes, but one of my favorite things to do with my old partner was just... To watch him touch myself. It was so stimulating.</state>
-                <state img="#-happyVag.png">I've never tried, but I could probably get myself off by watching something like this. Hands-free.</state>
+                <state img="#-embarrassed.png">I would have sex sometimes, but one of my favorite things to do with my old partner was just... To watch him touch myself. It was so stimulating.</state>
+                <state img="#-embarrassed.png">I've never tried, but I could probably get myself off by watching something like this. Hands-free.</state>
             </case>
             <case stage="0" id="206">
                 <state img="#-disinterested.png">I know it feels good, ~name~, but could you keep it down? My mission is of utmost importance.</state>
@@ -3084,12 +3199,12 @@
             </case>
             <case stage="9" id="590">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-surprisedVag.png">Oh, uh... A lot came out...</state>
-                <state img="#-embarrassedVag.png">Aren't men supposed to do that into a tissue or something?</state>
-                <state img="#-embarrassedVag.png">I assumed you'd catch it in your hand, not... let it go all over the place...</state>
-                <state img="#-disinterested2Vag.png">You could've caught that with your other hand, ~name~...</state>
-                <state img="#-embarrassedVag.png">I know it's part of the game, but... did you have to be so reckless? You could've gotten some of that one someone.</state>
-                <state img="#-disappointedVag.png">Wish you could have held out a bit longer, ~name~...</state>
+                <state img="#-embarrassed.png">Oh, uh... A lot came out...</state>
+                <state img="#-surprised.png">Aren't men supposed to do that into a tissue or something?</state>
+                <state img="#-embarrassed.png">I assumed you'd catch it in your hand, not... let it go all over the place...</state>
+                <state img="#-disinterested.png">You could've caught that with your other hand, ~name~...</state>
+                <state img="#-angry.png">I know it's part of the game, but... did you have to be so reckless? You could've gotten some of that one someone.</state>
+                <state img="#-embarrassed.png">Wish you could have held out a bit longer, ~name~...</state>
             </case>
             <case stage="9" id="591">
                 <condition role="self" notSaidMarker="MastTransition" />
@@ -3102,7 +3217,7 @@
             </case>
             <case stage="0-8 10" id="198" priority="0">
                 <test expr="~background.location~" value="indoors" />
-                <state img="#-surprised.png">All over the floor?</state>
+                <state img="#-surprised.png">All over the floor? Please, have better aim next time...</state>
                 <state img="#-surprised.png">It got all over the floor.</state>
                 <state img="#-disappointed.png">All over the floor? You couldn't have shot that in your hand or something?</state>
             </case>
@@ -3131,15 +3246,15 @@
             </case>
             <case stage="9" id="586">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-disinterested2Vag.png">End of the line, ~name~.</state>
-                <state img="#-happyVag.png">Gig's up, ~name~.</state>
-                <state img="#-disinterestedVag.png">Enemy down.</state>
-                <state img="#-disinterested2Vag.png">Down for the count.</state>
+                <state img="#-disappointed.png">End of the line, ~name~.</state>
+                <state img="#-disappointed.png">Gig's up, ~name~.</state>
+                <state img="#-disinterested.png">Enemy down.</state>
+                <state img="#-happy.png">Down for the count.</state>
             </case>
             <case stage="9" id="595">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-happyVag.png">So kind of you to join me, ~name~.</state>
-                <state img="#-happyVag.png">About time you gave me some company, ~name~.</state>
+                <state img="#-happy.png">So kind of you to join me, ~name~.</state>
+                <state img="#-happy.png">About time you gave me some company, ~name~.</state>
                 <state img="custom:dildo_fall_out" marker="Fall Out">Ah, come on. Bad time for this to fall out.</state>
             </case>
             <case stage="9" id="596">
@@ -3166,8 +3281,8 @@
             </case>
             <case stage="9" id="607">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-thinkingVag.png">I usually start of slow. And if I'm not in a relationship, with the help of self-pleasuring aids.</state>
-                <state img="#-happyVag.png">It's hard for me to get started without skimming through some graphic content first. At least this won't be an issue for you, ~name~.</state>
+                <state img="#-disinterested.png">I usually start of slow. And if I'm not in a relationship, with the help of self-pleasuring aids.</state>
+                <state img="#-happy.png">It's hard for me to get started without skimming through some graphic content first. At least this won't be an issue for you, ~name~.</state>
             </case>
             <case stage="0-4">
                 <state img="#-thinking.png">Right. Perhaps my target will be distracted by you and slip from his cover.</state>
@@ -3191,8 +3306,8 @@
         <trigger id="female_finished_masturbating">
             <case stage="9" id="597">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-disappointedVag.png">You couldn't have lasted just a bit longer, ~name~? Shame.</state>
-                <state img="#-disappointedVag.png">Leaving me to do this without you, ~name~? Not very lady-like...</state>
+                <state img="#-disappointed.png">You couldn't have lasted just a bit longer, ~name~? Shame.</state>
+                <state img="#-thinking.png">Leaving me to do this without you, ~name~? Not very lady-like...</state>
             </case>
             <case stage="9" id="599">
                 <condition role="self" notSaidMarker="MastTransition" />
@@ -3206,10 +3321,10 @@
 
         <trigger id="must_masturbate_first">
             <case stage="8" priority="1">
-                <state img="#-loss.png">Right. Knowing now that this whole thing was a set up organized by Catherine, it makes much more sense why she wanted me to bring this thing...</state>
-                <state img="#-loss.png">I'm reminded that this is all Catherine's doing. Damn, that blasted woman. And to make matters worse, she explicitly wrote in the contract that I'm to use &lt;i&gt;this&lt;/i&gt;...</state>
-                <state img="#-loss.png">Catherine's contract clearly mentioned I must use &lt;i&gt;this&lt;/i&gt; in order for her to consider the mission complete. However, knowing that this was a setup, I surely don't have to? Well, better safe than sorry...</state>
-                <state img="#-loss.png">If this is a setup, then I wonder if Catherine would mind if I declined to use this... Well, it's better safe than sorry...</state>
+                <state img="#-loss.png" marker="MastTransition">Right. Knowing now that this whole thing was a set up organized by Catherine, it makes much more sense why she wanted me to bring this thing...</state>
+                <state img="#-loss.png" marker="MastTransition">I'm reminded that this is all Catherine's doing. Damn, that blasted woman. And to make matters worse, she explicitly wrote in the contract that I'm to use &lt;i&gt;this&lt;/i&gt;...</state>
+                <state img="#-loss.png" marker="MastTransition">Catherine's contract clearly mentioned I must use &lt;i&gt;this&lt;/i&gt; in order for her to consider the mission complete. However, knowing that this was a setup, I surely don't have to? Well, better safe than sorry...</state>
+                <state img="#-loss.png" marker="MastTransition">If this is a setup, then I wonder if Catherine would mind if I declined to use this... Well, it's better safe than sorry...</state>
             </case>
         </trigger>
 
@@ -3224,58 +3339,39 @@
 
         <trigger id="start_masturbating">
             <case stage="8">
-                <state img="#-startAngry.png">There's also the part in the contract where... yeah, she wanted me to make it look convincing, so I have to put it in my mouth first... I swear I'm gonna get her back for this.</state>
-                <state img="#-startAngry.png">This has to go in my mouth first, however... It was in the contract, unfortunately...</state>
-                <state img="#-startAngry.png">I regret to remember the part of the contract where this has to go in my mouth first... Damn that Catherine...</state>
-                <state img="#-startAngry.png">The contract explicitly stated that I have to put this in my mouth first. Guess Catherine wanted me to tease you guys...</state>
+                <state img="#-startAngry.png">If Catherine really is behind this... Damn it all.</state>
+                <state img="#-startAngry.png">If it's really Catherine behind this scheme... I'll have to get her back.</state>
+                <state img="#-startAngry.png">And to think that Catherine planned ahead with this thing...</state>
             </case>
         </trigger>
 
         <trigger id="masturbating">
-            <case stage="9" id="217" oneShotId="6" priority="900">
-                <condition role="self" saidMarker="OralMastCount" notSaidMarker="MastTransition" />
-                <state img="#-transition.png" marker="MastTransition">That's enough of that. I'll be moving on now.</state>
-                <state img="#-transition.png" marker="MastTransition">I trust that's enough for Catherine... Time to get this over with.</state>
-            </case>
-            <case stage="9" id="35">
-                <condition role="self" notSaidMarker="MastTransition" />
-                <state img="#-angryOral.png" marker="OralMastCount">It's hard to believe someone as perverse as my employer exists.</state>
-                <state img="#-angryOral.png" marker="OralMastCount">Catherine wanted me to put this in my mouth while I did this... Gods, I'll make her pay.</state>
-                <state img="custom:suck" marker="OralMastCount">*suck* *suck* *suck* *slurp* *schlip* *sclop* Mmm... *schlurp*</state>
-                <state img="#-disinterested2Oral.png" marker="OralMastCount">I'm only doing this because my employer instructed me to do so. I'd never put one of these things in my mouth otherwise.</state>
-                <state img="#-disappointedOral.png" marker="OralMastCount">If it weren't for my contract, I'd get this over with efficiently. I would not be wasting time putting this thing near my mouth.</state>
-                <state img="#-angryOral.png" marker="OralMastCount">Licking this is a waste of time, but requirements are requirements.</state>
-                <state img="#-disappointedOral.png" marker="OralMastCount">I know licking this is inefficient. Boss's orders.</state>
-                <state img="#-disappointedOral.png" marker="OralMastCount">I'd sooner put this in the proper place and get this show on the road, but my boss is set on wasting time...</state>
-                <state img="#-disappointedOral.png" marker="OralMastCount">At any rate, I suppose I &lt;i&gt;am&lt;/i&gt; lubricating this thing... It'll make the second half easier.</state>
-                <state img="#-smirkOral.png" marker="OralMastCount">If it's any consolation, the second part of this will be easier if this thing is wet.</state>
-            </case>
             <case stage="9" id="36">
                 <condition role="self" saidMarker="MastTransition" />
-                <state img="#-embarrassedVag.png">I would never use one of these in a relationship. Can't help but feel like I would be unfaithful.</state>
-                <state img="#-embarrassedVag.png">Doing this feels... &lt;i&gt;tingly&lt;/i&gt;... Should I stop?</state>
-                <state img="#-disappointedVag.png">&lt;i&gt;(I haven't used one of these since my partner passed. Maybe I should...)&lt;/i&gt;</state>
-                <state img="#-thinkingVag.png">I'm surprised these sorts of pleasure aids are created so well. It's mostly men who make tools. Guess they know what women want.</state>
-                <state img="#-disappointedVag.png">I'm not terribly pissed at Catherine for making me use this. They &lt;i&gt;do&lt;/i&gt; feel nicer than just using my fingers.</state>
+                <state img="#-disappointed.png">I would never use one of these in a relationship. Can't help but feel like I would be unfaithful.</state>
+                <state img="#-embarrassed.png">Doing this feels... &lt;i&gt;tingly&lt;/i&gt;... Should I stop?</state>
+                <state img="#-disappointed.png">&lt;i&gt;(I haven't used one of these since my partner passed. Maybe I should...)&lt;/i&gt;</state>
+                <state img="#-thinking.png">I'm surprised these sorts of pleasure aids are created so well. It's mostly men who make tools. Guess they know what women want.</state>
+                <state img="#-thinking.png">I'm not terribly pissed at Catherine for making me use this. They &lt;i&gt;do&lt;/i&gt; feel nicer than just using my fingers.</state>
             </case>
             <case stage="9">
-                <state img="ShamirQuiver.png">This line should not play. Please submit a bug report!</state>
+                <state img="ShamirQuiver.png">This line should not play. Please submit a bug report! (Masturbating self)</state>
             </case>
         </trigger>
 
         <trigger id="heavy_masturbating">
             <case stage="9" id="614">
                 <condition role="self" saidMarker="MastTransition" notSaidMarker="HaveGrabbedDildo" />
-                <state img="#-embarrassedVag.png">I would never use one of these in a relationship. Can't help but feel like I would be unfaithful.</state>
+                <state img="#-disappointed.png">I would never use one of these in a relationship. Can't help but feel like I would be unfaithful.</state>
                 <state img="custom:dildo_fall_out" marker="+FallOut" collectible="Shamir's Phallus" persist-marker="true">Ah-aa-! Damn. These things don't stay inside very well, do they?</state>
                 <state img="custom:dildo_fall_out" marker="+FallOut" collectible="Shamir's Phallus" persist-marker="true">You can tell I'm not cut out for--&lt;i&gt;ah!-&lt;/i&gt; this kind of stuff... *pant* My body seems to be rejecting this thing.</state>
                 <state img="custom:dildo_fall_out" marker="+FallOut" collectible="Shamir's Phallus" persist-marker="true">These things don't stay in very well, do they?</state>
-                <state img="#-embarrassedVag.png">Doing this feels... &lt;i&gt;tingly&lt;/i&gt;... Should I stop?</state>
-                <state img="#-disappointedVag.png">I haven't used one of these since my partner passed. Maybe I should...</state>
+                <state img="#-embarrassed.png">Doing this feels... &lt;i&gt;tingly&lt;/i&gt;... Should I stop?</state>
+                <state img="#-disappointed.png">I haven't used one of these since my partner passed. Maybe I should...</state>
                 <state img="custom:dildo_fall_out" marker="+FallOut" collectible="Shamir's Phallus" persist-marker="true">&lt;i&gt;Fuuuuck&lt;/i&gt; I need it back in I need it back in!</state>
-                <state img="#-disappointedVag.png">&lt;i&gt;(Partner... If only we could just be... just one last time...)&lt;/i&gt;</state>
+                <state img="#-disappointed.png">&lt;i&gt;(Partner... If only we could just be... just one last time...)&lt;/i&gt;</state>
                 <state img="custom:dildo_fall_out" marker="+FallOut" collectible="Shamir's Phallus" persist-marker="true">&lt;i&gt;Stay in, dammit!&lt;/i&gt;</state>
-                <state img="#-smirkVag.png">Just... a l-little mooore...</state>
+                <state img="#-angry.png">Just... a l-little mooore...</state>
             </case>
             <case stage="9" id="620">
                 <state img="dildo.png">should not play. Send bug report (Heavy Masturbating)</state>
