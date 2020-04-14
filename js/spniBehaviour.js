@@ -591,7 +591,11 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
     switch (fn) {
     case 'position':
         if (player.slot === self.slot) return 'self';
+        if (player === humanPlayer) return 'across';
         return (player.slot < self.slot) ? 'left' : 'right';
+    case 'distance':
+        if (player === humanPlayer) return undefined;
+        return Math.abs(player.slot - self.slot);
     case 'slot':
         return player.slot;
     case 'collectible':
