@@ -934,6 +934,10 @@ Interval.prototype.contains = function (number) {
         && (this.max === null || number <= this.max);
 };
 
+Interval.prototype.isValid = function() {
+    return !isNaN(this.min) && !isNaN(this.max);
+};
+
 Interval.prototype.toString = Interval.prototype.toJSON = function(key) {
     if (isNaN(this.min)) return '#ERR';
     if (this.min === null && this.max === null) {
@@ -1678,7 +1682,7 @@ Case.prototype.checkConditions = function (self, opp) {
              * not an interval. */
             if (!cmp || cmp == '@' || cmp == '!@') {
                 var interval = parseInterval(value);
-                if (interval || cmp) {
+                if (interval.isValid() || cmp) {
                     return cmp === '!@' ? !inInterval(Number(expr), interval) : inInterval(Number(expr), interval);
                 }
             }
