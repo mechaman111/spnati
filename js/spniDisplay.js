@@ -823,6 +823,16 @@ function MainSelectScreenDisplay (slot) {
         $('#select-name-label-'+slot)
     );
 
+    this.badges = {
+        'new': $('#select-new-badge-'+slot),
+        'epilogue': $('#select-badge-'+slot),
+        'costume': $('#select-costume-badge-'+slot),
+    };
+    this.allBadges = $('#select-image-area-'+slot+'>.select-badge-bar>img');
+    this.layerIcon = $('#select-layer-'+slot);
+    this.genderIcon = $('#select-gender-'+slot);
+    this.statusIcon = $('#select-status-'+slot);
+    
     this.targetSuggestionsShown = false;
     this.targetSuggestions = Array(4);
     this.suggestionQuad = Array(4);
@@ -910,20 +920,22 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
     this.hideBubble();
     this.drawPose(player.selection_image);
     this.label.html(player.label.initCap()).addClass('suggestion-label');
-    this.simpleImage.addClass('prefill-suggestion');
+    this.imageArea.addClass('prefill-suggestion');
     this.selectButton.html("Select Other Opponent").removeClass("red").addClass("green suggestion-shown");
     this.prefillButton.show();
 
-    this.prefillBadgeRow.children().hide();
-
-    if (player.highlightStatus === 'new')
-        this.prefillSuggestionBadges.new.show();
-
-    if (player.ending)
-        this.prefillSuggestionBadges.epilogue.show();
-
-    if (player.alternate_costumes.length > 0)
-        this.prefillSuggestionBadges.costume.show();
+    this.prefillSuggestionBadges.new.toggle(player.highlightStatus === 'new');
+    this.prefillSuggestionBadges.epilogue.toggle(EPILOGUE_BADGES_ENABLED && player.ending);
+    this.prefillSuggestionBadges.costume.toggle(ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0);
+    this.layerIcon.attr({
+        src: "img/layers" + player.layers + ".png",
+        alt: player.layers + " layers",
+    }).show() ;
+    this.genderIcon.attr({
+        src: player.gender === 'male' ? 'img/male.png' : 'img/female.png',
+        alt: player.gender.initCap(),
+    }).show();
+    this.statusIcon.hide();
 }
 
 MainSelectScreenDisplay.prototype.onSingleSuggestionSelected = function () {
@@ -950,7 +962,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
 
     this.prefillBadgeRow.children().hide();
     this.label.removeClass("suggestion-label");
-    this.simpleImage.removeClass("prefill-suggestion");
+    this.imageArea.removeClass("prefill-suggestion");
     this.selectButton.removeClass("suggestion-shown");
     this.prefillButton.hide();
 
@@ -965,8 +977,26 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         this.selectButton.removeClass("red");
         this.selectButton.addClass("green");
         this.altCostumeSelector.hide();
+
+        this.allBadges.hide();
+        this.layerIcon.hide();
+        this.genderIcon.hide();
+        this.statusIcon.hide();
         return;
     }
+    
+    this.badges.new.toggle(player.highlightStatus === 'new');
+    this.badges.epilogue.toggle(EPILOGUE_BADGES_ENABLED && player.ending);
+    this.badges.costume.toggle(ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0);
+    updateStatusIcon(this.statusIcon, player);
+    this.layerIcon.attr({
+        src: "img/layers" + player.layers + ".png",
+        alt: player.layers + " layers",
+    }).show() ;
+    this.genderIcon.attr({
+        src: player.gender === 'male' ? 'img/male.png' : 'img/female.png',
+        alt: player.gender.initCap(),
+    }).show();
     
     if (!player.isLoaded()) {
         this.hideBubble();

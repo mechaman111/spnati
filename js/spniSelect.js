@@ -68,6 +68,7 @@ $groupNewBadges = [$("#group-new-badge-1"), $("#group-new-badge-2"), $("#group-n
 $groupCostumeBadges = [$("#group-costume-badge-1"), $("#group-costume-badge-2"), $("#group-costume-badge-3"), $("#group-costume-badge-4")];
 $groupStatuses = [$("#group-status-1"), $("#group-status-2"), $("#group-status-3"), $("#group-status-4")];
 $groupLayers = [$("#group-layer-1"), $("#group-layer-2"), $("#group-layer-3"), $("#group-layer-4")];
+$groupGenders = [$("#group-gender-1"), $("#group-gender-2"), $("#group-gender-3"), $("#group-gender-4")];
 $groupCostumeSelectors = [$("#group-costume-select-1"), $("#group-costume-select-2"), $("#group-costume-select-3"), $("#group-costume-select-4")];
 
 $groupImages = [$("#group-image-1"), $("#group-image-2"), $("#group-image-3"), $("#group-image-4")];
@@ -517,6 +518,10 @@ function updateGroupSelectScreen (ignore_bg) {
                 src: "img/layers" + opponent.layers + ".png",
                 alt: opponent.layers + ' layers',
             }).show();
+            $groupGenders[i].attr({
+                src: opponent.gender === 'male' ? 'img/male.png' : 'img/female.png',
+                alt: opponent.gender.initCap(),
+            }).show();
 
             $groupImages[i].attr('src', opponent.selection_image);
             $groupImages[i].css('height', opponent.scale + '%');
@@ -536,6 +541,7 @@ function updateGroupSelectScreen (ignore_bg) {
             $groupCostumeBadges[i].hide();
             $groupStatuses[i].hide();
             $groupLayers[i].hide();
+            $groupGenders[i].hide();
             $groupImages[i].hide();
             $groupCostumeSelectors[i].hide();
             $groupButton.attr('disabled', true);
