@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 7:55:18 PM on April 09, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 6:46:53 PM on April 13, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Amy</first>
@@ -10791,6 +10791,10 @@
 
         <trigger id="game_over_defeat">
             <case stage="10">
+                <condition status="not_lost_some" role="target" character="human" />
+                <state img="#-cheer.png" marker="+amy_persist_lost_last"></state>
+            </case>
+            <case stage="10">
                 <condition role="target" character="human" />
                 <condition count="4" filter="ddlc" />
                 <state img="#-happy.png" marker="+amy_persist_lost_last" collectible="Imperfect Circle" persist-marker="true">Ehehe~ you know, it feels like a missed shot for the four of us not to return the favor for ~player~... and each other... this is what dreams are made of. Right, ladies? </state>
@@ -10824,10 +10828,6 @@
             <case stage="10" priority="300">
                 <condition filter="yuri" role="target" />
                 <state img="#-happy.png" marker="+amy_persist_lost_last" persist-marker="true">Well, I didn't &lt;i&gt;expect&lt;/i&gt; Yuri to beat me. But I wouldn't mind a &lt;i&gt;yuri&lt;/i&gt; lowercase scene with her. </state>
-            </case>
-            <case stage="10">
-                <condition role="target" character="human" />
-                <state collectible="panties">What the character says when someone else has won the game. This can only occur when a player is in the "finished" stage.</state>
             </case>
             <case stage="10" priority="2">
                 <test expr="~self.persistent.amy_persist_lost_last~" value="1" />
