@@ -1682,7 +1682,7 @@ Case.prototype.checkConditions = function (self, opp) {
              * not an interval. */
             if (!cmp || cmp == '@' || cmp == '!@') {
                 var interval = parseInterval(value);
-                if (interval.isValid() || cmp) {
+                if ((interval && interval.isValid()) || cmp) {
                     return cmp === '!@' ? !inInterval(Number(expr), interval) : inInterval(Number(expr), interval);
                 }
             }
