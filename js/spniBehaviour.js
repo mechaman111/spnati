@@ -1129,7 +1129,7 @@ function Case($xml) {
     this.totalRounds =              parseInterval($xml.attr("totalRounds"));
     this.saidMarker =               $xml.attr("saidMarker");
     this.notSaidMarker =            $xml.attr("notSaidMarker");
-    this.customPriority =           parseInt($xml.attr("priority"), 10) || undefined;
+    this.customPriority =           parseInt($xml.attr("priority"), 10);
     this.hidden =                   $xml.attr("hidden");
     this.addTags =                  $xml.attr("addCharacterTags");
     this.removeTags =               $xml.attr("removeCharacterTags");
@@ -1162,6 +1162,10 @@ function Case($xml) {
         tests.push($(this));
     });
     this.tests = tests;
+
+    if (isNaN(this.customPriority)) {
+        this.customPriority = undefined;
+    }
     
     // Calculate case priority ahead of time.
     if (this.customPriority !== undefined) {
@@ -1682,7 +1686,7 @@ Case.prototype.checkConditions = function (self, opp) {
              * not an interval. */
             if (!cmp || cmp == '@' || cmp == '!@') {
                 var interval = parseInterval(value);
-                if ((interval && interval.isValid()) || cmp) {
+                if ((interval != undefined && interval.isValid()) || cmp) {
                     return cmp === '!@' ? !inInterval(Number(expr), interval) : inInterval(Number(expr), interval);
                 }
             }
