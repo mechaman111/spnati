@@ -455,6 +455,7 @@ namespace SPNATI_Character_Editor.Controls
 			table.AddSpeedButton("Player", "Collectible", (data) => { return AddVariableTest("~_.collectible.*~", data); });
 			table.AddSpeedButton("Player", "Collectible (Counter)", (data) => { return AddVariableTest("~_.collectible.*.counter~", data); });
 			table.AddSpeedButton("Player", "Costume", (data) => { return AddVariableTest("~_.costume~", data); });
+			table.AddSpeedButton("Player", "Distance", (data) => { return AddVariableTest("~_.distance~", data); });
 			table.AddSpeedButton("Player", "Gender", (data) => { return AddVariableTest("~_.gender~", data); });
 			table.AddSpeedButton("Player", "Hand Quality", (data) => { return AddVariableTest("~_.hand.score~", data); });
 			table.AddSpeedButton("Player", "Largest Lead", (data) => { return AddVariableTest("~_.biggestlead~", data); });

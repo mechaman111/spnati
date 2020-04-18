@@ -639,7 +639,8 @@ namespace SPNATI_Character_Editor
 											if (string.IsNullOrEmpty(line.Marker)) { continue; }
 											string val;
 											bool pt;
-											string markerName = Marker.ExtractPieces(line.Marker, out val, out pt);
+											string markerOp;
+											string markerName = Marker.ExtractPieces(line.Marker, out val, out pt, out markerOp);
 											if (markerName == name)
 											{
 												for (int i = 0; i < c.Stages.Count; i++)

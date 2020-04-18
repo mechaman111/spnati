@@ -35,6 +35,29 @@ namespace Desktop.CommonControls
 			}
 		}
 
+		public Func<IRecord, bool> RecordFilter
+		{
+			get { return _cellTemplate.RecordFilter; }
+			set
+			{
+				_cellTemplate.RecordFilter = value;
+				if (DataGridView != null)
+				{
+					DataGridViewRowCollection rows = DataGridView.Rows;
+					for (int i = 0; i < rows.Count; i++)
+					{
+						DataGridViewRow row = rows.SharedRow(i);
+						RecordCell cell = row.Cells[Index] as RecordCell;
+						if (cell != null)
+						{
+							cell.RecordFilter = value;
+						}
+					}
+					DataGridView.InvalidateColumn(Index);
+				}
+			}
+		}
+
 		public bool AllowsNew
 		{
 			get { return _cellTemplate.AllowsNew; }
@@ -62,6 +85,8 @@ namespace Desktop.CommonControls
 		{
 			RecordColumn copy = base.Clone() as RecordColumn;
 			copy.RecordType = RecordType;
+			copy.RecordFilter = RecordFilter;
+			copy.AllowsNew = AllowsNew;
 			return copy;
 		}
 	}

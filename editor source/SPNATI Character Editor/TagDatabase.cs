@@ -1,6 +1,7 @@
 ﻿using Desktop;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SPNATI_Character_Editor
 {
@@ -105,36 +106,53 @@ namespace SPNATI_Character_Editor
 			list.Add(character.FolderName);
 		}
 
-		public static Tuple<string, List<Character>> GetSmallestGroup(string group, Character character)
+		/// <summary>
+		/// Gets all groups a character that has at least one other character
+		/// </summary>
+		/// <param name="group"></param>
+		/// <param name="character"></param>
+		/// <param name="max">Max amount of characters in the group to consider</param>
+		/// <returns></returns>
+		public static List<Tuple<string, List<Character>>> GetGroups(string group, Character character, int max)
 		{
+			List<Tuple<string, List<Character>>> output = new List<Tuple<string, List<Character>>>();
 			List<string> tags = _characterGroups.Get(character.FolderName, group);
-			if (tags == null) { return null; }
-			int min = int.MaxValue;
-			string minTag = null;
-			List<string> minList = null;
-			Dictionary<string, List<Character>> output = new Dictionary<string, List<Character>>();
+			if (tags == null) { return output; }
+
 			Dictionary<string, List<string>> result;
 			_groups.TryGetValue(group, out result);
 			foreach (string tag in tags)
 			{
 				List<string> list = result.Get(tag);
-				if (list != null && list.Count > 1 && (min == 0 || min > list.Count))
+				if (list != null && list.Count > 1 && list.Count <= max)
 				{
-					min = list.Count;
-					minTag = tag;
-					minList = list;
+					List<Character> finalList = new List<Character>();
+					foreach (string key in list)
+					{
+						finalList.Add(CharacterDatabase.Get(key));
+					}
+					output.Add(new Tuple<string, List<Character>>(tag, finalList));
 				}
 			}
-			if (minTag == null)
+			return output;
+		}
+
+		public static Tuple<string, List<Character>> GetSmallestGroup(string group, Character character)
+		{
+			List<Tuple<string, List<Character>>> groups = GetGroups(group, character, 10);
+			if (groups.Count == 0)
 			{
 				return null;
 			}
-			List<Character> finalList = new List<Character>();
-			foreach (string key in minList)
+			Tuple<string, List<Character>> min = null;
+			foreach (Tuple<string, List<Character>> grp in groups)
 			{
-				finalList.Add(CharacterDatabase.Get(key));
+				if (min == null || grp.Item2.Count < min.Item2.Count)
+				{
+					min = grp;
+				}
 			}
-			return new Tuple<string, List<Character>>(minTag, finalList);
+			return min;
 		}
 	}
 }

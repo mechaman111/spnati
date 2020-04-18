@@ -57,6 +57,10 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("status")]
 		public OpponentStatus Status;
 
+		[XmlArray("markers")]
+		[XmlArrayItem("marker")]
+		public List<MarkerOperation> Markers = new List<MarkerOperation>();
+
 		[XmlElement("scene")]
 		public List<Scene> Scenes = new List<Scene>();
 

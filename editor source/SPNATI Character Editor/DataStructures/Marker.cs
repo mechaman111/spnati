@@ -132,47 +132,52 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="marker"></param>
 		/// <returns></returns>
-		public static string ExtractPieces(string marker, out string value, out bool perTarget)
+		public static string ExtractPieces(string marker, out string value, out bool perTarget, out string op)
 		{
 			perTarget = false;
 			if (marker == null)
 			{
+				op = null;
 				value = null;
 				return null;
+			}
+			string pattern = @"^(?:(\+|-)([\w-]+\*?)|([\w-]+\*?)\s*([-+*%\/]?=)\s*(.*?)\s*)$";
+			Match match = Regex.Match(marker, pattern);
+
+			if (match.Success)
+			{
+				if (match.Groups[1].Success)
+				{
+					marker = match.Groups[2].Value;
+					op = match.Groups[1].Value;
+					value = "1";
+				}
+				else
+				{
+					marker = match.Groups[3].Value;
+					op = match.Groups[4].Value[0].ToString();
+					value = match.Groups[5].Value;
+				}
 			}
 			else if (marker.Contains("="))
 			{
 				string[] pieces = marker.Split('=');
-				value = pieces[1];
 				marker = pieces[0];
-				if (marker.EndsWith("*"))
-				{
-					perTarget = true;
-					marker = marker.Substring(0, marker.Length - 1);
-				}
-				return marker;
-			}
-			else if (marker.StartsWith("+") || marker.StartsWith("-"))
-			{
-				value = marker[0].ToString();
-				marker = marker.Substring(1);
-				if (marker.EndsWith("*"))
-				{
-					perTarget = true;
-					marker = marker.Substring(0, marker.Length - 1);
-				}
-				return marker;
+				op = "=";
+				value = pieces[1];
 			}
 			else
 			{
 				value = null;
-				if (marker.EndsWith("*"))
-				{
-					perTarget = true;
-					marker = marker.Substring(0, marker.Length - 1);
-				}
-				return marker;
+				op = null;	
 			}
+
+			if (marker.EndsWith("*"))
+			{
+				perTarget = true;
+				marker = marker.Substring(0, marker.Length - 1);
+			}
+			return marker;
 		}
 
 		/// <summary>

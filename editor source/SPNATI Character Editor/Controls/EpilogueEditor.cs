@@ -225,6 +225,8 @@ namespace SPNATI_Character_Editor.Controls
 			selAlsoPlayingAllMarkers.SelectedItems = _ending.AlsoPlayingAllMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 			selAlsoPlayingNotMarkers.SelectedItems = _ending.AlsoPlayingNotMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 			selAlsoPlayingAnyMarkers.SelectedItems = _ending.AlsoPlayingAnyMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+
+			gridMarkers.SetMarkers(_ending.Markers);
 		}
 
 		public override void Save()
@@ -243,6 +245,7 @@ namespace SPNATI_Character_Editor.Controls
 			_ending.AlsoPlayingAllMarkers = selAlsoPlayingAllMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAlsoPlayingAllMarkers.SelectedItems) : null;
 			_ending.AlsoPlayingNotMarkers = selAlsoPlayingNotMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAlsoPlayingNotMarkers.SelectedItems) : null;
 			_ending.AlsoPlayingAnyMarkers = selAlsoPlayingAnyMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAlsoPlayingAnyMarkers.SelectedItems) : null;
+			_ending.Markers = gridMarkers.GetMarkers();
 		}
 
 		private void RemoveEnding()

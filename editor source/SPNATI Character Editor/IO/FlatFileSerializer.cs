@@ -1443,7 +1443,7 @@ namespace SPNATI_Character_Editor
 					case "direction":
 						line.Direction = value;
 						break;
-					case "oneShotId":
+					case "oneshotid":
 						int oneShotId;
 						if (int.TryParse(value, out oneShotId))
 						{

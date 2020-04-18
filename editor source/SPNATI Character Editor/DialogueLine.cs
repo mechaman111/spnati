@@ -1,10 +1,6 @@
-﻿using Desktop;
-using SPNATI_Character_Editor.IO;
-using System;
+﻿using SPNATI_Character_Editor.IO;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
@@ -91,6 +87,15 @@ namespace SPNATI_Character_Editor
 		{
 			get { return _marker; }
 			set { if (_marker != value) { _marker = value; NotifyPropertyChanged(); } }
+		}
+
+		private List<MarkerOperation> _markers;
+		[XmlArray("markers")]
+		[XmlArrayItem("marker")]
+		public List<MarkerOperation> Markers
+		{
+			get { return _markers; }
+			set { if (_markers != value) { _markers = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _direction;
@@ -197,6 +202,7 @@ namespace SPNATI_Character_Editor
 			Weight = 1;
 			Marker = null;
 			Images = new List<StageImage>();
+			Markers = new List<MarkerOperation>();
 		}
 
 		public DialogueLine(string image, string text) : this()
@@ -212,6 +218,11 @@ namespace SPNATI_Character_Editor
 			foreach (StageImage img in Images)
 			{
 				copy.Images.Add(img.Copy());
+			}
+			copy.Markers = new List<MarkerOperation>();
+			foreach (MarkerOperation marker in Markers)
+			{
+				copy.Markers.Add(marker.Copy());
 			}
 			return copy;
 		}
@@ -236,6 +247,10 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (CollectibleValue ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ IsMarkerPersistent.GetHashCode();
 			hash = (hash * 397) ^ (OneShotId > 0 ? OneShotId : -1);
+			foreach (MarkerOperation op in Markers)
+			{
+				hash = (hash * 397) ^ op.GetHashCode();
+			}
 			return hash;
 		}
 
@@ -287,7 +302,7 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				return IsMarkerPersistent || (Marker != null && (Marker.Contains("=") || Marker.Contains("+") || Marker.Contains("-") || Marker.Contains("*")));
+				return IsMarkerPersistent || (Marker != null && (Marker.Contains("=") || Marker.Contains("+") || Marker.Contains("-") || Marker.Contains("*"))) || Markers.Count > 0;
 			}
 		}
 
@@ -303,7 +318,7 @@ namespace SPNATI_Character_Editor
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
 		private bool UseXmlText()
 		{
-			return Images.Count == 0;
+			return Images.Count == 0 && Markers.Count == 0;
 		}
 	}
 }

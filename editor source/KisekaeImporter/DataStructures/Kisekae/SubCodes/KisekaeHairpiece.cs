@@ -15,7 +15,10 @@
 			Side = other.Side;
 			Height = other.Height;
 			ScaleY = other.ScaleY;
+			OffsetX = other.OffsetX;
+			Outline = other.Outline;
 			Skew = other.Skew;
+			Flipped = other.Flipped;
 		}
 
 		public int Side
