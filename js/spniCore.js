@@ -515,7 +515,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.default_costume = null;
     this.poses = {};
     this.labelOverridden = false;
-    this.pendingCollectiblePopup = null;
+    this.pendingCollectiblePopups = [];
 
     this.loaded = false;
     this.loadProgress = undefined;

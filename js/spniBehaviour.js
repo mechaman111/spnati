@@ -467,7 +467,7 @@ State.prototype.applyCollectible = function (player) {
                 }
                 
                 if (collectible.isUnlocked() && !COLLECTIBLES_UNLOCKED) {
-                    player.pendingCollectiblePopup = collectible;
+                    player.pendingCollectiblePopups.push(collectible);
                 }
                 
                 return true;
