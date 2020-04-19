@@ -1080,7 +1080,7 @@ function OpponentSelectionCard (opponent) {
     }
 
     if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
-        $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
+        this.epilogueBadge = $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
             src: "img/epilogue_icon.png",
             alt: "SPNatI Epilogue available"
         });
@@ -1127,6 +1127,24 @@ OpponentSelectionCard.prototype.update = function () {
     
     this.label.text(this.opponent.selectLabel);
     this.source.text(this.opponent.source);
+
+    this.updateEpilogueBadge();
+}
+
+OpponentSelectionCard.prototype.updateEpilogueBadge = function () {
+    if (!this.epilogueBadge || !this.opponent.ending) return;
+
+    var epilogueStatus = getOpponentEpilogueStatus(this.opponent);
+    this.epilogueBadge.removeClass("missing-reqs");
+
+    var bestMatchEpilogue = epilogueStatus.match;
+    if (bestMatchEpilogue.unlocked) {
+        return;
+    }
+
+    if (!bestMatchEpilogue.genderReqMet || bestMatchEpilogue.needsCharacter) {
+        this.epilogueBadge.addClass("missing-reqs");
+    }
 }
 
 OpponentSelectionCard.prototype.clear = function () {}
@@ -1427,64 +1445,39 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         this.epiloguesField.removeClass('has-epilogues');
     } else {
         this.epiloguesField.addClass('has-epilogues');
-        
-        var endingGenders = {
-            male: false,
-            female: false
-        };
-        
-        var hasConditionalEnding = false;
-        var totalEndings = 0;
-        var unlockedEndings = 0;
-        
-        opponent.endings.each(function (idx, elem) {
-            var $elem = $(elem);
+        var epilogueStatus = getOpponentEpilogueStatus(opponent);
 
-            var status = $elem.attr('status');
-            if (status && !includedOpponentStatuses[status]) {
-                return;
-            }
-            
-            totalEndings += 1;
-            if (save.hasEnding(opponent.id, $elem.text())) {
-                unlockedEndings += 1;
-            }
-            
-            if(EPILOGUE_CONDITIONAL_ATTRIBUTES.some(function (attr) { return !!$elem.attr(attr); })) {
-                hasConditionalEnding = true;
-            }
-            
-            var gender = $elem.attr('gender');
-            
-            if (gender === 'male') {
-                endingGenders.male = true;
-            } else if (gender === 'female') {
-                endingGenders.female = true;
+        var ctr = '(' + epilogueStatus.unlocked + '/' + epilogueStatus.total + ' seen)';
+        var text = "";
+
+        var showPositive = false;
+        var bestMatchEpilogue = epilogueStatus.match;
+        if (!bestMatchEpilogue.genderReqMet) {
+            text = (bestMatchEpilogue.male ? 'Males' : 'Females') + ' Only';
+        } else if (bestMatchEpilogue.needsCharacter) {
+            var opp = loadedOpponents.find(function (p) {
+                return p.id === bestMatchEpilogue.needsCharacter;
+            });
+
+            if (opp) {
+                text = "Requires " + opp.selectLabel;
             } else {
-                endingGenders.male = true;
-                endingGenders.female = true;                
+                text = "Requires Missing Character";
             }
-        });
-        
-        var epilogueAvailable = false;
-        if (endingGenders.male && endingGenders.female) {
-            epilogueAvailable = true;
-        } else if (endingGenders.male) {
-            epilogueAvailable = (humanPlayer.gender === 'male');
-        } else if (endingGenders.female) {
-            epilogueAvailable = (humanPlayer.gender === 'female');
-        }
-        
-        if (epilogueAvailable) {
-            this.epiloguesNavButton
-                .text((hasConditionalEnding ? 'Conditionally ' : '') + 'Available' + ' (' + unlockedEndings +'/' + totalEndings + ' seen)')
-                .removeClass('smooth-button-red')
-                .addClass('smooth-button-blue');
         } else {
-            this.epiloguesNavButton
-                .text((endingGenders.male ? 'Males' : 'Females') + ' Only' + ' (' + unlockedEndings +'/' + totalEndings + ' seen)')
-                .removeClass('smooth-button-blue')
-                .addClass('smooth-button-red');
+            text = (bestMatchEpilogue.extraConditions > 0 ? "Conditionally " : "") + "Available";
+            showPositive = true;
+        }
+
+        this.epiloguesNavButton
+            .removeClass('red blue')
+
+        text += " " + ctr;
+        this.epiloguesNavButton.text(text);
+        if (showPositive) {
+            this.epiloguesNavButton.addClass('blue');
+        } else {
+            this.epiloguesNavButton.addClass('red');
         }
     }
 
@@ -1512,7 +1505,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         
         this.collectiblesNavButton
             .text("Available")
-            .addClass('smooth-button-blue')
+            .addClass('blue')
             .prop('disabled', false);
             
         if (!opponent.collectibles) {
@@ -1583,4 +1576,53 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.epiloguesView.hide();
     this.collectiblesView.hide();
     this.mainView.show();
+}
+
+/**
+ * Helper function that trims down opponent status into something that'll be
+ * easy to display on a selection screen.
+ * 
+ * To be specific, this attempts to identify the epilogue with the most matching
+ * static requirements, taking the player's gender and current table setup into
+ * account.
+ * 
+ * @param {Opponent} opponent 
+ */
+function getOpponentEpilogueStatus(opponent) {
+    /* Find the epilogue that matches the most requirements possible.
+     * Prefer matching gender requirements first before character reqs.
+     */
+    if (!opponent.ending) {
+        return;
+    }
+
+    var epilogueStatus = opponent.getAllEpilogueStatus();
+    var epiloguesUnlocked = 0;
+    var bestMatchEpilogue = null;
+    for (var i = 0; i < epilogueStatus.length; i++) {
+        var status = epilogueStatus[i];
+        
+        if (!bestMatchEpilogue) bestMatchEpilogue = status;
+
+        if (status.unlocked) {
+            epiloguesUnlocked += 1;
+            continue;
+        }
+
+        if (status !== bestMatchEpilogue) {
+            if (
+                (bestMatchEpilogue.unlocked && !status.unlocked) ||
+                (!bestMatchEpilogue.genderReqMet && status.genderReqMet) ||
+                (bestMatchEpilogue.needsCharacter && !status.needsCharacter)
+            ) {
+                bestMatchEpilogue = status;
+            }
+        }
+    }
+
+    return {
+        total: epilogueStatus.length,
+        unlocked: epiloguesUnlocked,
+        match: bestMatchEpilogue
+    };
 }

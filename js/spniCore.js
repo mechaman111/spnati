@@ -782,6 +782,70 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
 	});
 }
 
+/**
+ * Get quick details on epilogue conditions and whether they're met, given
+ * the current player gender and table composition.
+ */
+Opponent.prototype.getAllEpilogueStatus = function () {
+    if (!this.ending) {
+        return [];
+    }
+
+    var ret = [];
+    this.endings.each(function (idx, elem) {
+        var $elem = $(elem);
+
+        var status = $elem.attr('status');
+        if (status && !includedOpponentStatuses[status]) {
+            return;
+        }
+
+        var summary = {
+            unlocked: false,
+            male: false,
+            female: false,
+            extraConditions: false,
+            genderReqMet: true,
+            needsCharacter: null,
+        };
+
+        summary.unlocked = save.hasEnding(this.id, $elem.text());
+
+        /* Check what conditions we can for this epilogue: */
+        var epilogue_gender = $elem.attr('gender');
+        if (epilogue_gender) {
+            if (epilogue_gender === 'male') {
+                summary.male = true;
+            } else if (epilogue_gender === 'female') {
+                summary.female = true;
+            } else {
+                summary.male = true;
+                summary.female = true;
+            }
+
+            if (epilogue_gender !== humanPlayer.gender && epilogue_gender !== 'any') {
+                summary.genderReqMet = false; 
+            }
+        }
+
+        var alsoPlaying = $elem.attr("alsoPlaying");
+        if (alsoPlaying) {
+            if (!players.some(function (p) { return p.id == alsoPlaying; })) {
+                /* Player requirement not met */
+                summary.needsCharacter = alsoPlaying;
+            }
+        }
+
+        summary.extraConditions = EPILOGUE_CONDITIONAL_ATTRIBUTES.some(function (attr) {
+            return !!$elem.attr(attr) && attr !== "alsoPlaying";
+        });
+
+        ret.push(summary);
+    }.bind(this));
+
+    return ret;
+}
+
 /* Called prior to removing a character from the table. */
 Opponent.prototype.unloadOpponent = function () {
     if (SENTRY_INITIALIZED) {

@@ -392,6 +392,10 @@ function updateIndividualSelectScreen () {
     selectableOpponents.forEach(function(opp) {
         $('#individual-select-screen .selection-cards-container').append(opp.selectionCard.mainElem);
         $(opp.selectionCard.mainElem).show();
+
+        if (opp.ending) {
+            opp.selectionCard.updateEpilogueBadge();
+        }
     });
     return;
 }
