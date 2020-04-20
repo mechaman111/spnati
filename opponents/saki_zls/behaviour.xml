@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.2.6 at 8:42:20 PM on April 18, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.2.6 at 4:55:37 AM on April 20, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.2.6</version>
     <first>Saki</first>
@@ -236,6 +236,10 @@
                 <keyframe time="0.25" scalex="1" scaley="1" />
             </directive>
         </pose>
+        <pose id="6-AfterStripped">
+            <sprite id="Stripped-Bucket" src="saki_zls/6-Stripped-Bucket.png" x="194" y="1073" rotation="-245" />
+            <sprite id="Shocked" src="saki_zls/6-Shocked.png" x="0" y="0" />
+        </pose>
         <pose id="6-FOH_ANI">
             <sprite id="FOH" src="saki_zls/6-FOH.png" x="0" y="0" />
             <sprite id="Interrobang" delay="0.75" src="saki_zls/z_Interrobang.png" x="178" y="168" scalex="0.5" scaley="0.5" />
@@ -264,14 +268,9 @@
                 <keyframe time="3.62" x="400" y="-200" alpha="100" />
                 <keyframe time="4.38" x="600" y="-200" alpha="0" />
             </directive>
-            <directive type="animation" id="Saki">
-                <keyframe time="0" src="saki_zls/7-Angry.png" />
-                <keyframe time="1.5" src="saki_zls/7-Shocked.png" />
-                <keyframe time="2.88" src="saki_zls/8-Hit.png" />
-            </directive>
-            <directive type="animation" id="Saki" interpolation="linear">
+            <directive type="animation" id="Saki" ease="linear" interpolation="linear">
                 <keyframe time="0" x="0" y="0" />
-                <keyframe time="1.5" x="0" y="0" alpha="100" />
+                <keyframe time="1.5" x="0" y="0" />
                 <keyframe time="2.38" x="0" y="0" />
                 <keyframe time="2.62" x="0" y="0" />
                 <keyframe time="2.75" x="0" />
@@ -285,6 +284,11 @@
                 <keyframe time="3.31" x="5" />
                 <keyframe time="3.38" x="-5" />
                 <keyframe time="3.44" x="0" />
+            </directive>
+            <directive type="animation" id="Saki" ease="linear" interpolation="none">
+                <keyframe time="0" src="saki_zls/7-Angry.png" />
+                <keyframe time="1.5" src="saki_zls/7-Shocked.png" />
+                <keyframe time="2.88" src="saki_zls/8-Hit.png" />
             </directive>
             <directive type="animation" id="sord-A" delay="1.5" ease="smooth" interpolation="linear">
                 <keyframe time="0" x="510" y="206" alpha="0" />
@@ -306,23 +310,25 @@
                 <keyframe time="3.62" x="557" y="279" alpha="100" />
                 <keyframe time="4.38" x="757" y="279" alpha="0" />
             </directive>
-            <directive type="animation" id="Ball" delay="2.5" interpolation="linear">
+            <directive type="animation" id="Ball" delay="2.5" ease="linear" interpolation="linear">
                 <keyframe time="0" x="375" y="194" scalex="0" scaley="0" />
                 <keyframe time="0.75" scalex="1" scaley="1" />
                 <keyframe time="1.75" scalex="1" scaley="1" />
-                <keyframe time="2.5" scalex="0" scaley="0" alpha="100" />
-                <keyframe time="2.62" alpha="0" />
+                <keyframe time="2.5" scalex="0" scaley="0" />
             </directive>
-            <directive type="animation" id="Beam" delay="2.62" interpolation="linear">
+            <directive type="animation" id="Ball" delay="5" ease="smooth" interpolation="linear">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.1199999" alpha="0" />
+            </directive>
+            <directive type="animation" id="Beam" delay="2.62" ease="linear" interpolation="linear">
                 <keyframe time="0" x="215" y="-30" scalex="0" scaley="0.55" rotation="35" />
                 <keyframe time="0.8800001" x="106" y="127" scalex="1" scaley="1" />
                 <keyframe time="1.5" x="106" y="127" scalex="1" scaley="1" />
-                <keyframe time="2.38" x="106" y="127" scalex="0" alpha="100" />
-                <keyframe time="2.5" alpha="0" />
+                <keyframe time="2.38" x="106" y="127" scalex="0" />
             </directive>
-            <directive type="animation" id="TH145BGM" delay="1.38" ease="smooth">
-                <keyframe time="0" src="miko/98-TH145BGM.png" />
-                <keyframe time="4.62" src="miko/98-TH145BGM.png" />
+            <directive type="animation" id="Beam" delay="5" ease="smooth" interpolation="linear">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.1199999" alpha="0" />
             </directive>
             <directive type="animation" id="TH145BGM" delay="1.38" ease="smooth" interpolation="linear">
                 <keyframe time="0" x="400" y="1095" alpha="0" />
@@ -330,6 +336,10 @@
                 <keyframe time="0.37" x="100" alpha="100" />
                 <keyframe time="4.38" x="100" alpha="100" />
                 <keyframe time="4.62" x="400" y="1095" alpha="0" />
+            </directive>
+            <directive type="animation" id="TH145BGM" delay="1.38" ease="smooth" interpolation="none">
+                <keyframe time="0" src="miko/98-TH145BGM.png" />
+                <keyframe time="4.62" src="miko/98-TH145BGM.png" />
             </directive>
         </pose>
         <pose id="7-FOH_ANI">
@@ -449,6 +459,12 @@
         </trigger>
 
         <trigger id="swap_cards">
+            <case stage="6">
+                <condition role="self" timeInStage="0" />
+                <state img="custom:#-AfterStripped">Cold!</state>
+                <state img="custom:#-AfterStripped">Blech!</state>
+                <state img="custom:#-AfterStripped">&lt;i&gt;Cough!&lt;/i&gt;</state>
+            </case>
             <case stage="0-8">
                 <state img="#-Happy.png">Let’s see ~cards~ card~cards.ifPlural(s|)~, man!</state>
                 <state img="#-Serious.png">~Cards.text~ card~cards.ifPlural(s|)~, dealer!</state>
@@ -651,7 +667,7 @@
             <case stage="0-8" id="12" priority="0">
                 <condition role="self" notSaidMarker="q_saki_badluck" />
                 <state img="#-Annoyed.png" oneShotId="1" marker="q_saki_badluck">Just my luck, a shit hand. You people think ya got worse luck than a bitch who died? Out with it then. What was the unluckiest thing that ever happened to &lt;i&gt;you&lt;/i&gt;?</state>
-                <state img="#-Laughing.png" oneShotId="2" marker="q_saki_badluck">This hand, man. Is my luck that shitty? What am I sayin’ I &lt;i&gt;died&lt;/i&gt;! What about you folks, any bad luck stories you got to share?</state>
+                <state img="#-Thinking.png" oneShotId="2" marker="q_saki_badluck">This hand, man. Is my luck that shitty? What am I sayin’ I &lt;i&gt;died&lt;/i&gt;! What about you folks, any bad luck stories you got to share?</state>
             </case>
         </trigger>
 
@@ -1726,6 +1742,10 @@
                 <condition role="other" character="komi-san" />
                 <state img="#-Stripping.png">Why not, Komms? I don’t got any CDs on me, but talk to the dipshit in shades after the concert, he’ll hook you up.</state>
             </case>
+            <case stage="1">
+                <condition role="other" character="pit" />
+                <state img="#-Stripping.png">Ha! Ain’t no one wilder’n me, Gods or not!</state>
+            </case>
             <case stage="0">
                 <state img="#-Stripping.png">…</state>
             </case>
@@ -1765,9 +1785,6 @@
             </case>
             <case stage="7">
                 <state img="#-Stripping.png">Aw, is this a bad time to reveal my pussy got blown off when my motorbike exploded?</state>
-            </case>
-            <case stage="1">
-                <state img="#-Stripping.png">Ha! Ain’t no one wilder’n me, Gods or not!</state>
             </case>
         </trigger>
 
@@ -2110,15 +2127,15 @@
             </case>
             <case stage="0-10">
                 <condition role="target" character="arash" stage="0" />
-                <state img="#-Horny.png">&lt;i&gt;Woah-ho-ho&lt;/i&gt;! Check out this hunk. Can’t believe I was worried about it bein’ all nerds here.</state>
+                <state img="#-Horny.png" marker="ArashScarf1">&lt;i&gt;Woah-ho-ho&lt;/i&gt;! Check out this hunk. Can’t believe I was worried about it bein’ all nerds here.</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="arash" stage="1" />
-                <state img="#-Shocked.png">Hol’ up. Thinkin’ ‘bout what I was sayin’ earlier… Holy shit, people &lt;i&gt;do&lt;/i&gt; come back to life! N’ I’m one a’ them!</state>
+                <state img="#-Shocked.png" marker="ArashGloves1">Hol’ up. Thinkin’ ‘bout what I was sayin’ earlier… Holy shit, people &lt;i&gt;do&lt;/i&gt; come back to life! N’ I’m one a’ them!</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="arash" stage="2" />
-                <state img="#-Happy.png">So how’dja get gone, Bullseye? Mine was a cliff-edge game a’ Chicken I was a bit too dedicated to winnin’.</state>
+                <state img="#-Happy.png" marker="ArashBoots1">So how’dja get gone, Bullseye? Mine was a cliff-edge game a’ Chicken I was a bit too dedicated to winnin’.</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="jin" stage="0" />
@@ -2891,11 +2908,11 @@
             </case>
             <case stage="0-10">
                 <condition role="target" character="arash" stage="0" />
-                <state img="#-Laughing.png">But what’s with the arrows and armor, Bullseye? Ya look like Nobunaga off to battle the Shogunate!</state>
+                <state img="#-Laughing.png" marker="ArashScarf2">But what’s with the arrows and armor, Bullseye? Ya look like Nobunaga off to battle the Shogunate!</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="arash" stage="1" />
-                <state img="#-Excited.png">Shit, so you must be a zombie? I guess if Big Sis Yuugiri could come back with all her breast meat still on, you can come back a full hunk a’ beef.</state>
+                <state img="#-Excited.png" marker="ArashGloves2">Shit, so you must be a zombie? I guess if Big Sis Yuugiri could come back with all her breast meat still on, you can come back a full hunk a’ beef.</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="jin" stage="0" />
@@ -2981,11 +2998,11 @@
             </case>
             <case stage="0-10">
                 <condition role="target" character="arash" stage="1" />
-                <state img="#-Smug.png">Great Hero a’ Persia? Yer talkin’ about stuff that woulda happened &lt;i&gt;ages&lt;/i&gt; ago. People don’t just come back to life!</state>
+                <state img="#-Smug.png" marker="ArashScarf3">Great Hero a’ Persia? Yer talkin’ about stuff that woulda happened &lt;i&gt;ages&lt;/i&gt; ago. People don’t just come back to life!</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="arash" stage="2" />
-                <state img="#-Horny.png">They did a good job on yer makeup too, Bullseye. I know how hot &lt;i&gt;I&lt;/i&gt; look when I’m all gussied up!</state>
+                <state img="#-Horny.png" marker="ArashGloves3">They did a good job on yer makeup too, Bullseye. I know how hot &lt;i&gt;I&lt;/i&gt; look when I’m all gussied up!</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="jin" stage="1" />
@@ -3679,7 +3696,7 @@
             </case>
             <case stage="0-10">
                 <condition role="target" character="arash" stage="2" />
-                <state img="#-Shocked.png">Shit, wow, that… that &lt;i&gt;really&lt;/i&gt; beats mine.</state>
+                <state img="#-Shocked.png" marker="ArashBoots2">Shit, wow, that… that &lt;i&gt;really&lt;/i&gt; beats mine.</state>
             </case>
             <case stage="0-10">
                 <state img="#-Confused.png">~clothing.ifPlural(~Clothing~|A ~clothing~)~? ’Sokay, I guess.</state>
@@ -3733,6 +3750,10 @@
             <case stage="0-10">
                 <condition role="target" character="dust" stage="2" />
                 <state img="#-Shocked.png">N’ then Squirrelly here’s in charge a’ the knife. Hold up, she’s &lt;i&gt;tiny&lt;/i&gt;, how the hell does she carry it?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="arash" stage="3" />
+                <state img="#-Happy.png" marker="ArashBoots3">If ya want any help with bein’ a zombie, me n’ my gals are glad to help out. We got extra dried squid in the back, too! Really helps with those cravin’s for human flesh.</state>
             </case>
             <case stage="0-10" target="human" saidMarker="choices" notSaidMarker="choices02">
                 <state img="#-Rapping.png" marker="choices02">&lt;i&gt;NOPE!&lt;/i&gt;</state>
@@ -4052,10 +4073,6 @@
             <case stage="0-10">
                 <condition role="target" character="tomoko" stage="5" />
                 <state img="#-Happy.png">Sunshine, if you could get shades ta write a song for ya, what would it be about?</state>
-            </case>
-            <case stage="0-10">
-                <condition role="target" character="arash" stage="3" />
-                <state img="#-Happy.png">If ya want any help with bein’ a zombie, me n’ my gals are glad to help out. We got extra dried squid in the back, too! Really helps with those cravin’s for human flesh.</state>
             </case>
             <case stage="0-10" target="human" saidMarker="choices" notSaidMarker="choices02">
                 <state img="#-Rapping.png" marker="choices02">&lt;i&gt;NOPE!&lt;/i&gt;</state>
@@ -5920,6 +5937,11 @@ Then he’ll smoke you like a Juul pod&lt;/i&gt;</state>
         <trigger id="finishing_masturbating">
             <case stage="9" priority="251">
                 <condition status="alive" character="human" />
+                <condition count="1" status="alive" />
+                <state img="#-Finishing.png" marker="player_finish">~Player~!!!</state>
+            </case>
+            <case stage="9" priority="251">
+                <condition status="alive" character="human" />
                 <condition role="self" saidMarker="ss_threesome" />
                 <condition role="other" character="sakura" stage="8-9" />
                 <condition count="1" status="alive" />
@@ -5949,12 +5971,19 @@ Then he’ll smoke you like a Juul pod&lt;/i&gt;</state>
                 <condition role="other" character="sakura" />
                 <state img="#-Finished.png">Aw shit, I meant to say “Egghead."</state>
             </case>
+            <case stage="10" priority="100">
+                <condition role="self" saidMarker="player_finish" />
+                <condition count="0" filter="sakura" />
+                <state img="#-Finished.png">Oops, mighta jumped the gun a little there. Oh well, I’ll just be sure to scream yer name again later, ~player~.</state>
+                <state img="#-Finished.png">Oh, shoot. I was plannin’ on shoutin’ ~player~’s name &lt;i&gt;later&lt;/i&gt;. Well, we’ll call this one a dress rehearsal, alright?</state>
+            </case>
             <case stage="10">
                 <state img="#-Finished.png">Man, all that fapping made me hungry. Wanna get Drive-In Tori?</state>
                 <state img="#-Finished.png">Dang. Now what do I do, just sit around?</state>
             </case>
-            <case stage="10" totalFemales="4" priority="0">
+            <case stage="10" priority="0">
                 <condition count="1" filter="human_male" />
+                <condition count="4" gender="female" />
                 <state img="#-Thinking.png">Why ain’t we got any guys here?  ~player~’s gotta be hoarding all the cocks for himself!</state>
             </case>
         </trigger>
