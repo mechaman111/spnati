@@ -350,9 +350,20 @@ function showStrippingModal () {
   $stripButton.attr('disabled', true);
 
     /* display the stripping modal */
-    $stripModal.modal({show: true, keyboard: false});
+    $stripModal.modal({show: true, keyboard: false, backdrop: 'static'});
     $stripModal.one('shown.bs.modal', function() {
         $stripClothing.find('input').last().focus();
+    });
+    $stripModal.on('hidden.bs.modal', function () {
+        if (gamePhase === eGamePhase.STRIP) {
+            console.error("Possible softlock: player strip modal hidden with game phase still at STRIP");
+
+            if (SENTRY_INITIALIZED) {
+                Sentry.captureException(new Error("Possible softlock: player strip modal hidden with phase still at STRIP"));
+            }
+
+            allowProgression();
+        }
     });
     $(document).keyup(clothing_keyUp);
 }
@@ -450,6 +461,7 @@ function closeStrippingModal (id) {
 
         /* allow progression */
         $('#stripping-modal').modal('hide');
+        $stripModal.off("hidden.bs.modal");
         $(document).off('keyup', clothing_keyUp);
         endRound();
     } else {
