@@ -57,7 +57,8 @@ function compileBaseErrorReport(userDesc, bugType) {
             directive: epiloguePlayer.directiveIndex,
         };
         for (let i = epiloguePlayer.directiveIndex; i >= 0; i--) {
-            if (epiloguePlayer.activeScene.directives[i].type == "text") {
+            let directive = epiloguePlayer.activeScene.directives[i];
+            if (directive && directive.type == "text") {
                 data.epilogue.lastText = epiloguePlayer.activeScene.directives[i].text;
                 break;
             }
