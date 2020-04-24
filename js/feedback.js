@@ -119,14 +119,20 @@ function compileBaseErrorReport(userDesc, bugType) {
 }
 
 window.addEventListener('error', function (ev) {
-    jsErrors.push({
+    var errData = {
         'date': (new Date()).toISOString(),
-        'type': ev.error.name,
         'message': ev.message,
         'filename': ev.filename,
         'lineno': ev.lineno,
-        'stack': ev.error.stack
-    });
+
+    }
+
+    if (ev.error) {
+        errData.type = ev.error.name;
+        errData.stack = ev.error.stack;
+    }
+
+    jsErrors.push(errData);
 
     if (USAGE_TRACKING) {
         var report = compileBaseErrorReport('Automatically generated after Javascript error.', 'auto');
