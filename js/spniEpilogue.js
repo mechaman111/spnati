@@ -982,7 +982,11 @@ function doEpilogueModal() {
   }
 
   $epilogueHeader.html(headerStr); //set the header string
-  $epilogueSelectionModal.modal("show");//show the epilogue selection modal
+  $epilogueSelectionModal.modal({
+    show: true,
+    keyboard: false,
+    backdrop: "static",
+  });//show the epilogue selection modal
 }
 
 /************************************************************
