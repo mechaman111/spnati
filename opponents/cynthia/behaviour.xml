@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 8:14:53 PM on April 21, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 8:39:00 PM on April 25, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Cynthia</first>
@@ -1037,9 +1037,9 @@
             <case stage="0-8" oneShotId="61" priority="0">
                 <test expr="~self.collectible.collectible_egg~" value="true" />
                 <state img="#-happy.png" weight="0.01">How is the Pokémon egg I gave you previously, ~player~? I hope you are taking good care of it. Everyone Pokémon deserves to be loved by its owner.</state>
-                <state img="#-happy.png" weight="0.01">Are you loving the Pokémon egg I gave you during the previous game, ~player~? Meeting all the Pokémon is an accomplishment, and I only want to lend you a little hand, that's all.</state>
-                <state img="#-fingerup.png" weight="0.01">That Egg I have you is special, ~player~. An Egg is the cradle of every being. The planet itself is an Egg in a sense... Life that comes from an Egg will come to an end in due course... to begin anew...</state>
-                <state img="#-happy.png" weight="0.01">I hope that Egg I gave you will come in handy, ~player~. A Pokémon will hatch from it while you are traveling. I would be happy to know that it will help you fill another page of your Pokédex.</state>
+                <state img="#-happy.png" weight="0.01">{small} Are you loving the Pokémon egg I gave you during the previous game, ~player~? Meeting all the Pokémon is an accomplishment, and I only want to lend you a little hand, that's all.</state>
+                <state img="#-fingerup.png" weight="0.01">{small} That Egg I have you is special, ~player~. An Egg is the cradle of every being. The planet itself is an Egg in a sense... Life that comes from an Egg will come to an end in due course... to begin anew...</state>
+                <state img="#-happy.png" weight="0.01">{small}  I hope that Egg I gave you will come in handy, ~player~. A Pokémon will hatch from it while you are traveling. I would be happy to know that it will help you fill another page of your Pokédex.</state>
             </case>
             <case stage="0-8" hidden="1">
                 <condition role="other" />
@@ -3985,7 +3985,7 @@
             </case>
             <case stage="4-6">
                 <state img="#-aggressive.png">I still have a couple of layers to spare before I would have to do the same, but I can't let myself get overconfident.</state>
-                <state img="#-embarrassed.png">I do hope there aren't any ~clothing~ thieves lurking around here.</state>
+                <state img="#-embarrassed.png">I do hope there aren't any thieves lurking around here. It would be a shame if someone stole your ~clothing~.</state>
                 <state img="#-happy.png">It's so brave of you to remove your ~clothing~ in front of a crowd. Not everyone has the courage to do it.</state>
             </case>
             <case stage="7-8 10">
@@ -4003,6 +4003,31 @@
         </trigger>
 
         <trigger id="opponent_lost">
+            <case stage="0-10" priority="900">
+                <condition role="target" character="jessie" stage="0" sayingMarker="CynthiaAge1" />
+                <state img="#-surprised.png">Are you really in your mid-30s, Jessie? It seems hardly believable given your youthful appearance.</state>
+                <state img="#-surprised.png">You look young for a woman in her 30s, Jessie. I almost look older than you!</state>
+            </case>
+            <case stage="0-10" priority="900">
+                <condition role="target" character="jessie" stage="1" sayingMarker="CynthiaPorn1" />
+                <state img="#-thinking.png">So you must be... well-experienced in the adult movie industry, Jessie. I'm just curious what prompted you take an unconventional career path.</state>
+                <state img="#-thinking.png">I can't say I've met a porn actress before, let alone a veteran. Any particular reason you chose that occupation, Jessie?  </state>
+            </case>
+            <case stage="0-10" priority="900">
+                <condition role="target" character="jessie" stage="2" sayingMarker="CynthiaVirginity1" />
+                <state img="#-excited.png">I know you're used to doing it everyday, Jessie, but can I ask if you still remember your first time? What did you felt at the time?</state>
+                <state img="#-excited.png">This might be a bit personal, Jessie, but I'm interested in knowing if you could still remember the feeling of losing your virginity.</state>
+            </case>
+            <case stage="0-10" priority="900">
+                <condition role="target" character="jessie" stage="3" sayingMarker="CynthiaSeduction1" />
+                <state img="#-fingerup.png">I understand, from what I've heard so far, that you are rather adept at attracting men, Jessie. Can you share your secrets with me? </state>
+                <state img="#-fingerup.png">I take it that it is relatively easy for you to gain a man's attention, Jessie. I am curious about how you accomplish that.</state>
+            </case>
+            <case stage="0-10" priority="900">
+                <condition role="target" character="jessie" stage="4" sayingMarker="CynthiaShow1" />
+                <state img="#-shocked.png">I... I'm not leering at you, if that's what you're implying, Jessie... I was just... making sure you follow the rules.</state>
+                <state img="#-shocked.png">That... that wasn't why I was staring at you, Jessie... I was checking if you had more than one layer remaining to strip.</state>
+            </case>
             <case stage="0-10" oneShotId="43">
                 <condition filter="tall" gender="male" status="not_lost_some" role="target" character="human" />
                 <condition filter="blonde" character="human" />
@@ -4078,7 +4103,7 @@
             </case>
             <case stage="0-8">
                 <condition role="target" character="guzma" stage="2" />
-                <state img="#-scowling.png">Guzma, if you're to expect any restraint from you, you must be clear what you're involvement with Team Skull is; what are your plans?</state>
+                <state img="#-scowling.png">Guzma, if you're to expect any restraint from me, you must be clear what you're involvement with Team Skull is; what are your plans?</state>
             </case>
             <case stage="1-10" id="82">
                 <condition role="target" character="chazz" stage="0" />
@@ -4157,6 +4182,56 @@
         </trigger>
 
         <trigger id="opponent_stripping">
+            <case stage="0-10" priority="999">
+                <condition role="target" character="jessie" stage="3" />
+                <condition role="other" character="tharja" stage="2-7" saidMarker="JessieBoobsStarter" sayingMarker="TharjaJessieBoobs" />
+                <state img="#-surprised.png">Huh? T-Tharja, are you alright? What's... What are you doing? ... Th-</state>
+            </case>
+            <case stage="0-10" priority="900">
+                <condition role="target" character="jessie" stage="0" sayingMarker="CynthiaAge2" />
+                <state img="#-scowling.png">Did you know that someone had been spreading rumors that you're a porn movie star? I can't believe the nerve of some people!</state>
+                <state img="#-scowling.png">You might be very flirtatious, but that doesn't justify people spreading the malicious rumor that you perform in porn films. </state>
+            </case>
+            <case stage="0-10" priority="900">
+                <condition role="target" character="jessie" stage="1" sayingMarker="CynthiaPorn2" />
+                <state img="#-surprised.png">You have a family? How do they feel about your career path? There's no way of measuring the awkwardness I would feel in that situation.</state>
+                <state img="#-surprised.png">You're married with kids? I didn't know they have actual mothers in porn films! What does your family have to say about your job?</state>
+            </case>
+            <case stage="0-10" priority="900">
+                <condition role="target" character="jessie" stage="2" sayingMarker="CynthiaVirginity2" />
+                <state img="#-embarrassed.png">... I... I did not mean that, Jessie...! I wanted to know about your emotions and thoughts during that time...</state>
+                <state img="#-embarrassed.png">Oh... that certainly sounds nice, Jessie... but I was more curious about the emotional effect of that experience...</state>
+            </case>
+            <case stage="0-10" priority="900">
+                <condition role="target" character="jessie" stage="3" sayingMarker="CynthiaSeduction2" />
+                <state img="#-thinking.png">Is that so? Some choice words can do the trick? Can you give an example of those?</state>
+                <state img="#-thinking.png">Can you give me an example of how you approach a man confidently?... I find that part rather fascinating.</state>
+            </case>
+            <case stage="0-3" priority="900">
+                <condition role="target" character="jessie" stage="4" sayingMarker="CynthiaShow2" />
+                <state img="#-aggressive.png">When you put it like that, I suppose I've been staring at everybody. Can't let anyone cheat on this game, you know.</state>
+                <state img="#-aggressive.png">Regardless of whether it's considered as staring or not, I've been keeping track of everybody's layer count. </state>
+            </case>
+            <case stage="4-6" priority="900">
+                <condition role="target" character="jessie" stage="4" sayingMarker="CynthiaShow2" />
+                <state img="#-embarrassed.png">I swear, I wasn't staring at you like that, Jessie. I'm not even attracted to women.</state>
+                <state img="#-embarrassed.png">You're misinterpreting the situation, Jessie. I came here to meet men, not other women. </state>
+            </case>
+            <case stage="7-8" priority="900">
+                <condition role="target" character="jessie" stage="4" sayingMarker="CynthiaShow2" />
+                <state img="#-embarrassed.png">It... wasn't like that... &lt;i&gt;(She might be right. Is that the reason why I'm feeling tingly inside?)&lt;/i&gt;</state>
+                <state img="#-embarrassed.png">I swear... it was because I was keeping track of the game... &lt;i&gt;(My body is betraying me right now. This isn't what I'm feeling at all.)&lt;/i&gt;</state>
+            </case>
+            <case stage="9" priority="900">
+                <condition role="target" character="jessie" stage="4" sayingMarker="CynthiaShow2" />
+                <state img="#-mast_c.png">All right, I suppose you got me.  I must concede that this is exciting me in a way that I've never experienced before.</state>
+                <state img="#-mast_c.png">There's no point in denying the obvious. I wouldn't have thought something like this would turn me on so much. It feels incredible.</state>
+            </case>
+            <case stage="10" priority="900">
+                <condition role="target" character="jessie" stage="4" sayingMarker="CynthiaShow2" />
+                <state img="#-embarrassed.png">J-Jessie! That wasn't something I usually do!</state>
+                <state img="#-embarrassed.png">J-Jessie!... I only did that for this game only. I swear, that's not something I would usually do.</state>
+            </case>
             <case stage="0-10" oneShotId="55">
                 <condition filter="tall" status="not_lost_some" role="target" character="human" />
                 <condition filter="blonde" character="human" />
@@ -4178,11 +4253,6 @@
                 <state img="#-horny.png">I still remember when Alder tried to ask me out to a date. I wouldn't mind if you did the same, ~name~.</state>
                 <state img="#-horny.png">It felt very creepy when Alder would flirt with me, but I don't see anything wrong with you flirting with me.</state>
                 <state img="#-horny.png">I don't know if you eat out alone all the time like Alder, but I can fix that problem if that is the case.</state>
-            </case>
-            <case stage="0-10">
-                <condition role="target" character="jessie" stage="3" />
-                <condition role="other" character="tharja" stage="2-7" saidMarker="JessieBoobsStarter" sayingMarker="TharjaJessieBoobs" />
-                <state img="#-surprised.png">Huh? T-Tharja, are you alright? What's... What are you doing? ... Th-</state>
             </case>
             <case stage="0-10" id="181">
                 <condition role="target" character="cammy_white" stage="4" saidMarker="juri_help" />
@@ -4586,8 +4656,8 @@
                 <condition role="target" character="guzma" stage="4" />
                 <state img="#-scowling.png">That cheap thing? Please, I bet you bought that from a children's accessory shop... Or stole it from one.</state>
                 <state img="#-scowling.png">Why would you associate with the likes of Team Skull? Don't you have standards or something?</state>
-                <state img="#-scowling.png">Ugh, just looking at thing is... unsettling.. Do you have any idea what that symbol stands for?</state>
-                <state img="#-scowling.png">Ugh, just looking at thing is... unsettling.. That symbol represents thievery and arrogance.</state>
+                <state img="#-scowling.png">Ugh, just looking at thing is... unsettling... Do you have any idea what that symbol stands for?</state>
+                <state img="#-scowling.png">Ugh, just looking at thing is... unsettling... That symbol represents thievery and arrogance.</state>
                 <state img="#-scowling.png">No one can possibly take you seriously with that thing around your neck anyway, Guzma.</state>
             </case>
             <case stage="0-10" id="81">
@@ -4620,6 +4690,59 @@
         </trigger>
 
         <trigger id="opponent_stripped">
+            <case stage="0-10" priority="999">
+                <condition role="other" character="tharja" saidMarker="TharjaJessieBoobs" />
+                <condition role="target" character="jessie" stage="4" sayingMarker="TharjaShrink" />
+                <test expr="~human.tag.human_male~" value="true" />
+                <state img="#-shocked.png">Hu-hu-&lt;i&gt;Huh?!&lt;/i&gt; What did you just do? You meant all of that? &lt;i&gt;I-I-I'll leave ~player~ alone! I'll leave him alone, I promise!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10" priority="999">
+                <condition role="other" character="tharja" saidMarker="TharjaJessieBoobs" />
+                <condition role="target" character="jessie" stage="4" sayingMarker="TharjaShrink" />
+                <test expr="~human.tag.human_female~" value="true" />
+                <state img="#-shocked.png">Hu-hu-&lt;i&gt;Huh?!&lt;/i&gt; What did you just do? You meant all of that? &lt;i&gt;I-I-I'll leave ~player~ alone! I'll leave her alone, I promise!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10" priority="900">
+                <condition role="target" character="jessie" stage="1" sayingMarker="CynthiaAge3" />
+                <state img="#-embarrassed.png">You're a porn star? Please tell me you're not recording any part of this game.</state>
+                <state img="#-shocked.png">I see, so there's some truth on that story... Hold on, did I mistakenly walk into one of your movie shoots?</state>
+            </case>
+            <case stage="0-10" priority="900">
+                <condition role="target" character="jessie" stage="2" sayingMarker="CynthiaPorn3" />
+                <state img="#-embarrassed.png">Oh, that's horrible, Jessie! I'm regretting asking about that now.</state>
+                <state img="#-embarrassed.png">I'm sorry I asked about that, Jessie. I wouldn't have asked you to talk about it had I known!</state>
+            </case>
+            <case stage="0-10" priority="900">
+                <condition role="target" character="jessie" stage="3" sayingMarker="CynthiaVirginity3" />
+                <state img="#-disappointed.png">... I'd rather not... slow down the game by telling a long story like that... Besides, the next hand is about to start...</state>
+                <state img="#-disappointed.png">... I think... I'd rather have the next round start immediately... We have some ways to go in this game... and my story would delay it...</state>
+            </case>
+            <case stage="0-10" priority="900">
+                <condition role="target" character="jessie" stage="4" sayingMarker="CynthiaSeduction3" />
+                <state img="#-embarrassed.png">... I... I was expecting... tips on how I can get men to date... how I can be more approachable to men, Jessie, and not that...</state>
+                <state img="#-embarrassed.png">... I thought you would be discussing the... emotional part of relationship-building, Jessie...</state>
+            </case>
+            <case stage="0-6" priority="900">
+                <condition role="target" character="jessie" stage="5" sayingMarker="CynthiaShow3" />
+                <state img="#-disappointed.png">&lt;i&gt;(Are people really misinterpreting my staring at them as a sign of attraction? How long has this been the case?)&lt;/i&gt;</state>
+                <state img="#-disappointed.png">&lt;i&gt;(How am I supposed to keep watch of the other players without them thinking that I'm attracted to them?)&lt;/i&gt;</state>
+            </case>
+            <case stage="7-8" priority="900">
+                <condition role="target" character="jessie" stage="5" sayingMarker="CynthiaShow3" />
+                <state img="#-thinking.png">&lt;i&gt;(These sensations I'm feeling right now... Am I really attracted to women, or is it because of Jessie's figure?)&lt;/i&gt;</state>
+                <state img="#-thinking.png">&lt;i&gt;(Seeing Jessie's body like this... My body is reacting differently than I would expect...)&lt;/i&gt;</state>
+            </case>
+            <case stage="9" priority="900">
+                <condition role="target" character="jessie" stage="5" sayingMarker="CynthiaShow3" />
+                <state img="#-heavy_c.png">Oh, Jessie... This sight... is much better than I had imagined...</state>
+                <state img="#-heavy_c.png">You're shaved as well... It looks so good without hair...</state>
+                <state img="#-heavy_c.png">I can't believe I lived my whole life without seeing this...</state>
+            </case>
+            <case stage="10" priority="900">
+                <condition role="target" character="jessie" stage="5" sayingMarker="CynthiaShow3" />
+                <state img="#-horny.png">&lt;i&gt;(I'm feeling tingly again... I should wait when I get home before masturbating again...)&lt;/i&gt;</state>
+                <state img="#-horny.png">&lt;i&gt;(Should I admit to Jessie that I'm enjoying this view?)&lt;/i&gt;</state>
+            </case>
             <case stage="0-10" oneShotId="56">
                 <condition filter="tall" status="not_lost_some" role="target" character="human" />
                 <condition filter="blonde" character="human" />
@@ -4641,18 +4764,6 @@
                 <state img="#-embarrassed.png">Not that I'm telling you to ask me out, but I wouldn't oppose the idea either.</state>
                 <state img="#-embarrassed.png">I'm not forcing you to ask me out or anything like that. It's still up to your discretion.</state>
                 <state img="#-sarcastic.png">Well, I'll just let you process all of that... and the fact that you just lost.</state>
-            </case>
-            <case stage="0-10">
-                <condition role="other" character="tharja" saidMarker="TharjaJessieBoobs" />
-                <condition role="target" character="jessie" stage="4" sayingMarker="TharjaShrink" />
-                <test expr="~human.tag.human_male~" value="true" />
-                <state img="#-shocked.png">Hu-hu-&lt;i&gt;Huh?!&lt;/i&gt; What did you just do? You meant all of that? &lt;i&gt;I-I-I'll leave ~player~ alone! I'll leave him alone, I promise!&lt;/i&gt;</state>
-            </case>
-            <case stage="0-10">
-                <condition role="other" character="tharja" saidMarker="TharjaJessieBoobs" />
-                <condition role="target" character="jessie" stage="4" sayingMarker="TharjaShrink" />
-                <test expr="~human.tag.human_female~" value="true" />
-                <state img="#-shocked.png">Hu-hu-&lt;i&gt;Huh?!&lt;/i&gt; What did you just do? You meant all of that? &lt;i&gt;I-I-I'll leave ~player~ alone! I'll leave her alone, I promise!&lt;/i&gt;</state>
             </case>
             <case stage="0-10" id="123">
                 <condition role="target" character="chazz" stage="6" />
@@ -5637,7 +5748,7 @@
                 <alternative>
                     <condition count="0" gender="female" status="finished" role="opp" />
                 </alternative>
-                <state img="#-embarrassed.png">I've... actually... never seen a human female masturbate before... B-but I've... Uhhh, nevermind.</state>
+                <state img="#-embarrassed.png">I've... actually... never seen a human female masturbate before this game... B-but I've... Uhhh, nevermind.</state>
                 <state img="#-fingerup.png">I've actually never seen a girl masturbate before... All the ancient pictographs I've come across only show sex and male masturbation.</state>
                 <state img="#-fingerup.png">This will be new for me; I've never watched a girl do it before...</state>
             </case>
@@ -5783,7 +5894,7 @@
             <case stage="0-8 10">
                 <state img="#-excited.png">Your breaths have become forced and uneven, ~name~. Are you close to finishing?</state>
                 <state img="#-excited.png">Ooh, your body language has changed, ~name~. You must be very close to an orgasm.</state>
-                <state img="#-aggressive.png">You looks so flush, ~name~! I can just imagine how good your feeling right now.</state>
+                <state img="#-aggressive.png">You looks so flush, ~name~! I can only imagine how good you're feeling right now.</state>
                 <state img="#-surprised.png">&lt;i&gt;(Those spasms look very intense!)&lt;/i&gt;</state>
                 <state img="#-aggressive.png">Wow, everybody has their eyes on you, ~name~!</state>
             </case>
