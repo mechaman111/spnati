@@ -1,0 +1,1102 @@
+#required for behaviour.xml
+first=Monique
+last=Lecoq
+label=Monique
+gender=female
+size=large
+intelligence=average
+
+#Number of phases to "finish" masturbating
+timer=24
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=black_hair
+tag=medium_hair
+tag=amber_eyes
+tag=pale-skinned
+tag=athletic
+tag=trimmed
+tag=pubic_hair
+tag=large_breasts
+tag=hat
+tag=thigh_highs
+tag=cheerful
+tag=confident
+tag=sarcastic
+tag=seductive
+tag=silent
+tag=slutty
+tag=bisexual
+tag=single
+tag=french
+tag=original_character
+tag=clown
+
+#required for meta.xml
+#select screen image
+pic=0-smug
+height=5'8"
+from=Original
+writer=BlueKoin
+artist=BlueKoin
+description=
+z-layer=0
+dialogue-layer=over
+
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=gloves,gloves,extra,hands,plural
+clothes=hat,hat,extra,head
+clothes=boots,boots,minor,feet,plural
+clothes=shirt,shirt,major,upper
+clothes=bra,bra,important,upper
+clothes=socks,socks,extra,legs,plural
+clothes=panties,panties,major,lower,plural
+clothes=skirt,skirt,important,lower
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermione=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#INTRODUCTION
+#These lines are used to say different things depending on which other characters are present when the character
+#is selected and when the game starts.
+	
+
+#fully clothed
+0-selected=cheer.png,~silent~
+0-selected=wink.png,~silent~
+0-selected=happy.png,~silent~
+0-selected,priority:0,test:~human.gender~:female=pussylick.png,~silent~
+0-selected,priority:0,test:~human.gender~:male=dicksuck.png,~silent~
+0-game_start=custom:name,~silent~
+
+
+
+
+#POKER PLAY
+#This is what a character says while they're exchanging cards and commenting on their hands afterwards.
+#When swapping cards, the game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+swap_cards=shrug.png,~silent~
+swap_cards=thinking.png,~silent~
+swap_cards=bored.png,~silent~
+good_hand=cheer.png,~silent~
+good_hand=happy.png,~silent~
+good_hand=smug.png,~silent~
+okay_hand=bored.png,~silent~
+okay_hand=interested.png,~silent~
+okay_hand=shrug.png,~silent~
+okay_hand=thinking.png,~silent~
+bad_hand=annoyed.png,~silent~
+bad_hand=confused.png,~silent~
+bad_hand=disappointed.png,~silent~
+bad_hand=sad.png,~silent~
+
+
+#stage-specific lines that override the stage-generic ones
+
+#lost shirt
+4-hand,oneShotId:3,priority:142,count-role;self&saidmarker;Stripping3-3:,count-role;other&character;joey:=shrug.png,~silent~
+4-hand,oneShotId:3,priority:142,count-role;self&saidmarker;Stripping3-3:,count-role;other&character;joey:=custom:no,~silent~
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+stripped,id:1=shrug.png,~silent~
+
+
+#stage-specific lines that override the stage-generic ones
+
+#losing gloves
+0-must_strip_winning=shrug.png,~silent~
+0-must_strip_winning=thinking.png,~silent~
+0-must_strip_winning=interested.png,~silent~
+0-must_strip_winning=disappointed.png,~silent~
+0-must_strip_winning=sad.png,~silent~
+0-must_strip_normal=shrug.png,~silent~
+0-must_strip_normal=thinking.png,~silent~
+0-must_strip_normal=interested.png,~silent~
+0-must_strip_normal=disappointed.png,~silent~
+0-must_strip_normal=sad.png,~silent~
+0-must_strip_losing=shrug.png,~silent~
+0-must_strip_losing=thinking.png,~silent~
+0-must_strip_losing=interested.png,~silent~
+0-must_strip_losing=disappointed.png,~silent~
+0-must_strip_losing=sad.png,~silent~
+0-stripping,marker:Stripping0-1=stripping1.png,~silent~
+0-stripping,marker:Stripping0-2=stripping2.png,~silent~
+0-stripping,marker:Stripping0-3=stripping3.png,~silent~
+
+
+#losing hat
+1-stripped,count-role;self&saidmarker;Stripping0-2:=stripped2.png,~silent~
+1-stripped,count-role;self&saidmarker;Stripping0-1:=stripped1.png,~silent~
+1-stripped,count-role;self&saidmarker;Stripping0-3:=stripped3.png,~silent~
+1-must_strip_winning=shrug.png,~silent~
+1-must_strip_winning=thinking.png,~silent~
+1-must_strip_winning=interested.png,~silent~
+1-must_strip_winning=disappointed.png,~silent~
+1-must_strip_winning=sad.png,~silent~
+1-must_strip_normal=shrug.png,~silent~
+1-must_strip_normal=thinking.png,~silent~
+1-must_strip_normal=interested.png,~silent~
+1-must_strip_normal=disappointed.png,~silent~
+1-must_strip_normal=sad.png,~silent~
+1-must_strip_losing=shrug.png,~silent~
+1-must_strip_losing=thinking.png,~silent~
+1-must_strip_losing=interested.png,~silent~
+1-must_strip_losing=disappointed.png,~silent~
+1-must_strip_losing=sad.png,~silent~
+1-stripping,marker:Stripping1-1=stripping1.png,~silent~
+1-stripping,marker:Stripping1-2=stripping2.png,~silent~
+1-stripping,marker:Stripping1-3=custom:stripping3,~silent~
+
+
+#losing boots
+2-stripped,count-role;self&saidmarker;Stripping1-1:=stripped1.png,~silent~
+2-stripped,count-role;self&saidmarker;Stripping1-3:=stripped3.png,~silent~
+2-stripped,count-role;self&saidmarker;Stripping1-2:=stripped2.png,~silent~
+2-must_strip_winning=shrug.png,~silent~
+2-must_strip_winning=thinking.png,~silent~
+2-must_strip_winning=interested.png,~silent~
+2-must_strip_winning=disappointed.png,~silent~
+2-must_strip_winning=sad.png,~silent~
+2-must_strip_normal=shrug.png,~silent~
+2-must_strip_normal=thinking.png,~silent~
+2-must_strip_normal=interested.png,~silent~
+2-must_strip_normal=disappointed.png,~silent~
+2-must_strip_normal=sad.png,~silent~
+2-must_strip_losing=shrug.png,~silent~
+2-must_strip_losing=thinking.png,~silent~
+2-must_strip_losing=interested.png,~silent~
+2-must_strip_losing=disappointed.png,~silent~
+2-must_strip_losing=sad.png,~silent~
+2-stripping,marker:Stripping2-1=stripping1.png,~silent~
+2-stripping,marker:Stripping2-2=stripping2.png,~silent~
+2-stripping,marker:Stripping2-3=stripping3.png,~silent~
+
+
+#losing shirt
+3-stripped,count-role;self&saidmarker;Stripping2-1:=stripped1.png,~silent~
+3-stripped,count-role;self&saidmarker;Stripping2-2:=stripped2.png,~silent~
+3-stripped,count-role;self&saidmarker;Stripping2-3:=stripped3.png,~silent~
+3-must_strip_winning=shrug.png,~silent~
+3-must_strip_winning=thinking.png,~silent~
+3-must_strip_winning=interested.png,~silent~
+3-must_strip_winning=disappointed.png,~silent~
+3-must_strip_winning=sad.png,~silent~
+3-must_strip_normal=shrug.png,~silent~
+3-must_strip_normal=thinking.png,~silent~
+3-must_strip_normal=interested.png,~silent~
+3-must_strip_normal=disappointed.png,~silent~
+3-must_strip_normal=sad.png,~silent~
+3-must_strip_losing=shrug.png,~silent~
+3-must_strip_losing=thinking.png,~silent~
+3-must_strip_losing=interested.png,~silent~
+3-must_strip_losing=disappointed.png,~silent~
+3-must_strip_losing=sad.png,~silent~
+3-stripping,marker:Stripping3-1=stripping1.png,~silent~
+3-stripping,marker:Stripping3-2=stripping2.png,~silent~
+3-stripping,marker:Stripping3-3=custom:stripping3,~silent~
+
+
+#losing bra
+4-stripped,count-role;self&saidmarker;Stripping3-2:=stripped2.png,~silent~
+4-stripped,count-role;self&saidmarker;Stripping3-1:=stripped1.png,~silent~
+4-stripped,count-role;self&saidmarker;Stripping3-3:=custom:stripped3,~silent~
+4-must_strip_winning,weight:2=shrug.png,~silent~
+4-must_strip_winning,weight:2=thinking.png,~silent~
+4-must_strip_winning,weight:2=interested.png,~silent~
+4-must_strip_winning,weight:2=disappointed.png,~silent~
+4-must_strip_winning,weight:2=sad.png,~silent~
+4-must_strip_winning,marker:Stripping4-2=stripping2a.png,~silent~
+4-must_strip_normal,weight:2=shrug.png,~silent~
+4-must_strip_normal,weight:2=thinking.png,~silent~
+4-must_strip_normal,weight:2=interested.png,~silent~
+4-must_strip_normal,weight:2=disappointed.png,~silent~
+4-must_strip_normal,weight:2=sad.png,~silent~
+4-must_strip_normal,marker:Stripping4-2=stripping2a.png,~silent~
+4-must_strip_losing,weight:2=shrug.png,~silent~
+4-must_strip_losing,weight:2=thinking.png,~silent~
+4-must_strip_losing,weight:2=interested.png,~silent~
+4-must_strip_losing,weight:2=disappointed.png,~silent~
+4-must_strip_losing,weight:2=sad.png,~silent~
+4-must_strip_losing,marker:Stripping4-2=stripping2a.png,~silent~
+4-stripping,marker:Stripping4-1=stripping1.png,~silent~
+4-stripping,marker:Stripping4-3=stripping3.png,~silent~
+4-stripping,count-role;self&saidmarker;Stripping4-2:=stripping2b.png,~silent~
+
+
+#losing socks
+5-stripped,count-role;self&saidmarker;Stripping4-3:=stripped3.png,~silent~
+5-stripped,count-role;self&saidmarker;Stripping4-2:=stripped2.png,~silent~
+5-stripped,count-role;self&saidmarker;Stripping4-1:=stripped1.png,~silent~
+5-must_strip_winning=shrug.png,~silent~
+5-must_strip_winning=thinking.png,~silent~
+5-must_strip_winning=interested.png,~silent~
+5-must_strip_winning=disappointed.png,~silent~
+5-must_strip_winning=sad.png,~silent~
+5-must_strip_normal=shrug.png,~silent~
+5-must_strip_normal=thinking.png,~silent~
+5-must_strip_normal=interested.png,~silent~
+5-must_strip_normal=disappointed.png,~silent~
+5-must_strip_normal=sad.png,~silent~
+5-must_strip_losing=shrug.png,~silent~
+5-must_strip_losing=thinking.png,~silent~
+5-must_strip_losing=interested.png,~silent~
+5-must_strip_losing=disappointed.png,~silent~
+5-must_strip_losing=sad.png,~silent~
+5-stripping,marker:Stripping5-1=stripping1.png,~silent~
+5-stripping,marker:Stripping5-2=stripping2.png,~silent~
+5-stripping,marker:Stripping5-3=stripping3.png,~silent~
+
+
+#losing panties
+6-stripped,count-role;self&saidmarker;Stripping5-1:=stripped1.png,~silent~
+6-stripped,count-role;self&saidmarker;Stripping5-3:=stripped3.png,~silent~
+6-stripped,count-role;self&saidmarker;Stripping5-2:=stripped2.png,~silent~
+6-must_strip_winning=shrug.png,~silent~
+6-must_strip_winning=thinking.png,~silent~
+6-must_strip_winning=interested.png,~silent~
+6-must_strip_winning=disappointed.png,~silent~
+6-must_strip_winning=sad.png,~silent~
+6-must_strip_winning,weight:2=shrug.png,~silent~
+6-must_strip_winning,weight:2=thinking.png,~silent~
+6-must_strip_winning,weight:2=interested.png,~silent~
+6-must_strip_winning,weight:2=disappointed.png,~silent~
+6-must_strip_winning,weight:2=sad.png,~silent~
+6-must_strip_winning,marker:Stripping6-3=stripping3a.png,~silent~
+6-must_strip_normal,weight:2=shrug.png,~silent~
+6-must_strip_normal,weight:2=thinking.png,~silent~
+6-must_strip_normal,weight:2=interested.png,~silent~
+6-must_strip_normal,weight:2=disappointed.png,~silent~
+6-must_strip_normal,weight:2=sad.png,~silent~
+6-must_strip_normal,marker:Stripping6-3=stripping3a.png,~silent~
+6-must_strip_normal=shrug.png,~silent~
+6-must_strip_normal=thinking.png,~silent~
+6-must_strip_normal=interested.png,~silent~
+6-must_strip_normal=disappointed.png,~silent~
+6-must_strip_normal=sad.png,~silent~
+6-must_strip_losing,weight:2=shrug.png,~silent~
+6-must_strip_losing,weight:2=thinking.png,~silent~
+6-must_strip_losing,weight:2=interested.png,~silent~
+6-must_strip_losing,weight:2=disappointed.png,~silent~
+6-must_strip_losing,weight:2=sad.png,~silent~
+6-must_strip_losing,marker:Stripping6-3=stripping3a.png,~silent~
+6-must_strip_losing=shrug.png,~silent~
+6-must_strip_losing=thinking.png,~silent~
+6-must_strip_losing=interested.png,~silent~
+6-must_strip_losing=disappointed.png,~silent~
+6-must_strip_losing=sad.png,~silent~
+6-stripping,marker:Stripping6-1=stripping1.png,~silent~
+6-stripping,marker:Stripping6-2=stripping2.png,~silent~
+6-stripping,count-role;self&saidmarker;Stripping6-3:=stripping3b.png,~silent~
+
+
+#losing skirt
+7-stripped,count-role;self&saidmarker;Stripping6-1:=stripped1.png,~silent~
+7-stripped,count-role;self&saidmarker;Stripping6-2:=stripped2.png,~silent~
+7-stripped,count-role;self&saidmarker;Stripping6-3:=stripped3.png,~silent~
+7-must_strip_winning=shrug.png,~silent~
+7-must_strip_winning=thinking.png,~silent~
+7-must_strip_winning=interested.png,~silent~
+7-must_strip_winning=disappointed.png,~silent~
+7-must_strip_winning=sad.png,~silent~
+7-must_strip_normal=shrug.png,~silent~
+7-must_strip_normal=thinking.png,~silent~
+7-must_strip_normal=interested.png,~silent~
+7-must_strip_normal=disappointed.png,~silent~
+7-must_strip_normal=sad.png,~silent~
+7-must_strip_losing=shrug.png,~silent~
+7-must_strip_losing=thinking.png,~silent~
+7-must_strip_losing=interested.png,~silent~
+7-must_strip_losing=disappointed.png,~silent~
+7-must_strip_losing=sad.png,~silent~
+7-stripping,marker:Stripping7-1=stripping1.png,~silent~
+7-stripping,marker:Stripping7-2=stripping2.png,~silent~
+7-stripping,marker:Stripping7-3=custom:stripping3,~silent~
+
+
+#naked
+-3-stripped,count-role;self&saidmarker;Stripping7-1:=stripped1.png,~silent~
+-3-stripped,count-role;self&saidmarker;Stripping7-2:=stripped2.png,~silent~
+-3-stripped,count-role;self&saidmarker;Stripping7-3:=stripped3.png,~silent~
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_strip=cheer.png,~silent~
+male_must_strip=happy.png,~silent~
+male_must_strip=interested.png,~silent~
+male_must_strip=shrug.png,~silent~
+male_must_strip=smug.png,~silent~
+male_must_strip=smugclap.png,~silent~
+male_must_strip=yourturn.png,~silent~
+female_must_strip=cheer.png,~silent~
+female_must_strip=happy.png,~silent~
+female_must_strip=interested.png,~silent~
+female_must_strip=shrug.png,~silent~
+female_must_strip=smug.png,~silent~
+female_must_strip=smugclap.png,~silent~
+female_must_strip=yourturn.png,~silent~
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_must_strip,count-role;target&character;joey&stage;2&saying;Watch closely!:,id:2=interested.png,~silent~
+
+
+#lost gloves
+1-female_must_strip,count-role;target&character;joey&stage;2&saying;Watch closely!:,id:2=interested.png,~silent~
+
+
+#lost hat
+2-female_must_strip,count-role;target&character;joey&stage;2&saying;Watch closely!:,id:2=interested.png,~silent~
+
+
+#lost boots
+3-female_must_strip,count-role;target&character;joey&stage;2&saying;Watch closely!:,id:2=interested.png,~silent~
+
+
+#lost shirt
+4-female_must_strip,count-role;target&character;joey&stage;2&saying;Watch closely!:,id:2=interested.png,~silent~
+
+
+#lost bra
+5-female_must_strip,count-role;target&character;joey&stage;2&saying;Watch closely!:,id:2=interested.png,~silent~
+
+
+#lost socks
+6-female_must_strip,count-role;target&character;joey&stage;2&saying;Watch closely!:,id:2=interested.png,~silent~
+
+
+#lost panties
+7-female_must_strip,count-role;target&character;joey&stage;2&saying;Watch closely!:,id:2=interested.png,~silent~
+
+
+#naked
+-3-female_must_strip,count-role;target&character;joey&stage;2&saying;Watch closely!:,id:2=interested.png,~silent~
+
+
+#masturbating
+-2-female_must_strip,count-role;target&character;joey&stage;2&saying;Watch closely!:,id:2=interested.png,~silent~
+
+
+#finished
+-1-female_must_strip,count-role;target&character;joey&stage;2&saying;Watch closely!:,id:2=interested.png,~silent~
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_accessory=angry.png,~silent~
+male_removing_accessory=annoyed.png,~silent~
+male_removing_accessory=bird.png,~silent~
+male_removing_accessory=bored.png,~silent~
+male_removing_accessory=confused.png,~silent~
+male_removing_accessory=disappointed.png,~silent~
+male_removing_accessory=sad.png,~silent~
+male_removing_accessory=custom:no,~silent~
+male_removed_accessory=angry.png,~silent~
+male_removed_accessory=annoyed.png,~silent~
+male_removed_accessory=bird.png,~silent~
+male_removed_accessory=bored.png,~silent~
+male_removed_accessory=confused.png,~silent~
+male_removed_accessory=disappointed.png,~silent~
+male_removed_accessory=sad.png,~silent~
+female_removing_accessory=angry.png,~silent~
+female_removing_accessory=annoyed.png,~silent~
+female_removing_accessory=bird.png,~silent~
+female_removing_accessory=bored.png,~silent~
+female_removing_accessory=confused.png,~silent~
+female_removing_accessory=disappointed.png,~silent~
+female_removing_accessory=sad.png,~silent~
+female_removing_accessory=custom:no,~silent~
+female_removed_accessory=angry.png,~silent~
+female_removed_accessory=annoyed.png,~silent~
+female_removed_accessory=bird.png,~silent~
+female_removed_accessory=bored.png,~silent~
+female_removed_accessory=confused.png,~silent~
+female_removed_accessory=disappointed.png,~silent~
+female_removed_accessory=sad.png,~silent~
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_minor=annoyed.png,~silent~
+male_removing_minor=bored.png,~silent~
+male_removing_minor=disappointed.png,~silent~
+male_removing_minor=interested.png,~silent~
+male_removing_minor=shrug.png,~silent~
+male_removed_minor=annoyed.png,~silent~
+male_removed_minor=bored.png,~silent~
+male_removed_minor=disappointed.png,~silent~
+male_removed_minor=interested.png,~silent~
+male_removed_minor=shrug.png,~silent~
+male_removed_minor=smugclap.png,~silent~
+female_removing_minor=annoyed.png,~silent~
+female_removing_minor=bored.png,~silent~
+female_removing_minor=disappointed.png,~silent~
+female_removing_minor=interested.png,~silent~
+female_removing_minor=shrug.png,~silent~
+female_removed_minor=annoyed.png,~silent~
+female_removed_minor=bored.png,~silent~
+female_removed_minor=disappointed.png,~silent~
+female_removed_minor=interested.png,~silent~
+female_removed_minor=shrug.png,~silent~
+female_removed_minor=smugclap.png,~silent~
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_major=cheer.png,~silent~
+male_removing_major=happy.png,~silent~
+male_removing_major=smug.png,~silent~
+male_removing_major=custom:yes,~silent~
+male_removed_major=cheer.png,~silent~
+male_removed_major=happy.png,~silent~
+male_removed_major=smug.png,~silent~
+male_removed_major=handinskirt.png,~silent~
+female_removing_major=cheer.png,~silent~
+female_removing_major=happy.png,~silent~
+female_removing_major=smug.png,~silent~
+female_removing_major=custom:yes,~silent~
+female_removed_major=cheer.png,~silent~
+female_removed_major=happy.png,~silent~
+female_removed_major=smug.png,~silent~
+female_removed_major=handinskirt.png,~silent~
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_removing_major,count-role;target&character;joey&stage;2&notsaidmarker;NonMagicStrip1:=happy.png,~silent~
+0-female_removing_major,count-role;target&character;joey&stage;3:,id:3=confused.png,~silent~
+0-female_removed_major,count-role;target&character;joey&stage;4:=interested.png,~silent~
+0-female_removed_major,count-role;target&character;joey&stage;4:=shocked.png,~silent~
+0-female_removed_major,count-role;target&character;joey&stage;3&notsaidmarker;NonMagicStrip1:=shocked.png,~silent~
+
+
+#lost gloves
+1-female_removing_major,count-role;target&character;joey&stage;3:,id:3=confused.png,~silent~
+1-female_removing_major,count-role;target&character;joey&stage;2&notsaidmarker;NonMagicStrip1:=happy.png,~silent~
+1-female_removed_major,count-role;target&character;joey&stage;4:=interested.png,~silent~
+1-female_removed_major,count-role;target&character;joey&stage;4:=shocked.png,~silent~
+1-female_removed_major,count-role;target&character;joey&stage;3&notsaidmarker;NonMagicStrip1:=shocked.png,~silent~
+
+
+#lost hat
+2-female_removing_major,count-role;target&character;joey&stage;3:,id:3=confused.png,~silent~
+2-female_removing_major,count-role;target&character;joey&stage;2&notsaidmarker;NonMagicStrip1:=happy.png,~silent~
+2-female_removed_major,count-role;target&character;joey&stage;3&notsaidmarker;NonMagicStrip1:=shocked.png,~silent~
+2-female_removed_major,count-role;target&character;joey&stage;4:=interested.png,~silent~
+2-female_removed_major,count-role;target&character;joey&stage;4:=shocked.png,~silent~
+
+
+#lost boots
+3-female_removing_major,count-role;target&character;joey&stage;2&notsaidmarker;NonMagicStrip1:=happy.png,~silent~
+3-female_removing_major,count-role;target&character;joey&stage;3:,id:3=confused.png,~silent~
+3-female_removed_major,count-role;target&character;joey&stage;4:=interested.png,~silent~
+3-female_removed_major,count-role;target&character;joey&stage;4:=shocked.png,~silent~
+3-female_removed_major,count-role;target&character;joey&stage;3&notsaidmarker;NonMagicStrip1:=shocked.png,~silent~
+
+
+#lost shirt
+4-female_removing_major,count-role;target&character;joey&stage;2&notsaidmarker;NonMagicStrip1:=happy.png,~silent~
+4-female_removing_major,count-role;target&character;joey&stage;3:,id:3=confused.png,~silent~
+4-female_removed_major,count-role;target&character;joey&stage;3&notsaidmarker;NonMagicStrip1:=shocked.png,~silent~
+4-female_removed_major,count-role;target&character;joey&stage;4:=interested.png,~silent~
+4-female_removed_major,count-role;target&character;joey&stage;4:=shocked.png,~silent~
+
+
+#lost bra
+5-female_removing_major,count-role;target&character;joey&stage;3:,id:3=confused.png,~silent~
+5-female_removing_major,count-role;target&character;joey&stage;2&notsaidmarker;NonMagicStrip1:=happy.png,~silent~
+5-female_removed_major,count-role;target&character;joey&stage;3&notsaidmarker;NonMagicStrip1:=shocked.png,~silent~
+5-female_removed_major,count-role;target&character;joey&stage;4:=interested.png,~silent~
+5-female_removed_major,count-role;target&character;joey&stage;4:=shocked.png,~silent~
+
+
+#lost socks
+6-female_removing_major,count-role;target&character;joey&stage;2&notsaidmarker;NonMagicStrip1:=happy.png,~silent~
+6-female_removing_major,count-role;target&character;joey&stage;3:,id:3=confused.png,~silent~
+6-female_removed_major,count-role;target&character;joey&stage;4:=interested.png,~silent~
+6-female_removed_major,count-role;target&character;joey&stage;4:=shocked.png,~silent~
+6-female_removed_major,count-role;target&character;joey&stage;3&notsaidmarker;NonMagicStrip1:=shocked.png,~silent~
+
+
+#lost panties
+7-female_removing_major,count-role;target&character;joey&stage;2&notsaidmarker;NonMagicStrip1:=happy.png,~silent~
+7-female_removing_major,count-role;target&character;joey&stage;3:,id:3=confused.png,~silent~
+7-female_removed_major,count-role;target&character;joey&stage;3&notsaidmarker;NonMagicStrip1:=shocked.png,~silent~
+7-female_removed_major,count-role;target&character;joey&stage;4:=interested.png,~silent~
+7-female_removed_major,count-role;target&character;joey&stage;4:=shocked.png,~silent~
+
+
+#naked
+-3-female_removing_major,count-role;target&character;joey&stage;3:,id:3=confused.png,~silent~
+-3-female_removing_major,count-role;target&character;joey&stage;2&notsaidmarker;NonMagicStrip1:=happy.png,~silent~
+-3-female_removed_major,count-role;target&character;joey&stage;4:=interested.png,~silent~
+-3-female_removed_major,count-role;target&character;joey&stage;4:=shocked.png,~silent~
+-3-female_removed_major,count-role;target&character;joey&stage;3&notsaidmarker;NonMagicStrip1:=shocked.png,~silent~
+
+
+#masturbating
+-2-female_removing_major,count-role;target&character;joey&stage;3:,id:3=confused.png,~silent~
+-2-female_removing_major,count-role;target&character;joey&stage;2&notsaidmarker;NonMagicStrip1:=happy.png,~silent~
+-2-female_removed_major,count-role;target&character;joey&stage;4:=interested.png,~silent~
+-2-female_removed_major,count-role;target&character;joey&stage;4:=shocked.png,~silent~
+-2-female_removed_major,count-role;target&character;joey&stage;3&notsaidmarker;NonMagicStrip1:=shocked.png,~silent~
+
+
+#finished
+-1-female_removing_major,count-role;target&character;joey&stage;3:,id:3=confused.png,~silent~
+-1-female_removing_major,count-role;target&character;joey&stage;2&notsaidmarker;NonMagicStrip1:=happy.png,~silent~
+-1-female_removed_major,count-role;target&character;joey&stage;3&notsaidmarker;NonMagicStrip1:=shocked.png,~silent~
+-1-female_removed_major,count-role;target&character;joey&stage;4:=interested.png,~silent~
+-1-female_removed_major,count-role;target&character;joey&stage;4:=shocked.png,~silent~
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character to have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_chest_will_be_visible=cheer.png,~silent~
+male_chest_will_be_visible=happy.png,~silent~
+male_chest_will_be_visible=smug.png,~silent~
+male_chest_will_be_visible=custom:yes,~silent~
+male_chest_is_visible=cheer.png,~silent~
+male_chest_is_visible=happy.png,~silent~
+male_chest_is_visible=smug.png,~silent~
+male_chest_is_visible=handinskirt.png,~silent~
+male_chest_is_visible=wink.png,~silent~
+male_crotch_will_be_visible=cheer.png,~silent~
+male_crotch_will_be_visible=happy.png,~silent~
+male_crotch_will_be_visible=smug.png,~silent~
+male_crotch_will_be_visible=thinking.png,~silent~
+male_crotch_will_be_visible=interested.png,~silent~
+male_small_crotch_is_visible=annoyed.png,~silent~
+male_small_crotch_is_visible=bird.png,~silent~
+male_small_crotch_is_visible=disappointed.png,~silent~
+male_small_crotch_is_visible=sad.png,~silent~
+male_small_crotch_is_visible=shrug.png,~silent~
+male_small_crotch_is_visible=confused.png,~silent~
+male_medium_crotch_is_visible=cheer.png,~silent~
+male_medium_crotch_is_visible=dicksuck.png,~silent~
+male_medium_crotch_is_visible=flashing.png,~silent~
+male_medium_crotch_is_visible=handinskirt.png,~silent~
+male_medium_crotch_is_visible=happy.png,~silent~
+male_medium_crotch_is_visible=wink.png,~silent~
+male_large_crotch_is_visible=cheer.png,~silent~
+male_large_crotch_is_visible=dicksuck.png,~silent~
+male_large_crotch_is_visible=flashing.png,~silent~
+male_large_crotch_is_visible=handinskirt.png,~silent~
+male_large_crotch_is_visible=shocked.png,~silent~
+female_chest_will_be_visible=cheer.png,~silent~
+female_chest_will_be_visible=happy.png,~silent~
+female_chest_will_be_visible=honk.png,~silent~
+female_chest_will_be_visible=interested.png,~silent~
+female_chest_will_be_visible=smug.png,~silent~
+female_small_chest_is_visible=annoyed.png,~silent~
+female_small_chest_is_visible=bored.png,~silent~
+female_small_chest_is_visible=shrug.png,~silent~
+female_small_chest_is_visible=thinking.png,~silent~
+female_small_chest_is_visible=disappointed.png,~silent~
+female_medium_chest_is_visible=cheer.png,~silent~
+female_medium_chest_is_visible=happy.png,~silent~
+female_medium_chest_is_visible=honk.png,~silent~
+female_large_chest_is_visible=cheer.png,~silent~
+female_large_chest_is_visible=handinskirt.png,~silent~
+female_large_chest_is_visible=happy.png,~silent~
+female_large_chest_is_visible=honk.png,~silent~
+female_large_chest_is_visible=pussylick.png,~silent~
+female_large_chest_is_visible=shocked.png,~silent~
+female_large_chest_is_visible=custom:yes,~silent~
+female_crotch_will_be_visible=cheer.png,~silent~
+female_crotch_will_be_visible=happy.png,~silent~
+female_crotch_will_be_visible=smug.png,~silent~
+female_crotch_will_be_visible=thinking.png,~silent~
+female_crotch_will_be_visible=interested.png,~silent~
+female_crotch_is_visible=cheer.png,~silent~
+female_crotch_is_visible=flashing.png,~silent~
+female_crotch_is_visible=handinskirt.png,~silent~
+female_crotch_is_visible=happy.png,~silent~
+female_crotch_is_visible=pussylick.png,~silent~
+female_crotch_is_visible=wink.png,~silent~
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_chest_will_be_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:,id:4=smug.png,~silent~
+0-female_medium_chest_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:=smugclap.png,~silent~
+0-female_crotch_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip2:=shocked.png,~silent~
+
+
+#lost gloves
+1-female_chest_will_be_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:,id:4=smug.png,~silent~
+1-female_medium_chest_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:=smugclap.png,~silent~
+1-female_crotch_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip2:=shocked.png,~silent~
+
+
+#lost hat
+2-female_chest_will_be_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:,id:4=smug.png,~silent~
+2-female_medium_chest_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:=smugclap.png,~silent~
+2-female_crotch_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip2:=shocked.png,~silent~
+
+
+#lost boots
+3-female_chest_will_be_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:,id:4=smug.png,~silent~
+3-female_medium_chest_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:=smugclap.png,~silent~
+3-female_crotch_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip2:=shocked.png,~silent~
+
+
+#lost shirt
+4-female_chest_will_be_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:,id:4=smug.png,~silent~
+4-female_medium_chest_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:=smugclap.png,~silent~
+4-female_crotch_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip2:=shocked.png,~silent~
+
+
+#lost bra
+5-female_chest_will_be_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:,id:4=smug.png,~silent~
+5-female_medium_chest_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:=smugclap.png,~silent~
+5-female_crotch_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip2:=shocked.png,~silent~
+
+
+#lost socks
+6-female_chest_will_be_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:,id:4=smug.png,~silent~
+6-female_medium_chest_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:=smugclap.png,~silent~
+6-female_crotch_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip2:=shocked.png,~silent~
+
+
+#lost panties
+7-female_chest_will_be_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:,id:4=smug.png,~silent~
+7-female_medium_chest_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:=smugclap.png,~silent~
+7-female_crotch_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip2:=shocked.png,~silent~
+
+
+#naked
+-3-female_chest_will_be_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:,id:4=smug.png,~silent~
+-3-female_medium_chest_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:=smugclap.png,~silent~
+-3-female_crotch_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip2:=shocked.png,~silent~
+
+
+#masturbating
+-2-female_chest_will_be_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:,id:4=smug.png,~silent~
+-2-female_medium_chest_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:=smugclap.png,~silent~
+-2-female_crotch_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip2:=shocked.png,~silent~
+
+
+#finished
+-1-female_chest_will_be_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:,id:4=smug.png,~silent~
+-1-female_medium_chest_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip3:=smugclap.png,~silent~
+-1-female_crotch_is_visible,count-role;target&character;joey&notsaidmarker;NonMagicStrip2:=shocked.png,~silent~
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_masturbate=happy.png,~silent~
+male_must_masturbate=interested.png,~silent~
+male_must_masturbate=sad.png,~silent~
+male_must_masturbate=shrug.png,~silent~
+male_must_masturbate=smug.png,~silent~
+male_must_masturbate=smugclap.png,~silent~
+male_start_masturbating=flashing.png,~silent~
+male_start_masturbating=handinskirt.png,~silent~
+male_start_masturbating=happy.png,~silent~
+male_start_masturbating=smug.png,~silent~
+male_start_masturbating=yourturn.png,~silent~
+male_masturbating=bored.png,~silent~
+male_masturbating=dicksuck.png,~silent~
+male_masturbating=flashing.png,~silent~
+male_masturbating=handinskirt.png,~silent~
+male_masturbating=happy.png,~silent~
+male_masturbating=interested.png,~silent~
+male_masturbating=smug.png,~silent~
+male_masturbating=thinking.png,~silent~
+male_masturbating=wink.png,~silent~
+male_finished_masturbating=cheer.png,~silent~
+male_finished_masturbating=shocked.png,~silent~
+male_finished_masturbating=smug.png,~silent~
+male_finished_masturbating=smugclap.png,~silent~
+female_must_masturbate=happy.png,~silent~
+female_must_masturbate=interested.png,~silent~
+female_must_masturbate=sad.png,~silent~
+female_must_masturbate=shrug.png,~silent~
+female_must_masturbate=smug.png,~silent~
+female_must_masturbate=smugclap.png,~silent~
+female_start_masturbating=flashing.png,~silent~
+female_start_masturbating=handinskirt.png,~silent~
+female_start_masturbating=happy.png,~silent~
+female_start_masturbating=smug.png,~silent~
+female_start_masturbating=yourturn.png,~silent~
+female_masturbating=bored.png,~silent~
+female_masturbating=pussylick.png,~silent~
+female_masturbating=flashing.png,~silent~
+female_masturbating=handinskirt.png,~silent~
+female_masturbating=happy.png,~silent~
+female_masturbating=interested.png,~silent~
+female_masturbating=smug.png,~silent~
+female_masturbating=thinking.png,~silent~
+female_masturbating=wink.png,~silent~
+female_finished_masturbating=cheer.png,~silent~
+female_finished_masturbating=shocked.png,~silent~
+female_finished_masturbating=smug.png,~silent~
+female_finished_masturbating=smugclap.png,~silent~
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+
+#naked
+-3-must_masturbate_first=angry.png,~silent~
+-3-must_masturbate_first=annoyed.png,~silent~
+-3-must_masturbate_first=disappointed.png,~silent~
+-3-must_masturbate_first=sad.png,~silent~
+-3-must_masturbate=flashing.png,~silent~
+-3-must_masturbate=happy.png,~silent~
+-3-must_masturbate=shrug.png,~silent~
+-3-start_masturbating=starting.png,~silent~
+
+
+#masturbating
+-2-masturbating=flashing.png,~silent~
+-2-masturbating=handinskirt.png,~silent~
+-2-masturbating=interested.png,~silent~
+-2-masturbating=smug.png,~silent~
+-2-masturbating=thinking.png,~silent~
+-2-masturbating=wink.png,~silent~
+-2-heavy_masturbating=flashing.png,~silent~
+-2-heavy_masturbating=handinskirt.png,~silent~
+-2-heavy_masturbating=interested.png,~silent~
+-2-heavy_masturbating=smug.png,~silent~
+-2-heavy_masturbating=thinking.png,~silent~
+-2-heavy_masturbating=wink.png,~silent~
+-2-finishing_masturbating=finishing.png,~silent~
+
+
+#finished
+-1-finished_masturbating=finished.png,~silent~
+-1-after_masturbating=annoyed.png,~silent~
+-1-after_masturbating=bored.png,~silent~
+-1-after_masturbating=confused.png,~silent~
+-1-after_masturbating=flashing.png,~silent~
+-1-after_masturbating=interested.png,~silent~
+-1-after_masturbating=shrug.png,~silent~
+-1-after_masturbating=smug.png,~silent~
+-1-after_masturbating=thinking.png,~silent~
+
+
+
+
+#GAME OVER
+#Lines spoken after the overall winner has been decided and all the losers have finished their forfeits.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+game_over_victory=cheer.png,~silent~
+game_over_victory=flashing.png,~silent~
+game_over_victory=happy.png,~silent~
+
+
+#stage-specific lines that override the stage-generic ones
+
+#finished
+game_over_defeat=bored.png,~silent~
+game_over_defeat=cheer.png,~silent~
+game_over_defeat=interested.png,~silent~
+game_over_defeat=sad.png,~silent~
+game_over_defeat=shrug.png,~silent~
+game_over_defeat,count-role;target&character;joey:=custom:no,~silent~
+
+
+
+
+#GLOBAL
+#If your character is saying a set of lines in sequence where it doesn't matter what phase of the game it's at, you can use this area to avoid duplicating lines across cases. These lines are considered for every case in the game.
+
+#finished
+-1-global,oneShotId:2,priority:999=stand.png,~silent~
+
+#EPILOGUE/ENDING
+
+#CUSTOM POSES
+
+pose=0-name
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/0-sign.png,x:0,y:0
+	sprite=id:x_text1,iterations:0,layer:0,z:0,count:0,src:monique/x_text1.png,x:284,y:28,pivotx:75%,pivoty:62%
+
+pose=0-no
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/0-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text4.png,x:284,y:28
+
+pose=0-notalking
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/0-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text2.png,x:284,y:28
+
+pose=0-yes
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/0-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text3.png,x:284,y:28
+
+pose=10-no
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/10-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text4.png,x:284,y:28
+
+pose=10-notalking
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/10-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text2.png,x:284,y:28
+
+pose=10-yes
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/10-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text3.png,x:284,y:28
+
+pose=1-no
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/1-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text4.png,x:284,y:28
+
+pose=1-notalking
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/1-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text2.png,x:284,y:28
+
+pose=1-stripping3
+	base_height=1400
+	sprite=id:stripping3,iterations:0,layer:0,z:0,count:0,src:monique/1-stripping3.png,x:0,y:0
+	sprite=id:monique_hat,iterations:0,layer:0,z:0,count:0,src:monique/attachments/monique_hat.png,x:62,y:97,rotation:9
+	directive=type:animation,id:monique_hat,ease:smooth,interpolation:linear,iterations:0,layer:0,z:0,count:0
+		keyframe=time:0,x:62,y:97,rotation:9
+		keyframe=time:1,y:97
+		keyframe=time:6,x:62,y:-1000,rotation:9
+	directive=type:animation,id:monique_hat,ease:linear,interpolation:none,iterations:0,layer:0,z:0,count:0
+		keyframe=time:0,src:monique/attachments/monique_hat.png
+		keyframe=time:6,src:monique/attachments/monique_hat.png
+
+pose=1-yes
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/1-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text3.png,x:284,y:28
+
+pose=2-no
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/2-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text4.png,x:284,y:28
+
+pose=2-notalking
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/2-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text2.png,x:284,y:28
+
+pose=2-yes
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/2-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text3.png,x:284,y:28
+
+pose=3-no
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/3-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text4.png,x:284,y:28
+
+pose=3-notalking
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/3-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text2.png,x:284,y:28
+
+pose=3-stripping3
+	base_height=1400
+	sprite=id:stripping3a,iterations:0,layer:0,z:0,count:0,src:monique/3-stripping3a.png,x:0,y:0
+	directive=type:animation,id:stripping3a,ease:linear,interpolation:none,iterations:0,layer:0,z:0,count:0
+		keyframe=time:0,src:monique/3-stripping3a.png
+		keyframe=time:1,src:monique/3-stripping3b.png
+
+pose=3-yes
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/3-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text3.png,x:284,y:28
+
+pose=4-no
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/4-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text4.png,x:284,y:28
+
+pose=4-notalking
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/4-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text2.png,x:284,y:28
+
+pose=4-stripped3
+	base_height=1400
+	sprite=id:stripping3a,iterations:0,layer:0,z:0,count:0,src:monique/4-stripped3a.png,x:0,y:0
+	directive=type:animation,id:stripping3a,ease:linear,interpolation:none,iterations:0,layer:0,z:0,count:0
+		keyframe=time:0,src:monique/4-stripped3a.png
+		keyframe=time:2,src:monique/4-stripped3b.png
+
+pose=4-yes
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/4-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text3.png,x:284,y:28
+
+pose=5-no
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/5-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text4.png,x:284,y:28
+
+pose=5-notalking
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/5-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text2.png,x:284,y:28
+
+pose=5-yes
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/5-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text3.png,x:284,y:28
+
+pose=6-no
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/6-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text4.png,x:284,y:28
+
+pose=6-notalking
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/6-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text2.png,x:284,y:28
+
+pose=6-yes
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/6-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text3.png,x:284,y:28
+
+pose=7-no
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/7-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text4.png,x:284,y:28
+
+pose=7-notalking
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/7-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text2.png,x:284,y:28
+
+pose=7-stripping3
+	base_height=1400
+	sprite=id:stripping3a,iterations:0,layer:0,z:1,count:0,src:monique/7-stripping3a.png,x:0,y:0,alpha:100
+	sprite=id:stripping3b,delay:1,iterations:0,layer:0,z:0,count:0,src:monique/7-stripping3b.png,x:0,y:0,alpha:100
+	directive=type:animation,id:stripping3a,ease:smooth,interpolation:linear,iterations:0,layer:0,z:0,count:0
+		keyframe=time:0,x:0,y:0,alpha:100
+		keyframe=time:1,alpha:100
+		keyframe=time:2,alpha:0
+	directive=type:animation,id:stripping3b,delay:1,ease:smooth,interpolation:linear,iterations:0,layer:0,z:0,count:0
+		keyframe=time:0,x:0,y:0,alpha:100
+		keyframe=time:1,alpha:100
+
+pose=7-yes
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/7-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text3.png,x:284,y:28
+
+pose=8-no
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/8-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text4.png,x:284,y:28
+
+pose=8-notalking
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/8-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text2.png,x:284,y:28
+
+pose=8-yes
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/8-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text3.png,x:284,y:28
+
+pose=9-no
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/9-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text4.png,x:282,y:522
+
+pose=9-notalking
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/9-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text2.png,x:282,y:522
+
+pose=9-yes
+	base_height=1400
+	sprite=id:sign,iterations:0,layer:0,z:0,count:0,src:monique/9-sign.png,x:0,y:0
+	sprite=id:x_text4,iterations:0,layer:0,z:0,count:0,src:monique/x_text3.png,x:282,y:522

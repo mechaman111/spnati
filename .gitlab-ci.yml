@@ -20,6 +20,20 @@ deploy_production:
     only:
         - master@spnati/spnati
 
+deploy_docs:
+    stage: deploy
+    tags:
+        - production
+    only:
+        refs:
+            - master@spnati/spnati
+        changes:
+            - creator-docs/**/*
+    script:
+        - cd creator-docs
+        - mkdocs build
+        - rsync -crltz --out-format=%n --delete site/ /opt/spnati-docs
+
 bundle_packages:
     stage: bundle
     tags:

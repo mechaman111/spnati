@@ -131,6 +131,18 @@ function Deck() {
     this.dealCard = function() {
         return cards.pop();
     }
+
+    this.rigFor = function(player) {
+        var rigSuit = getRandomNumber(0, 4);
+        for (var n = 0; n < CARDS_PER_HAND; n++) {
+            var i = cards.length - 1 - (player * CARDS_PER_HAND + n);
+            for (var j = 0; j < cards.length; j++) {
+                if (cards[j].suit == rigSuit && cards[j].rank == 14 - n && i != j) {
+                    var c = cards[i]; cards[i] = cards[j]; cards[j] = c;
+                }
+            }
+        }
+    }
 }
 
 /**********************************************************************

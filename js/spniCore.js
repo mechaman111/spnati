@@ -63,13 +63,15 @@ var BLANK_PLAYER_IMAGE = "opponents/blank.png";
 
 /* player array */
 var players = Array(5);
+Object.defineProperty(players, 'opponents', {
+    get: function() {
+        return this.slice(1);
+    }
+});
 var humanPlayer;
 
 /* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
 var timeoutID;
-
-/* Modal to return to from the feedback modal, or null if not returning to any modal. */
-var feedbackModalReturn = null;
 
 /**********************************************************************
  * Game Wide Global Variables
@@ -87,7 +89,6 @@ var codeImportEnabled = false;
  **********************************************************************/
 
 /* Screens */
-$warningScreen = $('#warning-screen');
 $titleScreen = $('#title-screen');
 $selectScreen = $('#main-select-screen');
 $individualSelectScreen = $('#individual-select-screen');
@@ -96,15 +97,12 @@ $gameScreen = $('#game-screen');
 $epilogueScreen = $('#epilogue-screen');
 $galleryScreen = $('#gallery-screen');
 
-var allScreens = [$warningScreen, $titleScreen, $selectScreen, $individualSelectScreen, $groupSelectScreen, $gameScreen, $epilogueScreen, $galleryScreen];
+var allScreens = [$titleScreen, $selectScreen, $individualSelectScreen, $groupSelectScreen, $gameScreen, $epilogueScreen, $galleryScreen];
 
 /* Modals */
 $helpModal = $('#help-modal');
 $creditModal = $('#credit-modal');
 $versionModal = $('#version-modal');
-$bugReportModal = $('#bug-report-modal');
-$feedbackReportModal = $('#feedback-report-modal');
-$usageTrackingModal = $('#usage-reporting-modal');
 $playerTagsModal = $('#player-tags-modal');
 $collectibleInfoModal = $('#collectibles-info-modal');
 $ioModal = $('#io-modal');
@@ -120,164 +118,22 @@ var bubbleArrowOffsetRules;
  * Game Wide Utility Functions
  ********************************************************************************/
 
-function getReportedOrigin () {
-    var origin = window.location.origin;
-
-    if (origin.toLowerCase().startsWith('file:')) {
-        return '<local filesystem origin>';
-    } else {
-        return origin;
-    }
-}
-
-/* Gathers most of the generic information for an error report. */
-function compileBaseErrorReport(userDesc, bugType) {
-    var tableReports = [];
-    for (let i=1;i<players.length;i++) {
-        if (players[i]) {
-            playerData = {
-                'id': players[i].id,
-                'slot': i,
-                'stage': players[i].stage,
-                'timeInStage': players[i].timeInStage,
-                'markers': players[i].markers,
-                'oneShotCases': players[i].oneShotCases,
-                'oneShotStates': players[i].oneShotStates,
-            }
-
-            if (players[i].chosenState) {
-                playerData.currentLine    = players[i].chosenState.rawDialogue;
-                if (players[i].chosenState.image) {
-                    playerData.currentImage   = players[i].folder + players[i].chosenState.image.replace('#', players[i].stage);
-                }
-            }
-
-            tableReports[i-1] = playerData;
-        } else {
-            tableReports[i-1] = null;
-        }
-    }
-
-    var circumstances = {
-        'userAgent': navigator.userAgent,
-        'origin': getReportedOrigin(),
-        'currentRound': currentRound,
-        'currentTurn': currentTurn,
-        'previousLoser': previousLoser,
-        'recentLoser': recentLoser,
-        'gameOver': gameOver,
-        'visibleScreens': [],
-        'rollback': inRollback()
-    }
-
-    if (gamePhase) {
-        if (inRollback()) {
-            circumstances.gamePhase = rolledBackGamePhase[0];
-        } else {
-            circumstances.gamePhase = gamePhase[0];
-        }
-    }
-
-    for (let i=0;i<allScreens.length;i++) {
-        if (allScreens[i].css('display') !== 'none') {
-            circumstances.visibleScreens.push(allScreens[i].attr('id'));
-        }
-    }
-
-    var bugCharacter = null;
-    if (bugType.startsWith('character')) {
-        bugCharacter = bugType.split(':', 2)[1];
-        bugType = 'character';
-    }
-
-    return {
-        'date': (new Date()).toISOString(),
-        'commit': VERSION_COMMIT,
-        'session': sessionID,
-        'game': gameID,
-        'type': bugType,
-        'character': bugCharacter,
-        'description': userDesc,
-        'circumstances': circumstances,
-        'table': tableReports,
-        'player': {
-            'gender': humanPlayer.gender,
-            'size': humanPlayer.size,
-        },
-        'jsErrors': jsErrors,
-    };
-}
-
-window.addEventListener('error', function (ev) {
-    jsErrors.push({
-        'date': (new Date()).toISOString(),
-        'type': ev.error.name,
-        'message': ev.message,
-        'filename': ev.filename,
-        'lineno': ev.lineno,
-        'stack': ev.error.stack
-    });
-
-    if (USAGE_TRACKING) {
-        var report = compileBaseErrorReport('Automatically generated after Javascript error.', 'auto');
-
-        $.ajax({
-            url: BUG_REPORTING_ENDPOINT,
-            method: 'POST',
-            data: JSON.stringify(report),
-            contentType: 'application/json',
-            error: function (jqXHR, status, err) {
-                console.error("Could not send bug report - error "+status+": "+err);
-            },
-        });
-    }
-});
-
 /* Fetch a possibly compressed file.
  * Attempts to fetch a compressed version of the file first,
  * then fetches the uncompressed version of the file if that isn't found.
  */
 function fetchCompressedURL(baseUrl) {
-    /*
-     * The usual Jquery AJAX request function doesn't play nice with
-     * the binary-encoded data we'll get here, so we do the XHR manually.
-     * (I would use fetch() were it not for compatibility issues.)
-     */
-    var req = new XMLHttpRequest();
-    req.open('GET', baseUrl+'.gz', true);
-    req.responseType = 'arraybuffer';
-    var deferred = $.Deferred();
-
-    req.onload = function(ev) {
-        if (req.status < 400 && req.response) {
-            var data = new Uint8Array(req.response);
-            var decompressed = pako.inflate(data, { to: 'string' });
-            deferred.resolve(decompressed);
-        } else if (req.status === 404) {
-            $.ajax({
-                type: "GET",
-        		url: baseUrl,
-        		dataType: "text",
-                success: deferred.resolve.bind(deferred),
-                error: deferred.reject.bind(deferred),
+    return $.ajax(baseUrl+'.gz', {
+        xhrFields: { responseType: 'arraybuffer' },
+    }).then(function(data) {
+        return pako.inflate(new Uint8Array(data), { to: 'string' });
+    }, function(jqXHR) {
+        if (jqXHR.status == 404) {
+            return $.ajax(baseUrl, {
+                dataType: 'text',
             });
-        } else {
-            deferred.reject();
         }
-    }
-
-    req.onerror = function(err) {
-        $.ajax({
-            type: "GET",
-            url: baseUrl,
-            dataType: "text",
-            success: deferred.resolve.bind(deferred),
-            error: deferred.reject.bind(deferred),
-        });
-    }
-
-    req.send(null);
-    return deferred.promise();
+    });
 }
 
 
@@ -659,7 +515,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.default_costume = null;
     this.poses = {};
     this.labelOverridden = false;
-    this.pendingCollectiblePopup = null;
+    this.pendingCollectiblePopups = [];
 
     this.loaded = false;
     this.loadProgress = undefined;
@@ -671,6 +527,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
      * including implied tags.
      */
     this.baseTags = $metaXml.find('tags').children().map(function() { return canonicalizeTag($(this).text()); }).get();
+    this.removeTag(this.id);
     this.updateTags();
     this.searchTags = expandTagsList(this.baseTags);
     
@@ -687,7 +544,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
         var status = $(elem).attr('status') || 'offline';
         
         if (alternateCostumeSets['all'] || alternateCostumeSets[set]) {
-            if (!includedOpponentStatuses[status]) {
+            if (!includedOpponentStatuses[status] && set !== DEFAULT_COSTUME_SET) {
                 return;
             }
 
@@ -941,6 +798,15 @@ Opponent.prototype.unloadOpponent = function () {
     }
 }
 
+Opponent.prototype.fetchBehavior = function() {
+    // Optionally, replace with fetchCompressedURL(this.folder + "behaviour.xml")
+    return $.ajax({
+        type: "GET",
+        url: this.folder + "behaviour.xml",
+        dataType: "text",
+    });
+}
+
 /************************************************************
  * Loads and parses the start of the behaviour XML file of the
  * given opponent.
@@ -960,11 +826,11 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
         return;
     }
 
-    fetchCompressedURL('opponents/' + this.id + "/behaviour.xml")
 		/* Success callback.
          * 'this' is bound to the Opponent object.
          */
-		.then(function(xml) {
+    this.fetchBehavior()
+        .then(function(xml) {
             var $xml = $(xml);
 
             if (SENTRY_INITIALIZED) {
@@ -1437,12 +1303,15 @@ function initialSetup () {
         bubbleArrowOffsetRules.push(pair);
     }
     $(document).keydown(function(ev) {
-        if (ev.keyCode == 9) {
+        if (ev.keyCode == 9) {  // Tab
             $("body").addClass('focus-indicators-enabled');
         }
     });
-    $(document).on('keyup', function(ev) {
-        if (ev.keyCode == 112) { // F1
+    $(document).keyup(function(ev) {
+        if ((ev.key == 'f' || (ev.key == 'F' && !ev.shiftKey))
+            && !$(document.activeElement).is('input, select, textarea')) {
+            toggleFullscreen();
+        } else if (ev.keyCode == 112) { // F1
             showHelpModal();
         }
     });
@@ -1809,8 +1678,8 @@ function restartGame () {
 
     /* there is only one call to this right now */
     $epilogueSelectionModal.hide();
-    $epilogueScreen.hide();
     clearEpilogue();
+    screenTransition($epilogueScreen, $titleScreen);
     screenTransition($gameScreen, $titleScreen);
     autoResizeFont();
 }
@@ -1819,331 +1688,6 @@ function restartGame () {
  *****                    Interaction Functions                   *****
  **********************************************************************/
 
-/*
- * Bug Report Modal functions
- */
-
-function getBugReportJSON() {
-    var desc = $('#bug-report-desc').val();
-    var type = $('#bug-report-type').val();
-    var character = undefined;
-
-    var report = compileBaseErrorReport(desc, type);
-    return JSON.stringify(report);
-}
-
-function updateBugReportSendButton() {
-    if($('#bug-report-desc').val().trim().length > 0) {
-        $("#bug-report-modal-send-button").removeAttr('disabled');
-    } else {
-        $("#bug-report-modal-send-button").attr('disabled', 'true');
-    }
-}
-
-$('#bug-report-desc').keyup(updateBugReportSendButton);
-
-/* Update the bug report text dump. */
-function updateBugReportOutput() {
-    $('#bug-report-output').val(getBugReportJSON());
-    $('#bug-report-status').text("");
-
-    updateBugReportSendButton();
-}
-
-function copyBugReportOutput() {
-    var elem = $('#bug-report-output')[0];
-    elem.select();
-    document.execCommand("copy");
-}
-
-function sendBugReport() {
-    if($('#bug-report-desc').val().trim().length == 0) {
-        $('#bug-report-status').text("Please enter a description first!");
-        return false;
-    }
-
-    $.ajax({
-        url: BUG_REPORTING_ENDPOINT,
-        method: 'POST',
-        data: getBugReportJSON(),
-        contentType: 'application/json',
-        error: function (jqXHR, status, err) {
-            console.error("Could not send bug report - error "+status+": "+err);
-            $('#bug-report-status').text("Failed to send bug report (error "+status+")");
-        },
-        success: function () {
-            $('#bug-report-status').text("Bug report sent!");
-            $('#bug-report-desc').val("");
-            closeBugReportModal();
-        }
-    });
-}
-
-$('#bug-report-type').change(updateBugReportOutput);
-$('#bug-report-desc').change(updateBugReportOutput);
-$('#bug-report-copy-btn').click(copyBugReportOutput);
-
-if (!document.fullscreenEnabled) {
-    $('.title-fullscreen-button, .game-menu-dropup li:has(#game-fullscreen-button), #epilogue-fullscreen-button').hide();
-}
-
- /************************************************************
-  * The player clicked a bug-report button. Shows the bug reports modal.
-  ************************************************************/
-function showBugReportModal () {
-    /* Set up possible bug report types. */
-    var bugReportTypes = [
-        ['freeze', 'Game Freeze or Crash'],
-        ['display', 'Game Graphical Problem'],
-        ['other', 'Other Game Issue'],
-    ]
-
-    for (var i=1;i<5;i++) {
-        if (players[i]) {
-            var mixedCaseID = players[i].id.charAt(0).toUpperCase()+players[i].id.substring(1);
-            bugReportTypes.push(['character:'+players[i].id, 'Character Defect ('+mixedCaseID+')']);
-        }
-    }
-
-    $('#bug-report-type').empty().append(bugReportTypes.map(function (t) {
-        return $('<option value="'+t[0]+'">'+t[1]+'</option>');
-    }));
-
-    updateBugReportOutput();
-
-    $bugReportModal.modal('show');
-}
-
-$bugReportModal.on('shown.bs.modal', function() {
-	$('#bug-report-type').focus();
-});
-
-function closeBugReportModal() {
-    $bugReportModal.modal('hide');
-}
-
- /************************************************************
-  * Functions for the feedback reporting modal.
-  ************************************************************/
-
-function sendFeedbackReport() {
-    if ($('#feedback-report-desc').val().trim().length == 0) {
-        $('#feedback-report-status').text("Please enter a description first!");
-        return false;
-    }
-
-    var desc = $('#feedback-report-desc').val();
-    var slot = parseInt($('#feedback-report-character').val(), 10);
-    var report = compileBaseErrorReport(desc, "feedback");
-
-    if (slot > 0) {
-        var character = players[slot].id;
-    } else {
-        var character = "";
-    }
-
-    $.ajax({
-        url: FEEDBACK_ROUTE + character,
-        method: 'POST',
-        data: JSON.stringify(report),
-        contentType: 'application/json',
-        error: function (jqXHR, status, err) {
-            console.error("Could not send feedback report - error " + status + ": " + err);
-            $('#feedback-report-status').text("Failed to send feedback report (error " + err + ")");
-        },
-        success: function () {
-            $('#feedback-report-status').text("Feedback sent!");
-            $('#feedback-report-desc').val("");
-            closeFeedbackReportModal();
-        }
-    });
-}
-
-function updateFeedbackSendButton() {
-    if (
-        !!$("#feedback-report-character").val() &&
-        $('#feedback-report-desc').val().trim().length > 0
-    ) {
-        $("#feedback-report-modal-send-button").removeAttr('disabled');
-    } else {
-        $("#feedback-report-modal-send-button").attr('disabled', 'true');
-    }
-}
-
-$('#feedback-report-desc').keyup(updateFeedbackSendButton).change(updateFeedbackSendButton);
-
-function updateFeedbackMessage() {
-    var slot = parseInt($('#feedback-report-character').val(), 10);
-
-    if (players[slot] && players[slot].feedbackData && 
-        players[slot].feedbackData.enabled && 
-        players[slot].feedbackData.message
-    ) {
-        $(".feedback-message-container").show();
-        $(".feedback-character-name").text(players[slot].label);
-        $(".feedback-message").text(players[slot].feedbackData.message);
-    } else {
-        $(".feedback-message-container").hide();
-    }
-}
-
-$("#feedback-report-character").change(updateFeedbackMessage);
-
-function showFeedbackReportModal(fromModal) {
-    $('#feedback-report-character').empty().append(
-        $('<option value="" disabled data-load-indicator="">Loading...</option>'),
-    ).val("");
-
-    if (!fromModal) {
-        feedbackModalReturn = null;
-    } else {
-        feedbackModalReturn = fromModal;
-    }
-
-    for (let i = 1; i < 5; i++) {
-        if (players[i]) {
-            let mixedCaseID = players[i].id.charAt(0).toUpperCase() + players[i].id.substring(1);
-            let selectorOption = $('<option value="' + players[i].slot + '">' + mixedCaseID + '</option>');
-            $("#feedback-report-character").append(selectorOption);
-
-            if (players[i].feedbackData) {
-                $("#feedback-report-character option[data-load-indicator]").remove();
-                 updateFeedbackMessage();
-            } else {
-                $.ajax({
-                    url: FEEDBACK_ROUTE + players[i].id,
-                    type: "GET",
-                    dataType: "json",
-                    success: function (data) {
-                        players[i].feedbackData = data;
-                        
-                        $("#feedback-report-character option[data-load-indicator]").remove();
-                        updateFeedbackMessage();
-                    },
-                    error: function () {
-                        console.error("Failed to get feedback message data for " + players[i].id);
-                    },
-                });
-            }
-        }
-    }
-
-    $("#feedback-report-character").append(
-        $('<option value="-1" data-general-option="">General Game Feedback</option>')
-    );
-
-    if (fromModal) fromModal.modal('hide');
-    $feedbackReportModal.modal('show');
-}
-
-function closeFeedbackReportModal() {
-    $feedbackReportModal.modal('hide');
-
-    if (feedbackModalReturn) {
-        feedbackModalReturn.modal('show');
-        feedbackModalReturn = null;
-    }
-}
-
-$feedbackReportModal.on('shown.bs.modal', function () {
-    $('#feedback-report-character').focus();
-});
-
-/*
- * Show the usage tracking consent modal.
- */
-
-function showUsageTrackingModal() {
-    $usageTrackingModal.modal('show');
-}
-
-function enableUsageTracking() {
-    USAGE_TRACKING = true;
-    save.saveUsageTracking();
-    sentryInit();
-}
-
-function disableUsageTracking() {
-    USAGE_TRACKING = false;
-    save.saveUsageTracking();
-}
-
-function sentryInit() {
-    if (USAGE_TRACKING && !SENTRY_INITIALIZED) {
-        console.log("Initializing Sentry...");
-
-        var sentry_opts = {
-            dsn: 'https://df511167a4fa4a35956a8653ff154960@sentry.io/1508488',
-            release: VERSION_TAG,
-            maxBreadcrumbs: 100,
-            integrations: [new Sentry.Integrations.Breadcrumbs({
-                console: false,
-                dom: false
-            })],
-            beforeSend: function (event, hint) {
-                /* Inject additional game state data into event tags: */
-                if (!event.extra) event.extra = {};
-
-                event.tags.commit = VERSION_COMMIT;
-
-                if (inGame && !epiloguePlayer) {
-                    event.extra.recentLoser = recentLoser;
-                    event.extra.previousLoser = previousLoser;
-                    event.extra.gameOver = gameOver;
-                    event.extra.currentTurn = currentTurn;
-                    event.extra.currentRound = currentRound;
-
-                    event.tags.rollback = inRollback();
-                    event.tags.gamePhase = getGamePhaseString(gamePhase);
-                }
-
-                if (epiloguePlayer) {
-                    event.tags.epilogue = epiloguePlayer.epilogue.title;
-                    event.tags.epilogue_player = epiloguePlayer.epilogue.player.id;
-                    event.tags.epilogue_gender = epiloguePlayer.epilogue.gender;
-
-                    event.extra.loaded = epiloguePlayer.loaded;
-                    event.extra.directiveIndex = epiloguePlayer.directiveIndex;
-                    event.extra.sceneIndex = epiloguePlayer.sceneIndex;
-                    event.extra.viewIndex = epiloguePlayer.viewIndex;
-                }
-
-                var n_players = 0;
-                for (var i=1;i<players.length;i++) {
-                    if (players[i]) {
-                        n_players += 1;
-                        event.tags["character:" + players[i].id] = true;
-                        event.tags["slot-" + i] = players[i].id;
-
-                        if (players[i].alt_costume) {
-                            event.tags[players[i].id+":alt-costume"] = players[i].alt_costume.id;
-                        }
-                    } else {
-                        event.tags["slot-" + i] = undefined;
-                    }
-                }
-
-                event.tags.n_players = n_players;
-
-                return event;
-            }
-        };
-
-        if (window.location.origin.indexOf('spnati.net') >= 0) {
-            sentry_opts.environment = 'production';
-        }
-
-        Sentry.init(sentry_opts);
-
-        Sentry.setUser({
-            'id': sessionID,
-        });
-
-        Sentry.setTag("game_version", CURRENT_VERSION);
-
-        SENTRY_INITIALIZED = true;
-    }
-}
 
 var SEMVER_RE = /[vV]?(\d+)\.(\d+)(?:\.(\d+))?(?:\-([a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-])*))?(?:\+([a-zA-Z0-9\-]+(?:\.[a-zA-Z0-9\-]+)*))?/;
 function parseSemVer (versionString) {
@@ -2274,7 +1818,7 @@ function gotoHelpPage (toPage) {
     if (toPage === 'prev') {
         curPage = (curPage > 1) ? curPage-1 : 1;
     } else if (toPage === 'next') {
-        curPage = (curPage < 7) ? curPage+1 : 7;
+        curPage = (curPage < 8) ? curPage+1 : 8;
     } else {
         curPage = toPage;
     }
@@ -2488,7 +2032,17 @@ function toggleFullscreen() {
     if (document.fullscreenElement) {
         document.exitFullscreen();
     } else {
-        document.documentElement.requestFullscreen();
+        /* handle vendor prefixes for out of date browsers
+         * (probably don't need -moz- prefix though, according to Sentry data)
+         */
+        var d = document.documentElement;
+        if (d.requestFullscreen) {
+            d.requestFullscreen();
+        } else if (d.webkitRequestFullScreen) {
+            d.webkitRequestFullScreen();
+        } else if (d.msRequestFullscreen) {
+            d.msRequestFullscreen();
+        }
     }
 }
 
@@ -2501,7 +2055,7 @@ $(':root').on('dblclick', toggleFullscreen);
  * The player clicked on a Load/Save button.
  ************************************************************/
 function showImportModal() {
-    $("#export-code").text(save.serializeLocalStorage());
+    $("#export-code").val(save.serializeStorage());
     
     $('#import-invalid-code').hide();
 
@@ -2526,7 +2080,7 @@ function showImportModal() {
             });
         }
 
-        if (save.deserializeLocalStorage(code)) {
+        if (save.deserializeStorage(code)) {
             $ioModal.modal('hide');
         } else {
             $('#import-invalid-code').show();
@@ -2557,6 +2111,23 @@ function showResortModal() {
  ************************************************************/
 function getRandomNumber (min, max) {
 	return Math.floor(Math.random() * (max - min) + min);
+}
+
+function mergeObjects(a, b){
+	if(b === undefined || b === null){
+		return a;
+	}
+	else if(a === undefined || a === null){
+		return b;
+	}
+	for(var v in b){
+		if (typeof a[v] === 'object') {
+			a[v] = mergeObjects(a[v], b[v])
+		} else {
+			a[v] = b[v];
+		}
+	}
+	return a;
 }
 
 /************************************************************

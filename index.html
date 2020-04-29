@@ -1712,6 +1712,7 @@
                                         </h3>
                                         <p class="feedback-message"></p>
                                     </div>
+                                    <h3 id="feedback-disabled-warning" style="display:none">Feedback is disabled for this character. Their creator(s) may not be able to see your comments.</h3>
                                     <div class="form-group">
                                         <label for="feedback-report-desc">Feedback (required):</label>
                                         <textarea class="form-control" id="feedback-report-desc" rows="5"
@@ -2450,6 +2451,51 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Licensing -->
+                            <div class="help-page container-fluid" data-page="8" style="display:none">
+                                <h2>Legal Information</h2>
+                                <div class="faq-question-container">
+                                    <h4 class="faq-question">The MIT License (MIT)</h4>
+                                    <div class="faq-answer">
+                                        <p>Copyright (c) 2015 The SPNATI Contributors</p>
+                                        <p>
+                                            Permission is hereby granted, free of charge, to any person obtaining a copy
+                                            of this software and associated documentation files (the "Software"), to deal
+                                            in the Software without restriction, including without limitation the rights
+                                            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                                            copies of the Software, and to permit persons to whom the Software is
+                                            furnished to do so, subject to the following conditions:
+                                        </p>
+                                        <p>
+                                            The above copyright notice and this permission notice shall be included in all
+                                            copies or substantial portions of the Software.
+                                        </p>
+                                        <p>
+                                            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                                            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                                            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                                            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                                            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                                            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+                                            SOFTWARE.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="faq-question-container">
+                                    <h4 class="faq-question">For Contributors:</h4>
+                                    <div class="faq-answer">
+                                        <p>
+                                            The vast majority of open-source software, by default, operates on "inbound = outbound" licensing: in other words, one license covers both "inbound"
+                                            licensing (from contributors to the project), and "outbound" licensing (from the project back to contributors and users).
+                                        </p>
+                                        <p>
+                                            SPNATI also operates by this rule: by submitting contributions to SPNATI, you implicitly agree to make your contributions publically available to us
+                                            under the MIT License, posted above.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <nav aria-label="Page navigation">
@@ -2472,6 +2518,8 @@
                                     <li class="help-page-select" data-page="6"><a href="#" data-select-page="6">6</a>
                                     </li>
                                     <li class="help-page-select" data-page="7"><a href="#" data-select-page="7">7</a>
+                                    </li>
+                                    <li class="help-page-select" data-page="8"><a href="#" data-select-page="8">8</a>
                                     </li>
                                     <li class="help-page-select">
                                         <a href="#" aria-label="Next" data-select-page="next">
@@ -3132,30 +3180,34 @@
                 <div class="spinner-pip"></div>
                 <div id="epilogue-progress">0%</div>
             </div>
-        </div>
-        <div id='epilogue-buttons'>
-            <button type="button" id='epilogue-next' class="bordered smooth-button">
-                Next
-            </button>
-            <button type="button" id='epilogue-previous' class="bordered smooth-button">
-                Previous
-            </button>
-            <button type="button" id='epilogue-restart' class="bordered smooth-button">
-                Restart?
-            </button>
-            <button type="button" id="epilogue-fullscreen-button" class="bordered smooth-button" onclick="toggleFullscreen()">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-            </button>
-            <div id="epilogue-debug-group" hidden>
-                <select id="epilogue-skip-scene"></select>
-                <button type="button" id="epilogue-skip" class="bordered smooth-button green">Skip to Scene</button>
-                <button type="button" id='epilogue-reload' class="bordered smooth-button red">
-                    Reload Epilogue
-                </button>
-                <button type="button" id='epilogue-exit' class="bordered smooth-button">
-                    Exit Epilogue
-                </button>
-	        </div>
+            <div id="epilogue-buttons">
+                <div>
+                    <button type="button" id="epilogue-previous" data-action="prev">
+                        <span class="glyphicon glyphicon-step-backward"></span>
+                    </button>
+                    <button type="button" id="epilogue-next" data-action="next">
+                        <span class="glyphicon glyphicon-step-forward"></span>
+                    </button>
+                    <select class="debug" id="epilogue-skip-scene" hidden></select>
+                    <button type="button" class="debug" id="epilogue-skip" data-action="skip" aria-hidden="true" hidden>
+                    <span class="glyphicon glyphicon-fast-forward"></span>
+                    </button>
+                </div>
+                <div>
+                    <button type="button" class="debug" id="epilogue-reload" data-action="reload" aria-hidden="true" hidden>
+                        <span class="glyphicon glyphicon-refresh"></span>
+                    </button>
+                    <button type="button" id="epilogue-bug-report-button" data-action="bug">
+                        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" id="epilogue-restart" data-action="exit">
+                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" id="epilogue-fullscreen-button" data-action="fullscreen">
+                        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     <!-- End of Epilogue Screen -->
@@ -3208,7 +3260,7 @@
     <script
         src="https://polyfill.io/v3/polyfill.min.js?features=Promise%2CObject.assign%2CString.prototype.includes%2CNumber.isNaN">
     </script>
-    <script src="js/sentry-5.7.0-bundle.min.js"></script>
+    <script src="js/sentry-5.15.4.bundle.min.js" integrity="sha384-Nrg+xiw+qRl3grVrxJtWazjeZmUwoSt0FAVsbthlJ5OMpx0G08bqIq3b/v0hPjhB"></script>
 
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -3236,6 +3288,7 @@
     <script src="js/spniOption.js"></script>
     <script src="js/spniEpilogue.js"></script>
     <script src="js/spniGallery.js"></script>
+    <script src="js/feedback.js"></script>
     <!-- beautify ignore:start -->
     <script>document.addEventListener('keyup',function(){var i=0;var c=[2,2,0,0,3,1,3,1,5,4].map(function(j){return ['ArrowDown','ArrowRight','ArrowUp','ArrowLeft',String.fromCharCode(97),String.fromCharCode(98)][j]});return function(e){if(inGame) return;if(e.key === c[i]){i++;if(i>=c.length){codeImportEnabled=EPILOGUES_UNLOCKED=true;i=0;screenTransition($selectScreen, $galleryScreen);loadGalleryScreen();goToEpiloguesScreen();}} else i=0}}(),false);</script>
     <!-- beautify ignore:end -->

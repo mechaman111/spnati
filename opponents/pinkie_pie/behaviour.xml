@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 8:07:15 p. m. on febrero 25, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 12:13:19 a. m. on abril 13, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Pinkie</first>
@@ -81,6 +81,10 @@
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0" priority="901">
+                <test expr="~self.costume~" value="pink_bunny" />
+                <state img="#-hi.png" marker="pinka_end2">Welcome everyone to my special easter party!</state>
+            </case>
             <case stage="0" priority="900">
                 <condition role="other" character="rainbow_dash" />
                 <condition role="other" character="twilight" />
@@ -210,7 +214,8 @@
                 <condition role="other" character="rarity" />
                 <state img="#-happy.png" marker="presentation">Looks really nice, Rarity. Classy, just like you!</state>
             </case>
-            <case stage="0" totalFemales="1" totalRounds="0" priority="900">
+            <case stage="0" totalRounds="0" priority="900">
+                <condition count="1" gender="female" />
                 <state img="#-horny.png">Am I really the only girl here? Oh boy I can already tell this is going to be a fun night!</state>
                 <state img="#-whatever.png">I get to be the only girl here? Well, more fun for me!</state>
                 <state img="#-embarassed.png">Surrounded by handsome men and playing a strip poker game with them? This is going to be a fun night isn't it?</state>
@@ -301,7 +306,8 @@
                 <state img="#-embarassed.png" marker="final_hand">Just one more round left, the tension is palpable, I can't wait!</state>
                 <state img="#-whatever.png" marker="final_hand">It all comes down to this! But will it be me? Or will it be you, I wonder?</state>
             </case>
-            <case stage="0" totalMales="0">
+            <case stage="0">
+                <condition count="0" gender="male" />
                 <state img="#-happy.png">Wow, I didn't think this would happen! I guess we get to find out who likes girls!</state>
                 <state img="#-smug.png">This is going to be like one of those sleepovers I did back at CHS! Except a lot more wild!</state>
                 <state img="#-sad.png">Don't take this the wrong way girls, but I'm slightly disappointed I'm not going to see a single weiner this game...</state>
@@ -758,7 +764,8 @@
                 <condition role="other" character="rarity_eg" stage="0-2" sayingMarker="pinkie_cheese" />
                 <state img="#-embarassed.png" marker="rarity_cheese2">W... What do you mean, Rarity? I mean... He is always so nice and we do share our passion for party planning but...</state>
             </case>
-            <case stage="0" alsoPlaying="pit">
+            <case stage="0">
+                <condition role="other" character="pit" />
                 <state img="#-excited.png">Serene? I can be serene, but not here silly, this is a party after all!</state>
                 <state img="#-happy.png">Serene = not fun, at least not here, this is a party after all!</state>
             </case>
@@ -1038,7 +1045,9 @@
         </trigger>
 
         <trigger id="stripping">
-            <case stage="4" alsoPlaying="streaming-chan" saidMarker="pinka_start" notSaidMarker="pinka_end2" alsoPlayingSayingMarker="pinka_bake2" priority="505">
+            <case stage="4" priority="505">
+                <condition role="self" saidMarker="pinka_start" notSaidMarker="pinka_end2" />
+                <condition role="other" character="streaming-chan" sayingMarker="pinka_bake2" />
                 <state img="#-pinkastrip.png" marker="streaming_bake2">No! I'm starting to lose control of her body again... I have to... resist... As for you Streamer girl... You better shut up before the thing I decide to bake is you into a cupcake...</state>
             </case>
             <case stage="4" alsoPlaying="streaming-chan" saidMarker="pinka_start" notSaidMarker="pinka_end2" alsoPlayingSayingMarker="pinka_control2" priority="505">
@@ -1056,10 +1065,12 @@
             <case stage="5" alsoPlaying="streaming-chan" saidMarker="pinka_start" notSaidMarker="pinka_end2" alsoPlayingSayingMarker="pinka_sc2" priority="505">
                 <state img="#-pinkastripping.png" marker="streaming_sc2">Oh yeah? I fail to see how that's my problem stream girl...</state>
             </case>
-            <case stage="4" saidMarker="pinka_start" notSaidMarker="pinka_end2" priority="500">
+            <case stage="4" priority="500">
+                <condition role="self" saidMarker="pinka_start" notSaidMarker="pinka_end2" />
                 <state img="#-pinkastrip.png">No! I'm starting to lose control of her body again... I have to... resist...</state>
             </case>
-            <case stage="5" saidMarker="pinka_start" notSaidMarker="pinka_end2" priority="500">
+            <case stage="5" priority="500">
+                <condition role="self" saidMarker="pinka_start" notSaidMarker="pinka_end2" />
                 <state img="#-pinkastripping.png">Congratulations, you get the last two pieces of clothing I had...</state>
             </case>
             <case stage="0">
@@ -1130,13 +1141,27 @@
             <case stage="0" totalRounds="0">
                 <state img="#-strip.png">Let's start strong, after all someone has to do it right?</state>
             </case>
-            <case stage="3" saidMarker="pinka_start" notSaidMarker="pinka_end2">
+            <case stage="3">
+                <condition role="self" saidMarker="pinka_start" notSaidMarker="pinka_end2" />
                 <state img="#-pinkastripping.png">You want to see my body? I'm afraid I can't let you do that!</state>
             </case>
             <case stage="2">
                 <condition role="self" saidMarker="surprise_strip" />
                 <state img="#-strip.png">Like taking off my shoes! I bet you're surprised, aren't you?</state>
                 <state img="#-strip.png">But it's not time for that yet!</state>
+            </case>
+            <case stage="0" priority="1">
+                <test expr="~self.costume~" value="pink_bunny" />
+                <state img="#-strip.png">This is so much fun! Bye bye, skirt! Don't forget to write!</state>
+                <state img="#-strip.png">Bye bye, skirt!</state>
+            </case>
+            <case stage="1" priority="1">
+                <test expr="~self.costume~" value="pink_bunny" />
+                <state img="#-strip.png">Aww... so soon out of the bunny outfit? Oh well!</state>
+            </case>
+            <case stage="3" priority="1">
+                <test expr="~self.costume~" value="pink_bunny" />
+                <state img="#-strip.png">You know what? I think this thong is covering too much. Let's get rid of it, shall we?</state>
             </case>
             <case stage="0">
                 <state img="#-strip.png">This is so much fun! Bye bye, shirt! Don't forget to write!</state>
@@ -1175,7 +1200,8 @@
                 <condition role="self" saidMarker="pinka_start" notSaidMarker="pinka_end2" />
                 <state img="#-pinkastripped.png">Damn it, not again! Fine, look at my breasts. Perverts. But I'll have the last laugh...</state>
             </case>
-            <case stage="6" saidMarker="pinka_start" notSaidMarker="pinka_end2" priority="500">
+            <case stage="6" priority="500">
+                <condition role="self" saidMarker="pinka_start" notSaidMarker="pinka_end2" />
                 <state img="#-pinkastripped.png">Disappointed? Did you expect me to just go and masturbate right away like a cheap whore... Don't worry, after this game you will never have a chance to be disappointed, ever again...</state>
             </case>
             <case stage="4" priority="400">
@@ -1195,10 +1221,12 @@
             <case stage="2" alsoPlaying="uravity" saidMarker="uravi_skirt">
                 <state img="#-stripped.png">...the real party starter is when the underwear goes off!</state>
             </case>
-            <case stage="1" alsoPlaying="miko">
+            <case stage="1">
+                <condition role="other" character="miko" />
                 <state img="#-stripped.png">I don't know who this "Unzan" guy is... but if he has a hair as poofy as mine he can't be too bad!</state>
             </case>
-            <case stage="1" alsoPlaying="misato">
+            <case stage="1">
+                <condition role="other" character="misato" />
                 <state img="#-stripped.png">Fun is what I do best, Misato!</state>
             </case>
             <case stage="1">
@@ -1248,6 +1276,14 @@
             </case>
             <case stage="6" alsoPlaying="zone-tan">
                 <state img="#-stripped.png">Invite whoever you like! I'm very open-minded about crazy stuff.~</state>
+            </case>
+            <case stage="1">
+                <test expr="~self.costume~" value="pink_bunny" />
+                <state img="#-stripped.png">I hope you all are enjoying my special outfit for the night, it probably won't last for much longer!</state>
+            </case>
+            <case stage="4" priority="1">
+                <test expr="~self.costume~" value="pink_bunny" />
+                <state img="#-stripped.png">This bunny won't be taking her geode or her gloves off, but what will I take off next I wonder... Beat me again and find out!</state>
             </case>
             <case stage="1">
                 <state img="#-stripped.png">This bra is very similar to the one I lent to the other world's Twilight. I wonder if she still has it?</state>
@@ -3601,7 +3637,8 @@
         </trigger>
 
         <trigger id="must_masturbate">
-            <case stage="6" saidMarker="pinka_start" notSaidMarker="pinka_end2" priority="500">
+            <case stage="6" priority="500">
+                <condition role="self" saidMarker="pinka_start" notSaidMarker="pinka_end2" />
                 <state img="#-pinkawhip.png">What the hell... I guess I'll give you a rare sight...</state>
             </case>
             <case stage="6" alsoPlaying="joey">
@@ -3610,7 +3647,8 @@
             <case stage="6" alsoPlaying="kamina">
                 <state img="#-starting1.png">Remember what I told you about saving surprises for later Kamina?</state>
             </case>
-            <case stage="6" saidMarker="final_hand">
+            <case stage="6">
+                <condition role="self" saidMarker="final_hand" />
                 <state img="#-starting1.png">Oh man, I got so close, well here we go...</state>
                 <state img="#-starting1.png">Oh well, I got all the way till the end, but I lost fair and square...</state>
                 <state img="#-starting1.png">Dangit! But be sure, I'll beat you next game, and tha's a Pinkie promise!</state>
@@ -3621,7 +3659,8 @@
         </trigger>
 
         <trigger id="start_masturbating">
-            <case stage="6" saidMarker="pinka_start" notSaidMarker="pinka_end2" priority="500">
+            <case stage="6" priority="500">
+                <condition role="self" saidMarker="pinka_start" notSaidMarker="pinka_end2" />
                 <state img="#-pinkawhip.png" marker="pop">I guess I can use a couple of toys of my own...</state>
             </case>
             <case stage="6" alsoPlaying="joey">
@@ -3640,6 +3679,14 @@
                 <condition role="other" character="jessie" />
                 <state img="#-starting2.png">Normal balloons may not, but these are special pattented Pinkie party balloons, Jessie!</state>
             </case>
+            <case stage="6" id="7">
+                <test expr="~self.costume~" value="pink_bunny" />
+                <state img="#-starting2.png">Hmmm... It seems I may had forgotten my special balloons when puttin the bunny costume, I guess I'll have to do it the traditional way...</state>
+                <state img="#-starting2.png">I swear I had brought balloons with me today, oh well, by hand it is...</state>
+                <state img="#-starting2.png">Seems I was so busy preparing this party that I forgot the balloons, hope you don't mind me doing it the boring way...</state>
+                <state img="#-starting2.png">Oh man, I even had a pun ready for when I pulled out the balloon... guess I'll have to do it normally today...</state>
+                <state img="#-starting2.png">I've hidden balloons all over the Inventory, in case of masturbation emergency!</state>
+            </case>
             <case stage="6" id="1">
                 <state img="#-starting2.png">Balloons can be used for way more than kids parties! Allow me to show you.</state>
                 <state img="#-starting2.png">Emergency masturbation balloon, in case of masturbation emergency!</state>
@@ -3656,6 +3703,27 @@
                 <state img="#-pinkawhip.png">It's harder to do this without whipping someone to submission before, but I'll make this work...</state>
                 <state img="#-pinkainterested.png">Some of my other half's toys are a bit tamer than what I'd like, but they'll do the job.</state>
                 <state img="#-pinka2.png">Enjoy while you can, because once we are done here I'm coming for you ~player~...</state>
+            </case>
+            <case stage="7" priority="1">
+                <state img="#-happy.png">My balloons would have saved me from using my hands, but this will have to do...</state>
+                <state img="#-excited.png">This is why parties are so much fun!</state>
+                <state img="#-embarassed.png">101 uses for party balloons; self-pleasure... Just remember to actually bring them...</state>
+                <state img="#-smug.png">I can't wait for someone to cream this Pie later!</state>
+                <state img="#-horny.png">Usually all the adult parties I organize "skip" this part but I'm glad for a change of pace for once.</state>
+                <state img="#-whatever.png">I didn't want to get these gloves dirty... but I like how they feel so much...</state>
+                <state img="#-smart.png">It feels a bit weird to do this for the first couple of times, but eventually you get used to the eyes.</state>
+                <state img="#-embarassed.png">I have to admit, this game has been the most fun I've had in a while.</state>
+                <state img="#-horny.png">This bunny may be in heat...</state>
+                <state img="#-smart.png">Guess we'll find out what's of a party without balloons after all!</state>
+                <state img="#-smug.png">The texture of these silk gloves is almost as good as the balloons were...</state>
+                <state img="#-whatever.png">I like to do this all the time, being the super duper party planner can be a bit stressful sometimes...</state>
+                <state img="#-embarassed.png">I guess at least I won't have to worry about the balloon breaking this time...</state>
+                <state img="#-excited.png">Don't feel ashamed to take a peek, this is what we were playing for anyways.</state>
+                <state img="#-horny.png">Organizing kiddy parties becomes so monotonous after stuff like this.</state>
+                <state img="#-smart.png">From now on I'll make the Inventory my new favorite site for this type of "parties".</state>
+                <state img="#-happy.png">I wonder if I can try to break my record...</state>
+                <state img="#-calm.png">Pace yourself Pinkie, you don't want to finish too early...</state>
+                <state img="#-smart.png">Have you ever used a balloon as a bouncy seat? I rode one across the gym once!</state>
             </case>
             <case stage="7">
                 <state img="#-happy.png">These are special balloons that move on their own so I don't even have to use my hands, that's magic!</state>
@@ -3684,7 +3752,15 @@
         </trigger>
 
         <trigger id="heavy_masturbating">
-            <case stage="7" saidMarker="pinka_start" notSaidMarker="pinka_end2">
+            <case stage="7">
+                <test expr="~self.costume~" value="pink_bunny" />
+                <state img="#-happy.png">I hope you all are enjoying this party as much as I am!</state>
+                <state img="#-laughing.png">I really need to stop thinking of puns while I do this or I'm going to cum early.</state>
+                <state img="#-excited.png">It tickles!</state>
+                <state img="#-smart.png">I think I can feel it coming now...</state>
+            </case>
+            <case stage="7">
+                <condition role="self" saidMarker="pinka_start" notSaidMarker="pinka_end2" />
                 <state img="#-pinkafinishing.png">Curious... I'm actually enjoying this...</state>
                 <state img="#-pinkainterested.png">I'll try to finish this now, and then it will be your turn...</state>
                 <state img="#-pinkawhip.png">This would be so much faster if I had my whip...</state>
@@ -3699,7 +3775,12 @@
         </trigger>
 
         <trigger id="finishing_masturbating">
-            <case stage="7" saidMarker="pinka_start" notSaidMarker="pinka_end2">
+            <case stage="7">
+                <test expr="~self.costume~" value="pink_bunny" />
+                <state img="#-finishing.png" marker="pop">Oh god i'm going so fast, I gotta slow down before I...</state>
+            </case>
+            <case stage="7">
+                <condition role="self" saidMarker="pinka_start" notSaidMarker="pinka_end2" />
                 <state img="#-pinkafinishing.png" marker="pop">The pleasure... is making me lose control again... No!!!</state>
             </case>
             <case stage="7">
@@ -3715,6 +3796,11 @@
             <case stage="8" id="2" priority="500">
                 <condition role="self" notSaidMarker="pop" />
                 <state img="#-finished.png" marker="pop">...Pops...</state>
+            </case>
+            <case stage="8">
+                <condition role="self" saidMarker="pop" notSaidMarker="pop2" />
+                <test expr="~self.costume~" value="pink_bunny" />
+                <state img="#-excited.png" marker="pop2">Well, I hope you enjoyed this bunny's show!</state>
             </case>
             <case stage="8">
                 <condition role="self" saidMarker="pop" notSaidMarker="pop2" />

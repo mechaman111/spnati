@@ -1,7 +1,3 @@
-/* Epilogue UI elements */
-$epilogueScreen = $('#epilogue-screen');
-var epilogueContainer = document.getElementById('epilogue-container');
-
 /* Epilogue selection modal elements */
 var $epilogueSelectionModal = $('#epilogue-modal'); //the modal box
 var $epilogueHeader = $('#epilogue-header-text'); //the header text for the epilogue selection box
@@ -16,9 +12,13 @@ var chosenEpilogue = null;
 var epiloguePlayer = null;
 var epilogueSuffix = 0;
 
-var $epiloguePrevButton = $('#epilogue-buttons > #epilogue-previous');
-var $epilogueNextButton = $('#epilogue-buttons > #epilogue-next');
-var $epilogueRestartButton = $('#epilogue-buttons > #epilogue-restart');
+/* Epilogue UI elements */
+var $epilogueScreen = $('#epilogue-screen');
+var $epilogueButtons = $('#epilogue-buttons');
+
+var $epiloguePrevButton = $('#epilogue-buttons #epilogue-previous');
+var $epilogueNextButton = $('#epilogue-buttons #epilogue-next');
+var $epilogueRestartButton = $('#epilogue-buttons #epilogue-restart');
 
 var $epilogueSkipSelector = $('#epilogue-skip-scene');
 var $epilogueHotReloadBtn = $('#epilogue-reload');
@@ -982,7 +982,11 @@ function doEpilogueModal() {
   }
 
   $epilogueHeader.html(headerStr); //set the header string
-  $epilogueSelectionModal.modal("show");//show the epilogue selection modal
+  $epilogueSelectionModal.modal({
+    show: true,
+    keyboard: false,
+    backdrop: "static",
+  });//show the epilogue selection modal
 }
 
 /************************************************************
@@ -1055,7 +1059,6 @@ function loadEpilogue(epilogue, loadToScene) {
   epiloguePlayer.load();
 
   if (DEBUG) {
-    $('#epilogue-debug-group').addClass('debug-active');
     $epilogueSkipSelector.empty();
     for (var i = 0; i < epiloguePlayer.epilogue.scenes.length; i++) {
       var label = (i+1).toString();
@@ -1068,8 +1071,6 @@ function loadEpilogue(epilogue, loadToScene) {
         text: label
       }));
     }
-  } else {
-    $('#epilogue-debug-group').removeClass('debug-active');
   }
 
   updateEpilogueButtons();
@@ -1131,7 +1132,7 @@ function hotReloadEpilogue () {
   /* Clean up the old EpiloguePlayer. */
   clearEpilogue();
 
-  fetchCompressedURL('opponents/' + player.id + "/behaviour.xml")
+  player.fetchBehavior()
     /* Success callback.
     * 'this' is bound to the Opponent object.
     */
@@ -1161,9 +1162,13 @@ function updateEpilogueButtons() {
     return;
   }
 
-  $epiloguePrevButton.prop("disabled", !epiloguePlayer.hasPreviousDirectives());
-  $epilogueNextButton.prop("disabled", !epiloguePlayer.hasMoreDirectives());
-  $epilogueRestartButton.prop("disabled", epiloguePlayer.hasMoreDirectives());
+    $epiloguePrevButton.prop("disabled", !epiloguePlayer.hasPreviousDirectives());
+    $epilogueNextButton.prop("disabled", !epiloguePlayer.hasMoreDirectives());
+    /* Force button bar visible at end of epilogue, un-force it if
+     * going back, but avoid un-forcing it at the start. */
+    if (epiloguePlayer.hasPreviousDirectives()) {
+        $epilogueButtons.toggleClass('force-show', !epiloguePlayer.hasMoreDirectives());
+    }
 
   if (DEBUG) {
     $epilogueSkipSelector.val(
@@ -1192,6 +1197,7 @@ function EpiloguePlayer(epilogue) {
   this.viewIndex = 0;
   this.activeTransition = null;
   this.hotReloadScene = null;
+  this.startingDirectiveIndex = 1;
 }
 
 EpiloguePlayer.prototype.load = function () {
@@ -1237,7 +1243,11 @@ EpiloguePlayer.prototype.onLoadComplete = function () {
     this.views.push(new SceneView(container, 0, this.assetMap));
     this.views.push(new SceneView(container, 1, this.assetMap));
     container.append($("<div id='scene-fade' class='epilogue-overlay' style='z-index: 10000'></div>")); //scene transition overlay
-    this.loaded = true;
+      this.loaded = true;
+      $epilogueButtons.addClass('force-show');
+      setTimeout(function() {
+          $epilogueButtons.removeClass('force-show');
+      }, 3000);
     
     if (
       typeof this.hotReloadScene === "number" &&
@@ -1246,10 +1256,16 @@ EpiloguePlayer.prototype.onLoadComplete = function () {
       this.sceneIndex = this.hotReloadScene;
       this.setupScene(this.sceneIndex, true);
       this.hotReloadScene = null;
-      updateEpilogueButtons();
+
+      /* We won't be able to set startingDirectiveIndex here.
+       * It's not worth going through the trouble to remedy this, though, since it's such
+       * a minor detail in the scheme of things.
+       */
     } else {
       this.advanceScene();
+      this.startingDirectiveIndex = this.directiveIndex;
     }
+    updateEpilogueButtons();
 
     window.requestAnimationFrame(this.loop.bind(this));
   }
@@ -1285,11 +1301,11 @@ EpiloguePlayer.prototype.destroy = function () {
 }
 
 EpiloguePlayer.prototype.hasMoreDirectives = function () {
-  return this.sceneIndex < this.epilogue.scenes.length - 1 || this.directiveIndex < this.activeScene.directives.length - 1;
+    return this.loaded && (this.sceneIndex < this.epilogue.scenes.length - 1 || this.directiveIndex < this.activeScene.directives.length - 1);
 }
 
 EpiloguePlayer.prototype.hasPreviousDirectives = function () {
-  return this.sceneIndex > 0 || this.directiveIndex > 1;
+    return this.loaded && (this.sceneIndex > 0 || this.directiveIndex > this.startingDirectiveIndex);
 }
 
 EpiloguePlayer.prototype.loop = function (timestamp) {
@@ -1377,6 +1393,11 @@ EpiloguePlayer.prototype.resizeViewport = function () {
         this.views[i].resize();
     }
     $(':root').css('font-size', (this.activeScene.view.viewportHeight / 75)+'px');
+
+    $epilogueButtons.css('font-size', Math.max(window.innerHeight / 50,
+                                                     Math.min(30 * (window.devicePixelRatio || 1),
+                                                              window.innerWidth / 20,
+                                                              window.innerHeight / 12)) + 'px');
     this.draw();
 }
 
@@ -3078,25 +3099,51 @@ SceneTransition.prototype.flyThrough = function (t) {
 }
 
 // Event handlers
-$('#epilogue-buttons').on('click', ':input', function(ev) {
-    ev.stopPropagation();
-});
-$('#epilogue-container').click(moveEpilogueForward);
-$epilogueNextButton.click(moveEpilogueForward);
-$epiloguePrevButton.click(moveEpilogueBack);
-$('#epilogue-buttons').click(moveEpilogueBack);
-$epilogueRestartButton.click(showRestartModal);
+$epilogueButtons.on('click', ':input', function(ev) {
+  ev.stopImmediatePropagation();
 
-$epilogueHotReloadBtn.click(hotReloadEpilogue);
-$('#epilogue-skip').click(skipToEpilogueScene);
-$('#epilogue-exit').click(showRestartModal);
+  var action = $(ev.target).attr("data-action");
+  switch (action) {
+    case "next":
+      moveEpilogueForward();
+      break;
+    case "prev":
+      moveEpilogueBack();
+      break;
+    case "exit":
+      showRestartModal();
+      break;
+    case "bug":
+      showBugReportModal();
+      break;
+    case "reload":
+      hotReloadEpilogue();
+      break;
+    case "skip":
+      skipToEpilogueScene();
+      break;
+    case "fullscreen":
+      toggleFullscreen();
+      break;
+    default:
+      break;
+  }
+});
+
+$('#epilogue-container').click(function(ev) {
+    if (ev.pageX < window.innerWidth * 0.2) {
+        moveEpilogueBack();
+    } else {
+        moveEpilogueForward();
+    }
+});
 
 function epilogue_keyUp(ev) {
-    if (epiloguePlayer && epiloguePlayer.loaded) {
+    if (epiloguePlayer && epiloguePlayer.loaded && $('.modal:visible').length == 0) {
         switch (ev.keyCode) {
         case 81:
             if (DEBUG) {
-                $('#epilogue-debug-group').toggle();
+                $epilogueButtons.toggleClass('debug-active');
             }
             break;
         case 37:
@@ -3108,5 +3155,21 @@ function epilogue_keyUp(ev) {
         ev.preventDefault();
     }
 }
+
+$epilogueScreen.on('mouseleave', function() {
+    $epilogueButtons.removeClass('show');
+});
+
+$epilogueScreen.on('mousemove', function(ev) {
+    $epilogueButtons.toggleClass('show', ev.pageY >= 0.75 * window.innerHeight);
+});
+$epilogueScreen.on('touchstart touchmove', function(ev) {
+    var show = false;
+    for (var i = 0; i < ev.originalEvent.changedTouches.length; i++) {
+        if (ev.originalEvent.touches[0].pageY
+            >= 0.75 * window.innerHeight) show = true;
+    }
+    $epilogueButtons.toggleClass('show', show);
+});
 
 $epilogueScreen.data('keyhandler', epilogue_keyUp);

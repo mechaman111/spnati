@@ -404,6 +404,7 @@ function startDealPhase () {
     setupDeck();
 
     var numPlayers = getNumPlayersInStage(STATUS_ALIVE);
+
     var n = 0;
     for (var i = 0; i < players.length; i++) {
         if (players[i]) {

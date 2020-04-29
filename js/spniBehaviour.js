@@ -108,6 +108,13 @@ var GLOBAL_CASE = "global";
 var TAG_ALIASES = {
     // Add new aliases as follows:
     // 'alias_name': 'tag_name',
+    // Franchise abbreviations
+    'jojos_bizarre_adventure':    'jjba',
+    'mlp':   'my_little_pony',
+    'tengen_toppa_gurren_lagann': 'ttgl',
+    // Other aliases
+    'redhead': 'ginger',
+    'sword':   'blade',
 };
 
 /* Tag implications list, mapping tags to lists of implied tags. */
@@ -460,7 +467,7 @@ State.prototype.applyCollectible = function (player) {
                 }
                 
                 if (collectible.isUnlocked() && !COLLECTIBLES_UNLOCKED) {
-                    player.pendingCollectiblePopup = collectible;
+                    player.pendingCollectiblePopups.push(collectible);
                 }
                 
                 return true;
@@ -584,7 +591,11 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
     switch (fn) {
     case 'position':
         if (player.slot === self.slot) return 'self';
+        if (player === humanPlayer) return 'across';
         return (player.slot < self.slot) ? 'left' : 'right';
+    case 'distance':
+        if (player === humanPlayer) return undefined;
+        return Math.abs(player.slot - self.slot);
     case 'slot':
         return player.slot;
     case 'collectible':
@@ -689,7 +700,7 @@ function expandDialogue (dialogue, self, target, bindings) {
         try {
             switch (variable.toLowerCase()) {
             case 'player':
-                substitution = expandNicknames(self, humanPlayer);
+                substitution = expandPlayerVariable(fn_parts, args, humanPlayer, self, target, bindings);
                 break;
             case 'name':
                 substitution = expandNicknames(self, target);
@@ -902,22 +913,53 @@ function poseNameMatches(nameA, nameB) {
  * separated by a dash, returns an array with the same number 
  * twice, or the first and second number as the case may be
  ************************************************************/
+function Interval (str) {
+    if (str === undefined) {
+        this.min = this.max = null; return;
+    }
+    var m = str.match(/^\s*(-?\d+)?\s*-\s*(-?\d+)?\s*$/);
+    if (m) {
+        this.min = m[1] ? parseInt(m[1]) : null;
+        this.max = m[2] ? parseInt(m[2]) : null;
+    } else if (str.match(/^\s*(\d+)\s*$/)) {
+        var val = parseInt(str);
+        this.min = this.max = val;
+    } else {
+        this.min = this.max = NaN;
+    }
+}
+
+Interval.prototype.contains = function (number) {
+    return (this.min === null || this.min <= number)
+        && (this.max === null || number <= this.max);
+};
+
+Interval.prototype.isValid = function() {
+    return !isNaN(this.min) && !isNaN(this.max);
+};
+
+Interval.prototype.toString = Interval.prototype.toJSON = function(key) {
+    if (isNaN(this.min)) return '#ERR';
+    if (this.min === null && this.max === null) {
+        return undefined;
+    }
+    if (this.min == this.max && this.min >= 0) {
+        return this.min.toString();
+    } else {
+        return (this.min === null ? '' : this.min.toString()) + '-' +
+            (this.max === null ? '' : this.max.toString());
+    }
+};
+
 function parseInterval (str) {
-    if (!str) return undefined;
-    var pieces = str.split("-");
-    if (pieces.length > 2) return null;
-    var min = pieces[0].trim() == "" ? null : parseInt(pieces[0], 10);
-    if (isNaN(min)) return null;
-    var max = pieces.length == 1 ? min
-    : pieces[1].trim() == "" ? null : parseInt(pieces[1], 10);
-    if (isNaN(max)) return null;
-    return { min : min, max : max };
+    if (str) {
+        return new Interval(str);
+    }
+    return undefined;
 }
 
 function inInterval (value, interval) {
-    return interval
-        && (interval.min === null || interval.min <= value)
-        && (interval.max === null || value <= interval.max);
+    return !interval || interval.contains(value);
 }
 
 /************************************************************
@@ -1120,9 +1162,13 @@ function Case($xml) {
         tests.push($(this));
     });
     this.tests = tests;
+
+    if (isNaN(this.customPriority)) {
+        this.customPriority = undefined;
+    }
     
     // Calculate case priority ahead of time.
-    if (!isNaN(this.customPriority)) {
+    if (this.customPriority !== undefined) {
         this.priority = this.customPriority;
     } else {
     	this.priority = 0;
@@ -1220,28 +1266,16 @@ Case.prototype.getPossibleImages = function (stage) {
 /* Convert this case's conditions into a plain object, into a format suitable
  * for e.g. JSON serialization.
  */
-Case.prototype.serializeConditions = function () {
-    var complexProps = ['states', 'tests', 'counters', 'addTags', 'removeTags', 'variableBindings', 'priority'];
+Case.prototype.toJSON = function () {
     var ser = {};
     
     Object.keys(this).forEach(function (prop) {
-        if (complexProps.indexOf(prop) >= 0) return;
         var val = this[prop];
-        
-        if (val && typeof val === "object" && (val.min !== undefined || val.max !== undefined)) {
-            // convert interval objects back into strings
-            var min = (val.min !== null) ? val.min : "";
-            var max = (val.max !== null) ? val.max : "";
-            
-            if (min === max) {
-                ser[prop] = (min !== "") ? min.toString() : null;
-            } else {
-                ser[prop] = min+"-"+max;
-            }
-        } else {
-            ser[prop] = val;
-        }
-    }.bind(this));
+        if (prop == 'priority') return;
+        if (prop == 'customPriority') prop = 'priority';
+        if (val === undefined || (typeof val === 'object' && !(val instanceof Interval))) return;
+        ser[prop] = val;
+    }, this);
     
     ser.tests = this.tests.map(function (test) {
         return {
@@ -1251,18 +1285,7 @@ Case.prototype.serializeConditions = function () {
         };
     });
     
-    ser.counters = this.counters.map(function (ctr) {
-        return {
-            'count': ctr.attr('count'),
-            'role': ctr.attr('role'),
-            'var': ctr.attr('var'),
-            'character': ctr.attr('character'),
-            'stage': ctr.attr('stage'),
-            'filter': ctr.attr('filter'),
-            'gender': ctr.attr('gender'),
-            'status': ctr.attr('status'),
-        };
-    });
+    ser.counters = this.counters;
     
     return ser;
 }
@@ -1663,7 +1686,7 @@ Case.prototype.checkConditions = function (self, opp) {
              * not an interval. */
             if (!cmp || cmp == '@' || cmp == '!@') {
                 var interval = parseInterval(value);
-                if (interval || cmp) {
+                if ((interval != undefined && interval.isValid()) || cmp) {
                     return cmp === '!@' ? !inInterval(Number(expr), interval) : inInterval(Number(expr), interval);
                 }
             }

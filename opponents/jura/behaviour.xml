@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 2:13:29 AM on March 15, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 7:20:46 AM on April 20, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Jura</first>
@@ -80,8 +80,9 @@
         </trigger>
 
         <trigger id="game_start">
-            <case stage="0" alsoPlaying="meia" priority="990">
+            <case stage="0" priority="990">
                 <condition count="1" filter="meia_cupid" />
+                <condition role="other" character="meia" />
                 <state img="#-laughing.png">Oh my God, Meia, you actually wore the Cupid outfit?  I thought you'd throw that thing out the airlock!</state>
                 <state img="#-seductive.png">And look at &lt;i&gt;you,&lt;/i&gt; Meia, dressing up for Valentine's Day!  Maybe I should let you hog the spotlight for once.</state>
                 <state img="#-coy.png">Normally I'd do my best to hog the attention, but...oh, dear, I didn't think you'd really dress up like a Cupid, Meia.</state>
@@ -121,6 +122,18 @@
                 <state img="#-seductive.png">&lt;i&gt;Hi, everyone!&lt;/i&gt;  I think Shrimpy's talking to me--can a smaller girl tell me what she's saying?</state>
                 <state img="#-coy.png">Speak up, Miss Glasses!  I'm a big girl--and you're way down there, mumbling about my spaceship.</state>
                 <state img="#-laughing.png">I don't think I like your tone of voice, Four-eyes.  All I heard was the tone, since you're a lot closer to the ground than I am.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="jin" saying="guy" />
+                <state img="#-vain.png" marker="jin_guy">&lt;i&gt;Oh?&lt;/i&gt;  Don't be so full of yourself, &lt;i&gt;Jin.&lt;/i&gt;  There's a whole planet of men who fear my Dread, and I know a few handsome soldiers personally.</state>
+                <state img="#-teasing.png" marker="jin_guy">&lt;i&gt;Well, now.&lt;/i&gt;  You're quite handsome, Jin, but I'm not such an easy catch.  In fact, a whole army of men has been trying to catch me.</state>
+                <state img="#-laughing.png" marker="jin_guy">&lt;i&gt;Oho.&lt;/i&gt;  I've put plenty of "guys" at the end of my rapier, thank you.  Even onboard the Nirvana, you'd have some handsome male competition.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="jin" saying="on behalf of men" />
+                <state img="#-vain.png" marker="jin_behalf">&lt;i&gt;I know, Jin.&lt;/i&gt;  Women have been telling me that for years...but it's nice to know my beauty bridges the gap between the sexes.</state>
+                <state img="#-smug.png" marker="jin_behalf">&lt;i&gt;Oh?&lt;/i&gt;  Men tend to drop dead around Mejarians for &lt;i&gt;other&lt;/i&gt; reasons.  But...it's nice to hear a &lt;i&gt;man&lt;/i&gt; complimenting me for once.</state>
+                <state img="#-teasing.png" marker="jin_behalf">Well, don't &lt;i&gt;drop dead&lt;/i&gt; on me before I learn more about you, Mister Sunglasses.  I'm oh-so used to &lt;i&gt;women's&lt;/i&gt; compliments.</state>
             </case>
             <case stage="0" alsoPlaying="meia">
                 <state img="#-coy.png">Maybe we ought to stick together, Meia.  &lt;i&gt;Foreign planets can be hostile to outsiders!&lt;/i&gt;</state>
@@ -734,19 +747,6 @@
                 <state img="#-laughing.png" marker="dust_blush">Oh, he's just shy, Meia.  I guess the shrinking-violet types exist among &lt;i&gt;men,&lt;/i&gt; too--who knew?</state>
                 <state img="#-cackling.png" marker="dust_blush">Hey now, maybe we've only met the daring military sorts that men have to offer.  Dust here must not be able to handle the thought of so many girls!</state>
             </case>
-            <case stage="6">
-                <alternative alsoPlaying="revy" alsoPlayingStage="7" timeInStage="0" saidMarker="revy_grope">
-                    <condition count="1" filter="alice_mgq" stage="0-6" />
-                </alternative>
-                <alternative alsoPlaying="revy" alsoPlayingStage="7" timeInStage="0" saidMarker="revy_grope">
-                    <condition count="1" filter="alice_mgq" stage="8" />
-                </alternative>
-                <state img="#-shocked.png">Uh--!  Y-yes, by all means, check someone else!  I hope you realize she'll really do it, Alice!  And she'll abuse yours, too!</state>
-                <state img="#-frustrated.png">I hope you're--not just teasing, Miss Monster, because she'll do it!  And she'll squeeze them so hard, they &lt;i&gt;hurt!&lt;/i&gt;</state>
-                <state img="#-angry.png">Ugh--!  Take it from me, Alice--you don't want Revy's hands anywhere near your breasts.  It's like she's trying to pop them!</state>
-                <state img="#-shocked.png">H-hey, Alice, you might want to think that over!  Revy's--too rough!  Like she was just going to toss me aside after squeezing them!</state>
-                <state img="#-frustrated.png">Ugh, whatever it takes to get Revy's awful hands away from me.  Your breasts are even bigger, Alice, and she'll nearly pull them off.</state>
-            </case>
             <case stage="0-6">
                 <condition count="1" filter="beatrix" />
                 <condition role="other" character="meia" stage="1" timeInStage="0" />
@@ -785,22 +785,41 @@
                 <state img="#-confused.png">&lt;i&gt;I'm so excited about the wedding!&lt;/i&gt;  ...What?  Oh, yeah...I was teasing you about cheating.</state>
                 <state img="#-thinking.png">Oh, listen, Meia, Miss Politics is going on about some nonsense again.  ...Wait, &lt;i&gt;I&lt;/i&gt; prompted that.</state>
             </case>
-            <case stage="6" alsoPlaying="revy" alsoPlayingStage="7" timeInStage="0" saidMarker="revy_grope" alsoPlayingSayingMarker="futaba_jura_real">
+            <case stage="6" priority="159">
+                <alternative alsoPlaying="revy" alsoPlayingStage="7" timeInStage="0" saidMarker="revy_grope">
+                    <condition count="1" filter="alice_mgq" stage="0-6" />
+                </alternative>
+                <alternative alsoPlaying="revy" alsoPlayingStage="7" timeInStage="0" saidMarker="revy_grope">
+                    <condition count="1" filter="alice_mgq" stage="8" />
+                </alternative>
+                <state img="#-shocked.png">Uh--!  Y-yes, by all means, check someone else!  I hope you realize she'll really do it, Alice!  And she'll abuse yours, too!</state>
+                <state img="#-frustrated.png">I hope you're--not just teasing, Miss Monster, because she'll do it!  And she'll squeeze them so hard, they &lt;i&gt;hurt!&lt;/i&gt;</state>
+                <state img="#-angry.png">Ugh--!  Take it from me, Alice--you don't want Revy's hands anywhere near your breasts.  It's like she's trying to pop them!</state>
+                <state img="#-shocked.png">H-hey, Alice, you might want to think that over!  Revy's--too rough!  Like she was just going to toss me aside after squeezing them!</state>
+                <state img="#-frustrated.png">Ugh, whatever it takes to get Revy's awful hands away from me.  Your breasts are even bigger, Alice, and she'll nearly pull them off.</state>
+            </case>
+            <case stage="6" priority="159">
                 <condition count="1" filter="futaba" />
+                <condition role="self" timeInStage="0" saidMarker="revy_grope" />
+                <condition role="other" character="revy" stage="7" sayingMarker="futaba_jura_real" />
                 <state img="#-angry.png">W-what?  Of &lt;i&gt;course&lt;/i&gt; my breasts are real!  I am the &lt;i&gt;pinnacle&lt;/i&gt; of Mejarian beauty, not some sliced-up has-been!</state>
                 <state img="#-angry.png">I &lt;i&gt;told&lt;/i&gt; you they were real!  Why would I lie about that?  I'm proud to represent my planet's beauty, thank you!</state>
                 <state img="#-annoyed.png">&lt;i&gt;Hmph!&lt;/i&gt;  As if my breasts' genuine nature was ever in any doubt.  You and Shrimpy should both learn how gorgeous Mejarians are!</state>
                 <state img="#-annoyed.png">I'm surprised you could conclude anything by just squeezing and pulling them like that--but &lt;i&gt;yes,&lt;/i&gt; they're real!  And they're my planet's pride!</state>
             </case>
-            <case stage="6" alsoPlaying="revy" alsoPlayingStage="7" timeInStage="0" saidMarker="revy_grope">
+            <case stage="6">
                 <condition count="1" filter="florina" />
+                <condition role="self" timeInStage="0" saidMarker="revy_grope" />
+                <condition role="other" character="revy" stage="7" />
                 <state img="#-angry.png">R-Revy!  Don't you respect the throes of relationships?  Is nothing sacred to you?  ...What did it &lt;i&gt;look&lt;/i&gt; like, Florina?</state>
                 <state img="#-frustrated.png">Eep!  ...What, are you blind, Flower Girl?  Revy tried to defile my beauty!  My breasts are for Barnette's hands only!</state>
                 <state img="#-awkward.png">Don't you have &lt;i&gt;sexual assault&lt;/i&gt; in your kingdom, Miss Pegasus?  I could've been killed!  Or worse, defiled!</state>
                 <state img="#-annoyed.png">Seriously, Flower Girl?  Revy squeezed my breasts--way too hard, I might add--and you're not sure what happened?  I need witnesses!</state>
             </case>
-            <case stage="6" alsoPlaying="revy" alsoPlayingStage="7" timeInStage="0" saidMarker="revy_grope">
+            <case stage="6">
                 <condition count="1" filter="futaba" />
+                <condition role="self" timeInStage="0" saidMarker="revy_grope" />
+                <condition role="other" character="revy" stage="7" />
                 <state img="#-angry.png">N-no, &lt;i&gt;nobody's&lt;/i&gt; touching "Jura's boobs," you little imp!  Not unless your name is &lt;i&gt;Barnette!&lt;/i&gt;</state>
                 <state img="#-frustrated.png">Ugh, now Four-eyes wants to grope me, too?  Not that she can reach--but doesn't this planet understand &lt;i&gt;teasing?&lt;/i&gt;</state>
                 <state img="#-sad.png">You too, Miss Redhead?  I knew my beauty was unheard of on this planet, but I'm sending girls into a frenzy--&lt;i&gt;oh, Barnette, I'm sorry.&lt;/i&gt;</state>
@@ -815,8 +834,10 @@
                 <state img="#-shocked.png">J-Jessie, don't let her near you!  She's just jealous of women with bigger breasts!  And she'll throw you around by them!</state>
                 <state img="#-frustrated.png">&lt;i&gt;Ugh!&lt;/i&gt;  To have my body manhandled by such an awful woman--Barnette is &lt;i&gt;gentle!&lt;/i&gt;  Jessie, she might go for you next!</state>
             </case>
-            <case stage="6" alsoPlaying="revy" alsoPlayingStage="7" timeInStage="0" saidMarker="revy_grope">
+            <case stage="6">
                 <condition count="1" filter="mulan" />
+                <condition role="self" timeInStage="0" saidMarker="revy_grope" />
+                <condition role="other" character="revy" stage="7" />
                 <state img="#-shocked.png">W-what was that all about?  ...Hey, don't start inviting other girls to touch me!  I'm for viewing only!</state>
                 <state img="#-angry.png">H-hey, who do think you are, groping me and then talking like my body can be just pawned off?  You don't touch me either, Mulan!</state>
                 <state img="#-frustrated.png">...Ugh, you are so &lt;i&gt;vulgar!&lt;/i&gt;  What am I, a blow-up doll?  You can't just offer my breasts to random women!</state>
@@ -829,8 +850,10 @@
                 <state img="#-annoyed.png">Is your name &lt;i&gt;Barnette,&lt;/i&gt; Miss Purple-Horse?  Do you have her adorable green hair and tight little frame?  Then hands off!</state>
                 <state img="#-shocked.png">N-no!  No &lt;i&gt;touching!&lt;/i&gt;  Can't a girl flirt on this planet without a thug squeezing her breasts and a horse ganging up on her?</state>
             </case>
-            <case stage="6" alsoPlaying="revy" alsoPlayingStage="7" timeInStage="0" saidMarker="revy_grope">
+            <case stage="6">
                 <condition count="1" filter="tharja" />
+                <condition role="self" timeInStage="0" saidMarker="revy_grope" />
+                <condition role="other" character="revy" stage="7" />
                 <state img="#-sad.png">&lt;i&gt;U-ugh,&lt;/i&gt; how'd I get stuck on a table with such awful women?  I hope you two take each other out.</state>
                 <state img="#-angry.png">W-what was &lt;i&gt;that&lt;/i&gt; for?  Don't you know the difference between flirting and invitations?  Go, go manhandle that awful Tharja instead!</state>
                 <state img="#-frustrated.png">&lt;i&gt;Mmmgh!&lt;/i&gt;  Could this planet get &lt;i&gt;any&lt;/i&gt; worse?  Assaulting my breasts, chanting hexes--how does Earth &lt;i&gt;raise&lt;/i&gt; its women?</state>
@@ -848,6 +871,13 @@
                 <state img="#-laughing.png">After you called me a little dirty-photo-taking nymph, Miss Coco?  I don't think so...well, maybe if you join my fan club.</state>
                 <state img="#-stretching.png">I'm afraid it's not that simple, Shady!  If you want a permanent view of my nude body, join my fan club for a copy...</state>
                 <state img="#-butt.png">&lt;i&gt;Oh, Mahiru!&lt;/i&gt;  Get a rear shot, too, and I'll share it with all my fan club members on the ship!  Join if you want one, Coco!</state>
+            </case>
+            <case stage="6" priority="159">
+                <condition role="self" timeInStage="0" saidMarker="revy_grope" />
+                <condition role="other" character="revy" stage="7" />
+                <condition role="other" character="ryuko" saidMarker="jura_revy" />
+                <state img="#-bored.png" marker="ryuko_revy">&lt;i&gt;Eek!  R-Revy!&lt;/i&gt;  Don't touch me--did you have to be so &lt;i&gt;rough?&lt;/i&gt;  ...Hey, Ryuko, I'm only twenty.  Not some old hag...</state>
+                <state img="#-angry.png" marker="ryuko_revy">&lt;i&gt;Ngh!  R-Revy, my breasts are delicate!&lt;/i&gt;  You'll &lt;i&gt;deform&lt;/i&gt; them if you pull like that...and &lt;i&gt;Ryuko!&lt;/i&gt;  I'm twenty, not some old lady!</state>
             </case>
             <case stage="0-6" alsoPlaying="futaba" alsoPlayingStage="1" alsoPlayingTimeInStage="1" saidMarker="fama_and_oma">
                 <state img="#-interested.png">What do you mean, "space" terms?  Figures a little Earthling runt would see her planet as the center of the universe.</state>
@@ -1006,12 +1036,18 @@
                 <state img="#-smug.png">&lt;i&gt;You&lt;/i&gt; ought to give these sweet Earthlings a chance, Meia.  This is much different than the mechanical Earth we know and hate.</state>
                 <state img="#-vain.png">Oh, come on, Meia, I don't think this is the same hostile Earth we know.  Besides, my rapier is a much scarier visual.</state>
             </case>
-            <case stage="6" alsoPlaying="revy" alsoPlayingStage="7" timeInStage="0" saidMarker="revy_grope">
+            <case stage="6">
+                <condition role="self" timeInStage="0" saidMarker="revy_grope" />
+                <condition role="other" character="revy" stage="7" />
                 <state img="#-shocked.png">&lt;i&gt;Eeek!  Ee--uh, uh&lt;/i&gt;--!  Revy!  I have a girlfriend, you know!  Hands off!</state>
                 <state img="#-angry.png">&lt;i&gt;H-hey, don't you know what a tease is?&lt;/i&gt;  Don't touch me again!</state>
                 <state img="#-shocked.png">U-uh, Revy--!  Just because I do a little teasing doesn't mean you can just start groping me!</state>
                 <state img="#-awkward.png">Uh--!  Do you &lt;i&gt;always&lt;/i&gt; just grope women out of the blue, Revy?  ...So how'd they feel?</state>
                 <state img="#-angry.png">Y-you!  There's a difference between teasing and the real thing, you know!  I have a girlfriend!  With guns!</state>
+                <state img="#-angry.png">&lt;i&gt;Agh!  Ngh!  G-get off--!&lt;/i&gt;  Revy!  Were they &lt;i&gt;real&lt;/i&gt; enough for you, hm?  Supple, firm, healthy?  Would you like to suckle on them next?</state>
+                <state img="#-critical.png">&lt;i&gt;Ngh--owwww!&lt;/i&gt;  That &lt;i&gt;hurt,&lt;/i&gt; Revy!  Can't you be gentle?  Your gross, calloused hands all over my body--!</state>
+                <state img="#-bored.png">&lt;i&gt;Eugggh!&lt;/i&gt;  That was a few seconds, and my breasts are already sore, you &lt;i&gt;animal!&lt;/i&gt;  And my hair smells of gunpowder...</state>
+                <state img="#-frustrated.png">&lt;i&gt;Owww--!&lt;/i&gt;  How can you even &lt;i&gt;be&lt;/i&gt; so rough with such delicate things as breasts?  Barnette treats me so much gentler...</state>
             </case>
             <case stage="6">
                 <condition role="other" character="beatrix" stage="0-3" saying="egg-splicing" />
@@ -1264,6 +1300,21 @@
                 <state img="#-laughing.png">Worried we would think you're too young, Sayori?  I can't imagine why else you'd drag along your twelve-your-old classmate.</state>
                 <state img="#-interested.png">Hey, Schoolgirl.  The tall one with a naive look in your eye.  Tell your little friend to beat it--this place is adults-only.</state>
             </case>
+            <case stage="0" totalRounds="0" priority="125">
+                <condition role="other" character="jin" hasHand="High Card" saying="Jura" />
+                <state img="#-teasing.png">As if you're my first impression of men, Mister Jin.  And are you implying I'm not a human?  &lt;i&gt;How rude!&lt;/i&gt;</state>
+                <state img="#-smug.png">My &lt;i&gt;impression&lt;/i&gt; of men is that they're rude, boisterous beings, honey.  You assuming I've never met one, and that I'm not human, confirms that.</state>
+                <state img="#-laughing.png">First off, Mister Presumptuous, I'm fully human.  And second, you're not the first man I've met--nor the handsomest.  But you might be the rudest.</state>
+                <state img="#-coy.png">Well, look at the little Sleepyhead man who thinks he's oh-so-special.  I've met and fought men before--and despite your rude assertions, I'm human.</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="125">
+                <condition role="other" character="jin" hasHand="One Pair" saying="Jura" />
+                <state img="#-smug.png">Whatever a "Neighbor" is to you, Mister Sunglasses, it doesn't sound very neighborly.  How typical of men to boast about their strength right away.</state>
+                <state img="#-stretching.png">Yeah, yeah, Mister-Holster, you can take the poor little woman on in a fight.  I knew men liked to brag about combat, but this is just sad.</state>
+                <state img="#-interested.png">That anatomy book I read says men are usually bigger and stronger than us, so that's not much of a boast, honey.  Pick a fight with a man if you're going to brag.</state>
+                <state img="#-dreaming.png">Men really are creatures of combat, I see.  Not even one round in and Mister Sunglasses is trying to start swinging at me.</state>
+                <state img="#-disgusted.png">H-hey, I'm a pilot, not a--a wrestler or something!  Don't touch my face!  Do men just brag about fighting all day?</state>
+            </case>
             <case stage="0-2" totalRounds="2">
                 <condition count="1" filter="ddlc" />
                 <condition role="other" character="natsuki" />
@@ -1292,19 +1343,6 @@
                 <state img="#-vain.png">Bold of you to judge my piloting skills, Miss Library.  I'm second-in-command on our ship--that's how good I am.</state>
                 <state img="#-vain.png">Maybe a jealous little gremlin like you wouldn't believe it, but women can be beautiful &lt;i&gt;and&lt;/i&gt; smart.  I'm the secondary squadron commander.</state>
                 <state img="#-smug.png">Oh, sure, claim I'm a lousy pilot because I take care of my appearance.  The typical play of the ugly and envious--I &lt;i&gt;happen&lt;/i&gt; to be Meia's trusted second officer.</state>
-            </case>
-            <case stage="0" alsoPlaying="jin" alsoPlayingHand="High Card" totalRounds="0-0">
-                <state img="#-teasing.png">As if you're my first impression of men, Mister Jin.  And are you implying I'm not a human?  &lt;i&gt;How rude!&lt;/i&gt;</state>
-                <state img="#-smug.png">My &lt;i&gt;impression&lt;/i&gt; of men is that they're rude, boisterous beings, honey.  You assuming I've never met one, and that I'm not human, confirms that.</state>
-                <state img="#-laughing.png">First off, Mister Presumptuous, I'm fully human.  And second, you're not the first man I've met--nor the handsomest.  But you might be the rudest.</state>
-                <state img="#-coy.png">Well, look at the little Sleepyhead man who thinks he's oh-so-special.  I've met and fought men before--and despite your rude assertions, I'm human.</state>
-            </case>
-            <case stage="0" alsoPlaying="jin" alsoPlayingHand="One Pair" totalRounds="0-0">
-                <state img="#-smug.png">Whatever a "Neighbor" is to you, Mister Sunglasses, it doesn't sound very neighborly.  Typical of men to boast about their strength right away.</state>
-                <state img="#-stretching.png">Yeah, yeah, Mister-Holster, you can take the poor little woman on in a fight.  I knew men liked to brag about combat, but this is just sad.</state>
-                <state img="#-interested.png">That anatomy book I read says men are usually bigger and stronger than us, so that's not much of a boast, honey.  Pick a fight with a man if you're going to brag.</state>
-                <state img="#-coy.png">Men really are creatures of combat, I see.  Not even one round in and Mister Sunglasses is trying to start swinging at me like that makes him tough.</state>
-                <state img="#-shocked.png">H-hey, I'm a pilot, not a--a wrestler or something!  Don't touch my face!  Do men just brag about fighting all day?</state>
             </case>
             <case stage="0" alsoPlaying="meia" totalFemales="2-2" totalRounds="0-0">
                 <state img="#-confused.png">Hi there! I'm Jura, and...I really thought there'd be Earth women here.  Oh well, more male nudity for us, right, Meia?</state>
@@ -1342,6 +1380,13 @@
                 <state img="#-angry.png">&lt;i&gt;W-what's wrong with that?&lt;/i&gt;  I thought it was cute!  Don't get all snippy with me!</state>
                 <state img="#-angry.png">Jeez, I just got here!  What's your problem, short stuff?  You're getting all mad over a &lt;i&gt;vowel?&lt;/i&gt;</state>
             </case>
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="jin" saying="Jura" />
+                <state img="#-teasing.png">Oh, I've seen men before, honey.  Don't get a big head.  You're cute, but I happen to know a doctor who's just as handsome.</state>
+                <state img="#-laughing.png">How characteristic of men to think they're the hottest stuff around.  I've seen men before, darling--in fact, I've killed my fair share.</state>
+                <state img="#-stretching.png">My, aren't we presumptuous?  Mister Jacket-and-Pants here thinks I've never seen a man before because Mejare is all women.  I've &lt;i&gt;fought&lt;/i&gt; men.</state>
+                <state img="#-vain.png">I &lt;i&gt;have&lt;/i&gt; seen men before, Mister Jin, and you're a cute one.  The real question is whether you can handle a Mejarian.</state>
+            </case>
             <case stage="0" alsoPlaying="aella" totalRounds="0-0">
                 <state img="#-confused.png">...&lt;i&gt;Tack-o?&lt;/i&gt;  What's that?  I just carry my rapier around for intimidation--and fashion.</state>
                 <state img="#-awkward.png">...I didn't really get any of that, Aella, sorry.  I'm a pilot first and a swordswoman second, so the dueling terms are lost on me.</state>
@@ -1353,12 +1398,6 @@
                 <state img="#-seductive.png">&lt;i&gt;Why, thank you, Elizabeth!&lt;/i&gt;  You're a cutie yourself, even if you're too shy to make use of it.</state>
                 <state img="#-seductive.png">&lt;i&gt;Ohhh, thank you, Elizabeth!&lt;/i&gt;  I get a lot of admirers, but few just come out and call me beautiful.  &lt;i&gt;You're so sweet!&lt;/i&gt;</state>
                 <state img="#-teasing.png">Don't be jealous, dear!  You're quite the looker yourself--better than I expected from Earth women.  I guess you haven't let men mangle you.</state>
-            </case>
-            <case stage="0" alsoPlaying="jin" totalRounds="0-0">
-                <state img="#-teasing.png">Oh, I've seen men before, honey.  Don't get a big head.  You're cute, but I happen to know a doctor who's just as handsome.</state>
-                <state img="#-laughing.png">Characteristic of men to think they're the hottest stuff around.  I've seen men before, darling--in fact, I've killed my fair share.</state>
-                <state img="#-stretching.png">My, aren't we presumptuous?  Mister Jacket-and-Pants here thinks I've never seen a man before because Mejare is all women.  I've &lt;i&gt;fought&lt;/i&gt; men.</state>
-                <state img="#-vain.png">I &lt;i&gt;have&lt;/i&gt; seen men before, Mister Jin, and you're a cute one.  The real question is whether you can handle a Mejarian.</state>
             </case>
             <case stage="0" alsoPlaying="meia" totalMales="1" totalRounds="0" priority="110">
                 <state img="#-laughing.png">Well, well, well!  Look at that, Meia, a gender ratio we're used to.  Let's see what this lone man has in store for us, shall we?</state>
@@ -1455,6 +1494,12 @@
                 <state img="#-teasing.png" marker="dust_outfits">Hey now, Dust, image matters to a woman--even nasty pirates like us.  We can't all wear the same thing!</state>
                 <state img="#-cackling.png" marker="dust_outfits">&lt;i&gt;Hahahaha!&lt;/i&gt;  Oh, Meia, it's so cute when men try to understand fashion.  A woman's clothes are her statement to the world!</state>
                 <state img="#-vain.png" marker="dust_outfits">And why exactly should we dress the same, Dusty?  Meia has her look, and I have mine--a billowing black dress to show my elegance.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="other" character="scm" sayingMarker="scm_jura" />
+                <state img="#-teasing.png" marker="scm_hand0">...Don't men &lt;i&gt;like&lt;/i&gt; their girls to have a bit of sass to them, "Suction Cup Man"?  Though I'm flattered I got a compliment from such a sourpuss.</state>
+                <state img="#-smug.png" marker="scm_hand0">...Oh, and I suppose men don't expect any backtalk from a woman on this planet, Mister Suction Cup?  At least you called me attractive.</state>
+                <state img="#-smug.png" marker="scm_hand0">...&lt;i&gt;Hmph.&lt;/i&gt;  Maybe Earth girls are afraid to make fun of a man, Suction Cup, but Mejarians are a tougher breed.  And prettier, as you noticed.</state>
             </case>
             <case stage="5">
                 <alternative alsoPlaying="meia" timeInStage="1-1" />
@@ -1558,7 +1603,7 @@
                 <state img="#-vain.png">Jura Basil Elden, of planet Mejare.  Any other alien ladies in attendance?</state>
                 <state img="#-teasing.png">Jura Basil Elden, home planet Mejare.  I'm going to go out on a limb and guess you're all Earthlings.</state>
             </case>
-            <case stage="0-6" totalRounds="28-28">
+            <case stage="0-6" totalRounds="28">
                 <state img="#-stretching.png">&lt;i&gt;Yawn...&lt;/i&gt;oh, wow.  This game is really taking a while, isn't it?</state>
                 <state img="#-vain.png">Such a long game we've got going here.  &lt;i&gt;Barnette's going to be so worried about me.&lt;/i&gt;</state>
                 <state img="#-stretching.png">Oh, wow...I think I'm getting kind of sleepy, this game's been going for so long.  &lt;i&gt;Someone catch me if I slump over!&lt;/i&gt;</state>
@@ -1584,7 +1629,7 @@
             </case>
             <case stage="5">
                 <condition role="self" timeInStage="0-0" />
-                <state img="#-stretching.png">Nothing quite like letting the girls loose.  Now I'm feeling great!</state>
+                <state img="#-stretching.png">There's nothing quite like letting my girls loose.  Now I'm feeling great!</state>
                 <state img="#-vain.png">I still can't get over how wonderful my chest is.</state>
                 <state img="#-stretching.png">&lt;i&gt;Yawn...&lt;/i&gt;so that's pretty much it, right?  I mean, surely you can guess what my groin looks like.</state>
                 <state img="#-coy.png">Feeling so much freer now.  I wonder what could have changed?</state>
@@ -1594,7 +1639,8 @@
                 <state img="#-thong.png">I hope you're not too &lt;i&gt;jealous&lt;/i&gt; of me.  You should be jealous of my darling Barnette--she has me &lt;i&gt;alllll&lt;/i&gt; to herself.</state>
                 <state img="#-fixing.png">&lt;i&gt;Behold, my Mejarian beauty--&lt;/i&gt;and misbehaving thong.  Damn it...well, snapping it back onto my waist is sexy, too, don't you think?</state>
             </case>
-            <case stage="5" timeInStage="4-4">
+            <case stage="5" id="20">
+                <condition role="self" timeInStage="4-4" />
                 <state img="#-butt.png" marker="butt">You poor things...you just can't seem to get me out of my thong, can you?  Here, have another peek at my butt.</state>
                 <state img="#-butt.png" marker="butt">Would you poor souls like another glance at my rear?  It's hard to be ashamed when I've still got this thong on.</state>
                 <state img="#-butt.png" marker="butt">I really thought you'd get me out of this thong quickly.  Was that peek at my butt enough to satisfy you earlier?</state>
@@ -1606,9 +1652,10 @@
                 <condition role="self" timeInStage="0-0" />
                 <state img="#-vain.png">&lt;i&gt;Jura Basil Elden,&lt;/i&gt; crown jewel of planet Mejare, in all her glory.</state>
                 <state img="#-vain.png">You can look, but you can't touch.  I'm delicate, you know.</state>
-                <state img="#-teasing.png">Don't get handsy, now.  Barnette's got more guns than she knows what to do with.</state>
-                <state img="#-teasing.png">Don't get any ideas, sweetheart.  My Barnette's &lt;i&gt;nasty&lt;/i&gt; when she's all fired up.</state>
+                <state img="#-teasing.png">Don't get handsy, now.  My Barnette's got more guns than she knows what to do with!</state>
+                <state img="#-teasing.png">Don't get any ideas, sweetheart.  My Barnette is &lt;i&gt;nasty&lt;/i&gt; when she's all fired up.</state>
                 <state img="#-vain.png">How does it feel to gaze upon the most beautiful woman on Mejare?</state>
+                <state img="#-stretching.png">&lt;i&gt;Oh, it's hard being this beautiful.&lt;/i&gt;  I turn women green wherever I go...try to just enjoy the view.</state>
             </case>
             <case stage="6">
                 <condition role="self" timeInStage="1-1" />
@@ -1618,7 +1665,8 @@
                 <state img="#-bored.png">I'm feeling a bit checked out...all my big reveals are over with.  Short of spreading my legs, I suppose...</state>
                 <state img="#-smug.png">It's a shame Paiway's too young to be here.  Her camera would &lt;i&gt;love&lt;/i&gt; this place.</state>
             </case>
-            <case stage="6" timeInStage="2-2">
+            <case stage="6" id="21">
+                <condition role="self" timeInStage="2-2" />
                 <state img="#-butt.png" marker="butt">&lt;i&gt;La-la!  Still in the game, sweethearts!&lt;/i&gt;  I think I'm getting even more daring!</state>
                 <state img="#-butt.png" marker="butt">&lt;i&gt;What's the matter, everyone?&lt;/i&gt;  Is my body too distracting for you to put me away?  Let me make it even worse, then...</state>
                 <state img="#-butt.png" marker="butt">Oh, this is so &lt;i&gt;thrilling!&lt;/i&gt;  I thought I'd stay cool, but being ogled so blatantly like this--&lt;i&gt;how's my rear?&lt;/i&gt;</state>
@@ -1635,6 +1683,25 @@
                 <state img="#-start.png" marker="1v1">One little target left to pick off.  And they haven't put up much of a fight so far.</state>
                 <state img="#-start.png" marker="1v1">Things aren't looking good for you, sweetie.  It's just you and me...and I still have my sword, even.</state>
                 <state img="#-start.png" marker="1v1">&lt;i&gt;My, my, my.&lt;/i&gt;  Looks like we have a little showdown on our hands...you vs. the armed alien pirate.</state>
+            </case>
+            <case stage="5" priority="6">
+                <condition role="self" notSaidMarker="1v1" />
+                <condition count="2" status="alive" />
+                <state img="#-teasing.png" marker="1v1">&lt;i&gt;Well, well, well.&lt;/i&gt;  Just you and me, darling...but there isn't much left for you to take off of me.</state>
+                <state img="#-laughing.png" marker="1v1">This tiny little thong of mine isn't going to keep you from winning this, right?  All alone...</state>
+                <state img="#-seductive.png" marker="1v1">Showdown time, it would seem.  You won't deprive me of my favorite thong, right?  &lt;i&gt;Come on.&lt;/i&gt;</state>
+                <state img="#-vain.png" marker="1v1">One-on-one?  So be it...I'm beautiful no matter &lt;i&gt;how&lt;/i&gt; this ends.</state>
+                <state img="#-seductive.png" marker="1v1">Ready to go toe-to-toe with Mejare's finest woman?  Try not to let my &lt;i&gt;gorgeous, full, healthy breasts&lt;/i&gt; be a distraction.</state>
+            </case>
+            <case stage="6" priority="6">
+                <condition role="self" notSaidMarker="1v1" />
+                <condition count="2" status="alive" />
+                <state img="#-laughing.png" marker="1v1">&lt;i&gt;Well, well, well.&lt;/i&gt;  Just you and me, dearie.  My buxom body isn't &lt;i&gt;too&lt;/i&gt; distracting, right?</state>
+                <state img="#-smug.png" marker="1v1">Well, now!  A &lt;i&gt;showdown?&lt;/i&gt;  I was never all that good under pressure...</state>
+                <state img="#-vain.png" marker="1v1">I'm a fearless Mejarian pirate, so this little showdown doesn't bother me, even nude.  But I'm not the greatest poker player...</state>
+                <state img="#-teasing.png" marker="1v1">Hey, now...don't forget I'm a pirate.  Not a good idea to go head-to-head with a killer, even when she's naked.</state>
+                <state img="#-vain.png" marker="1v1">I'm quite the pilot, you know...believe me, I'd rather have a showdown in my Dread than at this table.  Oh, well...</state>
+                <state img="#-seductive.png" marker="1v1">Can't say I'm the &lt;i&gt;greatest&lt;/i&gt; poker player...I mean, look at the state I'm in.  But sure, what's a little one-on-one action?</state>
             </case>
             <case stage="1" totalAlive="2-2" notSaidMarker="1v1">
                 <state img="#-laughing.png" marker="1v1">&lt;i&gt;Well, well, well.&lt;/i&gt;  &lt;i&gt;One-on-one with the big, bad, alien woman.&lt;/i&gt;</state>
@@ -1660,21 +1727,6 @@
                 <state img="#-teasing.png" marker="1v1">Showdown time!  And you should know--my dress is next.  &lt;i&gt;Don't disappoint everyone!&lt;/i&gt;</state>
                 <state img="#-seductive.png" marker="1v1">Oh, just the two of us?  Well then, honey...won't you &lt;i&gt;please&lt;/i&gt; let me win?  Pretty please?</state>
                 <state img="#-vain.png" marker="1v1">Time for a showdown, sweetie.  You're not going to make this scared foreigner take off her dress, right?  Expose her beautiful buxom chest?</state>
-            </case>
-            <case stage="5" totalAlive="2-2" notSaidMarker="1v1">
-                <state img="#-teasing.png" marker="1v1">&lt;i&gt;Well, well, well.&lt;/i&gt;  Just you and me, darling...but there isn't much left for you to take off of me.</state>
-                <state img="#-laughing.png" marker="1v1">This tiny little thong of mine isn't going to keep you from winning this, right?  All alone...</state>
-                <state img="#-seductive.png" marker="1v1">Showdown time, it would seem.  You won't deprive me of my favorite thong, right?  &lt;i&gt;Come on.&lt;/i&gt;</state>
-                <state img="#-vain.png" marker="1v1">One-on-one?  So be it...I'm beautiful no matter &lt;i&gt;how&lt;/i&gt; this ends.</state>
-                <state img="#-seductive.png" marker="1v1">Ready to go toe-to-toe with Mejare's finest woman?  Try not to let my &lt;i&gt;gorgeous, full, healthy breasts&lt;/i&gt; be a distraction.</state>
-            </case>
-            <case stage="6" totalAlive="2-2" notSaidMarker="1v1">
-                <state img="#-laughing.png" marker="1v1">&lt;i&gt;Well, well, well.&lt;/i&gt;  Just you and me, dearie.  My buxom body isn't &lt;i&gt;too&lt;/i&gt; distracting, right?</state>
-                <state img="#-smug.png" marker="1v1">Well, now!  A &lt;i&gt;showdown?&lt;/i&gt;  I was never all that good under pressure...</state>
-                <state img="#-vain.png" marker="1v1">I'm a fearless Mejarian pirate, so this little showdown doesn't bother me, even nude.  But I'm not the greatest poker player...</state>
-                <state img="#-teasing.png" marker="1v1">Hey, now...don't forget I'm a pirate.  Not a good idea to go head-to-head with a killer, even when she's naked.</state>
-                <state img="#-vain.png" marker="1v1">I'm quite the pilot, you know...believe me, I'd rather have a showdown in my Dread than at this table.  Oh, well...</state>
-                <state img="#-seductive.png" marker="1v1">Can't say I'm the &lt;i&gt;greatest&lt;/i&gt; poker player...I mean, look at the state I'm in.  But sure, what's a little one-on-one action?</state>
             </case>
             <case stage="0-6" id="4" alsoPlaying="meia" totalFemales="4" notSaidMarker="seduction" priority="0">
                 <state img="#-cackling.png" marker="seduction">What a fun little game!  Hey, if Meia and I were to seduce a man, what would an Earth girl's advice be?</state>
@@ -1732,8 +1784,10 @@
                 <state img="#-vain.png">&lt;i&gt;Hm?&lt;/i&gt;  I'm twenty, darling.  I know, a high-ranking pilot and a steady relationship, and so young!</state>
                 <state img="#-laughing.png">Why do you ask, Miss Schoolgirl?  Thinking of stealing me from Barnette?  ...Anyway, 20.</state>
             </case>
-            <case stage="0-5" alsoPlaying="zone-tan" alsoPlayingStage="6" notSaidMarker="jinzone" alsoPlayingSaidMarker="jin_jura">
+            <case stage="0-5">
                 <condition count="1" filter="jin" />
+                <condition role="self" notSaidMarker="jinzone" />
+                <condition role="other" character="zone-tan" stage="6" saidMarker="jin_jura" />
                 <state img="#-thinking.png" marker="jinzone">...Well, they both start with a &lt;i&gt;J,&lt;/i&gt; I suppose.  But really, I think all the sex making it harder for you to distinguish men and women.</state>
                 <state img="#-vain.png" marker="jinzone">&lt;i&gt;What?&lt;/i&gt;  Talk about oversexed--poor little Zone-tan can't tell the difference between men and women anymore.</state>
                 <state img="#-stretching.png" marker="jinzone">I guess when you just pleasure yourself to men and women indiscriminately, Zone, you start to mix them up.</state>
@@ -2361,7 +2415,8 @@
                 <state img="#-vain.png">&lt;i&gt;Finally.&lt;/i&gt;  Sei here understands she doesn't need to compete...Mejare is home to the galaxy's finest women.</state>
                 <state img="#-seductive.png">Oh, Sei, it's OK you're not as beautiful--you're not Mejarian!  It's hard being the gold standard, so just enjoy being the audience.</state>
             </case>
-            <case stage="0" alsoPlaying="rarity_eg">
+            <case stage="0">
+                <condition role="other" character="rarity_eg" />
                 <state img="#-smug.png">My, my, yes, I do, Miss Rarity.  Thanks for noticing--is it my dress or some of my smaller decorations?</state>
                 <state img="#-vain.png">Oh, really?  What strikes you in particular--my fabulous black dress?  My studded boots?  My jewelry?</state>
                 <state img="#-coy.png">&lt;i&gt;Heehee!&lt;/i&gt;  Well, it's nice to hear that from Miss Fashionista herself.  What on my outfit has caught your eye?</state>
@@ -2958,13 +3013,15 @@
                 <state img="#-losing-rapier.png">&lt;i&gt;Hi there, Haru!&lt;/i&gt;  Good job addressing me--this isn't the first time pulling my rapier out has made a woman talk.</state>
                 <state img="#-losing-rapier.png">I agree, darling--my rapier is &lt;i&gt;very&lt;/i&gt; interesting, just like the rest of me.  Funny how pulling it out always makes cuties talk.</state>
             </case>
-            <case stage="0" alsoPlaying="jin" alsoPlayingStage="0-1">
+            <case stage="0">
+                <condition role="other" character="jin" stage="0-1" />
                 <state img="#-losing-rapier.png">What, is my ornate rapier not enough for you, Earth-man?  Well, too bad--weapons count when you're a wanted woman.</state>
                 <state img="#-losing-rapier.png">What you see as a lame excuse, I see as being deprived of my weapon of choice.  Pirates shouldn't be unarmed in public!</state>
                 <state img="#-losing-rapier.png">Hey, I'm a wanted criminal back home, Jin!  To lose my rapier is a catastrophic blow this early on!  &lt;i&gt;Please understand.&lt;/i&gt;</state>
                 <state img="#-losing-rapier.png">Oh, please--pirates &lt;i&gt;need&lt;/i&gt; their weapons!  You'd be calling me paranoid if I kept this on all game.</state>
             </case>
-            <case stage="0" alsoPlaying="jin" alsoPlayingStage="2-8">
+            <case stage="0">
+                <condition role="other" character="jin" stage="2-8" />
                 <state img="#-losing-rapier.png">You know what's even &lt;i&gt;lamer,&lt;/i&gt; Earth-man?  Calling a poor woman out for things &lt;i&gt;you're&lt;/i&gt; guilty of.</state>
                 <state img="#-losing-rapier.png">Says the man who stripped his katana earlier?  I don't need to take this kind of abuse from someone who's losing.</state>
                 <state img="#-losing-rapier.png">Losing to me, stripping your weapon, and then complaining when I do the same isn't a great impression, either.</state>
@@ -4441,7 +4498,8 @@
                 <state img="#-laughing.png">...I might believe that if you were, well, a little &lt;i&gt;slimmer,&lt;/i&gt; Haru.  Or do you have a secret streetfighting side we should know about?</state>
                 <state img="#-smug.png">Oh, I'm the &lt;i&gt;epitome&lt;/i&gt; of graceful once I'm in a cockpit.  If you'd like to become a pilot yourself...well, you could stand to lose a little weight first.</state>
             </case>
-            <case stage="1" alsoPlaying="jin" alsoPlayingStage="0-8">
+            <case stage="1">
+                <condition role="other" character="jin" stage="0-8" />
                 <state img="#-smug.png">You men could do to learn the meaning of &lt;i&gt;patience.&lt;/i&gt;  The good stuff isn't nearly as good if you skip to it.</state>
                 <state img="#-teasing.png">As far as I'm concerned, I'm showing plenty already...so you'll have to get the rest off of me the &lt;i&gt;hard&lt;/i&gt; way.</state>
                 <state img="#-teasing.png">That all depends on how good you are at cards, dear.  Or maybe you'll win my heart and I'll just throw off my dress.</state>
@@ -5795,13 +5853,33 @@
                 <state img="#-seductive.png">A beautiful blonde boy and girl, going to the same school?  Strange venue for a date, but I'm too excited to see a male-female romance in person to care!</state>
                 <state img="#-seductive.png">My, what kind of perverted students is your school generating, going to strip poker together?  Well, since you're here...&lt;i&gt;show me how men and women love each other.&lt;/i&gt;</state>
             </case>
+            <case stage="0-6">
+                <condition filter="girl_kazuma" role="target" character="kazuma" stage="0" />
+                <state img="#-awkward.png" marker="kazuko0">Weren't you a &lt;i&gt;man&lt;/i&gt; the last time I saw you?  I can't say I haven't seen men attempt to dress as women...</state>
+                <state img="#-critical.png" marker="kazuko0">&lt;i&gt;Well, hello there, Kazu--&lt;/i&gt;wait, "Kazuko"?  H-hey, you're that boy from last time, aren't you?  I'm getting sick of you men dressing like women!</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="corrin_m_valentine" role="target" character="corrin_m" stage="0" />
+                <state img="#-bored.png" marker="corrin_mv0">&lt;i&gt;Eugh,&lt;/i&gt; women's clothing just does &lt;i&gt;not&lt;/i&gt; fit a man's body--in your case, quite literally.  No man &lt;i&gt;I&lt;/i&gt; date is wearing my dress.</state>
+                <state img="#-bored.png" marker="corrin_mv0">&lt;i&gt;Eugh.&lt;/i&gt;  Now I see why men don't dress like we do.  And this is your &lt;i&gt;wife's&lt;/i&gt; outfit?  Even Barnette is &lt;i&gt;not&lt;/i&gt; touching my dress.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="halloween_pit" role="target" character="pit" stage="0" />
+                <state img="#-cackling.png">Oh, it's Mr. Angel, back again.  I hope you don't think wearing all-black is going to make you look intimidating!</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="summertime_ryuji" role="target" character="ryuji" stage="0" />
+                <state img="#-stretching.png">Oh, it's you, the boy with the fake-blond hair.  Time in the summer sun is fun and all, but it won't bleach your hair into my golden shimmer.</state>
+            </case>
             <case stage="0-6" target="corrin_m" targetStage="0" alsoPlaying="rinkah" alsoPlayingStage="0">
                 <state img="#-confused.png">What's the deal with this woman, Rinkah?  You know each other?  You take orders from her?</state>
                 <state img="#-confused.png">So is this girl your commanding officer, Rinkah?  You certainly treat her that way.</state>
                 <state img="#-stretching.png">My, Rinkah, your commanding officer is such a young, fresh-faced woman!  Ours is a wizened old crone.</state>
                 <state img="#-seductive.png">You can cut your hair short, Corrin, but you're still such a cute young girl!  I can't believe you order Rinkah around.</state>
             </case>
-            <case stage="0-6" target="ryuji" targetStage="0" alsoPlaying="futaba" alsoPlayingStage="0">
+            <case stage="0-6">
+                <condition role="target" character="ryuji" stage="0" />
+                <condition role="other" character="futaba" stage="0" />
                 <state img="#-laughing.png">Ooh, a schooldate?  Far be it from me to understand men's tastes, dear, but I'm not sure you've got the height to woo your handsome blonde classmate here.</state>
                 <state img="#-teasing.png">I think I can see what's going on here, Shorty.  You're in love with your blonde hunk-o-man here, and you're playing strip poker with him so he ignores your more beautiful classmates.</state>
                 <state img="#-interested.png">&lt;i&gt;Classmates?&lt;/i&gt;  Is this the last desperate move from the short, bespectacled girl's playbook?  Land a man by dropping the pretenses and playing strip poker with him?</state>
@@ -5839,7 +5917,8 @@
                 <state img="#-interested.png">I knew men could be cowardly, but damn.  Even the &lt;i&gt;Tarakkians&lt;/i&gt; I know can look a woman in the eye.</state>
                 <state img="#-interested.png">So the blindfold's going first, right?  So you can actually read the cards from now on?</state>
             </case>
-            <case stage="0-6" target="9s" targetStage="1">
+            <case stage="0-6">
+                <condition role="target" character="9s" stage="1" />
                 <state img="#-interested.png">&lt;i&gt;Pod this, data that...&lt;/i&gt;you talk like you're a machine.  Why the formality, dear?</state>
                 <state img="#-interested.png">Why do you talk like you're a robot half the time, huh?  Loosen up and enjoy yourself--if men can do that, of course.</state>
                 <state img="#-interested.png">Hey, what's with all your formal data-mechanics babble?  You sound like you just rolled off the factory line, dearie.</state>
@@ -5871,7 +5950,8 @@
                 <state img="#-teasing.png">Tall, check--muscles, check--handsome, &lt;i&gt;check!&lt;/i&gt;  Looks like I've found me a winner, and he hasn't even stripped yet.</state>
                 <state img="#-seductive.png">&lt;i&gt;Oooh!&lt;/i&gt;  Look at &lt;i&gt;you,&lt;/i&gt; handsome!  Just the sort of man I hoped to see here!</state>
             </case>
-            <case stage="0-6" target="captain_falcon" targetStage="0">
+            <case stage="0-6">
+                <condition role="target" character="captain_falcon" stage="0" />
                 <state img="#-smug.png">And I thought &lt;i&gt;I&lt;/i&gt; was enthusiastic.  This man's blowing me out of the water.</state>
                 <state img="#-interested.png">Talk about bringing energy to the table.  Planning on winning this thing, or just shouting about it?</state>
                 <state img="#-laughing.png">Well, &lt;i&gt;someone's&lt;/i&gt; a feisty one.  Hibiki's energetic, but you've got the body to match, hot stuff.</state>
@@ -5986,7 +6066,8 @@
                 <state img="#-smug.png">Oh, good, you can talk.  I had really lost all hope for men's intelligence for a while there.</state>
                 <state img="#-shocked.png">&lt;i&gt;Ack!&lt;/i&gt;  Wha--o-oh, you're done screaming!  Uh...OK.</state>
             </case>
-            <case stage="0-6" target="mettaton" targetStage="0">
+            <case stage="0-6">
+                <condition role="target" character="mettaton" stage="0" />
                 <state img="#-confused.png">Well, now!  There's bizarre specimens, and then there's you.  Are you a man or a woman?</state>
                 <state img="#-confused.png">I can't really pin down your sex, to be honest...or your species, for that matter.</state>
                 <state img="#-vain.png" marker="fama_and_oma">Weren't you made in a lab?  So were all Mejarians before our Famas carried us!  ...But I'm not sure if you're a woman.</state>
@@ -6018,7 +6099,8 @@
                 <state img="#-laughing.png">A big hunk of a man with more muscles than brainpower?  Just what I've been looking for.</state>
                 <state img="#-teasing.png">You seem a little clueless about this game, handsome.  Don't worry...&lt;i&gt;I'll guide you along.&lt;/i&gt;</state>
             </case>
-            <case stage="0-8" target="ryuji" targetStage="0">
+            <case stage="0-8">
+                <condition role="target" character="ryuji" stage="0" />
                 <state img="#-seductive.png">Ooh, I &lt;i&gt;love&lt;/i&gt; blonde hair!  And a blonde &lt;i&gt;man&lt;/i&gt; is that much more fascinating.  What's your story, Mister Student?</state>
                 <state img="#-seductive.png">Going to school still, dear?  I'm afraid I wasn't much of a student--do all the Earth girls fawn over your magnificent blonde hair?</state>
                 <state img="#-teasing.png">How embarrassing that a man made it further in school than I did.  But I can forgive that--blondes always put me in a good mood.</state>
@@ -6036,13 +6118,124 @@
                 <state img="#-teasing.png">Not to be too forward or anything, but I'm on the prowl for a good man...for reasons you'll know soon enough.  Interested?</state>
                 <state img="#-vain.png">You're a pretty average-looking man.  I can live with that...but I bet they don't make women like &lt;i&gt;me&lt;/i&gt; where you come from.</state>
             </case>
+            <case stage="0-6">
+                <condition role="target" character="ae86" stage="0" />
+                <state img="#-laughing.png">Oh, an Earth car?  I bet our engineer would love taking you apart...but for me, you're just so terribly antiquated.</state>
+                <state img="#-stretching.png">&lt;i&gt;Hoaaaagh...&lt;/i&gt;am I supposed to be blown away by this ratty old mechanical thing?  All it does it puff out smoke and make noise...no grace at all.</state>
+                <state img="#-smug.png">&lt;i&gt;Hm.&lt;/i&gt;  I must say, a silly little gearbox chugging along just doesn't impress a pilot of a sleek, airborne fighter craft.</state>
+                <state img="#-vain.png">Am I supposed to be enamored with this antique Earth car?  Even without my Dread, I'd prefer the quiet, hovering luxury of a Mejarian make.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="ae86" stage="1" />
+                <state img="#-coy.png">Now, if you were an antique &lt;i&gt;gun,&lt;/i&gt; my darling Barnette would be &lt;i&gt;all over&lt;/i&gt; you.  I'd have to pry her off so she'd pay attention to me...</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="mister_clean" stage="0" />
+                <state img="#-vain.png">I hope you don't think you're the first bald man I've met.  Our navigator has a shaved head--a woman's hair is more important, anyway.</state>
+                <state img="#-teasing.png">Well, I can certainly appreciate the &lt;i&gt;cleanliness&lt;/i&gt; of a bald man.  But don't expect to scrub down my body that easily.</state>
+                <state img="#-teasing.png">"Mister Clean"?  Well, &lt;i&gt;that&lt;/i&gt; will be revealed over time.  I know our bald prisoner has a very clean body himself...as do I.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="shou_tucker" stage="0" />
+                <state img="#-awkward.png">&lt;i&gt;Ugh.&lt;/i&gt;  Aren't you a bit &lt;i&gt;old&lt;/i&gt; to be playing this?  Though if you have a wife, I'm curious how she seduced you.</state>
+                <state img="#-awkward.png">&lt;i&gt;Uhhh...&lt;/i&gt;I was looking for a &lt;i&gt;young&lt;/i&gt; man's seed, thank you.  Not one who's clearly got children already.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="lucina" stage="0" />
+                <state img="#-interested.png" marker="lucina0">I generally expect a man to look me in the eye, you know.  Aren't you supposed to be brave warrior types?  Or am I too spoiled by our captive soldiers?</state>
+                <state img="#-laughing.png" marker="lucina0">Aren't you a bit shy for a man, hiding under that mask?  You're rather short and slender for a man, too, but you can't help that.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="dust" stage="0" />
+                <state img="#-bored.png">...&lt;i&gt;Ew.&lt;/i&gt;  Are you some kind of furry dog-man?  Dogs may be cute, but I can't stand how gross they are, slobbering all over my legs.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="n" stage="0" />
+                <state img="#-seductive.png" marker="n0">My, my.  Are you really going to play games with my heart, handsome?  You won't even tell me your whole name...I'm &lt;i&gt;Jura.&lt;/i&gt;</state>
+                <state img="#-seductive.png" marker="n0">..."N."  You &lt;i&gt;really&lt;/i&gt; won't even tell us your name?  I can't fall for a man I don't know a thing about.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="chazz" stage="0" />
+                <state img="#-laughing.png" marker="chazz0">Well, aren't &lt;i&gt;you&lt;/i&gt; bombastic?  I can appreciate a man with dramatic flair, but is it really over something as silly as cards?</state>
+                <state img="#-cackling.png" marker="chazz0">My, men really put their heart and soul into &lt;i&gt;everything,&lt;/i&gt; don't they?  You even built a little card-holding contraption!</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="guzma" stage="0" />
+                <state img="#-annoyed.png" marker="guzma0">...Is this how older men speak on Earth?  I was expecting some handsome, experienced gentleman, and I get a scowling sloucher in baggy clothes.</state>
+                <state img="#-annoyed.png" marker="guzma0">Well, aren't &lt;i&gt;you&lt;/i&gt; charming?  I see men lose their luster with age--the young men I know are sharp-dressed and stand up straight.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="kazuma" stage="0" />
+                <state img="#-interested.png">Well, it's not as if a shorty hasn't caught my attention before.  I wonder if you'll impress me with your gumption as he has.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="kokichi" stage="0" />
+                <state img="#-annoyed.png" marker="kokichi0">What a pushy little boy.  Listen, "Supreme Leader," a Mejarian doesn't take orders from a man, understand?</state>
+                <state img="#-annoyed.png" marker="kokichi0">Hey, a playful back-and-forth is one thing, but no &lt;i&gt;man&lt;/i&gt; is my "Supreme Leader."  I'm not even from this planet.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="brock" stage="0" />
+                <state img="#-shocked.png" marker="brock0">
+                    <alt-img stage="0">#-shocked2.png</alt-img>
+                    <text>&lt;i&gt;What have we here, but another fine male spec--&lt;/i&gt;h-hey!  That's one of those explosive launchers men use!  Stay away from me!</text>
+                </state>
+                <state img="#-shocked.png" marker="brock0">
+                    <alt-img stage="0">#-shocked2.png</alt-img>
+                    <text>H-hey, what's the big idea?  I've seen men on Tarak lug around those boxes, firing rockets at us!</text>
+                </state>
+                <state img="#-shocked.png" marker="brock0">
+                    <alt-img stage="0">#-shocked2.png</alt-img>
+                    <text>&lt;i&gt;Hello there, Mister&lt;/i&gt;--R-Rocket Launcher?  Hey, what're you carrying that thing around for?  Men try to blow us up enough back home!</text>
+                </state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="arash" stage="0" />
+                <state img="#-teasing.png" marker="arash0">&lt;i&gt;Hello there,&lt;/i&gt; handsome.  Is it true you're some kind of servant?  I'll &lt;i&gt;gladly&lt;/i&gt; allow a man to wait on me hand and foot.</state>
+                <state img="#-seductive.png" marker="arash0">I thought a man would be too proud to describe himself as a &lt;i&gt;servant.&lt;/i&gt;  By all means, serve &lt;i&gt;me&lt;/i&gt;--doesn't my beauty deserve it?</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="merlin" stage="0" />
+                <state img="#-annoyed.png">&lt;i&gt;Hmph.&lt;/i&gt;  Normally I'd flirt with a man to check if your seed is worth my time, but I've got no patience for rudeness.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="astolfo_bean_plushie" stage="0" />
+                <state img="#-bored.png" marker="astolfo0">You...call men "gay"?  Does that insult apply to women in love, as well?  It's the natural way of things, as far as I'm concerned.</state>
+                <state img="#-frustrated.png" marker="astolfo0">Oh, I don't understand what you're on about at all.  You suck on men's rods, then insult them?  What's wrong with men in love--or women?</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="astolfo_bean_plushie" stage="1" />
+                <state img="#-thinking.png" marker="astolfo1">Sucking on a man's tube...I've never considered that.  Maybe it extracts their seed better than that &lt;i&gt;penetration&lt;/i&gt; business...</state>
+                <state img="#-confused.png" marker="astolfo1">...Do men &lt;i&gt;like&lt;/i&gt; it when you put your mouth on their tube?  I figured my vagina would feel softer, but maybe it makes collecting seed easier...</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="freddie" stage="0" />
+                <state img="#-bored.png" marker="freddie0">&lt;i&gt;Ew.&lt;/i&gt;  You're certainly not as pretty as the dolls I had as a girl.  Don't tell me Earth girls have tea parties with creepy monsters.</state>
+                <state img="#-bored.png" marker="freddie0">...You're the sort of toy &lt;i&gt;men&lt;/i&gt; play with as kids, right?  I played with dolls of gorgeous women as a girl--and then became one, of course.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="glass_joe" stage="0" />
+                <state img="#-seductive.png" marker="glassjoe0">My, men aren't shy about going topless, are you?  But you could stand to have a bit more bravado.</state>
+                <state img="#-bored.png" marker="glassjoe0">&lt;i&gt;Hm.&lt;/i&gt;  Cowardly trembling is &lt;i&gt;not&lt;/i&gt; a good look for a man, even if he's got a nice chest to show off.  Stand up straight, would you?</state>
+                <state img="#-critical.png" marker="glassjoe0">Hey, now, the occasional show of fear fits a woman's delicate nature.  A &lt;i&gt;man&lt;/i&gt; doing it is just weird.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="grey" stage="0" />
+                <state img="#-coy.png" marker="gray0">&lt;i&gt;Oh, dear.&lt;/i&gt;  I know my beauty can be overwhelming, but this man started throwing his clothes off as soon as he saw me.</state>
+                <state img="#-teasing.png" marker="gray0">Hey, now.  I know you're a man, but patience is a virtue.  Don't throw off &lt;i&gt;all&lt;/i&gt; your clothes without a good tease first.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="scm" stage="0" />
+                <state img="#-bored.png" marker="scm0">What kind of a title is "Suction Cup Man"?  I'm afraid to let you anywhere near my breasts.</state>
+                <state img="#-critical.png" marker="scm0">I think I deserve an explanation for why you're called "Suction Cup Man" if I'll be stripping near you.  My body is &lt;i&gt;delicate,&lt;/i&gt; you know!</state>
+            </case>
             <case stage="0" alsoPlaying="meia" alsoPlayingStage="1-7" targetTimeInStage="7-">
                 <state img="#-interested.png">Quite the streak you had there.  Was that beginner's luck, or do men actually understand how numbers work?</state>
                 <state img="#-teasing.png">&lt;i&gt;That&lt;/i&gt; took long enough.  More male skin for me!</state>
                 <state img="#-interested.png">Don't get a big head over that streak, handsome.  You still haven't even touched me.</state>
                 <state img="#-teasing.png">Feeling good about yourself, ~name~?  You have yet to beat a Mejarian woman...well, me, anyway.</state>
             </case>
-            <case stage="0-6" alsoPlaying="misato" alsoPlayingStage="1" alsoPlayingTimeInStage="0-1">
+            <case stage="0-6">
+                <condition role="other" character="misato" stage="1" timeInStage="0-1" />
                 <state img="#-teasing.png">So, not to call you a harlot or anything, Misato, but you seem &lt;i&gt;awful&lt;/i&gt; interested in these men...so am I.  How do you Earth girls get their attention?</state>
                 <state img="#-confused.png">Ooh, you seem pretty confident around these Earth men, Misato.  From one woman to another, what's the secret to getting their attention?</state>
                 <state img="#-confused.png">You seem to be doing a better job flirting with these Earth men, Misato.  Am I doing something wrong?  I always seem to scare them!</state>
@@ -6515,8 +6708,10 @@
             <case stage="8" alsoPlaying="meia" alsoPlayingStage="6" saidMarker="meiamast" priority="990">
                 <state img="#-meiablank.png"></state>
             </case>
-            <case stage="0" target="meia" targetStage="0" alsoPlaying="corrin_f" alsoPlayingStage="0-2">
+            <case stage="0">
                 <condition count="1" filter="rinkah" />
+                <condition role="target" character="meia" stage="0" />
+                <condition role="other" character="corrin_f" stage="0-2" />
                 <state img="#-smug.png">It's a little late for that, Rinkah, darling.  I mean, you two look like you walked out of an era before indoor plumbing.</state>
                 <state img="#-laughing.png">Sorry, dearies.  It's just hard to not underestimate a pair of women who look like pages out of history.</state>
                 <state img="#-smug.png">It's just second nature, darling.  I come from a world of spaceships and energy cores--your little armor-and-bindings schtick doesn't impress me.</state>
@@ -6585,6 +6780,188 @@
                 <state img="#-interested.png">You two work together?  I &lt;i&gt;refuse&lt;/i&gt; to believe you haven't...&lt;i&gt;experimented&lt;/i&gt; a little, with the way muscles start to glisten after a workout.</state>
                 <state img="#-interested.png">Am we really supposed to buy this little cover story about an "investigation"?  I think Chun and Cammy here have realized the best exercise machine is each other.</state>
             </case>
+            <case stage="0-6">
+                <condition filter="nostalgia_misty" role="target" character="misty_hgss" stage="0" />
+                <state img="#-vain.png" marker="mistyhgss_nostalgia0">Oh, it's Miss Swimsuit again!  But you're in something a little more &lt;i&gt;sensible&lt;/i&gt; now.  Imagine &lt;i&gt;me&lt;/i&gt; stuffed into a one-piece, my hips spilling out the sides.</state>
+                <state img="#-smug.png" marker="mistyhgss_nostalgia0">Aren't you the girl who showed up in a one-piece swimsuit last time?  This dress is the one thing my body doesn't stretch to its limit.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="Weiss (Volume 4)" role="target" character="weiss_schnee" stage="0" />
+                <state img="#-annoyed.png" marker="weiss_v40">Oh, yes, show off your endless wardrobe...this is the only good dress I could steal.  I ought to be in &lt;i&gt;photoshoots,&lt;/i&gt; not dogfights.</state>
+                <state img="#-annoyed.png" marker="weiss_v40">Is this the dramatic poetry of the universe?  I, a generational beauty, must live a criminal's life while this flat imp can buy forty dresses?</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="elesa_bw" role="target" character="elesa" stage="0" />
+                <state img="#-vain.png" marker="elesa_bw0">&lt;i&gt;Oh?&lt;/i&gt;  This new look is a noble attempt to emulate my beauty, but you can't get my blonde in a bottle--or my breasts.</state>
+                <state img="#-vain.png" marker="elesa_bw0">Oh, it's you, Elesa.  Blonde hair is a good start towards capturing my look, but you'll need to &lt;i&gt;fill out&lt;/i&gt; a bit for the full effect.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="nostalgia_nami" role="target" character="nami" stage="0" />
+                <state img="#-cackling.png">Oh, it's the bikini beach pirate girl again.  Why'd you cut your hair?  I was looking forward to giving you some styling tips!</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="megu" role="target" character="megumin" stage="0" />
+                <state img="#-smug.png" marker="megu0">...Honestly, you're making my job &lt;i&gt;far&lt;/i&gt; too easy.  I stand out as gorgeous even when other girls aren't hasty scribbles.</state>
+                <state img="#-laughing.png" marker="megu0">...Is &lt;i&gt;this&lt;/i&gt; what being around me does to your self-image, Megumin?</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="mama_shotgun" role="target" character="aella" stage="0" />
+                <state img="#-cackling.png">Oh, it's you--that tall girl with the oversized axe.  I see you've moved on to an oversized rifle!</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="mama_shotgun" role="target" character="aella" stage="1" />
+                <state img="#-interested.png">It's no &lt;i&gt;laser ring,&lt;/i&gt; but those mechanical guns still have their fans.  My girlfriend collects antiques--I wonder what she'd think of that enormous thing.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="normal_girl_tharja" role="target" character="tharja" stage="0" />
+                <state img="#-laughing.png" marker="tharja_normal0">Oh, dear.  You were &lt;i&gt;already&lt;/i&gt; showing off plenty of skin before, honey.  This sort of thing starts to give diminishing returns.</state>
+                <state img="#-interested.png" marker="tharja_normal0">My, my, you're hardly wearing anything but the coat.  If you're vying for ~player~'s attention, a revealing outfit only goes so far.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="larachel_harvest_princess" role="target" character="larachel" stage="0" />
+                <state img="#-shocked.png" marker="larachel_hp0">
+                    <alt-img stage="0">#-shocked2.png</alt-img>
+                    <text>D-did you say you're a &lt;i&gt;Harvest Princess?&lt;/i&gt;  Hey, what's the big idea?  Was this whole game a setup?</text>
+                </state>
+                <state img="#-critical.png" marker="larachel_hp0">Well, hello there, Miss--&lt;i&gt;H-Harvest Princess?&lt;/i&gt;  Excuse me?  Did I walk into some kind of Earth blood ritual?  Hey!</state>
+                <state img="#-shocked.png" marker="larachel_hp0">
+                    <alt-img stage="0">#-shocked2.png</alt-img>
+                    <text>W-what do you mean, you're dressed as a "Harvest Princess"?  W-was this a trap?  Stay away from me!</text>
+                </state>
+            </case>
+            <case stage="0-6">
+                <condition filter="shadow_emi" role="target" character="emi" stage="0" />
+                <state img="#-vain.png">&lt;i&gt;My,&lt;/i&gt; what happened to that peppy little girl from last time?  I suppose we all go through a moody phase...I know I did.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="witchs_costume" role="target" character="estelle" stage="0" />
+                <state img="#-seductive.png">&lt;i&gt;Awww,&lt;/i&gt; you're so adorable, Miss Princess!  You could never scare anyone just by dressing up like a witch--your eyes are too sweet.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="misato_catrina" role="target" character="misato" stage="0" />
+                <state img="#-awkward.png" marker="misato_catrina0">O-oh, is that &lt;i&gt;you,&lt;/i&gt; Misato?  ...&lt;i&gt;Eugh.&lt;/i&gt;  Is that traditional Earth makeup?  Now I know why men think we're hideous monsters.</state>
+                <state img="#-awkward.png" marker="misato_catrina0">&lt;i&gt;Ugh,&lt;/i&gt; Misato, is that really you under there?  I thought you'd be old enough to not overdo it on makeup.  Now I know why men fear us.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="jessie_christmas_queen" role="target" character="jessie" stage="0" />
+                <state img="#-laughing.png" marker="jessie_christmas0">Oh, look, it's the &lt;i&gt;old lady&lt;/i&gt; again.  Do you &lt;i&gt;always&lt;/i&gt; dress so lavishly for Christmas, or has your butt sagged some more since we met?</state>
+                <state img="#-interested.png" marker="jessie_christmas0">&lt;i&gt;Hmph.&lt;/i&gt;  Back again for Christmas, are we, Granny?  Clothes don't make the woman, you know--unless you're &lt;i&gt;sagging&lt;/i&gt; some more.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="nagisa_maid_cafe" role="target" character="nagisa" stage="0" />
+                <state img="#-seductive.png">&lt;i&gt;Nagisa?&lt;/i&gt;  It &lt;i&gt;is&lt;/i&gt; you, that sugary-sweet little girl!  Why are you all dressed up like a maid now, hm?  You ought to be a fairy or an elf.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="ghost_bride_weiss_schnee" role="target" character="weiss_schnee" stage="0" />
+                <state img="#-surprised.png" marker="weiss_sghost0">&lt;i&gt;U-uh--!&lt;/i&gt;  A-are you a--g-ghost?  I-I didn't mean any of the nasty things I said about you being flat!</state>
+                <state img="#-shocked.png" marker="weiss_sghost0">
+                    <alt-img stage="0">#-shocked2.png</alt-img>
+                    <text>&lt;i&gt;W-W-Weiss?&lt;/i&gt;  W-when did you die?  Are you haunting me because I made fun of your breasts?  Eek!</text>
+                </state>
+            </case>
+            <case stage="0-6">
+                <condition filter="ghost_bride_weiss" role="target" character="weiss" stage="0" />
+                <state img="#-stretching.png">&lt;i&gt;Oh, dear.&lt;/i&gt;  Well, I know models come and go, but honestly, there's no reason to take your "death" so literally, honey.  What a drama queen.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="festival_aella" role="target" character="aella" stage="0" />
+                <state img="#-interested.png">Oh, it's you, the girl who makes &lt;i&gt;me&lt;/i&gt; feel short.  I like how you've dolled yourself up a bit--what's the occasion?</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="lynbride" role="target" character="lyn" stage="0" />
+                <state img="#-vain.png">Oh, what a lovely wedding dress!  I always picture what I'll be wearing when I embrace Barnette at the altar...it'll be wonderful!</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="dapper_date" role="target" character="haru" stage="0" />
+                <state img="#-teasing.png">Well, it's Miss Haru again!  And you're quite a bit more spruced-up than your old &lt;i&gt;sweater&lt;/i&gt; look.  Who are you dressing up for, hm?</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="monika_love_bug" role="target" character="monika" stage="0" />
+                <state img="#-bored.png">Oh, &lt;i&gt;no,&lt;/i&gt; it's you again.  The girl who kept playing tricks on my eyes...well, how cute, you've done something with your hair.  Creeper...</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="flower_girl_ini" role="target" character="ini" stage="0" />
+                <state img="#-critical.png" marker="ini_fg0">H-hey, since when is your name "Dahlia"?  You're that &lt;i&gt;Ini&lt;/i&gt; girl who played dumb and then got all creepy on me!</state>
+                <state img="#-critical.png" marker="ini_fg0">Hey, do you think I'm some brainless blonde who can't remember your name?  You're that creepy &lt;i&gt;Ini&lt;/i&gt; girl, "Dahlia"!</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="meia_cupid" role="target" character="meia" stage="0" />
+                <state img="#-vain.png" marker="meia_cupid0">You look so &lt;i&gt;cute&lt;/i&gt; in that costume.  Hanging around &lt;i&gt;me&lt;/i&gt; must've brightened your spirit over all this time.</state>
+                <state img="#-cackling.png" marker="meia_cupid0">Honestly, I could hardly get you to wear a Christmas hat back in the day!  It's &lt;i&gt;my&lt;/i&gt; influence that's softened you up, you know!</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="bunny_catria" role="target" character="catria" stage="0" />
+                <state img="#-laughing.png">Oh, it's you, the cute little horseback rider whose skirt was too short for her backside.  I see you've dropped all pretense of modesty.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="new_year_aella" role="target" character="aella" stage="0" />
+                <state img="#-vain.png" marker="aella_newyear0">&lt;i&gt;Oh, how cute,&lt;/i&gt; you've brought a stuffed animal.  A bit childish for someone stripping--&lt;i&gt;I&lt;/i&gt; have another person to cuddle in bed.</state>
+                <state img="#-teasing.png" marker="aella_newyear0">Aren't you a little &lt;i&gt;old&lt;/i&gt; to be clinging to plush toys, honey?  Adults cuddle &lt;i&gt;each&lt;/i&gt; other in bed.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="florina_easter" role="target" character="florina" stage="0" />
+                <state img="#-interested.png" marker="florina_easter0">Aren't you that timid &lt;i&gt;Florina&lt;/i&gt; girl who had several layers of armor?  Who forced you into such a risqué bunny suit?</state>
+                <state img="#-cackling.png" marker="florina_easter0">&lt;i&gt;Well, now!&lt;/i&gt;  Haven't &lt;i&gt;you&lt;/i&gt; matured, Miss Pegasus?  You're dressed more provocatively than &lt;i&gt;I&lt;/i&gt; am, after all your crying last time!</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="ragnarinkah" role="target" character="rinkah" stage="0" />
+                <state img="#-shocked.png" marker="rinkah_r0">
+                    <alt-img stage="0">#-shocked2.png</alt-img>
+                    <text>&lt;i&gt;U-uh--!&lt;/i&gt;  A-aren't you--that fiery muscle girl with the tattoos?  I didn't mean &lt;i&gt;fiery&lt;/i&gt; so literally!  S-stay back!</text>
+                </state>
+                <state img="#-shocked.png" marker="rinkah_r0">
+                    <alt-img stage="0">#-shocked2.png</alt-img>
+                    <text>&lt;i&gt;Agh!&lt;/i&gt;  R-Rinkah?  W-what demon crawled inside your head since last time and set it on fire?  Don't touch me!</text>
+                </state>
+            </case>
+            <case stage="0">
+                <condition filter="rinkah_charlotte" role="target" character="rinkah" stage="0" />
+                <state img="#-laughing.png">&lt;i&gt;Well,&lt;/i&gt; you were already showing more skin than me the &lt;i&gt;last&lt;/i&gt; time we met.  What do you wear on Christmas, three pieces of tape?</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="d.va_black_cat" role="target" character="d.va" stage="0" />
+                <state img="#-thinking.png">I admit, I've never dressed as any "sexy animal" for Halloween...it just seems so cliché.  I'll have to give it more thought this year...</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="white_raven" role="target" character="raven" stage="0" />
+                <state img="#-vain.png">Oh, are you a little less glum around Halloween, Raven?  I see you're learning to embrace the beauty of long, flowing, shimmering hair.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="full_moon" role="target" character="moon" stage="0" />
+                <state img="#-awkward.png" marker="moon_full0">...Wait a minute.  Aren't you that creepy island girl who was always going on about having sex with animals?  God, what've you done to your skin?</state>
+                <state img="#-bored.png" marker="moon_full0">...You're that oversexed island girl, aren't you?  I heard men's seed is a pearly white...I guess you've had a bit too much of it.</state>
+            </case>
+            <case stage="0">
+                <condition filter="swimsuit_sheena" role="target" character="sheena" stage="0" />
+                <state img="#-stretching.png">Oh, it's Miss Assassin, looking for a day of fun in the sun.  Water and sand just ruin my hair...I prefer an umbrella's shade.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="juri_summer" role="target" character="juri" stage="0" />
+                <state img="#-bored.png" marker="juri_summer0">&lt;i&gt;And who have we here?  It's...&lt;/i&gt;eugh.  The girl who threatens bodily harm because our names sound alike.  Are you enjoying your summer?</state>
+                <state img="#-critical.png" marker="juri_summer0">Oh, not &lt;i&gt;you&lt;/i&gt; again.  We're only a vowel apart, and you wanted to &lt;i&gt;tear&lt;/i&gt; me apart for that.  Just go for a swim and leave me alone!</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="monika_stirring_mermaid" role="target" character="monika" stage="0" />
+                <state img="#-frustrated.png">You're a &lt;i&gt;stirring mermaid,&lt;/i&gt; are you?  Something about being around you certainly stirs up headaches...</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="zizou_summer" role="target" character="zizou" stage="0" />
+                <state img="#-laughing.png">Aren't you that self-proclaimed goddess from last time?  You haven't &lt;i&gt;filled out&lt;/i&gt; much, but you could certainly use some sun.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="summer_larachel" role="target" character="larachel" stage="0" />
+                <state img="#-seductive.png" marker="larachel_summer0">Oh, honey, that's &lt;i&gt;so&lt;/i&gt; much better.  I'm glad you've freed yourself from all that heavy armor--now let your beauty &lt;i&gt;breathe.&lt;/i&gt;</state>
+                <state img="#-interested.png" marker="larachel_summer0">You're that haughty girl with the magical staff and &lt;i&gt;way&lt;/i&gt; too much armor.  I'm sure this is only for summer, but you ought to just wear it year-round.</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="nugi-chan_bikini" role="target" character="nugi-chan" stage="0" />
+                <state img="#-stretching.png">&lt;i&gt;Waitress,&lt;/i&gt; be a dear and bring me some fruity drink--mostly fruit, and a little bit drink.  &lt;i&gt;Thank you!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6">
+                <condition filter="pinkie_pie" role="target" character="pinkie_pie" stage="0" />
+                <state img="#-laughing.png" marker="pinkie_bunny0">Hello there, Miss Pinkie.  How can you stomach being dressed so &lt;i&gt;scandalously&lt;/i&gt;--is that all Earth's Easter is?</state>
+                <state img="#-interested.png" marker="pinkie_bunny0">Oh, if it isn't the pink-haired, pink-skinned girl from before.  What caused you to dress so &lt;i&gt;Mejarian&lt;/i&gt;-esque?  Earth's Easter?</state>
+            </case>
             <case stage="0-6" target="ann" targetStage="0" alsoPlaying="ryuji" alsoPlayingStage="0">
                 <state img="#-seductive.png">&lt;i&gt;Ooh, you're classmates?&lt;/i&gt;  Is this an after-school date?  I've never seen a man-woman couple!</state>
                 <state img="#-cackling.png">Ooh, you two go to school together?  &lt;i&gt;Are you on a date?&lt;/i&gt;  Romance between a boy and a girl--in the flesh!</state>
@@ -6607,32 +6984,42 @@
                 <state img="#-smug.png">Oh, dear, Little Miss Four-eyes, I'm sorry for interrupting your plan to strip for your blonde classmate.  He'll just be staring at &lt;i&gt;me&lt;/i&gt; the whole time.</state>
                 <state img="#-teasing.png">It doesn't take enormous lenses to see through your plan, Futaba--you want to strip for your classmate here.  Men are dumb, it could work.</state>
             </case>
-            <case stage="0-8" target="meia" targetStage="0" alsoPlaying="sei" alsoPlayingStage="0">
-                <state img="#-cackling.png">&lt;i&gt;Omigosh, Meia!&lt;/i&gt;  This Sei girl looks just like you!  Ask her out, ask her out!</state>
+            <case stage="0-8">
+                <condition role="target" character="meia" stage="0" />
+                <condition role="other" character="sei" stage="0" />
+                <state img="#-cackling.png">&lt;i&gt;Oh my God, Meia!&lt;/i&gt;  This Sei girl looks just like you!  Ask her out, would you?</state>
                 <state img="#-seductive.png">Deep, gorgeous eyes, short blue hair, even armor!  Meia, you and Sei were &lt;i&gt;made&lt;/i&gt; for each other!</state>
                 <state img="#-seductive.png">Oh my God, Meia, look how adorable Sei is!  She's like you if you were a few inches shorter and knew how to smile.</state>
                 <state img="#-teasing.png">Meia, if you don't ask Sei out, I will &lt;i&gt;personally&lt;/i&gt; do it for you.  She looks just like you--imagine the cute blue-haired babies!</state>
             </case>
-            <case stage="0-8" target="meia" targetStage="0" alsoPlaying="sei" alsoPlayingStage="1-10">
+            <case stage="0-8">
+                <condition role="target" character="meia" stage="0" />
+                <condition role="other" character="sei" stage="1-10" />
                 <state img="#-cackling.png">S-so, uh, Meia!  I know you and Sei got off on the wrong foot, but look what a cute couple you'd make!  Blue hair, gorgeous eyes!</state>
                 <state img="#-seductive.png">...Better defuse things.  Hey, Sei, maybe you want to give my boss another chance?  She's crabby, but you two would be so cute together!</state>
                 <state img="#-seductive.png">I'm sorry Meia was so rude before, Sei.  You're as cute as a button--and a cheery girlfriend would really lighten her up!</state>
                 <state img="#-smug.png">Please don't judge my boss too harshly, Sei, darling.  If you'd like to brighten her mood, &lt;i&gt;she's single!&lt;/i&gt;</state>
                 <state img="#-seductive.png">Oh, Sei, you're such a cutie, and opposites attract!  Please understand Meia's unease with soldiers--and think of your cute blue-haired babies together.</state>
             </case>
-            <case stage="0-8" target="meia" targetStage="1" alsoPlaying="sei" alsoPlayingStage="0-4">
+            <case stage="0-8">
+                <condition role="target" character="meia" stage="1" />
+                <condition role="other" character="sei" stage="0-4" />
                 <state img="#-vain.png">&lt;i&gt;Is she ever.&lt;/i&gt;  All Meia needs is a woman's touch to melt away all her tension...</state>
                 <state img="#-teasing.png">More than single, Sei--&lt;i&gt;desperately&lt;/i&gt; single.  She's so overworked and stressed...if only a girl were there in her bed each night.</state>
                 <state img="#-laughing.png">&lt;i&gt;Ohoho.&lt;/i&gt;  There's single, and then there's my boss here.  She's married to the job.</state>
                 <state img="#-seductive.png">&lt;i&gt;Is that an invitation, Sei, darling?&lt;/i&gt;  My leader acts all-business, but she's a sweet little thing beneath the ice...</state>
             </case>
-            <case stage="0-8" target="meia" targetStage="2" alsoPlaying="revy" alsoPlayingStage="0-9">
+            <case stage="0-8">
+                <condition role="target" character="meia" stage="2" />
+                <condition role="other" character="revy" stage="0-9" />
                 <state img="#-seductive.png">Well, you're certainly swamped with work, yes.  But that just means you need to find a girl who'll &lt;i&gt;relieve&lt;/i&gt; all that stress.</state>
                 <state img="#-teasing.png">Of course, honey, but you'd handle your work a lot better if a woman were there for you.  You know, to massage the tension out.</state>
                 <state img="#-vain.png">Oh, just stop it.  Having a ton of work is no excuse--I'm second-ranked, and I need Barnette around to &lt;i&gt;handle&lt;/i&gt; all that stress!</state>
                 <state img="#-laughing.png">So go and find a girl who's just as work-obsessed, Leader.  She'll leave you alone...and then the two of you can snuggle your stress away.</state>
             </case>
-            <case stage="0-8" target="revy" targetStage="6" alsoPlaying="meia" alsoPlayingStage="5">
+            <case stage="0-8">
+                <condition role="target" character="revy" stage="6" />
+                <condition role="other" character="meia" stage="5" />
                 <state img="#-surprised.png">&lt;i&gt;M-Meia?&lt;/i&gt;  What are you egging her on for?  You--always &lt;i&gt;defuse&lt;/i&gt; things!</state>
                 <state img="#-shocked.png">H-hey, Meia, this woman's nuts!  Guns or no guns, she's going to try to kill you!</state>
                 <state img="#-shocked.png">...&lt;i&gt;Meia?&lt;/i&gt;  What's gotten into you, taunting her like that?  What if she does it?</state>
@@ -6681,7 +7068,7 @@
                 <alternative target="weiss" targetStage="0" alsoPlaying="winter" alsoPlayingStage="0" />
                 <alternative target="winter" targetStage="0" alsoPlaying="weiss" alsoPlayingStage="0" />
                 <state img="#-teasing.png">&lt;i&gt;Pfft!&lt;/i&gt;  Well, now we know how Earth soldiers act on downtime--taking their little sisters to strip poker games!</state>
-                <state img="#-laughing.png">Is &lt;i&gt;this&lt;/i&gt; the kind of values they teach you in the military, dear?  "Strip in front of your little sister?</state>
+                <state img="#-laughing.png">Is &lt;i&gt;this&lt;/i&gt; the kind of values they teach you in the military, dear?  "Strip in front of your little sister"?</state>
                 <state img="#-smug.png">Premature white hair, weapons, grim expressions?  You don't need to tell me you're sisters--though I do question a soldier's ethics to bring her little sister here.</state>
                 <state img="#-vain.png">Well, looks like we're stuck with a pair of literal ice queens!  And they're &lt;i&gt;related&lt;/i&gt;--I guess they don't teach you that's weird in Earth's military.</state>
             </case>
@@ -6701,13 +7088,29 @@
                 <state img="#-teasing.png">You know, Tharja, you really shouldn't obsess over one man so much.  A more &lt;i&gt;well-endowed&lt;/i&gt; woman might swipe him away.</state>
                 <state img="#-cackling.png">It's so cute to watch Tharja squirm whenever I shake my breasts, isn't it, ~player~?  I think she's worried about me!</state>
             </case>
-            <case stage="0-8" target="meia" targetStage="1" alsoPlaying="saki_zls" alsoPlayingSaying="You too, Blondie">
+            <case stage="0-6">
+                <condition role="target" character="tharja" stage="0" />
+                <condition gender="female" role="other" character="human" />
+                <state img="#-teasing.png" marker="tharjaf0">Oh, dear.  Am I &lt;i&gt;intruding&lt;/i&gt; on your little love affair with ~player~?  Jealousy is attractive, but &lt;i&gt;desperation&lt;/i&gt; isn't.</state>
+                <state img="#-laughing.png" marker="tharjaf0">~player~, are you and Tharja an item?  She sure treats you like it, but she sounds so &lt;i&gt;desperate&lt;/i&gt; to me.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="tharja" stage="0" />
+                <condition gender="male" role="other" character="human" />
+                <state img="#-teasing.png" marker="tharjam0">Oh, dear.  Am I &lt;i&gt;intruding&lt;/i&gt; on your little love affair with ~player~?  I'd just &lt;i&gt;love&lt;/i&gt; to steal a man away from an Earth girl.</state>
+                <state img="#-laughing.png" marker="tharjam0">~player~, are you and Tharja an item?  I hope it's not normal for women to patrol about their men like desperate lapdogs.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="meia" stage="1" />
+                <condition role="other" character="saki_zls" saying="You too, Blondie" />
                 <state img="#-vain.png">&lt;i&gt;Of course&lt;/i&gt; we are!  Didn't our exotically ravishing beauty give that away?  ...I think they're just jealous, Meia.</state>
                 <state img="#-stretching.png">&lt;i&gt;Hmph.&lt;/i&gt;  You know what I think?  Earthlings just don't want to believe there's a whole planet of women as beautiful as we are.</state>
                 <state img="#-smug.png">It boggles the mind, Leader.  Perhaps it gives Earth girls comfort to think our beauty can be achieved on this little rock.</state>
                 <state img="#-vain.png">&lt;i&gt;"Are we from outer space."&lt;/i&gt;  I hate to disappoint, but you won't find such perfect examples of the female form anywhere but Mejare.</state>
             </case>
-            <case stage="0-5" target="meia" targetStage="4" alsoPlaying="miko" alsoPlayingNotSaidMarker="Nirvana01">
+            <case stage="0-5">
+                <condition role="target" character="meia" stage="4" />
+                <condition role="other" character="miko" notSaidMarker="Nirvana01" />
                 <state img="#-vain.png">Why, yes!  And a magnificent ship it is--although I preferred &lt;i&gt;my&lt;/i&gt; name, the "Luxury Night."</state>
                 <state img="#-teasing.png">Ah, yes, the Nirvana!  A fabulous name for an incredible ship.  I came up with the &lt;i&gt;Luxury Night,&lt;/i&gt; though--much better.</state>
                 <state img="#-smug.png">Do you not the like the name, Miss Nippon?  I admit, we should've gone with &lt;i&gt;my&lt;/i&gt; choice--the "Luxury Night."</state>
@@ -6721,119 +7124,157 @@
                 <state img="#-awkward.png">Hey, who're you calling &lt;i&gt;aliens?&lt;/i&gt;  I was joking if I said that.  Mejare was settled by Earth women, you know.</state>
                 <state img="#-annoyed.png">Oh, we're remarkably human-like indeed, Mister N.  It's almost as if Mejarians &lt;i&gt;are&lt;/i&gt; human.  So much for your smarts.</state>
             </case>
-            <case stage="0-6" target="ami" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="ami" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-seductive.png">Is that so?  Well, Ami, you've &lt;i&gt;got&lt;/i&gt; to let me know how to become an Earth model.  I'm a bit of an outlaw on Mejare, after all.</state>
                 <state img="#-teasing.png">Thanks for the tip, Meia.  Leave it to you to gather a little intel on our friends here...how's life as an Earth model, honey?</state>
                 <state img="#-vain.png">Ooh, she's a &lt;i&gt;model?&lt;/i&gt;  &lt;i&gt;Now&lt;/i&gt; I'm curious...that was always my dream job, after all.</state>
             </case>
-            <case stage="0-6" target="arwen" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="arwen" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-confused.png">Hey, what's all this about the &lt;i&gt;middle&lt;/i&gt; of Earth?  Is there a spot underground that only you elf-people get to live in?</state>
                 <state img="#-confused.png">And I call &lt;i&gt;you&lt;/i&gt; pale, Meia.  Arwen here looks almost ghostly...is that just the way elves are?</state>
                 <state img="#-confused.png">Hey, what's up with those pointy ears?  And that pallid skin?  You're a strange one, "elf" girl.</state>
                 <state img="#-confused.png">So you call yourself an elf, right?  Is that another word for "Earthling with crazy ears"?  Because you look human otherwise.</state>
             </case>
-            <case stage="0-6" target="catria" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="catria" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-seductive.png">Well, aren't &lt;i&gt;you&lt;/i&gt; a cute little thing in ancient-looking armor?  &lt;i&gt;Catria,&lt;/i&gt; you said?</state>
                 <state img="#-smug.png">Are you from a time before electricity, dear?  That armor is like a prehistoric version of what Meia wears.</state>
                 <state img="#-teasing.png">Ooh, you've got on chest-and-shoulder armor like Meia here.  Hers looks a lot more modern, though--and I think she wears it better.</state>
                 <state img="#-cackling.png">Omigosh, Catria, you're so adorably shy!  And you've got such old-fashioned armor on--it's so cool!</state>
             </case>
-            <case stage="0-6" target="chell" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="chell" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-stretching.png">See, Meia, I think you do the "strong, silent type" thing pretty well.  Chell here is an example of taking it too far.</state>
                 <state img="#-laughing.png">Slow on the uptake?  The "strong, silent type" doesn't mean &lt;i&gt;literally&lt;/i&gt; never speaking, you know.</state>
                 <state img="#-vain.png">Oh, don't feel bad.  I know you're speechless at the sight of me--but I'll do enough talking for both of us!</state>
                 <state img="#-teasing.png">Stunned into speechlessness?  I'm flattered, but really, honey, you can talk to me.  I won't mind.</state>
                 <state img="#-teasing.png">Hey, Chell.  If I'm the most gorgeous woman you've ever met, don't say anything.</state>
             </case>
-            <case stage="0-6" target="chun-li" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="chun-li" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-laughing.png">&lt;i&gt;Oh, dear.&lt;/i&gt;  I can see where &lt;i&gt;this&lt;/i&gt; is going, Ice Queen.</state>
                 <state img="#-vain.png">&lt;i&gt;Flirting,&lt;/i&gt; are we Meia?  I figured as much.  Best to let the lovebirds just figure things out on their own.</state>
                 <state img="#-smug.png">Meia, honey, you're just setting yourself up for disappointment.  Earth girls don't like each others' bodies the way &lt;i&gt;we&lt;/i&gt; do.</state>
                 <state img="#-teasing.png">Ooh, you're so &lt;i&gt;cute&lt;/i&gt; when a woman actually gets you going!  She'll deny it now, Chun, but Meia here is &lt;i&gt;totally&lt;/i&gt; into you.</state>
             </case>
-            <case stage="0-6" target="d.va" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="d.va" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-smug.png" marker="planetcountries">Where'd you say you were from?  Planet &lt;i&gt;Korea?&lt;/i&gt;  Well then, it seems Korea and Mejare share a fashion sense...</state>
                 <state img="#-teasing.png" marker="planetcountries">You're a cutie, Miss Bodysuit, if a little on the short side.  Is that just how they make women over on Planet Korea?</state>
                 <state img="#-teasing.png">Well, everyone, cards on the table.  Who wears the whole bodysuit look better--D.Va or my miserable old boss here?</state>
                 <state img="#-smug.png">You're an adorable little thing, D.Va!  All wrapped up in that cute bodysuit, just like &lt;i&gt;another&lt;/i&gt; pilot I know...who might be sitting here.</state>
             </case>
-            <case stage="0" target="gwen" targetStage="0" alsoPlaying="meia">
+            <case stage="0">
+                <condition role="target" character="gwen" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-seductive.png">I understand, dear.  You're so stunned by my beauty that you hid your own face in shame.  I'm sure you're still cute!</state>
                 <state img="#-seductive.png">Don't hide that pretty little face on &lt;i&gt;my&lt;/i&gt; account, honey.  You've certainly got a beautiful &lt;i&gt;figure.&lt;/i&gt;</state>
                 <state img="#-laughing.png">Look, Meia, a girl with your fashion sense--though apparently she needs a mask to match your sheer lack of emotion.</state>
                 <state img="#-laughing.png">You've got a lot of sass for someone who won't show her face, Miss Masked.  Hiding some grisly injury, or just your own embarrassment?</state>
             </case>
-            <case stage="0-6" target="hk416" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="hk416" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-interested.png">I know I'm a foreign woman, honey, but can't you be more friendly?  What's your &lt;i&gt;real&lt;/i&gt; name?</state>
                 <state img="#-teasing.png">Going by just a code name, are we?  You must find the alien woman pretty scary--or you're just miserable.</state>
                 <state img="#-laughing.png">You're too stoic for your own good, Miss Machine--just like Meia here.  But even &lt;i&gt;she&lt;/i&gt; uses her real name.</state>
                 <state img="#-vain.png">What kind of woman just gives "HK416" for her name?  My Barnette is a sour little muffin, too, and she loves guns like you do.</state>
             </case>
-            <case stage="0-6" target="jane" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="jane" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-laughing.png">What's up, sourpuss?  You look even more miserable than a certain squadron leader I know...the one right next to us.</state>
                 <state img="#-smug.png">Hey, lighten up, girlie.  I could have gotten this mood from playing poker with Meia back on the ship.</state>
                 <state img="#-stretching.png">&lt;i&gt;Yawn...&lt;/i&gt;are you really going to be a miserable bore this whole time?  Would having &lt;i&gt;my&lt;/i&gt; breasts make you feel better?</state>
                 <state img="#-smug.png">Looks like it's Little Miss Sunshine's turn to strip.  Between you and Meia here, the energy's just through the roof.</state>
             </case>
-            <case stage="0-6" target="kyoko" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="kyoko" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-interested.png">Look, Meia, she's just as pale, serious, and boring as you are.  Think she'd smile around Kahlua?</state>
                 <state img="#-smug.png">Hey, Meia's standing right here.  Isn't that enough boredom for one table without &lt;i&gt;you&lt;/i&gt; aping her style?</state>
                 <state img="#-laughing.png">Look at that, Meia, Earth's found a way to mass-produce you!  &lt;i&gt;Diabolical.&lt;/i&gt;</state>
                 <state img="#-laughing.png">&lt;i&gt;Yeah, yeah, Meia, stay cocky.&lt;/i&gt;  Oh wait, Meia's over &lt;i&gt;here!&lt;/i&gt;  You two are just so similar.</state>
             </case>
-            <case stage="0-6" target="marinette" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="marinette" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-laughing.png">Hey, Meia, what do you think?  Should we try to find you a bodysuit with polka dots?  Maybe force you to smile like Marinette?</state>
                 <state img="#-interested.png">This girl makes bodysuits look a lot cuter than &lt;i&gt;you&lt;/i&gt; do, Meia.  Must be because she smiles...or because of the polka dots.</state>
                 <state img="#-laughing.png">Even with the mask on, this girl emotes much more than &lt;i&gt;you,&lt;/i&gt; Meia.  Maybe a polka-dotted suit would lighten you up.</state>
                 <state img="#-teasing.png">If you're not a fan of polka dots, Meia, maybe you could adopt this girl's adorable accent and actually brighten a room for once.</state>
             </case>
-            <case stage="0-6" target="mei" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="mei" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-laughing.png">Mei and Meia, eh?  I hope our other guests won't mix the two of you up--both are cold in your own ways, after all.</state>
                 <state img="#-smug.png">Look, Meia, this girl's nearly got your name.  But she smiles, so telling you two apart should be easy.</state>
                 <state img="#-teasing.png">Mei and Meia?  I'd play matchmaker, but you'd be the most confusing couple of all time.</state>
                 <state img="#-teasing.png">See, Meia?  You're so sweet, this girl was nearly named after you.  Nearly.</state>
             </case>
-            <case stage="0-6" target="meia" targetStage="0" alsoPlaying="elizabeth">
+            <case stage="0-6">
+                <condition role="target" character="meia" stage="0" />
+                <condition role="other" character="elizabeth" />
                 <state img="#-vain.png">No jokes here, darling!  We're one hundred percent &lt;i&gt;alien...&lt;/i&gt;if you define "alien" as "not from Earth."</state>
                 <state img="#-seductive.png">We &lt;i&gt;are&lt;/i&gt; from another planet, honey!  We're fearless Mejarian pirates...and we've come &lt;i&gt;all this way&lt;/i&gt; to learn about Earth.</state>
                 <state img="#-vain.png">Yep, just two exotic women from another world!  So we stuck together, since we can only trust each other around here.</state>
                 <state img="#-teasing.png">We're pirates from Mejare, darling, and all we know about Earth is that men and women live together here!  Which sounds strange to us.</state>
                 <state img="#-seductive.png">That's right, Elizabeth--Meia and I are from another world!  And we're stripping here--&lt;i&gt;that's how much we trust each other.&lt;/i&gt;</state>
             </case>
-            <case stage="0-6" target="meia" targetStage="0" alsoPlaying="kizuna">
+            <case stage="0-6">
+                <condition role="target" character="meia" stage="0" />
+                <condition role="other" character="kizuna" />
                 <state img="#-interested.png">...This is &lt;i&gt;Meia Gisborn&lt;/i&gt; you're talking about, right?  Because I think I talk more in an afternoon than she has in years.</state>
                 <state img="#-teasing.png">Oh, Kizuna, honey.  Clearly you've hit your head--this is my squadron leader, Meia.  She only speaks when spoken to...or when she has criticisms.</state>
                 <state img="#-confused.png">...&lt;i&gt;Excuse me?&lt;/i&gt;  Honey, I've known Meia for quite a while.  If she didn't have to give orders, she'd be mute.</state>
                 <state img="#-interested.png">...Meia, do you know this girl?  Did you plant her here to try and convince me you can actually carry a conversation?</state>
                 <state img="#-thinking.png">Hey, Kizuna, honey, Meia is the &lt;i&gt;last&lt;/i&gt; girl I'd call a chatterbox.  Well, sometimes she is--in the spa.</state>
             </case>
-            <case stage="0" target="meia" targetStage="0" alsoPlaying="mahiru">
+            <case stage="0">
+                <condition role="target" character="meia" stage="0" />
+                <condition role="other" character="mahiru" />
                 <state img="#-laughing.png">Hey, what's that supposed to mean?  You think they wouldn't believe me if I just said it?</state>
                 <state img="#-vain.png">The only proof I need is my trusted word, Meia!  Now come here and get in frame.</state>
                 <state img="#-seductive.png">Oh, come on, Leader, you've got a face the camera loves!  They'd believe me on hearsay, anyway.</state>
                 <state img="#-teasing.png">As if I need proof to convince them.  But hey, just focus on giving your adorable smile!</state>
                 <state img="#-seductive.png">Show Mahiru how cute your smile can be, Meia!  That'll be all the crew sees in that photo...not that I need proof.</state>
             </case>
-            <case stage="0-8" target="meia" targetStage="1" alsoPlaying="miko">
+            <case stage="0-8">
+                <condition role="target" character="meia" stage="1" />
+                <condition role="other" character="miko" />
                 <state img="#-vain.png">A &lt;i&gt;boat?&lt;/i&gt;  The Nirvana is a magnificent pirate ship full of our devoted Mejarian crewmates!  And a few men.</state>
                 <state img="#-smug.png">The Nirvana is not some silly &lt;i&gt;boat,&lt;/i&gt; Miss Japanese.  It's a marvel of fusion technology, crewed by our lovely Mejarian sisters!</state>
                 <state img="#-stretching.png">My, so &lt;i&gt;condescending,&lt;/i&gt; calling our ship a &lt;i&gt;boat.&lt;/i&gt;  The Nirvana is crewed by the most beautiful women in the galaxy--and more sophisticated than you could dream of.</state>
                 <state img="#-smug.png">You insult every gorgeous woman who crews the Nirvana, calling it a &lt;i&gt;boat.&lt;/i&gt;  Its marvelous Paksis technology could run circles around anything &lt;i&gt;you&lt;/i&gt; have.</state>
             </case>
-            <case stage="0-8" target="meia" targetStage="3" alsoPlaying="miko">
+            <case stage="0-8">
+                <condition role="target" character="meia" stage="3" />
+                <condition role="other" character="miko" />
                 <state img="#-seductive.png">Of course we're comrades!  Meia acts all sour because that's her job, but she's a big sweetheart who cares about us!</state>
                 <state img="#-teasing.png">Miss Japanese-Princess is right on the mark for once.  I would never abandon my fearless leader--and she cares, too, I swear.</state>
                 <state img="#-coy.png">Oh, Meia and I are the best of friends, Miko!  Well, as much as she &lt;i&gt;wants&lt;/i&gt; to be.  But I know she cares beneath the ice.</state>
                 <state img="#-smug.png">All that icy apathy is just a front, Miss Politics.  Meia's shared a lot with me, since I'm her second-in-command...</state>
                 <state img="#-seductive.png">Oh, my boss will always insist we're all-business, but she can be quite a talker in the spa.  &lt;i&gt;We trust each other!&lt;/i&gt;</state>
             </case>
-            <case stage="0-6" target="misato" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="misato" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-teasing.png">You'll have to excuse Meia's hostility.  She's absorbed all of our collective pirate hatred of authority.</state>
                 <state img="#-vain.png">Oh, don't mind Meia.  She's taken the whole pirates-hating--soldiers thing a little too much to heart.</state>
                 <state img="#-smug.png">Just let Meia fume a little, Miss Military. We know you're not from &lt;i&gt;Mejare's&lt;/i&gt; nasty old ranks.</state>
                 <state img="#-stretching.png">Cute purple hair, Miss Military.  Oh, don't worry about Meia.  She's even touchier with soldier women than the rest of us.</state>
             </case>
-            <case stage="0-6" target="misty" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="misty" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-teasing.png">Ooh, look, Meia.  Another Misty.  &lt;i&gt;Don't go falling in love with her, now!&lt;/i&gt;</state>
                 <state img="#-laughing.png">OK, Meia.  I know this girl's called Misty, but don't start trying to be &lt;i&gt;her&lt;/i&gt; Big Sister, too.</state>
                 <state img="#-teasing.png">Don't tell anyone, but...&lt;i&gt;Meia's got a bit of a crush on a girl named Misty.&lt;/i&gt;  Fair warning!</state>
@@ -6845,37 +7286,49 @@
                 <state img="#-vain.png">Ooh, Nayru has your gorgeous flowing blue hair earned you a fan in Navi?  I understand--I have to deal with fan mail on the ship.</state>
                 <state img="#-seductive.png">And I thought &lt;i&gt;I&lt;/i&gt; was a fan of blue hair and musical skills.  Little Miss Fairy is buzzing about for your autograph, honey!</state>
             </case>
-            <case stage="0-6" target="raven" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="raven" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-bored.png">&lt;i&gt;Yeesh.&lt;/i&gt;  Meia, I'm sorry I ever called you miserable.  Next to this girl, you're a field of sunflowers.</state>
                 <state img="#-teasing.png">I'm glad we came here, boss.  Miss Blueberry over here has given me a new appreciation for your sense of humor.</state>
                 <state img="#-bored.png">Jeez, I've at least &lt;i&gt;seen&lt;/i&gt; you smile, Meia.  I don't think this girl &lt;i&gt;has&lt;/i&gt; those muscles.</state>
                 <state img="#-smug.png">At least you have your face on display, Leader.  This girl's both miserable &lt;i&gt;and&lt;/i&gt; refuses to show it.</state>
             </case>
-            <case stage="0-8" target="raven" targetStage="4" alsoPlaying="meia">
+            <case stage="0-8">
+                <condition role="target" character="raven" stage="4" />
+                <condition role="other" character="meia" />
                 <state img="#-seductive.png">I don't think your complexion quite matches anymore, dear.  You've really lightened up!</state>
                 <state img="#-teasing.png">So much for Miss Blueberry.  I mean, you're bluer than ever, but showing all that skin's really warmed you up!</state>
                 <state img="#-vain.png">I &lt;i&gt;knew&lt;/i&gt; stripping always makes a girl feel sexy and confident!  Meia, take some notes--this girl started off even mopier than you did.</state>
                 <state img="#-seductive.png">Hey, Miss Doom-and-Gloom, you're starting to look like you're having fun.  Won't you please follow suit, Meia?  I &lt;i&gt;know&lt;/i&gt; you feel sexy.</state>
             </case>
-            <case stage="0-8" target="revy" targetStage="1" alsoPlaying="meia">
+            <case stage="0-8">
+                <condition role="target" character="revy" stage="1" />
+                <condition role="other" character="meia" />
                 <state img="#-bored.png" marker="revy1">&lt;i&gt;Hmph.&lt;/i&gt;  Normally I'd do a little flirting with the loser, but I'd rather just ignore Miss Powderkeg over here.</state>
                 <state img="#-annoyed.png" marker="revy1">You know, I &lt;i&gt;would&lt;/i&gt; flirt with you, Revy--except you're liable to start shooting at me.</state>
                 <state img="#-sad.png" marker="revy1">You brought your laser ring, right, Meia?  Gunslinger over here might get offended I don't want to flirt with her.</state>
                 <state img="#-teasing.png" marker="revy1">You might've noticed I'm trying to flirt with the others, Revy.  If you promise to be nice, I can do it with you, too.</state>
             </case>
-            <case stage="0-6" target="samus" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="samus" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-seductive.png">Omigosh, Meia, look!  &lt;i&gt;Another&lt;/i&gt; spacefarer who recognizes the value of a bodysuit.  You should chat her up!</state>
                 <state img="#-vain.png">Blonde like me, suit like yours, from space like both of us!  This &lt;i&gt;Samus&lt;/i&gt; covers all our bases, Meia.  Go flirt with her!</state>
                 <state img="#-teasing.png">This woman's practically a Mejarian, between the spacey jumpsuit and gorgeous figure.  Go get her, Meia--she's got your sense of style!</state>
                 <state img="#-seductive.png">Full jumpsuit, shapely behind, cute face, &lt;i&gt;from space?&lt;/i&gt;  Meia, this girl is prime girlfriend material!  Now's the time!</state>
             </case>
-            <case stage="0-6" target="sayla" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="sayla" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-interested.png">...So it's &lt;i&gt;piloting&lt;/i&gt; that really gets you going, Leader.  &lt;i&gt;You hopeless intellectual, you.&lt;/i&gt;</state>
                 <state img="#-smug.png">I &lt;i&gt;knew&lt;/i&gt; you were a robot.  The only thing that makes you lighten up is another woman's skills.</state>
                 <state img="#-stretching.png">I guess I'm just shallower than you are, boss.  There you go, seeking out girlfriends on things &lt;i&gt;beyond&lt;/i&gt; looks.</state>
                 <state img="#-stretching.png">Oh, thank God, you're flirting.  For a second there I was worried you really &lt;i&gt;were&lt;/i&gt; sexless.</state>
             </case>
-            <case stage="0-6" target="sei" targetStage="0" alsoPlaying="meia">
+            <case stage="0-6">
+                <condition role="target" character="sei" stage="0" />
+                <condition role="other" character="meia" />
                 <state img="#-bored.png">Oh, for God's sake, Meia, don't go on a damn moral crusade.  She's kind of cute, isn't that enough?</state>
                 <state img="#-frustrated.png">We barely know her or what Earth's military is like, Meia.  Don't start with your vendettas against authority.</state>
                 <state img="#-bored.png">It wasn't Earth soldiers that shut down our living districts, Meia.  Cool it and try to have a nice time.</state>
@@ -6888,6 +7341,12 @@
                 <state img="#-laughing.png">Well, aren't &lt;i&gt;you&lt;/i&gt; in shape, Miss Twin-braids?  And your butt's hanging out, which makes me think this'll be an easy win.</state>
                 <state img="#-interested.png">Ooh, I can see those steel abs poking through your leotard, Blonde-Braids.  Normally women show up to strip poker, well, &lt;i&gt;wearing some clothes.&lt;/i&gt;</state>
                 <state img="#-interested.png">You're pretty dead-serious for a tiny little blonde with her butt on display, Miss Cammy.  Look, Meia, another girl who's no fun and hardly wears anything.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="shamir" stage="0" />
+                <condition role="other" character="meia" />
+                <state img="#-teasing.png" marker="shamir_meia0">&lt;i&gt;Mission this, objective that.&lt;/i&gt;  This girl must be a no-fun workaholic like you, Meia...but at least you're not pretending to work.</state>
+                <state img="#-laughing.png" marker="shamir_meia0">Are you hearing this girl go on about her mission, Meia?  That's how &lt;i&gt;you&lt;/i&gt; sound to the others.  You're lucky I know better.</state>
             </case>
             <case stage="0-6" target="d.va" targetStage="0">
                 <test expr="~target.costume~" value="d.va_cruiser" />
@@ -6903,12 +7362,18 @@
                 <state img="#-stretching.png">Mixing up the outfits, are we?  I've cultivated a certain look with my crewmates I'd rather just maintain.</state>
                 <state img="#-vain.png">Hey, check out the new style Ruby's rocking.  Not bad, but I'm the kind of girl to just stick with what I know best!</state>
             </case>
-            <case stage="0-6" target="weiss" targetStage="0">
+            <case stage="0-6">
+                <condition role="target" character="weiss" stage="0" />
                 <test expr="~target.costume~" value="weiss_v4" />
                 <state img="#-vain.png">Hey, Miss Moneybags, nice wardrobe.  I'm just a poor little pirate--&lt;i&gt;this dress is the best I can afford.&lt;/i&gt;</state>
                 <state img="#-smug.png">Figures Miss Princess can't go five minutes without changing her clothes.  A few months of piracy will teach you appreciate the clothes you've got.</state>
                 <state img="#-interested.png">At least you mixed up the colors a little with this new outfit, Miss Heirlooms.  What you had before was like if I wore all yellow.</state>
                 <state img="#-teasing.png">Looking cute there, Coinstacks.  Nice new outfit--gotta show off the money somehow, right?</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="emi" stage="0" />
+                <test expr="~emi.costume~" value="AprilFools" />
+                <state img="#-laughing.png">Now, what's so embarrassing about a lemon-printed top?  You must have worn it during an &lt;i&gt;incident--&lt;/i&gt; go on, share the story.</state>
             </case>
             <case stage="0-8" target="monika" targetStage="2">
                 <condition count="1" filter="human_female" />
@@ -6952,8 +7417,9 @@
                 <state img="#-teasing.png">So naive and clueless.  Look, Sayori, when you want someone, you march right up and flirt with them!  I'll take ~player~ if you don't.</state>
                 <state img="#-vain.png">Look, darling, everyone can tell you want ~player~ bad.  When I met Barnette, I made my feelings clear from the start!</state>
             </case>
-            <case stage="0-6" target="meia" targetStage="0">
+            <case stage="0-6">
                 <condition count="2" filter="meia" />
+                <condition role="target" character="meia" stage="0" />
                 <state img="#-annoyed.png">Ugh, now there's &lt;i&gt;two&lt;/i&gt; of you?  I guess ~player~ is a big fan of being rejected.</state>
                 <state img="#-angry.png">&lt;i&gt;Two&lt;/i&gt; Meias?  Hey, I've been hitting on you this entire time!  What's &lt;i&gt;she&lt;/i&gt; done besides give you the cold shoulder?</state>
                 <state img="#-annoyed.png">...You know, I put a lot of effort into my appearance.  Meia rolls out of bed, and &lt;i&gt;she's&lt;/i&gt; the one to get two of her?</state>
@@ -6965,6 +7431,16 @@
                 <state img="#-seductive.png">You're just &lt;i&gt;adorable&lt;/i&gt; how you've dolled yourself up!  And you're so teenie-weenie.</state>
                 <state img="#-cackling.png">Omigosh, that little outfit is &lt;i&gt;so&lt;/i&gt; cute!  And you might be more into makeup than even &lt;i&gt;I&lt;/i&gt; am.</state>
                 <state img="#-cackling.png">Ooh, do they make dresses that cute in my size?  What about your makeup?  You look so adorable!</state>
+            </case>
+            <case stage="0-6" totalRounds="0">
+                <condition role="target" character="nami_szs" stage="0" />
+                <state img="#-critical.png" marker="nami_szs0">You didn't know what we were playing?  Well, don't run off on me--you look nice and normal, so give me some answers about men!</state>
+                <state img="#-cackling.png" marker="nami_szs0">&lt;i&gt;Hahaha!&lt;/i&gt;  How clueless can a girl get, walking blind into strip poker?  Well, stay a while and fill me in about this lovely planet!</state>
+            </case>
+            <case stage="0-6" totalRounds="1-">
+                <condition role="target" character="nami_szs" stage="0" />
+                <state img="#-bored.png" marker="nami_szs0">&lt;i&gt;Well,&lt;/i&gt; talk about a spineless little girl.  You don't lose anything by being seen--why'd she have to up and leave like that?</state>
+                <state img="#-vain.png" marker="nami_szs0">What was so scary about just showing off your body a little?  Maybe the poor thing just felt all flat and short next to me...</state>
             </case>
             <case stage="0-6" target="florina" targetStage="0" totalMales="1-3">
                 <state img="#-interested.png">Jeez, you're terrified.  Maybe men &lt;i&gt;do&lt;/i&gt; eat women's livers.</state>
@@ -6984,7 +7460,8 @@
                 <state img="#-laughing.png">When the Nirvana wants to know if a woman's single, it asks Jura Basil Elden.  And &lt;i&gt;you,&lt;/i&gt; dear, can't fool me--~player~ must be shoving his tube into you.</state>
                 <state img="#-cackling.png">&lt;i&gt;Oooh, Kyu, are you and ~player~ in a man-woman relationship?&lt;/i&gt;  You keep gossiping--oh, tell me how his thing works!  Where's the seed?</state>
             </case>
-            <case stage="0-6" target="nagisa" targetStage="0" targetSaidMarker="nagisa_first_time_playing">
+            <case stage="0-6">
+                <condition role="target" character="nagisa" stage="0" saidMarker="nagisa_first_time_playing" />
                 <state img="#-laughing.png">Wait, wait, wait.  You've &lt;i&gt;never&lt;/i&gt; played poker before?  What are you, in some religious cult or something?</state>
                 <state img="#-smug.png">You poor, poor thing.  Never played poker before...what a way to start.</state>
                 <state img="#-laughing.png">You've &lt;i&gt;never&lt;/i&gt; played poker before?  Oh, dear...well, I'll be sure to show you the ropes, sweetie.</state>
@@ -7052,13 +7529,15 @@
                 <state img="#-bored.png">What a weirdo...knives are just as deadly as swords, with none of the style.</state>
                 <state img="#-frustrated.png">Better keep my sword on hand, with &lt;i&gt;this&lt;/i&gt; nutcase on the scene.</state>
             </case>
-            <case stage="0-6" target="alice_degracia" targetStage="0">
+            <case stage="0-6">
+                <condition role="target" character="alice_degracia" stage="0" />
                 <state img="#-smug.png">Hey, hey, hey!  Check out the &lt;i&gt;all-purple&lt;/i&gt; look.  That's a new one...</state>
                 <state img="#-vain.png">Hey, honey, color &lt;i&gt;contrasts&lt;/i&gt; show confidence.  Would I look nearly as stunning if this dress matched my hair?</state>
                 <state img="#-smug.png">Purple hair's certainly got an exotic appeal...too bad mine is boring old blonde.  As for the matching outfit, I don't follow the logic.</state>
                 <state img="#-teasing.png">Quite the exotic color scheme you've got there, sweetie.  Too bad you forgot to mix it up at all.</state>
             </case>
-            <case stage="0-6" target="alice_mgq" targetStage="0">
+            <case stage="0-6">
+                <condition role="target" character="alice_mgq" stage="0" />
                 <state img="#-smug.png">Forgive for being a little less than impressed with the so-called "Monster Lord," dearie.  Tattoos and skimpy clothes don't make you a monster.</state>
                 <state img="#-interested.png">Have they been feeding you indoctrination on Earth?  Why would a cute girl call herself a monster just from a garish sense of style?</state>
                 <state img="#-confused.png">..."Monster Lord"?  I mean, I think tattoos are gross and all, and you haven't got much on, but that's a little extreme of a name.</state>
@@ -7108,7 +7587,8 @@
                 <state img="#-vain.png">&lt;i&gt;That&lt;/i&gt; ought to do it, unless you've got more of the plant kingdom at your disposal.  Isn't this what you wanted, playing this game?</state>
                 <state img="#-seductive.png">Oh, I'm sure you're cute, dear--I remember your butt!  Besides...I seriously doubt this isn't turning you on.</state>
             </case>
-            <case stage="0-6" target="ami" targetStage="0">
+            <case stage="0-6">
+                <condition role="target" character="ami" stage="0" />
                 <state img="#-teasing.png">Hey, girlie, someone told me you're a model on Earth...is that true?  I'd like to get in on that...</state>
                 <state img="#-teasing.png">You're pretty cute, honey, but I hear people like legs on their models...better hope &lt;i&gt;I&lt;/i&gt; don't hit the scene.</state>
                 <state img="#-vain.png">Hey now, sweetheart.  You're cute, but there's no need to brag about being a model...not when a &lt;i&gt;Mejarian's&lt;/i&gt; on the scene.</state>
@@ -7145,7 +7625,8 @@
                 <state img="#-interested.png">How's the weather down there, at the very bottom of Earth?  You really need to drink your milk, honey.</state>
                 <state img="#-vain.png" marker="fama_and_oma">...See, &lt;i&gt;this&lt;/i&gt; is why I'm going to be the Fama for Barnette.  I don't want our daughters growing up all short from lack of milk.</state>
             </case>
-            <case stage="0-6" target="april" targetStage="0">
+            <case stage="0-6">
+                <condition role="target" character="april" stage="0" />
                 <state img="#-vain.png">Ooh, do you really report the news?  Be sure to get my good side--oh wait, that's &lt;i&gt;every&lt;/i&gt; side!</state>
                 <state img="#-teasing.png">Hey there, Jumpsuit.  Someone said you're a reporter--but &lt;i&gt;this&lt;/i&gt; pirate doesn't mind a little publicity!</state>
                 <state img="#-smug.png">I've been in the media for much worse than a few glory shots, so don't think I'm afraid of that camera, newsgirl.</state>
@@ -7605,7 +8086,8 @@
                 <state img="#-smug.png">I consider myself a bit of a matchmaker, but it looks like Miss Fairytale and ~player~ have already shacked up with each other.</state>
                 <state img="#-stretching.png">Interesting choice of woman, ~player~...a girl dressed as a fairy who drags you to strip poker.  I would never do that to Barnette.</state>
             </case>
-            <case stage="0-6" target="lara" targetStage="0">
+            <case stage="0-6">
+                <condition role="target" character="lara" stage="0" />
                 <state img="#-stretching.png">Raiding tombs, you said?  Why would you &lt;i&gt;ever&lt;/i&gt; want to be all dirty and dusty?</state>
                 <state img="#-stretching.png">You won't find &lt;i&gt;me&lt;/i&gt; in catacombs like you explore.  It'd ruin my dress...and my face.</state>
                 <state img="#-teasing.png">So what's in these tombs, anyway?  &lt;i&gt;We&lt;/i&gt; conduct raids on the living and able--so watch out!</state>
@@ -7736,18 +8218,21 @@
                 <state img="#-interested.png" marker="planetcountries">You're from Planet China, is that right?  Must be one big snowball if &lt;i&gt;that's&lt;/i&gt; in vogue over there.</state>
                 <state img="#-laughing.png">I understand why you must be so cold.  Your name is pretty close to &lt;i&gt;Meia,&lt;/i&gt; after all.</state>
             </case>
-            <case stage="0" target="meia" targetStage="0">
-                <state img="#-teasing.png">Didn't think you'd be the first to lose between us, Meia.  Maybe I'll win this whole thing!</state>
+            <case stage="0">
+                <condition role="target" character="meia" stage="0" />
+                <state img="#-teasing.png">I didn't think you'd be the first to lose between us, Meia.  Maybe I'll win this whole thing!</state>
                 <state img="#-interested.png">Oh, wow.  If &lt;i&gt;you're&lt;/i&gt; taking the first shot, I might actually beat you.</state>
                 <state img="#-laughing.png">Would you look at that, Meia?  First blood between us.  You getting sloppy?</state>
                 <state img="#-teasing.png">Overconfident, Meia?  Or just some bad luck?</state>
             </case>
-            <case stage="0" target="meia" targetStage="1">
+            <case stage="0">
+                <condition role="target" character="meia" stage="1" />
                 <state img="#-confused.png">Again?  Meia, are you OK?  You didn't have to take off your eyepiece, seriously.</state>
                 <state img="#-awkward.png">Another?  Meia...you're all flushed.  Just calm down...</state>
                 <state img="#-awkward.png">Meia, you're blushing.  You're a wreck...</state>
             </case>
-            <case stage="0" target="meia" targetStage="2">
+            <case stage="0">
+                <condition role="target" character="meia" stage="2" />
                 <state img="#-laughing.png">Meia, this is getting &lt;i&gt;embarrassing.&lt;/i&gt;  You're a better poker player than this!</state>
                 <state img="#-interested.png">Gascogne would be so ashamed of you, Meia.  Where's all that poker skill?</state>
                 <state img="#-smug.png">Still haven't lost.  &lt;i&gt;What would Gascogne say?&lt;/i&gt;</state>
@@ -7755,13 +8240,15 @@
                 <state img="#-interested.png">Really?  I shouldn't be beating you at &lt;i&gt;all,&lt;/i&gt; Meia.</state>
                 <state img="#-laughing.png">Hate to throw this back at you, but &lt;i&gt;where's your focus?&lt;/i&gt;</state>
             </case>
-            <case stage="0" target="meia" targetStage="3">
+            <case stage="0">
+                <condition role="target" character="meia" stage="3" />
                 <state img="#-stretching.png">Yeesh.  Did I pick the worst day of your life to drag you here or what?</state>
                 <state img="#-laughing.png">What's got you so distracted, Meia, honestly?  The tantalizing thought of male nudity?</state>
                 <state img="#-laughing.png">It's a good thing you're a better officer than strip poker player, because this is just sad.</state>
                 <state img="#-interested.png">Talk about off days.  You should be beating me senseless as usual.</state>
             </case>
-            <case stage="0" target="meia" targetStage="4">
+            <case stage="0">
+                <condition role="target" character="meia" stage="4" />
                 <state img="#-seductive.png">...Honestly, I don't know what to say.  You always beat me!</state>
                 <state img="#-laughing.png">The stripping must really have been getting to you.  I've never beaten you before!</state>
                 <state img="#-laughing.png">Never in a million years would I have predicted this kind of gap between us.  Sorry.</state>
@@ -7988,8 +8475,9 @@
                 <state img="#-bored.png">All stretched-out like that...you're not shaped like a pearl at all!  Shame, because I love those things.</state>
                 <state img="#-vain.png">&lt;i&gt;Oh, to hold a real pearl in my hands!&lt;/i&gt;  I've only seen pictures in Earth history books.</state>
             </case>
-            <case stage="0-6" target="penny" targetStage="0">
-                <state img="#-smug.png">Looks like we've found an Earth girl who's just decided to embrace the whole "boring conservatism" stereotype.  At least your hair is a fiery red.</state>
+            <case stage="0-6">
+                <condition role="target" character="penny_classic" stage="0" />
+                <state img="#-smug.png">It looks like we've found an Earth girl who's just decided to embrace the whole "boring conservatism" stereotype.  At least your hair is a fiery red.</state>
                 <state img="#-teasing.png">That fiery red hair contrasts your rather plain outfit.  But it's not a bad look overall!</state>
                 <state img="#-vain.png">&lt;i&gt;Finally,&lt;/i&gt; a normal-looking Earth girl.  I need a measuring stick to compare all these superpowered weirdos to...all you've got is that red hair.</state>
                 <state img="#-seductive.png">Good, a civilian girl.  So many people at this bar are such colorful characters--oh, but your hair is pretty vibrant, I guess.</state>
@@ -8382,11 +8870,12 @@
                 <state img="#-laughing.png">Well, get ready for full-blown blue nudity, everyone.</state>
                 <state img="#-smug.png">All the magic in the universe, and not one ounce of sense.  You poor thing.</state>
             </case>
-            <case stage="0-6" target="weiss" targetStage="0">
+            <case stage="0-6">
+                <condition role="target" character="weiss" stage="0" />
                 <state img="#-teasing.png">Hey, Miss Moneybags, you'd better watch out.  This pirate's got half a mind to loot you with extreme prejudice!</state>
                 <state img="#-teasing.png">Sure you're not worried to be playing in a seedy place like this, Miss Heiress?  You might get mugged by, say, an ornery pirate.</state>
                 <state img="#-interested.png">Nice premature white hair, Miss Heirlooms.  I guess having all that inherited money must be &lt;i&gt;oh-so-stressful&lt;/i&gt; for you.</state>
-                <state img="#-laughing.png">Looking quite adorable there, Coinstacks.  Maybe I'll help myself to the jewelry you'll undoubtedly remove first.</state>
+                <state img="#-laughing.png">Looking quite adorable there, Miss Coinstacks.  Maybe I'll help myself to the jewelry you'll undoubtedly remove first.</state>
             </case>
             <case stage="0-6" target="wiifitfemale" targetStage="0">
                 <state img="#-smug.png">And here I thought I was on Earth.  Turns out we've got a woman from a frozen tundra planet, evolved for camouflage.</state>
@@ -8725,6 +9214,257 @@
                 <state img="#-awkward.png">Er...Mejare sings the praises of pale skin, honey, but you're taking it a little far.  Maybe try designing some summer wear...and going outside.</state>
                 <state img="#-smug.png">If your planet has a sun, Miss Rarity, you really ought to go and say hi to it for once.  That said, I'm &lt;i&gt;loving&lt;/i&gt; that outfit.</state>
                 <state img="#-cackling.png">Omigosh, Rarity!  Are you really a fashion designer?  I mean, you're pale-white, which is weird, but I love fashion!  How's my dress?</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="akko" stage="0" />
+                <state img="#-laughing.png" marker="akko0">Oh, aren't &lt;i&gt;you&lt;/i&gt; adorable?  I hope you dazzle us with some lovely magic tricks...even if you're a little young-looking.</state>
+                <state img="#-laughing.png" marker="akko0">Hi there, Pint-size.  Did you wear that enormous witch's hat just to make yourself look taller?  Well, be sure to perform some &lt;i&gt;magic.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="emi" stage="0" />
+                <state img="#-awkward.png" marker="emi0">Oh, dear.  Legs are one a woman's finest qualities...next to the chest, which, well...you're also lacking.</state>
+                <state img="#-bored.png" marker="emi0">Oh, I'm...sorry.  &lt;i&gt;Ugh...&lt;/i&gt;short, flat, and legless.  I can't even imagine--women are meant to be tall, buxom, and leggy.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="jessie" stage="0" />
+                <state img="#-laughing.png" marker="jessie0">Aren't you a little &lt;i&gt;old&lt;/i&gt; to be playing this game, Madam?  Though I do appreciate the tall, buxom blonde aesthetic.</state>
+                <state img="#-laughing.png" marker="jessie0">Well, I never expected to see a tall, blonde, &lt;i&gt;well-endowed&lt;/i&gt; woman anywhere but a mirror.  I'm glad to be on the better side of thirty, though.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="misty_hgss" stage="0" />
+                <state img="#-vain.png" marker="mistyhgss0">Well, look who's &lt;i&gt;also&lt;/i&gt; here to take someone home!  But wearing a &lt;i&gt;swimsuit&lt;/i&gt; is a bit desperate--be glad I'm in this modest dress.</state>
+                <state img="#-cackling.png" marker="mistyhgss0">Oh, you're looking for a suitable partner, as well?  Just be glad &lt;i&gt;I&lt;/i&gt; didn't show up in a swimsuit!</state>
+                <state img="#-cackling.png" marker="mistyhgss0">&lt;i&gt;Hahahahah!&lt;/i&gt;  Well, I suppose when you're looking for a date around a Mejarian, you have to show a lot of skin!</state>
+                <state img="#-interested.png" marker="mistyhgss0">Oh, dear.  Did you &lt;i&gt;really&lt;/i&gt; need to wear that to attract attention, honey?  I'd knock this table unconscious in a swimsuit.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="derpy_hooves" stage="0" />
+                <state img="#-awkward.png">Oh, dear.  Lazy eyes, and an unusual skin color...this must be an Earth experiment gone wrong, cast out into the streets.  My apologies.</state>
+                <state img="#-bored.png">...Hello?  Oh, I always get so uncomfortable around girls who're a bit...&lt;i&gt;slow.&lt;/i&gt;  And that's &lt;i&gt;not&lt;/i&gt; a healthy pigment.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="default-chan" stage="0" />
+                <state img="#-thinking.png">&lt;i&gt;Desu this, desu that.&lt;/i&gt;  I wonder what it means?  I suppose it's a bit fun to say, but it feels so childish...</state>
+                <state img="#-cackling.png">"Default-chan"?  Well, I guess you have an excuse for not exactly stealing the spotlight!  &lt;i&gt;Desu.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="estelle" stage="0" />
+                <state img="#-cackling.png" marker="estelle0">You've got such sweet eyes, honey, and you're so overdressed!  Are you just a bit intimidated by the tall pirate woman in black?</state>
+                <state img="#-interested.png" marker="estelle0">Now, why would such a cute young girl pile so much clothing on top of her body?  If you're worried for your safety, I'm not the &lt;i&gt;worst&lt;/i&gt; pirate around.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="saki_zls" stage="0" />
+                <state img="#-cackling.png" marker="saki_n0">My, you're so feisty!  And you're part of a biker gang, are you?  It's like a pint-sized version of our own crew!</state>
+                <state img="#-cackling.png" marker="saki_n0">&lt;i&gt;Hahahah!&lt;/i&gt;  Long blonde hair and a fighting spirit--it's nice to see an Earth girl leading a little pirate crew of her own, on bikes instead of Dreads!</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="sakura" stage="0" />
+                <state img="#-teasing.png" marker="sakura0">And who might &lt;i&gt;you&lt;/i&gt; be?  A darling young girl with a lovely singing voice?  If I'm in the presence of an Earth celebrity...&lt;i&gt;you should be honored.&lt;/i&gt;</state>
+                <state img="#-vain.png" marker="sakura0">Oh, an &lt;i&gt;idol?&lt;/i&gt;  I loved seeing those cute singers onstage as a girl...how lucky that a celebrity gets to meet me.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="roxie" stage="0" />
+                <state img="#-bored.png" marker="roxie0">Rock n' roll music has always been too much for me...it messes up my hair with all the vibrations and heat.  Play somewhere else.</state>
+                <state img="#-bored.png" marker="roxie0">Oh, you're one of those punk rocker types, aren't you?  Why would anyone want to listen to &lt;i&gt;screaming?&lt;/i&gt;  It gives me headaches.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="mae" stage="0" />
+                <state img="#-laughing.png" marker="mae0">&lt;i&gt;Well.&lt;/i&gt;  You've got a cute face, but a stocky, stubby body isn't exactly the feminine ideal, now is it?</state>
+                <state img="#-vain.png" marker="mae0">&lt;i&gt;Pfft.&lt;/i&gt;  Well, I guess I shouldn't have &lt;i&gt;expected&lt;/i&gt; Earth women to compare to Mejarian beauty, but...this is just embarrassing.</state>
+                <state img="#-smug.png" marker="mae0">&lt;i&gt;Oh, honey.&lt;/i&gt;  I'm so used to having to steal the spotlight away from other gorgeous, slender women...this planet is just too easy.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="larachel" stage="0" />
+                <state img="#-bored.png" marker="larachel0">Do Earth women really have to overcomplicate &lt;i&gt;everything?&lt;/i&gt;  That outfit is so conservative--and even that stick is decorated!</state>
+                <state img="#-bored.png" marker="larachel0">Well, I can't say you're not &lt;i&gt;elegant,&lt;/i&gt; but don't you think you're wearing a little much?  Earth girls can't even carry a stick without covering it.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="rin" stage="0" />
+                <state img="#-awkward.png" marker="rin0">...Erm...w-well, hello.  Do you need something?  You obviously can't play if you can't hold the cards.</state>
+                <state img="#-awkward.png" marker="rin0">...O-oh, ew.  I'm sorry if you had some kind of accident...but you need arms to play, you know.  Don't hang around and stare at us.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="leggy" stage="0" />
+                <state img="#-awkward.png" marker="leggy0">A-are you...a real animal?  I thought you were some girl in a woolly suit, but...those are actual hooves!  &lt;i&gt;Ugh,&lt;/i&gt; don't touch me.</state>
+                <state img="#-bored.png" marker="leggy0">...&lt;i&gt;Ew.&lt;/i&gt;  Why is there a walking, talking sheep girl here?  It's not a costume--I see dirt in her fur!  Animals are so &lt;i&gt;disgusting!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="syrenne" stage="0" />
+                <state img="#-bored.png">&lt;i&gt;Hmph.&lt;/i&gt;  You've got a pretty face and a shapely figure, but it's sullied by sloppy drinking and your sloppier speech.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="caulifla" stage="0" />
+                <state img="#-awkward.png">I've been all across the galaxy with our lovely crew, and we've only encountered humans.  Is this spiky-haired girl in sweatpants really the alien life we've missed?</state>
+                <state img="#-critical.png">H-hey, don't jerk me around, honey.  I happen to be an experienced space traveler--you look like a runt in a tube top, not an alien.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="leafy" stage="0" />
+                <state img="#-awkward.png">"Leafy"...huh.  I can't say I'm a fan of going &lt;i&gt;that&lt;/i&gt; natural with fashion...maybe this is what happens when your &lt;i&gt;whole planet&lt;/i&gt; has trees.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="nami" stage="0" />
+                <state img="#-laughing.png" marker="nami0">&lt;i&gt;Ooh.&lt;/i&gt;  A pretty face, voluptuous body, and long, vibrant locks--I have myself some competition.  If only you were dressed nicer.</state>
+                <state img="#-teasing.png" marker="nami0">Hello there, Nami.  You're the kind of feminine beauty I &lt;i&gt;expect&lt;/i&gt;--gorgeous hair and a full bust.  All you need is a dress.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="weiss_schnee" stage="0" />
+                <state img="#-smug.png" marker="weiss0">Oh, do we have a wealthy heiress here?  It's sad to watch your type spend so much money and still be outdone by natural beauty.</state>
+                <state img="#-stretching.png" marker="weiss0">What do we have here?  A runty blue-blood dressed in white, and a lowly pirate in a black dress she had to steal.  At least I can fill mine out.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="misaka" stage="0" />
+                <state img="#-seductive.png" marker="misaka0">Well, what an adorable little girl, still in her school uniform!  But &lt;i&gt;everyone&lt;/i&gt; has something special about them, no?  Don't keep yours a secret.</state>
+                <state img="#-vain.png" marker="misaka0">Misaka, yes?   Oh, I remember &lt;i&gt;my&lt;/i&gt; school uniform...and how I started to fill it out.  What girlish secrets are &lt;i&gt;you&lt;/i&gt; hiding?</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="erufuda" stage="0" />
+                <state img="#-disgusted.png" marker="erufuda0">...&lt;i&gt;Ugh.&lt;/i&gt;  I've only seen girls so chubby in movies, where men were fattening them up for slaughter.  Men don't actually like that, right?</state>
+                <state img="#-disgusted.png" marker="erufuda0">...&lt;i&gt;My God,&lt;/i&gt; don't you have any respect for your own beauty?  Munching down on junk food while your gut expands...is that what men like?</state>
+                <state img="#-disgusted.png" marker="erufuda0">&lt;i&gt;Ew.&lt;/i&gt;  What compelled you to come here and display your gross, flabby, fatty body?  Don't tell me men &lt;i&gt;like&lt;/i&gt; women your size!</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="mythra" stage="0" />
+                <state img="#-stretching.png" marker="mythra0">God, how can you even move around in all that heavy armor?  You need to let your body &lt;i&gt;express&lt;/i&gt; itself, with all its lovely curves.</state>
+                <state img="#-stretching.png" marker="mythra0">You're going to hurt yourself lugging all that weight, you know.  Women are too delicate to smash into each other like men do.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="cynthia" stage="0" />
+                <state img="#-teasing.png" marker="cynthia0">Well, &lt;i&gt;hello&lt;/i&gt; there!  Blonde hair and a black dress--I see my aesthetic exists on Earth.  But you don't &lt;i&gt;fill it out&lt;/i&gt; quite as well.</state>
+                <state img="#-cackling.png" marker="cynthia0">&lt;i&gt;Hahahaha!&lt;/i&gt;  Well, aren't you my mirror image, if a little &lt;i&gt;smaller!&lt;/i&gt;  I'm glad Earth appreciates long blonde hair and a longer black dress!</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="elesa" stage="0" />
+                <state img="#-cackling.png" marker="elesa0">&lt;i&gt;Oh,&lt;/i&gt; are you a model?  I can believe it with those lovely legs--you should just hope your boss doesn't spot me!</state>
+                <state img="#-teasing.png" marker="elesa0">Fortunately for you, Miss Model, I'm too busy fighting enemy forces to supplant you on the runway.  Just watch your back.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="megumin" stage="0" />
+                <state img="#-cackling.png" marker="megumin0">Now, who's &lt;i&gt;this&lt;/i&gt; darling little pipsqueak?  She's even got a witch's hat to make herself look bigger!  Oh, it's so adorable!</state>
+                <state img="#-stretching.png" marker="megumin0">Run along now, little girl--we're playing an &lt;i&gt;adult's&lt;/i&gt; game.  I'm sure your parents are very proud of your Halloween costume.</state>
+                <state img="#-seductive.png" marker="megumin0">&lt;i&gt;Ohhh,&lt;/i&gt; you're so cute!  I'd love to play this game with you when you're a bit older, honey.  &lt;i&gt;Still running around in costumes...&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="panty" stage="0" />
+                <state img="#-bored.png" marker="panty0">What a crass, shameless girl.  You could do to tone down your libido a bit, honey--blondes get a bad rap sometimes.</state>
+                <state img="#-bored.png" marker="panty0">Ugh, can't you stop swearing and talking about sex so bluntly?  You're giving blondes a bad name...</state>
+                <state img="#-bored.png" marker="panty0">...You know, Miss Angel, &lt;i&gt;elegance&lt;/i&gt; is a woman's best trait.  I hope I'm not lumped in with you as some oversexed blonde...</state>
+                <state img="#-frustrated.png" marker="panty0">Ugh...is this behavior what men like?  All that cursing and swearing and &lt;i&gt;orgy&lt;/i&gt; nonsense...so unbefitting of blonde beauty.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="starfire" stage="0" />
+                <state img="#-surprised.png" marker="starfire0">O-oh my God, a real alien?  Not a man, but an orange-skinned, floating, glowing-eyed woman!  Are there others on this planet?</state>
+                <state img="#-shocked.png" marker="starfire0">A-a real alien?  You can't be serious!  Y-you're even floating--has Earth been hogging all the alien species for itself?  We've never seen any!</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="wonder_woman" stage="0" />
+                <state img="#-smug.png">People often say &lt;i&gt;I'm&lt;/i&gt; a wondrous woman myself.  But I've never thought to make it such an on-the-nose nickname.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="rainbow_dash" stage="0" />
+                <state img="#-stretching.png" marker="rainbowdash0">Sporty and competitve, hm?  I always annoyed your type as a girl since I was athletic &lt;i&gt;and&lt;/i&gt; shapely.  And look at me now--a fighter pilot!</state>
+                <state img="#-vain.png" marker="rainbowdash0">Are you sporty types so competitive because you're short?  Women can hardly believe a girl of my size and beauty is a skilled pilot.</state>
+                <state img="#-vain.png" marker="rainbowdash0">I hope I don't make you too envious, Shorty.  The sporty types in school called me a brainless bimbo--but can &lt;i&gt;they&lt;/i&gt; pilot a Dread?</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="hatsume" stage="0" />
+                <state img="#-bored.png" marker="hatsume0">&lt;i&gt;Ugh.&lt;/i&gt;  I'm glad Parfet's not so pushy about her beloved machines as you are...she'd probably chew me out for scratching my Dread.</state>
+                <state img="#-bored.png" marker="hatsume0">Are machines all you care about?  I never appreciated how our engineer just keeps to herself on these sorts of things...</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="tomoko" stage="0" />
+                <state img="#-awkward.png" marker="tomoko0">Uh...well, hello, honey.  You could've done to spruce yourself up a bit before coming here and stripping, you know.</state>
+                <state img="#-awkward.png" marker="tomoko0">...&lt;i&gt;Ew.&lt;/i&gt;  Would it have killed you to brush your hair first, honey?  Or wash it?  Or get some sleep?</state>
+                <state img="#-annoyed.png" marker="tomoko0">Is this how low Earth's standards have fallen for feminine beauty?  Why is an unwashed runt of a girl here playing strip poker?</state>
+                <state img="#-critical.png" marker="tomoko0">&lt;i&gt;Ugh,&lt;/i&gt; I was wondering what that smell was.  Can't you put the least bit effort into your appearance?  I feel insulted as a woman.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="yuelia" stage="0" />
+                <state img="#-vain.png" marker="yuelia0">Butterflies are the only insect I like, with their lovely, colorful wings...why can't the rest do something besides crawl around?</state>
+                <state img="#-vain.png" marker="yuelia0">&lt;i&gt;Oh, butterflies...&lt;/i&gt;the one insect that understands the value of beauty.  The others just disgust me...</state>
+                <state img="#-vain.png" marker="yuelia0">I'm glad you're not a talking &lt;i&gt;cockroach.&lt;/i&gt;  Butterflies are the most beautiful, graceful insect, taking to the skies...just like me.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="mary" stage="0" />
+                <state img="#-vain.png" marker="mary0">You're the nerdy computer type, yes?  Even our chief engineer has a nice figure under her jumpsuit... Mejarians are so much more feminine.</state>
+                <state img="#-stretching.png" marker="mary0">I see computer fascination carries a certain stigma on Earth of a flat, petite little girl.  Even the nerdy girls on Mejare are well-endowed.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="amy" stage="0" />
+                <state img="#-vain.png">Oh, adorable little schoolgirls like you just &lt;i&gt;melt&lt;/i&gt; my heart!  I remember my time in school, before I became a fearsome criminal...</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="amy" stage="1" />
+                <state img="#-teasing.png">You really ought to ditch those glasses and let your hair down, honey.  Part of being a woman is trading &lt;i&gt;cute&lt;/i&gt; for &lt;i&gt;sexy.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="maki" stage="0" />
+                <state img="#-vain.png">How charming--a young girl into music!  Our crew has occasionally formed a makeshift choir--and I have solo parts, of course.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="gaige" stage="0" />
+                <state img="#-awkward.png" marker="gaige0">Er...well then.  I see your spacefaring has left you a bit &lt;i&gt;maimed.&lt;/i&gt;  I've &lt;i&gt;broken&lt;/i&gt; my arms before, but losing them...</state>
+                <state img="#-frustrated.png" marker="gaige0">Oh, God, I can't even imagine losing a limb.  My beauty being left all asymmetrical...and yet I risk it every day.  Broken arms, concussions...</state>
+                <state img="#-awkward.png" marker="gaige0">Oh my God, is that an artificial limb?  Not to say I've never sustained injuries as a pilot, but something so &lt;i&gt;disfiguring...&lt;/i&gt;</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="shantae" stage="0" />
+                <state img="#-stretching.png" marker="shantae0">I wonder if I should learn to bellydance myself.  This dress &lt;i&gt;does&lt;/i&gt; show my midriff, and I could use a bit more flexibility in my hips.</state>
+                <state img="#-seductive.png" marker="shantae0">Ooh, I like the way your bellydancing &lt;i&gt;unwinds&lt;/i&gt; your whole body.  I should try it myself and loosen up my hips.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="lucy" stage="0" />
+                <state img="#-vain.png">So what's this "Fairy Tail" guild all about?  Our own &lt;i&gt;Magno Family&lt;/i&gt; is a guild... crewed by the most beautiful pirates on Mejare.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="komi-san" stage="0" />
+                <state img="#-cackling.png" marker="komi0">&lt;i&gt;Hahahaha!&lt;/i&gt;  Oh, you're so adorable, Komi!  You're not the &lt;i&gt;first&lt;/i&gt; girl to be left speechless by my beauty!</state>
+                <state img="#-teasing.png" marker="komi0">Oh, you have the most &lt;i&gt;adorably&lt;/i&gt; flustered expression, honey!  It's OK, I don't bite--there's no shame in feeling a bit inferior.</state>
+                <state img="#-seductive.png" marker="komi0">&lt;i&gt;Ohhh,&lt;/i&gt; it's OK to say something in my presence, Miss Komi.  You're quite pretty yourself--you shouldn't expect to match me.</state>
+                <state img="#-cackling.png" marker="komi0">&lt;i&gt;Hahahaha!&lt;/i&gt;  Well, I've never left a girl so literally speechless!  Don't feel bad, honey--my girlfriend's not as pretty as me, either.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="shamir" stage="0" />
+                <state img="#-laughing.png" marker="shamir0">My, what a business-focused girl.  All about the mission, is it?  My squadron leader is every bit the no-nonsense stoic type you are.</state>
+                <state img="#-interested.png" marker="shamir0">What mission could possibly bring you here to play &lt;i&gt;strip poker?&lt;/i&gt;  Honestly.  My squadron leader is a killjoy like you.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="azami" stage="0" />
+                <state img="#-bored.png" marker="azami0">I suppose you're bringing up your scar to prepare us all for it later?  Ugh, if I had any scars on my forehead after what that mothership did to me...</state>
+                <state img="#-frustrated.png" marker="azami0">Ugh, don't talk about scars, even if you'll be showing yours off later.  Piloting is a constant risk to my beauty, and I've had several close calls...</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="monique" stage="0" />
+                <state img="#-bored.png" marker="monique0">...I don't suppose you can &lt;i&gt;act out&lt;/i&gt; what it's like to have sex with a man, can you?  That was my goal in coming here, you know.</state>
+                <state img="#-vain.png" marker="monique0">It's alright, Miss Mime--I'll talk enough for the both of us.  If you want to do me a favor, play a little &lt;i&gt;man-on-woman&lt;/i&gt; charade.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="nanoko-chan" stage="0" />
+                <state img="#-teasing.png" marker="nanoko0">Hey, honey, why're you so clammed up half the time?  Fidgeting, eyes darting about--I'm not making you feel &lt;i&gt;jealous,&lt;/i&gt; am I?</state>
+                <state img="#-smug.png" marker="nanoko0">&lt;i&gt;Oh, the telltale signs of a nervous, jealous girl.&lt;/i&gt;  My beauty doesn't bite, honey--stop glancing around and stand up straight.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="yukari" stage="0" />
+                <state img="#-stretching.png" marker="yukari0">Oh, do we have another layered-up blue-blood?  That's the kind of thing a woman wears when her legs and backside can't make the dress.</state>
+                <state img="#-laughing.png" marker="yukari0">It doesn't speak much to your legs or your &lt;i&gt;rear end&lt;/i&gt; if you wear a dress hiding both.  Can we at least see your face, Miss Mansion?</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="zenobia" stage="0" />
+                <state img="#-frustrated.png" marker="zenobia0">&lt;i&gt;U-ugh,&lt;/i&gt; what's this supposed to be?  Some psychedelic light show from the bar?  I feel a headache coming on just from looking at you...</state>
+                <state img="#-frustrated.png" marker="zenobia0">&lt;i&gt;Ugh,&lt;/i&gt; can someone tell the owner to stop with the creepy black strobe lights over there?  I hear voices in my head whenever I look over there...</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="uravity" stage="0" />
+                <state img="#-vain.png" marker="ochako_cheerleader0">Oh, hello, Ochako!  Are you a cheerleader at your school?  &lt;i&gt;I&lt;/i&gt; just couldn't bear to sit on the sidelines like that...</state>
+                <state img="#-vain.png" marker="ochako_cheerleader0">Girls in school always thought &lt;i&gt;I&lt;/i&gt; had the body and charm of a cheerleader.  But I'm a woman of action, despite my buxom figure.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="penny" stage="0" />
+                <state img="#-smug.png" marker="penny0">Oh, are you a teacher?  My schoolteachers were always nasty old ladies, warning us about men's fangs.  I never did pay them much attention.</state>
+                <state img="#-smug.png" marker="penny0">An Earth schoolteacher...young girls can be such a pain, can't they?  I know &lt;i&gt;I&lt;/i&gt; had a rebellious streak in school.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="target" character="sayaka" stage="0" />
+                <state img="#-vain.png">&lt;i&gt;Oh,&lt;/i&gt; don't remind me of my Barnette's cooking with that burger-tube.  I'm afraid I'll get fat, the way she feeds me...</state>
             </case>
             <case stage="2" alsoPlaying="meia" targetTimeInStage="7-">
                 <state img="#-seductive.png">More runs like that, and you'd have a spot on our pilot team.  You're always scouting for new recruits, right, Meia?</state>
@@ -9335,11 +10075,12 @@
                 <state img="#-annoyed.png">Jeez, this girl's gonna spend the evening sobbing.  Can't we just tell her to leave?</state>
                 <state img="#-bored.png">You're no fun.  You're such a head case that I can't even tease you.</state>
             </case>
-            <case stage="0-6" target="florina" targetStage="0" targetSaidMarker="fled">
+            <case stage="0-6">
+                <condition role="target" character="florina" stage="0" saidMarker="fled" />
                 <state img="#-laughing.png">...Well, that's one down.</state>
                 <state img="#-interested.png">...I really thought Earth girls handled men better than anyone.  I wanted to see her naked, too.</state>
                 <state img="#-smug.png">...That girl really needed some time on Mejare to toughen her up.  Men are giant pushovers.</state>
-                <state img="#-bored.png">Should've known we wouldn't all make it through this without bailing.</state>
+                <state img="#-bored.png">&lt;i&gt;Sigh...&lt;/i&gt;I should've known we wouldn't all make it through this without someone bailing.</state>
                 <state img="#-smug.png">Well, I mean, if &lt;i&gt;anyone&lt;/i&gt; was going to chicken out, it was going to be her.</state>
             </case>
             <case stage="0-6" target="nayru" targetStage="0" targetSaidMarker="jura_strumming">
@@ -9798,6 +10539,12 @@
                 <state img="#-awkward.png">W-wha--but...&lt;i&gt;why?&lt;/i&gt;  You should be having fun, not torturing yourself!</state>
                 <state img="#-sad.png">...You'd still look sexy with that on.  It's not what I meant by stripping...or fun.</state>
             </case>
+            <case stage="0-6">
+                <condition role="target" character="nami" stage="0" />
+                <state img="#-cackling.png" marker="nami01">Well, how should I put this...?  It's &lt;i&gt;sexy,&lt;/i&gt; but there just isn't any &lt;i&gt;class.&lt;/i&gt;  Perhaps Barnette and I can give you a Mejarian makeover!</state>
+                <state img="#-dreaming.png" marker="nami01">Well, it's &lt;i&gt;thoughtless&lt;/i&gt; sexiness.  Just wantonly flaunting your skin, your hips...oh, Barnette and I should dress you up!</state>
+                <state img="#-dreaming.png" marker="nami01">Well, you're dressed for the &lt;i&gt;beach.&lt;/i&gt;  All the sexiness is in your body, not the outfit...&lt;i&gt;oh, Barnette and I should find an outfit for you!&lt;/i&gt;</state>
+            </case>
             <case stage="0" alsoPlaying="meia">
                 <state img="#-interested.png">That's it, huh?  Earth women are awfully boring.</state>
                 <state img="#-smug.png">Just that?  Why, you won't see &lt;i&gt;me&lt;/i&gt; taking off something that small.  No way.</state>
@@ -9979,7 +10726,8 @@
                 <state img="#-seductive.png">Our only doctor's a man.  Even if you don't want to get all cuddly with Meia, could you maybe join us anyway?</state>
                 <state img="#-coy.png">A medic, hm?  OK, Meia, forget the girlfriend situation--now you need her so we have a woman doctor on board.  &lt;i&gt;Think of the ship!&lt;/i&gt;</state>
             </case>
-            <case stage="0-6" target="florina" targetStage="1" targetSaidMarker="fled">
+            <case stage="0-6">
+                <condition role="target" character="florina" stage="1" saidMarker="fled" />
                 <state img="#-interested.png">Oh, you're back.  Try not to make a habit of that, dearie...it's not very intimidating.</state>
                 <state img="#-confused.png">...Well, at least you came back.  Seriously, did a man kill your family or something?</state>
                 <state img="#-teasing.png">Listen, honey, you ought to come my my home planet sometime.  It's nothing but women...and we make a habit of shooting nasty men.</state>
@@ -12348,9 +13096,11 @@
             </case>
             <case stage="8">
                 <state img="#-thinking.png">Size isn't based on height, right?  If it is, Hibiki's &lt;i&gt;really&lt;/i&gt; in trouble.</state>
-                <state img="#-bored.png">Huh.  Guess I'm &lt;i&gt;glad&lt;/i&gt; I'm all done.  Does that thing still work properly?</state>
+                <state img="#-bored.png">Huh.  I guess I'm &lt;i&gt;glad&lt;/i&gt; I'm all done.  Does that thing still work properly?</state>
                 <state img="#-annoyed.png">Yuck.  Good thing I finished already.  A pipsqueak like that would've taken me right out of the zone.</state>
                 <state img="#-angry.png">I go through this whole game, lose, masturbate, wait around, and &lt;i&gt;this&lt;/i&gt; is my reward?</state>
+                <state img="#-disgusted.png">&lt;i&gt;Now I--&lt;/i&gt;o-oh.  Is that...&lt;i&gt;it?&lt;/i&gt;  It's not as impressive as I expected...</state>
+                <state img="#-disgusted.png">...Is that really how big it gets?  I'm no expert, but it just seems...&lt;i&gt;stubby.&lt;/i&gt;</state>
             </case>
         </trigger>
 
@@ -12427,7 +13177,8 @@
                 <state img="#-seductive.png">I can't help but wonder how that'd feel inside me.  &lt;i&gt;Something must be done.&lt;/i&gt;</state>
                 <state img="#-seductive.png">So inelegant, yet so powerful.  Like men themselves.</state>
                 <state img="#-interested.png">So, do you men get all competitive about the sizes of those things?  I know women can get touchy about breasts.</state>
-                <state img="#-laughing.png">Oh, what a nice size!  &lt;i&gt;I always get hungry after sex.&lt;/i&gt;</state>
+                <state img="#-cackling.png">Oh, what a nice size!  &lt;i&gt;I always get hungry after sex.&lt;/i&gt;</state>
+                <state img="#-teasing.png">I'll just have to listen to my &lt;i&gt;instincts&lt;/i&gt; for guidance here...and they say you've got a fine-looking rod.</state>
             </case>
         </trigger>
 
@@ -14154,15 +14905,17 @@
             <case stage="6">
                 <state img="#-shocked.png">H-hey, not on the breasts!  Or the face!  Or the hair!</state>
                 <state img="#-teasing.png">Hey, keep your seed where I can reach it.  Unless you expect me to scoop it off the floor.</state>
-                <state img="#-bored.png">Well, there goes &lt;i&gt;that&lt;/i&gt; sample.  Should've brought a cup to catch it in.</state>
+                <state img="#-bored.png">Well, there goes &lt;i&gt;that&lt;/i&gt; sample.  I should've brought a cup to catch it in.</state>
                 <state img="#-confused.png">So if I wanted to take that stuff home, would I have to keep it cold?</state>
                 <state img="#-laughing.png">Wow.  It's like you shot your soul out...and got some on my leg.</state>
+                <state img="#-disgusted.png">&lt;i&gt;Yes!  Let's see--eugh.&lt;/i&gt;  ...Does it really come out in thick spurts like that?  I &lt;i&gt;hate&lt;/i&gt; gooey stuff...</state>
             </case>
             <case stage="7">
                 <state img="#-frustrated.png">Ew!  What's all that goo?  ...&lt;i&gt;That's&lt;/i&gt; seed?</state>
                 <state img="#-angry.png">Hey, I said &lt;i&gt;don't&lt;/i&gt; get any on me!  Are you listening?</state>
-                <state img="#-awkward.png">Looks all warm and viscous...kinda gross.</state>
+                <state img="#-disgusted.png">It looks all warm and viscous...it's kind of &lt;i&gt;gross.&lt;/i&gt;</state>
                 <state img="#-frustrated.png">Ew!  Ew!  It's getting everywhere!  Keep it out of my hair!</state>
+                <state img="#-disgusted.png">&lt;i&gt;Y-yes,&lt;/i&gt; I've read about this!  &lt;i&gt;Ngh&lt;/i&gt;--s-shoot your--&lt;i&gt;eugh.  Eugh!&lt;/i&gt;  Is it always so &lt;i&gt;gooey?&lt;/i&gt;</state>
             </case>
             <case stage="8">
                 <state img="#-stretching.png">Sorry, ~name~, but maybe I don't want the seed of a man who can't even win a poker game.</state>
@@ -15879,6 +16632,7 @@
                 <state img="#-teasing.png">O-oh, I'm so &lt;i&gt;spread out.&lt;/i&gt;  You can see every &lt;i&gt;inch&lt;/i&gt; of me...even my &lt;i&gt;anus&lt;/i&gt; is beautiful, isn't it?  Perfect and pristine...</state>
                 <state img="#-mast-3.png">&lt;i&gt;A-ah.&lt;/i&gt;  It's a lot of work massaging my breasts all by m-myself like this, you know...so &lt;i&gt;heavy and full.&lt;/i&gt;  I take Barnette for granted...</state>
                 <state img="#-mast-5.png">&lt;i&gt;Hah...a-ah!&lt;/i&gt;  Oh, I c-can't keep myself balanced...if only someone could run their fingers through my hair, that'd &lt;i&gt;really&lt;/i&gt; set me off...</state>
+                <state img="#-dreaming.png">&lt;i&gt;Hah...ngh...mmn.&lt;/i&gt;  Oh, you're all so &lt;i&gt;hah&lt;/i&gt; cruel, making me do this...I've got to picture Barnette's tight little frame, sitting here...</state>
             </case>
             <case stage="7" alsoPlaying="meia" alsoPlayingStage="0" priority="0">
                 <state img="#-laughing.png">Barnette, Belvedere, even you, Meia...so many lovely ladies on the Nirvana.  Give me a reason to think of someone else.</state>
@@ -16203,6 +16957,7 @@
                 <state img="#-finished.png">...Mmm.</state>
                 <state img="#-finished.png">...That was great.</state>
                 <state img="#-finished.png">...</state>
+                <state img="#-dreaming.png">&lt;i&gt;Oh, I just know a warm meal and some awkward questions are waiting for me back aboard the ship.&lt;/i&gt;  I'll have to put Barnette at ease!</state>
             </case>
         </trigger>
 

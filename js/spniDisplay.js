@@ -795,7 +795,7 @@ GameScreenDisplay.prototype.update = function (player) {
     
     if (devModeActive) this.devModeController.update(player);
     
-    if (player && player.pendingCollectiblePopup) {
+    if (player && player.pendingCollectiblePopups.length) {
         this.collectibleIndicator.show();
     } else {
         this.collectibleIndicator.hide();
@@ -803,13 +803,13 @@ GameScreenDisplay.prototype.update = function (player) {
 }
 
 GameScreenDisplay.prototype.onCollectibleIndicatorClick = function (ev) {
-    if (!this.player || !this.player.pendingCollectiblePopup) return;
+    if (!this.player || this.player.pendingCollectiblePopups.length == 0) return;
     
-    var collectible = this.player.pendingCollectiblePopup;
-    
-    this.player.pendingCollectiblePopup = null;
-    this.collectibleIndicator.hide();
-    collectible.displayInfoModal();
+    this.player.pendingCollectiblePopups.shift().displayInfoModal();
+
+    if (this.player.pendingCollectiblePopups.length == 0) {
+        this.collectibleIndicator.hide();
+    }
 }
 
 /* Wraps logic for handling the Main Select screen displays. */
@@ -1556,7 +1556,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         this.linecountLabel.text("Loading...");
         this.posecountLabel.text("Loading...");
 
-        fetchCompressedURL(opponent.folder + 'behaviour.xml').then(countLinesImages).then(function(response) {
+        opponent.fetchBehavior().then(countLinesImages).then(function(response) {
             opponent.uniqueLineCount = response.numUniqueLines;
             opponent.posesImageCount = response.numPoses;
 
