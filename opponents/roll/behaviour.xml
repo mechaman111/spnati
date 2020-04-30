@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 3:51:40 AM on April 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 4:51:15 AM on April 30, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Roll</first>
@@ -98,7 +98,7 @@
             </case>
             <case stage="0" id="62">
                 <condition role="other" character="navi" />
-                <state img="#-excited.png">Now I've seen everything!</state>
+                <state img="#-excited.png">A floating ball of light?</state>
             </case>
             <case stage="0" id="67">
                 <condition role="other" character="yuelia" />
@@ -110,14 +110,14 @@
             </case>
             <case stage="0" priority="1">
                 <condition count="3-" filter="robot" />
-                <state img="#-happy3.png">Hey! Hi there! Good to see you!</state>
+                <state img="#-happy3.png">Hey! Hi there! Good to see you! You can call me Roll!</state>
             </case>
             <case stage="0">
-                <state img="#-excited.png">A game of strip poker might calm my nerves. Err, circuits?</state>
-                <state img="#-happy.png">Eh? What is this place? Heheh, just kidding. I know what I signed up for.</state>
-                <state img="#-happy2.png">Looks like this will be a fun night after all!</state>
-                <state img="#-excited.png">Looking at you guys, this looks like this will be fun!</state>
-                <state img="#-happy.png">I haven't played this kind of poker in a while, so forgive me if I'm a bit rusty. Not literally, of course, I made sure of that.</state>
+                <state img="#-happy.png">Wow, there are more people here than I thought there would be!</state>
+                <state img="#-happy2.png">I've heard really good things about this place, so try not to waste my night off!</state>
+                <state img="#-excited.png">I haven't played this kind of poker in a while, so forgive me if I'm rusty. Well, not literally. I made sure of that!</state>
+                <state img="#-think.png">Is this the right place? I hope I didn't teleport into some random place again.</state>
+                <state img="#-happy3.png">I finished my housework for the night, so Dr. Light gave me the rest of the day off! Don't tell him I'm here, though.</state>
             </case>
         </trigger>
 
@@ -495,6 +495,7 @@
             </case>
             <case stage="0" id="43" totalRounds="0">
                 <state img="#-bored.png">Off to a great start, I see...</state>
+                <state img="#-happy2.png">Oh well, might as well get it out of the way now.</state>
             </case>
             <case stage="0-6" priority="2">
                 <condition role="self" hasHand="One Pair" />
@@ -512,6 +513,7 @@
             </case>
             <case stage="0">
                 <state img="#-happy.png">Alright, then. I guess I could part with my shoes.</state>
+                <state img="#-excited.png">At least I'm not the first.</state>
             </case>
             <case stage="1">
                 <state img="#-happy3.png">Thank Asimov, these were getting filthy.</state>
@@ -522,7 +524,7 @@
             </case>
             <case stage="2">
                 <state img="#-angry.png">Am I going to have to take my bow off? Because I'm not doing that.</state>
-                <state img="#-think.png">Okay, then. What should I take off now?</state>
+                <state img="#-bored.png">Is there a rule that says I have to take my bow off? Because if so-</state>
                 <state img="#-think.png">Alright then, I guess I should take something off. My dress?</state>
             </case>
             <case stage="3">
@@ -537,7 +539,7 @@
             <case stage="6">
                 <state img="#-angry.png">If some creep takes these, there will be hell to pay...</state>
                 <state img="#-happy3.png">Well, if you insist.</state>
-                <state img="#-horny.png">Oh no, whatever shall I do?</state>
+                <state img="#-horny.png">This isn't how I thought my night would go, but I'm not really complaining.</state>
             </case>
         </trigger>
 
@@ -1503,6 +1505,27 @@
                 <condition role="self" saidMarker="protomen1" />
                 <state img="#-happy2.png" collectible="roll_helmet" collectible-value="+1">No matter how dark this seems to get, there will be light!</state>
             </case>
+            <case stage="0-9" priority="0">
+                <test expr="~clothing.type~" value="extra" />
+                <state img="#-bored.png">Oh, you're choosing that?</state>
+                <state img="#-excited.png">I thought you looked cute in your ~clothing~, ~name~!</state>
+            </case>
+            <case stage="0-9" priority="0">
+                <condition status="lost_some" role="target" />
+                <test expr="~clothing.type~" value="extra" />
+                <state img="#-bored.png">I didn't even realize you didn't take your ~clothing~ off yet, ~name~! </state>
+                <state img="#-bored.png">Oh, you still have small things to take off, huh...</state>
+            </case>
+            <case stage="5-9" priority="0">
+                <condition status="lost_some" role="target" />
+                <test expr="~clothing.type~" value="extra" />
+                <state img="#-angry.png">I can't believe you still have little things to take off, ~name~. When will you run out!?</state>
+                <state img="#-embarrassed.png">I thought you looked cute in your ~clothing~, name~. Err, not that I... you know what I mean...</state>
+            </case>
+            <case stage="7-9" priority="0">
+                <test expr="~clothing.type~" value="extra" />
+                <state img="#-angry.png">This is getting ridiculous! I'm here, naked as the day I was built, and ~name~ here still has ~target.ifMale(his|her)~ ~clothing~!</state>
+            </case>
         </trigger>
 
         <trigger id="opponent_stripped">
@@ -1524,6 +1547,16 @@
                 <condition role="target" />
                 <condition role="self" saidMarker="shirtoff" notSaidMarker="shirtoff2" />
                 <state img="#-bored.png" marker="shirtoff2">I said it as a joke, but now I'm kind of disappointed...</state>
+            </case>
+            <case stage="6-9" priority="0">
+                <test expr="~clothing.type~" value="extra" />
+                <test expr="~clothing.type~" value="minor" />
+                <state img="#-happy2.png">Let's just keep going so I can put ~name~ in ~target.ifMale(his|her)~ place. On my level, that is</state>
+            </case>
+            <case stage="6-9" priority="0">
+                <test expr="~clothing.type~" value="extra" />
+                <test expr="~clothing.type~" value="minor" />
+                <state img="#-bored.png">Oh, Asimov, this is going to be a long night if we keep this up...</state>
             </case>
         </trigger>
 
@@ -1818,7 +1851,7 @@
                 <state img="#-heavy2.png">I'm about to...</state>
             </case>
             <case stage="8">
-                <state img="#-heavy1.png">&lt;i&gt;pant&lt;/i&gt; I... I'm getting close...</state>
+                <state img="#-heavy1.png">I... I'm getting close...</state>
                 <state img="#-heavy1.png">I'm gonna...</state>
                 <state img="#-heavy2.png">Getting real close here...</state>
                 <state img="#-heavy1.png">If I keep this up, I'm gonna...</state>
@@ -1892,8 +1925,8 @@
                 <state img="#-happy2.png" collectible="roll_buster">I guess I'll see you around. We accomplished a lot together! It was fun! Take care!</state>
             </case>
             <case stage="9" priority="0">
-                <state img="#-excited.png" collectible="roll_buster">Good job, ~name~! Never would've pegged you for the winner.</state>
-                <state img="#-excited.png" collectible="roll_buster">Nice job, ~name~! Same time next week?</state>
+                <state img="#-happy3.png" collectible="roll_buster">Well, that was really fun. Good job, ~name~! Sorry I can't stick around, I gotta roll.</state>
+                <state img="#-happy.png" collectible="roll_buster">Wow, that was fun. Maybe I could stick ar- hm? Oh. Sorry, Dr. Light's calling. I've gotta go. See you, ~name~!</state>
             </case>
         </trigger>
 
@@ -1921,7 +1954,6 @@
             <case stage="4-7" oneShotId="24">
                 <condition role="self" saidMarker="ovenon2" />
                 <state img="#-disappointed.png" marker="ovenon3">Wait, was it Ice Man or Fire Man?</state>
-                <state img="#-excited.png">Thank Asimov that's over!</state>
                 <state img="#-happy3.png">I was worried for a second!</state>
             </case>
             <case stage="4-7" oneShotId="27">
