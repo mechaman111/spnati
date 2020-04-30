@@ -52,15 +52,18 @@ function compileBaseErrorReport(userDesc, bugType) {
             player: epiloguePlayer.epilogue.player.id,
             gender: epiloguePlayer.epilogue.gender,
             scene: epiloguePlayer.sceneIndex,
-            sceneName: epiloguePlayer.activeScene.name,
             view: epiloguePlayer.viewIndex,
             directive: epiloguePlayer.directiveIndex,
         };
-        for (let i = epiloguePlayer.directiveIndex; i >= 0; i--) {
-            let directive = epiloguePlayer.activeScene.directives[i];
-            if (directive && directive.type == "text") {
-                data.epilogue.lastText = epiloguePlayer.activeScene.directives[i].text;
-                break;
+
+        if (epiloguePlayer.activeScene) {
+            data.epilogue.sceneName = epiloguePlayer.activeScene.name;
+            for (let i = epiloguePlayer.directiveIndex; i >= 0; i--) {
+                let directive = epiloguePlayer.activeScene.directives[i];
+                if (directive && directive.type == "text") {
+                    data.epilogue.lastText = directive.text;
+                    break;
+                }
             }
         }
     } else {
