@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 5:37:19 PM on February 23, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 4:14:04 PM on April 30, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Mulan</first>
@@ -197,7 +197,8 @@
         </trigger>
 
         <trigger id="hand">
-            <case stage="1" timeInStage="0" priority="999">
+            <case stage="1" id="76" priority="999">
+                <condition role="self" timeInStage="0" />
                 <state img="#-peace.png" marker="honorable_others">Folks, what things do &lt;i&gt;you&lt;/i&gt; look for in a match? For me: a person who speaks their mind, and is brave, clever, and most importantly: honorable.</state>
             </case>
             <case stage="2" priority="999">
@@ -276,7 +277,9 @@
             <case stage="2-8" alsoPlaying="saki_zls" saidMarker="saki_zls_duel" notSaidMarker="challenge_answer" priority="990">
                 <state img="#-smirk.png" marker="challenge_answer">I see, Saki. Well... should ~player~ not be interested tonight...</state>
             </case>
-            <case stage="2-8" alsoPlaying="sayaka" saidMarker="sayaka_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-8" priority="990">
+                <condition role="self" saidMarker="sayaka_duel" notSaidMarker="challenge_answer" />
+                <condition role="other" character="sayaka" />
                 <state img="#-challenge.png" marker="challenge_answer">Well, Sayaka? Tell us.</state>
             </case>
             <case stage="2-8" alsoPlaying="sei" saidMarker="sei_duel" notSaidMarker="challenge_answer" priority="990">
@@ -703,7 +706,9 @@
             <case stage="8" alsoPlaying="sakura" saidMarker="duel_lost" notSaidMarker="duel_sakura_lost">
                 <state img="#-peace.png" marker="duel_sakura_lost">I'll make sure to tell everyone about the fantastic group of zombie princesses, Sakura. I'm sure they'd be happy to support you!</state>
             </case>
-            <case stage="8" alsoPlaying="sayaka" saidMarker="duel_lost" notSaidMarker="duel_sayaka_lost">
+            <case stage="8">
+                <condition role="self" saidMarker="duel_lost" notSaidMarker="duel_sayaka_lost" />
+                <condition role="other" character="sayaka" />
                 <state img="#-interested.png" marker="duel_sayaka_lost">My master's weakspot... Hmm... Well, the man who taught me has a really soft neck... and earlobes...</state>
             </case>
             <case stage="8" alsoPlaying="sei" saidMarker="duel_lost" notSaidMarker="duel_sei_lost">
@@ -809,7 +814,7 @@
                 <condition role="other" character="weiss_schnee" />
                 <state img="#-smirk.png">Are you so sure about that, Weiss? I can be pretty convincing, if I do say so myself...</state>
             </case>
-            <case stage="2-4">
+            <case stage="2-4" id="77">
                 <condition role="self" timeInStage="1" notSaidMarker="mulan_duel" />
                 <condition count="0" status="naked" />
                 <condition count="0" status="masturbating" />
@@ -1617,7 +1622,8 @@
             <case stage="8" alsoPlaying="kamina">
                 <state img="#-chuckle.png">Keep being so &lt;i&gt;charming&lt;/i&gt;, and maybe I'll make you a prince of my own.</state>
             </case>
-            <case stage="8" alsoPlaying="pit">
+            <case stage="8">
+                <condition role="other" character="pit" />
                 <state img="#-challenge.png">Hades? I think Meg knows that guy. With the big flaming eyebrows? Kind of a jerk? I'd like to give him a piece of my sword!</state>
             </case>
             <case stage="1">
@@ -1680,7 +1686,7 @@
                 <condition role="other" character="amy" />
                 <state img="#-stripped.png">...Perhaps, Amy, more time in cold water might help you rest more parts of your head than your mind. </state>
             </case>
-            <case stage="8">
+            <case stage="8" id="78">
                 <condition count="1" status="naked" />
                 <condition count="0" status="masturbating" />
                 <condition count="0" status="finished" />
@@ -5708,7 +5714,10 @@
         </trigger>
 
         <trigger id="female_crotch_is_visible">
-            <case stage="2-7" alsoPlaying="sayaka" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="47" priority="990">
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition role="other" character="sayaka" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="sayaka_duel" collectible="Fireworks" collectible-value="+1">You lost, Sayaka! Do these "witches" of yours often involve a sexual component? What was the worst thing you've done to slay a witch like that?</state>
             </case>
             <case stage="2-7" priority="990">
@@ -5717,84 +5726,133 @@
                 <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="x_duel">PH Challenge</state>
             </case>
-            <case stage="2-7" target="misty_hgss" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="59" priority="990">
                 <condition count="0" filter="human_male" />
+                <condition role="target" character="misty_hgss" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="misty_duel" collectible="Fireworks" collectible-value="+1">So... it seems like you didn't get a date. When you do, what position do you prefer?</state>
             </case>
-            <case stage="2-7" target="misty_hgss" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="62" priority="990">
                 <condition count="1" filter="human_male" />
+                <condition role="target" character="misty_hgss" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="misty_duel" collectible="Fireworks" collectible-value="+1">Ah, that's right, Misty. If ~player~ does end up taking you out, are you the type of woman that puts out on a first date? If so, what should he expect?</state>
             </case>
-            <case stage="2-7" target="akko" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="50" priority="990">
+                <condition role="target" character="akko" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="akko_duel" collectible="Fireworks" collectible-value="+1">Well, Akko, this doesn't seem like the first time you've lost at something. But tell me, have you ever masturbated or had sex while transformed?</state>
             </case>
-            <case stage="2-7" target="ann_takamaki" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="54" priority="990">
+                <condition role="target" character="ann_takamaki" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="ann_duel" collectible="Fireworks" collectible-value="+1">You lost, Ann. You seem to have a close tie with your other Phantom Thieves. Do you ever fantasize about them?</state>
             </case>
-            <case stage="2-7" target="coco" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="53" priority="990">
+                <condition role="target" character="coco" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="coco_duel" collectible="Fireworks" collectible-value="+1">You fought well, Ms. Gunslinger. Tell me, do you enjoy firing that gun you've mentioned for more than just killing enemies...?</state>
             </case>
-            <case stage="2-7" target="d.va" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="56" priority="990">
+                <condition role="target" character="d.va" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="d.va_duel" collectible="Fireworks" collectible-value="+1">You lost the challenge, D.Va! My question: How often do you pillow down in your mech?</state>
             </case>
-            <case stage="2-7" priority="990">
+            <case stage="2-7" id="48" priority="990">
                 <condition role="target" character="futaba" />
                 <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
                 <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="futaba_duel" collectible="Fireworks" collectible-value="+1">I win the bet, Futaba! Why didn't you preserve your modesty with your headphones and glasses?</state>
             </case>
-            <case stage="2-7" target="gwen" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="55" priority="990">
+                <condition role="target" character="gwen" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="gwen_duel" collectible="Fireworks" collectible-value="+1">I've won the bet, Gwen! I'm uncertain if I have alternate versions of myself. How does it feel to be unique?</state>
             </case>
-            <case stage="2-7" target="human" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" priority="990">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="human_duel">You've lost, ~player~. I want to know what you think about the game! Feel free to make a post on the subreddit. Making a character is easy, if you have a friend for us!</state>
             </case>
-            <case stage="2-7" target="ini" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="60" priority="990">
+                <condition role="target" character="ini" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="ini_duel" collectible="Fireworks" collectible-value="+1">I won my bet, Ini! My question: which personality of yours do you find more successful in bringing people home?</state>
             </case>
-            <case stage="2-7" target="lotte" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="57" priority="990">
+                <condition role="target" character="lotte" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="lotte_duel" collectible="Fireworks" collectible-value="+1">Well, Lotte, I think I won my duel! Have you ever talked to the spirit inside one your... personal toys, before?</state>
             </case>
-            <case stage="2-7" priority="990">
+            <case stage="2-7" id="49" priority="990">
                 <condition role="target" character="marinette" />
                 <condition role="self" notSaidMarker="challenge_answer" />
                 <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="mari_duel" collectible="Fireworks" collectible-value="+1">You lose, Marinette. Why were you chosen for your magic?</state>
             </case>
-            <case stage="2-7" target="natsuki" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="61" priority="990">
+                <condition role="target" character="natsuki" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-chuckle.png" marker="natsuki_duel" collectible="Fireworks" collectible-value="+1">She lost... so, Natsuki... would you prefer if ~player~ were a man, or a woman? You seem conflicted!</state>
             </case>
-            <case stage="2-7" target="sei" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="58" priority="990">
+                <condition role="target" character="sei" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="sei_duel" collectible="Fireworks" collectible-value="+1">Since you lost, Sei... what's the best drunk sex you've had?</state>
             </case>
-            <case stage="2-7" target="star" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="75" priority="990">
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition filter="star" role="target" />
                 <state img="#-challenge.png" marker="star_duel" collectible="Fireworks" collectible-value="+1">Well, Princess Butterfly, you've been bested. What is the hardest burden of rulership you face?</state>
             </case>
-            <case stage="2-7" target="streaming-chan" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="63" priority="990">
+                <condition role="target" character="streaming-chan" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-denial.png" marker="nicole_duel" collectible="Fireworks" collectible-value="+1">I'm... not even sure I have a good question for some as audacious as Streaming-chan... but, what do you do for fun that's not driven by your need for money or sex?</state>
             </case>
-            <case stage="2-7" target="terra" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="74" priority="990">
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition filter="terra" role="target" />
                 <state img="#-smirk.png" marker="terra_duel" collectible="Fireworks" collectible-value="+1">Good effort Terra, but not good enough. It seems quite difficult for you to catch a break. What's the luckiest you've ever felt?</state>
             </case>
-            <case stage="2-7" target="uravity" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="990">
+            <case stage="2-7" id="71" priority="990">
+                <condition role="target" character="uravity" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="uravity_duel" collectible="Fireworks" collectible-value="+1">You lost, Ochako, but not for trying. You come from a world where powers are common. If you had been able to pick yours, what would you have wanted?</state>
             </case>
             <case stage="7" target="larachel" totalNaked="1" saidMarker="mulan_larachel_double" notSaidMarker="challenge_answer" priority="990">
                 <state img="#-challenge.png" marker="larachel_duel2">Looks like I won, so close to defeat. Well, my question is first: are you looking forward to losing the game, L'Arachel and showing off for all of us? And... I'll let you wait for the second part of my bet.</state>
             </case>
-            <case stage="2-7" priority="990">
+            <case stage="2-7" id="52" priority="990">
                 <condition role="target" character="jessie" />
                 <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
                 <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="jessie_duel" collectible="Fireworks" collectible-value="+1">You lost the wager, Jessie! What was the &lt;i&gt;actual&lt;/i&gt; best sex you've ever had? </state>
             </case>
-            <case stage="2-7" priority="990">
+            <case stage="2-7" id="51" priority="990">
                 <condition role="target" character="megumin" />
                 <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
                 <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="megumin_duel" collectible="Fireworks" collectible-value="+1">Looks like I won the bet, Megumin. Before this game, have you ever... been intimate? If not, what do you imagine your first time being like?</state>
             </case>
-            <case stage="2-7" target="larachel" totalNaked="1" saidMarker="mulan_duel" notSaidMarker="challenge_answer" priority="980">
+            <case stage="2-7" id="68" priority="980">
+                <condition role="target" character="larachel" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="larachel_duel" collectible="Fireworks" collectible-value="+1">Victory is mine, L'Arachel! So, tell me, as a holy woman, are you looking forward to profaning yourself in a hand or two?</state>
             </case>
             <case stage="0-10" target="jura" alsoPlaying="revy" alsoPlayingStage="7" targetSaidMarker="revy_grope">
@@ -5845,13 +5903,23 @@
                 <condition role="target" character="futaba" stage="6" />
                 <state img="#-surprise.png">Given your... heritage, I'm quite surprised that you're a natural redhead. </state>
             </case>
-            <case stage="2-7" target="hanako" totalNaked="1" totalMasturbating="0" totalFinished="0" saidMarker="mulan_duel" notSaidMarker="duel_lost">
+            <case stage="2-7" id="64">
+                <condition role="target" character="hanako" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="duel_lost" />
+                <condition count="1" status="naked" />
+                <condition count="0" status="masturbating" />
+                <condition count="0" status="finished" />
                 <state img="#-challenge.png" marker="hanako_duel" collectible="Fireworks" collectible-value="+1">Well, Hanako, besides ~player~, would you be interested in spending some time with me after this game? What can a xia such as myself do to woo you?</state>
             </case>
-            <case stage="2-7" target="meia" totalNaked="1" totalMasturbating="0" totalFinished="0" saidMarker="mulan_duel" notSaidMarker="challenge_answer">
+            <case stage="2-7" id="67">
+                <condition role="target" character="meia" />
+                <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
+                <condition count="0" status="masturbating" />
+                <condition count="0" status="finished" />
                 <state img="#-challenge.png" marker="meia_duel" collectible="Fireworks" collectible-value="+1">It would seem that I've won, Meia! What would you say the most appealing part of the male form would be? Or, rather, what &lt;i&gt;excites&lt;/i&gt; you most?</state>
             </case>
-            <case stage="2-7">
+            <case stage="2-7" id="70">
                 <condition role="target" character="miko" />
                 <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
                 <condition count="1" status="naked" />
@@ -5859,7 +5927,7 @@
                 <condition count="0" status="finished" />
                 <state img="#-challenge.png" marker="miko_duel" collectible="Fireworks" collectible-value="+1">It would seem time to collect on our wager, Crown Prince. Have you ever received male company, or does your consort suffice?</state>
             </case>
-            <case stage="2-7">
+            <case stage="2-7" id="65">
                 <condition role="target" character="rin" />
                 <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
                 <condition count="1" status="naked" />
@@ -5871,19 +5939,19 @@
                 <condition count="1" gender="female" status="crotch_visible" />
                 <state img="#-chuckle.png">I'm sure it won't be the last one out, Estelle.</state>
             </case>
-            <case stage="2-7">
+            <case stage="2-7" id="69">
                 <condition role="target" character="sakura" saidMarker="sakura_mulan_challenge_yes" />
                 <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
                 <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="sakura_duel" collectible="Fireworks" collectible-value="+1">Looks like I win, Number One! As a minstrel, you've probably had a great many... experiences, right? What was your favorite sexual experience?</state>
             </case>
-            <case stage="2-7">
+            <case stage="2-7" id="66">
                 <condition role="target" character="saki_zls" />
                 <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
                 <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="saki_zls_duel" collectible="Fireworks" collectible-value="+1">Looks like I win, Miss Number Two. &lt;i&gt;Have&lt;/i&gt; you had sex since your... &lt;i&gt;ah, revival?&lt;/i&gt; How has it been different?</state>
             </case>
-            <case stage="2-7">
+            <case stage="2-7" id="72">
                 <condition role="target" character="starfire" />
                 <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
                 <condition count="1" status="naked" />
@@ -5964,7 +6032,10 @@
                 <condition role="target" character="rainbow_dash" />
                 <state img="#-challenge.png">Well, that's a shame. But I think we can still find a good way to put each of us to our labors... </state>
             </case>
-            <case stage="2-7" filter="alien" totalNaked="1" notSaidMarker="challenge_answer">
+            <case stage="2-7">
+                <condition filter="alien" role="target" />
+                <condition role="self" notSaidMarker="challenge_answer" />
+                <condition count="1" status="naked" />
                 <state img="#-challenge.png" marker="duel_alien">My question, for our wager, ~name~: What world are you really from? What’s it like there? Most importantly, are you here to… pillow down with a human?</state>
             </case>
             <case stage="2-7" filter="androgynous" totalNaked="1" notSaidMarker="challenge_answer">
@@ -6078,7 +6149,8 @@
             <case stage="0-1">
                 <state img="#-interested.png">O-oh. Very sexy. It’s kind of like my-- &lt;i&gt;many&lt;/i&gt; of the ones I’ve seen before. You uh, are in kind of a hurry to get naked though, given I’m still… still in my armor.</state>
             </case>
-            <case stage="0-10" filter="blonde" priority="0">
+            <case stage="0-10" priority="0">
+                <condition filter="blonde" role="target" />
                 <state img="#-chuckle.png">I know a blonde girl who can do crazy stuff with her hair. And that does mean all of it.</state>
             </case>
             <case stage="0-10" filter="brunette" priority="0">
@@ -6307,11 +6379,11 @@
                 <condition count="1-" status="naked" />
                 <state img="#-challenge.png" marker="duel_ribbon_girl">Looks like I won &lt;i&gt;our&lt;/i&gt; wager, Ribbon Girl, if not your other one. When you're intimate with a man, what position do you most enjoy?</state>
             </case>
-            <case stage="2-7">
+            <case stage="2-7" id="73">
                 <condition role="target" character="ribbon_girl" />
                 <condition role="self" saidMarker="mulan_duel" notSaidMarker="challenge_answer" />
                 <condition count="1-" status="naked" />
-                <state img="#-challenge.png" marker="duel_ribbon_girl">It would seem I won my own challenge, Ribbon Girl! When you're... intimate... what kind position do you enjoy most? </state>
+                <state img="#-challenge.png" marker="duel_ribbon_girl" collectible="Fireworks" collectible-value="+1">It would seem I won my own challenge, Ribbon Girl! When you're... intimate... what kind position do you enjoy most? </state>
             </case>
             <case stage="0-1" id="25">
                 <condition role="target" character="chihiro" />

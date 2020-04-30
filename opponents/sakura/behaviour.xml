@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 7:46:30 PM on April 09, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 1:39:39 PM on April 30, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Sakura</first>
@@ -430,6 +430,11 @@
                 <condition role="other" character="komi-san" stage="1" timeInStage="0" sayingMarker="jacket_off" />
                 <state img="#-why.png">...What happened to sensible and small, Komi-san!? W-what do we do!? W-what &lt;i&gt;should&lt;/i&gt; we do!? </state>
             </case>
+            <case stage="0-7" totalRounds="9-10" priority="156">
+                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptFlamel" sayingMarker="promptAskFlamel" />
+                <condition count="1" filter="saki_zls" />
+                <state img="#-doubt.png" marker="sakura_yuelia_prompt8">...Hi, Yuelia, this is Saki. </state>
+            </case>
             <case stage="0-7" alsoPlaying="chun-li" alsoPlayingStage="1" alsoPlayingTimeInStage="0">
                 <state img="#-happy.png">It's an idol band! We're really popular in Saga, Japan, Chun-li... though we &lt;i&gt;do&lt;/i&gt; have a dog for a mascot!</state>
             </case>
@@ -545,11 +550,6 @@
             <case stage="0-7" totalRounds="9-10" priority="152">
                 <condition role="other" character="yuelia" stage="1-8" saidMarker="promptFizz" sayingMarker="promptAskFizz" />
                 <state img="#-smile.png" marker="sakura_yuelia_prompt6">I'll never take my ribbons off if I can avoid that! But... I mostly like all the stuff our costumes come with! </state>
-            </case>
-            <case stage="0-7" totalRounds="9-10" priority="152">
-                <condition role="other" character="yuelia" stage="1-8" saidMarker="promptFlamel" sayingMarker="promptAskFlamel" />
-                <condition count="1" filter="saki_zls" />
-                <state img="#-doubt.png" marker="sakura_yuelia_prompt8">...Hi, Yuelia, this is Saki. </state>
             </case>
             <case stage="0-7" totalRounds="9-10" priority="152">
                 <condition role="other" character="yuelia" stage="1-8" saidMarker="promptFlamel" sayingMarker="promptAskFlamel" />
@@ -848,7 +848,9 @@
                 <condition role="other" character="natsuki" />
                 <state img="#-huh.png">Oh, uh... y-yeah! Definitely a &lt;i&gt;weird&lt;/i&gt; dream. Franchouchou aren't zombies. This is all really weird, right, everyone? Dream. Totally.</state>
             </case>
-            <case stage="3" alsoPlaying="saki_zls" timeInStage="0">
+            <case stage="3">
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="saki_zls" />
                 <state img="#-why.png">S-saki-chan! I-I don't like what you're implying! I'm not-- I'm not-- just-- I am a zombie, but I'm not a--!</state>
             </case>
             <case stage="6" alsoPlaying="saki_zls" timeInStage="0">
@@ -4896,7 +4898,7 @@
             </case>
             <case stage="0-9">
                 <condition role="target" character="komi-san" stage="1" />
-                <state img="#-hum.png">And &lt;i&gt;your&lt;/i&gt; actions say that you're being smart and sensible by picking somthing small--</state>
+                <state img="#-hum.png">And &lt;i&gt;your&lt;/i&gt; actions say that you're being smart and sensible by picking something small--</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="chiaki" stage="1" />
@@ -8065,13 +8067,17 @@
             <case stage="0-2" filter="uses_toy" notSaidMarker="toy_forfeit">
                 <state img="#-huh.png" marker="+toy_forfeit">Aren't you... going to use your fingers...? (&lt;i&gt;Come to think of it, I could get myself something to spice up the bedroom... not that I have private time...&lt;/i&gt;)</state>
             </case>
-            <case stage="3-4" filter="uses_toy" notSaidMarker="toy_forfeit">
+            <case stage="3-4">
+                <condition filter="uses_toy" role="target" />
+                <condition role="self" notSaidMarker="toy_forfeit" />
                 <state img="#-huh.png" marker="+toy_forfeit">W-wow. You... you really came prepared to cum, ~name~. Is... is that something you usually use?</state>
             </case>
             <case stage="5-7" filter="uses_toy" notSaidMarker="toy_forfeit">
                 <state img="#-hum.png" marker="+toy_forfeit">(&lt;i&gt;I've never used a toy before... maybe I've been missing out...&lt;/i&gt;)</state>
             </case>
-            <case stage="8-9" filter="uses_toy" notSaidMarker="toy_forfeit">
+            <case stage="8-9">
+                <condition filter="uses_toy" role="target" />
+                <condition role="self" notSaidMarker="toy_forfeit" />
                 <state img="#-smile.png" marker="+toy_forfeit">Maybe I should try one of those, ~name~.</state>
                 <state img="#-happy.png" marker="+toy_forfeit">Okay, ~name~, is that... as fun as it looks?</state>
             </case>
@@ -8512,6 +8518,18 @@
                 <state img="#-zettai.png" collectible="Sakura's Bra">Well, it was a weird night, but I think we could get your group and mine together for a show! </state>
             </case>
             <case stage="9">
+                <state img="#-huh.png" collectible="Sakura's Bra">Wait. This is room 69. Not 96. Ohhhhhhhh crap. That explains so much. Um... w-well, if the rest of you can keep a secret, why don't you come to our show...?</state>
+                <state img="#-zettai.png" collectible="Sakura's Bra">This has been Franchouchou Number One, with quite the unusual performance! Hope to see you all at our next concert!</state>
+            </case>
+            <case stage="9" hidden="1" priority="301">
+                <condition count="4" filter="musician" />
+                <state img="#-smile.png" collectible="The Ugliest Freaking T-Shirt">Wow, that was a great performance tonight. Everyone else brought band shirts, right? It'd be kind of cute to swap them around!</state>
+            </case>
+            <case stage="9" hidden="1" priority="301">
+                <condition filter="zombieland_saga" role="target" />
+                <state img="#-smile.png" collectible="The Ugliest Freaking T-Shirt">I'm just happy one of us won, ~name~! Looks like we gained some new fans, too!</state>
+            </case>
+            <case stage="9" hidden="1">
                 <state img="#-huh.png" collectible="Sakura's Bra">Wait. This is room 69. Not 96. Ohhhhhhhh crap. That explains so much. Um... w-well, if the rest of you can keep a secret, why don't you come to our show...?</state>
                 <state img="#-zettai.png" collectible="Sakura's Bra">This has been Franchouchou Number One, with quite the unusual performance! Hope to see you all at our next concert!</state>
             </case>
