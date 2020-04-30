@@ -489,11 +489,39 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
   var title = $epilogue.find("title").html().trim();
   var gender = $epilogue.attr("gender") || 'any';
 
+  var markers = [];
+  $epilogue.children("markers").children("marker").each(function() {
+    var $elem = $(this);
+    var markerOp = parseMarkerXML(this, null);
+
+    /* By default, execute marker ops only when playing from the game end modal. */
+    var run_on = $elem.attr('when');
+
+    switch (run_on) {
+    case "game":
+    default:
+      markerOp.from_game = true;
+      markerOp.from_gallery = false;
+      break;
+    case "gallery":
+      markerOp.from_game = false;
+      markerOp.from_gallery = true;
+      break;
+    case "always":
+      markerOp.from_game = true;
+      markerOp.from_gallery = true;
+      break;
+    }
+
+    markers.push(markerOp);
+  });
+
   var epilogue = {
     title: title,
     player: player,
     gender: gender,
     scenes: [],
+    markers: markers,
   };
   var scenes = epilogue.scenes;
 
@@ -997,6 +1025,15 @@ function doEpilogue() {
 
   /* Prevent players from trying to load an epilogue twice. */
   $epilogueAcceptButton.prop("disabled", true);
+
+  /* Persistent marker forward declarations should already be loaded.
+   * Execute any marker operations attached to this epilogue. 
+   */
+  chosenEpilogue.markers.forEach(function(markerOp) {
+    if (markerOp.from_game) {
+      markerOp.apply(player, null);
+    }
+  });
 
   if (USAGE_TRACKING) {
     var usage_tracking_report = {
