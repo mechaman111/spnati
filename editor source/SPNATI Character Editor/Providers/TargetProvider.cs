@@ -101,5 +101,10 @@ namespace SPNATI_Character_Editor.Providers
 		{
 			list.Sort((record1, record2) => record1.CompareTo(record2));
 		}
+
+		public bool FilterFromUI(IRecord record)
+		{
+			return false;
+		}
 	}
 }

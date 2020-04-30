@@ -90,6 +90,12 @@ namespace SPNATI_Character_Editor.Providers
 			return list;
 		}
 
+		public bool FilterFromUI(IRecord record)
+		{
+			OpponentStatus status = Listing.Instance.GetCharacterStatus(record.Key);
+			return Config.StatusFilters.Contains(status);
+		}
+
 		public void Sort(List<IRecord> list)
 		{
 			list.Sort((record1, record2) => record1.CompareTo(record2));
@@ -97,7 +103,7 @@ namespace SPNATI_Character_Editor.Providers
 
 		public string[] GetColumns()
 		{
-			return new string[] { "Name", "Folder", "Last Update", "Source" };
+			return new string[] { "Name", "Folder", "Last Update", "Status" };
 		}
 
 		public int[] GetColumnWidths()

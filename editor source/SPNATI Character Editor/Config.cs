@@ -3,6 +3,7 @@ using Desktop.Providers;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
@@ -500,6 +501,36 @@ namespace SPNATI_Character_Editor
 			{
 				string items = string.Join(",", value);
 				Set("autopause", items);
+			}
+		}
+
+		public static HashSet<OpponentStatus> StatusFilters
+		{
+			get
+			{
+				HashSet<OpponentStatus> set = new HashSet<OpponentStatus>();
+				if (!HasValue("statusfilter"))
+				{
+					set.Add(OpponentStatus.Incomplete);
+					set.Add(OpponentStatus.Event);
+					return set;
+				}
+				string items = GetString("statusfilter");
+				foreach (string item in items.Split(','))
+				{
+					int value;
+					if (int.TryParse(item, out value))
+					{
+						OpponentStatus status = (OpponentStatus)value;
+						set.Add(status);
+					}
+				}
+				return set;
+			}
+			set
+			{
+				string items = string.Join(",", value.Select(status => (int)status));
+				Set("statusfilter", items);
 			}
 		}
 

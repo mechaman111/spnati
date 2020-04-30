@@ -238,6 +238,10 @@ namespace SPNATI_Character_Editor.Controls
 						MarkerOperation oldMarker = new MarkerOperation(line.Marker);
 						newMarker.Operator = oldMarker.Operator;
 						newMarker.Value = oldMarker.Value;
+						if (oldMarker.Name.EndsWith("*"))
+						{
+							newMarker.Name += "*";
+						}
 					}
 				}
 				line.Marker = newMarker.ToString();

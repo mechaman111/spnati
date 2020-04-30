@@ -191,7 +191,7 @@ namespace SPNATI_Character_Editor
 			set { if (_persistent != value) { _persistent = value; NotifyPropertyChanged(); } }
 		}
 
-		public static readonly string[] ArrowDirections = new string[] { "", "down", "left", "right", "up" };
+		public static readonly string[] ArrowDirections = new string[] { "", "down", "left", "right", "up", "none" };
 		public static readonly string[] AILevels = new string[] { "", "throw", "bad", "average", "good", "best" };
 
 		public DialogueLine()

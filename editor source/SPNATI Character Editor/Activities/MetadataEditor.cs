@@ -49,12 +49,6 @@ namespace SPNATI_Character_Editor.Activities
 				cboDefaultPic.SelectedItem = pose;
 			}
 			gridAI.Data = _character.Intelligence;
-
-			OpponentStatus status = Listing.Instance.GetCharacterStatus(_character.FolderName);
-			lblIncomplete.Visible = (status == OpponentStatus.Incomplete);
-			lblOffline.Visible = (status == OpponentStatus.Offline);
-			lblTesting.Visible = (status == OpponentStatus.Testing);
-			lblUnlisted.Visible = (status == OpponentStatus.Unlisted);
 		}
 
 		/// <summary>

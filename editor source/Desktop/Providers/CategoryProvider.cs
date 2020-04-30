@@ -45,6 +45,11 @@ namespace Desktop.Providers
 			return null;
 		}
 
+		public virtual bool FilterFromUI(IRecord record)
+		{
+			return false;
+		}
+
 		public abstract string GetLookupCaption();
 
 		protected abstract T[] GetCategoryValues();

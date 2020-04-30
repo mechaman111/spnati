@@ -29,11 +29,11 @@
 		private void InitializeComponent()
 		{
 			this.grpPartners = new Desktop.Skinning.SkinnedGroupBox();
+			this.cboGroups = new Desktop.Skinning.SkinnedComboBox();
 			this.cmdPreviousGraph = new Desktop.Skinning.SkinnedIcon();
 			this.cmdNextGraph = new Desktop.Skinning.SkinnedIcon();
 			this.lblLines = new Desktop.Skinning.SkinnedLabel();
 			this.graphPartners = new Desktop.CommonControls.Graphs.StackedBarGraph();
-			this.cboGroups = new Desktop.Skinning.SkinnedComboBox();
 			this.grpPartners.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -56,6 +56,25 @@
 			this.grpPartners.TabIndex = 2;
 			this.grpPartners.TabStop = false;
 			this.grpPartners.Text = "Franchise Partners";
+			// 
+			// cboGroups
+			// 
+			this.cboGroups.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cboGroups.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+			this.cboGroups.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+			this.cboGroups.BackColor = System.Drawing.Color.White;
+			this.cboGroups.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboGroups.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+			this.cboGroups.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.cboGroups.KeyMember = null;
+			this.cboGroups.Location = new System.Drawing.Point(240, 3);
+			this.cboGroups.Name = "cboGroups";
+			this.cboGroups.SelectedIndex = -1;
+			this.cboGroups.SelectedItem = null;
+			this.cboGroups.Size = new System.Drawing.Size(181, 23);
+			this.cboGroups.Sorted = false;
+			this.cboGroups.TabIndex = 4;
+			this.cboGroups.SelectedIndexChanged += new System.EventHandler(this.cboGroups_SelectedIndexChanged);
 			// 
 			// cmdPreviousGraph
 			// 
@@ -111,25 +130,6 @@
 			this.graphPartners.ShowTotals = true;
 			this.graphPartners.Size = new System.Drawing.Size(415, 262);
 			this.graphPartners.TabIndex = 0;
-			// 
-			// cboGroups
-			// 
-			this.cboGroups.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cboGroups.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-			this.cboGroups.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-			this.cboGroups.BackColor = System.Drawing.Color.White;
-			this.cboGroups.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cboGroups.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
-			this.cboGroups.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.cboGroups.KeyMember = null;
-			this.cboGroups.Location = new System.Drawing.Point(264, 3);
-			this.cboGroups.Name = "cboGroups";
-			this.cboGroups.SelectedIndex = -1;
-			this.cboGroups.SelectedItem = null;
-			this.cboGroups.Size = new System.Drawing.Size(157, 23);
-			this.cboGroups.Sorted = false;
-			this.cboGroups.TabIndex = 4;
-			this.cboGroups.SelectedIndexChanged += new System.EventHandler(this.cboGroups_SelectedIndexChanged);
 			// 
 			// ComparisonWidget
 			// 
