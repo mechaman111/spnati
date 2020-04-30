@@ -5,6 +5,10 @@ namespace KisekaeImporter.SubCodes
 	{
 		public KisekaeBangs() : base("ed") { }
 
+		public void Pose(IPoseable pose)
+		{
+		}
+
 		public int Shape
 		{
 			get { return GetInt(0); }

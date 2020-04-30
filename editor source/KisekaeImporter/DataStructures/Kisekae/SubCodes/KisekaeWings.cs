@@ -4,6 +4,18 @@
 	{
 		public KisekaeWings() : base("pd") { }
 
+		public void Pose(IPoseable pose)
+		{
+			KisekaeWings other = pose as KisekaeWings;
+			if (other == null)
+			{
+				return;
+			}
+			ScaleX = other.ScaleX;
+			Side = other.Side;
+			OffsetY = other.OffsetY;
+		}
+
 		public int Shape
 		{
 			get { return GetInt(0); }

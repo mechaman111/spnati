@@ -93,5 +93,10 @@ namespace Desktop.Providers
 		{
 			get { return false; }
 		}
+
+		public virtual bool FilterFromUI(IRecord record)
+		{
+			return false;
+		}
 	}
 }

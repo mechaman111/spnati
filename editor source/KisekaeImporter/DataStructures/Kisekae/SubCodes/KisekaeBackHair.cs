@@ -4,6 +4,18 @@
 	{
 		public KisekaeBackHair() : base("ec") { }
 
+		public void Pose(IPoseable pose)
+		{
+			KisekaeBackHair other = pose as KisekaeBackHair;
+			if (other == null)
+			{
+				return;
+			}
+			Length = other.Length;
+			XScale = other.XScale;
+			YScale = other.YScale;
+		}
+
 		public int Shape
 		{
 			get { return GetInt(0); }

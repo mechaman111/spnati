@@ -75,5 +75,10 @@ namespace SPNATI_Character_Editor.Providers
 		{
 			list.Sort();
 		}
+
+		public virtual bool FilterFromUI(IRecord record)
+		{
+			return false;
+		}
 	}
 }

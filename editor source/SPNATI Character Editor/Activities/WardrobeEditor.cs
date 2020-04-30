@@ -23,6 +23,7 @@ namespace SPNATI_Character_Editor.Controls
 			ColGeneric.RecordType = typeof(ClothingCategory);
 			ColType.RecordType = typeof(ClothingTypeCategory);
 			ColPosition.RecordType = typeof(ClothingPositionCategory);
+			ColPosition.RecordFilter = FilterPosition;
 			ColPlural.TrueValue = true;
 			ColPosition.AllowsNew = true;
 			ColGeneric.AllowsNew = true;
@@ -213,7 +214,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void gridWardrobe_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.ColumnIndex != ColDelete.Index || gridWardrobe.AllowUserToDeleteRows)
+			if (e.ColumnIndex != ColDelete.Index)
 			{
 				return;
 			}
@@ -223,6 +224,12 @@ namespace SPNATI_Character_Editor.Controls
 				DataGridViewRow row = gridWardrobe.Rows[e.RowIndex];
 				if (row != null && !row.IsNewRow)
 				{
+					if (!gridWardrobe.AllowUserToDeleteRows)
+					{
+						MessageBox.Show("You cannot delete layers from within the editor because this is highly disruptive to other characters targeting yours.");
+						return;
+					}
+
 					gridWardrobe.Rows.RemoveAt(e.RowIndex);
 					row.Tag = null;
 				}
@@ -243,6 +250,21 @@ namespace SPNATI_Character_Editor.Controls
 				e.Graphics.DrawImage(img, new Rectangle(x, y, w, h));
 				e.Handled = true;
 			}
+		}
+
+		private bool FilterPosition(IRecord record)
+		{
+			if (gridWardrobe.SelectedCells.Count > 0)
+			{
+				int rowIndex = gridWardrobe.SelectedCells[0].RowIndex;
+				DataGridViewRow row = gridWardrobe.Rows[rowIndex];
+				string type = row.Cells[nameof(ColType)].Value?.ToString();
+				if (type == "important" || type == "major")
+				{
+					return record.Key == "upper" || record.Key == "lower" || record.Key == "both";
+				}
+			}
+			return true;
 		}
 	}
 }

@@ -64,6 +64,10 @@ namespace SPNATI_Character_Editor
 		Offline,
 		[XmlEnum("incomplete")]
 		Incomplete,
+		[XmlEnum("duplicate")]
+		Duplicate,
+		[XmlEnum("event")]
+		Event,
 		[XmlEnum()]
 		Unlisted
 	}

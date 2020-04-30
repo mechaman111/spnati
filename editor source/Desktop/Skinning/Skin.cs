@@ -52,6 +52,9 @@ namespace Desktop.Skinning
 		[ColorSet(DisplayName = "SecondaryWidget")]
 		public ColorSet SecondaryWidget { get; set; } = new ColorSet();
 
+		[ColorSet(DisplayName = "Critical")]
+		public ColorSet Critical { get; set; } = new ColorSet();
+
 		[Color(DisplayName = "Shadow")]
 		public Color SurfaceShadowColor = Color.LightGray;
 
@@ -473,6 +476,7 @@ namespace Desktop.Skinning
 		Group3,
 		Group4,
 		Group5,
+		Critical,
 	}
 
 	/// <summary>

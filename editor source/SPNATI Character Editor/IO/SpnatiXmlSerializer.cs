@@ -232,23 +232,22 @@ namespace SPNATI_Character_Editor.IO
 				else
 				{
 					//Array
-					writer.WriteStartElement(tuple.Item2);
 					IList array = field.GetValue(data) as IList;
-					if (array != null)
+					if (array != null && array.Count > 0)
 					{
+						writer.WriteStartElement(tuple.Item2);
 						foreach (var obj in array)
 						{
 							WriteElement(obj, tuple.Item3, writer, builder);
 						}
-					}
+						writer.WriteEndElement();
 
-					if (newLine == XmlNewLinePosition.After || newLine == XmlNewLinePosition.Both)
-					{
-						writer.Flush();
-						builder.AppendLine();
+						if (newLine == XmlNewLinePosition.After || newLine == XmlNewLinePosition.Both)
+						{
+							writer.Flush();
+							builder.AppendLine();
+						}
 					}
-
-					writer.WriteEndElement();
 				}
 			}
 

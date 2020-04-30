@@ -42,6 +42,7 @@
 			this.lblGood = new Desktop.Skinning.SkinnedLabel();
 			this.panelFix = new Desktop.Skinning.SkinnedPanel();
 			this.lblProgress = new Desktop.Skinning.SkinnedLabel();
+			this.cmdGoto = new Desktop.Skinning.SkinnedButton();
 			this.panelFix.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -58,6 +59,8 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label1.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label1.Location = new System.Drawing.Point(3, 146);
@@ -108,6 +111,8 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
+			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label2.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.label2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label2.Location = new System.Drawing.Point(3, 0);
@@ -167,6 +172,8 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label3.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.label3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label3.Location = new System.Drawing.Point(3, 42);
@@ -193,6 +200,7 @@
 			// 
 			// panelFix
 			// 
+			this.panelFix.Controls.Add(this.cmdGoto);
 			this.panelFix.Controls.Add(this.lblProgress);
 			this.panelFix.Controls.Add(this.label2);
 			this.panelFix.Controls.Add(this.txtLine);
@@ -211,10 +219,13 @@
 			this.panelFix.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
 			this.panelFix.Size = new System.Drawing.Size(603, 290);
 			this.panelFix.TabIndex = 12;
+			this.panelFix.TabSide = Desktop.Skinning.TabSide.None;
 			// 
 			// lblProgress
 			// 
 			this.lblProgress.AutoSize = true;
+			this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.lblProgress.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.lblProgress.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.lblProgress.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.lblProgress.Location = new System.Drawing.Point(6, 231);
@@ -222,6 +233,19 @@
 			this.lblProgress.Size = new System.Drawing.Size(34, 13);
 			this.lblProgress.TabIndex = 11;
 			this.lblProgress.Text = "0 of 0";
+			// 
+			// cmdGoto
+			// 
+			this.cmdGoto.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdGoto.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdGoto.Flat = false;
+			this.cmdGoto.Location = new System.Drawing.Point(378, 162);
+			this.cmdGoto.Name = "cmdGoto";
+			this.cmdGoto.Size = new System.Drawing.Size(100, 23);
+			this.cmdGoto.TabIndex = 12;
+			this.cmdGoto.Text = "Goto Line";
+			this.cmdGoto.UseVisualStyleBackColor = true;
+			this.cmdGoto.Click += new System.EventHandler(this.cmdGoto_Click);
 			// 
 			// SpellCheck
 			// 
@@ -253,5 +277,6 @@
 		private Desktop.Skinning.SkinnedLabel lblGood;
 		private Desktop.Skinning.SkinnedPanel panelFix;
 		private Desktop.Skinning.SkinnedLabel lblProgress;
+		private Desktop.Skinning.SkinnedButton cmdGoto;
 	}
 }

@@ -82,5 +82,10 @@ namespace Desktop
 		}
 
 		public void SetContext(object context) { }
+
+		public virtual bool FilterFromUI(IRecord record)
+		{
+			return false;
+		}
 	}
 }

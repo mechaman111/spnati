@@ -55,6 +55,8 @@
 			this.txtFilter = new Desktop.Skinning.SkinnedTextBox();
 			this.tabsSections = new Desktop.Skinning.SkinnedTabControl();
 			this.tabGeneral = new System.Windows.Forms.TabPage();
+			this.label7 = new Desktop.Skinning.SkinnedLabel();
+			this.chkStatuses = new Desktop.Skinning.SkinnedCheckedListBox();
 			this.skinnedLabel5 = new Desktop.Skinning.SkinnedLabel();
 			this.recAutoOpen = new Desktop.CommonControls.RecordField();
 			this.cmdBrowseKisekae = new Desktop.Skinning.SkinnedButton();
@@ -444,6 +446,8 @@
 			// tabGeneral
 			// 
 			this.tabGeneral.BackColor = System.Drawing.Color.White;
+			this.tabGeneral.Controls.Add(this.label7);
+			this.tabGeneral.Controls.Add(this.chkStatuses);
 			this.tabGeneral.Controls.Add(this.skinnedLabel5);
 			this.tabGeneral.Controls.Add(this.recAutoOpen);
 			this.tabGeneral.Controls.Add(this.cmdBrowseKisekae);
@@ -461,6 +465,31 @@
 			this.tabGeneral.Size = new System.Drawing.Size(447, 242);
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.label7.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label7.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+			this.label7.Location = new System.Drawing.Point(7, 116);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(96, 13);
+			this.label7.TabIndex = 13;
+			this.label7.Text = "Characters to hide:";
+			// 
+			// chkStatuses
+			// 
+			this.chkStatuses.BackColor = System.Drawing.Color.White;
+			this.chkStatuses.CheckOnClick = true;
+			this.chkStatuses.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.chkStatuses.ForeColor = System.Drawing.Color.Black;
+			this.chkStatuses.FormattingEnabled = true;
+			this.chkStatuses.Location = new System.Drawing.Point(133, 112);
+			this.chkStatuses.Name = "chkStatuses";
+			this.chkStatuses.Size = new System.Drawing.Size(276, 109);
+			this.chkStatuses.TabIndex = 12;
 			// 
 			// skinnedLabel5
 			// 
@@ -1088,5 +1117,7 @@
 		private Desktop.Skinning.SkinnedCheckBox chkPreviewFormatting;
 		private Desktop.Skinning.SkinnedCheckBox chkPreviewBubble;
 		private Desktop.Skinning.SkinnedCheckBox chkHideImages;
+		private Desktop.Skinning.SkinnedLabel label7;
+		private Desktop.Skinning.SkinnedCheckedListBox chkStatuses;
 	}
 }

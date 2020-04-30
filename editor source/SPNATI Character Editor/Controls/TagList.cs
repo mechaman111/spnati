@@ -14,6 +14,7 @@ namespace SPNATI_Character_Editor.Controls
 		private AutoCompleteStringCollection _tagAutoComplete = new AutoCompleteStringCollection();
 		private BindableTagList _binding;
 		private Character _character;
+		private bool _adding;
 
 		public void SetData(BindableTagList dataSource, Character character)
 		{
@@ -73,6 +74,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void AddRow(BindableTag tag)
 		{
+			if (_adding) { return; }
 			DataGridViewRow row = grid.Rows[grid.Rows.Add()];
 			row.Tag = tag;
 			row.Cells[0].Value = tag.Tag;
@@ -209,6 +211,14 @@ namespace SPNATI_Character_Editor.Controls
 						tag = _binding.Add(key);
 					}
 					row.Tag = tag;
+
+					//default stages to All
+					_adding = true;
+					for (int i = 0; i < _character.Layers + Clothing.ExtraStages; i++)
+					{
+						tag.Stages.Add(i);
+					}
+					_adding = false;
 				}
 			}
 			else

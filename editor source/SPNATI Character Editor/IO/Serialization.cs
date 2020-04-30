@@ -532,7 +532,14 @@ namespace SPNATI_Character_Editor
 
 		public static TagDictionary ImportTags()
 		{
-			string filename = Path.Combine(Config.ExecutableDirectory, "tag_dictionary.xml");
+			string path = Path.Combine(Config.SpnatiDirectory, "opponents");
+			string filename = Path.Combine(path, "tag_dictionary.xml");
+			if (!File.Exists(filename))
+			{
+				//use the old location for backwards compatibility
+				filename = Path.Combine(Config.ExecutableDirectory, "tag_dictionary.xml");
+			}
+
 			if (File.Exists(filename))
 			{
 				TextReader reader = null;

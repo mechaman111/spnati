@@ -67,6 +67,13 @@ namespace SPNATI_Character_Editor
 					ValidationContext context = new ValidationContext(new Stage(stageCase.Stages[0]), stageCase, null);
 					ValidateSaying(stageCase.Target, stageCase.TargetSaying, warnings, "targetSaying", stageCase.Tag, context);
 					ValidateSaying(stageCase.AlsoPlaying, stageCase.AlsoPlayingSaying, warnings, "alsoPlayingSaying", stageCase.Tag, context);
+					foreach (TargetCondition condition in stageCase.Conditions)
+					{
+						if (!string.IsNullOrEmpty(condition.Saying))
+						{
+							ValidateSaying(condition.Character, condition.Saying, warnings, "sayingText", stageCase.Tag, context);
+						}
+					}
 				}
 
 				foreach (int stageIndex in stageCase.Stages)
@@ -632,7 +639,8 @@ namespace SPNATI_Character_Editor
 											if (string.IsNullOrEmpty(line.Marker)) { continue; }
 											string val;
 											bool pt;
-											string markerName = Marker.ExtractPieces(line.Marker, out val, out pt);
+											string markerOp;
+											string markerName = Marker.ExtractPieces(line.Marker, out val, out pt, out markerOp);
 											if (markerName == name)
 											{
 												for (int i = 0; i < c.Stages.Count; i++)

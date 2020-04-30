@@ -142,6 +142,11 @@ namespace SPNATI_Character_Editor.Providers
 				return compare;
 			});
 		}
+
+		public bool FilterFromUI(IRecord record)
+		{
+			return false;
+		}
 	}
 
 	public class FilterType : IRecord

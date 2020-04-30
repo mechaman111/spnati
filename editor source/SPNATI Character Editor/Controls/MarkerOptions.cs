@@ -1,5 +1,6 @@
 ﻿using Desktop.Skinning;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
@@ -38,85 +39,35 @@ namespace SPNATI_Character_Editor.Controls
 			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 			RowIndex = rowIndex;
 			_line = line;
-			string markerValue;
-			bool perTarget;
-			string marker = Marker.ExtractPieces(line.Marker, out markerValue, out perTarget);
-			txtMarker.Text = marker;
-			txtValue.Text = markerValue;
-			if (markerValue == "+")
+			List<MarkerOperation> markers = new List<MarkerOperation>();
+			if (!string.IsNullOrEmpty(line.Marker))
 			{
-				radIncrement.Checked = true;
+				//move the marker into the list so there aren't two places to edit
+				MarkerOperation marker = new MarkerOperation(line.Marker);
+				markers.Add(marker);
 			}
-			else if (markerValue == "-")
-			{
-				radDecrement.Checked = true;
-			}
-			else if (markerValue == "0")
-			{
-				radClear.Checked = true;
-			}
-			else
-			{
-				radSet.Checked = true;
-			}
-			chkPerTarget.Checked = perTarget;
+			markers.AddRange(_line.Markers);
+			gridMarkers.SetMarkers(markers);
 			chkPersistent.Checked = line.IsMarkerPersistent;
-		}
-
-		private void radSet_CheckedChanged(object sender, EventArgs e)
-		{
-			if (radIncrement.Checked)
-			{
-				txtValue.Text = "+";
-			}
-			else if (radDecrement.Checked)
-			{
-				txtValue.Text = "-";
-			}
-			else if (radClear.Checked)
-			{
-				txtValue.Text = "0";
-			}
-			txtValue.Enabled = radSet.Checked;
-			DataUpdated?.Invoke(this, e);
 		}
 
 		public DialogueLine GetLine()
 		{
-			string marker = txtMarker.Text;
-			if (string.IsNullOrEmpty(marker))
-			{
-				marker = null;
-			}
-			string markerValue = txtValue.Text;
-			bool perTarget = chkPerTarget.Checked;
-			if (perTarget)
-			{
-				marker += "*";
-			}
-
 			_line.IsMarkerPersistent = chkPersistent.Checked;
-
-			if (string.IsNullOrEmpty(markerValue))
+			List<MarkerOperation> markers = gridMarkers.GetMarkers();
+			if (markers.Count > 0)
 			{
-				_line.Marker = marker;
-			}
-			else if (markerValue == "+" || markerValue == "-")
-			{
-				_line.Marker = $"{markerValue}{marker}";
-			}
-			else if (markerValue == "+1")
-			{
-				_line.Marker = $"+{marker}";
-			}
-			else if (markerValue == "-1")
-			{
-				_line.Marker = $"-{marker}";
+				//move the first marker into the legacy attribute
+				MarkerOperation marker = markers[0];
+				markers.RemoveAt(0);
+				_line.Marker = marker.ToString();
 			}
 			else
 			{
-				_line.Marker = $"{marker}={markerValue}";
+				_line.Marker = null;
 			}
+			_line.Markers = markers;
+
 			return _line;
 		}
 	}
