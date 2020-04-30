@@ -9,6 +9,7 @@ PATHS = [
     "js/player.js",
     "js/save.js",
     "js/table.js",
+    "js/feedback.js",
     "js/spni*.js",
     "opponents/monika/js/behaviour_callbacks.js",
     "opponents/monika/js/effects.js",
