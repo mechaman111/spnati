@@ -1031,7 +1031,7 @@ function doEpilogue() {
    */
   chosenEpilogue.markers.forEach(function(markerOp) {
     if (markerOp.from_game) {
-      markerOp.apply(player, null);
+      markerOp.apply(chosenEpilogue.player, null);
     }
   });
 
