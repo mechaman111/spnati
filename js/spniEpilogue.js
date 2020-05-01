@@ -1198,13 +1198,16 @@ function updateEpilogueButtons() {
   if (!epiloguePlayer) {
     return;
   }
+    var atStart = !epiloguePlayer.hasPreviousDirectives(),
+        atEnd = !epiloguePlayer.hasMoreDirectives();
 
-    $epiloguePrevButton.prop("disabled", !epiloguePlayer.hasPreviousDirectives());
-    $epilogueNextButton.prop("disabled", !epiloguePlayer.hasMoreDirectives());
+    $epiloguePrevButton.prop("disabled", atStart);
+    $epilogueNextButton.prop("disabled", atEnd);
+    $('#epilogue-end-indicator').toggle(atEnd);
     /* Force button bar visible at end of epilogue, un-force it if
      * going back, but avoid un-forcing it at the start. */
-    if (epiloguePlayer.hasPreviousDirectives()) {
-        $epilogueButtons.toggleClass('force-show', !epiloguePlayer.hasMoreDirectives());
+    if (!atStart) {
+        $epilogueButtons.toggleClass('force-show', atEnd);
     }
 
   if (DEBUG) {
