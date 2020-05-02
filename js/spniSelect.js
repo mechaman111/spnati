@@ -157,16 +157,24 @@ var randomLock = false;
 /* Status indicators */
 var statusIndicators = {
     testing: {
-        icon: "testing-badge.png",
+        icon: "badge-testing.png",
         tooltip: "This opponent is currently in testing.",
     },
     offline: {
-        icon: "offline-badge.png",
+        icon: "badge-offline.png",
         tooltip: "This opponent has been retired from the official version of the game.",
     },
     incomplete: {
-        icon: "incomplete-badge.png",
+        icon: "badge-incomplete.png",
         tooltip: "This opponent is incomplete and currently not in development."
+    },
+    duplicate: {
+        icon: "badge-duplicate.png",
+        tooltip: "This opponent is incomplete and currently not in development."
+    },
+    event: {
+        icon: "badge-event.png",
+        tooltip: "This opponent only returns to the official version of the game for special events."
     }
 }
 
