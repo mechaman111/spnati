@@ -43,6 +43,7 @@ namespace SPNATI_Character_Editor
 			chkHideImages.Checked = !Config.GetBoolean(Settings.HideImages);
 			chkPreviewBubble.Checked = Config.GetBoolean(Settings.ShowPreviewText);
 			chkPreviewFormatting.Checked = !Config.GetBoolean(Settings.DisablePreviewFormatting);
+			valFranchise.Value = Config.MaxFranchisePartners;
 
 			recAutoOpen.RecordType = typeof(Character);
 			recAutoOpen.RecordFilter = CharacterDatabase.FilterHuman;
@@ -157,6 +158,7 @@ namespace SPNATI_Character_Editor
 			Config.EnableDashboardSpellCheck = chkChecklistSpell.Checked;
 			Config.EnableDashboardValidation = chkChecklistValidation.Checked;
 			Config.Set(Settings.AutoOpenCharacter, recAutoOpen.RecordKey);
+			Config.MaxFranchisePartners = (int)valFranchise.Value;
 
 			HashSet<string> pauses = new HashSet<string>();
 			foreach (string item in lstPauses.CheckedItems)

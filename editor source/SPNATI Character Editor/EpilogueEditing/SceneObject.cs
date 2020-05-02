@@ -205,6 +205,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 				case "center":
 					return (int)(size * 0.5f);
 				default:
+					if (string.IsNullOrEmpty(pivot))
+					{
+						return (int)(size * 0.5f);
+					}
 					return (int)Parse(pivot, size);
 			}
 		}

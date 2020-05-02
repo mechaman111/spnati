@@ -86,6 +86,7 @@ namespace SPNATI_Character_Editor.Controls
 			_layerCount = character.Layers + Clothing.ExtraStages;
 
 			HashSet<PoseMapping> poses = new HashSet<PoseMapping>();
+			HashSet<PoseMapping> unusedPoses = new HashSet<PoseMapping>();
 			//limit poses to those available in at least one selected stage
 			foreach (int stage in workingCase.Stages)
 			{
@@ -93,6 +94,7 @@ namespace SPNATI_Character_Editor.Controls
 				foreach (PoseMapping pose in character.PoseLibrary.GetPoses(stage))
 				{
 					poses.Add(pose);
+					unusedPoses.Add(pose);
 				}
 			}
 			List<PoseMapping> list = poses.ToList();
@@ -101,7 +103,13 @@ namespace SPNATI_Character_Editor.Controls
 
 			foreach (StageImage img in line.Images)
 			{
+				unusedPoses.Remove(img.Pose);
 				AddRow(img);
+			}
+			foreach (PoseMapping unused in unusedPoses)
+			{
+				StageImage placeholder = new StageImage(-1, unused);
+				AddRow(placeholder);
 			}
 			AddRow(null);
 		}

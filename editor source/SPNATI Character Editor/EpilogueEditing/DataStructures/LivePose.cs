@@ -29,6 +29,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			get { return Get<string>(); }
 			set
 			{
+				if (value == null)
+				{
+					return; //prevent null IDs
+				}
 				Set(value);
 				LabelChanged?.Invoke(this, EventArgs.Empty);
 			}
