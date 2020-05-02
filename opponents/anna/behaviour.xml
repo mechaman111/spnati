@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.6.1 at 4:05:59 PM on May 02, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.6.1 at 5:34:04 PM on May 02, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.6.1</version>
     <first>Anna</first>
@@ -3213,7 +3213,7 @@
 
         <trigger id="bad_hand">
             <case stage="0-7">
-                <state img="#-awkward.png" marker="gold" persist-marker="true">I feel cheated.</state>
+                <state img="#-awkward.png">I feel cheated.</state>
                 <state img="#-peeved.png">This feels like a scam.</state>
                 <state img="#-peeved.png">Come on, dealer? You trying to scam me?</state>
                 <state img="#-awkward.png">Unlucky...</state>
@@ -3990,7 +3990,7 @@
             </case>
             <case stage="0-9" oneShotId="34" priority="0">
                 <condition status="decent" role="target" />
-                <test expr="~self.collectible.*~" value="false" />
+                <test expr="~self.collectible.member card~" value="false" />
                 <state img="#-mocking.png">More of that and I might have to invite you to my &lt;i&gt;Secret Shop&lt;/i&gt;. Ha, just kidding. You're not on the list.</state>
             </case>
         </trigger>
@@ -4024,7 +4024,17 @@
         <trigger id="female_removed_major">
             <case stage="7" id="187" oneShotId="23" priority="999">
                 <condition role="self" saidMarker="MissCoinFlipButt1" />
-                <state img="custom:#-buttCoin">Think I could sell used treasure maps? I mean, it's the customer's fault for not inquiring if the treasure is still there...</state>
+                <state img="custom:#-buttCoin" marker="MissCoinFlipButt2">Think I could sell used treasure maps? I mean, it's the customer's fault for not inquiring if the treasure is still there...</state>
+            </case>
+            <case stage="7" id="223" oneShotId="37" priority="999">
+                <condition role="self" saidMarker="MissCoinFlipButt1" />
+                <test expr="~self.collectible.member card~" value="true" />
+                <state img="custom:#-buttCoin" marker="MissCoinFlipButt2" persist-marker="true">
+                    <text>Think I could sell used treasure maps? I mean, it's the customer's fault for not inquiring if the treasure is still there...</text>
+                    <markers>
+                        <marker name="gold" op="+" value="1" />
+                    </markers>
+                </state>
             </case>
             <case stage="0-9" id="20">
                 <condition role="target" character="shamir" stage="4" sayingMarker="ShamirStripsAnnaReact12" />
@@ -4467,30 +4477,36 @@
                 <state img="#-fingerChin.png" collectible="coin purse">Congratulations, ~name~! But, really, your victory wouldn't have been possible if it not for me. So, I think I deserve a cut of that cash prize...</state>
             </case>
             <case stage="9" priority="1">
-                <condition count="3" role="other" />
+                <condition count="3" />
+                <condition filter="human" role="target" />
+                <test expr="~self.collectible.member card~" value="true" />
                 <state img="#-peeved.png" marker="gold=+2" persist-marker="true">How about it? First to three?</state>
                 <state img="#-thinking.png" marker="gold=+2" persist-marker="true">Way to go, ~name~! Now, how about a deal for that prize money...</state>
                 <state img="#-fingerChin.png" marker="gold=+2" persist-marker="true">Congratulations, ~name~! But, really, your victory wouldn't have been possible if it not for me. So, I think I deserve a cut of that cash prize...</state>
                 <state img="#-awkward.png" marker="gold += 2" persist-marker="true">I thought with only three players, winning was pretty likely.</state>
             </case>
             <case stage="9" priority="1">
-                <condition count="4" role="other" />
+                <condition count="4" />
+                <condition filter="human" role="target" />
+                <test expr="~self.collectible.member card~" value="true" />
                 <state img="#-peeved.png" marker="gold += 3" persist-marker="true">How about it? First to three?</state>
                 <state img="#-thinking.png" marker="gold=+3" persist-marker="true">Way to go, ~name~! Now, how about a deal for that prize money...</state>
                 <state img="#-fingerChin.png" marker="gold=+3" persist-marker="true">Congratulations, ~name~! But, really, your victory wouldn't have been possible if it not for me. So, I think I deserve a cut of that cash prize...</state>
                 <state img="#-awkward.png" marker="gold=+3" persist-marker="true">I thought with only four players, I wasn't that likely to lose.</state>
             </case>
             <case stage="9" priority="1">
-                <condition count="5" role="other" />
+                <condition count="5" />
+                <condition filter="human" role="target" />
+                <test expr="~self.collectible.member card~" value="true" />
                 <state img="#-peeved.png" marker="gold=+4" persist-marker="true">How about it? First to three?</state>
                 <state img="#-thinking.png" marker="gold=+4" persist-marker="true">Way to go, ~name~! Now, how about a deal for that prize money...</state>
                 <state img="#-fingerChin.png" marker="gold=+4" persist-marker="true">Congratulations, ~name~! But, really, your victory wouldn't have been possible if it not for me. So, I think I deserve a cut of that cash prize...</state>
                 <state img="#-thinking.png" marker="gold += 4" persist-marker="true">The cash prize must be pretty big with five people here...</state>
             </case>
             <case stage="9" id="221">
-                <state img="#-peeved.png" marker="gold=+2" persist-marker="true">How about it? First to three?</state>
-                <state img="#-thinking.png" marker="gold=+2" persist-marker="true">Way to go, ~name~! Now, how about a deal for that prize money...</state>
-                <state img="#-fingerChin.png" marker="gold=+2" persist-marker="true">Congratulations, ~name~! But, really, your victory wouldn't have been possible if it not for me. So, I think I deserve a cut of that cash prize...</state>
+                <state img="#-peeved.png">How about it? First to three?</state>
+                <state img="#-thinking.png">Way to go, ~name~! Now, how about a deal for that prize money...</state>
+                <state img="#-fingerChin.png">Congratulations, ~name~! But, really, your victory wouldn't have been possible if it not for me. So, I think I deserve a cut of that cash prize...</state>
             </case>
         </trigger>
 
