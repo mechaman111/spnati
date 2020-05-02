@@ -2028,7 +2028,7 @@ SceneView.prototype.applyTextDirective = function (directive, box) {
   var content = expandDialogue(directive.text, null, humanPlayer);
 
   box.html('<span>' + content + '</span>');
-  box.addClass(directive.arrow)
+  box.removeClass('arrow-down arrow-left arrow-right arrow-up').addClass(directive.arrow);
   box.attr('style', directive.css);
 
   //use css to position the box
