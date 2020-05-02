@@ -2003,7 +2003,7 @@ SceneView.prototype.addText = function (directive, context) {
     context.oldDirective = box.data("directive");
   }
   else {
-    box = $(document.createElement('div')).addClass('bordered dialogue-bubble');
+    box = $('<div>', { 'class': 'bordered dialogue-bubble' });
     //attach new div element to the content div
     this.$textContainer.append(box[0]);
     box.data("id", id);
@@ -2027,8 +2027,8 @@ SceneView.prototype.removeText = function (directive, context) {
 SceneView.prototype.applyTextDirective = function (directive, box) {
   var content = expandDialogue(directive.text, null, humanPlayer);
 
-  box.html('<span>' + content + '</span>');
-  box.addClass(directive.arrow)
+  box.empty().append($('<span>', { html: content }));
+  box.removeClass('arrow-down arrow-left arrow-right arrow-up').addClass(directive.arrow);
   box.attr('style', directive.css);
 
   //use css to position the box
