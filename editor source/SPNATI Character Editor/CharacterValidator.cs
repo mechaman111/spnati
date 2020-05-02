@@ -367,7 +367,7 @@ namespace SPNATI_Character_Editor
 								}
 								stageImages.Add(img);
 							}
-							else if (!string.IsNullOrEmpty(line.Text))
+							else if (!string.IsNullOrEmpty(line.Text) && string.IsNullOrEmpty(stageCase.Hidden))
 							{
 								warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line has no pose assigned. {0}", caseLabel), context));
 							}

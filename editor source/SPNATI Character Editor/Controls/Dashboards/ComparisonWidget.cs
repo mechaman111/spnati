@@ -31,7 +31,8 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				Tag def = TagDatabase.GetTag(tag.Tag);
 				if (def != null && def.Group == "Source Material")
 				{
-					List<Tuple<string, List<Character>>> franchiseGroups = TagDatabase.GetGroups("Source Material", _character, 10);
+					int max = Config.MaxFranchisePartners;
+					List<Tuple<string, List<Character>>> franchiseGroups = TagDatabase.GetGroups("Source Material", _character, max);
 					franchiseGroups.Sort((c1, c2) => c1.Item1.CompareTo(c2.Item1));
 					Tuple<string, List<Character>> min = null;
 					cboGroups.Items.Clear();
