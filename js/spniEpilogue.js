@@ -1113,22 +1113,25 @@ function loadEpilogue(epilogue, loadToScene) {
   updateEpilogueButtons();
 }
 
-function moveEpilogueForward(ev) {
-  if (epiloguePlayer && epiloguePlayer.loaded && epiloguePlayer.hasMoreDirectives()) {
-    if (SENTRY_INITIALIZED) {
-      Sentry.addBreadcrumb({
-        category: 'epilogue',
-        message: 'Advancing epilogue from scene ' + epiloguePlayer.sceneIndex + ', directive' + epiloguePlayer.directiveIndex,
-        level: 'info'
-      });
+function moveEpilogueForward(showRestartModalAtEnd) {
+    if (epiloguePlayer && epiloguePlayer.loaded) {
+        if (epiloguePlayer.hasMoreDirectives()) {
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'epilogue',
+                    message: 'Advancing epilogue from scene ' + epiloguePlayer.sceneIndex + ', directive' + epiloguePlayer.directiveIndex,
+                    level: 'info'
+                });
+            }
+            epiloguePlayer.advanceDirective();
+            updateEpilogueButtons();
+        } else if (showRestartModalAtEnd) {
+            showRestartModal();
+        }
     }
-
-    epiloguePlayer.advanceDirective();
-    updateEpilogueButtons();
-  }
 }
 
-function moveEpilogueBack(ev) {
+function moveEpilogueBack() {
   if (epiloguePlayer && epiloguePlayer.loaded && epiloguePlayer.hasPreviousDirectives()) {
     if (SENTRY_INITIALIZED) {
       Sentry.addBreadcrumb({
@@ -1198,13 +1201,16 @@ function updateEpilogueButtons() {
   if (!epiloguePlayer) {
     return;
   }
+    var atStart = !epiloguePlayer.hasPreviousDirectives(),
+        atEnd = !epiloguePlayer.hasMoreDirectives();
 
-    $epiloguePrevButton.prop("disabled", !epiloguePlayer.hasPreviousDirectives());
-    $epilogueNextButton.prop("disabled", !epiloguePlayer.hasMoreDirectives());
+    $epiloguePrevButton.prop("disabled", atStart);
+    $epilogueNextButton.prop("disabled", atEnd);
+    $('#epilogue-end-indicator').toggle(atEnd);
     /* Force button bar visible at end of epilogue, un-force it if
      * going back, but avoid un-forcing it at the start. */
-    if (epiloguePlayer.hasPreviousDirectives()) {
-        $epilogueButtons.toggleClass('force-show', !epiloguePlayer.hasMoreDirectives());
+    if (!atStart) {
+        $epilogueButtons.toggleClass('force-show', atEnd);
     }
 
   if (DEBUG) {
@@ -3171,7 +3177,7 @@ $('#epilogue-container').click(function(ev) {
     if (ev.pageX < window.innerWidth * 0.2) {
         moveEpilogueBack();
     } else {
-        moveEpilogueForward();
+        moveEpilogueForward(true);
     }
 });
 
@@ -3186,6 +3192,7 @@ function epilogue_keyUp(ev) {
         case 37:
             moveEpilogueBack(); break;
         case 32:
+            moveEpilogueForward(true); break;
         case 39:
             moveEpilogueForward(); break;
         }
