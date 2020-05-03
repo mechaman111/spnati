@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 8:46:36 PM on May 02, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.6 at 10:55:49 PM on May 03, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.5</version>
+    <version>v5.6</version>
     <first>Cynthia</first>
     <last />
     <label>Cynthia</label>
@@ -40,9 +40,7 @@
         <tag>celebrity</tag>
         <tag>hero</tag>
     </tags>
-    <nicknames />
 
-    <start />
 
     <wardrobe>
         <clothing name="panties" generic="panties" position="lower" type="important" plural="true" />
@@ -55,7 +53,6 @@
         <clothing name="coat" generic="coat" position="both" type="minor" />
     </wardrobe>
 
-    <poses />
 
     <behaviour>
         <trigger id="selected">
@@ -622,6 +619,10 @@
                 <state img="#-fingerup.png" marker="RevyMusic2">On the contrary, playing classical music to my Pokémon actually come them down, Revy. it's perfect for helping them rest.</state>
                 <state img="#-fingerup.png" marker="RevyMusic2">Believe it or not, Revy, playing classical music to my Pokémon actually relieves their stress. I usually play it to them after training.</state>
             </case>
+            <case stage="0-8" priority="900">
+                <condition role="other" character="anna" sayingMarker="CynthiaChampion1" />
+                <state img="#-fingerup.png" marker="AnnaChampion1">Anna, I don't compete in the Pokémon League for money. But, if you must know, the fame brings in the most money. Promos, merchandise...</state>
+            </case>
             <case stage="1-2" id="283" oneShotId="62" priority="850">
                 <condition role="other" character="nami" saidMarker="void_century" />
                 <state img="#-excited.png" marker="NamiVoidCentury1">You mentioned something about your friend investigating a "Void Century", Nami. Can you elaborate on that?</state>
@@ -790,7 +791,7 @@
             <case stage="0-8" oneShotId="101" priority="850">
                 <condition role="other" character="meia" saidMarker="cynthia_history2" />
                 <state img="#-fingerup.png" marker="MeiaHistory3">If the past is any indication, then I would say that is indeed human nature, Meia. You either learn to live together, or one of you gets wiped out.</state>
-                <state img="#-fingerup.png" marker="MeiaHistory3">That's just a regular pattern I've seen in history, Cynthia. The cycle only pauses when everyone learn to coexist, or if one get assimilated by the other.</state>
+                <state img="#-fingerup.png" marker="MeiaHistory3">That's just a regular pattern I've seen in history, Meia. The cycle only pauses when everyone learn to coexist, or if one get assimilated by the other.</state>
             </case>
             <case stage="0-8" oneShotId="102" priority="850">
                 <condition role="other" character="meia" saidMarker="cynthia_ruins2" />
@@ -1047,6 +1048,11 @@
                 <condition count="2-" filter="short" role="other" />
                 <state img="#-embarrassed.png">I hope my rather tall build isn't intimidating anyone. I've heard people say that before.</state>
                 <state img="#-sarcastic.png">&lt;i&gt;(This is a rather... vertically-challenged group of people.)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-8">
+                <condition role="self" hasHand="Royal Flush" />
+                <state img="#-happy.png">Well, there's no point in keeping this a secret since I can't lose. I just got a Royal Flush!</state>
+                <state img="#-happy.png">A Royal Flush! I've got the perfect hand!</state>
             </case>
             <case stage="0" id="136" oneShotId="18" totalRounds="-1">
                 <condition count="3" status="alive" />
@@ -1321,10 +1327,6 @@
                 <state img="#-happy.png" weight="0.01">{small} Are you loving the Pokémon egg I gave you during the previous game, ~player~? Meeting all the Pokémon is an accomplishment, and I only want to lend you a little hand, that's all.</state>
                 <state img="#-fingerup.png" weight="0.01">{small} That Egg I have you is special, ~player~. An Egg is the cradle of every being. The planet itself is an Egg in a sense... Life that comes from an Egg will come to an end in due course... to begin anew...</state>
                 <state img="#-happy.png" weight="0.01">{small}  I hope that Egg I gave you will come in handy, ~player~. A Pokémon will hatch from it while you are traveling. I would be happy to know that it will help you fill another page of your Pokédex.</state>
-            </case>
-            <case stage="0-8">
-                <condition role="other" />
-                <state img="#-fingerup.png" marker="AnnaChampion1">Anna, I don't compete in the Pokémon League for money. But, if you must know, the fame brings in the most money. Promos, merchandise...</state>
             </case>
         </trigger>
 
@@ -1631,6 +1633,182 @@
                 <state img="#-thinking.png">Do you think you can teach me about this Duel Monsters card game, Chazz? I'm always eager to learn about this kind of stuff.</state>
                 <state img="#-thinking.png">Would now be a good time to inform me about Duel Monsters, Chazz? I try to learn everything I can about mythology and folklore!</state>
             </case>
+            <case stage="1" id="366">
+                <condition role="self" consecutiveLosses="2" />
+                <condition count="0" status="lost_some" role="opp" />
+                <state img="#-embarrassed.png">... This isn't the start I had in mind...</state>
+                <state img="#-contemplative.png">Two losses straight out of the gates... Am I misremembering the game mechanics...?</state>
+                <state img="#-disappointed.png">...Perhaps I should have played a warmup game first before joining this table...</state>
+            </case>
+            <case stage="2" id="376">
+                <condition role="self" consecutiveLosses="3" />
+                <condition count="0" status="lost_some" role="opp" />
+                <state img="#-scowling.png">I thought dressing myself up would give me an advantage, but for me to lose all of them right off the bat is just very unlucky.</state>
+                <state img="#-surprised.png">Losing three rounds in a row is unlucky enough, but for it to happen before anyone else has lost... I'm lost for words!</state>
+                <state img="#-disappointed.png">I know that my poker skills might be a bit rusty, but I didn't think I'd lose three times to start the game.</state>
+            </case>
+            <case stage="3" id="380">
+                <condition role="self" consecutiveLosses="4" />
+                <condition count="0" status="lost_some" role="opp" />
+                <state img="#-embarrassed.png">I brought all of these layers, only to lose all of them before anyone else had to strip... Perhaps playing this game was a big mistake...</state>
+                <state img="#-embarrassed.png">We are playing poker, right? I have a feeling that we're playing different games with the way this is going...</state>
+                <state img="#-shocked.png">Is there a conspiracy to get me to lost as soon as possible? First, all my accessories are gone and now my shirt, and nobody else have lost yet!</state>
+            </case>
+            <case stage="4-6" id="387">
+                <condition role="self" consecutiveLosses="5-7" />
+                <condition count="0" status="lost_some" role="opp" />
+                <state img="#-furious.png" oneShotId="32">Am I getting pranked here?! There's no way I'm losing this many layers while everyone has yet to lose.</state>
+                <state img="#-furious.png" oneShotId="33">This game must have been rigged! There's no way a losing streak this bad, this early can happen organically!</state>
+                <state img="#-shocked.png" oneShotId="34">Is this a cruel joke being played against me?! I really hope nobody is recording me getting humiliated here!</state>
+            </case>
+            <case stage="7" id="389">
+                <condition role="self" consecutiveLosses="8" />
+                <condition count="0" status="lost_some" role="opp" />
+                <state img="#-furious.png">Is this a set-up to to get me naked?! Come on, this isn't funny at all!</state>
+                <state img="#-shocked.png">This game isn't simply rigged! Even if you rig a game like this, you wouldn't be able to pull off what just happened to me. &lt;i&gt;This is divine intervention.&lt;/i&gt;</state>
+                <state img="#-embarrassed.png">Being completely naked while being leered at by a crowd is awakening something in me.</state>
+            </case>
+            <case stage="0" id="365">
+                <condition role="self" consecutiveLosses="2" />
+                <state img="#-shocked.png">(Please report this bug. Shouldn't be playing when Cynthia has lost only once.)</state>
+            </case>
+            <case stage="1" id="367">
+                <condition role="self" consecutiveLosses="2" />
+                <state img="#-disappointed.png">It's been quite some time since I last payed poker. Some practice games might have been a good idea.</state>
+                <state img="#-disappointed.png">This game isn't going the way I thought it would. I wouldn't have expected to lose two in a row.</state>
+                <state img="#-embarrassed.png">I was undefeated just two rounds ago... Is this a fluke or was my undefeated streak pure luck? </state>
+            </case>
+            <case stage="2" id="368">
+                <condition role="self" consecutiveLosses="2" />
+                <state img="#-surprised.png">I thought I had figured out this game... How did I lose again?</state>
+                <state img="#-aggressive.png">Obviously, the card exchange strategy I had formulated the previous round wasn't effective. Good thing I had another one in mind.</state>
+                <state img="#-thinking.png">The plan I came up with the previous round didn't pan out like I expected. Time to go to the backup strategy then.</state>
+            </case>
+            <case stage="3" id="369">
+                <condition role="self" consecutiveLosses="2" />
+                <state img="#-embarrassed.png">I have no more minor clothing to spare. I didn't think I'd lose again immediately.</state>
+                <state img="#-disappointed.png">Again? But I don't have any small layers to spare anymore. I was hoping I wouldn't lose again so soon.</state>
+                <state img="#-disappointed.png">Time for me to actually strip something substantial then. I hope I can end this losing streak in the next round.</state>
+            </case>
+            <case stage="4" id="370">
+                <condition role="self" consecutiveLosses="2" />
+                <state img="#-shocked.png">How did I lose my blouse and my pants in consecutive rounds?! This string of bad luck is simply unbelievable!</state>
+                <state img="#-surprised.png">A couple of minutes ago, I was still properly dressed, and now... I'll be down to my underwear...</state>
+                <state img="#-surprised.png">First my blouse, now my pants... It's like I'm just about to take a bath with how quickly I've lost both of them.</state>
+            </case>
+            <case stage="5" id="372">
+                <condition role="self" consecutiveLosses="2" />
+                <state img="#-stripped.png">Didn't take long for me to lose my pantyhose, wasn't it? Oh well, I'm more disappointed that I lost another layer so quickly.</state>
+                <state img="#-thinking.png">My pantyhose was pretty much the same layer as my pants, so it kind of makes sense that they'll be gone one after the other. </state>
+                <state img="#-stripped.png">At least my pantyhose has spared me from embarrassment for at least one more round. I can't afford losing a third consecutive round.</state>
+            </case>
+            <case stage="6" id="374">
+                <condition role="self" consecutiveLosses="2" />
+                <state img="#-shocked.png">I cannot believe this! From having a safety net to having to expose myself within two rounds... How did I let this happen?</state>
+                <state img="#-shocked.png">Oh Arceus, my luck has completely abandoned me the last two rounds.</state>
+            </case>
+            <case stage="7" id="375">
+                <condition role="self" consecutiveLosses="2" />
+                <state img="#-disappointed.png">And just like that, both my lingerie is gone... When it's not your day, it's simply not your day.</state>
+                <state img="#-disappointed.png">It didn't take long at all for me to go from being down to my lingerie to ending up naked...</state>
+                <state img="#-embarrassed.png">I bet some of you must be very happy that I lost both of my underwear in rapid succession...</state>
+            </case>
+            <case stage="5" id="377">
+                <condition role="self" consecutiveLosses="3" />
+                <state img="#-disappointed.png">And to think that three rounds ago, I wasn't even showing any underwear yet...</state>
+                <state img="#-battleready.png">I must admit, losing my blouse made me lose my composure. No worries though, I still have plenty of chances at winning this game.</state>
+                <state img="#-embarrassed.png">I thought I was mentally prepared for the possibility of me falling to my underwear, but the loss of my blouse affected me more than I had expected.</state>
+            </case>
+            <case stage="7" id="378">
+                <condition role="self" consecutiveLosses="3" />
+                <state img="#-stripped.png">I don't think I remove my underwear this quickly even when I'm alone at home. Walking around in only my underwear can be refreshing.</state>
+                <state img="#-disappointed.png">Remember when I was still wearing my pantyhose? That was only two rounds ago. Hard to believe how unlucky this past few rounds.</state>
+            </case>
+            <case stage="3-4 6" id="379">
+                <condition role="self" consecutiveLosses="3" />
+                <state img="#-aggressive.png">Have I really lost 3 rounds in a row? No matter. As long as I'm not out of the game yet, I will always have a chance of winning. I don't give up that easily.</state>
+                <state img="#-fingerup.png">Just because I'm at a lengthy losing streak doesn't mean I've lost the game already. At a game of luck like this, I can go on a winning streak just as easily.</state>
+                <state img="#-battleready.png">I don't think I've lost 3 of my Pokemon during battles the same way I'm losing clothes right now. Just goes to show how differing those two game are.</state>
+            </case>
+            <case stage="2" id="382">
+                <condition role="self" consecutiveLosses="3" />
+                <state img="#-aggressive.png">This is certainly an interesting way of making a challenge for myself: losing all my accessories in consecutive rounds. I don't mean that I threw the game, but still...</state>
+                <state img="#-contemplative.png">With the number of accessories I had brought to this game, I suppose it's karmic justice that I lost all of them quickly.</state>
+                <state img="#-disappointed.png">I had intended for my accessories to be my safety net, which I suppose it had fulfilled, but I still would have preferred not losing them this quickly.</state>
+            </case>
+            <case stage="3" id="383">
+                <condition role="self" consecutiveLosses="4" />
+                <state img="#-surprised.png">4 losses in a row! I'm not even sure why I'm losing like this. I'm not even panicking before since I've only lost insignificant layers so far.</state>
+                <state img="#-embarrassed.png">From being undefeated to having to remove my blouse in the span of four rounds... My first loss seems to have opened the proverbial floodgates.</state>
+            </case>
+            <case stage="6" id="384">
+                <condition role="self" consecutiveLosses="4" />
+                <state img="#-embarrassed.png">Just four rounds ago, I still have my blouse and pants on,and now... I can't believe this is happening this quickly...</state>
+                <state img="#-disappointed.png">I felt like it was just a couple of minutes ago when I had to remove my shirt... How did it come to this in such a short span of time?</state>
+            </case>
+            <case stage="7" id="385">
+                <condition role="self" consecutiveLosses="4" />
+                <state img="#-aggressive.png">I might have lost 4 in a row already, but I'll do everything I can to make sure it wouldn't be five. I can't afford another loss after this.</state>
+                <state img="#-aggressive.png">If you're enjoying this losing streak, then savor it because I'll make sure I'll go undefeated from now on. I have no other choice from this point.</state>
+            </case>
+            <case stage="4-5" id="386">
+                <condition role="self" consecutiveLosses="4" />
+                <state img="#-shocked.png">Four losses in a row? You'll need a calculator to compute the odds of this happening to anyone!</state>
+                <state img="#-aggressive.png">I wouldn't be celebrating just yet if I were you. All losing streaks must come to an end. Don't expect me to give up anytime soon.</state>
+            </case>
+            <case stage="4-7" id="388">
+                <condition role="self" consecutiveLosses="5-7" />
+                <state img="#-disappointed.png" oneShotId="28">It's not the loss that hurts, it's the false hope that gets you.</state>
+                <state img="#-furious.png" oneShotId="29">I refuse to believe that there's nothing shady going on here. Dealer, you have some explaining to do!</state>
+                <state img="#-embarrassed.png" oneShotId="31">I can't even figure out what's going on here! I feel like everything in this circumstance is actively working against me.</state>
+            </case>
+            <case stage="7" id="390">
+                <condition role="self" consecutiveLosses="8" />
+                <state img="#-embarrassed.png">I'm getting the feeling that a deity is looking down at me and laughing at my humiliation.</state>
+                <state img="#-contemplative.png">Is this a secret test of character to see if I would break down under these circumstances?</state>
+                <state img="#-embarrassed.png">Even the most mentally strong people will break down under these circumstances. Being used as a play toy by the universe is very disheartening.</state>
+            </case>
+            <case stage="0">
+                <condition role="self" timeInStage="8-" />
+                <state img="#-sarcastic.png">For a second there, I thought everyone had forgotten that I'm also supposed to strip.</state>
+                <state img="#-aggressive.png">It took quite a while to get me to lose. This is also approximately the length of time it usually takes for my first Pokemon to be defeated during battles.</state>
+                <state img="#-sarcastic.png">If it takes this long for me to strip each layer I'm wearing right now, then it would be early morning by the time you get me naked.</state>
+            </case>
+            <case stage="1">
+                <condition role="self" timeInStage="8-" />
+                <state img="#-fingerup.png">I still have another small layer remaining after this, so I would suggest picking the pace up. It took too long for me to lose this layer.</state>
+                <state img="#-battleready.png">I know this might be frustrating for all of you, considering how long it took for me to lose this layer, but I had planned my strip order beforehand.</state>
+            </case>
+            <case stage="2">
+                <condition role="self" timeInStage="8-" />
+                <state img="#-happy.png">It took quite a while, but you finally got me to remove the last of my insignificant layers. Great job, everybody!</state>
+                <state img="#-battleready.png">If everyone is got frustrated by the length of time it took to lose this round, then you'll be happy to know that this is my last minor layer. </state>
+            </case>
+            <case stage="3">
+                <condition role="self" timeInStage="8-" />
+                <state img="#-embarrassed.png">I've been standing like this for so long that I had forgotten that I was in danger of losing my blouse.</state>
+                <state img="#-disappointed.png">With the amount of time I've gone without losing, I was starting to hope that I'd get to keep my shirt on for the rest of the game.</state>
+            </case>
+            <case stage="4">
+                <condition role="self" timeInStage="8-" />
+                <state img="#-sarcastic.png">I know this sounds weird, but I'm somewhat glad that I'm finally removing my pants. It felt weird having it on without my shirt.</state>
+                <state img="#-fingerup.png">This is the longest I've gone wearing pants with no shirt. It's simply not the way I usually dress myself.</state>
+            </case>
+            <case stage="5">
+                <condition role="self" timeInStage="8-" />
+                <state img="#-happy.png">Using my pantyhose as a safety net worked much better than expected, considering how long I kept it on before losing again.</state>
+                <state img="#-disappointed.png">My pantyhose had been doing a perfect job of keeping my legs warm. I almost feel bad about having to remove them even though it's not even hiding my panties.</state>
+            </case>
+            <case stage="6">
+                <condition role="self" timeInStage="8-" />
+                <state img="#-embarrassed.png">Just when I was starting to become comfortable in being on my underwear in front of other people...</state>
+                <state img="#-embarrassed.png">I didn't mind being on my underwear for this long since it felt like I'm on my swimsuit, but having to remove my bra is a different matter...</state>
+            </case>
+            <case stage="7">
+                <condition role="self" timeInStage="8-" />
+                <state img="#-aggressive.png">I have been mentally preparing myself for this situation since I removed my bra. It has been quite a while since then, hasn't it?</state>
+                <state img="#-thinking.png">I've been feeling cold since I removed my bra. By the way, how long has it been since then? It felt like I've been topless for a long time.</state>
+            </case>
             <case stage="7">
                 <condition count="0" status="not_naked" role="other" />
                 <state img="#-embarrassed.png">The only thing mitigating the embarrassment in this situation is the fact that I'm not the only one naked.</state>
@@ -1698,6 +1876,12 @@
 
         <trigger id="must_strip_winning">
             <case stage="0">
+                <condition count="0" status="lost_some" role="opp" />
+                <state img="#-fingerup.png">First loss to me then. No matter. I'm wearing the highest number of layers anyway. I can spare a layer or two.</state>
+                <state img="#-aggressive.png">I have the highest layer count among all of us anyway, so I can just write off the previous round as a warmup for me.</state>
+                <state img="#-sarcastic.png">I can see that I'm the only one in this table to have maximized the layer count. Let's even the odds a bit, shall we?</state>
+            </case>
+            <case stage="0">
                 <state img="#-aggressive.png">No matter. I'm wearing plenty of layers. I can spare an article or two.</state>
                 <state img="#-sarcastic.png">I can see I'm wearing the most clothing among our little group. It's only fair that I even the odds a bit.</state>
                 <state img="#-fingerup.png">Even the best poker players can lose from time to time. </state>
@@ -1749,6 +1933,7 @@
                 <state img="#-shocked.png">I figured that having a lot of layers would give me a numerical advantage, but so did everyone, apparently.</state>
                 <state img="#-disappointed.png">...This might be a longer game than I had prepared for.</state>
                 <state img="#-scowling.png">Hmm, a misstep. Not something I do often.</state>
+                <state img="#-battleready.png">Well, I'm not surprised that I wasn't the only who thought of maximizing layer counts. I accept this challenge!</state>
             </case>
             <case stage="1">
                 <state img="#-excited.png">I must say, this game is more competitive than I expected. I'm excited to see how this game develops.</state>
@@ -2853,48 +3038,35 @@
         </trigger>
 
         <trigger id="male_must_strip">
-            <case stage="0" id="216">
-                <condition role="self" hasHand="High Card" />
-                <state img="#-happy.png">That was a close shave. I almost lost for the first time there.</state>
-                <state img="#-sarcastic.png">Thanks for taking the defeat for me, ~name~. I thought I was going to lose this round.</state>
-                <state img="#-happy.png">I didn't think my undefeated streak will go on for at least another round. My hand was pretty bad.</state>
+            <case stage="0-3" id="355">
+                <condition role="target" consecutiveLosses="2" />
+                <state img="#-aggressive.png">That's two losses in a row now, ~name~. Are you starting to fill the pressure of playing against me?</state>
+                <state img="#-excited.png">Is something on your mind, ~name~? You didn't seem to be paying for the last two rounds.</state>
+                <state img="#-thinking.png">Losing two in a row isn't that uncommon of an occurrence, but I can't help but feel that you're a bit distracted, ~name~.</state>
             </case>
-            <case stage="1-2" id="222">
-                <condition role="self" hasHand="High Card" />
-                <state img="#-sarcastic.png">Well, what a stroke of bad luck, ~name~. I could have sworn my high card would be a losing hand.</state>
-                <state img="#-aggressive.png">I still had some small items to spare, but it's nice that I don't have to strip them just yet.</state>
-                <state img="#-battleready.png">My extra layer of defense remains solid.</state>
+            <case stage="4-6" id="356">
+                <condition role="target" consecutiveLosses="2" />
+                <state img="#-sarcastic.png">You're being too eager in getting the next person to strip, ~name~. I don't suppose it was your intention to be the one stripping instead.</state>
+                <state img="#-embarrassed.png">I do hope my form isn't causing you to lose, ~name~... I mean, I'm not implying that my body is distracting you or anything... It's just that I might have ruined your concentration... </state>
+                <state img="#-aggressive.png">It might have helped you if you had been paying attention to your cards rather than the other players, ~name~.</state>
             </case>
-            <case stage="3" id="220">
-                <condition role="self" hasHand="High Card" />
-                <state img="#-excited.png">Oh, good! For a second there, I thought I might finally have to strip something substantial.</state>
-                <state img="#-happy.png">My heart almost skipped a beat when I couldn't find a pair! I'm just glad I didn't lose.</state>
-                <state img="#-sarcastic.png">You had no idea how close I was to losing my top, ~name~.</state>
+            <case stage="7-8" id="357">
+                <condition role="target" consecutiveLosses="2" />
+                <state img="#-stripped.png">Am I being too distracting for you, ~name~? I can cover up my breasts with my arms if that would help you perform better.</state>
+                <state img="#-aggressive.png">If you're very excited to see me lose, ~name~, then you losing twice in succession isn't what you needed right now. It might help if you remain focused on your cards instead.</state>
+                <state img="#-stripped.png">You might be enjoying the view too much, ~name~... Not that I was trying to give you a view if that's what you were thinking...</state>
             </case>
-            <case stage="4-5" id="221">
-                <condition role="self" hasHand="High Card" />
-                <state img="#-fingerup.png">That was your chance, ~name~. My hand was very vulnerable! Don't worry, you'll have another chance I'm sure.</state>
-                <state img="#-fingerup.png">Don't feel too bad, ~name~. We were both unlucky that round; you were just a tad bit unluckier than I was!</state>
-                <state img="#-embarrassed.png">If the cards had been distributed differently, I would have lost instead of you.</state>
+            <case stage="9" id="361">
+                <condition role="target" consecutiveLosses="2" />
+                <state img="#-sarcastic.png">Am I misremembering or is that your second consecutive defeat? Maybe look at your cards from time to time, hmm?</state>
+                <state img="#-mast_a.png">Are you enjoying my display so much that you forgot to exchange your cards, ~name~?</state>
+                <state img="#-horny.png">I was starting to wonder if anyone was watching me attentively...</state>
             </case>
-            <case stage="6" id="218">
-                <condition role="self" hasHand="High Card" />
-                <state img="#-excited.png">Oh, I was so close to having to bare my breasts! What a stroke of luck!</state>
-                <state img="#-battleready.png">A high card... I wouldn't have thought I'd be spared from embarrassment with a high card.</state>
-                <state img="#-sarcastic.png">Well, I didn't get a pair, and neither did you in more ways than one.</state>
-            </case>
-            <case stage="7" id="219">
-                <condition role="self" hasHand="High Card" />
-                <state img="#-happy.png">I'm just glad I didn't have to bear it all just yet.</state>
-                <state img="#-excited.png">This is fantastic! Saved from the brink of defeat!</state>
-                <state img="#-surprised.png">I did this without a pair. I don't know what to say...</state>
-            </case>
-            <case stage="8" id="217">
-                <condition role="self" hasHand="High Card" />
-                <state img="#-excited.png">From the brink of defeat! Now I know I can still win this game!</state>
-                <state img="#-happy.png">Another chance! I was so certain that I was going to be eliminated. I'm not going to squander this!</state>
-                <state img="#-sarcastic.png">I hope you've realized what you've missed out on, ~name~!</state>
-                <state img="#-scowling.png">I might have survived this round, but I need to do better than this if I am to win.</state>
+            <case stage="10" id="363">
+                <condition role="target" consecutiveLosses="2" />
+                <state img="#-horny.png">Don't tell me you weren't paying attention because you were still thinking about my masturbation earlier, ~name~. It couldn't have been that good.</state>
+                <state img="#-sarcastic.png">I don't know what you've been thinking about for the past two round, ~name~, but it's definitely not the proper strategy you were thinking of.</state>
+                <state img="#-disappointed.png">&lt;i&gt;(Am I still dripping? Is that what's been distracting ~name~ for the past two rounds?)&lt;/i&gt;?</state>
             </case>
             <case stage="0" id="201" totalRounds="1">
                 <state img="#-sarcastic.png">Another victory? Ha, this comes easy.</state>
@@ -3041,6 +3213,36 @@
                 <state img="#-mast_a.png">I've shown you mine,~name~... It's only fitting that you show yours...</state>
                 <state img="#-mast_c.png">I trust you're well aware about a woman's needs during this ritual, ~name~... </state>
             </case>
+            <case stage="0-3" id="358">
+                <condition role="target" consecutiveLosses="2" />
+                <state img="#-battleready.png">Is this just bad luck, ~name~, or is your judgment being clouded by fear of losing?</state>
+                <state img="#-fingerup.png">It's not easy keeping your composure in a game like this, but you're not helping yourself by making hasty decisions and losing two consecutive rounds.</state>
+                <state img="#-excited.png">I certainly hope you don't have a crippling fear of exposure, ~name~, because losing twice in quick succession can really mess up your composure. </state>
+            </case>
+            <case stage="4-6" id="359">
+                <condition role="target" consecutiveLosses="2" />
+                <state img="#-fingerup.png">Is this just an unfortunate streak, or are you starting to lose your composure, ~name~? All I can say is that panicking isn't helping your case, having just lost the last two rounds.</state>
+                <state img="#-battleready.png">Is something bothering you, ~name~, aside from the fact that you're going to strip back-to-back? You already looked worried before the card reveal.</state>
+                <state img="#-fingerup.png">Just breathe in and breathe out to calm yourself, ~name~. You can no longer change the previous rounds, but you can still improve in the upcoming rounds.</state>
+            </case>
+            <case stage="7-8" id="360">
+                <condition role="target" consecutiveLosses="2" />
+                <state img="#-embarrassed.png">Is my nudity distracting you, ~name~? That's somewhat surprising since we both have the same parts anyway...</state>
+                <state img="#-sarcastic.png">Are you trying to join me in being nude, ~name~? That's two losses in a row for you now. Perhaps, your nudity will pry the gazes away from me.</state>
+                <state img="#-horny.png">Did you lose in consecutive because you were checking out my body, ~name~? I thought only men do that.</state>
+            </case>
+            <case stage="9" id="362">
+                <condition role="target" consecutiveLosses="2" />
+                <state img="#-happy.png">My, was my display so distracting that you lost twice in quick succession, ~name~? I must be doing it correctly then.</state>
+                <state img="#-horny.png">Since I now know that you've been watching me, ~name~, what do you think about my technique? It took me years to perfect it.</state>
+                <state img="#-sarcastic.png">It must be difficult watching two things at the same time, ~name~. Now wonder you lost two in a row.</state>
+            </case>
+            <case stage="10" id="364">
+                <condition role="target" consecutiveLosses="2" />
+                <state img="#-horny.png">&lt;i&gt;(If ~name~ keeps up this losing streak, she will also have to forfeit sooner rather than later.)&lt;/i&gt;</state>
+                <state img="#-aggressive.png">What's wrong, ~name~? Did my elimination make you too complacent? Surely, these consecutive losses would be a wake-up call for you.</state>
+                <state img="#-thinking.png">&lt;i&gt;(Was my forfeit really that good that ~name~ got flustered by the sight?... Maybe it's another thing completely that's shaken her up...)&lt;/i&gt;</state>
+            </case>
             <case stage="4" id="96">
                 <condition role="target" layers="1-3" />
                 <state img="#-fingerup.png">It looks like things are getting down to the wire for you, ~name~...</state>
@@ -3052,49 +3254,6 @@
                 <condition role="target" layers="1" />
                 <state img="#-horny.png">Ah! You're... That's your last layer, right? So you're gonna get naked for us?</state>
                 <state img="#-sarcastic.png">You have nothing left to hide after this, ~name~.</state>
-            </case>
-            <case stage="0" id="223">
-                <condition role="self" hasHand="High Card" />
-                <state img="#-happy.png">That was a close shave. I almost lost for the first time there.</state>
-                <state img="#-sarcastic.png">Thanks for taking the defeat for me, ~name~. I thought I was going to lose this round.</state>
-                <state img="#-happy.png">I didn't think my undefeated streak will go on for at least another round. My hand was pretty bad.</state>
-            </case>
-            <case stage="1-2" id="224">
-                <condition role="self" hasHand="High Card" />
-                <state img="#-sarcastic.png">Well, what a stroke of bad luck, ~name~. I could have sworn my high card would be a losing hand.</state>
-                <state img="#-aggressive.png">I still had some small items to spare, but it's nice that I don't have to strip them just yet.</state>
-                <state img="#-battleready.png">My extra layer of defense remains solid.</state>
-            </case>
-            <case stage="3" id="225">
-                <condition role="self" hasHand="High Card" />
-                <state img="#-excited.png">Oh, good! For a second there, I thought I might finally have to strip something substantial.</state>
-                <state img="#-happy.png">My heart almost skipped a beat when I couldn't find a pair! I'm just glad I didn't lose.</state>
-                <state img="#-sarcastic.png">You had no idea how close I was to losing my top, ~name~.</state>
-            </case>
-            <case stage="4-5" id="226">
-                <condition role="self" hasHand="High Card" />
-                <state img="#-fingerup.png">That was your chance, ~name~. My hand was very vulnerable! Don't worry, you'll have another chance I'm sure.</state>
-                <state img="#-fingerup.png">Don't feel too bad, ~name~. We were both unlucky that round; you were just a tad bit unluckier than I was!</state>
-                <state img="#-battleready.png">If the cards had been distributed differently, I would have lost instead of you.</state>
-            </case>
-            <case stage="6" id="227">
-                <condition role="self" hasHand="High Card" />
-                <state img="#-excited.png">Oh, I was so close to having to bare my breasts! What a stroke of luck!</state>
-                <state img="#-surprised.png">A high card... I wouldn't have thought I'd be spared from embarrassment with a high card.</state>
-                <state img="#-sarcastic.png">Well, I didn't get a pair, and neither did you in more ways than one.</state>
-            </case>
-            <case stage="7" id="228">
-                <condition role="self" hasHand="High Card" />
-                <state img="#-happy.png">I'm just glad I didn't have to bear it all just yet.</state>
-                <state img="#-excited.png">This is fantastic! Saved from the brink of defeat!</state>
-                <state img="#-surprised.png">I did this without a pair. I don't know what to say...</state>
-            </case>
-            <case stage="8" id="229">
-                <condition role="self" hasHand="High Card" />
-                <state img="#-excited.png">From the brink of defeat! Now I know I can still win this game!</state>
-                <state img="#-happy.png">Another chance! I was so certain that I was going to be eliminated. I'm not going to squander this!</state>
-                <state img="#-sarcastic.png">I hope you've realized what you've missed out on, ~name~!</state>
-                <state img="#-scowling.png">I might have survived this round, but I need to do better than this if I am to win.</state>
             </case>
             <case stage="0" id="85" totalRounds="1">
                 <state img="#-fingerup.png">Looks like I'm two for two!</state>
@@ -4566,6 +4725,14 @@
                 <state img="#-scowling.png">Errg &lt;i&gt;come on, ~not_guzma~!&lt;/i&gt; Don't let Guzma win!</state>
                 <state img="#-scowling.png">That's it, ~not_guzma~! We can't let Guzma win under any conditions!</state>
             </case>
+            <case stage="0-10" id="354">
+                <condition count="0" role="target" hasHand="High Card" />
+                <condition count="0" role="target" hasHand="One Pair" />
+                <condition count="0" role="target" hasHand="Two Pair" />
+                <condition count="0" role="target" hasHand="Three of a Kind" />
+                <state img="#-shocked.png">What a horrible turn of luck for you, ~name~! Your hand wouldn't be a loser 99 times out of a 100, .</state>
+                <state img="#-fingerup.png">You would normally assume that your hand would have been safe from a loss, ~name~, but that's just the nature of card games in a nutshell.</state>
+            </case>
             <case stage="0-10" id="159">
                 <condition role="other" character="streaming-chan" sayingMarker="gen_bar" />
                 <state img="#-fingerup.png">My, aren't you rather straightforward, Streaming-chan! If truth be told, I was just hoping to spice things up tonight!</state>
@@ -4587,17 +4754,95 @@
                 <condition count="2" status="alive" />
                 <state img="#-happy.png">And the victor is: Cynthia! For a second there, I thought I lost.</state>
             </case>
-            <case stage="0-8">
+            <case stage="0-8" id="346" priority="60">
                 <condition gender="male" role="target" consecutiveLosses="3" />
                 <state img="#-frustrated.png">That's three losses in a row, ~name~; I'll have you know, if this was all just a stunt to masturbate in front of me, I am &lt;i&gt;not&lt;/i&gt; impressed!</state>
                 <state img="#-frustrated.png">That's three losses in a row, ~name~; I'll have you know, if this was all just an excuse to masturbate in front of me, I am &lt;i&gt;not&lt;/i&gt; impressed!</state>
                 <state img="#-frustrated.png">Are you &lt;i&gt;trying&lt;/i&gt; to lose, ~name~? I do &lt;i&gt;not&lt;/i&gt; take kindly to perverts taking any opportunity they can to fondle themselves in front of me!</state>
                 <state img="#-aggressive.png">Ha, it looks like you're &lt;i&gt;trying&lt;/i&gt; to lose, ~name~. You wouldn't be the first guy to want to expose himself in front of me.</state>
             </case>
-            <case stage="0-8">
+            <case stage="0-8" id="347">
                 <condition role="target" consecutiveLosses="3" />
                 <state img="#-disappointed.png">Hmm? Three in a row? Are you &lt;i&gt;trying&lt;/i&gt; to lose? I'll have you know, I don't appreciate you removing the challenge of this game.</state>
                 <state img="#-disappointed.png">Hmm? Three in a row? Are you &lt;i&gt;trying&lt;/i&gt; to lose? I'll have you know, I was hoping you would make this at least a &lt;i&gt;little&lt;/i&gt; challenging for me.</state>
+                <state img="#-surprised.png">This would be your third straight loss, ~name~. I cannot believe this string of bad luck you're experiencing.</state>
+                <state img="#-sarcastic.png">You've achieved a hat-trick of losses now, ~name~. Your card exchange strategy simply isn't working.</state>
+            </case>
+            <case stage="0-10" id="348">
+                <condition role="target" consecutiveLosses="4" />
+                <state img="#-sarcastic.png">Some cultures associate the number 4 with death and consider it as unlucky. Four losses in a row falls under the same regard.</state>
+                <state img="#-contemplative.png">One loss is a fluke, two losses is a coincidence, three losses is a streak of bad luck... Surely, losing four in a row is an anomaly.</state>
+                <state img="#-surprised.png">Losing four consecutive rounds is just really unlucky. Even when you intentionally try to lose, it wouldn't be easy to accomplish.</state>
+            </case>
+            <case stage="0-10" id="349">
+                <condition role="target" consecutiveLosses="5-7" />
+                <state img="#-shocked.png">The odds of this losing streak occurring, it has to be nothing short of astronomical!</state>
+                <state img="#-shocked.png">Is this game rigged to make ~name~ lose? There's no way this losing streak is happening naturally.</state>
+                <state img="#-sarcastic.png">You probably should learn the mechanics of poker first before playing a game like this, ~name~. This losing streak of yours is laughable.</state>
+            </case>
+            <case stage="0-10" id="350">
+                <condition role="target" consecutiveLosses="8" />
+                <state img="#-shocked.png">All of your layers gone in a string of losses! You cannot write a script like this!</state>
+                <state img="#-shocked.png">I can't believe you lost all eight layers without as much as a pause in between your losses!</state>
+                <state img="#-sarcastic.png">For you to go from having the maximum layer count to being naked within eight rounds is an impressive event by itself.</state>
+            </case>
+            <case stage="0-10" id="351">
+                <condition role="target" hasHand="Two Pair" />
+                <state img="#-battleready.png">Losing with a two pair on hand is quite uncommon. You were just unlucky this round, ~name~.</state>
+                <state img="#-sarcastic.png">Just when you thought that having two pairs would be a guaranteed safety from losing...</state>
+                <state img="#-sarcastic.png">Losing with two pairs on your hand... If only the fifth card was more useful...</state>
+            </case>
+            <case stage="0-10" id="352">
+                <condition role="target" hasHand="Royal Flush" />
+                <state img="#-shocked.png">How did you lose with a royal flush?! That's not possible under normal gameplay! (Please report this bug)</state>
+            </case>
+            <case stage="0-10" id="353">
+                <condition role="target" hasHand="Three of a Kind" />
+                <state img="#-aggressive.png">The rule of three simply wasn't in your favor, ~name~...</state>
+                <state img="#-fingerup.png">Losing with three of a kind on your hand... Just goes to show how unpredictable one-hand poker can be.</state>
+            </case>
+            <case stage="0" id="216">
+                <condition role="self" hasHand="High Card" />
+                <state img="#-happy.png">That was a close shave. I almost lost for the first time there.</state>
+                <state img="#-sarcastic.png">Thanks for taking the defeat for me, ~name~. I thought I was going to lose this round.</state>
+                <state img="#-happy.png">I didn't think my undefeated streak will go on for at least another round. My hand was pretty bad.</state>
+            </case>
+            <case stage="1-2" id="222">
+                <condition role="self" hasHand="High Card" />
+                <state img="#-sarcastic.png">Well, what a stroke of bad luck, ~name~. I could have sworn my high card would be a losing hand.</state>
+                <state img="#-aggressive.png">I still had some small items to spare, but it's nice that I don't have to strip them just yet.</state>
+                <state img="#-battleready.png">My extra layer of defense remains solid.</state>
+            </case>
+            <case stage="3" id="220">
+                <condition role="self" hasHand="High Card" />
+                <state img="#-excited.png">Oh, good! For a second there, I thought I might finally have to strip something substantial.</state>
+                <state img="#-happy.png">My heart almost skipped a beat when I couldn't find a pair! I'm just glad I didn't lose.</state>
+                <state img="#-sarcastic.png">You had no idea how close I was to losing my top, ~name~.</state>
+            </case>
+            <case stage="4-5" id="221">
+                <condition role="self" hasHand="High Card" />
+                <state img="#-fingerup.png">That was your chance, ~name~. My hand was very vulnerable! Don't worry, you'll have another chance I'm sure.</state>
+                <state img="#-fingerup.png">Don't feel too bad, ~name~. We were both unlucky that round; you were just a tad bit unluckier than I was!</state>
+                <state img="#-embarrassed.png">If the cards had been distributed differently, I would have lost instead of you.</state>
+            </case>
+            <case stage="6" id="218">
+                <condition role="self" hasHand="High Card" />
+                <state img="#-excited.png">Oh, I was so close to having to bare my breasts! What a stroke of luck!</state>
+                <state img="#-battleready.png">A high card... I wouldn't have thought I'd be spared from embarrassment with a high card.</state>
+                <state img="#-sarcastic.png">Well, I didn't get a pair, and neither did you in more ways than one.</state>
+            </case>
+            <case stage="7" id="219">
+                <condition role="self" hasHand="High Card" />
+                <state img="#-happy.png">I'm just glad I didn't have to bear it all just yet.</state>
+                <state img="#-excited.png">This is fantastic! Saved from the brink of defeat!</state>
+                <state img="#-surprised.png">I did this without a pair. I don't know what to say...</state>
+            </case>
+            <case stage="8" id="217">
+                <condition role="self" hasHand="High Card" />
+                <state img="#-excited.png">From the brink of defeat! Now I know I can still win this game!</state>
+                <state img="#-happy.png">Another chance! I was so certain that I was going to be eliminated. I'm not going to squander this!</state>
+                <state img="#-sarcastic.png">I hope you've realized what you've missed out on, ~name~!</state>
+                <state img="#-scowling.png">I might have survived this round, but I need to do better than this if I am to win.</state>
             </case>
             <case stage="10">
                 <condition count="2" status="alive" />
@@ -6412,6 +6657,35 @@
                 <condition role="other" character="guzma" stage="0-8" />
                 <state img="#-sarcastic.png" marker="GuzmaThug1">You might have won this battle, but I'm still way ahead of the war, or did you forget that I'm the Champion and you're just a lowly street thug?</state>
             </case>
+            <case stage="8">
+                <condition role="self" consecutiveLosses="9" />
+                <condition count="0" status="not_decent" role="opp" />
+                <state img="#-horny.png">There's something about being made to pleasure myself while being watched by a fully-clothed audience that is awakening weird sensations inside of me...</state>
+                <state img="#-horny.png">I don't know why, but the fact that everyone here is fully-clothed aside from me... I'm quite excited in more ways than one.</state>
+            </case>
+            <case stage="8">
+                <condition role="self" consecutiveLosses="2" />
+                <state img="#-scowling.png">That's all she wrote for my game, I guess. I was hoping to start a comeback while on the edge of defeat.</state>
+                <state img="#-surprised.png">I thought I had discovered the perfect strategy the previous round... Trying a new strategy always carries the risk of failure, I suppose.</state>
+                <state img="#-embarrassed.png">Consecutive losses to end my game... Not exactly a dignified way of going out...</state>
+            </case>
+            <case stage="8">
+                <condition role="self" consecutiveLosses="3" />
+                <state img="#-surprised.png">From being on my lingerie to having to pleasure myself in front of other people in three rounds... this is like a badly written pornographic game.</state>
+                <state img="#-horny.png">This has to be the worst time to go on a losing streak... At least I get to have one thing going for me to~background.time~...</state>
+                <state img="#-disappointed.png">I revised my strategy twice and I still lost both rounds... There's no point in moping about past mistakes. I just have to accept the consequences.</state>
+            </case>
+            <case stage="8">
+                <condition role="self" consecutiveLosses="4-8" />
+                <state img="#-disappointed.png">What an incredibly poor run of form from my part! I'm embarrassed to admit that I'm simply not good enough to be playing a game like this.</state>
+                <state img="#-embarrassed.png">I thought I've mentally prepared myself for this game, but this losing streak... I'm afraid I simply wasn't headstrong enough to handle it, and I'll now pay the price for it.</state>
+            </case>
+            <case stage="8">
+                <condition role="self" consecutiveLosses="9" />
+                <state img="#-disappointed.png">From being fully clothed, to having to masturbate for other people to watch... I can't even describe the humiliation I'm feeling right now.</state>
+                <state img="#-scowling.png">This removes any doubt that this entire thing was a set-up. Does humiliating me like this really enjoyable for people here?</state>
+                <state img="#-embarrassed.png">How did I go from being fully clothed, to having to forfeit, in the blink of an eye?! Is this Arceus's way of punishing my proudness?</state>
+            </case>
             <case stage="8" priority="0">
                 <condition count="1" status="alive" role="opp" />
                 <state img="#-shocked.png">What? No! &lt;i&gt;Nooo!&lt;/i&gt; I was &lt;i&gt;so&lt;/i&gt; close!</state>
@@ -6423,7 +6697,6 @@
             </case>
             <case stage="8">
                 <state img="#-disappointed.png">Well, it appears that this is the end for me... I never thought it would come to this, but the rules must be respected.</state>
-                <state img="#-disappointed.png">Damn... If I have to masturbate, I would have at least wanted some cute boys watching...</state>
                 <state img="#-scowling.png">No! Defeat is taste I've come to loathe...</state>
                 <state img="#-happy.png">You win some and you lose some. I had a lot of fun regardless, and that's what we came for.</state>
                 <state img="#-contemplative.png">I knew my layer count can only take me so far. I did learn a lot today, so perhaps I'll be victorious next time.</state>
@@ -6487,7 +6760,7 @@
                 <state img="#-mast_a.png">Doing this with an audience is not something I'm used to, but the technique seems to be the same.</state>
                 <state img="#-mast_b.png">It feels good... when I go deeper...</state>
                 <state img="#-mast_c.png">I've developed my masturbation technique when I was still a teen.</state>
-                <state img="#-mast_d.png">I can feel the blood running all over my body.</state>
+                <state img="#-mast_d.png">I can feel the blood running through my body.</state>
                 <state img="#-horny.png">I've never used any toys. My fingers can make me climax just as well.</state>
                 <state img="#-happy.png">i used to do this more often during my teens.</state>
                 <state img="#-happy.png">Good thing I had trimmed my nails before going here. I didn't expect to lose, but it always pays off to be safe.</state>
