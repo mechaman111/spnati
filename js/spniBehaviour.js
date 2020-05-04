@@ -1014,10 +1014,12 @@ var fixupDialogueSubstitutions = { // Order matters
     '...': '\u2026', // ellipsis
     '---': '\u2015', // em dash
     '--':  '\u2014', // en dash
+    ' - ': ' \u2014 ', // hyphen used as en dash
     '``':  '\u201c', // left double quotation mark
     '`':   '\u2018', // left single quotation mark
     "''":  '\u201d', // right double quotation mark
     "'":   '\u2019', // right single quotation mark
+    '\\':  '&shy;', // soft hyphen
     '&lt;i&gt;': '<i>',
     '&lt;br&gt;': '<br>',
     '&lt;hr&gt;': '<hr>',
@@ -1062,8 +1064,8 @@ function parseStyleSpecifiers (str) {
     return styledComponents;
 }
 
-/* Strip all formatting instructions (HTML tags and style specifiers) from a
- * string, and lowercase the entire string.
+/* Strip all formatting instructions (HTML tags and style specifiers)
+ * and backslashes from a string, and lowercase the entire string.
  * 
  * Used for *sayingText conditions.
  */
@@ -1072,7 +1074,7 @@ function normalizeConditionText (str) {
             .map(function (part, idx) {
                 if (part.length === 0 || part[0] === '<') return '';
 
-                return part.replace(/&lt;.+?&gt;/gi, '').replace(styleSpecifierRE, '');
+                return fixupDialogue(part.replace(/&lt;.+?&gt;|\\/gi, '').replace(styleSpecifierRE, ''));
             }).join('');
 }
 

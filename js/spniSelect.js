@@ -170,7 +170,7 @@ var statusIndicators = {
     },
     duplicate: {
         icon: "badge-duplicate.png",
-        tooltip: "This opponent is incomplete and currently not in development."
+        tooltip: "This opponent has been retired from the game and replaced with a newer version."
     },
     event: {
         icon: "badge-event.png",
