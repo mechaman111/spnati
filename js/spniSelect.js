@@ -270,8 +270,8 @@ function loadListingFile () {
         }
 
         if (outstandingLoads == 0) {
-            $("#warning-start-container").removeAttr("hidden");
-            $("#warning-load-container").hide();
+            $(".title-menu-buttons-container>div").removeAttr("hidden");
+            $("#title-load-container").hide();
             
             $tagList.append(Object.keys(TAG_ALIASES).concat(Object.keys(tagSet)).sort().map(function(tag) {
                 return new Option(tag);
