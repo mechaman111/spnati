@@ -71,7 +71,8 @@ namespace SPNATI_Character_Editor
 				return;
 			string value;
 			bool perTarget;
-			marker = Marker.ExtractPieces(marker, out value, out perTarget);
+			string op;
+			marker = Marker.ExtractPieces(marker, out value, out perTarget, out op);
 			Marker m = _markers.GetOrAddDefault(marker, () => new Marker(marker));
 			m.AddValue(value);
 		}
@@ -82,7 +83,8 @@ namespace SPNATI_Character_Editor
 				return;
 			string value;
 			bool perTarget;
-			marker = Marker.ExtractPieces(marker, out value, out perTarget);
+			string op;
+			marker = Marker.ExtractPieces(marker, out value, out perTarget, out op);
 			Marker m = _markers.Get(marker);
 			if (m != null)
 			{

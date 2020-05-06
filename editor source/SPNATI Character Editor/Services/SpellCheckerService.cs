@@ -110,17 +110,29 @@ namespace SPNATI_Character_Editor.Services
 
 		private void Behavior_CaseRemoved(object sender, Case theCase)
 		{
+			if (_unprocessedCases.Contains(theCase))
+			{
+				return;
+			}
 			_unprocessedCases.Remove(theCase);
 			FilterQueue(c => c.Case != theCase);
 		}
 
 		private void Behavior_CaseAdded(object sender, Case theCase)
 		{
+			if (_unprocessedCases.Contains(theCase))
+			{
+				return;
+			}
 			_unprocessedCases.Add(theCase);
 		}
 
 		private void Behavior_CaseModified(object sender, Case theCase)
 		{
+			if (_unprocessedCases.Contains(theCase))
+			{
+				return;
+			}
 			FilterQueue(c => c.Case != theCase);
 			_unprocessedCases.Add(theCase);
 		}

@@ -2,6 +2,27 @@
 {
 	public class KisekaeGlobalSpeech : KisekaeSubCode, IPoseable, IMoveable
 	{
+		public void Pose(IPoseable pose)
+		{
+			KisekaeGlobalSpeech other = pose as KisekaeGlobalSpeech;
+			if (other == null)
+			{
+				return;
+			}
+			ScaleX = other.ScaleX;
+			ScaleY = other.ScaleY;
+			ArrowScaleX = other.ArrowScaleX;
+			ArrowScaleY = other.ArrowScaleY;
+			Rotation = other.Rotation;
+			X = other.X;
+			Y = other.Y;
+			Depth = other.Depth;
+			Skew = other.Skew;
+			ArrowX = other.ArrowX;
+			ArrowY = other.ArrowY;
+			ArrowRotation = other.ArrowRotation;
+		}
+
 		public int Type
 		{
 			get { return GetInt(0); }

@@ -36,11 +36,15 @@
 			this.gridLabels = new SPNATI_Character_Editor.Controls.StageSpecificGrid();
 			this.label22 = new Desktop.Skinning.SkinnedLabel();
 			this.cboDefaultPic = new Desktop.Skinning.SkinnedComboBox();
+			this.lblStatus = new Desktop.Skinning.SkinnedLabel();
+			this.cboStatus = new Desktop.Skinning.SkinnedComboBox();
 			this.SuspendLayout();
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label1.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label1.Location = new System.Drawing.Point(3, 6);
@@ -62,6 +66,8 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
+			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label2.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.label2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label2.Location = new System.Drawing.Point(3, 64);
@@ -79,6 +85,7 @@
 			this.cboBaseStage.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
 			this.cboBaseStage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboBaseStage.FormattingEnabled = true;
+			this.cboBaseStage.KeyMember = null;
 			this.cboBaseStage.Location = new System.Drawing.Point(178, 61);
 			this.cboBaseStage.Name = "cboBaseStage";
 			this.cboBaseStage.SelectedIndex = -1;
@@ -90,6 +97,8 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label3.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.label3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label3.Location = new System.Drawing.Point(3, 97);
@@ -109,6 +118,8 @@
 			// label22
 			// 
 			this.label22.AutoSize = true;
+			this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label22.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label22.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.label22.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.label22.Location = new System.Drawing.Point(3, 32);
@@ -126,6 +137,7 @@
 			this.cboDefaultPic.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
 			this.cboDefaultPic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboDefaultPic.FormattingEnabled = true;
+			this.cboDefaultPic.KeyMember = null;
 			this.cboDefaultPic.Location = new System.Drawing.Point(53, 29);
 			this.cboDefaultPic.Name = "cboDefaultPic";
 			this.cboDefaultPic.SelectedIndex = -1;
@@ -135,10 +147,43 @@
 			this.cboDefaultPic.TabIndex = 2;
 			this.cboDefaultPic.SelectedIndexChanged += new System.EventHandler(this.cboDefaultPic_SelectedIndexChanged);
 			// 
+			// lblStatus
+			// 
+			this.lblStatus.AutoSize = true;
+			this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.lblStatus.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.lblStatus.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.lblStatus.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.lblStatus.Location = new System.Drawing.Point(224, 6);
+			this.lblStatus.Name = "lblStatus";
+			this.lblStatus.Size = new System.Drawing.Size(40, 13);
+			this.lblStatus.TabIndex = 98;
+			this.lblStatus.Text = "Status:";
+			// 
+			// cboStatus
+			// 
+			this.cboStatus.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+			this.cboStatus.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+			this.cboStatus.BackColor = System.Drawing.Color.White;
+			this.cboStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboStatus.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+			this.cboStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.cboStatus.FormattingEnabled = true;
+			this.cboStatus.KeyMember = null;
+			this.cboStatus.Location = new System.Drawing.Point(273, 2);
+			this.cboStatus.Name = "cboStatus";
+			this.cboStatus.SelectedIndex = -1;
+			this.cboStatus.SelectedItem = null;
+			this.cboStatus.Size = new System.Drawing.Size(156, 21);
+			this.cboStatus.Sorted = false;
+			this.cboStatus.TabIndex = 97;
+			// 
 			// SkinEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.lblStatus);
+			this.Controls.Add(this.cboStatus);
 			this.Controls.Add(this.label22);
 			this.Controls.Add(this.cboDefaultPic);
 			this.Controls.Add(this.label3);
@@ -164,5 +209,7 @@
 		private Desktop.Skinning.SkinnedLabel label3;
 		private Desktop.Skinning.SkinnedLabel label22;
 		private Desktop.Skinning.SkinnedComboBox cboDefaultPic;
+		private Desktop.Skinning.SkinnedLabel lblStatus;
+		private Desktop.Skinning.SkinnedComboBox cboStatus;
 	}
 }

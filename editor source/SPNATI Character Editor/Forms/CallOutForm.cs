@@ -29,7 +29,8 @@ namespace SPNATI_Character_Editor.Forms
 			{
 				return radPri1.Checked ? SituationPriority.MustTarget :
 					radPri2.Checked ? SituationPriority.Noteworthy :
-					SituationPriority.FYI;
+					radPri3.Checked ? SituationPriority.FYI :
+					SituationPriority.Prompt;
 			}
 		}
 	}

@@ -106,5 +106,10 @@ namespace Desktop.Providers
 		{
 			list.Sort();
 		}
+
+		public virtual bool FilterFromUI(IRecord record)
+		{
+			return false;
+		}
 	}
 }

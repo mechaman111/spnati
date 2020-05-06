@@ -11,6 +11,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 		private Character _character;
 		private PartnerGraphs _partnerGraphType = PartnerGraphs.Lines;
 		private Tuple<string, List<Character>> _franchises;
+		private List<Tuple<string, List<Character>>> _allGroups = new List<Tuple<string, List<Character>>>();
 
 		public ComparisonWidget()
 		{
@@ -30,8 +31,27 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				Tag def = TagDatabase.GetTag(tag.Tag);
 				if (def != null && def.Group == "Source Material")
 				{
-					_franchises = TagDatabase.GetSmallestGroup("Source Material", _character);
-					return _franchises != null;
+					int max = Config.MaxFranchisePartners;
+					List<Tuple<string, List<Character>>> franchiseGroups = TagDatabase.GetGroups("Source Material", _character, max);
+					franchiseGroups.Sort((c1, c2) => c1.Item1.CompareTo(c2.Item1));
+					Tuple<string, List<Character>> min = null;
+					cboGroups.Items.Clear();
+					_allGroups.Clear();
+					foreach (Tuple<string, List<Character>> group in franchiseGroups)
+					{
+						_allGroups.Add(group);
+						if (min == null || min.Item2.Count > group.Item2.Count)
+						{
+							min = group;
+						}
+						Tag t = TagDatabase.GetTag(group.Item1);
+						if (t != null)
+						{
+							cboGroups.Items.Add(t);
+						}
+					}
+					cboGroups.SelectedIndex = _allGroups.IndexOf(min);
+					return min != null;
 				}
 			}
 			return false;
@@ -183,6 +203,19 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			}
 			_partnerGraphType = (PartnerGraphs)type;
 			DoWork().MoveNext();
+		}
+
+		private void cboGroups_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (cboGroups.SelectedIndex >= 0)
+			{
+				_franchises = _allGroups[cboGroups.SelectedIndex];
+				DoWork().MoveNext();
+			}
+			else
+			{
+				_franchises = null;
+			}
 		}
 	}
 }

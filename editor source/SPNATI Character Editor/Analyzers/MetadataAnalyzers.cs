@@ -159,4 +159,96 @@ namespace SPNATI_Character_Editor.Analyzers
 			return false;
 		}
 	}
+
+	public class WriterAnalyzer : IDataAnalyzer
+	{
+		public string Key
+		{
+			get { return "Writer"; }
+		}
+
+		public string Name
+		{
+			get { return "Writer"; }
+		}
+
+		public string FullName
+		{
+			get { return "Writer"; }
+		}
+
+		public string ParentKey
+		{
+			get { return ""; }
+		}
+
+		public string[] GetValues()
+		{
+			return new string[] { };
+		}
+
+		public Type GetValueType()
+		{
+			return typeof(string);
+		}
+
+		public bool MeetsCriteria(Character character, string op, string value)
+		{
+			string[] writers = (character.Metadata.Writer ?? "").Split(',');
+			foreach (string writer in writers)
+			{
+				if (StringOperations.Matches(writer, op, value))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+	}
+
+	public class ArtistAnalyzer : IDataAnalyzer
+	{
+		public string Key
+		{
+			get { return "Artist"; }
+		}
+
+		public string Name
+		{
+			get { return "Artist"; }
+		}
+
+		public string FullName
+		{
+			get { return "Artist"; }
+		}
+
+		public string ParentKey
+		{
+			get { return ""; }
+		}
+
+		public string[] GetValues()
+		{
+			return new string[] { };
+		}
+
+		public Type GetValueType()
+		{
+			return typeof(string);
+		}
+
+		public bool MeetsCriteria(Character character, string op, string value)
+		{
+			string[] artists = (character.Metadata.Artist ?? "").Split(',');
+			foreach (string artist in artists)
+			{
+				if (StringOperations.Matches(artist, op, value))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+	}
 }

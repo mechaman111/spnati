@@ -4,6 +4,19 @@
 	{
 		public KisekaeHairSide() : base("ef") { }
 
+		public void Pose(IPoseable pose)
+		{
+			KisekaeHairSide other = pose as KisekaeHairSide;
+			if (other == null)
+			{
+				return;
+			}
+			Layer = other.Layer;
+			Length = other.Length;
+			Gravity = other.Gravity;
+			XOffset = other.XOffset;
+		}
+
 		public int Shape
 		{
 			get { return GetInt(0); }

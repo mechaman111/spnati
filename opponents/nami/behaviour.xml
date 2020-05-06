@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 1:58:39  on abril 18, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.6.1 at 8:33:41  on mayo 04, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.5</version>
+    <version>v5.6.1</version>
     <first>Nami</first>
     <last />
     <label>Nami</label>
@@ -41,9 +41,7 @@
         <tag>pirate</tag>
         <tag>one_piece</tag>
     </tags>
-    <nicknames />
 
-    <start />
 
     <wardrobe>
         <clothing name="bikini bottom" generic="bikini bottom" position="lower" type="important" />
@@ -2699,6 +2697,10 @@
                 <condition role="other" character="mary" sayingMarker="MaiChan" />
                 <state img="#-thinking.png">Manga? What's that? Sounds more like a fruit than a book.</state>
             </case>
+            <case stage="0-6" id="160" oneShotId="324">
+                <condition role="other" character="anna" pose="cheerfulOnGold" />
+                <state img="#-greedy.png">(Where did that pile of gold come from? I gotta pick it up...! As soon as she gets her foot off it...)</state>
+            </case>
             <case stage="0-6" oneShotId="280">
                 <test expr="~background~" value="poolside" />
                 <test expr="~self.costume~" value="nostalgia_nami" />
@@ -2908,7 +2910,7 @@
                 <alternative oneShotId="210" hasHand="One Pair" saidMarker="target2naked">
                     <test expr="~_.tag.human_male~" value="true" />
                 </alternative>
-                <state img="#-thinking.png">It's too bad you're naked now, ~player~ . Because it's really cold in here now, don't you think? And you're standing here naked, playing this silly game. I hope you don't get sick.Because all you can do now to put some clothes on is... lose.</state>
+                <state img="#-thinking.png">It's too bad you're naked now, ~player~ . Because it's really cold in here now, don't you think? And you're standing here naked, playing this silly game. I hope you don't get sick. Because all you can do now to put some clothes on is... lose.</state>
                 <state img="#-thinking.png">I'm feeling cold. Are you feeling cold, ~player~? You should, since you're naked. Too bad we can't put our clothes back on... unless we lose the game.</state>
                 <state img="#-thinking.png">You know, I heard there's a very serious cold around lately. I'm a little worried for ~player~, since he's naked, and he isn't looking too good. Can't he put some clothes on? Oh, right. He has to lose the game first.</state>
             </case>
@@ -3144,7 +3146,8 @@
                 <state img="#-smiling.png">This shouldn't take long with only three of us. I have no complaints at all about that.</state>
                 <state img="#-smug.png">You two get ready. I'm gonna give it my all, and try to finish this fast.</state>
             </case>
-            <case stage="0-6" oneShotId="96" totalAlive="2">
+            <case stage="0-6" oneShotId="96" priority="5">
+                <condition count="2" status="alive" />
                 <state img="#-serious.png">Despite my looks, I'm a pirate who has survived countless life or death situations. This is just a silly poker game. And you're my last opponent.</state>
                 <state img="#-serious.png">You're all that stands between me and the prize. I'll be playing for real now.</state>
             </case>
@@ -3208,12 +3211,67 @@
                 <state img="#-shocked.png">I'm... flattered? But that's not why I came here.</state>
             </case>
             <case stage="0-5">
-                <condition role="other" character="emi" saidMarker="800m" sayingMarker="800m2" />
+                <condition role="other" character="emi" saidMarker="800m==2" sayingMarker="800m2" />
                 <state img="#-furious.png">Hey, I never agreed to race you! And isn't having to strip punishment enough already?</state>
             </case>
             <case stage="1" priority="102">
                 <condition role="other" character="emi" sayingMarker="nami_pirate" notSaidMarker="pirate" />
                 <state img="#-smiling.png">Pirate?! D-did I say I'm a pirate? No, I'm just a cute navigator who sails around on a little ship without a skull on the flag. Yep.</state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=8" sayingMarker="nami_attire1" />
+                <state img="#-seductive.png">Oh, how sweet! It's nice to know you have a high quality audience that can appreciate fashion, SC.</state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=8" sayingMarker="nami_hunted1" />
+                <state img="#-annoyed.png">Oh yeah. And the worst part is most of the time I'm the only one who's aware of the danger we're constantly in.</state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=8" sayingMarker="nami_scare1" />
+                <state img="#-sad.png">
+                    <alt-img>#-annoyed.png</alt-img>
+                    <alt-img>#-calm.png</alt-img>
+                    <alt-img>#-embarrassed.png</alt-img>
+                    <alt-img>#-furious.png</alt-img>
+                    <alt-img>#-greedy.png</alt-img>
+                    <alt-img>#-happy.png</alt-img>
+                    <alt-img>#-sad.png</alt-img>
+                    <alt-img>#-seductive.png</alt-img>
+                    <alt-img>#-serious.png</alt-img>
+                    <alt-img>#-shocked.png</alt-img>
+                    <alt-img>#-smiling.png</alt-img>
+                    <alt-img>#-smug.png</alt-img>
+                    <alt-img>#-stripping.png</alt-img>
+                    <alt-img>#-thinking.png</alt-img>
+                    <alt-img>#-win.png</alt-img>
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-stripped.png</alt-img>
+                    <text>D-did you say ghost? No... I have no memories of anything like that. Repressed, or otherwise.</text>
+                </state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&lt;4" sayingMarker="nami_kiss1" />
+                <state img="#-shocked.png">What? Ummm, I don't... I don't know...</state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&lt;4" sayingMarker="nami_mermaids1" />
+                <state img="#-furious.png">What?! Who said that? Spreading weird rumors about me...</state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&lt;4" sayingMarker="nami_money1" />
+                <state img="#-sad.png">I've lied, swindled, betrayed... But only bad people, though. And never nothing indecent! Until now...</state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=4" sayingMarker="nami_boat1" />
+                <state img="#-furious.png">Huh?! How would I know? Your chat is full of perverts!</state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=4" sayingMarker="nami_fitness1" />
+                <state img="#-embarrassed.png">Oh, thank you! I don't really workout, but I guess I get enough exercise swimming for fun and running away from danger.</state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="viewers&gt;=4" sayingMarker="nami_treasure1" />
+                <state img="#-shocked.png">What kind of question is that?! I'm not answering it!</state>
             </case>
             <case stage="3" alsoPlaying="meia" alsoPlayingSaidMarker="nami_satellites">
                 <state img="#-thinking.png">Meia, I'm not sure I want to know the answer, but... what's a satellite? You mentioned it earlier.</state>
@@ -3319,6 +3377,10 @@
                 <condition role="other" character="shantae" />
                 <state img="#-sad.png">Are you still mad at me, Shantae? I'm sorry I lied to you. I did it precisely because I didn't want people treating me this way.</state>
             </case>
+            <case stage="2">
+                <condition role="other" character="streaming-chan" />
+                <state img="custom:#-stripping">Alright, time to take off my sandals. What's your next question, SC? Huh...?</state>
+            </case>
             <case stage="0" oneShotId="27" saidMarker="manipulation1" priority="99">
                 <state img="#-sad.png" marker="manipulation1end">Gah, I have no idea why I thought that would work.</state>
                 <state img="#-annoyed.png" marker="manipulation1end">Well, it was worth a shot. I guess.</state>
@@ -3382,7 +3444,8 @@
                 <state img="#-sad.png" marker="seduction6end">So I have to strip for the last time... (At least I won't have to let anyone touch my breasts.)</state>
                 <state img="#-serious.png" marker="seduction6end">OK, I lost. By the way, ~player~? I wasn't serious about letting you touch my breasts.</state>
             </case>
-            <case stage="0-5" oneShotId="120" consecutiveLosses="2">
+            <case stage="0-5" oneShotId="120">
+                <condition role="self" consecutiveLosses="2" />
                 <state img="#-furious.png">Two times in a row? What the hell?</state>
                 <state img="#-furious.png">Again? I didn't even enjoy it the first time!</state>
                 <state img="#-furious.png">It hasn't even been a minute since I stripped last! Give me a break.</state>
@@ -3391,7 +3454,8 @@
                 <state img="#-sad.png">Have I really lost three times in a row? Why'd things have to come to this all of a sudden?</state>
                 <state img="#-sad.png">Three times in a row? What am I doing wrong?</state>
             </case>
-            <case stage="0-5" oneShotId="122" consecutiveLosses="4-">
+            <case stage="0-5" oneShotId="122">
+                <condition role="self" consecutiveLosses="4-" />
                 <state img="#-shocked.png">What is happening? Why am I losing so much? I lost count already...</state>
                 <state img="#-shocked.png">Why do I keep losing again and again? Is this some kind of conspiracy?</state>
             </case>
@@ -3400,12 +3464,14 @@
                 <state img="#-serious.png">I'm not too psyched about taking off my sandals in this disgusting locker room. Just look at the floor.</state>
                 <state img="#-serious.png">We shouldn't be allowed to go barefoot in this locker room. Just look at how disgusting the floor is. What if I step on a piece of glass?</state>
             </case>
-            <case stage="0-1" oneShotId="156" hasHand="One Pair">
+            <case stage="0-1" oneShotId="156">
+                <condition role="self" hasHand="One Pair" />
                 <state img="#-smug.png">Whoa, you're really trying to make me lose the game. I doubt it'll work.</state>
                 <state img="#-calm.png">Impressive. Well, kind of. It wasn't a great hand you beat, anyway.</state>
                 <state img="#-calm.png">Huh, this is more competition than I was expecting. Still, it doesn't matter.</state>
             </case>
-            <case stage="0-5" oneShotId="159" hasHand="Three of a Kind">
+            <case stage="0-5" oneShotId="159">
+                <condition role="self" hasHand="Three of a Kind" />
                 <state img="#-shocked.png">What?! Seriously? Ugh, if you beat this hand that must mean you're &lt;i&gt;really&lt;/i&gt; good at this game.</state>
             </case>
             <case stage="0-5" oneShotId="158" hasHand="Two Pair">
@@ -3431,7 +3497,8 @@
                 <state img="#-shocked.png">Oh... This better not be an indication of how this game is gonna go for me.</state>
                 <state img="#-serious.png">Losing the first round... Maybe this will teach me to be more careful from now on.</state>
             </case>
-            <case stage="0" oneShotId="88" timeInStage="8-">
+            <case stage="0" oneShotId="88">
+                <condition role="self" timeInStage="8-" />
                 <state img="#-smug.png">Oh, I guess I'm not invincible. But close...</state>
                 <state img="#-smug.png">It seems I can't keep winning after all. Oh, well...</state>
             </case>
@@ -3571,8 +3638,225 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="0">
+                <condition role="other" character="jura" stage="0-6" sayingMarker="nami01" />
+                <state img="custom:#-stripping">Hey, I'll have you know I put a lot of thought into the way I dress. And it's not like I'm constantly going to fancy parties, so...</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="revy" stage="0-7" sayingMarker="nami01" />
+                <state img="custom:#-stripping">I came here to take all your money... I mean, the prize money. And I'm not gonna compromise my style, no matter where I go.</state>
+            </case>
             <case stage="0" alsoPlaying="meia" alsoPlayingStage="0-5">
                 <state img="custom:#-stripping">Y-you're kidding, right? I had a hard enough time believing there was an island in the sky, and now you're telling me there are people on other planets?!</state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_attire1" sayingMarker="nami_attire2" />
+                <state img="#-stripping.png">
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-calm.png</alt-img>
+                    <alt-img>#-embarrassed.png</alt-img>
+                    <alt-img>#-furious.png</alt-img>
+                    <alt-img>#-greedy.png</alt-img>
+                    <alt-img>#-happy.png</alt-img>
+                    <alt-img>#-sad.png</alt-img>
+                    <alt-img>#-seductive.png</alt-img>
+                    <alt-img>#-serious.png</alt-img>
+                    <alt-img>#-shocked.png</alt-img>
+                    <alt-img>#-smiling.png</alt-img>
+                    <alt-img>#-smug.png</alt-img>
+                    <alt-img>#-stripping.png</alt-img>
+                    <alt-img>#-thinking.png</alt-img>
+                    <alt-img>#-win.png</alt-img>
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-stripped.png</alt-img>
+                    <text>Very comfortable. I know that some people consider it too revealing, and others stare at me too much. But what can I do? I can't stop looking cute, right?</text>
+                </state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_hunted1" sayingMarker="nami_hunted2" />
+                <state img="#-stripping.png">
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-calm.png</alt-img>
+                    <alt-img>#-embarrassed.png</alt-img>
+                    <alt-img>#-furious.png</alt-img>
+                    <alt-img>#-greedy.png</alt-img>
+                    <alt-img>#-happy.png</alt-img>
+                    <alt-img>#-sad.png</alt-img>
+                    <alt-img>#-seductive.png</alt-img>
+                    <alt-img>#-serious.png</alt-img>
+                    <alt-img>#-shocked.png</alt-img>
+                    <alt-img>#-smiling.png</alt-img>
+                    <alt-img>#-smug.png</alt-img>
+                    <alt-img>#-stripping.png</alt-img>
+                    <alt-img>#-thinking.png</alt-img>
+                    <alt-img>#-win.png</alt-img>
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-stripped.png</alt-img>
+                    <text>Not really... Most of them are weirdos. This one invisible creep once tried to force me to marry him. Can you believe that?</text>
+                </state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_scare1" sayingMarker="nami_scare2" />
+                <state img="#-stripping.png">
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-calm.png</alt-img>
+                    <alt-img>#-embarrassed.png</alt-img>
+                    <alt-img>#-furious.png</alt-img>
+                    <alt-img>#-greedy.png</alt-img>
+                    <alt-img>#-happy.png</alt-img>
+                    <alt-img>#-sad.png</alt-img>
+                    <alt-img>#-seductive.png</alt-img>
+                    <alt-img>#-serious.png</alt-img>
+                    <alt-img>#-shocked.png</alt-img>
+                    <alt-img>#-smiling.png</alt-img>
+                    <alt-img>#-smug.png</alt-img>
+                    <alt-img>#-stripping.png</alt-img>
+                    <alt-img>#-thinking.png</alt-img>
+                    <alt-img>#-win.png</alt-img>
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-stripped.png</alt-img>
+                    <text>Don't talk about that stuff, SC! I don't like it... Wait, what the hell is a &lt;i&gt;Cthulhu&lt;/i&gt;?</text>
+                </state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_kiss1" sayingMarker="nami_kiss2" />
+                <state img="#-stripping.png">
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-calm.png</alt-img>
+                    <alt-img>#-embarrassed.png</alt-img>
+                    <alt-img>#-furious.png</alt-img>
+                    <alt-img>#-greedy.png</alt-img>
+                    <alt-img>#-happy.png</alt-img>
+                    <alt-img>#-sad.png</alt-img>
+                    <alt-img>#-seductive.png</alt-img>
+                    <alt-img>#-serious.png</alt-img>
+                    <alt-img>#-shocked.png</alt-img>
+                    <alt-img>#-smiling.png</alt-img>
+                    <alt-img>#-smug.png</alt-img>
+                    <alt-img>#-stripping.png</alt-img>
+                    <alt-img>#-thinking.png</alt-img>
+                    <alt-img>#-win.png</alt-img>
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-stripped.png</alt-img>
+                    <text>Well, shouldn't it be ⅘ for me? I'm your interviewee after all, so...</text>
+                </state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_mermaids1" sayingMarker="nami_mermaids2" />
+                <state img="#-stripping.png">
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-calm.png</alt-img>
+                    <alt-img>#-embarrassed.png</alt-img>
+                    <alt-img>#-furious.png</alt-img>
+                    <alt-img>#-greedy.png</alt-img>
+                    <alt-img>#-happy.png</alt-img>
+                    <alt-img>#-sad.png</alt-img>
+                    <alt-img>#-seductive.png</alt-img>
+                    <alt-img>#-serious.png</alt-img>
+                    <alt-img>#-shocked.png</alt-img>
+                    <alt-img>#-smiling.png</alt-img>
+                    <alt-img>#-smug.png</alt-img>
+                    <alt-img>#-stripping.png</alt-img>
+                    <alt-img>#-thinking.png</alt-img>
+                    <alt-img>#-win.png</alt-img>
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-stripped.png</alt-img>
+                    <alt-img>#-annoyed.png</alt-img>
+                    <text>I don't know... Luffy is the one who asks the weird anatomy questions. And Camie never answered, so...</text>
+                </state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_money1" sayingMarker="nami_money2" />
+                <state img="#-stripping.png">
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-calm.png</alt-img>
+                    <alt-img>#-embarrassed.png</alt-img>
+                    <alt-img>#-furious.png</alt-img>
+                    <alt-img>#-greedy.png</alt-img>
+                    <alt-img>#-happy.png</alt-img>
+                    <alt-img>#-sad.png</alt-img>
+                    <alt-img>#-seductive.png</alt-img>
+                    <alt-img>#-serious.png</alt-img>
+                    <alt-img>#-shocked.png</alt-img>
+                    <alt-img>#-smiling.png</alt-img>
+                    <alt-img>#-smug.png</alt-img>
+                    <alt-img>#-stripping.png</alt-img>
+                    <alt-img>#-thinking.png</alt-img>
+                    <alt-img>#-win.png</alt-img>
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-stripped.png</alt-img>
+                    <text>Uh... If it makes you happy, then that's perfectly fine. Dunno if I'd go that far...</text>
+                </state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_boat1" sayingMarker="nami_boat2" />
+                <state img="#-stripping.png">
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-calm.png</alt-img>
+                    <alt-img>#-embarrassed.png</alt-img>
+                    <alt-img>#-furious.png</alt-img>
+                    <alt-img>#-greedy.png</alt-img>
+                    <alt-img>#-happy.png</alt-img>
+                    <alt-img>#-sad.png</alt-img>
+                    <alt-img>#-seductive.png</alt-img>
+                    <alt-img>#-serious.png</alt-img>
+                    <alt-img>#-shocked.png</alt-img>
+                    <alt-img>#-smiling.png</alt-img>
+                    <alt-img>#-smug.png</alt-img>
+                    <alt-img>#-stripping.png</alt-img>
+                    <alt-img>#-thinking.png</alt-img>
+                    <alt-img>#-win.png</alt-img>
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-stripped.png</alt-img>
+                    <alt-img>#-annoyed.png</alt-img>
+                    <text>The Sunny is not that small, since I have my own room. But it's kind of hard to get any privacy in the shower. And the motion does feel nice... while sleeping.</text>
+                </state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_fitness1" sayingMarker="nami_fitness2" />
+                <state img="#-stripping.png">
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-calm.png</alt-img>
+                    <alt-img>#-embarrassed.png</alt-img>
+                    <alt-img>#-furious.png</alt-img>
+                    <alt-img>#-greedy.png</alt-img>
+                    <alt-img>#-happy.png</alt-img>
+                    <alt-img>#-sad.png</alt-img>
+                    <alt-img>#-seductive.png</alt-img>
+                    <alt-img>#-serious.png</alt-img>
+                    <alt-img>#-shocked.png</alt-img>
+                    <alt-img>#-smiling.png</alt-img>
+                    <alt-img>#-smug.png</alt-img>
+                    <alt-img>#-stripping.png</alt-img>
+                    <alt-img>#-thinking.png</alt-img>
+                    <alt-img>#-win.png</alt-img>
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-stripped.png</alt-img>
+                    <text>Sanji handles the foot, so I don't have to worry about my diet. I'm sure he wouldn't want me to get too fat or too skinny, so I can trust him.</text>
+                </state>
+            </case>
+            <case stage="0-5" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_treasure1" sayingMarker="nami_treasure2" />
+                <state img="#-stripping.png">
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-calm.png</alt-img>
+                    <alt-img>#-embarrassed.png</alt-img>
+                    <alt-img>#-furious.png</alt-img>
+                    <alt-img>#-greedy.png</alt-img>
+                    <alt-img>#-happy.png</alt-img>
+                    <alt-img>#-sad.png</alt-img>
+                    <alt-img>#-seductive.png</alt-img>
+                    <alt-img>#-serious.png</alt-img>
+                    <alt-img>#-shocked.png</alt-img>
+                    <alt-img>#-smiling.png</alt-img>
+                    <alt-img>#-smug.png</alt-img>
+                    <alt-img>#-stripping.png</alt-img>
+                    <alt-img>#-thinking.png</alt-img>
+                    <alt-img>#-win.png</alt-img>
+                    <alt-img>custom:#-stripping</alt-img>
+                    <alt-img>#-stripped.png</alt-img>
+                    <text>Treasure...? Don't think you'll get me to reply by using words that I like.</text>
+                </state>
             </case>
             <case stage="1">
                 <condition role="other" character="zone-tan" saying="bazonkadongs" />
@@ -3679,6 +3963,10 @@
                 <condition role="other" character="emi" />
                 <state img="#-stripping.png">Definitely not that...</state>
             </case>
+            <case stage="3">
+                <condition role="other" character="streaming-chan" />
+                <state img="#-stripped.png">Yeah, I'm a pirate and I have a bounty on my head... Wait, what bounty hunters are you talking about, SC?</state>
+            </case>
             <case stage="2" id="102">
                 <test expr="~self.costume~" value="nostalgia_nami" />
                 <state img="custom:#-stripping">I'll remove my sandals carefully. I don't wanna show more than... whoops.</state>
@@ -3741,6 +4029,42 @@
                 <state img="#-stripped.png">Maybe I'll show you my Clima-Tact in action, Chun-Li. But you're gonna have to beat me first.</state>
                 <state img="#-stripped.png">If you want me to show you what my Clima-Tact can do, you're gonna have to defeat me, Chun-Li.</state>
             </case>
+            <case stage="1-6" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_attire2" sayingMarker="nami_attire3" />
+                <state img="#-smiling.png">Oh, don't sell yourself too short, SC. You're gorgeous! Although now that you mention it, you could wear something a bit less... ugly.</state>
+            </case>
+            <case stage="1-6" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_hunted2" sayingMarker="nami_hunted3" />
+                <state img="#-serious.png">That's it. Tell the people in your chat (whatever that is) that if any of them comes after me, they'll get zapped.</state>
+            </case>
+            <case stage="1-6" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_scare2" sayingMarker="nami_scare3" />
+                <state img="#-shocked.png">STOOOOP!!! You're freaking me out! If you keep talking about that stuff I won't answer your questions anymore!</state>
+            </case>
+            <case stage="1-6" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_kiss2" sayingMarker="nami_kiss3" />
+                <state img="#-thinking.png">Oh, I see... Maybe it's for the best.</state>
+            </case>
+            <case stage="1-6" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_mermaids2" sayingMarker="nami_mermaids3" />
+                <state img="#-annoyed.png">I'm starting to question the kind of people that follow SC.</state>
+            </case>
+            <case stage="1-6" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_money2" sayingMarker="nami_money3" />
+                <state img="#-serious.png">Ummm, but I'd never... And I haven't... Never mind.</state>
+            </case>
+            <case stage="1-6" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_boat2" sayingMarker="nami_boat3" />
+                <state img="#-annoyed.png">But I didn't say anything useful for your question... I hope I don't get taken out of context.</state>
+            </case>
+            <case stage="1-6" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_fitness2" sayingMarker="nami_fitness3" />
+                <state img="#-serious.png">I don't know about lucrative... I guess only as long as Luffy doesn't spend my hard stolen money on garbage.</state>
+            </case>
+            <case stage="1-6" priority="102">
+                <condition role="other" character="streaming-chan" saidMarker="nami_treasure2" sayingMarker="nami_treasure3" />
+                <state img="#-furious.png">Well, maybe if he... No! Enough! Interview over!</state>
+            </case>
             <case stage="4" alsoPlaying="meia" alsoPlayingSaidMarker="nami_satellites">
                 <state img="#-sad.png">Hey, if anyone is sending fleets to kill your people, it has to be the World Government. I wouldn't put it past them, though I doubt they have the resources to send armies into outer space. I hope...</state>
             </case>
@@ -3765,6 +4089,10 @@
             <case stage="3" id="156" priority="101">
                 <condition role="other" character="emi" notSaidMarker="pirate" />
                 <state img="#-stripped.png">You sound like... everyone else in my crew.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="streaming-chan" sayingMarker="viewers=2" />
+                <state img="#-annoyed.png">If anyone comes after me because of this, I'm blaming you, SC!  You'll have to compensate me properly.</state>
             </case>
             <case stage="1" alsoPlaying="akko">
                 <state img="#-stripped.png">Oh, you mean that stuff you're carrying is a weapon like my Clima-Tact? I'd love to examine it!</state>
@@ -4121,7 +4449,7 @@
                 </state>
             </case>
             <case stage="0-8" oneShotId="321">
-                <condition role="target" character="emi" stage="0-1" saidMarker="800m" />
+                <condition role="target" character="emi" stage="0-1" saidMarker="800m" sayingMarker="800m" />
                 <state img="#-smug.png">
                     <alt-img stage="7">custom:#-smug</alt-img>
                     <text>You're very confident about your running skills, huh? But this is poker, so...</text>
@@ -5361,6 +5689,14 @@
                     <text>I know you mentioned you're a robot earlier, but I don't buy it. I thought those Pacifistas look real, but you'd be on another level.</text>
                 </state>
             </case>
+            <case stage="0-8" id="158">
+                <condition role="target" character="anna" stage="0" />
+                <state img="#-smiling.png">Finally someone here who understand the importance of money. But keep your hands off the prize, I saw it first.</state>
+            </case>
+            <case stage="0-8" id="161">
+                <condition role="target" character="anna" stage="2" />
+                <state img="#-smug.png">Do you really make a lot of money as a shopkeeper? Not unless your prices are really high, I guess. Good thing I'm excellent at haggling, so that wouldn't work on me.</state>
+            </case>
             <case stage="0-6" target="human" notSaidMarker="target2">
                 <test expr="~human.tag.lesbian~" value="false" />
                 <state img="#-thinking.png" marker="target2">(~Player~ looks naive. I can probably use my persuasion tactics to convince her into losing the game.)</state>
@@ -5385,7 +5721,8 @@
                     <text>From what I see, you like fries &lt;i&gt;a lot&lt;/i&gt;.</text>
                 </state>
             </case>
-            <case stage="0-8" oneShotId="117" filter="non-human" targetStage="0" priority="240">
+            <case stage="0-8" oneShotId="117" priority="240">
+                <condition filter="non-human" role="target" stage="0" />
                 <state img="#-thinking.png">
                     <alt-img stage="7">custom:#-thinking</alt-img>
                     <text>What a weird creature... Good thing Luffy isn't here, or he would ask her to join the crew.</text>
@@ -5395,7 +5732,8 @@
                     <text>What is &lt;i&gt;that&lt;/i&gt;? The sea really is a vast place...</text>
                 </state>
             </case>
-            <case stage="0-8" oneShotId="118" filter="fighter" targetStage="0">
+            <case stage="0-8" oneShotId="118">
+                <condition filter="fighter" role="target" stage="0" />
                 <state img="#-smug.png">
                     <alt-img stage="7">custom:#-smug</alt-img>
                     <text>A fighter, huh? I'm sure you're no match for Luffy.</text>
@@ -5405,7 +5743,8 @@
                     <text>So you're a fighter. It's a good thing my crew mates are not here, or some of them would be eager to get into a fight with her for no reason.</text>
                 </state>
             </case>
-            <case stage="0-8" oneShotId="116" filter="princess" targetStage="0">
+            <case stage="0-8" oneShotId="116">
+                <condition filter="princess" role="target" stage="0" />
                 <state img="#-smiling.png">
                     <alt-img stage="7">custom:#-smiling</alt-img>
                     <text>You're a princess? You wouldn't happen to know Vivi, right? She's the princess of the Kingdom of Alabasta. I haven't talked to her in a while.</text>
@@ -5429,7 +5768,8 @@
                     <text>Doesn't that uniform mean you're still in school? Then what do you think you're doing here?</text>
                 </state>
             </case>
-            <case stage="0-8" oneShotId="115" filter="scantily-clad" targetStage="0" priority="220">
+            <case stage="0-8" oneShotId="115" priority="220">
+                <condition filter="scantily-clad" role="target" stage="0" />
                 <state img="#-happy.png">
                     <alt-img stage="7">custom:#-serious</alt-img>
                     <text>And people say that I dress inappropriately. That's still a cute outfit, though...</text>
@@ -7361,7 +7701,7 @@
                 <state img="#-thinking.png">I might have a similar ~clothing~ to yours. Wait, do I?</state>
             </case>
             <case stage="4">
-                <state img="#-serious.png">Hmmm, that ~clothing~... Classic ~name~ move.</state>
+                <state img="#-serious.png">Hmmm, ~clothing.ifPlural(those | that)~ ~clothing~... Classic ~name~ move.</state>
                 <state img="#-calm.png">Ha! I knew it. The ~clothing~ is coming off.</state>
                 <state img="#-serious.png">I won't say I'm happy with this, but it makes sense.</state>
             </case>
@@ -7388,8 +7728,9 @@
         </trigger>
 
         <trigger id="female_removed_minor">
-            <case stage="0-8" target="futaba" targetStage="4">
-                <condition count="1" filter="ann" />
+            <case stage="0-8">
+                <condition filter="ann" />
+                <condition role="target" character="futaba" stage="4" />
                 <state img="#-smiling.png">
                     <alt-img stage="7">custom:#-smiling</alt-img>
                     <text>That sounds just like me! I guess every group of outlaws needs a big sister.</text>
@@ -7484,7 +7825,8 @@
                     <text>(Why the hell am I trying to pick a fight with her? I'm the smart one, and Luffy isn't here.)</text>
                 </state>
             </case>
-            <case stage="0-8" id="62" target="emi" targetStage="7">
+            <case stage="0-8" id="62">
+                <condition role="target" character="emi" stage="7" />
                 <state img="#-smiling.png">You know, maybe Franky could make you some better legs. He's the shipwright of our crew, and like half of his body is machine. It would probably take him like five minutes.</state>
             </case>
             <case stage="0-8" target="futaba" targetStage="1">
@@ -7649,7 +7991,7 @@
                 <condition role="target" character="shantae" stage="2" />
                 <state img="#-calm.png">
                     <alt-img stage="7">custom:#-calm</alt-img>
-                    <text>That definitely surprised me. So you can turn into a monkey... As long as Devil Fruits go, that's very cute.</text>
+                    <text>That definitely surprised me. So you can turn into a monkey... As far as Devil Fruits go, that's very cute.</text>
                 </state>
             </case>
             <case stage="0-8">
@@ -8089,6 +8431,10 @@
                     <text>I'm not offended that you're trying to cheat, but you should at least be smart about it.</text>
                 </state>
             </case>
+            <case stage="0-8" id="157">
+                <condition role="other" character="anna" stage="7" sayingMarker="MissCoinFlipButt1" />
+                <state img="#-serious.png">Hey, don't play with money, Anna! Wait... where did that coin fall?</state>
+            </case>
             <case stage="0">
                 <state img="#-happy.png">Yes! This is what I'm talking about!</state>
                 <state img="#-happy.png">Woohoo! Take it off!</state>
@@ -8499,7 +8845,12 @@
                     <text>See, that's what happens when you get caught cheating. You get... pantsed, apparently.</text>
                 </state>
             </case>
-            <case stage="0-8" oneShotId="163" filter="athletic">
+            <case stage="0-8" id="159">
+                <condition role="target" character="anna" stage="5" />
+                <state img="#-calm.png">It's simple: People are idiots, Anna.</state>
+            </case>
+            <case stage="0-8" oneShotId="163">
+                <condition filter="athletic" role="target" />
                 <state img="#-smiling.png">
                     <alt-img stage="7">custom:#-smiling</alt-img>
                     <text>You got a nice figure, ~name~. I have to be careful to keep my own diet. Sanji's food is so good.</text>
@@ -8513,7 +8864,8 @@
                     <text>Nice figure. Do you exercise, ~name~? I don't, I guess I'm just lucky, heheh. Actually, I do go for a swim every now and then.</text>
                 </state>
             </case>
-            <case stage="0-8" oneShotId="171" filter="muscular">
+            <case stage="0-8" oneShotId="171">
+                <condition filter="muscular" role="target" />
                 <state img="#-smiling.png">
                     <alt-img stage="7">custom:#-smiling</alt-img>
                     <text>Those are some big muscles you have. I know they're not considered very feminine, but you are still beautiful.</text>
@@ -10270,6 +10622,11 @@
                     <text>I could never have hair that long. I'd probably trip on it everytime I walk.</text>
                 </state>
             </case>
+            <case stage="0-8">
+                <condition filter="tentacle_forfeit" status="lost_all" role="target" />
+                <state img="#-shocked.png">~Name~ lost? Then it's time to... Wait, what's happening?</state>
+                <state img="#-shocked.png">So it's ~name~'s turn to... What the hell is that?!</state>
+            </case>
             <case stage="0-8" id="59" alsoPlaying="rainbow_mika" alsoPlayingStage="3" alsoPlayingTimeInStage="1-" alsoPlayingSaidMarker="mask" alsoPlayingSayingMarker="mask_falls">
                 <state img="#-calm.png">
                     <alt-img stage="7">custom:#-calm</alt-img>
@@ -10807,7 +11164,9 @@
                     <text>Oh, how the mighty have fallen. I don't mean to gloat. But if you lost your advantage, you must have done something wrong, ~name~.</text>
                 </state>
             </case>
-            <case stage="0-4" oneShotId="23" targetStatus="crotch_visible" totalExposed="1">
+            <case stage="0-4" oneShotId="23" priority="75">
+                <condition status="crotch_visible" role="target" />
+                <condition count="1" status="exposed" />
                 <state img="#-shocked.png">Part of me was hoping the "getting naked" part of this game was just a bluff.</state>
                 <state img="#-sad.png">Suddenly, this game feels a lot more real.</state>
             </case>
@@ -11036,16 +11395,37 @@
                 <state img="#-calm.png">I'll make it up to you, ~player~. Not with money, of course. Maybe I can get Sanji to cook you something, or...</state>
                 <state img="#-calm.png">Maybe I can do something for you, ~player~. Something other than giving you the prize, of course.  I could get Usopp to make something for you? Nah, that's too lame.</state>
             </case>
-            <case stage="0-8" target="lucina">
+            <case stage="0-8">
+                <condition role="target" character="lucina" />
                 <state img="#-shocked.png">
                     <alt-img stage="7">custom:#-shocked</alt-img>
                     <text>Are you praying? You know the punishment for losing the game is a little different, right?</text>
                 </state>
             </case>
+            <case stage="0-8">
+                <condition filter="tentacle_forfeit" role="target" />
+                <state img="#-sad.png">Uhhh... Those things give me the creeps. And you're going to let them...?</state>
+                <state img="#-sad.png">I wouldn't even let those things near me, much less...</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_masturbating">
+            <case stage="0-8" priority="0">
+                <condition filter="tentacle_forfeit" role="target" />
+                <state img="#-sad.png">This is just like what that octopus from the bath house in Wano does... But I only let it wash my back, so... It's not the same. </state>
+                <state img="#-annoyed.png">If you're willing to let those things touch you all over, your standards are probably too low, ~name~.</state>
+                <state img="#-shocked.png">It's like each one of those things has a mind of its own, and they're all perverts.</state>
+            </case>
+            <case stage="0-8" priority="0">
+                <condition filter="bondage_forfeit" role="target" />
+                <state img="#-shocked.png">I've been tied before, but never like this...</state>
+                <state img="#-thinking.png">I have this trick to get out when I'm tied down, but... You probably don't need it.</state>
+            </case>
         </trigger>
 
         <trigger id="opponent_finished_masturbating">
-            <case stage="0-8" target="lucina" targetTimeInStage="0-" targetSaidMarker="finished" targetSayingMarker="sit_on_crate">
+            <case stage="0-8">
+                <condition role="target" character="lucina" timeInStage="0-" saidMarker="finished" sayingMarker="sit_on_crate" />
                 <state img="#-shocked.png">
                     <alt-img stage="7">custom:#-shocked</alt-img>
                     <text>Did you just yell out Robin? Oh, I guess that's a different Robin. Sorry, I have a friend named Robin too, so I got confused for second.</text>
@@ -12685,10 +13065,11 @@
                     <text>I feel like I just got tricked into watching porn... Eh, I mean, good job you two.</text>
                 </state>
             </case>
-            <case stage="0-8" target="raven" targetSayingMarker="post_orgasm">
+            <case stage="0-8">
+                <condition role="target" character="raven" sayingMarker="post_orgasm" />
                 <state img="#-shocked.png">
                     <alt-img stage="7">custom:#-shocked</alt-img>
-                    <text>That was terrifying. I don't want anything to do with this dark stuff, whatever it its...</text>
+                    <text>That was terrifying. I don't want anything to do with this dark stuff, whatever it is...</text>
                 </state>
             </case>
             <case stage="0-8">

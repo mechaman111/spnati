@@ -14,6 +14,16 @@
 			OffsetY = paint.OffsetY;
 		}
 
+		public void Pose(IPoseable pose)
+		{
+			KisekaeFacePaint other = pose as KisekaeFacePaint;
+			if (other == null)
+			{
+				return;
+			}
+			CopyPositionFrom(other);
+		}
+
 		public int Shape
 		{
 			get { return GetInt(0); }

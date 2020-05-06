@@ -169,5 +169,10 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			return replacement;
 		}
+
+		private void cmdGoto_Click(object sender, EventArgs e)
+		{
+			Shell.Instance.Launch<Character, DialogueEditor>(_character, new ValidationContext(new Stage(_currentMisspelling.Case.Stages[0]), _currentMisspelling.Case, _currentMisspelling.Line));
+		}
 	}
 }

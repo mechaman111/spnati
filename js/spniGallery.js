@@ -556,6 +556,22 @@ function doEpilogueFromGallery(){
 			
 			// function definition in spniEpilogue.js
 			epilogue = parseEpilogue(player, endingElem);
+
+			/* Load forward-declarations for persistent markers. */
+			var persistentMarkers = $xml.find('persistent-markers');
+			if (typeof persistentMarkers !== typeof undefined && persistentMarkers) {
+				$(persistentMarkers).find('marker').each(function (i, elem) {
+					var markerName = $(elem).text();
+					player.persistentMarkers[markerName] = true;
+				});
+			}
+
+			/* Execute marker operations. */
+			epilogue.markers.forEach(function(markerOp) {
+				if (markerOp.from_gallery) {
+					markerOp.apply(player, null);
+				}
+			});
 		
 			if (USAGE_TRACKING) {
 				var usage_tracking_report = {

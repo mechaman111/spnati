@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
@@ -117,7 +118,7 @@ namespace Desktop
 			TabPage page = tabActivities.TabPages[0];
 			Control ctl = page.Tag as Control;
 
-			DockTabPage(_tabs, tabActivities, splitContainer1.Panel1, stripActivities);
+			DockTabPage(_tabs, tabActivities, splitContainer1.Panel1, stripActivities, splitContainer2);
 
 			//Update sidebar visibility
 			if (tabSidebarActivities.TabPages.Count == 0)
@@ -127,11 +128,11 @@ namespace Desktop
 			else
 			{
 				splitContainer1.Panel2Collapsed = false;
-				DockTabPage(_sideTabs, tabSidebarActivities, sidebar, stripSidebar);
+				DockTabPage(_sideTabs, tabSidebarActivities, sidebar, stripSidebar, tabSidebarActivities);
 			}
 		}
 
-		private void DockTabPage(Dictionary<IActivity, TabPage> tabs, TabControl tabControl, Control parentControl, Control tabStrip)
+		private void DockTabPage(Dictionary<IActivity, TabPage> tabs, TabControl tabControl, Control parentControl, Control tabStrip, Control tabContainer)
 		{
 			TabPage page = tabControl.TabPages[0];
 			Control ctl = page.Tag as Control;
@@ -140,14 +141,14 @@ namespace Desktop
 			{
 				//Move the control out of the tabstrip
 				parentControl.Controls.Add(ctl);
-				tabControl.Visible = false;
+				tabContainer.Visible = false;
 				tabStrip.Visible = false;
 			}
 			else
 			{
 				//put the control back into the tabstrip
 				page.Controls.Add(ctl);
-				tabControl.Visible = true;
+				tabContainer.Visible = true;
 				tabStrip.Visible = true;
 			}
 		}
@@ -177,6 +178,28 @@ namespace Desktop
 			if (Workspace.ActiveSidebarActivity == null) { return; }
 
 			splitContainer1.Panel2Collapsed = !expanded;
+		}
+
+		public void ShowBanner(string text, SkinnedHighlight highlight)
+		{
+			if (string.IsNullOrEmpty(text))
+			{
+				splitContainer2.Panel1Collapsed = true;
+			}
+			else
+			{
+				grpBanner.Text = text;
+				if (highlight == SkinnedHighlight.Bad)
+				{
+					grpBanner.PanelType = SkinnedBackgroundType.Critical;
+				}
+				else
+				{
+					grpBanner.PanelType = SkinnedBackgroundType.Surface;
+				}
+				splitContainer2.Panel1Collapsed = false;
+			}
+
 		}
 	}
 }

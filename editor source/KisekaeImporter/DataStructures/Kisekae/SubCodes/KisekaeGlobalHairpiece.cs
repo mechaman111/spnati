@@ -2,6 +2,22 @@
 {
 	public class KisekaeGlobalHairpiece : KisekaeSubCode, IPoseable, IMoveable
 	{
+		public void Pose(IPoseable pose)
+		{
+			KisekaeGlobalHairpiece other = pose as KisekaeGlobalHairpiece;
+			if (other == null)
+			{
+				return;
+			}
+			
+			ScaleX = other.ScaleX;
+			Rotation = other.Rotation;
+			X = other.X;
+			Y = other.Y;
+			Depth = other.Depth;
+			Skew = other.Skew;
+		}
+
 		public int Type
 		{
 			get { return GetInt(0); }

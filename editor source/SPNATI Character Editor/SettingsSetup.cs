@@ -43,6 +43,7 @@ namespace SPNATI_Character_Editor
 			chkHideImages.Checked = !Config.GetBoolean(Settings.HideImages);
 			chkPreviewBubble.Checked = Config.GetBoolean(Settings.ShowPreviewText);
 			chkPreviewFormatting.Checked = !Config.GetBoolean(Settings.DisablePreviewFormatting);
+			valFranchise.Value = Config.MaxFranchisePartners;
 
 			recAutoOpen.RecordType = typeof(Character);
 			recAutoOpen.RecordFilter = CharacterDatabase.FilterHuman;
@@ -58,6 +59,17 @@ namespace SPNATI_Character_Editor
 				lstPauses.Items.Add(def.Key, pauses.Contains(def.Key));
 			}
 			lstPauses.Sorted = true;
+
+			HashSet<OpponentStatus> statusFilters = Config.StatusFilters;
+			foreach (OpponentStatus status in Enum.GetValues(typeof(OpponentStatus)))
+			{
+				if (status == OpponentStatus.Unlisted || status == OpponentStatus.Main)
+				{
+					continue;
+				}
+
+				chkStatuses.Items.Add(status, statusFilters.Contains(status));
+			}
 		}
 		
 		private void cmdBrowse_Click(object sender, EventArgs e)
@@ -146,6 +158,7 @@ namespace SPNATI_Character_Editor
 			Config.EnableDashboardSpellCheck = chkChecklistSpell.Checked;
 			Config.EnableDashboardValidation = chkChecklistValidation.Checked;
 			Config.Set(Settings.AutoOpenCharacter, recAutoOpen.RecordKey);
+			Config.MaxFranchisePartners = (int)valFranchise.Value;
 
 			HashSet<string> pauses = new HashSet<string>();
 			foreach (string item in lstPauses.CheckedItems)
@@ -153,6 +166,13 @@ namespace SPNATI_Character_Editor
 				pauses.Add(item);	
 			}
 			Config.AutoPauseDirectives = pauses;
+
+			HashSet<OpponentStatus> statusFilters = new HashSet<OpponentStatus>();
+			foreach (OpponentStatus status in chkStatuses.CheckedItems)
+			{
+				statusFilters.Add(status);
+			}
+			Config.StatusFilters = statusFilters;
 
 			DialogResult = DialogResult.OK;
 			Config.Save();

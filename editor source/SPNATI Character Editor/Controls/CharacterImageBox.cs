@@ -29,6 +29,7 @@ namespace SPNATI_Character_Editor.Controls
 		private Image _singleUseImage;
 		private Image _imageReference;
 		private bool _animating;
+		private DialogueLine _line = null;
 		private string _text = null;
 		private List<Word> _words = null;
 		private float _percent = 0.5f;
@@ -153,6 +154,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		public void SetText(DialogueLine line)
 		{
+			_line = line;
 			if (line == null || line.Text == null)
 			{
 				_text = null;
@@ -396,14 +398,17 @@ namespace SPNATI_Character_Editor.Controls
 					}
 
 					g.DrawRectangle(_textBorder, TextMargin, topPadding + TopOffset, canvas.Width - TextMargin * 2, textboxHeight - TopOffset);
-					Point[] triangle = new Point[] {
+					if (_line.Direction != "none")
+					{
+						Point[] triangle = new Point[] {
 						new Point((int)(canvas.Width * _percent) - ArrowSize, topPadding  + textboxHeight - 1),
 						new Point((int)(canvas.Width * _percent) + ArrowSize, topPadding  + textboxHeight - 1),
 						new Point((int)(canvas.Width * _percent), topPadding + textboxHeight + ArrowSize - 1),
 					};
-					g.FillPolygon(br, triangle);
-					g.DrawLine(_textBorder, triangle[0], triangle[2]);
-					g.DrawLine(_textBorder, triangle[1], triangle[2]);
+						g.FillPolygon(br, triangle);
+						g.DrawLine(_textBorder, triangle[0], triangle[2]);
+						g.DrawLine(_textBorder, triangle[1], triangle[2]);
+					}
 				}
 			}
 

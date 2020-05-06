@@ -642,7 +642,8 @@ namespace SPNATI_Character_Editor
 		None = 0,
 		MustTarget = 1,
 		Noteworthy = 2,
-		FYI = 3
+		FYI = 3,
+		Prompt = 4,
 	}
 
 	public class SituationResponse

@@ -221,17 +221,30 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			PoseMapping pose = row.Cells["ColImage"].Value as PoseMapping;
 			string text = row.Cells["ColText"].Value?.ToString();
-			string markerValue;
-			bool perTarget;
-			string marker = Marker.ExtractPieces(line.Marker, out markerValue, out perTarget);
-			marker = row.Cells["ColMarker"].Value?.ToString();
+			string marker = row.Cells["ColMarker"].Value?.ToString();
 			if (string.IsNullOrWhiteSpace(marker))
 			{
-				marker = null;
+				line.Marker = null;
 			}
 			else
 			{
 				marker = marker.Trim();
+				MarkerOperation newMarker = new MarkerOperation(marker);
+
+				if (newMarker.Operator == null && newMarker.Value == null)
+				{
+					if (!string.IsNullOrEmpty(line.Marker))
+					{
+						MarkerOperation oldMarker = new MarkerOperation(line.Marker);
+						newMarker.Operator = oldMarker.Operator;
+						newMarker.Value = oldMarker.Value;
+						if (oldMarker.Name.EndsWith("*"))
+						{
+							newMarker.Name += "*";
+						}
+					}
+				}
+				line.Marker = newMarker.ToString();
 			}
 
 			if (text == "~silent~")
@@ -243,32 +256,6 @@ namespace SPNATI_Character_Editor.Controls
 
 			line.Pose = pose;
 			line.Text = text ?? "";
-
-			if (perTarget)
-			{
-				marker += "*";
-			}
-
-			if (string.IsNullOrEmpty(markerValue))
-			{
-				line.Marker = marker;
-			}
-			else if (markerValue == "+" || markerValue == "-")
-			{
-				line.Marker = $"{markerValue}{marker}";
-			}
-			else if (markerValue == "+1")
-			{
-				line.Marker = $"+{marker}";
-			}
-			else if (markerValue == "-1")
-			{
-				line.Marker = $"-{marker}";
-			}
-			else
-			{
-				line.Marker = $"{marker}={markerValue}";
-			}
 
 			Tuple<string, string> collectibleData = row.Cells[nameof(ColTrophy)].Tag as Tuple<string, string>;
 			if (collectibleData != null)
@@ -575,16 +562,8 @@ namespace SPNATI_Character_Editor.Controls
 			DataGridViewColumn col = gridDialogue.Columns[e.ColumnIndex];
 			if (col == ColDelete)
 			{
-				DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
-				if (row != null && !row.IsNewRow)
-				{
-					DialogueLine line = row.Tag as DialogueLine;
-					_selectedCase.Lines.Remove(line);
-					gridDialogue.Rows.RemoveAt(e.RowIndex);
-					NotifyChange();
-					line.PropertyChanged -= Line_PropertyChanged;
-					row.Tag = null;
-				}
+				int rowIndex = e.RowIndex;
+				DeleteLine(rowIndex);
 			}
 			else if (col == ColTrophy)
 			{
@@ -606,6 +585,35 @@ namespace SPNATI_Character_Editor.Controls
 					StageImageSelection form = new StageImageSelection(_character, line, _selectedCase);
 					form.ShowDialog();
 				}
+			}
+		}
+
+		/// <summary>
+		/// Clears all lines
+		/// </summary>
+		public void ClearLines()
+		{
+			for (int i = gridDialogue.Rows.Count - 1; i >= 0; i--)
+			{
+				DeleteLine(i);
+			}
+		}
+
+		/// <summary>
+		/// Deletes a line
+		/// </summary>
+		/// <param name="rowIndex"></param>
+		public void DeleteLine(int rowIndex)
+		{
+			DataGridViewRow row = gridDialogue.Rows[rowIndex];
+			if (row != null && !row.IsNewRow)
+			{
+				DialogueLine line = row.Tag as DialogueLine;
+				_selectedCase.Lines.Remove(line);
+				gridDialogue.Rows.RemoveAt(rowIndex);
+				NotifyChange();
+				line.PropertyChanged -= Line_PropertyChanged;
+				row.Tag = null;
 			}
 		}
 
@@ -746,7 +754,8 @@ namespace SPNATI_Character_Editor.Controls
 			DataGridViewCell markerCell = row.Cells["ColMarker"];
 			string marker, markerValue;
 			bool perTarget;
-			marker = Marker.ExtractPieces(line.Marker, out markerValue, out perTarget);
+			string op;
+			marker = Marker.ExtractPieces(line.Marker, out markerValue, out perTarget, out op);
 			markerCell.Value = marker;
 			
 			row.Cells[nameof(ColTrophy)].Tag = new Tuple<string, string>(line.CollectibleId, line.CollectibleValue);
@@ -773,7 +782,16 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
-				return line.Marker;
+				List<string> markers = new List<string>();
+				if (!string.IsNullOrEmpty(line.Marker))
+				{
+					markers.Add(line.Marker);
+				}
+				foreach (MarkerOperation op in line.Markers)
+				{
+					markers.Add(op.ToString());
+				}
+				return string.Join("\n", markers);
 			}
 		}
 
@@ -806,7 +824,7 @@ namespace SPNATI_Character_Editor.Controls
 				}
 				if (loadedLine.Text == line.Text && loadedLine.Marker == line.Marker)
 				{
-					row.Cells[1].Selected = true;
+					row.Cells[2].Selected = true;
 					return;
 				}
 			}

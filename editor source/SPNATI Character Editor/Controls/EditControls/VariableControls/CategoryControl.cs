@@ -130,4 +130,23 @@ namespace SPNATI_Character_Editor.Controls.EditControls.VariableControls
 			OnChangeLabel("Gender");
 		}
 	}
+
+	[SubVariable("distance")]
+	public class DistanceControl : CategoryControl
+	{
+		protected override Type GetCategoryType()
+		{
+			return typeof(DistanceCategory);
+		}
+
+		protected override string GetVariable()
+		{
+			return "distance";
+		}
+
+		public override void OnAddedToRow()
+		{
+			OnChangeLabel("Distance");
+		}
+	}
 }

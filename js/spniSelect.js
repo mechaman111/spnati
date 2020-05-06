@@ -157,16 +157,24 @@ var randomLock = false;
 /* Status indicators */
 var statusIndicators = {
     testing: {
-        icon: "testing-badge.png",
+        icon: "badge-testing.png",
         tooltip: "This opponent is currently in testing.",
     },
     offline: {
-        icon: "offline-badge.png",
+        icon: "badge-offline.png",
         tooltip: "This opponent has been retired from the official version of the game.",
     },
     incomplete: {
-        icon: "incomplete-badge.png",
+        icon: "badge-incomplete.png",
         tooltip: "This opponent is incomplete and currently not in development."
+    },
+    duplicate: {
+        icon: "badge-duplicate.png",
+        tooltip: "This opponent has been retired from the game and replaced with a newer version."
+    },
+    event: {
+        icon: "badge-event.png",
+        tooltip: "This opponent only returns to the official version of the game for special events."
     }
 }
 
@@ -216,6 +224,7 @@ function splitCreatorField (field) {
 function loadListingFile () {
 	/* clear the previous meta information */
 	var outstandingLoads = 0;
+    var totalLoads = 0;
 	var opponentGroupMap = {};
 	var opponentMap = {};
     var tagSet = {};
@@ -250,6 +259,7 @@ function loadListingFile () {
 				});
 			}
 		}
+        
         if (--outstandingLoads % 16 == 0) {
             updateSelectableOpponents();
             updateIndividualSelectScreen();
@@ -258,7 +268,11 @@ function loadListingFile () {
             updateGroupSelectScreen(true);
             updateSelectionVisuals();
         }
+
         if (outstandingLoads == 0) {
+            $(".title-menu-buttons-container>div").removeAttr("hidden");
+            $("#title-load-container").hide();
+            
             $tagList.append(Object.keys(TAG_ALIASES).concat(Object.keys(tagSet)).sort().map(function(tag) {
                 return new Option(tag);
             }));
@@ -268,6 +282,9 @@ function loadListingFile () {
             $creatorList.append(Object.keys(creatorSet).sort().map(function(source) {
                 return new Option(source);
             }));
+        } else {
+            var progress = Math.floor(100 * (totalLoads - outstandingLoads) / totalLoads);
+            $(".game-load-progress").text(progress.toString(10));
         }
 	}
 
@@ -322,6 +339,7 @@ function loadListingFile () {
 
                 if (available[id]) {
                     outstandingLoads++;
+                    totalLoads++;
 					if (doInclude) {
 						opponentMap[id] = oppDefaultIndex++;
 					}

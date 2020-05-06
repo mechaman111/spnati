@@ -14,7 +14,7 @@
 
 	public interface IPoseable
 	{
-
+		void Pose(IPoseable pose);
 	}
 
 	public interface IMoveable

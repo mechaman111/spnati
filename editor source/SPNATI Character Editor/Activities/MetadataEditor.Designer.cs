@@ -33,11 +33,9 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.txtLabel = new Desktop.Skinning.SkinnedTextBox();
 			this.label1 = new Desktop.Skinning.SkinnedLabel();
-			this.lblUnlisted = new Desktop.Skinning.SkinnedLabel();
-			this.lblTesting = new Desktop.Skinning.SkinnedLabel();
-			this.lblIncomplete = new Desktop.Skinning.SkinnedLabel();
-			this.lblOffline = new Desktop.Skinning.SkinnedLabel();
 			this.gridAI = new Desktop.Skinning.SkinnedDataGridView();
+			this.ColAIStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColDifficulty = new Desktop.Skinning.SkinnedDataGridViewComboBoxColumn();
 			this.label7 = new Desktop.Skinning.SkinnedLabel();
 			this.label22 = new Desktop.Skinning.SkinnedLabel();
 			this.txtDescription = new Desktop.Skinning.SkinnedTextBox();
@@ -64,8 +62,6 @@
 			this.skinnedGroupBox1 = new Desktop.Skinning.SkinnedGroupBox();
 			this.skinnedGroupBox2 = new Desktop.Skinning.SkinnedGroupBox();
 			this.skinnedGroupBox3 = new Desktop.Skinning.SkinnedGroupBox();
-			this.ColAIStage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColDifficulty = new Desktop.Skinning.SkinnedDataGridViewComboBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridAI)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valRounds)).BeginInit();
 			this.skinnedGroupBox1.SuspendLayout();
@@ -96,58 +92,6 @@
 			this.label1.TabIndex = 4;
 			this.label1.Text = "Label:";
 			// 
-			// lblUnlisted
-			// 
-			this.lblUnlisted.AutoSize = true;
-			this.lblUnlisted.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.lblUnlisted.ForeColor = System.Drawing.Color.Black;
-			this.lblUnlisted.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
-			this.lblUnlisted.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.lblUnlisted.Location = new System.Drawing.Point(181, 8);
-			this.lblUnlisted.Name = "lblUnlisted";
-			this.lblUnlisted.Size = new System.Drawing.Size(130, 13);
-			this.lblUnlisted.TabIndex = 22;
-			this.lblUnlisted.Text = "UNLISTED CHARACTER";
-			// 
-			// lblTesting
-			// 
-			this.lblTesting.AutoSize = true;
-			this.lblTesting.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.lblTesting.ForeColor = System.Drawing.Color.Black;
-			this.lblTesting.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
-			this.lblTesting.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.lblTesting.Location = new System.Drawing.Point(181, 8);
-			this.lblTesting.Name = "lblTesting";
-			this.lblTesting.Size = new System.Drawing.Size(104, 13);
-			this.lblTesting.TabIndex = 21;
-			this.lblTesting.Text = "TEST CHARACTER";
-			// 
-			// lblIncomplete
-			// 
-			this.lblIncomplete.AutoSize = true;
-			this.lblIncomplete.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.lblIncomplete.ForeColor = System.Drawing.Color.Black;
-			this.lblIncomplete.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
-			this.lblIncomplete.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.lblIncomplete.Location = new System.Drawing.Point(181, 8);
-			this.lblIncomplete.Name = "lblIncomplete";
-			this.lblIncomplete.Size = new System.Drawing.Size(145, 13);
-			this.lblIncomplete.TabIndex = 20;
-			this.lblIncomplete.Text = "INCOMPLETE CHARACTER";
-			// 
-			// lblOffline
-			// 
-			this.lblOffline.AutoSize = true;
-			this.lblOffline.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.lblOffline.ForeColor = System.Drawing.Color.Black;
-			this.lblOffline.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
-			this.lblOffline.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.lblOffline.Location = new System.Drawing.Point(181, 8);
-			this.lblOffline.Name = "lblOffline";
-			this.lblOffline.Size = new System.Drawing.Size(120, 13);
-			this.lblOffline.TabIndex = 19;
-			this.lblOffline.Text = "OFFLINE CHARACTER";
-			// 
 			// gridAI
 			// 
 			this.gridAI.AllowUserToResizeColumns = false;
@@ -167,6 +111,7 @@
 			this.gridAI.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColAIStage,
             this.ColDifficulty});
+			this.gridAI.Data = null;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
 			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -193,6 +138,26 @@
 			this.gridAI.RowHeadersVisible = false;
 			this.gridAI.Size = new System.Drawing.Size(212, 101);
 			this.gridAI.TabIndex = 16;
+			// 
+			// ColAIStage
+			// 
+			this.ColAIStage.DataPropertyName = "Stage";
+			this.ColAIStage.HeaderText = "Stage";
+			this.ColAIStage.MinimumWidth = 50;
+			this.ColAIStage.Name = "ColAIStage";
+			this.ColAIStage.Width = 50;
+			// 
+			// ColDifficulty
+			// 
+			this.ColDifficulty.AutoComplete = false;
+			this.ColDifficulty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.ColDifficulty.DataPropertyName = "Value";
+			this.ColDifficulty.DisplayMember = null;
+			this.ColDifficulty.HeaderText = "Intelligence";
+			this.ColDifficulty.Name = "ColDifficulty";
+			this.ColDifficulty.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.ColDifficulty.Sorted = false;
+			this.ColDifficulty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 			// 
 			// label7
 			// 
@@ -240,6 +205,7 @@
 			this.cboDefaultPic.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
 			this.cboDefaultPic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboDefaultPic.FormattingEnabled = true;
+			this.cboDefaultPic.KeyMember = null;
 			this.cboDefaultPic.Location = new System.Drawing.Point(107, 76);
 			this.cboDefaultPic.Name = "cboDefaultPic";
 			this.cboDefaultPic.SelectedIndex = -1;
@@ -442,6 +408,7 @@
 			this.cboSize.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
 			this.cboSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboSize.FormattingEnabled = true;
+			this.cboSize.KeyMember = null;
 			this.cboSize.Location = new System.Drawing.Point(392, 49);
 			this.cboSize.Name = "cboSize";
 			this.cboSize.SelectedIndex = -1;
@@ -485,6 +452,7 @@
 			this.cboGender.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
 			this.cboGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboGender.FormattingEnabled = true;
+			this.cboGender.KeyMember = null;
 			this.cboGender.Location = new System.Drawing.Point(107, 49);
 			this.cboGender.Name = "cboGender";
 			this.cboGender.SelectedIndex = -1;
@@ -496,6 +464,7 @@
 			// 
 			// skinnedGroupBox1
 			// 
+			this.skinnedGroupBox1.BackColor = System.Drawing.Color.White;
 			this.skinnedGroupBox1.Controls.Add(this.label2);
 			this.skinnedGroupBox1.Controls.Add(this.txtFirstName);
 			this.skinnedGroupBox1.Controls.Add(this.label3);
@@ -512,8 +481,12 @@
 			this.skinnedGroupBox1.Controls.Add(this.label23);
 			this.skinnedGroupBox1.Controls.Add(this.txtSource);
 			this.skinnedGroupBox1.Controls.Add(this.label17);
+			this.skinnedGroupBox1.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox1.Image = null;
 			this.skinnedGroupBox1.Location = new System.Drawing.Point(6, 30);
 			this.skinnedGroupBox1.Name = "skinnedGroupBox1";
+			this.skinnedGroupBox1.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.skinnedGroupBox1.ShowIndicatorBar = false;
 			this.skinnedGroupBox1.Size = new System.Drawing.Size(616, 231);
 			this.skinnedGroupBox1.TabIndex = 108;
 			this.skinnedGroupBox1.TabStop = false;
@@ -521,12 +494,17 @@
 			// 
 			// skinnedGroupBox2
 			// 
+			this.skinnedGroupBox2.BackColor = System.Drawing.Color.White;
 			this.skinnedGroupBox2.Controls.Add(this.label18);
 			this.skinnedGroupBox2.Controls.Add(this.txtWriter);
 			this.skinnedGroupBox2.Controls.Add(this.label19);
 			this.skinnedGroupBox2.Controls.Add(this.txtArtist);
+			this.skinnedGroupBox2.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox2.Image = null;
 			this.skinnedGroupBox2.Location = new System.Drawing.Point(6, 267);
 			this.skinnedGroupBox2.Name = "skinnedGroupBox2";
+			this.skinnedGroupBox2.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.skinnedGroupBox2.ShowIndicatorBar = false;
 			this.skinnedGroupBox2.Size = new System.Drawing.Size(616, 80);
 			this.skinnedGroupBox2.TabIndex = 109;
 			this.skinnedGroupBox2.TabStop = false;
@@ -534,36 +512,21 @@
 			// 
 			// skinnedGroupBox3
 			// 
+			this.skinnedGroupBox3.BackColor = System.Drawing.Color.White;
 			this.skinnedGroupBox3.Controls.Add(this.label12);
 			this.skinnedGroupBox3.Controls.Add(this.valRounds);
 			this.skinnedGroupBox3.Controls.Add(this.gridAI);
 			this.skinnedGroupBox3.Controls.Add(this.label7);
+			this.skinnedGroupBox3.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox3.Image = null;
 			this.skinnedGroupBox3.Location = new System.Drawing.Point(6, 353);
 			this.skinnedGroupBox3.Name = "skinnedGroupBox3";
+			this.skinnedGroupBox3.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.skinnedGroupBox3.ShowIndicatorBar = false;
 			this.skinnedGroupBox3.Size = new System.Drawing.Size(616, 163);
 			this.skinnedGroupBox3.TabIndex = 110;
 			this.skinnedGroupBox3.TabStop = false;
 			this.skinnedGroupBox3.Text = "Gameplay";
-			// 
-			// ColAIStage
-			// 
-			this.ColAIStage.DataPropertyName = "Stage";
-			this.ColAIStage.HeaderText = "Stage";
-			this.ColAIStage.MinimumWidth = 50;
-			this.ColAIStage.Name = "ColAIStage";
-			this.ColAIStage.Width = 50;
-			// 
-			// ColDifficulty
-			// 
-			this.ColDifficulty.AutoComplete = false;
-			this.ColDifficulty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ColDifficulty.DataPropertyName = "Value";
-			this.ColDifficulty.DisplayMember = null;
-			this.ColDifficulty.HeaderText = "Intelligence";
-			this.ColDifficulty.Name = "ColDifficulty";
-			this.ColDifficulty.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.ColDifficulty.Sorted = false;
-			this.ColDifficulty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 			// 
 			// MetadataEditor
 			// 
@@ -572,10 +535,6 @@
 			this.Controls.Add(this.skinnedGroupBox3);
 			this.Controls.Add(this.skinnedGroupBox2);
 			this.Controls.Add(this.skinnedGroupBox1);
-			this.Controls.Add(this.lblUnlisted);
-			this.Controls.Add(this.lblTesting);
-			this.Controls.Add(this.lblIncomplete);
-			this.Controls.Add(this.lblOffline);
 			this.Controls.Add(this.txtLabel);
 			this.Controls.Add(this.label1);
 			this.Name = "MetadataEditor";
@@ -597,10 +556,6 @@
 
 		private Desktop.Skinning.SkinnedTextBox txtLabel;
 		private Desktop.Skinning.SkinnedLabel label1;
-		private Desktop.Skinning.SkinnedLabel lblUnlisted;
-		private Desktop.Skinning.SkinnedLabel lblTesting;
-		private Desktop.Skinning.SkinnedLabel lblIncomplete;
-		private Desktop.Skinning.SkinnedLabel lblOffline;
 		private Desktop.Skinning.SkinnedDataGridView gridAI;
 		private Desktop.Skinning.SkinnedLabel label7;
 		private Desktop.Skinning.SkinnedLabel label22;

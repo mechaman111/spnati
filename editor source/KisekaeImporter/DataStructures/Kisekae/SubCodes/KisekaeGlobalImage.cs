@@ -4,6 +4,22 @@ namespace KisekaeImporter.SubCodes
 {
 	public class KisekaeGlobalImage : KisekaeSubCode, IPoseable, IMoveable
 	{
+		public void Pose(IPoseable pose)
+		{
+			KisekaeGlobalImage other = pose as KisekaeGlobalImage;
+			if (other == null)
+			{
+				return;
+			}
+			ScaleX = other.ScaleX;
+			OffsetY = other.OffsetY;
+			Layer = other.Layer;
+			OffsetX = other.OffsetX;
+			Rotation = other.Rotation;
+			ScaleY = other.ScaleY;
+			RotationZ = other.RotationZ;
+		}
+
 		public int ScaleX
 		{
 			get { return GetInt(0); }

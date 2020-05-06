@@ -55,6 +55,8 @@
 			this.txtFilter = new Desktop.Skinning.SkinnedTextBox();
 			this.tabsSections = new Desktop.Skinning.SkinnedTabControl();
 			this.tabGeneral = new System.Windows.Forms.TabPage();
+			this.label7 = new Desktop.Skinning.SkinnedLabel();
+			this.chkStatuses = new Desktop.Skinning.SkinnedCheckedListBox();
 			this.skinnedLabel5 = new Desktop.Skinning.SkinnedLabel();
 			this.recAutoOpen = new Desktop.CommonControls.RecordField();
 			this.cmdBrowseKisekae = new Desktop.Skinning.SkinnedButton();
@@ -93,6 +95,9 @@
 			this.chkWorkflowTracer = new Desktop.Skinning.SkinnedCheckBox();
 			this.stripSections = new Desktop.Skinning.SkinnedTabStrip();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
+			this.grpComparison = new Desktop.Skinning.SkinnedGroupBox();
+			this.skinnedLabel6 = new Desktop.Skinning.SkinnedLabel();
+			this.valFranchise = new Desktop.Skinning.SkinnedNumericUpDown();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valFrequency)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valLifetime)).BeginInit();
@@ -108,6 +113,8 @@
 			this.panelSnapshot.SuspendLayout();
 			this.tabTroubleshoot.SuspendLayout();
 			this.skinnedPanel1.SuspendLayout();
+			this.grpComparison.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valFranchise)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// txtApplicationDirectory
@@ -444,6 +451,8 @@
 			// tabGeneral
 			// 
 			this.tabGeneral.BackColor = System.Drawing.Color.White;
+			this.tabGeneral.Controls.Add(this.label7);
+			this.tabGeneral.Controls.Add(this.chkStatuses);
 			this.tabGeneral.Controls.Add(this.skinnedLabel5);
 			this.tabGeneral.Controls.Add(this.recAutoOpen);
 			this.tabGeneral.Controls.Add(this.cmdBrowseKisekae);
@@ -461,6 +470,31 @@
 			this.tabGeneral.Size = new System.Drawing.Size(447, 242);
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.label7.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label7.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+			this.label7.Location = new System.Drawing.Point(7, 116);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(96, 13);
+			this.label7.TabIndex = 13;
+			this.label7.Text = "Characters to hide:";
+			// 
+			// chkStatuses
+			// 
+			this.chkStatuses.BackColor = System.Drawing.Color.White;
+			this.chkStatuses.CheckOnClick = true;
+			this.chkStatuses.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.chkStatuses.ForeColor = System.Drawing.Color.Black;
+			this.chkStatuses.FormattingEnabled = true;
+			this.chkStatuses.Location = new System.Drawing.Point(133, 112);
+			this.chkStatuses.Name = "chkStatuses";
+			this.chkStatuses.Size = new System.Drawing.Size(276, 109);
+			this.chkStatuses.TabIndex = 12;
 			// 
 			// skinnedLabel5
 			// 
@@ -534,6 +568,7 @@
 			// tabDashboard
 			// 
 			this.tabDashboard.BackColor = System.Drawing.Color.White;
+			this.tabDashboard.Controls.Add(this.grpComparison);
 			this.tabDashboard.Controls.Add(this.chkStartDashboard);
 			this.tabDashboard.Controls.Add(this.grpChecklist);
 			this.tabDashboard.Controls.Add(this.chkDashboard);
@@ -975,6 +1010,62 @@
 			this.skinnedPanel1.TabIndex = 14;
 			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
 			// 
+			// grpComparison
+			// 
+			this.grpComparison.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.grpComparison.BackColor = System.Drawing.Color.White;
+			this.grpComparison.Controls.Add(this.valFranchise);
+			this.grpComparison.Controls.Add(this.skinnedLabel6);
+			this.grpComparison.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.grpComparison.Image = null;
+			this.grpComparison.Location = new System.Drawing.Point(6, 146);
+			this.grpComparison.Name = "grpComparison";
+			this.grpComparison.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.grpComparison.ShowIndicatorBar = false;
+			this.grpComparison.Size = new System.Drawing.Size(434, 90);
+			this.grpComparison.TabIndex = 3;
+			this.grpComparison.TabStop = false;
+			this.grpComparison.Text = "Franchise Overview";
+			// 
+			// skinnedLabel6
+			// 
+			this.skinnedLabel6.AutoSize = true;
+			this.skinnedLabel6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel6.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel6.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel6.Location = new System.Drawing.Point(6, 26);
+			this.skinnedLabel6.Name = "skinnedLabel6";
+			this.skinnedLabel6.Size = new System.Drawing.Size(208, 13);
+			this.skinnedLabel6.TabIndex = 10;
+			this.skinnedLabel6.Text = "Include groups with fewer characters than:";
+			// 
+			// valFranchise
+			// 
+			this.valFranchise.BackColor = System.Drawing.Color.White;
+			this.valFranchise.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valFranchise.ForeColor = System.Drawing.Color.Black;
+			this.valFranchise.Location = new System.Drawing.Point(220, 24);
+			this.valFranchise.Maximum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+			this.valFranchise.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.valFranchise.Name = "valFranchise";
+			this.valFranchise.Size = new System.Drawing.Size(56, 20);
+			this.valFranchise.TabIndex = 11;
+			this.valFranchise.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
 			// SettingsSetup
 			// 
 			this.AcceptButton = this.cmdOk;
@@ -1018,6 +1109,9 @@
 			this.tabTroubleshoot.ResumeLayout(false);
 			this.tabTroubleshoot.PerformLayout();
 			this.skinnedPanel1.ResumeLayout(false);
+			this.grpComparison.ResumeLayout(false);
+			this.grpComparison.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valFranchise)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1088,5 +1182,10 @@
 		private Desktop.Skinning.SkinnedCheckBox chkPreviewFormatting;
 		private Desktop.Skinning.SkinnedCheckBox chkPreviewBubble;
 		private Desktop.Skinning.SkinnedCheckBox chkHideImages;
+		private Desktop.Skinning.SkinnedLabel label7;
+		private Desktop.Skinning.SkinnedCheckedListBox chkStatuses;
+		private Desktop.Skinning.SkinnedGroupBox grpComparison;
+		private Desktop.Skinning.SkinnedNumericUpDown valFranchise;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel6;
 	}
 }

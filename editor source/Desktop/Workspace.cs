@@ -1,4 +1,5 @@
 ﻿using Desktop.Messaging;
+using Desktop.Skinning;
 using System;
 using System.Collections.Generic;
 
@@ -158,7 +159,7 @@ namespace Desktop
 
 			if (!OnCanQuit(reason))
 				return false;
-			
+
 			return true;
 		}
 		protected virtual bool OnCanQuit(CloseReason reason)
@@ -240,7 +241,7 @@ namespace Desktop
 					return true;
 			}
 			return false;
-			
+
 		}
 
 		public Mailbox GetMailbox()
@@ -284,6 +285,11 @@ namespace Desktop
 			{
 				return default(T);
 			}
+		}
+
+		public void ShowBanner(string text, SkinnedHighlight highlight)
+		{
+			Control.ShowBanner(text, highlight);
 		}
 	}
 }

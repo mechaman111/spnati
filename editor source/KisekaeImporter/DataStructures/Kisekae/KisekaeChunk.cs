@@ -155,10 +155,20 @@ namespace KisekaeImporter.DataStructures.Kisekae
 		/// Merges another chunk into this one
 		/// </summary>
 		/// <param name="chunk"></param>
-		public void MergeIn(KisekaeChunk chunk, bool applyEmpties)
+		public void MergeIn(KisekaeChunk chunk, bool applyEmpties, bool poseOnly)
 		{
 			//TODO: Asset merging is very flawed since there's no way to know what image/speech bubble the asset belongs to
-			Assets.AddRange(chunk.Assets);
+			for (int i = 0; i < chunk.Assets.Count; i++)
+			{
+				if (Assets.Count > i)
+				{
+					Assets[i] = chunk.Assets[i];
+				}
+				else
+				{
+					Assets.Add(chunk.Assets[i]);
+				}
+			}
 
 			KisekaeChunk copy = new KisekaeChunk(chunk);
 			foreach (var kvp in copy._components)
@@ -168,10 +178,7 @@ namespace KisekaeImporter.DataStructures.Kisekae
 
 				foreach (var subcode in component.GetSubCodes())
 				{
-					existing.ReplaceSubCode(subcode, applyEmpties);
-					if (this.ToString().EndsWith("_"))
-					{
-					}
+					existing.ReplaceSubCode(subcode, applyEmpties, poseOnly);
 				}
 			}
 		}

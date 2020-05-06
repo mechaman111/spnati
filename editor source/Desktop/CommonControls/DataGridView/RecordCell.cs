@@ -24,6 +24,23 @@ namespace Desktop.CommonControls
 			}
 		}
 
+		private Func<IRecord, bool> _filter;
+		public Func<IRecord, bool> RecordFilter
+		{
+			get { return _filter; }
+			set
+			{
+				if (_filter != value)
+				{
+					_filter = value;
+					if (OwnsEditingControl(RowIndex))
+					{
+						EditingControl.RecordFilter = value;
+					}
+				}
+			}
+		}
+
 		private bool _allowsNew;
 		public bool AllowsNew
 		{
@@ -57,6 +74,7 @@ namespace Desktop.CommonControls
 			if (copy != null)
 			{
 				copy.RecordType = RecordType;
+				copy.RecordFilter = RecordFilter;
 				copy.AllowsNew = AllowsNew;
 			}
 			return copy;
@@ -84,6 +102,7 @@ namespace Desktop.CommonControls
 			{
 				control.AllowCreate = AllowsNew;
 				control.RecordType = RecordType;
+				control.RecordFilter = RecordFilter;
 				control.RecordKey = initialFormattedValue?.ToString();
 				EditingControl = control;
 			}
