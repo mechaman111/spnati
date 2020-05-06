@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.6.1 at 5:26:00 AM on May 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.6.1 at 3:21:59 PM on May 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.6.1</version>
     <first>Nugi-chan</first>
@@ -336,6 +336,7 @@
                 <state img="#-happy.png">Of course I have a great hand! I'm in my element.</state>
                 <state img="#-calm.png">Don't you think I look cute in this outfit? And it's all staying on this round.</state>
                 <state img="#-calm.png">My game's still going well.</state>
+                <state img="#-calm.png">My cards are as perfect, just like me.</state>
             </case>
             <case stage="0" alsoPlaying="jasmine" alsoPlayingStage="0" priority="0">
                 <state img="#-devious.png">Those are some sexy ankles you have there, Jasmine-sama.</state>
@@ -359,6 +360,7 @@
             </case>
             <case stage="2">
                 <state img="#-happy.png">Oooh, this is a good hand.</state>
+                <state img="custom:#-awkward_flipped" oneShotId="63">&lt;i&gt;(Will they still think I'm cute if I totally crush them?)</state>
             </case>
             <case stage="2" alsoPlaying="chell" priority="0">
                 <state img="#-calm.png">Chell-sama, I played a strip game with the K-On! girls last week. They call it "Cake-on!", and I think you might like it!</state>
@@ -391,7 +393,8 @@
                 <state img="#-awkward.png">Normally I'm against the idea of winning back clothing, but right now I could make an exception for this game!</state>
                 <state img="#-mean.png">If I'm going down, I'm taking you all down with me!</state>
             </case>
-            <case stage="7" alsoPlaying="wiifitfemale" priority="0">
+            <case stage="7" priority="0">
+                <condition role="other" character="wiifitfemale" />
                 <state img="#-devious.png">I once played strip golf with a girl who started stripping after only two holes! Coincidentally, I was after &lt;i&gt;her&lt;/i&gt; two holes...</state>
             </case>
         </trigger>
@@ -513,6 +516,9 @@
             <case stage="0">
                 <state img="#-awkward.png">I guess I won't be able to make it the whole game without losing anything.</state>
                 <state img="#-sad.png">Couldn't you have dealt me anything better than these?</state>
+                <state img="#-loss.png" oneShotId="66">This game isn't programmed to make me lose, is it? Just asking.</state>
+                <state img="#-loss.png" oneShotId="67">I don't think I've ever been able to wear this outfit for a whole day without losing it in a strip game...</state>
+                <state img="#-awkward.png" oneShotId="68">&lt;i&gt;(Maybe they won't notice my bad cards if I lift my skirt when I curtsey.)&lt;/i&gt;</state>
             </case>
             <case stage="1">
                 <state img="#-awkward.png">Aww, this hand is awful.</state>
@@ -524,7 +530,7 @@
                 <state img="#-awkward.png">Anyone want to trade hands before looking at them?</state>
                 <state img="#-sad.png">I only have so many small items, you know.</state>
                 <state img="#-sad.png">I've as good as lost this one. How did you do, ~player~?</state>
-                <state img="#-annoyed.png" oneShotId="31" marker="nugi-chan_submit_query">What the fuck is a "Submit Query" card?</state>
+                <state img="#-sad.png" oneShotId="69" marker="nugi-chan_submit_query">My card images didn't load. How was I supposed to choose?</state>
             </case>
             <case stage="2" priority="0">
                 <test expr="~self.costume~" cmp="!=" value="nugi-chan_bikini" />
@@ -737,7 +743,8 @@
                 <test expr="~weekday~" value="Monday" />
                 <state img="#-calm.png">It's a Monday, and I always cosplay as a maid on Mondays!</state>
             </case>
-            <case stage="0" alsoPlaying="remilia" alsoPlayingStage="0-6" alsoPlayingSayingMarker="nugi1">
+            <case stage="0">
+                <condition role="other" character="remilia" stage="0-6" sayingMarker="nugi1" />
                 <test expr="~remilia.position~" value="left" />
                 <state img="#-calm.png" marker="nugi-chan_remilia_webmaster">My Webmaster knows I'm here, Remilia-sama.He knows more about stripping games than anyone!</state>
             </case>
@@ -1431,7 +1438,8 @@
             <case stage="2">
                 <state img="#-happy.png">Another layer bites the dust!</state>
                 <state img="#-calm.png">We'll keep doing this until only I'm left.</state>
-                <state img="#-mean.png">They call me "Nugi-chan, stripping game expert".</state>
+                <state img="#-mean.png" oneShotId="60">They call me "Nugi-chan, stripping game expert".</state>
+                <state img="#-calm.png">Naturally.</state>
             </case>
             <case stage="2" hasHand="high card" priority="0">
                 <state img="#-loss.png">Thank you for being terrible at poker.</state>
@@ -1605,6 +1613,7 @@
                 <state img="#-calm.png">I hope you don't mind me saying this, but ~clothing.ifPlural(those are|that's)~ the second nicest ~clothing~ I've seen today.</state>
                 <state img="#-interested.png">Good boy. If you want to see any more of me, you have to work for it.</state>
                 <state img="#-devious.png">Who doesn't love it when a man knows how to accessorize?</state>
+                <state img="#-calm.png" oneShotId="64">Good choice. ~clothing.ifPlural(Those ~clothing~ were|That ~clothing~ was)~ making you look fat anyways.</state>
             </case>
             <case stage="4-7">
                 <state img="#-small2.png">I guess that wasn't nothing.</state>
@@ -1695,6 +1704,7 @@
                 <state img="#-calm.png">If you need help at any time, please don't hesitate to ask.</state>
                 <state img="#-interested.png">Good things come to those who wait.</state>
                 <state img="#-loss.png" oneShotId="55">~clothing.ifPlural(Those are|That's a)~ pretty cute ~clothing~. Would you be interested in selling ~clothing.ifPlural(them|it)~? Let me get my purse.</state>
+                <state img="#-shocked.png" oneShotId="65">Shock. This is my complete and total shock.</state>
             </case>
             <case stage="1">
                 <state img="#-loss.png">Not too exciting.</state>
@@ -1706,10 +1716,11 @@
             <case stage="2">
                 <state img="#-loss.png">An accessory is fine too.</state>
                 <state img="#-calm.png">We don't mind if you want to be more ambitious.</state>
+                <state img="#-awkward.png" oneShotId="62">Imagine wearing ~clothing.ifPlural(that |)~ "~clothing~". It's not like I would ever do something like that...</state>
             </case>
             <case stage="2" priority="0">
                 <test expr="~self.costume~" value="default" />
-                <state img="#-small2.png">Maybe I should take off this tiny ribbon next.</state>
+                <state img="#-small2.png" oneShotId="61">Maybe I should take off this tiny ribbon next.</state>
             </case>
             <case stage="3">
                 <state img="#-sad.png">You looked so cute ~clothing.ifPlural(with those on|in that)~. I was hoping you were going to keep ~clothing.ifPlural(them|it)~ on while you were forfeiting.</state>
@@ -1862,11 +1873,13 @@
                 <test expr="~clothing~" value="shoes" />
                 <state img="#-calm.png">Think of that as your first step into a nuder world!</state>
             </case>
-            <case stage="0" id="87" oneShotId="71" targetStatus="decent">
+            <case stage="0-9" id="87" oneShotId="71">
+                <condition status="decent" role="target" />
                 <test expr="~clothing~" value="shoes" />
                 <state img="#-calm.png">You seem just a little shorter now, ~name~.</state>
             </case>
-            <case stage="1" id="79" oneShotId="69" targetStatus="decent">
+            <case stage="1-2" id="79" oneShotId="69">
+                <condition status="decent" role="target" />
                 <test expr="~clothing~" value="shoes" />
                 <state img="#-loss.png">I think we both knew we wouldn't make if through the whole game with our shoes on, right?</state>
             </case>
@@ -1991,7 +2004,8 @@
             <case stage="6-9" target="link" targetStage="2">
                 <state img="#-calm.png">I'm wet, you're taking off your boots, and this is taking forever. Am I trapped in this Water Temple I keep hearing about?</state>
             </case>
-            <case stage="0-9" targetStatus="decent">
+            <case stage="0-9">
+                <condition status="decent" role="target" />
                 <state img="#-happy.png">That's better, ~name~. Keep losing and show me the rest. ♡</state>
                 <state img="#-small2.png">I wouldn't say no to a little more.</state>
             </case>
@@ -2171,6 +2185,7 @@
             </case>
             <case stage="0">
                 <state img="#-calm.png">Thank you for showing us a little more, ~name~.</state>
+                <state img="#-calm.png">That might not be much, but we appreciate it.</state>
             </case>
             <case stage="1">
                 <state img="#-happy.png" oneShotId="42">If a queue forms for you after the game, know that I was here first!</state>
