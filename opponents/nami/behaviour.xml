@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.6.1 at 8:33:41  on mayo 04, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.6.1 at 1:57:56  on mayo 07, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.6.1</version>
     <first>Nami</first>
@@ -2072,6 +2072,11 @@
         </trigger>
 
         <trigger id="swap_cards">
+            <case stage="0" oneShotId="326" totalRounds="0" priority="999">
+                <condition role="self" notSaidMarker="hp_start" />
+                <test expr="~nami.diff(human)~" cmp="&gt;=" value="2" />
+                <state img="#-thinking.png" marker="hp_start">Mmmm...</state>
+            </case>
             <case stage="0-2">
                 <state img="#-smug.png">Give me... ~cards~. Yeah, that should work.</state>
                 <state img="#-calm.png">~Cards~ should do the trick.</state>
@@ -13284,55 +13289,68 @@
         </trigger>
 
         <trigger id="must_masturbate_first">
+            <case stage="6" priority="999">
+                <test expr="~self.costume~" value="nostalgia_nami" />
+                <state img="custom:#-starting" collectible="Straw Hat">I should've came to play wearing a sweater and a coat... Well, at least I didn't do something stupid like wear a swimsuit.</state>
+                <state img="custom:#-starting" collectible="Straw Hat">I can't believe I'm going forward with this instead of stealing the prize and running away... I've changed too much lately.</state>
+            </case>
             <case stage="6" oneShotId="234">
                 <condition role="self" saidMarker="manipulation7" notSaidMarker="manipulation7end" />
-                <state img="custom:#-starting" marker="manipulation7end">Yeah, I guess I deserve this after lying so much. I'll do what I have to do. Just hand me my Clima-Tact for a second.</state>
-                <state img="custom:#-starting" marker="manipulation7end">I figured that wouldn't work, but it was worth a shot. Can I get my Clima-Tact back for a moment? I want to do something.</state>
-                <state img="custom:#-starting" marker="manipulation7end">&lt;i&gt;Sigh&lt;/i&gt;... Okay. That's how far I'll get being honest. I'll pay the price of losing. Let me use my Clima-Tact for a second.</state>
+                <state img="custom:#-starting" marker="manipulation7end" collectible="Wanted Poster">Yeah, I guess I deserve this after lying so much. I'll do what I have to do. Just hand me my Clima-Tact for a second.</state>
+                <state img="custom:#-starting" marker="manipulation7end" collectible="Wanted Poster">I figured that wouldn't work, but it was worth a shot. Can I get my Clima-Tact back for a moment? I want to do something.</state>
+                <state img="custom:#-starting" marker="manipulation7end" collectible="Wanted Poster">&lt;i&gt;Sigh&lt;/i&gt;... Okay. That's how far I'll get being honest. I'll pay the price of losing. Let me use my Clima-Tact for a second.</state>
             </case>
             <case stage="6" oneShotId="235">
                 <condition role="self" saidMarker="seduction7" notSaidMarker="seduction7end" />
-                <state img="custom:#-starting" marker="seduction7end">&lt;i&gt;Sight&lt;/i&gt;... That was my final card. Well played, ~player~. I'll just do what I have to do. Let me just use my Clima-Tact.</state>
-                <state img="custom:#-starting" marker="seduction7end">So you didn't fall for that, ~player~. That means I'm out. Okay, I'll just follow the rules of the game. Let me use my Clima-Tact for a second.</state>
-                <state img="custom:#-starting" marker="seduction7end">Whatever. A-as if I'd like to do that, ~player~. I'll just follow the forfeit. Let me use my Clima-Tact for a second.</state>
+                <state img="custom:#-starting" marker="seduction7end" collectible="Wanted Poster">&lt;i&gt;Sight&lt;/i&gt;... That was my final card. Well played, ~player~. I'll just do what I have to do. Let me just use my Clima-Tact.</state>
+                <state img="custom:#-starting" marker="seduction7end" collectible="Wanted Poster">So you didn't fall for that, ~player~. That means I'm out. Okay, I'll just follow the rules of the game. Let me use my Clima-Tact for a second.</state>
+                <state img="custom:#-starting" marker="seduction7end" collectible="Wanted Poster">Whatever. A-as if I'd like to do that, ~player~. I'll just follow the forfeit. Let me use my Clima-Tact for a second.</state>
             </case>
             <case stage="6">
-                <state img="custom:#-starting">Great, I'm the first one out... &lt;i&gt;sigh&lt;/i&gt; Let me use my Clima-Tact for a second, I think I earned it.</state>
-                <state img="custom:#-starting">Why am I the first? If you don't mind, I'll use my Clima-Tact for something. Even if you mind, I don't care. Just let me have this.</state>
+                <state img="custom:#-starting" collectible="Wanted Poster">Great, I'm the first one out... &lt;i&gt;sigh&lt;/i&gt; Let me use my Clima-Tact for a second, I think I earned it.</state>
+                <state img="custom:#-starting" collectible="Wanted Poster">Why am I the first? If you don't mind, I'll use my Clima-Tact for something. Even if you mind, I don't care. Just let me have this.</state>
             </case>
         </trigger>
 
         <trigger id="must_masturbate">
-            <case stage="6" id="45" alsoPlaying="sayaka" alsoPlayingStage="0-7">
-                <state img="custom:#-starting">I may have lost, but I'll never surrender to you! And... it's not like I have anything to surrender for, anyway.</state>
+            <case stage="6" priority="999">
+                <test expr="~self.costume~" value="nostalgia_nami" />
+                <state img="custom:#-starting" collectible="Straw Hat">I should've came to play wearing a sweater and a coat... Well, at least I didn't do something stupid like wear a swimsuit.</state>
+                <state img="custom:#-starting" collectible="Straw Hat">I can't believe I'm going forward with this instead of stealing the prize and running away... I've changed too much lately.</state>
             </case>
-            <case stage="6" alsoPlaying="chun-li">
-                <state img="custom:#-starting">Well, I did say I would show you, Chun-Li.</state>
+            <case stage="6" id="45">
+                <condition role="other" character="sayaka" stage="0-7" />
+                <state img="custom:#-starting" collectible="Wanted Poster">I may have lost, but I'll never surrender to you! And... it's not like I have anything to surrender for, anyway.</state>
             </case>
-            <case stage="6" alsoPlaying="juri">
-                <state img="custom:#-starting">No! Do you still think that's what my Clima-Tact is for, Juri?</state>
+            <case stage="6">
+                <condition role="other" character="chun-li" />
+                <state img="custom:#-starting" collectible="Wanted Poster">Well, I did say I would show you, Chun-Li.</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="juri" />
+                <state img="custom:#-starting" collectible="Wanted Poster">No! Do you still think that's what my Clima-Tact is for, Juri?</state>
             </case>
             <case stage="6" oneShotId="62">
                 <condition role="self" saidMarker="manipulation7" notSaidMarker="manipulation7end" />
-                <state img="custom:#-starting" marker="manipulation7end">Yeah, I guess I deserve this after lying so much. I'll do what I have to do. Just hand me my Clima-Tact for a second.</state>
-                <state img="custom:#-starting" marker="manipulation7end">I figured that wouldn't work, but it was worth a shot. Can I get my Clima-Tact back for a moment? I want to do something.</state>
-                <state img="custom:#-starting" marker="manipulation7end">&lt;i&gt;Sigh&lt;/i&gt;... Okay. That's how far I'll get being honest. I'll pay the price of losing. Let me use my Clima-Tact for a second.</state>
+                <state img="custom:#-starting" marker="manipulation7end" collectible="Wanted Poster">Yeah, I guess I deserve this after lying so much. I'll do what I have to do. Just hand me my Clima-Tact for a second.</state>
+                <state img="custom:#-starting" marker="manipulation7end" collectible="Wanted Poster">I figured that wouldn't work, but it was worth a shot. Can I get my Clima-Tact back for a moment? I want to do something.</state>
+                <state img="custom:#-starting" marker="manipulation7end" collectible="Wanted Poster">&lt;i&gt;Sigh&lt;/i&gt;... Okay. That's how far I'll get being honest. I'll pay the price of losing. Let me use my Clima-Tact for a second.</state>
             </case>
             <case stage="6" oneShotId="10">
                 <condition role="self" saidMarker="seduction7" notSaidMarker="seduction7end" />
-                <state img="custom:#-starting" marker="seduction7end">&lt;i&gt;Sight&lt;/i&gt;... That was my final card. Well played, ~player~. I'll just do what I have to do. Let me just use my Clima-Tact.</state>
-                <state img="custom:#-starting" marker="seduction7end">So you didn't fall for that, ~player~. That means I'm out. Okay, I'll just follow the rules of the game. Let me use my Clima-Tact for a second.</state>
-                <state img="custom:#-starting" marker="seduction7end">Whatever. A-as if I'd like to do that, ~player~. I'll just follow the forfeit. Let me use my Clima-Tact for a second.</state>
+                <state img="custom:#-starting" marker="seduction7end" collectible="Wanted Poster">&lt;i&gt;Sight&lt;/i&gt;... That was my final card. Well played, ~player~. I'll just do what I have to do. Let me just use my Clima-Tact.</state>
+                <state img="custom:#-starting" marker="seduction7end" collectible="Wanted Poster">So you didn't fall for that, ~player~. That means I'm out. Okay, I'll just follow the rules of the game. Let me use my Clima-Tact for a second.</state>
+                <state img="custom:#-starting" marker="seduction7end" collectible="Wanted Poster">Whatever. A-as if I'd like to do that, ~player~. I'll just follow the forfeit. Let me use my Clima-Tact for a second.</state>
             </case>
             <case stage="6">
                 <condition role="self" saidMarker="last_round" />
-                <state img="custom:#-starting">Alright, I lost. After I got so far. You must feel great, ~player~. Well, I just have to do the thing now. Let me get my Clima-Tact...</state>
+                <state img="custom:#-starting" collectible="Wanted Poster">Alright, I lost. After I got so far. You must feel great, ~player~. Well, I just have to do the thing now. Let me get my Clima-Tact...</state>
             </case>
             <case stage="6" id="12">
-                <state img="custom:#-starting">Okay... If I have to do this, can I have my Clima-Tact back for a second? I want to use it. And no, it's not for that, you perverts!</state>
-                <state img="custom:#-starting">&lt;i&gt;Sigh&lt;/i&gt;... Hand me my Clima-Tact. I have something in mind. I don't have to explain it, a lot of people here do weird stuff for no reason.</state>
-                <state img="custom:#-starting">Can I have my Clima-Tact for a second? There's something I want to do. You want me to do this right, huh? So let me have this.</state>
-                <state img="custom:#-starting">Pass me my Clima-Tact. I want to use it for one thing. If you have a problem with this, complain to the people that made this vile game.</state>
+                <state img="custom:#-starting" collectible="Wanted Poster">Okay... If I have to do this, can I have my Clima-Tact back for a second? I want to use it. And no, it's not for that, you perverts!</state>
+                <state img="custom:#-starting" collectible="Wanted Poster">&lt;i&gt;Sigh&lt;/i&gt;... Hand me my Clima-Tact. I have something in mind. I don't have to explain it, a lot of people here do weird stuff for no reason.</state>
+                <state img="custom:#-starting" collectible="Wanted Poster">Can I have my Clima-Tact for a second? There's something I want to do. You want me to do this right, huh? So let me have this.</state>
+                <state img="custom:#-starting" collectible="Wanted Poster">Pass me my Clima-Tact. I want to use it for one thing. If you have a problem with this, complain to the people that made this vile game.</state>
             </case>
         </trigger>
 
@@ -13546,7 +13564,8 @@
         </trigger>
 
         <trigger id="game_over_victory">
-            <case stage="0-6" saidMarker="target1end">
+            <case stage="0-6">
+                <condition role="self" saidMarker="target1end" />
                 <state img="#-smiling.png">I win! Give me that money. ~Player~, I'm still sorry about what I did to you, so I'll give you a part of the prize. No hard feelings, okay?</state>
                 <state img="#-smiling.png">Where's my money? Alright! ~Player~, I'm sorry again for using you. I'll give you a part of the prize, and I hope you can forgive me.</state>
             </case>
@@ -13572,30 +13591,43 @@
         </trigger>
 
         <trigger id="game_over_defeat">
+            <case stage="8" priority="999">
+                <condition role="self" saidMarker="hp_start" />
+                <condition role="target" character="human" />
+                <state img="#-smiling.png" collectible="Happiness Punch!">I can't believe you beat us all considering you started the game wearing only that! I'm impressed, ~player~.</state>
+                <state img="#-happy.png" collectible="Happiness Punch!">Wow, you're a true winner, ~player~! You weren't even wearing that much, yet you still won!</state>
+            </case>
+            <case stage="8" priority="600">
+                <condition role="target" character="human" />
+                <test expr="~human.gender~" value="female" />
+                <state img="#-smug.png" collectible="Icecream">Congratulations, ~player~! I'm happy at least a girl won the game. But next time you won't be so lucky!</state>
+                <state img="#-smiling.png" collectible="Icecream">Congratulations, ~player~! Sincerely, from one girl to another.</state>
+                <state img="#-smiling.png" collectible="Icecream">You just came here like nothing and kicked our ass, ~player~! But next time it'll be me who wins!</state>
+            </case>
             <case stage="8" id="27" priority="500">
                 <condition count="1" filter="chun-li" />
                 <condition role="self" timeInStage="5-" />
-                <state img="#-stealing.png" marker="stealing" collectible="Wanted Poster">I'm just taking all your stuff. We're friends, Chun-Li! That's why I made an exception for you. Take care!</state>
+                <state img="#-stealing.png" marker="stealing">I'm just taking all your stuff. We're friends, Chun-Li! That's why I made an exception for you. Take care!</state>
             </case>
             <case stage="8" id="15" priority="500">
                 <condition role="self" timeInStage="5-" />
-                <state img="#-stealing.png" marker="stealing" collectible="Wanted Poster">I have good news and bad news. The good is that I won't steal the prize, the bad is that I'm taking your stuff instead. But I left your underwear. Oh, shoot! I forgot to get dressed first.</state>
-                <state img="#-stealing.png" marker="stealing" collectible="Wanted Poster">Bye, everyone! Nice to meet you all! Oh, this?  I'm just taking your valuables. Since I lost, I don't want to leave empty-handed. But I like you, so I'm leaving your underwear. Damn, I forgot my own clothes!</state>
-                <state img="#-stealing.png" marker="stealing" collectible="Wanted Poster">You remember when I said you didn't have to worry about me being a pirate? I guess I exaggerated, cause I'm taking your stuff. Minus your underwear, of course. But I feel like I'm forgetting something...</state>
+                <state img="#-stealing.png" marker="stealing">I have good news and bad news. The good is that I won't steal the prize, the bad is that I'm taking your stuff instead. But I left your underwear. Oh, shoot! I forgot to get dressed first.</state>
+                <state img="#-stealing.png" marker="stealing">Bye, everyone! Nice to meet you all! Oh, this?  I'm just taking your valuables. Since I lost, I don't want to leave empty-handed. But I like you, so I'm leaving your underwear. Damn, I forgot my own clothes!</state>
+                <state img="#-stealing.png" marker="stealing">You remember when I said you didn't have to worry about me being a pirate? I guess I exaggerated, cause I'm taking your stuff. Minus your underwear, of course. But I feel like I'm forgetting something...</state>
             </case>
             <case stage="8">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="target1" />
-                <state img="#-seductive.png" collectible="Wanted Poster">Hey, you won, ~player~! Didn't you have a good time? You don't even care about the prize, don't you?</state>
-                <state img="#-seductive.png" collectible="Wanted Poster">Congratulations, ~player~. Consider what you saw today your reward for winning this game. (The only one you'll have...)</state>
+                <state img="#-seductive.png">Hey, you won, ~player~! Didn't you have a good time? You don't even care about the prize, don't you?</state>
+                <state img="#-seductive.png">Congratulations, ~player~. Consider what you saw today your reward for winning this game. (The only one you'll have...)</state>
             </case>
             <case stage="8">
                 <condition role="target" character="mae" />
-                <state img="#-smiling.png" collectible="Wanted Poster">Fine, a deal is a deal, Mae. Let me grab my clothes and I'll tell you what you want to know.</state>
+                <state img="#-smiling.png">Fine, a deal is a deal, Mae. Let me grab my clothes and I'll tell you what you want to know.</state>
             </case>
             <case stage="8">
                 <condition role="target" character="sayaka" />
-                <state img="#-shocked.png" collectible="Wanted Poster">Uh... Time to get out of here!</state>
+                <state img="#-shocked.png">Uh... Time to get out of here!</state>
             </case>
             <case stage="8">
                 <condition status="lost_all" role="target" />
@@ -13607,9 +13639,9 @@
                 <state img="#-greedy.png">Congratulations, ~name~. I still finished second, so that's enough reason to try again. That prize will be mine!</state>
             </case>
             <case stage="8">
-                <state img="#-smiling.png" collectible="Wanted Poster">Congratulations, ~name~! Well played. (Time for me to steal that prize and get out of here!)</state>
-                <state img="#-greedy.png" collectible="Wanted Poster">Well done, ~name~. This was all part of my plan... losing so you could win. No need to say thanks. I'm a pirate, if you want to thank me, you'll have to do it with valuables.</state>
-                <state img="#-smiling.png" collectible="Wanted Poster">This was quite the adventure! But now it's time to return to my own adventure. Bye bye, everyone! (There's the prize! Showtime...)</state>
+                <state img="#-smiling.png">Congratulations, ~name~! Well played. (Time for me to steal that prize and get out of here!)</state>
+                <state img="#-greedy.png">Well done, ~name~. This was all part of my plan... losing so you could win. No need to say thanks. I'm a pirate, if you want to thank me, you'll have to do it with valuables.</state>
+                <state img="#-smiling.png">This was quite the adventure! But now it's time to return to my own adventure. Bye bye, everyone! (There's the prize! Showtime...)</state>
             </case>
         </trigger>
 
