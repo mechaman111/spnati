@@ -44,6 +44,7 @@ namespace SPNATI_Character_Editor
 			chkPreviewBubble.Checked = Config.GetBoolean(Settings.ShowPreviewText);
 			chkPreviewFormatting.Checked = !Config.GetBoolean(Settings.DisablePreviewFormatting);
 			valFranchise.Value = Config.MaxFranchisePartners;
+			chkAutoFill.Checked = Config.AutoPopulateStageImages;
 
 			recAutoOpen.RecordType = typeof(Character);
 			recAutoOpen.RecordFilter = CharacterDatabase.FilterHuman;
@@ -159,6 +160,7 @@ namespace SPNATI_Character_Editor
 			Config.EnableDashboardValidation = chkChecklistValidation.Checked;
 			Config.Set(Settings.AutoOpenCharacter, recAutoOpen.RecordKey);
 			Config.MaxFranchisePartners = (int)valFranchise.Value;
+			Config.AutoPopulateStageImages = chkAutoFill.Checked;
 
 			HashSet<string> pauses = new HashSet<string>();
 			foreach (string item in lstPauses.CheckedItems)

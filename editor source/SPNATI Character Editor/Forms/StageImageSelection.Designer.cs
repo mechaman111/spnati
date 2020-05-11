@@ -70,9 +70,10 @@
 			// 
 			// skinnedPanel1
 			// 
+			this.skinnedPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.skinnedPanel1.Controls.Add(this.cmdCancel);
 			this.skinnedPanel1.Controls.Add(this.cmdOK);
-			this.skinnedPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.skinnedPanel1.Location = new System.Drawing.Point(0, 529);
 			this.skinnedPanel1.Name = "skinnedPanel1";
 			this.skinnedPanel1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryDark;
@@ -82,6 +83,9 @@
 			// 
 			// pnlImages
 			// 
+			this.pnlImages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.pnlImages.AutoScroll = true;
 			this.pnlImages.Controls.Add(this.gridImages);
 			this.pnlImages.Location = new System.Drawing.Point(1, 27);
@@ -96,7 +100,6 @@
 			// 
 			this.gridImages.AutoSize = true;
 			this.gridImages.ColumnHeaderHeight = 72;
-			this.gridImages.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gridImages.Location = new System.Drawing.Point(0, 0);
 			this.gridImages.Name = "gridImages";
 			this.gridImages.RowHeaderWidth = 110;

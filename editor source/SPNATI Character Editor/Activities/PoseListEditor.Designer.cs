@@ -63,6 +63,7 @@
 			this.chkRequired = new Desktop.Skinning.SkinnedCheckBox();
 			this.cmdCopyCrop = new Desktop.Skinning.SkinnedButton();
 			this.cmdFolder = new Desktop.Skinning.SkinnedButton();
+			this.cmdToMatrix = new Desktop.Skinning.SkinnedButton();
 			((System.ComponentModel.ISupportInitialize)(this.gridPoses)).BeginInit();
 			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -166,6 +167,7 @@
             this.ColImage,
             this.ColImport});
 			this.gridPoses.ContextMenuStrip = this.contextMenu;
+			this.gridPoses.Data = null;
 			dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
 			dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -404,10 +406,25 @@
 			this.cmdFolder.UseVisualStyleBackColor = true;
 			this.cmdFolder.Click += new System.EventHandler(this.cmdFolder_Click);
 			// 
+			// cmdToMatrix
+			// 
+			this.cmdToMatrix.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdToMatrix.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdToMatrix.Flat = true;
+			this.cmdToMatrix.ForeColor = System.Drawing.Color.Blue;
+			this.cmdToMatrix.Location = new System.Drawing.Point(237, 32);
+			this.cmdToMatrix.Name = "cmdToMatrix";
+			this.cmdToMatrix.Size = new System.Drawing.Size(113, 23);
+			this.cmdToMatrix.TabIndex = 38;
+			this.cmdToMatrix.Text = "Add to Matrix";
+			this.cmdToMatrix.UseVisualStyleBackColor = true;
+			this.cmdToMatrix.Click += new System.EventHandler(this.cmdToMatrix_Click);
+			// 
 			// PoseListEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.cmdToMatrix);
 			this.Controls.Add(this.cmdFolder);
 			this.Controls.Add(this.cmdCopyCrop);
 			this.Controls.Add(this.chkRequired);
@@ -458,5 +475,6 @@
 		private System.Windows.Forms.DataGridViewImageColumn ColImage;
 		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColImport;
 		private Desktop.Skinning.SkinnedButton cmdFolder;
+		private Desktop.Skinning.SkinnedButton cmdToMatrix;
 	}
 }
