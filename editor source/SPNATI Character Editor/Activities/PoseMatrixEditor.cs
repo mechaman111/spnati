@@ -155,14 +155,11 @@ namespace SPNATI_Character_Editor.Activities
 					PoseStage row = new PoseStage(stage);
 
 					//make a sample column
-					if (stage == 0)
+					PoseEntry calm = new PoseEntry()
 					{
-						PoseEntry calm = new PoseEntry()
-						{
-							Key = "calm"
-						};
-						row.Poses.Add(calm);
-					}
+						Key = "calm"
+					};
+					row.Poses.Add(calm);
 
 					_sheet.Stages.Add(row);
 				}
