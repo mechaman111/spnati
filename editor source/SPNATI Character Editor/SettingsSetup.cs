@@ -45,6 +45,7 @@ namespace SPNATI_Character_Editor
 			chkPreviewFormatting.Checked = !Config.GetBoolean(Settings.DisablePreviewFormatting);
 			valFranchise.Value = Config.MaxFranchisePartners;
 			chkAutoFill.Checked = Config.AutoPopulateStageImages;
+			chkWarnIncomplete.Checked = Config.WarnAboutIncompleteStatus;
 
 			recAutoOpen.RecordType = typeof(Character);
 			recAutoOpen.RecordFilter = CharacterDatabase.FilterHuman;
@@ -61,18 +62,19 @@ namespace SPNATI_Character_Editor
 			}
 			lstPauses.Sorted = true;
 
-			HashSet<OpponentStatus> statusFilters = Config.StatusFilters;
-			foreach (OpponentStatus status in Enum.GetValues(typeof(OpponentStatus)))
+			HashSet<string> statusFilters = Config.StatusFilters;
+			foreach (string status in new string[] {
+				OpponentStatus.Testing,
+				OpponentStatus.Offline,
+				OpponentStatus.Incomplete,
+				OpponentStatus.Duplicate,
+				OpponentStatus.Event,
+			})
 			{
-				if (status == OpponentStatus.Unlisted || status == OpponentStatus.Main)
-				{
-					continue;
-				}
-
 				chkStatuses.Items.Add(status, statusFilters.Contains(status));
 			}
 		}
-		
+
 		private void cmdBrowse_Click(object sender, EventArgs e)
 		{
 			if (!string.IsNullOrEmpty(txtApplicationDirectory.Text))
@@ -161,16 +163,17 @@ namespace SPNATI_Character_Editor
 			Config.Set(Settings.AutoOpenCharacter, recAutoOpen.RecordKey);
 			Config.MaxFranchisePartners = (int)valFranchise.Value;
 			Config.AutoPopulateStageImages = chkAutoFill.Checked;
+			Config.WarnAboutIncompleteStatus = chkWarnIncomplete.Checked;
 
 			HashSet<string> pauses = new HashSet<string>();
 			foreach (string item in lstPauses.CheckedItems)
 			{
-				pauses.Add(item);	
+				pauses.Add(item);
 			}
 			Config.AutoPauseDirectives = pauses;
 
-			HashSet<OpponentStatus> statusFilters = new HashSet<OpponentStatus>();
-			foreach (OpponentStatus status in chkStatuses.CheckedItems)
+			HashSet<string> statusFilters = new HashSet<string>();
+			foreach (string status in chkStatuses.CheckedItems)
 			{
 				statusFilters.Add(status);
 			}

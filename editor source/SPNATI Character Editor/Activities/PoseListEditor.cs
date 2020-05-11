@@ -1163,10 +1163,16 @@ namespace SPNATI_Character_Editor.Activities
 			AddSheetForm form = new AddSheetForm(name);
 			if (form.ShowDialog() == DialogResult.OK)
 			{
+				MakePoseList();
+				if (_poseList == null || _poseList.Poses.Count == 0)
+				{
+					MessageBox.Show("Pose list is empty.");
+					return;
+				}
+
 				PoseMatrix matrix = CharacterDatabase.GetPoseMatrix(_character);
 				bool isEmpty = matrix.IsEmpty();
 				PoseSheet sheet = matrix.AddSheet(form.SheetName);
-				MakePoseList();
 				if (isEmpty && matrix.Sheets.Count > 1)
 				{
 					matrix.RemoveSheet(matrix.Sheets[0]);

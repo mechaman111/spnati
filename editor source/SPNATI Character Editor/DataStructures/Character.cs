@@ -928,7 +928,7 @@ namespace SPNATI_Character_Editor
 		public WardrobeRestrictions GetWardrobeRestrictions()
 		{
 			//For established characters, lock down changing the layer amount and order since it's hugely disruptive
-			OpponentStatus status = Listing.Instance.GetCharacterStatus(FolderName);
+			string status = Listing.Instance.GetCharacterStatus(FolderName);
 			if (status != OpponentStatus.Testing && status != OpponentStatus.Unlisted && status != OpponentStatus.Incomplete)
 			{
 				return WardrobeRestrictions.LayerCount;

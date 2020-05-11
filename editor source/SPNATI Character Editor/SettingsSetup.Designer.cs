@@ -99,6 +99,7 @@
 			this.chkWorkflowTracer = new Desktop.Skinning.SkinnedCheckBox();
 			this.stripSections = new Desktop.Skinning.SkinnedTabStrip();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
+			this.chkWarnIncomplete = new Desktop.Skinning.SkinnedCheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valFrequency)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valLifetime)).BeginInit();
@@ -452,6 +453,7 @@
 			// tabGeneral
 			// 
 			this.tabGeneral.BackColor = System.Drawing.Color.White;
+			this.tabGeneral.Controls.Add(this.chkWarnIncomplete);
 			this.tabGeneral.Controls.Add(this.label7);
 			this.tabGeneral.Controls.Add(this.chkStatuses);
 			this.tabGeneral.Controls.Add(this.skinnedLabel5);
@@ -494,7 +496,7 @@
 			this.chkStatuses.FormattingEnabled = true;
 			this.chkStatuses.Location = new System.Drawing.Point(133, 112);
 			this.chkStatuses.Name = "chkStatuses";
-			this.chkStatuses.Size = new System.Drawing.Size(276, 109);
+			this.chkStatuses.Size = new System.Drawing.Size(276, 79);
 			this.chkStatuses.TabIndex = 12;
 			// 
 			// skinnedLabel5
@@ -1079,6 +1081,17 @@
 			this.skinnedPanel1.TabIndex = 14;
 			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
 			// 
+			// chkWarnIncomplete
+			// 
+			this.chkWarnIncomplete.AutoSize = true;
+			this.chkWarnIncomplete.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkWarnIncomplete.Location = new System.Drawing.Point(9, 197);
+			this.chkWarnIncomplete.Name = "chkWarnIncomplete";
+			this.chkWarnIncomplete.Size = new System.Drawing.Size(189, 17);
+			this.chkWarnIncomplete.TabIndex = 14;
+			this.chkWarnIncomplete.Text = "Warn about incomplete characters";
+			this.chkWarnIncomplete.UseVisualStyleBackColor = true;
+			// 
 			// SettingsSetup
 			// 
 			this.AcceptButton = this.cmdOk;
@@ -1201,5 +1214,6 @@
 		private Desktop.Skinning.SkinnedNumericUpDown valFranchise;
 		private Desktop.Skinning.SkinnedLabel skinnedLabel6;
 		private Desktop.Skinning.SkinnedCheckBox chkAutoFill;
+		private Desktop.Skinning.SkinnedCheckBox chkWarnIncomplete;
 	}
 }

@@ -510,14 +510,14 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private static HashSet<OpponentStatus> _statusFilters;
-		public static HashSet<OpponentStatus> StatusFilters
+		private static HashSet<string> _statusFilters;
+		public static HashSet<string> StatusFilters
 		{
 			get
 			{
 				if (_statusFilters == null)
 				{
-					HashSet<OpponentStatus> set = new HashSet<OpponentStatus>();
+					HashSet<string> set = new HashSet<string>();
 					if (!HasValue("statusfilter"))
 					{
 						set.Add(OpponentStatus.Incomplete);
@@ -531,8 +531,25 @@ namespace SPNATI_Character_Editor
 						int value;
 						if (int.TryParse(item, out value))
 						{
-							OpponentStatus status = (OpponentStatus)value;
-							set.Add(status);
+							switch (value)
+							{
+								case 2:
+									set.Add("offline");
+									break;
+								case 3:
+									set.Add("incomplete");
+									break;
+								case 4:
+									set.Add("duplicate");
+									break;
+								case 5:
+									set.Add("event");
+									break;
+							}
+						}
+						else
+						{
+							set.Add(item);
 						}
 					}
 					_statusFilters = set;
@@ -542,7 +559,7 @@ namespace SPNATI_Character_Editor
 			set
 			{
 				_statusFilters = value;
-				string items = string.Join(",", value.Select(status => (int)status));
+				string items = string.Join(",", value);
 				Set("statusfilter", items);
 			}
 		}
@@ -584,6 +601,15 @@ namespace SPNATI_Character_Editor
 		{
 			get { return GetString("lastending"); }
 			set { Set("lastending", value); }
+		}
+
+		/// <summary>
+		/// Whether to be annoying about viewing incomplete characters
+		/// </summary>
+		public static bool WarnAboutIncompleteStatus
+		{
+			get { return !GetBoolean("suppressincomplete"); }
+			set { Set("suppressincomplete", !value); }
 		}
 
 		/// <summary>
@@ -632,6 +658,12 @@ namespace SPNATI_Character_Editor
 				return value;
 			}
 			set { Set("franchisemax", value); }
+		}
+
+		public static string LastFranchise
+		{
+			get { return GetString("lastfranchise"); }
+			set { Set("lastfranchise", value); }
 		}
 		#endregion
 

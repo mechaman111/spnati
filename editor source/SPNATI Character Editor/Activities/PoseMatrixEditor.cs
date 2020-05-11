@@ -170,6 +170,10 @@ namespace SPNATI_Character_Editor.Activities
 
 			foreach (PoseStage stage in _sheet.Stages)
 			{
+				if (stage.Poses.Count == 0)
+				{
+					continue;
+				}
 				//create new columns as necessary
 				foreach (PoseEntry pose in stage.Poses)
 				{
