@@ -1495,7 +1495,10 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
             }
 
             var counts = opponent.collectibles.reduce(function (acc, collectible) {
-                if (collectible.status && !includedOpponentStatuses[collectible.status]) {
+                if (
+                    (collectible.status && !includedOpponentStatuses[collectible.status]) ||
+                    (collectible.hidden && !collectible.isUnlocked())
+                ) {
                     return acc;
                 }
 
