@@ -171,6 +171,12 @@ namespace SPNATI_Character_Editor.Activities
 			TargetReport report = new TargetReport(this._character);
 			tabTargets.Controls.Add(report);
 			report.Dock = DockStyle.Fill;
+			BackgroundGuide bgGuide = new BackgroundGuide();
+			TabPage page = new TabPage("BGs");
+			page.Controls.Add(bgGuide);
+			bgGuide.Dock = DockStyle.Fill;
+			tabsReference.TabPages.Add(page);
+
 			SkinManager.UpdateSkin(report, SkinManager.Instance.CurrentSkin);
 		}
 

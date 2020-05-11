@@ -195,7 +195,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		public void SetImage(PoseMapping pose, int stage)
 		{
-			if (_currentPose == pose && _currentStage == stage)
+			if (_currentPose == pose && _currentStage == stage && _imageReference != null)
 			{
 				return;
 			}

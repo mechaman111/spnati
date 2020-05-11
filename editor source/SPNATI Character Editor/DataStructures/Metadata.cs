@@ -228,9 +228,9 @@ namespace SPNATI_Character_Editor
 
 	public class EpilogueMeta
 	{
-		[DefaultValue(OpponentStatus.Main)]
+		[DefaultValue("")]
 		[XmlAttribute("status")]
-		public OpponentStatus Status;
+		public string Status;
 
 		[XmlAttribute("gender")]
 		public string Gender;

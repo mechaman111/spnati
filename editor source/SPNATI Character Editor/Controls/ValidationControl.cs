@@ -118,8 +118,8 @@ namespace SPNATI_Character_Editor.Controls
 					foreach (Character c in CharacterDatabase.Characters)
 					{
 						if (c.FolderName == "human") { continue; }
-						OpponentStatus status = Listing.Instance.GetCharacterStatus(c.FolderName);
-						if (status == OpponentStatus.Incomplete || status == OpponentStatus.Offline)
+						string status = Listing.Instance.GetCharacterStatus(c.FolderName);
+						if (status == OpponentStatus.Incomplete || status == OpponentStatus.Offline || status == OpponentStatus.Duplicate)
 							continue; //don't validate characters that aren't in the main opponents folder, since they're likely to have errors but aren't being actively worked on
 						progress.Report(c);
 						List<ValidationError> warnings;

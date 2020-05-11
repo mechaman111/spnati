@@ -15,7 +15,7 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2", "v3.3", "v3.3.1", "v3.4", "v3.4.1", "v3.5", "v3.6",
 			"v3.7", "v3.7.1", "v3.8", "v3.8.1", "v3.8.2", "v4.0b", "v4.0.1b", "v4.0.2b", "v4.0.3b", "v4.0", "v4.1", "v4.2", "v4.2.1", "v4.3", "v4.4b", "v5.0b", "v5.0",
-			"v5.1", "v5.1.1", "v5.2", "v5.2.1", "v5.2.2", "v5.2.3", "v5.2.4", "v5.2.5", "v5.2.6", "v5.2.7", "v5.2.8", "v5.3", "v5.4", "v5.5", "v5.6", "v5.6.1" };
+			"v5.1", "v5.1.1", "v5.2", "v5.2.1", "v5.2.2", "v5.2.3", "v5.2.4", "v5.2.5", "v5.2.6", "v5.2.7", "v5.2.8", "v5.3", "v5.4", "v5.5", "v5.6", "v5.6.1", "v5.7" };
 
 		/// <summary>
 		/// Current Version
@@ -485,6 +485,12 @@ namespace SPNATI_Character_Editor
 			set { Set("import", value); }
 		}
 
+		public static bool AutoPopulateStageImages
+		{
+			get { return GetBoolean("autopopulateimages"); }
+			set { Set("autopopulateimages", value); }
+		}
+
 		public static HashSet<string> AutoPauseDirectives
 		{
 			get
@@ -504,14 +510,14 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private static HashSet<OpponentStatus> _statusFilters;
-		public static HashSet<OpponentStatus> StatusFilters
+		private static HashSet<string> _statusFilters;
+		public static HashSet<string> StatusFilters
 		{
 			get
 			{
 				if (_statusFilters == null)
 				{
-					HashSet<OpponentStatus> set = new HashSet<OpponentStatus>();
+					HashSet<string> set = new HashSet<string>();
 					if (!HasValue("statusfilter"))
 					{
 						set.Add(OpponentStatus.Incomplete);
@@ -525,8 +531,25 @@ namespace SPNATI_Character_Editor
 						int value;
 						if (int.TryParse(item, out value))
 						{
-							OpponentStatus status = (OpponentStatus)value;
-							set.Add(status);
+							switch (value)
+							{
+								case 2:
+									set.Add("offline");
+									break;
+								case 3:
+									set.Add("incomplete");
+									break;
+								case 4:
+									set.Add("duplicate");
+									break;
+								case 5:
+									set.Add("event");
+									break;
+							}
+						}
+						else
+						{
+							set.Add(item);
 						}
 					}
 					_statusFilters = set;
@@ -536,7 +559,7 @@ namespace SPNATI_Character_Editor
 			set
 			{
 				_statusFilters = value;
-				string items = string.Join(",", value.Select(status => (int)status));
+				string items = string.Join(",", value);
 				Set("statusfilter", items);
 			}
 		}
@@ -578,6 +601,15 @@ namespace SPNATI_Character_Editor
 		{
 			get { return GetString("lastending"); }
 			set { Set("lastending", value); }
+		}
+
+		/// <summary>
+		/// Whether to be annoying about viewing incomplete characters
+		/// </summary>
+		public static bool WarnAboutIncompleteStatus
+		{
+			get { return !GetBoolean("suppressincomplete"); }
+			set { Set("suppressincomplete", !value); }
 		}
 
 		/// <summary>
@@ -626,6 +658,12 @@ namespace SPNATI_Character_Editor
 				return value;
 			}
 			set { Set("franchisemax", value); }
+		}
+
+		public static string LastFranchise
+		{
+			get { return GetString("lastfranchise"); }
+			set { Set("lastfranchise", value); }
 		}
 		#endregion
 

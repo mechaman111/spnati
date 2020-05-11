@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Xml.Serialization;
 
 namespace KisekaeImporter.ImageImport
 {
@@ -19,11 +21,16 @@ namespace KisekaeImporter.ImageImport
 		public List<ImageMetadata> Poses = new List<ImageMetadata>();
 	}
 
+	[Serializable]
 	public struct Rect
 	{
+		[XmlAttribute("top")]
 		public int Top;
+		[XmlAttribute("right")]
 		public int Right;
+		[XmlAttribute("bottom")]
 		public int Bottom;
+		[XmlAttribute("left")]
 		public int Left;
 
 		public Rect(int l, int t, int r, int b)

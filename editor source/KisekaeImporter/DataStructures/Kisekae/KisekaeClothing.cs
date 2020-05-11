@@ -40,9 +40,9 @@ namespace KisekaeImporter
 			set { SetSubCode("ic", value); }
 		}
 		[KisekaeSubCode("jc")]
-		public KisekaeClothes Pantyhose
+		public KisekaePantyhose Pantyhose
 		{
-			get { return GetSubCode<KisekaeClothes>("jc"); }
+			get { return GetSubCode<KisekaePantyhose>("jc"); }
 			set { SetSubCode("jc", value); }
 		}
 		[KisekaeSubCode("ie")]

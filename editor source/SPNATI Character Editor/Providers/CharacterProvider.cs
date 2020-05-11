@@ -92,7 +92,7 @@ namespace SPNATI_Character_Editor.Providers
 
 		public bool FilterFromUI(IRecord record)
 		{
-			OpponentStatus status = Listing.Instance.GetCharacterStatus(record.Key);
+			string status = Listing.Instance.GetCharacterStatus(record.Key);
 			return Config.StatusFilters.Contains(status);
 		}
 
@@ -113,10 +113,10 @@ namespace SPNATI_Character_Editor.Providers
 
 		public ListViewItem FormatItem(IRecord record)
 		{
-			OpponentStatus status = Listing.Instance.GetCharacterStatus(record.Key);
+			string status = Listing.Instance.GetCharacterStatus(record.Key) ?? "";
 			Character c = record as Character;
 			string lastUpdate = GetTimeSince(c.LastUpdate, DateTime.Now);
-			return new ListViewItem(new string[] { record.Name, record.Key, lastUpdate, status == OpponentStatus.Testing || status == OpponentStatus.Main ? "" : status.ToString() });
+			return new ListViewItem(new string[] { record.Name, record.Key, lastUpdate, status == OpponentStatus.Testing || status == OpponentStatus.Main ? "" : status });
 		}
 
 		public void SetContext(object context)

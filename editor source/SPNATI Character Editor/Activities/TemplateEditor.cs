@@ -1,6 +1,7 @@
 ﻿using Desktop;
 using KisekaeImporter;
 using KisekaeImporter.ImageImport;
+using SPNATI_Character_Editor.DataStructures;
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
@@ -333,6 +334,29 @@ namespace SPNATI_Character_Editor.Activities
 					row.Cells[3].Value = crop.Right;
 					row.Cells[4].Value = crop.Bottom;
 				}
+			}
+		}
+
+		private void cmdGenerateMatrix_Click(object sender, EventArgs e)
+		{
+			PoseTemplate template = CreateTemplate(false);
+			if (template == null)
+			{
+				return;
+			}
+			AddSheetForm form = new AddSheetForm("Main");
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				PoseMatrix matrix = CharacterDatabase.GetPoseMatrix(_character, true);
+				bool isEmpty = matrix.IsEmpty();
+				PoseSheet sheet = matrix.AddSheet(form.SheetName);
+				if (isEmpty && matrix.Sheets.Count > 1)
+				{
+					matrix.RemoveSheet(matrix.Sheets[0]);
+					sheet.Name = form.SheetName;
+				}
+				sheet.FillFromTemplate(_character.Character, template);
+				Shell.Instance.Launch(_character as IRecord, typeof(PoseMatrixEditor), sheet);
 			}
 		}
 	}

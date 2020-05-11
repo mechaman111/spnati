@@ -37,9 +37,15 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 					Tuple<string, List<Character>> min = null;
 					cboGroups.Items.Clear();
 					_allGroups.Clear();
+					int targetIndex = -1;
+					string targetFranchise = Config.LastFranchise;
 					foreach (Tuple<string, List<Character>> group in franchiseGroups)
 					{
 						_allGroups.Add(group);
+						if (!string.IsNullOrEmpty(targetFranchise) && targetFranchise == group.Item1)
+						{
+							targetIndex = _allGroups.Count - 1;
+						}
 						if (min == null || min.Item2.Count > group.Item2.Count)
 						{
 							min = group;
@@ -50,7 +56,14 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 							cboGroups.Items.Add(t);
 						}
 					}
-					cboGroups.SelectedIndex = _allGroups.IndexOf(min);
+					if (targetIndex >= 0)
+					{
+						cboGroups.SelectedIndex = targetIndex;
+					}
+					else
+					{
+						cboGroups.SelectedIndex = _allGroups.IndexOf(min);
+					}
 					return min != null;
 				}
 			}
@@ -210,6 +223,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			if (cboGroups.SelectedIndex >= 0)
 			{
 				_franchises = _allGroups[cboGroups.SelectedIndex];
+				Config.LastFranchise = _franchises.Item1;
 				DoWork().MoveNext();
 			}
 			else

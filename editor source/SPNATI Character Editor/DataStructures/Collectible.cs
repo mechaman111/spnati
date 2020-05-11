@@ -21,12 +21,15 @@ namespace SPNATI_Character_Editor.DataStructures
 			set { Set(value); }
 		}
 
-		[EnumControl(DisplayName = "Status", Description = "Where the collectible is available", GroupOrder = 2, ValueType = typeof(OpponentStatus))]
-		[DefaultValue(OpponentStatus.Main)]
+		[DefaultValue("")]
+		[ComboBox(DisplayName = "Status", Description = "Where the collectible is available", GroupOrder = 1, Options = new string[] {
+			"offline",
+			"testing",
+		})]
 		[XmlAttribute("status")]
-		public OpponentStatus Status
+		public string Status
 		{
-			get { return Get<OpponentStatus>(); }
+			get { return Get<string>(); }
 			set { Set(value); }
 		}
 
