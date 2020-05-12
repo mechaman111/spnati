@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.6.1 at 2:58:59 PM on May 08, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7 at 2:32:54 PM on May 11, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.6.1</version>
+    <version>v5.7</version>
     <first>Aella</first>
     <last />
     <label>Aella</label>
@@ -101,6 +101,10 @@
                 <condition role="other" character="kamina" saying="wait" />
                 <condition count="0" filter="mama_shotgun" role="self" />
                 <state img="#-interested.png" marker="KaminaIntro">Well, no, of course not. I'm not from this world.</state>
+            </case>
+            <case stage="0" id="297">
+                <condition role="other" character="shamir" sayingMarker="employerExplained" />
+                <state img="#-competitive.png" marker="ShamirTarget">A target, huh? I could help you catch them!</state>
             </case>
             <case stage="0">
                 <condition role="other" character="el_shaggy_blanco" />
@@ -1056,6 +1060,10 @@
                 <condition role="other" character="revy" />
                 <state img="#-calm.png">Listen, Revy, my understanding is that your not lawful citizen, but if you don't cause any problems here, I'll just let you go. Got it?</state>
             </case>
+            <case stage="0-6" totalRounds="0">
+                <condition role="other" character="shamir" />
+                <state img="#-interested.png" marker="ShamirPlaying">So you're playing, then? You don't really have to.</state>
+            </case>
             <case stage="1">
                 <condition role="self" timeInStage="0" />
                 <condition role="other" character="joey" />
@@ -1160,6 +1168,11 @@
                 <condition role="other" character="tharja" saidMarker="cheating1" />
                 <condition role="self" notSaidMarker="TharjaCheating" />
                 <state img="#-annoyed.png" marker="TharjaCheating">H-hey, wait a minute, did you just say you've been cheating? You'd better stop!</state>
+            </case>
+            <case stage="0-6" id="295" oneShotId="13">
+                <condition role="self" saidMarker="MaryDucks" />
+                <condition role="other" character="mary" sayingMarker="AellaDucks" />
+                <state img="#-thinking.png" marker="MaryDucks2">I don't know about that. I think my dress could only carry... maybe seven? Eight at best.</state>
             </case>
             <case stage="0-6">
                 <condition role="other" character="futaba" sayingMarker="futaba_adventures" />
@@ -1558,6 +1571,10 @@
             <case stage="0">
                 <condition role="other" character="ribbon_girl" />
                 <state img="#-interested.png" marker="AellaHP">I don't know any healing spells, if that's what you mean, but my HP does regenerate a little bit every turn.</state>
+            </case>
+            <case stage="0" id="296">
+                <condition role="other" character="mary" />
+                <state img="#-happy.png">If you think &lt;i&gt;I'm&lt;/i&gt; tall, you should've seen my father! He was nearly seven feet tall. Some people thought he was part giant!</state>
             </case>
             <case stage="0-2">
                 <test expr="~self.place~" value="1" />
@@ -3175,6 +3192,10 @@
                 <condition role="target" character="erufuda" stage="0" />
                 <state img="#-calm.png">You said you're trying to get fit, huh? I might be able to help you with that.</state>
             </case>
+            <case stage="0-8" id="298">
+                <condition role="target" character="shamir" stage="0" />
+                <state img="#-interested.png">I take it you're an archer? What class are you?</state>
+            </case>
             <case stage="6-8">
                 <condition role="target" character="revy" />
                 <condition role="self" saidMarker="DoneWithRevy" />
@@ -3317,6 +3338,11 @@
                 <condition role="target" character="kazuma" />
                 <state img="#-competitive.png">Fair warning, I'm really good at crushing thieves before they make off with my stuff!</state>
             </case>
+            <case stage="0-8" priority="56">
+                <condition role="target" startingLayers="3-4" />
+                <state img="#-flustered.png">Alright, sure. You didn't come here with much, after all...</state>
+                <state img="#-flustered.png">I... supppose it's only fair we let you count ~clothing.ifPlural(those|that)~</state>
+            </case>
             <case stage="0-3">
                 <alternative>
                     <condition role="target" layers="3-4" />
@@ -3338,11 +3364,6 @@
                 <state img="#-interested.png">Y-you still have ~clothing.ifPlural(those|that)~? Er, why?</state>
                 <state img="#-calm.png">I can't say I understand why you kept ~clothing.ifPlural(those|that)~ for as long as you did...</state>
                 <state img="#-flustered.png">I would've thought you'd have taken ~clothing.ifPlural(those|that)~ off before you... became exposed...</state>
-            </case>
-            <case stage="0-8">
-                <condition role="target" startingLayers="3-4" />
-                <state img="#-flustered.png">Alright, sure. You didn't come here with much, after all...</state>
-                <state img="#-flustered.png">I... supppose it's only fair we let you count ~clothing.ifPlural(those|that)~</state>
             </case>
             <case stage="0-3">
                 <state img="#-calm.png">Your ~clothing~? That's fair.</state>
@@ -3445,9 +3466,14 @@
                 <condition role="target" character="chazz" stage="1" />
                 <state img="#-flustered.png">Whatever game you play with those sounds needlessly complicated...</state>
             </case>
+            <case stage="0-8" priority="56">
+                <condition role="target" startingLayers="3-4" />
+                <state img="#-happy.png">I guess as long as you don't start pulling threads off to survive, I'll let this slide.</state>
+                <state img="#-happy.png">Maybe next time you should come a little more prepared?</state>
+            </case>
             <case stage="0-3">
                 <alternative>
-                    <condition role="target" layers="3-4" />
+                    <condition role="target" layers="2-3" />
                 </alternative>
                 <alternative>
                     <condition status="exposed" role="target" />
@@ -3458,7 +3484,7 @@
             </case>
             <case stage="4-8">
                 <alternative>
-                    <condition role="target" layers="3-4" />
+                    <condition role="target" layers="2-3" />
                 </alternative>
                 <alternative>
                     <condition status="exposed" role="target" />
@@ -3467,11 +3493,6 @@
                 <state img="#-flustered.png">I-I'm going to let that slide, since you're... you know...</state>
                 <state img="#-flustered.png">I guess I can't really complain, because you're... you know...</state>
                 <state img="#-flustered.png" oneShotId="3">Well, I can't say I wouldn't have done the same thing... Or maybe I can, because I would've taken ~clothing.ifPlural(those|that)~ off before anything else.</state>
-            </case>
-            <case stage="0-8">
-                <condition role="target" startingLayers="3-4" />
-                <state img="#-happy.png">I guess as long as you don't start pulling threads off to survive, I'll let this slide.</state>
-                <state img="#-happy.png">Maybe next time you should come a little more prepared?</state>
             </case>
             <case stage="0-3">
                 <state img="#-happy.png">I certainly understand the desire to stall with every single one of your accessories.</state>
@@ -3793,6 +3814,10 @@
                 <condition role="target" character="mary" stage="0" />
                 <state img="#-happy.png">I'm not really a sandal person, myself. You probably already knew that because I came here in boots, though.</state>
             </case>
+            <case stage="0-8" id="299">
+                <condition role="target" character="shamir" stage="0" />
+                <state img="#-happy.png">I've dabbled in archery a bit myself, but I prefer melee weapons. My sister's pretty good with bows, though.</state>
+            </case>
             <case stage="0-3">
                 <condition role="target" character="alice_mgq" />
                 <state img="#-embarrassed.png">Oh, well, uh, g-good. Good that you're not out yet.</state>
@@ -3800,6 +3825,11 @@
             <case stage="4-8">
                 <condition role="target" character="alice_mgq" />
                 <state img="#-annoyed.png">Well, whatever it is, it'd better be worth stalling for.</state>
+            </case>
+            <case stage="0-8" priority="56">
+                <condition role="target" startingLayers="3-4" />
+                <state img="#-flustered.png">Alright, sure. You didn't come here with much, after all...</state>
+                <state img="#-flustered.png">I... supppose it's only fair we let you count ~clothing.ifPlural(those|that)~</state>
             </case>
             <case stage="0-3">
                 <alternative>
@@ -3822,11 +3852,6 @@
                 <state img="#-interested.png">Y-you still have ~clothing.ifPlural(those|that)~? Er, why?</state>
                 <state img="#-calm.png">I can't say I understand why you kept ~clothing.ifPlural(those|that)~ for as long as you did...</state>
                 <state img="#-flustered.png">I would've thought you'd have taken ~clothing.ifPlural(those|that)~ off before you... became exposed...</state>
-            </case>
-            <case stage="0-8">
-                <condition role="target" startingLayers="3-4" />
-                <state img="#-flustered.png">Alright, sure. You didn't come here with much, after all...</state>
-                <state img="#-flustered.png">I... supppose it's only fair we let you count ~clothing.ifPlural(those|that)~</state>
             </case>
             <case stage="0-3">
                 <state img="#-calm.png">Your ~clothing~? That's fair.</state>
@@ -4182,13 +4207,22 @@
                 <condition role="target" character="lucina" stage="1" />
                 <state img="#-horny.png">Oh! Y-you're... a princ&lt;i&gt;ess&lt;/i&gt;? Th-that's cool too, I guess...</state>
             </case>
+            <case stage="0-8" id="294">
+                <condition role="target" character="mary" stage="1" />
+                <state img="#-thinking.png">If you made them steel-toed, would they even be sandals anymore? At that point they're just shoes, and wouldn't that defeat the purpose?</state>
+            </case>
             <case stage="0-8">
                 <condition role="target" character="alice_mgq" />
                 <state img="#-shocked.png">Whoa! Y-your a Lamia? So it &lt;i&gt;is&lt;/i&gt; true that you can disguise yourselves!</state>
             </case>
+            <case stage="0-8" priority="56">
+                <condition role="target" startingLayers="2-3" />
+                <state img="#-happy.png">I guess as long as you don't start pulling threads off to survive, I'll let this slide.</state>
+                <state img="#-happy.png">Maybe next time you should come a little more prepared?</state>
+            </case>
             <case stage="0-3">
                 <alternative>
-                    <condition role="target" layers="3-4" />
+                    <condition role="target" layers="2-3" />
                 </alternative>
                 <alternative>
                     <condition status="exposed" role="target" />
@@ -4208,11 +4242,6 @@
                 <state img="#-flustered.png">I-I'm going to let that slide, since you're... you know...</state>
                 <state img="#-flustered.png">I guess I can't really complain, because you're... you know...</state>
                 <state img="#-flustered.png" oneShotId="2">Well, I can't say I wouldn't have done the same thing... Or maybe I can, because I would've taken ~clothing.ifPlural(those|that)~ off before anything else.</state>
-            </case>
-            <case stage="0-8">
-                <condition role="target" startingLayers="3-4" />
-                <state img="#-happy.png">I guess as long as you don't start pulling threads off to survive, I'll let this slide.</state>
-                <state img="#-happy.png">Maybe next time you should come a little more prepared?</state>
             </case>
             <case stage="0-3">
                 <state img="#-happy.png">I certainly understand the desire to stall with every single one of your accessories.</state>
@@ -4396,7 +4425,7 @@
             </case>
             <case stage="0-3">
                 <alternative>
-                    <condition role="target" layers="3-4" />
+                    <condition role="target" layers="2-3" />
                 </alternative>
                 <alternative>
                     <condition status="exposed" role="target" />
@@ -4406,7 +4435,7 @@
             </case>
             <case stage="4-6">
                 <alternative>
-                    <condition role="target" layers="3-4" />
+                    <condition role="target" layers="2-3" />
                 </alternative>
                 <alternative>
                     <condition status="exposed" role="target" />
@@ -4801,7 +4830,7 @@
             </case>
             <case stage="0-3">
                 <alternative>
-                    <condition role="target" layers="3-4" />
+                    <condition role="target" layers="2-3" />
                 </alternative>
                 <alternative>
                     <condition status="exposed" role="target" />
@@ -4811,7 +4840,7 @@
             </case>
             <case stage="4-6">
                 <alternative>
-                    <condition role="target" layers="3-4" />
+                    <condition role="target" layers="2-3" />
                 </alternative>
                 <alternative>
                     <condition status="exposed" role="target" />
