@@ -273,7 +273,7 @@ namespace SPNATI_Character_Editor.Activities
 		private void PopulatePoseGrid()
 		{
 			//pull in required images
-			HashSet<string> requiredImages = _character.GetRequiredPoses();
+			HashSet<string> requiredImages = _character.GetRequiredPoses(false);
 			if (requiredImages == null)
 			{
 				requiredImages = new HashSet<string>();

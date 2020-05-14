@@ -1,6 +1,6 @@
 ﻿namespace SPNATI_Character_Editor.Forms
 {
-	partial class AddSheetForm
+	partial class AddPoseForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -33,18 +33,14 @@
 			this.cmdCreate = new Desktop.Skinning.SkinnedButton();
 			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
 			this.txtName = new Desktop.Skinning.SkinnedTextBox();
-			this.lblSheet = new Desktop.Skinning.SkinnedLabel();
-			this.cboSheet = new Desktop.Skinning.SkinnedComboBox();
 			this.skinnedPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// skinnedPanel1
 			// 
-			this.skinnedPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.skinnedPanel1.Controls.Add(this.cmdCancel);
 			this.skinnedPanel1.Controls.Add(this.cmdCreate);
-			this.skinnedPanel1.Location = new System.Drawing.Point(0, 91);
+			this.skinnedPanel1.Location = new System.Drawing.Point(0, 67);
 			this.skinnedPanel1.Name = "skinnedPanel1";
 			this.skinnedPanel1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryDark;
 			this.skinnedPanel1.Size = new System.Drawing.Size(271, 30);
@@ -98,65 +94,31 @@
 			// 
 			this.txtName.BackColor = System.Drawing.Color.White;
 			this.txtName.ForeColor = System.Drawing.Color.Black;
-			this.txtName.Location = new System.Drawing.Point(73, 36);
+			this.txtName.Location = new System.Drawing.Point(57, 36);
 			this.txtName.Name = "txtName";
-			this.txtName.Size = new System.Drawing.Size(132, 20);
+			this.txtName.Size = new System.Drawing.Size(100, 20);
 			this.txtName.TabIndex = 2;
 			// 
-			// lblSheet
-			// 
-			this.lblSheet.AutoSize = true;
-			this.lblSheet.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.lblSheet.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.lblSheet.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
-			this.lblSheet.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
-			this.lblSheet.Location = new System.Drawing.Point(12, 66);
-			this.lblSheet.Name = "lblSheet";
-			this.lblSheet.Size = new System.Drawing.Size(57, 13);
-			this.lblSheet.TabIndex = 3;
-			this.lblSheet.Text = "Copy from:";
-			this.lblSheet.Visible = false;
-			// 
-			// cboSheet
-			// 
-			this.cboSheet.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-			this.cboSheet.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-			this.cboSheet.BackColor = System.Drawing.Color.White;
-			this.cboSheet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cboSheet.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
-			this.cboSheet.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.cboSheet.KeyMember = null;
-			this.cboSheet.Location = new System.Drawing.Point(73, 62);
-			this.cboSheet.Name = "cboSheet";
-			this.cboSheet.SelectedIndex = -1;
-			this.cboSheet.SelectedItem = null;
-			this.cboSheet.Size = new System.Drawing.Size(132, 23);
-			this.cboSheet.Sorted = false;
-			this.cboSheet.TabIndex = 4;
-			this.cboSheet.Visible = false;
-			// 
-			// AddSheetForm
+			// AddPoseForm
 			// 
 			this.AcceptButton = this.cmdCreate;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
-			this.ClientSize = new System.Drawing.Size(271, 120);
+			this.ClientSize = new System.Drawing.Size(271, 97);
 			this.ControlBox = false;
-			this.Controls.Add(this.cboSheet);
-			this.Controls.Add(this.lblSheet);
 			this.Controls.Add(this.txtName);
 			this.Controls.Add(this.skinnedLabel1);
 			this.Controls.Add(this.skinnedPanel1);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "AddSheetForm";
+			this.Name = "AddPoseForm";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.Sizable = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "Add Sheet";
+			this.Text = "Add Pose";
 			this.skinnedPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -170,7 +132,5 @@
 		private Desktop.Skinning.SkinnedButton cmdCancel;
 		private Desktop.Skinning.SkinnedLabel skinnedLabel1;
 		private Desktop.Skinning.SkinnedTextBox txtName;
-		private Desktop.Skinning.SkinnedLabel lblSheet;
-		private Desktop.Skinning.SkinnedComboBox cboSheet;
 	}
 }

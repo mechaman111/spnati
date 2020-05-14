@@ -313,6 +313,16 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CopyCode {
+            get {
+                object obj = ResourceManager.GetObject("CopyCode", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CopyKeyFrame {
             get {
                 object obj = ResourceManager.GetObject("CopyKeyFrame", resourceCulture);
@@ -693,6 +703,16 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap InsertColumn {
+            get {
+                object obj = ResourceManager.GetObject("InsertColumn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LastFrame {
             get {
                 object obj = ResourceManager.GetObject("LastFrame", resourceCulture);
@@ -736,6 +756,16 @@ namespace SPNATI_Character_Editor.Properties {
         internal static System.Drawing.Bitmap Loop {
             get {
                 object obj = ResourceManager.GetObject("Loop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Missing {
+            get {
+                object obj = ResourceManager.GetObject("Missing", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -936,6 +966,16 @@ namespace SPNATI_Character_Editor.Properties {
         internal static System.Drawing.Bitmap Sort {
             get {
                 object obj = ResourceManager.GetObject("Sort", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SortHorizontal {
+            get {
+                object obj = ResourceManager.GetObject("SortHorizontal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
