@@ -10,8 +10,11 @@ using SPNATI_Character_Editor.DataStructures;
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -30,6 +33,7 @@ namespace SPNATI_Character_Editor.Activities
 		private PoseEntry _currentPose;
 		private bool _dirty;
 		private Column _currentColumn;
+		private bool _building;
 		private bool _pendingWardrobeChange = false;
 
 		private Dictionary<string, DataGridViewColumn> _columns = new Dictionary<string, DataGridViewColumn>();
@@ -56,7 +60,10 @@ namespace SPNATI_Character_Editor.Activities
 
 			skinnedSplitContainer1.Panel2Collapsed = true;
 			tsRemovePose.Enabled = false;
-			tsApplyCrop.Enabled = false;
+			tsApplyCrop.Enabled = tsApplyCode.Enabled = false;
+
+			tsAddMain.Visible = _skin is Costume;
+			sepSkin.Visible = _skin is Costume;
 		}
 
 		protected override void OnFirstActivate()
@@ -78,7 +85,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void _matrix_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-			_character.IsDirty = true;
+			_skin.IsDirty = true;
 			if (!this.IsActive)
 			{
 				_dirty = true;
@@ -123,8 +130,9 @@ namespace SPNATI_Character_Editor.Activities
 				AddTab(sheet);
 			}
 
-			if (tabControl.TabPages.Count == 1)
+			if (tabControl.TabPages.Count > 0)
 			{
+				tabControl.SelectedIndex = 0;
 				//need to manually raise the event for the first tab
 				tabControl_SelectedIndexChanged(tabControl, new System.EventArgs());
 			}
@@ -139,6 +147,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void BuildGrid()
 		{
+			_building = true;
 			_columns.Clear();
 			_cells.Clear();
 			_currentPose = null;
@@ -146,6 +155,8 @@ namespace SPNATI_Character_Editor.Activities
 			skinnedSplitContainer1.Panel2Collapsed = true;
 			grid.Rows.Clear();
 			grid.Columns.Clear();
+
+			grid.TopLeftHeaderCell.Value = "Sheet";
 
 			if (_sheet.Stages.Count == 0)
 			{
@@ -181,6 +192,7 @@ namespace SPNATI_Character_Editor.Activities
 				}
 
 				DataGridViewRow row = grid.Rows[grid.Rows.Add()];
+				row.Tag = stage;
 
 				//give every cell a valid default
 				foreach (DataGridViewCell cell in row.Cells)
@@ -200,14 +212,34 @@ namespace SPNATI_Character_Editor.Activities
 					pose.PropertyChanged += Pose_PropertyChanged;
 				}
 			}
+			_building = false;
+
+			//manually trigger selection
+			grid_SelectionChanged(grid, EventArgs.Empty);
 		}
 
 		private void AddColumn(string key)
 		{
+			AddColumn(key, -1);
+		}
+		/// <summary>
+		/// Creates a new column
+		/// </summary>
+		/// <param name="key">Pose key</param>
+		/// <param name="index">Where to insert in the sheet. -1 to put at the end.</param>
+		private DataGridViewImageColumn AddColumn(string key, int index)
+		{
 			DataGridViewImageColumn col = new DataGridViewImageColumn();
 			col.Name = key;
 			col.HeaderText = key;
-			grid.Columns.Add(col);
+			if (index == -1)
+			{
+				grid.Columns.Add(col);
+			}
+			else
+			{
+				grid.Columns.Insert(index, col);
+			}
 			col.SortMode = DataGridViewColumnSortMode.NotSortable;
 			col.MinimumWidth = 40;
 			col.DefaultCellStyle = new DataGridViewCellStyle()
@@ -222,10 +254,15 @@ namespace SPNATI_Character_Editor.Activities
 				DataGridViewCell existingCell = existingRow.Cells[col.Name];
 				existingCell.Value = EmptyImage;
 			}
+			return col;
 		}
 
 		private void UpdateCell(DataGridViewCell cell, PoseEntry pose)
 		{
+			int stage = cell.RowIndex;
+			string key = GetKey(stage.ToString(), pose.Key);
+			string filePath = Path.Combine(_skin.GetDirectory(), key + ".png");
+
 			if (!string.IsNullOrEmpty(pose.Code))
 			{
 				if (cell == null && !_cells.TryGetValue(pose, out cell))
@@ -234,9 +271,6 @@ namespace SPNATI_Character_Editor.Activities
 				}
 
 				//see if physical file exists
-				int stage = cell.RowIndex;
-				string key = GetKey(stage.ToString(), pose.Key);
-				string filePath = Path.Combine(_skin.GetDirectory(), key + ".png");
 				if (File.Exists(filePath))
 				{
 					cell.Value = Properties.Resources.Checkmark;
@@ -248,7 +282,22 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			else
 			{
-				cell.Value = EmptyImage;
+				if (_skin is Costume)
+				{
+					string mainPath = Path.Combine(_skin.Character.GetDirectory(), key + ".png");
+					if (File.Exists(mainPath) && !File.Exists(filePath))
+					{
+						cell.Value = Properties.Resources.Missing;
+					}
+					else
+					{
+						cell.Value = EmptyImage;
+					}
+				}
+				else
+				{
+					cell.Value = EmptyImage;
+				}
 			};
 		}
 
@@ -298,54 +347,98 @@ namespace SPNATI_Character_Editor.Activities
 		private void tabStrip_AddButtonClicked(object sender, System.EventArgs e)
 		{
 			AddSheetForm form = new AddSheetForm("New Sheet");
+			form.SetMatrix(_matrix);
 			if (form.ShowDialog() == DialogResult.OK)
 			{
-				PoseSheet sheet = _matrix.AddSheet(form.SheetName);
+				PoseSheet sheet = _matrix.AddSheet(form.SheetName, form.SelectedSheet);
 				AddTab(sheet);
 				tabControl.SelectedIndex = tabControl.TabPages.Count - 1;
 			}
 		}
 
-		private void grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+
+		private void grid_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
 		{
+			if (e.ColumnIndex == -1)
+			{
+				//Row
+				grid.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
+
+				if (e.Button == MouseButtons.Right)
+				{
+					grid.ClearSelection();
+					grid.Rows[e.RowIndex].Selected = true;
+				}
+			}
+			else if (e.RowIndex == -1)
+			{
+				//Column
+				grid.SelectionMode = DataGridViewSelectionMode.ColumnHeaderSelect;
+
+				if (e.Button == MouseButtons.Right)
+				{
+					grid.ClearSelection();
+					grid.Columns[e.ColumnIndex].Selected = true;
+				}
+			}
+			else
+			{
+				//Cell
+
+				//don't need to change SelectionMode because the others already allow selecting cells
+
+				if (e.Button == MouseButtons.Right)
+				{
+					grid.ClearSelection();
+					grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = true;
+				}
+			}
 		}
 
-		private void grid_CellClick(object sender, DataGridViewCellEventArgs e)
+		private void grid_TopLeftHeaderMouseDown(object sender, EventArgs e)
 		{
+			grid.ClearSelection();
+
+			//selecting the whole sheet
+			skinnedSplitContainer1.Panel2Collapsed = false;
+			sptMode.Panel2Collapsed = false;
+			picHelp.Image = new Bitmap("Resources/Images/BaseCode.png");
+			panelSingle.Visible = false;
+			panelStage.Visible = false;
+			panelPose.Visible = true;
+			_currentPose = null;
+			_currentColumn = null;
+			lblHeader.Text = "Sheet: " + _sheet.Name;
+			table.SetDataAsync(_sheet, null);
+			return;
+		}
+
+		private void grid_SelectionChanged(object sender, EventArgs e)
+		{
+			if (_building)
+			{
+				return;
+			}
 			if (_currentColumn != null)
 			{
 				_currentColumn.PropertyChanged -= ColumnChanged;
+				_currentColumn = null;
 			}
 
 			tsRemovePose.Enabled = false;
-			tsApplyCrop.Enabled = false;
+			tsApplyCrop.Enabled = tsApplyCode.Enabled = false;
 
-			if (e.ColumnIndex == -1)
+			if (grid.SelectedRows.Count > 0)
 			{
-				if (e.RowIndex == -1)
-				{
-					//selecting the whole sheet
-					skinnedSplitContainer1.Panel2Collapsed = false;
-					sptMode.Panel2Collapsed = false;
-					picHelp.Image = new Bitmap("Resources/Images/BaseCode.png");
-					panelSingle.Visible = false;
-					panelStage.Visible = false;
-					panelPose.Visible = true;
-					_currentPose = null;
-					_currentColumn = null;
-					lblHeader.Text = "Sheet: " + _sheet.Name;
-					table.SetDataAsync(_sheet, null);
-					return;
-				}
-
 				//selecting a stage
+				tsPaste.Enabled = Clipboards.Has<RowClipboardData>();
 
-				grid.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
-				DataGridViewRow row = grid.Rows[e.RowIndex];
+				int rowIndex = grid.SelectedRows[0].Index;
+				DataGridViewRow row = grid.Rows[rowIndex];
 				row.Selected = true;
 				_currentPose = null;
-				_currentStage = e.RowIndex;
-				if (e.RowIndex >= 0 && e.RowIndex < _sheet.Stages.Count)
+				_currentStage = rowIndex;
+				if (rowIndex >= 0 && rowIndex < _sheet.Stages.Count)
 				{
 					lblHeader.Text = $"{row.HeaderCell.Value?.ToString()}";
 					skinnedSplitContainer1.Panel2Collapsed = false;
@@ -354,25 +447,26 @@ namespace SPNATI_Character_Editor.Activities
 					panelStage.Visible = true;
 					sptMode.Panel2Collapsed = false;
 					picHelp.Image = new Bitmap("Resources/Images/StageCode.png");
-					table.SetDataAsync(_sheet.Stages[e.RowIndex], null);
+					table.SetDataAsync(_sheet.Stages[rowIndex], null);
 				}
 			}
-			else if (e.RowIndex == -1)
+			else if (grid.SelectedColumns.Count > 0)
 			{
 				//selecting a pose key
-
-				grid.SelectionMode = DataGridViewSelectionMode.ColumnHeaderSelect;
-				DataGridViewColumn column = grid.Columns[e.ColumnIndex];
+				DataGridViewColumn column = grid.SelectedColumns[0];
 				column.Selected = true;
 				_currentPose = null;
 				_currentStage = -1;
 				_currentColumn = new Column(column);
-				sptMode.Panel2Collapsed = true;
+
+				tsPaste.Enabled = Clipboards.Has<ColumnClipboardData>();
+
 				if (_currentColumn != null)
 				{
 					_currentColumn.PropertyChanged += ColumnChanged;
-					tsRemovePose.Enabled = true;
+					tsRemovePose.Enabled = grid.SelectedColumns.Count < grid.ColumnCount;
 					skinnedSplitContainer1.Panel2Collapsed = false;
+					sptMode.Panel2Collapsed = true;
 					panelSingle.Visible = false;
 					panelPose.Visible = true;
 					panelStage.Visible = false;
@@ -380,51 +474,71 @@ namespace SPNATI_Character_Editor.Activities
 					table.SetDataAsync(_currentColumn, null);
 				}
 			}
-			else
+			else if (grid.SelectedCells.Count > 0)
 			{
-				//selecting a pose+stage combo
-
-				DataGridViewCell gridCell = grid.Rows[e.RowIndex]?.Cells[e.ColumnIndex];
+				DataGridViewCell gridCell = grid.SelectedCells[0];
 				if (gridCell == null)
 				{
 					return;
 				}
-				sptMode.Panel2Collapsed = true;
-				tsApplyCrop.Enabled = true;
-				_currentStage = e.RowIndex;
+
+				tsPaste.Enabled = Clipboards.Has<CellClipboardData>();
+
+				tsApplyCrop.Enabled = tsApplyCode.Enabled = true;
+				_currentStage = gridCell.RowIndex;
 
 				PoseEntry cell = gridCell?.Tag as PoseEntry;
 				if (cell == null)
 				{
-					cell = new PoseEntry()
-					{
-						Key = grid.Columns[e.ColumnIndex].HeaderText
-					};
-					cell.PropertyChanged += Pose_PropertyChanged;
-					gridCell.Tag = cell;
-					_cells[cell] = gridCell;
-					_sheet.Stages[_currentStage].Poses.Add(cell);
+					DataGridViewColumn col = gridCell.OwningColumn;
+					cell = CreatePoseEntry(gridCell, col.Name);
 				}
 				if (cell != null)
 				{
 					_currentPose = cell;
-					lblHeader.Text = $"{grid.Rows[e.RowIndex].HeaderCell.Value?.ToString()} - {cell.Key}";
+					lblHeader.Text = $"{grid.Rows[gridCell.RowIndex].HeaderCell.Value?.ToString()} - {cell.Key}";
 					skinnedSplitContainer1.Panel2Collapsed = false;
 					panelSingle.Visible = true;
 					panelPose.Visible = false;
 					panelStage.Visible = false;
-
-					sptMode.Panel2Collapsed = string.IsNullOrEmpty(_sheet.Stages[_currentStage].Code);
-					if (!sptMode.Panel2Collapsed)
-					{
-						picHelp.Image = new Bitmap("Resources/Images/PoseCode.png");
-					}
-
-					table.SetDataAsync(cell, null);
-
-					ShowPreview(cell);
 				}
+
+				sptMode.Panel2Collapsed = string.IsNullOrEmpty(_sheet.Stages[_currentStage].Code);
+				if (!sptMode.Panel2Collapsed)
+				{
+					picHelp.Image = new Bitmap("Resources/Images/PoseCode.png");
+				}
+
+				table.SetDataAsync(cell, null);
+				ShowPreview(cell);
 			}
+		}
+
+		private List<string> GetColumnOrder()
+		{
+			List<DataGridViewColumn> cols = new List<DataGridViewColumn>();
+			foreach (DataGridViewColumn col in grid.Columns)
+			{
+				cols.Add(col);
+			}
+			return cols.OrderBy(c => c.DisplayIndex).Select(c => c.Name).ToList();
+		}
+
+		/// <summary>
+		/// Creates and attaches a PoseEntry to a grid cell
+		/// </summary>
+		/// <param name="cell"></param>
+		private PoseEntry CreatePoseEntry(DataGridViewCell gridCell, string key)
+		{
+			PoseEntry cell = new PoseEntry()
+			{
+				Key = key
+			};
+			cell.PropertyChanged += Pose_PropertyChanged;
+			gridCell.Tag = cell;
+			_cells[cell] = gridCell;
+			_sheet.Stages[gridCell.RowIndex].InsertCell(cell, GetColumnOrder());
+			return cell;
 		}
 
 		private void ColumnChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -535,7 +649,7 @@ namespace SPNATI_Character_Editor.Activities
 
 			preview.SkipPreprocessing = _currentPose.SkipPreProcessing;
 			ImageCropper cropper = new ImageCropper();
-			cropper.Import(preview, _character, false);
+			cropper.Import(preview, _skin, false);
 			if (cropper.ShowDialog() == DialogResult.OK)
 			{
 				Image importedImage = cropper.CroppedImage;
@@ -557,7 +671,7 @@ namespace SPNATI_Character_Editor.Activities
 		private string SaveImage(string imageKey, Image image)
 		{
 			string filename = imageKey + ".png";
-			string fullPath = Path.Combine(_character.GetDirectory(), filename);
+			string fullPath = Path.Combine(_skin.GetDirectory(), filename);
 
 			try
 			{
@@ -588,7 +702,7 @@ namespace SPNATI_Character_Editor.Activities
 			PoseMapping img = _character.PoseLibrary.GetPose("#-" + cell.Key + ".png");
 			if (img != null)
 			{
-				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, img, _currentStage));
+				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_skin, img, _currentStage));
 			}
 		}
 
@@ -769,12 +883,7 @@ namespace SPNATI_Character_Editor.Activities
 							PoseEntry pose = cell.Tag as PoseEntry;
 							if (pose == null)
 							{
-								pose = new PoseEntry();
-								pose.Key = key;
-								stage.Poses.Add(pose);
-								cell.Tag = pose;
-								_cells[pose] = cell;
-								pose.PropertyChanged += Pose_PropertyChanged;
+								pose = CreatePoseEntry(cell, key);
 							}
 
 							pose.Code = $"{lineup.Version}**{model.Serialize()}";
@@ -832,7 +941,7 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					string key = GetKey(stage.Stage.ToString(), pose.Key);
 					string filename = key + ".png";
-					string fullPath = Path.Combine(_character.GetDirectory(), filename);
+					string fullPath = Path.Combine(_skin.GetDirectory(), filename);
 					if (File.Exists(fullPath))
 					{
 						continue;
@@ -906,7 +1015,7 @@ namespace SPNATI_Character_Editor.Activities
 					codes.Add(code);
 				}
 			}
-			if (!CharacterGenerator.ImportUnrecognizedAssets(_character, codes))
+			if (!CharacterGenerator.ImportUnrecognizedAssets(_skin, codes))
 			{
 				return;
 			}
@@ -958,7 +1067,7 @@ namespace SPNATI_Character_Editor.Activities
 						progress.Report(current++);
 						try
 						{
-							Image img = await CharacterGenerator.GetCroppedImage(new KisekaeCode(metadata.Data), metadata.CropInfo, _character, metadata.ExtraData, metadata.SkipPreprocessing);
+							Image img = await CharacterGenerator.GetCroppedImage(new KisekaeCode(metadata.Data), metadata.CropInfo, _skin, metadata.ExtraData, metadata.SkipPreprocessing);
 							if (img == null)
 							{
 								//Something went wrong. Stop here.
@@ -1011,35 +1120,78 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				return;
 			}
-			if (grid.Columns.Count == 1)
+			if (RemoveColumn(_currentColumn.GridColumn))
 			{
-				MessageBox.Show("You cannot remove the last column.");
-				return;
-			}
-			if (MessageBox.Show($"Are you sure you want to remove all poses for {_currentColumn.Key}? This cannot be undone.", "Remove Pose", MessageBoxButtons.OKCancel) == DialogResult.OK)
-			{
-				_sheet.RemoveColumn(_currentColumn.Key);
-				_columns.Remove(_currentColumn.Key);
-				grid.Columns.Remove(_currentColumn.GridColumn);
 				_currentColumn = null;
 			}
 		}
 
 		private void tsAddPose_Click(object sender, EventArgs e)
 		{
+			AddNewColumn(-1);
+		}
+
+		private void AddNewColumn(int index)
+		{
 			if (_sheet == null)
 			{
 				return;
 			}
 
-			AddSheetForm form = new AddSheetForm("happy");
-			form.Text = "Add Pose";
+			AddPoseForm form = new AddPoseForm("happy");
 			if (form.ShowDialog() == DialogResult.OK)
 			{
 				//create a column but no data structure yet. That'll happen when clicking in cells
-				string key = _sheet.GetUniqueColumnName(form.SheetName);
-				AddColumn(key);
+				string key = _sheet.GetUniqueColumnName(form.PoseName);
+				DataGridViewColumn col = AddColumn(key, index);
+
+				//select the first cell
+				grid.ClearSelection();
+				grid.Rows[0].Cells[col.Index].Selected = true;
 			}
+		}
+
+		private void InsertColumn()
+		{
+			if (grid.SelectedCells.Count > 0)
+			{
+				AddNewColumn(grid.SelectedCells[0].OwningColumn.DisplayIndex);
+			}
+			else
+			{
+				AddNewColumn(-1);
+			}
+		}
+
+		private bool RemoveColumn(params DataGridViewColumn[] columns)
+		{
+			if (grid.Columns.Count == columns.Length)
+			{
+				MessageBox.Show("You cannot remove all columns.");
+				return false;
+			}
+			if (MessageBox.Show($"Are you sure you want to remove all poses for the selected columns? This cannot be undone.", "Remove Pose", MessageBoxButtons.OKCancel) == DialogResult.OK)
+			{
+				List<string> names = columns.Select(c => c.Name).ToList();
+				foreach (string key in names)
+				{
+					DataGridViewColumn column = grid.Columns[key];
+					if (column == null)
+					{
+						continue;
+					}
+					_columns.Remove(key);
+					foreach (DataGridViewRow row in grid.Rows)
+					{
+						DataGridViewCell cell = row.Cells[key];
+						ClearCell(cell);
+					}
+					_sheet.RemoveColumn(key);
+					grid.Columns.Remove(column);
+				}
+				return true;
+			}
+			return false;
 		}
 
 		private void grid_ColumnDisplayIndexChanged(object sender, DataGridViewColumnEventArgs e)
@@ -1050,8 +1202,7 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			if (e.Column.DisplayIndex != e.Column.Index)
 			{
-				string name = e.Column.Name;
-				_sheet.MoveColumn(name, e.Column.DisplayIndex);
+				_sheet.ReorderColumns(GetColumnOrder());
 			}
 		}
 
@@ -1071,14 +1222,547 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				return;
 			}
-			foreach (PoseStage stage in _sheet.Stages)
+			for (int i = 0; i < _sheet.Stages.Count; i++)
 			{
+				if (i == _currentStage)
+				{
+					continue;
+				}
+				PoseStage stage = _sheet.Stages[i];
 				PoseEntry cell = stage.GetCell(_currentPose.Key);
-				if (cell == null || cell == _currentPose)
+				if (cell == null)
 				{
 					continue;
 				}
 				cell.Crop = _currentPose.Crop;
+			}
+		}
+
+		private void tsApplyCode_Click(object sender, EventArgs e)
+		{
+			if (_currentPose == null || _sheet == null)
+			{
+				return;
+			}
+
+			for (int i = 0; i < grid.Rows.Count; i++)
+			{
+				if (i == _currentStage)
+				{
+					continue;
+				}
+				DataGridViewRow row = grid.Rows[i];
+				DataGridViewCell cell = row.Cells[_currentPose.Key];
+				PoseEntry pose = cell.Tag as PoseEntry;
+				if (pose == null)
+				{
+					pose = CreatePoseEntry(cell, _currentPose.Key);
+				}
+				_currentPose.CopyPropertiesInto(pose);
+			}
+		}
+
+		private void gridMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			if (grid.SelectedRows.Count > 0)
+			{
+				FilterContextMenu("Row");
+			}
+			else if (grid.SelectedColumns.Count > 0)
+			{
+				FilterContextMenu("Column");
+			}
+			else if (grid.SelectedCells.Count > 0)
+			{
+				FilterContextMenu("Cell");
+			}
+			else
+			{
+				e.Cancel = true;
+			}
+		}
+
+		private void FilterContextMenu(string tag)
+		{
+			foreach (ToolStripItem item in gridMenu.Items)
+			{
+				item.Visible = (item.Tag?.ToString() == tag);
+			}
+		}
+
+		#region Event Handlers
+		private void tsCut_Click(object sender, EventArgs e)
+		{
+			Cut();
+		}
+
+		private void tsCopy_Click(object sender, EventArgs e)
+		{
+			Copy();
+		}
+
+		private void tsPaste_Click(object sender, EventArgs e)
+		{
+			Paste();
+		}
+
+		private void cutCellToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Cut();
+		}
+
+		private void copyCellToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Copy();
+		}
+
+		private void pasteCellToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Paste();
+		}
+
+		private void deleteCellsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DeleteSelection();
+		}
+
+		private void insertColumnToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			InsertColumn();
+		}
+
+		private void addColumnToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			AddNewColumn(-1);
+		}
+		#endregion
+
+		private DataGridViewColumn GetColumnByDisplayIndex(int displayIndex)
+		{
+			foreach (DataGridViewColumn col in grid.Columns)
+			{
+				if (col.DisplayIndex == displayIndex)
+				{
+					return col;
+				}
+			}
+			return null;
+		}
+
+		#region Clipboard
+		private void Cut()
+		{
+			Copy();
+			DeleteSelection();
+		}
+
+		private void Copy()
+		{
+			if (grid.SelectedRows.Count > 0)
+			{
+				Clipboards.Set<RowClipboardData>(new RowClipboardData(grid.SelectedRows));
+				tsPaste.Enabled = pasteRowsToolStripMenuItem.Enabled = true;
+			}
+			else if (grid.SelectedColumns.Count > 0)
+			{
+				Clipboards.Set<ColumnClipboardData>(new ColumnClipboardData(grid.SelectedColumns));
+				tsPaste.Enabled = pasteColumnsToolStripMenuItem.Enabled = true;
+			}
+			else if (grid.SelectedCells.Count > 0)
+			{
+				Clipboards.Set<CellClipboardData>(new CellClipboardData(grid.SelectedCells));
+				tsPaste.Enabled = pasteCellToolStripMenuItem.Enabled = true;
+			}
+		}
+
+		private void Paste()
+		{
+			if (_sheet == null)
+			{
+				return;
+			}
+			if (grid.SelectedRows.Count > 0)
+			{
+				RowClipboardData clipboard = Clipboards.Get<RowClipboardData, RowClipboardData>();
+				if (clipboard != null)
+				{
+					int start = int.MaxValue;
+					foreach (DataGridViewRow r in grid.SelectedRows)
+					{
+						start = Math.Min(start, r.Index);
+					}
+					grid.ClearSelection();
+
+					foreach (PoseStage clipboardRow in clipboard.Rows)
+					{
+						int index = start + clipboardRow.Stage;
+						if (index >= 0 && index < grid.Rows.Count)
+						{
+							DataGridViewRow row = grid.Rows[index];
+							PoseStage stage = _sheet.Stages[index];
+							stage.Code = clipboardRow.Code;
+							for (int i = 0; i < row.Cells.Count; i++)
+							{
+								DataGridViewCell gridCell = row.Cells[i];
+								PoseEntry pose = gridCell.Tag as PoseEntry;
+								PoseEntry clipboardPose = clipboardRow.GetCell(grid.Columns[i].Name);
+								if (clipboardPose == null || clipboardPose.Code == null)
+								{
+									if (pose != null)
+									{
+										ClearCell(gridCell);
+									}
+								}
+								else
+								{
+									if (pose == null)
+									{
+										pose = CreatePoseEntry(gridCell, clipboardPose.Key);
+									}
+									clipboardPose.CopyPropertiesInto(pose);
+								}
+							}
+							row.Selected = true;
+						}
+					}
+				}
+			}
+			else if (grid.SelectedColumns.Count > 0)
+			{
+				ColumnClipboardData clipboard = Clipboards.Get<ColumnClipboardData, ColumnClipboardData>();
+				if (clipboard != null)
+				{
+					int start = int.MaxValue;
+					foreach (DataGridViewColumn c in grid.SelectedColumns)
+					{
+						start = Math.Min(start, c.DisplayIndex);
+					}
+
+					grid.ClearSelection();
+
+					foreach (ColumnClipboardItem item in clipboard.Columns)
+					{
+						int col = start + item.Index;
+						DataGridViewColumn column = GetColumnByDisplayIndex(col);
+						if (column != null)
+						{
+							for (int i = 0; i < item.Rows.Count && i < grid.Rows.Count; i++)
+							{
+								PoseEntry clipboardRow = item.Rows[i];
+								DataGridViewRow row = grid.Rows[i];
+								DataGridViewCell cell = row.Cells[column.Index];
+								PoseEntry pose = cell.Tag as PoseEntry;
+								if (clipboardRow == null)
+								{
+									//nothing in this cell
+									if (pose == null)
+									{
+										continue;
+									}
+									else
+									{
+										ClearCell(cell);
+									}
+								}
+								else
+								{
+									if (pose == null)
+									{
+										pose = CreatePoseEntry(cell, column.Name);
+									}
+									else
+									{
+										pose.Clear();
+									}
+									clipboardRow.CopyPropertiesInto(pose);
+									pose.Key = column.Name;
+								}
+							}
+							column.Selected = true;
+						}
+					}
+				}
+			}
+			else if (grid.SelectedCells.Count > 0)
+			{
+				CellClipboardData clipboard = Clipboards.Get<CellClipboardData, CellClipboardData>();
+
+				if (clipboard != null)
+				{
+					CellClipboardData newSelection = new CellClipboardData(grid.SelectedCells);
+
+					grid.ClearSelection();
+
+					foreach (Tuple<Point, PoseEntry> item in clipboard.Cells)
+					{
+						int col = newSelection.Left + item.Item1.X;
+						int row = newSelection.Top + item.Item1.Y;
+						if (col >= 0 && row >= 0 && col < grid.Columns.Count && row < grid.Rows.Count)
+						{
+							DataGridViewColumn gridCol = GetColumnByDisplayIndex(col);
+							DataGridViewCell gridCell = grid.Rows[row].Cells[gridCol.Name];
+							PoseStage stage = _sheet.Stages[row];
+							if (item.Item2 == null || string.IsNullOrEmpty(item.Item2.Code))
+							{
+								ClearCell(gridCell);
+							}
+							else
+							{
+								PoseEntry cell = stage.GetCell(gridCol.Name);
+								if (cell == null)
+								{
+									cell = CreatePoseEntry(gridCell, gridCol.Name);
+								}
+								item.Item2.CopyPropertiesInto(cell);
+								cell.Key = gridCol.Name; //set the key back since a column's key should never change
+							}
+							gridCell.Selected = true;
+						}
+					}
+				}
+			}
+		}
+		#endregion
+
+		private void DeleteSelection()
+		{
+			if (_sheet == null)
+			{
+				return;
+			}
+			if (grid.SelectedRows.Count > 0)
+			{
+				foreach (DataGridViewRow row in grid.SelectedRows)
+				{
+					PoseStage stage = _sheet.Stages[row.Index];
+					stage.Code = null;
+					foreach (PoseEntry cell in stage.Poses)
+					{
+						cell.Clear();
+					}
+				}
+			}
+			else if (grid.SelectedColumns.Count > 0)
+			{
+				DataGridViewColumn[] toDelete = new DataGridViewColumn[grid.SelectedColumns.Count];
+				for (int i = 0; i < grid.SelectedColumns.Count; i++)
+				{
+					toDelete[i] = grid.SelectedColumns[i];
+				}
+
+				RemoveColumn(toDelete);
+			}
+			else if (grid.SelectedCells.Count > 0)
+			{
+				foreach (DataGridViewCell cell in grid.SelectedCells)
+				{
+					ClearCell(cell);
+				}
+			}
+		}
+
+		private void ClearCell(DataGridViewCell cell)
+		{
+			PoseEntry pose = cell.Tag as PoseEntry;
+			if (pose == null || _sheet == null)
+			{
+				return;
+			}
+			cell.Tag = null;
+			_cells.Remove(pose);
+			PoseStage stage = _sheet.Stages[cell.RowIndex];
+			stage.RemoveCell(pose.Key);
+			cell.Value = EmptyImage;
+		}
+
+		private void tsAddMain_Click(object sender, EventArgs e)
+		{
+			HashSet<string> requiredImages = _skin.GetRequiredPoses(true);
+			foreach (string key in requiredImages.OrderBy(i => i))
+			{
+				if (!_columns.ContainsKey(key))
+				{
+					AddColumn(key);
+				}
+			}
+		}
+
+		private void cmdFolder_Click(object sender, EventArgs e)
+		{
+			string directory = _skin.GetDirectory();
+			try
+			{
+				ProcessStartInfo startInfo = new ProcessStartInfo()
+				{
+					Arguments = directory,
+					FileName = "explorer.exe"
+				};
+
+				Process.Start(startInfo);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+		}
+	}
+
+	public class CellClipboardData
+	{
+		private List<Tuple<Point, PoseEntry>> _cells = new List<Tuple<Point, PoseEntry>>();
+
+		public int Left { get; private set; }
+		public int Top { get; private set; }
+		public int Width { get; private set; }
+		public int Height { get; private set; }
+
+		public IEnumerable<Tuple<Point, PoseEntry>> Cells
+		{
+			get { return _cells; }
+		}
+
+		public int Count
+		{
+			get { return _cells.Count; }
+		}
+
+		public CellClipboardData(DataGridViewSelectedCellCollection selection)
+		{
+			int minRow = int.MaxValue;
+			int minCol = int.MaxValue;
+			int maxRow = int.MinValue;
+			int maxCol = int.MaxValue;
+			foreach (DataGridViewCell cell in selection)
+			{
+				PoseEntry copy = new PoseEntry() { Key = cell.OwningColumn.Name };
+				PoseEntry pose = cell.Tag as PoseEntry;
+				pose?.CopyPropertiesInto(copy);
+
+				Tuple<Point, PoseEntry> item = new Tuple<Point, PoseEntry>(new Point(cell.OwningColumn.DisplayIndex, cell.RowIndex), copy);
+				minRow = Math.Min(minRow, cell.RowIndex);
+				maxRow = Math.Max(maxRow, cell.RowIndex);
+				minCol = Math.Min(minCol, cell.OwningColumn.DisplayIndex);
+				maxCol = Math.Max(maxCol, cell.OwningColumn.DisplayIndex);
+				_cells.Add(item);
+			}
+
+			Left = minCol;
+			Top = minRow;
+			Height = maxRow - minRow;
+			Width = maxCol - minCol;
+
+			//adjust everything relative to 0,0
+			for (int i = 0; i < _cells.Count; i++)
+			{
+				Tuple<Point, PoseEntry> item = _cells[i];
+				Point pt = item.Item1;
+				Point relPt = new Point(pt.X - minCol, pt.Y - minRow);
+				_cells[i] = new Tuple<Point, PoseEntry>(relPt, item.Item2);
+			}
+		}
+	}
+
+	public class ColumnClipboardItem
+	{
+		public int Index;
+		public string Name;
+		public List<PoseEntry> Rows = new List<PoseEntry>();
+
+		public ColumnClipboardItem(DataGridViewColumn column)
+		{
+			Name = column.Name;
+			Index = column.DisplayIndex;
+			DataGridView grid = column.DataGridView;
+			for (int i = 0; i < grid.Rows.Count; i++)
+			{
+				DataGridViewRow row = grid.Rows[i];
+				DataGridViewCell cell = row.Cells[column.Name];
+				PoseEntry pose = cell.Tag as PoseEntry;
+				if (pose != null)
+				{
+					PoseEntry copy = new PoseEntry();
+					pose.CopyPropertiesInto(copy);
+					Rows.Add(copy);
+				}
+				else
+				{
+					Rows.Add(null);
+				}
+			}
+		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
+	}
+
+	public class ColumnClipboardData
+	{
+		private List<ColumnClipboardItem> _columns = new List<ColumnClipboardItem>();
+
+		public ColumnClipboardData(DataGridViewSelectedColumnCollection selection)
+		{
+			int left = int.MaxValue;
+			foreach (DataGridViewColumn col in selection)
+			{
+				left = Math.Min(left, col.DisplayIndex);
+				ColumnClipboardItem item = new ColumnClipboardItem(col);
+				_columns.Add(item);
+			}
+
+			//make all columns relative to the leftmost
+			foreach (ColumnClipboardItem item in _columns)
+			{
+				item.Index -= left;
+			}
+		}
+
+		public IEnumerable<ColumnClipboardItem> Columns
+		{
+			get
+			{
+				return _columns;
+			}
+		}
+	}
+
+	public class RowClipboardData
+	{
+		private List<PoseStage> _rows = new List<PoseStage>();
+
+		public IEnumerable<PoseStage> Rows
+		{
+			get { return _rows; }
+		}
+
+		public RowClipboardData(DataGridViewSelectedRowCollection selection)
+		{
+			int top = int.MaxValue;
+			foreach (DataGridViewRow row in selection)
+			{
+				top = Math.Min(top, row.Index);
+				PoseStage data = null;
+				PoseStage stage = row.Tag as PoseStage;
+				if (stage != null)
+				{
+					data = new PoseStage();
+					stage.CopyPropertiesInto(data);
+					data.Poses = new ObservableCollection<PoseEntry>();
+					foreach (PoseEntry pose in stage.Poses)
+					{
+						data.Poses.Add(pose.Clone() as PoseEntry);
+					}
+				}
+				_rows.Add(data);
+			}
+
+			foreach (PoseStage stage in _rows)
+			{
+				if (stage != null)
+				{
+					stage.Stage -= top;
+				}
 			}
 		}
 	}

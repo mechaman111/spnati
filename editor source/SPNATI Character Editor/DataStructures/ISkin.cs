@@ -30,7 +30,7 @@ namespace SPNATI_Character_Editor
 		/// Gets a list of pose names that the skin requires
 		/// </summary>
 		/// <returns></returns>
-		HashSet<string> GetRequiredPoses();
+		HashSet<string> GetRequiredPoses(bool stageless);
 		/// <summary>
 		/// Associated character
 		/// </summary>

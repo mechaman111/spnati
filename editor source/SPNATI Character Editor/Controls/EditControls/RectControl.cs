@@ -51,7 +51,11 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 
 		protected override void OnSave()
 		{
-			base.OnSave();
+			int left = (int)valLeft.Value;
+			int top = (int)valTop.Value;
+			int width = (int)valWidth.Value;
+			int height = (int)valHeight.Value;
+			SetValue(new Rect(left, top, left + width, top + height));
 		}
 	}
 

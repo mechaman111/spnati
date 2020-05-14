@@ -964,7 +964,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		public HashSet<string> GetRequiredPoses()
+		public HashSet<string> GetRequiredPoses(bool stageless)
 		{
 			return null;
 		}

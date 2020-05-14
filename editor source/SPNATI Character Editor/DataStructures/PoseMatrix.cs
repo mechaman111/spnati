@@ -3,6 +3,7 @@ using Desktop.DataStructures;
 using KisekaeImporter.ImageImport;
 using SPNATI_Character_Editor.Controls.EditControls;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
@@ -54,8 +55,19 @@ namespace SPNATI_Character_Editor.DataStructures
 		/// <summary>
 		/// Adds a new sheet
 		/// </summary>
+		/// <param name="name"></param>
 		/// <param name="name">Sheet name. Will be made unique if necessary</param>
 		public PoseSheet AddSheet(string name)
+		{
+			return AddSheet(name, null);
+		}
+
+		/// <summary>
+		/// Adds a new sheet
+		/// </summary>
+		/// <param name="name">Sheet name. Will be made unique if necessary</param>
+		/// <param name="basis">Sheet to duplicate</param>
+		public PoseSheet AddSheet(string name, PoseSheet basis)
 		{
 			name = GetUniqueSheetName(name);
 			PoseSheet sheet = new PoseSheet()
@@ -63,6 +75,20 @@ namespace SPNATI_Character_Editor.DataStructures
 				Name = name
 			};
 			Sheets.Add(sheet);
+
+			if (basis != null)
+			{
+				foreach (PoseStage basisStage in basis.Stages)
+				{
+					PoseStage stage = basisStage.Clone() as PoseStage;
+					sheet.Stages.Add(stage);
+					stage.Poses = new ObservableCollection<PoseEntry>();
+					foreach (PoseEntry pose in basisStage.Poses)
+					{
+						stage.Poses.Add(pose.Clone() as PoseEntry);
+					}
+				}
+			}
 
 			return sheet;
 		}
@@ -126,6 +152,11 @@ namespace SPNATI_Character_Editor.DataStructures
 		{
 			get { return Get<ObservableCollection<PoseStage>>(); }
 			set { Set(value); }
+		}
+
+		public override string ToString()
+		{
+			return Name;
 		}
 
 		/// <summary>
@@ -240,17 +271,16 @@ namespace SPNATI_Character_Editor.DataStructures
 				stage.Sort();
 			}
 		}
-
+		
 		/// <summary>
-		/// Moves a column to the specified index
+		/// Reorders columns to match the order
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="newIndex"></param>
-		public void MoveColumn(string key, int newIndex)
+		/// <param name="expectedOrder"></param>
+		public void ReorderColumns(List<string> expectedOrder)
 		{
 			foreach (PoseStage stage in Stages)
 			{
-				stage.MoveCell(key, newIndex);
+				stage.Reorder(expectedOrder);
 			}
 		}
 
@@ -315,6 +345,56 @@ namespace SPNATI_Character_Editor.DataStructures
 			return Poses.Find(p => p.Key == key);
 		}
 
+		/// <summary>
+		/// Inserts a cell into the stage
+		/// </summary>
+		/// <param name="cell">Cell to insert</param>
+		/// <param name="order">Expected order cells to help determine where to place it (otherwise order won't be preserved in the grid next time opening this)</param>
+		public void InsertCell(PoseEntry cell, List<string> order)
+		{
+			//try to figure out the best index
+			int index = order.IndexOf(cell.Key);
+			if (index == -1)
+			{
+				//if it's not even in the order, just tack it on the end
+				Poses.Add(cell);
+				return;
+			}
+
+			//look for a previous item and insert after it
+			for (int i = index - 1; i >= 0; i--)
+			{
+				string neighborKey = order[i];
+				for (int j = 0; j < Poses.Count; j++)
+				{
+					if (Poses[j].Key == neighborKey)
+					{
+						//found a previous key. Assume it's the closest and just insert after it
+						Poses.Insert(j + 1, cell);
+						return;
+					}
+				}
+			}
+
+			//look for a next item and insert before it
+			for (int i = index + 1; i < order.Count; i++)
+			{
+				string neighborKey = order[i];
+				for (int j = Poses.Count - 1; j >= 0; j--)
+				{
+					if (Poses[j].Key == neighborKey)
+					{
+						//found a previous key. Assume it's the closest and just insert after it
+						Poses.Insert(j, cell);
+						return;
+					}
+				}
+			}
+
+			//no neighbors found, so just add it
+			Poses.Add(cell);
+		}
+
 		public void RemoveCell(string key)
 		{
 			for (int i = 0; i < Poses.Count; i++)
@@ -328,29 +408,12 @@ namespace SPNATI_Character_Editor.DataStructures
 		}
 
 		/// <summary>
-		/// Moves a cell to a new index
+		/// Reorders cells to match the expected order
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="newIndex"></param>
-		public void MoveCell(string key, int newIndex)
+		/// <param name="expectedOrder"></param>
+		public void Reorder(List<string> expectedOrder)
 		{
-			for (int i = 0; i < Poses.Count; i++)
-			{
-				PoseEntry pose = Poses[i];
-				if (pose.Key == key)
-				{
-					Poses.RemoveAt(i);
-					if (newIndex >= Poses.Count)
-					{
-						Poses.Add(pose);
-					}
-					else
-					{
-						Poses.Insert(newIndex, pose);
-					}
-					break;
-				}
-			}
+			Poses.Sort((p1, p2) => expectedOrder.IndexOf(p1.Key).CompareTo(expectedOrder.IndexOf(p2.Key)));
 		}
 
 		/// <summary>
@@ -409,6 +472,11 @@ namespace SPNATI_Character_Editor.DataStructures
 		{
 			get { return Get<bool>(); }
 			set { Set(value); }
+		}
+
+		public override string ToString()
+		{
+			return Key;
 		}
 	}
 }
