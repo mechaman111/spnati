@@ -1118,7 +1118,7 @@ OpponentSelectionCard.prototype.update = function () {
         alt: this.opponent.layers + " layers",
     }).show() ;
     this.genderIcon.attr({
-        src: this.opponent.gender === 'male' ? 'img/male.png' : 'img/female.png',
+        src: this.opponent.gender === 'male' ? 'img/male.svg' : 'img/female.svg',
         alt: this.opponent.gender.initCap(),
     }).show();
 
