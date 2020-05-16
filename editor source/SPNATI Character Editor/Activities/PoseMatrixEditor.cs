@@ -259,17 +259,16 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void UpdateCell(DataGridViewCell cell, PoseEntry pose)
 		{
+			if (cell == null && !_cells.TryGetValue(pose, out cell))
+			{
+				return;
+			}
 			int stage = cell.RowIndex;
 			string key = GetKey(stage.ToString(), pose.Key);
 			string filePath = Path.Combine(_skin.GetDirectory(), key + ".png");
 
 			if (!string.IsNullOrEmpty(pose.Code))
 			{
-				if (cell == null && !_cells.TryGetValue(pose, out cell))
-				{
-					return;
-				}
-
 				//see if physical file exists
 				if (File.Exists(filePath))
 				{

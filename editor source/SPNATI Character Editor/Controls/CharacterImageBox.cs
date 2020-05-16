@@ -116,8 +116,9 @@ namespace SPNATI_Character_Editor.Controls
 
 			int screenWidth = (int)(canvas.Height * 1.33f);
 
-			float size = 14 * (screenWidth / 1000f);
-			_textFont = new Font("Trebuchet MS", size == 0 ? 14 : size);
+			const float BaseSize = 12;
+			float size = BaseSize * (screenWidth / 1000f);
+			_textFont = new Font("Trebuchet MS", size == 0 ? BaseSize : size);
 			_italicFont = new Font(_textFont, FontStyle.Italic);
 		}
 
@@ -303,7 +304,7 @@ namespace SPNATI_Character_Editor.Controls
 						Font font = (italics ? _italicFont : _textFont);
 						SizeF textSize = g.MeasureString(text, font);
 						word.Width = textSize.Width;
-						height = Math.Max(textSize.Height, height) - 2;
+						height = Math.Max(textSize.Height, height);
 
 						if (word.Width >= remainingWidth)
 						{

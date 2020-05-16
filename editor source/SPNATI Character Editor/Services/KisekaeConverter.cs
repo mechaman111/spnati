@@ -1,8 +1,9 @@
-﻿using KisekaeImporter;
-using KisekaeImporter.ImageImport;
+﻿using KisekaeImporter.ImageImport;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
@@ -18,6 +19,35 @@ namespace SPNATI_Character_Editor
 			_timer = new System.Timers.Timer(10000);
 			_timer.Elapsed += _timer_Elapsed;
 			_timer.Start();
+		}
+
+		public void WarmUp()
+		{
+			CheckKKL();
+		}
+		
+		private void CheckKKL()
+		{
+			if (!string.IsNullOrEmpty(Config.KisekaeDirectory))
+			{
+				//see what version of kkl is running and complain if it doesn't match
+				try
+				{
+					Process[] p = Process.GetProcessesByName("kkl");
+					if (p.Length > 0)
+					{
+						string file = p[0].MainModule.FileName;
+						if (string.Compare(file, Config.KisekaeDirectory, true) != 0)
+						{
+							if (MessageBox.Show($"Looks like you're running a different version of kkl.exe than the editor is configured to use, which will cause image attachments to fail.\r\n\r\nDo you want me to switch the editor to use {file}?", "Character Editor", MessageBoxButtons.YesNo) == DialogResult.Yes)
+							{
+								Config.KisekaeDirectory = file;
+							}
+						}
+					}
+				}
+				catch { }
+			}
 		}
 
 		private void _timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

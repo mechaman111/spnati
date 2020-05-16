@@ -213,7 +213,26 @@ namespace SPNATI_Character_Editor
 
 		public DialogueLine Copy()
 		{
-			DialogueLine copy = MemberwiseClone() as DialogueLine;
+			DialogueLine copy = new DialogueLine();
+			//previously this used MemberwiseClone, but that clones registered event handlers too which is bad
+			copy._image = this._image;
+			copy._pose = this._pose;
+			copy.LegacyText = this.LegacyText;
+			copy._text = this._text;
+			copy._oneShotId = this._oneShotId;
+			copy._marker = this._marker;
+			copy._direction = this._direction;
+			copy._location = this._location;
+			copy._gender = this._gender;
+			copy._intelligence = this._intelligence;
+			copy._size = this._size;
+			copy._label = this._label;
+			copy._weight = this._weight;
+			copy.IsGenericImage = this.IsGenericImage;
+			copy._collectibleId = this._collectibleId;
+			copy._collectibleValue = this._collectibleValue;
+			copy._persistent = this._persistent;
+
 			copy.Images = new List<StageImage>();
 			foreach (StageImage img in Images)
 			{
