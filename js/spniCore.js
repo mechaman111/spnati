@@ -1033,33 +1033,28 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
 Opponent.prototype.loadXMLTriggers = function () {
     var deferred = $.Deferred();
 
-    var triggerQueue = this.xml.find('>behaviour>trigger').get();
-    if (triggerQueue.length <= 0) {
-        deferred.resolveWith(this, [0]);
-        return deferred.promise();
-    }
+    var $cases = this.xml.find('>behaviour>trigger>case');
 
-    var loadItemsTotal = this.xml.find('>behaviour>trigger>case').length;
+    var loadItemsTotal = $cases.length;
+    if (loadItemsTotal == 0) {
+        return deferred.resolveWith(this, [0]).promise();
+    }
     var loadItemsCompleted = 0;
 
-    function process(tag, elemQueue) {
+    function process() {
         var startTS = performance.now();
 
         /* break tasks into roughly 50ms chunks */
         while (performance.now() - startTS < 50) {
-            while (elemQueue.length <= 0) {
-                /* If triggerQueue is empty, then we are done. */
-                if (triggerQueue.length <= 0) {
-                    return deferred.resolveWith(this, [loadItemsCompleted]);
-                }
-
-                let $trigger = $(triggerQueue.shift());
-                tag = $trigger.attr('id');
-                elemQueue = $trigger.children('case').get();
+            if (loadItemsCompleted >= loadItemsTotal) {
+                deferred.resolveWith(this, [loadItemsCompleted]);
+                return;
             }
 
-            let c = new Case($(elemQueue.shift()));
-            this.recordTargetedCase(c);            
+            let $case = $($cases.get(loadItemsCompleted));
+            let c = new Case($case);
+            let tag = $case.parent().attr('id');
+            this.recordTargetedCase(c);
 
             c.getStages().forEach(function (stage) {
                 var key = tag+':'+stage;
@@ -1074,14 +1069,10 @@ Opponent.prototype.loadXMLTriggers = function () {
         }
 
         deferred.notifyWith(this, [loadItemsCompleted, loadItemsTotal]);
-        setTimeout(process.bind(this, tag, elemQueue), 50);
+        setTimeout(process.bind(this), 10);
     }
 
-    let $trigger = $(triggerQueue.shift());
-    let tag = $trigger.attr('id');
-    let cases = $trigger.children('case').get();
-
-    setTimeout(process.bind(this, tag, cases), 0);
+    setTimeout(process.bind(this), 0);
     return deferred.promise();
 }
 
@@ -1098,30 +1089,27 @@ Opponent.prototype.loadXMLTriggers = function () {
 Opponent.prototype.loadXMLStages = function (onComplete) {
     var deferred = $.Deferred();
 
-    var stageQueue = this.xml.find('>behaviour>stage').get();
-    if (stageQueue.length <= 0) {
-        deferred.resolveWith(this, [0]);
-        return deferred.promise();
-    }
+    var $cases = this.xml.find('>behaviour>stage>case');
 
-    var loadItemsTotal = this.xml.find('>behaviour>stage>case').length;
+    var loadItemsTotal = $cases.length;
+    if (loadItemsTotal == 0) {
+        return deferred.resolveWith(this, [0]).promise();
+    }
     var loadItemsCompleted = 0;
 
-    function process(stage, elemQueue) {
+    function process() {
         var startTS = performance.now();
 
+        /* break tasks into roughly 50ms chunks */
         while (performance.now() - startTS < 50) {
-            while (elemQueue.length <= 0) {
-                if (stageQueue.length <= 0) {
-                    return deferred.resolveWith(this, [loadItemsCompleted]);
-                }
-
-                let $stage = $(stageQueue.shift());
-                stage = parseInt($stage.attr('id'), 10);
-                elemQueue = $stage.children('case').get();
+            if (loadItemsCompleted >= loadItemsTotal) {
+                deferred.resolveWith(this, [loadItemsCompleted]);
+                return;
             }
 
-            let c = new Case($(elemQueue.shift()));
+            let $case = $($cases.get(loadItemsCompleted));
+            let c = new Case($case);
+            let stage = $case.parent().attr('id');
             this.recordTargetedCase(c);
 
             var key = c.tag + ':' + stage;
@@ -1130,19 +1118,15 @@ Opponent.prototype.loadXMLStages = function (onComplete) {
             }
 
             this.cases.get(key).push(c);
-            
+
             loadItemsCompleted++;
         }
 
-        deferred.notifyWith(this, [loadItemsCompleted, loadItemsTotal])
-        setTimeout(process.bind(this, stage, elemQueue), 50);
+        deferred.notifyWith(this, [loadItemsCompleted, loadItemsTotal]);
+        setTimeout(process.bind(this), 10);
     }
 
-    let $stage = $(stageQueue.shift());
-    let stage = parseInt($stage.attr('id'), 10);
-    let cases = $stage.children('case').get();
-
-    setTimeout(process.bind(this, stage, cases), 0);
+    setTimeout(process.bind(this), 0);
     return deferred.promise();
 }
 
