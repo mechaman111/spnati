@@ -27,6 +27,10 @@ namespace SPNATI_Character_Editor
 			_timer.Start();
 		}
 
+		public void WarmUp()
+		{
+		}
+
 		private void _timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 		{
 			_timer.Stop();

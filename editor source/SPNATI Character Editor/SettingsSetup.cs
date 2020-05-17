@@ -138,14 +138,7 @@ namespace SPNATI_Character_Editor
 			Config.PrefixFilter = txtFilter.Text;
 			Config.BackupEnabled = chkAutoBackup.Checked;
 			Config.AutoOpenConditions = chkInitialAdd.Checked;
-			if (txtKisekae.Text != Config.KisekaeDirectory)
-			{
-				if (!string.IsNullOrEmpty(Config.KisekaeDirectory))
-				{
-					CopyKisekaeImagesTo(txtKisekae.Text);
-				}
-				Config.KisekaeDirectory = txtKisekae.Text;
-			}
+			Config.KisekaeDirectory = txtKisekae.Text;
 			Config.SuppressDefaults = !chkDefaults.Checked;
 			Config.UseSimpleTree = !chkCaseTree.Checked;
 			Config.ColorTargetedLines = chkColorTargets.Checked;
@@ -183,24 +176,6 @@ namespace SPNATI_Character_Editor
 			Config.Save();
 			Shell.Instance.PostOffice.SendMessage(DesktopMessages.SettingsUpdated);
 			Close();
-		}
-
-		private void CopyKisekaeImagesTo(string newPath)
-		{
-			string oldDir = Path.Combine(Path.GetDirectoryName(Config.KisekaeDirectory), "images");
-			string newDir = Path.Combine(Path.GetDirectoryName(newPath), "images");
-			try
-			{
-				if (!Directory.Exists(newDir))
-				{
-					Directory.CreateDirectory(newDir);
-				}
-				foreach (string file in Directory.EnumerateFiles(oldDir))
-				{
-					File.Copy(file, Path.Combine(newDir, Path.GetFileName(file)));
-				}
-			}
-			catch { }
 		}
 
 		private void cmdCancel_Click(object sender, EventArgs e)

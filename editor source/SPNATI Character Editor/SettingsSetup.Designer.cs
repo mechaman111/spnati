@@ -55,6 +55,7 @@
 			this.txtFilter = new Desktop.Skinning.SkinnedTextBox();
 			this.tabsSections = new Desktop.Skinning.SkinnedTabControl();
 			this.tabGeneral = new System.Windows.Forms.TabPage();
+			this.chkWarnIncomplete = new Desktop.Skinning.SkinnedCheckBox();
 			this.label7 = new Desktop.Skinning.SkinnedLabel();
 			this.chkStatuses = new Desktop.Skinning.SkinnedCheckedListBox();
 			this.skinnedLabel5 = new Desktop.Skinning.SkinnedLabel();
@@ -99,7 +100,6 @@
 			this.chkWorkflowTracer = new Desktop.Skinning.SkinnedCheckBox();
 			this.stripSections = new Desktop.Skinning.SkinnedTabStrip();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
-			this.chkWarnIncomplete = new Desktop.Skinning.SkinnedCheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valFrequency)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valLifetime)).BeginInit();
@@ -473,6 +473,17 @@
 			this.tabGeneral.Size = new System.Drawing.Size(447, 242);
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
+			// 
+			// chkWarnIncomplete
+			// 
+			this.chkWarnIncomplete.AutoSize = true;
+			this.chkWarnIncomplete.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkWarnIncomplete.Location = new System.Drawing.Point(9, 197);
+			this.chkWarnIncomplete.Name = "chkWarnIncomplete";
+			this.chkWarnIncomplete.Size = new System.Drawing.Size(189, 17);
+			this.chkWarnIncomplete.TabIndex = 14;
+			this.chkWarnIncomplete.Text = "Warn about incomplete characters";
+			this.chkWarnIncomplete.UseVisualStyleBackColor = true;
 			// 
 			// label7
 			// 
@@ -1080,17 +1091,6 @@
 			this.skinnedPanel1.Size = new System.Drawing.Size(657, 30);
 			this.skinnedPanel1.TabIndex = 14;
 			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
-			// 
-			// chkWarnIncomplete
-			// 
-			this.chkWarnIncomplete.AutoSize = true;
-			this.chkWarnIncomplete.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkWarnIncomplete.Location = new System.Drawing.Point(9, 197);
-			this.chkWarnIncomplete.Name = "chkWarnIncomplete";
-			this.chkWarnIncomplete.Size = new System.Drawing.Size(189, 17);
-			this.chkWarnIncomplete.TabIndex = 14;
-			this.chkWarnIncomplete.Text = "Warn about incomplete characters";
-			this.chkWarnIncomplete.UseVisualStyleBackColor = true;
 			// 
 			// SettingsSetup
 			// 

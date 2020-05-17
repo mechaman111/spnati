@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
@@ -18,11 +19,13 @@ namespace SPNATI_Character_Editor
 		private static int _currentConverter = -1;
 		private static IKisekaeConverter _converter = new KisekaeConverter();
 		private static BackgroundQueue _workerQueue = new BackgroundQueue();
+		private static bool _warmed;
 
 		public static void SetConverter(int converter)
 		{
 			if (_currentConverter != converter)
 			{
+				_warmed = false;
 				_currentConverter = converter;
 				switch (converter)
 				{
@@ -182,6 +185,11 @@ namespace SPNATI_Character_Editor
 				CropInfo = crop,
 				ExtraData = extraData
 			};
+			if (!_warmed)
+			{
+				_converter.WarmUp();
+				_warmed = true;
+			}
 			return await _workerQueue.QueueTask(() => { return _converter.Generate(data, true, false); }, 1, null, 0);
 		}
 
@@ -192,6 +200,11 @@ namespace SPNATI_Character_Editor
 			ImageMetadata data = new ImageMetadata("raw", code.ToString());
 			data.SkipPreprocessing = skipPreprocessing;
 			data.ExtraData = extraData;
+			if (!_warmed)
+			{
+				_converter.WarmUp();
+				_warmed = true;
+			}
 			return await _workerQueue.QueueTask(() => { return _converter.Generate(data, false, false); }, 1, null, 0);
 		}
 	}
@@ -237,5 +250,6 @@ namespace SPNATI_Character_Editor
 	public interface IKisekaeConverter
 	{
 		Image Generate(ImageMetadata metadata, bool crop, bool allowCache);
+		void WarmUp();
 	}
 }
