@@ -938,6 +938,10 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				foreach (PoseEntry pose in stage.Poses)
 				{
+					if (string.IsNullOrEmpty(pose.Code))
+					{
+						continue;
+					}
 					string key = GetKey(stage.Stage.ToString(), pose.Key);
 					string filename = key + ".png";
 					string fullPath = Path.Combine(_skin.GetDirectory(), filename);
@@ -963,6 +967,10 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				foreach (PoseEntry pose in stage.Poses)
 				{
+					if (string.IsNullOrEmpty(pose.Code))
+					{
+						continue;
+					}
 					ImageMetadata metadata = CreateMetadata(stage, pose);
 					toImport.Add(metadata);
 				}

@@ -623,6 +623,14 @@ namespace SPNATI_Character_Editor
 			}
 
 			bool success = ExportXml(skin, Path.Combine(dir, "costume.xml"));
+			PoseMatrix matrix = CharacterDatabase.GetPoseMatrix(skin, false);
+			if (success)
+			{
+				if (matrix != null)
+				{
+					success = ExportXml(matrix, Path.Combine(dir, "poses.xml"));
+				}
+			}
 			return success;
 		}
 
