@@ -1333,17 +1333,17 @@ function Case($xml) {
     }
     
     this.states = [];
-    $xml.find('state').each(function (idx, elem) {
+    $xml.children('state').each(function (idx, elem) {
         this.states.push(new State($(elem), this));
     }.bind(this));
     
     this.counters = [];
-    $xml.find("condition").each(function (idx, elem) {
+    $xml.children("condition").each(function (idx, elem) {
         this.counters.push(new Condition($(elem)));
     }.bind(this));
     
     var tests = [];
-    $xml.find("test").each(function () {
+    $xml.children("test").each(function () {
         tests.push($(this));
     });
     this.tests = tests;

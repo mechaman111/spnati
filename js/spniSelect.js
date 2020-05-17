@@ -298,7 +298,7 @@ function loadListingFile () {
 			var available = {};
 
             /* start by checking which characters will be loaded and available */
-            $xml.find('individuals>opponent').each(function () {
+            $xml.find('>individuals>opponent').each(function () {
                 var oppStatus = $(this).attr('status');
                 var id = $(this).text();
                 if (oppStatus === undefined || oppStatus === 'testing' || includedOpponentStatuses[oppStatus]) {
@@ -306,7 +306,7 @@ function loadListingFile () {
                 }
             });
 
-			$xml.find('groups>group').each(function () {
+			$xml.find('>groups>group').each(function () {
                 var title = $(this).attr('title');
                 var background = $(this).attr('background') || undefined;
 				var opp1 = $(this).attr('opp1');
@@ -330,7 +330,7 @@ function loadListingFile () {
             /* now actually load the characters */
             var oppDefaultIndex = 0; // keep track of an opponent's default placement
 
-            $xml.find('individuals>opponent').each(function () {
+            $xml.find('>individuals>opponent').each(function () {
                 var oppStatus = $(this).attr('status');
                 var id = $(this).text();
                 var releaseNumber = $(this).attr('release');
@@ -1492,7 +1492,7 @@ function countLinesImages(xml) {
     var poses = new Set();
     
     var matched = $(xml).find('state').get();
-    var layers = $(xml).find('wardrobe>clothing').length;
+    var layers = $(xml).find('>wardrobe>clothing').length;
     var deferred = $.Deferred();
     
     /* Avoid blocking the UI by breaking the work into smaller chunks. */

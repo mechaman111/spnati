@@ -81,13 +81,13 @@ function Collectible(xmlElem, player) {
 	this.image = xmlElem.attr('img');
 	this.thumbnail = xmlElem.attr('thumbnail') || this.image;
 	this.status = xmlElem.attr('status');
-	this.title = unescapeHTML(xmlElem.find('title').text());
-	this.subtitle = unescapeHTML(xmlElem.find('subtitle').text());	
-	this.unlock_hint = unescapeHTML(xmlElem.find('unlock').text());
-	this.text = unescapeHTML(xmlElem.find('text').html());
-    this.detailsHidden = xmlElem.find('hide-details').text() === 'true';
-    this.hidden = xmlElem.find('hidden').text() === 'true';
-    this.counter = parseInt(xmlElem.find('counter').text(), 10) || undefined;
+    this.title = unescapeHTML(xmlElem.children('title').text());
+    this.subtitle = unescapeHTML(xmlElem.children('subtitle').text());
+    this.unlock_hint = unescapeHTML(xmlElem.children('unlock').text());
+    this.text = unescapeHTML(xmlElem.children('text').html());
+    this.detailsHidden = xmlElem.children('hide-details').text() === 'true';
+    this.hidden = xmlElem.children('hidden').text() === 'true';
+    this.counter = parseInt(xmlElem.children('counter').text(), 10) || undefined;
     
     if (this.counter <= 0) this.counter = undefined;
     
@@ -538,8 +538,8 @@ function doEpilogueFromGallery(){
 			
 			var endingElem = null;
 			
-			$xml.find('epilogue').each(function () {
-				if ($(this).find('title').html() === epilogue.title && $(this).attr('gender') === epilogue.gender) {
+			$xml.children('epilogue').each(function () {
+				if ($(this).children('title').html() === epilogue.title && $(this).attr('gender') === epilogue.gender) {
 					endingElem = this;
 				}
 			});
@@ -558,13 +558,10 @@ function doEpilogueFromGallery(){
 			epilogue = parseEpilogue(player, endingElem);
 
 			/* Load forward-declarations for persistent markers. */
-			var persistentMarkers = $xml.find('persistent-markers');
-			if (typeof persistentMarkers !== typeof undefined && persistentMarkers) {
-				$(persistentMarkers).find('marker').each(function (i, elem) {
-					var markerName = $(elem).text();
-					player.persistentMarkers[markerName] = true;
-				});
-			}
+			$xml.find('>persistent-markers>marker').each(function (i, elem) {
+				var markerName = $(elem).text();
+				player.persistentMarkers[markerName] = true;
+			});
 
 			/* Execute marker operations. */
 			epilogue.markers.forEach(function(markerOp) {
