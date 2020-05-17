@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.6.1 at 4:43:56 AM on May 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.1 at 3:08:54 PM on May 16, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.6.1</version>
+    <version>v5.7.1</version>
     <first>Moon</first>
     <last />
     <label>Moon</label>
@@ -53,6 +53,24 @@
     </wardrobe>
 
     <poses>
+        <pose id="0-stripping_bra">
+            <sprite id="stripping_bra" src="moon/0-stripping_bra.png" x="0" y="0" alpha="100" />
+            <sprite id="stripping_bra2" src="moon/0-stripping_bra2.png" x="0" y="0" alpha="0" />
+            <sprite id="stripping_bra3" src="moon/0-stripping_bra3.png" x="0" y="0" alpha="0" />
+            <directive type="animation" id="stripping_bra" ease="linear" interpolation="none">
+                <keyframe time="0" src="moon/0-stripping_bra.png" alpha="100" />
+                <keyframe time="0.75" alpha="0" />
+            </directive>
+            <directive type="animation" id="stripping_bra2" ease="linear" interpolation="none">
+                <keyframe time="0" src="moon/0-stripping_bra2.png" alpha="0" />
+                <keyframe time="0.75" alpha="100" />
+                <keyframe time="1.5" alpha="0" />
+            </directive>
+            <directive type="animation" id="stripping_bra3" ease="linear" interpolation="none">
+                <keyframe time="0" src="moon/0-stripping_bra3.png" alpha="0" />
+                <keyframe time="1.5" alpha="100" />
+            </directive>
+        </pose>
         <pose id="1-flash_panic_b">
             <sprite id="1-flash_panic_b_left" src="moon/1-flash_panic_b_left.png" x="0" y="0" />
             <directive type="animation" id="1-flash_panic_b_left" loop="true" ease="linear" interpolation="none">
@@ -835,7 +853,7 @@
             <case stage="0-7">
                 <condition role="other" character="tomoko" sayingMarker="moon_maurice" />
                 <test expr="~tomoko.position~" value="left" />
-                <state img="#-scared.png" marker="moon_tomoko_long_nails">What the fuck? How do you even service yourself with nails that long, Tomoko?</state>
+                <state img="#-confused.png" marker="moon_tomoko_long_nails">What the fuck? How do you even service yourself with nails that long, Tomoko?</state>
             </case>
             <case stage="0-7">
                 <condition role="other" character="tomoko" sayingMarker="moon_nicknameslut" />
@@ -1106,12 +1124,20 @@
                 <state img="#-cantstrip_b.png" marker="moon_elesa_that_sucks">Wait, this note says that repeat offenders can't go straight to the good stuff. Man, that sucks.</state>
                 <state img="#-cantstrip.png" marker="moon_elesa_sounds_like_management">You're sounding just like the management, Elesa. They told me I'm not supposed to go straight for the good stuff first anymore...</state>
             </case>
-            <case stage="0" id="51">
+            <case stage="0" id="130">
+                <test expr="~self.costume~" value="full_moon" />
                 <state img="#-stripping_bra.png">I bet you didn't see this coming! I'm taking off my bra!</state>
                 <state img="#-stripping_bra.png">I'm taking off my bra! From under my shirt!</state>
                 <state img="#-stripping_bra.png">And... no more bra!</state>
                 <state img="#-stripping_bra.png">No more bra! Ta-dah!</state>
                 <state img="#-stripping_bra.png">My bra won't be getting in the way when I lose my shirt next round!</state>
+            </case>
+            <case stage="0" id="51">
+                <state img="custom:#-stripping_bra">I bet you didn't see this coming! I'm taking off my bra!</state>
+                <state img="custom:#-stripping_bra">I'm taking off my bra! From under my shirt!</state>
+                <state img="custom:#-stripping_bra">And... no more bra!</state>
+                <state img="custom:#-stripping_bra">No more bra! Ta-dah!</state>
+                <state img="custom:#-stripping_bra">My bra won't be getting in the way when I lose my shirt next round!</state>
             </case>
             <case stage="1" id="50">
                 <state img="#-cantstrip.png">Fuck, I just remembered. I promised the management I wouldn't remove all my clothes immediately.</state>
@@ -1245,7 +1271,7 @@
                 <state img="#-sad_d.png">If I lost, I was gonna remove... actually, I should keep it a surprise.</state>
                 <state img="#-sad_d.png">I wish I was the one stripping. You are gonna cum in your pants when you see what I'm going to strip!</state>
                 <state img="#-confused.png">Ugh, I really don't like it when somebody else has less clothing than me.</state>
-                <state img="#-stripping_bra.png">Damn, I was gonna strip off my... actually, I think you'd like the surprise!</state>
+                <state img="#-sad_d.png">Damn, I was gonna strip off my... actually, I think you'd like the surprise!</state>
                 <state img="#-joy.png">I think we're both waiting for when I strip. You aren't going to &lt;i&gt;believe&lt;/i&gt; what I'm gonna take off!</state>
                 <state img="#-apology.png">But I was going to remove... actually, I'll keep it a surprise. You'll see why!</state>
                 <state img="#-apology.png">I was gonna take off... actually, I won't say. But you're going to LOVE it!</state>
@@ -5449,7 +5475,7 @@
             <case stage="0">
                 <condition role="other" character="dark_magician_girl" />
                 <test expr="~self.costume~" value="default" />
-                <state img="#-stripping_bra.png" oneShotId="47" marker="moon_dmg_dark_magic">It seems like ~player~ is in the mood for a little dark magic.</state>
+                <state img="#-smug_b.png" oneShotId="47" marker="moon_dmg_dark_magic">It seems like ~player~ is in the mood for a little dark magic.</state>
             </case>
             <case stage="0" oneShotId="2">
                 <condition count="0" filter="corrin_m" />
