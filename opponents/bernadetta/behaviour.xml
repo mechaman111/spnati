@@ -1,0 +1,1301 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--This file was machine generated using the Character Editor v5.7.3 at 4:49:36  on Mai 18, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<opponent>
+    <version>v5.7.3</version>
+    <first>Bernadetta</first>
+    <last>von Varley</last>
+    <label>Bernadetta</label>
+    <gender>female</gender>
+    <size>small</size>
+    <timer>20</timer>
+    <intelligence>average</intelligence>
+
+    <tags>
+        <tag>purple_hair</tag>
+        <tag>exotic_hair</tag>
+        <tag>short_hair</tag>
+        <tag>messy_hair</tag>
+        <tag>pale_eyes</tag>
+        <tag>pale-skinned</tag>
+        <tag>pubic_hair</tag>
+        <tag>small_breasts</tag>
+        <tag>school_uniform</tag>
+        <tag>perverted</tag>
+        <tag>shut_in</tag>
+        <tag>shy</tag>
+        <tag>enf</tag>
+        <tag>fantasy</tag>
+        <tag>video_game</tag>
+        <tag>fire_emblem</tag>
+        <tag>nintendo</tag>
+        <tag>fighter</tag>
+        <tag>student</tag>
+        <tag>fe_three_houses</tag>
+    </tags>
+
+
+    <wardrobe>
+        <clothing name="panties" generic="panties" position="lower" type="important" plural="true" />
+        <clothing name="bra" generic="bra" position="upper" type="important" />
+        <clothing name="spats" generic="spats" position="lower" type="major" plural="true" />
+        <clothing name="hoodie" generic="hoodie" position="upper" type="major" />
+        <clothing name="boots" generic="boots" position="feet" type="minor" plural="true" />
+        <clothing name="uniform bottom" generic="uniform bottom" position="lower" type="minor" />
+        <clothing name="uniform top" generic="uniform top" position="upper" type="minor" />
+    </wardrobe>
+
+
+    <behaviour>
+        <trigger id="selected">
+            <case stage="0">
+                <test expr="~weekday.number~" value="7" />
+                <state img="#-uncomfortable.png">I know it's not unusual to take special seminars on a Sunday, but I'd have preferred to stay in my room today...</state>
+            </case>
+            <case stage="0">
+                <condition count="2-" filter="shy" />
+                <state img="#-thinking.png">This is the social interaction practice seminar, right? S-seems like I'm not the only one here for it...</state>
+            </case>
+            <case stage="0">
+                <state img="#-uncomfortable.png">I-Is this the place for the seminar? Bernadetta von Varley should be on the list? O-okay, good...</state>
+                <state img="#-thinking.png">Is this the place the professor told me about? I-I hope so... &lt;i&gt;(But... some of these people don't seem like they need a social interaction practice seminar like this? No, Bernie! No! Don't pretend like you know them! Stupid!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="game_start">
+            <case stage="0">
+                <state img="#-default.png">Dorothea told me about this "social interaction practice" seminar that they were hosting. She said there'd be 4 other people at most, so I decided I might as well take it...</state>
+                <state img="#-surprised.png">A-are you the professor of this  "social interaction practice" seminar, ~player~? Y-you don't look quite like one... O-oh well...</state>
+                <state img="#-surprised.png">Uhh... cards? I thought this was a "social interaction practice" seminar... Does playing cards really have anything to do with helping in social situations?</state>
+                <state img="#-comfortable.png">So is this why Dorothea invited me to play poker with the other girls? I looked up how to play, but I didn't actually join them...</state>
+            </case>
+        </trigger>
+
+        <trigger id="swap_cards">
+            <case stage="0-7">
+                <test expr="~cards~" value="0" />
+                <state img="#-surprised.png">Oh, um... Just ignore me, dealer. I don't think I need any others...</state>
+                <state img="#-uncomfortable.png">A hand like this off the bat? I don't trust it...</state>
+            </case>
+            <case stage="0-7">
+                <test expr="~cards~" value="1" />
+                <state img="#-default.png">I only need the one swapped, please...</state>
+                <state img="#-uncomfortable.png">I only want to swap one card... if it's not a nuisance...</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-default.png">Um... give me ~cards~ cards, please...</state>
+                <state img="#-thinking.png">Oh, I'll swap ~cards~ of these...</state>
+                <state img="#-timid.png">Er, can I have ~cards~ new cards? If not, it's okay...</state>
+            </case>
+        </trigger>
+
+        <trigger id="good_hand">
+            <case stage="0-7">
+                <state img="#-comfortable.png">Oh! I may not lose with these!</state>
+                <state img="#-happy.png">Thank Seiros for this hand, I don't wanna lose.</state>
+                <state img="#-default.png">Hope this is good for something...</state>
+            </case>
+            <case stage="0-4">
+                <state img="#-thinking.png">Um, is this as good as it gets?</state>
+                <state img="#-comfortable.png">Maybe this'll help me keep steady.</state>
+                <state img="#-happy.png">This hand... I guess I've got some talent.</state>
+            </case>
+            <case stage="5-7">
+                <state img="#-upset.png">Old Bernie isn't gonna lose this time!</state>
+            </case>
+        </trigger>
+
+        <trigger id="okay_hand">
+            <case stage="0-4">
+                <state img="#-happy.png">More than I could ask for.</state>
+                <state img="#-timid.png">Just ignore me... I'll try not to stand out...</state>
+                <state img="#-uncomfortable.png">Just to make things clear; I'm not lonely when I'm sitting in my room all day! I'm just, um, very isolated! ...On purpose!</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-default.png">These are... alright, I guess?</state>
+            </case>
+            <case stage="5-7">
+                <state img="#-uncomfortable.png">These probably aren't enough, knowing my luck...</state>
+                <state img="#-uncomfortable.png">Ugh, I can feel someone's eyes on me... I bet they're imagining dirty things about Bernie...</state>
+                <state img="#-scared.png">Wah! W-was someone staring at me? I hope no-one plans to do anything to me...</state>
+                <state img="#-default.png">Maybe I'm not the best at cards, but I can improve too, you know...</state>
+            </case>
+        </trigger>
+
+        <trigger id="bad_hand">
+            <case stage="0-7">
+                <state img="#-uncomfortable.png">Oh, Seiros...</state>
+                <state img="#-uncomfortable.png">This seems about right for old Bernie...</state>
+                <state img="#-uncomfortable.png">I'm sure to lose with these ones...</state>
+                <state img="#-uncomfortable.png">I'd... rather retreat.</state>
+                <state img="#-shocked.png">Anywhere I can hide...?</state>
+                <state img="#-uncomfortable.png">What did I expect...?</state>
+                <state img="#-uncomfortable.png">Bernie's just no good...</state>
+                <state img="#-back.png">Just ignore me this round... I'll try to pretend I'm a rock, or something...</state>
+            </case>
+            <case stage="5-6">
+                <state img="#-uncomfortable.png">&lt;i&gt;(Come on, Bernie! If you don't play better, everyone's going to see some bare Bernie butt soon...)&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="hand">
+            <case stage="3" priority="300">
+                <condition role="self" notSaidMarker="isPlayerProf" />
+                <state img="#-timid.png" marker="isPlayerProf">Is it okay if I call you 'Professor', ~player~? You have similar aura like my professor in the monastery. It would give me the confidence to go on.</state>
+            </case>
+            <case stage="0-7" oneShotId="1">
+                <condition role="other" character="lucina" stage="1" />
+                <state img="#-pleading.png">C-can you forgive me for calling you Marth, Princess Lucina? I promise I won't make that mistake again!</state>
+                <state img="#-pleading.png">I'm so sorry for mistaking you for Marth, Princess Lucina! Please don't hurt me!</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip">
+            <case stage="0" totalRounds="0" priority="300">
+                <state img="#-shocked.png">Why do I have to go first!? Stripping is still better than being forced to do yard duty with Hubert to gain confidence, but I wanted to get used to the situation here first!</state>
+            </case>
+            <case stage="1">
+                <condition role="self" consecutiveLosses="2" />
+                <state img="#-uncomfortable.png">&lt;i&gt;(Why did they stop me last round, when they want me to take off the bottom part of my uniform right after anyway?)&lt;/i&gt;</state>
+            </case>
+            <case stage="2-4">
+                <condition role="self" consecutiveLosses="2" />
+                <state img="#-uncomfortable.png">Again? Of course &lt;i&gt;I'm&lt;/i&gt; losing this badly...</state>
+                <state img="#-scared.png">Twice in a row? Is everyone teaming up against me? Do they want me to lose?</state>
+            </case>
+            <case stage="2-4">
+                <condition role="self" consecutiveLosses="3" />
+                <state img="#-shocked.png">Three times? Even taking a critical hit doesn't feel &lt;i&gt;this&lt;/i&gt; bad...!</state>
+            </case>
+            <case stage="6">
+                <condition role="self" consecutiveLosses="2" />
+                <state img="#-scared.png">You wanted me out of my undies that fast? What do you plan to do with me!?</state>
+            </case>
+            <case stage="0">
+                <state img="#-shocked.png">I lost? Does this mean I have to strip too? B-but... I already got braver just by watching the others strip...</state>
+            </case>
+            <case stage="5">
+                <state img="#-flustered.png">I lost? But I can't! My breasts are really sensitive to cold. And also...</state>
+            </case>
+            <case stage="6">
+                <state img="#-uncomfortable.png">I can feel everyone's attention... It was their goal to get Bernie naked and defenseless from the very beginning...</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip_winning">
+            <case stage="1-4">
+                <state img="#-uncomfortable.png">I knew I wouldn't be allowed to be this lucky for long...</state>
+                <state img="#-timid.png">Bernie doesn't deserve to win anyway...</state>
+                <state img="#-uncomfortable.png">At least I didn't lose first. I'd hate to be the first one embarrassed. It'd be so awkward!</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip_normal">
+            <case stage="1-4">
+                <state img="#-uncomfortable.png">I'm okay with playing this strange game. But can I play from behind a door?</state>
+                <state img="#-timid.png">Can we play this game in my room? It'd make this all much easier...</state>
+                <state img="#-timid.png">I guess I lose, then... Just, um... don't stare! ...I'm not worth staring at, anyway...</state>
+                <state img="#-timid.png">M-my turn, right? Alright! &lt;i&gt;(You can do it, Bernie! You take your clothes off all the time! Just pretend you're in your room!)&lt;/i&gt;</state>
+                <state img="#-uncomfortable.png">Me? Ugh, I'm nervous...&lt;i&gt;(I should've brought my teddy bear... he always calms me down...)&lt;/i&gt;</state>
+                <state img="#-shocked.png">Me again? Can't I sit it out?</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_strip_losing">
+            <case stage="1-4">
+                <state img="#-uncomfortable.png">I'm... uh, feeling very very ill! *cough* I need to go back to the dorms!  ...No one's buying it, are they...?</state>
+                <state img="#-shocked.png">What kind of game is this!? And why do I keep losing!?</state>
+                <state img="#-upset.png">From now on, I hate poker! And I hate Bernie's luck!</state>
+                <state img="#-upset.png">&lt;i&gt;(Why do you keep losing, Bernie? Do you WANT to strip naked?)&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="stripping">
+            <case stage="0">
+                <state img="#-strip.png">I guess I have no other choice but to s-strip, then... But somehow, it doesn't feel as weird as I feared... It's just the uniform top, after all...</state>
+            </case>
+            <case stage="1">
+                <state img="#-strip.png">Did you know that you're allowed to customize your uniform to a certain degree, ~player~? I sewed this skirt myself.</state>
+                <state img="#-strip.png">I can afford to lose this much, because I wear spats under my uniform. You have move a lot in battle to not get hit, and I don't want to flash my panties all the time like Hilda does...</state>
+            </case>
+            <case stage="2">
+                <state img="#-strip.png">I'm pretty surprised that I can just take my clothes off without panicking. I guess it's because of you, ~player~. You kind of... relax me.</state>
+            </case>
+            <case stage="3">
+                <state img="#-strip.png">Good bye, hoodie... I'll never understand why most students prefer a shirt to the comfort you offer...</state>
+            </case>
+            <case stage="4">
+                <state img="#-strip.png">It's fine Bernie... you're always like this in your room...</state>
+            </case>
+            <case stage="5">
+                <state img="#-strip.png"> I know they aren't as big as the others... I can always feel how the others pity me for them. Even if they don't say it.</state>
+            </case>
+            <case stage="6">
+                <state img="#-strip.png">You shouldn't worry too much, Bernie! If anyone can't hold back after seeing you naked, I'm sure the professor would protect you. If the professor is here you can get fully...exposed.</state>
+            </case>
+        </trigger>
+
+        <trigger id="stripped">
+            <case stage="7" priority="5">
+                <condition count="1-3" />
+                <state img="#-after.png">Nobody has ever seen me like this before... I even cover my teddy bear's eyes when getting changed... Only you two...</state>
+            </case>
+            <case stage="1">
+                <state img="#-after.png">Okay, and now the bottom part... I-I can strip more? Oh... good? &lt;i&gt;(Oh no, I overdid it! Now everyone will think Bernie is a exhibitionist...)&lt;/i&gt;</state>
+            </case>
+            <case stage="2">
+                <state img="#-after.png">Ah! I forgot how tight-fitting these spats are... &lt;i&gt;(They'll all be after Bernie's butt now, for sure...)&lt;/i&gt;</state>
+            </case>
+            <case stage="3">
+                <state img="#-after.png">Still, next time, I'lI have no other choice but to strip something big... &lt;i&gt;(You can do it, Bernie! Just think of something you like!)&lt;/i&gt;</state>
+            </case>
+            <case stage="4">
+                <state img="#-after.png">By the way, this is our house's underwear. If it were up to me, I'd have worn something less tight in a plainer color. Maybe black?</state>
+            </case>
+            <case stage="5">
+                <state img="#-after.png">&lt;i&gt;(That's good, Bernie. Focus all your attention on your balance. Don't think about how embarrassing it is to lose-)&lt;/i&gt; Uwahhh, I'm falling!</state>
+            </case>
+            <case stage="6">
+                <state img="#-after.png">I'd prefer it if you didn't touch them... Even if you've heard from someone how "soft and well-shaped they are".</state>
+                <state img="#-after.png">I may be eighteen already, but I have a good feeling that they will get bigger... someday. So no need to tease me about them!</state>
+            </case>
+            <case stage="7">
+                <state img="#-after.png">Nobody has ever seen me like this before... I even cover my teddy bear's eyes when getting changed... Only you and these others, Professor...</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_human_must_strip">
+            <case stage="0-7 9">
+                <condition role="self" saidMarker="isPlayerProf" />
+                <state img="#-timid.png">You're used to being watched, right, Professor? Is it okay if I catch a glimpse, as well?</state>
+                <state img="#-comfortable.png">Somehow, I'm not even nervous, if you're the one who has to strip. Calling you "Professor" really helps!</state>
+                <state img="#-thinking.png">&lt;i&gt;(Is it okay to look at the professor when he strips? He would never get angry with me, would he...?)&lt;/i&gt;</state>
+                <state img="#-surprised.png">So even someone who plays this game as much as you can lose from time to time, Professor?</state>
+                <state img="#-comfortable.png">Is it okay if I watch you, Professor? It would give me a lot of confidence...</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">Just what I wanted to see right now... You're being so nice to me.</state>
+                <state img="#-default.png">You lost the round for me, didn't you, Professor?</state>
+                <state img="#-default.png">You may have lost, but you also made me happy, Professor.</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_must_strip">
+            <case stage="0-9">
+                <condition filter="aggressive" role="target" />
+                <state img="#-scared.png">&lt;i&gt;(~Name~ is scary! He wants to kill me! Or worse...!)&lt;/i&gt;</state>
+                <state img="#-scared.png">Noooo! Now he'll be even more angry than before...!</state>
+                <state img="#-scared.png">&lt;i&gt;(My life is over! ~Name~ will definitely take it out on me! You're done for, Bernie!)&lt;/i&gt;</state>
+                <state img="#-scared.png">&lt;i&gt;(He scares me! He's mad, he's furious, he wants to kill Bernie! I know it!!)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-surprised.png">Oh, someone else lost? T-that's uh... good?</state>
+                <state img="#-pleading.png">Please don't hate me for not losing this round!</state>
+                <state img="#-pleading.png">I know it's partly my fault that you lost, but please don't hurt me!</state>
+                <state img="#-default.png">&lt;i&gt;(If I don't move, ~name~ won't notice me, and won't blame me for having a better hand than him!)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-4">
+                <state img="#-scared.png">Why did ~name~, of all people, lose this round? He already had his eyes on me! Now he'll hate me even more!</state>
+            </case>
+            <case stage="5-7">
+                <state img="#-uncomfortable.png">T-that's too bad, but better someone else than me!</state>
+                <state img="#-timid.png">Someone always has to lose, but as long as it isn't me, then...</state>
+                <state img="#-scared.png">I-Is it bad that I'm kinda glad that someone else lost? ...I-I don't mean it in a mean way, so please spare me!</state>
+            </case>
+            <case stage="8">
+                <state img="#-comfortable.png">I admit, I've often looked when the guys strip...</state>
+                <state img="#-default.png">This might be better than just imagining things alone in my room...</state>
+                <state img="#-default.png">I was just imagining ~name~ stripping next...</state>
+                <state img="#-default.png">~Name~'s lost, but I don't care. I'm a naughty girl...</state>
+            </case>
+            <case stage="9">
+                <state img="#-timid.png">B-Bernie isn't here! She won't watch anyone stripping!</state>
+                <state img="#-thinking.png">&lt;i&gt;(Is it alright to look at the others, even if you can't be any braver than you already were?)&lt;/i&gt;</state>
+                <state img="#-flustered.png">I won't look! ...Unless there's a chance I could still learn something new!</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_human_must_strip">
+            <case stage="0-7 9">
+                <condition role="self" saidMarker="isPlayerProf" />
+                <state img="#-timid.png">You're used to being watched, right, Professor? Is it okay if I catch a glimpse, as well?</state>
+                <state img="#-comfortable.png">Somehow, I'm not even nervous, if you're the one who has to strip. Calling you "Professor" really helps!</state>
+                <state img="#-thinking.png">&lt;i&gt;(Is it okay to look at the professor when she strips? She would never get angry with me, would she...?)&lt;/i&gt;</state>
+                <state img="#-surprised.png">So even someone who plays this game as much as you can lose from time to time, Professor?</state>
+                <state img="#-comfortable.png">Is it okay if I watch you, Professor? It would give me a lot of confidence...</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">Just what I wanted to see right now... You're being so nice to me.</state>
+                <state img="#-default.png">You lost the round for me, didn't you, Professor?</state>
+                <state img="#-default.png">You may have lost, but you also made me happy, Professor.</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_must_strip">
+            <case stage="0-9">
+                <condition role="target" character="lyn" stage="0" />
+                <state img="#-uncomfortable.png">&lt;i&gt;(So this is the famous Lyn. I've heard so much about her, and apparently she's super popular in the castle... Maybe I should avoid her...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="rinkah" stage="0" />
+                <state img="#-shocked.png">&lt;i&gt;(Eeeeek! The warrior princess looked my way!)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="florina" stage="0" />
+                <state img="#-timid.png">Y-you're one of those Pegasus Knights from another world, right? I-I heard you also have issues talking to people...</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="lucina" />
+                <state img="#-surprised.png">&lt;i&gt;(O-oh, isn't that Marth? The hero king of legend? I've heard he's really nice to people...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-9">
+                <condition filter="aggressive" role="target" />
+                <state img="#-scared.png">&lt;i&gt;(~Name~ is scary! She wants to kill me! Or worse...!)&lt;/i&gt;</state>
+                <state img="#-scared.png">Noooo! Now she'll be even more angry than before...!</state>
+                <state img="#-scared.png">&lt;i&gt;(My life is over! ~Name~ will definitely take it out on me! You're done for, Bernie!)&lt;/i&gt;</state>
+                <state img="#-scared.png">&lt;i&gt;(She scares me! She's mad, she's furious, she wants to kill Bernie! I know it!!)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-surprised.png">Oh, someone else lost? T-that's uh... good?</state>
+                <state img="#-pleading.png">Please don't hate me for not losing this round!</state>
+                <state img="#-pleading.png">I know it's partly my fault that you lost, but please don't hurt me!</state>
+            </case>
+            <case stage="0-4">
+                <state img="#-default.png">&lt;i&gt;(If I don't move, ~name~ won't notice me, and won't blame me for having a better hand than her!)&lt;/i&gt;</state>
+                <state img="#-scared.png">Why did ~name~, of all people, lose this round? She already had her eyes on me! Now she'll hate me even more!</state>
+            </case>
+            <case stage="5-7">
+                <state img="#-uncomfortable.png">T-that's too bad, but better someone else than me!</state>
+                <state img="#-timid.png">Someone always has to lose, but as long as it isn't me, then...</state>
+                <state img="#-scared.png">I-Is it bad that I'm kinda glad that someone else lost? ...I-I don't mean it in a mean way, so please spare me!</state>
+                <state img="#-default.png">&lt;i&gt;(If I don't move, ~name~ won't notice me, and won't blame me for having a better hand than him!)&lt;/i&gt;</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">~Name~'s lost, but I don't care. I'm a naughty girl...</state>
+                <state img="#-default.png">Even if ~name~ is stripping, I'll continue having my own fun...</state>
+                <state img="#-default.png">I'm used to having fun like this while everyone else is distracted doing other things... but no-one's noticed yet.</state>
+            </case>
+            <case stage="9">
+                <state img="#-default.png">Just ignore me and do what you have to do...</state>
+                <state img="#-timid.png">B-Bernie isn't here! She won't watch anyone stripping!</state>
+                <state img="#-thinking.png">&lt;i&gt;(Is it alright to look at the others, even if you can't be any braver than you already were?)&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="tie">
+            <case stage="0-9">
+                <state img="#-shocked.png">W-what is this? Did I break something? ...It's a tie?</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removing_accessory">
+            <case stage="0-7">
+                <condition status="not_decent" role="target" />
+                <state img="#-shocked.png">Aaaah! I forgot that you only have... Y-you still have your ~clothing~ left?</state>
+                <state img="#-shocked.png">B-but you're already... Wait, I'm not ready to see your... Oh, you still have your ~clothing~?</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-comfortable.png">Oh, you're still doing fine. So you won't blame me then... R-right?</state>
+                <state img="#-thinking.png">So if he's only taking off his ~clothing~ this time, he won't be angry for too long that I stole his victory this round, right?</state>
+                <state img="#-pleading.png">I bet your ~clothing~ ~clothing.ifPlural(were|was)~ very valuable... Please, don't be angry with me!</state>
+                <state img="#-timid.png">I like crafting small accessories. Maybe I should try to make ~clothing.ifPlural(|a)~ ~clothing~ next time...</state>
+                <state img="#-uncomfortable.png">&lt;i&gt;(~Name~'s ~clothing~ ~clothing.ifPlural(aren't big items|isn't that big an item)~... Still, I think ~name~ looks pretty irritated...)&lt;/i&gt;</state>
+            </case>
+            <case stage="8">
+                <state img="#-uncomfortable.png">I'm sure he's only losing his ~clothing~ because he wants to bully Bernie...</state>
+                <state img="#-upset.png">~clothing~~clothing.ifPlural(|s)~ are stupid!</state>
+                <state img="#-flustered.png">Just that? He's definitely teasing Bernie on purpose...</state>
+            </case>
+            <case stage="9">
+                <state img="#-default.png">I don't mind that his ~clothing~ ~clothing.ifPlural(are|is)~ getting more attention than me.</state>
+                <state img="#-uncomfortable.png">Hard to believe that just a few moments ago, I was so horny about something like that....</state>
+                <state img="#-surprised.png">~Name~ still had something like that? D-did I play the game wrong? Were we supposed to keep stuff like that for so long?</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removed_accessory">
+            <case stage="0-7">
+                <condition status="not_decent" role="target" />
+                <state img="#-upset.png">You tricked me! I thought you would... you would...</state>
+                <state img="#-timid.png">I guess it's good that you still had something small to remove, right?</state>
+                <state img="#-surprised.png">For a moment I really thought you were out of options...</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-flustered.png">That wasn't as bad as expected! N-not that I expected anything bad, I just... &lt;i&gt;(Oh, well done, Bernie. Now ~name~ definitely  hates you...)&lt;/i&gt;</state>
+                <state img="#-uncomfortable.png">I'm sure ~name~ is blaming Bernie for losing that item... I have to be cautious.</state>
+                <state img="#-timid.png">Normally I'd say something like &lt;i&gt;"If you've lost something, the professor will bring it back to you!"&lt;/i&gt;, but I doubt he'd bring back your ~clothing~...</state>
+                <state img="#-flustered.png">Oh! That wasn't a good conversation starter, was it...? I'm sorry! I'm just no good at socializing...</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">But I like it, somehow~♥</state>
+                <state img="#-upset.png">I deserve better than that!</state>
+                <state img="#-timid.png">Bernie will continue to have fun, with or without ~name~'s ~clothing~.</state>
+            </case>
+            <case stage="9">
+                <state img="#-uncomfortable.png">I bet his ~clothing~ ~clothing.ifPlural(are|is)~ still more relevant than me, though...</state>
+                <state img="#-timid.png">I still think that it looked good on you...!</state>
+                <state img="#-default.png">Can I go back to my room, Professor? It doesn't look like anything special will happen here...</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removing_accessory">
+            <case stage="0-9">
+                <condition role="target" character="rinkah" stage="0" />
+                <state img="#-scared.png">&lt;i&gt;(E-Even off the battlefield I'm scared to approach her... she's so scary...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="lucina" />
+                <state img="#-timid.png">Uhm... h-hello Marth, it's really nice to uhh... finally meet you! &lt;i&gt;(Oh goddess, I really screwed that one up, didn't I...?)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7">
+                <condition status="not_decent" role="target" />
+                <state img="#-shocked.png">Aaaah! I forgot that you only have... Y-you still have your ~clothing~ left?</state>
+                <state img="#-shocked.png">B-but you're already... Wait, I'm not ready to see your... Oh, you still have your ~clothing~?</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-comfortable.png">Oh, you're still doing fine. So you won't blame me then... R-right?</state>
+                <state img="#-thinking.png">So if she's only taking off her ~clothing~ this time, she won't be angry for too long that I stole her victory this round, right?</state>
+                <state img="#-pleading.png">I bet your ~clothing~ ~clothing.ifPlural(were|was)~ very valuable... Please, don't be angry with me!</state>
+                <state img="#-timid.png">I like crafting small accessories. Maybe I should try to make ~clothing.ifPlural(|a)~ ~clothing~ next time...</state>
+                <state img="#-uncomfortable.png">~Name~'s ~clothing~ ~clothing.ifPlural(aren't big items|isn't that big an item)~... I think ~name~ looks pretty irritated though.</state>
+                <state img="#-uncomfortable.png">I'm sure the professor is happier that ~name~ is stripping instead of Bernie...</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">Who cares about ~clothing~~clothing.ifPlural(|s)~? Watching the professor is way more fun. Even if he might be more focused on ~name~ right now...?</state>
+                <state img="#-uncomfortable.png">I knew it! She just wants to show off how good she is at this stupid game, because she doesn't like how I'm enjoying myself!</state>
+                <state img="#-thinking.png">&lt;i&gt;(Would it be possible to get the professor's attention, somehow? He seems more focused on ~clothing.ifPlural(those|this)~ ~clothing~ right now...)&lt;/i&gt;</state>
+            </case>
+            <case stage="9">
+                <state img="#-default.png">I don't mind that her ~clothing~ ~clothing.ifPlural(are|is)~ getting more attention than me.</state>
+                <state img="#-surprised.png">~Name~ still had something like that? D-did I play the game wrong? Were we supposed to keep stuff like that for so long?</state>
+                <state img="#-thinking.png">She looks like she's thought a lot about what she will strip, and when...</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removed_accessory">
+            <case stage="0-9">
+                <condition role="target" character="rinkah" stage="1" />
+                <state img="#-scared.png">&lt;i&gt;(S-she's a different kind of scary than Hubert or Felix... I-I really don't want to talk to her...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="lucina" stage="1" />
+                <state img="#-shocked.png">What? I... I made a mistake? &lt;i&gt;(I can't believe I thought that was Marth!)&lt;/i&gt; S-Stupid Bernie!</state>
+            </case>
+            <case stage="0-7">
+                <condition status="not_decent" role="target" />
+                <state img="#-upset.png">You tricked little old me! I thought you'd... you'd...</state>
+                <state img="#-timid.png">I guess it's good that you still had something small to remove, right?</state>
+                <state img="#-surprised.png">For a moment I really thought you were out of options...</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-flustered.png">That wasn't as bad as expected! N-not that I expected anything bad, I just... &lt;i&gt;(Oh, well done, Bernie. Now ~name~ definitely  hates you...)&lt;/i&gt;</state>
+                <state img="#-uncomfortable.png">I'm sure ~name~ is blaming Bernie for losing that item... I have to be cautious.</state>
+                <state img="#-timid.png">Normally I'd say something like &lt;i&gt;"If you've lost something, the professor will bring it back to you!"&lt;/i&gt;, but I doubt he'd bring back your ~clothing~...</state>
+                <state img="#-flustered.png">Oh! That wasn't a good conversation starter, was it...? I'm sorry! I'm just no good at socializing...</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">But I like it, somehow~♥</state>
+                <state img="#-upset.png">I deserve better than that!</state>
+                <state img="#-timid.png">I will continue to have fun, with or without ~name~'s ~clothing~.</state>
+            </case>
+            <case stage="9">
+                <state img="#-uncomfortable.png">I bet her ~clothing~ ~clothing.ifPlural(are|is)~ still more relevant than me, though...</state>
+                <state img="#-timid.png">I still think that it looked good on you...!</state>
+                <state img="#-default.png">Can I go back to my room, Professor? It doesn't look like anything special will happen here anymore.</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removing_minor">
+            <case stage="0-7">
+                <state img="#-flustered.png" marker="sewing">Can I maybe take a look at your ~clothing~, ~name~...? I think I saw a hole... A-ah, never mind... forget I said anything!</state>
+                <state img="#-pleading.png" marker="forgiveMe">Forgive me! I didn't know you'd lose your ~clothing~! I'll go straight back to my room and you'll never see me again. I swear!</state>
+                <state img="#-flustered.png">Your ~clothing~ is, um... pretty? Ah, I can't just talk about clothes casually!</state>
+                <state img="#-flustered.png">Am I allowed to look? I can close my eyes if you want!</state>
+                <state img="#-thinking.png">I wonder if everyone wears ~clothing~~clothing.ifPlural(|s)~ like that where ~name~ is from...</state>
+            </case>
+            <case stage="8">
+                <state img="#-comfortable.png">I love ~clothing~~clothing.ifPlural(|s)~... But I love something else even more~♥</state>
+                <state img="#-flustered.png">Do you know what stripping your ~clothing~ now will do to me...?</state>
+            </case>
+            <case stage="9">
+                <state img="#-pleading.png">Is it my fault that ~name~ has to lose his ~clothing~? I distracted him with all the lewd things I was saying earlier...</state>
+                <state img="#-comfortable.png">I bet ~name~'d be angry at me now since he has to lose his ~clothing~. But fortunately, I'm already out, so he can't blame me!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removed_minor">
+            <case stage="0-7">
+                <condition role="self" saidMarker="sewing==1" />
+                <state img="#-timid.png" marker="sewing=0">I just thought I saw a hole in your ~clothing~. I-I'm good at sewing, you know! I could fix it...</state>
+                <state img="#-uncomfortable.png" marker="sewing=0">If I tried to fix it, it wouldn't turn out good anyway...</state>
+            </case>
+            <case stage="0-7">
+                <condition role="self" saidMarker="forgiveMe==1" />
+                <state img="#-surprised.png" marker="forgiveMe=0">Y-you won't condemn me? I-is it okay to stay, then? ...Okay, I'll stay.</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-scared.png">Eeeheee! I think ~name~ glared at me! Either he's super angry, or he plans to do something dirty with Bernie. Both would be disastrous!</state>
+                <state img="#-flustered.png">I know this is about becoming more social, but... wgat do you say to a man who just took off his ~clothing~...?</state>
+                <state img="#-comfortable.png">C-can't we just talk about something other than ~name~'s ~clothing~? How about cute carnivorous plants?</state>
+                <state img="#-timid.png">You can pretend I'm not here if you want... I'll do the same...</state>
+                <state img="#-thinking.png">I thought this game was supposed to make socializing easier! Though... I guess I &lt;i&gt;am&lt;/i&gt; talking a lot more than usual... I don't know if I've said anything of value, though.</state>
+                <state img="#-back.png">I-I didn't see anything! I was turned away the whole time!</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">I want to see more of that...</state>
+                <state img="#-flustered.png">It ~clothing.ifPlural(were|was)~ only ~clothing.ifPlural(|a)~ ~clothing~... Yet I got so...</state>
+            </case>
+            <case stage="9">
+                <state img="#-surprised.png">~Name~ doesn't seem like he wants to blame me, though? D-Did I finally turn invisible!?</state>
+                <state img="#-uncomfortable.png">So ~name~ isn't going to blame me... But I'm sure he will eventually, if he keeps losing...</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removing_minor">
+            <case stage="0-7">
+                <state img="#-flustered.png" marker="sewing">Can I maybe take a look at your ~clothing~, ~name~...? I think I saw a hole... A-ah, never mind... forget I said anything!</state>
+                <state img="#-pleading.png" marker="forgiveMe">Forgive me! I didn't know you'd lose your ~clothing~! I'll go straight back to my room and you'll never see me again. I swear!</state>
+                <state img="#-flustered.png">You're ~clothing~ ~clothing.ifPlural(are|is)~, um... pretty? Ah, I just can't talk about clothes casually!</state>
+                <state img="#-timid.png">I hope you don't mind me standing here. I can even look away if it bothers you...</state>
+                <state img="#-thinking.png">I wonder if everyone wears ~clothing~~clothing.ifPlural(|s)~ like that where ~name~ is from...</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">Don't let her distract you, Professor! Bernie needs all your attention right now~♥</state>
+                <state img="#-flustered.png">I wish the professor would keep making eye contact with me...</state>
+            </case>
+            <case stage="9">
+                <state img="#-pleading.png">Is it my fault that ~name~ has to lose her ~clothing~? I distracted her with all the lewd things I was saying earlier...</state>
+                <state img="#-comfortable.png">I bet ~name~'d be angry at me now since she has to lose her ~clothing~. But fortunately, I'm already out, so she can't blame me!</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removed_minor">
+            <case stage="0-7">
+                <condition role="self" saidMarker="sewing==1" />
+                <state img="#-timid.png" marker="sewing=0">I just thought I saw a hole in your ~clothing~. I-I'm good at sewing, you know! I could fix it...</state>
+                <state img="#-uncomfortable.png" marker="sewing=0">If I tried to fix it, it wouldn't turn out good anyway...</state>
+            </case>
+            <case stage="0-7">
+                <condition role="self" saidMarker="forgiveMe==1" />
+                <state img="#-surprised.png" marker="forgiveMe=0">Y-you won't condemn me? I-is it okay to stay, then? ...Okay, I'll stay.</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-comfortable.png">C-can't we just talk about something other than ~name~'s ~clothing~? How about cute carnivorous plants?</state>
+                <state img="#-thinking.png">&lt;i&gt;(Think, Bernie, think! There has to be something you can say about ~name~'s ~clothing~...)&lt;/i&gt; Hey, I- oh, she's already done...</state>
+                <state img="#-thinking.png">I thought this game was supposed to make socializing easier! Though... I guess I &lt;i&gt;am&lt;/i&gt; talking a lot more than usual... I don't know if I've said anything of value, though.</state>
+                <state img="#-back.png">I-I didn't see anything! I was turned away the whole time!</state>
+            </case>
+            <case stage="8">
+                <state img="#-comfortable.png">You'll see a lot of women taking off their ~clothing~ in your liifetimes, but you'll never see me doing this again. You should get your priorities straight...</state>
+                <state img="#-happy.png">If the professor watches me, I feel so happy~♥</state>
+            </case>
+            <case stage="9">
+                <state img="#-surprised.png">~Name~ doesn't seem like she wants to blame me, though? D-Did I finally turn invisible!?</state>
+                <state img="#-uncomfortable.png">So ~name~ isn't going to blame me... But I'm sure she will eventually, if she keeps losing...</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removing_major">
+            <case stage="0-7">
+                <state img="#-shocked.png">I-I'm sorry you have to remove your ~clothing~! It's because I still haven't lost that it's come to this...</state>
+                <state img="#-scared.png">&lt;i&gt;(Oh, nononono! ~Name~ has to lose his ~clothing~ because of me! Now you've done it, Bernie! Now you've made an enemy for life!)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7 9">
+                <state img="#-scared.png">&lt;i&gt;(Oh no! ~name~ has to strip his ~clothing~! What do I do? Think, Bernie, think!)&lt;/i&gt;</state>
+                <state img="#-scared.png">Don't blame me for this! Even if it &lt;i&gt;is&lt;/i&gt; really easy to victimize me!</state>
+            </case>
+            <case stage="8">
+                <state img="#-flustered.png">I'd never get the chance to see &lt;i&gt;this&lt;/i&gt; in my room...</state>
+                <state img="#-surprised.png">Is it already time for ~name~'s ~clothing~? Not that I mind, right now...</state>
+            </case>
+            <case stage="9">
+                <state img="#-shocked.png">Why does he only lose his ~clothing~ &lt;i&gt;now?!&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_removed_major">
+            <case stage="0-7 9">
+                <state img="#-scared.png">I can see it in his eyes! First he gets rid of his ~clothing~, then he gets rid of Bernie!!</state>
+                <state img="#-pleading.png">I know your ~clothing~ was important for hiding your underwear, but please don't take it out on me!</state>
+                <state img="#-shocked.png">He lost such a big item, and now he wants to take out his anger on me! I just know it...</state>
+            </case>
+            <case stage="8">
+                <state img="#-comfortable.png">I already have an idea of what ~name~'s hiding under that...</state>
+                <state img="#-timid.png">Somehow, I was hoping he wasn't wearing underwear. I'm so naughty...</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removing_major">
+            <case stage="0-7">
+                <state img="#-back.png">&lt;i&gt;(Of course ~name~'s upset! Just pretend you're a plant, and she can't hurt you, Bernie!)&lt;/i&gt;</state>
+                <state img="#-shocked.png">That wasn't my fault, was it? Your ~clothing~ ~clothing.ifPlural(were|was)~ next anyway, right...?</state>
+                <state img="#-default.png" marker="breath">...!</state>
+            </case>
+            <case stage="8">
+                <state img="#-upset.png">~Name~ just wants the professor for herself. That's the only reason she's taking off her ~clothing~ now...</state>
+                <state img="#-uncomfortable.png">That's not fair! How am I supposed to keep the professor's attention if ~name~ strips something like that!?</state>
+            </case>
+            <case stage="9">
+                <state img="#-shocked.png">Something that big? I bet ~name~ will be in a bad mood now...</state>
+                <state img="#-pleading.png">&lt;i&gt;(She'll definitely want to blame me for that!)&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_removed_major">
+            <case stage="0-7">
+                <condition role="self" saidMarker="breath==1" />
+                <state img="#-faint.png" marker="breath=0">Huahh!! I nearly died... I thought that maybe if I held my breath until it was over, you wouldn't be able to blame me for losing your ~clothing~...</state>
+            </case>
+            <case stage="0-7 9">
+                <state img="#-timid.png">No need to be embarrassed. A girl in the Blue Lions house once headed to practice wearing no more than you are right now...</state>
+                <state img="#-thinking.png">&lt;i&gt;(Looks like I'm safe. Even if ~name~&lt;/i&gt; has &lt;i&gt;lost something big, it doesn't look like she's holding a grudge against me...)&lt;/i&gt;</state>
+                <state img="#-surprised.png">&lt;i&gt;(~Name~ isn't as furious as I thought she'd be, especially after losing her ~clothing~...)&lt;/i&gt;</state>
+            </case>
+            <case stage="8">
+                <state img="#-timid.png">&lt;i&gt;(I should invite the professor somewhere where it can be just the two of us...)&lt;/i&gt;</state>
+                <state img="#-thinking.png">I should do something to get more attention, but I don't want to leave my blanket...</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_chest_will_be_visible">
+            <case stage="0-7">
+                <state img="#-flustered.png">~Name~ has to get topless? Y-you can't scare me with that! I 've seen plenty of bare chests before!</state>
+                <state img="#-upset.png">You want to catch me off-guard by revealing your chest? That won't work! I'm more-or-less used to bare chests!</state>
+                <state img="#-uncomfortable.png">&lt;i&gt;(I see right through ~name~'s plan! He wants to seduce me with his bare chest, but I'm stronger than he thinks!)&lt;/i&gt;</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">I like men's chests. I sometimes watch the boys wash themselves after training...</state>
+            </case>
+            <case stage="9">
+                <state img="#-timid.png">I don't need to look at ~name~'s chest. I know a lot of places where- I mean,  I've seen plenty before!</state>
+                <state img="#-timid.png">No need to be angry at me! I'm not even looking at you, ~name~! I only look at people's chests where I can't be seen!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_chest_is_visible">
+            <case stage="0-9">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="isPlayerProf" />
+                <state img="#-flustered.png">I suddenly feel so... But it's not the first bare chest I've seen, so why..? Is it because it's Professor's?</state>
+            </case>
+            <case stage="0-7 9">
+                <state img="#-flustered.png">I see Raphael, Caspar and Felix train s-shirtless sometimes, so this isn't anything new to me! &lt;i&gt;(Still...)&lt;/i&gt;</state>
+                <state img="#-timid.png">The male grapplers already show so much chest that seeing this doesn't phase me!</state>
+                <state img="#-timid.png">That big guy from the Ashen Wolves always wears his uniform open, so this is nothing new to me!</state>
+            </case>
+            <case stage="8">
+                <state img="#-surprised.png">You don't see a chest like that very often in the monastery.</state>
+                <state img="#-default.png">I could get used to ~name~'s chest. It's quite unique.</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_crotch_will_be_visible">
+            <case stage="0-7">
+                <state img="#-shocked.png">Oh, Seiros! Does this mean he's going to show his-</state>
+                <state img="#-shocked.png">~Name~ has to... Does that mean I get to see one without peeking in the- ...I never said anything!</state>
+                <state img="#-shocked.png">Stay calm, Bernie! This won't be the first time you've seen- ...I mean, it &lt;i&gt;will&lt;/i&gt; be the first time I... I've said too much!!</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">I know the professor will protect me if ~name~ is planning anything, so it's safe for me to take a good look at it...</state>
+            </case>
+            <case stage="9">
+                <state img="#-upset.png">I may be immobile right now, but I'm not defenseless. So don't get any funny ideas, ~name~!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_small_crotch_is_visible">
+            <case stage="0-7 9">
+                <state img="#-flustered.png" oneShotId="1">&lt;i&gt;(That's... not actually that big... oh but I shouldn't say that and offend them, should I?)&lt;/i&gt;</state>
+                <state img="#-flustered.png" oneShotId="10">I've never seen one that small... I mean, I never seen one at all! It's not like I peek at the boys when they're changing, or anything!</state>
+                <state img="#-surprised.png" oneShotId="11">That's all? It's not half the size of the ones I've... &lt;i&gt;(No, Bernie! You shouldn't mention that!)&lt;/i&gt;</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">So cute, but still so lewd...</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_medium_crotch_is_visible">
+            <case stage="0-7 9">
+                <state img="#-flustered.png" oneShotId="12">&lt;i&gt;(S-should I say something about it? I-I don't want to come off the wrong way though...)&lt;/i&gt;</state>
+                <state img="#-flustered.png" oneShotId="13">Oh, Bernie... What have you gotten yourself into...?</state>
+                <state img="#-flustered.png" oneShotId="14">It's just the same size as... Er, don't mind Bernie! She's just talking to herself!</state>
+            </case>
+            <case stage="8">
+                <state img="#-comfortable.png">Should I tell you who has a toy the same size as ~name~'s penis in the monastery, Professor? Do you want to guess?</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_large_crotch_is_visible">
+            <case stage="0-9">
+                <state img="#-scared.png" oneShotId="15">Eeeek! Stay away from me! What do you mean to do with that thing!?</state>
+                <state img="#-scared.png" oneShotId="16">That size... That's more that I could ever handle! &lt;i&gt;(Still... I'd like to try it just once, someday...)&lt;/i&gt;</state>
+                <state img="#-scared.png" oneShotId="17">Why is it so big!? &lt;i&gt;(It scares me, but why do I feel so attracted to it...?)&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_chest_will_be_visible">
+            <case stage="0-7">
+                <state img="#-timid.png">Dorothea always asks me why I look away when the other girls take off their tops when changing... But isn't that what you're supposed to do?</state>
+                <state img="#-flustered.png">I once accidentally followed Edelgard into the sauna, and only realised once she'd taken off her top... That was pretty awkward once she saw me...</state>
+                <state img="#-flustered.png">I-It isn't my fault that ~name~ has to show us her chest, is it?  It's for the game's sake, r-right?</state>
+            </case>
+            <case stage="8">
+                <state img="#-uncomfortable.png">If ~name~ shows her breasts, I'll lose the professor's attention for sure... Stupid blanket! ...But I couldn't do what I'm doing right now without it...</state>
+            </case>
+            <case stage="9">
+                <state img="#-flustered.png">It's not cheating if I'm hiding inside my the blanket, is it? I mean, technically, I had to show my breasts as well...</state>
+                <state img="#-default.png">I hope they all forgot that I'm actually supposed to be showing my breasts as well...</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_small_chest_is_visible">
+            <case stage="0-7 9">
+                <state img="#-happy.png">Small breasts are good, if you don't want to stand out too much. I know what I'm talking about!</state>
+                <state img="#-surprised.png">They really are tiny... Aah! I didn't mean to say that out loud! I wasn't criticizing them! Believe me!!</state>
+                <state img="#-default.png">Small breasts aren't inferior at all! Even Edelgard is modestly-endowed, and she's an admirable person!</state>
+                <state img="#-uncomfortable.png">A smaller chest is better when you're always using a bow, but it also means you get teased... theoretically.</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">The professor would never be distracted by that! And if he is, then that means that the professor likes my size as well!</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_medium_chest_is_visible">
+            <case stage="0-7 9">
+                <state img="#-uncomfortable.png">That's about Ingrid's size... I know because she once dragged me to the washing rooms and soaped me after I once refused to leave my room for three days...</state>
+                <state img="#-thinking.png">I wonder if my breasts will still grow a little...? I mean, I've not long turned 18 on the 12th of the Ethereal Moon.</state>
+                <state img="#-timid.png">All I hear the other girls talking about when it comes to breasts is their size. I like them smaller, but I guess mine will still grow eventually...</state>
+            </case>
+            <case stage="8">
+                <state img="#-upset.png">Don't worry, Professor! I'ill grow bigger than her, someday!</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_large_chest_is_visible">
+            <case stage="0-7 9">
+                <state img="#-thinking.png">There are a lot of well-endowed girls in the monastery as well... Well, at least they draw all the attention away from me, so it's fine.</state>
+                <state img="#-timid.png">I once tripped and fell into Marianne's chest. It was really soft and warm... I just hope she didn't think I did it on purpose.</state>
+                <state img="#-uncomfortable.png">I know size doesn't actually matter, but I feel like most women with big breasts look down on me. I bet they all hate me...</state>
+                <state img="#-uncomfortable.png">I wish I had a chest like Dorothea or Hilda... or maybe even bigger, so I could pick on them!</state>
+            </case>
+            <case stage="8">
+                <state img="#-uncomfortable.png">That's cheating! She just wants the professor for herself...</state>
+                <state img="#-flustered.png">Y-you're not really into those, are you, Professor...? They're way too big to be normal...</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_chest_is_visible">
+            <case stage="0-9">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="isPlayerProf" />
+                <state img="#-flustered.png">I'm looking at the professor's breasts... I feel so... But I'm not into girls... Am I?</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_crotch_will_be_visible">
+            <case stage="0-7">
+                <state img="#-timid.png">Did you know that we have a sauna at the monastery? We go in there in our sport uniforms, but on "girls-only" days, some of the students don't wear anything at all, so...</state>
+                <state img="#-timid.png">I've actually seen more than you'd expect from a shut-in like me... We have our own rooms at the monastery, but we all share the washrooms.</state>
+                <state img="#-flustered.png">&lt;i&gt;This will help you get more self-esteem... This will help you get more self-esteem... This will help you get more self-esteem... This will help you get more self-esteem...&lt;/i&gt;</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">She has to show hers as well? How naughty... But not as naughty as me...</state>
+            </case>
+            <case stage="9">
+                <state img="#-shocked.png">She has to reveal her crotch as well? &lt;i&gt;(I hope no one noticed that mine's been visible under my blanket all this time...)&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_crotch_is_visible">
+            <case stage="0-7 9">
+                <condition filter="hairy" role="target" />
+                <state img="#-surprised.png">I don't maintain my hair or anything, but I doubt it'd grow like that...</state>
+                <state img="#-flustered.png">Should I be glad that my hair down there is naturally tidy, or would that be mean...?</state>
+            </case>
+            <case stage="0-7 9">
+                <condition filter="shaved" role="target" />
+                <state img="#-shocked.png">Y-you actually shaved all the hair down there? You put sharp objects near it...!?</state>
+                <state img="#-uncomfortable.png">Dorothea shaves as well. She says it's because she "doesn't like the idea of getting hair in her mouth"... I probably shouldn't think too hard about what she meant by that.</state>
+            </case>
+            <case stage="0-7 9">
+                <state img="#-flustered.png">I-I accidentally looked at it! I swear it wasn't on purpose! &lt;i&gt;(...~name~ isn't as hairy as I thought she'd be...)&lt;/i&gt;</state>
+                <state img="#-flustered.png">I'm not sure if I'm supposed to look... Some of the girls in the monastery got pretty angry at me when I took a glimpse at them. But there were also those girls who actually wanted me to look...? What should I do now?</state>
+                <state img="#-uncomfortable.png">This sight is kind of familiar... There's this girl that always sits with her legs open in the sauna, so you can see everything...</state>
+            </case>
+            <case stage="8">
+                <state img="#-comfortable.png">Bernie can be a very naughty girl if she's in the mood...</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_lost">
+            <case stage="0" totalRounds="0" priority="300">
+                <state img="#-shocked.png">So the rumors were true... This seminar is really about taking off clothes!</state>
+                <state img="#-shocked.png">So... it &lt;i&gt;wasn't&lt;/i&gt; a joke when Dorothea said this game was about losing clothes?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="self" hasHand="high card" />
+                <state img="#-pleading.png">I'm sorry for having a better hand, even though I had nothing at all! It's all my fault that you lost, but don't hurt me, please!</state>
+                <state img="#-scared.png">Eeeek! I'm sorry! I... I didn't lose this round?</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_stripping">
+            <case stage="0" totalRounds="0" priority="300">
+                <state img="#-flustered.png">T-this is a social seminar, after all... I guess a game like this would certainly make me braver, but still...</state>
+            </case>
+            <case stage="0-9">
+                <condition filter="school_uniform" role="target" />
+                <condition role="self" notSaidMarker="school_uniform0" />
+                <state img="#-thinking.png" marker="school_uniform0">That's a kind of school uniform as well, isn't it? But it's not from a military academy...</state>
+            </case>
+            <case stage="0-9">
+                <test expr="~clothing~" value="belt" />
+                <state img="#-surprised.png">That belt reminds me of the ones on our summer uniforms. I don't like wearing it. It's way too... flashy.</state>
+            </case>
+            <case stage="0-7 9">
+                <test expr="~clothing~" value="belts" />
+                <state img="#-surprised.png">Those belts remind me of the ones on our summer uniforms. I don't like wearing them. They're way too... flashy.</state>
+            </case>
+            <case stage="0-9">
+                <test expr="~clothing~" value="glasses" />
+                <state img="#-thinking.png">Sometimes our professor at the monastery wears glasses as well, but not always. Makes me wonder if it's just a fashion accessory.</state>
+            </case>
+            <case stage="0-9">
+                <test expr="~clothing~" value="hat" />
+                <state img="#-default.png">The monks at the monastery all wear fancy hats. But I never seen one like that.</state>
+            </case>
+            <case stage="0-9">
+                <test expr="~clothing~" value="headphones" />
+                <state img="#-thinking.png">I've been wondering what those are for. Some kind of ear protectors?</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_stripped">
+            <case stage="0-9" priority="500">
+                <condition role="target" character="human" />
+                <test expr="~clothing~" value="belt" />
+                <state img="#-uncomfortable.png">That belt reminds me of the ones on our summer uniforms. I don't like wearing it. It's way too... flashy.</state>
+            </case>
+            <case stage="0-9" priority="500">
+                <test expr="~clothing~" value="glasses" />
+                <state img="#-surprised.png">If you're losing your glasses, does that mean that you don't actually need them to see well? Like my professor at the monastery?</state>
+            </case>
+            <case stage="0-9">
+                <condition status="not_chest_visible" role="target" character="human" />
+                <test expr="~clothing~" value="tanktop" />
+                <state img="#-surprised.png">You have another layer under your tanktop?</state>
+            </case>
+            <case stage="0-9">
+                <condition status="not_chest_visible" role="target" character="human" />
+                <test expr="~clothing~" value="undershirt" />
+                <state img="#-surprised.png">You have another layer under your undershirt?</state>
+            </case>
+            <case stage="0-9">
+                <condition status="not_crotch_visible" role="target" character="human" />
+                <test expr="~clothing~" value="boxers" />
+                <state img="#-surprised.png" marker="underwearTrick">What? How did you take off your boxers when...? Is this some trick?</state>
+            </case>
+            <case stage="0-9">
+                <condition status="not_crotch_visible" role="target" character="human" />
+                <test expr="~clothing~" value="panties" />
+                <state img="#-surprised.png" marker="underwearTrick">What? How can you take off your panties when...? Is this some trick?</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="isPlayerProf" />
+                <test expr="~clothing.type~" value="major" />
+                <state img="#-flustered.png">The professor just got out of ~target.ifMale(his|her)~ ~clothing~... Stay calm, Bernie...</state>
+                <state img="#-flustered.png">What now, Bernie? The professor took off ~target.ifMale(his|her)~ ~clothing~ in front of me... I'm...I'm...</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="isPlayerProf" />
+                <test expr="~clothing.type~" value="minor" />
+                <state img="#-comfortable.png">I'm sure you'll be way more comfortable without your ~clothing~, Professor. We should both be as comfy as possible together!</state>
+                <state img="#-happy.png">You seem so used to it, Professor. It make me comfortable seeing you like this, even if you just lost your ~clothing~.</state>
+                <state img="#-comfortable.png">I bet you don't wear your ~clothing~ when you're alone in your room, are you, Professor? At least, I wouldn't.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="human" />
+                <test expr="~clothing.type~" value="extra" />
+                <state img="#-timid.png">I usually avoid wearing too much fancy stuff, but your ~clothing~ certainly looked... Oh, forget I said anything! I'm sorry!</state>
+                <state img="#-timid.png">You're pretty used to this game, aren't you? I bet you must have a lot of confidence...</state>
+                <state img="#-happy.png">If you like accessories, I could make you some cute ones! I like to sew, and stuff...</state>
+                <state img="#-thinking.png">Maybe I should try to make something like your ~clothing~ next time. J-just for practice, of course!</state>
+            </case>
+            <case stage="0" totalRounds="0" priority="300">
+                <state img="#-upset.png">No, Bernie! You've been through a lot worse than this! Staying here is still better than fighting for your life, or having yard duty with Hubert!</state>
+            </case>
+            <case stage="0-9">
+                <condition filter="school_uniform" role="target" />
+                <condition role="self" notSaidMarker="school_uniform1" />
+                <state img="#-timid.png" marker="school_uniform1">It must be nice to be in a school without any battles at all...</state>
+            </case>
+            <case stage="0-9">
+                <alternative>
+                    <test expr="~clothing~" value="belt" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing~" value="belts" />
+                </alternative>
+                <state img="#-uncomfortable.png">It also reminds me at Ferdinand. He's way too flashy as well...</state>
+            </case>
+            <case stage="0-9">
+                <test expr="~clothing~" value="hat" />
+                <state img="#-timid.png">Sometimes I wish I had a hat so big that I could hide under it...</state>
+            </case>
+            <case stage="0-9">
+                <test expr="~clothing~" value="headphones" />
+                <state img="#-timid.png">Sometimes I too want to cover my ears and drown out all the noise around me...</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_chest_is_visible">
+            <case stage="0-9">
+                <condition role="target" character="human" />
+                <test expr="~clothing~" value="jacket" />
+                <state img="#-shocked.png">Why aren't you wearing anything under your jacket!? And why didn't I notice earlier!?</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_crotch_is_visible">
+            <case stage="0-9">
+                <condition role="self" notSaidMarker="underwearTrick" />
+                <condition role="target" character="human" />
+                <test expr="~clothing~" value="kilt" />
+                <state img="#-shocked.png">So the rumors that people wear nothing under their kilts were true!?</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="underwearTrick" />
+                <test expr="~clothing~" value="pants" />
+                <state img="#-scared.png">It wasn't a trick at all! You really did somehow take off your underwear before your pants, earlier!</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="underwearTrick" />
+                <test expr="~clothing~" value="shorts" />
+                <state img="#-scared.png">It wasn't a trick at all! You really did somehow take off your underwear before your shorts, earlier!</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="human" />
+                <test expr="~clothing~" value="pants" />
+                <state img="#-shocked.png">Why weren't you wearing anything under your pants!? Why would anyone do that?</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="human" />
+                <test expr="~clothing~" value="shorts" />
+                <state img="#-shocked.png">Why weren't you wearing anything under your shorts!? Why would anyone do that?</state>
+            </case>
+            <case stage="0-7 9">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="isPlayerProf" />
+                <state img="#-flustered.png">I swear, I didn't mean to look at it, Professor! Something inside me forced me to do it! &lt;i&gt;(Bernie, what are you doing!? B-but... I can't avert my eyes...)&lt;/i&gt;</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="isPlayerProf" />
+                <state img="#-comfortable.png">I suddenly feel so hot inside, Professor!</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_masturbating">
+            <case stage="0-7">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="isPlayerProf" />
+                <state img="#-surprised.png">This isn't your first time here, right, Professor? At least, it looks like you're used to it...</state>
+                <state img="#-back.png">T-take your time, Professor! I'm not looking! &lt;i&gt;(Actually, I just don't want Professor to see how red my face is right now...)&lt;/i&gt;</state>
+                <state img="#-flustered.png">I'm looking right at the Professor's...! Aah, I didn't mean to stare like that! It's just, you're...</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="isPlayerProf" />
+                <state img="#-default.png">You watch me and I watch you, Professor. Sounds fair, right?</state>
+                <state img="#-happy.png">Together with... the Professor. So...happy...</state>
+            </case>
+            <case stage="9">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="isPlayerProf" />
+                <state img="#-timid.png">Maybe I should invite the professor to spend the night... but... I guess I wouldn't be allowed to invite outsiders...</state>
+                <state img="#-default.png">Could you say some embarrassing stuff to me as well, Professor? Just so we're even.... &lt;i&gt;(I'm also curious about what the professor would say to Bernie...)&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_finished_masturbating">
+            <case stage="8-9">
+                <condition role="target" character="human" />
+                <state img="#-default.png">If you want, you can sneak under my blanket with me, Professor. This offer's only open to you, y'know?</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_must_masturbate">
+            <case stage="0-7 9">
+                <condition role="target" character="human" />
+                <state img="#-flustered.png">Y-you really have to do that, too? O-okay... &lt;i&gt;(So even someone used to the game doesn't win all the time...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7" priority="300">
+                <condition status="not_masturbating" />
+                <condition status="not_finished" />
+                <state img="#-shocked.png">T-that's also part of the game!? Isn't it enough that we already have to strip naked in front of others?</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="human" />
+                <state img="#-surprised.png">You too, Professor? But who will protect me now...?</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-shocked.png">~Name~ has to play with himself in front of us? ...Isn't he worried about us all watching him...?</state>
+                <state img="#-scared.png">~Name~ really needs to do that? But... what if he can't resist Bernie's charm, and ends up...?</state>
+                <state img="#-scared.png">~Name~ really has to do it here? Can't we isolate him, for the girls' safety? Or can I isolate myself from you for the rest of the game...?</state>
+            </case>
+            <case stage="8-9">
+                <state img="#-flustered.png">It might be nice to watch a man doing it without having to stay hidden...</state>
+                <state img="#-pleading.png">Don't get any funny ideas, please! I can't promise anything right now!</state>
+                <state img="#-flustered.png">Don't forget your promise, Professor! Protect me if ~name~ can't control himself!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_start_masturbating">
+            <case stage="0-7 9">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="isPlayerProf" />
+                <state img="#-timid.png">If you need any help, just ask... &lt;i&gt;(What are you saying, Bernie!?)&lt;/i&gt;</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="human" />
+                <state img="#-default.png">Maybe I need to be protected &lt;i&gt;from&lt;/i&gt; the Professor from now on, instead...</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-timid.png">I-if it doesn't bother you, would it be okay to watch?</state>
+                <state img="#-flustered.png">&lt;i&gt;(Keep calm, Bernie! I know you want to see this, but you have to keep your distance!)&lt;/i&gt;</state>
+                <state img="#-timid.png">Well... If you keep your distance, everything should be fine, right?</state>
+            </case>
+            <case stage="8">
+                <state img="#-comfortable.png">I-if you guys promise that I'll be safe, I can take a good look at what ~name~ is doing...</state>
+            </case>
+            <case stage="9">
+                <state img="#-flustered.png">B-but if I do have to stay here, don't be mad if I sneak some peeks at you, ~name~!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_masturbating">
+            <case stage="0-7 9">
+                <state img="#-flustered.png">I just know he's imagining something improper involving me right now! &lt;i&gt;(...Now I'm starting to imagine improper things...)&lt;/i&gt;</state>
+                <state img="#-uncomfortable.png">His eyes... they're saying that he can barely resist the urge to do things to me...!</state>
+                <state img="#-flustered.png">I... I need to hide! &lt;i&gt;(...And watch him closely... from a safe distance.)&lt;/i&gt;</state>
+                <state img="#-flustered.png">I bet ~name~'s imagining holding me tightly right now, and then gently... Aah! &lt;i&gt;(Get a hold of yourself, Bernie!!)&lt;/i&gt;</state>
+            </case>
+            <case stage="8-9">
+                <state img="#-flustered.png">I can see in his eyes that he'd prefer to be playing with me, rather than himself...</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">Please don't imagine doing anything improper with me... &lt;i&gt;(I already have enough dirty thoughts for the both of us...)&lt;/i&gt;</state>
+                <state img="#-default.png">If I let him, would ~name~...? My head is spinning...</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_heavy_masturbating">
+            <case stage="0-7">
+                <state img="#-uncomfortable.png">&lt;i&gt;(I know he wants to aim it at me... I can feel it! He wants to cover me in it!)&lt;/i&gt;</state>
+                <state img="#-uncomfortable.png">~Name~'s face is worrying... He's planning something. Probably with me...</state>
+                <state img="#-uncomfortable.png">I can already read ~name~'s face... but I'm good at avoiding trouble.</state>
+            </case>
+            <case stage="8">
+                <state img="#-flustered.png">Those sounds ~name~ is making... If I wasn't so aroused, I'd have run away by now...</state>
+            </case>
+            <case stage="9">
+                <state img="#-pleading.png">Please! Don't aim  my way! This blanket already needs washing!</state>
+                <state img="#-scared.png">I know I'm protected by my blanket, but don't face this way, please!!</state>
+            </case>
+        </trigger>
+
+        <trigger id="male_finished_masturbating">
+            <case stage="0-9">
+                <state img="#-scared.png">I'm shocked! I'm traumatized! I'm... &lt;i&gt;(Aroused...?)&lt;/i&gt;</state>
+                <state img="#-pleading.png">&lt;i&gt;Don't hit me! Don't hit me! Don't hit me! Don't hit me! Don't hit me! Don't-&lt;/i&gt; ...He didn't aim at me?</state>
+                <state img="#-scared.png">What is that!? I mean, I know what it &lt;i&gt;is&lt;/i&gt;, but why is there so &lt;i&gt;much&lt;/i&gt; of it!?</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_must_masturbate">
+            <case stage="0-7 9">
+                <condition role="target" character="human" />
+                <state img="#-flustered.png">Y-you really have to do that, too? O-okay... &lt;i&gt;(So even someone used to the game doesn't win all the time...)&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7" priority="300">
+                <condition status="not_masturbating" />
+                <condition status="not_finished" />
+                <state img="#-shocked.png">T-that is part of the game!? Isn't it already enough that we have to strip naked in front of others?</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="human" />
+                <state img="#-surprised.png">You too, Professor? But who will protect me now...?</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-shocked.png">~Name~ is out before me, as well...? Great going, Bernie! You've made a ton of new enemies today!</state>
+                <state img="#-shocked.png">You knocked out another opponent, Bernie... Now they have even more reason to hate you...</state>
+                <state img="#-pleading.png">That wasn't on purpose! I swear! Don't hate me for having more luck than you!</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">~Name~ has to join me? ...We don't have to do anything together, right...?</state>
+            </case>
+            <case stage="9">
+                <state img="#-timid.png">Another person's out? It's okay if I don't share my blanket, right?</state>
+                <state img="#-default.png">~Name~ is out? As long as I don't have to share my blanket, I'm okay with it.</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_start_masturbating">
+            <case stage="0-7 9">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="isPlayerProf" />
+                <state img="#-timid.png">If you need any help, just ask... &lt;i&gt;(What are you saying, Bernie!?)&lt;/i&gt;</state>
+            </case>
+            <case stage="8">
+                <condition role="target" character="human" />
+                <state img="#-default.png">Maybe I need to be protected &lt;i&gt;from&lt;/i&gt; the Professor from now on, instead...</state>
+            </case>
+            <case stage="0-7">
+                <state img="#-flustered.png">I bet ~name~ would prefer to do it alone in her room, right? At least, that's what I would prefer...</state>
+                <state img="#-flustered.png">C-can't we add a new rule that you can do it in a separate room where no -ne can see?</state>
+                <state img="#-flustered.png">Just thinking about doing it anywhere other than my room makes me want to die...</state>
+            </case>
+            <case stage="8">
+                <state img="#-comfortable.png">Even if ~name~ has to do it as well, don't forget that you have to watch me, Professor!</state>
+            </case>
+            <case stage="9">
+                <state img="#-uncomfortable.png">I just hope ~name~ doesn't plan on stealing my blanket, because it's super warm and comfy...</state>
+                <state img="#-pleading.png">I know I'm a selfish girl because I don't want to share...</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_masturbating">
+            <case stage="0-7">
+                <state img="#-flustered.png">I wish I were back in my room now... N-not for what you're thinking, Professor!</state>
+                <state img="#-flustered.png">So that's how... Eee! I wasn't looking at all!</state>
+                <state img="#-timid.png">I'm not looking! I'm not even listening to the sounds you're making! I'm just here and... I'm just here.</state>
+                <state img="#-back.png">Don't let me disturb you, ~name~... I'm not looking or thinking anything. I'm not even saying... Wait! I've been talking this whole time, right?</state>
+                <state img="#-flustered.png">This totally reminds me of when I was in the monastery at night, and... Forget I said anything!</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">~Name~ is really enjoying herself... But is she enjoying it as much as I am...?</state>
+                <state img="#-default.png">No need to watch other girls' technique... I know what feels best for me...</state>
+            </case>
+            <case stage="9">
+                <state img="#-surprised.png">I see... So every girl has their own favorite way of doing it...</state>
+                <state img="#-flustered.png">I could never do it that aggressively... I prefer the gentle way.</state>
+                <state img="#-timid.png">I hope you don't mind if I watch. But don't worry! I won't tell anyone...</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_heavy_masturbating">
+            <case stage="0-7">
+                <state img="#-shocked.png">You're that loud when you're about to... Does... does that mean people could hear me when I was behind the door and...</state>
+                <state img="#-flustered.png">She doesn't seem to be aware of anything else right now. Don't tell me someone saw me when I was like that, and I didn't even notice!</state>
+                <state img="#-thinking.png">&lt;i&gt;(I should definitely be careful, if I also moan like that. It would be bad if Bernie was discovered if she did it at daytime...)&lt;/i&gt;</state>
+            </case>
+            <case stage="8">
+                <state img="#-default.png">About to finish, already? I'm lasting longer than you are....</state>
+            </case>
+            <case stage="9">
+                <state img="#-uncomfortable.png">She's so into it... Makes me remember the kinds of naughty stuff I was talking about...</state>
+                <state img="#-flustered.png">I was like that as well, right? S-so it's not unusual to talk about embarrassing stuff like that, is it?</state>
+            </case>
+        </trigger>
+
+        <trigger id="female_finished_masturbating">
+            <case stage="0-9">
+                <state img="#-flustered.png">Does everyone make a face like that? Even me...?</state>
+                <state img="#-flustered.png">It looks so embarrassing... What a high price to pay for that much enjoyment... Good thing you usually do it alone.</state>
+                <state img="#-flustered.png">At least I'm not the only one who makes such a mess when she's having fun...</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_masturbate_first">
+            <case stage="7">
+                <state img="#-flustered.png">I have to do &lt;i&gt;that&lt;/i&gt; in front of all of you!? Impossible!! I can't do it anywhere but in my room! I got a little aroused, sure, but... Can I bring my pillow here?</state>
+            </case>
+        </trigger>
+
+        <trigger id="must_masturbate">
+            <case stage="7">
+                <state img="#-flustered.png">Eeeeek! Now it's my turn to...? Impossible!! I can't do it anywhere but in my room! I got a little aroused, sure, but... Can I bring my pillow here?</state>
+            </case>
+        </trigger>
+
+        <trigger id="start_masturbating">
+            <case stage="7">
+                <state img="#-start.png">I'm a very shy and delicate girl who hardly leaves her room. Is it okay if I wrap up in a blanket, while I... touch myself? And you have to keep a permanent eye on me, Professor. I'd feel a lot safer if you did...</state>
+            </case>
+        </trigger>
+
+        <trigger id="masturbating">
+            <case stage="8">
+                <state img="#-happy.png">Just pretend you're in your room, Bernie... But don't let yourself go too much!</state>
+                <state img="#-timid.png">I'm doing so many naughty things under her blanket in front of everyone... It feels kinda exciting.</state>
+                <state img="#-default.png">This is so embarrassing, but somehow, I don't care...</state>
+                <state img="#-comfortable.png">I have some pretty sensitive spots there... I think I already found more spots than I know people in my class.</state>
+                <state img="#-default.png">Ahh, I love running my fingers through my pubic hair... It feels so nice... I bet everyone else wants to do it, too...</state>
+                <state img="#-flustered.png">Bernie can't stop to talk about how good she feels, but I'm sure no one but the professor is paying attention to her right now...</state>
+                <state img="#-timid.png">Good thing I have my blanket... If anyone else knew this spot, they could make me melt so easily...</state>
+            </case>
+        </trigger>
+
+        <trigger id="heavy_masturbating">
+            <case stage="8">
+                <condition role="self" notSaidMarker="blanketFall" />
+                <state img="#-heavyStart.png" marker="blanketFall">Ahhn~ The blanket is falling off, but I'm too much into... I don't care anymore!</state>
+            </case>
+            <case stage="8">
+                <state img="#-heavy0.png">I'm totally exposed and doing naughty stuff in front of the professor... It feels so wrong, but... so hot...</state>
+                <state img="#-heavy1.png">I can't control myself anymore... I just want to finish soon, while the professor is watching..!</state>
+                <state img="#-heavy1.png">I'm so defenseless right now... If the professor were to do something to me now, I'd let him...</state>
+                <state img="#-heavy0.png">&lt;i&gt;The professor is watching me... The professor is watching me... The professor is watching me... The professor is watching me...&lt;/i&gt;</state>
+            </case>
+        </trigger>
+
+        <trigger id="finishing_masturbating">
+            <case stage="8">
+                <state img="#-finish.png">Watch me, Professor...!</state>
+            </case>
+        </trigger>
+
+        <trigger id="finished_masturbating">
+            <case stage="9">
+                <state img="#-finished.png">Just as good as it is in my room... Thanks for watching me, Professor~♥</state>
+            </case>
+        </trigger>
+
+        <trigger id="after_masturbating">
+            <case stage="9" priority="500">
+                <condition role="self" notSaidMarker="wrapUp" />
+                <state img="#-wrap.png" marker="wrapUp">Oh, nooo! Did I really say all those embarrassing things!? I could just die right now...</state>
+            </case>
+            <case stage="9">
+                <state img="#-timid.png">Don't mind me! I'm just... trying to fuse with my blanket.</state>
+                <state img="#-timid.png">Please continue and don't bother me. I've already built enough confidence for one day...</state>
+                <state img="#-default.png">Is it normal to get hungry after doing something like this...?</state>
+                <state img="#-thinking.png">I never thought it'd feel so great to do something like that in front of others... Is that the lesson this seminar was meant to teach me?</state>
+                <state img="#-flustered.png">It was so much more intense than normal, but I don't think I could do this regularly... &lt;i&gt;(But maybe if the professor...)&lt;/i&gt;</state>
+                <state img="#-pleading.png">Even thinking about what I just did is so embarrassing! I was such a bad girl, having so much fun in front of the others...!</state>
+                <state img="#-timid.png">Er, Professor? ...Do you want to eat in the dining hall of the monastery with me. one day? They make good cakes there.</state>
+            </case>
+        </trigger>
+
+        <trigger id="game_over_victory">
+            <case stage="0-7">
+                <state img="#-surprised.png">I won? I don't have to strip and masturbate like you did? ...Did I still pass the seminar?</state>
+            </case>
+        </trigger>
+
+        <trigger id="game_over_defeat">
+            <case stage="9" priority="500">
+                <condition role="self" notSaidMarker="wrapUp" />
+                <state img="#-wrap.png" marker="wrapUp">Oh, nooo! Did I really say all those embarrassing things!? I could just die right now... Good thing this game is over.</state>
+            </case>
+            <case stage="9">
+                <state img="#-end.png">Finally over? I passed the seminar, right? ...Now to go back to my room, and never leave it ever again.</state>
+            </case>
+        </trigger>
+
+    </behaviour>
+</opponent>
