@@ -234,7 +234,17 @@ Player.prototype.resetState = function () {
         this.labels = appearance.labels;
         this.folders = appearance.folders;
         this.baseTags = appearance.tags.slice();
-        this.labelOverridden = false;
+        this.labelOverridden = this.intelligenceOverridden = false;
+
+        /* The gender listed in meta.xml and behaviour.xml might differ
+         * (for example with gender-revealing characters)
+         * So assume behaviour.xml holds the 'definitive' starting gender
+         * for the character.
+         */
+        var startGender = this.xml.find('gender').text();
+        if (startGender) {
+            this.gender = startGender;
+        }
 
 		/* Load the player's wardrobe. */
 
@@ -264,13 +274,10 @@ Player.prototype.resetState = function () {
 	this.stageChangeUpdate();
 }
 
-Player.prototype.getIntelligence = function () {
-    return this.intelligence; // Opponent uses getByStage()
-};
-
 /* These shouldn't do anything for the human player, but exist as empty functions
    to make it easier to iterate over the entire players[] array. */
 Player.prototype.updateLabel = function () { }
+Player.prototype.updateIntelligence = function () { }
 Player.prototype.updateFolder = function () { }
 Player.prototype.updateBehaviour = function() { }
 
@@ -308,6 +315,7 @@ Player.prototype.updateTags = function () {
 
 Player.prototype.stageChangeUpdate = function () {
     this.updateLabel();
+    this.updateIntelligence();
     this.updateFolder();
     this.updateTags();
 }
@@ -514,7 +522,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.alt_costume = null;
     this.default_costume = null;
     this.poses = {};
-    this.labelOverridden = false;
+    this.labelOverridden = this.intelligenceOverridden = false;
     this.pendingCollectiblePopups = [];
 
     this.loaded = false;
@@ -626,7 +634,43 @@ Opponent.prototype.onSelected = function(individual) {
 }
 
 Opponent.prototype.updateLabel = function () {
-    if (this.labels && !this.labelOverridden) this.label = this.getByStage(this.labels);
+    if (!this.labelOverridden) {
+        if (this.labels && this.labels.length) {
+            this.label = this.getByStage(this.labels);
+        } else {
+            this.label = this.selectLabel;
+        }
+    }
+}
+
+Opponent.prototype.setLabel = function(label) {
+    if (label) {
+        this.label = label;
+        this.labelOverridden = true;
+    } else {
+        this.labelOverridden = false;
+        this.updateLabel();
+    }
+}
+
+Opponent.prototype.updateIntelligence = function () {
+    if (!this.intelligenceOverridden) {
+        if (this.intelligences && this.intelligences.length) {
+            this.intelligence = this.getByStage(this.intelligences);
+        } else {
+            this.intelligence = eIntelligence.AVERAGE;
+        }
+    }
+}
+
+Opponent.prototype.setIntelligence = function (intelligence) {
+    if (intelligence) {
+        this.intelligence = intelligence;
+        this.intelligenceOverridden = true;
+    } else {
+        this.intelligenceOverridden = false;
+        this.updateIntelligence();
+    }
 }
 
 Opponent.prototype.updateFolder = function () {
@@ -662,10 +706,6 @@ Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
 
     if (this.selectionCard)
         this.selectionCard.update();
-};
-
-Opponent.prototype.getIntelligence = function () {
-    return this.getByStage(this.intelligence) || eIntelligence.AVERAGE;
 };
 
 Opponent.prototype.loadAlternateCostume = function (individual) {
@@ -848,7 +888,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.xml = $xml;
             this.size = $xml.find('size').text();
             this.stamina = Number($xml.find('timer').text());
-            this.intelligence = $xml.find('intelligence');
+            this.intelligences = $xml.find('intelligence');
 
             /* Load in the legacy "start" lines, and also
              * initialize player.chosenState to the first listed line.
@@ -867,16 +907,6 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 if (m) {
                     this.stylesheet = 'opponents/'+this.id+'/'+m[0];
                 }
-            }
-
-            /* The gender listed in meta.xml and behaviour.xml might differ
-             * (for example with gender-revealing characters)
-             * So assume behaviour.xml holds the 'definitive' starting gender
-             * for the character.
-             */
-            var startGender = $xml.find('gender').text();
-            if (startGender) {
-                this.gender = startGender;    
             }
 
             this.default_costume = {
