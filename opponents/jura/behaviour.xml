@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.6.1 at 12:26:36 AM on May 10, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 2:17:23 AM on May 21, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.6.1</version>
+    <version>v5.7.3</version>
     <first>Jura</first>
     <last>Basil Elden</last>
     <label>Jura</label>
@@ -736,6 +736,13 @@
                 <state img="#-laughing.png" marker="meia_birthday">&lt;i&gt;Hi there.&lt;/i&gt;  Jura Basil Elden, and blue-hair-over-there is Meia Gisborn.  Meia Gisborn the &lt;i&gt;Birthday Girl!&lt;/i&gt;</state>
                 <state img="#-laughing.png" marker="meia_birthday">&lt;i&gt;Beauties of planet Mejare, hitting the scene!&lt;/i&gt;  And it's a very special day for one of us...come &lt;i&gt;on,&lt;/i&gt; Meia, tell them!  They won't throw you a party, I promise.</state>
                 <state img="#-vain.png" marker="meia_birthday">&lt;i&gt;It's a very special day today, Earthlings!&lt;/i&gt;  I mean, besides your first encounters with Mejarian beauty.  It's my scowling team leader's birthday!</state>
+            </case>
+            <case stage="1-6">
+                <condition role="other" character="cynthia" sayingMarker="MeiaJuraCrewmates" />
+                <condition role="other" character="meia" sayingMarker="cynthia_juracrewmates" />
+                <state img="#-cackling.png" marker="cynthia_meiacrewmates">...&lt;i&gt;Well,&lt;/i&gt; that's the nice formal explanation Meia just gave you.  But really, Cynthia, shouldn't you be pleased that I rock your aesthetic across the galaxy? </state>
+                <state img="#-teasing.png" marker="cynthia_meiacrewmates">&lt;i&gt;What,&lt;/i&gt; Cynthia, are you afraid that people will come to associate your blonde-in-black aesthetic with &lt;i&gt;me&lt;/i&gt; instead?  Anyway, Meia gave you the &lt;i&gt;official&lt;/i&gt; reason.</state>
+                <state img="#-vain.png" marker="cynthia_meiacrewmates">Meia said it all, honey.  We're not the stuffy Mejarian imperials--even when a woman goes into battle, she should bring her own style!  Or &lt;i&gt;your&lt;/i&gt; style, apparently.</state>
             </case>
             <case stage="0-6">
                 <condition role="other" character="dust" sayingMarker="mejare_nomen" />
@@ -1749,7 +1756,9 @@
                 <state img="#-confused.png" marker="seduction">Would you believe neither of us have seduced a man yet?  I mean, Meia is too shy, but how do you Earth girls do it?</state>
                 <state img="#-coy.png" marker="seduction">Meia won't admit it, but we'd both like to seduce a man and have a look at his seed.  How do you Earth girls string along the handsome ones?</state>
             </case>
-            <case stage="0-6" id="1" totalFemales="3-4" notSaidMarker="seduction" priority="0">
+            <case stage="0-6" id="1" priority="0">
+                <condition role="self" notSaidMarker="seduction" />
+                <condition count="3-4" gender="female" />
                 <state img="#-cackling.png" marker="seduction">What a fun little game!  Hey, I've got a question...how do you Earth girls seduce men, anyhow?</state>
                 <state img="#-seductive.png" marker="seduction">So, help a poor Mejarian out, Earth girls.  If I were to seduce a handsome man, how should I go about it?</state>
                 <state img="#-confused.png" marker="seduction">Would you believe I haven't seduced a man yet?  They're such strange beasts...hey, how do you Earth girls do it?</state>
@@ -1781,10 +1790,10 @@
             <case stage="2">
                 <condition role="other" character="meia" sayingMarker="jura_erufuda2" />
                 <condition role="other" character="erufuda" sayingMarker="jura_meia_ease_up" />
-                <state img="#-bored.png" marker="meia_erufudaresp2">&lt;i&gt;OK,&lt;/i&gt; so some other things have been occupying my time lately.  Cut me a break--my waist is thinner than yours, you know!</state>
+                <state img="#-critical.png" marker="meia_erufudaresp2">&lt;i&gt;OK,&lt;/i&gt; so some other things have been occupying my time lately.  Cut me a break--my waist is thinner than yours, you know!</state>
                 <state img="#-bored.png" marker="meia_erufudaresp2">Come &lt;i&gt;on,&lt;/i&gt; Meia, don't start lecturing me!  I'll have you know my waist is a centimeter thinner than yours!</state>
                 <state img="#-annoyed.png" marker="meia_erufudaresp2">&lt;i&gt;Ugh.&lt;/i&gt;  I don't need to take this from Miss 61-Centimeter-Waist.  I'm still thinner than you, even if I've been preoccupied lately.</state>
-                <state img="#-bored.png" marker="meia_erufudaresp2">&lt;i&gt;Look,&lt;/i&gt; I don't need to exercise quite so much, so excuse me if I take days off.  I have natural model's proportions-- including a thinner waist.</state>
+                <state img="#-critical.png" marker="meia_erufudaresp2">&lt;i&gt;Look,&lt;/i&gt; I don't need to exercise quite so much, so excuse me if I take days off.  I have natural model's proportions-- including a thinner waist.</state>
             </case>
             <case stage="3">
                 <condition role="other" character="meia" sayingMarker="jura_erufuda3" />
@@ -7906,7 +7915,8 @@
                 <state img="#-seductive.png">Something wrong, honey?  &lt;i&gt;You've hardly been looking me in the eye.&lt;/i&gt;  It's OK, I don't bite.</state>
                 <state img="#-vain.png">Why so shy, Elizabeth?  Confidence makes women ten times as beautiful--just look at me!</state>
             </case>
-            <case stage="0-6" target="evie" targetStage="0">
+            <case stage="0-6">
+                <condition role="target" character="evie" stage="0" />
                 <state img="#-vain.png">So what's your story?  You can cast magic spells or something?  If it's true, sign me up--it'll be another wonderful thing about me!</state>
                 <state img="#-vain.png">Some might call my &lt;i&gt;beauty&lt;/i&gt; magical...I'm inclined to agree.</state>
                 <state img="#-teasing.png">Hey, honey.  Cast a spell on &lt;i&gt;me...&lt;/i&gt;one that makes me even prettier.  Now &lt;i&gt;that&lt;/i&gt; would be magic!</state>
@@ -8133,7 +8143,8 @@
                 <state img="#-teasing.png">A love fairy, eh?  You listen here, Miss Pixie--&lt;i&gt;I'm&lt;/i&gt; in a happy relationship.  So no touching!</state>
                 <state img="#-laughing.png">Little Miss Pixie's got quite the filthy mouth for being so frilly-pink with love.  I guess sex &lt;i&gt;is&lt;/i&gt; a part of love, but still...</state>
             </case>
-            <case stage="0-6" target="kyu" targetStage="1">
+            <case stage="0-6">
+                <condition role="target" character="kyu" stage="1" />
                 <state img="#-laughing.png">I can't shake the feeling you and ~player~ might be a little closer than the rest of us, Miss Pixie.  &lt;i&gt;Do&lt;/i&gt; share the details.</state>
                 <state img="#-teasing.png">Oh, are you and ~player~ an &lt;i&gt;item,&lt;/i&gt; darling?  You're always delivering the gossip to that side of the table...do share.</state>
                 <state img="#-smug.png">I consider myself a bit of a matchmaker, but it looks like Miss Fairytale and ~player~ have already shacked up with each other.</state>
@@ -11108,8 +11119,9 @@
                 <state img="#-awkward.png">Wait, where'd they go?  Did you just make them--&lt;i&gt;vanish?&lt;/i&gt;  And I thought what the Paksis did was impressive...</state>
                 <state img="#-shocked.png">...OK.  I thought our technology was pretty impressive...but I can't tell what you just did.  That thing looks like a &lt;i&gt;stick!&lt;/i&gt;</state>
             </case>
-            <case stage="0-6" alsoPlaying="kyu" alsoPlayingStage="0-1">
-                <state img="#-smug.png">Still shaky on the game's rules, Miss Pixie?  You don't &lt;i&gt;have&lt;/i&gt; to jump straight to be big-name items.</state>
+            <case stage="0-6">
+                <condition role="other" character="kyu" stage="0-1" />
+                <state img="#-cackling.png">Are you still a bit shaky on the game's rules, Miss Pixie?  You don't &lt;i&gt;have&lt;/i&gt; to jump straight to the big-name items.</state>
                 <state img="#-interested.png">Jeez, Kyu, settle down.  What kind of awful tease would jump straight to nudity?  You've got to keep them guessing.</state>
                 <state img="#-laughing.png">Hey, I know &lt;i&gt;you're&lt;/i&gt; not shy about it, but do try to understand why these poor Earth people might be ashamed.</state>
                 <state img="#-vain.png">I don't get it either, Kyu, but don't get all mad.  Earth people just tend to hate their own bodies.</state>
