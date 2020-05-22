@@ -824,7 +824,6 @@ function MainSelectScreenDisplay (slot) {
     );
 
     this.badges = {
-        'new': $('#select-new-badge-'+slot),
         'epilogue': $('#select-badge-'+slot),
         'costume': $('#select-costume-badge-'+slot),
     };
@@ -990,7 +989,6 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         return;
     }
     
-    this.badges.new.toggle(player.highlightStatus === 'new');
     this.badges.epilogue.toggle(EPILOGUE_BADGES_ENABLED && player.ending);
     var epilogueStatus = player.getEpilogueStatus(true);
     if (epilogueStatus) {
