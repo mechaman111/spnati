@@ -801,49 +801,122 @@ Opponent.prototype.getAllEpilogueStatus = function () {
         }
 
         var summary = {
-            unlocked: false,
-            male: false,
-            female: false,
             extraConditions: false,
-            genderReqMet: true,
-            needsCharacter: null,
+            wrongGender: false,
+            needsCharacter: false,
+            missingCharacter: null,
+            hint: undefined,
         };
 
         summary.unlocked = save.hasEnding(this.id, $elem.text());
 
         /* Check what conditions we can for this epilogue: */
-        var epilogue_gender = $elem.attr('gender');
-        if (epilogue_gender) {
-            if (epilogue_gender === 'male') {
-                summary.male = true;
-            } else if (epilogue_gender === 'female') {
-                summary.female = true;
-            } else {
-                summary.male = true;
-                summary.female = true;
-            }
-
-            if (epilogue_gender !== humanPlayer.gender && epilogue_gender !== 'any') {
-                summary.genderReqMet = false; 
-            }
+        summary.gender = $elem.attr('gender') || 'any';
+        if (summary.gender !== humanPlayer.gender && summary.gender !== 'any') {
+            summary.wrongGender = true; 
         }
 
         var alsoPlaying = $elem.attr("alsoPlaying");
         if (alsoPlaying) {
             if (!players.some(function (p) { return p.id == alsoPlaying; })) {
                 /* Player requirement not met */
-                summary.needsCharacter = alsoPlaying;
+                summary.missingCharacter = alsoPlaying;
             }
+            summary.needsCharacter = true;
         }
 
-        summary.extraConditions = EPILOGUE_CONDITIONAL_ATTRIBUTES.some(function (attr) {
-            return !!$elem.attr(attr) && attr !== "alsoPlaying";
-        });
+        summary.hint = $elem.attr('hint');
+        summary.extraConditions = $elem.attr('markers') == 'true';
+        summary.score = (summary.wrongGender ? 4 : 0)
+            + (summary.missingCharacter ? 2 : 0)
+            + (summary.needsCharacter || summary.extraConditions ? 1 : 0);
 
         ret.push(summary);
     }.bind(this));
 
     return ret;
+}
+
+/**
+ * Helper function that trims down opponent status into something that'll be
+ * easy to display on a selection screen.
+ *
+ * To be specific, this attempts to identify the epilogue with the most matching
+ * static requirements, taking the player's gender and current table setup into
+ * account.
+ */
+Opponent.prototype.getEpilogueStatus = function(mainSelect) {
+    /* Find the epilogue that matches the most requirements possible.
+     * Prefer matching gender requirements first before character reqs.
+     */
+    if (!EPILOGUE_BADGES_ENABLED || !this.ending) {
+        return;
+    }
+
+    var epilogueStatus = this.getAllEpilogueStatus();
+    var epiloguesUnlocked = 0;
+    var bestMatchEpilogue = null;
+    for (var i = 0; i < epilogueStatus.length; i++) {
+        var status = epilogueStatus[i];
+        if (status.unlocked) {
+            epiloguesUnlocked += 1;
+            continue;
+        }
+
+        if (!bestMatchEpilogue || status.score < bestMatchEpilogue.score) {
+            bestMatchEpilogue = status;
+        }
+    }
+
+    /* Prior to main selection screen, show gender icon for wrong
+     * gender and conditional icon for other conditions, fulfilled or
+     * not (on the group selection screen, we'd need to look at the
+     * other characters in the group rather than the currently
+     * selected ones to give an accurate statement; let's do that
+     * later).  On the main selection screen, show the warning icon
+     * for wrong gender or character missing and the conditional icon
+     * for marker conditions.
+     */
+    var badge = '';
+    if (epiloguesUnlocked == epilogueStatus.length) {
+        badge = "-completed";
+    } else if (mainSelect && bestMatchEpilogue.score > 1) {
+        badge = "-unavailable";
+    } else if (bestMatchEpilogue.wrongGender) {
+        badge = '-' + bestMatchEpilogue.gender;
+    } else if ((bestMatchEpilogue.needsCharacter && !mainSelect) || bestMatchEpilogue.extraConditions) {
+        badge = "-conditional";
+    }
+    var tooltip;
+    if (bestMatchEpilogue) {
+        if (bestMatchEpilogue.wrongGender) {
+            tooltip = "Play as " + bestMatchEpilogue.gender + " for a chance to unlock another epilogue";
+        } else if (bestMatchEpilogue.missingCharacter) {
+            var opp = loadedOpponents.find(function (p) {
+                return p && p.id === bestMatchEpilogue.missingCharacter;
+            });
+
+            if (opp) {
+                tooltip = "Play with " + opp.selectLabel + " for a chance to unlock another epilogue";
+            } else {
+                tooltip = "Requires a Missing Character";
+            }
+        } else if (bestMatchEpilogue.extraConditions) {
+            if (bestMatchEpilogue.hint) {
+                tooltip = "Hint: " + bestMatchEpilogue.hint;
+            } else {
+                tooltip = "Unknown conditions apply";
+            }
+        }
+    }
+
+    return {
+        total: epilogueStatus.length,
+        unlocked: epiloguesUnlocked,
+        match: bestMatchEpilogue,
+        badge: 'img/epilogue' + badge + '.svg',
+        tooltip: tooltip,
+    };
 }
 
 /* Called prior to removing a character from the table. */

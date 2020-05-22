@@ -403,6 +403,7 @@ function changePlayerGender (gender) {
 	humanPlayer.gender = gender;
 	save.loadPlayer();
 	updateTitleGender();
+    updateSelectionVisuals(); // To update epilogue availability status
 }
 
 /************************************************************

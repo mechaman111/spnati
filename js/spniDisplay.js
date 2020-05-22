@@ -828,6 +828,7 @@ function MainSelectScreenDisplay (slot) {
         'epilogue': $('#select-badge-'+slot),
         'costume': $('#select-costume-badge-'+slot),
     };
+    this.badges.epilogue.tooltip({placement: 'right', container: this.imageArea});
     this.allBadges = $('#select-image-area-'+slot+'>.select-badge-bar>img');
     this.layerIcon = $('#select-layer-'+slot);
     this.genderIcon = $('#select-gender-'+slot);
@@ -926,6 +927,10 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
 
     this.prefillSuggestionBadges.new.toggle(player.highlightStatus === 'new');
     this.prefillSuggestionBadges.epilogue.toggle(EPILOGUE_BADGES_ENABLED && player.ending);
+    var epilogueStatus = player.getEpilogueStatus();
+    if (epilogueStatus) {
+        this.prefillSuggestionBadges.epilogue.attr('src', epilogueStatus.badge);
+    }
     this.prefillSuggestionBadges.costume.toggle(ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0);
     this.layerIcon.attr({
         src: "img/layers" + player.layers + ".png",
@@ -987,6 +992,11 @@ MainSelectScreenDisplay.prototype.update = function (player) {
     
     this.badges.new.toggle(player.highlightStatus === 'new');
     this.badges.epilogue.toggle(EPILOGUE_BADGES_ENABLED && player.ending);
+    var epilogueStatus = player.getEpilogueStatus(true);
+    if (epilogueStatus) {
+        this.badges.epilogue.attr({'src': epilogueStatus.badge,
+                                   'data-original-title': epilogueStatus.tooltip});
+    }
     this.badges.costume.toggle(ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0);
     updateStatusIcon(this.statusIcon, player);
     this.layerIcon.attr({
@@ -1105,15 +1115,15 @@ function OpponentSelectionCard (opponent) {
     if (opponent.highlightStatus === 'new') {
         $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
             src: "img/new_icon.png",
-            alt: "SPNatI Epilogue available"
+            alt: "SPNatI New"
         });
     }
 
     if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
-        this.epilogueBadge = $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
-            src: "img/epilogue_icon.png",
+        this.epilogueBadge = $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon epilogue-badge'))).attr({
+            src: "img/epilogue.svg",
             alt: "SPNatI Epilogue available"
-        });
+        }).tooltip({placement: 'right', container: this.mainElem});
     }
 
     if (COSTUME_BADGES_ENABLED && opponent.alternate_costumes.length > 0) {
@@ -1164,17 +1174,9 @@ OpponentSelectionCard.prototype.update = function () {
 OpponentSelectionCard.prototype.updateEpilogueBadge = function () {
     if (!this.epilogueBadge || !this.opponent.ending) return;
 
-    var epilogueStatus = getOpponentEpilogueStatus(this.opponent);
-    this.epilogueBadge.removeClass("missing-reqs");
-
-    var bestMatchEpilogue = epilogueStatus.match;
-    if (bestMatchEpilogue.unlocked) {
-        return;
-    }
-
-    if (!bestMatchEpilogue.genderReqMet || bestMatchEpilogue.needsCharacter) {
-        this.epilogueBadge.addClass("missing-reqs");
-    }
+    var epilogueStatus = this.opponent.getEpilogueStatus();
+    this.epilogueBadge.attr('src', epilogueStatus.badge)
+        .tooltip('destroy').tooltip({title: epilogueStatus.tooltip, placement: 'right'});
 }
 
 OpponentSelectionCard.prototype.clear = function () {}
@@ -1475,18 +1477,21 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         this.epiloguesField.removeClass('has-epilogues');
     } else {
         this.epiloguesField.addClass('has-epilogues');
-        var epilogueStatus = getOpponentEpilogueStatus(opponent);
+        var epilogueStatus = opponent.getEpilogueStatus();
 
         var ctr = '(' + epilogueStatus.unlocked + '/' + epilogueStatus.total + ' seen)';
         var text = "";
 
         var showPositive = false;
         var bestMatchEpilogue = epilogueStatus.match;
-        if (!bestMatchEpilogue.genderReqMet) {
-            text = (bestMatchEpilogue.male ? 'Males' : 'Females') + ' Only';
-        } else if (bestMatchEpilogue.needsCharacter) {
+        if (bestMatchEpilogue == null) {
+            text = 'All unlocked';
+            showPositive = true;
+        } else if (bestMatchEpilogue.wrongGender) {
+            text = bestMatchEpilogue.gender.initCap() + 's Only';
+        } else if (bestMatchEpilogue.missingCharacter) {
             var opp = loadedOpponents.find(function (p) {
-                return p.id === bestMatchEpilogue.needsCharacter;
+                return p.id === bestMatchEpilogue.missingCharacter;
             });
 
             if (opp) {
@@ -1606,53 +1611,4 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.epiloguesView.hide();
     this.collectiblesView.hide();
     this.mainView.show();
-}
-
-/**
- * Helper function that trims down opponent status into something that'll be
- * easy to display on a selection screen.
- * 
- * To be specific, this attempts to identify the epilogue with the most matching
- * static requirements, taking the player's gender and current table setup into
- * account.
- * 
- * @param {Opponent} opponent 
- */
-function getOpponentEpilogueStatus(opponent) {
-    /* Find the epilogue that matches the most requirements possible.
-     * Prefer matching gender requirements first before character reqs.
-     */
-    if (!opponent.ending) {
-        return;
-    }
-
-    var epilogueStatus = opponent.getAllEpilogueStatus();
-    var epiloguesUnlocked = 0;
-    var bestMatchEpilogue = null;
-    for (var i = 0; i < epilogueStatus.length; i++) {
-        var status = epilogueStatus[i];
-        
-        if (!bestMatchEpilogue) bestMatchEpilogue = status;
-
-        if (status.unlocked) {
-            epiloguesUnlocked += 1;
-            continue;
-        }
-
-        if (status !== bestMatchEpilogue) {
-            if (
-                (bestMatchEpilogue.unlocked && !status.unlocked) ||
-                (!bestMatchEpilogue.genderReqMet && status.genderReqMet) ||
-                (bestMatchEpilogue.needsCharacter && !status.needsCharacter)
-            ) {
-                bestMatchEpilogue = status;
-            }
-        }
-    }
-
-    return {
-        total: epilogueStatus.length,
-        unlocked: epiloguesUnlocked,
-        match: bestMatchEpilogue
-    };
 }

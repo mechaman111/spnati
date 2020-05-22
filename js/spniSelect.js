@@ -479,9 +479,12 @@ function updateGroupSelectScreen (ignore_bg) {
             $groupWriterLabels[i].html(opponent.writer);
             $groupArtistLabels[i].html(opponent.artist);
             $groupDescriptionLabels[i].html(opponent.description);
+            var epilogueStatus = opponent.getEpilogueStatus();
 
             if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
                 $groupBadges[i].show();
+                $groupBadges[i].attr({'src': epilogueStatus.badge,
+                                      'data-original-title': epilogueStatus.tooltip});
             } else {
                 $groupBadges[i].hide();
             }
