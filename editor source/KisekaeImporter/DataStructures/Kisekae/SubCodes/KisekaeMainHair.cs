@@ -5,6 +5,15 @@ namespace KisekaeImporter.SubCodes
 	{
 		public KisekaeMainHair() : base("ea") { }
 
+		public void Pose(IPoseable pose)
+		{
+			KisekaeMainHair other = pose as KisekaeMainHair;
+			if (other == null)
+			{
+				return;
+			}
+		}
+
 		public int Shape
 		{
 			get { return GetInt(0); }

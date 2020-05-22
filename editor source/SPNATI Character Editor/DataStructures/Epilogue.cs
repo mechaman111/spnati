@@ -52,10 +52,17 @@ namespace SPNATI_Character_Editor
 		[XmlElement("title")]
 		public string Title = "New Ending";
 
-		[DefaultValue(OpponentStatus.Main)]
-		[EnumControl(DisplayName = "Status", Description = "Where the epilogue is available", GroupOrder = 1, ValueType = typeof(OpponentStatus))]
+		[DefaultValue("")]
+		[ComboBox(DisplayName = "Status", Description = "Where the epilogue is available", GroupOrder = 1, Options = new string[] {
+			"offline",
+			"testing",
+		})]
 		[XmlAttribute("status")]
-		public OpponentStatus Status;
+		public string Status;
+
+		[XmlArray("markers")]
+		[XmlArrayItem("marker")]
+		public List<MarkerOperation> Markers = new List<MarkerOperation>();
 
 		[XmlElement("scene")]
 		public List<Scene> Scenes = new List<Scene>();

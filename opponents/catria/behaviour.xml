@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 4:32:57  on April 08, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 12:35:29  on Mai 03, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Catria</first>
@@ -445,7 +445,7 @@
                 <state img="#-shocked.png" marker="first">What!? You expect me to... Wait! This is strip poker!?</state>
             </case>
             <case stage="0" priority="299">
-                <test expr="~self.costume~" />
+                <test expr="~self.costume~" value="bunny_catria" />
                 <state img="#-ironic.png">Oh, I lost! What a shame... &lt;i&gt;(It's about time!)&lt;/i&gt;</state>
             </case>
             <case stage="0-2">
@@ -557,7 +557,7 @@
         <trigger id="stripping">
             <case stage="4" priority="3001">
                 <condition role="other" character="florina" stage="0-5" />
-                <test expr="~target.costume~" />
+                <test expr="~target.costume~" value="florina_easter" />
                 <state img="#-undress.png">Y-You already saw my panties, Florina? ...You didn't watch me dressing, did you...?</state>
             </case>
             <case stage="0" priority="320">
@@ -663,7 +663,7 @@
                 <state img="#-undress.png">I wouldn't say scared... just cautious. Though I &lt;i&gt;can&lt;/i&gt; afford to lose my sword.</state>
             </case>
             <case stage="3">
-                <test expr="~self.costume~" />
+                <test expr="~self.costume~" value="bunny_catria" />
                 <state img="#-undress.png">Just one moment! I'll take off this... what is this wannabe piece of clothing even called? A mantle?</state>
                 <state img="#-undress.png">Please don't look at my exposed shoulders, okay? (Why does the word "exposed" feel so strange right now? It's just my shoulders, right?)</state>
             </case>
@@ -1404,7 +1404,8 @@
             <case stage="1-7 9" target="jura" targetStage="0">
                 <state img="#-ironic.png">Seeing you copying my strategy kinda makes me proud, Jura. I feel really smart now.</state>
             </case>
-            <case stage="1-7 9" target="lyn" targetStage="0">
+            <case stage="1-7 9">
+                <condition role="target" character="lyn" stage="0" />
                 <state img="#-flustered.png">She only takes off her sword? Well, I did the same thing not long ago...</state>
             </case>
             <case stage="1-7 9" target="lyn" targetStage="2">
@@ -1510,14 +1511,17 @@
             <case stage="0-7 9" target="lyn" targetStage="1">
                 <state img="#-calm.png">But it was nice to see the legendary Mani Katti in person. Thanks for that, Lyn!</state>
             </case>
-            <case stage="0-7 9" target="lyn" targetStage="3">
+            <case stage="0-7 9">
+                <condition role="target" character="lyn" stage="3" />
                 <state img="#-flustered.png">This must be a privilege of a real lady, huh?</state>
             </case>
-            <case stage="0-7 9" target="lyn" targetStage="4">
+            <case stage="0-7 9">
+                <condition role="target" character="lyn" stage="4" />
                 <state img="#-flustered.png">Even her feet are beautiful. And she certainly walks a lot more than I do...</state>
             </case>
-            <case stage="0-7 9" target="lyn" targetStage="5">
-                <state img="#-insecure.png">You're not hiding any more accessories on your body, do you, Landy Lyndis?</state>
+            <case stage="0-7 9">
+                <condition role="target" character="lyn" stage="5" />
+                <state img="#-insecure.png">You're not hiding any more accessories on your body, are you, Landy Lyndis?</state>
             </case>
             <case stage="0-7 9" target="meia" targetStage="1">
                 <state img="#-ironic.png">But isn't the lens missing? How can you even see through it?</state>
@@ -2462,7 +2466,7 @@
             </case>
             <case stage="6-7">
                 <condition role="target" character="florina" />
-                <state img="#-determind.png">Be brave, Florina! If was able to show my breasts, you will as well!</state>
+                <state img="#-determind.png">Be brave, Florina! If I was able to show my breasts, you will as well!</state>
             </case>
             <case stage="9">
                 <condition role="target" character="florina" />
@@ -3189,7 +3193,8 @@
             <case stage="9" saidMarker="lostMask" notSaidMarker="lostMask2" priority="210">
                 <state img="#-shocked.png" marker="lostMask2">What! Prince Marth turned into Lucina while I was... Wait, it was Lucina from the very start!? I feel like an idiot now...</state>
             </case>
-            <case stage="9" notSaidMarker="finish" priority="200">
+            <case stage="9" priority="200">
+                <condition role="self" notSaidMarker="finish" />
                 <state img="#-done.png" marker="finish">Wow! I don't think I've ever cum like that before. Was it because I was being watched?</state>
             </case>
             <case stage="9" alsoPlaying="florina" alsoPlayingStage="7" alsoPlayingSaidMarker="underwear_knights" alsoPlayingNotSaidMarker="underwear_over" alsoPlayingSayingMarker="underwear_over">
@@ -3209,7 +3214,7 @@
             </case>
             <case stage="9">
                 <state img="#-done.png">That got out of control pretty fast... At least I can relax from now on.</state>
-                <state img="#-done.png">I really use something to wipe off my hands. And my... you know.</state>
+                <state img="#-done.png">I could really use something to wipe off my hands. And my... you know.</state>
                 <state img="#-insecure.png">Er... If you heard me talking to myself... Could you just forget it?</state>
                 <state img="#-insecure.png">I wonder if &lt;i&gt;he&lt;/i&gt; would play this with me, if I asked Caeda to join us?</state>
                 <state img="#-flustered.png">Can you hurry up a bit? It's cold around here. I could use &lt;i&gt;someone&lt;/i&gt; to heat me up...</state>
@@ -3242,4 +3247,801 @@
         </trigger>
 
     </behaviour>
+    <epilogue hint="Play as male" gender="male" img="epilogue-bg1.png">
+        <title>The Pegasus Knight's New Clothes</title>
+        <scene background="epilogue-bg0.png" x="0" y="0" width="1920" height="1080">
+            <directive type="text" id="text1" width="26%" x="38%" y="46%">You're wandering around in the fields.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text2" width="20%" arrow="up" x="51%" y="24%">Suddenly you notice two objects in the sky coming closer.</directive>
+            <directive type="sprite" id="smallEst" src="est-small.png" x="768" y="-142" pivotx="50%" pivoty="50%" rotation="22.42043" />
+            <directive type="sprite" id="smallPalla" layer="3" src="palla-small.png" x="928" y="-140" scalex="1" scaley="1" pivotx="50%" pivoty="50%" rotation="29.32048" />
+            <directive type="move" id="smallEst" delay="0.5" ease="smooth" time="1" x="955" y="61" rotation="-1.259045" />
+            <directive type="move" id="smallPalla" delay="0.5" ease="smooth" time="1" x="1095" y="15" rotation="-3.428369" />
+            <directive type="wait" />
+            <directive type="move" id="smallEst" ease="smooth" time="2" x="1829" y="-146" rotation="-8.185036" />
+            <directive type="move" id="smallPalla" ease="smooth" time="2" x="1619" y="-140" rotation="-10.51004" />
+            <directive type="wait" />
+            <directive type="remove" id="smallEst" />
+            <directive type="remove" id="smallPalla" />
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text16" width="20%" arrow="right" x="64%" y="23%">Hey there!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="sprite" id="est1" src="est1.png" x="1920" y="140" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="pall1" src="palla1.png" x="1920" y="140" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="est1" time="3" x="500" y="140" />
+            <directive type="move" id="pall1" time="3" x="1000" y="140" />
+            <directive type="wait" />
+            <directive type="text" id="text10" width="20%" arrow="left" x="75%" y="25%">My name is Palla.</directive>
+            <directive type="pause" />
+            <directive type="move" id="est1" time="0.25" y="100" />
+            <directive type="wait" />
+            <directive type="move" id="est1" time="0.25" y="140" />
+            <directive type="wait" />
+            <directive type="text" id="text17" width="20%" arrow="right" x="7%" y="30%">And I'm Est.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text20" width="20%" arrow="left" x="75%" y="16%">Sorry we had to suprise you like that, but we have to ask you a favor concerning our sister.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text22" width="20%" arrow="right" x="7%" y="26%">You met Catria earlier, right?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text24" width="20%" arrow="right" x="7%" y="44%">Don't worry! We know everything. &lt;i&gt;*wink*&lt;/i&gt;</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="pall1" time="0.5" x="1050" y="140" />
+            <directive type="text" id="text28" width="20%" arrow="left" x="77%" y="20%">Catria is quite the timid type, so it's our duty as sisters to give her more confidence in herself.</directive>
+            <directive type="pause" />
+            <directive type="move" id="est1" time="0.5" x="525" y="140" />
+            <directive type="wait" />
+            <directive type="move" id="est1" time="0.5" x="500" y="140" />
+            <directive type="text" id="text31" width="20%" arrow="right" x="7%" y="22%">She's neither as beautiful nor as cute as us, so she needs all the help she can get.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text36" width="20%" arrow="right" x="7%" y="38%">And she's still super delusional concerning love.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text38" width="20%" arrow="left" x="77%" y="37%">Yes, that is a problem indeed...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="pall1" time="1" x="978" y="410" scalex="1.5" scaley="1.5" />
+            <directive type="wait" />
+            <directive type="text" id="text41" width="20%" arrow="left" x="75%" y="24%">If you don't have anything else to do, would you like to help us a little? There is something we want your opinon about.</directive>
+            <directive type="pause" />
+            <directive type="move" id="est1" time="1" x="468" y="404" scalex="1.5" scaley="1.5" />
+            <directive type="wait" />
+            <directive type="text" id="text47" width="20%" arrow="right" x="2%" y="32%">It won't take long. And it will be to your favor as well. Promise! What do you think?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="fade" time="3" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene name="AllBunny" background="epilogue-bg1.png" width="1920" height="1080" overlay-alpha="100">
+            <directive type="sprite" id="catty0" layer="6" src="costume0.png" x="760" y="40" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="fade" time="1" alpha="0" />
+            <directive type="wait" />
+            <directive type="text" id="text3" width="20%" arrow="right" x="17%" y="16%">Huh? What are you doing here, ~name~?</directive>
+            <directive type="move" id="catty0" time="2" x="756" y="40" alpha="100" />
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="sprite" id="palla0" src="palla2.png" x="-500" y="240" scalex="1.5" scaley="1.5" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="palla0" time="1" x="450" y="40" scalex="1" scaley="1" />
+            <directive type="wait" />
+            <directive type="text" id="text4" width="20%" arrow="right" x="2%" y="17%">~Name~ will help us choose the best new costume for you. </directive>
+            <directive type="pause" />
+            <directive type="text" id="text7" width="20%" arrow="right" x="2%" y="34%">Est and I thought it would be good to hear another person's opinion this time.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text9" width="20%" arrow="left" x="60%" y="15%">Er... If you need more opinions, why don't you try to listen to mine? Why am I always the last one asked about something like this...</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text9" />
+            <directive type="sprite" id="est0" src="est2.png" x="2000" y="240" scalex="1.5" scaley="1.5" pivotx="50%" pivoty="50%" />
+            <directive type="move" id="est0" time="1" x="1000" y="40" scalex="1" scaley="1" />
+            <directive type="wait" />
+            <directive type="text" id="text15" width="20%" arrow="left" x="71%" y="18%">Because your opinions are boring as fuck. The outfits you would choose would be plain and not popular at all.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text18" width="20%" arrow="up" x="40%" y="68%">What's wrong about plain clothes? Isn't it better if they're funtional?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text21" width="20%" arrow="right" x="5%" y="12%">Aww, Catty, you're so sweet. You still have so much to learn.</directive>
+            <directive type="text" id="text23" width="20%" arrow="left" x="70%" y="17%">You're so innocent. You still have much to learn.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text26" width="20%" arrow="right" x="2%" y="14%">What we are looking for is something like the outfit she’s currently wearing, ~name~. She wore it during the spring season in Askr.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text29" width="20%" arrow="right" x="2%" y="34%">It's cute while focusing on her "good parts" while pushing her "bad parts" a little.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text32" width="20%" arrow="up" x="40%" y="71%">And what exactly do you mean by "bad parts"?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text34" width="20%" arrow="left" x="69%" y="17%">Your tits.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text32" />
+            <directive type="text" id="text37" width="20%" arrow="up" x="40%" y="73%">I wish I hadn't asked...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="palla0" time="0.5" x="600" />
+            <directive type="camera" time="0.5" x="0" y="-70" zoom="1.2" />
+            <directive type="wait" />
+            <directive type="text" id="text42" width="20%" arrow="right" x="5%" y="13%">But as good as this outfit is, I think you could use something new for a future event.</directive>
+            <directive type="pause" />
+            <directive type="move" id="est0" time="0.5" x="900" />
+            <directive type="camera" time="0.5" x="0" y="-120" zoom="1.4" />
+            <directive type="wait" />
+            <directive type="text" id="text48" width="20%" arrow="left" x="71%" y="18%">Yep! Especially because Palla and I overshadowed you drastically when we wore our bunny outfits the following years.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text50" width="20%" arrow="right" x="5%" y="30%">Are you ready for costume number 1?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text52" width="20%" arrow="up" x="40%" y="79%">Er... what do you mean by...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="3" zoom="7" />
+            <directive type="text" id="text59" width="40%" x="33%" y="50%">Uahh! Don't strip me in front of ~name~!</directive>
+            <directive type="fade" time="3" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene name="DangerousMaid" background="epilogue-bg1.png" width="1920" height="1080">
+            <directive type="sprite" id="sprite3" layer="1" src="costume1.png" x="760" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="palla0" src="palla3.png" x="450" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="est0" src="est3.png" x="1100" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="fade" time="1" alpha="0" />
+            <directive type="wait" />
+            <directive type="text" id="text6" width="20%" arrow="right" x="6%" y="11%">Oh, my! Look at you! You look adoreable with the hair like that! Just like a sweet kitty cat.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text8" width="20%" arrow="left" x="75%" y="9%">I admit, I never thought a maid outfit would actually suit you. And it's amazing what you can do with those breast pads.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text11" width="20%" arrow="up" x="40%" y="71%">I think it's kinda hard to move in it, but it's not as bad as I feared. What do you think, ~name~?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="2" x="300" y="-250" zoom="2" />
+            <directive type="text" id="text14" width="20%" arrow="left" x="74%" y="14%">Something about this outfit is concerning me though...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="1" x="-250" />
+            <directive type="text" id="text19" width="20%" arrow="right" x="7%" y="13%">We can shorten the skirt later of course.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="0" x="377" y="-280" zoom="3" />
+            <directive type="text" id="text25" width="20%" arrow="left" x="75%" y="50%">That's not it... But wait! Don't maids use knives in combat?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="palla0" src="palla4.png" />
+            <directive type="camera" time="1" x="0" y="0" zoom="1" />
+            <directive type="text" id="text27" width="5%" arrow="right" x="20%" y="13%">..!</directive>
+            <directive type="text" id="text30" width="20%" arrow="up" x="centered" y="65%">I don't understand why this should be a problem. I use swords in battle so knives shouldn't be...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text39" width="20%" arrow="right" x="6%" y="24%">No, Catria! Remember what happened last time you tried to use a knife. So much for this outfit...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="palla0" time="0.5" x="650" />
+            <directive type="move" id="est0" time="0.5" x="900" />
+            <directive type="camera" time="3" y="-80" zoom="7" />
+            <directive type="text" id="text43" width="20%" x="33%" y="50%">But that was just because you... Hey, I can change on my own!</directive>
+            <directive type="fade" time="3" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene name="SchoolUniform" background="epilogue-bg1.png" width="1920" height="1080">
+            <directive type="sprite" id="sprite1" src="costume2.png" x="760" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="palla0" src="palla2.png" x="450" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="est0" src="est3.png" x="1100" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="fade" time="1" alpha="0" />
+            <directive type="wait" />
+            <directive type="text" id="text12" width="20%" arrow="up" x="40%" y="69%">Oh, this one isn't bad. </directive>
+            <directive type="pause" />
+            <directive type="text" id="text33" width="20%" arrow="left" x="74%" y="15%">Ah, shit! She actually likes it...</directive>
+            <directive type="text" id="text35" width="20%" arrow="right" x="2%" y="15%">This is the school uniform of the Garreg Mach Monastery. People from there just joined in Askr and are quite popular there. We thought that it would help you to get some more attention as well.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="est0" src="est4.png" />
+            <directive type="text" id="text40" width="20%" arrow="left" x="76%" y="14%">Maybe they won't even notice that you're not from the monastery at all.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text44" width="20%" arrow="up" x="40%" y="72%">Well, yes. Maybe... But if this is a school uniform, why is the skirt this short..?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text46" width="20%" arrow="right" x="3%" y="10%">Personalizing your uniform is allowed. Treat it like your trademark.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text44" />
+            <directive type="text" id="text49" width="20%" arrow="up" x="40%" y="69%">That's why it felt so familiar... It is a little bit tight around the waist though.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text46" />
+            <directive type="move" id="palla0" src="palla4.png" />
+            <directive type="text" id="text53" width="20%" arrow="right" x="5%" y="12%">Mnn... Looks like you're not as skinny as I thought... I should change that later.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text40" />
+            <directive type="clear" id="text49" />
+            <directive type="text" id="text55" width="20%" arrow="left" x="75%" y="13%">You're too fat for the uniform, Catria.</directive>
+            <directive type="move" id="palla0" time="1" />
+            <directive type="wait" />
+            <directive type="text" id="text60" width="20%" arrow="up" x="46%" y="66%">I'm not fat!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="palla0" src="palla3.png" />
+            <directive type="text" id="text62" width="20%" arrow="right" x="5%" y="12%">Anyway! Why don't we try the next costume? Maybe there's an even better one.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="fade" time="3" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene background="epilogue-bg1.png" width="1920" height="1080">
+            <directive type="sprite" id="sprite5" src="costume3.png" x="760" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="est0" src="est5.png" x="1100" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="palla" src="palla3.png" x="450" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="fade" time="1" alpha="0" />
+            <directive type="wait" />
+            <directive type="text" id="text13" width="20%" arrow="left" x="74%" y="15%">Oh my gosh! That outfit is so cute!</directive>
+            <directive type="move" id="est0" time="0.25" y="10" />
+            <directive type="wait" />
+            <directive type="move" id="est0" time="0.25" y="40" />
+            <directive type="wait" />
+            <directive type="pause" />
+            <directive type="text" id="text45" width="20%" arrow="right" x="5%" y="9%">Indeed! Beast units are not only cute but also very powerful. That’s why they’re so popular. Giving you some new skills would certainly give you new fans.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text51" width="20%" arrow="up" x="40%" y="76%">Roarr! I can already feel the power of the beast tribe.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="1" x="200" y="-160" zoom="1.5" />
+            <directive type="text" id="text56" width="20%" arrow="left" x="72%" y="21%">Hey, Catria! Do you know what time it is?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text58" width="20%" arrow="up" x="24%" y="66%">Right now! Er... I think it is...</directive>
+            <directive type="move" id="palla" time="2" />
+            <directive type="wait" />
+            <directive type="text" id="text63" width="20%" arrow="left" x="72%" y="40%">You're supposed to say "Snuggle time"!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text58" />
+            <directive type="text" id="text65" width="20%" arrow="up" x="24%" y="73%">Snuggle what..?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text67" width="20%" arrow="left" x="72%" y="55%">You're no fun.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="1" x="450" y="-300" zoom="2" />
+            <directive type="move" id="est0" src="est3.png" />
+            <directive type="text" id="text71" width="20%" arrow="left" x="51%" y="36%">But say, Palla! How do we solve the problem that Catria can't even transform into a beast?</directive>
+            <directive type="move" id="palla" time="2" />
+            <directive type="wait" />
+            <directive type="text" id="text73" width="20%" arrow="up" x="1%" y="87%">What do you mean by "even"?</directive>
+            <directive type="pause" />
+            <directive type="camera" x="-450" />
+            <directive type="clear-all" />
+            <directive type="move" id="palla" src="palla4.png" />
+            <directive type="text" id="text75" width="20%" arrow="right" x="26%" y="29%">Good point! The closest thing we have to a beast would be one of Princess Minerva’s dragons.</directive>
+            <directive type="move" id="palla" time="2" />
+            <directive type="wait" />
+            <directive type="text" id="text78" width="20%" arrow="up" x="79%" y="88%">Yeah, sure, ignore me...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="1" x="0" y="0" zoom="1" />
+            <directive type="wait" />
+            <directive type="text" id="text79" width="20%" arrow="left" x="75%" y="14%">Maybe a dragon would be better suited than a beast after all...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text82" width="20%" arrow="right" x="5%" y="13%">I guess, you're right... </directive>
+            <directive type="pause" />
+            <directive type="move" id="palla" src="palla5.png" />
+            <directive type="text" id="text84" width="20%" arrow="right" x="5%" y="21%">Good thing I actually made a dragon costume for her as well. Would have been a shame if she didn't get to wear it after all.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="3" y="-80" zoom="7" />
+            <directive type="text" id="text90" width="20%" x="36%" y="50%">A-another costume? But this one was... Ahh!</directive>
+            <directive type="fade" time="3" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene id="TheDragon'sWrath" background="epilogue-bg1.png" width="1920" height="1080">
+            <directive type="sprite" id="sprite5" src="costume4.png" x="760" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="est0" src="est2.png" x="1100" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="palla" src="palla5.png" x="450" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="camera" y="-150" zoom="1.5" />
+            <directive type="fade" time="1" alpha="0" />
+            <directive type="wait" />
+            <directive type="text" id="text5" width="20%" arrow="down" x="40%" y="2%">Haha, nice joke!</directive>
+            <directive type="pause" />
+            <directive type="text" id="text54" width="20%" arrow="up" x="40%" y="79%">You just wanted to see me in this ridiculous outfit, right? No way a real dragon would wear something like this.</directive>
+            <directive type="pause" />
+            <directive type="move" id="palla" src="palla4.png" />
+            <directive type="text" id="text57" width="17%" arrow="right" x="1%" y="10%">You didn't know? This &lt;i&gt;is&lt;/i&gt; the outfit of an actual dragon. It's Nowi's. Haven't you ever met her in Askr?</directive>
+            <directive type="pause" />
+            <directive type="move" id="est0" time="0.5" x="1000" />
+            <directive type="text" id="text61" width="20%" arrow="left" x="77%" y="19%">She even has the same cup size as you?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text5" />
+            <directive type="clear" id="text54" />
+            <directive type="text" id="text66" width="20%" arrow="up" x="40%" y="71%">I'm not sure I &lt;i&gt;ever&lt;/i&gt; want to met a girl who wears outfits like this...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text68" width="17%" arrow="right" x="1%" y="30%">Really? I think it's cute. And ~name~ seems to like it as well.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text66" />
+            <directive type="text" id="text70" width="20%" arrow="up" x="40%" y="74%">C'mon! I can't even tell if this outfit is more childish or more slutty... Why can't I wear something like Tiki wears?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text57" />
+            <directive type="clear" id="text68" />
+            <directive type="text" id="text72" width="16%" arrow="right" x="1%" y="15%">Are you really sure you don't like it?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="1" x="0" y="0" zoom="1" />
+            <directive type="move" id="est0" time="0.5" src="est4.png" x="1100" />
+            <directive type="text" id="text74" width="20%" arrow="left" x="75%" y="12%">You heard the girl, Palla. She want's to try on Tiki's outfit now.</directive>
+            <directive type="pause" />
+            <directive type="move" id="palla" src="palla2.png" />
+            <directive type="text" id="text80" width="20%" arrow="right" x="3%" y="9%">It can't be helped. If you want to wear Tiki's outfit that badly...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="3" y="-80" zoom="7" />
+            <directive type="text" id="text69" width="20%" arrow="up" x="40%" y="61%">Why do I have the feeling that this is a trap..?</directive>
+            <directive type="fade" time="3" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene id="BeachStar" background="epilogue-bg1.png" width="1920" height="1080">
+            <directive type="sprite" id="sprite5" src="costume5.png" x="760" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="est0" src="est4.png" x="1100" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="palla" src="palla3.png" x="450" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="fade" time="1" alpha="0" />
+            <directive type="wait" />
+            <directive type="text" id="text76" width="20%" arrow="up" x="40%" y="70%">I knew it...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text81" width="20%" arrow="right" x="6%" y="9%">But it &lt;i&gt;is&lt;/i&gt; Tiki's outfit, my dear. Not the Tiki's we know, but she wore it during that summer event in Askr.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text83" width="20%" arrow="left" x="76%" y="16%">Summer outfits are really popular. Even if the units suck, everyone wants to have them.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text85" width="20%" arrow="left" x="76%" y="33%">So no one will worry if you actually suck, Catria.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text87" width="20%" arrow="up" x="40%" y="68%">I don't wanna suck...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text88" width="20%" arrow="right" x="6%" y="29%">Don't worry! We'll find some fitting skills for you as well.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="1" y="-200" zoom="2" />
+            <directive type="text" id="text92" width="20%" arrow="up" x="40%" y="68%">So, err... What is the melon... Oh, forget I asked!</directive>
+            <directive type="pause" />
+            <directive type="text" id="text94" width="20%" arrow="up" x="76%" y="66%">It's because people say you lack melons in general.</directive>
+            <directive type="text" id="text96" width="20%" arrow="up" x="40%" y="79%">I knew it would go that way...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text100" width="20%" arrow="down" x="40%" y="2%">Achoo!</directive>
+            <directive type="move" id="palla" src="palla4.png" />
+            <directive type="move" id="est0" src="est3.png" />
+            <directive type="move" id="sprite5" time="0.2" y="45" />
+            <directive type="wait" />
+            <directive type="move" id="sprite5" time="0.2" y="40" />
+            <directive type="wait" />
+            <directive type="camera" time="1" x="0" y="0" zoom="1" />
+            <directive type="text" id="text103" width="20%" arrow="right" x="6%" y="15%">Bless you!</directive>
+            <directive type="text" id="text104" width="20%" arrow="left" x="74%" y="18%">Did you catch a cold?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text107" width="20%" arrow="up" x="40%" y="69%">It's pretty cold in here. Can't I have my clothes back?</directive>
+            <directive type="pause" />
+            <directive type="move" id="palla" src="palla5.png" />
+            <directive type="text" id="text110" width="20%" arrow="right" x="6%" y="11%">We could have gone to the beach to dress you up, but I don't know if you would have prefered a more public place.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text112" width="20%" arrow="left" x="75%" y="16%">Look at those goosebumbs... You should do something about them, Catria.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text107" />
+            <directive type="text" id="text114" width="20%" arrow="up" x="40%" y="66%">How about getting dressed again?</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text110" />
+            <directive type="text" id="text116" width="20%" arrow="right" x="4%" y="18%">What are you talking about? We can't stop until we found an outfit ~name~ really likes.</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text107" />
+            <directive type="clear" id="text114" />
+            <directive type="text" id="text120" width="20%" arrow="up" x="40%" y="65%">Have you even looked in ~name~'s face for a while? </directive>
+            <directive type="pause" />
+            <directive type="move" id="palla" src="palla2.png" />
+            <directive type="text" id="text121" width="20%" arrow="right" x="4%" y="34%">How about this: Next outfit will be a super cozy winter outfit, so you can get warm again.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text125" width="20%" arrow="up" x="40%" y="76%">Do I even have a choice?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="est0" src="est2.png" />
+            <directive type="text" id="text128" width="5%" arrow="right" x="18%" y="13%">No!</directive>
+            <directive type="text" id="text129" width="5%" arrow="left" x="74%" y="15%">No!</directive>
+            <directive type="camera" time="3" y="-80" zoom="7" />
+            <directive type="fade" time="3" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene background="epilogue-bg1.png" width="1920" height="1080">
+            <directive type="sprite" id="catria" src="costume6.png" x="760" y="-60" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="est0" src="est4.png" x="1100" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="palla" src="palla5.png" x="450" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="fade" time="1" alpha="0" />
+            <directive type="wait" />
+            <directive type="text" id="text64" width="20%" arrow="up" x="40%" y="71%">And how exactly is this outfit supposed to be "super cozy"?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text77" width="20%" arrow="left" x="75%" y="16%">It suits you perfectly!</directive>
+            <directive type="text" id="text86" width="20%" arrow="right" x="7%" y="12%">Did I say "cozy"? Sorry, I meant "sexy". I often mess those two words up.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text89" width="20%" arrow="up" x="40%" y="66%">Very funny! I've seen right through you. You just want to set me up in skimpy clothes, don't you?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text91" width="20%" arrow="left" x="75%" y="18%">We've been busted, Palla.</directive>
+            <directive type="pause" />
+            <directive type="move" id="palla" src="palla4.png" />
+            <directive type="text" id="text93" width="20%" arrow="right" x="6%" y="13%">We only want what's best for you, Catria. Tharja wore this outfit at a christmas event and was the star of it just because it is more revealing that a common winter outfit is.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text95" width="20%" arrow="right" x="6%" y="39%">And an outfit like that would give you more confidence in your body as well.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text97" width="20%" arrow="up" x="40%" y="65%">Yeah, sure! What worked with Tharja, will automatically work with me as well. We have the same body sizes after all..</directive>
+            <directive type="pause" />
+            <directive type="move" id="est0" src="est3.png" />
+            <directive type="text" id="text101" width="20%" arrow="left" x="74%" y="17%">Oh, my... Someone's getting sarcastic. </directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text105" width="20%" arrow="up" x="40%" y="64%">Seriously! What are you aiming for? Do you just want to ridicule me in front of ~name~, or do you have something else planned?</directive>
+            <directive type="pause" />
+            <directive type="move" id="palla" src="palla3.png" />
+            <directive type="text" id="text106" width="20%" arrow="right" x="6%" y="13%">Oh, er... let's try out something else!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text105" />
+            <directive type="text" id="text111" width="20%" arrow="up" x="40%" y="70%">Do you think I wouldn't notice if you change the topic like that?</directive>
+            <directive type="move" id="est0" time="0.5" src="est2.png" x="975" />
+            <directive type="text" id="text113" width="20%" arrow="left" x="70%" y="14%">Trust us! It's just for your best, sis.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text117" width="20%" arrow="up" alignmentx="center" x="50%" y="56%">Wha- Hey! Just wait until I get my revenge for this!</directive>
+            <directive type="camera" time="3" y="-80" zoom="7" />
+            <directive type="fade" time="3" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene background="epilogue-bg1.png" width="1920" height="1080">
+            <directive type="sprite" id="catria" src="costume8.png" x="760" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="est0" src="est3.png" x="1100" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="palla" src="palla6.png" x="400" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="fade" time="1" alpha="0" />
+            <directive type="wait" />
+            <directive type="text" id="text98" width="20%" arrow="up" x="40%" y="59%">Why, Palla? Just why?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text102" width="20%" arrow="right" x="5%" y="12%">I hoped it would look better on you... Green isn't your color after all.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text108" width="20%" arrow="up" x="40%" y="66%">I think the color is the lesser evil here. You knew that it would be way too big around the chest area!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text115" width="20%" arrow="up" x="40%" y="63%">And it's not even the whole outfit... You could at least let me wear panties under it.</directive>
+            <directive type="pause" />
+            <directive type="move" id="est0" src="est4.png" />
+            <directive type="text" id="text122" width="20%" arrow="left" x="75%" y="15%">I would lend you my outfit, but I fear you wouldn't fit in it because...</directive>
+            <directive type="move" id="catria" time="2" />
+            <directive type="wait" />
+            <directive type="text" id="text126" width="20%" arrow="left" x="61%" y="33%">I'm NOT fat!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text130" width="20%" arrow="right" x="4%" y="15%">Looks like we are actually out of options now...</directive>
+            <directive type="pause" />
+            <directive type="move" id="est0" src="est3.png" />
+            <directive type="text" id="text99" width="20%" arrow="left" x="74%" y="12%">Really? But I thought you had a &lt;i&gt;special&lt;/i&gt; outfit prepared for her if everything else fails.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text109" width="20%" arrow="up" x="41%" y="74%">I kinda have a feeling what that &lt;i&gt;special&lt;/i&gt; outfit could be...</directive>
+            <directive type="text" id="text118" width="20%" arrow="right" x="4%" y="28%">&lt;i&gt;Special&lt;/i&gt;... Could you mean..?</directive>
+            <directive type="pause" />
+            <directive type="move" id="est0" src="est5.png" />
+            <directive type="text" id="text123" width="20%" arrow="left" x="74%" y="32%">Of course! It's the best of all. ~Player~ will love it as well.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text127" width="20%" arrow="left" x="74%" y="48%">Quick! Let's change her into it, Palla! You should help us too, ~player~!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="3" y="-80" zoom="7" />
+            <directive type="text" id="text132" width="20%" arrow="up" x="centered" y="50%">Hey! Hands off! I don't wanna!</directive>
+            <directive type="fade" time="3" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene background="epilogue-bg1.png" width="1920" height="1080">
+            <directive type="sprite" id="est0" src="est6.png" x="1100" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="catria" src="costume9.png" x="760" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="palla" src="palla7.png" x="400" y="40" pivotx="50%" pivoty="50%" />
+            <directive type="camera" x="centered" y="-350" zoom="4.485981" />
+            <directive type="fade" time="1" alpha="0" />
+            <directive type="wait" />
+            <directive type="text" id="text119" width="23%" arrow="down" x="37%" y="7%">I knew it would end like this....</directive>
+            <directive type="pause" />
+            <directive type="text" id="text124" width="20%" arrow="left" x="6%" y="53%">As expected this is the best costume!</directive>
+            <directive type="text" id="text131" width="20%" arrow="right" x="73%" y="56%">Looks like we have a winner!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text136" width="20%" arrow="down" x="40%" y="0%">I can see why I am naked, but why are you two as well?</directive>
+            <directive type="move" id="catria" time="2" />
+            <directive type="camera" time="1" y="10" zoom="1.1" />
+            <directive type="wait" />
+            <directive type="text" id="text137" width="20%" arrow="right" x="2%" y="12%">Isn't it more fun this way?</directive>
+            <directive type="text" id="text138" width="20%" arrow="left" x="78%" y="13%">It's not like we had to hide anything, right?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text143" width="20%" arrow="up" x="40%" y="72%">Yeah, sure! You two are nudists... But more importantly...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text147" width="20%" arrow="down" x="40%" y="2%">Why is ~player~ nude as well!?</directive>
+            <directive type="camera" time="1" zoom="1" />
+            <directive type="wait" />
+            <directive type="pause" />
+            <directive type="text" id="text153" width="20%" arrow="right" x="6%" y="17%">You're a smart girl, Catria. I'm sure you have already figured it out, right?</directive>
+            <directive type="move" id="palla" time="2" x="500" />
+            <directive type="pause" />
+            <directive type="text" id="text155" width="20%" arrow="up" x="41%" y="65%">Y-you want me and ~player~ to... Wait, no! I can't do that!</directive>
+            <directive type="pause" />
+            <directive type="text" id="text159" width="20%" arrow="left" x="73%" y="17%">Oh, Catria! You can't stay like that forever. You will never overcome your unrequited love for Prince Marth like that.</directive>
+            <directive type="move" id="est0" time="2" x="1000" />
+            <directive type="pause" />
+            <directive type="text" id="text162" width="20%" arrow="up" x="41%" y="78%">I never said that I...</directive>
+            <directive type="move" id="palla" time="1" x="520" />
+            <directive type="wait" />
+            <directive type="text" id="text165" width="20%" arrow="right" x="9%" y="31%">We all know, Catria. We figured out that ~player~ is the perfect partner for you, because he has already seen you nude and all.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text167" width="20%" arrow="up" x="41%" y="86%">So that was all your plan from the beginning...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text169" width="20%" arrow="left" x="73%" y="36%">Maybe...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="2" y="-150" zoom="1.5" />
+            <directive type="wait" />
+            <directive type="text" id="text175" width="20%" arrow="down" x="40%" y="2%">Still... I don't think I...</directive>
+            <directive type="move" id="catria" loop="true" ease="linear" clamp="mirror" time="1" x="750" />
+            <directive type="text" id="text177" width="20%" arrow="right" x="2%" y="17%">Don't worry! We will be here to help you~♥</directive>
+            <directive type="pause" />
+            <directive type="stop" id="catria" />
+            <directive type="text" id="text180" width="20%" arrow="up" x="39%" y="86%">You two want to be part of this? This isn't something you should do together with your sisters!</directive>
+            <directive type="pause" />
+            <directive type="text" id="text182" width="20%" arrow="left" x="77%" y="23%">So you would do it if we left you two alone?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text183" width="20%" arrow="down" x="40%" y="7%">Huh? I never said that!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="palla" time="5" x="-400" />
+            <directive type="text" id="text189" width="20%" arrow="up" x="9%" y="81%">No worries! We will leave you two alone. But we'll stay close, just if you need some help.</directive>
+            <directive type="text" id="text190" width="20%" arrow="up" x="39%" y="68%">Don't watch us, please!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text189" />
+            <directive type="move" id="est0" time="6" x="-400" />
+            <directive type="text" id="text193" width="20%" arrow="up" x="63%" y="78%">Call us if you need something!</directive>
+            <directive type="text" id="text194" width="20%" arrow="up" x="39%" y="76%">Don't listen either!!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="wait" />
+            <directive type="move" id="catria" time="3" src="epilogue0.png" x="900" />
+            <directive type="camera" time="3" x="200" />
+            <directive type="wait" />
+            <directive type="text" id="text133" width="20%" arrow="right" x="9%" y="15%">L-looks like it's only the two of us now...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text135" width="20%" arrow="left" x="61%" y="22%">Now you saw for yourself how treacherous my sisters can be. Haha...</directive>
+            <directive type="pause" />
+            <directive type="move" id="catria" interpolation="linear" iterations="2" time="2" />
+            <directive type="text" id="text139" width="20%" arrow="right" x="10%" y="35%">Can... Can I ask you a question?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text141" width="20%" arrow="left" x="59%" y="44%">Theoretically, if I would say 'yes', would you really like to have sex with me?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text144" width="20%" arrow="right" x="12%" y="58%">I mean, we don't have to. We were both tricked into this, so we could only pretend to do something, or just go and pretend this never happened.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text146" width="20%" arrow="left" x="61%" y="68%">I'm just interested if you see me like a woman. Someone you would love and like to have sex with...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" iterations="2" time="1" y="-50" />
+            <directive type="wait" />
+            <directive type="camera" iterations="2" time="1" y="-150" />
+            <directive type="wait" />
+            <directive type="move" id="catria" src="epilogue1.png" />
+            <directive type="text" id="text134" width="20%" arrow="right" x="14%" y="22%">You’d actually be interested?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text140" width="20%" arrow="right" x="14%" y="35%">And you're sure you would want it with me and you're not just horny because you saw my sisters naked?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="catria" src="epilogue0.png" />
+            <directive type="text" id="text145" width="20%" arrow="right" x="15%" y="25%">No! I better not wait for an answer for that question.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text148" width="20%" arrow="left" x="58%" y="30%">Not now that I have the chance to make the next step.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text154" width="20%" arrow="right" x="14%" y="44%">But I'm a little bit nervous. I hope you'll be gentle...</directive>
+            <directive type="clear-all" />
+            <directive type="move" id="catria" src="epilogue1.png" />
+            <directive type="text" id="text150" width="20%" arrow="right" x="15%" y="25%">I-is it okay if start slowly before we... You know.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="fade" time="3" alpha="100" />
+            <directive type="wait" />
+        </scene>
+        <scene background="epilogue-bg1.png" width="1920" height="1080">
+            <directive type="camera" x="400" y="-100" zoom="1.7" />
+            <directive type="fade" time="1" alpha="0" />
+            <directive type="sprite" id="catria" layer="1" src="epilogue2.png" x="1100" y="186" pivotx="50%" pivoty="50%" />
+            <directive type="sprite" id="dong" layer="1" src="epilogueDong.png" x="1315" y="624" scalex="0.8" scaley="0.8" pivotx="50%" pivoty="50%" rotation="0" />
+            <directive type="sprite" id="arm" layer="1" src="epilogueArm.png" x="1176" y="629" pivotx="14%" pivoty="25%" rotation="-54.82772" />
+            <directive type="wait" />
+            <directive type="text" id="text142" width="20%" arrow="right" x="11%" y="18%">So this is your penis...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text149" width="20%" arrow="right" x="14%" y="30%">It looks even bigger up close.</directive>
+            <directive type="pause" />
+            <directive type="move" id="catria" src="epilogue3.png" />
+            <directive type="text" id="text151" width="20%" arrow="right" x="12%" y="46%">You better be gentle later! Okay, ~player~?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="catria" src="epilogue2.png" />
+            <directive type="text" id="text156" width="20%" arrow="right" x="16%" y="25%">Can...can I touch it?</directive>
+            <directive type="pause" />
+            <directive type="move" id="dong" time="0.5" y="614" />
+            <directive type="wait" />
+            <directive type="move" id="dong" time="0.5" y="624" />
+            <directive type="wait" />
+            <directive type="move" id="catria" src="epilogue3.png" />
+            <directive type="text" id="text161" width="20%" arrow="right" x="14%" y="44%">I guess than means 'yes', right?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="catria" src="epilogue2.png" />
+            <directive type="move" id="arm" time="1.5" x="1179" y="629" rotation="-8" />
+            <directive type="wait" />
+            <directive type="pause" />
+            <directive type="text" id="text164" width="20%" arrow="right" x="15%" y="24%">So warm...</directive>
+            <directive type="pause" />
+            <directive type="move" id="arm" ease="linear" time="0.5" rotation="-2.300825" />
+            <directive type="wait" />
+            <directive type="move" id="arm" ease="linear" time="0.5" rotation="-8" />
+            <directive type="wait" />
+            <directive type="text" id="text166" width="20%" arrow="right" x="15%" y="34%">Oh and there's already precum. </directive>
+            <directive type="pause" />
+            <directive type="move" id="catria" src="epilogue3.png" />
+            <directive type="text" id="text171" width="20%" arrow="right" x="15%" y="46%">Should I continue to stroke it?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="catria" src="epilogue2.png" />
+            <directive type="move" id="arm" loop="true" clamp="mirror" time="1" rotation="-2.300825" />
+            <directive type="pause" />
+            <directive type="text" id="text176" width="20%" arrow="right" x="13%" y="18%">This is actually my first time touching one.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text178" width="20%" arrow="right" x="13%" y="30%">So warm and pulsating... You can really feel that it's living.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text181" width="20%" arrow="right" x="13%" y="45%">It belongs to you after all, ~player~.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="pause" />
+            <directive type="move" id="catria" src="epilogue3.png" />
+            <directive type="text" id="text185" width="20%" arrow="right" x="12%" y="21%">You’re so quiet. Am I doing it right?</directive>
+            <directive type="pause" />
+            <directive type="move" id="catria" src="epilogue2.png" />
+            <directive type="text" id="text187" width="20%" arrow="right" x="12%" y="34%">I would use my breasts, but… Please, don't let me elaborate on that.</directive>
+            <directive type="pause" />
+            <directive type="stop" id="arm" />
+            <directive type="text" id="text191" width="20%" arrow="right" x="12%" y="49%">I bet my sisters could be more useful here than me...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="dong" time="0.5" y="614" />
+            <directive type="wait" />
+            <directive type="move" id="dong" time="0.5" y="624" />
+            <directive type="wait" />
+            <directive type="text" id="text198" width="20%" arrow="right" x="13%" y="33%">Ah, sorry! I shouldn’t kill the mood like this. I'll continue to stroke your penis, okay?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="arm" ease="linear" time="0.5" x="1178" y="629" rotation="-10" />
+            <directive type="wait" />
+            <directive type="move" id="arm" loop="true" clamp="mirror" time="0.7" x="1186" y="629" rotation="4" />
+            <directive type="pause" />
+            <directive type="move" id="catria" src="epilogue3.png" />
+            <directive type="text" id="text203" width="20%" arrow="right" x="15%" y="32%">That's better, right?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text152" width="20%" arrow="right" x="15%" y="43%">Do you like this pace? You look so... pleased all of the sudden.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text157" width="20%" arrow="right" x="15%" y="58%">I can understand it. Your penis actually feels really nice to touch.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text160" width="20%" arrow="right" x="15%" y="72%">It's so warm and hard, but yet so soft at some spots. </directive>
+            <directive type="pause" />
+            <directive type="text" id="text163" width="20%" arrow="left" x="65%" y="43%">I like to stroke over every vein and unevenness.</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="dong" time="0.5" scalex="0.9" />
+            <directive type="wait" />
+            <directive type="move" id="dong" time="0.5" scalex="0.8" />
+            <directive type="wait" />
+            <directive type="move" id="catria" src="epilogue2.png" />
+            <directive type="text" id="text172" width="20%" arrow="right" x="14%" y="38%">Huh? It started twitching all of the sudden.</directive>
+            <directive type="pause" />
+            <directive type="move" id="catria" src="epilogue3.png" />
+            <directive type="text" id="text174" width="20%" arrow="right" x="14%" y="51%">D-did you like me praising it?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text158" width="20%" arrow="right" x="14%" y="63%">Then how do you like this?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="stop" id="dong" />
+            <directive type="move" id="arm" ease="linear" time="0.5" x="1178" y="629" rotation="-10" />
+            <directive type="wait" />
+            <directive type="move" id="arm" loop="true" clamp="mirror" time="0.2" x="1186" y="629" rotation="4" />
+            <directive type="text" id="text168" width="20%" arrow="right" x="15%" y="36%">I can already feel the sensation of it by just touching it with my hand. It feels so amazing!</directive>
+            <directive type="pause" />
+            <directive type="text" id="text170" width="20%" arrow="right" x="15%" y="53%">It actually make me curious how it would feel inside my sensitive parts.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text173" width="20%" arrow="left" x="64%" y="40%">Would you like to show me how it feels, ~player~?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="move" id="catria" src="epilogue2.png" />
+            <directive type="move" id="dong" loop="true" clamp="mirror" time="1" scalex="0.9" />
+            <directive type="text" id="text179" width="20%" arrow="right" x="14%" y="35%">It started to twitch even more...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text184" width="20%" arrow="right" x="14%" y="48%">Did the thought of having sex with me excite you that much?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text186" width="20%" arrow="left" x="68%" y="38%">Wait! You're already about to..!</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="stop" id="arm" />
+            <directive type="stop" id="dong" />
+            <directive type="move" id="catria" src="epilogue4.png" />
+            <directive type="move" id="dong" scalex="0.8" />
+            <directive type="wait" />
+            <directive type="sprite" id="f0" layer="1" src="fluid0.png" x="1347" y="625" scaley="-0.3" pivotx="50%" pivoty="50%" rotation="-142.4314" />
+            <directive type="move" id="dong">
+                <keyframe time="0.5" scalex="0.9" />
+                <keyframe time="0.5" scalex="0.8" />
+            </directive>
+            <directive type="move" id="f0" time="0.5" x="1360" y="555" scaley="1" alpha="100" rotation="0" />
+            <directive type="wait" />
+            <directive type="move" id="catria" time="1" />
+            <directive type="wait" />
+            <directive type="sprite" id="f1" layer="1" src="fluid1.png" x="1350" y="600" scaley="0.08333334" pivotx="50%" pivoty="50%" rotation="0" />
+            <directive type="move" id="dong">
+                <keyframe time="0.5" scalex="0.9" />
+                <keyframe time="0.5" scalex="0.8" />
+            </directive>
+            <directive type="move" id="f1" time="0.5" x="1342" y="509" scalex="1" scaley="1" rotation="-1.958067" />
+            <directive type="wait" />
+            <directive type="sprite" id="f2" layer="1" src="fluid2.png" x="1352" y="630" scalex="1" scaley="0.4" pivotx="50%" pivoty="50%" rotation="42.3736" />
+            <directive type="move" id="dong">
+                <keyframe time="0.5" scalex="0.9" />
+                <keyframe time="0.5" scalex="0.8" />
+            </directive>
+            <directive type="move" id="f2" time="0.5" x="1361" y="606" scaley="1" rotation="0" />
+            <directive type="wait" />
+            <directive type="pause" />
+            <directive type="move" id="catria" src="epilogue5.png" />
+            <directive type="text" id="text188" width="20%" arrow="right" x="13%" y="38%">So that's how it feels like...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text192" width="20%" arrow="right" x="13%" y="46%">My heart is beating like crazy!</directive>
+            <directive type="pause" />
+            <directive type="move" id="catria" src="epilogue3.png" />
+            <directive type="text" id="text195" width="20%" arrow="left" x="65%" y="41%">I'm so excited! Would it be okay if we go right to the next &lt;i&gt;step&lt;/i&gt;?</directive>
+            <directive type="pause" />
+            <directive type="sprite" id="minerva" src="Minerva0.png" x="695" y="-173" scalex="0.9" scaley="0.9" pivotx="50%" pivoty="50%" alpha="0" />
+            <directive type="move" id="minerva" time="3" alpha="100" />
+            <directive type="text" id="text196" width="24%" arrow="left" x="35%" y="6%">Interesting! And what exactly would this &lt;i&gt;Next Step&lt;/i&gt; be?</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="remove" id="arm" />
+            <directive type="move" id="catria" src="epilogue6.png" />
+            <directive type="camera" time="1" x="52" y="-127" zoom="1.3" />
+            <directive type="move" id="dong" time="1" y="815" />
+            <directive type="text" id="text204" width="20%" arrow="down" x="63%" y="19%">P-Princess Minerva!</directive>
+            <directive type="pause" />
+            <directive type="text" id="text206" width="20%" arrow="right" x="11%" y="12%">What the hell do you think you're doing?</directive>
+            <directive type="pause" />
+            <directive type="text" id="text208" width="20%" arrow="right" x="9%" y="25%">Fucking around when you're supposed to be on patrol with your sisters...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text210" width="13%" arrow="left" x="83%" y="43%">My sisters? But they were...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text212" width="20%" arrow="right" x="9%" y="41%">They told me I would find you here messing around with a stranger.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text214" width="20%" arrow="right" x="9%" y="58%">Honestly! You’re the last person I would have expected such behaviour from.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text216" width="17%" arrow="left" x="81%" y="58%">B-but this is all...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="text" id="text219" width="13%" arrow="right" x="17%" y="11%">Silence!</directive>
+            <directive type="pause" />
+            <directive type="text" id="text221" width="22%" arrow="right" x="7%" y="19%">If you don't get dressed in the next few minutes and get your ass on your Pegasus, I'll force you to go on patrol like that.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text223" width="10%" arrow="down" x="68%" y="17%">I-I'll go!</directive>
+            <directive type="pause" />
+            <directive type="clear" id="text223" />
+            <directive type="remove" id="f0" />
+            <directive type="remove" id="f1" />
+            <directive type="remove" id="f2" />
+            <directive type="move" id="catria" time="1" x="-500" />
+            <directive type="text" id="text231" width="20%" arrow="down" x="66%" y="24%">We'll continue this one day, ~player~!</directive>
+            <directive type="wait" />
+            <directive type="clear-all" />
+            <directive type="move" id="minerva" src="Minerva1.png" />
+            <directive type="text" id="text235" width="20%" arrow="right" x="11%" y="14%">Now to you, ~player~...</directive>
+            <directive type="pause" />
+            <directive type="text" id="text237" width="23%" arrow="left" x="66%" y="19%">Pretty brave of you to seduce one of my subordinates.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text239" width="20%" arrow="right" x="9%" y="28%">I hope you can take responsabilty for that.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text241" width="25%" arrow="left" x="68%" y="36%">I'll test if you're worthy of a member of my Pegasus Knights.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text243" width="20%" arrow="right" x="9%" y="47%">How? I'll show you later in my chamber if you dare.</directive>
+            <directive type="pause" />
+            <directive type="text" id="text245" width="21%" arrow="left" x="68%" y="55%">You better prepare yourself for a long night! I'm not a squeamish girl like Catria is...</directive>
+            <directive type="pause" />
+            <directive type="clear-all" />
+            <directive type="camera" time="3" y="-400" zoom="3" />
+            <directive type="fade" time="3" alpha="100" />
+            <directive type="wait" />
+            <directive type="text" id="text251" width="20%" x="77%" y="91%">To be continued..?</directive>
+        </scene>
+
+    </epilogue>
+
 </opponent>

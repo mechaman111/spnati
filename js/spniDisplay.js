@@ -795,7 +795,7 @@ GameScreenDisplay.prototype.update = function (player) {
     
     if (devModeActive) this.devModeController.update(player);
     
-    if (player && player.pendingCollectiblePopup) {
+    if (player && player.pendingCollectiblePopups.length) {
         this.collectibleIndicator.show();
     } else {
         this.collectibleIndicator.hide();
@@ -803,13 +803,13 @@ GameScreenDisplay.prototype.update = function (player) {
 }
 
 GameScreenDisplay.prototype.onCollectibleIndicatorClick = function (ev) {
-    if (!this.player || !this.player.pendingCollectiblePopup) return;
+    if (!this.player || this.player.pendingCollectiblePopups.length == 0) return;
     
-    var collectible = this.player.pendingCollectiblePopup;
-    
-    this.player.pendingCollectiblePopup = null;
-    this.collectibleIndicator.hide();
-    collectible.displayInfoModal();
+    this.player.pendingCollectiblePopups.shift().displayInfoModal();
+
+    if (this.player.pendingCollectiblePopups.length == 0) {
+        this.collectibleIndicator.hide();
+    }
 }
 
 /* Wraps logic for handling the Main Select screen displays. */
@@ -1156,7 +1156,7 @@ OpponentSelectionCard.prototype.update = function () {
         alt: this.opponent.layers + " layers",
     }).show() ;
     this.genderIcon.attr({
-        src: this.opponent.gender === 'male' ? 'img/male.png' : 'img/female.png',
+        src: this.opponent.gender === 'male' ? 'img/male.svg' : 'img/female.svg',
         alt: this.opponent.gender.initCap(),
     }).show();
 
@@ -1521,7 +1521,10 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
             }
 
             var counts = opponent.collectibles.reduce(function (acc, collectible) {
-                if (collectible.status && !includedOpponentStatuses[collectible.status]) {
+                if (
+                    (collectible.status && !includedOpponentStatuses[collectible.status]) ||
+                    (collectible.hidden && !collectible.isUnlocked())
+                ) {
                     return acc;
                 }
 

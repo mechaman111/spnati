@@ -14,7 +14,8 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public static readonly string[] VersionHistory = new string[] { "v3.0", "v3.0.1", "v3.1", "v3.2", "v3.3", "v3.3.1", "v3.4", "v3.4.1", "v3.5", "v3.6",
 			"v3.7", "v3.7.1", "v3.8", "v3.8.1", "v3.8.2", "v4.0b", "v4.0.1b", "v4.0.2b", "v4.0.3b", "v4.0", "v4.1", "v4.2", "v4.2.1", "v4.3", "v4.4b", "v5.0b", "v5.0",
-			"v5.1", "v5.1.1", "v5.2", "v5.2.1", "v5.2.2", "v5.2.3", "v5.2.4", "v5.2.5", "v5.2.6", "v5.2.7", "v5.2.8", "v5.3", "v5.4", "v5.5" };
+			"v5.1", "v5.1.1", "v5.2", "v5.2.1", "v5.2.2", "v5.2.3", "v5.2.4", "v5.2.5", "v5.2.6", "v5.2.7", "v5.2.8", "v5.3", "v5.4", "v5.5", "v5.6", "v5.6.1", "v5.7",
+			"v5.7.1", "v5.7.2", "v5.7.3" };
 
 		/// <summary>
 		/// Current Version
@@ -250,7 +251,36 @@ namespace SPNATI_Character_Editor
 		public static string KisekaeDirectory
 		{
 			get { return GetString(Settings.KisekaeDirectory); }
-			set { Set(Settings.KisekaeDirectory, value); }
+			set
+			{
+				string current = KisekaeDirectory;
+				if (current != value)
+				{
+					if (!string.IsNullOrEmpty(current) && !string.IsNullOrEmpty(value))
+					{
+						CopyKisekaeImagesTo(value);
+					}
+					Set(Settings.KisekaeDirectory, value);
+				}
+			}
+		}
+
+		private static void CopyKisekaeImagesTo(string newPath)
+		{
+			string oldDir = Path.Combine(Path.GetDirectoryName(Config.KisekaeDirectory), "images");
+			string newDir = Path.Combine(Path.GetDirectoryName(newPath), "images");
+			try
+			{
+				if (!Directory.Exists(newDir))
+				{
+					Directory.CreateDirectory(newDir);
+				}
+				foreach (string file in Directory.EnumerateFiles(oldDir))
+				{
+					File.Copy(file, Path.Combine(newDir, Path.GetFileName(file)));
+				}
+			}
+			catch { }
 		}
 
 		/// <summary>
@@ -484,6 +514,12 @@ namespace SPNATI_Character_Editor
 			set { Set("import", value); }
 		}
 
+		public static bool AutoPopulateStageImages
+		{
+			get { return GetBoolean("autopopulateimages"); }
+			set { Set("autopopulateimages", value); }
+		}
+
 		public static HashSet<string> AutoPauseDirectives
 		{
 			get
@@ -500,6 +536,60 @@ namespace SPNATI_Character_Editor
 			{
 				string items = string.Join(",", value);
 				Set("autopause", items);
+			}
+		}
+
+		private static HashSet<string> _statusFilters;
+		public static HashSet<string> StatusFilters
+		{
+			get
+			{
+				if (_statusFilters == null)
+				{
+					HashSet<string> set = new HashSet<string>();
+					if (!HasValue("statusfilter"))
+					{
+						set.Add(OpponentStatus.Incomplete);
+						set.Add(OpponentStatus.Event);
+						_statusFilters = set;
+						return set;
+					}
+					string items = GetString("statusfilter");
+					foreach (string item in items.Split(','))
+					{
+						int value;
+						if (int.TryParse(item, out value))
+						{
+							switch (value)
+							{
+								case 2:
+									set.Add("offline");
+									break;
+								case 3:
+									set.Add("incomplete");
+									break;
+								case 4:
+									set.Add("duplicate");
+									break;
+								case 5:
+									set.Add("event");
+									break;
+							}
+						}
+						else
+						{
+							set.Add(item);
+						}
+					}
+					_statusFilters = set;
+				}
+				return _statusFilters;
+			}
+			set
+			{
+				_statusFilters = value;
+				string items = string.Join(",", value);
+				Set("statusfilter", items);
 			}
 		}
 
@@ -543,6 +633,15 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
+		/// Whether to be annoying about viewing incomplete characters
+		/// </summary>
+		public static bool WarnAboutIncompleteStatus
+		{
+			get { return !GetBoolean("suppressincomplete"); }
+			set { Set("suppressincomplete", !value); }
+		}
+
+		/// <summary>
 		/// Tinify API key
 		/// </summary>
 		public static string TinifyKey
@@ -574,6 +673,26 @@ namespace SPNATI_Character_Editor
 		{
 			get { return !GetBoolean("nodashboardvalidation"); }
 			set { Set("nodashboardvalidation", !value); }
+		}
+
+		public static int MaxFranchisePartners
+		{
+			get
+			{
+				int value = GetInt("franchisemax");
+				if (value == 0)
+				{
+					value = 10;
+				}
+				return value;
+			}
+			set { Set("franchisemax", value); }
+		}
+
+		public static string LastFranchise
+		{
+			get { return GetString("lastfranchise"); }
+			set { Set("lastfranchise", value); }
 		}
 		#endregion
 

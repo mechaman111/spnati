@@ -37,8 +37,41 @@ namespace KisekaeImporter.ImageImport
 			KisekaeCode poseCode = new KisekaeCode(emotion.Code);
 
 			KisekaeCode output = new KisekaeCode("", true);
-			output.MergeIn(baseCode, false);
-			output.MergeIn(new KisekaeCode(stage.Code), false);
+			output.MergeIn(baseCode, false, false);
+			output.MergeIn(new KisekaeCode(stage.Code), false, false);
+
+			//try to determine which assets from the pose don't apply
+			for (int i = 0; i < poseCode.Models.Length; i++)
+			{
+				int assetIndex = 0;
+				KisekaeModel poseModel = poseCode.Models[i];
+				KisekaeModel baseModel = (baseCode.Models.Length > i ? baseCode.Models[i] : null);
+				KisekaeExternalParts poseParts = poseModel?.GetComponent<KisekaeExternalParts>();
+				KisekaeModel stageModel = (stageCode.Models.Length > i ? stageCode.Models[i] : null);
+				KisekaeExternalParts baseParts = baseModel?.GetComponent<KisekaeExternalParts>();
+				KisekaeExternalParts stageParts = stageModel?.GetComponent<KisekaeExternalParts>();
+				if (poseParts != null)
+				{
+					for (int j = 0; j < 100; j++)
+					{
+						if (poseParts.HasPart(j))
+						{
+							SubCodes.KisekaeImage img = poseParts.GetPart(j);
+							if (!img.IsEmpty)
+							{
+								if (baseParts?.HasPart(j) == true || stageParts?.HasPart(j) == true)
+								{
+									assetIndex++;
+								}
+								else
+								{
+									poseModel.Assets.RemoveAt(assetIndex);
+								}
+							}
+						}
+					}
+				}
+			}
 
 			//Remove any belts and such that appear in the pose but not in the clothing or base
 			foreach (KisekaeSubCode subcode in poseCode.GetSubCodesOfType<IPoseable>())
@@ -49,7 +82,7 @@ namespace KisekaeImporter.ImageImport
 				}
 			}
 
-			output.MergeIn(poseCode, false);
+			output.MergeIn(poseCode, false, true);
 
 			//Add in stage blush, etc.
 			KisekaeExpression expression = output.GetOrAddComponent<KisekaeExpression>();

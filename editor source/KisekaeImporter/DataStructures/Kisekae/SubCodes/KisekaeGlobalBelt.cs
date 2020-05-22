@@ -2,6 +2,24 @@
 {
 	public class KisekaeGlobalBelt : KisekaeSubCode, IPoseable, IMoveable
 	{
+		public void Pose(IPoseable pose)
+		{
+			KisekaeGlobalBelt other = pose as KisekaeGlobalBelt;
+			if (other == null)
+			{
+				return;
+			}
+			
+			ScaleX = other.ScaleX;
+			ScaleY = other.ScaleY;
+			Rotation = other.Rotation;
+			X = other.X;
+			Y = other.Y;
+			Depth = other.Depth;
+			Length = other.Length;
+			Skew = other.Skew;
+		}
+
 		public int Type
 		{
 			get { return GetInt(0); }

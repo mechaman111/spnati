@@ -1,9 +1,24 @@
-﻿using System;
-
-namespace KisekaeImporter.SubCodes
+﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeGlobalArm : KisekaeSubCode, IMoveable
+	public class KisekaeGlobalArm : KisekaeSubCode, IMoveable, IPoseable
 	{
+		public void Pose(IPoseable pose)
+		{
+			KisekaeGlobalArm other = pose as KisekaeGlobalArm;
+			if (other == null)
+			{
+				return;
+			}
+			Scale = other.Scale;
+			Rotation = other.Rotation;
+			X = other.X;
+			Y = other.Y;
+			Depth = other.Depth;
+			Hand = other.Hand;
+			HandRotation = other.HandRotation;
+			MuscleSize = other.MuscleSize;
+		}
+
 		public int Type
 		{
 			get { return GetInt(0); }

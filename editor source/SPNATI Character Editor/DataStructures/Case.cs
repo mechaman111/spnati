@@ -292,7 +292,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalPlaying;
-		[NumericRange(DisplayName = "Total Playing", GroupOrder = 3, Description = "Number of players still in the game", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "# Players Still in Game", GroupOrder = 3, Description = "Number of players still in the game", Minimum = 0, Maximum = 5)]
 		[XmlOrder(200)]
 		[XmlAttribute("totalAlive")]
 		[JsonProperty("totalAlive")]
@@ -303,7 +303,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalExposed;
-		[NumericRange(DisplayName = "Total Exposed", GroupOrder = 4, Description = "Number of players who have exposed either their chest or crotch", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "# Players Exposed", GroupOrder = 4, Description = "Number of players who have exposed either their chest or crotch", Minimum = 0, Maximum = 5)]
 		[XmlOrder(210)]
 		[XmlAttribute("totalExposed")]
 		[JsonProperty("totalExposed")]
@@ -314,7 +314,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalNaked;
-		[NumericRange(DisplayName = "Total Naked", GroupOrder = 5, Description = "Number of players who have lost all their clothing, but might still be playing", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "# Players Naked", GroupOrder = 5, Description = "Number of players who have lost all their clothing, but might still be playing", Minimum = 0, Maximum = 5)]
 		[XmlOrder(220)]
 		[XmlAttribute("totalNaked")]
 		[JsonProperty("totalNaked")]
@@ -325,7 +325,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalMasturbating;
-		[NumericRange(DisplayName = "Total Masturbating", GroupOrder = 6, Description = "Number of players who are currently masturbating", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "# Players Masturbating", GroupOrder = 6, Description = "Number of players who are currently masturbating", Minimum = 0, Maximum = 5)]
 		[XmlOrder(230)]
 		[XmlAttribute("totalMasturbating")]
 		[JsonProperty("totalMasturbating")]
@@ -336,7 +336,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _totalFinished;
-		[NumericRange(DisplayName = "Total Finished", GroupOrder = 7, Description = "Number of players who finished masturbating and completely out of the game", Minimum = 0, Maximum = 5)]
+		[NumericRange(DisplayName = "# Players Finished", GroupOrder = 7, Description = "Number of players who finished masturbating and completely out of the game", Minimum = 0, Maximum = 5)]
 		[XmlOrder(240)]
 		[XmlAttribute("totalFinished")]
 		[JsonProperty("totalFinished")]
@@ -1654,8 +1654,22 @@ namespace SPNATI_Character_Editor
 			//special cases
 			if (Tag == "must_masturbate_first")
 			{
-				response.TotalMasturbating = "0";
-				response.TotalFinished = "0";
+				TargetCondition cond = new TargetCondition();
+				cond.Count = "0";
+				cond.Status = "not_alive";
+				response.Conditions.Add(cond);
+			}
+			else if (response.Tag == "must_masturbate")
+			{
+				//finished check
+				TargetCondition finished = response.Conditions.Find(c => c.ToString() == "0 finished");
+				TargetCondition finishing = response.Conditions.Find(c => c.ToString() == "0 masturbating");
+				if (finished != null && finishing != null)
+				{
+					response.Tag = "must_masturbate_first";
+					response.Conditions.Remove(finished);
+					response.Conditions.Remove(finishing);
+				}
 			}
 
 			foreach (Case alternate in AlternativeConditions)
@@ -2282,6 +2296,10 @@ namespace SPNATI_Character_Editor
 			{
 				return "hand";
 			}
+			else if (Tag == "selected")
+			{
+				return "opponent_selected";
+			}
 
 			string tag = Tag;
 			if (tag != null && tag.StartsWith("female_"))
@@ -2350,6 +2368,11 @@ namespace SPNATI_Character_Editor
 			if (tag == "good_hand" || tag == "okay_hand" || tag == "bad_hand")
 			{
 				return "hand";
+			}
+
+			if (tag == "finishing_masturbating")
+			{
+				return null;
 			}
 
 			return Tag; //if nothing above applied, the speaker is reacting to some event unrelated to the responder, so the responder can target the same thing

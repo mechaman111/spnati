@@ -1,10 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SPNATI_Character_Editor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnitTests
 {
@@ -17,8 +12,10 @@ namespace UnitTests
 			string marker;
 			string value;
 			bool perTarget;
-			marker = Marker.ExtractPieces("foo", out value, out perTarget);
+			string op;
+			marker = Marker.ExtractPieces("foo", out value, out perTarget, out op);
 			Assert.AreEqual("foo", marker);
+			Assert.IsNull(op);
 			Assert.IsNull(value);
 			Assert.IsFalse(perTarget);
 		}
@@ -29,8 +26,10 @@ namespace UnitTests
 			string marker;
 			string value;
 			bool perTarget;
-			marker = Marker.ExtractPieces("foo*", out value, out perTarget);
+			string op;
+			marker = Marker.ExtractPieces("foo*", out value, out perTarget, out op);
 			Assert.AreEqual("foo", marker);
+			Assert.IsNull(op);
 			Assert.IsNull(value);
 			Assert.IsTrue(perTarget);
 		}
@@ -41,9 +40,11 @@ namespace UnitTests
 			string marker;
 			string value;
 			bool perTarget;
-			marker = Marker.ExtractPieces("+foo", out value, out perTarget);
+			string op;
+			marker = Marker.ExtractPieces("+foo", out value, out perTarget, out op);
 			Assert.AreEqual("foo", marker);
-			Assert.AreEqual("+", value);
+			Assert.AreEqual("1", value);
+			Assert.AreEqual("+", op);
 			Assert.IsFalse(perTarget);
 		}
 
@@ -53,9 +54,11 @@ namespace UnitTests
 			string marker;
 			string value;
 			bool perTarget;
-			marker = Marker.ExtractPieces("+foo*", out value, out perTarget);
+			string op;
+			marker = Marker.ExtractPieces("+foo*", out value, out perTarget, out op);
 			Assert.AreEqual("foo", marker);
-			Assert.AreEqual("+", value);
+			Assert.AreEqual("1", value);
+			Assert.AreEqual("+", op);
 			Assert.IsTrue(perTarget);
 		}
 
@@ -65,9 +68,11 @@ namespace UnitTests
 			string marker;
 			string value;
 			bool perTarget;
-			marker = Marker.ExtractPieces("-foo", out value, out perTarget);
+			string op;
+			marker = Marker.ExtractPieces("-foo", out value, out perTarget, out op);
 			Assert.AreEqual("foo", marker);
-			Assert.AreEqual("-", value);
+			Assert.AreEqual("1", value);
+			Assert.AreEqual("-", op);
 			Assert.IsFalse(perTarget);
 		}
 
@@ -77,9 +82,11 @@ namespace UnitTests
 			string marker;
 			string value;
 			bool perTarget;
-			marker = Marker.ExtractPieces("-foo*", out value, out perTarget);
+			string op;
+			marker = Marker.ExtractPieces("-foo*", out value, out perTarget, out op);
 			Assert.AreEqual("foo", marker);
-			Assert.AreEqual("-", value);
+			Assert.AreEqual("1", value);
+			Assert.AreEqual("-", op);
 			Assert.IsTrue(perTarget);
 		}
 
@@ -89,8 +96,10 @@ namespace UnitTests
 			string marker;
 			string value;
 			bool perTarget;
-			marker = Marker.ExtractPieces("foo=bar", out value, out perTarget);
+			string op;
+			marker = Marker.ExtractPieces("foo=bar", out value, out perTarget, out op);
 			Assert.AreEqual("foo", marker);
+			Assert.AreEqual("=", op);
 			Assert.AreEqual("bar", value);
 			Assert.IsFalse(perTarget);
 		}
@@ -101,8 +110,150 @@ namespace UnitTests
 			string marker;
 			string value;
 			bool perTarget;
-			marker = Marker.ExtractPieces("foo*=bar", out value, out perTarget);
+			string op;
+			marker = Marker.ExtractPieces("foo*=bar", out value, out perTarget, out op);
 			Assert.AreEqual("foo", marker);
+			Assert.AreEqual("=", op);
+			Assert.AreEqual("bar", value);
+			Assert.IsTrue(perTarget);
+		}
+
+		[TestMethod]
+		public void Add_Global()
+		{
+			string marker;
+			string value;
+			bool perTarget;
+			string op;
+			marker = Marker.ExtractPieces("foo += bar", out value, out perTarget, out op);
+			Assert.AreEqual("foo", marker);
+			Assert.AreEqual("+", op);
+			Assert.AreEqual("bar", value);
+			Assert.IsFalse(perTarget);
+		}
+
+		[TestMethod]
+		public void Add_Target()
+		{
+			string marker;
+			string value;
+			bool perTarget;
+			string op;
+			marker = Marker.ExtractPieces("foo* += bar", out value, out perTarget, out op);
+			Assert.AreEqual("foo", marker);
+			Assert.AreEqual("+", op);
+			Assert.AreEqual("bar", value);
+			Assert.IsTrue(perTarget);
+		}
+
+		[TestMethod]
+		public void Subtract_Global()
+		{
+			string marker;
+			string value;
+			bool perTarget;
+			string op;
+			marker = Marker.ExtractPieces("foo -= bar", out value, out perTarget, out op);
+			Assert.AreEqual("foo", marker);
+			Assert.AreEqual("-", op);
+			Assert.AreEqual("bar", value);
+			Assert.IsFalse(perTarget);
+		}
+
+		[TestMethod]
+		public void Subtract_Target()
+		{
+			string marker;
+			string value;
+			bool perTarget;
+			string op;
+			marker = Marker.ExtractPieces("foo* -= bar", out value, out perTarget, out op);
+			Assert.AreEqual("foo", marker);
+			Assert.AreEqual("-", op);
+			Assert.AreEqual("bar", value);
+			Assert.IsTrue(perTarget);
+		}
+
+		[TestMethod]
+		public void Multiply_Global()
+		{
+			string marker;
+			string value;
+			bool perTarget;
+			string op;
+			marker = Marker.ExtractPieces("foo *= bar", out value, out perTarget, out op);
+			Assert.AreEqual("foo", marker);
+			Assert.AreEqual("*", op);
+			Assert.AreEqual("bar", value);
+			Assert.IsFalse(perTarget);
+		}
+
+		[TestMethod]
+		public void Multiply_Target()
+		{
+			string marker;
+			string value;
+			bool perTarget;
+			string op;
+			marker = Marker.ExtractPieces("foo* *= bar", out value, out perTarget, out op);
+			Assert.AreEqual("foo", marker);
+			Assert.AreEqual("*", op);
+			Assert.AreEqual("bar", value);
+			Assert.IsTrue(perTarget);
+		}
+
+		[TestMethod]
+		public void Divide_Global()
+		{
+			string marker;
+			string value;
+			bool perTarget;
+			string op;
+			marker = Marker.ExtractPieces("foo /= bar", out value, out perTarget, out op);
+			Assert.AreEqual("foo", marker);
+			Assert.AreEqual("/", op);
+			Assert.AreEqual("bar", value);
+			Assert.IsFalse(perTarget);
+		}
+
+		[TestMethod]
+		public void Divide_Target()
+		{
+			string marker;
+			string value;
+			bool perTarget;
+			string op;
+			marker = Marker.ExtractPieces("foo* /= bar", out value, out perTarget, out op);
+			Assert.AreEqual("foo", marker);
+			Assert.AreEqual("/", op);
+			Assert.AreEqual("bar", value);
+			Assert.IsTrue(perTarget);
+		}
+
+		[TestMethod]
+		public void Modulo_Global()
+		{
+			string marker;
+			string value;
+			bool perTarget;
+			string op;
+			marker = Marker.ExtractPieces("foo %= bar", out value, out perTarget, out op);
+			Assert.AreEqual("foo", marker);
+			Assert.AreEqual("%", op);
+			Assert.AreEqual("bar", value);
+			Assert.IsFalse(perTarget);
+		}
+
+		[TestMethod]
+		public void Modulo_Target()
+		{
+			string marker;
+			string value;
+			bool perTarget;
+			string op;
+			marker = Marker.ExtractPieces("foo* %= bar", out value, out perTarget, out op);
+			Assert.AreEqual("foo", marker);
+			Assert.AreEqual("%", op);
 			Assert.AreEqual("bar", value);
 			Assert.IsTrue(perTarget);
 		}
@@ -313,6 +464,92 @@ namespace UnitTests
 			Assert.AreEqual(MarkerOperator.GreaterThanOrEqual, op);
 			Assert.AreEqual("bar", value);
 			Assert.IsTrue(perTarget);
+		}
+
+		[TestMethod]
+		public void MarkerOperation_To_Raw()
+		{
+			MarkerOperation marker = new MarkerOperation();
+			marker.Name = "foo";
+			Assert.AreEqual("foo", marker.ToString());
+		}
+
+		[TestMethod]
+		public void MarkerOperation_To_Increment()
+		{
+			MarkerOperation marker = new MarkerOperation();
+			marker.Name = "foo";
+			marker.Operator = "+";
+			Assert.AreEqual("+foo", marker.ToString());
+		}
+
+		[TestMethod]
+		public void MarkerOperation_To_Decrement()
+		{
+			MarkerOperation marker = new MarkerOperation();
+			marker.Name = "foo";
+			marker.Operator = "+";
+			Assert.AreEqual("+foo", marker.ToString());
+		}
+
+		[TestMethod]
+		public void MarkerOperation_Set()
+		{
+			MarkerOperation marker = new MarkerOperation();
+			marker.Name = "foo";
+			marker.Operator = "=";
+			marker.Value = "bar";
+			Assert.AreEqual("foo=bar", marker.ToString());
+		}
+
+		[TestMethod]
+		public void MarkerOperation_Add()
+		{
+			MarkerOperation marker = new MarkerOperation();
+			marker.Name = "foo";
+			marker.Operator = "+";
+			marker.Value = "5";
+			Assert.AreEqual("foo += 5", marker.ToString());
+		}
+
+		[TestMethod]
+		public void MarkerOperation_Subttract()
+		{
+			MarkerOperation marker = new MarkerOperation();
+			marker.Name = "foo";
+			marker.Operator = "-";
+			marker.Value = "5";
+			Assert.AreEqual("foo -= 5", marker.ToString());
+		}
+
+		[TestMethod]
+		public void MarkerOperation_Multiply()
+		{
+			MarkerOperation marker = new MarkerOperation();
+			marker.Name = "foo";
+			marker.Operator = "*";
+			marker.Value = "5";
+			Assert.AreEqual("foo *= 5", marker.ToString());
+		}
+
+		[TestMethod]
+		public void MarkerOperation_Divide()
+		{
+			MarkerOperation marker = new MarkerOperation();
+			marker.Name = "foo";
+			marker.Operator = "/";
+			marker.Value = "5";
+			Assert.AreEqual("foo /= 5", marker.ToString());
+		}
+
+		[TestMethod]
+		public void MarkerOperation_Modulo()
+		{
+			MarkerOperation marker = new MarkerOperation();
+			marker.Name = "foo";
+			marker.Operator = "%";
+			marker.Value = "5";
+			Assert.AreEqual("foo %= 5", marker.ToString());
 		}
 	}
 }

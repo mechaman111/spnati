@@ -8,7 +8,21 @@
 			set { Set(0, value); }
 		}
 
-
+		public void Pose(IPoseable pose)
+		{
+			KisekaeGlobalFlag other = pose as KisekaeGlobalFlag;
+			if (other == null)
+			{
+				return;
+			}
+			ScaleX = other.ScaleX;
+			ScaleY = other.ScaleY;
+			Rotation = other.Rotation;
+			X = other.X;
+			Y = other.Y;
+			Depth = other.Depth;
+			Skew = other.Skew;
+		}
 
 		public int ScaleX
 		{

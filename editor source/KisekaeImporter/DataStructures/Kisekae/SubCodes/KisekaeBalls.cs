@@ -4,6 +4,10 @@
 	{
 		public KisekaeBalls() : base("qb") { }
 
+		public void Pose(IPoseable pose)
+		{
+		}
+
 		public int Shape
 		{
 			get { return GetInt(0); }

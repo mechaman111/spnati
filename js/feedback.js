@@ -52,14 +52,18 @@ function compileBaseErrorReport(userDesc, bugType) {
             player: epiloguePlayer.epilogue.player.id,
             gender: epiloguePlayer.epilogue.gender,
             scene: epiloguePlayer.sceneIndex,
-            sceneName: epiloguePlayer.activeScene.name,
             view: epiloguePlayer.viewIndex,
             directive: epiloguePlayer.directiveIndex,
         };
-        for (let i = epiloguePlayer.directiveIndex; i >= 0; i--) {
-            if (epiloguePlayer.activeScene.directives[i].type == "text") {
-                data.epilogue.lastText = epiloguePlayer.activeScene.directives[i].text;
-                break;
+
+        if (epiloguePlayer.activeScene) {
+            data.epilogue.sceneName = epiloguePlayer.activeScene.name;
+            for (let i = epiloguePlayer.directiveIndex; i >= 0; i--) {
+                let directive = epiloguePlayer.activeScene.directives[i];
+                if (directive && directive.type == "text") {
+                    data.epilogue.lastText = directive.text;
+                    break;
+                }
             }
         }
     } else {
@@ -118,14 +122,20 @@ function compileBaseErrorReport(userDesc, bugType) {
 }
 
 window.addEventListener('error', function (ev) {
-    jsErrors.push({
+    var errData = {
         'date': (new Date()).toISOString(),
-        'type': ev.error.name,
         'message': ev.message,
         'filename': ev.filename,
         'lineno': ev.lineno,
-        'stack': ev.error.stack
-    });
+
+    }
+
+    if (ev.error) {
+        errData.type = ev.error.name;
+        errData.stack = ev.error.stack;
+    }
+
+    jsErrors.push(errData);
 
     if (USAGE_TRACKING) {
         var report = compileBaseErrorReport('Automatically generated after Javascript error.', 'auto');

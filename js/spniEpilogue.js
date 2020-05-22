@@ -489,11 +489,39 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
   var title = $epilogue.find("title").html().trim();
   var gender = $epilogue.attr("gender") || 'any';
 
+  var markers = [];
+  $epilogue.children("markers").children("marker").each(function() {
+    var $elem = $(this);
+    var markerOp = parseMarkerXML(this, null);
+
+    /* By default, execute marker ops only when playing from the game end modal. */
+    var run_on = $elem.attr('when');
+
+    switch (run_on) {
+    case "game":
+    default:
+      markerOp.from_game = true;
+      markerOp.from_gallery = false;
+      break;
+    case "gallery":
+      markerOp.from_game = false;
+      markerOp.from_gallery = true;
+      break;
+    case "always":
+      markerOp.from_game = true;
+      markerOp.from_gallery = true;
+      break;
+    }
+
+    markers.push(markerOp);
+  });
+
   var epilogue = {
     title: title,
     player: player,
     gender: gender,
     scenes: [],
+    markers: markers,
   };
   var scenes = epilogue.scenes;
 
@@ -982,7 +1010,11 @@ function doEpilogueModal() {
   }
 
   $epilogueHeader.html(headerStr); //set the header string
-  $epilogueSelectionModal.modal("show");//show the epilogue selection modal
+  $epilogueSelectionModal.modal({
+    show: true,
+    keyboard: false,
+    backdrop: "static",
+  });//show the epilogue selection modal
 }
 
 /************************************************************
@@ -993,6 +1025,15 @@ function doEpilogue() {
 
   /* Prevent players from trying to load an epilogue twice. */
   $epilogueAcceptButton.prop("disabled", true);
+
+  /* Persistent marker forward declarations should already be loaded.
+   * Execute any marker operations attached to this epilogue. 
+   */
+  chosenEpilogue.markers.forEach(function(markerOp) {
+    if (markerOp.from_game) {
+      markerOp.apply(chosenEpilogue.player, null);
+    }
+  });
 
   if (USAGE_TRACKING) {
     var usage_tracking_report = {
@@ -1072,22 +1113,25 @@ function loadEpilogue(epilogue, loadToScene) {
   updateEpilogueButtons();
 }
 
-function moveEpilogueForward(ev) {
-  if (epiloguePlayer && epiloguePlayer.loaded && epiloguePlayer.hasMoreDirectives()) {
-    if (SENTRY_INITIALIZED) {
-      Sentry.addBreadcrumb({
-        category: 'epilogue',
-        message: 'Advancing epilogue from scene ' + epiloguePlayer.sceneIndex + ', directive' + epiloguePlayer.directiveIndex,
-        level: 'info'
-      });
+function moveEpilogueForward(showRestartModalAtEnd) {
+    if (epiloguePlayer && epiloguePlayer.loaded) {
+        if (epiloguePlayer.hasMoreDirectives()) {
+            if (SENTRY_INITIALIZED) {
+                Sentry.addBreadcrumb({
+                    category: 'epilogue',
+                    message: 'Advancing epilogue from scene ' + epiloguePlayer.sceneIndex + ', directive' + epiloguePlayer.directiveIndex,
+                    level: 'info'
+                });
+            }
+            epiloguePlayer.advanceDirective();
+            updateEpilogueButtons();
+        } else if (showRestartModalAtEnd) {
+            showRestartModal();
+        }
     }
-
-    epiloguePlayer.advanceDirective();
-    updateEpilogueButtons();
-  }
 }
 
-function moveEpilogueBack(ev) {
+function moveEpilogueBack() {
   if (epiloguePlayer && epiloguePlayer.loaded && epiloguePlayer.hasPreviousDirectives()) {
     if (SENTRY_INITIALIZED) {
       Sentry.addBreadcrumb({
@@ -1157,13 +1201,16 @@ function updateEpilogueButtons() {
   if (!epiloguePlayer) {
     return;
   }
+    var atStart = !epiloguePlayer.hasPreviousDirectives(),
+        atEnd = !epiloguePlayer.hasMoreDirectives();
 
-    $epiloguePrevButton.prop("disabled", !epiloguePlayer.hasPreviousDirectives());
-    $epilogueNextButton.prop("disabled", !epiloguePlayer.hasMoreDirectives());
+    $epiloguePrevButton.prop("disabled", atStart);
+    $epilogueNextButton.prop("disabled", atEnd);
+    $('#epilogue-end-indicator').toggle(atEnd);
     /* Force button bar visible at end of epilogue, un-force it if
      * going back, but avoid un-forcing it at the start. */
-    if (epiloguePlayer.hasPreviousDirectives()) {
-        $epilogueButtons.toggleClass('force-show', !epiloguePlayer.hasMoreDirectives());
+    if (!atStart) {
+        $epilogueButtons.toggleClass('force-show', atEnd);
     }
 
   if (DEBUG) {
@@ -1962,7 +2009,7 @@ SceneView.prototype.addText = function (directive, context) {
     context.oldDirective = box.data("directive");
   }
   else {
-    box = $(document.createElement('div')).addClass('bordered dialogue-bubble');
+    box = $('<div>', { 'class': 'bordered dialogue-bubble' });
     //attach new div element to the content div
     this.$textContainer.append(box[0]);
     box.data("id", id);
@@ -1986,8 +2033,8 @@ SceneView.prototype.removeText = function (directive, context) {
 SceneView.prototype.applyTextDirective = function (directive, box) {
   var content = expandDialogue(directive.text, null, humanPlayer);
 
-  box.html('<span>' + content + '</span>');
-  box.addClass(directive.arrow)
+  box.empty().append($('<span>', { html: content }));
+  box.removeClass('arrow-down arrow-left arrow-right arrow-up').addClass(directive.arrow);
   box.attr('style', directive.css);
 
   //use css to position the box
@@ -3130,7 +3177,7 @@ $('#epilogue-container').click(function(ev) {
     if (ev.pageX < window.innerWidth * 0.2) {
         moveEpilogueBack();
     } else {
-        moveEpilogueForward();
+        moveEpilogueForward(true);
     }
 });
 
@@ -3145,6 +3192,7 @@ function epilogue_keyUp(ev) {
         case 37:
             moveEpilogueBack(); break;
         case 32:
+            moveEpilogueForward(true); break;
         case 39:
             moveEpilogueForward(); break;
         }

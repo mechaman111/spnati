@@ -18,6 +18,7 @@ namespace Desktop
 		void Sort(List<IRecord> list);
 		bool AllowsNew { get; }
 		bool TrackRecent { get; }
+		bool FilterFromUI(IRecord record);
 	}
 
 	public interface IRecordProvider<T> : IRecordProvider where T : IRecord

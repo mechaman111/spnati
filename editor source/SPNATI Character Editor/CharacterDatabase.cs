@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using SPNATI_Character_Editor.DataStructures;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +27,7 @@ namespace SPNATI_Character_Editor
 		private static Dictionary<string, Character> _idMap = new Dictionary<string, Character>();
 		private static Dictionary<Character, CharacterEditorData> _editorData = new Dictionary<Character, CharacterEditorData>();
 		private static Dictionary<string, Costume> _reskins = new Dictionary<string, Costume>();
+		private static Dictionary<ISkin, PoseMatrix> _poseMatrices = new Dictionary<ISkin, PoseMatrix>();
 
 		public static List<string> FailedCharacters = new List<string>();
 
@@ -373,6 +375,45 @@ namespace SPNATI_Character_Editor
 				markers.Merge(editorData.Markers);
 			}
 			return markers;
+		}
+
+		public static void AddPoseMatrix(ISkin skin, PoseMatrix matrix)
+		{
+			_poseMatrices[skin] = matrix;
+		}
+
+		public static PoseMatrix GetPoseMatrix(ISkin skin)
+		{
+			return GetPoseMatrix(skin, true);
+		}
+
+		/// <summary>
+		/// Gets the pose matrix for a character/costume
+		/// </summary>
+		/// <param name="skin"></param>
+		/// <returns></returns>
+		public static PoseMatrix GetPoseMatrix(ISkin skin, bool loadFromDisk)
+		{
+			PoseMatrix matrix;
+			if (!_poseMatrices.TryGetValue(skin, out matrix) && loadFromDisk)
+			{
+				//try to load it
+				string filename = Path.Combine(skin.GetDirectory(), "poses.xml");
+				if (File.Exists(filename))
+				{
+					matrix = Serialization.ImportXml<PoseMatrix>(filename);
+				}
+				if (matrix == null)
+				{
+					//create a new one
+					matrix = new PoseMatrix(skin);
+				}
+
+				//cache it
+				_poseMatrices[skin] = matrix;
+			}
+
+			return matrix;
 		}
 	}
 }

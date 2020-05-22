@@ -4,6 +4,20 @@
 	{
 		public KisekaePenis() : base("qa") { }
 
+		public void Pose(IPoseable pose)
+		{
+			KisekaePenis other = pose as KisekaePenis;
+			if (other == null)
+			{
+				return;
+			}
+			Scale = other.Scale;
+			ErectionSize = other.Erect;
+			Layer = other.Layer;
+			Erect = other.Erect;
+			Angle = other.Angle;
+		}
+
 		public int Size
 		{
 			get { return GetInt(0); }

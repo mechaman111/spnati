@@ -353,6 +353,10 @@ namespace Desktop
 			{
 				if (Filter == null || Filter(record))
 				{
+					if (_provider.FilterFromUI(record))
+					{
+						continue;
+					}
 					ListViewItem item = _provider.FormatItem(record);
 					item.Tag = record;
 

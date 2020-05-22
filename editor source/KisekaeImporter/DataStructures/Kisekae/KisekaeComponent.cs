@@ -138,7 +138,7 @@ namespace KisekaeImporter
 			code.Deserialize(data);
 		}
 
-		public void ReplaceSubCode(KisekaeSubCode code, bool applyEmpties)
+		public void ReplaceSubCode(KisekaeSubCode code, bool applyEmpties, bool poseOnly)
 		{
 			string prefix = code.Id;
 			if (code.Index >= 0)
@@ -147,7 +147,14 @@ namespace KisekaeImporter
 			KisekaeSubCode existingCode = GetSubCode(prefix);
 			if (existingCode == null || !code.IsEmpty || applyEmpties)
 			{
-				SetSubCode(prefix, code);
+				if (poseOnly && existingCode is IPoseable)
+				{
+					((IPoseable)existingCode).Pose(code as IPoseable);
+				}
+				else
+				{
+					SetSubCode(prefix, code);
+				}
 			}
 		}
 

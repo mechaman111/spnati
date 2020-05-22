@@ -41,8 +41,6 @@ namespace SPNATI_Character_Editor
 
 		protected override void AddHandlers()
 		{
-			valFrom.ValueChanged += ValueChanged;
-			valTo.ValueChanged += ValueChanged;
 			valFrom.TextChanged += Value_TextChanged;
 			valTo.TextChanged += Value_TextChanged;
 			chkUpper.CheckedChanged += ValueChanged;
@@ -50,8 +48,6 @@ namespace SPNATI_Character_Editor
 
 		protected override void RemoveHandlers()
 		{
-			valFrom.ValueChanged -= ValueChanged;
-			valTo.ValueChanged -= ValueChanged;
 			valFrom.TextChanged -= Value_TextChanged;
 			valTo.TextChanged -= Value_TextChanged;
 			chkUpper.CheckedChanged -= ValueChanged;
@@ -147,11 +143,7 @@ namespace SPNATI_Character_Editor
 
 		private void Value_TextChanged(object sender, EventArgs e)
 		{
-			NumericUpDown ctl = sender as NumericUpDown;
-			if (ctl?.Text == "")
-			{
-				Save();
-			}
+			Save();
 		}
 	}
 

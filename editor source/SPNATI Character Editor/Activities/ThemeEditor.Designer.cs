@@ -34,6 +34,7 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.skinTester1 = new Desktop.Skinning.SkinTester();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.skinnedGroupBox1 = new Desktop.Skinning.SkinnedGroupBox();
 			this.gridCustom = new Desktop.Skinning.SkinnedDataGridView();
 			this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColColor = new System.Windows.Forms.DataGridViewButtonColumn();
@@ -52,7 +53,7 @@
 			this.skinTester1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.skinTester1.Location = new System.Drawing.Point(0, 0);
 			this.skinTester1.Name = "skinTester1";
-			this.skinTester1.Size = new System.Drawing.Size(511, 686);
+			this.skinTester1.Size = new System.Drawing.Size(805, 686);
 			this.skinTester1.TabIndex = 0;
 			// 
 			// splitContainer1
@@ -65,6 +66,7 @@
 			// 
 			// splitContainer1.Panel1
 			// 
+			this.splitContainer1.Panel1.Controls.Add(this.skinnedGroupBox1);
 			this.splitContainer1.Panel1.Controls.Add(this.skinTester1);
 			// 
 			// splitContainer1.Panel2
@@ -72,9 +74,23 @@
 			this.splitContainer1.Panel2.Controls.Add(this.gridCustom);
 			this.splitContainer1.Panel2.Controls.Add(this.table);
 			this.splitContainer1.Panel2MinSize = 450;
-			this.splitContainer1.Size = new System.Drawing.Size(975, 686);
-			this.splitContainer1.SplitterDistance = 511;
+			this.splitContainer1.Size = new System.Drawing.Size(1269, 686);
+			this.splitContainer1.SplitterDistance = 805;
 			this.splitContainer1.TabIndex = 1;
+			// 
+			// skinnedGroupBox1
+			// 
+			this.skinnedGroupBox1.BackColor = System.Drawing.Color.White;
+			this.skinnedGroupBox1.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox1.Image = null;
+			this.skinnedGroupBox1.Location = new System.Drawing.Point(605, 283);
+			this.skinnedGroupBox1.Name = "skinnedGroupBox1";
+			this.skinnedGroupBox1.PanelType = Desktop.Skinning.SkinnedBackgroundType.Critical;
+			this.skinnedGroupBox1.ShowIndicatorBar = false;
+			this.skinnedGroupBox1.Size = new System.Drawing.Size(197, 28);
+			this.skinnedGroupBox1.TabIndex = 1;
+			this.skinnedGroupBox1.TabStop = false;
+			this.skinnedGroupBox1.Text = "Alert";
 			// 
 			// gridCustom
 			// 
@@ -99,6 +115,7 @@
 			this.gridCustom.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColName,
             this.ColColor});
+			this.gridCustom.Data = null;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
 			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -181,7 +198,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitContainer1);
 			this.Name = "ThemeEditor";
-			this.Size = new System.Drawing.Size(975, 686);
+			this.Size = new System.Drawing.Size(1269, 686);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -201,5 +218,6 @@
 		private System.Windows.Forms.DataGridViewButtonColumn ColColor;
 		private System.Windows.Forms.ColorDialog colorDialog1;
 		private System.Windows.Forms.Timer tmrRow;
+		private Desktop.Skinning.SkinnedGroupBox skinnedGroupBox1;
 	}
 }

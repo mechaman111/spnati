@@ -11,6 +11,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 		private Character _character;
 		private PartnerGraphs _partnerGraphType = PartnerGraphs.Lines;
 		private Tuple<string, List<Character>> _franchises;
+		private List<Tuple<string, List<Character>>> _allGroups = new List<Tuple<string, List<Character>>>();
 
 		public ComparisonWidget()
 		{
@@ -30,8 +31,40 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				Tag def = TagDatabase.GetTag(tag.Tag);
 				if (def != null && def.Group == "Source Material")
 				{
-					_franchises = TagDatabase.GetSmallestGroup("Source Material", _character);
-					return _franchises != null;
+					int max = Config.MaxFranchisePartners;
+					List<Tuple<string, List<Character>>> franchiseGroups = TagDatabase.GetGroups("Source Material", _character, max);
+					franchiseGroups.Sort((c1, c2) => c1.Item1.CompareTo(c2.Item1));
+					Tuple<string, List<Character>> min = null;
+					cboGroups.Items.Clear();
+					_allGroups.Clear();
+					int targetIndex = -1;
+					string targetFranchise = Config.LastFranchise;
+					foreach (Tuple<string, List<Character>> group in franchiseGroups)
+					{
+						_allGroups.Add(group);
+						if (!string.IsNullOrEmpty(targetFranchise) && targetFranchise == group.Item1)
+						{
+							targetIndex = _allGroups.Count - 1;
+						}
+						if (min == null || min.Item2.Count > group.Item2.Count)
+						{
+							min = group;
+						}
+						Tag t = TagDatabase.GetTag(group.Item1);
+						if (t != null)
+						{
+							cboGroups.Items.Add(t);
+						}
+					}
+					if (targetIndex >= 0)
+					{
+						cboGroups.SelectedIndex = targetIndex;
+					}
+					else
+					{
+						cboGroups.SelectedIndex = _allGroups.IndexOf(min);
+					}
+					return min != null;
 				}
 			}
 			return false;
@@ -183,6 +216,20 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			}
 			_partnerGraphType = (PartnerGraphs)type;
 			DoWork().MoveNext();
+		}
+
+		private void cboGroups_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (cboGroups.SelectedIndex >= 0)
+			{
+				_franchises = _allGroups[cboGroups.SelectedIndex];
+				Config.LastFranchise = _franchises.Item1;
+				DoWork().MoveNext();
+			}
+			else
+			{
+				_franchises = null;
+			}
 		}
 	}
 }

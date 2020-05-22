@@ -234,7 +234,7 @@ namespace SPNATI_Character_Editor
 			return Path.Combine(Config.SpnatiDirectory, "attachments", "reskins", FolderName);
 		}
 
-		public HashSet<string> GetRequiredPoses()
+		public HashSet<string> GetRequiredPoses(bool stageless)
 		{
 			if (Character == null)
 			{
@@ -259,7 +259,11 @@ namespace SPNATI_Character_Editor
 							{
 								continue;
 							}
-							string name = pose.GetStageKey(stage, false);
+							string name = pose.DisplayName;
+							if (!stageless)
+							{
+								name = pose.GetStageKey(stage, false);
+							}
 							images.Add(name);
 						}
 					}

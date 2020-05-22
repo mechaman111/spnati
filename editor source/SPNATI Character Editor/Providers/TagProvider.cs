@@ -69,5 +69,10 @@ namespace SPNATI_Character_Editor.Providers
 		public void SetContext(object context)
 		{
 		}
+
+		public bool FilterFromUI(IRecord record)
+		{
+			return false;
+		}
 	}
 }

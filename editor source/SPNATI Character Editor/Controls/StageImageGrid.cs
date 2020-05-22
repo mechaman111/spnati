@@ -53,7 +53,28 @@ namespace SPNATI_Character_Editor.Controls
 			for (int i = 0; i < _images.Count; i++)
 			{
 				StageImage img = new StageImage();
-				img.Stages.AddRange(_images[i]);
+
+				HashSet<int> stages = _images[i];
+				foreach (int stage in stages)
+				{
+					if (IsStageEnabled(stage, i))
+					{
+						img.Stages.Add(stage);
+					}
+				}
+
+				if (img.Stages.Count == 0)
+				{
+					//nothing was checked; discard this row
+					continue;
+				}
+
+				//if every possible stage was checked, don't manually track any
+				if (img.Stages.Count == _allowedStages.Count)
+				{
+					img.Stages.Clear();
+				}
+				
 				img.Pose = _selectedPoses[i];
 				list.Add(img);
 			}
@@ -85,7 +106,10 @@ namespace SPNATI_Character_Editor.Controls
 			_selectedPoses.Clear();
 			_layerCount = character.Layers + Clothing.ExtraStages;
 
+			Width = (int)Math.Ceiling(RowHeaderWidth + CellSize * _layerCount + _headerHeight * 1.67f) - 3;
+
 			HashSet<PoseMapping> poses = new HashSet<PoseMapping>();
+			HashSet<PoseMapping> unusedPoses = new HashSet<PoseMapping>();
 			//limit poses to those available in at least one selected stage
 			foreach (int stage in workingCase.Stages)
 			{
@@ -93,6 +117,7 @@ namespace SPNATI_Character_Editor.Controls
 				foreach (PoseMapping pose in character.PoseLibrary.GetPoses(stage))
 				{
 					poses.Add(pose);
+					unusedPoses.Add(pose);
 				}
 			}
 			List<PoseMapping> list = poses.ToList();
@@ -101,12 +126,21 @@ namespace SPNATI_Character_Editor.Controls
 
 			foreach (StageImage img in line.Images)
 			{
-				AddRow(img);
+				unusedPoses.Remove(img.Pose);
+				AddRow(img, true);
 			}
-			AddRow(null);
+			if (Config.AutoPopulateStageImages)
+			{
+				foreach (PoseMapping unused in unusedPoses)
+				{
+					StageImage placeholder = new StageImage(-1, unused);
+					AddRow(placeholder, false);
+				}
+			}
+			AddRow(null, false);
 		}
 
-		private void AddRow(StageImage img)
+		private void AddRow(StageImage img, bool checkAllIfBlank)
 		{
 			_populating = true;
 			HashSet<int> stages = new HashSet<int>();
@@ -124,6 +158,16 @@ namespace SPNATI_Character_Editor.Controls
 					stages.Add(stage);
 				}
 				_images.Add(stages);
+
+				if (img.Stages.Count == 0 && checkAllIfBlank)
+				{
+					//check everything by default
+					foreach (int stage in _allowedStages)
+					{
+						stages.Add(stage);
+					}
+				}
+
 				_selectedPoses.Add(img.Pose);
 			}
 			SkinnedComboBox combo = new SkinnedComboBox();
@@ -146,6 +190,8 @@ namespace SPNATI_Character_Editor.Controls
 			Controls.Add(combo);
 			combo.BringToFront();
 			_populating = false;
+
+			Height = _images.Count + 1;
 		}
 
 		private void Combo_SelectedIndexChanged(object sender, EventArgs e)
@@ -163,7 +209,7 @@ namespace SPNATI_Character_Editor.Controls
 					_selectedPoses.Add(pose);
 					if (!_populating)
 					{
-						AddRow(null); //new row
+						AddRow(null, false); //new row
 					}
 				}
 				int index = _images.IndexOf(img);
@@ -230,73 +276,71 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				g.DrawString("Stages", Skin.HeaderFont, headerBrush, -2, -3);
 			}
-			using (Brush disabledBrush = new SolidBrush(skin.Surface.DisabledForeColor))
+
+			using (Brush fontBrush = new SolidBrush(Enabled ? skin.Surface.ForeColor : skin.Surface.DisabledForeColor))
 			{
-				using (Brush fontBrush = new SolidBrush(Enabled ? skin.Surface.ForeColor : skin.Surface.DisabledForeColor))
+				using (Brush disabledBack = new SolidBrush(skin.Background.Disabled))
 				{
-					using (Brush disabledBack = new SolidBrush(skin.Background.Disabled))
+					g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+					int rows = _images.Count + 1;
+
+					Image check = Properties.Resources.Checkmark;
+					Image disabledCheck = Properties.Resources.CheckmarkDisabled;
+					for (int row = 0; row < _images.Count + 1; row++)
 					{
-						g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
-						int rows = _images.Count + 1;
-
-						Image check = Properties.Resources.Checkmark;
-						Image disabledCheck = Properties.Resources.CheckmarkDisabled;
-						for (int row = 0; row < _images.Count + 1; row++)
+						for (int layer = 0; layer < _layerCount; layer++)
 						{
-							for (int layer = 0; layer < _layerCount; layer++)
+							bool enabled = IsStageEnabled(layer, row);
+							if (!enabled)
 							{
-								bool enabled = IsStageEnabled(layer, row);
-								if (!enabled)
-								{
-									g.FillRectangle(disabledBack, xOffset + layer * CellSize, _headerHeight + CellSize * row, CellSize, CellSize);
-								}
+								g.FillRectangle(disabledBack, xOffset + layer * CellSize, _headerHeight + CellSize * row, CellSize, CellSize);
+							}
 
-								if (layer == _currentStage && row == _currentRow)
-								{
-									g.FillRectangle(indicator, xOffset + layer * CellSize, _headerHeight + CellSize - 5 + CellSize * row, CellSize, 5);
-								}
+							if (layer == _currentStage && row == _currentRow)
+							{
+								g.FillRectangle(indicator, xOffset + layer * CellSize, _headerHeight + CellSize - 5 + CellSize * row, CellSize, 5);
+							}
 
-								bool stageChecked = row < _images.Count && _images[row].Contains(layer);
-								if (stageChecked)
-								{
-									g.DrawImage(enabled ? check : disabledCheck, xOffset + layer * CellSize + CellSize / 2 - check.Width / 2, _headerHeight + CellSize * row + CellSize / 2 - check.Height / 2, check.Width, check.Height);
-								}
+							bool stageChecked = row < _images.Count && _images[row].Contains(layer);
+							if (stageChecked && enabled)
+							{
+								g.DrawImage(enabled ? check : disabledCheck, xOffset + layer * CellSize + CellSize / 2 - check.Width / 2, _headerHeight + CellSize * row + CellSize / 2 - check.Height / 2, check.Width, check.Height);
 							}
 						}
+					}
 
-						g.DrawLine(_border, xOffset + _headerHeight * 1.67f, 0, xOffset + _headerHeight * 1.67f + CellSize * _layerCount, 0); //top edge
-						g.DrawLine(_border, 0, _headerHeight, 0, _headerHeight + CellSize * rows); //left edge
+					g.DrawLine(_border, xOffset + _headerHeight * 1.67f, 0, xOffset + _headerHeight * 1.67f + CellSize * _layerCount, 0); //top edge
+					g.DrawLine(_border, 0, _headerHeight, 0, _headerHeight + CellSize * rows); //left edge
 
-						//Cells
-						for (int j = 0; j < _images.Count + 1; j++)
-						{
-							for (int i = 0; i < _layerCount; i++)
-							{
-								int x = CellSize * i;
-								g.DrawLine(_border, xOffset + x, _headerHeight, xOffset + x, _headerHeight + rows * CellSize); //left grid line
-								g.DrawLine(_border, xOffset + x, _headerHeight, xOffset + x + _headerHeight * 1.67f, 0); //grid diagonal
-							}
-							g.DrawLine(_border, 0, _headerHeight + CellSize * j, xOffset + CellSize * _layerCount, _headerHeight + CellSize * j); //top grid line
-						}
-						g.DrawLine(_border, xOffset + CellSize * _layerCount, _headerHeight, xOffset + CellSize * _layerCount, _headerHeight + CellSize * rows); //right edge
-						g.DrawLine(_border, xOffset + CellSize * _layerCount, _headerHeight, xOffset + CellSize * _layerCount + _headerHeight * 1.67f, 0); //right diagonal edge
-						g.DrawLine(_border, 0, _headerHeight + CellSize * rows, xOffset + CellSize * _layerCount, _headerHeight + CellSize * rows); //bottom edge
-
-						//Column labels
+					//Cells
+					for (int j = 0; j < _images.Count + 1; j++)
+					{
 						for (int i = 0; i < _layerCount; i++)
 						{
-							string label = GetLayerName(i);
-
-							int x = xOffset + CellSize * i;
-							g.TranslateTransform(x + 13, _headerHeight - 16); //fudging some numbers empirically to make it line up nice
-							g.RotateTransform(-30);
-
-							int width = (int)(Math.Sqrt((_headerHeight * _headerHeight) + (_headerHeight * 1.67f) * (_headerHeight * 1.67f)));
-							g.DrawString(label, Font, fontBrush, new Rectangle(0, 0, width, CellSize), sf);
-
-							g.ResetTransform();
+							int x = CellSize * i;
+							g.DrawLine(_border, xOffset + x, _headerHeight, xOffset + x, _headerHeight + rows * CellSize); //left grid line
+							g.DrawLine(_border, xOffset + x, _headerHeight, xOffset + x + _headerHeight * 1.67f, 0); //grid diagonal
 						}
+						g.DrawLine(_border, 0, _headerHeight + CellSize * j, xOffset + CellSize * _layerCount, _headerHeight + CellSize * j); //top grid line
+					}
+					g.DrawLine(_border, xOffset + CellSize * _layerCount, _headerHeight, xOffset + CellSize * _layerCount, _headerHeight + CellSize * rows); //right edge
+					g.DrawLine(_border, xOffset + CellSize * _layerCount, _headerHeight, xOffset + CellSize * _layerCount + _headerHeight * 1.67f, 0); //right diagonal edge
+					g.DrawLine(_border, 0, _headerHeight + CellSize * rows, xOffset + CellSize * _layerCount, _headerHeight + CellSize * rows); //bottom edge
+
+					//Column labels
+					for (int i = 0; i < _layerCount; i++)
+					{
+						string label = GetLayerName(i);
+
+						int x = xOffset + CellSize * i;
+						g.TranslateTransform(x + 13, _headerHeight - 16); //fudging some numbers empirically to make it line up nice
+						g.RotateTransform(-30);
+
+						int width = (int)(Math.Sqrt((_headerHeight * _headerHeight) + (_headerHeight * 1.67f) * (_headerHeight * 1.67f)));
+						g.DrawString(label, Font, fontBrush, new Rectangle(0, 0, width, CellSize), sf);
+
+						g.ResetTransform();
 					}
 				}
 			}

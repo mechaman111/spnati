@@ -210,8 +210,9 @@
 			this.Controls.Add(this.txtName);
 			this.Controls.Add(this.label1);
 			this.Name = "RecordLookup";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Record Lookup";
+			this.TopMost = true;
 			this.Shown += new System.EventHandler(this.RecordLookup_Shown);
 			this.skinnedPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);

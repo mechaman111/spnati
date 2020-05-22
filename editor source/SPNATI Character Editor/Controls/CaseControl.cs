@@ -216,7 +216,7 @@ namespace SPNATI_Character_Editor.Controls
 					return;
 				else if (result == DialogResult.Yes)
 				{
-					gridDialogue.Clear();
+					gridDialogue.ClearLines();
 				}
 			}
 			gridDialogue.PasteLines(_lineClipboard);
@@ -410,11 +410,11 @@ namespace SPNATI_Character_Editor.Controls
 			//Table
 			table.AddSpeedButton("Table", "Total Females", (data) => { return AddGenderFilter(data, "female"); });
 			table.AddSpeedButton("Table", "Total Males", (data) => { return AddGenderFilter(data, "male"); });
-			table.AddSpeedButton("Table", "Total Playing", (data) => { return AddStatusFilter(data, "alive"); });
-			table.AddSpeedButton("Table", "Total Exposed", (data) => { return AddStatusFilter(data, "exposed"); });
-			table.AddSpeedButton("Table", "Total Naked", (data) => { return AddStatusFilter(data, "naked"); });
-			table.AddSpeedButton("Table", "Total Masturbating", (data) => { return AddStatusFilter(data, "masturbating"); });
-			table.AddSpeedButton("Table", "Total Finished", (data) => { return AddStatusFilter(data, "finished"); });
+			table.AddSpeedButton("Table", "# Players Still in Game", (data) => { return AddStatusFilter(data, "alive"); });
+			table.AddSpeedButton("Table", "# Players Exposed", (data) => { return AddStatusFilter(data, "exposed"); });
+			table.AddSpeedButton("Table", "# Players Naked", (data) => { return AddStatusFilter(data, "naked"); });
+			table.AddSpeedButton("Table", "# Players Masturbating", (data) => { return AddStatusFilter(data, "masturbating"); });
+			table.AddSpeedButton("Table", "# Players Finished", (data) => { return AddStatusFilter(data, "finished"); });
 			table.AddSpeedButton("Table", "Human Name", (data) => { return AddVariableTest("~player~", data); });
 
 			//Also Playing
@@ -455,6 +455,7 @@ namespace SPNATI_Character_Editor.Controls
 			table.AddSpeedButton("Player", "Collectible", (data) => { return AddVariableTest("~_.collectible.*~", data); });
 			table.AddSpeedButton("Player", "Collectible (Counter)", (data) => { return AddVariableTest("~_.collectible.*.counter~", data); });
 			table.AddSpeedButton("Player", "Costume", (data) => { return AddVariableTest("~_.costume~", data); });
+			table.AddSpeedButton("Player", "Distance", (data) => { return AddVariableTest("~_.distance~", data); });
 			table.AddSpeedButton("Player", "Gender", (data) => { return AddVariableTest("~_.gender~", data); });
 			table.AddSpeedButton("Player", "Hand Quality", (data) => { return AddVariableTest("~_.hand.score~", data); });
 			table.AddSpeedButton("Player", "Largest Lead", (data) => { return AddVariableTest("~_.biggestlead~", data); });

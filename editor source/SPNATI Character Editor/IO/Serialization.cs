@@ -83,6 +83,19 @@ namespace SPNATI_Character_Editor
 			{
 				CharacterStyleSheetSerializer.Save(character, character.Styles);
 			}
+			PoseMatrix matrix = CharacterDatabase.GetPoseMatrix(character, false);
+			if (success)
+			{
+				if (matrix != null)
+				{
+					BackupAndExportXml(character, matrix, "poses", timestamp);
+				}
+				else
+				{
+					//if a poses file exists but hasn't been touched this session, copy it over
+					BackupFile(character, "poses", timestamp);
+				}
+			}
 
 			character.LastUpdate = DateTime.Now;
 
@@ -177,26 +190,37 @@ namespace SPNATI_Character_Editor
 				bool backupEnabled = Config.BackupEnabled;
 				if (backupEnabled)
 				{
-					string backup = Config.GetBackupDirectory(character);
-					if (!Directory.Exists(backup))
-					{
-						Directory.CreateDirectory(backup);
-					}
-					string backupFilename = Path.Combine(backup, $"{name}-{timestamp}.bak");
-					try
-					{
-						if (File.Exists(backupFilename))
-						{
-							File.Delete(backupFilename);
-						}
-
-						File.Copy(filename, backupFilename);
-					}
-					catch { }
+					BackupFile(character, name, timestamp);
 				}
 				return true;
 			}
 			return false;
+		}
+
+		private static void BackupFile(Character character, string name, string timestamp)
+		{
+			string dir = Config.GetRootDirectory(character);
+			string filename = Path.Combine(dir, name + ".xml");
+			if (!File.Exists(filename))
+			{
+				return;
+			}
+			string backup = Config.GetBackupDirectory(character);
+			if (!Directory.Exists(backup))
+			{
+				Directory.CreateDirectory(backup);
+			}
+			string backupFilename = Path.Combine(backup, $"{name}-{timestamp}.bak");
+			try
+			{
+				if (File.Exists(backupFilename))
+				{
+					File.Delete(backupFilename);
+				}
+
+				File.Copy(filename, backupFilename);
+			}
+			catch { }
 		}
 
 		public static Listing ImportListing()
@@ -339,6 +363,16 @@ namespace SPNATI_Character_Editor
 				if (editorData != null)
 				{
 					CharacterDatabase.AddEditorData(recoveredCharacter, editorData);
+				}
+			}
+
+			string posesFile = Path.Combine(folder, $"poses-{timestamp}.bak");
+			if (File.Exists(posesFile))
+			{
+				PoseMatrix matrix = ImportXml<PoseMatrix>(posesFile);
+				if (matrix != null)
+				{
+					CharacterDatabase.AddPoseMatrix(recoveredCharacter, matrix);
 				}
 			}
 
@@ -532,7 +566,14 @@ namespace SPNATI_Character_Editor
 
 		public static TagDictionary ImportTags()
 		{
-			string filename = Path.Combine(Config.ExecutableDirectory, "tag_dictionary.xml");
+			string path = Path.Combine(Config.SpnatiDirectory, "opponents");
+			string filename = Path.Combine(path, "tag_dictionary.xml");
+			if (!File.Exists(filename))
+			{
+				//use the old location for backwards compatibility
+				filename = Path.Combine(Config.ExecutableDirectory, "tag_dictionary.xml");
+			}
+
 			if (File.Exists(filename))
 			{
 				TextReader reader = null;
@@ -582,6 +623,14 @@ namespace SPNATI_Character_Editor
 			}
 
 			bool success = ExportXml(skin, Path.Combine(dir, "costume.xml"));
+			PoseMatrix matrix = CharacterDatabase.GetPoseMatrix(skin, false);
+			if (success)
+			{
+				if (matrix != null)
+				{
+					success = ExportXml(matrix, Path.Combine(dir, "poses.xml"));
+				}
+			}
 			return success;
 		}
 

@@ -55,12 +55,18 @@
 			this.txtFilter = new Desktop.Skinning.SkinnedTextBox();
 			this.tabsSections = new Desktop.Skinning.SkinnedTabControl();
 			this.tabGeneral = new System.Windows.Forms.TabPage();
+			this.chkWarnIncomplete = new Desktop.Skinning.SkinnedCheckBox();
+			this.label7 = new Desktop.Skinning.SkinnedLabel();
+			this.chkStatuses = new Desktop.Skinning.SkinnedCheckedListBox();
 			this.skinnedLabel5 = new Desktop.Skinning.SkinnedLabel();
 			this.recAutoOpen = new Desktop.CommonControls.RecordField();
 			this.cmdBrowseKisekae = new Desktop.Skinning.SkinnedButton();
 			this.txtKisekae = new Desktop.Skinning.SkinnedTextBox();
 			this.label5 = new Desktop.Skinning.SkinnedLabel();
 			this.tabDashboard = new System.Windows.Forms.TabPage();
+			this.grpComparison = new Desktop.Skinning.SkinnedGroupBox();
+			this.valFranchise = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.skinnedLabel6 = new Desktop.Skinning.SkinnedLabel();
 			this.chkStartDashboard = new Desktop.Skinning.SkinnedCheckBox();
 			this.grpChecklist = new Desktop.Skinning.SkinnedGroupBox();
 			this.chkChecklistValidation = new Desktop.Skinning.SkinnedCheckBox();
@@ -72,6 +78,7 @@
 			this.cboImportMethod = new Desktop.Skinning.SkinnedComboBox();
 			this.skinnedLabel3 = new Desktop.Skinning.SkinnedLabel();
 			this.tabDialogue = new System.Windows.Forms.TabPage();
+			this.chkAutoFill = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkEmptyCases = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkColorTargets = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkCaseTree = new Desktop.Skinning.SkinnedCheckBox();
@@ -99,6 +106,8 @@
 			this.tabsSections.SuspendLayout();
 			this.tabGeneral.SuspendLayout();
 			this.tabDashboard.SuspendLayout();
+			this.grpComparison.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valFranchise)).BeginInit();
 			this.grpChecklist.SuspendLayout();
 			this.tabImages.SuspendLayout();
 			this.tabDialogue.SuspendLayout();
@@ -444,6 +453,9 @@
 			// tabGeneral
 			// 
 			this.tabGeneral.BackColor = System.Drawing.Color.White;
+			this.tabGeneral.Controls.Add(this.chkWarnIncomplete);
+			this.tabGeneral.Controls.Add(this.label7);
+			this.tabGeneral.Controls.Add(this.chkStatuses);
 			this.tabGeneral.Controls.Add(this.skinnedLabel5);
 			this.tabGeneral.Controls.Add(this.recAutoOpen);
 			this.tabGeneral.Controls.Add(this.cmdBrowseKisekae);
@@ -461,6 +473,42 @@
 			this.tabGeneral.Size = new System.Drawing.Size(447, 242);
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
+			// 
+			// chkWarnIncomplete
+			// 
+			this.chkWarnIncomplete.AutoSize = true;
+			this.chkWarnIncomplete.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkWarnIncomplete.Location = new System.Drawing.Point(9, 197);
+			this.chkWarnIncomplete.Name = "chkWarnIncomplete";
+			this.chkWarnIncomplete.Size = new System.Drawing.Size(189, 17);
+			this.chkWarnIncomplete.TabIndex = 14;
+			this.chkWarnIncomplete.Text = "Warn about incomplete characters";
+			this.chkWarnIncomplete.UseVisualStyleBackColor = true;
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.label7.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.label7.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
+			this.label7.Location = new System.Drawing.Point(7, 116);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(96, 13);
+			this.label7.TabIndex = 13;
+			this.label7.Text = "Characters to hide:";
+			// 
+			// chkStatuses
+			// 
+			this.chkStatuses.BackColor = System.Drawing.Color.White;
+			this.chkStatuses.CheckOnClick = true;
+			this.chkStatuses.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.chkStatuses.ForeColor = System.Drawing.Color.Black;
+			this.chkStatuses.FormattingEnabled = true;
+			this.chkStatuses.Location = new System.Drawing.Point(133, 112);
+			this.chkStatuses.Name = "chkStatuses";
+			this.chkStatuses.Size = new System.Drawing.Size(276, 79);
+			this.chkStatuses.TabIndex = 12;
 			// 
 			// skinnedLabel5
 			// 
@@ -534,6 +582,7 @@
 			// tabDashboard
 			// 
 			this.tabDashboard.BackColor = System.Drawing.Color.White;
+			this.tabDashboard.Controls.Add(this.grpComparison);
 			this.tabDashboard.Controls.Add(this.chkStartDashboard);
 			this.tabDashboard.Controls.Add(this.grpChecklist);
 			this.tabDashboard.Controls.Add(this.chkDashboard);
@@ -544,6 +593,62 @@
 			this.tabDashboard.Size = new System.Drawing.Size(447, 242);
 			this.tabDashboard.TabIndex = 7;
 			this.tabDashboard.Text = "Dashboard";
+			// 
+			// grpComparison
+			// 
+			this.grpComparison.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.grpComparison.BackColor = System.Drawing.Color.White;
+			this.grpComparison.Controls.Add(this.valFranchise);
+			this.grpComparison.Controls.Add(this.skinnedLabel6);
+			this.grpComparison.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.grpComparison.Image = null;
+			this.grpComparison.Location = new System.Drawing.Point(6, 146);
+			this.grpComparison.Name = "grpComparison";
+			this.grpComparison.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.grpComparison.ShowIndicatorBar = false;
+			this.grpComparison.Size = new System.Drawing.Size(434, 90);
+			this.grpComparison.TabIndex = 3;
+			this.grpComparison.TabStop = false;
+			this.grpComparison.Text = "Franchise Overview";
+			// 
+			// valFranchise
+			// 
+			this.valFranchise.BackColor = System.Drawing.Color.White;
+			this.valFranchise.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.valFranchise.ForeColor = System.Drawing.Color.Black;
+			this.valFranchise.Location = new System.Drawing.Point(220, 24);
+			this.valFranchise.Maximum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+			this.valFranchise.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.valFranchise.Name = "valFranchise";
+			this.valFranchise.Size = new System.Drawing.Size(56, 20);
+			this.valFranchise.TabIndex = 11;
+			this.valFranchise.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// skinnedLabel6
+			// 
+			this.skinnedLabel6.AutoSize = true;
+			this.skinnedLabel6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel6.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel6.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel6.Location = new System.Drawing.Point(6, 26);
+			this.skinnedLabel6.Name = "skinnedLabel6";
+			this.skinnedLabel6.Size = new System.Drawing.Size(208, 13);
+			this.skinnedLabel6.TabIndex = 10;
+			this.skinnedLabel6.Text = "Include groups with fewer characters than:";
 			// 
 			// chkStartDashboard
 			// 
@@ -684,6 +789,7 @@
 			// tabDialogue
 			// 
 			this.tabDialogue.BackColor = System.Drawing.Color.White;
+			this.tabDialogue.Controls.Add(this.chkAutoFill);
 			this.tabDialogue.Controls.Add(this.chkEmptyCases);
 			this.tabDialogue.Controls.Add(this.chkColorTargets);
 			this.tabDialogue.Controls.Add(this.chkCaseTree);
@@ -702,6 +808,17 @@
 			this.tabDialogue.Size = new System.Drawing.Size(447, 242);
 			this.tabDialogue.TabIndex = 1;
 			this.tabDialogue.Text = "Dialogue";
+			// 
+			// chkAutoFill
+			// 
+			this.chkAutoFill.AutoSize = true;
+			this.chkAutoFill.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkAutoFill.Location = new System.Drawing.Point(6, 189);
+			this.chkAutoFill.Name = "chkAutoFill";
+			this.chkAutoFill.Size = new System.Drawing.Size(290, 17);
+			this.chkAutoFill.TabIndex = 30;
+			this.chkAutoFill.Text = "Auto-fill available poses in Select Images Per Stage form";
+			this.chkAutoFill.UseVisualStyleBackColor = true;
 			// 
 			// chkEmptyCases
 			// 
@@ -1001,6 +1118,9 @@
 			this.tabGeneral.PerformLayout();
 			this.tabDashboard.ResumeLayout(false);
 			this.tabDashboard.PerformLayout();
+			this.grpComparison.ResumeLayout(false);
+			this.grpComparison.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valFranchise)).EndInit();
 			this.grpChecklist.ResumeLayout(false);
 			this.grpChecklist.PerformLayout();
 			this.tabImages.ResumeLayout(false);
@@ -1088,5 +1208,12 @@
 		private Desktop.Skinning.SkinnedCheckBox chkPreviewFormatting;
 		private Desktop.Skinning.SkinnedCheckBox chkPreviewBubble;
 		private Desktop.Skinning.SkinnedCheckBox chkHideImages;
+		private Desktop.Skinning.SkinnedLabel label7;
+		private Desktop.Skinning.SkinnedCheckedListBox chkStatuses;
+		private Desktop.Skinning.SkinnedGroupBox grpComparison;
+		private Desktop.Skinning.SkinnedNumericUpDown valFranchise;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel6;
+		private Desktop.Skinning.SkinnedCheckBox chkAutoFill;
+		private Desktop.Skinning.SkinnedCheckBox chkWarnIncomplete;
 	}
 }

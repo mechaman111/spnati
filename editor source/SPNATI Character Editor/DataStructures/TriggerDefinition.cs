@@ -520,5 +520,10 @@ namespace SPNATI_Character_Editor
 				return TriggerDatabase.Compare(t1.Tag, t2.Tag);
 			});
 		}
+
+		public bool FilterFromUI(IRecord record)
+		{
+			return false;
+		}
 	}
 }

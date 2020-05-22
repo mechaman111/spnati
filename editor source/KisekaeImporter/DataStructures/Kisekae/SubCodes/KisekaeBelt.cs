@@ -4,13 +4,24 @@
 	{
 		public void CopyPositionFrom(KisekaeBelt belt)
 		{
-			Side = belt.Side;
 			ScaleX = belt.ScaleX;
+			ScaleY = belt.ScaleY;
 			Rotation = belt.Rotation;
 			OffsetX = belt.OffsetX;
 			OffsetY = belt.OffsetY;
 			Length = belt.Length;
 			Crop = belt.Crop;
+			RotationZ = belt.RotationZ;
+		}
+
+		public void Pose(IPoseable pose)
+		{
+			KisekaeBelt other = pose as KisekaeBelt;
+			if (other == null)
+			{
+				return;
+			}
+			CopyPositionFrom(other);
 		}
 
 		public int Side

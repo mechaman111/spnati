@@ -76,7 +76,7 @@ namespace KisekaeImporter
 		/// Merges another code into this one. Any existing subcodes will be replaced
 		/// </summary>
 		/// <param name="code">Code to merge into this one</param>
-		public void MergeIn(KisekaeCode code, bool applyEmpties)
+		public void MergeIn(KisekaeCode code, bool applyEmpties, bool poseOnly)
 		{
 			int mergingVersion;
 			int version;
@@ -99,7 +99,7 @@ namespace KisekaeImporter
 				{
 					Scene = new KisekaeChunk("");
 				}
-				Scene.MergeIn(code.Scene, applyEmpties);
+				Scene.MergeIn(code.Scene, applyEmpties, poseOnly);
 			}
 
 			for (int i = 0; i < Models.Length; i++)
@@ -110,7 +110,7 @@ namespace KisekaeImporter
 					{
 						Models[i] = new KisekaeModel("");
 					}
-					Models[i].MergeIn(code.Models[i], applyEmpties);
+					Models[i].MergeIn(code.Models[i], applyEmpties, poseOnly);
 				}
 			}
 		}

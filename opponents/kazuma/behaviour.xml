@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 11:35:28 PM on April 18, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.1 at 2:22:00 AM on May 22, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.5</version>
+    <version>v5.7.1</version>
     <first>Kazuma</first>
     <last>Satou</last>
     <label>Kazuma</label>
@@ -37,9 +37,7 @@
         <tag>adventurer</tag>
         <tag>konosuba</tag>
     </tags>
-    <nicknames />
 
-    <start />
 
     <wardrobe>
         <clothing name="boxers" generic="boxers" position="lower" type="important" plural="true" />
@@ -686,6 +684,12 @@
     <behaviour>
         <trigger id="selected">
             <case stage="0">
+                <test expr="~background~" value="bedroom" />
+                <test expr="~_.tag.human_female~" value="true" />
+                <test expr="~_.gender~" value="female" />
+                <state img="#-horny.png">Taking me to your bedroom, ~Player~? It is your bedroom, right?</state>
+            </case>
+            <case stage="0">
                 <condition role="other" character="remilia" />
                 <state img="#-strip.png">Look at this little princess. I bet she's a total bitch.</state>
             </case>
@@ -706,11 +710,6 @@
                 <test expr="~background~" value="bedroom" />
                 <test expr="~_.tag.human_male~" value="true" />
                 <state img="#-loss.png">Do I really have to go to ~Player~'s bedroom? It is your bedroom, right?</state>
-            </case>
-            <case stage="0">
-                <test expr="~background~" value="bedroom" />
-                <test expr="~_.tag.human_female~" value="true" />
-                <state img="#-horny.png">Taking me to your bedroom, ~Player~? It is your bedroom, right?</state>
             </case>
             <case stage="0">
                 <condition role="other" character="zizou" />
@@ -2038,7 +2037,7 @@
             </case>
             <case stage="5">
                 <condition role="other" character="tomoko" stage="0-8" />
-                <state img="#-stripped.png">Y'know... I had to slime down to fit my niche on a party. You wouldn't understand.</state>
+                <state img="#-stripped.png">Y'know... I had to slim down to fit my niche on a party. You wouldn't understand.</state>
             </case>
             <case stage="6">
                 <condition role="other" character="tomoko" stage="0-8" />
@@ -3596,10 +3595,6 @@
                 <state img="#-smirk.png">So, do you believe me, or do you wanna go on the quest with me and my party?</state>
             </case>
             <case stage="0-8">
-                <condition role="target" character="tomoko" stage="4" />
-                <state img="#-unimpressed.png">You think I'd perv on you when I've got several beautiful girls back home that want a piece of me?</state>
-            </case>
-            <case stage="0-8">
                 <condition role="target" character="yuelia" stage="3" />
                 <state img="#-smirk.png">I know it's impressive, so how about you join my party on a quest?</state>
             </case>
@@ -3828,10 +3823,6 @@
             <case stage="0-8">
                 <condition role="target" character="tomoko" stage="4" />
                 <state img="#-horrified.png">What? I'm not trying to perv on you!</state>
-            </case>
-            <case stage="0-8">
-                <condition role="target" character="tomoko" stage="5" />
-                <state img="#-awkward.png">Not that you're not beautiful in your own, weird, slightly off-putting way.</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="yuelia" stage="4" />
@@ -4095,6 +4086,10 @@
 
         <trigger id="female_removing_major">
             <case stage="0-8">
+                <condition role="target" character="tomoko" stage="4" />
+                <state img="#-unimpressed.png">You think I'd perv on you when I've got several beautiful girls back home that want a piece of me?</state>
+            </case>
+            <case stage="0-8">
                 <condition role="target" character="megumin" stage="6" />
                 <condition count="0" filter="girl_kazuma" role="self" />
                 <state img="#-interested.png">I see. You're going with the dress. Go ahead, it's nothing I haven't seen before.</state>
@@ -4261,6 +4256,10 @@
             <case stage="0-8" id="34">
                 <condition role="target" character="haru" stage="5" sayingMarker="mommyharu" />
                 <state img="#-horrified.png">I thought you were sweet and submissive! Why are you destroying my fantasy?</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="tomoko" stage="5" />
+                <state img="#-awkward.png">Not that you're not beautiful in your own, weird, slightly off-putting way.</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="megumin" stage="7" />
@@ -5955,7 +5954,6 @@
 
         <trigger id="heavy_masturbating">
             <case stage="7">
-                <condition count="0" filter="girl_kazuma" role="self" />
                 <state img="#-horny.png">I'm really close now...</state>
                 <state img="#-shocked.png">I... I didn't know I was good at edging...</state>
                 <state img="#-horny.png">I'm ready to pop off in a minute here.</state>
@@ -5973,9 +5971,6 @@
                 <state img="#-embarrassed.png">I'm about to cum in public. What am I? Lalatina?</state>
                 <state img="#-embarrassed.png">You're almost done, Kazuko. Just a little longer...</state>
                 <state img="#-finishing.png">Just gotta hold off a little longer...</state>
-            </case>
-            <case stage="7">
-                <state>What the character says while they're masturbating, and closer to "finishing".</state>
             </case>
         </trigger>
 

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 11:42:10 AM on April 13, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.6.1 at 4:21:50 PM on May 03, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.5</version>
+    <version>v5.6.1</version>
     <first>Joetta</first>
     <last>Grimaldi</last>
     <label>Joey</label>
@@ -31,9 +31,7 @@
         <tag>bottomless_first</tag>
         <tag>uses_toy</tag>
     </tags>
-    <nicknames />
 
-    <start />
 
     <wardrobe>
         <clothing name="bra" generic="Bra" position="upper" type="important" />
@@ -44,7 +42,6 @@
         <clothing name="gloves" generic="gloves" position="other" type="extra" plural="true" />
     </wardrobe>
 
-    <poses />
 
     <behaviour>
         <trigger id="selected">
@@ -354,6 +351,11 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0-6" oneShotId="16" priority="999">
+                <condition count="4-5" filter="hat" />
+                <condition role="other" character="megumin" />
+                <state img="#-calm.png" marker="NiceHatParty">Golly, look at all these hats. It's like we're having some kind of "nice hat party" or something!</state>
+            </case>
             <case stage="0-6" priority="156">
                 <condition role="other" character="derpy_hooves" stage="0" timeInStage="0-1" sayingMarker="why_swimsuit" />
                 <state img="#-thinking.png">There were invitations...?</state>
@@ -457,11 +459,6 @@
             </case>
             <case stage="0" alsoPlaying="jin" alsoPlayingHand="One Pair" totalRounds="0">
                 <state img="#-wink.png">You sure you want that now and not once my pants are off?</state>
-            </case>
-            <case stage="0" totalRounds="0" priority="112">
-                <condition count="4-5" filter="hat" />
-                <condition role="other" character="megumin" />
-                <state img="#-calm.png" marker="NiceHatParty">Golly, look at all these hats. It's like we're having some kind of "nice hat party" or something!</state>
             </case>
             <case stage="0" totalRounds="0">
                 <condition role="self" saidMarker="JoeyJoJo" />
@@ -1064,6 +1061,10 @@
                 <condition role="other" character="nami" />
                 <state img="#-happy.png">Oh, I'm sorry to hear that, Nami. I promise we aren't all bad!</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="ribbon_girl" />
+                <state img="#-thinking.png">Oh, it was made by, uh... I actually can't remember. It was, um... &lt;i&gt;someone...&lt;/i&gt;</state>
+            </case>
             <case stage="1 3-5">
                 <condition role="self" consecutiveLosses="2" />
                 <state img="#-laugh.png">Two times in a row? Man!</state>
@@ -1403,6 +1404,14 @@
                 <condition role="other" character="nami" />
                 <state img="#-stripping.png">Hmm... Nope, never heard of a &lt;i&gt;Buggy&lt;/i&gt; the &lt;i&gt;clown&lt;/i&gt;, but I have &lt;i&gt;driven&lt;/i&gt; a &lt;i&gt;clown buggy&lt;/i&gt;!</state>
             </case>
+            <case stage="1">
+                <condition role="other" character="ribbon_girl" />
+                <state img="#-stripping.png">Are you sure about that, Ribbon Girl? I wear this red shoe a lot and I've never felt the urge to dance until I die. Maybe you need &lt;i&gt;two&lt;/i&gt; red shoes?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="ribbon_girl" />
+                <state img="#-stripping.png">That wasn't it. It was something that started with a "q..." I'm sure I'll remember eventually!</state>
+            </case>
             <case stage="0">
                 <state img="#-stripping.png">Lucky for you all, I'm not just a clown and a magician, but also a practitioner of American burlesque.</state>
                 <state img="#-stripping.png">Lucky for you all, American burlesque is among my many skill sets!</state>
@@ -1670,6 +1679,10 @@
             <case stage="1">
                 <condition role="other" character="nami" />
                 <state img="#-stripped.png">Wait, you &lt;i&gt;don't&lt;/i&gt; think having the nose be real is a good thing...?</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="ribbon_girl" />
+                <state img="#-happy.png">I dunno, I don't think they'd want their brand associated with someone who'd be frequently taking &lt;i&gt;off&lt;/i&gt; the clothes they made!</state>
             </case>
             <case stage="1">
                 <state img="#-stripped.png">What? I never said I was gonna strip sexily. I just meant that I'm cool with stripping in front of strangers.</state>
@@ -2054,6 +2067,14 @@
                 <state img="#-calm.png">That was a pretty neat trick you did with that arrow earlier. You're pretty good with your fingers, huh?</state>
             </case>
             <case stage="0-8">
+                <condition role="target" character="ribbon_girl" stage="0" />
+                <state img="#-calm.png">I'm gonna go ahead and skip the obvious question and go to my next one: what's the deal with your hair?</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="ribbon_girl" stage="1" />
+                <state img="#-calm.png">Must be pretty nice, having stretchy arms.</state>
+            </case>
+            <case stage="0-8">
                 <condition role="target" character="default-chan" />
                 <state img="#-calm.png">What they say to a female NPC who has lost a round honk</state>
                 <state img="#-happy.png">What they say to a female NPC who has lost a round honk</state>
@@ -2399,6 +2420,14 @@
                 <state img="#-happy.png">Do you know how to pick pockets? I do, but I like to use that power to slip business cards into people's pockets without them knowing!</state>
             </case>
             <case stage="0-8">
+                <condition role="target" character="ribbon_girl" stage="0" />
+                <state img="#-happy.png">What's it like having ribbon arms? I bet it feels like you're always wearing gloves, huh?</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="ribbon_girl" stage="1" />
+                <state img="#-thinking.png">Really? What could possibly go wrong?</state>
+            </case>
+            <case stage="0-8">
                 <condition role="target" character="futaba" />
                 <state img="#-happy.png">So Futaba, your a gamer, huh? What's your hardware preference? You strike me as a PC gal.</state>
             </case>
@@ -2630,6 +2659,14 @@
             <case stage="0-8">
                 <condition role="target" character="uravity" stage="1" />
                 <state img="#-shrug.png">I dunno why, your costume just makes me think of balls.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="ribbon_girl" stage="1" />
+                <state img="#-thinking.png">... Now I can't help but wonder what it'd feel like to get a handy-j from you.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="ribbon_girl" stage="2" />
+                <state img="#-shrug.png">Sounds kinda fun to me!</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="vriska" saidMarker="4b" />
@@ -4538,6 +4575,10 @@
                 <state img="#-shrug.png">What the character says when a female character has lost a hand while nude, and must masturbate. honk</state>
                 <state img="#-wink.png">What the character says when a female character has lost a hand while nude, and must masturbate. honk</state>
             </case>
+            <case stage="0-8" id="65">
+                <condition role="target" character="azami" />
+                <state img="#-thinking.png">Y'know, I didn't even stop to think if this thing was going to swallow Azami whole.</state>
+            </case>
             <case stage="0-3">
                 <condition role="self" hasHand="High Card" saidMarker="1v1" />
                 <state img="#-gasp.png">Golly! That's super unlucky! Sorry it had to end like this, ~name~!</state>
@@ -4567,9 +4608,6 @@
             <case stage="7">
                 <state img="#-gasp.png">Oh dear! You have to join me, now!</state>
                 <state img="#-shrug.png">Another one bites the dust, I guess!</state>
-            </case>
-            <case stage="0-8" id="65">
-                <state img="#-thinking.png">Y'know, I didn't even stop to think if this thing was going to swallow Azami whole.</state>
             </case>
         </trigger>
 
@@ -4638,6 +4676,10 @@
                 <state img="#-shrug.png">What the character says when a female character has started masturbating. honk</state>
                 <state img="#-wink.png">What the character says when a female character has started masturbating. honk</state>
             </case>
+            <case stage="0-8" id="66">
+                <condition role="target" character="azami" />
+                <state img="#-shrug.png">Apparently the answer is "it can."</state>
+            </case>
             <case stage="0-6 8">
                 <state img="#-thinking.png">If you need help with lubrication, I got'cha covered! &lt;i&gt;Pretty sure I brought some lube...&lt;/i&gt;</state>
                 <state img="#-hot.png">Mercy! I daresay this game is superfluously lewd!</state>
@@ -4650,9 +4692,6 @@
                 <state img="#-happy.png">Hey, ~name~, wanna make this a race?</state>
                 <state img="#-happy.png">If you start jillin' to my jillin', I might start jillin' to you jillin' to me jillin'.</state>
                 <state img="#-approve.png">If you wanna start jillin' to my jillin', that's a-okay!</state>
-            </case>
-            <case stage="0-8" id="66">
-                <state img="#-shrug.png">Apparently the answer is "it can."</state>
             </case>
         </trigger>
 

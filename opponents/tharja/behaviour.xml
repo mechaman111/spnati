@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 8:21:16 PM on March 30, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.6.1 at 10:30:24 PM on May 03, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.5</version>
+    <version>v5.6.1</version>
     <first>Tharja</first>
     <last />
     <label>Tharja</label>
@@ -41,9 +41,7 @@
         <tag>goth</tag>
         <tag>magic</tag>
     </tags>
-    <nicknames />
 
-    <start />
 
     <wardrobe>
         <clothing name="loincloth" generic="loincloth" position="lower" type="important" />
@@ -1784,16 +1782,38 @@
                 <test expr="~self.costume~" value="normal_girl_tharja" />
                 <state img="#-embarrassed2.png">...You're not disappointed at all? Well, thank you! You're... surprisingly kind... I suppose it's okay to celebrate the winter festival as my true self... Just because it's with you, ~player~.</state>
             </case>
+            <case stage="0-4" id="239" oneShotId="181" priority="998">
+                <condition role="other" character="anna" stage="7" saidMarker="AnnaStripsTharjaReacts21" sayingMarker="AnnaTharjaPictureWaitsAfterGame" />
+                <test expr="~human.gender~" value="male" />
+                <state img="#-embarrassed.png" marker="AnnaTharjaPictureWaitsAfterGame">Right... I want ~player~ to watch you photograph me, Anna. After all, if he's getting some of the pictures, he should be able to tell you which, uh, &lt;i&gt;angles&lt;/i&gt; to capture...</state>
+            </case>
+            <case stage="0-4" id="240" oneShotId="182" priority="998">
+                <condition role="other" character="anna" stage="7" saidMarker="AnnaStripsTharjaReacts21" sayingMarker="AnnaTharjaPictureWaitsAfterGame" />
+                <test expr="~human.gender~" value="female" />
+                <state img="#-embarrassed.png" marker="AnnaTharjaPictureWaitsAfterGame">Right... I want ~player~ to watch you photograph me, Anna. After all, if she's getting some of the pictures, she should be able to tell you which, uh, &lt;i&gt;angles&lt;/i&gt; to capture...</state>
+            </case>
             <case stage="5" id="188" oneShotId="177" priority="242">
                 <condition role="self" saidMarker="TharjaJuraBoob3" />
                 <condition role="other" character="jura" stage="6" sayingMarker="tharja3" />
                 <condition count="1" role="opp" character="meia" />
                 <state img="#-shocked.png">Yes, you better remember that it is I who am above y- ngh -huh? Wait, how did... did I...?(&lt;i&gt;Shit, I casts the temporary hex by mistake!&lt;/i&gt;)</state>
             </case>
+            <case stage="0-5" id="191" priority="155">
+                <condition role="other" character="shamir" stage="2" hasHand="Two Pair" sayingMarker="TharjaHandGood3" />
+                <state img="#-disinterested.png">Two pair? And no, I didn't cast any spells. You're just terrible at hiding your cards, Shamir.</state>
+            </case>
             <case stage="0-5" id="69" totalRounds="2">
                 <condition role="other" character="jessie" stage="0-2" sayingMarker="JessieQA_Million" />
                 <state img="#-embarrassed.png">They say you can't buy love... But I would have to put that theory to the test... (&lt;i&gt;Mmmm... ~Player~...&lt;/i&gt;)</state>
                 <state img="#-embarrassed.png">A million bullion? ... I would buy ~player~'s love. I don't care what they say about that, a million &lt;i&gt;has to be enough!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-5" id="189">
+                <condition role="other" character="shamir" stage="0" sayingMarker="TharjaHandGood1" />
+                <state img="#-disinterested.png">Don't talk to ~player~ by name like that, Shamir. Consider this your first warning.</state>
+            </case>
+            <case stage="0-5" id="190">
+                <condition role="other" character="shamir" stage="1" sayingMarker="TharjaHandGood2" />
+                <state img="#-gloomy.png">Ever hear of &lt;i&gt;luck&lt;/i&gt;, Shamir? Sometimes you draw good cards. It's not that complicated.</state>
             </case>
             <case stage="0-5" id="30" alsoPlaying="misty_hgss" alsoPlayingStage="4" alsoPlayingSaidMarker="player_male" alsoPlayingNotSaidMarker="found_date" alsoPlayingSayingMarker="askfor_number" priority="100">
                 <state img="#-disinterested.png" marker="MistyPlayWontGiveNumber">Oh please, Misty... As if ~player~ would ever give yo-</state>
@@ -1995,19 +2015,37 @@
         <trigger id="must_strip">
             <case stage="4" priority="999">
                 <condition role="other" character="jura" stage="6" />
-                <condition role="self" saidMarker="standardroute" />
                 <state img="#-angry.png" marker="TharjaJuraBoob1">Behave yourself, &lt;i&gt;woman&lt;/i&gt;, if you know what's good for you. I'm capable of some wicked curses if you tempt me so.</state>
                 <state img="#-angry.png" marker="TharjaJuraBoob1">Do presume I'm &lt;i&gt;jealous&lt;/i&gt; of something, you cow? You will not get away with insults. Crossing me is an invite for humiliations!</state>
             </case>
             <case stage="4">
-                <condition gender="female" role="other" character="human" />
+                <condition gender="male" role="other" character="human" />
                 <condition role="other" character="jura" stage="6" />
-                <condition role="self" saidMarker="standardroute" />
             </case>
             <case stage="0-4" priority="101">
                 <condition role="self" saidMarker="JessieBoobWontMasturbate2" notSaidMarker="JessieBoobBegging2" />
                 <condition role="other" character="jessie" />
                 <state img="#-cocky.png" marker="JessieBoobsSelfStrip1">I got a little too careless after  casting that &lt;i&gt;wicked&lt;/i&gt; hex that I forgot to pay attention to the game. No matter; seeing the cam slut squeal more than makes up for it!</state>
+            </case>
+            <case stage="0" id="198">
+                <condition role="other" character="anna" />
+                <state img="#-disinterested.png" marker="TharjaStripsAnnaReacts1">Anna, Anna... Sounds familiar...</state>
+            </case>
+            <case stage="1" id="201">
+                <condition role="other" character="anna" />
+                <state img="#-disinterested.png" marker="TharjaStripsAnnaReacts4">Your sister was lucky I was in a good mood, or else I might have cast a curse on her, like this one...</state>
+            </case>
+            <case stage="2" id="202">
+                <condition role="other" character="anna" />
+                <state img="#-angry.png" marker="TharjaStripsAnnaReacts7">How could I like such a woman, Anna? She made me wear that breast-binding torture device! It was at least two sizes too small. I'm lucky my uncanny valleys survived in one piece.</state>
+            </case>
+            <case stage="3" id="203">
+                <condition role="other" character="anna" />
+                <state img="#-excited.png" marker="TharjaStripsAnnaReacts10">A better way to win over ~player~'s heart? Tell me at once, merchant!</state>
+            </case>
+            <case stage="4" id="204">
+                <condition role="other" character="anna" />
+                <state img="#-disinterested.png" marker="TharjaStripsAnnaReacts13">&lt;i&gt;Ughh...&lt;/i&gt; It's a figure of speech, you fool.</state>
             </case>
             <case stage="0-4" priority="98">
                 <condition role="self" saidMarker="JessieBoobBegging1" notSaidMarker="JessieBoobRevert" />
@@ -2040,13 +2078,13 @@
             </case>
             <case stage="2" id="108">
                 <test expr="~self.costume~" value="normal_girl_tharja" />
-                <state img="#-normal.png">Oh no, did I &lt;i&gt;lose&lt;/i&gt; again? Hee... &lt;i&gt;opps...&lt;/i&gt;</state>
+                <state img="#-normal.png">Oh no, did I &lt;i&gt;lose&lt;/i&gt; again? Hee... &lt;i&gt;oops...&lt;/i&gt;</state>
                 <state img="#-normal.png">&lt;i&gt;Oh no, I lost! What a silly game!&lt;/i&gt;</state>
             </case>
             <case stage="3" id="112">
                 <test expr="~self.costume~" value="normal_girl_tharja" />
                 <state img="#-shocked.png">I have to reveal my breasts? &lt;i&gt;(How do I pull this off as normal?)&lt;/i&gt;</state>
-                <state img="#-shocked.png">I have to reveal my breasts? &lt;i&gt;(I'm suposed to act &lt;/i&gt;normal!&lt;i&gt; How do I act normally about this?)&lt;/i&gt;</state>
+                <state img="#-shocked.png">I have to reveal my breasts? &lt;i&gt;(I'm supposed to act &lt;/i&gt;normal!&lt;i&gt; How do I act normally about this?)&lt;/i&gt;</state>
             </case>
             <case stage="4" id="113">
                 <test expr="~self.costume~" value="normal_girl_tharja" />
@@ -2077,7 +2115,8 @@
                 <condition role="self" saidMarker="stripshow6" />
                 <state img="#-horny.png" marker="stripshow7">I'm sorry ~player~, but the desert slave outfit has to go. I hope I won't displease you by removing my sandals.</state>
             </case>
-            <case stage="3" oneShotId="56" saidMarker="cheating9" priority="3">
+            <case stage="3" oneShotId="56" priority="3">
+                <condition role="self" saidMarker="cheating9" />
                 <state img="#-shocked.png" marker="cheating10">I don't need your sympathies! Just cut it out! I'll take it off... Jus-Just leave me alone!</state>
             </case>
             <case stage="3" oneShotId="61" saidMarker="stripshow9" priority="3">
@@ -2163,7 +2202,7 @@
                 <state img="#-angry.png" marker="standardroute">What?! I cast a hex that round! How is this possible?</state>
             </case>
             <case stage="2" priority="2">
-                <state img="#-normal.png" marker="standardroute">Oh no, did I &lt;i&gt;lose&lt;/i&gt;? Hee... &lt;i&gt;opps...&lt;/i&gt;</state>
+                <state img="#-normal.png" marker="standardroute">Oh no, did I &lt;i&gt;lose&lt;/i&gt;? Hee... &lt;i&gt;oops...&lt;/i&gt;</state>
             </case>
             <case stage="3-4" priority="1">
                 <state img="#-shocked.png">Fuck! That means... Uhhhhh....</state>
@@ -2219,6 +2258,26 @@
             <case stage="4" id="155">
                 <condition role="other" character="shamir" />
                 <state img="#-stripping.png" marker="TharjaStripsShamirReacts14">And besides, it's not like anything else I've done works...</state>
+            </case>
+            <case stage="0" id="199">
+                <condition role="other" character="anna" />
+                <state img="#-stripping.png" marker="TharjaStripsAnnaReacts2">Oh, her... That horrible, wasteful experience... It's a good thing that curtain was there to block her view, or else I would have cast a wicked hex on her.</state>
+            </case>
+            <case stage="1" id="205">
+                <condition role="other" character="anna" />
+                <state img="custom:#-magic" marker="TharjaStripsAnnaReacts5">&lt;i&gt;To ThE dARk PowERs I CaLL, ReMOVe mY GarmEntS AnD mAkE THiS sLaTTeRN SiLEnT!&lt;/i&gt;</state>
+            </case>
+            <case stage="2" id="206">
+                <condition role="other" character="anna" />
+                <state img="#-stripping.png" marker="TharjaStripsAnnaReacts8">That wretched merchant was trying to profit off of my lewdness. Of course I hold disdain for her.</state>
+            </case>
+            <case stage="3" id="207">
+                <condition role="other" character="anna" />
+                <state img="#-stripping.png" marker="TharjaStripsAnnaReacts11">&lt;i&gt;Money?&lt;/i&gt; There's surely more to it than that. I can provide love, protection, entertainment, sex, loyalty... And you think a few shiny disks is all it takes?</state>
+            </case>
+            <case stage="4" id="208">
+                <condition role="other" character="anna" />
+                <state img="#-stripping.png" marker="TharjaStripsAnnaReacts14">I suppose that's fair, Anna. I &lt;i&gt;have&lt;/i&gt; purchased real human hearts before. It's an easy mistake, honestly.</state>
             </case>
             <case stage="0-4" priority="98">
                 <condition role="self" saidMarker="JessieBoobBegging2" />
@@ -2358,6 +2417,26 @@
                 <condition role="self" saidMarker="TharjaJuraBoob2" />
                 <state img="#-horny.png" marker="TharjaJuraBoob3">Ha! You're almost cute when you're mad, Jura. See how much power I hold over you? </state>
             </case>
+            <case stage="3" id="210">
+                <condition role="other" character="anna" />
+                <test expr="~human.gender~" value="male" />
+                <state img="#-stripped.png" marker="TharjaStripsAnnaReacts9">Well, I suppose. I &lt;i&gt;did&lt;/i&gt; keep the swimsuit. I figured it could be key to winning ~player~'s affections. I could endure the torture of wearing it for him...</state>
+            </case>
+            <case stage="4" id="211">
+                <condition role="other" character="anna" />
+                <test expr="~human.gender~" value="male" />
+                <state img="#-stripped.png" marker="TharjaStripsAnnaReacts12">I would have thought a perky set of these would be all it took... Very well, I'll look into, uh... &lt;i&gt;buying&lt;/i&gt; his heart.</state>
+            </case>
+            <case stage="3" id="213">
+                <condition role="other" character="anna" />
+                <test expr="~human.gender~" value="male" />
+                <state img="#-stripped.png" marker="TharjaStripsAnnaReacts9">Well, I suppose. I &lt;i&gt;did&lt;/i&gt; keep the swimsuit. I figured it could be key to winning ~player~'s affections. I could endure the torture of wearing it for her...</state>
+            </case>
+            <case stage="4" id="214">
+                <condition role="other" character="anna" />
+                <test expr="~human.gender~" value="male" />
+                <state img="#-stripped.png" marker="TharjaStripsAnnaReacts12">I would have thought a perky set of these would be all it took... Very well, I'll look into, uh... &lt;i&gt;buying&lt;/i&gt; her heart.</state>
+            </case>
             <case stage="1" oneShotId="104">
                 <condition role="other" character="rinkah" stage="6-8" />
                 <state img="#-stripped.png">Right Rinkah... Aaaaand how many alts do you have in Heroes? ... Oh, that's right; you weren't even invited.</state>
@@ -2391,6 +2470,20 @@
             <case stage="5" id="156">
                 <condition role="other" character="shamir" />
                 <state img="#-stripped.png" marker="TharjaStripsShamirReacts15">Now, this strategy will work on ~player~ too, right Shamir?</state>
+            </case>
+            <case stage="1" id="200">
+                <condition role="other" character="anna" />
+                <state img="#-stripped.png" marker="TharjaStripsAnnaReacts3">Yes, Anna. I'm aware of your sister, er... Anna. What about it?</state>
+            </case>
+            <case stage="2" id="209">
+                <condition role="other" character="anna" />
+                <state img="#-stripped.png" marker="TharjaStripsAnnaReacts6">I left your sister unharmed, Anna. Which is as good of a fate as she could hope for.</state>
+            </case>
+            <case stage="5" id="212">
+                <condition role="other" character="anna" />
+                <state img="#-stripped.png" marker="TharjaStripsAnnaReacts15">And you don't think I have, Anna?</state>
+                <state img="#-stripped.png" marker="TharjaStripsAnnaReacts15">Who's to say I haven't, Anna...</state>
+                <state img="#-stripped.png" marker="TharjaStripsAnnaReacts15">...Thanks, Anna. So did I.</state>
             </case>
             <case stage="1-5" oneShotId="163" priority="98">
                 <condition role="self" saidMarker="JessieBoobBegging3" notSaidMarker="JessieBoobRevert" />
@@ -2488,10 +2581,10 @@
                 <state img="#-stripped.png">I don't make threats. I make promises. Remember that the next time I say I'll kill you.</state>
             </case>
             <case stage="2">
-                <state img="#-horny.png">I may be one step closer to losing, but I'm happy to take off anything for you ~player~.</state>
-                <state img="#-stripped.png">Rrgh... I look like a whore...</state>
-                <state img="#-stripped.png">... Oh, that? That was just a spell... I prepared it to impress ~player~...</state>
-                <state img="#-gloomy.png">You guys are... Gazing... Can you stop it already?</state>
+                <state img="#-horny.png" marker="TharjaStripAfterSpell">I may be one step closer to losing, but I'm happy to take off anything for you ~player~.</state>
+                <state img="#-stripped.png" marker="TharjaStripAfterSpell">Rrgh... I look like a whore...</state>
+                <state img="#-stripped.png" marker="TharjaStripAfterSpell">... Oh, that? That was just a spell... I prepared it to impress ~player~...</state>
+                <state img="#-gloomy.png" marker="TharjaStripAfterSpell">You guys are... Gazing... Can you stop it already?</state>
             </case>
             <case stage="4">
                 <state img="#-stripped.png">Well... Here they are...</state>
@@ -2656,6 +2749,41 @@
         </trigger>
 
         <trigger id="female_must_strip">
+            <case stage="0-7" id="192">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="0" sayingMarker="AnnaStripsShamirTharjaReact1" />
+                <state img="#-disinterested.png" marker="AnnaStripsShamirTharjaReact1">I've done all sorts of things to get money, Anna. Ultimately, I simply have no use for it.</state>
+            </case>
+            <case stage="0-7" id="195">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="1" sayingMarker="AnnaStripsShamirTharjaReact4" />
+                <state img="#-calm.png">&lt;i&gt;Treasure hunting&lt;/i&gt;, Anna? Don't be ridiculous. I'd rather stay here with ~player~ then run around with you two looking for myths and legends.</state>
+            </case>
+            <case stage="0-7" id="241">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="2" sayingMarker="AnnaStripsShamirTharjaReact7" />
+                <state img="#-disinterested.png">The &lt;i&gt;stock market&lt;/i&gt; Tha't not the sort of stalking I planned on doing today, Anna.</state>
+            </case>
+            <case stage="0-7" id="244">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="3" sayingMarker="AnnaStripsShamirTharjaReact10" />
+                <state img="#-disinterested.png">Does it involve me, Anna?</state>
+            </case>
+            <case stage="0-7" id="247">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="4" sayingMarker="AnnaStripsShamirTharjaReact13" />
+                <state img="#-gloomy.png">Here we go again...</state>
+            </case>
+            <case stage="0-7" id="250">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="5" sayingMarker="AnnaStripsShamirTharjaReact16" />
+                <state img="#-gloomy.png">Why do I have the feeling this will &lt;i&gt;not&lt;/i&gt; be a hit...</state>
+            </case>
+            <case stage="0-7" id="253">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="6" sayingMarker="AnnaStripsShamirTharjaReact19" />
+                <state img="#-disinterested.png">How about you write everything you said in a book, Anna, and title it &lt;i&gt;Top Ways&lt;/i&gt; NOT &lt;i&gt; to Make Money&lt;/i&gt;. You'd sell millions.</state>
+            </case>
             <case stage="0-7" id="10" totalRounds="0-7">
                 <condition role="target" character="zone-tan" stage="2" consecutiveLosses="3" sayingMarker="fulldemonloss" />
                 <state img="#-excited.png">&lt;i&gt;Hahaha&lt;/i&gt;! I have new-found respect for you now, Zone-tan!</state>
@@ -2686,11 +2814,39 @@
             </case>
             <case stage="0-7" id="178">
                 <condition role="target" character="shamir" stage="6" sayingMarker="ShamirStripsTharjaReacts19" />
-                <state img="#-disinterested.png">Simple, Shamir. I have a few &lt;i&gt;expiremental&lt;/i&gt; hexes I've prepared that are ready for human testing. </state>
+                <state img="#-disinterested.png">Simple, Shamir. I have a few &lt;i&gt;experimental&lt;/i&gt; hexes I've prepared that are ready for human testing. </state>
             </case>
             <case stage="0-7" id="181">
                 <condition role="target" character="shamir" stage="7" sayingMarker="ShamirStripsTharjaReacts22" />
-                <state img="#-disinterested.png">I have a three o'clock interogation and I'm studying ~player~'s eating habits at six, Shamir. I think I could squeeze you in at five...</state>
+                <state img="#-disinterested.png">I have a three o'clock interrogation and I'm studying ~player~'s eating habits at six, Shamir. I think I could squeeze you in at five...</state>
+            </case>
+            <case stage="0-7" id="215">
+                <condition role="target" character="anna" stage="0" sayingMarker="AnnaStripsTharjaReacts1" />
+                <state img="#-disinterested.png">No.</state>
+            </case>
+            <case stage="0-7" id="218">
+                <condition role="target" character="anna" stage="1" sayingMarker="AnnaStripsTharjaReacts4" />
+                <state img="#-angry.png">I'm not interested in treasure hunting either, Anna. I told you, I don't need you help with any of that.</state>
+            </case>
+            <case stage="0-7" id="221">
+                <condition role="target" character="anna" stage="2" sayingMarker="AnnaStripsTharjaReacts7" />
+                <state img="#-disinterested.png">Don't be ridiculous, merchant girl. I've tried my hand at brewing a love potion for years and I've had nothing but failure after failure after failureIt's impossible.</state>
+            </case>
+            <case stage="0-7" id="224">
+                <condition role="target" character="anna" stage="3" sayingMarker="AnnaStripsTharjaReacts10" />
+                <state img="#-mischievous.png">Three thousand? One hundred million? The entire continent of Valentia? Wouldn't be hard to &lt;i&gt;remove&lt;/i&gt; the mortals dwelling there... If you want it, it's yours. Just give me the potion.</state>
+            </case>
+            <case stage="0-7" id="227">
+                <condition role="target" character="anna" stage="4" sayingMarker="AnnaStripsTharjaReacts13" />
+                <state img="#-angry.png">&lt;i&gt;Leave them alive?&lt;/i&gt; Anna, of course I'd keep them alive! What do you take me for, implying I'd wipe out that many people?</state>
+            </case>
+            <case stage="0-7" id="230">
+                <condition role="target" character="anna" stage="5" sayingMarker="AnnaStripsTharjaReacts16" />
+                <state img="#-shocked.png">A... &lt;i&gt;camera tome&lt;/i&gt;? ... Okaaaaaaay...</state>
+            </case>
+            <case stage="0-7" id="233">
+                <condition role="target" character="anna" stage="6" sayingMarker="AnnaStripsTharjaReacts19" />
+                <state img="#-angry.png">And you &lt;i&gt;swear&lt;/i&gt; this love potion works, right?</state>
             </case>
             <case stage="2-7" priority="100">
                 <condition role="target" character="jessie" stage="3" />
@@ -2969,13 +3125,22 @@
         </trigger>
 
         <trigger id="female_removing_accessory">
+            <case stage="0-7" id="245">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="3" sayingMarker="AnnaStripsShamirTharjaReacts11" />
+                <state img="#-gloomy.png">......... Yep. It involves me.</state>
+            </case>
             <case stage="0-7" id="159">
                 <condition role="target" character="shamir" stage="0" sayingMarker="ShamirStripsTharjaReacts2" />
-                <state img="#-calm.png" marker="ShamirStripsTharjaReacts2">You don't find that odd, Shamir? Some unkown employer, sending you out on such a mission?</state>
+                <state img="#-calm.png" marker="ShamirStripsTharjaReacts2">You don't find that odd, Shamir? Some unknown employer, sending you out on such a mission?</state>
             </case>
             <case stage="0-7" id="179">
                 <condition role="target" character="shamir" stage="6" sayingMarker="ShamirStripsTharjaReacts20" />
                 <state img="#-excited.png" marker="ShamirStripsTharjaReacts20">No one's ever died from a disappearing clothes spell, have they, Shamir? </state>
+            </case>
+            <case stage="0-7" id="225">
+                <condition role="target" character="anna" stage="3" sayingMarker="AnnaStripsTharjaReacts11" />
+                <state img="#-shocked.png">An infinite supply of gold? Anna, that would crash the economy. For a merchant, you sure lack basic economic concepts like inflation and scarcity.</state>
             </case>
             <case stage="0-7" target="blake" targetStage="5">
                 <state img="#-calm.png">You really waited this long to remove such a stupid accessory? You really are on a whole new level of cluelessness...</state>
@@ -3083,6 +3248,11 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
+            <case stage="0-7" id="246">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="4" sayingMarker="AnnaStripsShamirTharjaReact12" />
+                <state img="#-angry.png">&lt;i&gt;Oh, wow Anna, you're so smart! You and your brilliant schemes!&lt;/i&gt; As if I haven't already thought of doing that...</state>
+            </case>
             <case stage="0-7" id="161">
                 <condition role="target" character="shamir" stage="1" sayingMarker="ShamirStripsTharjaReacts3" />
                 <state img="#-disinterested.png" marker="ShamirStripsTharjaReacts3">Riiiiiiight... If you were worth your salt, Shamir, you'd know exactly what was going on.</state>
@@ -3090,6 +3260,10 @@
             <case stage="0-7" id="180">
                 <condition role="target" character="shamir" stage="7" sayingMarker="ShamirStripsTharjaReacts21" />
                 <state img="#-disinterested.png" marker="ShamirStripsTharjaReacts21">Never mind then, Shamir. Just pick a time and place, and I'll be there with my spell.</state>
+            </case>
+            <case stage="0-7" id="226">
+                <condition role="target" character="anna" stage="4" sayingMarker="AnnaStripsTharjaReacts12" />
+                <state img="#-disinterested.png">Right, but it wouldn't just be you Anna, would it? You'd funnel all the wealth to your sisters, and how many of those do you have? We can't have a thousand Annas running around with unlimited wealth.</state>
             </case>
             <case stage="0-7" priority="5">
                 <condition role="target" character="sayori" />
@@ -3216,13 +3390,31 @@
         </trigger>
 
         <trigger id="female_removing_minor">
+            <case stage="0-7" id="196">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="1" sayingMarker="AnnaStripsShamirTharjaReact5" />
+                <state img="#-disinterested.png">There's plenty of gold anywhere there's men; I'm not going out of my way to find some with dusty coins rusting in a dank cave, Anna.</state>
+            </case>
+            <case stage="0-7" id="242">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="2" sayingMarker="AnnaStripsShamirTharjaReact8" />
+                <state img="#-gloomy.png">Forget the laws, Shamir; This bigger issue here is Anna thinking I'd make an exception for her. You realize &lt;i&gt;how many people&lt;/i&gt; ask me for things like this, Anna?</state>
+            </case>
             <case stage="0-7" id="163">
                 <condition role="target" character="shamir" stage="1" sayingMarker="ShamirStripsTharjaReacts5" />
-                <state img="#-calm.png" marker="ShamirStripsTharjaReacts5">Just think, Shamir... Why would someone &lt;i&gt;anonomously&lt;/i&gt; send you off to do this?</state>
+                <state img="#-calm.png" marker="ShamirStripsTharjaReacts5">Just think, Shamir... Why would someone &lt;i&gt;anonymously&lt;/i&gt; send you off to do this?</state>
             </case>
             <case stage="0-7" id="166">
                 <condition role="target" character="shamir" stage="2" sayingMarker="ShamirStripsTharjaReacts8" />
-                <state img="#-calm.png" marker="ShamirStripsTharjaReacts8">Right. Then why isn't your employer's identity &lt;i&gt;in order&lt;/i&gt;... It's not because they're embarraaaaassed... It's becaaaause... - ?</state>
+                <state img="#-calm.png" marker="ShamirStripsTharjaReacts8">Right. Then why isn't your employer's identity &lt;i&gt;in order&lt;/i&gt;... It's not because they're embarrassed... It's becaaaause... - ?</state>
+            </case>
+            <case stage="0-7" id="219">
+                <condition role="target" character="anna" stage="1" sayingMarker="AnnaStripsTharjaReacts5" />
+                <state img="#-disinterested.png">(&lt;i&gt;This merchant just keeps going and going and going and going... I haven't killed a merchant before... Is it true that they bleed gold?&lt;/i&gt;)</state>
+            </case>
+            <case stage="0-7" id="222">
+                <condition role="target" character="anna" stage="2" sayingMarker="AnnaStripsTharjaReacts8" />
+                <state img="#-shocked.png">Huh? Mages from... other worlds? ... &lt;i&gt;(Yeah, I suppose it makes sense...)&lt;/i&gt; And this love potion recipe has been proven to work, Anna?</state>
             </case>
             <case stage="0-7" target="natsuki" targetStage="1" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
@@ -3260,7 +3452,7 @@
                 <state img="#-mischievous.png">Felling wicked, Lilith?</state>
             </case>
             <case stage="0-7" target="mavis" targetStage="3" priority="2">
-                <state img="#-horny.png">Stockings add a certain alure, don't they, Mavis?</state>
+                <state img="#-horny.png">Stockings add a certain allure, don't they, Mavis?</state>
                 <state img="#-embarrassed.png">Stockings add a certain allure, don't they, Mavis? I've been thinking about getting some myself, but I thought they'd be out of place unless I removed my bodysuit.</state>
             </case>
             <case stage="0-7" target="mythra" targetStage="1" priority="2">
@@ -3318,6 +3510,16 @@
         </trigger>
 
         <trigger id="female_removed_minor">
+            <case stage="0-7" id="197">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="2" sayingMarker="AnnaStripsShamirTharjaReact6" />
+                <state img="#-horny.png">There's &lt;i&gt;hours&lt;/i&gt; of adventure awaiting me within ~player~'s eyes. All I need is... right here in front of me.</state>
+            </case>
+            <case stage="0-7" id="243">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="3" sayingMarker="AnnaStripsShamirTharjaReact9" />
+                <state img="#-disinterested.png">Aren't some of your sisters from the future, Anna? Go ask them about your scheme if you're so intent on these sorts of tricks.</state>
+            </case>
             <case stage="0-7" id="164">
                 <condition role="target" character="shamir" stage="2" sayingMarker="ShamirStripsTharjaReacts6" />
                 <state img="#-disinterested.png" marker="ShamirStripsTharjaReacts6">You're answering a different question Shamir. You answered "Why didn't you ask". I asked "Why didn't they &lt;i&gt;tell&lt;/i&gt;".</state>
@@ -3325,6 +3527,14 @@
             <case stage="0-7" id="187">
                 <condition role="target" character="shamir" stage="2" sayingMarker="ShamirStripsTharjaReacts7" />
                 <state img="#-disinterested.png" marker="ShamirStripsTharjaReacts7">&lt;i&gt;Ugh,&lt;/i&gt; this is helpless...</state>
+            </case>
+            <case stage="0-7" id="220">
+                <condition role="target" character="anna" stage="2" sayingMarker="AnnaStripsTharjaReacts6" />
+                <state img="#-angry.png">No! I don't need &lt;i&gt;wealth&lt;/i&gt;; what I seek is an emotional connection with the soul I was destined to be with. &lt;i&gt;I have no need for your money-making schemes.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7" id="223">
+                <condition role="target" character="anna" stage="3" sayingMarker="AnnaStripsTharjaReacts9" />
+                <state img="#-mischievous.png">If this love potion works, Anna, I'll pay any price. Name it, and it's yours.</state>
             </case>
             <case stage="0-7" target="mythra" targetStage="3" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
@@ -3434,13 +3644,31 @@
         </trigger>
 
         <trigger id="female_removing_major">
+            <case stage="0-7" id="193">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="0" sayingMarker="AnnaStripsShamirTharjaReact2" />
+                <state img="#-gloomy.png">I trust you don't expect me to tag along, Anna...</state>
+            </case>
+            <case stage="0-7" id="248">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="4" sayingMarker="AnnaStripsShamirTharjaReacts14" />
+                <state img="#-disinterested.png">Don't even pretend to be listening, Shamir. You're only going to encourage her.</state>
+            </case>
             <case stage="0-7" id="168">
                 <condition role="target" character="shamir" stage="3" sayingMarker="ShamirStripsTharjaReacts11" />
-                <state img="#-angry.png">The whole setup's &lt;i&gt;suspicous&lt;/i&gt;, Shamir! No name, no paper trail, no accountability. It's like they don't want anyone to know they're paying girls to take off their clothes.</state>
+                <state img="#-angry.png">The whole setup's &lt;i&gt;suspicious&lt;/i&gt;, Shamir! No name, no paper trail, no accountability. It's like they don't want anyone to know they're paying girls to take off their clothes.</state>
             </case>
             <case stage="0-7" id="173">
                 <condition role="target" character="shamir" stage="4" sayingMarker="FigureOutSetup2" />
                 <state img="#-gloomy.png">Whoever put you up to this is likely here, watching you. They wouldn't pay you to play strip poker if they weren't gonna watch.</state>
+            </case>
+            <case stage="0-7" id="216">
+                <condition role="target" character="anna" stage="0" sayingMarker="AnnaStripsTharjaReacts2" />
+                <state img="#-gloomy.png">Knock it off, Anna. You're just like the other. &lt;i&gt;"Oh Tharja, can you cast a luck hex on me? How about you make my beloved fall in love with me?"&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7" id="228">
+                <condition role="target" character="anna" stage="4" sayingMarker="AnnaStripsTharjaReacts14" />
+                <state img="#-gloomy.png">You're walking on thin Ice, Anna. Let me remind you that I could &lt;i&gt;take&lt;/i&gt; that recipe from you and there's nothing you could do to stop me. I'm trying to be generous here.</state>
             </case>
             <case stage="0-7" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
@@ -3519,6 +3747,16 @@
         </trigger>
 
         <trigger id="female_removed_major">
+            <case stage="0-7" id="194">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="1" sayingMarker="AnnaStripsShamirTharjaReact3" />
+                <state img="#-disinterested.png">I &lt;i&gt;suppose&lt;/i&gt; I'll follow along for a bit. It's been a while since I've gotten myself into mischief. Keep the money though; I don't need a cut.</state>
+            </case>
+            <case stage="0-7" id="249">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" stage="5" sayingMarker="AnnaStripsShamirTharjaReact15" />
+                <state img="#-disinterested.png">It's a quick way to lose money is what it is, Anna.</state>
+            </case>
             <case stage="0-7" id="169">
                 <condition role="target" character="shamir" stage="4" sayingMarker="ShamirStripsTharjaReacts12" />
                 <state img="#-disinterested.png">-And it's been how many rounds now? And you still haven't found your "target"... Don't you think think that, maybe, there &lt;i&gt;is no target&lt;/i&gt; This is a setup Shamir. Face it.</state>
@@ -3526,6 +3764,14 @@
             <case stage="0-7" id="174">
                 <condition role="target" character="shamir" stage="5" sayingMarker="FigureOutSetup3" />
                 <state img="#-mischievous.png" marker="ShamirStripsTharjaReacts15">Oh? &lt;i&gt;Catherine&lt;/i&gt;, huh? Some perverted friend of yours?</state>
+            </case>
+            <case stage="0-7" id="217">
+                <condition role="target" character="anna" stage="1" sayingMarker="AnnaStripsTharjaReacts3" />
+                <state img="#-disinterested.png">I don't need you help getting rich, Anna. I could be amass all the wealth I'd ever need in mere seconds.</state>
+            </case>
+            <case stage="0-7" id="229">
+                <condition role="target" character="anna" stage="5" sayingMarker="AnnaStripsTharjaReacts15" />
+                <state img="#-disinterested.png">More than just the continent of Valentia? Out with it.</state>
             </case>
             <case stage="4-7" saidMarker="CurseIntoToad" priority="5">
                 <state img="#-disinterested.png">Then again, being a toad might increase your intellectual capacity.</state>
@@ -3858,9 +4104,18 @@
         </trigger>
 
         <trigger id="female_chest_will_be_visible">
+            <case stage="0-7" id="251">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" sayingMarker="AnnaStripsShamirTharjaReacts17" />
+                <state img="#-angry.png">&lt;i&gt;No!&lt;/i&gt;</state>
+            </case>
             <case stage="0-7" id="176">
                 <condition role="target" character="shamir" sayingMarker="ShamirStripsTharjaReacts17" />
                 <state img="#-mischievous.png" marker="ShamirStripsTharjaReacts17">Well, I already found my love, Shamir. If this was just a way for her to &lt;i&gt;get one up on you&lt;/i&gt;, then, I may be willing to assist you...</state>
+            </case>
+            <case stage="0-7" id="231">
+                <condition role="target" character="anna" sayingMarker="AnnaStripsTharjaReacts17" />
+                <state img="#-embarrassed.png">You want &lt;i&gt;naked photos&lt;/i&gt; of me to hang in your shop? You want to post my promiscuity on your walls for all to see?</state>
             </case>
             <case stage="2-7" priority="100">
                 <condition role="target" character="jessie" />
@@ -3969,6 +4224,16 @@
         </trigger>
 
         <trigger id="female_medium_chest_is_visible">
+            <case stage="0-7" id="252">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" sayingMarker="AnnaStripsShamirTharjaReact18" />
+                <state img="#-disinterested.png">I know a fool-proof way to earn money, Anna. It's called hard work.</state>
+            </case>
+            <case stage="0-7" id="232">
+                <condition role="target" character="anna" sayingMarker="AnnaStripsTharjaReacts18" />
+                <test expr="~human.gender~" value="male" />
+                <state img="#-embarrassed.png">Right, of course... Yes, let's get on with it, Anna...</state>
+            </case>
             <case stage="0-7" id="177">
                 <condition role="target" character="shamir" sayingMarker="ShamirStripsTharjaReacts18" />
                 <state img="#-cocky.png" marker="ShamirStripsTharjaReacts18">Disappearing clothes spell in the mess hall, disappearing clothes spell at the hot springs, disappearing clothes spell in the throne room... I have spells for all sorts of tricks at my disposal, Shamir.</state>
@@ -4074,9 +4339,18 @@
         </trigger>
 
         <trigger id="female_crotch_will_be_visible">
+            <case stage="0-7" id="254">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" sayingMarker="AnnaStripsShamirTharjaReacts20" />
+                <state img="#-cocky.png">You could fill &lt;i&gt;hundreds&lt;/i&gt; of pages with your schemes, Anna. Although, what would you market the book as? Non-fiction? Or perhaps comedy?</state>
+            </case>
             <case stage="0-7" id="182">
                 <condition role="target" character="shamir" sayingMarker="ShamirStripsTharjaReacts23" />
                 <state img="#-excited.png">Of course, Shamir...</state>
+            </case>
+            <case stage="0-7" id="234">
+                <condition role="target" character="anna" sayingMarker="AnnaStripsTharjaReacts20" />
+                <state img="#-angry.png">&lt;i&gt;"Give or take a few zeroes?"&lt;/i&gt; Anna, that means you could be one percent sure!</state>
             </case>
             <case stage="0-7" target="misty_hgss" priority="2">
                 <condition count="1" filter="human_female" gender="female" />
@@ -4155,9 +4429,18 @@
         </trigger>
 
         <trigger id="female_crotch_is_visible">
+            <case stage="0-7" id="255">
+                <condition role="other" character="shamir" />
+                <condition role="target" character="anna" sayingMarker="AnnaStripsShamirTharjaReact21" />
+                <state img="#-disinterested.png">...Sure. I suppose I'll endulge...</state>
+            </case>
             <case stage="0-7" id="183">
                 <condition role="target" character="shamir" sayingMarker="ShamirStripsTharjaReacts24" />
                 <state img="#-mischievous.png">Now, let's talk about additional measures, Shamir. There's also an invisibility spell I could put on you if you wanted more &lt;i&gt;hands on&lt;/i&gt; mischief. Or one that makes her slur her speech! Could you imagine if she walked into an important meeting sounding drunk! I could use a weak bladder hex while I'am at it, or perhaps one that makes her horny. I could think of a few uses for that. Then there's always the classic flactulance spell, but, let's be honest, that's a bit immature, even for you. What are your thoughts on a spell that delays her moon blood? Could you imagine how anxious she'd be if she missed her moon blood? I could use a sleeping spell on her while she's in the hotsprings. Those are risky, but that's the point! You never know what perv might stop by if they see a naked woman sleeping... </state>
+            </case>
+            <case stage="0-7" id="235">
+                <condition role="target" character="anna" sayingMarker="AnnaStripsTharjaReacts21" />
+                <state img="#-disinterested.png">Yeah, let's do it. Even a one percent chance of winning ~player~'s attention is worth the brainwashing an entire continent to convince them this merchant is their legitamate supreme leader...</state>
             </case>
             <case stage="0-7" id="35" priority="101">
                 <condition filter="no_underwear" role="target" />
@@ -5477,31 +5760,49 @@
                 <state img="#-shocked.png" collectible="Dark Energy">Wait... Huh? It's over already? &lt;i&gt;NO! I REFUSE!!&lt;/i&gt;</state>
             </case>
             <case stage="7" id="184" priority="1">
-                <condition count="4" status="finished" />
-                <state img="#-horny.png">I didn't actually mind losing... As long as ~player~ enjoyed my show, at least.</state>
-                <state img="#-gloomy.png">So not even my hexes could save me from defeat, it would seem...</state>
-                <state img="#-disinterested.png">I suppose I could be convinced to play this game again...</state>
-                <state img="#-angry.png">No promises that I won't kill you all later.</state>
-                <state img="#-embarrassed.png">I wouldn't mind playing this game again... Without you three, obviously.</state>
+                <condition status="finished" />
+                <state img="#-horny.png" collectible="Dark Energy">I didn't actually mind losing... As long as ~player~ enjoyed my show, at least.</state>
+                <state img="#-gloomy.png" collectible="Dark Energy">So not even my hexes could save me from defeat, it would seem...</state>
+                <state img="#-disinterested.png" collectible="Dark Energy">I suppose I could be convinced to play this game again...</state>
+                <state img="#-angry.png" collectible="Dark Energy">No promises that I won't kill you all later.</state>
+                <state img="#-embarrassed.png" collectible="Dark Energy">I wouldn't mind playing this game again... Without you three, obviously.</state>
             </case>
             <case stage="7" id="185" priority="1">
                 <condition count="3" status="finished" />
-                <state img="#-horny.png">I didn't actually mind losing... As long as ~player~ enjoyed my show, at least.</state>
-                <state img="#-gloomy.png">So not even my hexes could save me from defeat, it would seem...</state>
-                <state img="#-disinterested.png">I suppose I could be convinced to play this game again...</state>
-                <state img="#-angry.png">No promises that I won't kill you all later.</state>
-                <state img="#-embarrassed.png">I wouldn't mind playing this game again... Without you two, obviously.</state>
+                <state img="#-horny.png" collectible="Dark Energy">I didn't actually mind losing... As long as ~player~ enjoyed my show, at least.</state>
+                <state img="#-gloomy.png" collectible="Dark Energy">So not even my hexes could save me from defeat, it would seem...</state>
+                <state img="#-disinterested.png" collectible="Dark Energy">I suppose I could be convinced to play this game again...</state>
+                <state img="#-angry.png" collectible="Dark Energy">No promises that I won't kill you all later.</state>
+                <state img="#-embarrassed.png" collectible="Dark Energy">I wouldn't mind playing this game again... Without you two, obviously.</state>
             </case>
             <case stage="7" id="186" priority="1">
                 <condition count="2" status="finished" />
-                <state img="#-horny.png">I didn't actually mind losing... As long as ~player~ enjoyed my show, at least.</state>
-                <state img="#-gloomy.png">So not even my hexes could save me from defeat, it would seem...</state>
-                <state img="#-disinterested.png">I suppose I could be convinced to play this game again...</state>
-                <state img="#-angry.png">No promises that I won't kill you all later.</state>
-                <state img="#-embarrassed.png">I wouldn't mind playing this game again... With only ~player~, obviously...</state>
+                <state img="#-horny.png" collectible="Dark Energy">I didn't actually mind losing... As long as ~player~ enjoyed my show, at least.</state>
+                <state img="#-gloomy.png" collectible="Dark Energy">So not even my hexes could save me from defeat, it would seem...</state>
+                <state img="#-disinterested.png" collectible="Dark Energy">I suppose I could be convinced to play this game again...</state>
+                <state img="#-angry.png" collectible="Dark Energy">No promises that I won't kill you all later.</state>
+                <state img="#-embarrassed.png" collectible="Dark Energy">I wouldn't mind playing this game again... With only ~player~, obviously...</state>
             </case>
             <case stage="7">
                 <state>What the character says when someone else has won the game. This can only occur when a player is in the "finished" stage.</state>
+            </case>
+        </trigger>
+
+        <trigger id="global">
+            <case stage="5" id="236" oneShotId="178" priority="999">
+                <condition role="other" character="anna" stage="7" saidMarker="AnnaStripsTharjaReacts21" sayingMarker="AnnaTakesPictureOfTharjaNaked" />
+                <condition role="self" notSaidMarker="AnnaTakesPictureOfTharjaNaked" />
+                <state img="#-annaPhoto.png" marker="AnnaTakesPictureOfTharjaNaked" collectible="photographFromAnna">There we go, Tharja! And turn... And that angle... &lt;hr&gt; Rhg, hurry up, Anna. How many pictures do you need?</state>
+            </case>
+            <case stage="6" id="237" oneShotId="179" priority="999">
+                <condition role="other" character="anna" stage="7" saidMarker="AnnaStripsTharjaReacts21" sayingMarker="AnnaTakesPictureOfTharjaNaked" />
+                <condition role="self" notSaidMarker="AnnaTakesPictureOfTharjaNaked" />
+                <state img="#-annaPhoto.png" marker="AnnaTakesPictureOfTharjaNaked" collectible="photographFromAnna">There we go, Tharja! And turn... And that angle... &lt;hr&gt; Rhg, hurry up, Anna. How many pictures do you need? Must you really do this while I masturbate?</state>
+            </case>
+            <case stage="7" id="238" oneShotId="180" priority="999">
+                <condition role="other" character="anna" stage="7" saidMarker="AnnaStripsTharjaReacts21" sayingMarker="AnnaTakesPictureOfTharjaNaked" />
+                <condition role="self" notSaidMarker="AnnaTakesPictureOfTharjaNaked" />
+                <state img="#-annaPhoto.png" marker="AnnaTakesPictureOfTharjaNaked" collectible="photographFromAnna">There we go, Tharja! And turn... And that angle... &lt;hr&gt; Rhg, hurry up, Anna. How many pictures do you need?</state>
             </case>
         </trigger>
 

@@ -180,6 +180,12 @@
     <Compile Include="Activities\LineImporter.Designer.cs">
       <DependentUpon>LineImporter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Activities\PoseMatrixEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\PoseMatrixEditor.Designer.cs">
+      <DependentUpon>PoseMatrixEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Activities\PoseUsageGraph.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -245,6 +251,7 @@
     <Compile Include="Analyzers\PoseDirectiveAnalyzers.cs" />
     <Compile Include="Analyzers\PoseCountAnalyzer.cs" />
     <Compile Include="Categories\GeneralCategories.cs" />
+    <Compile Include="Categories\DistanceCategory.cs" />
     <Compile Include="Categories\RelativePosition.cs" />
     <Compile Include="Categories\SizeCategory.cs" />
     <Compile Include="Categories\Slot.cs" />
@@ -333,6 +340,12 @@
     </Compile>
     <Compile Include="Controls\EditControls\PoseMatchControl.Designer.cs">
       <DependentUpon>PoseMatchControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\RectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\RectControl.Designer.cs">
+      <DependentUpon>RectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\EditControls\VariableControls\BackgroundTagControl.cs">
       <SubType>UserControl</SubType>
@@ -472,6 +485,12 @@
     <Compile Include="Controls\LiveEpilogueEditor.Designer.cs">
       <DependentUpon>LiveEpilogueEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MarkerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MarkerControl.Designer.cs">
+      <DependentUpon>MarkerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MarkerOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -483,6 +502,12 @@
     </Compile>
     <Compile Include="Controls\PartTransparencySlider.Designer.cs">
       <DependentUpon>PartTransparencySlider.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Reference\BackgroundGuide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Reference\BackgroundGuide.Designer.cs">
+      <DependentUpon>BackgroundGuide.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Reference\TagGuide.cs">
       <SubType>UserControl</SubType>
@@ -882,6 +907,7 @@
     <Compile Include="DataStructures\Pose.cs" />
     <Compile Include="DataStructures\PoseDirective.cs" />
     <Compile Include="DataStructures\PoseMap.cs" />
+    <Compile Include="DataStructures\PoseMatrix.cs" />
     <Compile Include="DataStructures\Recipe.cs" />
     <Compile Include="DataStructures\Scene.cs" />
     <Compile Include="DataStructures\Screen.cs" />
@@ -900,6 +926,31 @@
     <Compile Include="DataStructures\VariableDatabase.cs" />
     <Compile Include="DesktopMessages.cs" />
     <Compile Include="DialogueDatabase.cs" />
+    <Compile Include="Forms\AddPoseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddPoseForm.Designer.cs">
+      <DependentUpon>AddPoseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddSheetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddSheetForm.Designer.cs">
+      <DependentUpon>AddSheetForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ImageLoader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ImageLoader.Designer.cs">
+      <DependentUpon>ImageLoader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ImportLineupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ImportLineupForm.Designer.cs">
+      <DependentUpon>ImportLineupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MarkerOperation.cs" />
     <Compile Include="DialogueLine.cs" />
     <Compile Include="EpilogueEditing\AnimationHelpers.cs" />
     <Compile Include="EpilogueEditing\DataStructures\LiveAnimatedObject.cs" />
@@ -1264,6 +1315,9 @@
     <EmbeddedResource Include="Activities\Loader.resx">
       <DependentUpon>Loader.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Activities\PoseMatrixEditor.resx">
+      <DependentUpon>PoseMatrixEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Activities\PoseUsageGraph.resx">
       <DependentUpon>PoseUsageGraph.cs</DependentUpon>
     </EmbeddedResource>
@@ -1363,6 +1417,9 @@
     <EmbeddedResource Include="Controls\EditControls\PoseMatchControl.resx">
       <DependentUpon>PoseMatchControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\RectControl.resx">
+      <DependentUpon>RectControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\EditControls\VariableControls\BackgroundTagControl.resx">
       <DependentUpon>BackgroundTagControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -1443,6 +1500,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\EpilogueEditor.resx">
       <DependentUpon>EpilogueEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\FindReplace.resx">
       <DependentUpon>FindReplace.cs</DependentUpon>
@@ -1459,6 +1517,9 @@
     <EmbeddedResource Include="Controls\MarkerConditionField.resx">
       <DependentUpon>MarkerConditionField.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MarkerControl.resx">
+      <DependentUpon>MarkerControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\MarkerGrid.resx">
       <DependentUpon>MarkerGrid.cs</DependentUpon>
     </EmbeddedResource>
@@ -1467,9 +1528,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MarkerOptions.resx">
       <DependentUpon>MarkerOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PartTransparencySlider.resx">
       <DependentUpon>PartTransparencySlider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Reference\BackgroundGuide.resx">
+      <DependentUpon>BackgroundGuide.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Reference\TagGuide.resx">
       <DependentUpon>TagGuide.cs</DependentUpon>
@@ -1561,6 +1626,12 @@
     <EmbeddedResource Include="EpilogueEditing\Timeline.resx">
       <DependentUpon>Timeline.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddPoseForm.resx">
+      <DependentUpon>AddPoseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddSheetForm.resx">
+      <DependentUpon>AddSheetForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\CallOutForm.resx">
       <DependentUpon>CallOutForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -1608,6 +1679,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ImageLoader.resx">
+      <DependentUpon>ImageLoader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ImportLineupForm.resx">
+      <DependentUpon>ImportLineupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\KisekaeSetup.resx">
       <DependentUpon>KisekaeSetup.cs</DependentUpon>
@@ -1716,6 +1793,51 @@
     <None Include="Resources\Skins\The Inventory.skin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Icons\FileMissing.png" />
+    <Content Include="Help\images\matrix1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\matrix_lineup.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Icons\CopyRect.png" />
+    <None Include="Icons\CopyCode.png" />
+    <None Include="Icons\SortHorizontal.png" />
+    <None Include="Icons\InsertColumn.png" />
+    <None Include="Icons\Missing.png" />
+    <Content Include="Resources\Images\BaseCode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\LineupAll.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\LineupClothing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\LineupPose.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\PoseCode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\StageCode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v5.7.3.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v5.7.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v5.7.1.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v5.6.1.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v5.6.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="VersionHistory\v5.5.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2145,9 +2267,6 @@
     <Content Include="Resources\words.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="tag_dictionary.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="editor.ico" />
     <Content Include="Help\creation.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2282,6 +2401,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="VersionHistory\v3.5.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v5.7.2.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="VersionHistory\whatsnew.css">

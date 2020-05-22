@@ -484,7 +484,7 @@ Save.prototype.getCollectibleCounter = function (collectible) {
  * @returns {string | number}
  */
 Save.prototype.getPersistentMarker = function (player, name) {
-    var val = this.getItem('markers.' + player.id + '.' + name, true);
+    var val = this.getItem('marker.' + player.id + '.' + name, true);
     return val || '';
 }
 
