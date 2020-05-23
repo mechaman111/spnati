@@ -864,7 +864,7 @@ function loadDefaultFillSuggestions () {
     /* get a copy of the loaded opponents list, same as above */
     var possiblePicks = loadedOpponents.filter(function (opp) {
         return !players.some(function (p) { return p && p.id === opp.id; })
-                && !mainSelectDisplays.some(function (d) { d.prefillSuggestion && d.prefillSuggestion.id === opp.id; })
+                && !mainSelectDisplays.some(function (d) { return d.prefillSuggestion && d.prefillSuggestion.id === opp.id; })
                 && opp.highlightStatus === DEFAULT_FILL;
     });
 
@@ -887,10 +887,8 @@ function loadDefaultFillSuggestions () {
         fillPlayers.push(randomOpponent);
     }
 
-    for (var i = 1; i < players.length; i++) {
-        if (!(i in players)) {
-            if (fillPlayers.length === 0) break;
-
+    for (var i = 1; i < players.length && fillPlayers.length > 0; i++) {
+        if (!(i in players) && !mainSelectDisplays[i - 1].prefillSuggestion) {
             var suggestion = fillPlayers.shift();
             mainSelectDisplays[i - 1].setPrefillSuggestion(suggestion);
         }
