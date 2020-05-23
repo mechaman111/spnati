@@ -1195,7 +1195,7 @@ OpponentDetailsDisplay = function () {
     this.descriptionLabel = $("#individual-select-screen .opponent-details-description");
     this.linecountLabel = $("#individual-select-screen .opponent-linecount");
     this.posecountLabel = $("#individual-select-screen .opponent-posecount");
-    this.costumeSelector = $("#individual-select-screen .opponent-costume-select");
+    this.costumeSelector = $("#individual-select-screen .alt-costume-dropdown");
     this.simpleImage = $("#individual-select-screen .opponent-details-simple-image");
     this.imageArea = $("#individual-select-screen .opponent-details-image-area");
     
