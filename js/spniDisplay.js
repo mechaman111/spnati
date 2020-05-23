@@ -1110,13 +1110,6 @@ function OpponentSelectionCard (opponent) {
 
     var badgeSidebar = this.mainElem.appendChild(createElementWithClass('div', 'badge-sidebar'));
 
-    if (opponent.highlightStatus === 'new') {
-        $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
-            src: "img/new_icon.png",
-            alt: "SPNatI New"
-        });
-    }
-
     if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
         this.epilogueBadge = $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon epilogue-badge'))).attr({
             src: "img/epilogue.svg",
