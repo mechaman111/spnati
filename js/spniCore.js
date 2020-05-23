@@ -938,11 +938,8 @@ Opponent.prototype.getEpilogueStatus = function(mainSelect) {
                 return p && p.id === bestMatchEpilogue.needsCharacter;
             });
 
-            if (opp) {
-                tooltip = "Play with " + opp.selectLabel + " for a chance to unlock another epilogue";
-            } else {
-                tooltip = "Requires a Missing Character";
-            }
+            tooltip = "Play with " + (opp ? opp.selectLabel : bestMatchEpilogue.needsCharacter.initCap())
+                + " for a chance to unlock another epilogue";
         } else if (bestMatchEpilogue.extraConditions) {
             if (bestMatchEpilogue.hint) {
                 tooltip = "Hint: " + bestMatchEpilogue.hint;
