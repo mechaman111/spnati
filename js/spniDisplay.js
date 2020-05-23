@@ -925,12 +925,12 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
     this.prefillButton.show();
 
     this.prefillSuggestionBadges.new.toggle(player.highlightStatus === 'new');
-    this.prefillSuggestionBadges.epilogue.toggle(EPILOGUE_BADGES_ENABLED && player.ending);
+    /*this.prefillSuggestionBadges.epilogue.toggle(EPILOGUE_BADGES_ENABLED && player.ending);
     var epilogueStatus = player.getEpilogueStatus();
     if (epilogueStatus) {
         this.prefillSuggestionBadges.epilogue.attr('src', epilogueStatus.badge);
     }
-    this.prefillSuggestionBadges.costume.toggle(ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0);
+    this.prefillSuggestionBadges.costume.toggle(ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0);*/
     this.layerIcon.attr({
         src: "img/layers" + player.layers + ".png",
         alt: player.layers + " layers",
@@ -995,8 +995,8 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         this.badges.epilogue.attr({'src': epilogueStatus.badge,
                                    'data-original-title': epilogueStatus.tooltip || ''});
     }
-    this.badges.costume.toggle(ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0);
-    updateStatusIcon(this.statusIcon, player);
+    //this.badges.costume.toggle(ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0);
+    //updateStatusIcon(this.statusIcon, player);
     this.layerIcon.attr({
         src: "img/layers" + player.layers + ".png",
         alt: player.layers + " layers",

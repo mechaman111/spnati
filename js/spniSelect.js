@@ -507,21 +507,22 @@ function updateGroupSelectScreen (ignore_bg) {
             } else {
                 $groupBadges[i].hide();
             }
-
+            /*
             if (opponent.highlightStatus === 'new') {
                 $groupNewBadges[i].show();
             } else {
                 $groupNewBadges[i].hide();
             }
-
+            */
             $groupCostumeSelectors[i].hide();
             if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
+                /*
                 if (COSTUME_BADGES_ENABLED) {
                     $groupCostumeBadges[i].show();
                 } else {
                     $groupCostumeBadges[i].hide();
                 }
-
+                */
                 $groupCostumeSelectors[i].empty();
 
                 $groupCostumeSelectors[i].append($('<option>', {
