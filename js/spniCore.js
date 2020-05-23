@@ -789,7 +789,6 @@ Opponent.prototype.unloadAlternateCostume = function () {
     }
     
     this.alt_costume = null;
-    this.selectAlternateCostume(null);
     this.resetState();
 }
 
