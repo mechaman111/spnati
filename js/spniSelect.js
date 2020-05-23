@@ -283,6 +283,7 @@ function loadListingFile () {
             $creatorList.append(Object.keys(creatorSet).sort().map(function(source) {
                 return new Option(source);
             }));
+            loadedOpponents.forEach(function(p) { p.selectionCard.updateEpilogueBadge() });
         } else {
             var progress = Math.floor(100 * (totalLoads - outstandingLoads) / totalLoads);
             $(".game-load-progress").text(progress.toString(10));

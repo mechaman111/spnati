@@ -1158,8 +1158,6 @@ OpponentSelectionCard.prototype.update = function () {
     
     this.label.text(this.opponent.selectLabel);
     this.source.text(this.opponent.source);
-
-    this.updateEpilogueBadge();
 }
 
 OpponentSelectionCard.prototype.updateEpilogueBadge = function () {
