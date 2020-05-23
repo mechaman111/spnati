@@ -46,8 +46,8 @@ var backgroundImage;
 #Now that opponents can be specified in any folder, this is no longer required.*/
 
 /* Gender Images */
-var MALE_SYMBOL = IMG + 'male.png';
-var FEMALE_SYMBOL = IMG + 'female.png';
+var MALE_SYMBOL = IMG + 'male.svg';
+var FEMALE_SYMBOL = IMG + 'female.svg';
 
 var includedOpponentStatuses = {};
 var alternateCostumeSets = {};

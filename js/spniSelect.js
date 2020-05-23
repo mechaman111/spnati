@@ -544,7 +544,7 @@ function updateGroupSelectScreen (ignore_bg) {
                 alt: opponent.layers + ' layers',
             }).show();
             $groupGenders[i].attr({
-                src: opponent.gender === 'male' ? 'img/male.png' : 'img/female.png',
+                src: opponent.gender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
                 alt: opponent.gender.initCap(),
             }).show();
 
