@@ -827,7 +827,7 @@ function MainSelectScreenDisplay (slot) {
         'epilogue': $('#select-badge-'+slot),
         'costume': $('#select-costume-badge-'+slot),
     };
-    this.badges.epilogue.tooltip({placement: 'right', container: this.imageArea});
+    this.badges.epilogue.tooltip({placement: 'right', container: this.imageArea, delay: 200});
     this.allBadges = $('#select-image-area-'+slot+'>.select-badge-bar>img');
     this.layerIcon = $('#select-layer-'+slot);
     this.genderIcon = $('#select-gender-'+slot);
@@ -993,7 +993,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
     var epilogueStatus = player.getEpilogueStatus(true);
     if (epilogueStatus) {
         this.badges.epilogue.attr({'src': epilogueStatus.badge,
-                                   'data-original-title': epilogueStatus.tooltip});
+                                   'data-original-title': epilogueStatus.tooltip || ''});
     }
     this.badges.costume.toggle(ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0);
     updateStatusIcon(this.statusIcon, player);
@@ -1121,7 +1121,7 @@ function OpponentSelectionCard (opponent) {
         this.epilogueBadge = $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon epilogue-badge'))).attr({
             src: "img/epilogue.svg",
             alt: "SPNatI Epilogue available"
-        }).tooltip({placement: 'right', container: this.mainElem});
+        }).tooltip({placement: 'right', delay: 200, container: this.mainElem});
     }
 
     if (COSTUME_BADGES_ENABLED && opponent.alternate_costumes.length > 0) {
@@ -1173,8 +1173,8 @@ OpponentSelectionCard.prototype.updateEpilogueBadge = function () {
     if (!this.epilogueBadge || !this.opponent.ending) return;
 
     var epilogueStatus = this.opponent.getEpilogueStatus();
-    this.epilogueBadge.attr('src', epilogueStatus.badge)
-        .tooltip('destroy').tooltip({title: epilogueStatus.tooltip, placement: 'right'});
+    this.epilogueBadge.attr({'src': epilogueStatus.badge,
+                             'data-original-title': epilogueStatus.tooltip || '' });
 }
 
 OpponentSelectionCard.prototype.clear = function () {}

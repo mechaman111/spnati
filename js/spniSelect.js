@@ -387,7 +387,7 @@ function updateStatusIcon(elem, opp) {
         elem.attr({
             'src': 'img/' + statusIndicators[status].icon,
             'alt': status.initCap(),
-            'data-original-title': statusIndicators[status].tooltip,
+            'data-original-title': statusIndicators[status].tooltip || '',
         }).show();
     } else {
         elem.removeAttr('data-original-title').hide();
@@ -502,7 +502,7 @@ function updateGroupSelectScreen (ignore_bg) {
             if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
                 $groupBadges[i].show();
                 $groupBadges[i].attr({'src': epilogueStatus.badge,
-                                      'data-original-title': epilogueStatus.tooltip});
+                                      'data-original-title': epilogueStatus.tooltip || ''});
             } else {
                 $groupBadges[i].hide();
             }

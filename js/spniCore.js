@@ -843,8 +843,8 @@ Opponent.prototype.getAllEpilogueStatus = function () {
         var summary = {
             extraConditions: false,
             wrongGender: false,
-            needsCharacter: false,
-            missingCharacter: null,
+            needsCharacter: null,
+            missingCharacter: false,
             hint: undefined,
         };
 
@@ -860,9 +860,9 @@ Opponent.prototype.getAllEpilogueStatus = function () {
         if (alsoPlaying) {
             if (!players.some(function (p) { return p.id == alsoPlaying; })) {
                 /* Player requirement not met */
-                summary.missingCharacter = alsoPlaying;
+                summary.missingCharacter = true;
             }
-            summary.needsCharacter = true;
+            summary.needsCharacter = alsoPlaying;
         }
 
         summary.hint = $elem.attr('hint');
@@ -931,9 +931,9 @@ Opponent.prototype.getEpilogueStatus = function(mainSelect) {
     if (bestMatchEpilogue) {
         if (bestMatchEpilogue.wrongGender) {
             tooltip = "Play as " + bestMatchEpilogue.gender + " for a chance to unlock another epilogue";
-        } else if (bestMatchEpilogue.missingCharacter) {
+        } else if (bestMatchEpilogue.needsCharacter && (!mainSelect || bestMatchEpilogue.missingCharacter)) {
             var opp = loadedOpponents.find(function (p) {
-                return p && p.id === bestMatchEpilogue.missingCharacter;
+                return p && p.id === bestMatchEpilogue.needsCharacter;
             });
 
             if (opp) {
