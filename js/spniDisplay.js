@@ -1119,7 +1119,7 @@ function OpponentSelectionCard (opponent) {
 
     if (COSTUME_BADGES_ENABLED && opponent.alternate_costumes.length > 0) {
         $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
-            src: "img/costume_icon.png",
+            src: "img/costume_badge.svg",
             alt: "SPNatI Alternate Costume available"
         });
     }
