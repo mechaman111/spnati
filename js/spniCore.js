@@ -841,6 +841,7 @@ Opponent.prototype.getAllEpilogueStatus = function () {
         }
 
         var summary = {
+            title: $elem.text(),
             extraConditions: false,
             wrongGender: false,
             needsCharacter: null,
@@ -894,12 +895,14 @@ Opponent.prototype.getEpilogueStatus = function(mainSelect) {
     }
 
     var epilogueStatus = this.getAllEpilogueStatus();
-    var epiloguesUnlocked = 0;
+    var epilogueTitles = new Set();
+    var epiloguesUnlocked = new Set();
     var bestMatchEpilogue = null;
     for (var i = 0; i < epilogueStatus.length; i++) {
         var status = epilogueStatus[i];
+        epilogueTitles.add(status.title);
         if (status.unlocked) {
-            epiloguesUnlocked += 1;
+            epiloguesUnlocked.add(status.title);
             continue;
         }
 
@@ -918,7 +921,7 @@ Opponent.prototype.getEpilogueStatus = function(mainSelect) {
      * for marker conditions.
      */
     var badge = '';
-    if (epiloguesUnlocked == epilogueStatus.length) {
+    if (epiloguesUnlocked.size == epilogueTitles.size) {
         badge = "-completed";
     } else if (mainSelect && bestMatchEpilogue.score > 1) {
         badge = "-unavailable";
@@ -951,8 +954,8 @@ Opponent.prototype.getEpilogueStatus = function(mainSelect) {
     }
 
     return {
-        total: epilogueStatus.length,
-        unlocked: epiloguesUnlocked,
+        total: epilogueTitles.size,
+        unlocked: epiloguesUnlocked.size,
         match: bestMatchEpilogue,
         badge: 'img/epilogue' + badge + '.svg',
         tooltip: tooltip,
