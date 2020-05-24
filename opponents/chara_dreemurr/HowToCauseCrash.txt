@@ -1,0 +1,30 @@
+Insert the following code into the .xml in the appropriate spots:
+
+<script>restartGame();</script>
+
+Appropriate spots being before the text in her 'Hand Any' and 'Create Text Box' cases. Specifically, change the following:
+
+<case stage="0-8" id="1190" priority="666">
+	<test expr="~player~" value="Gaster" />
+	<state img="#-surprised.png">Uh oh.</state>
+</case>
+
+and
+
+<directive type="text" id="text21" width="20%" x="-27%" y="27%">This text holds the script that crashes the game. It shouldn't even be onscreen; IF YOU SEE THIS SOMETHING HAS GONE WRONG!</directive>
+
+
+To:
+
+
+<case stage="0-8" id="1190" priority="666">
+	<test expr="~player~" value="Gaster" />
+	<state img="#-surprised.png"><script>restartGame();</script>Uh oh.</state>
+</case>
+
+and
+
+<directive type="text" id="text21" width="20%" x="-27%" y="27%"><script>restartGame();</script>This text holds the script that crashes the game. It shouldn't even be onscreen; IF YOU SEE THIS SOMETHING HAS GONE WRONG!</directive>
+
+
+respectively.
