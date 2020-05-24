@@ -925,12 +925,13 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
     this.prefillButton.show();
 
     this.prefillSuggestionBadges.new.toggle(player.highlightStatus === 'new');
-    /*this.prefillSuggestionBadges.epilogue.toggle(EPILOGUE_BADGES_ENABLED && player.ending);
+    this.badges.epilogue.toggle(EPILOGUE_BADGES_ENABLED && player.ending);
     var epilogueStatus = player.getEpilogueStatus();
     if (epilogueStatus) {
-        this.prefillSuggestionBadges.epilogue.attr('src', epilogueStatus.badge);
+        this.badges.epilogue.attr({ 'src': epilogueStatus.badge,
+                                    'data-original-title': epilogueStatus.tooltip });
     }
-    this.prefillSuggestionBadges.costume.toggle(ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0);*/
+    //this.prefillSuggestionBadges.costume.toggle(ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0);
     this.layerIcon.attr({
         src: "img/layers" + player.layers + ".png",
         alt: player.layers + " layers",
