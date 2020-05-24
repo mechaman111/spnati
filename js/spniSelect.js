@@ -413,7 +413,7 @@ function updateIndividualSelectScreen () {
         $('#individual-select-screen .selection-cards-container').append(opp.selectionCard.mainElem);
         $(opp.selectionCard.mainElem).show();
 
-        if (opp.ending) {
+        if (opp.endings) {
             opp.selectionCard.updateEpilogueBadge();
         }
     });
@@ -500,7 +500,7 @@ function updateGroupSelectScreen (ignore_bg) {
             $groupDescriptionLabels[i].html(opponent.description);
             var epilogueStatus = opponent.getEpilogueStatus();
 
-            if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
+            if (opponent.endings) {
                 $groupBadges[i].show();
                 $groupBadges[i].attr({'src': epilogueStatus.badge,
                                       'data-original-title': epilogueStatus.tooltip || ''});

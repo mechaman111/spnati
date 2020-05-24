@@ -925,7 +925,7 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
     this.prefillButton.show();
 
     this.prefillSuggestionBadges.new.toggle(player.highlightStatus === 'new');
-    this.badges.epilogue.toggle(EPILOGUE_BADGES_ENABLED && player.ending);
+    this.badges.epilogue.toggle(!!player.endings);
     var epilogueStatus = player.getEpilogueStatus();
     if (epilogueStatus) {
         this.badges.epilogue.attr({ 'src': epilogueStatus.badge,
@@ -993,7 +993,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         return;
     }
     
-    this.badges.epilogue.toggle(EPILOGUE_BADGES_ENABLED && player.ending);
+    this.badges.epilogue.toggle(!!player.endings);
     var epilogueStatus = player.getEpilogueStatus(true);
     if (epilogueStatus) {
         this.badges.epilogue.attr({'src': epilogueStatus.badge,
@@ -1112,7 +1112,7 @@ function OpponentSelectionCard (opponent) {
 
     var badgeSidebar = this.mainElem.appendChild(createElementWithClass('div', 'badge-sidebar'));
 
-    if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
+    if (opponent.endings) {
         this.epilogueBadge = $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon epilogue-badge'))).attr({
             src: "img/epilogue.svg",
             alt: "SPNatI Epilogue available"
@@ -1163,7 +1163,7 @@ OpponentSelectionCard.prototype.update = function () {
 }
 
 OpponentSelectionCard.prototype.updateEpilogueBadge = function () {
-    if (!this.epilogueBadge || !this.opponent.ending) return;
+    if (!this.epilogueBadge || !this.opponent.endings) return;
 
     var epilogueStatus = this.opponent.getEpilogueStatus();
     this.epilogueBadge.attr({'src': epilogueStatus.badge,
@@ -1335,7 +1335,7 @@ function isEquivalentEpilogue(e1, e2) {
 }
 
 OpponentDetailsDisplay.prototype.updateEpiloguesView = function () {
-    if (!this.opponent.ending) return;
+    if (!this.opponent.endings) return;
 
     // Group together any epilogues with a shared name and conditional attributes (but with different gender attributes).
     var groups = [];
@@ -1344,11 +1344,6 @@ OpponentDetailsDisplay.prototype.updateEpiloguesView = function () {
         var $elem = $(elem);
         var title = $elem.text();
 
-        var status = $elem.attr('status');
-        if (status && !includedOpponentStatuses[status]) {
-            return;
-        }
-        
         if(!groups.some(function (group) {
             if (group.every(isEquivalentEpilogue.bind(null, $elem))) {
                 // This group contains all equivalent epilogues to the current one, add the current epilogue 
@@ -1464,7 +1459,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         this.mainView.removeClass('show-more');
     }
     
-    if (!opponent.ending) {
+    if (!opponent.endings) {
         this.epiloguesField.removeClass('has-epilogues');
     } else {
         this.epiloguesField.addClass('has-epilogues');

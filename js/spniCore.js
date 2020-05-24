@@ -13,7 +13,6 @@ var EPILOGUES_ENABLED = true;
 var EPILOGUES_UNLOCKED = false;
 var COLLECTIBLES_ENABLED = true;
 var COLLECTIBLES_UNLOCKED = false;
-var EPILOGUE_BADGES_ENABLED = true;
 var COSTUME_BADGES_ENABLED = true;
 var ALT_COSTUMES_ENABLED = false;
 var DEFAULT_COSTUME_SET = null;
@@ -501,17 +500,16 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.posesImageCount = parseInt($metaXml.find('poses').text(), 10) || undefined;
     this.z_index = parseInt($metaXml.find('z-index').text(), 10) || 0;
     this.dialogue_layering = $metaXml.find('dialogue-layer').text();
-    
-    this.endings = $metaXml.find('epilogue');
-    this.ending = $metaXml.find('has_ending').text() === "true";
 
-    if (this.endings.length > 0) {
-        this.endings.each(function (idx, elem) {
+    this.endings = null;
+    if (EPILOGUES_ENABLED) {
+        var $endings = $metaXml.find('epilogue').filter(function (idx, elem) {
             var status = $(elem).attr('status');
-            if (!status || includedOpponentStatuses[status]) {
-                this.ending = true;
-            }
+            return (!status || includedOpponentStatuses[status]);
         }.bind(this));
+        if ($endings.length) {
+            this.endings = $endings;
+        }
     }
 
     if (['over', 'under'].indexOf(this.dialogue_layering) < 0) {
@@ -826,18 +824,13 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
  * the current player gender and table composition.
  */
 Opponent.prototype.getAllEpilogueStatus = function () {
-    if (!this.ending) {
+    if (!this.endings) {
         return [];
     }
 
     var ret = [];
     this.endings.each(function (idx, elem) {
         var $elem = $(elem);
-
-        var status = $elem.attr('status');
-        if (status && !includedOpponentStatuses[status]) {
-            return;
-        }
 
         var summary = {
             title: $elem.text(),
@@ -889,7 +882,7 @@ Opponent.prototype.getEpilogueStatus = function(mainSelect) {
     /* Find the epilogue that matches the most requirements possible.
      * Prefer matching gender requirements first before character reqs.
      */
-    if (!EPILOGUE_BADGES_ENABLED || !this.ending) {
+    if (!this.endings) {
         return;
     }
 
@@ -1432,6 +1425,9 @@ function initialSetup () {
         loadGeneralCollectibles,
         loadSelectScreen,
         function () {
+            if (!EPILOGUES_ENABLED && !COLLECTIBLES_ENABLED) {
+                $('.title-gallery-edge').css('visibility', 'hidden');
+            }
             /* Make sure that save data is loaded before updateTitleGender(),
              * since the latter uses selectedClothing.
              */
@@ -1567,15 +1563,6 @@ function loadConfigFile () {
                 console.error('All epilogues unlocked in config file. You better be using this for development only and not cheating!');
             } else {
                 EPILOGUES_UNLOCKED = false;
-            }
-
-            var _epilogue_badges = $(xml).find('epilogue_badges').text();
-            if(_epilogue_badges.toLowerCase() === 'false') {
-                EPILOGUE_BADGES_ENABLED = false;
-                console.log("Epilogue badges are disabled.");
-            } else {
-                console.log("Epilogue badges are enabled.");
-                EPILOGUE_BADGES_ENABLED = true;
             }
 
 			var _debug = $(xml).find('debug').text();
