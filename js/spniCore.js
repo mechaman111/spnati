@@ -486,7 +486,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.label = this.selectLabel;
 
     this.image = $metaXml.find('pic').text();
-    this.gender = $metaXml.find('gender').text();
+    this.metaGender = this.gender = $metaXml.find('gender').text();
     this.height = $metaXml.find('height').text();
     this.source = $metaXml.find('from').text();
     this.artist = $metaXml.find('artist').text();

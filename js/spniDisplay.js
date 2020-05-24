@@ -937,8 +937,8 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
         alt: player.layers + " layers",
     }).show() ;
     this.genderIcon.attr({
-        src: player.gender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
-        alt: player.gender.initCap(),
+        src: player.metaGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
+        alt: player.metaGender.initCap(),
     }).show();
     this.statusIcon.hide();
 }
@@ -1006,8 +1006,8 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         alt: player.layers + " layers",
     }).show() ;
     this.genderIcon.attr({
-        src: player.gender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
-        alt: player.gender.initCap(),
+        src: player.metaGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
+        alt: player.metaGender.initCap(),
     }).show();
     
     if (!player.isLoaded()) {
@@ -1151,8 +1151,8 @@ OpponentSelectionCard.prototype.update = function () {
         alt: this.opponent.layers + " layers",
     }).show() ;
     this.genderIcon.attr({
-        src: this.opponent.gender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
-        alt: this.opponent.gender.initCap(),
+        src: this.opponent.metaGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
+        alt: this.opponent.metaGender.initCap(),
     }).show();
 
     this.simpleImage.one('load', OpponentDisplay.prototype.rescaleSimplePose.bind(this, this.opponent.scale));
