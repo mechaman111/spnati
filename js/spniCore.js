@@ -239,10 +239,7 @@ Player.prototype.resetState = function () {
          * So assume behaviour.xml holds the 'definitive' starting gender
          * for the character.
          */
-        var startGender = this.xml.find('gender').text();
-        if (startGender) {
-            this.gender = startGender;
-        }
+        this.gender = appearance.gender;
 
 		/* Load the player's wardrobe. */
 
@@ -476,15 +473,14 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.highlightStatus = highlightStatus || status || '';
     this.first = $metaXml.find('first').text();
     this.last = $metaXml.find('last').text();
-    
-    /* selectLabel shouldn't change due to e.g. alt costumes selected on
-     * the main select screen.
-     */
-    this.selectLabel = $metaXml.find('label').text();
-    this.label = this.selectLabel;
+
+    // For label and gender, track the original, default value from
+    // meta.xml, the value for the currently selected costume to be
+    // shown on the selection card, and the current in-game value.
+    this.label = this.selectLabel = this.metaLabel = $metaXml.find('label').text();
+    this.gender = this.selectGender = this.metaGender = $metaXml.find('gender').text();
 
     this.image = $metaXml.find('pic').text();
-    this.metaGender = this.gender = $metaXml.find('gender').text();
     this.height = $metaXml.find('height').text();
     this.source = $metaXml.find('from').text();
     this.artist = $metaXml.find('artist').text();
@@ -556,8 +552,10 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
 
             var costume_descriptor = {
                 'folder': $(elem).attr('folder'),
-                'label': $(elem).text(),
+                'name': $(elem).text(),
                 'image': $(elem).attr('img'),
+                'gender': $(elem).attr('gender') || this.selectGender,
+                'label': $(elem).attr('label') || this.selectLabel,
                 'set': set,
                 'status': status,
             };
@@ -698,9 +696,13 @@ Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
     if (!costumeDesc) {
         this.selected_costume = null;
         this.selection_image = this.base_folder + this.image;
+        this.selectLabel = this.metaLabel;
+        this.selectGender = this.metaGender;
     } else {
         this.selected_costume = costumeDesc.folder;
         this.selection_image = costumeDesc.folder + costumeDesc.image;
+        this.selectLabel = costumeDesc.label;
+        this.selectGender = costumeDesc.gender;
     }
 
     if (this.selectionCard)
@@ -738,7 +740,8 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
                 tags: [],
                 folder: this.selected_costume,
                 folders: $xml.find('folder'),
-                wardrobe: $xml.find('wardrobe')
+                wardrobe: $xml.find('wardrobe'),
+                gender: $xml.find('gender').text() || this.selectGender,
             };
             
             var poses = $xml.find('poses');
@@ -1044,7 +1047,8 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 labels: $xml.find('label'),
                 tags: null,
                 folders: this.folder,
-                wardrobe: $xml.find('wardrobe')
+                wardrobe: $xml.find('wardrobe'),
+                gender: $xml.children('gender').text(),
             };
             
             var poses = $xml.find('poses');

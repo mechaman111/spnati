@@ -400,7 +400,7 @@ function updateStatusIcon(elem, opp) {
  * `alt_costume` in this case has only `id` and `label` attributes.
  */
 function getCostumeOption(alt_costume, selected_costume) {
-    return $('<option>', {val: alt_costume.folder, text: 'Costume: '+alt_costume.label,
+    return $('<option>', {val: alt_costume.folder, text: 'Costume: '+alt_costume.name,
                           selected: alt_costume.folder == selected_costume})
 }
 
@@ -542,8 +542,8 @@ function updateGroupSelectScreen (ignore_bg) {
                 alt: opponent.layers + ' layers',
             }).show();
             $groupGenders[i].attr({
-                src: opponent.metaGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
-                alt: opponent.metaGender.initCap(),
+                src: opponent.selectGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
+                alt: opponent.selectGender.initCap(),
             }).show();
 
             $groupImages[i].attr('src', opponent.selection_image);

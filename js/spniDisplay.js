@@ -938,8 +938,8 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
         alt: player.layers + " layers",
     }).show() ;
     this.genderIcon.attr({
-        src: player.metaGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
-        alt: player.metaGender.initCap(),
+        src: player.selectGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
+        alt: player.selectGender.initCap(),
     }).show();
     this.statusIcon.hide();
 }
@@ -1007,8 +1007,8 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         alt: player.layers + " layers",
     }).show() ;
     this.genderIcon.attr({
-        src: player.metaGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
-        alt: player.metaGender.initCap(),
+        src: player.selectGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
+        alt: player.selectGender.initCap(),
     }).show();
     
     if (!player.isLoaded()) {
@@ -1152,8 +1152,8 @@ OpponentSelectionCard.prototype.update = function () {
         alt: this.opponent.layers + " layers",
     }).show() ;
     this.genderIcon.attr({
-        src: this.opponent.metaGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
-        alt: this.opponent.metaGender.initCap(),
+        src: this.opponent.selectGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
+        alt: this.opponent.selectGender.initCap(),
     }).show();
 
     this.simpleImage.one('load', OpponentDisplay.prototype.rescaleSimplePose.bind(this, this.opponent.scale));
