@@ -923,6 +923,7 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
     this.imageArea.addClass('prefill-suggestion');
     this.selectButton.html("Select Other Opponent").removeClass("red").addClass("green suggestion-shown");
     this.prefillButton.show();
+    this.altCostumeSelector.hide();
 
     this.prefillSuggestionBadges.new.toggle(player.highlightStatus === 'new');
     this.badges.epilogue.toggle(!!player.endings);
