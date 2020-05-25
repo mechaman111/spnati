@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7 at 2:32:54 PM on May 11, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7 at 7:41:18 PM on May 24, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7</version>
     <first>Aella</first>
@@ -283,21 +283,6 @@
         </trigger>
 
         <trigger id="swap_cards">
-            <case stage="0-6">
-                <condition role="self" hasHand="Flush" />
-                <alternative>
-                    <condition role="self" hasHand="Straight Flush" />
-                </alternative>
-                <alternative>
-                    <condition role="self" hasHand="Full House" />
-                </alternative>
-                <alternative>
-                    <condition role="self" hasHand="Straight" />
-                </alternative>
-                <state img="#-happy.png">Oh, I guess I don't need any cards!</state>
-                <state img="#-happy.png">No cards, thanks! This hand is great!</state>
-                <state img="#-enthused.png">Oh boy, this hand is awesome!</state>
-            </case>
             <case stage="0-6" id="82">
                 <condition filter="mama_shotgun" role="self" hasHand="Flush" />
                 <alternative>
@@ -317,6 +302,23 @@
             <case stage="0-6" id="83" priority="21">
                 <condition filter="mama_shotgun" role="self" />
                 <state img="#-calm.png">I need ~cards~.</state>
+            </case>
+            <case stage="0-6">
+                <alternative>
+                    <condition role="self" hasHand="Straight Flush" />
+                </alternative>
+                <alternative>
+                    <condition role="self" hasHand="Full House" />
+                </alternative>
+                <alternative>
+                    <condition role="self" hasHand="Straight" />
+                </alternative>
+                <alternative>
+                    <condition role="self" hasHand="Flush" />
+                </alternative>
+                <state img="#-happy.png">Oh, I guess I don't need any cards!</state>
+                <state img="#-happy.png">No cards, thanks! This hand is great!</state>
+                <state img="#-enthused.png">Oh boy, this hand is awesome!</state>
             </case>
             <case stage="0-6">
                 <condition role="self" hasHand="Royal Flush" />
@@ -1174,6 +1176,11 @@
                 <condition role="other" character="mary" sayingMarker="AellaDucks" />
                 <state img="#-thinking.png" marker="MaryDucks2">I don't know about that. I think my dress could only carry... maybe seven? Eight at best.</state>
             </case>
+            <case stage="0-6" id="301" oneShotId="15">
+                <condition role="other" character="jolyne" saidMarker="Stand" />
+                <condition role="self" notSaidMarker="JolyneStand" />
+                <state img="#-interested.png" marker="JolyneStand">You mentioned something about a "Stand," Jolyne? I can't see it. Is that bad?</state>
+            </case>
             <case stage="0-6">
                 <condition role="other" character="futaba" sayingMarker="futaba_adventures" />
                 <state img="#-enthused.png">Ooh, I've always wanted to go overseas! Uh, in my world, that is, but I'm sure overseas in this world is great too!</state>
@@ -1234,6 +1241,16 @@
                 <condition role="other" character="erufuda" />
                 <condition role="self" saidMarker="AellaBookClub" />
                 <state img="#-flustered.png" marker="ErufudaBook1">What was that book you mentioned again, Erufuda? The only part of it I caught was "Elf."</state>
+            </case>
+            <case stage="0-6" id="303">
+                <condition role="other" character="jolyne" />
+                <condition role="self" saidMarker="AellaAdventures" />
+                <state img="#-happy.png" marker="JolyneAdventure">I don't know about that, Jolyne, my adventure was pretty bizarre too! I'd like to hear about yours!</state>
+            </case>
+            <case stage="0-6" oneShotId="16">
+                <condition role="self" saidMarker="AellaAdventures" />
+                <condition role="other" character="chara_dreemurr" />
+                <state img="#-flustered.png" marker="CharaDemon">Are you a demon, Chara? I don't remember freeing you from a weapon prison...</state>
             </case>
             <case stage="2">
                 <condition role="other" character="kamina" />
@@ -2035,6 +2052,10 @@
             <case stage="0">
                 <condition role="other" character="ribbon_girl" />
                 <state img="#-stripping.png">I do know a bit of self-improvement magic, like weapon-enchanting spells. My favorite spell is Blazing Blade.</state>
+            </case>
+            <case stage="0" id="300">
+                <condition role="other" character="mary" />
+                <state img="#-stripping.png">Oh? Why's that? Is that because you can fit into smaller spaces? My sister's pretty good at that too.</state>
             </case>
             <case stage="3">
                 <test expr="~background.temperature~" value="cold" />
@@ -3052,6 +3073,11 @@
                 <condition role="target" character="akko" stage="4" />
                 <condition filter="mama_shotgun" role="self" />
                 <state img="#-calm.png">There's no cure for Manatrocism, so if you turned into one, I'd have no choice but to kill you. Hence why I'd have no hesitation doing so.</state>
+            </case>
+            <case stage="0-8" id="302">
+                <condition role="target" character="jolyne" stage="0" />
+                <condition role="self" notSaidMarker="JolyneStand" />
+                <state img="#-interested.png" marker="JolyneStand">You mentioned something about "Stands" before, right? What were you talking about?</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="leggy" stage="0" />
@@ -4233,7 +4259,7 @@
             </case>
             <case stage="4-8">
                 <alternative>
-                    <condition role="target" layers="3-4" />
+                    <condition role="target" layers="2-3" />
                 </alternative>
                 <alternative>
                     <condition status="exposed" role="target" />
