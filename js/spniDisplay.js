@@ -931,7 +931,7 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
         this.badges.epilogue.attr({ 'src': epilogueStatus.badge,
                                     'data-original-title': epilogueStatus.tooltip });
     }
-    //this.prefillSuggestionBadges.costume.toggle(ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0);
+    //this.prefillSuggestionBadges.costume.toggle(player.alternate_costumes.length > 0);
     this.layerIcon.attr({
         src: "img/layers" + player.layers + ".png",
         alt: player.layers + " layers",
@@ -999,7 +999,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         this.badges.epilogue.attr({'src': epilogueStatus.badge,
                                    'data-original-title': epilogueStatus.tooltip || ''});
     }
-    //this.badges.costume.toggle(ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0);
+    //this.badges.costume.toggle(player.alternate_costumes.length > 0);
     //updateStatusIcon(this.statusIcon, player);
     this.layerIcon.attr({
         src: "img/layers" + player.layers + ".png",
@@ -1038,7 +1038,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         }
 
         this.altCostumeSelector.hide();
-        if (ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0) {
+        if (player.alternate_costumes.length > 0) {
             this.altCostumeSelector.empty();
             
             this.altCostumeSelector.append($('<option>', {
@@ -1119,7 +1119,7 @@ function OpponentSelectionCard (opponent) {
         }).tooltip({placement: 'right', delay: 200, container: this.mainElem});
     }
 
-    if (COSTUME_BADGES_ENABLED && opponent.alternate_costumes.length > 0) {
+    if (opponent.alternate_costumes.length > 0) {
         $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
             src: "img/costume_badge.svg",
             alt: "SPNatI Alternate Costume available"
@@ -1541,7 +1541,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         this.collectiblesField.removeClass('has-collectibles');
     }
 
-    if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
+    if (opponent.alternate_costumes.length > 0) {
         this.costumeSelector.empty().append($('<option>', {val: '', text: 'Default Costume'})).prop('disabled', false);
         
         opponent.alternate_costumes.forEach(function (alt) {

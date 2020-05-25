@@ -13,8 +13,7 @@ var EPILOGUES_ENABLED = true;
 var EPILOGUES_UNLOCKED = false;
 var COLLECTIBLES_ENABLED = true;
 var COLLECTIBLES_UNLOCKED = false;
-var COSTUME_BADGES_ENABLED = true;
-var ALT_COSTUMES_ENABLED = false;
+var ALT_COSTUMES_ENABLED = true;
 var DEFAULT_COSTUME_SET = null;
 var USAGE_TRACKING = undefined;
 var SENTRY_INITIALIZED = false;
@@ -226,7 +225,7 @@ Player.prototype.resetState = function () {
         if (this.startStates.length > 0) this.updateChosenState(new State(this.startStates[0]));
 
         var appearance = this.default_costume;
-        if (ALT_COSTUMES_ENABLED && this.alt_costume) {
+        if (this.alt_costume) {
             appearance = this.alt_costume;
         }
 
@@ -544,7 +543,8 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
 
     this.alternate_costumes = [];
     this.selection_image = this.folder + this.image;
-    
+
+    if (!ALT_COSTUMES_ENABLED) return;
     $metaXml.find('alternates').find('costume').each(function (i, elem) {
         var set = $(elem).attr('set') || 'offline';
         var status = $(elem).attr('status') || 'offline';
@@ -570,6 +570,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
             this.alternate_costumes.push(costume_descriptor);
         }
     }.bind(this)).get();
+    // Not reached if alt costumes are disabled
 }
 
 Opponent.prototype = Object.create(Player.prototype);
@@ -1612,19 +1613,12 @@ function loadConfigFile () {
 
             var _alts = $(xml).find('alternate-costumes').text();
 
-            if(_alts === "true") {
-                ALT_COSTUMES_ENABLED = true;
+            if(_alts === "false") {
+                ALT_COSTUMES_ENABLED = false;
+                console.log("Alternate costumes disabled");
+            } else {
                 console.log("Alternate costumes enabled");
 
-                var _costume_badges = $(xml).find('costume_badges').text();
-                if (_costume_badges.toLowerCase() === 'false') {
-                    COSTUME_BADGES_ENABLED = false;
-                    console.log("Alternate costume badges are disabled.");
-                } else {
-                    console.log("Alternate costume badges are enabled.");
-                    COSTUME_BADGES_ENABLED = true;
-                }
-                
                 DEFAULT_COSTUME_SET = $(xml).find('default-costume-set').text();
                 if (DEFAULT_COSTUME_SET) {
                     console.log("Defaulting to alternate costume set: "+DEFAULT_COSTUME_SET);
@@ -1640,9 +1634,6 @@ function loadConfigFile () {
                         console.log("Including alternate costume set: "+set);
                     }
                 });
-            } else {
-                ALT_COSTUMES_ENABLED = false;
-                console.log("Alternate costumes disabled");
             }
             
             COLLECTIBLES_ENABLED = false;

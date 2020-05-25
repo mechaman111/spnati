@@ -515,13 +515,9 @@ function updateGroupSelectScreen (ignore_bg) {
             }
             */
             $groupCostumeSelectors[i].hide();
-            if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
+            if (opponent.alternate_costumes.length > 0) {
                 /*
-                if (COSTUME_BADGES_ENABLED) {
-                    $groupCostumeBadges[i].show();
-                } else {
-                    $groupCostumeBadges[i].hide();
-                }
+                $groupCostumeBadges[i].show();
                 */
                 $groupCostumeSelectors[i].empty();
 
