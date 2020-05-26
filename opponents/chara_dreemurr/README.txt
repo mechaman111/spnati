@@ -2,6 +2,7 @@
                                                                                         CHARA DREEMURR
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
+README edited May 25th 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -202,6 +203,7 @@ Most, if not all, of these come with a documented Marker. If you find one withou
 
 AELLA
 -Responds to Aella's question about adventures. For some reason, this is also a Pinkie Pie case?!?!
+-Responds to Aella asking Chara if she's a demon.
 
 AIMEE
 -Responds to Aimee shooting her clothes off.
@@ -215,6 +217,11 @@ AMY
 -Responds to Amy's planar form.
 -Responds to Amy losing one hand, where she references Undertale's character Muffet.
 
+ARASH
+-Responds to Arash's question about cooking.
+-Responds to Arash's question about flowers.
+-Responds to Arash starting to throw.
+
 ATSUKO
 -Responds to Atsuko using the Necronomicon.
 -Responds to Atsuko using a transformation to strip. She will only do this once per game.
@@ -225,6 +232,10 @@ AZAMI
 TOYOTA SPRINTER
 -Generic responses to handle the car's, uh, unique stripping and masturbation sequence.
 
+BROCK
+-Responds to Brock launching a missile.
+-Responds to Brock getting hit by a missile.
+
 CHAZZ
 -Responds to Chazz attempting to leave the game.
 -Responds to Chazz blaming the player when he fails to leave the game.
@@ -232,6 +243,10 @@ CHAZZ
 CHIHIRO
 -Responds to Chihiro running away.
 -Responds to Chihiro revealing he's actually male.
+
+DUST
+-Responds to Dust's question about doubts.
+-Responds to Dust's question about snacks.
 
 ELIZABETH
 -Responds to Elizabeth using an alternate version of herself to masturbate.
@@ -268,6 +283,9 @@ KYU
 
 L'ARACHEL
 -Responds to L'Arachel's staff breaking.
+
+MAKI
+-Responds to Maki's question about favorite foods.
 
 MARINETTE
 -Responds to Marinette losing her transformation.
@@ -312,8 +330,16 @@ REVY
 RIN
 -Responds to Rin showing her lack of arms.
 
+SAKI (ZLS)
+-Responds to Saki's question about bad luck.
+-Responds to Saki revealing she's a zombie.
+-Responds to Saki's head falling off.
+
 SAKURA
 -Responds to Sakura's head falling off.
+
+SHANTAE
+-Responds to Shantae transforming into a monkey.
 
 SPOOKY
 -Responds to Spooky stripping her knife.
@@ -351,35 +377,19 @@ ZONE-TAN
 PLANNED FEATURES
 -------------------------------------------------------------------------------------------
 
-I would like Chara to have a variety of topics to discuss with the player, using Persistent Markers to cycle through them and even picking up across games if she is 'interrupted' in the
-midst of a topic. This has to be tabled, for now; all that presently exists of this is a 1-time remark of wishing to be able to defeat the enemies in SPNATI in a 'single blow'. The reason
-this is tabled is because I can't think of a variety of topics for grim, focused Chara to just casually chat about.
+-Huge Generics Upgrade. Currently most are at ~5, some at 3. Gotta bump those numbers up, those are rookie numbers!
+-I would like to add a sex scene to the epilogue. Just have to get the writing right.
 
 -------------------------------------------------------------------------------------------
 PLANNED CHARACTER INTERACTIONS
 -------------------------------------------------------------------------------------------
 
-Planned interactions not yet implemented, either due to having high reliance on the other author, or due to the intended target currently being on the Testing Tables and it striking me
-as poor form to write targets to them, while they are being so often edited, before I myself have placed Chara on the Testing Tables too.
+Planned interactions not yet implemented for any number of reasons.
 
 -Narrator Chara indicates Chara used to knit. Maybe tie in to Aella's 'sewing magic' remarks somehow?
 -Narrator Chara indicates Chara used to like gardening. Something with this?
--Responses to Arash's lines about:
-	-Cooking
-	-Flowers
-	-Him Beginning to Throw
--Brock launching, and then getting hit by, a missile.
--Responses to Dust's lines about:
-	-Doubts
-	-Snacks
 -Lucy's attempt to cheat at low layers.
--Responses to Maki's lines about:
-	-Food
--Saki (ZLS)'s lines about:
-	-Having bad luck.
-	-Revealing herself being a zombie.
-	-Having her head fall off.
--Shantae becoming a monkey.
+-Noticing Remilia strips by her maid stopping time.
 
 -------------------------------------------------------------------------------------------
 MISC
