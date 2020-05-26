@@ -5610,6 +5610,10 @@
                 <condition role="target" character="galatea" stage="0" />
                 <state img="#-excited.png">That's... pretty neat... it would've been cool to have a Phantom Thief that was a robot... but that seems &lt;i&gt;too&lt;/i&gt; fantasy, even for us. </state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="hermione" stage="0" />
+                <state img="#-triumphant.png">I’m the smart one here though, so don’t act like you can quite measure up.</state>
+            </case>
             <case stage="0-8" target="cammy">
                 <state img="#-shocked.png">O-oh no! Wait a second!</state>
                 <state img="#-shocked.png">W-wait, you aren't supposed to do that here!</state>
@@ -5815,9 +5819,6 @@
             <case stage="0-8">
                 <condition role="target" character="d.va" stage="3" />
                 <state img="#-annoyed.png">If the headphones mattered to you, you’d leave them on no matter what, D.va!</state>
-            </case>
-            <case stage="0-8" target="daria" targetStage="1">
-                <state img="#-disappointed.png">Why are people so complicated?</state>
             </case>
             <case stage="0-8" target="daria" targetStage="2">
                 <state img="#-calm.png">Maybe not. But you’d definitely look better with longer stockings! Short socks are no fun.</state>
@@ -6120,6 +6121,10 @@
             <case stage="0-8">
                 <condition role="target" character="galatea" stage="1" />
                 <state img="#-interested.png">Oh! You mean, like a Turing Test? But you're clearly as human as the rest of us. Shouldn't you be looking for something more like dreams or higher consciousness? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="hermione" stage="1" />
+                <state img="#-awkward.png">(Though if you wanted to teach me magic I’d definitely actually really be interested in that okay thanks.)</state>
             </case>
             <case stage="0-8" target="cammy">
                 <state img="#-triumphant.png">Wow! Cammy's awesome!</state>
@@ -6562,10 +6567,6 @@
             <case stage="0-8" target="haru" targetStage="2">
                 <state img="#-happy.png">Ohh! Your sweater? That always looked really comfortable.</state>
             </case>
-            <case stage="0-8">
-                <condition role="target" character="hermione" stage="0" />
-                <state img="#-triumphant.png">I’m the smart one here though, so don’t act like you can quite measure up.</state>
-            </case>
             <case stage="0-8" target="jessie" targetStage="0">
                 <state img="#-gremlin.png">Waaaaaaaaait a second. &lt;i&gt;You're&lt;/i&gt; Jessie Maye! I didn't know MILF pornstars liked to play strip poker.</state>
             </case>
@@ -6848,6 +6849,10 @@
             <case stage="0-8" target="sola" targetStage="4" targetSaidMarker="please_dont_be_too_rough">
                 <state img="#-nyoro.png">Oh c-c-come on, isn't this a &lt;i&gt;little&lt;/i&gt; hot, Sola?</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="daria" stage="1" />
+                <state img="#-disappointed.png">Why are people so complicated?</state>
+            </case>
             <case stage="0-8" target="ann" targetStage="1">
                 <state img="#-awkward.png">You know, I knew we’d be friends since I saw your sweater! The four-leaf clover reminds me of that old website. You know, Futaba-channel?</state>
                 <state img="#-happy.png">I think Joker misses you, Ann! You should text him more often.</state>
@@ -6901,10 +6906,6 @@
             </case>
             <case stage="0" target="haru" targetStage="3">
                 <state img="#-shocked.png">Not as comfy as mine... Y-your jacket. Not your boobs. I mean, those are more comfortable. But that's your utility, not mine!</state>
-            </case>
-            <case stage="0-8">
-                <condition role="target" character="hermione" stage="1" />
-                <state img="#-awkward.png">(Though if you wanted to teach me magic I’d definitely actually really be interested in that okay thanks.)</state>
             </case>
             <case stage="0-8" target="jessie" targetStage="1">
                 <state img="#-nyoro.png">&lt;i&gt;May-&lt;/i&gt;be someone should act her age. ...Or maybe I'm at the wrong table.</state>
@@ -11109,17 +11110,17 @@
                 <condition role="other" character="haru" />
                 <test expr="~name~" cmp="!=" value="Haru" />
                 <test expr="~name~" cmp="!=" value="Ryuji" />
-                <state img="#-threewayhug.png" collectible="C+C">Great job, ~name~! This was some team-bonding for the doujins, for sure!</state>
+                <state img="#-threewayhug.png">Great job, ~name~! This was some team-bonding for the doujins, for sure!</state>
             </case>
             <case stage="8" priority="9999">
                 <condition role="other" character="haru" />
                 <test expr="~name~" cmp="!=" value="Haru" />
-                <state img="#-haruhug.png" collectible="C+C">Great job, ~name~! This was some team-bonding for the doujins, for sure!</state>
+                <state img="#-haruhug.png">Great job, ~name~! This was some team-bonding for the doujins, for sure!</state>
             </case>
             <case stage="8" priority="9999">
                 <condition role="other" character="ryuji" />
                 <test expr="~name~" cmp="!=" value="Ryuji" />
-                <state img="#-ryujihug.png" collectible="C+C">Great job, ~name~! This was some team-bonding for the doujins, for sure!</state>
+                <state img="#-ryujihug.png">Great job, ~name~! This was some team-bonding for the doujins, for sure!</state>
             </case>
             <case stage="8">
                 <condition role="target" character="nami" stage="3-6" />
@@ -11127,34 +11128,38 @@
                 <test expr="~nami.place~" value="1" />
                 <state img="#-triumphant.png">Yeet! Friendship increased with Mae! </state>
             </case>
-            <case stage="8" target="human" alsoPlaying="uravity" priority="430">
+            <case stage="8" priority="430">
                 <condition count="1" filter="saki" />
-                <state img="#-finished.png" collectible="Saki">~player~! I’ll be out with Saki and Ochako tomorrow, but after that I will be very drunk and tired! Y-y-you should try and call me when that’s done!</state>
+                <condition role="target" character="human" />
+                <condition role="other" character="uravity" />
+                <state img="#-finished.png">~Player~! I’ll be out with Saki and Ochako tomorrow, but after that I will be very drunk and tired! Y-y-you should try and call me when that’s done!</state>
             </case>
-            <case stage="8" target="human" alsoPlaying="marinette">
+            <case stage="8">
                 <condition count="1" filter="saki" />
-                <state img="#-finished.png" collectible="Saki">~Player~! I’ll be out with Saki and Marinette tomorrow, but after that I will be very drunk and tired! Y-y-you should try and call me when that’s done!</state>
+                <condition role="target" character="human" />
+                <condition role="other" character="marinette" />
+                <state img="#-finished.png">~Player~! I’ll be out with Saki and Marinette tomorrow, but after that I will be very drunk and tired! Y-y-you should try and call me when that’s done!</state>
             </case>
             <case stage="8">
                 <alternative target="saki" alsoPlaying="marinette" />
                 <alternative target="saki" alsoPlaying="uravity" />
-                <state img="#-happy.png" collectible="Saki">Okay, Saki! Let's clean up, get going, and get out there!</state>
+                <state img="#-happy.png">Okay, Saki! Let's clean up, get going, and get out there!</state>
             </case>
             <case stage="8">
                 <condition role="target" character="pinkie_pie" />
-                <state img="#-finished.png" collectible="Mask">It was nice seeing you play, Pinkie Pie! Let's try this again sometime!</state>
+                <state img="#-finished.png">It was nice seeing you play, Pinkie Pie! Let's try this again sometime!</state>
             </case>
             <case stage="8">
                 <condition role="target" character="ryuji" />
-                <state img="#-excited.png" collectible="Mask">For real!? I could learn all kinds of things about what gets guys off!</state>
+                <state img="#-excited.png">For real!? I could learn all kinds of things about what gets guys off!</state>
             </case>
             <case stage="8">
                 <condition role="other" character="navi" />
-                <state img="#-excited.png" collectible="Mask">It was fun to play with another Navi. GG, ~name~.</state>
+                <state img="#-excited.png">It was fun to play with another Navi. GG, ~name~.</state>
             </case>
             <case stage="8">
                 <condition role="other" character="nayru" />
-                <state img="#-happy.png" collectible="Mask">That was really fun, Nayru. I might be a little busy after this, but let's talk about Shadows and Oracle stuff again, okay?</state>
+                <state img="#-happy.png">That was really fun, Nayru. I might be a little busy after this, but let's talk about Shadows and Oracle stuff again, okay?</state>
             </case>
             <case stage="8">
                 <condition role="other" character="bernadetta" />
@@ -11162,28 +11167,34 @@
             </case>
             <case stage="8">
                 <test expr="~player~" value="Hank Hill " />
-                <state img="text.png" collectible="Ink">&lt;You won! But the BDSM Pro-Pain Epilogue Isn't Ready Yet! I Tell You Hwat, That Waifu Just Ain't Right.&gt;</state>
+                <state img="text.png">&lt;You won! But the BDSM Pro-Pain Epilogue Isn't Ready Yet! I Tell You Hwat, That Waifu Just Ain't Right.&gt;</state>
             </case>
             <case stage="8">
                 <condition count="2-4" filter="phantom_thieves" />
-                <state img="#-excited.png" collectible="C+C">This was really fun! I wouldn't mind this being a team building exercise... umm... maybe later though... I have a lot on my mind... and my hands.</state>
+                <state img="#-excited.png">This was really fun! I wouldn't mind this being a team building exercise... umm... maybe later though... I have a lot on my mind... and my hands.</state>
             </case>
             <case stage="8">
-                <state img="#-calm.png" collectible="Mask">Well, you got me! This is Oracle, signing out. GG!</state>
+                <state img="#-calm.png">Well, you got me! This is Oracle, signing out. GG!</state>
             </case>
-            <case stage="8" hidden="1">
+            <case stage="8" id="74" hidden="1">
+                <condition count="3-" filter="phantom_thieves" />
                 <condition role="target" character="human" />
-                <state collectible="Mask">[Mask Unlock]</state>
+                <state collectible="C+C">[Hidden line. Awards the Coffee and Curry collectible when you win against three or more Phantom Thieves, including Futaba.]</state>
             </case>
-            <case stage="8" hidden="1">
+            <case stage="8" id="73" hidden="1">
                 <condition role="target" character="human" />
-                <condition count="3-4" filter="phantom_thieves" />
-                <state collectible="C+C">[Phantom Thieves Unlock]</state>
+                <state collectible="Mask">[Hidden line. Awards the Mask collectible if the human player wins.]</state>
             </case>
-            <case stage="8" hidden="1">
-                <alternative target="saki" alsoPlaying="marinette" />
-                <alternative target="saki" alsoPlaying="uravity" />
-                <state img="#-happy.png" collectible="Saki">Okay, Saki! Let's clean up, get going, and get out there!</state>
+            <case stage="8" id="72" hidden="1">
+                <condition role="target" character="human" />
+                <condition role="other" character="saki" />
+                <alternative>
+                    <condition role="other" character="marinette" />
+                </alternative>
+                <alternative>
+                    <condition role="other" character="uravity" />
+                </alternative>
+                <state collectible="Saki">[Hidden line. Awards the Girl's Day Out collectible when you with a game against Win a game against Futaba, Saki Yamada, and either Marinette or Ochako.]</state>
             </case>
         </trigger>
 
