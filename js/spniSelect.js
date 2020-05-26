@@ -794,6 +794,10 @@ function loadGroup (chosenGroup) {
             if (players.some(function(p, j) { return i != j && p == member; })) {
                 member = member.clone();
             }
+            
+            if ($groupCostumeSelectors[i-1].val() != member.selected_costume) {
+                member.selected_costume = $groupCostumeSelectors[i-1].val();
+            }
 
             if (SENTRY_INITIALIZED) {
                 Sentry.addBreadcrumb({
