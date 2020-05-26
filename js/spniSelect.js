@@ -590,7 +590,7 @@ function updateSelectableOpponents(autoclear) {
     selectableOpponents = loadedOpponents.filter(function(opp) {
         // filter by name
         if (name
-            && opp.label.toLowerCase().indexOf(name) < 0
+            && opp.selectLabel.toLowerCase().indexOf(name) < 0
             && opp.first.toLowerCase().indexOf(name) < 0
             && opp.last.toLowerCase().indexOf(name) < 0) {
             return false;
@@ -612,8 +612,8 @@ function updateSelectableOpponents(autoclear) {
         }
 
         // filter by gender
-        if ((chosenGender == 2 && opp.gender !== eGender.MALE)
-            || (chosenGender == 3 && opp.gender !== eGender.FEMALE)) {
+        if ((chosenGender == 2 && opp.selectGender !== eGender.MALE)
+            || (chosenGender == 3 && opp.selectGender !== eGender.FEMALE)) {
             return false;
         }
 
@@ -729,7 +729,7 @@ function updateSelectableGroups(screen) {
         if (groupname && group.title.toLowerCase().indexOf(groupname) < 0) return false;
 
         if (name && !group.opponents.some(function(opp) {
-            return opp.label.toLowerCase().indexOf(name) >= 0
+            return opp.selectLabel.toLowerCase().indexOf(name) >= 0
                 || opp.first.toLowerCase().indexOf(name) >= 0
                 || opp.last.toLowerCase().indexOf(name) >= 0;
         })) return false;
@@ -744,12 +744,12 @@ function updateSelectableGroups(screen) {
 
         if ((chosenGroupGender == 2 || chosenGroupGender == 3)
             && !group.opponents.every(function(opp) {
-                return opp.gender == (chosenGroupGender == 2 ? eGender.MALE : eGender.FEMALE);
+                return opp.selectGender == (chosenGroupGender == 2 ? eGender.MALE : eGender.FEMALE);
             })) return false;
 
         if (chosenGroupGender == 4
-            && !(group.opponents.some(function(opp) { return opp.gender == eGender.MALE; })
-                 && group.opponents.some(function(opp) { return opp.gender == eGender.FEMALE; })))
+            && !(group.opponents.some(function(opp) { return opp.selectGender == eGender.MALE; })
+                 && group.opponents.some(function(opp) { return opp.selectGender == eGender.FEMALE; })))
             return false;
 
         return true;
