@@ -189,6 +189,7 @@ function Group(title, background) {
     this.title = title;
     this.background = background;
     this.opponents = Array(4);
+    this.costumes = Array(4);
 }
 
 /**********************************************************************
@@ -256,6 +257,7 @@ function loadListingFile () {
 			if (opp.id in opponentGroupMap) {
 				opponentGroupMap[opp.id].forEach(function(groupPos) {
 					groupPos.group.opponents[groupPos.idx] = opp;
+                    groupPos.group.costumes[groupPos.idx] = groupPos.costume;
 				});
 			}
 		}
@@ -313,8 +315,13 @@ function loadListingFile () {
 				var opp2 = $(this).attr('opp2');
 				var opp3 = $(this).attr('opp3');
 				var opp4 = $(this).attr('opp4');
+                var costume1 = $(this).attr('costume1');
+				var costume2 = $(this).attr('costume2');
+				var costume3 = $(this).attr('costume3');
+				var costume4 = $(this).attr('costume4');
 
                 var ids = [opp1, opp2, opp3, opp4];
+                var costumes = [costume1, costume2, costume3, costume4];
                 if (!ids.every(function(id) { return available[id]; })) return;
 
 				var newGroup = new Group(title, background);
@@ -322,7 +329,7 @@ function loadListingFile () {
 					if (!(id in opponentGroupMap)) {
 						opponentGroupMap[id] = [];
 					}
-					opponentGroupMap[id].push({ group: newGroup, idx: idx });
+					opponentGroupMap[id].push({ group: newGroup, idx: idx, costume: costumes[idx] });
 				});
 				loadedGroups[$(this).attr('testing') ? 1 : 0].push(newGroup);
 			});
@@ -481,9 +488,16 @@ function updateGroupSelectScreen (ignore_bg) {
 
     for (var i = 0; i < 4; i++) {
         var opponent = group ? group.opponents[i] : null;
+        var costume = group ? group.costumes[i] : null;
 
         if (opponent && typeof opponent == "object") {
             shownGroup[i] = opponent;
+
+            if (costume == "default") {
+                opponent.selected_costume = null;
+            } else {
+                opponent.selected_costume = costume;
+            }
 
             $groupNameLabels[i].html(opponent.first + " " + opponent.last);
             $groupPrefersLabels[i].html(opponent.label);
