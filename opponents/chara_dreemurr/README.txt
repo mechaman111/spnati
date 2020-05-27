@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited May 27 2020
+README edited May 27th 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
