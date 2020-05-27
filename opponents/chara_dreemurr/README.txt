@@ -2,7 +2,8 @@
                                                                                         CHARA DREEMURR
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
-README edited May 25th 2020
+
+README edited May 27 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -96,7 +97,7 @@ SITUATIONS
 -------------------------------------------------------------------------------------------
 
 THROW - MUST TARGET - When it's just Chara and the Player, she begins to throw the game. She'll react differently to swapping cards, to hands, and to stripping. NOTE: This has a case
-where the player has seen Chara throw before, so make sure you instead target the 'Throwing' marker rather than the case itself!
+where the player has seen Chara throw before. The situation itself points to the 'generic case' and should work for the non-generic, but still. Double-check the functionality.
 
 DEMON EYES - NOTEWORTHY - Two of Chara's poses, DemonHappy and DemonAngry, feature her hollow-eyed look from Undertale. NOTE: This specific callout only references one time she uses these
 poses, to properly target them instead use Filter -> Dialogue -> Pose.
@@ -104,6 +105,8 @@ poses, to properly target them instead use Filter -> Dialogue -> Pose.
 HIDDEN BELT - FYI - The second item Chara removes is her belt, which is hidden beneath her shirt. As such, removing it does not actually change her appearance. Some opponents may find
 that unfair. NOTE: This specific callout only references one possible case for Chara stripping her belt. Make sure to target the general 'stripping, in stage 1' case instead. Though this
 points to the Generic Case already, but still. Double-check the functionality.
+
+FOCUS UP - FYI - After removing her shirt, and if the player is still in the game, Chara will tell them to focus on the game.
 
 -------------------------------------------------------------------------------------------
 PERSISTENTS
@@ -324,6 +327,9 @@ NAVI
 NAYRU
 -Responds to Nayru getting possessed.
 
+REMILIA
+-Responds the first time Remilia's maid uses her time-stop powers to strip her.
+
 REVY
 -Responds to Revy's question about killing people.
 
@@ -377,7 +383,7 @@ ZONE-TAN
 PLANNED FEATURES
 -------------------------------------------------------------------------------------------
 
--Huge Generics Upgrade. Currently most are at ~5, some at 3. Gotta bump those numbers up, those are rookie numbers!
+-Huge Generics Upgrade. Currently most are at ~5, some at 3. Gotta bump those numbers up, those are rookie numbers! <-Bumping up of rookie numbers is in progress.
 -I would like to add a sex scene to the epilogue. Just have to get the writing right.
 
 -------------------------------------------------------------------------------------------
@@ -388,8 +394,8 @@ Planned interactions not yet implemented for any number of reasons.
 
 -Narrator Chara indicates Chara used to knit. Maybe tie in to Aella's 'sewing magic' remarks somehow?
 -Narrator Chara indicates Chara used to like gardening. Something with this?
+-Chara embodies the feeling you get when a number grows, among them 'gold' ie currency. Something with Anna, maybe?
 -Lucy's attempt to cheat at low layers.
--Noticing Remilia strips by her maid stopping time.
 
 -------------------------------------------------------------------------------------------
 MISC
