@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7.3 at 2:51:25 PM on May 27, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 1:49:15 PM on May 28, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7.3</version>
     <first>PA-15</first>
@@ -50,6 +50,7 @@
     </tags>
     <nicknames>
         <nickname for="hk416">416</nickname>
+        <nickname for="komi-san">Komi</nickname>
     </nicknames>
     <stylesheet>styles.css</stylesheet>
 
@@ -393,6 +394,10 @@
                 <condition role="other" character="hk416" stage="1-4" sayingMarker="pa-15_patience=1" />
                 <state img="#-bored.png">Ugh, you and your "well-laid" plans, 416. What are you going to do when things &lt;i&gt;don't&lt;/i&gt; go to plan, huh?</state>
             </case>
+            <case stage="0">
+                <condition status="not_masturbating" role="other" character="mary" />
+                <state img="#-satisfied.png">Ooh, "Flo", huh? I like that name. It's cute. &lt;br&gt; And you were right the second time around, I'm an android.</state>
+            </case>
             <case stage="0" totalRounds="0-2">
                 <state img="#-puzzled.png">I thought it'd be more exciting if I went easy on you for a bit, but I couldn't really get a streak going... what a buzzkill.</state>
                 <state img="#-bored.png">This is how long I could last picking the worst hands? Not quite the thrill I was looking for.</state>
@@ -487,6 +492,10 @@
 
         <trigger id="stripping">
             <case stage="0">
+                <condition status="not_masturbating" role="other" character="mary" />
+                <state img="#-stripping.png">Oh, these good looks aren't a part of my current occupation, but my old job. Being a cute girl helps out in ways you can probably imagine.</state>
+            </case>
+            <case stage="0">
                 <state img="#-stripping.png">You all beat me at my worst, so, a small reward for your small victory.</state>
                 <state img="#-stripping.png">I'll take these gloves off, then. I know, I know, not very exciting.</state>
             </case>
@@ -513,6 +522,10 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="1">
+                <condition status="not_masturbating" role="other" character="mary" />
+                <state img="#-inviting.png">I'm always glad to introduce cuties to new experiences... and if you think I look good &lt;i&gt;now&lt;/i&gt;, just wait until &lt;i&gt;the rest&lt;/i&gt; comes off.</state>
+            </case>
             <case stage="6" priority="20">
                 <condition role="self" saidMarker="excitement&gt;=7" />
                 <state img="#-broke.png" set-intelligence="throw">Wait, there's still more? Really? No way... Seriously, I can't go on any further...</state>
@@ -1357,6 +1370,11 @@
         </trigger>
 
         <trigger id="opponent_lost">
+            <case stage="0">
+                <condition role="target" character="shimakaze" stage="1" />
+                <condition role="self" saidMarker="WIP" />
+                <state img="#-satisfied.png">Alright, let's get this show on the road.</state>
+            </case>
             <case stage="0-6">
                 <condition role="target" character="meia" stage="0" />
                 <state img="#-bored.png">&lt;i&gt;*Yawn*&lt;/i&gt;. You know, Meia, you remind me of a much more boring version of... well... me.</state>
@@ -1368,6 +1386,31 @@
             <case stage="0-6">
                 <condition role="target" character="aimee" stage="0" />
                 <state img="#-angry.png">Hey, you better watch where you're pointing that gun of yours, cowgi-</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="komi-san" stage="0" />
+                <state img="#-smug.png">
+                    <alt-img stage="0-2 4-6">#-smug.png</alt-img>
+                    <alt-img stage="3">#-cool.png</alt-img>
+                    <alt-img stage="8">#-victorious.png</alt-img>
+                    <text>Hello, miss silent-type. Are you going to scribble on your little notepad this whole time, or are we going to hear that pretty little voice of yours at some point?</text>
+                </state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="mary" stage="0" />
+                <state img="#-thinking.png">"Flo" is such a cute nickname that I just have to give you one of my own. Mary, huh? Hmm...</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="mary" stage="1" />
+                <state img="#-puzzled.png">Y'know, May-may, I had you down for the brooding, gloomy type when I first saw you.</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="erufuda" stage="0" />
+                <state img="#-thinking.png">Oh, hmm... Erufuda, you said you were an... elf, right?</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="moon" stage="0" />
+                <state img="#-satisfied.png">Hey now, easy there girl. We're here for a good time &lt;i&gt;and&lt;/i&gt; a long time, so there's no need to be so eager.</state>
             </case>
             <case stage="0-6" id="46" oneShotId="26">
                 <condition role="target" character="human" />
@@ -1401,6 +1444,11 @@
                 <condition role="self" saidMarker="WIP" />
                 <state img="#-confrontational.png">Ah, well, if it's a race you're after, I'd be happy to take you on.</state>
             </case>
+            <case stage="0">
+                <condition role="target" character="shimakaze" stage="1" />
+                <condition role="self" saidMarker="WIP" />
+                <state img="#-satisfied.png">I don't think we need any complex rules or anything, so let's keep it simple. First one naked wins. Sounds good?</state>
+            </case>
             <case stage="0-6">
                 <condition role="target" character="meia" stage="0" />
                 <state img="#-puzzled.png">Like, look at that! I'm hardly getting a rise out of you even when I'm insulting you right to your face!</state>
@@ -1412,6 +1460,35 @@
             <case stage="0-6">
                 <condition role="target" character="aimee" stage="0" />
                 <state img="#-thinking.png">...</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="komi-san" stage="0" />
+                <state img="#-victorious.png">
+                    <alt-img stage="0-2 4-6">#-smug.png</alt-img>
+                    <alt-img stage="3">#-cool.png</alt-img>
+                    <alt-img stage="8">#-victorious.png</alt-img>
+                    <text>For all I know, you could have the voice of an angel. What'll it take to get this little songbird to cry out?</text>
+                </state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="mary" stage="0" />
+                <state img="#-puzzled.png">Mary... Ma... Me? How about Me-me? No?</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="mary" stage="1" />
+                <state img="#-smug.png">
+                    <alt-img stage="0-2 4-6">#-smug.png</alt-img>
+                    <alt-img stage="3 8">custom:#-smug</alt-img>
+                    <text>Safe to say that it only took about three words out of your mouth to figure out you were the total opposite.</text>
+                </state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="erufuda" stage="0" />
+                <state img="#-puzzled.png">I expected elves to be more, y'know, "stunning and elegant beauty".</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="moon" stage="0" />
+                <state img="#-interested.png">Going for the good stuff straight away? Can't say I don't like the way you play when you pull a stunt like that.</state>
             </case>
             <case stage="0-2" oneShotId="5">
                 <condition status="exposed" role="target" stage="0" />
@@ -1629,6 +1706,11 @@
                 <condition role="self" saidMarker="WIP" />
                 <state img="#-satisfied.png" set-intelligence="best">How about you even up the odds a little bit, then we'll start for real?</state>
             </case>
+            <case stage="0">
+                <condition role="target" character="shimakaze" stage="1" />
+                <condition role="self" saidMarker="WIP" />
+                <state img="#-inviting.png">Don't fall too far behind, alright? I love a nice, tight... race.</state>
+            </case>
             <case stage="0-6">
                 <condition role="target" character="meia" stage="1" />
                 <state img="#-bored.png">You must be fun at parties.</state>
@@ -1640,6 +1722,35 @@
             <case stage="0-6">
                 <condition role="target" character="aimee" stage="1" />
                 <state img="#-interested.png">Wow, that was... actually really impressive.</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="komi-san" stage="1" />
+                <state img="#-bliss.png">
+                    <alt-img stage="0-2 4-6">#-smug.png</alt-img>
+                    <alt-img stage="3">#-cool.png</alt-img>
+                    <alt-img stage="8">#-victorious.png</alt-img>
+                    <text>I guess we'll have to wait and see. Won't be long before we find out if you mew like a kitten or shriek like a banshee, hmhm.</text>
+                </state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="mary" stage="0" />
+                <state img="#-victorious.png">Oh, I know, May-may! Super cute, right?</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="mary" stage="1" />
+                <state img="#-satisfied.png">So, I hope you have a couple more surprises in store for me, because there's nothing I love more than someone who can catch me off guard.</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="erufuda" stage="1" />
+                <state img="#-smug.png">
+                    <alt-img stage="0-2 4-6">#-smug.png</alt-img>
+                    <alt-img stage="3 8">custom:#-smug</alt-img>
+                    <text>You know what, yeah - I guess I was pretty "stunned" after all. Lovin' the confidence, cutie, it really looks good on you.</text>
+                </state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="moon" stage="1" />
+                <state img="#-puzzled.png">Lovin' the attitude, but I'd like it if you could curb your enthusiasm, just a &lt;i&gt;little&lt;/i&gt; bit.</state>
             </case>
             <case stage="0-6" id="45" oneShotId="28">
                 <condition role="target" character="human" />
@@ -1928,7 +2039,7 @@
                     <alt-img stage="0-2 4-7">#-smug.png</alt-img>
                     <alt-img stage="3">custom:#-smug</alt-img>
                     <alt-img stage="8">#-inviting.png</alt-img>
-                    <text>Don't get to into it though, ~name~. Wouldn't want you to get addicted now.</text>
+                    <text>Don't get too into it though, ~name~. Wouldn't want you to get addicted now.</text>
                 </state>
             </case>
         </trigger>
@@ -2018,7 +2129,7 @@
                     <alt-img stage="0-2 4-7">#-smug.png</alt-img>
                     <alt-img stage="3">custom:#-smug</alt-img>
                     <alt-img stage="8">#-inviting.png</alt-img>
-                    <text>Don't get to into it though, ~name~. Wouldn't want you to get addicted now.</text>
+                    <text>Don't get too into it though, ~name~. Wouldn't want you to get addicted now.</text>
                 </state>
             </case>
         </trigger>
@@ -2033,6 +2144,10 @@
         </trigger>
 
         <trigger id="female_finished_masturbating">
+            <case stage="0-6 8">
+                <condition role="target" character="komi-san" />
+                <state img="#-puzzled.png">Well, looks like I got my answer. Honestly? Not surprised one bit.</state>
+            </case>
             <case stage="0-8">
                 <state>
                     <alt-img stage="0-4">#-bliss.png</alt-img>
