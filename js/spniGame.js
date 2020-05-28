@@ -527,6 +527,7 @@ function completeExchangePhase () {
  ************************************************************/
 function completeRevealPhase () {
     detectCheat();
+    stopCardAnimations(); // If the player was impatient
     /* reveal everyone's hand */
     for (var i = 0; i < players.length; i++) {
         if (players[i] && !players[i].out) {

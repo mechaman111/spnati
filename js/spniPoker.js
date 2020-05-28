@@ -330,7 +330,7 @@ function exchangeCards (player) {
  * in the order dealt, used to calculate the initial delay.
  ************************************************************/
 function animateDealtCard (player, card, n) {
-	var $clonedCard = $('#deck').clone().attr('id', 'dealt-card-'+player+'-'+card).prependTo($gameHiddenArea);
+	var $clonedCard = $('#deck').clone().attr('id', '').addClass('shown-card').prependTo($gameHiddenArea);
 	
 	if (player == HUMAN_PLAYER) {
         $clonedCard.addClass("large-card-image");
@@ -353,7 +353,7 @@ function animateDealtCard (player, card, n) {
 	}
 
 	$clonedCard.delay(n * ANIM_DELAY).animate({top: top, left: left}, animTime, function() {
-		$('#dealt-card-'+player+'-'+card).remove();
+		$clonedCard.remove();
 		displayCard(player, card, player == HUMAN_PLAYER);
 		dealLock--;
         if (dealLock <= 0) {
