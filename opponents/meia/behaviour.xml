@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7.3 at 7:03:04 AM on May 22, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 11:00:20 AM on May 28, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7.3</version>
     <first>Meia</first>
@@ -271,8 +271,9 @@
                 <state img="#-confused.png">...I believe that's Shimakaze, Jura.  Not the robot--the girl climbing on your back.</state>
                 <state img="#-pleased.png">That robot &lt;i&gt;does&lt;/i&gt; look like Pyoro.  I think she wants him back...though he doesn't seem to mind.</state>
             </case>
-            <case stage="0" alsoPlaying="zone-tan" alsoPlayingSaying="yuri space pirates">
+            <case stage="0">
                 <condition count="1" filter="jura" />
+                <condition role="other" character="zone-tan" saying="yuri space pirates" />
                 <state img="#-explaining.png">...Zone-tan's gossip is of no concern.  But that is not a playful look in her eyes.</state>
                 <state img="#-critical.png">...By the look in her eyes, she does not have our interests in mind.  Stay clear of her, Jura.</state>
                 <state img="#-annoyed.png">...It seems she's brought a partner of her own--~player~.  And that grin of hers looks far from innocent.</state>
@@ -3527,6 +3528,12 @@
                 <condition role="self" notSaidMarker="cynthia_tablet" />
                 <state img="#-concerned.png" marker="cynthia_tablet">...If you're still curious whether I have any appointments, Cynthia, I am essentially always on call in case we need to scramble.</state>
                 <state img="#-busy.png" marker="cynthia_tablet">...I schedule flight practice and patrol timeslots on this device, Cynthia, but my work is otherwise on-call.  Enemy fleets don't take out appointments for their attacks.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="other" character="jolyne" saidMarker="MeiaMenInfo" />
+                <condition role="self" notSaidMarker="jolyne_meninfo" />
+                <state img="#-advising.png" marker="jolyne_meninfo">...I'm sorry that happened to you, Jolyne.  I'd heard that men were a proud race who wouldn't sell out their companions.</state>
+                <state img="#-confused.png" marker="jolyne_meninfo">...I'm sorry, Jolyne.  It wasn't my intention to pry like that...would you say most men would do the same in his position?</state>
             </case>
             <case stage="0-5">
                 <condition role="other" character="nagisa" sayingMarker="nagisa_maid" />
@@ -12147,14 +12154,16 @@
                 <state img="#-disappointed.png" marker="maleplayer">Can't say I'm thrilled about a man playing at all, but at least he didn't bring friends.</state>
                 <state img="#-bored.png" marker="maleplayer">Jura dragging me here at all isn't what I'd call supportive, Rinkah.</state>
             </case>
-            <case stage="0-5" target="human" notSaidMarker="maleplayer">
-                <state img="#-stoic.png" marker="maleplayer">You seem a bit...plain.  At least as plain as a man can be to me...nice to meet you.</state>
-                <state img="#-disappointed.png" marker="maleplayer">~player~, right?  ...I've only met a few men my whole life, so don't do anything strange.</state>
-                <state img="#-explaining.png" marker="maleplayer">Just so you know, ~player~, I come from Mejare...which is populated only by women.  So I might have some questions for you...</state>
-                <state img="#-stoic.png" marker="maleplayer">You should know I didn't grow up around men.  Since you signed up for this game, I assume you don't mind if I see you nude.</state>
-                <state img="#-disappointed.png" marker="maleplayer">It seems you don't have much to say, either.  My general impression of men is that they're loud...so it's nice to have something different.</state>
+            <case stage="0-5">
+                <condition role="target" character="human" />
+                <condition role="self" notSaidMarker="maleplayer" />
+                <state img="#-concerned.png" marker="maleplayer">You seem a bit...plain.  At least as plain as a man can be to me...it's nice to meet you.</state>
+                <state img="#-advising.png" marker="maleplayer">~player~, right?  ...I've only met a few men my whole life, so don't do anything strange.</state>
+                <state img="#-concerned.png" marker="maleplayer">Just so you know, ~player~, I come from Mejare...which is populated only by women.  So I might have some questions for you...</state>
+                <state img="#-concerned.png" marker="maleplayer">You should know I didn't grow up around men.  Since you signed up for this game, I assume you don't mind if I see you nude.</state>
+                <state img="#-explaining.png" marker="maleplayer">It seems you don't have much to say, either.  My general impression of men is that they're loud...so it's nice to have something different.</state>
                 <state img="#-explaining.png" marker="maleplayer">You seem like an average man.  Count yourself lucky--the average Mejarian would shoot you on sight.</state>
-                <state img="#-explaining.png" marker="maleplayer">...You're an average-looking man.  Take that as a compliment--I'd like my first nude man to be a standard one.</state>
+                <state img="#-disappointed.png" marker="maleplayer">...You're an average-looking man.  Take that as a compliment--I'd like my first nude man to be a standard one.</state>
             </case>
             <case stage="0-5">
                 <condition role="other" character="misato" stage="1" timeInStage="0-1" />
@@ -12904,6 +12913,10 @@
                 <state img="#-annoyed.png" marker="leo0">Tch...small dogs bark the loudest.  If you were the killer you professed to be, your gun would be holstered, and you'd feel no need to voice it.</state>
             </case>
             <case stage="0-5">
+                <condition role="target" character="gray" stage="0" />
+                <state img="#-disappointed.png">...You started stripping before the first hand was dealt.  Is this a man's intellect, or your own perversion?</state>
+            </case>
+            <case stage="0-5">
                 <condition role="other" character="misato" stage="1" timeInStage="0-1" />
                 <state img="#-impressed.png">You're awfully forward with men.  I guess you have experience with them.</state>
                 <state img="#-disappointed.png">You seem to really want men to strip.  I'm not sure I want to see what's lurking beneath.</state>
@@ -13166,10 +13179,18 @@
             <case stage="0-5">
                 <condition role="target" character="human" />
                 <condition role="self" notSaidMarker="femplayer" />
+                <test expr="~player~" value="Sherry" />
+                <state img="#-reminiscing.png" marker="femplayer">It's a pleasure to meet you.  You are?  ..."Sherry."  That's actually my Fama's name...</state>
+                <state img="#-advising.png" marker="femplayer">...Your name is "Sherry," isn't it?  That was my Fama's name.  It's a pleasure...</state>
+                <state img="#-reminiscing.png" marker="femplayer">"Sherry"...that was my Fama's name.  It's nice to meet you.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="human" />
+                <condition role="self" notSaidMarker="femplayer" />
                 <state img="#-explaining.png" marker="femplayer">I must be dressed oddly to a woman from Earth, yes?  I come from Mejare...where women are quite common.</state>
-                <state img="#-thinking.png" marker="femplayer">I was hoping to meet some Earth women here and get a feel for the culture...men are too strange for me.  You seem approachable...</state>
-                <state img="#-disappointed.png" marker="femplayer">You're ~player~, is that right?  Nice to meet you...I've never met an Earth woman.</state>
-                <state img="#-bored.png" marker="femplayer">You seem to have as little to say as I do.  I suppose the nudity speaks for itself, doesn't it?</state>
+                <state img="#-advising.png" marker="femplayer">I was hoping to meet some Earth women here and get a feel for the culture...men are too strange for me.  You seem approachable...</state>
+                <state img="#-advising.png" marker="femplayer">You're ~player~, is that right?  Nice to meet you...I've never met an Earth woman.</state>
+                <state img="#-aside.png" marker="femplayer">You seem to have as little to say as I do.  I suppose the nudity speaks for itself, doesn't it?</state>
                 <state img="#-stoic.png" marker="femplayer">~player~, right?  My pleasure...out of everyone here, you seem the friendliest.</state>
                 <state img="#-disappointed.png" marker="femplayer">Hello, ~player~.  You seem like an average Earth woman--in a good way.  I need a baseline for this planet.</state>
                 <state img="#-disappointed.png" marker="femplayer">Hello, ~player~.  You should know Mejarians are raised to see other women in a sexual light...is that normal for you?</state>
@@ -14202,6 +14223,12 @@
                 <state img="#-critical.png">I'm sick of you running your mouth.  Insult me if you want, but don't you dare involve my second-in-command.</state>
                 <state img="#-critical.png">Leave Jura out of this, Revy.  Your quarrel is with me--but, of course, you're a coward who picks on those weaker than her.</state>
                 <state img="#-critical.png">Don't you &lt;i&gt;dare&lt;/i&gt; lay a hand on my pilots, Revy.  I suppose you're too cowardly to fight &lt;i&gt;me.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="connie" stage="0" />
+                <condition role="other" character="jura" />
+                <state img="#-disappointed.png" marker="connie_jura0">Is it true you're a swordswoman?  Jura, this girl might make a good practice partner for you.</state>
+                <state img="#-concerned.png" marker="connie_jura0">Jura, have you been practicing with your rapier lately?  Apparently this girl has sword experience--you should spar with her later.</state>
             </case>
             <case stage="0-5">
                 <condition filter="Weiss (Volume 4)" role="target" character="weiss_schnee" />
@@ -16738,13 +16765,13 @@
                 <state img="#-thinking.png" marker="riches_to_rags">My parents used to dress me in the latest fashions...now I just wear this suit, and I'm curious what a fashion deisgner thinks of it.</state>
             </case>
             <case stage="0-5">
-                <alternative target="dawn" targetStage="0" />
-                <alternative target="may" targetStage="0" />
+                <condition role="target" character="dawn" stage="0" />
                 <state img="#-disappointed.png">It's &lt;i&gt;poker,&lt;/i&gt; not &lt;i&gt;pokermon.&lt;/i&gt;</state>
                 <state img="#-confused.png">You train pokuh--&lt;i&gt;what?&lt;/i&gt;</state>
                 <state img="#-thinking.png">These &lt;i&gt;Pokemon&lt;/i&gt; sound interesting...Mejare doesn't have many animals.</state>
                 <state img="#-disappointed.png">You capture animals for your own amusement...that sounds a little cruel, but Mejare treats men that way.</state>
                 <state img="#-disappointed.png">These &lt;i&gt;Pokemon&lt;/i&gt; nipping at your heels sounds like Pyoro when he's making his rounds.</state>
+                <state>You live in a colder region of this planet, right?  And these &lt;i&gt;Pokuhmon&lt;/i&gt; creatures exist in every habitat?  Perhaps some kind of animal experiments let loose...</state>
             </case>
             <case stage="0-5">
                 <condition role="target" character="weiss_schnee" stage="0" />
@@ -17070,6 +17097,30 @@
                 <state img="#-stoic.png" marker="komi1">Komi-san, I've noticed that you occasionally use men's language in your writing.  We only use &lt;i&gt;kana&lt;/i&gt; on Mejare--it's fascinating to see men and women's coexistence in culture, as well.</state>
                 <state img="#-stoic.png" marker="komi1">Earth's style of writing is fascinating, Komi-san.  You mix men and women's language--Mejare doesn't use those more complex characters.  A fused letter system for fused genders...</state>
                 <state img="#-stoic.png" marker="komi1">I'd never considered this, but the same way men and women live together on this planet, you write using a combination of our languages.  Tarakkians use those &lt;i&gt;kanji&lt;/i&gt; letters to encode messages.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="connie" stage="0" />
+                <state img="#-stoic.png" marker="connie0">Is it true you're a swordswoman?  My deputy ensign carries a rapier, though I'd prefer she practice more.</state>
+                <state img="#-concerned.png" marker="connie0">I'm told you're an experienced swordswoman, even though you're a young girl.  I don't care for edged weapons myself, but one of my pilots uses a rapier.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="chara_dreemurr" stage="0" />
+                <state img="#-critical.png" marker="chara_d0">I don't know what your intentions are, but you'd best keep that knife to yourself.  It's sad a child managed to get a hold of one in the first place.</state>
+                <state img="#-angry.png" marker="chara_d0">
+                    <alt-img stage="0-2">#-angry2.png</alt-img>
+                    <text>Why is there a mentally unstable child permitted to run about this place with a knife?  I won't hesitate to defend myself.</text>
+                </state>
+                <state img="#-critical.png" marker="chara_d0">Why have you drawn your knife?  In fact, I don't even see a sheathe for it.  You're clearly not well.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="pa-15" stage="0" />
+                <state img="#-disappointed.png" marker="pa0">"PA-15"...a codename?  I'd expect a professional to have a better sense of gun safety.</state>
+                <state img="#-critical.png" marker="pa0">You're far too animated to have that weapon out.  Are you really a professional the way your codename implies?</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="may" stage="0" />
+                <state img="#-disappointed.png">"Pok-uh-mon"...I've never heard of such creatures.  And they're apparently common on this planet?</state>
+                <state img="#-aside.png">I wonder if these "Pokuhmon" creatures are invasive species that have resulted from Earth's experimentation on regular animals...</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="yuelia" saidMarker="meia_goddessSlip" />
@@ -24661,6 +24712,38 @@
                 <state img="#-embarrassed.png">...My &lt;i&gt;God.&lt;/i&gt;  The more I look at that thing, the more I can't believe you hid it...and now it's staring me in the face, about to explode.</state>
                 <state img="#-embarrassed.png">It's like watching a monster in a cage, with no regard for its own decency... furiously rubbing an oversized organ.</state>
                 <state img="#-embarrassed.png">...~name~.  Have you found a woman who can actually take that thing?  I suppose there's alternatives... you could rub it along her face, her body...</state>
+            </case>
+            <case stage="1" priority="0">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="small_penis" />
+                <condition count="1" gender="male" />
+                <state img="#-embarrassed.png">...Your hand's covering nearly the entire thing, ~name~.  It's hard to tell one part of the rod from another...</state>
+                <state img="#-confused.png">I was so apprehensive about seeing a man do this, but watching you tug at that little thing isn't exactly intimidating...</state>
+                <state img="#-confused.png">The penis was much bigger than those &lt;i&gt;testicle&lt;/i&gt; organs in most of the example pictures I saw...yours must be a small one.</state>
+                <state img="#-awkward.png">...Do women care much about the size of a man's tube?  I remember reading something about penetration depth...</state>
+                <state img="#-advising.png">It's a common misconception that the size of a woman's breasts determine her milk production.  Does your smaller penis produce less of that "semen" substance?</state>
+            </case>
+            <case stage="1" priority="0">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="medium_penis" />
+                <condition count="1" gender="male" />
+                <state img="#-embarrassed.png">...Well, your penis &lt;i&gt;looks&lt;/i&gt; well-proportioned, from what I can tell.  It's such a strange organ in the first place...</state>
+                <state img="#-embarrassed.png">I thought the male sex organ would &lt;i&gt;resemble&lt;/i&gt; women's in some way if we're really the same species.  ...Well, maybe it could be seen as a giant clitoris.</state>
+                <state img="#-confused.png">It almost seems more manageable to work that thing with my hands than my body...that's what &lt;i&gt;you're&lt;/i&gt; doing, after all.</state>
+                <state img="#-awkward.png">You're touching that sacklike organ behind it every so often...the one with the "testes" inside.  Does that feel good, as well?</state>
+                <state img="#-advising.png">Your penis looks a lot like the example ones I saw in the textbook we found...still, it's nice to see it in motion, pulsing with blood.  Free from the anatomical labels...</state>
+                <state img="#-advising.png">...Men really do value function over form, don't they?  Even your organs look like they were slapped together to get a job done.</state>
+            </case>
+            <case stage="1" priority="0">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="large_penis" />
+                <condition count="1" gender="male" />
+                <state img="#-embarrassed.png">Working that enormous thing with your hands must count as some form of manual labor...</state>
+                <state img="#-embarrassed.png">That thing is more like a &lt;i&gt;hose&lt;/i&gt; than the "tube" it was described to me as...just how much sperm are you going to release?</state>
+                <state img="#-confused.png">It's hard to see them with your tube being so large, but you've been almost cradling those egg-organs in the sack behind it...men seem awfully protective of them.</state>
+                <state img="#-awkward.png">...I suppose if a woman can give birth, then she could &lt;i&gt;technically&lt;/i&gt; fit that inside her...but is it really supposed feel good?</state>
+                <state img="#-reminiscing.png">I wonder if penis size has anything to do with the overall size of a man...or how large most men tend to be.</state>
+                <state img="#-confused.png">It's such a massive, unsubtle organ...if a woman's body had something like that, it'd be one graceful shape, not an enormous battering ram and a dangling sack.</state>
             </case>
         </trigger>
 
