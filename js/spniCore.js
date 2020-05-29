@@ -212,7 +212,7 @@ Player.prototype.resetState = function () {
     this.outOrder = undefined;
     this.biggestLead = 0;
 	this.forfeit = "";
-	this.stage = this.current = this.consecutiveLosses = 0;
+	this.stage = this.consecutiveLosses = 0;
 	this.timeInStage = -1;
 	this.markers = {};
 	this.oneShotCases = {};
@@ -1689,6 +1689,7 @@ function restartGame () {
 	timeoutID = autoForfeitTimeoutID = undefined;
 	stopCardAnimations();
 	resetPlayers();
+    currentRound = -1;
 
 	/* enable table opacity */
 	tableOpacity = 1;
