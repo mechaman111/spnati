@@ -217,6 +217,7 @@ Player.prototype.resetState = function () {
 	this.markers = {};
 	this.oneShotCases = {};
 	this.oneShotStates = {};
+    this.hand = null;
 
 	if (this.xml !== null) {
         /* Initialize reaction handling state. */
