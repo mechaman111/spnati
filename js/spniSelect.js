@@ -493,10 +493,12 @@ function updateGroupSelectScreen (ignore_bg) {
         if (opponent && typeof opponent == "object") {
             shownGroup[i] = opponent;
 
-            if (costume == "default") {
-                opponent.selected_costume = null;
-            } else {
-                opponent.selected_costume = costume;
+            if (costume) {
+                if (costume == "default") {
+                    opponent.selected_costume = null;
+                } else {
+                    opponent.selected_costume = costume;
+                }
             }
 
             $groupNameLabels[i].html(opponent.first + " " + opponent.last);
