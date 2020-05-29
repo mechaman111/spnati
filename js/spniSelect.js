@@ -793,8 +793,20 @@ function loadGroup (chosenGroup) {
                 member = member.clone();
             }
             
-            if ($groupCostumeSelectors[i-1].val() != member.selected_costume) {
-                member.selected_costume = $groupCostumeSelectors[i-1].val();
+            var selectedCostume = $groupCostumeSelectors[i-1].val();
+
+            if ((member.selected_costume && selectedCostume != member.selected_costume)
+                || (!member.selected_costume && selectedCostume != '')) {
+                var costumeDesc = undefined;
+
+                for (let i=0;i<member.alternate_costumes.length;i++) {
+                    if (member.alternate_costumes[i].folder === selectedCostume) {
+                        costumeDesc = member.alternate_costumes[i];
+                        break;
+                    }
+                }
+                
+                member.selectAlternateCostume(costumeDesc);
             }
 
             if (SENTRY_INITIALIZED) {
