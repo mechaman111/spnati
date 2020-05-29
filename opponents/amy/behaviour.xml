@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7.3 at 10:35:30 PM on May 25, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 10:00:18 PM on May 28, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7.3</version>
     <first>Amy</first>
@@ -187,7 +187,6 @@
 
         <trigger id="opponent_selected">
             <case stage="0" id="228" priority="1000">
-                <test expr="~self.persistent.amy_persist_continue~" value="0" />
                 <test expr="~self.persistent.amy_persist_lost_last~" value="1" />
                 <state img="#-happy.png" marker="+amy_persist_continue" persist-marker="true">You got me last time, ~player~, but your luck's not going to hold out! I'm so happy you picked me, though!&lt;br&gt;Play more games with me! I'd love to sing for you! </state>
             </case>
@@ -281,6 +280,31 @@
                 <state img="#-annoyed.png">Fine. I'll say it. &lt;i&gt;Just Amy.&lt;/i&gt; It's a shorter name than Monika. &lt;i&gt;Sigh.&lt;/i&gt;</state>
             </case>
             <case stage="0">
+                <condition role="other" character="chara_dreemurr" />
+                <condition role="self" />
+                <test expr="~self.persistent.chara_beat_amy_last~" value="0" />
+                <test expr="~self.persistent.amy_beat_chara_last~" value="0" />
+                <state img="#-surprise.png" marker="strange_harmonies += 30" persist-marker="true">Whoa... uh... ~player~? I'm getting a &lt;i&gt;weird&lt;/i&gt; feeling from that girl... person... </state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="chara_dreemurr" />
+                <condition role="self" />
+                <test expr="~self.persistent.chara_beat_amy_last~" value="1" />
+                <test expr="~self.persistent.amy_beat_chara_last~" value="0" />
+                <state img="#-surprise.png" marker="strange_harmonies += 30" persist-marker="true">Hey, you know she beat me last time, right, ~player~? Are you sure it's a good idea to play with her again?</state>
+                <state img="#-sarcastic.png" marker="strange_harmonies += 30" persist-marker="true">Do we have to play with Chara again? She was &lt;i&gt;such&lt;/i&gt; a jerk last time. ~player~!</state>
+                <state img="#-annoyed.png" marker="strange_harmonies += 30" persist-marker="true">~Player~... you know, I'm not &lt;i&gt;against&lt;/i&gt; sharing... just not with her... </state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="chara_dreemurr" />
+                <condition role="self" />
+                <test expr="~self.persistent.chara_beat_amy_last~" value="0" />
+                <test expr="~self.persistent.amy_beat_chara_last~" value="1" />
+                <state img="#-chat.png" marker="strange_harmonies += 30" persist-marker="true">So, Chara, you feel like playing nice this time, or do I have to give you a spanking? ...Not that kind.</state>
+                <state img="#-ooooh.png" marker="strange_harmonies += 30">Oooooh... Chara, again? You think she'll be upset she lost last time? </state>
+                <state img="#-happy.png" marker="strange_harmonies += 30">Ehehe~ I'm feeling &lt;i&gt;another&lt;/i&gt; win coming on, ~player~!</state>
+            </case>
+            <case stage="0">
                 <condition role="other" character="natsuki" />
                 <state img="#-surprise.png">Huh? C'mon, Natsuki, why are you going to bully me? I'm as confused as you are, but don't pretend I'm someone you made up!</state>
             </case>
@@ -299,6 +323,10 @@
             <case stage="0">
                 <condition role="other" character="sayaka" />
                 <state img="#-ooooh.png">That could be really fun--! I bet Natsuki would like another fan of magical girl stuff! </state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="moon" />
+                <state img="#-happy.png">Well, I'm not one to bodyshame-- I &lt;i&gt;love&lt;/i&gt; the body positivity, Moon! </state>
             </case>
             <case stage="0" priority="99">
                 <condition role="other" character="amy_rose" />
@@ -678,6 +706,16 @@
                 <condition role="self" timeInStage="0" saidMarker="amy_ini_background_spiders" />
                 <test expr="~background~" value="haunted forest" />
                 <state img="#-chat.png">This mansion's really old, so it has to have some classic spiders, somewhere, right? Definitely a black widow or two in the wood pile. Speaking of, anyone want to start a fire?</state>
+            </case>
+            <case stage="0-8" totalRounds="0">
+                <condition role="other" character="pa-15" stage="0" />
+                <alternative alsoPlaying="pa-15" alsoPlayingStage="0">
+                    <test expr="~player~" value="Shikikan" />
+                </alternative>
+                <alternative alsoPlaying="pa-15" alsoPlayingStage="0">
+                    <test expr="~player~" value="Commander" />
+                </alternative>
+                <state img="#-happy.png">"Commander?!" &lt;i&gt;Pfffffffffffffffffffffffffft!&lt;/i&gt; Florence, you can't call ~target.ifMale(him|her)~ that! Senpai is about as far as you ought to go! </state>
             </case>
             <case stage="0-8" priority="301">
                 <condition role="other" character="guzma" stage="1-8" />
@@ -1144,6 +1182,14 @@
                 <condition role="other" character="mary" stage="2" timeInStage="0" />
                 <state img="#-chat.png">Don't take that the wrong way! Trust me, I can relate a &lt;i&gt;whole bunch&lt;/i&gt; to that feeling, Mary!</state>
             </case>
+            <case stage="0-8" id="397" priority="155">
+                <condition role="other" character="pa-15" stage="3" timeInStage="0" />
+                <state img="#-calm.png">So, you know that place people go when you're dreaming? Ehehe~ it was something like that, Florence. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="mary" stage="3" timeInStage="0" />
+                <state img="#-chat.png" marker="amy_40k">Oh wow! I've got a bunch of hobbies... I like to paint models-- the figurine kind, not the French girl kind!</state>
+            </case>
             <case stage="0-8" id="63" priority="151">
                 <condition count="0" filter="yuri" />
                 <condition role="other" character="sayori" stage="0-3" sayingMarker="yuri-absent-1" />
@@ -1593,6 +1639,19 @@
                 <condition role="self" notSaidMarker="komi-san_amy_singing_career" />
                 <state img="#-happy.png" marker="komi-san_amy_singing_career">...Singing as a professional, Shouko...? I don't think I'm &lt;i&gt;that&lt;/i&gt; good. But... it makes me really happy you think I'm that good! </state>
             </case>
+            <case stage="0-8" priority="102">
+                <condition role="other" character="mary" saidMarker="Amy1" sayingMarker="Amy_conjunction" />
+                <state img="#-singing.png">This is a musical term, but I like the "melisma" like whe~e~en I do th~i~i~is!</state>
+            </case>
+            <case stage="0-8" priority="102">
+                <condition role="other" character="mary" saidMarker="Amy1" sayingMarker="Amy_sicarius" />
+                <state img="#-happy.png">I think the &lt;i&gt;hexophthalma&lt;/i&gt; is pretty interesting too. It's like, how cool do you have to be to be declared extinct, but then come back as something pretty much wholly improved? Neat, right? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="mary" saidMarker="SPNATIStrandGame" />
+                <condition role="self" notSaidMarker="amy_meta_DS" />
+                <state img="#-hmm.png" marker="amy_meta_DS">Gosh... is SPNatI a Strand game...? I don't really play video games, but... that does seem a bit on the nose, doesn't it? It's like admitting you only write characters but don't play the game they're in... </state>
+            </case>
             <case stage="0-8" id="3">
                 <condition role="other" character="jessie" sayingMarker="JessieQA_DarkSecrets" />
                 <state img="#-happy.png" marker="a_j_dark">Dark secrets...? Um... No, not really. I'm not secretly Spiderman. I just like spiders, and singing, and I kind of like ~player~ and poetry. See, you admit your feelings casually, and then you can say it's a joke. </state>
@@ -2006,7 +2065,7 @@
 
         <trigger id="must_strip">
             <case stage="7" priority="990">
-                <test expr="~self.persistent.strange_harmonies~" cmp="&gt;" value="50" />
+                <test expr="~self.persistent.strange_harmonies~" cmp="&gt;" value="55" />
                 <state img="#-hmm.png">{ddlc}That music...{!reset} Um... I... h-hold on... </state>
             </case>
             <case stage="6" priority="800">
@@ -2390,6 +2449,10 @@
                 <condition role="other" character="maki" sayingMarker="maki_amy_spiders" />
                 <state img="#-chat.png">Well, why do you like singing so much? Kind of a hard question, right? I just like them because they're industrious, and keep things clean and safe... </state>
             </case>
+            <case stage="0-7" id="396">
+                <condition role="other" character="chara_dreemurr" sayingMarker="ResponseAmyLost" />
+                <state img="#-happy.png">You have to say more than just &lt;i&gt;that&lt;/i&gt;, Chara! </state>
+            </case>
             <case stage="0">
                 <condition role="other" character="guzma" />
                 <state img="#-surprise.png">What, Guzma? Were you thinking about spiders too?! </state>
@@ -2513,6 +2576,10 @@
             <case stage="0">
                 <condition role="other" character="ribbon_girl" />
                 <state img="#-ooooh.png">Ooo... imagine if it was a &lt;i&gt;bunch of smaller&lt;/i&gt; arms! They hit less hard, but there's a lot more! </state>
+            </case>
+            <case stage="7">
+                <condition role="other" character="moon" />
+                <state img="#-hmm.png" marker="strange_harmonies=50" persist-marker="true">{ddlc}That music...{!reset} Um... I... h-hold on... </state>
             </case>
             <case stage="6">
                 <condition count="2-" filter="mean" />
@@ -3141,7 +3208,7 @@
                 <state img="custom:denial" marker="amy_falters">N-no... not like... not in front of her. &lt;i&gt;Sigh.&lt;/i&gt; I guess we all have our... um... defects, huh, Yuri?</state>
             </case>
             <case stage="8" id="259" priority="9998">
-                <test expr="~self.persistent.strange_harmonies~" cmp="&gt;=" value="85" />
+                <test expr="~self.persistent.strange_harmonies~" cmp="&gt;=" value="55" />
                 <state img="custom:ascend" marker="planar_form" collectible="cord">I hear it! I hear it! &lt;br&gt;{ddlc}&lt;i&gt;What is that melody!?&lt;/i&gt; {!reset}&lt;br&gt;It's okay. &lt;br&gt;I'm okay. {ddlc}I can hear it! I can hear &lt;i&gt;all of it&lt;/i&gt;!{!reset}&lt;br&gt;I'm here. &lt;br&gt;I'm just Amy. &lt;br&gt;I'm {ddlc}me.{!reset}&lt;br&gt;And nobody else is me. &lt;br&gt;I'm me. I'm Amy. </state>
             </case>
             <case stage="7" priority="800">
@@ -4810,6 +4877,18 @@
                 <condition role="target" character="miko" stage="0" />
                 <state img="#-sarcastic.png">You know, I'm pretty sure you could learn a thing or two from Miko, ~player~. </state>
             </case>
+            <case stage="0-10" totalRounds="0-2">
+                <condition role="target" character="pa-15" stage="0" />
+                <state img="#-sarcastic.png">You're awfully confident for a woman with a gun... </state>
+            </case>
+            <case stage="0-10" totalRounds="3-6">
+                <condition role="target" character="pa-15" stage="0" />
+                <state img="#-sarcastic.png">You were playing to lose? That and I'm a giant spider. It's a cool fantasy, but hardly practical. </state>
+            </case>
+            <case stage="0-10" totalRounds="7-">
+                <condition role="target" character="pa-15" stage="0" />
+                <state img="#-sarcastic.png">If you're trying to lose, why not skip the foreplay and go for the final round? </state>
+            </case>
             <case stage="0-10">
                 <condition role="target" character="haru" stage="5" sayingMarker="seductingplayer" />
                 <state img="#-sarcastic.png">~Player~, for love of Lit Club, don't be stupid, give her what she wants. </state>
@@ -5479,6 +5558,82 @@
                 <state img="#-hmm.png">So what do you do for fun, besides shop the Silicon Valley techbro rack at Macy's? </state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="pa-15" stage="1" />
+                <state img="#-hmm.png">Cute outfit, though. Are you into racing, or something like that? </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="pa-15" stage="2" />
+                <state img="#-focused.png">I've heard of a strappy dress, but this is hardly what I really expected. </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="pa-15" stage="3" />
+                <state img="#-focused.png">So, wait a second-- you're one of those girls from that one game I always see the boys at school playing at lunch... </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="pa-15" stage="4" />
+                <state img="#-hmm.png">Hey, wait a sec. Is that like... a backpack, or what? Or just part of your outfit...? </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="0" />
+                <state img="#-happy.png">Yes! Go Moon, go! </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="1" />
+                <state img="#-surprise.png">W-wow, you really weren't joking-- </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="2" />
+                <state img="#-surprise.png">Uh... Moon, weren't you not supposed to--</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="3" />
+                <state img="#-cheer.png">You can do it, Moon!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="5" />
+                <state img="#-hmm.png">I'm almost kind of bored at this point, and normally I'm a fan of boobs. </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="6" />
+                <state img="#-annoyed.png">...</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="0" />
+                <state img="#-focused.png">&lt;i&gt;So!&lt;/i&gt; The knife's an interesting touch... </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="1" />
+                <state img="#-focused.png">&lt;i&gt;Aaaaaaaaaaaand-- knife!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="2" />
+                <state img="#-chat.png">So, Chara, what's your actual deal? Are you omniscient or something like that? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="3" />
+                <state img="#-chat.png">Hmm... so, ~player~'s a stone-cold killer, is what you're trying to illuminate, huh? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="4" />
+                <state img="#-chat.png">So, okay, Chara, you're some sort of embodied Chaos God thing, right? I'm-- well, &lt;i&gt;obviously, I'm&lt;/i&gt; just a normal schoolgirl... </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="5" />
+                <state img="#-chat.png">Hey, Chara, honest girl talk question... have you and ~player~ ever...? &lt;i&gt;You know...&lt;/i&gt;</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="6" />
+                <state img="#-focused.png">Did ~player~ buy you that necklace? Is there a picture of the two of you in there? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="7" />
+                <state img="#-horny.png">Cha~ra~ and ~player~ sit~ting~ on a log~ </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="mary" stage="3" />
+                <state img="#-hmm.png">So... I think if you're not liking your shirt or bra, you might want to invest in a new set that's more comfy. Trust me, you'd be surprised how much of a difference that makes. </state>
+            </case>
+            <case stage="0-10">
                 <condition role="target" character="ini" />
                 <condition role="self" notSaidMarker="amy_hi_ini" />
                 <state img="#-chat.png" marker="amy_hi_ini">Ini, you're wired a little... differently too, aren't you? </state>
@@ -5491,6 +5646,16 @@
             <case stage="0">
                 <condition role="target" character="raven" />
                 <state img="#-calm.png" oneShotId="26" weight="0.001">Don't worry! I'll have more to say to ~name~ very soon!</state>
+            </case>
+            <case stage="9-10">
+                <condition role="target" character="chara_dreemurr" />
+                <state img="#-annoyed.png">Aww... of all the people here, why do I think she'd have been the most interesting to beat?</state>
+                <state img="#-annoyed.png">Oh, I know her game. </state>
+                <state img="#-focused.png">Oh... what'll it be this time? Remember, I have memory issues, so it's not like &lt;i&gt;I'll&lt;/i&gt; remember. </state>
+                <state img="#-focused.png">Oooo... let's see what's next... </state>
+                <state img="#-focused.png">Hm... it's probably nothing, but I get a weird feeling about her, ~player~... </state>
+                <state img="#-annoyed.png">Ah, come on already! </state>
+                <state img="#-annoyed.png">...She's keeping the knife, isn't she? </state>
             </case>
             <case stage="0-10">
                 <condition filter="flies" role="target" />
@@ -6152,6 +6317,22 @@
                 <state img="#-happy.png">...But &lt;i&gt;Three Cheers for Sweet Revenge&lt;/i&gt; Gerard Way-- not &lt;i&gt;Danger Days&lt;/i&gt; Gerard Way... </state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="pa-15" stage="0" />
+                <state img="#-hmm.png">Actually, let's forget what I was saying. That's crazy talk. And I am not crazy... </state>
+            </case>
+            <case stage="0-10" id="395">
+                <condition role="target" character="moon" stage="1" />
+                <state img="#-hmm.png">You're a bit of an exhibitionist, aren't you? </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="2" />
+                <state img="#-annoyed.png">This is such a &lt;i&gt;nonsense&lt;/i&gt; rule! If she wants to undress, who is telling her to stop? </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="3" />
+                <state img="#-hmm.png">...That reminds me, where did I put my bookbag...? </state>
+            </case>
+            <case stage="0-10">
                 <condition status="exposed" role="target" />
                 <state img="#-ooooh.png">Um... I guess you're a good listener, if you &lt;i&gt;did&lt;/i&gt; take off something because we asked...</state>
                 <state img="#-surprise.png">Hey, what's the deal? We can already see your... </state>
@@ -6653,6 +6834,22 @@
             <case stage="0-10">
                 <condition role="target" character="mary" stage="2" />
                 <state img="#-singing.png" marker="hang_em_high">&lt;i&gt;♫ The angels just cut out her tongue / Call her black Mariah / Would I lie to you? / That girl's not right in the brain~ ♫&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="pa-15" stage="1" />
+                <state img="#-happy.png">Not when &lt;i&gt;Florence&lt;/i&gt; is right there, a~ny~way~!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="2" />
+                <state img="#-sad.png">...Don't look so crushed! I guess you're more of an extreme exhibitionist rather than a bit of one... </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="3" />
+                <state img="#-sarcastic.png" marker="isabelle_shitposting">Associating the purity of one's character with an arbitrary standard of chastity is a naive and regressive philosophy that has historically been used to infantilize and shame women away from seeking pre-marital sexual independence. What I'm saying is that I hope Moon gets exactly what she wants and you are utterly and completely powerless to stop the coming revolution.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="4" />
+                <state img="#-focused.png">Hey, has anyone seen my bag? It happens to have all the things Moon was just talking about, if you're a bit extra and want to buy them. </state>
             </case>
             <case stage="0-10">
                 <condition status="exposed" role="target" />
@@ -7217,6 +7414,22 @@
                 <state img="#-happy.png">You're &lt;i&gt;fun!&lt;/i&gt; All my other friends don't really stand up to banter. </state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="pa-15" stage="1" />
+                <state img="#-chat.png">No-- no-- wait, don't tell me, you're a cosplayer, aren't you? Are you an anthropomorphized gun? </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="pa-15" stage="2" />
+                <state img="#-surprise.png">That's a jacket?! &lt;i&gt;No way--!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="pa-15" stage="3" />
+                <state img="#-cheer.png">Azur Lane, right!? &lt;i&gt;HA!&lt;/i&gt; And they said--</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="4" />
+                <state img="#-hmm.png">Wait, that's a hat? </state>
+            </case>
+            <case stage="0-10">
                 <condition status="exposed" role="target" />
                 <state img="#-hmm.png">Um... I guess you're a good listener, if you &lt;i&gt;did&lt;/i&gt; take off something because we asked...</state>
                 <state img="#-hmm.png">Hey, what's the deal? We can already see your... </state>
@@ -7663,6 +7876,22 @@
             <case stage="0-10">
                 <condition role="target" character="mary" stage="3" />
                 <state img="#-chat.png">...Oh, sorry, I lost track... we were talking about some hobbies? </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="pa-15" stage="2" />
+                <state img="#-hmm.png">That'd be silly. Who'd want to mix casual violence with cute girls? ...Well. I learned a lot about the world today. </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="pa-15" stage="3" />
+                <state img="#-horny.png">I thought it'd be a cardigan, or a blazer... but... uh, wow, okay, the zip up bodysuit look's pretty hot too... </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="pa-15" stage="4" />
+                <state img="#-horny.png">Yowza! Who cares what they said... that bodysuit is &lt;i&gt;doing&lt;/i&gt; it for me... where can I get one, by the way, Florence? </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="5" />
+                <state img="#-sarcastic.png">I won't shame you for liking sex, but that fashion choice is an abomination. For this you must be smote. Smitten? Aw, fudge. I should be better at this. </state>
             </case>
             <case stage="0-10">
                 <condition status="exposed" role="target" />
@@ -8126,6 +8355,14 @@
                 <condition role="target" character="ribbon_girl" stage="3" />
                 <state img="#-happy.png">Well, I certainly won't say no to seeing more, Ribbon Girl-senpai! </state>
             </case>
+            <case stage="0-10" id="394">
+                <condition role="target" character="moon" stage="0" />
+                <state img="#-focused.png">That's a pretty cool move! Can you touch your elbows behind your back, too? </state>
+            </case>
+            <case stage="0-10" id="398">
+                <condition role="target" character="mary" stage="3" />
+                <state img="#-happy.png">See! You have the perfect excuse, now! </state>
+            </case>
             <case stage="9-10">
                 <state img="#-sarcastic.png">O-oh my. If only you were naked, I could tell you what I was thinking, ~name~~</state>
                 <state img="#-sarcastic.png">Hm. Yeah... </state>
@@ -8542,6 +8779,14 @@
                 <condition role="target" character="ribbon_girl" stage="6" />
                 <state img="#-ooooh.png">Ooooh... you're not taking off your arm... glove... springs...? That's really interesting... and &lt;i&gt;hot&lt;/i&gt;.</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="1" />
+                <state img="#-sarcastic.png">What is with everyone? Can't you just let her go about her business? You're here too, you know. </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="mary" stage="4" />
+                <state img="#-chat.png">Oh! You know, I bet you'd look plenty cute if you had a lot more green in your wardrobe! Seriously, you could look super... what's that thing that's like steampunk, but in the future-- that! </state>
+            </case>
             <case stage="9-10">
                 <state img="#-cheer.png">You aren't too far behind me, ~name~...! </state>
                 <state img="#-horny.png">If you want to catchup, I'm not going to tell you no... more of &lt;i&gt;enthusiastic&lt;/i&gt; yes. Es. Yeses.</state>
@@ -8923,6 +9168,10 @@
                 <condition role="target" character="sayaka" stage="3" />
                 <state img="#-horny.png">...I wonder though... what if you &lt;i&gt;didn't&lt;/i&gt; have a bra on? What if the corset really--</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="pa-15" stage="4" />
+                <state img="#-focused.png">...Are you okay over there, Florence? </state>
+            </case>
             <case stage="0-10" id="108">
                 <condition role="target" character="sayori" />
                 <condition count="2" filter="ddlc" />
@@ -9021,6 +9270,10 @@
                 <condition role="target" character="komi-san" />
                 <state img="#-chat.png">...Just think of it like taking a bath with your girlfriend! Or girl friend! Like... after getting sweaty. From... um... working out! Or whatever! </state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" />
+                <state img="#-chat.png">Oh... um... they're nice, I guess? </state>
+            </case>
             <case stage="9-10">
                 <state img="#-ooooh.png">You've been hiding the girls for so long... come on, ~name~!</state>
                 <state img="#-singing.png">Hey, ~name~, tip your performers... well... you can &lt;i&gt;nip&lt;/i&gt; me instead... </state>
@@ -9083,6 +9336,10 @@
             <case stage="0-10" id="237">
                 <condition role="target" character="megumin" stage="7" />
                 <state img="#-chat.png">Seriously. You're &lt;i&gt;much&lt;/i&gt; happier without them.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="pa-15" stage="5" />
+                <state img="#-surprise.png">I can't say I'm not impressed-- those are definitely amazing-- </state>
             </case>
             <case stage="0-10" id="109">
                 <condition role="target" character="sayori" />
@@ -9223,6 +9480,10 @@
             <case stage="0-10">
                 <condition role="target" character="komi-san" />
                 <state img="#-surprise.png">Gosh! They're a lot &lt;i&gt;bigger&lt;/i&gt; than I expected. Most of the girls in the Literature Club with small chests are super self-conscious. </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" />
+                <state img="#-annoyed.png">Okay, actually? Anyone else want to step out for cigarettes? There's a convent right around the corner where we can undo whatever this experience is. </state>
             </case>
             <case stage="9-10">
                 <state img="#-sarcastic.png">Tsk. ~Name~! You have to practice proper hygiene. Your chest is so dirty. I should clean those for you. I volunteer my mouth. </state>
@@ -9372,6 +9633,10 @@
             <case stage="0-10">
                 <condition role="target" character="shantae" stage="2" />
                 <state img="#-horny.png">I kind of want to bury my face... um... would you be interested, Shantae? I could hum or sing, too, you know~ </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="6" />
+                <state img="#-surprise.png">...Ew-- Oh shit. Oh &lt;i&gt;shoot&lt;/i&gt;. Aww...</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="estelle" />
@@ -9556,6 +9821,14 @@
             <case stage="0-10">
                 <condition role="target" character="shantae" stage="3" />
                 <state img="#-happy.png">I never get to wear yoga pants... but do you ever worry about getting too turned on? ...I can tell you're &lt;i&gt;kind of&lt;/i&gt; into the attention. </state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="pa-15" stage="6" />
+                <state img="#-horny.png">Uh huh... yeah... just stand like &lt;i&gt;thaaaaaaaaat&lt;/i&gt; and talk like &lt;i&gt;thaaaaaat&lt;/i&gt; and oh &lt;i&gt;yes please.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="moon" stage="7" />
+                <state img="#-sad.png">Um... sorry for being shamey, but this is... you're kind of making us all look stupid, Moon. </state>
             </case>
             <case stage="0-4" id="112">
                 <condition role="target" character="sayori" />
@@ -9764,6 +10037,21 @@
                 <condition role="self" notSaidMarker="go_apeshit" />
                 <state img="#-calm.png" marker="go_apeshit">Aren't you tired of being nice by now? Don't you want to just go apeshit? </state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="8" />
+                <test expr="~self.persistent.amy_beat_chara_last~" value="1" />
+                <state img="#-happy.png">Oh? Did I win &lt;i&gt;again&lt;/i&gt;, Chara? Ehehe~ </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="8" />
+                <test expr="~self.persistent.chara_beat_amy_last~" value="1" />
+                <state img="#-sarcastic.png" marker="chara_beat_amy_last=0" persist-marker="true">
+                    <text>Looks like &lt;i&gt;I&lt;/i&gt; won this time, Chara. I didn't even need a knife! </text>
+                    <markers>
+                        <marker name="amy_beat_chara_last" op="=" value="1" />
+                    </markers>
+                </state>
+            </case>
             <case stage="0-10" id="248">
                 <condition role="target" character="chihiro" stage="0" />
                 <state img="#-chat.png">Chihiro, it'll be okay! Don't worry. </state>
@@ -9879,6 +10167,45 @@
                 <condition role="target" character="ribbon_girl" stage="1" />
                 <state img="#-focused.png">When did you decide to do sports &lt;i&gt;and&lt;/i&gt; sing? I never knew that was an option!</state>
             </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="0" />
+                <state img="#-hmm.png">So, you're one of those girls that's hypercompetitive, hypercompetent, and... </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="1" />
+                <state img="#-annoyed.png">I mean the noun, not the verb. Geez, you'd have a &lt;i&gt;rough&lt;/i&gt; time at the Literature Club, Chara. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="2" />
+                <state img="#-annoyed.png">Actually, you'd be pretty surprised. I may be kind of a space case... but you know, there's lots of stuff out in the cosmos. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="3" />
+                <state img="#-sarcastic.png">I can &lt;i&gt;almost&lt;/i&gt; believe that. The ladykiller part, anyway... bu~u~u~t... </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="4" />
+                <state img="#-happy.png">I'm actually &lt;i&gt;super&lt;/i&gt; interested in what you look like under your--</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="5" />
+                <state img="#-horny.png">I mean... you're &lt;i&gt;very&lt;/i&gt; comfortable with ~player~. I figured you two've had sex at &lt;i&gt;some&lt;/i&gt; point...? Or maybe the knife is a great confidence booster.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="6" />
+                <state img="#-happy.png">Oh, you two are &lt;i&gt;so&lt;/i&gt; having sex! Like, the whole murderous rage thing is just belligerent sexual tension, right? </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="7" />
+                <state img="#-singing.png">Ser~en~a~ded~ by an an~noy~ing dog~ fir~st~ comes neu~tral~ then pa~ci~fi~sm~</state>
+            </case>
+            <case stage="9-10">
+                <condition role="target" character="chara_dreemurr" />
+                <state img="#-hmm.png">Well... it's just a game. I can hardly blame her for wanting to win...</state>
+                <state img="#-hmm.png">Ah, you won't let her hurt me, right, ~player~? I didn't think so. </state>
+                <state img="#-hmm.png">Hm... Not the choice I'd have gone with, but I'm not in a position to talk, am I?</state>
+                <state img="#-hmm.png">Aww... I was sure you were going to... </state>
+            </case>
             <case stage="0-10">
                 <condition filter="clothing_destruction" role="target" />
                 <state img="#-surprise.png">You're really... you okay over there, ~name~?</state>
@@ -9909,6 +10236,49 @@
             <case stage="0-10">
                 <condition role="target" character="ribbon_girl" stage="1" />
                 <state img="#-chat.png">It's okay! You sing professionally, right? There's absolutely no reason you should be embarassed! </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="1" />
+                <state img="#-sarcastic.png">...Still, for some reason, has something to prove to ~player~? ~Player~, what is it with your weird chick magnet? ...Present company excluded, obviously.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="2" />
+                <state img="#-hmm.png">I suppose we'd both actually have that in common. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="3" />
+                <state img="#-happy.png">Ehehe~ we~e~e~ll, truth be told, sometimes I just like to play along. But out there, in space? &lt;i&gt;Lots&lt;/i&gt; of scary stuff. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="4" />
+                <state img="#-horny.png">~Player~, you're into some weird stuff, but you're not a bad club mate. Go bang your weird demon girlfriend, I'm &lt;i&gt;so&lt;/i&gt; here for the weird girl getting what she wants. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="5" />
+                <state img="#-surprise.png">Jeez. Nice bra. I was expecting someone so unfettered to be a little... less fettered. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="6" />
+                <state img="#-focused.png">~Player~? I know I don't need it, but can &lt;i&gt;I&lt;/i&gt; have a knife? I'd feel &lt;i&gt;crazy&lt;/i&gt; safe with a knife. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="7" />
+                <state img="#-focused.png">~Player~? I know I don't need it, but can &lt;i&gt;I&lt;/i&gt; have a knife? I'd feel &lt;i&gt;crazy&lt;/i&gt; safe with a knife. </state>
+            </case>
+            <case stage="0-8">
+                <condition role="target" character="chara_dreemurr" stage="8" />
+                <state img="#-horny.png">Genocide's a storng word, but I get the feeling Chara &lt;i&gt;actually&lt;/i&gt; just wants you to do that all up inside her. Ehehe~ </state>
+            </case>
+            <case stage="9-10">
+                <condition role="target" character="chara_dreemurr" />
+                <state img="#-singing.png">&lt;i&gt;♫I've been working oh so hard-- / I was hoping I'd find you--♫&lt;/i&gt;</state>
+                <state img="#-singing.png">&lt;i&gt;♫I've got a small favor to ask-- / It's something you can doooo~♫&lt;/i&gt; </state>
+                <state img="#-singing.png">&lt;i&gt;♫It's far from reach and incomplete-- / But it's shiny and brand new-- / And then in time we'll connect the lines / For a future with you~ ♫&lt;/i&gt;</state>
+                <state img="#-singing.png">&lt;i&gt;♫You know that I can feel it / Flowing through my bones / And we're all on the verge of connection~ ♫&lt;/i&gt;</state>
+                <state img="#-singing.png">&lt;i&gt;♫'Cause with you and I / We've been waiting for so long / This'll be our greatest creation~ ♫&lt;/i&gt;</state>
+                <state img="#-singing.png">&lt;i&gt;♫The game we made / and the words we sing / You'll find them very very interesting / How wonderful to hear you've been looking for me / too~♫&lt;/i&gt;</state>
+                <state img="#-singing.png">&lt;i&gt;♫Dark and darker still / The shadows cut so deep / With everything we've come to learn / Tell me what you think</state>
+                <state img="#-singing.png">&lt;i&gt;♫I've got something up my sleeve / I've heard that you've been looking for me / Well here I am, do what you will / It's not at all what you were expecting / It's all just for me~&lt;/i&gt; </state>
             </case>
             <case stage="0-10">
                 <condition filter="clothing_destruction" role="target" />
@@ -10899,6 +11269,21 @@
         </trigger>
 
         <trigger id="must_masturbate">
+            <case stage="8">
+                <condition role="other" character="chara_dreemurr" />
+                <test expr="~self.persistent.chara_beat_amy_last~" value="1" />
+                <state img="#-annoyed.png">Darn it, she beat me again...</state>
+            </case>
+            <case stage="8">
+                <condition role="other" character="chara_dreemurr" />
+                <test expr="~self.persistent.amy_beat_chara_last~" value="1" />
+                <state img="#-happy.png" marker="chara_beat_amy_last=1" persist-marker="true">
+                    <text>Well, I did beat you last time, Chara. Just don't try anything weird, okay? </text>
+                    <markers>
+                        <marker name="amy_beat_chara_last" op="=" value="0" />
+                    </markers>
+                </state>
+            </case>
             <case stage="8">
                 <condition role="other" character="miko" />
                 <state img="#-sarcastic.png">You know, ~player~, you sure like crazy, huh? </state>
