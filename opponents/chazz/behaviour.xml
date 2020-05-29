@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 9:50:59 PM on May 03, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.6.1 at 11:53:55 PM on May 28, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.4</version>
+    <version>v5.6.1</version>
     <first>Chazz </first>
     <last>Princeton</last>
     <label>Chazz</label>
@@ -40,7 +40,9 @@
         <tag from="5" to="5">clothing_destruction</tag>
     </tags>
     <nicknames>
+        <nickname for="anna">Goblin of Greed</nickname>
         <nickname for="beatrix">Darklord Reficule</nickname>
+        <nickname for="galatea">Mystical Sand</nickname>
         <nickname for="guzma">Skullgar</nickname>
         <nickname for="hanako">Burn Deck</nickname>
         <nickname for="jessie">Jesse</nickname>
@@ -60,7 +62,6 @@
         <nickname for="starfire">Fartfire</nickname>
     </nicknames>
 
-    <start />
 
     <wardrobe>
         <clothing name="underwear" generic="underwear" position="lower" type="important" />
@@ -177,6 +178,14 @@
                 <state img="#-confident.png">Ahh yes, a game of Strip Duel Monsters with my Duel Academy frie... I mean idiot classmates that could never hope to beat me.</state>
                 <state img="#-confident.png">You will be playing against a card game expert, one of the best Duel Monsters players in the world. </state>
                 <state img="#-confident.png">You want to duel with the Chazz, huh? Ready to take a beating?</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_selected">
+            <case stage="0">
+                <condition count="2-" filter="shy" />
+                <condition role="target" character="bernadetta" />
+                <state img="#-confident.png">And you're jumping right in to the deep end. If you can handle me, you can handle anyone.</state>
             </case>
         </trigger>
 
@@ -318,6 +327,26 @@
             <case stage="0">
                 <condition role="other" character="sayaka" />
                 <state img="#-confident.png">Well you better learn quickly, you Blue Raspberry Magician Girl.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="shantae" />
+                <state img="#-horny.png">&lt;i&gt;Oooh. A belly dancer. She'll be fun to play with.&lt;/i&gt; </state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="anna" />
+                <state img="#-smug.png">They never told me there was a cash prize. I might already be a billionaire, but what's wrong with having a few thousand extra dollars in my coffers?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="kokichi" />
+                <state img="#-angry.png">Supreme Leader!? My family might be evil, but they don't support people like that.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="galatea" />
+                <state img="#-disappointed.png">Is this some kind of a joke? Tell me the wrong location for the strip poker game on purpose?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="bernadetta" />
+                <state img="#-mock.png">Well then, you've come to the right place. It's time to practice acting with an arrogant, obnoxious, entitled brat. That would be me!</state>
             </case>
             <case stage="0" id="28">
                 <alternative id="28">
@@ -533,10 +562,6 @@
                 <test expr="~_.lead~" cmp="&gt;" value="0" />
                 <state img="#-happy.png">There's this thing called the Heart of the Cards, but I don't really know how it works, because I'm not the main protagonist.</state>
             </case>
-            <case stage="0-7" id="207" alsoPlaying="shantae" totalRounds="3-" alsoPlayingSayingMarker="dance_first">
-                <condition role="other" character="shantae" sayingMarker="dance_first" />
-                <state img="#-happy.png">So we get live entertainment with our strip poker? Awesome. Will you dance when you're naked as well?</state>
-            </case>
             <case stage="0-7" id="97" priority="206">
                 <condition role="other" character="jura" sayingMarker="seduction" />
                 <condition role="other" character="meia" />
@@ -613,6 +638,10 @@
                 <condition role="other" character="komi-san" stage="1" timeInStage="0" sayingMarker="jacket_off" />
                 <state img="#-bored.png">That's a little better I guess. At least you know not to pass off shoes as a layer.</state>
             </case>
+            <case stage="0-7" priority="156">
+                <condition role="other" character="shantae" stage="2" timeInStage="0-" sayingMarker="elephant" />
+                <state img="#-shocked.png">So that's not your only form? Just what are you, and what kind of magic do you use?</state>
+            </case>
             <case stage="0-7">
                 <condition role="other" character="mulan" stage="6" timeInStage="0" />
                 <state img="#-happy.png">So you've got a dragon named Mushu, how quaint. Do you hate him just as much as I hate Ojama Yellow?</state>
@@ -630,6 +659,10 @@
                 <condition role="other" character="sakura" stage="1" timeInStage="0" />
                 <state img="#-thinking.png">That last line was a legit question. Someone here smells like death, and I'm looking at you, Number One.</state>
                 <state img="#-angry.png">That last part wasn't a lyric. This place stinks worse than than Syrus' bedsheets, and he wet the bed every other night! Do you wet the bed, Number One?</state>
+            </case>
+            <case stage="0-7" priority="155">
+                <condition role="other" character="shantae" stage="3" timeInStage="0-" />
+                <state img="#-sad.png">Apologies if I don't trust you, Shantae. But I've learned that most magical entities are pure evil, and I'm just being cautious.</state>
             </case>
             <case stage="0-7" id="94" alsoPlaying="emi" alsoPlayingStage="0-3" totalRounds="2-" alsoPlayingNotSaidMarker="800m" alsoPlayingSayingMarker="800m=1">
                 <state img="#-thinking.png">I'm allowed to bring my Z-Metal Tank, right? I won't compete unless I have an absurd advantage.</state>
@@ -732,11 +765,15 @@
             </case>
             <case stage="0-7" totalRounds="0" priority="152">
                 <condition role="other" character="haru" stage="0" />
-                <state img="#-happy.png">Don't you remember, Haru? Pretty sure your dad met my brothers to discuss buisness not too long ago.</state>
+                <state img="#-happy.png">Don't you remember, Haru? Pretty sure your dad met my brothers to discuss buisness a while ago.</state>
             </case>
             <case stage="0-7" id="52" totalRounds="9">
                 <condition role="other" character="mulan" stage="0-1" sayingMarker="fa_pp_ing" />
                 <state img="#-confident.png">Sure, let's go with that. I could come up with a better joke at your expense if you give me some time, though.</state>
+            </case>
+            <case stage="0-7" totalRounds="0" priority="151">
+                <condition role="other" character="shantae" stage="0" sayingMarker="start" />
+                <state img="#-joy.png">Well, Shantae, you look just like the exotic dancers my brothers hire for their private parties. &lt;i&gt;Hopefully you'll be just as horny as they are.&lt;/i&gt;</state>
             </case>
             <case stage="0-7" totalRounds="0">
                 <condition role="other" character="akko" stage="0" />
@@ -804,6 +841,18 @@
             <case stage="0-7" totalRounds="0">
                 <condition role="other" character="sayaka" stage="0" />
                 <state img="#-confident.png" marker="sayaka_magician">If you insist on calling yourself a magical girl, then I call you Blueberry, after those lame fruit magicians.</state>
+            </case>
+            <case stage="0-7" totalRounds="0">
+                <condition role="other" character="kokichi" stage="0" />
+                <state img="#-confident.png">Mass genocide is so wasteful. An infinitely better way of tormenting people is debt bondage. Death lasts for just a moment, but debt will last forever.</state>
+            </case>
+            <case stage="0-7" totalRounds="0">
+                <condition role="other" character="galatea" stage="0" />
+                <state img="#-confident.png">I know your real name, but I'm choosing to ignore it, Mystical Sand. That's your name now.</state>
+            </case>
+            <case stage="0-7" totalRounds="0">
+                <condition role="other" character="bernadetta" stage="3-4" />
+                <state img="#-bored.png">You're going to be so much fun to belittle. So much fun that I'm having trouble coming up with a demeaning nickname for you. Let's skip that part for now though. This is just practice, after all.</state>
             </case>
             <case stage="0-7">
                 <condition role="other" character="amalia" stage="5" saidMarker="grow1" sayingMarker="grow2" />
@@ -895,6 +944,14 @@
             <case stage="0-7" id="161" oneShotId="22">
                 <condition role="other" character="hanako" stage="7" />
                 <state img="#-shocked.png">Wait, I insult you all game and &lt;i&gt;that's&lt;/i&gt; what sets you off?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="bernadetta" stage="5" />
+                <state img="#-awkward.png">Did I just say something I shouldn't have? Pull a nerve or something?</state>
+            </case>
+            <case stage="0-7" id="207" totalRounds="3-" priority="111">
+                <condition role="other" character="shantae" sayingMarker="dance_first" />
+                <state img="#-happy.png">So we get live entertainment with our strip poker? Awesome. Will you dance when you're naked as well?</state>
             </case>
             <case stage="0-7" id="1">
                 <condition count="0" filter="futaba" />
@@ -1962,6 +2019,10 @@
             <case stage="0-9" id="91" target="zone-tan" targetStage="2" consecutiveLosses="3" totalRounds="0-7" targetSayingMarker="fulldemonloss">
                 <state img="#-angry.png">So this is your real form. I should have known. Never trust a friendly girl. They'll either be a doll or a demon.</state>
             </case>
+            <case stage="0-9" totalRounds="0">
+                <condition role="target" character="bernadetta" stage="0" />
+                <state img="#-smug.png">Boo hoo hoo! Things don't always go as you want, ~name~. You certainly didn't want to hang out with me, and yet here you are.</state>
+            </case>
             <case stage="0-9" id="87">
                 <condition role="target" character="nayru" stage="4" notSaidMarker="null_possess" />
                 <state img="#-disappointed.png">Oh great, now the Light of Destruction is getting in on the fun. Just don't summon any more world destroying satellites.</state>
@@ -2028,19 +2089,63 @@
             </case>
             <case stage="0-9">
                 <condition role="target" character="haru" stage="0" />
-                <state img="#-happy.png">Yup. My brothers keep tabs on all the rich and powerful people, and your father was one of the richest and most powerful people in the world.</state>
+                <state img="#-happy.png">Yup. My brothers keep tabs on all the rich and powerful people, and your father was one of the richest and most powerful people on earth.</state>
             </case>
             <case stage="0-7" oneShotId="23">
                 <condition role="target" character="haru" stage="1" />
-                <state img="#-thinking.png">You look just like one of those Phantom Thieves, and the voice and face recognition says you're a match, but you can't be a member, right?</state>
+                <state img="#-thinking.png">You look just like one of those Phantom Thieves. You're a dead ringer for that pink one with the axe, but you can't be a Phantom Thief, right?</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="haru" stage="2" />
-                <state img="#-happy.png">You were framed? I can most definitely believe that, Haru.</state>
+                <state img="#-happy.png">How is the buisness side of things going, Haru?</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="haru" stage="6" />
                 <state img="#-shocked.png">Crap! You are a Phantom Thief, aren't you? No other girl would have a butt as big as Noir's.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="shantae" stage="0" />
+                <state img="#-happy.png">Dance, ~name~, dance!</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="shantae" stage="1" />
+                <state img="#-happy.png">I ain't never seen hair like yours before, ~name~. And considering where I come from, that's saying a lot. You certainly wouldn't catch me wearing a ponytail.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="shantae" stage="2" />
+                <state img="#-calm.png">So you're a genie, huh? Here to grant someone's wish?</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="shantae" stage="3" />
+                <state img="#-joy.png">Now we've made it to the best part of the show, the one where you dance naked for us.</state>
+            </case>
+            <case stage="0-9" id="211">
+                <condition role="target" character="anna" stage="0" />
+                <state img="#-bored.png">So you're a famed shopkeeper, huh? I doubt you sell anything my brothers make.</state>
+            </case>
+            <case stage="0-9" id="224">
+                <condition role="target" character="anna" stage="6" />
+                <state img="#-smug.png">Why didn't I think of that, ~name~? We should lock all the commoners out with a $10,000 dollar blind.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="galatea" stage="0" />
+                <state img="#-bored.png">Ehhh, it's not that weird in hindsight. You're not far removed from that posessed doll Jaden fought that one time, and then never again.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="galatea" stage="2" />
+                <state img="#-horny.png">Say, ~name~, does your creator take comissions? I think I might like to buy a piece from him.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="galatea" stage="3" />
+                <state img="#-joy.png">So ~name~, are you ready to get naked? I'm wondering if your artist bothered to give you shyness about your body. I'm really wishing he forgot about that.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="bernadetta" stage="0" />
+                <state img="#-bored.png">Don't get cocky yet,~name~. The game is only just starting.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="bernadetta" stage="5" />
+                <state img="#-awkward.png">Is there something wrong, Bernadetta? Did I say something I shouldn't have?</state>
             </case>
             <case stage="0-9">
                 <condition filter="blonde" role="target" stage="0" />
@@ -2488,6 +2593,14 @@ And smells like it's been dead.</state>
                 <condition role="target" character="haru" stage="0" />
                 <state img="#-sad.png">I'm sorry about what happened, by the way. My family doesn't usually get torn up about things like that, but they did hold a brief vigil for your dad...</state>
             </case>
+            <case stage="0-9" id="218">
+                <condition role="target" character="anna" stage="3" />
+                <state img="#-confident.png">Petty theft is unneccesary for a billionaire. I can buy thousands of that necklace.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="galatea" stage="0" />
+                <state img="#-confident.png">Duel Academy never had a great art program, but if we did, than I bet one of the students would create something like you. It's just that kind of school.</state>
+            </case>
             <case stage="0-4">
                 <state img="#-happy.png">Such a lovely girl, why is she removing something so trivial?</state>
                 <state img="#-happy.png">Just like unwrapping a tootsie roll pop to get to it's chocolatey center.</state>
@@ -2740,7 +2853,15 @@ P.U., what's that horrible smell?!</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="haru" stage="1" />
-                <state img="#-sad.png">And all the money they spent on his political campaign that's totally wasted now.</state>
+                <state img="#-bored.png">And all the money they spent on his political campaign that's totally wasted now.</state>
+            </case>
+            <case stage="0-9" id="219">
+                <condition role="target" character="anna" stage="4" />
+                <state img="#-smug.png">When you have as much cash as I do, you can get away scot free with murder, or even worse. You just need to know who to bribe.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="galatea" stage="1" />
+                <state img="#-bored.png">A magnet for everything weird that ever has or ever will exist. Dueling primates, a haunted dormitory, an active volcano, home of the Sacred Beasts. You'd fit right in.</state>
             </case>
             <case stage="0-6">
                 <state img="#-horny.png">&lt;i&gt;Shall I hold that for you, madam ~name~?&lt;/i&gt;</state>
@@ -2912,6 +3033,10 @@ P.U., what's that horrible smell?!</state>
                 <condition role="target" character="yuelia" stage="4" sayingMarker="earthSandals" />
                 <state img="#-bored.png">Seems to me like they'll just get dirtier faster.</state>
             </case>
+            <case stage="0-9" id="209">
+                <condition role="target" character="shantae" stage="1" sayingMarker="monkey" />
+                <state img="#-shocked.png">Monkey?! So you were a filthy disgusting ape in disguise?</state>
+            </case>
             <case stage="0-9">
                 <condition role="target" character="croix" stage="4" />
                 <state img="#-thinking.png">Why a harness anyway? We may have crazy hair at Duel Academy, but not crazy clothes.</state>
@@ -3046,11 +3171,35 @@ P.U., what's that horrible smell?!</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="haru" stage="1" />
-                <state img="#-smug.png">Besides, why on earth would you ever do anything that would harm your own buisness empire?</state>
+                <state img="#-smug.png">The Phantom Thieves are mere peasants that are clawing at the fortunes of the rich and powerful, are they not? They're supposed to be your sworn enemy.</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="haru" stage="2" />
-                <state img="#-bored.png">Because if your father was actually nice, then he'd have to pay his employees a living wage and healthcare benefits, and treat them like human beings.</state>
+                <state img="#-confident.png">I hear you're implementing a lot of worker friendly policies. &lt;i&gt;How sweet of you.&lt;/i&gt; I would steal your ideas, but I'm not in control of the family's buisness interests.</state>
+            </case>
+            <case stage="0-9" id="208">
+                <condition role="target" character="shantae" stage="0" />
+                <state img="#-joy.png">My brothers usually hog the dancers for themselves, but now I have one all to myself! Isn't that great, ~name~?</state>
+            </case>
+            <case stage="0-9" id="214">
+                <condition role="target" character="anna" stage="1" />
+                <state img="#-happy.png">May I interest you in a Multilevel marketing scheme, ~name~? You'll get all sorts of wonderful products to sell people, like cosmetics and nutritional shakes.</state>
+            </case>
+            <case stage="0-9" id="216">
+                <condition role="target" character="anna" stage="2" />
+                <state img="#-bored.png">Just special boots? If you really wanted to sell people extra mobility, you'd get into the field of cybernetic limb replacement.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="bernadetta" stage="0" />
+                <state img="#-happy.png">That's a pretty decent uniform you got there. Nothing like the ones at my school though. Are you from East Academy or something?</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="bernadetta" stage="1" />
+                <state img="#-confident.png">I can customize my outfit too. How else would Duel Academy let me dress in an outfit this cool?</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="bernadetta" stage="2" />
+                <state img="#-happy.png">So what do they teach you at your crappy school? Probably not Duel Monsters, if I had to guess.</state>
             </case>
             <case stage="0-9">
                 <state img="#-horny.png">It's okay, take your time, the Chazz will still be here when you are done there...</state>
@@ -3197,11 +3346,39 @@ P.U., what's that horrible smell?!</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="haru" stage="2" />
-                <state img="#-confident.png">There may be honor among thieves, but there's also honor in not shooting yourself in the foot. You'd have lost a lot of wealth if Mr. Okumura's heart really changed.</state>
+                <state img="#-sad.png">You better watch yourself, Haru. You'll never know when they'll strike next. They could be after either one of us next.</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="haru" stage="3" />
-                <state img="#-mock.png">Half the fun of running a buisness to Jagger comes from treating his employees like slaves, making them know where they are on the pecking order. That's kinda fun to me too.</state>
+                <state img="#-mock.png">Half the fun of running a buisness to Jagger comes from treating his employees like slaves, making them know how worthless they are. That's kinda fun to me too.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="shantae" stage="1" />
+                <state img="#-awkward.png">Your dancing is so cute, ~name~. Everyone at this table is just so static, myself included.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="shantae" stage="2" />
+                <state img="#-smug.png">I didn't mean that as a racial slur, ~name~. My brothers totally would mean that as a racial slur though. I insult all people equally.</state>
+            </case>
+            <case stage="0-9" id="215">
+                <condition role="target" character="anna" stage="2" />
+                <state img="#-mock.png">It's actually an illegal pyramid scheme designed to put idiots into thousands of dollars of debt. But I'll put you at the top of the pyramid, because you're just that nice.</state>
+            </case>
+            <case stage="0-9" id="217">
+                <condition role="target" character="anna" stage="3" />
+                <state img="#-joy.png">Robotic limbs are an emerging industry, so that means we can charge whatever the hell we want for them. Three cheers for a lack of government oversight!</state>
+            </case>
+            <case stage="0-9" id="228">
+                <condition role="target" character="bernadetta" stage="1" />
+                <state img="#-happy.png">Uniforms don't really matter anyway for this game. I'm just gonna pretend you're an Obelisk Blue based on your hoodie. We can save the Slifer Red talk for later.</state>
+            </case>
+            <case stage="0-9" id="229">
+                <condition role="target" character="bernadetta" stage="2" />
+                <state img="#-horny.png">Wow... those spats don't leave much to the imagination, do they? Almost as revealing as those Duel Academy miniskirts.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="bernadetta" stage="3" />
+                <state img="#-smug.png">Archery? What a waste! What will flimsy arrows do to a fully powered XYZ Dragon Cannon? Nothing, that's what!</state>
             </case>
             <case stage="0-9">
                 <state img="#-smug.png">This game may not be duel monsters, but it's not that bad either...</state>
@@ -3433,11 +3610,27 @@ P.U., what's that horrible smell?!</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="haru" stage="3" />
-                <state img="#-confident.png">Well, what's done is done, and you're now head of a massive corporation.</state>
+                <state img="#-confident.png">Are you sure you have what it takes for the world of buisness? Niceness won't get you far.</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="haru" stage="4" />
-                <state img="#-bored.png">I personally don't think you deserve to be under the thumb of the Princetons. You're too nice and sexy for that.</state>
+                <state img="#-bored.png">I'm liking the whole flirty angle you've got, Haru. Still waiting for that surprise...</state>
+            </case>
+            <case stage="0-9" id="212">
+                <condition role="target" character="anna" stage="0" />
+                <state img="#-confident.png">They make everything from clothing to heavy machinery. Them and their dozens of wholly owned subsidiaries.</state>
+            </case>
+            <case stage="0-9" id="222">
+                <condition role="target" character="anna" stage="4" />
+                <state img="#-thinking.png">Have you ever heard of a leveraged buyout? It's one of my Jagger's favorite buisness tricks. You basically buy a company using debt, and leave the responsibility of paying it off to the company you just bought.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="galatea" stage="1" />
+                <state img="#-horny.png">Yes, ~name~. Take it all off, and never put it back on...</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="bernadetta" stage="3" />
+                <state img="#-confident.png">You remind me a lot of a friend of mine. His name is Syrus. He's a pathetic loser with zero self confidence, who uses an army of pathetic machine monsters. Kinda like you.</state>
             </case>
             <case stage="0-9">
                 <state img="#-happy.png">Next time I see Alexis, I'm going to challenge her to a strip duel monsters game...</state>
@@ -3454,7 +3647,7 @@ P.U., what's that horrible smell?!</state>
             </case>
             <case stage="0-9" id="198">
                 <condition role="target" character="haru" stage="5" sayingMarker="mommyharu" />
-                <state img="#-confident.png">They'll just wait for you to drive your company into bankruptcy, and then they'll buy you out. They don't think a woman can run a company.</state>
+                <state img="#-joy.png">So the prim and proper CEO has revealed herself to be a dominatrix. I knew you had that ruthless spirit in you. You're just using it on men who like it is all.</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="croix" stage="3" />
@@ -3622,7 +3815,27 @@ P.U., what's that horrible smell?!</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="haru" stage="4" />
-                <state img="#-smug.png">A corporation that my brothers are looking to buy.</state>
+                <state img="#-thinking.png">Or is it all an act to get people's guards down? I look forward to seeing your true self, Haru.</state>
+            </case>
+            <case stage="0-9" id="213">
+                <condition role="target" character="anna" stage="1" />
+                <state img="#-smug.png">They probably even made your cloak, or more accurately, told a chinese sweatshop to make it for them. Isn't big buisness wonderful?</state>
+            </case>
+            <case stage="0-9" id="223">
+                <condition role="target" character="anna" stage="5" />
+                <state img="#-confident.png">There's no refunds in the world of buisness and strip poker. We'll keep going unto you either get naked or bankrupt, whichever one comes first.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="galatea" stage="2" />
+                <state img="#-happy.png">You're not perfect, but I expected far worse out of a statue. Give my thanks to your creator. </state>
+            </case>
+            <case stage="0-9" id="230">
+                <condition role="target" character="bernadetta" stage="4" />
+                <state img="#-mock.png">I remember that time he hid in a trash can. Maybe you should learn a thing or to from that. Nobody would get within 30 feet of you if you smelled like old hamburgers.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="bernadetta" stage="5" />
+                <state img="#-confident.png">It's even better if everyone who expected you to grow up as a pathetic loser sees that you're now the rich and powerful one! Is there anyone in your life who thinks you're pathetic?</state>
             </case>
             <case stage="0-9">
                 <state img="#-drooling.png">Don't get me wrong, you are pretty alright, but I only have eyes for my Alexis...</state>
@@ -3821,6 +4034,10 @@ P.U., what's that horrible smell?!</state>
                 <condition role="target" character="revy" stage="5" />
                 <state img="#-confident.png">I wonder how edgy Zane would have liked this game? He probably would have relished the pain and humiliation. Unlike you, Bandit Revy.</state>
             </case>
+            <case stage="0-9">
+                <condition role="target" character="shantae" stage="3" />
+                <state img="#-horny.png">There's a whole archetype of dancing Duel Monsters. They're called Lunalights. But they ain't as beautiful as you. They aren't genies for one.</state>
+            </case>
             <case stage="0-9" id="116">
                 <condition role="target" character="ini" sayingMarker="ini_personality" />
                 <state img="#-mock.png">No, I know what's going on. You're possessed by a millennium item spirit, aren't you? It doesn't change a thing, Yami Ini. It doesn't change a thing at all.</state>
@@ -3910,6 +4127,14 @@ P.U., what's that horrible smell?!</state>
             <case stage="0-9">
                 <condition role="target" character="haru" />
                 <state img="#-awkward.png">Telling you about how awful my brothers are was a pretty bad idea in hindsight.</state>
+            </case>
+            <case stage="0-9" id="220">
+                <condition role="target" character="anna" />
+                <state img="#-smug.png">You don't need the cash prize, Anna. As the Princetons always say, the rich get richer and the poor get poorer.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="galatea" />
+                <state img="#-confident.png">I've definitely got the money for it. A average yearly salary is pocket change to me, and it's probably pocket change to your creator too.</state>
             </case>
             <case stage="0-9">
                 <state img="#-horny.png">Hmmmm... Yes... go on...</state>
@@ -4017,6 +4242,10 @@ P.U., what's that horrible smell?!</state>
                 <state img="#-thinking.png">You have 12 universes? I wonder if there's a set of twelve universes in those dimensions too? Once you start getting into sub-dimensions and stuff, things get complicated.</state>
             </case>
             <case stage="0-9">
+                <condition role="target" character="shantae" stage="4" />
+                <state img="#-drooling.png">You sure you aren't an erotic dancer? You'd be great for the job.</state>
+            </case>
+            <case stage="0-9">
                 <condition role="target" character="panty" />
                 <state img="#-horny.png">Meanwhile, I've no problems with being in the same room while you have sex with someone. Or, better yet, I make love to you.</state>
             </case>
@@ -4043,6 +4272,14 @@ P.U., what's that horrible smell?!</state>
             <case stage="0-9" id="158">
                 <condition role="target" character="hanako" />
                 <state img="#-joy.png">This goes to show that breasts are always awesome, even when they've been kept in the oven a little too long.</state>
+            </case>
+            <case stage="0-9" id="221">
+                <condition role="target" character="anna" />
+                <state img="#-thinking.png">That underwear is expensive? You sure you didn't get it from the clearance rack? It sure looks like something you'd find in the bargain bin.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="galatea" />
+                <state img="#-drooling.png">I mean, creating living sex dolls? How is he not the richest man on earth? I'll have him build one that looks just like my beloved, or maybe a half dozen for good measure.</state>
             </case>
             <case stage="0-9">
                 <state img="#-drooling.png">An offer the Chazz will gladly take...</state>
@@ -4114,6 +4351,10 @@ P.U., what's that horrible smell?!</state>
             <case stage="0-9">
                 <condition role="target" character="futaba" stage="5" />
                 <state img="#-joy.png">The underwear of a phantom thief... wonder what it looks like.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="shantae" stage="2" />
+                <state img="#-confident.png">This is probably a surprise to you, but there's nothing you could give me that I don't already have. That's one of the benefits of inherited wealth. </state>
             </case>
             <case stage="0-9" id="178" target="maki" targetSayingMarker="makisanta">
                 <condition count="5" status="not_naked" />
@@ -4219,6 +4460,14 @@ P.U., what's that horrible smell?!</state>
                 <condition role="target" character="haru" />
                 <state img="#-smug.png">I just hope those Phantom Thieves don't get their hands on my brothers. They may be awful people, but they're still family. And I still have access to all their money.</state>
             </case>
+            <case stage="0-9" id="225">
+                <condition role="target" character="anna" />
+                <state img="#-horny.png">I'm sure they won't get dirty, ~name~. But you will be getting very dirty, ~name~. Dirty from all the slove juices you're going to spurt out.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="galatea" />
+                <state img="#-horny.png">My brothers encouraged me not to take an art degree. They think the arts are a waste of my talents. But if I knew I could create stuff like you, I might have ignored them.</state>
+            </case>
             <case stage="0-9">
                 <condition filter="exhibitionist" role="target" />
                 <state img="#-angry.png">Where's the fun in this if you find humiliating yourself like this to be a good time?</state>
@@ -4284,6 +4533,10 @@ P.U., what's that horrible smell?!</state>
             </case>
             <case stage="0-9" id="188" target="sheena" targetStage="6">
                 <state img="#-disappointed.png">Why didn't anyone tell me ninjas had a card like that before? I might have actually ran a ninja deck in that case...</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="shantae" stage="3" />
+                <state img="#-sad.png">Well... Yoiu could give me the heart of Alexis... but you'd probably screw it up on purpose and give me her literal dismembered heart... Your pussy shall serve as a good replacement.</state>
             </case>
             <case stage="0-9" id="199">
                 <condition role="target" character="haru" sayingMarker="booty" />
@@ -4379,6 +4632,14 @@ P.U., what's that horrible smell?!</state>
             <case stage="0-9">
                 <condition role="target" character="caulifla" />
                 <state img="#-joy.png">I'd probably touch you, if you wouldn't immediately punch me in the face for doing so.</state>
+            </case>
+            <case stage="0-9" id="226">
+                <condition role="target" character="anna" />
+                <state img="#-drooling.png">I don't mind that you didn't shave. My beloved Alexis doesn't shave either... Don't ask me how I know that.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="galatea" />
+                <state img="#-drooling.png">Completely beautiful. And that's not just because I'm incredibly perverted. You belong in a museum. My family's private museum.</state>
             </case>
             <case stage="0-9">
                 <condition filter="hairy" role="target" />
@@ -4774,7 +5035,7 @@ P.U., what's that horrible smell?!</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="haru" sayingMarker="dirty_talk" />
-                <state img="#-angry.png">Looks like I might need to be the one who merges with you. My brothers will be going to jail for 10,000 years if the Phantom Thieves get a hold of their hearts.</state>
+                <state img="#-joy.png">Let's just pretend the whole Phantom Thief thing never happened. That way, I can appreciate you masturbating better.</state>
             </case>
             <case stage="0-9" id="16" target="nami">
                 <state img="#-horny.png">You better not cover yourself up with that cloud, Nami. Otherwise, you'd be an even worse Cloudian player than Adrian.</state>
@@ -4796,6 +5057,14 @@ P.U., what's that horrible smell?!</state>
             </case>
             <case stage="0-9" id="129" target="sola">
                 <state img="#-drooling.png">Masturbating with a diamond? Such an ultimate display of wealth. Good work, ~name~.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="anna" />
+                <state img="#-joy.png">The consolation prize is you being forced to masturbate for us.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="galatea" />
+                <state img="#-confident.png">Say, ~name~? Is that vagina of yours fully functional? I might want to play around with it...</state>
             </case>
             <case stage="0-9">
                 <state img="#-horny.png">To say that the Chazz is pleased with this outcome would be an understatement...</state>
@@ -4850,7 +5119,15 @@ P.U., what's that horrible smell?!</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="haru" />
-                <state img="#-drooling.png">And I can't run all those buisnesses by myself... Merging with you in the sexual way might not be a bad idea either.</state>
+                <state img="#-drooling.png">We don't need a merger of the buisness kind. But perhaps we need a merger of the sex kind...</state>
+            </case>
+            <case stage="0-9" id="210">
+                <condition role="target" character="shantae" />
+                <state img="#-drooling.png">A dancing masturbation? That's even better.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="galatea" />
+                <state img="#-thinking.png">But I might get someone to test it out first. I'm not sure you were built for... &lt;i&gt;what I have in mind.&lt;/i&gt;</state>
             </case>
             <case stage="0-9">
                 <state img="#-drooling.png">I'd take being defeated by Jaden for the rest of time if it means I can see this for the rest of my life...</state>
@@ -4934,6 +5211,14 @@ P.U., what's that horrible smell?!</state>
             </case>
             <case stage="0-9" id="20" target="akko">
                 <state img="#-horny.png">My duel disk can make much better holograms than that. But not ones as sexy as that.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="shantae" />
+                <state img="#-joy.png">Yeah, Shantae, let loose your gigantic hair! Drown us all in your glorious purple locks!</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="galatea" />
+                <state img="#-joy.png">Yeah, I'd say you're not synthetic. You could never program an artifical lifeform to masturbate like that, if the millions my brothers invested in failed robots are any indication.</state>
             </case>
             <case stage="0-9">
                 <state img="#-drooling.png">If only I could ever see Alexis do that for me too...</state>
@@ -5212,11 +5497,23 @@ P.U., what's that horrible smell?!</state>
             </case>
             <case stage="9">
                 <condition role="other" character="haru" />
-                <state img="#-sad.png" collectible="XYZ_dragon_cannon">Yes, we did all have fun, corporate overlord Haru.</state>
+                <state img="#-joy.png" collectible="XYZ_dragon_cannon">You may be a Phantom Thief, Haru, but you're still an amazing girl. May you have massive luck, both in the world of buisness and thievery... So long as you don't target the Princetons.</state>
             </case>
             <case stage="9">
                 <condition role="other" character="sayaka" />
                 <state img="#-horny.png">I never disagreed that true love existed. When I get my hands on Alexis, I'll show her to you like a trophy.</state>
+            </case>
+            <case stage="9">
+                <condition role="other" character="shantae" />
+                <state img="#-joy.png">The Chazz would be happy to rematch you, Shantae. Just make sure not to use your wishes for The Chazz's enemies.</state>
+            </case>
+            <case stage="9" id="227">
+                <condition role="other" character="anna" />
+                <state img="#-smug.png">Good game, ~name~. Two fellow ruthless capitalists clashing, what could be more fun than that?</state>
+            </case>
+            <case stage="9">
+                <condition role="other" character="galatea" />
+                <state img="#-confident.png">Ain't art just the best? You're way better than some lame Picasso painting.</state>
             </case>
             <case stage="9">
                 <test expr="~self.place~" value="2" />
