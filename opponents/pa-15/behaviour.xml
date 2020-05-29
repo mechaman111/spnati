@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7.3 at 12:58:41 AM on May 29, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 11:46:53 AM on May 29, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7.3</version>
     <first>PA-15</first>
@@ -52,6 +52,7 @@
         <nickname for="hk416">416</nickname>
         <nickname for="komi-san">Komi</nickname>
         <nickname for="mary">May-may</nickname>
+        <nickname for="ribbon_girl">Ribbons</nickname>
     </nicknames>
     <stylesheet>styles.css</stylesheet>
 
@@ -119,6 +120,24 @@
             <directive type="animation" id="shock" delay="1.38" ease="smooth" interpolation="linear">
                 <keyframe time="0" alpha="100" />
                 <keyframe time="0.12" alpha="0" />
+            </directive>
+        </pose>
+        <pose id="6-drop">
+            <sprite id="bliss" src="pa-15/6-bliss.png" x="0" y="0" alpha="100" />
+            <sprite id="broke" delay="1.5" src="pa-15/6-broke.png" x="0" y="0" alpha="100" />
+            <sprite id="forfeita" delay="3" src="pa-15/6-forfeita.png" x="0" y="0" alpha="0" />
+            <directive type="animation" id="bliss" ease="smooth" interpolation="none">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="1.5" alpha="0" />
+            </directive>
+            <directive type="animation" id="broke" delay="1.5" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="0" y="0" alpha="100" />
+                <keyframe time="1.25" alpha="100" />
+                <keyframe time="1.5" alpha="0" />
+            </directive>
+            <directive type="animation" id="forfeita" delay="3" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="0" y="0" alpha="0" />
+                <keyframe time="0.25" alpha="100" />
             </directive>
         </pose>
         <pose id="8-cool">
@@ -338,14 +357,40 @@
                 <condition role="self" hasHand="Royal Flush" />
                 <state img="#-thinking.png">Normally you'd be ecstatic about a hand like this, but certainty is no fun.</state>
             </case>
+            <case stage="5-6" priority="10">
+                <condition role="self" saidMarker="excitement==4" />
+                <state img="#-victorious.png" set-intelligence="average">What, are you having a hard time? Need a bit of help? Alright, I'll ease up a bit.</state>
+            </case>
+            <case stage="5-6" priority="10">
+                <condition role="self" saidMarker="excitement==7" />
+                <state img="#-bliss.png" set-intelligence="throw">
+                    <alt-img stage="5">#-bliss.png</alt-img>
+                    <alt-img stage="6">#-broke.png</alt-img>
+                    <text>Aww, jeez, I can't hold back anymore. Someone, &lt;i&gt;anyone, please finish me off&lt;/i&gt;!</text>
+                </state>
+            </case>
             <case stage="3" id="18">
                 <condition role="self" timeInStage="0" />
                 <state img="custom:#-smug">Y'know, I wasn't &lt;i&gt;always&lt;/i&gt; a gun for hire. Back when I was Florence, I spent my time... actually, what do you all think my job was before joining a PMC?</state>
+            </case>
+            <case stage="5-6" priority="3">
+                <condition count="2" status="alive" />
+                <condition role="other" layers="1" />
+                <state img="#-satisfied.png">This is really coming down to the wire. Games on the edge like this are where I really shine, though.</state>
+            </case>
+            <case stage="6" priority="3">
+                <condition count="2" status="alive" />
+                <condition role="other" layers="0" />
+                <state img="#-smug.png">Last hand, ~name~. Time to put everything on the line.</state>
             </case>
             <case stage="5" priority="2">
                 <condition role="self" timeInStage="0" />
                 <state img="#-smug.png">Oh, by the way - that whole "giving away how good my hand is" thing that we've been doing? Can I stop doing that now?</state>
                 <state img="#-smug.png">Surely, you don't need that whole "giving away how good my hand is" thing to beat me, right?</state>
+            </case>
+            <case stage="5-6" priority="2">
+                <condition count="2" status="alive" />
+                <state img="#-smug.png">It's just you and me, ~name~. Do you think you've got what it takes to bring me down?</state>
             </case>
             <case stage="5-6" priority="1">
                 <condition role="self" saidMarker="excitement&lt;7" />
@@ -368,18 +413,6 @@
                 <state img="#-satisfied.png">Hey~, ~player~. Do I have a good hand? Do I have a bad hand? How are you going to play out this round?</state>
                 <state img="#-smug.png">Come on now, ~player~! Isn't it more fun when you don't know about what's in my hand?</state>
             </case>
-            <case stage="5-6" priority="1">
-                <condition role="self" saidMarker="excitement==4" />
-                <state img="#-victorious.png" set-intelligence="average">What, are you having a hard time? Need a bit of help? Alright, I'll ease up a bit.</state>
-            </case>
-            <case stage="5-6" priority="1">
-                <condition role="self" saidMarker="excitement==7" />
-                <state img="#-bliss.png" set-intelligence="throw">
-                    <alt-img stage="5">#-bliss.png</alt-img>
-                    <alt-img stage="6">#-broke.png</alt-img>
-                    <text>Aww, jeez, I can't hold back anymore. Someone, &lt;i&gt;anyone, please finish me off&lt;/i&gt;!</text>
-                </state>
-            </case>
         </trigger>
 
         <trigger id="must_strip">
@@ -394,6 +427,18 @@
             <case stage="0" totalRounds="1-">
                 <condition role="other" character="hk416" stage="1-4" sayingMarker="pa-15_patience=1" />
                 <state img="#-bored.png">Ugh, you and your "well-laid" plans, 416. What are you going to do when things &lt;i&gt;don't&lt;/i&gt; go to plan, huh?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="revy" stage="0-7" sayingMarker="pa0" />
+                <state img="#-cool.png">Aww, come on, Revy. You should understand that once you've used a gun for long enough, you could never see yourself using anything different.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="meia" stage="0-5" sayingMarker="pa0" />
+                <state img="#-smug.png">When you're good enough at what you do, Meia, you find ways to get things done without needing to be all stiff about it. That's what makes me a &lt;i&gt;real&lt;/i&gt; pro.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="jura" stage="0-6" sayingMarker="pa0" />
+                <state img="#-puzzled.png">Oh, you know Cal? We go way back, but she's not actually my sister, or my mom... I can't figure out why people keep saying that...</state>
             </case>
             <case stage="0">
                 <condition status="not_masturbating" role="other" character="mary" />
@@ -1429,6 +1474,36 @@
                 <condition role="target" character="tomoko" stage="0" />
                 <state img="#-puzzled.png">Aww, jeez, one of you gloomy types, huh. I really can't handle people like you.</state>
             </case>
+            <case stage="0-6 8">
+                <condition role="target" character="revy" stage="0" />
+                <state img="#-satisfied.png">"Two-Hands", huh? Everybody in the business knows its not easy to pick up a nickname in our line of work.</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="ribbon_girl" stage="0" />
+                <state img="#-thinking.png">Woah, what's up with those springy arms of yours, Ribbons? Can't say I've seen anything like &lt;i&gt;those&lt;/i&gt; before.</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="ribbon_girl" stage="1" />
+                <state img="#-thinking.png">Hey, Ribbons, I was thinking...</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="jim" stage="0" />
+                <state img="#-interested.png">Why, hello there, big boy. What's &lt;i&gt;your&lt;/i&gt; name?</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="jim" stage="0" />
+                <state img="#-victorious.png" marker="nickname*=James">
+                    <alt-img stage="0-2">#-victorious.png</alt-img>
+                    <alt-img stage="3-4">#-bliss.png</alt-img>
+                    <alt-img stage="5-6">#-smug.png</alt-img>
+                    <alt-img stage="8">#-victorious.png</alt-img>
+                    <text>Well, James, &lt;i&gt;you&lt;/i&gt; can feel free to call me Florence.</text>
+                </state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="navi" stage="0" />
+                <state img="#-puzzled.png">Aw, jeez, did I let an Illumination Fairy follow me here from the base? The Commander's gonna kill me...</state>
+            </case>
             <case stage="0-6" id="46" oneShotId="26">
                 <condition role="target" character="human" />
                 <alternative>
@@ -1443,6 +1518,11 @@
                 <condition role="target" character="human" />
                 <test expr="~player~" value="Gentiane" />
                 <state img="#-satisfied.png">So &lt;i&gt;you're&lt;/i&gt; that commander I've been hearing about, Gentiane.</state>
+            </case>
+            <case stage="6">
+                <condition role="target" layers="0" />
+                <condition count="2" status="alive" />
+                <state img="custom:#-drop" marker="clutch">Ha ha... hahaha-&lt;i&gt;ah&lt;/i&gt;! O-oh, god, I just, came, just a little.</state>
             </case>
             <case stage="0-2" priority="1">
                 <condition role="self" hasHand="High Card" />
@@ -1528,6 +1608,26 @@
             <case stage="0-6 8">
                 <condition role="target" character="tomoko" stage="0" />
                 <state img="#-bored.png">There are frigid people who wouldn't know what an emotion was even if it hit them like a 40mm, and then...</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="revy" stage="0" />
+                <state img="#-interested.png">So, there's gotta be one heck of a story behind how that caught on, right?</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="ribbon_girl" stage="0" />
+                <state img="#-puzzled.png">They're... they're your... arms? Like, your real arms, or...?</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="ribbon_girl" stage="1" />
+                <state img="#-interested.png">You ever though about hooking up some rockets to those ARMs of yours?</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="navi" stage="0" />
+                <state img="#-smug.png">Wait a second, you're not an Illumination Fairy at all.</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="navi" stage="1" />
+                <state img="#-bliss.png">A shame, honestly. I wouldn't have minded a bit of punishment from the Commander...</state>
             </case>
             <case stage="0-2" oneShotId="5">
                 <condition status="exposed" role="target" stage="0" />
@@ -1815,6 +1915,50 @@
                 <condition role="target" character="tomoko" stage="1" />
                 <state img="#-puzzled.png">Well, and then there are people like you, who don't have the confidence to go after the things they want. Living like that'd kill me!</state>
             </case>
+            <case stage="0-6 8">
+                <condition role="target" character="revy" stage="1" />
+                <state img="#-smug.png">
+                    <alt-img stage="0-2 4-6">#-smug.png</alt-img>
+                    <alt-img stage="3 8">custom:#-smug</alt-img>
+                    <text>There's no way a nickname's going to stick from that. You had to have done &lt;i&gt;something&lt;/i&gt; to burn that in everyone's mind, "Two-Hands".</text>
+                </state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="ribbon_girl" stage="1" />
+                <state img="#-cool.png">
+                    <alt-img stage="0-6">#-cool.png</alt-img>
+                    <alt-img stage="8">#-victorious.png</alt-img>
+                    <text>Oh, I get it, so they're called ARMs. Is that an acronym for something, or does someone just have a really boring way of naming things?</text>
+                </state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="ribbon_girl" stage="2" />
+                <state img="#-smug.png">
+                    <alt-img stage="3 8">custom:#-smug</alt-img>
+                    <alt-img stage="0-2 4-6">#-smug.png</alt-img>
+                    <text>Just imagine the look on your opponents faces when they get all used to the springs, and &lt;i&gt;WHAM&lt;/i&gt;! Rocket straight to the jaw.</text>
+                </state>
+            </case>
+            <case stage="0-4">
+                <condition role="target" character="jim" stage="1" />
+                <state img="#-inviting.png" marker="jim0a">
+                    <alt-img stage="0-2">#-victorious.png</alt-img>
+                    <alt-img stage="3-4">#-bliss.png</alt-img>
+                    <alt-img stage="5-6">#-smug.png</alt-img>
+                    <alt-img stage="8">#-victorious.png</alt-img>
+                    <text>I'm sure we'll be seeing quite a lot of each other from now on, &lt;i&gt;if you know what I mean.&lt;/i&gt;</text>
+                </state>
+            </case>
+            <case stage="5-6 8">
+                <condition role="target" character="jim" stage="1" />
+                <state img="#-inviting.png" marker="jim0b">
+                    <alt-img stage="0-2">#-victorious.png</alt-img>
+                    <alt-img stage="3-4">#-bliss.png</alt-img>
+                    <alt-img stage="5-6">#-smug.png</alt-img>
+                    <alt-img stage="8">#-victorious.png</alt-img>
+                    <text>Getting a good look? I hope you're ready to return the favour some time down the line.</text>
+                </state>
+            </case>
             <case stage="0-6" id="45" oneShotId="28">
                 <condition role="target" character="human" />
                 <alternative>
@@ -1976,6 +2120,10 @@
         </trigger>
 
         <trigger id="opponent_start_masturbating">
+            <case stage="6" priority="999">
+                <condition role="self" saidMarker="clutch" />
+                <state img="#-forfeitb.png">Been a while since the last time I came from an adrenaline rush. Feels as good as I remember it feeling, though.</state>
+            </case>
             <case stage="0-8" oneShotId="52">
                 <condition role="target" character="croix" />
                 <state img="#-interested.png">Hey now, you're into some &lt;i&gt;real&lt;/i&gt; kinky stuff, aren't you, Croix?</state>
@@ -2254,9 +2402,24 @@
         </trigger>
 
         <trigger id="must_masturbate">
-            <case stage="6">
+            <case stage="6" priority="10">
                 <condition role="self" saidMarker="excitement&gt;=4" />
                 <state img="#-bliss.png">You finally got me? Good. I don't think I can take any more of this...</state>
+            </case>
+            <case stage="6" priority="5">
+                <condition count="2" status="alive" />
+                <condition status="alive" role="other" layers="3-8" />
+                <state img="#-puzzled.png">Jeez, I wasn't even close, huh? That's not a good look for me.</state>
+            </case>
+            <case stage="6" priority="5">
+                <condition count="2" status="alive" />
+                <condition status="alive" role="other" layers="1-2" />
+                <state img="#-smug.png">You gotta admit, I had a pretty good run, right?</state>
+            </case>
+            <case stage="6" priority="5">
+                <condition count="2" status="alive" />
+                <condition status="alive" role="other" layers="0" />
+                <state img="#-inviting.png">I may have lost, but honestly? I wouldn't want to lose in any other way.</state>
             </case>
             <case stage="6">
                 <state img="#-puzzled.png" marker="sm_buzz">Seriously? Bombed out already? Total buzzkill.</state>
@@ -2277,7 +2440,7 @@
                 <state img="#-forfeitb.png">Oh well. Thankfully, this game comes with a second opportunity for some edging...</state>
             </case>
             <case stage="6">
-                <state img="#-smug.png">This line should not play. If you see it, please submit a bug report.</state>
+                <state img="#-forfeitb.png">Well, you win some, you lose some... but who said you can't have a little fun after a loss?</state>
             </case>
         </trigger>
 
