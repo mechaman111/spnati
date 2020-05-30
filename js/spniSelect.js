@@ -1116,7 +1116,6 @@ function altCostumeSelected(slot) {
 
     var costumeDesc = costumeSelector.children(':selected').data('costumeDescriptor');
     opponent.selectAlternateCostume(costumeDesc);
-    updateGroupSelectScreen();
     $groupImages[slot-1].attr('src', opponent.selection_image);
     updateGenderIcon($groupGenders[slot-1], opponent);
 }
