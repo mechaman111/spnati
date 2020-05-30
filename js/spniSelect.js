@@ -495,9 +495,14 @@ function updateGroupSelectScreen (ignore_bg) {
 
             if (costume) {
                 if (costume == "default") {
-                    opponent.selected_costume = null;
+                    opponent.selectAlternateCostume(null);
                 } else {
-                    opponent.selected_costume = costume;
+                    for (let j=0;j<opponent.alternate_costumes.length;j++) {
+                        if (opponent.alternate_costumes[j].label === costume) {
+                            opponent.selectAlternateCostume(opponent.alternate_costumes[j]);
+                            break;
+                        }
+                    }
                 }
             }
 
@@ -801,9 +806,9 @@ function loadGroup (chosenGroup) {
                 || (!member.selected_costume && selectedCostume != '')) {
                 var costumeDesc = undefined;
 
-                for (let i=0;i<member.alternate_costumes.length;i++) {
-                    if (member.alternate_costumes[i].folder === selectedCostume) {
-                        costumeDesc = member.alternate_costumes[i];
+                for (let j=0;j<member.alternate_costumes.length;j++) {
+                    if (member.alternate_costumes[j].folder === selectedCostume) {
+                        costumeDesc = member.alternate_costumes[j];
                         break;
                     }
                 }
@@ -835,6 +840,26 @@ function clickedRandomGroupButton () {
 	/* get a random number for the group listings */
 	var randomGroupNumber = getRandomNumber(0, loadedGroups[0].length);
 	var chosenGroup = loadedGroups[0][randomGroupNumber];
+
+    /* workaround for preset costumes */
+	for (var i = 0; i < 4; i++) {
+	    var costume = chosenGroup.costumes[i];
+	    
+        if (costume) {
+            if (costume == "default") {
+                $groupCostumeSelectors[i].val('');
+            } else {
+                var opponent = chosenGroup.opponents[i];
+                
+                for (let j=0;j<opponent.alternate_costumes.length;j++) {
+                    if (opponent.alternate_costumes[j].label === costume) {
+                        $groupCostumeSelectors[i].append($('<option>', {val: opponent.alternate_costumes[j].folder, selected: true}));
+                        break;
+                    }
+                }
+            }
+        }
+	}
 
 	loadGroup(chosenGroup);
 }
