@@ -394,6 +394,12 @@ function updateStatusIcon(elem, opp) {
     }
 }
 
+function updateGenderIcon(elem, opp) {
+    elem.attr({
+        src: opp.selectGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
+        alt: opp.selectGender.initCap(),
+    }).show();
+}
 
 /* Creates an <option> element in a jQuery object for an alternate costume.
  * `alt_costume` in this case has only `id` and `label` attributes.
@@ -543,10 +549,7 @@ function updateGroupSelectScreen (ignore_bg) {
                 src: "img/layers" + opponent.layers + ".png",
                 alt: opponent.layers + ' layers',
             }).show();
-            $groupGenders[i].attr({
-                src: opponent.selectGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
-                alt: opponent.selectGender.initCap(),
-            }).show();
+            updateGenderIcon($groupGenders[i], opponent);
 
             $groupImages[i].attr('src', opponent.selection_image);
             $groupImages[i].css('height', opponent.scale + '%');
@@ -1111,10 +1114,7 @@ function altCostumeSelected(slot) {
     opponent.selectAlternateCostume(costumeDesc);
     updateGroupSelectScreen();
     $groupImages[slot-1].attr('src', opponent.selection_image);
-    $groupGenders[slot-1].attr({
-        src: opponent.selectGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
-        alt: opponent.selectGender.initCap(),
-    }).show();
+    updateGenderIcon($groupGenders[slot-1], opponent);
 }
 
 /**********************************************************************
