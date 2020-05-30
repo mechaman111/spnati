@@ -1,3 +1,6 @@
+Chara uses script to cause a crash in two specific places: when a player named Gaster attempts to start the game, and at the end of her epilogue. This cannot be done conventionally through
+the Character Editor and, so, must be done manually by changing the behavior.xml file itself.
+
 Insert the following code into the .xml in the appropriate spots:
 
 <script>restartGame();</script>
@@ -28,3 +31,8 @@ and
 
 
 respectively.
+
+Note: This does not actually CRASH the game. It just boots the player to the home page.
+
+Note: This is important to do. Saving Chara in the Character Editor eliminates all <script>restartGame();</script> in her behavior.xml, which then must be added back manually to prevent
+bugs. Always double-check the script is in the behavior.xml file before submitting.
