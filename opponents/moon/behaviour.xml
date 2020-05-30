@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7.3 at 5:15:12 PM on May 20, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 12:45:39 AM on May 31, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7.3</version>
     <first>Moon</first>
@@ -397,7 +397,7 @@
                 <state img="#-smug_b.png">Will I strip or won't I? Wouldn't you like to know?</state>
                 <state img="#-meh.png">Not the hand I wanted. Maybe it'll work.</state>
                 <state img="#-meh.png">Hmmmm.</state>
-                <state img="#-sad_b.png">Please, PLEASE let this be the worst hand!</state>
+                <state img="#-sad_b.png">Please, &lt;i&gt;please&lt;/i&gt; let this be the worst hand!</state>
                 <state img="#-sad_b.png">I hope I get to strip again!</state>
                 <state img="#-sad_b.png">I hope I get to strip again! Without showing skin, it just feels wrong.</state>
                 <state img="#-sad_b.png">I hope I get to strip again! I'm not even showing any skin!</state>
@@ -552,7 +552,7 @@
             <case stage="3">
                 <state img="#-smug_c.png">You can enjoy my feet, but now you can see more!</state>
                 <state img="#-smug_b.png">I bet you'd love to see more than my feet right now, huh?</state>
-                <state img="#-calm_c.png">I don't have much left! Aren't you excited!</state>
+                <state img="#-calm_c.png">I don't have much left! Aren't you excited?</state>
                 <state img="#-joy.png">I'm going to lose again!</state>
                 <state img="#-smug_c.png">My feet may be exposed, but I promise won't get cold feet!</state>
                 <state img="#-smug_c.png">I'm ready to show off again! I'm always ready!</state>
@@ -606,7 +606,7 @@
                 <state img="#-joy_c.png">Everybody please watch me when I lose this hand!</state>
             </case>
             <case stage="6">
-                <state img="#-joy_c.png">Already everybody, this is my moment!</state>
+                <state img="#-joy_c.png">All right, everybody! This is my moment!</state>
                 <state img="#-entice.png">Enjoy my tits, because the main attraction is almost here!</state>
                 <state img="#-joy_b.png">Pay attention to me! My pants are coming off!</state>
                 <state img="#-joy_b.png">You'll all strip me and watch me. I can't wait.</state>
@@ -876,6 +876,13 @@
                 <state img="#-apology.png" marker="moon_brock_the_human_body">Is "the human body" the right answer, Brock?</state>
                 <state img="#-sad_b.png" marker="moon_brock_make_love_not_war">Make love, not war!</state>
             </case>
+            <case stage="0-7">
+                <condition role="other" character="megumin" sayingMarker="megumin_moon_selfTreat" />
+                <test expr="~megumin.position~" value="left" />
+                <state img="#-smug_c.png" marker="moon_megumin_treat_snack">Just look at my body and tell me I'm not a snack!</state>
+                <state img="#-joy_b.png" marker="moon_megumin_treat_enjoy_too">Well... maybe. But I'm sure you'll enjoy it too, Megumin!</state>
+                <state img="#-calm_b.png" marker="moon_megumin_treat_wait_and_see">Just you wait and see, Megumin! You won't be disappointed.</state>
+            </case>
             <case stage="0-7" id="90" priority="142">
                 <condition role="other" character="amy" stage="1-8" saidMarker="amy_ilbb" sayingMarker="amy_ilbb" />
                 <test expr="~amy.position~" value="left" />
@@ -1000,9 +1007,22 @@
                 <state img="#-smug_c.png" marker="moon_scm_keeping_them_filled">Lies, Mr. Suction! All my holes are pretty small, so they fill easy!</state>
                 <state img="#-sad_b.png" marker="moon_scm_unfilled_heart">The only hole that will never be filled is in my heart...</state>
             </case>
+            <case stage="0-7">
+                <condition role="other" character="megumin" sayingMarker="megumin_moon_theRopes" />
+                <state img="#-confused.png" marker="moon_megumin_the_ropes_bondage">Are you sure? I think you'd look really hot in bondage gear, Megumin.</state>
+                <state img="#-calm_c.png" marker="moon_megumin_the_ropes_sempai">Are you sure, Megumin? I'd love to be your sempai. You could learn a lot from me.</state>
+                <state img="#-sad_mad.png" marker="moon_megumin_the_ropes_sidekick">Fine. I didn't want an adorable sidekick like you anyway, Megumin. Attention stealer.</state>
+            </case>
         </trigger>
 
         <trigger id="must_strip">
+            <case stage="1">
+                <condition role="other" character="megumin" sayingMarker="megumin_moon_enjoyment" />
+                <test expr="~moon.position~" value="left" />
+                <state img="#-stripping_joy.png" marker="moon_megumin_perfect_tits">You'll understand when you see my perfect ti--</state>
+                <state img="#-stripping_joy.png" marker="moon_megumin_begging_for">I'm excited about what you've all been begging for, that's what! Time to take of my shir---</state>
+                <state img="#-stripping_joy.png" marker="moon_megumin_perky">This, Megumin! Have you ever seen boobs as perky as thi---</state>
+            </case>
             <case stage="0">
                 <condition role="other" character="miko" />
                 <test expr="~miko.position~" value="left" />
@@ -1083,11 +1103,11 @@
                 <state img="#-stripping_joy.png">My turn! Time to take off my shir---</state>
             </case>
             <case stage="2">
-                <state img="#-stripping_joy.png">Now it's my turn again! Let's take off-</state>
-                <state img="#-stripping_mad.png">My turn! This time I'll take off something good! How about my-</state>
-                <state img="#-stripping_joy.png">Yeah! I knew it! This time, let's take off my shir-</state>
-                <state img="#-stripping_mad.png">Read them and weep, bitches! Time to take off my shir-</state>
-                <state img="#-stripping_joy.png">Me? Stripping? &lt;i&gt;Don't mind if I do!&lt;/i&gt; How about my shir-</state>
+                <state img="#-stripping_joy.png">Now it's my turn again! Let's take off---</state>
+                <state img="#-stripping_mad.png">My turn! This time I'll take off something good! How about my---</state>
+                <state img="#-stripping_joy.png">Yeah! I knew it! This time, let's take off my shir---</state>
+                <state img="#-stripping_mad.png">Read them and weep, bitches! Time to take off my shir---</state>
+                <state img="#-stripping_joy.png">Me? Stripping? &lt;i&gt;Don't mind if I do!&lt;/i&gt; How about my shir---</state>
             </case>
             <case stage="3">
                 <state img="#-calm_c.png">I can keep getting nude! And we're almost there!</state>
@@ -1446,7 +1466,7 @@
                 <state img="#-entice.png">You don't need to win anymore... I'm touching myself for &lt;i&gt;you!&lt;/i&gt;</state>
             </case>
             <case stage="9">
-                <state img="#-smug_c.png">You're on your way to joining me, aren't you ~name~?</state>
+                <state img="#-smug_c.png">You're on your way to joining me, aren't you, ~name~?</state>
                 <state img="#-calm_c.png">Don't be shy! Look at me naked and dripping!</state>
                 <state img="#-calm_b.png">So you lost? I guess somebody had to.</state>
                 <state img="#-smug_c.png">Here's your chance to show off, ~name~!</state>
@@ -1504,7 +1524,7 @@
             </case>
             <case stage="2">
                 <state img="#-mad_b.png">Stupid rules. I could have been nude by now!</state>
-                <state img="#-mad_b.png">Oh good, ~name~ is stripping. Everybody look at them. &lt;i&gt;Fine.&lt;/i&gt;</state>
+                <state img="#-mad_b.png">Oh good, ~name~ is stripping. Everybody look at her. &lt;i&gt;Fine.&lt;/i&gt;</state>
                 <state img="#-mad_b.png">I wonder what ~name~ is taking off? Oh, &lt;i&gt;so interesting!&lt;/i&gt;</state>
                 <state img="#-mad_b.png">God I hate the rules in this game. And now you're gonna strip something bigger than me.</state>
                 <state img="#-mad_b.png">You're going to strip something bigger than me, I just know it.</state>
@@ -1546,7 +1566,7 @@
             </case>
             <case stage="5">
                 <state img="#-mad_c.png">You just couldn't hold back and let me get topless, could you?</state>
-                <state img="#-mad_c.png">You're trying to stop me from getting topless, aren't you ~name~? Don't lie!</state>
+                <state img="#-mad_c.png">You're trying to stop me from getting topless, aren't you, ~name~? Don't lie!</state>
                 <state img="#-mad_c.png">You're trying to stop me from showing my tits, aren't you? Admit it!</state>
                 <state img="#-mad_b.png">Oooh, I thought I'd lost that one! Good job sniping it, ~name~.</state>
                 <state img="#-mad_c.png">You're trying to stop me from showing everyone my tits, aren't you? You're just like Mom!</state>
@@ -1567,10 +1587,10 @@
             <case stage="6">
                 <state img="#-mad_e.png">But I was so close to showing off my pussy!</state>
                 <state img="#-mad_b.png">Oh, what a shocking coincidence, ~name~ blocking me from getting naked.</state>
-                <state img="#-mad_e.png">You're trying to punish me for being topless, aren't you ~name~?! You puritan! You fascist!</state>
+                <state img="#-mad_e.png">You're trying to punish me for being topless, aren't you, ~name~?! You puritan! You fascist!</state>
                 <state img="#-mad_c.png">You're trying to get in the way of me being completely nude, aren't you! Admit it!</state>
                 <state img="#-smug_d.png">You want to steal the attention away from me! Well, joke's on you! I already have everybody's attention!</state>
-                <state img="#-mad_c.png">Trying to steal the attention away from my tits, aren't you ~name~?</state>
+                <state img="#-mad_c.png">Trying to steal the attention away from my tits, aren't you, ~name~?</state>
                 <state img="#-smug_d.png">You seriously think anything you strip can compete with these boobs?</state>
                 <state img="#-smug_d.png">Trying to compete with my tits, ~name~? Pathetic!</state>
                 <state img="#-smug_d.png">My tits are out! Nothing you do can distract the others away from me!</state>
@@ -1643,7 +1663,7 @@
                 <state img="#-smug_c.png">I guess you let me show off, so now it's fair that you can have a shot!</state>
                 <state img="#-smug_c.png">You can try showing off now, but you can't top my performance!</state>
                 <state img="#-joy.png">Show off for everyone, ~name~! It's really incredible!</state>
-                <state img="#-joy_c.png">Come on ~name~, &lt;i&gt;Try&lt;/i&gt; to top what I just did!</state>
+                <state img="#-joy_c.png">Come on, ~name~. &lt;i&gt;Try&lt;/i&gt; to top what I just did!</state>
                 <state img="#-smug_d.png">Come on ~name~, there is no way you can be as sexy as me!</state>
                 <state img="#-smug_d.png">I am the master of being lewd! I dare you to prove me wrong!</state>
                 <state img="#-smug_d.png">What could you take off that would possibly follow-up with what I just did!</state>
@@ -3205,7 +3225,7 @@
                 <state img="#-entice_e.png">Don't hold back, ~name~! Don't you want to be as sexy as me?</state>
                 <state img="#-entice_f.png">Let's see more of that sexy bod, ~name~! Let's see what'll be pressed against me later!</state>
                 <state img="#-smug_c.png">I'll fuck you regardless of what your body looks like, but it'll be interesting to see.</state>
-                <state img="#-smug_c.png">You're really almost done, aren't you ~name~? Soon you too can put on a show!</state>
+                <state img="#-smug_c.png">You're really almost done, aren't you, ~name~? Soon you too can put on a show!</state>
             </case>
         </trigger>
 
@@ -3339,7 +3359,7 @@
                 <state img="#-confused_b.png">You're gonna show your dick? You know this could have been avoided, y'know.</state>
                 <state img="#-mad_f.png">I tried, ~name~. I tried showing my junk first. But I needed you to meet me halfway and you just weren't up to the task.</state>
                 <state img="#-surprised.png">You're seriously about the show your dick? I haven't even gotten to my hat!</state>
-                <state img="#-confused_b.png">You're... you're &lt;i&gt;really&lt;/i&gt; not good at this, are you ~name~?</state>
+                <state img="#-confused_b.png">You're... you're &lt;i&gt;really&lt;/i&gt; not good at this, are you, ~name~?</state>
                 <state img="#-mad_f.png">You better have a really good dick, ~name~. Good enough to justify how you stole all my losses!</state>
             </case>
             <case stage="5">
@@ -3862,7 +3882,7 @@
             </case>
             <case stage="4">
                 <state img="#-sad_mad.png">Okay, laugh it up, ~name~. You win! You win by a landslide!</state>
-                <state img="#-sad_f.png">Oh, you're just &lt;i&gt;loving&lt;/i&gt; this, aren't you ~name~?</state>
+                <state img="#-sad_f.png">Oh, you're just &lt;i&gt;loving&lt;/i&gt; this, aren't you, ~name~?</state>
                 <state img="#-sad_f.png">Shiiiiiit. Your tits are better than mine. Because of &lt;i&gt;course&lt;/i&gt; they are.</state>
                 <state img="#-sad_e.png">I would sell, like, my &lt;i&gt;entire&lt;/i&gt; inventory to be in your shoes right now.</state>
                 <state img="#-sad_f.png">I would trade, like, ten shinies to be in your shoes. Legendary shinies.</state>
@@ -4536,7 +4556,7 @@
             </case>
             <case stage="9">
                 <state img="#-entice_d.png">Look at my tits! Don't they make you wanna cum?</state>
-                <state img="#-smug_c.png">I'm used to seeing guys jerk off to me in public, but it's usually DURING my show.</state>
+                <state img="#-smug_c.png">I'm used to seeing guys jerk off to me in public, but it's usually &lt;i&gt;during&lt;/i&gt; my show.</state>
                 <state img="#-calm_c.png">Reminds me of when I was showing off in Hau'oli City! So many guys were jerking off to me!</state>
                 <state img="#-entice_d.png">Do you want me to help you? I can give you a tittyfuck!</state>
                 <state img="#-entice_d.png">Do you want to use my tits? I'll let you rub your dick with them!</state>
@@ -4552,7 +4572,7 @@
                 <state img="#-entice_g.png" marker="moon_offers_bj">Want to cum in my mouth?</state>
                 <state img="#-entice_c.png">Are you imagining fucking me?</state>
                 <state img="#-entice_c.png">Staring at my pussy? You wanna penetrate it, don't you?</state>
-                <state img="#-entice_g.png">Are you close? I can swallow your cum!?</state>
+                <state img="#-entice_g.png">Are you close? I can swallow your cum!</state>
                 <state img="#-entice_e.png">You can cum anywhere on me! Just say when!</state>
                 <state img="#-entice_g.png">Want me to swallow your cum when you finish?</state>
                 <state img="#-entice_c.png" marker="moon_invites_sex_during_game">Want to fuck me and creampie me?</state>
@@ -5298,18 +5318,18 @@
             <case stage="8">
                 <state img="#-calm.png">N-now I'm rubbing my clit! With a ton of speed!</state>
                 <state img="#-apology.png">When I do this in public, I usually get at least three loads of cum in my hair!</state>
-                <state img="#-entice_b.png">N-now I'm... rubbing my clit AND penetrating myself!</state>
+                <state img="#-entice_b.png">N-now I'm... rubbing my clit &lt;i&gt;and&lt;/i&gt; penetrating myself!</state>
                 <state img="#-entice.png">Oooh... Y-you still watching me?</state>
                 <state img="#-apology.png">Sometimes I like to take my clothes off in the middle of a busy street and do this!</state>
                 <state img="#-entice_b.png">Anybody have any pre-cum they want me to lick? I could use the taste...</state>
-                <state img="#-touching_d.png">Mmmm... I'm reaching up inside m-myself... with three fingers...</state>
+                <state img="#-touching_d.png">Mmmm... I'm reaching up inside m-myself... with two fingers...</state>
                 <state img="#-calm_b.png">Wanna see? Come closer! Don't be shy!</state>
                 <state img="#-touching_d.png">N-n-n-now I'm swirling... my clit with my finger!</state>
                 <state img="#-apology.png">I love using toys... but my hands are more personal!</state>
                 <state img="#-smug_b.png">I'm pulling my clit softly! It's... OOOH!</state>
                 <state img="#-touching_d.png">I'm fingering myself as fast as I possibly can!</state>
                 <state img="#-entice_b.png">This would be better with cum on my face!</state>
-                <state img="#-mad.png">YOU BETTER STILL BE WATCHING ME!</state>
+                <state img="#-mad.png">&lt;i&gt;You better still be watching me!&lt;/i&gt;</state>
                 <state img="#-entice.png">Am I... turning you on?</state>
                 <state img="#-entice.png">Don't break eye contact! Look me in the eyes!</state>
                 <state img="#-entice.png">Don't break eye contact! See my lewd expression!</state>
@@ -5324,11 +5344,11 @@
                 <state img="#-entice.png">Oh... Am I making you feel dirty?</state>
                 <state img="#-apology.png">I wish I had a crowd of a hundred! No, a thousand!</state>
                 <state img="#-apology.png">I'm imagining all of you gangbanging me in public!</state>
-                <state img="#-confused.png">I'm fingering my pussy AND my asshole!</state>
+                <state img="#-confused.png">I'm fingering my pussy &lt;i&gt;and&lt;/i&gt; my asshole!</state>
                 <state img="#-confused.png">I'm rubbing my clit, and spanking myself!</state>
                 <state img="#-touching_b.png">I'm going crazy!</state>
                 <state img="#-entice_c.png">I'm rubbing the sides of my pussy from side to side!</state>
-                <state img="#-touching_e.png">All four fingers are inside me! ALL FOUR!</state>
+                <state img="#-touching_e.png">Three fingers are inside me! &lt;i&gt;Should we make it four?&lt;/i&gt;</state>
                 <state img="#-apology.png">I love it when people watch me do this in public!</state>
                 <state img="#-calm_b.png">Feel free to spit on me while I do this! I love it!</state>
                 <state img="#-joy.png">I love doing this on the beach!</state>
@@ -5365,20 +5385,20 @@
 
         <trigger id="finishing_masturbating">
             <case stage="8">
-                <state img="#-finish.png">I'm CUMMING! LOOK AT ME!</state>
+                <state img="#-finish.png">I'm CUMMING!&lt;br&gt;LOOK AT ME!</state>
                 <state img="#-finish.png">YES! YES! YESYESYESYESYES!</state>
-                <state img="#-finish.png">I'M SQUIRTING! I'M CUMMING EVERYWHERE!</state>
+                <state img="#-finish.png">I'M SQUIRTING!&lt;br&gt;I'M CUMMING EVERYWHERE!</state>
                 <state img="#-finish.png">WATCH ME CUM!</state>
                 <state img="#-finish.png">I'M THE BEST SLUT!</state>
                 <state img="#-finish.png">THIS IS FOR YOU!</state>
                 <state img="#-finish.png">I'M CUMMING SO HARD!</state>
                 <state img="#-finish.png">I'M YOUR PUBLIC SLUT CHICK!</state>
                 <state img="#-finish.png">YOU MADE ME CUM!</state>
-                <state img="#-finish.png">I'M GUNNA... I'M GUNNA CUUUUM!</state>
+                <state img="#-finish.png">I'M GUNNA...&lt;br&gt;I'M GUNNA CUUUUM!</state>
                 <state img="#-finish.png">OOOOOH! THAT'S IT!</state>
                 <state img="#-finish.png">YOU'RE... MAKING... ME...CUM!</state>
                 <state img="#-finish.png">CUM ON MY FACE WHILE I CUM!</state>
-                <state img="#-finish.png">LOOK AT ME CUM! I'M CUMMING!</state>
+                <state img="#-finish.png">LOOK AT ME CUM!&lt;br&gt;I'M CUMMING!</state>
                 <state img="#-finish.png">I'M CUMMING AGAIN!</state>
                 <state img="#-finish.png">I'M CUMMING! FOR THE SECOND TIME!</state>
             </case>
@@ -5401,12 +5421,12 @@
                 <state img="#-relief.png">Admit it, you can't think about anybody else but me now!</state>
                 <state img="#-sad_b.png">Admit it, you're in love with my slutty body now!</state>
                 <state img="#-finished_c.png" marker="moon_offers_bj">So, what do you want after this? Oral? Anal?</state>
-                <state img="#-sad_b.png">You guys can do whatever you want, I know I won the slut contest.</state>
+                <state img="#-sad_b.png">You guys can do whatever you want. I know I won the slut contest.</state>
                 <state img="#-sad_b.png" marker="moon_invites_sex_during_game">I bet you want to fuck me now. So why don't you?</state>
                 <state img="#-sad_b.png">Masturbating wasn't enough. Now I need to fuck in public!</state>
                 <state img="#-sad_b.png">I'm not tired! I can fuck somebody else now! Any takers?</state>
                 <state img="#-relief.png">I usually don't need a game to give me an excuse to strip, but this was fun!</state>
-                <state img="#-sad_b.png">Reminds me of the time a Drowzee hypnotized me and fucked me. Not that it NEEDED to hypnotize me first!</state>
+                <state img="#-sad_b.png">Reminds me of the time a Drowzee hypnotized me and fucked me. Not that it &lt;i&gt;needed&lt;/i&gt; to hypnotize me first!</state>
                 <state img="#-finished_e.png">I got plenty of love juice! Anybody want a free sample?</state>
                 <state img="#-sad_b.png">After this, I'm gonna fuck a random stranger on the beach of Hau'oli! Wanna join me for a threesome?</state>
                 <state img="#-relief.png">Thanks for watching me! I couldn't have cum without you!</state>
@@ -5432,14 +5452,14 @@
             <case stage="0">
                 <state img="#-sad_g.png">But... I didn't get to show off at all! WAAHHH!</state>
                 <state img="#-sad_g.png">Not even once? Didn't even get a chance to show off!</state>
-                <state img="#-sad_g.png">HOW!? How did I win?! The only thing I wanted to do the entire time was LOSE!</state>
+                <state img="#-sad_g.png">HOW!? How did I win?! The only thing I wanted to do the entire time was &lt;i&gt;lose!&lt;/i&gt;</state>
                 <state img="#-sad_g.png">Nobody even saw my tits! WAAAAHHHHH!</state>
                 <state img="#-sad_g.png">This can't be happening! There's NO WAY I'm still fully clothed!</state>
-                <state img="#-sad_g.png">C-can I strip now? PLEASE!? PLUH-LEEEASE!</state>
+                <state img="#-sad_g.png">C-can I strip now? &lt;i&gt;Please!?&lt;/i&gt; PLUH-LEEEASE!</state>
                 <state img="#-sad_g.png">Everybody else got to strip except me! It's NOT FAIR! WAAAHH!</state>
-                <state img="#-sad_g.png">Everybody else got to show off but ME! WAAAHHH!</state>
+                <state img="#-sad_g.png">Everybody else got to show off but &lt;i&gt;me!&lt;/i&gt; WAAAHHH!</state>
                 <state img="#-sad_g.png">This is the worst day of my entire life! I didn't want to win!</state>
-                <state img="#-sad_victory_flash.png">NO, IT'S NOT TOO LATE! HERE, SEE MY PUSSY!</state>
+                <state img="#-sad_victory_flash.png">&lt;i&gt;No, it's not too late! Here, see my pussy!&lt;/i&gt; </state>
                 <state img="#-sad_victory_flash.png">I-if I won... c-c-can I at least... show my clit before you all leave?</state>
             </case>
             <case stage="1">
@@ -5501,9 +5521,9 @@
             <case stage="7">
                 <state img="#-sad.png">I guess I can jill off in public on my way home...</state>
                 <state img="#-sad_victory_jill.png">Fuck it, I'm touching myself now. I don't even care that I won!</state>
-                <state img="#-sad_b.png">Now that I won, can I PLEASE masturbate? I think I earned it!</state>
+                <state img="#-sad_b.png">Now that I won, can I &lt;i&gt;please&lt;/i&gt; masturbate? I think I earned it!</state>
                 <state img="#-sad_g.png">I didn't want to win! I just wanted to fuck myself with all you watching!</state>
-                <state img="#-sad_g.png">NO! How did I win?! THIS IS THE WORST POSSIBLE ENDING!</state>
+                <state img="#-sad_g.png">NO! How did I win?! &lt;i&gt;This is the worst possible ending!&lt;/i&gt;</state>
                 <state img="#-entice_f.png" marker="moon_invites_sex_after_game">If I won, do I get a prize? If so, I demand all of you fuck me right now!</state>
             </case>
             <case stage="0-7" hidden="1">
