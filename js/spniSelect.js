@@ -269,7 +269,6 @@ function loadListingFile () {
             updateGroupSelectScreen(true);
             updateSelectionVisuals();
         }
-
         if (outstandingLoads == 0) {
             $(".title-menu-buttons-container>div").removeAttr("hidden");
             $("#title-load-container").hide();
@@ -401,7 +400,20 @@ function updateStatusIcon(elem, opp) {
  */
 function getCostumeOption(alt_costume, selected_costume) {
     return $('<option>', {val: alt_costume.folder, text: 'Costume: '+alt_costume.name,
-                          selected: alt_costume.folder == selected_costume})
+                          selected: alt_costume.folder == selected_costume, data: alt_costume});
+}
+
+function fillCostumeSelector($selector, costumes, selected_costume) {
+    $selector.empty().append($('<option>', {
+        val: '',
+        text: 'Default Costume'
+    }), costumes.map(function(c) {
+        return $('<option>', {
+            val: c.folder, text: '\u{1f455} '+c.name,
+            selected: c.folder == selected_costume
+        }).data('costumeDescriptor', c);
+    }));
+    return $selector;
 }
 
 /************************************************************
@@ -519,20 +531,10 @@ function updateGroupSelectScreen (ignore_bg) {
                 /*
                 $groupCostumeBadges[i].show();
                 */
-                $groupCostumeSelectors[i].empty();
-
-                $groupCostumeSelectors[i].append($('<option>', {
-                    val: '',
-                    text: 'Default Costume'
-                }));
-
-                opponent.alternate_costumes.forEach(function (alt) {
-                    $groupCostumeSelectors[i].append(getCostumeOption(alt, opponent.selected_costume));
-                });
-
-                $groupCostumeSelectors[i].show();
+                fillCostumeSelector($groupCostumeSelectors[i], opponent.alternate_costumes,
+                                    opponent.selected_costume).show();
             } else {
-                $groupCostumeBadges[i].hide();
+                //$groupCostumeBadges[i].hide();
             }
 
             updateStatusIcon($groupStatuses[i], opponent);
@@ -1101,27 +1103,19 @@ function backSelectScreen () {
  * `slot` is the 1-based opponent slot affected.
  * `inGroup` is true if the affected opponent is on the group selection screen.
  */
-function altCostumeSelected(slot, inGroup) {
-	var costumeSelector = (inGroup ? $groupCostumeSelectors[slot-1] : $individualCostumeSelectors[slot-1]);
-	var selectImage = (inGroup ? $groupImages[slot-1] : $individualImages[slot-1]);
-	var opponent = (inGroup ? selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[slot-1] : shownIndividuals[slot-1]);
-	
-	var selectedCostume = costumeSelector.val();
-	
-	var costumeDesc = undefined;
-	if (selectedCostume.length > 0) {
-		for (let i=0;i<opponent.alternate_costumes.length;i++) {
-			if (opponent.alternate_costumes[i].folder === selectedCostume) {
-				costumeDesc = opponent.alternate_costumes[i];
-				break;
-			}
-		}
-	}
-	
-    opponent.selectAlternateCostume(costumeDesc);
-    selectImage.attr('src', opponent.selection_image);
-}
+function altCostumeSelected(slot) {
+    var costumeSelector = $groupCostumeSelectors[slot-1];
+    var opponent = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[slot-1];
 
+    var costumeDesc = costumeSelector.children(':selected').data('costumeDescriptor');
+    opponent.selectAlternateCostume(costumeDesc);
+    updateGroupSelectScreen();
+    $groupImages[slot-1].attr('src', opponent.selection_image);
+    $groupGenders[slot-1].attr({
+        src: opponent.selectGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
+        alt: opponent.selectGender.initCap(),
+    }).show();
+}
 
 /**********************************************************************
  *****                     Display Functions                      *****
@@ -1195,26 +1189,6 @@ function updateSelectionVisuals () {
     /* Disable buttons while loading is going on */
     $selectRandomTableButton.attr('disabled', loaded < filled || loadedOpponents.length == 0);
     $groupButton.attr('disabled', loaded < filled);
-}
-
-
-
-/************************************************************
- * This is the callback for the group clicked rows, it
- * updates information on the group screen.
- ************************************************************/
-function updateGroupScreen (playerObject) {
-    /* find a spot to store this player */
-    for (var i = 0; i < storedGroup.length; i++) {
-        if (!storedGroup[i]) {
-            storedGroup[i] = playerObject;
-            $groupLabels[i+1].html(playerObject.label);
-            break;
-        }
-    }
-
-	/* enable the button */
-	$groupButton.attr('disabled', false);
 }
 
 /************************************************************
