@@ -795,19 +795,11 @@ function loadGroup (chosenGroup) {
                 member = member.clone();
             }
             
-            var selectedCostume = $groupCostumeSelectors[i-1].val();
+            var costumeDesc = $groupCostumeSelectors[i-1].children(':selected').data('costumeDescriptor');
+            var selectedCostume = costumeDesc ? costumeDesc.folder : null;
 
             if ((member.selected_costume && selectedCostume != member.selected_costume)
-                || (!member.selected_costume && selectedCostume != '')) {
-                var costumeDesc = undefined;
-
-                for (let i=0;i<member.alternate_costumes.length;i++) {
-                    if (member.alternate_costumes[i].folder === selectedCostume) {
-                        costumeDesc = member.alternate_costumes[i];
-                        break;
-                    }
-                }
-                
+                || (!member.selected_costume && selectedCostume != null)) {
                 member.selectAlternateCostume(costumeDesc);
             }
 
