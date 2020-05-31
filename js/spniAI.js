@@ -21,7 +21,7 @@ function determineAIAction (player) {
 	var hand = player.hand.cards;
 
 	/* Player tries hard to lose */
-	if (player.getIntelligence() == eIntelligence.THROW) {
+	if (player.intelligence == eIntelligence.THROW) {
 		if (player.hand.strength == STRAIGHT || player.hand.strength == FLUSH || player.hand.strength >= STRAIGHT_FLUSH) {
 			var sortedRanks = hand.map(function(c) { return c.rank; }).sort();
 			// Keep the two lowest cards.
@@ -46,7 +46,7 @@ function determineAIAction (player) {
 		}
 
 	/*for low intelligence characters all trades are done at random. Technically this is the same as doing nothing but this way they won't always just do nothing.*/
-	} else if (player.getIntelligence() == eIntelligence.BAD) {
+	} else if (player.intelligence == eIntelligence.BAD) {
 		player.hand.tradeIns = [false, false, false, false, false];
 
 		/*choose number of cards to trade in*/
@@ -88,7 +88,7 @@ function determineAIAction (player) {
 			return;
 		}
 
-		if (player.getIntelligence() == eIntelligence.AVERAGE) {
+		if (player.intelligence == eIntelligence.AVERAGE) {
 			/* Check for flush draw, even if holding a pair */
 			if (player.hand.suits.some(function(s) { return s == CARDS_PER_HAND - 1; })) {
 				player.hand.tradeIns = hand.map(function(c) { return player.hand.suits[c.suit] == 1; });
@@ -127,7 +127,7 @@ function determineAIAction (player) {
 			return;
 		}
 
-		if (player.getIntelligence() == eIntelligence.AVERAGE) {
+		if (player.intelligence == eIntelligence.AVERAGE) {
 			for (var start_rank = 2; start_rank <= 11; start_rank++) {
 				if (player.hand.ranks.slice(start_rank - 1, start_rank - 1 + 3).countTrue() == 3) {
 					player.hand.tradeIns = hand.map(function(c, idx) {
@@ -139,11 +139,11 @@ function determineAIAction (player) {
 			}
 		}
 		if (player.hand.strength == HIGH_CARD) {
-			if (player.getIntelligence() == eIntelligence.AVERAGE) {
+			if (player.intelligence == eIntelligence.AVERAGE) {
 				player.hand.tradeIns = hand.map(function(c) { return player.hand.value.slice(0, AVERAGE_KEEP_HIGH).indexOf(c.rank) < 0; });
 				console.log("Hand is bad, trading in "+ (CARDS_PER_HAND - AVERAGE_KEEP_HIGH) +" cards. "+player.hand.tradeIns);
 				return;
-			} else if (player.getIntelligence() != eIntelligence.BEST || player.hand.value[0] >= 10) {
+			} else if (player.intelligence != eIntelligence.BEST || player.hand.value[0] >= 10) {
 				player.hand.tradeIns = hand.map(function(c) { return c.rank != player.hand.value[0]; });
 				console.log("Hand is bad, trading in four cards. "+player.hand.tradeIns);
 				return;

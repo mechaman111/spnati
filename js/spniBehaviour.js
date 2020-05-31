@@ -1019,7 +1019,7 @@ var fixupDialogueSubstitutions = { // Order matters
     '`':   '\u2018', // left single quotation mark
     "''":  '\u201d', // right double quotation mark
     "'":   '\u2019', // right single quotation mark
-    '\\':  '&shy;', // soft hyphen
+    '\\':  '\xad', // soft hyphen
     '&lt;i&gt;': '<i>',
     '&lt;br&gt;': '<br>',
     '&lt;hr&gt;': '<hr>',
@@ -1597,7 +1597,7 @@ Case.prototype.checkConditions = function (self, opp) {
 
     // oppHand
     if (this.oppHand) {
-        if (!opp || handStrengthToString(opp.hand.strength).toLowerCase() !== this.oppHand.toLowerCase()) {
+        if (!opp || !opp.hand || handStrengthToString(opp.hand.strength).toLowerCase() !== this.oppHand.toLowerCase()) {
             return false;
         }
     }
@@ -1612,7 +1612,7 @@ Case.prototype.checkConditions = function (self, opp) {
 
     // hasHand
     if (this.hasHand) {
-        if (handStrengthToString(self.hand.strength).toLowerCase() !== this.hasHand.toLowerCase()) {
+        if (!self.hand || handStrengthToString(self.hand.strength).toLowerCase() !== this.hasHand.toLowerCase()) {
             return false;
         }
     }
@@ -1637,7 +1637,7 @@ Case.prototype.checkConditions = function (self, opp) {
             }
                     
             if (this.alsoPlayingHand) {
-                if (handStrengthToString(ap.hand.strength).toLowerCase() !== this.alsoPlayingHand.toLowerCase())
+                if (!ap.hand || handStrengthToString(ap.hand.strength).toLowerCase() !== this.alsoPlayingHand.toLowerCase())
                 {
                     return false;		// failed "alsoPlayingHand" requirement
                 }
@@ -1776,7 +1776,7 @@ Case.prototype.checkConditions = function (self, opp) {
                 && (ctr.layers === undefined || inInterval(p.clothing.length, ctr.layers))
                 && (ctr.startingLayers === undefined || inInterval(p.startingLayers, ctr.startingLayers))
                 && (ctr.timeInStage === undefined || inInterval(p.timeInStage, ctr.timeInStage))
-                && (ctr.hand === undefined || (handStrengthToString(p.hand.strength).toLowerCase() == ctr.hand.toLowerCase()))
+                && (ctr.hand === undefined || (p.hand && handStrengthToString(p.hand.strength).toLowerCase() == ctr.hand.toLowerCase()))
                 && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, ctr.consecutiveLosses))
                 && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, opp))
                 && (ctr.notSaidMarker === undefined || !checkMarker(ctr.notSaidMarker, p, opp));
@@ -2117,13 +2117,12 @@ Opponent.prototype.commitBehaviourUpdate = function () {
         this.chosenState.applyMarkers(this, this.currentTarget);
     }
     
-    if (this.chosenState.setLabel) {
-        this.label = this.chosenState.setLabel;
-        this.labelOverridden = true;
+    if (this.chosenState.setLabel !== undefined) {
+        this.setLabel(this.chosenState.setLabel);
     }
-    
-    if (this.chosenState.setIntelligence) {
-        this.intelligence = this.chosenState.setIntelligence;
+
+    if (this.chosenState.setIntelligence !== undefined) {
+        this.setIntelligence(this.chosenState.setIntelligence);
     }
     
     if (this.chosenState.setGender) {
@@ -2220,8 +2219,8 @@ function updateAllVolatileBehaviours () {
  ************************************************************/
 function commitAllBehaviourUpdates () {
     /* Apply setLabel first so that ~name~ is the same for all players */
-    players.forEach(function (p) {
-        if (p !== humanPlayer && p.chosenState && p.chosenState.setLabel) {
+    players.opponents.forEach(function (p) {
+        if (p.chosenState && p.chosenState.setLabel) {
             p.label = p.chosenState.setLabel;
             p.labelOverridden = true;
         }
@@ -2229,8 +2228,8 @@ function commitAllBehaviourUpdates () {
 
     /* Record updated states only. */
     var updatedPlayers = [];
-    players.forEach(function (p) {
-        if (p !== humanPlayer && p.chosenState && !p.stateCommitted) {
+    players.opponents.forEach(function (p) {
+        if (p.chosenState && !p.stateCommitted) {
             p.commitBehaviourUpdate();
             updatedPlayers.push(p.slot);
         }
