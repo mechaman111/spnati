@@ -154,17 +154,12 @@ function loadGameScreen () {
     /* reset all of the player's states */
     for (var i = 1; i < players.length; i++) {
         gameDisplays[i-1].reset(players[i]);
-        
-        if (players[i]) {
-            players[i].current = 0;
-        }
     }
     $gameLabels[HUMAN_PLAYER].removeClass("loser tied current");
     clearHand(HUMAN_PLAYER);
 
     previousLoser = -1;
     recentLoser = -1;
-    currentRound = -1;
     gameOver = false;
 
     $gamePlayerCardArea.show();

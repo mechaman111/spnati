@@ -1597,7 +1597,7 @@ Case.prototype.checkConditions = function (self, opp) {
 
     // oppHand
     if (this.oppHand) {
-        if (!opp || handStrengthToString(opp.hand.strength).toLowerCase() !== this.oppHand.toLowerCase()) {
+        if (!opp || !opp.hand || handStrengthToString(opp.hand.strength).toLowerCase() !== this.oppHand.toLowerCase()) {
             return false;
         }
     }
@@ -1612,7 +1612,7 @@ Case.prototype.checkConditions = function (self, opp) {
 
     // hasHand
     if (this.hasHand) {
-        if (handStrengthToString(self.hand.strength).toLowerCase() !== this.hasHand.toLowerCase()) {
+        if (!self.hand || handStrengthToString(self.hand.strength).toLowerCase() !== this.hasHand.toLowerCase()) {
             return false;
         }
     }
@@ -1637,7 +1637,7 @@ Case.prototype.checkConditions = function (self, opp) {
             }
                     
             if (this.alsoPlayingHand) {
-                if (handStrengthToString(ap.hand.strength).toLowerCase() !== this.alsoPlayingHand.toLowerCase())
+                if (!ap.hand || handStrengthToString(ap.hand.strength).toLowerCase() !== this.alsoPlayingHand.toLowerCase())
                 {
                     return false;		// failed "alsoPlayingHand" requirement
                 }
@@ -1776,7 +1776,7 @@ Case.prototype.checkConditions = function (self, opp) {
                 && (ctr.layers === undefined || inInterval(p.clothing.length, ctr.layers))
                 && (ctr.startingLayers === undefined || inInterval(p.startingLayers, ctr.startingLayers))
                 && (ctr.timeInStage === undefined || inInterval(p.timeInStage, ctr.timeInStage))
-                && (ctr.hand === undefined || (handStrengthToString(p.hand.strength).toLowerCase() == ctr.hand.toLowerCase()))
+                && (ctr.hand === undefined || (p.hand && handStrengthToString(p.hand.strength).toLowerCase() == ctr.hand.toLowerCase()))
                 && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, ctr.consecutiveLosses))
                 && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, opp))
                 && (ctr.notSaidMarker === undefined || !checkMarker(ctr.notSaidMarker, p, opp));

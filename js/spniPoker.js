@@ -396,7 +396,7 @@ function distance2d (x1, y1, x2, y2)
  ************************************************************/
 function handStrengthToString (number) {
 	switch (number) {
-        case NONE:              return "Nothing";
+        case NONE:              return undefined;
         case HIGH_CARD:         return "High card";
         case PAIR:              return "One pair";
         case TWO_PAIR:          return "Two pair";
