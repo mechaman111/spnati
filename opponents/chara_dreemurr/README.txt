@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited May 27th 2020
+README edited May 31 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -38,8 +38,13 @@ PALE-SKINNED - Chara's sprite has much lighter skin than Frisk.
 
 PUBIC HAIR - There was no reason to go for any of the other options, so I simply went with a middle-of-the-road.
 
-MEDIUM BREASTS - Post-Genocide, Chara states - and shows - that she embodies the process of grinding for stats and 'making numbers grow'. With this there might be some
+LARGE BREASTS - Post-Genocide, Chara states - and shows - that she embodies the process of grinding for stats and 'making numbers grow'. With this there might be some
 justification in tagging her as Large Breasts or even Huge Breasts, but I felt that was a reach and instead went with middle-of-the-road.
+	-UPDATE May 31 2020 - Based on feedback, the formerly Medium Breasts tag was updated to Large Breasts due to - despite using a size that is the upper range of medium characters -
+Chara's body frame would have her in the updated Large Breasts category. I guess this sort of lets me use the 'making numbers grow' justification?
+
+CLOTHING DESTRUCTION - UPDATE MAY 31 2020 - Based on feedback, added Clothing Destruction tab to stages 2, 6, and 7 (Lost Belt, Lost Pants, Lost Bra, all of which Chara uses her knife
+to strip.
 
 SUPERNATURAL - Post-Genocide, Chara is a literal demon, powerful enough to destroy the entire universe - multiple sources of evidence in Undertale point to that it is indeed
 the whole universe, not just 'the world' or even just 'the Underground' - and if that's not worth a Supernatural tag I do not know what is.
@@ -107,6 +112,8 @@ that unfair. NOTE: This specific callout only references one possible case for C
 points to the Generic Case already, but still. Double-check the functionality.
 
 FOCUS UP - FYI - After removing her shirt, and if the player is still in the game, Chara will tell them to focus on the game.
+
+REFUSE TO REMOVE - NOTEWORTHY - After removing her last layer of clothing, Chara will say she refuses to strip either her knife or locket, saying she would rather forfeit than do so.
 
 -------------------------------------------------------------------------------------------
 PERSISTENTS
@@ -219,6 +226,9 @@ AMALIA
 AMY
 -Responds to Amy's planar form.
 -Responds to Amy losing one hand, where she references Undertale's character Muffet.
+-Back-and-forth banter with Amy when Chara loses and must strip.
+-Responds to Amy losing and having to masturbate.
+-Has a PersistAmyFriendship marker that can make some of Chara's dialogue towards Amy less antagonistic if it's high enough.
 
 ARASH
 -Responds to Arash's question about cooking.
@@ -340,9 +350,11 @@ SAKI (ZLS)
 -Responds to Saki's question about bad luck.
 -Responds to Saki revealing she's a zombie.
 -Responds to Saki's head falling off.
+-Responds to Saki removing her makeup via water bucket.
 
 SAKURA
 -Responds to Sakura's head falling off.
+-Responds to Sakura removing her makeup.
 
 SHANTAE
 -Responds to Shantae transforming into a monkey.
