@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -40,7 +41,10 @@
 			this.ColTrophy = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
 			this.ColMore = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
 			this.ColDelete = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
+			this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.applyToColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).BeginInit();
+			this.mnuContext.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// gridDialogue
@@ -68,6 +72,7 @@
             this.ColTrophy,
             this.ColMore,
             this.ColDelete});
+			this.gridDialogue.ContextMenuStrip = this.mnuContext;
 			this.gridDialogue.Data = null;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
@@ -100,6 +105,7 @@
 			this.gridDialogue.TabIndex = 42;
 			this.gridDialogue.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellContentClick);
 			this.gridDialogue.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridDialogue_CellEnter);
+			this.gridDialogue.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridDialogue_CellMouseDown);
 			this.gridDialogue.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.gridDialogue_CellPainting);
 			this.gridDialogue.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.gridDialogue_CellParsing);
 			this.gridDialogue.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.gridDialogue_CellValidating);
@@ -171,6 +177,21 @@
 			this.ColDelete.Name = "ColDelete";
 			this.ColDelete.Width = 21;
 			// 
+			// mnuContext
+			// 
+			this.mnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.applyToColumnToolStripMenuItem});
+			this.mnuContext.Name = "mnuContext";
+			this.mnuContext.Size = new System.Drawing.Size(181, 48);
+			this.mnuContext.Opening += new System.ComponentModel.CancelEventHandler(this.mnuContext_Opening);
+			// 
+			// applyToColumnToolStripMenuItem
+			// 
+			this.applyToColumnToolStripMenuItem.Name = "applyToColumnToolStripMenuItem";
+			this.applyToColumnToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.applyToColumnToolStripMenuItem.Text = "Apply to Column";
+			this.applyToColumnToolStripMenuItem.Click += new System.EventHandler(this.applyToColumnToolStripMenuItem_Click);
+			// 
 			// DialogueGrid
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -180,6 +201,7 @@
 			this.Size = new System.Drawing.Size(572, 380);
 			this.Leave += new System.EventHandler(this.DialogueGrid_Leave);
 			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).EndInit();
+			this.mnuContext.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -195,5 +217,7 @@
 		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColTrophy;
 		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColMore;
 		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColDelete;
+		private System.Windows.Forms.ContextMenuStrip mnuContext;
+		private System.Windows.Forms.ToolStripMenuItem applyToColumnToolStripMenuItem;
 	}
 }

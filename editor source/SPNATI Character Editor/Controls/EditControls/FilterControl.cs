@@ -25,6 +25,7 @@ namespace SPNATI_Character_Editor
 			recWho.RecordType = typeof(FilterType);
 			recCharacter.RecordType = typeof(Character);
 			recCharacter.RecordFilter = FilterTargets;
+			recCharacter.AllowCreate = true;
 			valFrom.Text = "";
 			valTo.Text = "";
 			recWho.RecordChanged += UpdateRecord;

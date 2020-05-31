@@ -259,6 +259,9 @@ namespace KisekaeImporter
 		{
 			if (string.IsNullOrEmpty(data))
 				return;
+			data = data.Trim();
+			if (string.IsNullOrEmpty(data))
+				return;
 
 			//Extract the version and whether this is a scene or not
 			string[] versionSplit = data.Split(new string[] { "**" }, StringSplitOptions.None);

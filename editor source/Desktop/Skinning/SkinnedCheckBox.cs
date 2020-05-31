@@ -75,7 +75,7 @@ namespace Desktop.Skinning
 			Skin skin = SkinManager.Instance.CurrentSkin;
 			Rectangle rect = new Rectangle(x, y, CheckBoxSize, CheckBoxSize);
 
-			using (Brush boxColor = new SolidBrush(skin.FieldBackColor))
+			using (Brush boxColor = new SolidBrush(enabled ? skin.FieldBackColor : skin.FieldDisabledBackColor))
 			{
 				ColorSet set = skin.GetWidgetColorSet(fieldType);
 				g.FillRectangle(boxColor, rect);
@@ -120,7 +120,7 @@ namespace Desktop.Skinning
 					RenderCheckbox(g, 0, start, FieldType, CheckState, MouseState, Enabled);
 				}
 
-				Color foreColor = DesignMode ? ForeColor : this.GetSkinnedPanelForeColor();
+				Color foreColor = DesignMode ? ForeColor : (Enabled ? this.GetSkinnedPanelForeColor() : skin.LabelForeColor);
 				int left = 2 + CheckBoxSize;
 				Rectangle textRect = new Rectangle(left, 0, ClientRectangle.Width - left, ClientRectangle.Height - 2);
 				TextRenderer.DrawText(g, Text, Font, textRect, foreColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);

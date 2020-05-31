@@ -345,17 +345,18 @@ namespace SPNATI_Character_Editor.Activities
 				return;
 			}
 			AddSheetForm form = new AddSheetForm("Main");
+			form.ShowAdvanced = false;
 			if (form.ShowDialog() == DialogResult.OK)
 			{
 				PoseMatrix matrix = CharacterDatabase.GetPoseMatrix(_character, true);
 				bool isEmpty = matrix.IsEmpty();
-				PoseSheet sheet = matrix.AddSheet(form.SheetName);
+				PoseSheet sheet = matrix.AddSheet(form.SheetName, _character.Character);
 				if (isEmpty && matrix.Sheets.Count > 1)
 				{
 					matrix.RemoveSheet(matrix.Sheets[0]);
 					sheet.Name = form.SheetName;
 				}
-				sheet.FillFromTemplate(_character.Character, template);
+				matrix.FillFromTemplate(_character.Character, template, sheet);
 				Shell.Instance.Launch(_character as IRecord, typeof(PoseMatrixEditor), sheet);
 			}
 		}

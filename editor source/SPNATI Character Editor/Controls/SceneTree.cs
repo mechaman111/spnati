@@ -53,7 +53,10 @@ namespace SPNATI_Character_Editor.Controls
 				BuildSceneNode(scene);
 			}
 
-			treeScenes.ExpandAll();
+			if (!Config.CollapseEpilogueScenes)
+			{
+				treeScenes.ExpandAll();
+			}
 
 			treeScenes.EndUpdate();
 			if (treeScenes.Nodes.Count > 0)
@@ -1171,11 +1174,13 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void tsCollapse_Click(object sender, EventArgs e)
 		{
+			Config.CollapseEpilogueScenes = true;
 			treeScenes.CollapseAll();
 		}
 
 		private void tsExpandAll_Click(object sender, EventArgs e)
 		{
+			Config.CollapseEpilogueScenes = false;
 			treeScenes.ExpandAll();
 		}
 	}

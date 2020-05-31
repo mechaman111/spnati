@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
@@ -34,7 +35,6 @@ namespace SPNATI_Character_Editor.DataStructures
 		/// <param name="skin"></param>
 		public PoseMatrix(ISkin skin) : this()
 		{
-			Character character = skin.Character;
 		}
 
 		public bool IsEmpty()
@@ -57,9 +57,9 @@ namespace SPNATI_Character_Editor.DataStructures
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="name">Sheet name. Will be made unique if necessary</param>
-		public PoseSheet AddSheet(string name)
+		public PoseSheet AddSheet(string name, Character character)
 		{
-			return AddSheet(name, null);
+			return AddSheet(name, character, null, false);
 		}
 
 		/// <summary>
@@ -67,17 +67,20 @@ namespace SPNATI_Character_Editor.DataStructures
 		/// </summary>
 		/// <param name="name">Sheet name. Will be made unique if necessary</param>
 		/// <param name="basis">Sheet to duplicate</param>
-		public PoseSheet AddSheet(string name, PoseSheet basis)
+		/// <param name="global">Whether poses are global</param>
+		public PoseSheet AddSheet(string name, Character character, PoseSheet basis, bool global)
 		{
 			name = GetUniqueSheetName(name);
 			PoseSheet sheet = new PoseSheet()
 			{
-				Name = name
+				Name = name,
+				IsGlobal = global
 			};
 			Sheets.Add(sheet);
 
 			if (basis != null)
 			{
+				sheet.BaseCode = basis.BaseCode;
 				foreach (PoseStage basisStage in basis.Stages)
 				{
 					PoseStage stage = basisStage.Clone() as PoseStage;
@@ -89,6 +92,13 @@ namespace SPNATI_Character_Editor.DataStructures
 					}
 				}
 			}
+			else if (global)
+			{
+				PoseStage stage = new PoseStage(0);
+				sheet.Stages.Add(stage);
+			}
+
+			sheet.ReconcileStages(character);
 
 			return sheet;
 		}
@@ -120,6 +130,95 @@ namespace SPNATI_Character_Editor.DataStructures
 				sheet.ReconcileStages(character);
 			}
 		}
+
+		/// <summary>
+		/// Moves a pose list into a sheet
+		/// </summary>
+		/// <param name="character">Character the sheet belongs to</param>
+		/// <param name="list">List to convert</param>
+		/// <param name="sheet">Sheet to put the list into</param>
+		public void FillFromPoseList(Character character, PoseList list, PoseSheet sheet)
+		{
+			PoseSheet globalSheet = null;
+
+			//make sure stages exist
+			sheet.ReconcileStages(character);
+
+			string pattern = @"^((\d+)-)*(.+)$";
+			Regex regex = new Regex(pattern);
+
+			//fill in cells
+			foreach (ImageMetadata metadata in list.Poses)
+			{
+				Match match = regex.Match(metadata.ImageKey);
+				if (match.Success)
+				{
+					string key = metadata.ImageKey;
+					if (!string.IsNullOrEmpty(match.Groups[2].Value))
+					{
+						string stageValue = match.Groups[2].Value;
+						key = match.Groups[3].Value;
+
+						//find the right stage to put it into
+						int stage;
+						if (int.TryParse(stageValue, out stage))
+						{
+							PoseEntry cell = new PoseEntry(metadata);
+							cell.Key = key;
+							if (stage >= 0 && stage < sheet.Stages.Count)
+							{
+								PoseStage s = sheet.Stages[stage];
+								s.Poses.Add(cell);
+							}
+						}
+					}
+					else
+					{
+						if (globalSheet == null)
+						{
+							globalSheet = AddSheet("Global", character, null, true);
+						}
+						key = metadata.ImageKey;
+						PoseEntry cell = new PoseEntry(metadata);
+						cell.Key = key;
+						globalSheet.Stages[0].Poses.Add(cell);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Populates from a template
+		/// </summary>
+		/// <param name="template"></param>
+		public void FillFromTemplate(Character character, PoseTemplate template, PoseSheet sheet)
+		{
+			sheet.BaseCode = template.BaseCode.ToString();
+
+			//make sure every row exists
+			sheet.ReconcileStages(character);
+
+			//create stages
+			for (int stage = 0; stage < character.Layers + Clothing.ExtraStages; stage++)
+			{
+				PoseStage poseStage = sheet.Stages[stage];
+
+				if (stage < template.Stages.Count)
+				{
+					StageTemplate templateStage = template.Stages[stage];
+					poseStage.Code = templateStage.Code;
+
+					foreach (Emotion emotion in template.Emotions)
+					{
+						PoseEntry entry = new PoseEntry();
+						entry.Key = emotion.Key;
+						entry.Code = emotion.Code;
+						entry.Crop = emotion.Crop;
+						poseStage.Poses.Add(entry);
+					}
+				}
+			}
+		}
 	}
 
 	[Serializable]
@@ -146,6 +245,14 @@ namespace SPNATI_Character_Editor.DataStructures
 			set { Set(value); }
 		}
 
+		[DefaultValue(false)]
+		[XmlAttribute("global")]
+		public bool IsGlobal
+		{
+			get { return Get<bool>(); }
+			set { Set(value); }
+		}
+
 		[XmlArray("stages")]
 		[XmlArrayItem("stage")]
 		public ObservableCollection<PoseStage> Stages
@@ -160,81 +267,13 @@ namespace SPNATI_Character_Editor.DataStructures
 		}
 
 		/// <summary>
-		/// Creates a sheet out of a pose list
+		/// Gets whether there are no codes defined in this sheet
 		/// </summary>
-		/// <param name="list"></param>
-		public void FillFromPoseList(Character character, PoseList list)
+		public bool IsEmpty
 		{
-			//create stages
-			for (int stage = 0; stage < character.Layers + Clothing.ExtraStages; stage++)
+			get
 			{
-				Stages.Add(new PoseStage(stage));
-			}
-
-			string pattern = @"^((\d+)-)*(.+)$";
-			Regex regex = new Regex(pattern);
-
-			//fill in cells
-			foreach (ImageMetadata metadata in list.Poses)
-			{
-				Match match = regex.Match(metadata.ImageKey);
-				if (match.Success)
-				{
-					string key = metadata.ImageKey;
-					if (!string.IsNullOrEmpty(match.Groups[2].Value))
-					{
-						string stageValue = match.Groups[2].Value;
-						key = match.Groups[3].Value;
-
-						//find the right stage to put it into
-						int stage;
-						if (int.TryParse(stageValue, out stage))
-						{
-							PoseEntry cell = new PoseEntry(metadata);
-							cell.Key = key;
-							if (stage >= 0 && stage < Stages.Count)
-							{
-								PoseStage s = Stages[stage];
-								s.Poses.Add(cell);
-							}
-						}
-					}
-					else
-					{
-						//Currently can't handle stageless images
-					}
-				}				
-			}
-		}
-
-		/// <summary>
-		/// Populates a sheet from a template
-		/// </summary>
-		/// <param name="template"></param>
-		public void FillFromTemplate(Character character, PoseTemplate template)
-		{
-			BaseCode = template.BaseCode.ToString();
-
-			//create stages
-			for (int stage = 0; stage < character.Layers + Clothing.ExtraStages; stage++)
-			{
-				PoseStage poseStage = new PoseStage(stage);
-				Stages.Add(poseStage);
-
-				if (stage < template.Stages.Count)
-				{
-					StageTemplate templateStage = template.Stages[stage];
-					poseStage.Code = templateStage.Code;
-
-					foreach (Emotion emotion in template.Emotions)
-					{
-						PoseEntry entry = new PoseEntry();
-						entry.Key = emotion.Key;
-						entry.Code = emotion.Code;
-						entry.Crop = emotion.Crop;
-						poseStage.Poses.Add(entry);
-					}
-				}
+				return Stages.Find(s => s.Poses.Count > 0) == null;
 			}
 		}
 
@@ -290,7 +329,7 @@ namespace SPNATI_Character_Editor.DataStructures
 		/// <param name="character"></param>
 		public void ReconcileStages(Character character)
 		{
-			int expectedLayers = character.Layers + Clothing.ExtraStages;
+			int expectedLayers = IsGlobal ? 1 : character.Layers + Clothing.ExtraStages;
 			if (expectedLayers != Stages.Count)
 			{
 				while (expectedLayers > Stages.Count)
@@ -431,6 +470,7 @@ namespace SPNATI_Character_Editor.DataStructures
 		public PoseEntry()
 		{
 			Crop = new Rect(0, 0, 600, 1400);
+			ExtraMetadata = new Dictionary<string, string>();
 		}
 
 		public PoseEntry(ImageMetadata metadata)
@@ -439,7 +479,7 @@ namespace SPNATI_Character_Editor.DataStructures
 			Code = metadata.Data;
 			Crop = metadata.CropInfo;
 			SkipPreProcessing = metadata.SkipPreprocessing;
-			//TODO: extradata
+			ExtraMetadata = metadata.ExtraData;
 		}
 
 		[XmlAttribute("key")]
@@ -472,6 +512,55 @@ namespace SPNATI_Character_Editor.DataStructures
 		{
 			get { return Get<bool>(); }
 			set { Set(value); }
+		}
+
+		[DefaultValue("")]
+		[XmlElement("extra")]
+		[PoseMetadata(DisplayName = "Transparencies")]
+		public string ExtraMetadataRaw
+		{
+			get { return Get<string>(); }
+			set
+			{
+				Set(value);
+				ExtraMetadata.Clear();
+				if (value != null)
+				{
+					string[] pieces = value.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+					foreach (string raw in pieces)
+					{
+						string[] piece = raw.Split(new char[] { '=' }, 2);
+						if (piece.Length == 2)
+						{
+							string key = piece[0];
+							ExtraMetadata[key] = piece[1];
+						}
+					}
+				}
+			}
+		}
+
+		private Dictionary<string, string> _data;
+		[XmlIgnore]
+		public Dictionary<string, string> ExtraMetadata
+		{
+			get
+			{
+				return _data;
+			}
+			set
+			{
+				_data = value;
+				if (value != null)
+				{
+					StringBuilder sb = new StringBuilder();
+					foreach (KeyValuePair<string, string> kvp in value)
+					{
+						sb.Append($"{kvp.Key}={kvp.Value},");
+					}
+					Set(sb.ToString(), "ExtraMetadataRaw"); //not using the setter directly to avoid infinite recursion
+				}
+			}
 		}
 
 		public override string ToString()

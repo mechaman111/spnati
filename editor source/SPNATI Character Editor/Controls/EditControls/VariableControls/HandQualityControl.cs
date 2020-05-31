@@ -21,7 +21,6 @@ namespace SPNATI_Character_Editor.Controls.EditControls.VariableControls
 
 		private static readonly KeyValuePair<string, string>[] CardMap = {
 			new KeyValuePair<string, string>(null, ""),
-			new KeyValuePair<string, string>("01", "1"),
 			new KeyValuePair<string, string>("02", "2"),
 			new KeyValuePair<string, string>("03", "3"),
 			new KeyValuePair<string, string>("04", "4"),

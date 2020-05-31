@@ -95,6 +95,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (_selectedCase != null)
 			{
 				DataConversions.ConvertCase5_2(_selectedCase);
+				DataConversions.ConvertCase5_8(_selectedCase, _character);
 			}
 			TrackCase(_selectedCase);
 			if (_selectedCase != null)

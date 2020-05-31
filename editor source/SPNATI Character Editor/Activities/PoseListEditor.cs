@@ -1172,13 +1172,13 @@ namespace SPNATI_Character_Editor.Activities
 
 				PoseMatrix matrix = CharacterDatabase.GetPoseMatrix(_character);
 				bool isEmpty = matrix.IsEmpty();
-				PoseSheet sheet = matrix.AddSheet(form.SheetName);
+				PoseSheet sheet = matrix.AddSheet(form.SheetName, _character.Character);
 				if (isEmpty && matrix.Sheets.Count > 1)
 				{
 					matrix.RemoveSheet(matrix.Sheets[0]);
 					sheet.Name = form.SheetName;
 				}
-				sheet.FillFromPoseList(_character.Character, _poseList);
+				matrix.FillFromPoseList(_character.Character, _poseList, sheet);
 				Shell.Instance.Launch(_character as IRecord, typeof(PoseMatrixEditor), sheet);
 			}
 		}

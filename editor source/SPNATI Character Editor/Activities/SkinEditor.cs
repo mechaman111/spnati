@@ -121,15 +121,16 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					status = null;
 				}
-				if (txtName.Text != _costume.Link.Name || status != _costume.Link.Status)
+				if (txtName.Text != _costume.Link.Name || status != _costume.Link.Status || _costume.Link.IsDirty)
 				{
 					_linkDataChanged = true;
 				}
 				if (_linkDataChanged)
 				{
 					_linkDataChanged = false;
+					_costume.Link.IsDirty = false;
 					_costume.Link.Name = txtName.Text;
-					_costume.Link.Status = cboStatus.Text;
+					_costume.Link.Status = status;
 					Serialization.ExportCharacter(_costume.Character);
 				}
 			}
@@ -155,7 +156,12 @@ namespace SPNATI_Character_Editor.Activities
 			PoseMapping image = cboDefaultPic.SelectedItem as PoseMapping;
 			if (image == null)
 				return;
-			_costume.Link.PreviewImage = image.Key.Replace("#-", "0-");
+			string newKey = image.Key.Replace("#-", "0-");
+			if (_costume.Link.PreviewImage != newKey)
+			{
+				_costume.Link.PreviewImage = newKey;
+				_costume.Link.IsDirty = true;
+			}
 			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_costume, image, 0));
 		}
 	}

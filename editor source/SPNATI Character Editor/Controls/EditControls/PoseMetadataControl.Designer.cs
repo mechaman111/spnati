@@ -1,6 +1,6 @@
-﻿namespace SPNATI_Character_Editor.Controls
+﻿namespace SPNATI_Character_Editor.Controls.EditControls
 {
-	partial class MarkerOptions
+	partial class PoseMetadataControl
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -28,32 +28,35 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.gridMarkers = new SPNATI_Character_Editor.Controls.MarkerControl();
+			this.cmdSet = new Desktop.Skinning.SkinnedButton();
 			this.SuspendLayout();
 			// 
-			// gridMarkers
+			// cmdSet
 			// 
-			this.gridMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gridMarkers.Location = new System.Drawing.Point(0, 0);
-			this.gridMarkers.Name = "gridMarkers";
-			this.gridMarkers.ShowWhen = false;
-			this.gridMarkers.Size = new System.Drawing.Size(470, 160);
-			this.gridMarkers.TabIndex = 6;
+			this.cmdSet.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdSet.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+			this.cmdSet.Flat = false;
+			this.cmdSet.Location = new System.Drawing.Point(0, 0);
+			this.cmdSet.Name = "cmdSet";
+			this.cmdSet.Size = new System.Drawing.Size(75, 21);
+			this.cmdSet.TabIndex = 0;
+			this.cmdSet.Text = "Set...";
+			this.cmdSet.UseVisualStyleBackColor = true;
+			this.cmdSet.Click += new System.EventHandler(this.cmdSet_Click);
 			// 
-			// MarkerOptions
+			// PoseMetadataControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.gridMarkers);
-			this.Name = "MarkerOptions";
-			this.Size = new System.Drawing.Size(470, 163);
+			this.Controls.Add(this.cmdSet);
+			this.Name = "PoseMetadataControl";
+			this.Size = new System.Drawing.Size(150, 21);
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
-		private MarkerControl gridMarkers;
+
+		private Desktop.Skinning.SkinnedButton cmdSet;
 	}
 }

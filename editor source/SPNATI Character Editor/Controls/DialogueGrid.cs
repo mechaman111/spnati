@@ -192,7 +192,19 @@ namespace SPNATI_Character_Editor.Controls
 						_selectedCase.Lines.Add(line);
 						NotifyChange();
 					}
-					_character?.CacheMarker(line.Marker);
+					if (_character != null)
+					{
+						_character.CacheMarker(line.Marker);
+						foreach (MarkerOperation op in line.Markers)
+						{
+							string name = op.Name;
+							if (name.EndsWith("*"))
+							{
+								name = name.Substring(0, name.Length - 1);
+							}
+							_character.CacheMarker(name);
+						}
+					}
 				}
 			}
 		}
@@ -761,6 +773,8 @@ namespace SPNATI_Character_Editor.Controls
 			row.Cells[nameof(ColTrophy)].Tag = new Tuple<string, string>(line.CollectibleId, line.CollectibleValue);
 			row.Cells[nameof(ColMarkerOptions)].ToolTipText = GetMarkerTooltip(line);
 			_modifyingLine = false;
+
+			gridDialogue.InvalidateRow(row.Index);
 		}
 
 		private void Line_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -1061,6 +1075,135 @@ namespace SPNATI_Character_Editor.Controls
 			BackColor = skin.GetBackColor(SkinnedBackgroundType.Surface);
 			_markerCtl.OnUpdateSkin(skin);
 			_lineCtl.OnUpdateSkin(skin);
+		}
+
+		private void applyToColumnToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (gridDialogue.CurrentCell == null)
+			{
+				return;
+			}
+			DataGridViewColumn col = gridDialogue.CurrentCell.OwningColumn;
+			if (col == ColImageOptions || col == ColDelete)
+			{
+				return;
+			}
+			else if (col == ColMarker || col == ColMarkerOptions)
+			{
+				DialogueLine line = ReadLineFromDialogueGrid(gridDialogue.CurrentCell.RowIndex);
+				for (int i = 0; i < gridDialogue.Rows.Count; i++)
+				{
+					DataGridViewRow row = gridDialogue.Rows[i];
+					if (row.IsNewRow || i == gridDialogue.CurrentCell.RowIndex)
+					{
+						continue;
+					}
+					DialogueLine otherLine = gridDialogue.Rows[i].Tag as DialogueLine;
+					if (otherLine != null)
+					{
+						otherLine.Marker = line.Marker;
+						otherLine.Markers.Clear();
+						foreach (MarkerOperation op in line.Markers)
+						{
+							otherLine.Markers.Add(op.Copy());
+						}
+						AddLineToDialogueGrid(otherLine, row);
+					}
+				}
+			}
+			else if (col == ColTrophy)
+			{
+				DialogueLine line = ReadLineFromDialogueGrid(gridDialogue.CurrentCell.RowIndex);
+				for (int i = 0; i < gridDialogue.Rows.Count; i++)
+				{
+					DataGridViewRow row = gridDialogue.Rows[i];
+					if (row.IsNewRow || i == gridDialogue.CurrentCell.RowIndex)
+					{
+						continue;
+					}
+					DialogueLine otherLine = gridDialogue.Rows[i].Tag as DialogueLine;
+					if (otherLine != null)
+					{
+						otherLine.CollectibleId = line.CollectibleId;
+						otherLine.CollectibleValue = line.CollectibleValue;
+						AddLineToDialogueGrid(otherLine, row);
+					}
+				}
+			}
+			else if (col == ColMore)
+			{
+				DialogueLine line = ReadLineFromDialogueGrid(gridDialogue.CurrentCell.RowIndex);
+				for (int i = 0; i < gridDialogue.Rows.Count; i++)
+				{
+					DataGridViewRow row = gridDialogue.Rows[i];
+					if (row.IsNewRow || i == gridDialogue.CurrentCell.RowIndex)
+					{
+						continue;
+					}
+					DialogueLine otherLine = gridDialogue.Rows[i].Tag as DialogueLine;
+					if (otherLine != null)
+					{
+						otherLine.Direction = line.Direction;
+						otherLine.Gender = line.Gender;
+						otherLine.Intelligence = line.Intelligence;
+						otherLine.Location = line.Location;
+						otherLine.Size = line.Size;
+						otherLine.Label = line.Label;
+						if (line.OneShotId > 0)
+						{
+							otherLine.OneShotId = ++_character.Behavior.MaxStateId;
+						}
+						else
+						{
+							otherLine.OneShotId = 0;
+						}
+						otherLine.Weight = line.Weight;
+						AddLineToDialogueGrid(otherLine, row);
+					}
+				}
+			}
+			else
+			{
+				for (int i = 0; i < gridDialogue.Rows.Count; i++)
+				{
+					DataGridViewRow row = gridDialogue.Rows[i];
+					if (row.IsNewRow || i == gridDialogue.CurrentCell.RowIndex)
+					{
+						continue;
+					}
+					row.Cells[col.Index].Value = gridDialogue.CurrentCell.Value;
+				}
+			}
+		}
+
+		private void gridDialogue_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				try
+				{
+					gridDialogue.CurrentCell = gridDialogue.Rows[e.RowIndex].Cells[e.ColumnIndex];
+				}
+				catch
+				{
+					gridDialogue.CurrentCell = null;
+				}
+			}
+		}
+
+		private void mnuContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			if (gridDialogue.CurrentCell == null)
+			{
+				e.Cancel = true;
+				return;
+			}
+			DataGridViewColumn col = gridDialogue.CurrentCell.OwningColumn;
+			if (col == ColImageOptions || col == ColDelete)
+			{
+				e.Cancel = true;
+				return;
+			}
 		}
 	}
 }
