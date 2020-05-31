@@ -781,7 +781,11 @@ function allowProgression (nextPhase) {
         endWaitDisplay = (endWaitDisplay + 1) % 4;
         
 		/* someone is still forfeiting */
-		$mainButton.html("Wait" + dots);
+        if (humanPlayer.checkStatus(STATUS_MASTURBATING)) {
+            $mainButton.html((humanPlayer.gender == eGender.MALE ? "Fap" : "Schlick") + dots);
+        } else {
+            $mainButton.html("Wait" + dots);
+        }
 	}
 }
 
