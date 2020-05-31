@@ -1114,7 +1114,7 @@ function updateDebugState(show)
 
 function detectCheat() {
     /* detect common cheating attempt */
-    if (players[0].hand.cards[0] === "clubs10") {
+    if (humanPlayer.hand && humanPlayer.hand.cards[0] === "clubs10") {
         players.forEach(function(p, i) {
             if (i == 0) {
                 players[i].hand.cards = [ 7, 5, 4, 3, 2 ].map(function(n, i) { return new Card(i % 4, n); });
