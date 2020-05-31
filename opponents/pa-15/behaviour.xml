@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7.3 at 8:08:44 AM on May 31, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 1:02:32 AM on June 01, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7.3</version>
     <first>PA-15</first>
@@ -199,6 +199,65 @@
                 <keyframe time="0.5" rotation="-195" />
             </directive>
         </pose>
+        <pose id="7-climax">
+            <sprite id="bliss" z="1" src="pa-15/7-bliss.png" alpha="100" />
+            <sprite id="climax" delay="0.5" z="1" src="pa-15/posemaker/7-climax.png" x="0" y="0" />
+            <sprite id="glow" delay="0.5" z="1" src="pa-15/pieces/7-outline.png" x="0" y="0" alpha="100" />
+            <sprite id="bluel1" src="pa-15/pieces/bluel.png" x="-594" y="696" alpha="100" />
+            <sprite id="bluel2" delay="0.05" src="pa-15/pieces/bluel.png" x="-494" y="696" alpha="100" />
+            <sprite id="bluesq1" delay="0.1" src="pa-15/pieces/bluesq1.png" x="-304" y="560" alpha="100" />
+            <sprite id="bluel3" delay="0.15" src="pa-15/pieces/bluel.png" x="-110" y="714" alpha="100" />
+            <sprite id="bluesq2-1" delay="0.2" src="pa-15/pieces/bluesq2.png" x="27" y="609" alpha="100" />
+            <sprite id="bluel4" delay="0.25" src="pa-15/pieces/bluel.png" x="164" y="710" alpha="100" />
+            <sprite id="bluesq2-2" delay="0.3" src="pa-15/pieces/bluesq2.png" x="299" y="609" scalex="-1" alpha="100" rotation="-2" />
+            <sprite id="bluel5" delay="0.35" src="pa-15/pieces/bluel.png" x="428" y="707" alpha="100" />
+            <sprite id="blueh" delay="0.4" src="pa-15/pieces/blueh.png" x="492" y="523" alpha="100" />
+            <directive type="animation" id="bliss" ease="smooth" interpolation="none">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.5" alpha="0" />
+            </directive>
+            <directive type="animation" id="glow" delay="0.5" ease="smooth" interpolation="linear">
+                <keyframe time="0" x="0" y="0" alpha="100" />
+                <keyframe time="0.25" alpha="100" />
+                <keyframe time="0.75" alpha="0" />
+            </directive>
+            <directive type="animation" id="bluel1" ease="smooth" interpolation="none">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.75" alpha="0" />
+            </directive>
+            <directive type="animation" id="bluel2" delay="0.05" ease="smooth" interpolation="none">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.76" alpha="0" />
+            </directive>
+            <directive type="animation" id="bluesq1" delay="0.1" ease="smooth" interpolation="none">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.75" alpha="0" />
+            </directive>
+            <directive type="animation" id="bluel3" delay="0.15" ease="smooth" interpolation="none">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.74" alpha="0" />
+            </directive>
+            <directive type="animation" id="bluesq2-1" delay="0.2" ease="smooth" interpolation="none">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.75" alpha="0" />
+            </directive>
+            <directive type="animation" id="bluel4" delay="0.25" ease="smooth" interpolation="none">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.76" alpha="0" />
+            </directive>
+            <directive type="animation" id="bluesq2-2" delay="0.3" ease="smooth" interpolation="none">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.76" alpha="0" />
+            </directive>
+            <directive type="animation" id="bluel5" delay="0.35" ease="smooth" interpolation="none">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.7499999" alpha="0" />
+            </directive>
+            <directive type="animation" id="blueh" delay="0.4" ease="smooth" interpolation="none">
+                <keyframe time="0" alpha="100" />
+                <keyframe time="0.75" alpha="0" />
+            </directive>
+        </pose>
     </poses>
 
     <behaviour>
@@ -393,8 +452,8 @@
             </case>
             <case stage="6" priority="3">
                 <condition count="2" status="alive" />
-                <condition role="other" layers="0" />
-                <state img="#-smug.png">Last hand, ~name~. Time to put everything on the line.</state>
+                <condition role="other" var="last_hand" layers="0" />
+                <state img="#-smug.png">Last hand, ~last_hand~. Time to put everything on the line.</state>
             </case>
             <case stage="5" priority="2">
                 <condition role="self" timeInStage="0" />
@@ -948,7 +1007,7 @@
                 <state img="#-angry.png">I can only wait so long to see the good stuff, you know.</state>
                 <state img="#-thinking.png">I know that you have to start small before you get to the good stuff, but...</state>
                 <state img="#-thinking.png">Is this some kind of "letdown" play or something..?</state>
-                <state img="#-bored.png">Yeah, everything can't be exciting all the time, but they could have been exciting &lt;i&gt;this&lt;/i&gt; time...</state>
+                <state img="#-bored.png">Yeah, everything can't be exciting all the time, but ~target.ifMale(he|she)~ could have been exciting &lt;i&gt;this&lt;/i&gt; time...</state>
             </case>
         </trigger>
 
@@ -1028,7 +1087,7 @@
                 <state img="#-angry.png">I can only wait so long to see the good stuff, you know.</state>
                 <state img="#-thinking.png">I know that you have to start small before you get to the good stuff, but...</state>
                 <state img="#-thinking.png">Is this some kind of "letdown" play or something..?</state>
-                <state img="#-bored.png">Yeah, everything can't be exciting all the time, but they could have been exciting &lt;i&gt;this&lt;/i&gt; time...</state>
+                <state img="#-bored.png">Yeah, everything can't be exciting all the time, but ~target.ifMale(he|she)~ could have been exciting &lt;i&gt;this&lt;/i&gt; time...</state>
             </case>
         </trigger>
 
@@ -1852,36 +1911,61 @@
                 <test expr="~clothing.type~" value="minor" />
                 <state img="#-inviting.png" marker="play1=1">Hmm? Playing around on the job? Yeah, I do it all the time.</state>
             </case>
-            <case stage="0-4" id="1" oneShotId="8" priority="0">
+            <case stage="0-4 8" id="1" oneShotId="8" priority="0">
                 <condition filter="fighter" role="target" />
-                <test expr="~clothing.type~" value="minor" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
                 <state img="#-victorious.png" marker="minor_fighter">
                     <alt-img stage="3-4">#-victorious.png</alt-img>
                     <text>Tactical Dolls may be expert marksmen, but we've also been programmed with some of the world's finest combat techniques.</text>
                 </state>
             </case>
-            <case stage="0-4" id="4" oneShotId="7" priority="0">
+            <case stage="0-4 8" id="4" oneShotId="7" priority="0">
                 <condition filter="aggressive" role="target" />
-                <test expr="~clothing.type~" value="minor" />
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
                 <state img="#-interested.png" marker="+minor_agg">
                     <alt-img stage="3">#-interested.png</alt-img>
                     <alt-img stage="4">#-smug.png</alt-img>
                     <text>I'd love to have a hothead like you on my team, ~name~.</text>
                 </state>
             </case>
-            <case stage="0-4" id="7" oneShotId="10" priority="0">
+            <case stage="0-4 8" id="7" oneShotId="10" priority="0">
                 <condition filter="military" role="target" />
-                <test expr="~clothing.type~" value="minor" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
                 <state img="#-satisfied.png" marker="minor_mil">You're military, aren't you, ~name~? I can tell that you have experience on the battlefield.</state>
             </case>
-            <case stage="0-4" id="8" oneShotId="11" priority="0">
+            <case stage="0-4 8" id="8" oneShotId="11" priority="0">
                 <condition filter="tsundere" role="target" />
-                <test expr="~clothing.type~" value="minor" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
                 <state img="#-satisfied.png" marker="minor_tsun">Ah. I've spent enough time around a certain German rifle to know what kind of character you are.</state>
             </case>
-            <case stage="0-4" id="10" oneShotId="9" priority="0">
+            <case stage="0-4 8" id="10" oneShotId="9" priority="0">
                 <condition filter="indifferent" role="target" />
-                <test expr="~clothing.type~" value="minor" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
                 <state img="#-bored.png" marker="minor_ind">
                     <alt-img stage="3-4">#-angry.png</alt-img>
                     <text>Oh, ~name~, you're one of &lt;i&gt;those&lt;/i&gt; people, huh? The boring kind.</text>
@@ -1907,38 +1991,68 @@
                 <test expr="~clothing.type~" value="extra" />
                 <state img="#-bored.png">With your ~clothing~ out of the way we can get a better look at your... head..? That's not exactly going to get &lt;i&gt;anyone&lt;/i&gt; excited.</state>
             </case>
-            <case stage="0-4" id="19" oneShotId="12" priority="0">
+            <case stage="0-4 8" id="19" oneShotId="12" priority="0">
                 <condition filter="smart" role="target" />
-                <test expr="~clothing.type~" value="minor" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
                 <state img="#-satisfied.png" marker="minor_sma">Some people think I'm an idiotic risk taker, but they don't know what's really going on. </state>
             </case>
-            <case stage="0-4" id="21" oneShotId="19" priority="0">
+            <case stage="0-4 8" id="21" oneShotId="19" priority="0">
                 <condition filter="school_uniform" role="target" />
-                <test expr="~clothing.type~" value="minor" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
                 <state img="#-thinking.png" marker="+minor_uni">
                     <alt-img stage="3">custom:#-smug</alt-img>
                     <alt-img stage="4">#-smug.png</alt-img>
                     <text>How did you get in here wearing something like &lt;i&gt;that&lt;/i&gt;, name? It's a costume, right?</text>
                 </state>
             </case>
-            <case stage="0-4" id="24" oneShotId="22" priority="0">
+            <case stage="0-4 8" id="24" oneShotId="22" priority="0">
                 <condition filter="scantily-clad" role="target" />
-                <test expr="~clothing.type~" value="minor" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
                 <state img="#-thinking.png" marker="minor_sca">Do you normally go around wearing so little, ~name~? </state>
             </case>
-            <case stage="0-4" id="26" oneShotId="24" priority="0">
+            <case stage="0-4 8" id="26" oneShotId="24" priority="0">
                 <condition filter="green_hair" role="target" />
-                <test expr="~clothing.type~" value="minor" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
                 <state img="#-cool.png" marker="minor_gh">T-Dolls are usually manufactured with pretty specific colors in mind. </state>
             </case>
-            <case stage="0-4" id="48" oneShotId="59" priority="0">
+            <case stage="0-4 8" id="48" oneShotId="59" priority="0">
                 <condition filter="hero" role="target" />
-                <test expr="~clothing.type~" value="minor" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
                 <state img="#-interested.png" marker="minor_hero">You seem like the kind of person who goes around saving damsels in distress. </state>
             </case>
-            <case stage="0-4" id="50" oneShotId="61" priority="0">
+            <case stage="0-4 8" id="50" oneShotId="61" priority="0">
                 <condition filter="princess" role="target" />
-                <test expr="~clothing.type~" value="minor" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
                 <state img="#-cool.png" marker="minor_prncss">You seem a little out of your element, princess. Don't worry, thats a good thing. </state>
             </case>
         </trigger>
@@ -2124,99 +2238,88 @@
                 </alternative>
                 <state img="#-cool.png">Don't worry, I won't tell anyone. Isn't it exciting to try and keep secrets from everyone else?</state>
             </case>
-            <case stage="0-4" id="3" oneShotId="14">
+            <case stage="0-2" oneShotId="6">
+                <condition status="exposed" role="target" stage="0-1" />
+                <test expr="~clothing.type~" value="extra" />
+                <state img="#-bliss.png">Wow, that's... incredible. As much as I'd love to join you - and I really would - there's a certain charm to slowly being pushed to your limits.</state>
+            </case>
+            <case stage="0-4 8" id="3" oneShotId="14">
                 <condition filter="fighter" role="target" />
                 <condition role="self" saidMarker="minor_fighter" />
-                <test expr="~clothing.type~" value="minor" />
                 <state img="#-bliss.png">I can remember each time I've needed to take a Sangvis down in hand-to-hand combat. Ah, I'm getting all excited just thinking about it.</state>
             </case>
-            <case stage="0-4" id="5" oneShotId="13">
+            <case stage="0-4 8" id="5" oneShotId="13">
                 <condition filter="aggressive" role="target" />
                 <condition role="self" saidMarker="minor_agg" />
-                <test expr="~clothing.type~" value="minor" />
                 <state img="#-bliss.png">
                     <alt-img stage="3-4">#-bliss.png</alt-img>
                     <text>Back to back, encircled by Sangvis forces, with no options left but to fight our way out... doesn't that just sound awesome?</text>
                 </state>
             </case>
-            <case stage="0-4" id="6" oneShotId="16">
+            <case stage="0-4 8" id="6" oneShotId="16">
                 <condition filter="military" role="target" />
                 <condition role="self" saidMarker="minor_mil" />
-                <test expr="~clothing.type~" value="minor" />
                 <state img="#-cool.png">Someone like you just &lt;i&gt;has&lt;/i&gt; to have some thrilling stories to tell. How about we have a little chat at some point?</state>
             </case>
-            <case stage="0-4" id="9" oneShotId="17">
+            <case stage="0-4 8" id="9" oneShotId="17">
                 <condition filter="tsundere" role="target" />
                 <condition role="self" saidMarker="minor_tsun" />
-                <test expr="~clothing.type~" value="minor" />
                 <state img="#-smug.png">
                     <alt-img stage="3">custom:#-smug</alt-img>
                     <alt-img stage="4">#-smug.png</alt-img>
                     <text>Y'know, your life could become a whole lot more exciting if you were just a little more honest with yourself.</text>
                 </state>
             </case>
-            <case stage="0-4" id="11" oneShotId="15">
+            <case stage="0-4 8" id="11" oneShotId="15">
                 <condition filter="indifferent" role="target" />
                 <condition role="self" saidMarker="minor_ind" />
-                <test expr="~clothing.type~" value="minor" />
                 <state img="#-bored.png">I was about to come over and check your pulse to see if your heart was still beating. I just couldn't tell from your face.</state>
             </case>
-            <case stage="0-4" id="20" oneShotId="18">
+            <case stage="0-4 8" id="20" oneShotId="18">
                 <condition filter="smart" role="target" />
                 <condition role="self" saidMarker="minor_sma" />
-                <test expr="~clothing.type~" value="minor" />
                 <state img="#-cool.png">Don't underestimate my Digi-Mind. I'm always calculating ten steps ahead. </state>
             </case>
-            <case stage="0-4" id="22" oneShotId="20">
+            <case stage="0-4 8" id="22" oneShotId="20">
                 <condition filter="school_uniform" role="target" />
                 <condition role="self" saidMarker="minor_uni" />
-                <test expr="~clothing.type~" value="minor" />
                 <state img="#-interested.png">Was it a sneaking mission? That sounds kind of exciting, actually. </state>
             </case>
-            <case stage="0-4" id="25" oneShotId="23">
+            <case stage="0-4 8" id="25" oneShotId="23">
                 <condition filter="scantily-clad" role="target" />
                 <condition role="self" saidMarker="minor_sca" />
-                <test expr="~clothing.type~" value="minor" />
                 <state img="#-bliss.png">
                     <alt-img stage="3">custom:#-smug</alt-img>
                     <alt-img stage="4">#-smug.png</alt-img>
                     <text>No, no, I get it. That feeling of liberation is really satisfying, I know. </text>
                 </state>
             </case>
-            <case stage="0-4" id="27" oneShotId="25">
+            <case stage="0-4 8" id="27" oneShotId="25">
                 <condition filter="green_hair" role="target" />
                 <condition role="self" saidMarker="minor_gh" />
-                <test expr="~clothing.type~" value="minor" />
                 <state img="#-victorious.png">
                     <alt-img stage="3">custom:#-smug</alt-img>
                     <alt-img stage="4">#-smug.png</alt-img>
                     <text>Some people think I can come with green hair, but that's just a case of mistaken identity.</text>
                 </state>
             </case>
-            <case stage="0-4" id="49" oneShotId="60">
+            <case stage="0-4 8" id="49" oneShotId="60">
                 <condition filter="hero" role="target" />
                 <condition role="self" saidMarker="minor_hero" />
-                <test expr="~clothing.type~" value="minor" />
                 <state img="#-cool.png">
                     <alt-img stage="3">custom:#-smug</alt-img>
                     <alt-img stage="4">#-smug.png</alt-img>
                     <text>If you're gonna try and save me sometime, make sure it's only when I'm all out of options, okay? </text>
                 </state>
             </case>
-            <case stage="0-4" id="51" oneShotId="62">
+            <case stage="0-4 8" id="51" oneShotId="62">
                 <condition filter="princess" role="target" />
                 <condition role="self" saidMarker="minor_prncss" />
-                <test expr="~clothing.type~" value="minor" />
                 <state img="#-bliss.png">
                     <alt-img stage="3">custom:#-smug</alt-img>
                     <alt-img stage="4">#-smug.png</alt-img>
                     <text>There's a lot of excitement to get out of trying something new. Especially when it's something &lt;i&gt;this&lt;/i&gt; daring.</text>
                 </state>
-            </case>
-            <case stage="0-2" oneShotId="6">
-                <condition status="exposed" role="target" stage="0-1" />
-                <test expr="~clothing.type~" value="extra" />
-                <state img="#-bliss.png">Wow, that's... incredible. As much as I'd love to join you - and I really would - there's a certain charm to slowly being pushed to your limits.</state>
             </case>
             <case stage="7">
                 <condition status="naked" role="target" />
@@ -2312,20 +2415,26 @@
                     <alt-img stage="3-6">#-satisfied.png</alt-img>
                     <text>Make sure you're enjoying yourself, ~name~. That's the most important part of this all.</text>
                 </state>
-                <state img="#-bliss.png">Look at ~name~ go... They're not going to be able to forget this pleasure after today.</state>
+                <state img="#-bliss.png">Look at ~name~ go... ~Target.ifMale(he|she)~'s not going to be able to forget this pleasure after today.</state>
                 <state img="#-bliss.png">Just look at ~name~ right now. I think &lt;i&gt;someone's&lt;/i&gt; addicted to this now.</state>
                 <state img="#-bliss.png">Ah, seriously, this is all getting me &lt;i&gt;really&lt;/i&gt; fired up.</state>
                 <state img="#-bliss.png">The more you get worked up, the more &lt;i&gt;I&lt;/i&gt; get worked up, too.</state>
             </case>
-            <case stage="0-6">
+            <case stage="6">
                 <state img="#-bliss.png">You really know how to get a girl excited. It's taking all I've got not to get down there and join you.</state>
-                <state img="#-interested.png">If you keep teasing me like this I might just throw everything off and join you.</state>
                 <state img="#-interested.png">I won't be able to hold myself back if you keep making those sweet sounds.</state>
                 <state img="#-bliss.png">Are you trying to get me to lose and join you? It's kind of working.</state>
+                <state img="#-interested.png">If you keep teasing me like this I might have to skip losing and just come join you.</state>
             </case>
             <case stage="7">
                 <state img="#-bliss.png">Masturbating while being watched is one thing, but this mutual thing we have going on... &lt;i&gt;it's really turning me on&lt;/i&gt;.</state>
                 <state img="#-bliss.png">I'm glad that you've joined me, ~name~. Some things get more and more fun the more people you're with.</state>
+            </case>
+            <case stage="0-5">
+                <state img="#-bliss.png">You really know how to get a girl excited. It's taking all I've got not to get down there and join you.</state>
+                <state img="#-interested.png">If you keep teasing me like this I might just throw everything off and join you.</state>
+                <state img="#-interested.png">I won't be able to hold myself back if you keep making those sweet sounds.</state>
+                <state img="#-bliss.png">Are you trying to get me to lose and join you? It's kind of working.</state>
             </case>
         </trigger>
 
@@ -2603,6 +2712,7 @@
         <trigger id="masturbating">
             <case stage="7" oneShotId="51" priority="1">
                 <condition count="2" status="masturbating" var="0" />
+                <condition status="masturbating" role="other" timeInStage="0" />
                 <state img="#-inviting.png">Hey there cutie. Glad you could join me.</state>
             </case>
             <case stage="7">
@@ -2633,7 +2743,7 @@
 
         <trigger id="finishing_masturbating">
             <case stage="7">
-                <state img="#-bliss.png">&lt;i&gt;Aaaahnnnghh..!&lt;/i&gt;</state>
+                <state img="custom:#-climax">&lt;i&gt;Aaaahnnnghh..!&lt;/i&gt;</state>
             </case>
         </trigger>
 
