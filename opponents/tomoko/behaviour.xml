@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7.3 at 10:58:45 PM on May 28, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 7:09:03 PM on June 01, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7.3</version>
     <first>Tomoko</first>
@@ -1984,7 +1984,7 @@
                 <state img="#-idle1.png" oneShotId="299" marker="megumin_introvert">Do you consider yourself an introvert Megumin?</state>
             </case>
             <case stage="0-2" priority="0">
-                <condition filter="lonely" var="lonelyname" />
+                <condition count="2-" filter="lonely" var="lonelyname" />
                 <state img="#-shy.png" oneShotId="728">Y-You seem l-like kind of a loner, ~lonelyname~... Must suck to be someone like you...</state>
                 <state img="#-smug.png" oneShotId="729">Y-You want friends, ~lonelyname~? I c-could give you t-tips on how to  be p-popular like me, s-sometime...</state>
             </case>
@@ -2226,6 +2226,10 @@
             <case stage="0">
                 <condition role="other" character="sayaka" />
                 <state img="#-angery.png">I-I don't spend &lt;i&gt;all&lt;/i&gt; day in my room! Just... most of it.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="pa-15" />
+                <state img="#-angery.png">Shut the fuck &lt;i&gt;up&lt;/i&gt;. I'm actually super cheerful and fun.</state>
             </case>
         </trigger>
 
@@ -2707,6 +2711,10 @@
                 <state img="#-strip.png">I-I'm not &lt;i&gt;that&lt;/i&gt; upset, Sayaka... I-I've been through w-worse...</state>
             </case>
             <case stage="0">
+                <condition role="other" character="pa-15" />
+                <state>Ugh. At least if I got hit by a 40mm I wouldn't have to listen to your bullshit...</state>
+            </case>
+            <case stage="0">
                 <test expr="~background~" value="street" />
                 <state img="#-strip.png">I... It's j-just a t-tie... &lt;i&gt;(I wanted to be popular but not like this!)&lt;/i&gt;</state>
             </case>
@@ -2784,9 +2792,9 @@
                 <state img="#-smug.png">It's, uh, f-fine... you can say it in a weird way Megumin...</state>
             </case>
             <case stage="5">
-                <condition role="other" character="megumin" sayingMarker="megumin_tomoko_secondSkirt" />
-                <state img="#-surprised.png" marker="megumin_longbra">It's not a second skirt! It's just like a long t-shirt!</state>
-                <state img="#-angery.png" marker="megumin_sexyskirt">Is it sexy?... I thought it'd be sexy...</state>
+                <condition role="other" character="megumin" sayingMarker="megumin_tomoko_plainPanties" />
+                <state img="#-surprised.png" marker="megumin_reservedwoman">L-Look. My panties are &lt;i&gt;sexy!&lt;/i&gt; Okay?! They might be plain but that's the sign of a mature and reserved woman!</state>
+                <state img="#-shy.png" marker="megumin_prettyembarrassing">I-I dunno... T-This is &lt;i&gt;still&lt;/i&gt; pretty embarrassing...</state>
             </case>
             <case stage="8">
                 <condition role="other" character="natsuki" sayingMarker="hairy1" />
@@ -2860,6 +2868,10 @@
             <case stage="6">
                 <condition role="other" character="komi-san" sayingMarker="tomoko_poop_curry" />
                 <state img="#-serene.png">Heh! What?! Where did that come from? Uh, probably curry-flavored poop?</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="megumin" sayingMarker="megumin_tomoko_encourage2" />
+                <state img="#-idle1.png">Yeah... I mean, this game is &lt;i&gt;all&lt;/i&gt; luck anyway. So losing doesn't mean anything. Okay? Nobody is allowed to feel a  sense of achievement.</state>
             </case>
             <case stage="1">
                 <condition role="other" character="amy" />
@@ -3024,6 +3036,10 @@
             <case stage="6">
                 <condition role="other" character="sayaka" />
                 <state img="#-angery.png">S-Shut up! T-They will help you w-win &lt;i&gt;anyone&lt;/i&gt;! I-I've learned m-more about men from the game "Harem Mistress" than any dumb t-textbook!</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="pa-15" />
+                <state img="#-angery.png">I go after what I want! I don't just wallow in my own self-pity! I... Erm, just usually fail at it! But I try, okay? So a little bit less of the &lt;i&gt;judgement&lt;/i&gt;, you bag of dicks.</state>
             </case>
             <case stage="3">
                 <condition role="self" consecutiveLosses="3" />
@@ -6162,6 +6178,10 @@
         </trigger>
 
         <trigger id="opponent_start_masturbating">
+            <case stage="10" priority="1000">
+                <condition role="target" character="megumin" saidMarker="TomomegStart" notSaidMarker="megumin_tomoko_professionalism" />
+                <state img="custom:new_pose"></state>
+            </case>
             <case stage="0-8">
                 <condition role="target" character="uravity" />
                 <state img="#-thinking.png">Damn, masturbating with powers? Could be &lt;i&gt;super&lt;/i&gt; fucking hot.</state>
@@ -6169,6 +6189,10 @@
         </trigger>
 
         <trigger id="opponent_masturbating">
+            <case stage="10" priority="1000">
+                <condition role="target" character="megumin" saidMarker="TomomegStart" notSaidMarker="megumin_tomoko_professionalism" />
+                <state img="custom:new_pose"></state>
+            </case>
             <case stage="0-8 10">
                 <condition role="target" character="natsuki" stage="9" />
                 <state img="#-thinking.png" oneShotId="284" marker="natsuki_cexy">I-it’s cute… and sexy. Cexy? Seute? No? Uh, I’ll keep thinking.</state>
@@ -6186,6 +6210,20 @@
                 <state img="#-horny.png" oneShotId="575" marker="ochako_hornysuperpower7">If you could fly... you could masturbate &lt;i&gt;in the skies&lt;/i&gt;. You'd have to be careful where you finished though. Don't wanna cum on some random strangers head accidentally.</state>
                 <state img="#-horny.png" oneShotId="576" marker="ochako_hornysuperpower8">Time travel! Lady Godiva was famous just for riding naked on a horse, but what if she'd fucking finger-blasted herself while doing so!</state>
                 <state img="#-horny.png" oneShotId="577" marker="ochako_hornysuperpower9">Additional limbs. Two hands for my new two pussies!</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_heavy_masturbating">
+            <case stage="10" priority="1000">
+                <condition role="target" character="megumin" saidMarker="TomomegStart" notSaidMarker="megumin_tomoko_professionalism" />
+                <state img="custom:new_pose"></state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_finished_masturbating">
+            <case stage="10" priority="1000">
+                <condition role="target" character="megumin" saidMarker="TomomegStart" notSaidMarker="megumin_tomoko_professionalism" />
+                <state img="custom:new_pose"></state>
             </case>
         </trigger>
 
@@ -6397,6 +6435,11 @@
                 <state img="#-thinking.png">&lt;i&gt;(I won't judge... it's easier when you aren't only using your hands...)&lt;/i&gt;</state>
                 <state img="#-idle1.png">&lt;i&gt;(She's definitely stuck that up her vagina before. I would...)&lt;/i&gt;</state>
             </case>
+            <case stage="0-8 10">
+                <condition role="target" character="megumin" />
+                <state img="#-shy.png">&lt;i&gt;(I guess Megumin is going to show us a more personal explosion…)&lt;/i&gt;</state>
+                <state img="#-smug.png" marker="megumin_firsttimemasturbating">Have you done this before Megumin? </state>
+            </case>
             <case stage="0-8">
                 <condition filter="enf" role="target" />
                 <state img="#-thinking.png">&lt;i&gt;(I wonder if that virgin even knows how to masturbate...)&lt;/i&gt;</state>
@@ -6405,11 +6448,6 @@
             <case stage="0-2" oneShotId="65">
                 <condition role="other" character="palutena" stage="7" />
                 <state img="#-thinking.png">&lt;i&gt;(I didn’t know Gods could be sluts too…)&lt;/i&gt;</state>
-            </case>
-            <case stage="0-8 10">
-                <condition role="other" character="megumin" />
-                <state img="#-shy.png">&lt;i&gt;(I guess Megumin is going to show us a more personal explosion…)&lt;/i&gt;</state>
-                <state img="#-smug.png" marker="megumin_firsttimemasturbating">Have you done this before Megumin? </state>
             </case>
             <case stage="0-8">
                 <condition role="other" character="rin" />
@@ -6939,10 +6977,6 @@
                 <condition role="other" character="amy" stage="9-10" />
                 <state img="#-orgasm.png">Ooch! My gooch! I mean, something sexier!</state>
             </case>
-            <case stage="9" id="100" priority="102">
-                <condition role="other" character="komi-san" saidMarker="fantasizing_bi" sayingMarker="finish_manbagi" />
-                <state img="#-orgasm.png" oneShotId="715" marker="komi_tomokogay">&lt;i&gt;(She has such a cute voice... Wait, isn't that a g-girls name?!)&lt;/i&gt;</state>
-            </case>
             <case stage="9">
                 <state img="#-orgasm.png" marker="oochmygooch">Ooch! My gooch!</state>
             </case>
@@ -7000,6 +7034,10 @@
                 <condition role="other" character="miko" />
                 <condition role="self" timeInStage="2" />
                 <state img="#-victorious.png" oneShotId="683" marker="miko_dirtytalk">Yeah. That kind of dirty talk is considered sexy I think. You should &lt;i&gt;totally&lt;/i&gt; try it Miko.</state>
+            </case>
+            <case stage="9" id="100" priority="102">
+                <condition role="other" character="komi-san" saidMarker="finish_manbagi" />
+                <state img="#-orgasm.png" oneShotId="715" marker="komi_tomokogay">&lt;i&gt;(She has such a cute voice... Wait, isn't that a g-girls name?!)&lt;/i&gt;</state>
             </case>
             <case stage="10">
                 <condition role="other" character="komi-san" />
@@ -7091,6 +7129,22 @@
                 <condition role="other" character="komi-san" />
                 <condition role="self" saidMarker="komi_tomokogay2" />
                 <state img="#-excited.png" oneShotId="717" marker="komi_tomokogay3">Y-You k-know Komi-san... I-I might like g-girls too... M-Maybe we c-could hang out s-sometime?!</state>
+            </case>
+            <case stage="10">
+                <condition role="other" character="megumin" sayingMarker="megumin_tomoko_awkward" />
+                <state img="#-smug.png">You know... We could totally talk about some of the noises you made during that. &lt;i&gt;Heh&lt;/i&gt;.</state>
+            </case>
+            <case stage="10">
+                <condition role="other" character="megumin" sayingMarker="megumin_tomoko_borrowing" />
+                <state img="#-horny.png">F-For s-sure! B-But I h-have to be there to watch! Um, just to m-make sure y-you don't use it &lt;i&gt;incorrectly!&lt;/i&gt;</state>
+            </case>
+            <case stage="10">
+                <condition role="other" character="megumin" sayingMarker="megumin_tomoko_mansionInvite" />
+                <state img="#-shy.png">I could invite you to my room? It's a little less extravagant than a mansion and it smells weird most the time...</state>
+            </case>
+            <case stage="10">
+                <condition role="other" character="megumin" sayingMarker="megumin_tomoko_assistance" />
+                <state img="#-idle.png">No problem! I cummed a little during it, so we're &lt;i&gt;all&lt;/i&gt; good. You should maybe wash your back by the way.</state>
             </case>
             <case stage="10">
                 <condition role="other" character="weiss_schnee" />
@@ -7341,36 +7395,9 @@
         </trigger>
 
         <trigger id="global">
-            <case stage="10" priority="1000">
-                <alternative>
-                    <condition role="other" character="megumin" pose="Tomomeg_1" />
-                </alternative>
-                <alternative>
-                    <condition role="other" character="megumin" pose="Tomomeg_2" />
-                </alternative>
-                <alternative>
-                    <condition role="other" character="megumin" pose="Tomomeg_3" />
-                </alternative>
-                <alternative>
-                    <condition role="other" character="megumin" pose="Tomomeg_4" />
-                </alternative>
-                <alternative>
-                    <condition role="other" character="megumin" pose="Tomomeg_finished" />
-                </alternative>
-                <alternative>
-                    <condition role="other" character="megumin" pose="Tomomeg_finishing" />
-                </alternative>
-                <alternative>
-                    <condition role="other" character="megumin" pose="Tomomeg_start" />
-                </alternative>
-                <state img="custom:new_pose"></state>
-            </case>
             <case stage="10" priority="999">
                 <condition role="other" character="megumin" sayingMarker="TomomegStart" />
                 <state img="#-excited.png">Uh, Megumin... You okay? You need, um, help there... or... something? I-I could, um, you know... Assist? Y-You could use my personal massager! J-Just to... make, i-it easier!</state>
-            </case>
-            <case stage="10" priority="999">
-                <condition role="other" character="megumin" saidMarker="TomomegStart" notSaidMarker="megumin_tomoko_professionalism" />
             </case>
             <case stage="10" priority="999">
                 <condition role="other" character="megumin" sayingMarker="megumin_tomoko_professionalism" />
