@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7.3 at 9:39:06 PM on May 29, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 7:49:40 PM on May 31, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7.3</version>
     <first>Meia</first>
@@ -4372,6 +4372,18 @@
                 <state img="#-reminiscing.png" marker="jolyne_eyepiece">...It's nothing, Jolyne.  Just a family memento...has a relative given you anything?</state>
                 <state img="#-reminiscing.png" marker="jolyne_eyepiece">...It was a gift from family, Jolyne.  That's all...do you have something similar?</state>
             </case>
+            <case stage="0-2">
+                <condition role="other" character="pa-15" saying="if Sangvis attacked" />
+                <state img="#-concerned.png" marker="pa_disarmed">...Are you saying you're a target for some hostile organization, PA-15?  Well, you may have disarmed yourself, but &lt;i&gt;I&lt;/i&gt; have not.</state>
+                <state img="#-explaining.png" marker="pa_disarmed">You only have yourself to blame if you're attacked after unloading your weapon, PA-15.  I still have mine, if providing assistance is feasible.</state>
+                <state img="#-critical.png" marker="pa_disarmed">"Sangvis"?  ...I happen to be armed myself, in case this enemy of yours attacks indiscriminately.</state>
+            </case>
+            <case stage="3-5">
+                <condition role="other" character="pa-15" saying="if Sangvis attacked" />
+                <state img="#-annoyed.png" marker="pa_disarmed">"Sangvis"?  You have an &lt;i&gt;enemy,&lt;/i&gt; and you've disarmed yourself?  Now I'm regretting having done the same...</state>
+                <state img="#-annoyed.png" marker="pa_disarmed">...I didn't realize you were the target of hostiles, PA-15.  I should retrieve my laser ring before this situation worsens.</state>
+                <state img="#-critical.png" marker="pa_disarmed">...PA-15, are you expecting an enemy attack?  I shouldn't have disarmed myself--but at least my laser ring doesn't require ammunition.</state>
+            </case>
             <case stage="0-3" totalRounds="3">
                 <test expr="~background~" value="inventory" />
                 <state img="#-stretching.png">...At least this bar is clean and comfortable.  I don't care for bright lights...or constant chatter.</state>
@@ -6008,6 +6020,11 @@
                 <condition role="other" character="pa-15" saying="Meia" />
                 <state img="#-concerned.png" marker="pa_resp0">...We don't seem alike at all, PA-15.  Unless you mean how we've both brought weapons.</state>
                 <state img="#-advising.png" marker="pa_resp0">...Aside from both being armed, I don't see a resemblance between us, PA-15.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="galatea" saying="offhand questions" />
+                <state img="#-losing-bodysuit.png" marker="galatea_resp23">You were...&lt;i&gt;sculpted&lt;/i&gt; by a man, correct?  Are you meant to represent men's image of the ideal woman?</state>
+                <state img="#-losing-bodysuit.png" marker="galatea_resp23">Well...your creator was a man, wasn't he?  Do you embody Earth men's ideals of feminine beauty?</state>
             </case>
             <case stage="0" alsoPlaying="9s">
                 <state img="#-disappointed.png">...Is there something wrong with any of those things?</state>
@@ -19442,6 +19459,13 @@
                 <condition role="target" character="mary" stage="1" saidMarker="Meia_quirk" />
                 <state img="#-bored.png">If it helps me understand Earth's culture as a whole, then I wouldn't mind an explanation at all...but you don't seem cooperative.</state>
                 <state img="#-concerned.png">...If the "Internet" is important to Earth's culture, then yes, I'd like that.  Surely you can summarize if you're so familiar with it.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="target" character="pa-15" stage="1" sayingMarker="meia_empty" />
+                <state img="#-disappointed.png" marker="pa1s">There's no need for that.  I understand wanting to be armed in a place like this...</state>
+                <state img="#-stoic.png" marker="pa1s">That's--not what I wanted.  Someone might take advantage of you here--you shouldn't disarm yourself completely.</state>
+                <state img="#-confused.png" marker="pa1s">I...why would you even bring it if you'd so quickly discard all of its ammunition?  There's nothing wrong with being armed...</state>
+                <state img="#-disappointed.png" marker="pa1s">...What are you doing?  You're supposed to &lt;i&gt;always&lt;/i&gt; treat guns as loaded.  I didn't begrudge you for &lt;i&gt;having&lt;/i&gt; a weapon.</state>
             </case>
             <case stage="0-5">
                 <condition role="target" character="aella" stage="1" />
