@@ -15,7 +15,7 @@ namespace SPNATI_Character_Editor
 {
 	public class KisekaeOnlineConverter : IKisekaeConverter
 	{
-		private ImageImporter _importer = new ImageImporter();
+		private ImageImporter _importer = new ImageImporter(false);
 		private Timer _timer;
 		private HttpClient _httpClient = new HttpClient();
 		private Dictionary<int, Image> _rawCache = new Dictionary<int, Image>();

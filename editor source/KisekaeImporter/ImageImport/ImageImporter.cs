@@ -1,8 +1,10 @@
-﻿using System;
+﻿using KisekaeImporter.RemoteClient;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace KisekaeImporter.ImageImport
 {
@@ -81,6 +83,17 @@ namespace KisekaeImporter.ImageImport
 			}
 		}
 
+		private Client _client;
+
+		public ImageImporter(bool allowRemoteControl)
+		{
+			_client = new Client();
+			if (allowRemoteControl && _client.Connect())
+			{
+				_client.Run();
+			}
+		}
+
 		public Image ImportSingleImage(ImageMetadata image)
 		{
 			//SetupForImport();
@@ -104,7 +117,7 @@ namespace KisekaeImporter.ImageImport
 			}
 			catch
 			{
-			
+
 			}
 		}
 
@@ -155,17 +168,6 @@ namespace KisekaeImporter.ImageImport
 		{
 			try
 			{
-				string baseFile = Path.Combine(KklAppData, "zzReimport");
-				string dataFileName = baseFile + ".txt";
-				string[] imageFileNames = new string[] { baseFile + "..png", baseFile + ".png" }; //Different versions expect different names
-
-				//Conversion can fail if the image already exists
-				foreach (string file in imageFileNames)
-				{
-					File.Delete(file);
-				}
-
-				//Write the image data where kkl can find it
 				List<string> lines = new List<string>();
 				if (extraData != null)
 				{
@@ -183,17 +185,44 @@ namespace KisekaeImporter.ImageImport
 					}
 				}
 				lines.Add(data);
-				File.WriteAllLines(dataFileName, lines);
 
-				//Wait for KKL to pick it up and create an image
-				Image result = null;
-				Image tmp = WaitForImage(imageFileNames);
-				if (tmp != null)
+				if (_client.Connected)
 				{
-					result = new Bitmap(tmp); //free up the file so it can be deleted later
-					tmp.Dispose();
+					//use remote protocol
+					string code = string.Join("\r\n", lines).Replace("\\\\", "\\");
+					ServerRequest request = new ServerRequest("import", "code", code.Replace("\\", "\\\\"));
+					Task<ServerResponse> task = _client.SendCommand(request);
+					task.Wait();
+					ServerResponse response = task.Result;
+					return (response as ImageResponse)?.Image;
 				}
-				return result;
+				else
+				{
+					//fall back to the text file method
+
+					string baseFile = Path.Combine(KklAppData, "zzReimport");
+					string dataFileName = baseFile + ".txt";
+					string[] imageFileNames = new string[] { baseFile + "..png", baseFile + ".png" }; //Different versions expect different names
+
+					//Conversion can fail if the image already exists
+					foreach (string file in imageFileNames)
+					{
+						File.Delete(file);
+					}
+
+					//Write the image data where kkl can find it
+					File.WriteAllLines(dataFileName, lines);
+
+					//Wait for KKL to pick it up and create an image
+					Image result = null;
+					Image tmp = WaitForImage(imageFileNames);
+					if (tmp != null)
+					{
+						result = new Bitmap(tmp); //free up the file so it can be deleted later
+						tmp.Dispose();
+					}
+					return result;
+				}
 			}
 			catch
 			{

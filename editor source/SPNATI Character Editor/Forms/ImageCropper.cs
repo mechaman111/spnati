@@ -11,7 +11,7 @@ namespace SPNATI_Character_Editor.Forms
 	public partial class ImageCropper : SkinnedForm
 	{
 		private Image _previewImage;
-		private ImageImporter _importer = new ImageImporter();
+		private ImageImporter _importer = new ImageImporter(false);
 		private const int DefaultImageHeight = 1500;
 		private RectangleF _cropBounds = new Rectangle(0, 0, 10, 10);
 		private DragState _dragState = DragState.None;
