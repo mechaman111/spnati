@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7.3 at 2:21:46 PM on June 01, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 9:18:04 PM on June 01, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7.3</version>
     <first>PA-15</first>
@@ -476,6 +476,12 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0-6" totalRounds="2">
+                <condition role="other" character="jim" stage="0-6" />
+                <alternative alsoPlaying="jim" alsoPlayingStage="0-6">
+                    <condition count="1-4" filter="future" role="other" var="character" />
+                </alternative>
+            </case>
             <case stage="0-6" id="57" priority="155">
                 <condition role="other" character="saki_zls" stage="6" timeInStage="0" />
                 <state img="#-interested.png">
@@ -487,6 +493,11 @@
                 <condition role="self" notSaidMarker="JessieQA_LittleLies" />
                 <condition role="other" character="jessie" stage="0-2" sayingMarker="JessieQA_LittleLies" />
                 <state img="#-satisfied.png" marker="JessieQA_LittleLies">"Little" lies? Why stop at a "little" lie? It's a lot more exciting try to keep up a huge web of deceit, don't you think?</state>
+            </case>
+            <case stage="0-6">
+                <condition role="other" character="jura" />
+                <condition role="self" timeInStage="0" saidMarker="jura_name" />
+                <state img="#-smug.png">They didn't ask me for my name when I was hot off the production line, and something tells me you weren't asked to name yourself either.</state>
             </case>
             <case stage="0-6" id="56" priority="101">
                 <condition role="other" character="saki_zls" sayingMarker="q_saki_badluck" />
@@ -673,7 +684,7 @@
             </case>
             <case stage="6" priority="3">
                 <condition count="2" status="alive" />
-                <condition role="other" var="last_hand" layers="0" />
+                <condition count="1" status="alive" role="other" var="last_hand" layers="0" />
                 <state img="#-smug.png">Last hand, ~last_hand~. Time to put everything on the line.</state>
             </case>
             <case stage="5" priority="2">
@@ -944,6 +955,10 @@
             <case stage="1">
                 <condition role="other" character="meia" stage="0-5" sayingMarker="pa1s" />
                 <state img="#-disarmed.png" marker="meia_empty">But, look, I get what you're saying, and I wouldn't want to worry that pretty little head of yours, so here: I'll empty the magazine &lt;i&gt;and&lt;/i&gt; the chamber for you. Happy?</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="jura" stage="0-6" sayingMarker="pa1s" />
+                <state img="#-puzzled.png" marker="jura_name">What, you think I named myself? See, this is why I said you could call me Florence instead...</state>
             </case>
             <case stage="1">
                 <condition status="not_masturbating" role="other" character="mary" />
@@ -1937,22 +1952,24 @@
                 <state img="#-interested.png">Why, hello there, big boy. What's &lt;i&gt;your&lt;/i&gt; name?</state>
             </case>
             <case stage="0-6 8">
-                <condition role="target" character="jim" stage="0" />
-                <state img="#-victorious.png" marker="nickname*=James">
-                    <alt-img stage="0-2">#-victorious.png</alt-img>
-                    <alt-img stage="3-4">#-bliss.png</alt-img>
-                    <alt-img stage="5-6">#-smug.png</alt-img>
-                    <alt-img stage="8">#-victorious.png</alt-img>
-                    <text>Well, James, &lt;i&gt;you&lt;/i&gt; can feel free to call me Florence.</text>
-                </state>
-            </case>
-            <case stage="0-6 8">
                 <condition role="target" character="navi" stage="0" />
                 <state img="#-puzzled.png">Aw, jeez, did I let an Illumination Fairy follow me here from the base? The Commander's gonna kill me...</state>
             </case>
             <case stage="0-6 8">
                 <condition role="target" character="jura" stage="0" />
                 <state img="#-thinking.png">Didn't you say you were some kind of pilot, Jura? What's up with the sword?</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="moon" stage="1" />
+                <state img="#-satisfied.png" marker="moon1a">Look at you, Moon, diving right back into the deep end.</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="moon" stage="2" />
+                <state img="#-bored.png" marker="moon2a">Something tells me that it's going to be a while before I have to play seriously...</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="moon" stage="3" />
+                <state img="#-puzzled.png" marker="moon3a">Hey, Moon, remember that time I asked you to tone it down a little?</state>
             </case>
             <case stage="0-6" id="46" oneShotId="26">
                 <condition role="target" character="human" />
@@ -1995,6 +2012,16 @@
                 <condition role="target" character="shimakaze" stage="1" />
                 <condition role="self" saidMarker="WIP" />
                 <state img="#-satisfied.png">I don't think we need any complex rules or anything, so let's keep it simple. First one naked wins. Sounds good?</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="jim" stage="0" />
+                <state img="#-victorious.png" marker="nickname*=James">
+                    <alt-img stage="0-2">#-victorious.png</alt-img>
+                    <alt-img stage="3-4">#-bliss.png</alt-img>
+                    <alt-img stage="5-6">#-smug.png</alt-img>
+                    <alt-img stage="8">#-victorious.png</alt-img>
+                    <text>Well, James, &lt;i&gt;you&lt;/i&gt; can feel free to call me Florence.</text>
+                </state>
             </case>
             <case stage="0-6">
                 <condition role="target" character="meia" stage="0" />
@@ -2078,6 +2105,18 @@
             <case stage="0-6 8">
                 <condition role="target" character="navi" stage="1" />
                 <state img="#-bliss.png">A shame, honestly. I wouldn't have minded a bit of punishment from the Commander...</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="moon" stage="1" />
+                <state img="#-puzzled.png" marker="moon1b">Problems with the administration, huh? I know what you mean. The Commander likes to keep me on a tight leash as well, and not even the literal kind.</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="moon" stage="2" />
+                <state img="#-bored.png" marker="moon2b">Especially since it looks like this is as serious as little miss Moon over here is going to get.</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="moon" stage="3" />
+                <state img="#-thinking.png" marker="moon3b">No? Not interested? Okay, can't say I'm surprised.</state>
             </case>
             <case stage="0-2" oneShotId="5">
                 <condition status="exposed" role="target" stage="0" />
@@ -2488,6 +2527,26 @@
                     <text>Getting a good look? I hope you're ready to return the favour some time down the line.</text>
                 </state>
             </case>
+            <case stage="0-6 8">
+                <condition role="target" character="moon" stage="2" />
+                <state img="#-smug.png" marker="moon1c">
+                    <alt-img stage="0-2 4-6">#-smug.png</alt-img>
+                    <alt-img stage="3 8">custom:#-smug</alt-img>
+                    <text>Well, I don't think there's anything to worry about. At your pace, you'll be naked before you know it.</text>
+                </state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="moon" stage="3" />
+                <state img="#-victorious.png" marker="moon2c">Why are you wearing so many accessories anyway? No, wait, let me guess-- the management again?</state>
+            </case>
+            <case stage="0-6 8">
+                <condition role="target" character="moon" stage="4" />
+                <state img="#-puzzled.png" marker="moon3c">
+                    <alt-img stage="0-2 4-6">#-smug.png</alt-img>
+                    <alt-img stage="3 8">custom:#-smug</alt-img>
+                    <text>Is this how the Commander feels whenever he has to deal with me? You're really making me consider turning over a new leaf.</text>
+                </state>
+            </case>
             <case stage="0-6" id="45" oneShotId="28">
                 <condition role="target" character="human" />
                 <alternative>
@@ -2686,7 +2745,7 @@
                     <text>Make sure you're enjoying yourself, ~name~. That's the most important part of this all.</text>
                 </state>
                 <state img="#-bliss.png">Look at ~name~ go... ~Target.ifMale(he|she)~'s not going to be able to forget this pleasure after today.</state>
-                <state img="#-bliss.png">Just look at ~name~ right now. I think &lt;i&gt;someone's&lt;/i&gt; addicted to this now.</state>
+                <state img="#-bliss.png">Just look at ~name~ right now. I think &lt;i&gt;someone's&lt;/i&gt; gotten addicted.</state>
                 <state img="#-bliss.png">Ah, seriously, this is all getting me &lt;i&gt;really&lt;/i&gt; fired up.</state>
                 <state img="#-bliss.png">The more you get worked up, the more &lt;i&gt;I&lt;/i&gt; get worked up, too.</state>
             </case>
