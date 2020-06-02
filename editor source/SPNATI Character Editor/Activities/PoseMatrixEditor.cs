@@ -771,6 +771,10 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				PoseStage stage = _sheet.Stages[i];
 				PoseEntry cell = stage.GetCell(key) ?? lastCell;
+				if (cell != null && string.IsNullOrEmpty(cell.Code))
+				{
+					cell = lastCell;
+				}
 				if (cell != null && !string.IsNullOrEmpty(cell.Code))
 				{
 					lastCell = cell;

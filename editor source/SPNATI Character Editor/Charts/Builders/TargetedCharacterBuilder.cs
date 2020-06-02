@@ -24,10 +24,10 @@ namespace SPNATI_Character_Editor.Charts.Builders
 				HashSet<string> targets = new HashSet<string>();
 				foreach (var stageCase in c.Behavior.EnumerateSourceCases())
 				{
-					if (!string.IsNullOrEmpty(stageCase.Target))
-						targets.Add(stageCase.Target);
-					if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
-						targets.Add(stageCase.AlsoPlaying);
+					foreach (string target in stageCase.GetTargets())
+					{
+						targets.Add(target);
+					}
 				}
 				int count = targets.Count;
 				if (count > 0)

@@ -59,7 +59,6 @@ namespace KisekaeImporter.RemoteClient
 			sb.Append(string.Join(", ", fields));
 			sb.Append("}");
 			return sb.ToString();
-			//return Encoding.UTF8.GetBytes(sb.ToString());
 		}
 	}
 

@@ -179,7 +179,7 @@ namespace KisekaeImporter.ImageImport
 							float v;
 							if (float.TryParse(kvp.Value, out v))
 							{
-								lines.Add($"{subpiece}={v / 100.0f}");
+								lines.Add($"{subpiece}={Math.Floor(v / 100.0f * 255)}");
 							}
 						}
 					}
@@ -189,11 +189,39 @@ namespace KisekaeImporter.ImageImport
 				if (_client.Connected)
 				{
 					//use remote protocol
-					string code = string.Join("\r\n", lines).Replace("\\\\", "\\");
+
+					//ostensibly transparencies can be prepended to the code with new lines, but this doesn't appear to work
+					//string code = string.Join("\n", lines).Replace("\\\\", "\\");
+					string code = data.Replace("\\\\", "\\");
+
+					//so instead, send transparency commands
+					foreach (KeyValuePair<string, string> kvp in extraData)
+					{
+						string[] subpieces = kvp.Key.Split('/');
+						foreach (string subpiece in subpieces)
+						{
+							float v;
+							if (float.TryParse(kvp.Value, out v))
+							{
+								int amount = (int)Math.Floor(v / 100.0f * 255);
+								ServerRequest partRequest = new ServerRequest("alpha_direct", "op", "set", "character", "0", "path", subpiece, "alpha", amount.ToString());
+								_client.SendCommand(partRequest).Wait();
+							}
+						}
+					}
+
 					ServerRequest request = new ServerRequest("import", "code", code.Replace("\\", "\\\\"));
 					Task<ServerResponse> task = _client.SendCommand(request);
 					task.Wait();
 					ServerResponse response = task.Result;
+
+					if (extraData.Count > 0)
+					{
+						//reset transparencies
+						ServerRequest partRequest = new ServerRequest("alpha_direct", "op", "reset_all");
+						_client.SendCommand(partRequest).Wait();
+					}
+
 					return (response as ImageResponse)?.Image;
 				}
 				else

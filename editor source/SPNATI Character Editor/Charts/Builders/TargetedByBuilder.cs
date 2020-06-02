@@ -39,6 +39,18 @@ namespace SPNATI_Character_Editor.Charts.Builders
 				HashSet<string> tagTargets = new HashSet<string>();
 				foreach (var stageCase in c.Behavior.EnumerateSourceCases())
 				{
+					foreach (string target in stageCase.GetTargets())
+					{
+						if (!targets.Contains(target) && CharacterDatabase.Exists(target))
+						{
+							Tuple<int, int> current;
+							if (!targetMap.TryGetValue(target, out current))
+								current = new Tuple<int, int>(0, 0);
+							targetMap[target] = new Tuple<int, int>(current.Item1 + 1, current.Item2);
+							targets.Add(target);
+						}
+					}
+
 					if (!string.IsNullOrEmpty(stageCase.Target))
 					{
 						if (!targets.Contains(stageCase.Target) && CharacterDatabase.Exists(stageCase.Target))
