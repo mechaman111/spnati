@@ -280,9 +280,9 @@ function setupDeck () {
  * Deals new cards to the given player.
  ************************************************************/
 function dealHand (player, numPlayers, playersBefore) {
-	/* collect their old hand */
-	clearHand(player);
-
+    /* reset the strength so any hand condition won't use the last
+     * round's result. */
+    players[player].hand.strength = NONE;
 	/* deal the new cards */
 	for (var i = 0; i < CARDS_PER_HAND; i++) {
 		players[player].hand.tradeIns[i] = false;
