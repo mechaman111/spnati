@@ -410,6 +410,23 @@ function handStrengthToString (number) {
 	}
 }
 
+function handStrengthFromString (string) {
+    if (!string) return NaN;
+    switch (string.trim().toLowerCase()) {
+    case "high card":       return HIGH_CARD;
+    case "one pair":        return PAIR;
+    case "two pair":        return TWO_PAIR;
+    case "three of a kind": return THREE_OF_A_KIND;
+    case "straight":        return STRAIGHT;
+    case "flush":           return FLUSH;
+    case "full house":      return FULL_HOUSE;
+    case "four of a kind":  return FOUR_OF_A_KIND;
+    case "straight flush":  return STRAIGHT_FLUSH;
+    case "royal flush":     return ROYAL_FLUSH;
+    }
+    return NaN;
+}
+
 function cardRankToString(rank, plural) {
     var str = [ 'deuce', 'three', 'four', 'five', 'six',
                 'seven', 'eight', 'nine', 'ten',
