@@ -280,9 +280,9 @@ function setupDeck () {
  * Deals new cards to the given player.
  ************************************************************/
 function dealHand (player, numPlayers, playersBefore) {
-	/* collect their old hand */
-	clearHand(player);
-
+    /* reset the strength so any hand condition won't use the last
+     * round's result. */
+    players[player].hand.strength = NONE;
 	/* deal the new cards */
 	for (var i = 0; i < CARDS_PER_HAND; i++) {
 		players[player].hand.tradeIns[i] = false;
@@ -408,6 +408,23 @@ function handStrengthToString (number) {
         case STRAIGHT_FLUSH:    return "Straight flush";
         case ROYAL_FLUSH:       return "Royal flush";
 	}
+}
+
+function handStrengthFromString (string) {
+    if (!string) return NaN;
+    switch (string.trim().toLowerCase()) {
+    case "high card":       return HIGH_CARD;
+    case "one pair":        return PAIR;
+    case "two pair":        return TWO_PAIR;
+    case "three of a kind": return THREE_OF_A_KIND;
+    case "straight":        return STRAIGHT;
+    case "flush":           return FLUSH;
+    case "full house":      return FULL_HOUSE;
+    case "four of a kind":  return FOUR_OF_A_KIND;
+    case "straight flush":  return STRAIGHT_FLUSH;
+    case "royal flush":     return ROYAL_FLUSH;
+    }
+    return NaN;
 }
 
 function cardRankToString(rank, plural) {
