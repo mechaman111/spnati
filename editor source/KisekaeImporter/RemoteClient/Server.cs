@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -9,6 +8,7 @@ namespace KisekaeImporter.RemoteClient
 {
 	public enum MessageType
 	{
+		Disconnect = 0x00,
 		Command = 0x01,
 		CommandResponse = 0x02,
 		ImageData = 0x03,

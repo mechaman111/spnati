@@ -767,7 +767,10 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			HashSet<int> globalData = new HashSet<int>();
 			PoseEntry lastCell = null;
-			for (int i = 0; i < _sheet.Stages.Count && i <= _character.Layers && i < 9; i++)
+			StageTemplate lastStage = new StageTemplate("");
+			int max = Math.Min(_sheet.Stages.Count, 9);
+			max = Math.Min(max, _character.Layers < 7 ? _character.Layers + Clothing.ExtraStages: 9);
+			for (int i = 0; i < max; i++)
 			{
 				PoseStage stage = _sheet.Stages[i];
 				PoseEntry cell = stage.GetCell(key) ?? lastCell;
@@ -783,7 +786,9 @@ namespace SPNATI_Character_Editor.Activities
 					if (baseCode != null || !string.IsNullOrEmpty(stage.Code))
 					{
 						Emotion emotion = new Emotion(cell.Key, cell.Code, "", "", "", "");
-						modelCode = PoseTemplate.CreatePose(baseCode, new StageTemplate(stage.Code ?? ""), emotion);
+						StageTemplate stageTemplate = string.IsNullOrEmpty(stage.Code) ? lastStage : new StageTemplate(stage.Code);
+						lastStage = stageTemplate;
+						modelCode = PoseTemplate.CreatePose(baseCode, stageTemplate, emotion);
 					}
 					else
 					{

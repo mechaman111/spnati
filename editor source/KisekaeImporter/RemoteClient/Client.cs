@@ -17,6 +17,7 @@ namespace KisekaeImporter.RemoteClient
 		}
 
 		private TcpClient _clientSocket;
+		private bool _running;
 
 		private static readonly byte[] PROTOCOL_HEADER = Encoding.UTF8.GetBytes("KKL ");
 
@@ -62,12 +63,18 @@ namespace KisekaeImporter.RemoteClient
 			Disconnect();
 		}
 
-		public async void Run()
+		private async void Run()
 		{
-			while (Connected)
+			if (_running)
+			{
+				return;
+			}
+			_running = true;
+			while (Connected && _running)
 			{
 				NetworkStream stream = _clientSocket.GetStream();
 				ServerResponse response = await ReadMessage(stream);
+
 				if (response.Type == MessageType.Heartbeat)
 				{
 					LastHeartbeat = DateTime.Now;
@@ -87,15 +94,22 @@ namespace KisekaeImporter.RemoteClient
 			}
 		}
 
+		private void Stop()
+		{
+			_running = false;
+		}
+
 		private async Task<ServerResponse> ReadMessage(NetworkStream stream)
 		{
 			MessageHeader header = await ReadMessageHeader(stream);
+			if (header.Type == MessageType.Disconnect)
+			{
+				return new ServerResponse() { Type = MessageType.Disconnect };
+			}
 			byte[] bytes = new byte[header.Length];
 			await stream.ReadAsync(bytes, 0, header.Length);
 			switch (header.Type)
 			{
-				case MessageType.Heartbeat:
-					return new ServerResponse() { Type = MessageType.Heartbeat };
 				case MessageType.CommandResponse:
 					string payload = Encoding.UTF8.GetString(bytes);
 					return new JSONResponse(payload);
@@ -105,7 +119,7 @@ namespace KisekaeImporter.RemoteClient
 					Array.Copy(bytes, 4, data, 0, data.Length);
 					return new ImageResponse(identifier, data);
 				default:
-					return new ServerResponse();
+					return new ServerResponse() { Type = header.Type };
 			}
 		}
 
@@ -162,6 +176,8 @@ namespace KisekaeImporter.RemoteClient
 
 		public async Task<ServerResponse> SendCommand(ServerRequest request)
 		{
+			Run(); //spin it up again
+
 			int id = _requestId++;
 			if (_requestId > MaxRequestId)
 			{
@@ -193,6 +209,7 @@ namespace KisekaeImporter.RemoteClient
 
 			ServerResponse response = await pendedRequest;
 
+			Stop();
 			return response;
 		}
 	}

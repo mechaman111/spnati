@@ -88,9 +88,9 @@ namespace KisekaeImporter.ImageImport
 		public ImageImporter(bool allowRemoteControl)
 		{
 			_client = new Client();
-			if (allowRemoteControl && _client.Connect())
+			if (allowRemoteControl)
 			{
-				_client.Run();
+				_client.Connect();
 			}
 		}
 
