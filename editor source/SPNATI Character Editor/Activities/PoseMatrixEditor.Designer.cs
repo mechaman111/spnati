@@ -29,25 +29,27 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.grid = new Desktop.Skinning.SkinnedDataGridView();
 			this.gridMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.skinnedSplitContainer1 = new Desktop.Skinning.SkinnedSplitContainer();
+			this.searchBar = new SPNATI_Character_Editor.Controls.CodeReplaceBar();
 			this.cmdFolder = new Desktop.Skinning.SkinnedButton();
 			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
 			this.tsSheet = new System.Windows.Forms.ToolStrip();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.sepSkin = new System.Windows.Forms.ToolStripSeparator();
 			this.sptMode = new System.Windows.Forms.SplitContainer();
+			this.panelSingle = new System.Windows.Forms.Panel();
+			this.cmdImport = new Desktop.Skinning.SkinnedButton();
 			this.lblHeader = new Desktop.Skinning.SkinnedLabel();
 			this.table = new Desktop.CommonControls.PropertyTable();
 			this.panelStage = new System.Windows.Forms.Panel();
 			this.cmdLoadToKKL = new Desktop.Skinning.SkinnedButton();
-			this.panelSingle = new System.Windows.Forms.Panel();
-			this.cmdImport = new Desktop.Skinning.SkinnedButton();
 			this.panelPose = new System.Windows.Forms.Panel();
 			this.cmdImportLineup = new Desktop.Skinning.SkinnedButton();
 			this.cmdLineup = new Desktop.Skinning.SkinnedButton();
@@ -57,7 +59,8 @@
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.cmdImportAll = new Desktop.Skinning.SkinnedButton();
 			this.cmdImportNew = new Desktop.Skinning.SkinnedButton();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.cmdImportSelected = new Desktop.Skinning.SkinnedButton();
+			this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
 			this.tsAddPose = new System.Windows.Forms.ToolStripButton();
 			this.tsRemovePose = new System.Windows.Forms.ToolStripButton();
 			this.tsSort = new System.Windows.Forms.ToolStripButton();
@@ -66,8 +69,9 @@
 			this.tsCut = new System.Windows.Forms.ToolStripButton();
 			this.tsCopy = new System.Windows.Forms.ToolStripButton();
 			this.tsPaste = new System.Windows.Forms.ToolStripButton();
-			this.tsAddMain = new System.Windows.Forms.ToolStripButton();
 			this.tsPoseList = new System.Windows.Forms.ToolStripButton();
+			this.tsAddMain = new System.Windows.Forms.ToolStripButton();
+			this.tsReplace = new System.Windows.Forms.ToolStripButton();
 			this.cutCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.copyCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.pasteCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -92,8 +96,8 @@
 			this.sptMode.Panel1.SuspendLayout();
 			this.sptMode.Panel2.SuspendLayout();
 			this.sptMode.SuspendLayout();
-			this.panelStage.SuspendLayout();
 			this.panelSingle.SuspendLayout();
+			this.panelStage.SuspendLayout();
 			this.panelPose.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picHelp)).BeginInit();
 			this.SuspendLayout();
@@ -112,26 +116,26 @@
 			this.grid.BackgroundColor = System.Drawing.Color.White;
 			this.grid.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.grid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.grid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.grid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
 			this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.grid.ContextMenuStrip = this.gridMenu;
 			this.grid.Data = null;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.grid.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.grid.DefaultCellStyle = dataGridViewCellStyle5;
 			this.grid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.grid.EnableHeadersVisualStyles = false;
 			this.grid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -140,18 +144,18 @@
 			this.grid.Margin = new System.Windows.Forms.Padding(0);
 			this.grid.Name = "grid";
 			this.grid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.grid.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.grid.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
 			this.grid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
 			this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
 			this.grid.ShowEditingIcon = false;
-			this.grid.Size = new System.Drawing.Size(783, 296);
+			this.grid.Size = new System.Drawing.Size(783, 273);
 			this.grid.TabIndex = 0;
 			this.grid.TopLeftHeaderMouseDown += new System.EventHandler<System.EventArgs>(this.grid_TopLeftHeaderMouseDown);
 			this.grid.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.grid_CellMouseDown);
@@ -197,6 +201,7 @@
 			// 
 			// skinnedSplitContainer1.Panel1
 			// 
+			this.skinnedSplitContainer1.Panel1.Controls.Add(this.searchBar);
 			this.skinnedSplitContainer1.Panel1.Controls.Add(this.cmdFolder);
 			this.skinnedSplitContainer1.Panel1.Controls.Add(this.skinnedLabel1);
 			this.skinnedSplitContainer1.Panel1.Controls.Add(this.tsSheet);
@@ -209,6 +214,18 @@
 			this.skinnedSplitContainer1.SplitterColor = Desktop.Skinning.SkinnedBackgroundType.Primary;
 			this.skinnedSplitContainer1.SplitterDistance = 321;
 			this.skinnedSplitContainer1.TabIndex = 1;
+			// 
+			// searchBar
+			// 
+			this.searchBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.searchBar.Location = new System.Drawing.Point(0, 298);
+			this.searchBar.Margin = new System.Windows.Forms.Padding(0);
+			this.searchBar.Name = "searchBar";
+			this.searchBar.Size = new System.Drawing.Size(783, 23);
+			this.searchBar.TabIndex = 39;
+			this.searchBar.Close += new System.EventHandler(this.searchBar_Close);
+			this.searchBar.Enter += new System.EventHandler(this.searchBar_Enter);
 			// 
 			// cmdFolder
 			// 
@@ -252,6 +269,7 @@
             this.tsCut,
             this.tsCopy,
             this.tsPaste,
+            this.tsReplace,
             this.toolStripSeparator3,
             this.tsPoseList,
             this.sepSkin,
@@ -267,6 +285,11 @@
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
 			// 
 			// sepSkin
 			// 
@@ -297,6 +320,30 @@
 			this.sptMode.Size = new System.Drawing.Size(783, 231);
 			this.sptMode.SplitterDistance = 79;
 			this.sptMode.TabIndex = 5;
+			// 
+			// panelSingle
+			// 
+			this.panelSingle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.panelSingle.Controls.Add(this.cmdImport);
+			this.panelSingle.Location = new System.Drawing.Point(583, 0);
+			this.panelSingle.Margin = new System.Windows.Forms.Padding(0);
+			this.panelSingle.Name = "panelSingle";
+			this.panelSingle.Size = new System.Drawing.Size(200, 29);
+			this.panelSingle.TabIndex = 3;
+			// 
+			// cmdImport
+			// 
+			this.cmdImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdImport.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdImport.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdImport.Flat = false;
+			this.cmdImport.Location = new System.Drawing.Point(122, 3);
+			this.cmdImport.Name = "cmdImport";
+			this.cmdImport.Size = new System.Drawing.Size(75, 23);
+			this.cmdImport.TabIndex = 2;
+			this.cmdImport.Text = "Import";
+			this.cmdImport.UseVisualStyleBackColor = true;
+			this.cmdImport.Click += new System.EventHandler(this.cmdImport_Click);
 			// 
 			// lblHeader
 			// 
@@ -365,30 +412,6 @@
 			this.cmdLoadToKKL.UseVisualStyleBackColor = true;
 			this.cmdLoadToKKL.Click += new System.EventHandler(this.cmdLoadToKKL_Click);
 			// 
-			// panelSingle
-			// 
-			this.panelSingle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.panelSingle.Controls.Add(this.cmdImport);
-			this.panelSingle.Location = new System.Drawing.Point(583, 0);
-			this.panelSingle.Margin = new System.Windows.Forms.Padding(0);
-			this.panelSingle.Name = "panelSingle";
-			this.panelSingle.Size = new System.Drawing.Size(200, 29);
-			this.panelSingle.TabIndex = 3;
-			// 
-			// cmdImport
-			// 
-			this.cmdImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmdImport.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
-			this.cmdImport.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.cmdImport.Flat = false;
-			this.cmdImport.Location = new System.Drawing.Point(122, 3);
-			this.cmdImport.Name = "cmdImport";
-			this.cmdImport.Size = new System.Drawing.Size(75, 23);
-			this.cmdImport.TabIndex = 2;
-			this.cmdImport.Text = "Import";
-			this.cmdImport.UseVisualStyleBackColor = true;
-			this.cmdImport.Click += new System.EventHandler(this.cmdImport_Click);
-			// 
 			// panelPose
 			// 
 			this.panelPose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -453,7 +476,7 @@
 			this.tabStrip.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
 			this.tabStrip.ShowAddButton = true;
 			this.tabStrip.ShowCloseButton = false;
-			this.tabStrip.Size = new System.Drawing.Size(580, 30);
+			this.tabStrip.Size = new System.Drawing.Size(491, 30);
 			this.tabStrip.StartMargin = 5;
 			this.tabStrip.TabControl = this.tabControl;
 			this.tabStrip.TabIndex = 2;
@@ -482,11 +505,11 @@
 			this.cmdImportAll.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdImportAll.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
 			this.cmdImportAll.Flat = false;
-			this.cmdImportAll.Location = new System.Drawing.Point(684, 3);
+			this.cmdImportAll.Location = new System.Drawing.Point(701, 3);
 			this.cmdImportAll.Name = "cmdImportAll";
-			this.cmdImportAll.Size = new System.Drawing.Size(95, 23);
+			this.cmdImportAll.Size = new System.Drawing.Size(79, 23);
 			this.cmdImportAll.TabIndex = 27;
-			this.cmdImportAll.Text = "Import All";
+			this.cmdImportAll.Text = "All";
 			this.toolTip1.SetToolTip(this.cmdImportAll, "Create all images, replacing existing ones");
 			this.cmdImportAll.UseVisualStyleBackColor = true;
 			this.cmdImportAll.Click += new System.EventHandler(this.cmdImportAll_Click);
@@ -497,19 +520,43 @@
 			this.cmdImportNew.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdImportNew.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
 			this.cmdImportNew.Flat = false;
-			this.cmdImportNew.Location = new System.Drawing.Point(583, 3);
+			this.cmdImportNew.Location = new System.Drawing.Point(616, 3);
 			this.cmdImportNew.Name = "cmdImportNew";
-			this.cmdImportNew.Size = new System.Drawing.Size(95, 23);
+			this.cmdImportNew.Size = new System.Drawing.Size(79, 23);
 			this.cmdImportNew.TabIndex = 26;
-			this.cmdImportNew.Text = "Import New";
+			this.cmdImportNew.Text = "New";
 			this.toolTip1.SetToolTip(this.cmdImportNew, "Creates images that don\'t exist yet");
 			this.cmdImportNew.UseVisualStyleBackColor = true;
 			this.cmdImportNew.Click += new System.EventHandler(this.cmdImportNew_Click);
 			// 
-			// toolStripSeparator3
+			// cmdImportSelected
 			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+			this.cmdImportSelected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdImportSelected.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdImportSelected.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
+			this.cmdImportSelected.Flat = false;
+			this.cmdImportSelected.Location = new System.Drawing.Point(531, 4);
+			this.cmdImportSelected.Name = "cmdImportSelected";
+			this.cmdImportSelected.Size = new System.Drawing.Size(79, 23);
+			this.cmdImportSelected.TabIndex = 28;
+			this.cmdImportSelected.Text = "Selected";
+			this.toolTip1.SetToolTip(this.cmdImportSelected, "Creates images that don\'t exist yet");
+			this.cmdImportSelected.UseVisualStyleBackColor = true;
+			this.cmdImportSelected.Click += new System.EventHandler(this.cmdImportSelected_Click);
+			// 
+			// skinnedLabel2
+			// 
+			this.skinnedLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedLabel2.AutoSize = true;
+			this.skinnedLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel2.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.skinnedLabel2.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.skinnedLabel2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel2.Location = new System.Drawing.Point(494, 9);
+			this.skinnedLabel2.Name = "skinnedLabel2";
+			this.skinnedLabel2.Size = new System.Drawing.Size(39, 13);
+			this.skinnedLabel2.TabIndex = 29;
+			this.skinnedLabel2.Text = "Import:";
 			// 
 			// tsAddPose
 			// 
@@ -593,6 +640,17 @@
 			this.tsPaste.Text = "Paste";
 			this.tsPaste.Click += new System.EventHandler(this.tsPaste_Click);
 			// 
+			// tsPoseList
+			// 
+			this.tsPoseList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsPoseList.Image = global::SPNATI_Character_Editor.Properties.Resources.PoseList;
+			this.tsPoseList.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsPoseList.Name = "tsPoseList";
+			this.tsPoseList.Size = new System.Drawing.Size(23, 22);
+			this.tsPoseList.Text = "Create Pose List";
+			this.tsPoseList.ToolTipText = "Turn this sheet into a pose list";
+			this.tsPoseList.Click += new System.EventHandler(this.tsPoseList_Click);
+			// 
 			// tsAddMain
 			// 
 			this.tsAddMain.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -604,16 +662,15 @@
 			this.tsAddMain.Visible = false;
 			this.tsAddMain.Click += new System.EventHandler(this.tsAddMain_Click);
 			// 
-			// tsPoseList
+			// tsReplace
 			// 
-			this.tsPoseList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsPoseList.Image = global::SPNATI_Character_Editor.Properties.Resources.PoseList;
-			this.tsPoseList.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsPoseList.Name = "tsPoseList";
-			this.tsPoseList.Size = new System.Drawing.Size(23, 22);
-			this.tsPoseList.Text = "Create Pose List";
-			this.tsPoseList.ToolTipText = "Turn this sheet into a pose list";
-			this.tsPoseList.Click += new System.EventHandler(this.tsPoseList_Click);
+			this.tsReplace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsReplace.Image = global::SPNATI_Character_Editor.Properties.Resources.Replace;
+			this.tsReplace.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsReplace.Name = "tsReplace";
+			this.tsReplace.Size = new System.Drawing.Size(23, 22);
+			this.tsReplace.Text = "Replace text";
+			this.tsReplace.Click += new System.EventHandler(this.tsReplace_Click);
 			// 
 			// cutCellToolStripMenuItem
 			// 
@@ -752,11 +809,13 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.cmdImportSelected);
 			this.Controls.Add(this.cmdImportAll);
 			this.Controls.Add(this.cmdImportNew);
 			this.Controls.Add(this.tabControl);
 			this.Controls.Add(this.tabStrip);
 			this.Controls.Add(this.skinnedSplitContainer1);
+			this.Controls.Add(this.skinnedLabel2);
 			this.Name = "PoseMatrixEditor";
 			this.Size = new System.Drawing.Size(783, 586);
 			((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
@@ -774,11 +833,12 @@
 			this.sptMode.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.sptMode)).EndInit();
 			this.sptMode.ResumeLayout(false);
-			this.panelStage.ResumeLayout(false);
 			this.panelSingle.ResumeLayout(false);
+			this.panelStage.ResumeLayout(false);
 			this.panelPose.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picHelp)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -833,5 +893,9 @@
 		private Desktop.Skinning.SkinnedButton cmdFolder;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton tsPoseList;
+		private Desktop.Skinning.SkinnedButton cmdImportSelected;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel2;
+		private Controls.CodeReplaceBar searchBar;
+		private System.Windows.Forms.ToolStripButton tsReplace;
 	}
 }

@@ -56,6 +56,10 @@ namespace SPNATI_Character_Editor.Activities
 			_skin = Record as ISkin;
 			_character = _skin.Character;
 
+			HideSearchBar();
+
+			SubscribeWorkspace(WorkspaceMessages.Find, OnFind);
+			SubscribeWorkspace(WorkspaceMessages.Replace, OnFind);
 			SubscribeWorkspace(WorkspaceMessages.WardrobeUpdated, OnWardrobeChanged);
 
 			skinnedSplitContainer1.Panel2Collapsed = true;
@@ -194,7 +198,7 @@ namespace SPNATI_Character_Editor.Activities
 				//create new columns as necessary
 				foreach (PoseEntry pose in stage.Poses)
 				{
-					if (!_columns.ContainsKey(pose.Key))
+					if (!string.IsNullOrEmpty(pose.Key) && !_columns.ContainsKey(pose.Key))
 					{
 						AddColumn(pose.Key);
 					}
@@ -769,7 +773,7 @@ namespace SPNATI_Character_Editor.Activities
 			PoseEntry lastCell = null;
 			StageTemplate lastStage = new StageTemplate("");
 			int max = Math.Min(_sheet.Stages.Count, 9);
-			max = Math.Min(max, _character.Layers < 7 ? _character.Layers + Clothing.ExtraStages: 9);
+			max = Math.Min(max, _character.Layers < 7 ? _character.Layers + Clothing.ExtraStages : 9);
 			for (int i = 0; i < max; i++)
 			{
 				PoseStage stage = _sheet.Stages[i];
@@ -958,6 +962,11 @@ namespace SPNATI_Character_Editor.Activities
 			ImportAllPoses();
 		}
 
+		private void cmdImportSelected_Click(object sender, EventArgs e)
+		{
+			ImportSelectedPoses();
+		}
+
 		/// <summary>
 		/// Imports all pose data that doesn't have an image yet
 		/// </summary>
@@ -1017,6 +1026,35 @@ namespace SPNATI_Character_Editor.Activities
 					}
 					ImageMetadata metadata = CreateMetadata(stage, pose);
 					toImport.Add(metadata);
+				}
+			}
+
+			ImportPosesAsync(toImport);
+		}
+
+		/// <summary>
+		/// Imports all poses, replacing existing images
+		/// </summary>
+		private void ImportSelectedPoses()
+		{
+			List<ImageMetadata> toImport = new List<ImageMetadata>();
+			bool usingWardrobe = false;
+			foreach (DataGridViewCell cell in grid.SelectedCells)
+			{
+				if (cell.RowIndex < _sheet.Stages.Count && cell.RowIndex >= 0 && cell.ColumnIndex >= 0)
+				{
+					PoseStage stage = _sheet.Stages[cell.RowIndex];
+					usingWardrobe = usingWardrobe || !string.IsNullOrEmpty(stage.Code);
+					if (usingWardrobe && string.IsNullOrEmpty(stage.Code))
+					{
+						continue;
+					}
+					PoseEntry pose = cell.Tag as PoseEntry;
+					if (pose != null)
+					{
+						ImageMetadata metadata = CreateMetadata(stage, pose);
+						toImport.Add(metadata);
+					}
 				}
 			}
 
@@ -1686,6 +1724,57 @@ namespace SPNATI_Character_Editor.Activities
 				}
 			}
 			Shell.Instance.Launch(_skin as IRecord, typeof(PoseListEditor), list);
+		}
+
+		#region Find/Replace
+		private void OnFind()
+		{
+			if (!IsActive || _sheet == null) { return; }
+			List<IPoseCode> cells = new List<IPoseCode>();
+			foreach (DataGridViewCell cell in grid.SelectedCells)
+			{
+				PoseEntry entry = cell.Tag as PoseEntry;
+				if (entry != null && !string.IsNullOrEmpty(entry.Code))
+				{
+					cells.Add(entry);
+				}
+			}
+			searchBar.SetSheet(_sheet, cells);
+			ShowSearchBar();
+		}
+
+		private void ShowSearchBar()
+		{
+			if (searchBar.Visible) { return; }
+
+			grid.Height = grid.Height - searchBar.Height;
+			searchBar.Visible = true;
+			searchBar.SetFocus();
+		}
+
+		private void HideSearchBar()
+		{
+			if (!searchBar.Visible) { return; }
+
+			grid.Height = grid.Height + searchBar.Height;
+			searchBar.Visible = false;
+		}
+
+		private void searchBar_Close(object sender, EventArgs e)
+		{
+			HideSearchBar();
+		}
+
+		#endregion
+
+		private void searchBar_Enter(object sender, EventArgs e)
+		{
+			OnFind();
+		}
+
+		private void tsReplace_Click(object sender, EventArgs e)
+		{
+			OnFind();
 		}
 	}
 

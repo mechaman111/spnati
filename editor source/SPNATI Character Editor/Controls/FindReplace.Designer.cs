@@ -262,6 +262,7 @@
 			this.chkMarkers.TabIndex = 56;
 			this.chkMarkers.Text = "Search markers";
 			this.chkMarkers.UseVisualStyleBackColor = true;
+			this.chkMarkers.Visible = false;
 			this.chkMarkers.CheckedChanged += new System.EventHandler(this.chkMarkers_CheckedChanged);
 			// 
 			// FindReplace

@@ -206,6 +206,10 @@ namespace SPNATI_Character_Editor.DataStructures
 				if (stage < template.Stages.Count)
 				{
 					StageTemplate templateStage = template.Stages[stage];
+					if (string.IsNullOrEmpty(templateStage.Code))
+					{
+						continue;
+					}
 					poseStage.Code = templateStage.Code;
 
 					foreach (Emotion emotion in template.Emotions)
@@ -222,7 +226,7 @@ namespace SPNATI_Character_Editor.DataStructures
 	}
 
 	[Serializable]
-	public class PoseSheet : BindableObject
+	public class PoseSheet : BindableObject, IPoseCode
 	{
 		public PoseSheet()
 		{
@@ -264,6 +268,15 @@ namespace SPNATI_Character_Editor.DataStructures
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		public string GetCode()
+		{
+			return BaseCode;
+		}
+		public void SetCode(string value)
+		{
+			BaseCode = value;
 		}
 
 		/// <summary>
@@ -345,7 +358,7 @@ namespace SPNATI_Character_Editor.DataStructures
 	}
 
 	[Serializable]
-	public class PoseStage : BindableObject
+	public class PoseStage : BindableObject, IPoseCode
 	{
 		[XmlAttribute("id")]
 		public int Stage
@@ -377,6 +390,15 @@ namespace SPNATI_Character_Editor.DataStructures
 		public PoseStage(int stage) : this()
 		{
 			Stage = stage;
+		}
+
+		public string GetCode()
+		{
+			return Code;
+		}
+		public void SetCode(string value)
+		{
+			Code = value;
 		}
 
 		public PoseEntry GetCell(string key)
@@ -465,7 +487,7 @@ namespace SPNATI_Character_Editor.DataStructures
 	}
 
 	[Serializable]
-	public class PoseEntry : BindableObject
+	public class PoseEntry : BindableObject, IPoseCode
 	{
 		public PoseEntry()
 		{
@@ -480,6 +502,15 @@ namespace SPNATI_Character_Editor.DataStructures
 			Crop = metadata.CropInfo;
 			SkipPreProcessing = metadata.SkipPreprocessing;
 			ExtraMetadata = metadata.ExtraData;
+		}
+
+		public string GetCode()
+		{
+			return Code;
+		}
+		public void SetCode(string value)
+		{
+			Code = value;
 		}
 
 		[XmlAttribute("key")]
@@ -567,5 +598,11 @@ namespace SPNATI_Character_Editor.DataStructures
 		{
 			return Key;
 		}
+	}
+
+	public interface IPoseCode
+	{
+		string GetCode();
+		void SetCode(string value);
 	}
 }

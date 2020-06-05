@@ -935,7 +935,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			int startLine = _selectedRow;
 			int startIndex = GetSelectionStart(gridDialogue);
-			if (args.SearchMarkers)
+			if (args.SearchAdvanced)
 			{
 				startLine++;
 			}
@@ -947,7 +947,7 @@ namespace SPNATI_Character_Editor.Controls
 			for (int l = startLine; l < gridDialogue.Rows.Count; l++)
 			{
 				DataGridViewRow row = gridDialogue.Rows[l];
-				if (args.SearchMarkers)
+				if (args.SearchAdvanced)
 				{
 					string marker = row.Cells[nameof(ColMarker)].Value?.ToString();
 					if (!string.IsNullOrEmpty(marker))

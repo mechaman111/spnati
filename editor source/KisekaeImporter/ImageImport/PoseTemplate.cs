@@ -63,7 +63,7 @@ namespace KisekaeImporter.ImageImport
 								{
 									assetIndex++;
 								}
-								else
+								else if (assetIndex < poseModel.Assets.Count)
 								{
 									poseModel.Assets.RemoveAt(assetIndex);
 								}

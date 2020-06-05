@@ -425,6 +425,7 @@ namespace SPNATI_Character_Editor.Activities
 			_findForm.Replace += DoFindReplace;
 			_findForm.ReplaceAll += DoFindReplace;
 			_findForm.RestoreFocus += _findForm_RestoreFocus;
+			_findForm.ShowAdvanced = true;
 		}
 
 		private void DoFindReplace(object sender, FindArgs args)
@@ -462,7 +463,7 @@ namespace SPNATI_Character_Editor.Activities
 				Case c = otherCases[i];
 				for (int l = 0; l < c.Lines.Count; l++)
 				{
-					if (args.SearchMarkers)
+					if (args.SearchAdvanced)
 					{
 						string marker = c.Lines[l].Marker;
 						if (!string.IsNullOrEmpty(marker))
@@ -510,7 +511,7 @@ namespace SPNATI_Character_Editor.Activities
 									if (treeDialogue.SelectNode(_selectedStage?.Id ?? c.Stages[0], c))
 									{
 										//Select the line
-										caseControl.SelectTextInRow(l, index, args.FindText.Length, args.SearchMarkers);
+										caseControl.SelectTextInRow(l, index, args.FindText.Length, args.SearchAdvanced);
 									}
 									else
 									{

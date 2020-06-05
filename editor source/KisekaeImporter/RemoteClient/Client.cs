@@ -35,12 +35,16 @@ namespace KisekaeImporter.RemoteClient
 
 		public bool Connect()
 		{
-			_clientSocket = new TcpClient();
-			_clientSocket.Connect("127.0.0.1", 8008);
-			if (_clientSocket.Connected)
+			try
 			{
-				return true;
+				_clientSocket = new TcpClient();
+				_clientSocket.Connect("127.0.0.1", 8008);
+				if (_clientSocket.Connected)
+				{
+					return true;
+				}
 			}
+			catch (SocketException e) { }
 			return false;
 		}
 

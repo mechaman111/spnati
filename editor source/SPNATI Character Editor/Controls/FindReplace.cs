@@ -14,6 +14,25 @@ namespace SPNATI_Character_Editor
 		private bool _replaceMode;
 		private Button _lastClick;
 
+		private string _finishText = "Find reached the end of the dialogue.";
+		public string FinishText
+		{
+			get { return _finishText; }
+			set { _finishText = value; }
+		}
+
+		public string AdvancedLabel
+		{
+			get { return chkMarkers.Text; }
+			set { chkMarkers.Text = value; }
+		}
+
+		public bool ShowAdvanced
+		{
+			get { return chkMarkers.Visible; }
+			set { chkMarkers.Visible = value; }
+		}
+
 		public FindReplace()
 		{
 			InitializeComponent();
@@ -69,12 +88,12 @@ namespace SPNATI_Character_Editor
 			{
 				MatchCase = chkMatchCase.Checked,
 				WholeWords = chkWholeWords.Checked,
-				SearchMarkers = chkMarkers.Checked && !_replaceMode,
+				SearchAdvanced = chkMarkers.Checked && !_replaceMode,
 			};
 			Find?.Invoke(this, args);
 			if (!args.Success)
 			{
-				MessageBox.Show("Find reached the end of the dialogue.");
+				MessageBox.Show(FinishText);
 			}
 		}
 
@@ -166,7 +185,7 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// True to search markers instead of text
 		/// </summary>
-		public bool SearchMarkers;
+		public bool SearchAdvanced;
 
 		/// <summary>
 		/// Event handler sets this to indicate whether the find/replace operation was successful
