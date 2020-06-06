@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7.3 at 6:36:22  on juni 05, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 1:21:38  on juni 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7.3</version>
     <first>Stella</first>
@@ -21,7 +21,6 @@
         <tag>athletic</tag>
         <tag>pubic_hair</tag>
         <tag>medium_breasts</tag>
-        <tag>glasses</tag>
         <tag from="0" to="2">thigh_highs</tag>
         <tag>cheerful</tag>
         <tag>kind</tag>
@@ -34,8 +33,7 @@
         <tag>comic</tag>
         <tag>original_character</tag>
         <tag>superhero</tag>
-        <tag from="9" to="10">uses_toy</tag>
-        <tag>magic</tag>
+        <tag>uses_toy</tag>
         <tag>hero</tag>
     </tags>
 
@@ -92,10 +90,6 @@
         </trigger>
 
         <trigger id="dealing_cards">
-            <case stage="0-8 10">
-                <condition filter="superhero" role="other" />
-                <state img="#-calm.png" marker="WhatPowers">So, ~name~, you're a superhero too? What are your powers?</state>
-            </case>
             <case stage="0-8 10" id="3">
                 <state img="#-calm.png">Okay then, next round!</state>
                 <state img="#-calm.png">Alright, next round.</state>
@@ -334,6 +328,10 @@
             <case stage="0-8" id="71" alsoPlaying="megumin" alsoPlayingSayingMarker="megumin_giantFrogs">
                 <state img="#-pensive.png">Giant frogs... Believe it or not, I've been eaten by a giant tadpole before. Does that count?</state>
             </case>
+            <case stage="0-8 10">
+                <condition filter="superhero" role="other" />
+                <state img="#-calm.png" marker="WhatPowers">So, ~superhero~, you're a superhero too? What are your powers?</state>
+            </case>
         </trigger>
 
         <trigger id="must_strip">
@@ -454,6 +452,10 @@
                 <test expr="~self.tag.superhero~" value="true" />
                 <state img="#-angry.png">Why don't you mind your own business, before anyone gets hurt?</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="aella" />
+                <state img="#-calm.png">Same, except I was the one who accidentally opened a portal and stepped through it. I tend to do that a lot.</state>
+            </case>
         </trigger>
 
         <trigger id="must_strip_winning">
@@ -472,7 +474,7 @@
             </case>
             <case stage="4-7">
                 <state img="#-worried.png">I just lost. Again.</state>
-                <state img="#-worried.png">I'm kind of running out of clothes at this rate...</state>
+                <state img="#-worried.png">I'm not sure how much longer I'll last at this rate...</state>
             </case>
         </trigger>
 
@@ -517,6 +519,10 @@
                 <condition role="other" character="mileena" />
                 <test expr="~self.tag.american~" value="true" />
                 <state img="#-angry.png">Bring it on! I visited more worlds than you probably have in a lifetime!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="aella" />
+                <state img="#-stripping.png">What my world is like? Umm... modern, I guess. Some cities with skyscrapers, some with just regular buildings, cars driving around, that sort of thing. How is yours?</state>
             </case>
             <case stage="0">
                 <state img="#-stripping.png">
@@ -615,6 +621,10 @@
                 <condition role="target" character="ae86" />
                 <state img="#-pensive.png">So... instead of taking off clothes, the car... changes music? Interesting...</state>
             </case>
+            <case stage="0" totalRounds="0">
+                <state img="#-calm.png">I guess you're the first to strip, ~target~.</state>
+                <state img="#-calm.png">I'm glad I'm not the first to lose a round.</state>
+            </case>
             <case stage="0-8">
                 <state img="#-excited.png">Yay! I won!</state>
                 <state img="#-calm.png">I guess you're up next, ~target~.</state>
@@ -702,6 +712,10 @@
             </case>
             <case stage="0-8 10" id="139" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="gen_horsecat">
                 <state img="#-pensive.png">They're probably used to seeing that one horse version of me I met once...</state>
+            </case>
+            <case stage="0" totalRounds="0">
+                <state img="#-calm.png">I guess you're the first to strip, ~target~.</state>
+                <state img="#-calm.png">I'm glad I'm not the first to lose a round.</state>
             </case>
             <case stage="0-8">
                 <state img="#-excited.png">Yay! I won!</state>
@@ -796,7 +810,7 @@
                 <condition role="other" character="chazz" stage="0-6" />
                 <state img="#-pensive.png">...What? Just... what?</state>
             </case>
-            <case stage="0-4">
+            <case stage="0-4" totalRounds="10-">
                 <condition status="decent" role="target" />
                 <state img="#-calm.png">You're still safe, don't worry.</state>
                 <state img="#-calm.png">Moving on to your ~clothing~, right? You're still doing alright, then.</state>
@@ -805,6 +819,11 @@
                 <condition status="decent" role="target" />
                 <state img="#-calm.png">I guess I'm not that far behind anymore.</state>
                 <state img="#-calm.png">If ~target~ is already removing his ~clothing~, I might still win this.</state>
+            </case>
+            <case stage="0-4">
+                <condition status="decent" role="target" />
+                <state img="#-calm.png">Time to take off your ~clothing~, I see, ~target~.</state>
+                <state img="#-calm.png">So you're removing your ~clothing~ now?</state>
             </case>
             <case stage="9">
                 <state img="#-masturbating1.png">S-soon... you'll have to...</state>
