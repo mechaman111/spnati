@@ -897,7 +897,7 @@ function expandDialogue (dialogue, self, target, bindings) {
                     }
                 } else if ((fn == 'type' || fn == 'position' || fn == 'generic') && args === undefined) {
                     substitution = clothing[fn];
-                } else if (fn === undefined) {
+                } else if (fn === undefined && args === undefined) {
                     substitution = clothing.name;
                 }
                 break;
@@ -980,6 +980,15 @@ function expandDialogue (dialogue, self, target, bindings) {
                                     'July', 'August', 'September', 'November', 'December'][new Date().getMonth()];
                 }
                 break;
+            case 'rng':
+                if (fn !== undefined) break;
+                var range = new Interval(args);
+                if (range.isValid() && range.min != null && range.max != null) {
+                    return getRandomNumber(range.min, range.max+1);
+                } else {
+                    console.error("Invalid RNG range");
+                }
+                break;
             case 'target':
             case 'self':
             case 'winner':
@@ -1004,7 +1013,7 @@ function expandDialogue (dialogue, self, target, bindings) {
     // variable or
     // variable.attribute or
     // variable.function(arguments)
-    return dialogue.replace(/~(\w+)(?:\.(.+?)(?:\(([^)]*)\))?)?~/g, substitute);
+    return dialogue.replace(/~(\w+)(?:\.(.+?))?(?:\(([^)]*)\))?~/g, substitute);
 }
 
 function escapeRegExp(string) {
