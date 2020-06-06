@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7.3 at 4:16:33 PM on June 01, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 10:52:38 PM on June 05, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7.3</version>
     <first>Anna</first>
@@ -32,6 +32,7 @@
         <tag>nintendo</tag>
         <tag>adventurer</tag>
     </tags>
+    <stylesheet>styles.css</stylesheet>
 
 
     <wardrobe>
@@ -3049,10 +3050,11 @@
                 <alternative>
                     <test expr="~player~" value="ReformCopyright" />
                 </alternative>
-                <state img="custom:#-grantMembership">Hello, ~player~! My Secret Shop is still undergoing maintenance, but you'll be able to buy collectibles from me as I'm developed more by my creator. For now, your gold balance is ~marker.gold~.</state>
+                <state img="custom:#-grantMembership" marker="YouAreACurrentMember">Hello, ~player~! My Secret Shop is still undergoing maintenance. Right now, I only have one product for sale! More will be added later once my developer works on me some more. Oh, and your gold balance is ~marker.gold~.</state>
             </case>
             <case stage="0">
                 <state img="#-cheerful.png" marker="CashPrize">What's up what's up! I'm &lt;i&gt;Anna&lt;/i&gt;, strip poker extraordinaire! I play for that &lt;i&gt;sweet&lt;/i&gt; cash prize at then end. Ha, my name's on that check already.</state>
+                <state img="#-awkward.png">&lt;i&gt;NO REFUNDS!&lt;/i&gt; ....... Uhhh, can I help you?</state>
             </case>
         </trigger>
 
@@ -3077,9 +3079,10 @@
                 <alternative>
                     <test expr="~player~" value="ReformCopyright" />
                 </alternative>
-                <state img="custom:#-grantMembership" collectible="member card">~Player~? Wait a second... Yep, you're on the list! Here's your Member Card, ~player~. You can start earning points for my Secret Shop and get all sorts of goodies!</state>
+                <state img="custom:#-grantMembership" collectible="member card">~Player~? Wait a second... Yep, you're on the list! Here's your Member Card, ~player~. You can start earning points for my Secret Shop and get all sorts of goodies! By the way, my creator would enjoy it if you submitted a bug report to let him know!</state>
             </case>
-            <case stage="0" id="215" oneShotId="35" priority="999">
+            <case stage="0" id="333" oneShotId="96" priority="101">
+                <condition role="self" saidMarker="gold&gt;=5" />
                 <test expr="~self.collectible.member card~" value="true" />
                 <alternative>
                     <test expr="~player~" value="Floor" />
@@ -3102,7 +3105,32 @@
                 <alternative>
                     <test expr="~player~" value="ReformCopyright" />
                 </alternative>
-                <state img="custom:#-grantMembership">I see you got your membership card with you, ~player~! I'm still setting up the Secret Shop and don't have anything to sell yet. But in the future, I'll have all kinds of collectibles available to members only!</state>
+                <state img="custom:#-grantMembership" marker="AnnaGaveSecretShopItem1" collectible="money1" persist-marker="true">Well Member ~name~, looks like you have enough gold to buy my first item! It's a pink heart with a &lt;i&gt;1&lt;/i&gt; on it. Here you go! I'll have more collectibles to sell you later once my creator works on me some more. Anyway, let's play!</state>
+            </case>
+            <case stage="0" id="215" oneShotId="35" priority="100">
+                <test expr="~self.collectible.member card~" value="true" />
+                <alternative>
+                    <test expr="~player~" value="Floor" />
+                </alternative>
+                <alternative>
+                    <test expr="~player~" value="floor" />
+                </alternative>
+                <alternative>
+                    <test expr="~player~" value="Domo" />
+                </alternative>
+                <alternative>
+                    <test expr="~player~" value="RinkahBestGirl" />
+                </alternative>
+                <alternative>
+                    <test expr="~player~" value="alphaman21" />
+                </alternative>
+                <alternative>
+                    <test expr="~player~" value="HorseKiller" />
+                </alternative>
+                <alternative>
+                    <test expr="~player~" value="ReformCopyright" />
+                </alternative>
+                <state img="custom:#-grantMembership">I see you got your membership card with you, ~player~!  Right now, I only carry one item, a pink heart with a &lt;i&gt;1&lt;/i&gt; on it! In the future, I'll have all kinds of collectibles available to members only!</state>
             </case>
             <case stage="0">
                 <condition role="self" saidMarker="CashPrize" />
@@ -3148,6 +3176,9 @@
                 <state img="#-heart.png">Okay, I'm buying a lottery ticket after this!</state>
                 <state img="#-cheerful.png">Whoever came up with the idea of breakable weapons was a genius. It's a &lt;i&gt;brilliant&lt;/i&gt; way to get customers back to your store!</state>
                 <state img="#-cheerful.png">If only my sales were this nice!</state>
+                <state img="#-fingerChin.png">Ha, and I didn't even have to bribe the dealer!</state>
+                <state img="custom:#-goldSpill">Ahhh... There's no better feeling than a handful of coins!</state>
+                <state img="custom:#-goldSpill">A rising tide lifts all boats!</state>
             </case>
         </trigger>
 
@@ -3236,7 +3267,7 @@
             <case stage="7" id="307" oneShotId="78">
                 <condition role="self" saidMarker="StreetGood" />
                 <test expr="~background~" value="street" />
-                <state img="#-thinking.png">Wait, if I incite a mob and I get "injured", can I sue, or would I be liabel for inciting the mob in the first place? I mean this is how everyone else makes money, right?</state>
+                <state img="#-thinking.png">Wait, if I incite a mob and I get "injured", can I sue, or would I be liable for inciting the mob in the first place? I mean this is how everyone else makes money, right?</state>
             </case>
             <case stage="0" id="268" oneShotId="46">
                 <test expr="~background~" value="tiki bar" />
@@ -3304,6 +3335,14 @@
                 <test expr="~background~" value="beach" />
                 <state img="#-shout.png">I got it guys! The &lt;i&gt;perfect&lt;/i&gt; money-making scheme! Let's open up a nude beach! We'll attract &lt;i&gt;so&lt;/i&gt; many tourists guy.</state>
             </case>
+            <case stage="0" id="325" oneShotId="91">
+                <test expr="~background~" value="armory" />
+                <state img="#-thinking.png">I totally understand being limited on places to hold this game, but did we really have to hang up all my merchandise around? There's too much risk of theft.</state>
+            </case>
+            <case stage="1" id="326" oneShotId="92">
+                <test expr="~background~" value="armory" />
+                <state img="#-fingerChin.png">As much as I'm not exactly fond of playing with all my merchandise around, I guess this is the perfect promotional opportunity. You know, to give you guys a bit of a sample of what I offer!</state>
+            </case>
             <case stage="0-7" id="249">
                 <condition filter="student" role="other" var="student" />
                 <state img="#-shout.png" marker="AnnaStudentDependent">Hey, ~student~. You don't file your taxes, do you? Mind if I claim you as a dependent? I could &lt;i&gt;totally&lt;/i&gt; boost my tax refund.</state>
@@ -3325,6 +3364,10 @@
                 <state img="#-heart.png">I &lt;i&gt;love&lt;/i&gt; my siblings, especially my sister, Anna! Anna is great too, but so is Anna. Don't get me started with Anna though. Once Anna and Anna start going at it... yeesh.</state>
                 <state img="custom:#-coinFlip">Most of my siblings are merchants from quaint kingdoms. But one of my sisters, Anna, runs a shop in &lt;i&gt;Shibuya, Japan!&lt;/i&gt; She tells me &lt;i&gt;all kinds&lt;/i&gt; of crazy stories from her world.</state>
                 <state img="#-mocking.png">One of my sisters wrote a book titled &lt;i&gt;The Anna Manifesto&lt;/i&gt;. It's a joke book. I carry a few copies in stock, if anyone wants a few laughs.</state>
+                <state img="#-awkward.png">This hand is like the industry standard, except that it's not mass-produced and distributed to retailers to sold for large profits; it's just a poker hand.</state>
+                <state img="#-thinking.png">So, random question ~player~... What's your mother's maiden name? Oh, and which alley did you live on when you were five years old? Name of your first pet?</state>
+                <state img="#-thinking.png">Think I could sell used treasure maps? I mean, it's the customer's fault for not inquiring if the treasure is still there...</state>
+                <state img="#-heart.png">I should get into the shipping business! I'll just mail out illustrated catalogs of what I carry so customers can mail in purchases! It's all about the easiest way to drain 'em dry... I mean, to bring the shop experience to their doorstep!</state>
             </case>
             <case stage="6" id="29" oneShotId="26">
                 <state img="#-shout.png" marker="QAPinchPennies">Alright guys, what's the &lt;i&gt;craziest&lt;/i&gt; thing you've done to pinch your pennies?</state>
@@ -3350,7 +3393,7 @@
             <case stage="5" id="212" oneShotId="32">
                 <state img="#-thinking.png" marker="QACraziestThingDoneForMoney">You guys ever do anything &lt;i&gt;insane&lt;/i&gt; for cash? Any crazy dares or bets or something?</state>
             </case>
-            <case stage="4" id="267" oneShotId="45">
+            <case stage="4" id="267" oneShotId="45" hidden="1">
                 <state img="#-shout.png" marker="QABestDeal">So, what's the &lt;i&gt;best deal&lt;/i&gt; you've found while shopping? Would you believe it if I told you I once bought &lt;i&gt;three&lt;/i&gt; pairs of boots for the price of a porkchop?</state>
             </case>
         </trigger>
@@ -3383,6 +3426,10 @@
                 <condition role="self" saidMarker="AnnaStripsTharjaReacts21" />
                 <condition role="other" character="tharja" stage="5-7" />
                 <state img="blank.png" marker="AnnaTakesPictureOfTharjaNaked"></state>
+            </case>
+            <case stage="0-7" id="330" oneShotId="95" priority="999">
+                <condition role="self" saidMarker="AnnaDisasterColors2" />
+                <state img="#-peeved.png" marker="AnnaDisasterColors3">I mean, it's not &lt;i&gt;my fault&lt;/i&gt; the hurricane happened! It's not &lt;i&gt;my fault&lt;/i&gt; the king's an asshole! I just know how to profit off of it. Call it "&lt;i&gt;making the best out of a bad situation&lt;/i&gt;".</state>
             </case>
             <case stage="7" id="211" oneShotId="25" priority="998">
                 <condition role="self" saidMarker="AnnaStripsTharjaReacts21" />
@@ -3489,7 +3536,7 @@
             </case>
             <case stage="0" id="245">
                 <condition role="other" character="megumin" sayingMarker="megumin_anna_merchant1" />
-                <state img="#-cheerful.png" marker="AnnaStripsMeguminReacts1">Ha, I'm a merchant alright, Megumin. &lt;i&gt;The scummiest!&lt;/i&gt;... Except those are just rumors! There's nothing "scummy" about raising prices before a &lt;i&gt;20% off sale&lt;i&gt;. </state>
+                <state img="#-cheerful.png" marker="AnnaStripsMeguminReacts1">Ha, I'm a merchant alright, Megumin. &lt;i&gt;The scummiest!&lt;/i&gt;... Except those are just rumors! There's nothing "scummy" about raising prices before a &lt;i&gt;20% off sale&lt;/i&gt;. </state>
             </case>
             <case stage="1" id="246">
                 <condition role="other" character="megumin" sayingMarker="megumin_anna_moneyLove1" />
@@ -3697,6 +3744,7 @@
             </case>
             <case stage="0" id="79">
                 <state img="#-stripping.png">I'll take off my cloak. It doesn't have any special abilities or anything; only the newer models have those.</state>
+                <state img="#-awkward.png">&lt;i&gt;NO REFUNDS!!!&lt;/i&gt; --- Huh? Oh, sorry. Got a little startled there.</state>
             </case>
             <case stage="4" id="84">
                 <state img="#-stripping.png">My tights next... Looks like I'm in a tight spot.</state>
@@ -3712,6 +3760,8 @@
             <case stage="2" id="82">
                 <state img="#-stripping.png">You wanna know something funny? I sell a few pairs of boots that grant the wearer extra movement. Yet, I only wear the basic ones.</state>
                 <state img="#-stripping.png">You know, I even sell boots that grant the wearer extra movement. Maybe I should start wearing those and compete in races or something. Think there's money to be made in that?</state>
+                <state img="#-stripping.png">These boots have been through all sorts of adventures. Cross-country traveling, tomb excavations...</state>
+                <state img="#-stripping.png">These boots have seen it all. Heck, I think these are the pair I brought with me on that grave robbery mission... &lt;i&gt;Wait&lt;/i&gt;, did I say &lt;i&gt;"grave robbery"&lt;/i&gt;? Ha, I meant &lt;i&gt;"tomb excavation"&lt;/i&gt;. Yeah, that's it.</state>
             </case>
             <case stage="5" id="83">
                 <state img="#-stripping.png">This cash prize is slipping from my grasp...</state>
@@ -4070,16 +4120,22 @@
                 <state img="#-awkward.png">Lost with a pair? That's tragic. Truly tragic.</state>
                 <state img="#-awkward.png">You lost with a pair? That's more tragic than an expired warranty.</state>
             </case>
-            <case stage="0-9" id="43" priority="0">
+            <case stage="0-7" id="43" priority="0">
                 <condition role="self" hasHand="One Pair" />
                 <state img="#-heart.png">I knew going for the pair would pay dividends!</state>
                 <state img="#-cheerful.png">I made the right move going for the pair.</state>
+                <state img="#-casual.png">Going for a pair was the safer investment, in the end.</state>
+                <state img="#-fingerChin.png">I could have gone for a more crazy strategy, but getting the pair was safer.</state>
+                <state img="#-awkward.png">I was dealt the pair right out of the gate, actually. But I couldn't get the three of a kind.</state>
+                <state img="#-casual.png">Ha, good thing I played it safe! I was tempted to play that hand a bit more risky.</state>
             </case>
-            <case stage="0-9" id="48" priority="0">
+            <case stage="0-7" id="48" priority="0">
                 <condition role="self" hasHand="High Card" />
                 <state img="#-heart.png">I won with a high card? Talk about free estate.</state>
+                <state img="#-fingerChin.png">What, a high card? Ha, thought I was done for!</state>
+                <state img="#-fingerChin.png">Whoa, even with a bad exchange strategy, I still managed to earn a profit!</state>
             </case>
-            <case stage="0-5" id="44">
+            <case stage="1-5" id="44">
                 <state img="#-cheerful.png">I won! I'm so grateful.</state>
                 <state img="#-cheerful.png">Whew! Like keeping the tax collector away.</state>
                 <state img="#-cheerful.png">I'm a professional at this game!</state>
@@ -4100,6 +4156,25 @@
                 <state img="#-cheerful.png">I'm still in this!</state>
                 <state img="custom:#-goldSpill">One step closer to that &lt;i&gt;sweet&lt;/i&gt; cash prize!</state>
                 <state img="custom:#-rainingGold">I almost feel bad, ~name~. I might even give you a cut of the cash prize after I win this thing.</state>
+            </case>
+            <case stage="0" id="314">
+                <state img="#-mocking.png">Looks like you made a bad investment on the card exchange, ~name~.</state>
+                <state img="#-awkward.png">Looks like luck wasn't for sale, ~name~...</state>
+                <state img="#-flipAfter.png">You can still recover from your loss, ~name~!</state>
+                <state img="#-mocking.png">You can still recover from your loss, ~name~! ... Probably.</state>
+            </case>
+            <case stage="0-7" id="315" priority="0">
+                <condition role="self" hasHand="Royal Flush" />
+                <state img="custom:#-goldSpill">Royal. Fucking. Flush.</state>
+                <state img="custom:#-rainingGold">Royal flush!</state>
+                <state img="#-shout.png">I can't believe it! Guys guys guys guys, look! &lt;i&gt;A royal flush!&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7" id="316" priority="0">
+                <condition role="self" hasHand="Two Pair" />
+                <state img="#-cheerfulOnGold.png">Not one, but &lt;i&gt;two&lt;/i&gt;, count 'em, &lt;i&gt;two&lt;/i&gt; pairs.</state>
+                <state img="#-fingerChin.png">Two pair! Ha, I did pretty well.</state>
+                <state img="#-thinking.png">I had two pairs! Let's be honest, you didn't stand a chance, ~name~.</state>
+                <state img="#-fingerChin.png">Two pair! If only I was this lucky with my business.</state>
             </case>
         </trigger>
 
@@ -4127,6 +4202,11 @@
             <case stage="0-9" id="5">
                 <condition status="decent" role="target" />
                 <state img="#-cheerful.png">The little things really bring the outfit together, but you look fine without ~clothing.ifPlural(them|it)~.</state>
+            </case>
+            <case stage="7-9">
+                <condition status="not_crotch_visible" role="target" />
+                <state img="#-sexy.png">Is that a mirror in your pocket? Because I could totally see myself in your pants, ~name~.</state>
+                <state img="#-peeved.png">Is that a mirror in your pocket? Because that would be unpaid-for merchandise you're taking from my shop... Hmm? What did you &lt;i&gt;think&lt;/i&gt; I was gonna say?</state>
             </case>
             <case stage="0-7 9">
                 <state img="#-peeved.png">Come on... Cheapskate.</state>
@@ -4183,10 +4263,21 @@
                 <state img="#-heart.png">I sold ~clothing.ifPlural(some|a)~ counterfeit designer~clothing~ once. Didn't know it at the time, but as it turns out, that was illegal! </state>
                 <state img="#-peeved.png">Did I ever tell you guys about my 401k? No, that's not my retirement account; it's how much money it would take for me to act like I'm still interested in ~name~ stripping.</state>
                 <state img="#-thinking.png">Isn't it amazing what we'll do to chase after little green rectangles? ... Wait, did I say &lt;i&gt;green rectangles&lt;/i&gt;? I meant &lt;i&gt;golden circles&lt;/i&gt;. Could you imagine if we paid for things using green rectangles?</state>
+                <state img="#-thinking.png">I wonder what's gonna be the next big thing around here... You know, the thing that will &lt;i&gt;really&lt;/i&gt; bring in the coin.</state>
+                <state img="#-peeved.png">I don't get it. People always come up to me and say &lt;i&gt;"You're corrupt!"&lt;/i&gt; Like, &lt;i&gt;no&lt;/i&gt;! My name's &lt;i&gt;Anna&lt;/i&gt;. I've never heard of anyone named &lt;i&gt;corrupt&lt;/i&gt;</state>
+                <state img="#-cheerful.png">Kinda weak taking off your ~clothing~, ~name~. But, as long as it's not illegal, I call it &lt;i&gt;fair game&lt;/i&gt;!</state>
+                <state img="#-heart.png">I mean, if it's not illegal, it's fair game, right? Any of us could have brought ~clothing.ifPlural(some|a)~ ~clothing~ if we wanted to.</state>
+            </case>
+            <case stage="0-7" id="328" oneShotId="93">
+                <state img="#-fingerChin.png" marker="AnnaDisasterColors1">You guys want to know the secret to getting rich quick? Alright, get a dartboard and hang a bunch of colors on it. Next time there's some regional disaster, throw a dart!</state>
             </case>
         </trigger>
 
         <trigger id="female_removed_accessory">
+            <case stage="0-7" id="329" oneShotId="94" priority="999">
+                <condition role="self" saidMarker="AnnaDisasterColors1" />
+                <state img="#-shout.png" marker="AnnaDisasterColors2">There's a hurricane that wipes outa couple of towns? Make a green &lt;i&gt;disaster relief awareness ribbon&lt;/i&gt;. Currupt rulers? Sell blue &lt;i&gt;Commers Against the King&lt;/i&gt; pins. Why green? Why blue? Trust me, no one cares!</state>
+            </case>
             <case stage="0-9" id="11">
                 <condition role="target" character="shamir" stage="1" sayingMarker="ShamirStripsAnnaReact3" />
                 <state img="#-thinking.png">Yeesh, Shamir. You value privacy that much or something?</state>
@@ -4225,20 +4316,16 @@
                 <state img="#-peeved.png">This is almost as boring as one of those books about a zombie apocalypse but with vegetarian zombies.</state>
                 <state img="#-awkward.png">You ever go to one of those Finance 101 classes meant for freshmen and you &lt;i&gt;totally&lt;/i&gt; doze off from boredom? Yeah, this is one of those times.</state>
                 <state img="#-confident.png">Anyone want to do some crazy shit to make money after this game? I got all sorts of plans hatched. They're not even &lt;i&gt;that&lt;/i&gt; illegal.</state>
+                <state img="#-casual.png">Unless this is part of a &lt;i&gt;strip one, strip one free&lt;/i&gt; deal or something, I'm not that interested.</state>
+                <state img="#-casual.png">Rounds like this are a dime a dozen.</state>
+                <state img="#-cheerfulOnGold.png">Sometimes I get attacked for my behavior. But my belief is simple! &lt;i&gt;A rising tide lifts all boats&lt;/i&gt;! And I can totally make it high-tide with enough money.</state>
+                <state img="#-peeved.png">Your ~clothing~? This is corruption!</state>
+                <state img="#-peeved.png">Ugh, that's it. I', coming after your profit margins.</state>
             </case>
             <case stage="0-9" id="52" oneShotId="16" priority="0">
                 <test expr="~background~" cmp="!=" value="hot spring" />
                 <state img="#-shout.png">Okay, this is getting boring. &lt;i&gt;Who wants to go to the hot springs?&lt;/i&gt; Don't forget to take one of my camer--- I mean, generic tomes with you in the changing room!</state>
                 <state img="#-shout.png">Okay, this is getting boring. &lt;i&gt;Who wants to go to the hot springs?&lt;/i&gt;</state>
-            </case>
-            <case stage="0-7 9" id="156">
-                <state img="#-peeved.png">Come on... Cheapskate.</state>
-                <state img="#-thinking.png">How much did you pay for ~clothing.ifPlural(those|that)~?</state>
-                <state img="#-cheerful.png">I might have to buy something like ~clothing.ifPlural(those|that)~ for myself!</state>
-                <state img="#-awkward.png">I understand you're trying to play smart, ~name~, but I'm kinda in a hurry.</state>
-                <state img="custom:#-boredCoinSpin">Unless this is part of a &lt;i&gt;strip one, strip one free&lt;/i&gt; deal or something, I'm not that interested.</state>
-                <state img="custom:#-boredCoinSpin">Rounds like this are a dime a dozen.</state>
-                <state img="#-peeved.png" marker="DontDrinkAlcohol">Remember guys, &lt;i&gt;don't drink alcohol!&lt;/i&gt; Not because it's bad for you or anything; but it's &lt;i&gt;so expensive!&lt;/i&gt;</state>
             </case>
         </trigger>
 
@@ -4257,6 +4344,7 @@
                 <state img="#-confident.png">Some folks say money can't buy happiness.  We call those people &lt;i&gt;wrong&lt;/i&gt;.</state>
                 <state img="#-thinking.png">Wait, so are all girls after rich men, or is that only me...</state>
                 <state img="#-fingerChin.png">If you're looking to spice up your wardrobe, look no further! I sell &lt;i&gt;everything&lt;/i&gt; you never knew you couldn't live without.</state>
+                <state img="#-shout.png">Ha, this is more fun than counting money!</state>
             </case>
         </trigger>
 
@@ -4328,6 +4416,10 @@
                 <state img="#-thinking.png">Think I could sell used treasure maps? I mean, it's the customer's fault for not inquiring if the treasure is still there...</state>
                 <state img="#-fingerChin.png">If you're looking to spice up your wardrobe, look no further! I sell &lt;i&gt;everything&lt;/i&gt; you never knew you couldn't live without.</state>
             </case>
+            <case stage="0-9" id="323" oneShotId="90" priority="0">
+                <condition status="decent" role="target" />
+                <state img="#-cheerfulOnGold.png">Be a little more adventurous and I'll get you some discounts, ~name~! &lt;i&gt;{small}Restrictions may apply. Only at participating locations. Offer may change without any prior notice and probably at time of check out. See fine print for details.&lt;/i&gt; {!reset}</state>
+            </case>
         </trigger>
 
         <trigger id="male_removing_major">
@@ -4379,13 +4471,13 @@
         <trigger id="female_removed_major">
             <case stage="7" id="187" oneShotId="23" priority="999">
                 <condition role="self" saidMarker="MissCoinFlipButt1" />
-                <state img="custom:#-buttCoin" marker="MissCoinFlipButt2">Think I could sell used treasure maps? I mean, it's the customer's fault for not inquiring if the treasure is still there...</state>
+                <state img="custom:#-buttCoin" marker="MissCoinFlipButt2">Ahhhhh, &lt;i&gt;Oh!&lt;/i&gt; There it is!</state>
             </case>
             <case stage="7" id="223" oneShotId="37" priority="999">
                 <condition role="self" saidMarker="MissCoinFlipButt1" />
                 <test expr="~self.collectible.member card~" value="true" />
                 <state img="custom:#-buttCoin" marker="MissCoinFlipButt2" persist-marker="true">
-                    <text>Think I could sell used treasure maps? I mean, it's the customer's fault for not inquiring if the treasure is still there...</text>
+                    <text>Ahhhhh, &lt;i&gt;Oh!&lt;/i&gt; There it is!</text>
                     <markers>
                         <marker name="gold" op="+" value="1" />
                     </markers>
@@ -4428,7 +4520,11 @@
         </trigger>
 
         <trigger id="male_chest_is_visible">
-            <case stage="0-9">
+            <case stage="6-7" id="319">
+                <condition role="target" character="9s" />
+                <state img="#-sexy.png">Is your name &lt;i&gt;"Cheapskate"&lt;/i&gt;? Because I see myself in your blindfold, 9s. I know that doesn't make sense; just roll with it.</state>
+            </case>
+            <case stage="0-9" oneShotId="85" priority="0">
                 <condition filter="muscular" role="target" />
                 <state img="#-heart.png">Whoa there tough guy! Ever consider working security? I could use someone like you to scare off thieves.</state>
                 <state img="#-heart.png">Hey hey, nice! Looks like you don't have any need of my super expensive protein &lt;i&gt;supplements&lt;/i&gt;.</state>
@@ -4439,6 +4535,17 @@
                 <state img="#-cheerful.png">Looking to bulk up? I got &lt;i&gt;just the product&lt;/i&gt; for you!</state>
                 <state img="#-heart.png">Okay, I'll admit it. You're &lt;i&gt;a little&lt;/i&gt; dreamy. Any more compliments than that and I'll have to charge you.</state>
                 <state img="#-sexy.png">I don't normally give away compliments for free, but, okay, you look &lt;i&gt;nice&lt;/i&gt;, ~name~.</state>
+            </case>
+            <case stage="6-7" id="317" priority="0">
+                <state img="#-sexy.png">Is your name &lt;i&gt;"Cheapskate"&lt;/i&gt;? Because I see myself in your eyes, ~name~.</state>
+            </case>
+            <case stage="0-9" oneShotId="86" priority="0">
+                <condition filter="chubby" role="target" />
+                <state img="#-awkward.png">Uh oh, you've gained a bit of weight, ~name~. I could sell you some weight loss meals, if you're interested.</state>
+                <state img="#-awkward.png">You've put on some weight, ~name~. Want some dieting advice? Only 2 gold copper pieces...</state>
+            </case>
+            <case stage="5" id="318" oneShotId="87" priority="0">
+                <state img="#-sexy.png">You don't look too bad, ~name~... Five silvers and I'll give you a kiss...</state>
             </case>
         </trigger>
 
@@ -4531,6 +4638,8 @@
                 <state img="#-heart.png">Nice assets!</state>
                 <state img="#-fingerChin.png">I bet the boys are &lt;i&gt;all over&lt;/i&gt; your assets.</state>
                 <state img="#-sexy.png">Maybe I should try shopping topless! I mean, it's not &lt;i&gt;my fault&lt;/i&gt; if some lonely guy wants to give me a discount.</state>
+                <state img="#-cheerful.png">Looking like the industry standard, ~name~!</state>
+                <state img="#-fingerChin.png">They're good, ~name~, but you might need a clever scheme to market such an ordinary pair.</state>
             </case>
         </trigger>
 
@@ -4584,6 +4693,11 @@
                 <state img="#-cheerfulOnGold.png">Ever think about dancing for one of those private clubs? You'd make a lot of money!</state>
                 <state img="#-heart.png">A girl's body is beautiful, isn't it? No wonder boys pay a lot of money to see them.</state>
                 <state img="#-heart.png">And to think that there's so much artwork out there celebrating the beauty of a woman's body. I mean, it makes sense!</state>
+                <state img="#-fingerChin.png">Ha, you'd look &lt;i&gt;great&lt;/i&gt; on some of my promotional fliers, ~name~. You looking for modeling work?</state>
+            </case>
+            <case stage="0-2" id="324">
+                <state img="#-heart.png">Looking good, ~name~, but I'm not into girls. Dating boys is so much cheaper!</state>
+                <state img="#-fingerChin.png">Looking good, ~name~! Girls are too expensive for my tastes, but I'm sure you'll win someone over with that body of yours.</state>
             </case>
         </trigger>
 
@@ -4633,6 +4747,12 @@
             <case stage="0-9" id="168">
                 <condition role="target" character="lucina" stage="1" />
                 <state img="#-awkward.png">&lt;i&gt;Lucina?!&lt;/i&gt; It's &lt;i&gt;you&lt;/i&gt;! Ha, my sister from the future, Anna, told me &lt;i&gt;all&lt;/i&gt; about you! Well, she told me before she... died, anyway.</state>
+            </case>
+            <case stage="0-9" id="321" oneShotId="88">
+                <condition filter="bisexual" role="target" />
+                <test expr="~clothing.type~" value="extra" />
+                <state img="#-heart.png">Honestly, liking both men and women is what I call &lt;i&gt;efficiency&lt;/i&gt;. Like, why only buy from shops on one half of the street when you can buy from both?</state>
+                <state img="#-casual.png">Liking both men and women is like expanding your market share! Why only go after half of your customers?</state>
             </case>
         </trigger>
 
@@ -4741,6 +4861,11 @@
                 <state img="#-fingerChin.png">I'll do almost anything for money! I'll play strip poker, even if I have to masturbate if I lose. But I won't do prostitution one, I have &lt;i&gt;standards&lt;/i&gt;.</state>
                 <state img="#-cheerful.png">You're pretty good at this, ~name~. You could make few gold pieces doing this in front of people; I'm sure &lt;i&gt;everyone&lt;/i&gt; would want to watch.</state>
             </case>
+            <case stage="0-9" id="320" priority="0">
+                <condition filter="uses_toy" role="target" />
+                <state img="#-fingerChin.png">You use that thing a lot, ~name~? I hope you have; gotta get your money's worth, ya know?</state>
+                <state img="#-thinking.png">Oh, I have one just like that, ~name~! Tell me, is that one of the newer models?</state>
+            </case>
         </trigger>
 
         <trigger id="female_finished_masturbating">
@@ -4847,6 +4972,7 @@
                 <state img="#-shout.png">Don't forget to tip your showgirl!</state>
                 <state img="#-sexy.png">I probably should have brought some of that cream with me... It's a special mixture I sell that makes you orgasm in mere seconds!</state>
                 <state img="#-peeved.png">Using my hands is cheaper than using sex toys. They charge a &lt;i&gt;fortune&lt;/i&gt; for some of those things! A double-ended phallic rock for &lt;i&gt;sixty gold pieces?&lt;/i&gt;</state>
+                <state img="#-thinking.png">Despite what you may think, I've actually put a lot of though behind having a kid! I just don't know if having a boy or a girl would be cheaper... Boys eat more, so your budget for food goes up, but you'd spend more on clothing for a girl, not to mention &lt;i&gt;monthly sanitary expenditures&lt;/i&gt; if you can't kick her out by puberty.</state>
             </case>
         </trigger>
 
@@ -4858,6 +4984,9 @@
                 <state img="#-mocking.png">I should start charging all of you for watching!</state>
                 <state img="#-sexy.png">Feel free to tip me if you enjoy what you see.</state>
                 <state img="custom:#-rainingGold">I'm not the kind of girl to do this stuff for money. But, if I'm already doing it, I might as well make some money, right? So, &lt;i&gt;tip away!&lt;/i&gt;</state>
+                <state img="#-shout.png">Don't forget to tip your showgirl!</state>
+                <state img="#-sexy.png">I probably should have brought some of that cream with me... It's a special mixture I sell that makes you orgasm in mere seconds!</state>
+                <state img="#-peeved.png">Using my hands is cheaper than using sex toys. They charge a &lt;i&gt;fortune&lt;/i&gt; for some of those things! A double-ended phallic rock for &lt;i&gt;sixty gold pieces?&lt;/i&gt;</state>
             </case>
             <case stage="8" oneShotId="3" hidden="1">
                 <condition role="self" stage="8" timeInStage="1" />
@@ -4924,7 +5053,7 @@
             <case stage="9">
                 <state img="#-fingerChin.png">Whew! Looks like I hit the jackpot.</state>
                 <state img="#-casual.png">Whew, glad that's over.</state>
-                <state img="#-cheerful.png">Ha, I feel like a million bullion right now.</state>
+                <state img="custom:#-rainingGold">Ha, I feel like a million bullion right now.</state>
                 <state img="#-awkward.png">With that out of the way... Any tips? Come on, you can't expect me to have done that for free...</state>
             </case>
         </trigger>
@@ -4945,10 +5074,17 @@
 
         <trigger id="game_over_defeat">
             <case stage="9" id="214">
+                <condition role="target" character="human" />
                 <test expr="~self.collectible.coin purse~" value="false" />
                 <state img="#-peeved.png" collectible="coin purse">How about it? First to three?</state>
                 <state img="#-thinking.png" collectible="coin purse">Way to go, ~name~! Now, how about a deal for that prize money...</state>
                 <state img="#-fingerChin.png" collectible="coin purse">Congratulations, ~name~! But, really, your victory wouldn't have been possible if it not for me. So, I think I deserve a cut of that cash prize...</state>
+            </case>
+            <case stage="9" id="332">
+                <condition count="0" role="target" character="human" />
+                <state img="#-peeved.png">How about it? First to three?</state>
+                <state img="#-thinking.png">Way to go, ~name~! Now, how about a deal for that prize money...</state>
+                <state img="#-fingerChin.png">Congratulations, ~name~! But, really, your victory wouldn't have been possible if it not for me. So, I think I deserve a cut of that cash prize...</state>
             </case>
             <case stage="9" priority="1">
                 <condition count="3" />
