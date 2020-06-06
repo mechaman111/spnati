@@ -323,6 +323,13 @@ namespace SPNATI_Character_Editor
 				}
 				if (!string.IsNullOrEmpty(workingCase.Filter))
 				{
+					if (!string.IsNullOrEmpty(cond.FilterTag))
+					{
+						//already have a filter tag, need a new conditoin
+						cond = new TargetCondition();
+						cond.Role = "target";
+						workingCase.Conditions.Add(cond);
+					}
 					cond.FilterTag = workingCase.Filter;
 					workingCase.Filter = null;
 				}
