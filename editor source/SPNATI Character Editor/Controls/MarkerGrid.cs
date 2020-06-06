@@ -38,6 +38,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			InitializeComponent();
 			ColScope.Items.AddRange(new object[] { "Private", "Public" });
+			ColPersistent.TrueValue = true;
 			ColDelete.Flat = true;
 		}
 
@@ -73,6 +74,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			if (_character == null)
 				return;
+			gridMarkers.EndEdit();
 			List<Marker> oldMarkers = _character.Markers.Value.Values.ToList();
 			_character.Markers.Value.Clear();
 			foreach (DataGridViewRow row in gridMarkers.Rows)
@@ -82,6 +84,15 @@ namespace SPNATI_Character_Editor.Controls
 				if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(scopeStr))
 					continue;
 				string desc = row.Cells["ColDescription"].Value?.ToString();
+				bool persistent = row.Cells[nameof(ColPersistent)].Value != null && (bool)row.Cells[nameof(ColPersistent)].Value;
+				if (persistent)
+				{
+					_character.Behavior.PersistentMarkers.Add(name);
+				}
+				else
+				{
+					_character.Behavior.PersistentMarkers.Remove(name);
+				}
 				Marker marker = oldMarkers.Find(m => m.Name == name) ?? new Marker(name);
 				marker.Description = desc;
 				MarkerScope scope;
@@ -97,6 +108,7 @@ namespace SPNATI_Character_Editor.Controls
 			row.Tag = marker;
 			row.Cells["ColName"].Value = marker.Name;
 			row.Cells["ColDescription"].Value = marker.Description?.ToString();
+			row.Cells[nameof(ColPersistent)].Value = _character.Behavior.PersistentMarkers.Contains(marker.Name);
 			try
 			{
 				row.Cells["ColScope"].Value = marker.Scope.ToString();

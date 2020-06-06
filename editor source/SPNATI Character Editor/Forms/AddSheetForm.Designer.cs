@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
 			this.cmdCancel = new Desktop.Skinning.SkinnedButton();
 			this.cmdCreate = new Desktop.Skinning.SkinnedButton();
@@ -35,6 +36,8 @@
 			this.txtName = new Desktop.Skinning.SkinnedTextBox();
 			this.lblSheet = new Desktop.Skinning.SkinnedLabel();
 			this.cboSheet = new Desktop.Skinning.SkinnedComboBox();
+			this.chkGlobal = new Desktop.Skinning.SkinnedCheckBox();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.skinnedPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -44,7 +47,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.skinnedPanel1.Controls.Add(this.cmdCancel);
 			this.skinnedPanel1.Controls.Add(this.cmdCreate);
-			this.skinnedPanel1.Location = new System.Drawing.Point(0, 91);
+			this.skinnedPanel1.Location = new System.Drawing.Point(0, 113);
 			this.skinnedPanel1.Name = "skinnedPanel1";
 			this.skinnedPanel1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryDark;
 			this.skinnedPanel1.Size = new System.Drawing.Size(271, 30);
@@ -134,6 +137,21 @@
 			this.cboSheet.Sorted = false;
 			this.cboSheet.TabIndex = 4;
 			this.cboSheet.Visible = false;
+			this.cboSheet.SelectedIndexChanged += new System.EventHandler(this.cboSheet_SelectedIndexChanged);
+			// 
+			// chkGlobal
+			// 
+			this.chkGlobal.AutoSize = true;
+			this.chkGlobal.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkGlobal.Location = new System.Drawing.Point(12, 91);
+			this.chkGlobal.Name = "chkGlobal";
+			this.chkGlobal.Size = new System.Drawing.Size(116, 17);
+			this.chkGlobal.TabIndex = 5;
+			this.chkGlobal.Text = "Stage-independent";
+			this.toolTip1.SetToolTip(this.chkGlobal, "If checked, poses for each stage cannot be defined. Images will be saved without " +
+        "a stage prefix and can be used in any stage.");
+			this.chkGlobal.UseVisualStyleBackColor = true;
+			this.chkGlobal.Visible = false;
 			// 
 			// AddSheetForm
 			// 
@@ -141,8 +159,9 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
-			this.ClientSize = new System.Drawing.Size(271, 120);
+			this.ClientSize = new System.Drawing.Size(271, 142);
 			this.ControlBox = false;
+			this.Controls.Add(this.chkGlobal);
 			this.Controls.Add(this.cboSheet);
 			this.Controls.Add(this.lblSheet);
 			this.Controls.Add(this.txtName);
@@ -172,5 +191,7 @@
 		private Desktop.Skinning.SkinnedTextBox txtName;
 		private Desktop.Skinning.SkinnedLabel lblSheet;
 		private Desktop.Skinning.SkinnedComboBox cboSheet;
+		private Desktop.Skinning.SkinnedCheckBox chkGlobal;
+		private System.Windows.Forms.ToolTip toolTip1;
 	}
 }

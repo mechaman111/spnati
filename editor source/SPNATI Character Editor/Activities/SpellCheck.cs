@@ -32,11 +32,6 @@ namespace SPNATI_Character_Editor.Activities
 			_spellchecker = Workspace.GetData<SpellCheckerService>(CharacterWorkspace.SpellCheckerService);
 		}
 
-		public override void Destroy()
-		{
-			base.Destroy();
-		}
-
 		protected override void OnActivate()
 		{
 			cmdIgnore.Focus();

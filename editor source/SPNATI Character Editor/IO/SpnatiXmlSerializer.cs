@@ -194,7 +194,7 @@ namespace SPNATI_Character_Editor.IO
 				if (tuple.Item3 == null)
 				{
 					object subdata = field.GetValue(data);
-					IList list = subdata as IList;
+					IEnumerable<object> list = subdata as IEnumerable<object>;
 					if (list != null)
 					{
 						MethodInfo sortMethod = field.SortMethod;
@@ -232,8 +232,8 @@ namespace SPNATI_Character_Editor.IO
 				else
 				{
 					//Array
-					IList array = field.GetValue(data) as IList;
-					if (array != null && array.Count > 0)
+					IEnumerable<object> array = field.GetValue(data) as IEnumerable<object>;
+					if (array != null && array.Any())
 					{
 						writer.WriteStartElement(tuple.Item2);
 						foreach (var obj in array)

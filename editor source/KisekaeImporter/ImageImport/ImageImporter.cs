@@ -1,8 +1,10 @@
-﻿using System;
+﻿using KisekaeImporter.RemoteClient;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace KisekaeImporter.ImageImport
 {
@@ -81,6 +83,17 @@ namespace KisekaeImporter.ImageImport
 			}
 		}
 
+		private Client _client;
+
+		public ImageImporter(bool allowRemoteControl)
+		{
+			_client = new Client();
+			if (allowRemoteControl)
+			{
+				_client.Connect();
+			}
+		}
+
 		public Image ImportSingleImage(ImageMetadata image)
 		{
 			//SetupForImport();
@@ -104,7 +117,7 @@ namespace KisekaeImporter.ImageImport
 			}
 			catch
 			{
-			
+
 			}
 		}
 
@@ -155,17 +168,6 @@ namespace KisekaeImporter.ImageImport
 		{
 			try
 			{
-				string baseFile = Path.Combine(KklAppData, "zzReimport");
-				string dataFileName = baseFile + ".txt";
-				string[] imageFileNames = new string[] { baseFile + "..png", baseFile + ".png" }; //Different versions expect different names
-
-				//Conversion can fail if the image already exists
-				foreach (string file in imageFileNames)
-				{
-					File.Delete(file);
-				}
-
-				//Write the image data where kkl can find it
 				List<string> lines = new List<string>();
 				if (extraData != null)
 				{
@@ -177,23 +179,78 @@ namespace KisekaeImporter.ImageImport
 							float v;
 							if (float.TryParse(kvp.Value, out v))
 							{
-								lines.Add($"{subpiece}={v / 100.0f}");
+								lines.Add($"{subpiece}={Math.Floor(v / 100.0f * 255)}");
 							}
 						}
 					}
 				}
 				lines.Add(data);
-				File.WriteAllLines(dataFileName, lines);
 
-				//Wait for KKL to pick it up and create an image
-				Image result = null;
-				Image tmp = WaitForImage(imageFileNames);
-				if (tmp != null)
+				if (_client.Connected)
 				{
-					result = new Bitmap(tmp); //free up the file so it can be deleted later
-					tmp.Dispose();
+					//use remote protocol
+
+					//ostensibly transparencies can be prepended to the code with new lines, but this doesn't appear to work
+					//string code = string.Join("\n", lines).Replace("\\\\", "\\");
+					string code = data.Replace("\\\\", "\\");
+
+					//so instead, send transparency commands
+					foreach (KeyValuePair<string, string> kvp in extraData)
+					{
+						string[] subpieces = kvp.Key.Split('/');
+						foreach (string subpiece in subpieces)
+						{
+							float v;
+							if (float.TryParse(kvp.Value, out v))
+							{
+								int amount = (int)Math.Floor(v / 100.0f * 255);
+								ServerRequest partRequest = new ServerRequest("alpha_direct", "op", "set", "character", "0", "path", subpiece, "alpha", amount.ToString());
+								_client.SendCommand(partRequest).Wait();
+							}
+						}
+					}
+
+					ServerRequest request = new ServerRequest("import", "code", code.Replace("\\", "\\\\"));
+					Task<ServerResponse> task = _client.SendCommand(request);
+					task.Wait();
+					ServerResponse response = task.Result;
+
+					if (extraData.Count > 0)
+					{
+						//reset transparencies
+						ServerRequest partRequest = new ServerRequest("alpha_direct", "op", "reset_all");
+						_client.SendCommand(partRequest).Wait();
+					}
+
+					return (response as ImageResponse)?.Image;
 				}
-				return result;
+				else
+				{
+					//fall back to the text file method
+
+					string baseFile = Path.Combine(KklAppData, "zzReimport");
+					string dataFileName = baseFile + ".txt";
+					string[] imageFileNames = new string[] { baseFile + "..png", baseFile + ".png" }; //Different versions expect different names
+
+					//Conversion can fail if the image already exists
+					foreach (string file in imageFileNames)
+					{
+						File.Delete(file);
+					}
+
+					//Write the image data where kkl can find it
+					File.WriteAllLines(dataFileName, lines);
+
+					//Wait for KKL to pick it up and create an image
+					Image result = null;
+					Image tmp = WaitForImage(imageFileNames);
+					if (tmp != null)
+					{
+						result = new Bitmap(tmp); //free up the file so it can be deleted later
+						tmp.Dispose();
+					}
+					return result;
+				}
 			}
 			catch
 			{

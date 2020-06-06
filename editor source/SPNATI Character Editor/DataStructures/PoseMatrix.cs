@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
@@ -34,7 +35,6 @@ namespace SPNATI_Character_Editor.DataStructures
 		/// <param name="skin"></param>
 		public PoseMatrix(ISkin skin) : this()
 		{
-			Character character = skin.Character;
 		}
 
 		public bool IsEmpty()
@@ -57,9 +57,9 @@ namespace SPNATI_Character_Editor.DataStructures
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="name">Sheet name. Will be made unique if necessary</param>
-		public PoseSheet AddSheet(string name)
+		public PoseSheet AddSheet(string name, Character character)
 		{
-			return AddSheet(name, null);
+			return AddSheet(name, character, null, false);
 		}
 
 		/// <summary>
@@ -67,17 +67,20 @@ namespace SPNATI_Character_Editor.DataStructures
 		/// </summary>
 		/// <param name="name">Sheet name. Will be made unique if necessary</param>
 		/// <param name="basis">Sheet to duplicate</param>
-		public PoseSheet AddSheet(string name, PoseSheet basis)
+		/// <param name="global">Whether poses are global</param>
+		public PoseSheet AddSheet(string name, Character character, PoseSheet basis, bool global)
 		{
 			name = GetUniqueSheetName(name);
 			PoseSheet sheet = new PoseSheet()
 			{
-				Name = name
+				Name = name,
+				IsGlobal = global
 			};
 			Sheets.Add(sheet);
 
 			if (basis != null)
 			{
+				sheet.BaseCode = basis.BaseCode;
 				foreach (PoseStage basisStage in basis.Stages)
 				{
 					PoseStage stage = basisStage.Clone() as PoseStage;
@@ -89,6 +92,13 @@ namespace SPNATI_Character_Editor.DataStructures
 					}
 				}
 			}
+			else if (global)
+			{
+				PoseStage stage = new PoseStage(0);
+				sheet.Stages.Add(stage);
+			}
+
+			sheet.ReconcileStages(character);
 
 			return sheet;
 		}
@@ -120,56 +130,19 @@ namespace SPNATI_Character_Editor.DataStructures
 				sheet.ReconcileStages(character);
 			}
 		}
-	}
-
-	[Serializable]
-	public class PoseSheet : BindableObject
-	{
-		public PoseSheet()
-		{
-			Stages = new ObservableCollection<PoseStage>();
-		}
-
-		[Text(DisplayName = "Sheet Name")]
-		[XmlElement("name")]
-		public string Name
-		{
-			get { return Get<string>(); }
-			set { if (!string.IsNullOrEmpty(value)) { Set(value); } }
-		}
-
-		[Text(DisplayName = "Base Appearance Code", RowHeight = 130, Multiline = true)]
-		[XmlElement("model")]
-		public string BaseCode
-		{
-			get { return Get<string>(); }
-			set { Set(value); }
-		}
-
-		[XmlArray("stages")]
-		[XmlArrayItem("stage")]
-		public ObservableCollection<PoseStage> Stages
-		{
-			get { return Get<ObservableCollection<PoseStage>>(); }
-			set { Set(value); }
-		}
-
-		public override string ToString()
-		{
-			return Name;
-		}
 
 		/// <summary>
-		/// Creates a sheet out of a pose list
+		/// Moves a pose list into a sheet
 		/// </summary>
-		/// <param name="list"></param>
-		public void FillFromPoseList(Character character, PoseList list)
+		/// <param name="character">Character the sheet belongs to</param>
+		/// <param name="list">List to convert</param>
+		/// <param name="sheet">Sheet to put the list into</param>
+		public void FillFromPoseList(Character character, PoseList list, PoseSheet sheet)
 		{
-			//create stages
-			for (int stage = 0; stage < character.Layers + Clothing.ExtraStages; stage++)
-			{
-				Stages.Add(new PoseStage(stage));
-			}
+			PoseSheet globalSheet = null;
+
+			//make sure stages exist
+			sheet.ReconcileStages(character);
 
 			string pattern = @"^((\d+)-)*(.+)$";
 			Regex regex = new Regex(pattern);
@@ -192,38 +165,51 @@ namespace SPNATI_Character_Editor.DataStructures
 						{
 							PoseEntry cell = new PoseEntry(metadata);
 							cell.Key = key;
-							if (stage >= 0 && stage < Stages.Count)
+							if (stage >= 0 && stage < sheet.Stages.Count)
 							{
-								PoseStage s = Stages[stage];
+								PoseStage s = sheet.Stages[stage];
 								s.Poses.Add(cell);
 							}
 						}
 					}
 					else
 					{
-						//Currently can't handle stageless images
+						if (globalSheet == null)
+						{
+							globalSheet = AddSheet("Global", character, null, true);
+						}
+						key = metadata.ImageKey;
+						PoseEntry cell = new PoseEntry(metadata);
+						cell.Key = key;
+						globalSheet.Stages[0].Poses.Add(cell);
 					}
-				}				
+				}
 			}
 		}
 
 		/// <summary>
-		/// Populates a sheet from a template
+		/// Populates from a template
 		/// </summary>
 		/// <param name="template"></param>
-		public void FillFromTemplate(Character character, PoseTemplate template)
+		public void FillFromTemplate(Character character, PoseTemplate template, PoseSheet sheet)
 		{
-			BaseCode = template.BaseCode.ToString();
+			sheet.BaseCode = template.BaseCode.ToString();
+
+			//make sure every row exists
+			sheet.ReconcileStages(character);
 
 			//create stages
 			for (int stage = 0; stage < character.Layers + Clothing.ExtraStages; stage++)
 			{
-				PoseStage poseStage = new PoseStage(stage);
-				Stages.Add(poseStage);
+				PoseStage poseStage = sheet.Stages[stage];
 
 				if (stage < template.Stages.Count)
 				{
 					StageTemplate templateStage = template.Stages[stage];
+					if (string.IsNullOrEmpty(templateStage.Code))
+					{
+						continue;
+					}
 					poseStage.Code = templateStage.Code;
 
 					foreach (Emotion emotion in template.Emotions)
@@ -235,6 +221,72 @@ namespace SPNATI_Character_Editor.DataStructures
 						poseStage.Poses.Add(entry);
 					}
 				}
+			}
+		}
+	}
+
+	[Serializable]
+	public class PoseSheet : BindableObject, IPoseCode
+	{
+		public PoseSheet()
+		{
+			Stages = new ObservableCollection<PoseStage>();
+		}
+
+		[Text(DisplayName = "Sheet Name")]
+		[XmlElement("name")]
+		public string Name
+		{
+			get { return Get<string>(); }
+			set { if (!string.IsNullOrEmpty(value)) { Set(value); } }
+		}
+
+		[Text(DisplayName = "Base Appearance Code", RowHeight = 130, Multiline = true)]
+		[XmlElement("model")]
+		public string BaseCode
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
+
+		[DefaultValue(false)]
+		[XmlAttribute("global")]
+		public bool IsGlobal
+		{
+			get { return Get<bool>(); }
+			set { Set(value); }
+		}
+
+		[XmlArray("stages")]
+		[XmlArrayItem("stage")]
+		public ObservableCollection<PoseStage> Stages
+		{
+			get { return Get<ObservableCollection<PoseStage>>(); }
+			set { Set(value); }
+		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
+
+		public string GetCode()
+		{
+			return BaseCode;
+		}
+		public void SetCode(string value)
+		{
+			BaseCode = value;
+		}
+
+		/// <summary>
+		/// Gets whether there are no codes defined in this sheet
+		/// </summary>
+		public bool IsEmpty
+		{
+			get
+			{
+				return Stages.Find(s => s.Poses.Count > 0) == null;
 			}
 		}
 
@@ -290,7 +342,7 @@ namespace SPNATI_Character_Editor.DataStructures
 		/// <param name="character"></param>
 		public void ReconcileStages(Character character)
 		{
-			int expectedLayers = character.Layers + Clothing.ExtraStages;
+			int expectedLayers = IsGlobal ? 1 : character.Layers + Clothing.ExtraStages;
 			if (expectedLayers != Stages.Count)
 			{
 				while (expectedLayers > Stages.Count)
@@ -306,7 +358,7 @@ namespace SPNATI_Character_Editor.DataStructures
 	}
 
 	[Serializable]
-	public class PoseStage : BindableObject
+	public class PoseStage : BindableObject, IPoseCode
 	{
 		[XmlAttribute("id")]
 		public int Stage
@@ -338,6 +390,15 @@ namespace SPNATI_Character_Editor.DataStructures
 		public PoseStage(int stage) : this()
 		{
 			Stage = stage;
+		}
+
+		public string GetCode()
+		{
+			return Code;
+		}
+		public void SetCode(string value)
+		{
+			Code = value;
 		}
 
 		public PoseEntry GetCell(string key)
@@ -426,11 +487,12 @@ namespace SPNATI_Character_Editor.DataStructures
 	}
 
 	[Serializable]
-	public class PoseEntry : BindableObject
+	public class PoseEntry : BindableObject, IPoseCode
 	{
 		public PoseEntry()
 		{
 			Crop = new Rect(0, 0, 600, 1400);
+			ExtraMetadata = new Dictionary<string, string>();
 		}
 
 		public PoseEntry(ImageMetadata metadata)
@@ -439,7 +501,16 @@ namespace SPNATI_Character_Editor.DataStructures
 			Code = metadata.Data;
 			Crop = metadata.CropInfo;
 			SkipPreProcessing = metadata.SkipPreprocessing;
-			//TODO: extradata
+			ExtraMetadata = metadata.ExtraData;
+		}
+
+		public string GetCode()
+		{
+			return Code;
+		}
+		public void SetCode(string value)
+		{
+			Code = value;
 		}
 
 		[XmlAttribute("key")]
@@ -474,9 +545,64 @@ namespace SPNATI_Character_Editor.DataStructures
 			set { Set(value); }
 		}
 
+		[DefaultValue("")]
+		[XmlElement("extra")]
+		[PoseMetadata(DisplayName = "Transparencies")]
+		public string ExtraMetadataRaw
+		{
+			get { return Get<string>(); }
+			set
+			{
+				Set(value);
+				ExtraMetadata.Clear();
+				if (value != null)
+				{
+					string[] pieces = value.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+					foreach (string raw in pieces)
+					{
+						string[] piece = raw.Split(new char[] { '=' }, 2);
+						if (piece.Length == 2)
+						{
+							string key = piece[0];
+							ExtraMetadata[key] = piece[1];
+						}
+					}
+				}
+			}
+		}
+
+		private Dictionary<string, string> _data;
+		[XmlIgnore]
+		public Dictionary<string, string> ExtraMetadata
+		{
+			get
+			{
+				return _data;
+			}
+			set
+			{
+				_data = value;
+				if (value != null)
+				{
+					StringBuilder sb = new StringBuilder();
+					foreach (KeyValuePair<string, string> kvp in value)
+					{
+						sb.Append($"{kvp.Key}={kvp.Value},");
+					}
+					Set(sb.ToString(), "ExtraMetadataRaw"); //not using the setter directly to avoid infinite recursion
+				}
+			}
+		}
+
 		public override string ToString()
 		{
 			return Key;
 		}
+	}
+
+	public interface IPoseCode
+	{
+		string GetCode();
+		void SetCode(string value);
 	}
 }

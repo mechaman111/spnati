@@ -34,6 +34,10 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public int MaxStateId { get; set; }
 
+		[XmlArray("persistent-markers")]
+		[XmlArrayItem("marker")]
+		public HashSet<string> PersistentMarkers = new HashSet<string>();
+
 		/// <summary>
 		/// Only used when serializing or deserializing XML. Cases that share text across stages are split into separate cases per stage here
 		/// </summary>

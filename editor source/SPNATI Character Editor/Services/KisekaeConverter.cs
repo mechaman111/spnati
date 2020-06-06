@@ -3,19 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
 	public class KisekaeConverter : IKisekaeConverter
 	{
-		private ImageImporter _importer = new ImageImporter();
+		private ImageImporter _importer;
 		private System.Timers.Timer _timer;
 
 		private Dictionary<int, Image> _rawCache = new Dictionary<int, Image>();
 
-		public KisekaeConverter()
+		public bool AllowRemoteControl;
+
+		public KisekaeConverter(bool allowRemoteControl)
 		{
+			AllowRemoteControl = allowRemoteControl;
 			_timer = new System.Timers.Timer(10000);
 			_timer.Elapsed += _timer_Elapsed;
 			_timer.Start();
@@ -24,6 +28,19 @@ namespace SPNATI_Character_Editor
 		public void WarmUp()
 		{
 			CheckKKL();
+
+			try
+			{
+				string path = Config.KisekaeDirectory;
+				string enableServerPath = Path.Combine(Path.GetDirectoryName(path), "enable_server");
+				if (!string.IsNullOrEmpty(path) && !File.Exists(enableServerPath))
+				{
+					File.Create(enableServerPath);
+				}
+			}
+			catch { }
+
+			_importer = new ImageImporter(AllowRemoteControl);
 		}
 		
 		private void CheckKKL()
@@ -48,6 +65,8 @@ namespace SPNATI_Character_Editor
 				}
 				catch { }
 			}
+
+			//TODO: Add enable_server file
 		}
 
 		private void _timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

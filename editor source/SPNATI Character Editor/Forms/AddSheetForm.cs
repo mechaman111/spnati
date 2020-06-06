@@ -7,6 +7,17 @@ namespace SPNATI_Character_Editor.Forms
 {
 	public partial class AddSheetForm : SkinnedForm
 	{
+		private bool _advanced;
+		public bool ShowAdvanced
+		{
+			get { return _advanced; }
+			set
+			{
+				_advanced = value;
+
+			}
+		}
+
 		public AddSheetForm(string name)
 		{
 			InitializeComponent();
@@ -17,6 +28,7 @@ namespace SPNATI_Character_Editor.Forms
 		{
 			cboSheet.Visible = true;
 			lblSheet.Visible = true;
+			chkGlobal.Visible = true;
 			cboSheet.Items.Add("");
 			foreach (PoseSheet sheet in matrix.Sheets)
 			{
@@ -44,6 +56,21 @@ namespace SPNATI_Character_Editor.Forms
 		public PoseSheet SelectedSheet
 		{
 			get { return cboSheet.SelectedItem as PoseSheet; }
+		}
+
+		public bool Global
+		{
+			get { return chkGlobal.Checked; }
+		}
+
+		private void cboSheet_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			PoseSheet sheet = cboSheet.SelectedItem as PoseSheet;
+			chkGlobal.Enabled = (sheet == null);
+			if (sheet != null)
+			{
+				chkGlobal.Checked = sheet.IsGlobal;
+			}
 		}
 	}
 }

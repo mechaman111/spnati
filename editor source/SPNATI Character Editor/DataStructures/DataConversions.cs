@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Desktop;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -36,6 +37,10 @@ namespace SPNATI_Character_Editor
 			if (Config.VersionPredates(version, "v5.2.7"))
 			{
 				Convert5_2_7(character);
+			}
+			if (Config.VersionPredates(version, "v5.8"))
+			{
+				Convert5_8(character);
 			}
 		}
 
@@ -260,6 +265,32 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// 5.8 conversion: remove Nothing hands and convert old conditions to the 5.2 format
+		/// </summary>
+		/// <param name="character"></param>
+		private static void Convert5_8(Character character)
+		{
+			int count = 0;
+			foreach (Case wc in character.Behavior.GetWorkingCases())
+			{
+				if (wc.HasLegacyConditions())
+				{
+					ConvertCase5_2(wc);
+					count++;
+				}
+				foreach (TargetCondition condition in wc.Conditions)
+				{
+					if (condition.Hand == "Nothing")
+					{
+						condition.Hand = "High Card";
+					}
+				}
+				ConvertCase5_8(wc, character);
+			}
+			Shell.Instance.SetStatus("Auto-converted conditions for " + count + " cases.");
 		}
 
 		/// <summary>
@@ -519,6 +550,26 @@ namespace SPNATI_Character_Editor
 				workingCase.Conditions.Add(cond);
 			}
 			return cond;
+		}
+
+		/// <summary>
+		/// 5.8 conversion from line-level persistent marker to character-wide definitions
+		/// </summary>
+		/// <param name="workingCase"></param>
+		public static void ConvertCase5_8(Case workingCase, Character character)
+		{
+			foreach (DialogueLine line in workingCase.Lines)
+			{
+				if (!string.IsNullOrEmpty(line.Marker) && line.IsMarkerPersistent)
+				{
+					MarkerOperator op;
+					bool perTarget;
+					string value;
+					string name = Marker.ExtractConditionPieces(line.Marker, out op, out value, out perTarget);
+					character.Behavior.PersistentMarkers.Add(name);
+					line.IsMarkerPersistent = false;
+				}
+			}
 		}
 	}
 }

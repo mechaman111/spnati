@@ -33,6 +33,12 @@
 		Skirt,
 		UpperUndershirt,
 		LowerUndershirt,
+		LeftThigh,
+		RightThigh,
+		LeftLowerLeg,
+		RightLowerLeg,
+		LeftFoot,
+		RightFoot
 	}
 
 	public static class KisekaeExtensions
@@ -93,6 +99,18 @@
 					return "Undershirt (upper)";
 				case KisekaePart.LowerUndershirt:
 					return "Undershirt (lower)";
+				case KisekaePart.LeftThigh:
+					return "Left thigh";
+				case KisekaePart.RightThigh:
+					return "Right thigh";
+				case KisekaePart.LeftLowerLeg:
+					return "Left leg (lower)";
+				case KisekaePart.RightLowerLeg:
+					return "Right leg (lower)";
+				case KisekaePart.LeftFoot:
+					return "Left foot";
+				case KisekaePart.RightFoot:
+					return "Right foot";
 				case KisekaePart.None:
 					return "None";
 				default:
@@ -117,9 +135,9 @@
 				case KisekaePart.RightEar:
 					return "head.ear0";
 				case KisekaePart.LeftEye:
-					return "head.eye.eye1";
+					return "head.eye1";
 				case KisekaePart.RightEye:
-					return "head.eye.eye0";
+					return "head.eye0";
 				case KisekaePart.UpperBody:
 					return "mune";
 				case KisekaePart.LowerBody:
@@ -164,6 +182,18 @@
 					return "dou.dou_shitaHuku.Pantu";
 				case KisekaePart.Skirt:
 					return "dou.dou_Skirt.Skirt";
+				case KisekaePart.LeftThigh:
+					return "ashi1.thigh.thigh/ashi1.shiri.shiri";
+				case KisekaePart.RightThigh:
+					return "ashi0.thigh.thigh/ashi0.shiri.shiri";
+				case KisekaePart.LeftLowerLeg:
+					return "ashi1.leg.leg";
+				case KisekaePart.RightLowerLeg:
+					return "ashi0.leg.leg";
+				case KisekaePart.LeftFoot:
+					return "ashi1.foot.foot";
+				case KisekaePart.RightFoot:
+					return "ashi0.foot.foot";
 				default:
 					return "";
 			}
@@ -185,9 +215,9 @@
 					return KisekaePart.LeftEar;
 				case "head.ear0":
 					return KisekaePart.RightEar;
-				case "head.eye.eye1":
+				case "head.eye1":
 					return KisekaePart.LeftEye;
-				case "head.eye.eye0":
+				case "head.eye0":
 					return KisekaePart.RightEye;
 				case "mune":
 					return KisekaePart.UpperBody;
@@ -233,6 +263,18 @@
 					return KisekaePart.Panties;
 				case "dou.dou_Skirt.Skirt":
 					return KisekaePart.Skirt;
+				case "ashi1.thigh.thigh/ashi1.shiri.shiri":
+					return KisekaePart.LeftThigh;
+				case "ashi0.thigh.thigh/ashi0.shiri.shiri":
+					return KisekaePart.RightThigh;
+				case "ashi1.leg.leg":
+					return KisekaePart.LeftLowerLeg;
+				case "ashi0.leg.leg":
+					return KisekaePart.RightLowerLeg;
+				case "ashi1.foot.foot":
+					return KisekaePart.LeftFoot;
+				case "ashi0.foot.foot":
+					return KisekaePart.RightFoot;
 				default:
 					return KisekaePart.None;
 			}

@@ -147,6 +147,7 @@ namespace SPNATI_Character_Editor.Activities
 			if (_character == null) { return; }
 			SkinLink current = cboSkin.SelectedItem as SkinLink;
 			_character.CurrentSkin = current?.Costume;
+			cmdEditSkin.Visible = current?.Costume != null;
 			Workspace.SendMessage(WorkspaceMessages.SkinChanged);
 		}
 
@@ -183,6 +184,14 @@ namespace SPNATI_Character_Editor.Activities
 		private void splitContainer1_Panel1_Resize(object sender, System.EventArgs e)
 		{
 			splitContainer1.Panel1.Invalidate(true);
+		}
+
+		private void cmdEditSkin_Click(object sender, EventArgs e)
+		{
+			if (_character.CurrentSkin != null)
+			{
+				Shell.Instance.LaunchWorkspace<Costume>(_character.CurrentSkin);
+			}
 		}
 	}
 }

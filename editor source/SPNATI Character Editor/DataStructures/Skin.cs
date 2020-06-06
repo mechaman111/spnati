@@ -331,6 +331,8 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public Costume Costume { get; set; }
 
+		public bool IsDirty;
+
 		public override string ToString()
 		{
 			return Name;

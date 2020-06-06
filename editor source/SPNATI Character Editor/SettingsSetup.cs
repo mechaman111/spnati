@@ -31,6 +31,7 @@ namespace SPNATI_Character_Editor
 			chkEmptyCases.Checked = !Config.HideEmptyCases;
 			cboImportMethod.Items.Add("Locally (kkl.exe must be running)");
 			cboImportMethod.Items.Add("Remotely (Internet connection required)");
+			cboImportMethod.Items.Add("Legacy (kkl.exe must be running)");
 			cboImportMethod.SelectedIndex = Config.ImportMethod;
 			valFrequency.Value = Config.BackupPeriod;
 			valLifetime.Value = Config.BackupLifeTime;

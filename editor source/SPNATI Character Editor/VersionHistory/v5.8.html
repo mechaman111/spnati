@@ -1,0 +1,58 @@
+﻿<h3>General</h3>
+<ul>
+	Added a pencil next to the skin selection menu in the preview sidebar. Clicking this will open that skin for editing, sparing you from needing to search for it from the Skins toolbar.
+</ul>
+<h3>Dialogue</h3>
+<ul>
+	<li>Cases that have not been converted to use the new condition format will be automatically converted upon opening. This should be a transparent change, but it's recommended you save once and submit those changes before changing any other dialogue to make it easier to see in the file history what new dialogue you've written.</li>
+	<li>Right-clicking a cell in the dialogue table will allow you to "Apply to Column", copying that cell to all other lines in the case. For instance, you can copy markers from one line to all lines.</li>
+	<li>Individual markers can be flagged as persistent across the entire character file in the Markers tab or in the advanced marker table for a line. If a marker is persistent, its value is saved with the game data across games. Lines using the old method of making a marker persistent will be automatically converted to the new format when visited.</li>
+	<li>Added a ~rng~ variable for getting a random number. For example, ~rng(1-5)~ will return a number from 1 to 5 inclusively.</li>
+	<li>"Nothing" has been removed from the available Has Hand types. The only way to get Nothing would be if you aren't playing. Existing conditions using Nothing will be auto-converted to High Card.</li>
+</ul>
+<h3>Epilogues</h3>
+<ul>
+	<li>If you use the Collapse All button, the next time you open an epilogue, the scenes will start collapsed. The opposite applies when using the Expand All button.</li>
+</ul>
+<h3>KKL Interface</h3>
+<ul>
+	<li>Swapped out the image importing engine to use KKL's <a href="https://spnati.net/docs/kkl/kkl_local_protocol.html" target="_blank">Remote Control Protocol</a>. This doesn't offer any immediately obvious benefits like faster imports or hiding the export window, but it opens the door in the future for more advanced communication between the editor and KKL.</li>
+	<li>If this causes problems with imports, you can switch back to the old importer using Settings > Image Import > Import images = "Legacy".</li>
+	<li>Added transparency sliders for thighs, lower legs, and feet.</li>
+</ul>
+<h3>Pose Matrix</h3>
+<ul>
+	<li>When adding a new sheet, it's now possible to mark it as "stage-independent." These sheets contain only one row and images created in them will not contain a stage prefix. This is most useful for images that can be used in more than one stage or for creating epilogue or pose maker assets.</li>
+	<li>When converting a pose list to a sheet, any poses in the list that have no stage will now be added to a stage-independent sheet labeled "Global" instead of being discarded.</li>
+	<li>Added the ability to set part transparencies.</li>
+	<li>Added a button to create a pose list from a sheet.</li>
+	<li>If your character has fewer than 7 layers, exporting and importing lineups will now include the masturbating and finished stages.</li>
+	<li>Exporting a lineup using stage codes will now use the previous stage's clothing code if one is defined, similar to the pose codes.</li>
+	<li>Added an "Imported Selected" button to import images for all selected cells.</li>
+	<li>Added Find/Replace support (Ctrl+H) for changing text across a code or an entire sheet (ex. to replace the color 23AB23 everywhere to 17A7E2).</li>
+</ul>
+<h3>Writing Aid</h3>
+<ul>
+	<li>The "Prompt" category has been added to the filter options.</li>
+</ul>
+<h3>Miscellaneous</h3>
+<ul>
+	<li>Added a custom styles data point to the Data Analyzer.</li>
+</ul>
+<h3>Bug Fixes</h3>
+<ul>
+	<li>If some stages have clothing codes and others don't in a pose matrix sheet, when importing all poses, stages with no wardrobe code will be skipped.</li>
+	<li>Copying from another sheet when adding a new sheet in a pose matrix now copies the source sheet's base appearance code if there is one.</li>
+	<li>Misc typo fixes in help files.</li>
+	<li>Removed 1 as an option in the Hand Quality's High Card field, since there is no 1 card (A is the highest)</li>
+	<li>Pasting KKL codes with line breaks will no longer cause an "illegal character in path" error.</li>
+	<li>Fixed issue where the alternate skin's portrait wouldn't save unless you also saved the main character file.</li>
+	<li>Fixed "Per Target" checkbox not matching the theme.</li>
+	<li>The validator no longer complains about unused images for images that are only used in the selection screen portrait.</li>
+	<li>Unrecognized characters are no longer blanked out in filters.</li>
+	<li>Fixed eye transparency sliders.</li>
+	<li>Fixed partial part transparencies in recent KKL versions.</li>
+	<li>Fixed Outgoing and Incoming target charts to account for the new targeting format.</li>
+	<li>Fixed Pose Matrix issue where exporting a lineup when only the first stage has a code would only import that stage's model.</li>
+	<li>Fixed the Help files describing how to set a nickname to match the current UI.</li>
+</ul>

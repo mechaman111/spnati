@@ -226,7 +226,7 @@ namespace SPNATI_Character_Editor.Controls
 			selAlsoPlayingNotMarkers.SelectedItems = _ending.AlsoPlayingNotMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 			selAlsoPlayingAnyMarkers.SelectedItems = _ending.AlsoPlayingAnyMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 
-			gridMarkers.SetMarkers(_ending.Markers);
+			gridMarkers.SetMarkers(_ending.Markers, _character);
 		}
 
 		public override void Save()

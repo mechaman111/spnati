@@ -28,21 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MarkerOptions));
-			this.chkPersistent = new Desktop.Skinning.SkinnedCheckBox();
 			this.gridMarkers = new SPNATI_Character_Editor.Controls.MarkerControl();
 			this.SuspendLayout();
-			// 
-			// chkPersistent
-			// 
-			this.chkPersistent.AutoSize = true;
-			this.chkPersistent.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkPersistent.Location = new System.Drawing.Point(3, 141);
-			this.chkPersistent.Name = "chkPersistent";
-			this.chkPersistent.Size = new System.Drawing.Size(72, 17);
-			this.chkPersistent.TabIndex = 3;
-			this.chkPersistent.Text = "Persistent";
-			this.chkPersistent.UseVisualStyleBackColor = true;
 			// 
 			// gridMarkers
 			// 
@@ -52,7 +39,7 @@
 			this.gridMarkers.Location = new System.Drawing.Point(0, 0);
 			this.gridMarkers.Name = "gridMarkers";
 			this.gridMarkers.ShowWhen = false;
-			this.gridMarkers.Size = new System.Drawing.Size(470, 135);
+			this.gridMarkers.Size = new System.Drawing.Size(470, 160);
 			this.gridMarkers.TabIndex = 6;
 			// 
 			// MarkerOptions
@@ -60,16 +47,13 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.gridMarkers);
-			this.Controls.Add(this.chkPersistent);
 			this.Name = "MarkerOptions";
 			this.Size = new System.Drawing.Size(470, 163);
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
-		private Desktop.Skinning.SkinnedCheckBox chkPersistent;
 		private MarkerControl gridMarkers;
 	}
 }

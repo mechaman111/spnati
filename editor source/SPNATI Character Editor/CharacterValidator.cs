@@ -955,11 +955,6 @@ namespace SPNATI_Character_Editor
 				return;
 			}
 
-			if (string.IsNullOrEmpty(link.PreviewImage))
-			{
-				warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"{link.Name} has no preview portait set."));
-			}
-
 			//gather list of images in this skin
 			HashSet<string> existingImages = new HashSet<string>();
 			HashSet<string> unusedImages = new HashSet<string>();
@@ -973,6 +968,15 @@ namespace SPNATI_Character_Editor
 					existingImages.Add(path);
 					unusedImages.Add(path);
 				}
+			}
+
+			if (string.IsNullOrEmpty(link.PreviewImage))
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"{link.Name} has no preview portait set."));
+			}
+			else
+			{
+				unusedImages.Remove(link.PreviewImage);
 			}
 
 			//go through each stage using the alt skin and make sure the images are all present
