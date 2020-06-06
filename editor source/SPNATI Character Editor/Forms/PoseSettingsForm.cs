@@ -42,6 +42,12 @@ namespace SPNATI_Character_Editor.Forms
 			AddSlider(KisekaePart.RightLowerArmHand, panelBody);
 			AddSlider(KisekaePart.LeftLeg, panelBody);
 			AddSlider(KisekaePart.RightLeg, panelBody);
+			AddSlider(KisekaePart.LeftThigh, panelBody);
+			AddSlider(KisekaePart.RightThigh, panelBody);
+			AddSlider(KisekaePart.LeftLowerLeg, panelBody);
+			AddSlider(KisekaePart.RightLowerLeg, panelBody);
+			AddSlider(KisekaePart.LeftFoot, panelBody);
+			AddSlider(KisekaePart.RightFoot, panelBody);
 		}
 
 		private void PopulateClothing()

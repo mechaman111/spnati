@@ -1,6 +1,7 @@
 ﻿using Desktop;
 using KisekaeImporter;
 using KisekaeImporter.ImageImport;
+using SPNATI_Character_Editor.DataStructures;
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections;
@@ -34,7 +35,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		public override string Caption
 		{
-			get { return "Poses"; }
+			get { return "Pose Lists"; }
 		}
 
 		public PoseListEditor()
@@ -272,7 +273,7 @@ namespace SPNATI_Character_Editor.Activities
 		private void PopulatePoseGrid()
 		{
 			//pull in required images
-			HashSet<string> requiredImages = _character.GetRequiredPoses();
+			HashSet<string> requiredImages = _character.GetRequiredPoses(false);
 			if (requiredImages == null)
 			{
 				requiredImages = new HashSet<string>();
@@ -1145,6 +1146,40 @@ namespace SPNATI_Character_Editor.Activities
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message);
+			}
+		}
+
+		private void cmdToMatrix_Click(object sender, EventArgs e)
+		{
+			string name = _lastPoseFile;
+			if (string.IsNullOrEmpty(name))
+			{
+				name = "Main";
+			}
+			else
+			{
+				name = Path.GetFileNameWithoutExtension(name);
+			}
+			AddSheetForm form = new AddSheetForm(name);
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				MakePoseList();
+				if (_poseList == null || _poseList.Poses.Count == 0)
+				{
+					MessageBox.Show("Pose list is empty.");
+					return;
+				}
+
+				PoseMatrix matrix = CharacterDatabase.GetPoseMatrix(_character);
+				bool isEmpty = matrix.IsEmpty();
+				PoseSheet sheet = matrix.AddSheet(form.SheetName, _character.Character);
+				if (isEmpty && matrix.Sheets.Count > 1)
+				{
+					matrix.RemoveSheet(matrix.Sheets[0]);
+					sheet.Name = form.SheetName;
+				}
+				matrix.FillFromPoseList(_character.Character, _poseList, sheet);
+				Shell.Instance.Launch(_character as IRecord, typeof(PoseMatrixEditor), sheet);
 			}
 		}
 	}

@@ -60,6 +60,7 @@
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.label1 = new Desktop.Skinning.SkinnedLabel();
+			this.cmdGenerateMatrix = new Desktop.Skinning.SkinnedButton();
 			((System.ComponentModel.ISupportInitialize)(this.gridEmotions)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridLayers)).BeginInit();
 			this.SuspendLayout();
@@ -70,7 +71,7 @@
 			this.cmdPreviewPose.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdPreviewPose.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.cmdPreviewPose.Flat = false;
-			this.cmdPreviewPose.Location = new System.Drawing.Point(747, 6);
+			this.cmdPreviewPose.Location = new System.Drawing.Point(587, 6);
 			this.cmdPreviewPose.Name = "cmdPreviewPose";
 			this.cmdPreviewPose.Size = new System.Drawing.Size(141, 23);
 			this.cmdPreviewPose.TabIndex = 11;
@@ -117,6 +118,7 @@
             this.ColB,
             this.dataGridViewTextBoxColumn1,
             this.ColCrop});
+			this.gridEmotions.Data = null;
 			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
 			dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -233,6 +235,7 @@
             this.ColBlush,
             this.ColAnger,
             this.ColJuice});
+			this.gridLayers.Data = null;
 			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
 			dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -384,10 +387,25 @@
 			this.label1.Text = "In order for templates to work properly, make sure you export your codes in Kisek" +
     "ae with appropriate filters set!";
 			// 
+			// cmdGenerateMatrix
+			// 
+			this.cmdGenerateMatrix.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdGenerateMatrix.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdGenerateMatrix.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
+			this.cmdGenerateMatrix.Flat = false;
+			this.cmdGenerateMatrix.Location = new System.Drawing.Point(734, 6);
+			this.cmdGenerateMatrix.Name = "cmdGenerateMatrix";
+			this.cmdGenerateMatrix.Size = new System.Drawing.Size(154, 23);
+			this.cmdGenerateMatrix.TabIndex = 20;
+			this.cmdGenerateMatrix.Text = "Add to Matrix";
+			this.cmdGenerateMatrix.UseVisualStyleBackColor = true;
+			this.cmdGenerateMatrix.Click += new System.EventHandler(this.cmdGenerateMatrix_Click);
+			// 
 			// TemplateEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.cmdGenerateMatrix);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.cmdPreviewPose);
 			this.Controls.Add(this.label10);
@@ -435,5 +453,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColB;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColCrop;
+		private Desktop.Skinning.SkinnedButton cmdGenerateMatrix;
 	}
 }

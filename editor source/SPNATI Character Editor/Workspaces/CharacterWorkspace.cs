@@ -62,18 +62,21 @@ namespace SPNATI_Character_Editor.Workspaces
 				}
 			}
 
-			OpponentStatus status = Listing.Instance.GetCharacterStatus(_character.FolderName);
-			switch (status)
+			string status = Listing.Instance.GetCharacterStatus(_character.FolderName);
+			if (status == OpponentStatus.Duplicate)
 			{
-				case OpponentStatus.Duplicate:
-					ShowBanner("This character has been replaced by a newer version.", Desktop.Skinning.SkinnedHighlight.Bad);
-					break;
-				case OpponentStatus.Event:
-					ShowBanner("This character is not part of the permanent roster and is only available during certain events.", Desktop.Skinning.SkinnedHighlight.Bad);
-					break;
-				case OpponentStatus.Incomplete:
+				ShowBanner("This character has been replaced by a newer version.", Desktop.Skinning.SkinnedHighlight.Bad);
+			}
+			else if (status == OpponentStatus.Event)
+			{
+				ShowBanner("This character is not part of the permanent roster and is only available during certain events.", Desktop.Skinning.SkinnedHighlight.Bad);
+			}
+			else if (status == OpponentStatus.Incomplete)
+			{
+				if (Config.WarnAboutIncompleteStatus)
+				{
 					ShowBanner("This character is incomplete, meaning they have likely been abandoned.", Desktop.Skinning.SkinnedHighlight.Bad);
-					break;
+				}
 			}
 		}
 

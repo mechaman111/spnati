@@ -1,0 +1,174 @@
+********************************************************************************************************************************************************************************************
+											     CHANGELOG
+********************************************************************************************************************************************************************************************
+----------------------------------------------------------------------------------------------------
+UPDATE 1 - May 25 2020 "Update 1"
+----------------------------------------------------------------------------------------------------
+-Added the Changelog since there are now changes to log.
+-Minor changes to poses:
+	-Happy(0-8, 10)
+	-Thinking (0-8, 10)
+	-Amused (0-8, 10)
+	-Sad (0-8, 10)
+	-Aroused (0-8, 10)
+	-Snark (0-8, 10)
+	-Displeased (0-8, 10)
+	-9-Amused, 9-Devious, 9-Surprised, 9-Thinking, 9-StartHeavy, 9-Mast2, 9-Mast3, 9-Mast4, 9-Heavy2, 9-Heavy3, 9-Heavy4
+	-Chara should be a bit more expressive now while still not being liable to do cartwheels.
+-Fixed some dialogue cases that were unclear, or that pretended the player was still in the game even when they might not be.
+-Chara will chat with you, briefly, now and then. She has one fixed subject, and three variable subjects.
+-Chara will now talk a bit more about Undertale rather than just being laser-focused on the game itself.
+-Chara is more likely to refer to you by your name, rather than just 'partner'.
+-Chara has more responses to the masturbating player.
+-OpponentLost FilterInteractions cases will not fire as often.
+-Probably some smaller changes I made to her dialogue and forgot to jot down.
+-New Targeted Interactions:
+	-Response to Aella's 'Are you a Demon'. Incoming marker CharaDemon. Outgoing marker ResponseAellaDemon.
+	-Response to Arash's question about cooking. Incoming marker smalltalk-cooking. Outgoing marker ResponseArashCooking.
+	-Response to Arash's question about flowers. Incoming marker smalltalk-flowers. Outgoing marker ResponseArashFlowers.
+	-Response to Arash starting to throw. No incoming marker, case is 'opponent stripped, lost all layers'. Outgoing marker ResponseArashThrow.
+	-Response to Maki's question about favorite foods. Incoming marker makifood. Outgoing marker ResponseMakiFood.
+	-Repsonse to Brock launching a missile. No incoming marker, case is 'removing accessory male, losing rocket launcher'. Outgoing marker ResponseBrockLaunch.
+	-Response to Brock getting hit by his missile. No incoming marker, case is 'will be visible chest male, stage 4'. Outgoing marker ResponseBrockHitByRocket.
+	-Response to Dust's question about snacks. Incoming marker fidgetQA_snacks. Outgoing marker ResponseDustSnacks.
+	-Response to Dust's question about doubts. Incoming marker fidgetQA_doubts. Outgoing marker ResponseDustDoubts.
+	-Response to Saki ZLS revealing she's a zombie. No incoming marker, case 'hand any, saying text "That’s right, I’M A ZOMBIE! Betcha didn’t see that comin’!"'. Outgoing marker ResponseSakiZombieReveal.
+	-Response to Saki ZLS's head falling off. No incoming marker, case is 'will be visible chest female'. Outgoing marker ResponseSakiHeadless.
+	-Response to Saki ZLS talking about luck. Incoming marker q_saki_badluck. Outgoing marker ResponseSakiLuck.
+	-Response to Shantae turning into a monkey. Incoming marker monkey. Outgoing marker ResponseShantaeMonkey.
+----------------------------------------------------------------------------------------------------
+UPDATE 2 - May 26 2020 "Bugs and Poses"
+----------------------------------------------------------------------------------------------------
+-Fixed a bug that could cause the wrong 'player has stripped' lines to fire.
+-Minor changes to poses:
+	-Amused (0-10)
+	-Dismissive (0-10)
+	-Devious (0-10)
+	-DemonAngry (0-10)
+	-DemonHappy (0-10)
+	-Surprised (0-10)
+	-Displeased (0-10)
+	-Anger (0-10)
+	-Sad (0-10)
+	-Happy (0-10)
+	-Rigid (0-10)
+	-8-StartMast, 8-StartMastHappy
+	-9-Snark
+	-9-Mast1, 9-Mast2, 9-Mast3, 9-Mast4, 9-Mast5, 9-StartHeavy, 9-Heavy1, 9-Heavy2, 9-Heavy3, 9-Heavy4, 9-Orgasm, 10-Recover
+	-Stripping (0-7)
+	-Stripped (1-8)
+	-StrippingHappy (0-7)
+	-StrippedHappy (1-8)
+----------------------------------------------------------------------------------------------------
+UPDATE 3 - May 27 2020 "Generics, Bugfixes, and a Remilia Target in a pear tree."
+----------------------------------------------------------------------------------------------------
+-Fixed minor typo and grammar issues.
+-Minor adjustments to some dialogue.
+-Fixed a bug that caused targeting the Throwing situation to generate a case that only fires if this is the first time the player has EVER seen Chara start to throw.
+	-Developers who already had the faulty case targeted have been alerted.
+-Fixed a bug that could cause the two halves of Chara's 'randomized chat with the player' to not line up.
+-Fixed a bug that could cause Chara to respond to the player as if they're any plain-old enemy when removing their last item.
+-Reworked how the 'Undertale Exposition' lines work. They are now each a play-once. Made their markers more descriptive, too.
+-Added some more special-case dialogue, including but not limited to must-masturbate having a unique 'chara wins 9 in a row' case.
+-More Generics added to Removing Minor to account for reworked Undertale Exposition lines.
+-Set up some Markers in anticipation of upcoming Epilogue changes.
+-Generics Upgrade(s):
+	-Swapping Cards
+	-Hand=Good
+	-Hand=Okay
+	-Hand=Bad
+-New Situation(s):
+	-Focus Up
+-New Targeted Interaction(s):
+	-Response to Remilia stripping with her maid's time-stop powers, the first time she does it. No incoming marker, case is 'opponent stripping, target Remilia'. Outgoing marker ResponseRemiliaTimeStrip.
+----------------------------------------------------------------------------------------------------
+UPDATE 4 - May 27 2020 "Typo Squasher"
+----------------------------------------------------------------------------------------------------
+-Fixed a pair of literally unplayable typos.
+----------------------------------------------------------------------------------------------------
+UPDATE 5 - May 30 2020 "Getting Your Priorities Straight"
+----------------------------------------------------------------------------------------------------
+-Did some rework of the Epilogue. No actual visible changes to it, though, just organizing stuff.
+-Minor clarification in HowToCauseCrash.txt.
+-Fixed minor typos and grammar issues.
+-Some bugfixes. Chara should no longer menacingly count down how many enemies are left if both she and the player are already out.
+-Adjusted some clashing dialogue priorities.
+-Added some Play Once conditions to some dialogue that fired too much in practice.
+-Minor adjustments to some dialogue. Among other things, you should no longer need to read an essay about the three cards Chara is swapping, and in two seconds to boot.
+-Generics Upgrade(s):
+	-Must Strip (Self, Winning)
+	-Must Strip (Self, Normal)
+	-Must Strip (Self, Losing)
+	-Must Strip (Player, Male)
+	-Must Strip (Male)
+	-Must Strip (Player, Female)
+	-Must Strip (Female)
+	-Removing Accessory (Male)
+	-Removed Accessory (Male)
+	-Removing Accessory (Female)
+	-Removed Accessory (Female)
+-Minor changes to pose(s):
+	-5-Stripping
+	-5-StrippingHappy
+	-9-Rigid
+	-9-Mast3
+	-9-Mast4
+	-Devious (0-10)
+	-8-StartMastHappy
+	-StrippedHappy (6,8)
+-New Situation(s):
+	-Refuse to Remove
+-New Targeted Interaction(s):
+	-Many responses to Amy. Wide variety of various markers, incoming and outgoing.
+	-New Markers on the Opponent Lost lines targeting Moon. Markers are:
+		-ResponseMoonLost_Cretin
+		-ResponseMoonLost_Crushed
+		-ResponseMoonLost_Easy
+		-ResponseMoonLost_EXP
+		-ResponseMoonLost_Keenly
+		-ResponseMoonLost_KnowsPlace
+		-ResponseMoonLost_NotLong
+	-Response to Saki (ZLS) dumping water on herself. No incoming marker, case is 'removed major, target Saki ZLS, lost makeup'. Outgoing marker ResponseSakiMakeup.
+	-Response to Sakura removing her makeup. No incoming marker, case is 'removing minor, target Sakura, losing makeup'. Outgoing marker ResponseSakuraMakeup.
+----------------------------------------------------------------------------------------------------
+UPDATE 6 - May 31 2020 "Misc Adjustments"
+----------------------------------------------------------------------------------------------------
+-Updated a few marker descriptions.
+-Fixed Chara saying unfriendly targeted lines towards Amy when she should instead say their friendly versions.
+-Fixed Chara saying a player-targeted line towards non-players.
+-Updated some of Chara's tags.
+-Minor dialogue adjustments.
+----------------------------------------------------------------------------------------------------
+UPDATE 7 - June 2 2020 "Model Adjustments"
+----------------------------------------------------------------------------------------------------
+-Minor dialogue adjustments.
+-Minor priority adjustments.
+-Added an early-game dialogue case where Chara explains why she comes to SPNATI.
+-Modified Chara's variable chat so you wouldn't have to try and quickly read it during the Swapping Cards stage. Also made them occur earlier in the game.
+-New Targeted Interaction(s):
+	-Chara will now respond, pre-game, to any of the April Fools characters being selected. No incoming marker. Outgoing marker 'PickedAprilFools'.
+-Generics Upgrade(s):
+	-Removing Minor (Male)
+	-Removed Minor (Male)
+	-Removing Minor (Female)
+	-Removed Minor (Female)
+	-Removing Major (Male)
+	-Removed Major (Male)
+	-Removing Major (Female)
+	-Removed Major (Female)
+-Minor changes to pose(s):
+	-Base model adjustments made, so TECHNICALLY every pose?
+	-Sad (0-8, 10)
+	-Surprised (0-8, 10)
+	-Devious (0-10)
+	-Dismissive (0-4)
+	-Snark (0-8, 10)
+	-Thinking (0-8, 10)
+	-Happy (0-8, 10)
+	-Amused (0-10)
+	-9-Aroused
+	-9-Mast5
+	-9-Orgasm
+	-Stripped (2, 4-5)
+	-StrippedHappy (2, 6)
+	-StrippingHappy (3, 7)

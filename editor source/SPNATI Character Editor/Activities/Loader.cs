@@ -2,9 +2,11 @@
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
@@ -221,7 +223,19 @@ namespace SPNATI_Character_Editor.Activities
 
 			Config.LoadRecentRecords<Character>();
 			Config.LoadRecentRecords<Costume>();
+			
+			CheckForNewVersion();
+		}
 
+		private Task LoadChunk(string caption, int progress, Action action)
+		{
+			lblProgress.Text = $"Loading {caption}...";
+			progressBar.Value = Math.Min(progressBar.Maximum, progress);
+			return Task.Run(action);
+		}
+
+		private void CheckForNewVersion()
+		{
 			//look for new editor versions
 			try
 			{
@@ -247,13 +261,6 @@ namespace SPNATI_Character_Editor.Activities
 				}
 			}
 			catch { }
-		}
-
-		private Task LoadChunk(string caption, int progress, Action action)
-		{
-			lblProgress.Text = $"Loading {caption}...";
-			progressBar.Value = Math.Min(progressBar.Maximum, progress);
-			return Task.Run(action);
 		}
 	}
 

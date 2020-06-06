@@ -40,12 +40,12 @@ namespace SPNATI_Character_Editor
 		[XmlAnyElement]
 		public List<XmlElement> ExtraXml;
 
-		public OpponentStatus GetCharacterStatus(string name)
+		public string GetCharacterStatus(string name)
 		{
 			var opponent = Characters.Find(opp => opp.Name == name);
 			if (opponent != null)
 			{
-				return opponent.Status;
+				return opponent.Status ?? OpponentStatus.Main;
 			}
 			else
 			{
@@ -54,22 +54,15 @@ namespace SPNATI_Character_Editor
 		}
 	}
 
-	public enum OpponentStatus
+	public static class OpponentStatus
 	{
-		[XmlEnum()]
-		Main,
-		[XmlEnum("testing")]
-		Testing,
-		[XmlEnum("offline")]
-		Offline,
-		[XmlEnum("incomplete")]
-		Incomplete,
-		[XmlEnum("duplicate")]
-		Duplicate,
-		[XmlEnum("event")]
-		Event,
-		[XmlEnum()]
-		Unlisted
+		public static readonly string Main = "";
+		public static readonly string Testing = "testing";
+		public static readonly string Offline = "offline";
+		public static readonly string Incomplete = "incomplete";
+		public static readonly string Duplicate = "duplicate";
+		public static readonly string Event = "event";
+		public static readonly string Unlisted = null;
 	}
 
 	public class Opponent
@@ -78,8 +71,8 @@ namespace SPNATI_Character_Editor
 		public string ReleaseNumber;
 
 		[XmlAttribute("status")]
-		[DefaultValue(OpponentStatus.Main)]
-		public OpponentStatus Status;
+		[DefaultValue(null)]
+		public string Status;
 
 		[XmlText]
 		public string Name;
@@ -95,7 +88,7 @@ namespace SPNATI_Character_Editor
 
 		}
 
-		public Opponent(string name, OpponentStatus status)
+		public Opponent(string name, string status)
 		{
 			Name = name;
 			Status = status;

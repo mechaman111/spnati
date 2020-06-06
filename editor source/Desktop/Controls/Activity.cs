@@ -65,7 +65,7 @@ namespace Desktop
 
 		public bool IsActive
 		{
-			get { return Workspace.ActiveActivity == this; }
+			get { return Workspace != null && Workspace.ActiveActivity == this; }
 		}
 
 		public SkinnedBackgroundType PanelType
@@ -102,12 +102,16 @@ namespace Desktop
 
 		}
 
-		public virtual void Destroy()
+		public void Destroy()
 		{
+			OnDestroy();
 			Record = null;
 			Workspace = null;
 			_desktopMailbox.Destroy();
 			_workspaceMailbox.Destroy();
+		}
+		protected virtual void OnDestroy()
+		{
 		}
 
 		public virtual void OnKeyPressed(KeyEventArgs e)

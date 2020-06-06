@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
@@ -16,21 +17,26 @@ namespace SPNATI_Character_Editor
 	public static class CharacterGenerator
 	{
 		private static int _currentConverter = -1;
-		private static IKisekaeConverter _converter = new KisekaeConverter();
+		private static IKisekaeConverter _converter;
 		private static BackgroundQueue _workerQueue = new BackgroundQueue();
+		private static bool _warmed;
 
 		public static void SetConverter(int converter)
 		{
 			if (_currentConverter != converter)
 			{
+				_warmed = false;
 				_currentConverter = converter;
 				switch (converter)
 				{
 					case 1:
 						_converter = new KisekaeOnlineConverter();
 						break;
+					case 2:
+						_converter = new KisekaeConverter(false);
+						break;
 					default:
-						_converter = new KisekaeConverter();
+						_converter = new KisekaeConverter(true);
 						break;
 				}
 			}
@@ -182,6 +188,11 @@ namespace SPNATI_Character_Editor
 				CropInfo = crop,
 				ExtraData = extraData
 			};
+			if (!_warmed)
+			{
+				_converter.WarmUp();
+				_warmed = true;
+			}
 			return await _workerQueue.QueueTask(() => { return _converter.Generate(data, true, false); }, 1, null, 0);
 		}
 
@@ -192,6 +203,11 @@ namespace SPNATI_Character_Editor
 			ImageMetadata data = new ImageMetadata("raw", code.ToString());
 			data.SkipPreprocessing = skipPreprocessing;
 			data.ExtraData = extraData;
+			if (!_warmed)
+			{
+				_converter.WarmUp();
+				_warmed = true;
+			}
 			return await _workerQueue.QueueTask(() => { return _converter.Generate(data, false, false); }, 1, null, 0);
 		}
 	}
@@ -237,5 +253,6 @@ namespace SPNATI_Character_Editor
 	public interface IKisekaeConverter
 	{
 		Image Generate(ImageMetadata metadata, bool crop, bool allowCache);
+		void WarmUp();
 	}
 }

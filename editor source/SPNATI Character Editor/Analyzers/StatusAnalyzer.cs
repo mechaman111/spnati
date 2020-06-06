@@ -47,25 +47,7 @@ namespace SPNATI_Character_Editor.Analyzers
 
 		public bool MeetsCriteria(Character character, string op, string value)
 		{
-			string status = "";
-			switch (Listing.Instance.GetCharacterStatus(character.FolderName))
-			{
-				case OpponentStatus.Incomplete:
-					status = "incomplete";
-					break;
-				case OpponentStatus.Main:
-					status = "online";
-					break;
-				case OpponentStatus.Offline:
-					status = "offline";
-					break;
-				case OpponentStatus.Testing:
-					status = "testing";
-					break;
-				case OpponentStatus.Unlisted:
-					status = "unlisted";
-					break;
-			}
+			string status = Listing.Instance.GetCharacterStatus(character.FolderName);
 			return StringOperations.Matches(status, op, value);
 		}
 	}

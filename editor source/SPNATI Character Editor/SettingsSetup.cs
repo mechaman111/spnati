@@ -31,6 +31,7 @@ namespace SPNATI_Character_Editor
 			chkEmptyCases.Checked = !Config.HideEmptyCases;
 			cboImportMethod.Items.Add("Locally (kkl.exe must be running)");
 			cboImportMethod.Items.Add("Remotely (Internet connection required)");
+			cboImportMethod.Items.Add("Legacy (kkl.exe must be running)");
 			cboImportMethod.SelectedIndex = Config.ImportMethod;
 			valFrequency.Value = Config.BackupPeriod;
 			valLifetime.Value = Config.BackupLifeTime;
@@ -44,6 +45,8 @@ namespace SPNATI_Character_Editor
 			chkPreviewBubble.Checked = Config.GetBoolean(Settings.ShowPreviewText);
 			chkPreviewFormatting.Checked = !Config.GetBoolean(Settings.DisablePreviewFormatting);
 			valFranchise.Value = Config.MaxFranchisePartners;
+			chkAutoFill.Checked = Config.AutoPopulateStageImages;
+			chkWarnIncomplete.Checked = Config.WarnAboutIncompleteStatus;
 
 			recAutoOpen.RecordType = typeof(Character);
 			recAutoOpen.RecordFilter = CharacterDatabase.FilterHuman;
@@ -60,18 +63,19 @@ namespace SPNATI_Character_Editor
 			}
 			lstPauses.Sorted = true;
 
-			HashSet<OpponentStatus> statusFilters = Config.StatusFilters;
-			foreach (OpponentStatus status in Enum.GetValues(typeof(OpponentStatus)))
+			HashSet<string> statusFilters = Config.StatusFilters;
+			foreach (string status in new string[] {
+				OpponentStatus.Testing,
+				OpponentStatus.Offline,
+				OpponentStatus.Incomplete,
+				OpponentStatus.Duplicate,
+				OpponentStatus.Event,
+			})
 			{
-				if (status == OpponentStatus.Unlisted || status == OpponentStatus.Main)
-				{
-					continue;
-				}
-
 				chkStatuses.Items.Add(status, statusFilters.Contains(status));
 			}
 		}
-		
+
 		private void cmdBrowse_Click(object sender, EventArgs e)
 		{
 			if (!string.IsNullOrEmpty(txtApplicationDirectory.Text))
@@ -135,14 +139,7 @@ namespace SPNATI_Character_Editor
 			Config.PrefixFilter = txtFilter.Text;
 			Config.BackupEnabled = chkAutoBackup.Checked;
 			Config.AutoOpenConditions = chkInitialAdd.Checked;
-			if (txtKisekae.Text != Config.KisekaeDirectory)
-			{
-				if (!string.IsNullOrEmpty(Config.KisekaeDirectory))
-				{
-					CopyKisekaeImagesTo(txtKisekae.Text);
-				}
-				Config.KisekaeDirectory = txtKisekae.Text;
-			}
+			Config.KisekaeDirectory = txtKisekae.Text;
 			Config.SuppressDefaults = !chkDefaults.Checked;
 			Config.UseSimpleTree = !chkCaseTree.Checked;
 			Config.ColorTargetedLines = chkColorTargets.Checked;
@@ -159,16 +156,18 @@ namespace SPNATI_Character_Editor
 			Config.EnableDashboardValidation = chkChecklistValidation.Checked;
 			Config.Set(Settings.AutoOpenCharacter, recAutoOpen.RecordKey);
 			Config.MaxFranchisePartners = (int)valFranchise.Value;
+			Config.AutoPopulateStageImages = chkAutoFill.Checked;
+			Config.WarnAboutIncompleteStatus = chkWarnIncomplete.Checked;
 
 			HashSet<string> pauses = new HashSet<string>();
 			foreach (string item in lstPauses.CheckedItems)
 			{
-				pauses.Add(item);	
+				pauses.Add(item);
 			}
 			Config.AutoPauseDirectives = pauses;
 
-			HashSet<OpponentStatus> statusFilters = new HashSet<OpponentStatus>();
-			foreach (OpponentStatus status in chkStatuses.CheckedItems)
+			HashSet<string> statusFilters = new HashSet<string>();
+			foreach (string status in chkStatuses.CheckedItems)
 			{
 				statusFilters.Add(status);
 			}
@@ -178,24 +177,6 @@ namespace SPNATI_Character_Editor
 			Config.Save();
 			Shell.Instance.PostOffice.SendMessage(DesktopMessages.SettingsUpdated);
 			Close();
-		}
-
-		private void CopyKisekaeImagesTo(string newPath)
-		{
-			string oldDir = Path.Combine(Path.GetDirectoryName(Config.KisekaeDirectory), "images");
-			string newDir = Path.Combine(Path.GetDirectoryName(newPath), "images");
-			try
-			{
-				if (!Directory.Exists(newDir))
-				{
-					Directory.CreateDirectory(newDir);
-				}
-				foreach (string file in Directory.EnumerateFiles(oldDir))
-				{
-					File.Copy(file, Path.Combine(newDir, Path.GetFileName(file)));
-				}
-			}
-			catch { }
 		}
 
 		private void cmdCancel_Click(object sender, EventArgs e)

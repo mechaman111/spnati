@@ -154,17 +154,12 @@ function loadGameScreen () {
     /* reset all of the player's states */
     for (var i = 1; i < players.length; i++) {
         gameDisplays[i-1].reset(players[i]);
-        
-        if (players[i]) {
-            players[i].current = 0;
-        }
     }
     $gameLabels[HUMAN_PLAYER].removeClass("loser tied current");
     clearHand(HUMAN_PLAYER);
 
     previousLoser = -1;
     recentLoser = -1;
-    currentRound = -1;
     gameOver = false;
 
     $gamePlayerCardArea.show();
@@ -527,6 +522,7 @@ function completeExchangePhase () {
  ************************************************************/
 function completeRevealPhase () {
     detectCheat();
+    stopCardAnimations(); // If the player was impatient
     /* reveal everyone's hand */
     for (var i = 0; i < players.length; i++) {
         if (players[i] && !players[i].out) {
@@ -1118,7 +1114,7 @@ function updateDebugState(show)
 
 function detectCheat() {
     /* detect common cheating attempt */
-    if (players[0].hand.cards[0] === "clubs10") {
+    if (humanPlayer.hand && humanPlayer.hand.cards[0] === "clubs10") {
         players.forEach(function(p, i) {
             if (i == 0) {
                 players[i].hand.cards = [ 7, 5, 4, 3, 2 ].map(function(n, i) { return new Card(i % 4, n); });

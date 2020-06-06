@@ -194,7 +194,7 @@ namespace SPNATI_Character_Editor.IO
 				if (tuple.Item3 == null)
 				{
 					object subdata = field.GetValue(data);
-					IList list = subdata as IList;
+					IEnumerable list = GetEnumerable(subdata);
 					if (list != null)
 					{
 						MethodInfo sortMethod = field.SortMethod;
@@ -232,8 +232,8 @@ namespace SPNATI_Character_Editor.IO
 				else
 				{
 					//Array
-					IList array = field.GetValue(data) as IList;
-					if (array != null && array.Count > 0)
+					IEnumerable array = GetEnumerable(field.GetValue(data));
+					if (array != null && HasItems(array))
 					{
 						writer.WriteStartElement(tuple.Item2);
 						foreach (var obj in array)
@@ -285,6 +285,43 @@ namespace SPNATI_Character_Editor.IO
 			line = line.Replace("{Date}", DateTime.Now.ToString("MMMM dd, yyyy"));
 			line = line.Replace("{Version}", Config.Version);
 			return line;
+		}
+
+		/// <summary>
+		/// Casts an object into an enumerable if it should be treated as one
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		private IEnumerable GetEnumerable(object o)
+		{
+			if (o == null)
+			{
+				return null;
+			}
+			Type t = o.GetType();
+			if (t.GenericTypeArguments.Length == 0)
+			{
+				return null;
+			}
+			return o as IEnumerable;
+		}
+
+		/// <summary>
+		/// Gets whether an enumerable contains any items
+		/// </summary>
+		/// <param name="e"></param>
+		/// <returns></returns>
+		private bool HasItems(IEnumerable e)
+		{
+			if (e == null)
+			{
+				return false;
+			}
+			foreach (object o in e)
+			{
+				return true;
+			}
+			return false;
 		}
 	}
 

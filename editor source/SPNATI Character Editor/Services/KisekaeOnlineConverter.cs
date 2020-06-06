@@ -15,7 +15,7 @@ namespace SPNATI_Character_Editor
 {
 	public class KisekaeOnlineConverter : IKisekaeConverter
 	{
-		private ImageImporter _importer = new ImageImporter();
+		private ImageImporter _importer = new ImageImporter(false);
 		private Timer _timer;
 		private HttpClient _httpClient = new HttpClient();
 		private Dictionary<int, Image> _rawCache = new Dictionary<int, Image>();
@@ -25,6 +25,10 @@ namespace SPNATI_Character_Editor
 			_timer = new Timer(10000);
 			_timer.Elapsed += _timer_Elapsed;
 			_timer.Start();
+		}
+
+		public void WarmUp()
+		{
 		}
 
 		private void _timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

@@ -39,7 +39,7 @@ namespace SPNATI_Character_Editor.Activities
 			recFilter.RecordType = typeof(Character);
 			recFilter.RecordFilter = FilterRecords;
 
-			cboPriority.Items.AddRange(new string[] { "- All -", "Must Target", "Noteworthy", "FYI" });
+			cboPriority.Items.AddRange(new string[] { "- All -", "Must Target", "Noteworthy", "FYI", "Prompt" });
 			cboPriority.SelectedIndex = 0;
 		}
 

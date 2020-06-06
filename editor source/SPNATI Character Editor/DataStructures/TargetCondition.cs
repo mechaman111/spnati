@@ -125,7 +125,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		[ComboBox(DisplayName = "Has Hand", GroupName = "Game", GroupOrder = 65, Description = "Character has a particular poker hand",
-					Options = new string[] { "Nothing", "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush" })]
+					Options = new string[] { "High Card", "One Pair", "Two Pair", "Three of a Kind", "Straight", "Flush", "Full House", "Four of a Kind", "Straight Flush", "Royal Flush" })]
 		[DefaultValue("")]
 		[XmlAttribute("hasHand")]
 		[JsonProperty("hasHand")]

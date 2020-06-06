@@ -45,6 +45,7 @@ Player.prototype.setForfeitTimer = function() {
 function startMasturbation (player) {
 	players[player].forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
 	players[player].out = true;
+    players[player].hand = null;
     players[player].outOrder = players.countTrue(function(p) { return p.out; });
 
     if (chosenDebug === player) {

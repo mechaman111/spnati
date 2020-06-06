@@ -1,13 +1,14 @@
 ﻿using Desktop;
 using Desktop.Providers;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
 	public partial class MarkerControl : UserControl
 	{
+		private Character _character;
+
 		public bool ShowWhen
 		{
 			get
@@ -35,7 +36,18 @@ namespace SPNATI_Character_Editor.Controls
 				string op = row.Cells[nameof(ColOperator)].Value?.ToString();
 				string value = row.Cells[nameof(ColValue)].Value?.ToString();
 				bool perTarget = row.Cells[nameof(ColPerTarget)].Value != null ? (bool)row.Cells[nameof(ColPerTarget)].Value : false;
+				bool persistent = row.Cells[nameof(ColPersistent)].Value != null ? (bool)row.Cells[nameof(ColPersistent)].Value : false;
 				string when = row.Cells[nameof(ColWhen)].Value?.ToString();
+
+				if (persistent)
+				{
+					_character.Behavior.PersistentMarkers.Add(name);
+				}
+				else
+				{
+					_character.Behavior.PersistentMarkers.Remove(name);
+				}
+
 				if (perTarget)
 				{
 					name += "*";
@@ -48,12 +60,15 @@ namespace SPNATI_Character_Editor.Controls
 					When = when,
 				};
 				list.Add(marker);
+
+				
 			}
 			return list;
 		}
 
-		public void SetMarkers(List<MarkerOperation> markers)
+		public void SetMarkers(List<MarkerOperation> markers, Character character)
 		{
+			_character = character;
 			gridMarkers.Rows.Clear();
 			if (markers != null)
 			{
@@ -66,7 +81,8 @@ namespace SPNATI_Character_Editor.Controls
 						name = name.Substring(0, name.Length - 1);
 						perTarget = true;
 					}
-					gridMarkers.Rows.Add(name, marker.Operator, marker.Value, perTarget, marker.When);
+					bool persistent = character.Behavior.PersistentMarkers.Contains(name);
+					gridMarkers.Rows.Add(name, marker.Operator, marker.Value, perTarget, persistent, marker.When);
 				}
 			}
 

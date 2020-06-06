@@ -1118,7 +1118,7 @@ OpponentSelectionCard.prototype.update = function () {
         alt: this.opponent.layers + " layers",
     }).show() ;
     this.genderIcon.attr({
-        src: this.opponent.gender === 'male' ? 'img/male.png' : 'img/female.png',
+        src: this.opponent.gender === 'male' ? 'img/male.svg' : 'img/female.svg',
         alt: this.opponent.gender.initCap(),
     }).show();
 
@@ -1495,7 +1495,10 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
             }
 
             var counts = opponent.collectibles.reduce(function (acc, collectible) {
-                if (collectible.status && !includedOpponentStatuses[collectible.status]) {
+                if (
+                    (collectible.status && !includedOpponentStatuses[collectible.status]) ||
+                    (collectible.hidden && !collectible.isUnlocked())
+                ) {
                     return acc;
                 }
 

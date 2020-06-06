@@ -177,5 +177,18 @@ namespace Desktop.Skinning
 				}
 			}
 		}
+
+		protected override void OnCellMouseDown(DataGridViewCellMouseEventArgs e)
+		{
+			if (e.RowIndex == -1 && e.ColumnIndex == -1)
+			{
+				TopLeftHeaderMouseDown?.Invoke(this, EventArgs.Empty);
+			}
+			else
+			{
+				base.OnCellMouseDown(e);
+			}
+		}
+		public event EventHandler<EventArgs> TopLeftHeaderMouseDown;
 	}
 }

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.6.1 at 5:23:56 AM on May 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.8 at 4:13:46 PM on June 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.6.1</version>
+    <version>v5.8</version>
     <first>Sanako</first>
     <last>Isogai</last>
     <label>Sanako</label>
@@ -60,13 +60,16 @@
         </trigger>
 
         <trigger id="game_start">
-            <case stage="0" alsoPlaying="natsuki">
+            <case stage="0">
+                <condition role="other" character="natsuki" />
                 <state img="#-wondering.png" marker="sanako_natsuki_club">Are you and ~player~ in a club together, Natsuki? That sounds exciting.</state>
             </case>
-            <case stage="0" alsoPlaying="remilia">
+            <case stage="0">
+                <condition role="other" character="remilia" />
                 <state img="#-surprised.png" marker="sanako_remilia_wings">What scary wings. You all put a lot of effort into your costumes, didn't you?</state>
             </case>
-            <case stage="0" alsoPlaying="shimakaze">
+            <case stage="0">
+                <condition role="other" character="shimakaze" />
                 <state img="#-wondering.png" marker="sanako_shimakaze_flying_robot">Is that a flying robot?</state>
             </case>
             <case stage="0">
@@ -78,58 +81,59 @@
 
         <trigger id="swap_cards">
             <case stage="0">
-                <state img="#-lookingtoside.png">I'll take ~cards~ cards, please.</state>
-                <state img="#-wave.png">Could I have ~cards~?</state>
-                <state img="#-lookingtoside.png">I only need ~cards~ cards.</state>
+                <state img="#-lookingtoside.png">I'll take ~cards.text~ cards, please.</state>
+                <state img="#-wave.png">Could I have ~cards.text~?</state>
+                <state img="#-lookingtoside.png">I only need ~cards.text~ cards.</state>
             </case>
             <case stage="1">
-                <state img="#-calm.png">~Cards~ cards would be lovely.</state>
-                <state img="#-calm.png">May I have ~cards~ cards?</state>
-                <state img="#-calm.png">I should be able to get by with ~cards~ cards.</state>
-                <state img="#-disappointed.png">Sorry to be picky, but could I ~cards~ new cards?</state>
+                <state img="#-calm.png">~Cards.text~ cards would be lovely.</state>
+                <state img="#-calm.png">May I have ~cards.text~ cards?</state>
+                <state img="#-calm.png">I should be able to get by with ~cards.text~ cards.</state>
+                <state img="#-disappointed.png">Sorry to be picky, but could I ~cards.text~ new cards?</state>
             </case>
             <case stage="2">
-                <state img="#-calm.png">Count me in for ~cards~!</state>
-                <state img="#-calm.png">Might I trouble you for ~cards~ cards?</state>
-                <state img="#-calm.png">Let me check. Hmmm. ~cards~, please.</state>
+                <state img="#-calm.png">Count me in for ~cards.text~!</state>
+                <state img="#-calm.png">Might I trouble you for ~cards.text~ cards?</state>
+                <state img="#-calm.png">Let me check. Hmmm. ~cards.text~, please.</state>
             </case>
             <case stage="3">
-                <state img="#-handonheart.png">I'm sorry, could I have ~cards~ cards?</state>
-                <state img="#-calm.png">All right, ~cards~ cards for me.</state>
-                <state img="#-calm.png">~Cards~, please.</state>
+                <state img="#-handonheart.png">I'm sorry, could I have ~cards.text~ cards?</state>
+                <state img="#-calm.png">All right, ~cards.text~ cards for me.</state>
+                <state img="#-calm.png">~Cards.text~, please.</state>
             </case>
             <case stage="4">
-                <state img="#-calm.png">I think ~cards~ should be enough.</state>
-                <state img="#-calm.png">~Cards~ cards, if you please.</state>
-                <state img="#-hellothere.png">I'll have an order of ~cards~.</state>
+                <state img="#-calm.png">I think ~cards.text~ should be enough.</state>
+                <state img="#-calm.png">~Cards.text~ cards, if you please.</state>
+                <state img="#-hellothere.png">I'll have an order of ~cards.text~.</state>
             </case>
             <case stage="5">
-                <state img="#-disappointed.png">I must have ~cards~ new cards for this hand.</state>
-                <state img="#-peacesign.png">I'll try exchanging ~cards~ cards.</state>
-                <state img="#-calm.png">~Cards~ new cards, please.</state>
+                <state img="#-disappointed.png">I must have ~cards.text~ new cards for this hand.</state>
+                <state img="#-peacesign.png">I'll try exchanging ~cards.text~ cards.</state>
+                <state img="#-calm.png">~Cards.text~ new cards, please.</state>
             </case>
         </trigger>
 
         <trigger id="good_hand">
-            <case stage="2" consecutiveLosses="2">
+            <case stage="2">
+                <condition role="self" consecutiveLosses="2" />
                 <state img="#-coy.png">I have to make up for what happened last the last two rounds.</state>
             </case>
             <case stage="0" totalRounds="8">
                 <state img="#-pointingatself.png">You have to get up pretty early in the morning to outsmart a baker!</state>
             </case>
-            <case stage="1" timeInStage="4">
+            <case stage="1">
+                <condition role="self" timeInStage="4" />
                 <state img="#-happy.png">I'm on a roll!</state>
             </case>
-            <case stage="1" notSaidMarker="sanako_baked">
-                <state img="#-bodytilt.png" marker="sanako_baked">As a little surprise for you all, I made some baked goodies to eat after the game.</state>
+            <case stage="1">
+                <state img="#-bodytilt.png" oneShotId="6" marker="sanako_baked">As a little surprise for you all, I made some baked goodies to eat after the game.</state>
+                <state img="#-happy.png">Wow!</state>
             </case>
             <case stage="0">
                 <state img="#-bodytilt.png">Well, my! This is a good hand, isn't it?</state>
                 <state img="#-headtilt.png">Don't worry about me. I just got lucky, that's all.</state>
                 <state img="#-headtilt.png">I'm not telling you what I got yet. You'll just have to find out.</state>
-            </case>
-            <case stage="1">
-                <state img="#-happy.png">Wow!</state>
+                <state img="#-tasty.png">Sorry, but I came to play!</state>
             </case>
             <case stage="2">
                 <state img="#-handonheart.png">Yay!</state>
@@ -142,7 +146,8 @@
                 <condition role="other" character="mei" />
                 <state img="#-calm.png">You're so polite and well-mannered, Mei.</state>
             </case>
-            <case stage="3" alsoPlaying="samus" alsoPlayingStage="0-2" priority="0">
+            <case stage="3" priority="0">
+                <condition role="other" character="samus" stage="0-2" />
                 <state img="#-hopeful.png">That is an amazing bodysuit, Samus. I could never wear it as well as you can. You could be a swimsuit model.</state>
             </case>
             <case stage="3-5" priority="0">
@@ -168,14 +173,17 @@
             <case stage="0" totalRounds="8">
                 <state img="#-pointingatself.png">You have to get up pretty early in the morning to outsmart a baker!</state>
             </case>
-            <case stage="0" notSaidMarker="sanako_explains_pairs">
+            <case stage="0">
+                <condition role="self" notSaidMarker="sanako_explains_pairs" />
                 <state img="#-calm.png" marker="sanako_explains_pairs">If I remember right, I just have to match two or more of the same numbers together.</state>
             </case>
             <case stage="0">
                 <state img="#-wave.png">It's a match.</state>
                 <state img="#-lookingtoside.png">Let's go around the table and show each other what we have.</state>
+                <state img="#-bodytilt.png">Good things come to those who wait.</state>
             </case>
-            <case stage="0" hasHand="two pair" priority="0">
+            <case stage="0" priority="0">
+                <condition role="self" hasHand="two pair" />
                 <state img="#-headtilt.png">I can't complain with two pairs.</state>
             </case>
             <case stage="1">
@@ -190,48 +198,62 @@
                 <state img="#-laugh.png">Don't count me out too quickly.</state>
                 <state img="#-calm.png">I'm ready.</state>
             </case>
-            <case stage="3" totalExposed="1-4" priority="0">
+            <case stage="3" priority="0">
+                <condition count="1-4" status="exposed" />
                 <state img="#-puffedcheeks.png">Who keeps giving me these good cards?</state>
             </case>
-            <case stage="3" totalExposed="3-5" priority="0">
+            <case stage="3" priority="0">
+                <condition count="3-5" status="exposed" />
                 <state img="#-headtilt.png">Sorry to keep you all waiting, but I keep getting pairs.</state>
             </case>
-            <case stage="3" totalMales="1-4" notSaidMarker="sanako_younger_guy" priority="0">
+            <case stage="3" priority="0">
+                <condition role="self" notSaidMarker="sanako_younger_guy" />
+                <condition count="1-4" gender="male" />
                 <state img="#-headtilt.png" marker="sanako_younger_guy">Every once in a while, I feel like going out with a younger guy.</state>
             </case>
             <case stage="4">
-                <state img="#-cleavage.png">Does anyone else have their eyes on a nice pair?</state>
+                <state img="#-cleavage.png" oneShotId="10">Does anyone else have their eyes on a nice pair?</state>
                 <state img="#-happy.png">I hope we all have something to show.</state>
                 <state img="#-happy.png">It's not time for me to show you everything, but I'm sure your patience will be rewarded.</state>
+                <state img="#-happy.png">Wouldn't you agree that seeing me like this it already like winning?</state>
             </case>
             <case stage="5">
                 <state img="#-provocative.png">Wouldn't &lt;i&gt;you&lt;/i&gt; like to know what I have in store for you...</state>
                 <state img="#-tasty.png">I can't help but notice that you can't keep your eyes off me, ~player~.</state>
                 <state img="#-peacesign.png">May the best woman win.</state>
             </case>
-            <case stage="5" notSaidMarker="sanako_bootstraps" priority="0">
+            <case stage="5" priority="0">
+                <condition role="self" notSaidMarker="sanako_bootstraps" />
                 <state img="#-disappointed.png" marker="sanako_bootstraps">I'll pull myself together by my bootstraps.</state>
             </case>
         </trigger>
 
         <trigger id="bad_hand">
-            <case stage="5" consecutiveLosses="5" totalExposed="0">
+            <case stage="5" priority="65">
+                <condition role="self" consecutiveLosses="5" />
+                <condition count="0" status="exposed" />
                 <state img="#-crying.png">I've had a terrible game! I'm useless!</state>
             </case>
-            <case stage="5" totalMasturbating="0" totalFinished="0">
+            <case stage="5">
+                <condition count="0" status="masturbating" />
+                <condition count="0" status="finished" />
                 <state img="#-pleading.png">Oh dear! I might be the first one to lose.</state>
                 <state img="#-aaastripped1.png">Sorry to leave so soon, but I have a neighborhood board meeting to attend...</state>
             </case>
-            <case stage="1" timeInStage="0-1">
+            <case stage="1">
+                <condition role="self" timeInStage="0-1" />
                 <state img="#-waiting.png">I know I shouldn't be disappointed, but I wanted to hold on a little longer.</state>
             </case>
-            <case stage="4" totalNaked="4">
+            <case stage="4">
+                <condition count="4" status="naked" />
                 <state img="#-hellothere.png">Sorry, everyone! I'll be out of these panties in just a moment.</state>
             </case>
-            <case stage="3" totalExposed="0">
+            <case stage="3" priority="5">
+                <condition count="0" status="exposed" />
                 <state img="#-kneelingsad.png">Oh dear!</state>
             </case>
-            <case stage="5" totalExposed="0">
+            <case stage="5" priority="5">
+                <condition count="0" status="exposed" />
                 <state img="#-covering.png">I'm useless!</state>
             </case>
             <case stage="0">
@@ -252,6 +274,7 @@
             <case stage="4">
                 <state img="#-calm.png">Ah...</state>
                 <state img="#-embarrassed.png">Um...</state>
+                <state img="#-silly.png">I messed that one up...</state>
             </case>
             <case stage="5">
                 <state img="#-zzzstarting2.png">I can't hang on any longer!</state>
@@ -259,29 +282,38 @@
         </trigger>
 
         <trigger id="hand">
-            <case stage="0" alsoPlaying="joey" totalRounds="0" alsoPlayingSaying="Joetta">
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="joey" saying="Joetta" />
                 <test expr="~joey.position~" value="left" />
                 <state img="#-happy.png" marker="sanako_joey_nice_to_meet_you">It's nice to meet you, Joetta. You can call me Sanako.</state>
             </case>
-            <case stage="0" alsoPlaying="yang" alsoPlayingStage="0" totalRounds="1">
+            <case stage="0" totalRounds="1">
+                <condition role="other" character="yang" stage="0" />
                 <state img="#-bodytilt.png">That's a beautiful scarf, young lady. It goes wonderfully with your lovely blonde hair.</state>
             </case>
-            <case stage="0" alsoPlaying="zone-tan" totalMales="0" totalRounds="1">
+            <case stage="0" totalRounds="1">
+                <condition role="other" character="zone-tan" />
+                <condition count="0" gender="male" />
                 <state img="#-interested.png" marker="sanako_zone-tan_strapless">Lady in purple, that's a daring look! Do you think a strapless bra would look good on me too?</state>
             </case>
-            <case stage="0" alsoPlaying="elaine" totalRounds="1">
+            <case stage="0" totalRounds="1">
+                <condition role="other" character="elaine" />
                 <state img="#-wondering.png">Dressing as a pirate was a good idea. Maybe I should have done that too.</state>
             </case>
-            <case stage="0" alsoPlaying="kyu" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="kyu" />
                 <state img="#-bodytilt.png" marker="sanako_kyu_drama_club">Oh my! A fairy? Are you from the drama club?</state>
             </case>
-            <case stage="0" alsoPlaying="marinette" totalRounds="1">
+            <case stage="0" totalRounds="1">
+                <condition role="other" character="marinette" />
                 <state img="#-bodytilt.png">Some of you really went all out on your costumes! The ladybird girl is very pretty.</state>
             </case>
-            <case stage="0" alsoPlaying="navi" totalRounds="0">
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="navi" />
                 <state img="#-wondering.png" marker="sanako_navi_orb_of_light">Will the orb of light be playing with us too? There's a legend in my town that orbs of light can grant wishes.</state>
             </case>
-            <case stage="0" alsoPlaying="zone-tan" totalRounds="1">
+            <case stage="0" totalRounds="1">
+                <condition role="other" character="zone-tan" />
                 <state img="#-concerned.png" marker="sanako_zone-tan_strapless">Lady in purple, that's a daring look! I don't have anything that lets me show off my shoulders quite like that.</state>
             </case>
             <case stage="0" totalRounds="1">
@@ -305,7 +337,8 @@
             <case stage="0" totalRounds="0">
                 <state img="#-happy.png">It's only fair that it's my turn first. I have the most to give.</state>
             </case>
-            <case stage="4" totalNaked="2-4">
+            <case stage="4">
+                <condition count="2-4" status="naked" />
                 <state img="#-silly.png">Sorry to keep you waiting.</state>
             </case>
             <case stage="0">
@@ -326,10 +359,12 @@
         </trigger>
 
         <trigger id="must_strip_normal">
-            <case stage="3" alsoPlaying="nagisa">
+            <case stage="3">
+                <condition role="other" character="nagisa" />
                 <state img="#-underpressure.png">My ribbons? I can't! That only leaves me two options.</state>
             </case>
-            <case stage="1" consecutiveLosses="2">
+            <case stage="1">
+                <condition role="self" consecutiveLosses="2" />
                 <state img="#-bodytilt.png">Lucky you! That's two in a row for me.</state>
             </case>
             <case stage="0" totalRounds="0">
@@ -369,7 +404,8 @@
             <case stage="3" totalRounds="3">
                 <state img="#-kneelingsad.png">So that's it? So that's how it is?!</state>
             </case>
-            <case stage="4" totalExposed="0">
+            <case stage="4" priority="5">
+                <condition count="0" status="exposed" />
                 <state img="#-kneelingcovering.png">Me again? My breasts were just excess baggage to you, weren't they?</state>
             </case>
             <case stage="0">
@@ -390,13 +426,16 @@
         </trigger>
 
         <trigger id="stripping">
-            <case stage="0" totalExposed="1-4">
+            <case stage="0" priority="5">
+                <condition count="1-4" status="exposed" />
                 <state img="#-zzzstripping2.png">It's only fair that I take my socks off too.</state>
             </case>
-            <case stage="4" totalExposed="0">
+            <case stage="4" priority="5">
+                <condition count="0" status="exposed" />
                 <state img="#-kneelingcovering.png">I'm useless! Nothing but a burden to this game!</state>
             </case>
-            <case stage="0" saidMarker="sanako_bad_start">
+            <case stage="0">
+                <condition role="self" saidMarker="sanako_bad_start" />
                 <state img="#-zzzstripping2.png">Will my shoes be enough? Do you need my socks too?</state>
             </case>
             <case stage="0">
@@ -421,7 +460,8 @@
             <case stage="3" totalRounds="3">
                 <state img="#-kneelingsad.png">You're saying you don't like my panties?! That you wish I wasn't wearing them?!</state>
             </case>
-            <case stage="1" saidMarker="sanako_bad_start">
+            <case stage="1">
+                <condition role="self" saidMarker="sanako_bad_start" />
                 <state img="#-aaastripped1.png">I don't really mind going first, but it's someone else's turn next.</state>
             </case>
             <case stage="1">
@@ -443,10 +483,13 @@
         </trigger>
 
         <trigger id="male_human_must_strip">
-            <case stage="1" target="human" targetStage="4">
+            <case stage="1">
+                <condition role="target" character="human" stage="4" />
                 <state img="#-concerned.png">What's wrong, honey? You look upset.</state>
             </case>
-            <case stage="4" targetStage="0" totalMales="1">
+            <case stage="4">
+                <condition role="target" stage="0" />
+                <condition count="1" gender="male" />
                 <state img="#-bodytilt.png">Oh, so this young man is playing too? I was starting to think he was just here to deal cards and peep on girls.</state>
             </case>
             <case stage="0" totalRounds="0">
@@ -455,7 +498,8 @@
             <case stage="2" totalRounds="0-2">
                 <state img="#-readytopounce.png">We got him! Good work, everyone.</state>
             </case>
-            <case stage="0" notSaidMarker="sanako_human_male_taking_the_lead">
+            <case stage="0">
+                <condition role="self" notSaidMarker="sanako_human_male_taking_the_lead" />
                 <state img="#-lookingtoside.png" marker="sanako_human_male_taking_the_lead">I'm sure we'd all be happy if you wanted to start taking the lead.</state>
             </case>
             <case stage="0">
@@ -471,7 +515,8 @@
             <case stage="3">
                 <state img="#-aaastripped.png">Here, let me help too, ~name~.</state>
             </case>
-            <case stage="3" totalAlive="4-5" priority="0">
+            <case stage="3" priority="0">
+                <condition count="4-5" status="alive" />
                 <state img="#-wink.png">Congratulations to all of us except ~name~!</state>
             </case>
             <case stage="4">
@@ -524,7 +569,8 @@
         </trigger>
 
         <trigger id="female_human_must_strip">
-            <case stage="3" targetStage="0">
+            <case stage="3">
+                <condition role="target" stage="0" />
                 <state img="#-headtilt.png">I'm proud of you. Now you're a real part of the game!</state>
             </case>
             <case stage="0" totalRounds="0-2">
@@ -561,72 +607,93 @@
         </trigger>
 
         <trigger id="female_must_strip">
-            <case stage="0-1" target="corrin_f" targetStage="0">
+            <case stage="0-4">
+                <condition role="target" character="corrin_f" stage="0" />
                 <state img="#-wave.png">
-                    <alt-img stage="1">#-headtilt.png</alt-img>
+                    <alt-img stage="1 3">#-headtilt.png</alt-img>
+                    <alt-img stage="4">#-cleavage.png</alt-img>
+                    <alt-img stage="2">#-coy.png</alt-img>
+                    <alt-img stage="0">#-headtilt.png</alt-img>
                     <text>So your name is Corrin? It's a pleasure to meet you. For a moment, I thought Corrin was a boy's name.</text>
                 </state>
             </case>
-            <case stage="0-1" target="kyu" targetStage="0">
+            <case stage="0-1">
+                <condition role="target" character="kyu" stage="0" />
                 <state img="#-happy.png">
                     <alt-img stage="1">#-headtilt.png</alt-img>
                     <text>Those are beautiful wings, Miss Fairy. May I ask what they're made of?</text>
                 </state>
             </case>
-            <case stage="0-1" target="mei" targetStage="0">
+            <case stage="0-1">
+                <condition role="target" character="mei" stage="0" />
                 <state img="#-pointingatself.png">
                     <alt-img stage="1">#-thinking.png</alt-img>
                     <text>I'm sure you want to keep those glasses on. How else will you see the game?</text>
                 </state>
             </case>
-            <case stage="0-2" target="miko" targetStage="0">
+            <case stage="0-2">
+                <condition role="target" character="miko" stage="0" />
                 <state img="#-headtilt.png">
                     <alt-img stage="1">#-bodytilt.png</alt-img>
                     <alt-img stage="2">#-handonheart.png</alt-img>
                     <text>Aren't we the lucky ones today. We get to play with a prince!</text>
                 </state>
             </case>
-            <case stage="0-2" target="zizou" targetStage="0">
+            <case stage="0-2">
+                <condition role="target" character="zizou" stage="0" />
                 <state img="#-interested.png">
                     <alt-img stage="1">#-headtilt.png</alt-img>
                     <text>My, what a handsome prince!</text>
                 </state>
             </case>
-            <case stage="2-4" target="kyu" targetStage="0">
+            <case stage="2-4">
+                <condition role="target" character="kyu" stage="0" />
                 <state img="#-handonheart.png">
                     <alt-img stage="3-4">#-calm.png</alt-img>
                     <text>Those are beautiful wings, Kyu. May I ask what they're made of?</text>
                 </state>
             </case>
-            <case stage="2-3" target="mei" targetStage="0">
+            <case stage="2-3">
+                <condition role="target" character="mei" stage="0" />
                 <state img="#-coy.png">
                     <alt-img stage="3">#-headtilt.png</alt-img>
                     <text>I'm sure you want to keep those glasses on, Mei. How else will you see the rest of the game?</text>
                 </state>
             </case>
-            <case stage="4-5" target="mei" targetStage="0">
+            <case stage="4-5">
+                <condition role="target" character="mei" stage="0" />
                 <state img="#-happy.png">
                     <alt-img stage="5">#-tasty.png</alt-img>
                     <text>I'm sure you want to keep those glasses on, Mei. How else will you see what's left of the game?</text>
                 </state>
             </case>
-            <case stage="0-2" filter="glasses" targetStage="0" notSaidMarker="sanako_keeping_glasses">
+            <case stage="0-2">
+                <condition filter="glasses" role="target" stage="0" />
+                <condition role="self" notSaidMarker="sanako_keeping_glasses" />
                 <state img="#-pointingatself.png" marker="sanako_keeping_glasses">
                     <alt-img stage="1">#-headtilt.png</alt-img>
                     <alt-img stage="2">#-calm.png</alt-img>
                     <text>I'm going to be keeping my glasses on today. How about you?</text>
                 </state>
             </case>
-            <case stage="3" filter="glasses" targetStage="0" notSaidMarker="sanako_keeping_glasses">
+            <case stage="3">
+                <condition filter="glasses" role="target" stage="0" />
+                <condition role="self" notSaidMarker="sanako_keeping_glasses" />
                 <state img="#-handonheart.png" marker="sanako_keeping_glasses">I'm going to be keeping my glasses on today. How about you, ~name~?</state>
             </case>
-            <case stage="4" filter="glasses" targetStage="0" notSaidMarker="sanako_keeping_glasses">
+            <case stage="4">
+                <condition filter="glasses" role="target" stage="0" />
+                <condition role="self" notSaidMarker="sanako_keeping_glasses" />
                 <state img="#-embarrassed.png" marker="sanako_keeping_glasses">Even though it's probably going to cost me, I'm going to be keeping my glasses on today. How about you, ~name~?</state>
             </case>
-            <case stage="5" filter="glasses" targetStage="0" notSaidMarker="sanako_keeping_glasses">
+            <case stage="5">
+                <condition filter="glasses" role="target" stage="0" />
+                <condition role="self" notSaidMarker="sanako_keeping_glasses" />
                 <state img="#-pleading.png" marker="sanako_keeping_glasses">All I have left is my glasses, but I have to keep them. You could take off your if you like, though.</state>
             </case>
-            <case stage="7" filter="glasses" targetStage="0" notSaidMarker="sanako_keeping_glasses">
+            <case stage="7">
+                <condition filter="glasses" role="target" stage="0" />
+                <condition role="self" notSaidMarker="sanako_keeping_glasses" />
                 <state img="#-cold.png" marker="sanako_keeping_glasses">You could take off your glasses if you like, ~name~. I couldn't, but you could.</state>
             </case>
             <case stage="0-2">
@@ -636,14 +703,16 @@
                     <text>You have such pretty armor. Are you in a group that does historical re-enactments?</text>
                 </state>
             </case>
-            <case stage="0-2" filter="magical_girl" targetStage="0">
+            <case stage="0-2">
+                <condition filter="magical_girl" role="target" stage="0" />
                 <state img="#-wave.png">
                     <alt-img stage="1">#-thinking.png</alt-img>
                     <alt-img stage="2">#-calm.png</alt-img>
                     <text>It's a pleasure to meet you. Are you dressed up as a magical girl today to help you feel braver?</text>
                 </state>
             </case>
-            <case stage="3-5 7" filter="magical_girl" targetStage="0">
+            <case stage="3-5 7">
+                <condition filter="magical_girl" role="target" stage="0" />
                 <state img="#-headtilt.png">
                     <alt-img stage="4">#-bodytilt.png</alt-img>
                     <alt-img stage="5">#-peacesign.png</alt-img>
@@ -651,7 +720,9 @@
                     <text>Oh, you were doing so well, ~name~! But now it's finally time to take off the first part of that magical girl costume.</text>
                 </state>
             </case>
-            <case stage="0-4" filter="princess" notSaidMarker="sanako_drama_club_costumes">
+            <case stage="0-4">
+                <condition filter="princess" role="target" />
+                <condition role="self" notSaidMarker="sanako_drama_club_costumes" />
                 <state img="#-wondering.png" marker="sanako_drama_club_costumes">
                     <alt-img stage="1">#-thinking.png</alt-img>
                     <alt-img stage="2">#-handonheart.png</alt-img>
@@ -660,14 +731,18 @@
                     <text>Goodness, the drama club sure has a lot of different costumes, doesn't it?</text>
                 </state>
             </case>
-            <case stage="0" targetStage="4">
+            <case stage="0">
+                <condition role="target" stage="4" />
                 <state img="#-warning.png">Don't you all pick on ~name~. She's doing her best.</state>
             </case>
-            <case stage="2" targetTimeInStage="1">
+            <case stage="2">
+                <condition role="target" timeInStage="1" />
                 <state img="#-unsure.png">Again? We're sorry, ~name~.</state>
             </case>
-            <case stage="0" hasHand="high card">
-                <state img="#-wondering.png">Was it me?</state>
+            <case stage="0">
+                <condition role="self" hasHand="high card" />
+                <state img="#-wondering.png" oneShotId="4">Was it me?</state>
+                <state img="#-calm.png" oneShotId="5">Are you sure it wasn't me? I didn't have anything.</state>
             </case>
             <case stage="0" totalRounds="0">
                 <state img="#-headtilt.png">This going to be fun, isn't it?</state>
@@ -684,8 +759,10 @@
             <case stage="0">
                 <state img="#-happy.png">Okay.</state>
                 <state img="#-pointingatself.png">One item per round. That's the rule.</state>
+                <state img="#-headtilt.png" oneShotId="7">~Name~ is very pretty, isn't she?</state>
             </case>
-            <case stage="0" totalFemales="3-5" priority="0">
+            <case stage="0" priority="0">
+                <condition count="3-5" gender="female" />
                 <state img="#-lookingtoside.png">Who's the lucky girl?</state>
             </case>
             <case stage="1">
@@ -710,7 +787,8 @@
                 <state img="#-hopeful.png">Thanks for saving me.</state>
                 <state img="#-disappointed.png">I'm sorry, ~name~, but you can see that I'm in need here.</state>
             </case>
-            <case stage="5" hasHand="high card" priority="0">
+            <case stage="5" priority="0">
+                <condition role="self" hasHand="high card" />
                 <state img="#-peacesign.png">That was a close call for me.</state>
             </case>
             <case stage="6">
@@ -723,7 +801,8 @@
                 <state img="#-confident.png">Let's see those cards. Who's up next?</state>
                 <state img="#-covering.png">Even ~name~ beat me...</state>
             </case>
-            <case stage="7" filter="bi-curious" priority="0">
+            <case stage="7" priority="0">
+                <condition filter="bi-curious" role="target" />
                 <state img="#-footcaress.png">Could you take one step closer to me? Come on, I'll make you a nice bath.</state>
             </case>
         </trigger>
@@ -798,7 +877,8 @@
         </trigger>
 
         <trigger id="female_removing_accessory">
-            <case stage="0-1" target="shimakaze" targetStage="0">
+            <case stage="0-1">
+                <condition role="target" character="shimakaze" stage="0" />
                 <state img="#-tiptoe.png">
                     <alt-img stage="1">#-concerned.png</alt-img>
                     <text>Excuse me, Miss, but your clothes are on fire!</text>
@@ -817,7 +897,8 @@
                 <condition role="target" character="shimakaze" stage="0" />
                 <state img="#-masturbating_e.png">N-Noooooo!</state>
             </case>
-            <case stage="7" target="shimakaze" targetStage="0">
+            <case stage="7">
+                <condition role="target" character="shimakaze" stage="0" />
                 <state img="#-ahhhhhh.png">Help! What do we do? She's on fire!</state>
             </case>
             <case stage="0" totalRounds="0">
@@ -830,7 +911,8 @@
             <case stage="0" totalRounds="2">
                 <state img="#-headtilt.png">I expected as much.</state>
             </case>
-            <case stage="1" totalExposed="1-">
+            <case stage="1" priority="5">
+                <condition count="1-" status="exposed" />
                 <state img="#-interested.png">We're doing well so far, aren't we, ~name~?</state>
             </case>
             <case stage="0">
@@ -863,14 +945,19 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
-            <case stage="0-1" target="nayru" targetStage="2" alsoPlayingSaying="I hope nobody is disappointed with me">
+            <case stage="0-1" priority="431">
+                <condition role="target" character="nayru" stage="2" />
+                <condition role="other" saying="I hope nobody is disappointed with me" />
                 <test expr="~nayru.position~" value="left" />
                 <state img="#-bodytilt.png" marker="sanako_nayru_so_graceful">You are so graceful, Nayru. Who could be disappointed by that?</state>
             </case>
-            <case stage="4" filter="shy" targetStage="0">
+            <case stage="4">
+                <condition filter="shy" role="target" stage="0" />
                 <state img="#-bodytilt.png">No need to be so reserved. It's a new millennium! Let's discover a new you.</state>
             </case>
-            <case stage="3" targetStage="1" totalExposed="1-3">
+            <case stage="3" priority="85">
+                <condition role="target" stage="1" />
+                <condition count="1-3" status="exposed" />
                 <state img="#-puffedcheeks.png">Nobody likes a selfish player. We're all here to have fun, you know?</state>
             </case>
             <case stage="0">
@@ -905,7 +992,8 @@
                 <state img="#-pointingatself.png">Oh, I was wanting to see ~clothing.ifPlural(these|one of those)~!</state>
                 <state img="#-headtilt.png">Lovely.</state>
             </case>
-            <case stage="0" totalRounds="0-2" notSaidMarker="sanako_name_request" priority="0">
+            <case stage="0" totalRounds="0-2" priority="0">
+                <condition role="self" notSaidMarker="sanako_name_request" />
                 <state img="#-wondering.png" marker="sanako_name_request">Would you mind if I call you "~name~"?</state>
             </case>
             <case stage="1">
@@ -933,10 +1021,12 @@
             <case stage="7">
                 <state img="#-cross.png">I should have a word with your mother.</state>
             </case>
-            <case stage="7" totalFinished="1" priority="0">
+            <case stage="7" priority="0">
+                <condition count="1" status="finished" />
                 <state img="#-cold.png">How can you keep playing at a time like this? Did my penalty mean nothing to you?</state>
             </case>
-            <case stage="7" totalFinished="2-4" priority="0">
+            <case stage="7" priority="0">
+                <condition count="2-4" status="finished" />
                 <state img="#-cold.png">How can you keep playing at a time like this? Did our penalties mean nothing to you?</state>
             </case>
         </trigger>
@@ -969,19 +1059,22 @@
         </trigger>
 
         <trigger id="male_removed_minor">
-            <case stage="1" target="human">
+            <case stage="1">
+                <condition role="target" character="human" />
                 <state img="#-happy.png">Perfect!</state>
             </case>
             <case stage="1" totalRounds="0-2">
                 <state img="#-waiting.png">Don't be so grouchy. It's fine.</state>
             </case>
-            <case stage="5" totalExposed="1">
+            <case stage="5" priority="5">
+                <condition count="1" status="exposed" />
                 <state img="#-sad.png">I guess I'll just keep waiting here all by my lonesome...</state>
             </case>
             <case stage="0">
                 <state img="#-interested.png">Good boy!</state>
             </case>
-            <case stage="0" totalExposed="0" totalRounds="1-3" priority="0">
+            <case stage="0" totalRounds="1-3" priority="0">
+                <condition count="0" status="exposed" />
                 <state img="#-headtilt.png">It's okay if we start slow.</state>
             </case>
             <case stage="1">
@@ -1017,13 +1110,16 @@
                 <state img="#-wave.png">Don't worry about it.</state>
             </case>
             <case stage="1">
-                <state img="#-happy.png">If you want to give us a little present, who am I to say no?</state>
+                <state img="#-happy.png" oneShotId="8">If you want to give us a little present, who am I to say no?</state>
+                <state img="#-headtilt.png">It's always small steps at first.</state>
+                <state img="#-bodytilt.png">That's the spirit!</state>
             </case>
             <case stage="2">
                 <state img="#-calm.png">You're doing great.</state>
             </case>
             <case stage="3">
-                <state img="#-headtilt.png">My ~clothing~ collection at home has something very similar. Maybe we shop at the same store.</state>
+                <state img="#-headtilt.png" oneShotId="9">My ~clothing~ collection at home ~clothing.ifPlural(has a pair just like that|has something very similar)~. Maybe we shop at the same store.</state>
+                <state img="#-calm.png">You're handling this well, but come to me if you start getting worried.</state>
             </case>
             <case stage="4">
                 <state img="#-bodytilt.png">Here comes the stylish ~clothing~.</state>
@@ -1048,7 +1144,8 @@
                 <state img="#-happy.png">I hope this is okay with you.</state>
                 <state img="#-pointingatself.png">~clothing.ifPlural(Those are lovely ~clothing~. Did your mother buy them for you?|A nice ~clothing~ like that is worth taking care of.)~</state>
             </case>
-            <case stage="0" totalExposed="0" priority="0">
+            <case stage="0" priority="0">
+                <condition count="0" status="exposed" />
                 <state img="#-calm.png">Nobody has taken off anything exciting yet.</state>
             </case>
             <case stage="1">
@@ -1061,6 +1158,7 @@
             </case>
             <case stage="3">
                 <state img="#-calm.png">Doing things at your own pace is best.</state>
+                <state img="#-headtilt.png">You have such cute taste, ~name~. Is your underwear as pretty as your ~clothing~?</state>
             </case>
             <case stage="4">
                 <state img="#-happy.png">Who knew that ~name~ was such a lucky girl?</state>
@@ -1105,10 +1203,12 @@
         </trigger>
 
         <trigger id="male_removed_major">
-            <case stage="0" target="human" totalRounds="0-2">
+            <case stage="0" totalRounds="0-2">
+                <condition role="target" character="human" />
                 <state img="#-concerned.png">Didn't you want to wait for the rest of us?</state>
             </case>
-            <case stage="0" target="human">
+            <case stage="0">
+                <condition role="target" character="human" />
                 <state img="#-headtilt.png">If you're determined to keep fighting, then I won't stop you.</state>
             </case>
             <case stage="0" totalRounds="0-2">
@@ -1141,7 +1241,8 @@
         </trigger>
 
         <trigger id="female_removing_major">
-            <case stage="4" filter="shy">
+            <case stage="4">
+                <condition filter="shy" role="target" />
                 <state img="#-happy.png">I know you feel shy right now, but we all think you're just the cutest thing, and we'd be happy to see anything you'd be willing to show us.</state>
             </case>
             <case stage="0" totalRounds="0-4">
@@ -1151,7 +1252,8 @@
                 <state img="#-wondering.png">I must be better at this than I thought.</state>
                 <state img="#-wondering.png">Would you like me to take something off instead?</state>
             </case>
-            <case stage="0" totalExposed="0" priority="0">
+            <case stage="0" priority="0">
+                <condition count="0" status="exposed" />
                 <state img="#-concerned.png">~clothing.ifPlural(~Clothing~ are something you hold dear, aren't they?|You must be a brave girl if you're willing to remove that ~clothing~ in front of all of us.)~</state>
             </case>
             <case stage="1">
@@ -1179,7 +1281,9 @@
         </trigger>
 
         <trigger id="female_removed_major">
-            <case stage="2" target="sanako" alsoPlaying="joey" alsoPlayingStage="0-2" alsoPlayingSaying=" you normally take off your">
+            <case stage="2">
+                <condition role="target" character="sanako" />
+                <condition role="other" character="joey" stage="0-2" saying=" you normally take off your" />
                 <test expr="~joey.position~" value="left" />
                 <state img="#-sad.png" marker="sanako_joey_shirt_removal">Of course I normally take off my shirt at home, Joey. How would I wash it if I never took it off?</state>
             </case>
@@ -1190,7 +1294,8 @@
                     <text>That is such a lovely little bra. It reminds me of my daugh--- uh, my classmate's one. She has a cute one just like that.</text>
                 </state>
             </case>
-            <case stage="0-5 7" target="marinette" targetStage="2">
+            <case stage="0-5 7">
+                <condition role="target" character="marinette" stage="2" />
                 <state img="#-wondering.png">
                     <alt-img stage="1">#-thinking.png</alt-img>
                     <alt-img stage="2">#-coy.png</alt-img>
@@ -1210,13 +1315,17 @@
                     <text>That is such a lovely little bra, Kizuna. It reminds me of my daugh--- uh, my classmate's one. She has a cute one just like that.</text>
                 </state>
             </case>
-            <case stage="1" filter="sarcastic" notSaidMarker="sanako_press_buttons">
+            <case stage="1">
+                <condition filter="sarcastic" role="target" />
+                <condition role="self" notSaidMarker="sanako_press_buttons" />
                 <state img="#-thinking.png" marker="sanako_press_buttons">You all sure know the right buttons to press with her, don't you?</state>
             </case>
-            <case stage="3" filter="shy">
+            <case stage="3">
+                <condition filter="shy" role="target" />
                 <state img="#-hopeful.png">No need to be shy. You're beautiful.</state>
             </case>
-            <case stage="4" filter="shy">
+            <case stage="4">
+                <condition filter="shy" role="target" />
                 <state img="#-calm.png">You look upset. Is something troubling you?</state>
             </case>
             <case stage="1" totalRounds="0-2">
@@ -1226,7 +1335,8 @@
                 <state img="#-happy.png">Maybe some tea will cheer you up.</state>
                 <state img="#-headtilt.png">Doing that couldn't have been easy. I'm proud of you.</state>
             </case>
-            <case stage="0" totalExposed="0" priority="0">
+            <case stage="0" priority="0">
+                <condition count="0" status="exposed" />
                 <state img="#-wave.png">I'm here for you any time you need a hug.</state>
             </case>
             <case stage="1">
@@ -1281,10 +1391,12 @@
         </trigger>
 
         <trigger id="male_chest_is_visible">
-            <case stage="2" filter="athletic">
+            <case stage="2">
+                <condition filter="athletic" role="target" />
                 <state img="#-coy.png">Oh my. Is ~name~ going to pin someone down with those powerful arms of his?</state>
             </case>
-            <case stage="4" alsoPlaying="nagisa">
+            <case stage="4">
+                <condition role="other" character="nagisa" />
                 <state img="#-happy.png">What a strong young man. Don't you think ~name~ would make a great husband, Nagisa?</state>
             </case>
             <case stage="0" totalRounds="0-2">
@@ -1321,7 +1433,8 @@
         </trigger>
 
         <trigger id="male_crotch_will_be_visible">
-            <case stage="1" totalFemales="2-4">
+            <case stage="1">
+                <condition count="2-4" gender="female" />
                 <state img="#-happy.png">It's the moment the girls have been waiting for!</state>
             </case>
             <case stage="0">
@@ -1358,7 +1471,8 @@
             <case stage="2" totalRounds="0-2">
                 <state img="#-sad.png">I wish you had warned us. I was getting excited for no reason...</state>
             </case>
-            <case stage="7" totalMales="2-4">
+            <case stage="7">
+                <condition count="2-4" gender="male" />
                 <state img="#-facepalm.png">Boys, this is why you should always eat your vegetables.</state>
             </case>
             <case stage="0">
@@ -1450,10 +1564,12 @@
         </trigger>
 
         <trigger id="female_chest_will_be_visible">
-            <case stage="0" totalExposed="0" totalRounds="0-2">
+            <case stage="0" totalRounds="0-2" priority="15">
+                <condition count="0" status="exposed" />
                 <state img="#-shocked.png">Be brave. You can do it!</state>
             </case>
-            <case stage="0" totalExposed="0">
+            <case stage="0" priority="5">
+                <condition count="0" status="exposed" />
                 <state img="#-shocked.png">Be brave, ~name~. You can do it!</state>
             </case>
             <case stage="0">
@@ -1483,7 +1599,8 @@
         </trigger>
 
         <trigger id="female_small_chest_is_visible">
-            <case stage="0-5 7" target="marinette">
+            <case stage="0-5 7">
+                <condition role="target" character="marinette" />
                 <state img="#-headtilt.png">
                     <alt-img stage="1 4">#-bodytilt.png</alt-img>
                     <alt-img stage="2">#-handonheart.png</alt-img>
@@ -1525,7 +1642,8 @@
         </trigger>
 
         <trigger id="female_medium_chest_is_visible">
-            <case stage="5" target="valerie">
+            <case stage="5">
+                <condition role="target" character="valerie" />
                 <state img="#-disappointed.png">Are those default nipples?</state>
             </case>
             <case stage="0">
@@ -1610,25 +1728,30 @@
         </trigger>
 
         <trigger id="female_crotch_is_visible">
-            <case stage="0-1" target="mia" totalNaked="1">
+            <case stage="0-1">
+                <condition role="target" character="mia" />
+                <condition count="1" status="naked" />
                 <state img="#-headtilt.png">
                     <alt-img stage="1">#-interested.png</alt-img>
                     <text>I've been trying to lose a few rounds to catch up, but you've beaten us all.</text>
                 </state>
             </case>
-            <case stage="2-3" target="mia">
+            <case stage="2-3">
+                <condition role="target" character="mia" />
                 <state img="#-coy.png">
                     <alt-img stage="3">#-laugh.png</alt-img>
                     <text>I'm impressed. I thought you were going to be one of those stern office ladies, but you're really getting into the spirit of things.</text>
                 </state>
             </case>
-            <case stage="4-5" target="mia">
+            <case stage="4-5">
+                <condition role="target" character="mia" />
                 <state img="#-calm.png">
                     <alt-img stage="5">#-hopeful.png</alt-img>
                     <text>Great! You're really getting into the spirit of things, Mia.</text>
                 </state>
             </case>
-            <case stage="7" target="mia">
+            <case stage="7">
+                <condition role="target" character="mia" />
                 <state img="#-delighted.png">That's the way, Mia! Now you're getting into the spirit of things.</state>
             </case>
             <case stage="0">
@@ -1658,7 +1781,9 @@
         </trigger>
 
         <trigger id="male_must_masturbate">
-            <case stage="1" totalMasturbating="0" totalFinished="0">
+            <case stage="1">
+                <condition count="0" status="masturbating" />
+                <condition count="0" status="finished" />
                 <state img="#-horny.png">So... we decided that it's come to this...</state>
             </case>
             <case stage="2" totalRounds="0-2">
@@ -1691,7 +1816,8 @@
         </trigger>
 
         <trigger id="male_start_masturbating">
-            <case stage="4" timeInStage="0">
+            <case stage="4">
+                <condition role="self" timeInStage="0" />
                 <state img="#-breasthold.png">And it was as soon as I took my bra off. You flatter me, ~name~!</state>
             </case>
             <case stage="0">
@@ -1738,7 +1864,8 @@
                 <state img="#-callme.png">I don't want to interrupt ~name~, but I just want to remind him to get my number after the game.</state>
                 <state img="#-underpressure.png">Does anyone else feel a little overheated?</state>
             </case>
-            <case stage="3" totalExposed="1" priority="0">
+            <case stage="3" priority="0">
+                <condition count="1" status="exposed" />
                 <state img="#-zzzstripping1.png">Does seeing me in my underthings help, ~name~? You can touch the material if you like.</state>
             </case>
             <case stage="4">
@@ -1755,7 +1882,8 @@
                 <state img="#-footcaress.png">You can come a little closer. We're in this together, after all.</state>
                 <state img="#-footcaress.png">Come to mama...</state>
             </case>
-            <case stage="7" target="human" priority="0">
+            <case stage="7" priority="0">
+                <condition role="target" character="human" />
                 <state img="#-footcaress.png">Could it be that ~name~ wants to make me his woman?</state>
             </case>
         </trigger>
@@ -1792,10 +1920,12 @@
         </trigger>
 
         <trigger id="female_must_masturbate">
-            <case stage="0" target="nagisa">
+            <case stage="0">
+                <condition role="target" character="nagisa" />
                 <state img="#-sad.png">My poor, innocent angel...</state>
             </case>
-            <case stage="1" target="nagisa">
+            <case stage="1">
+                <condition role="target" character="nagisa" />
                 <state img="#-concerned.png">I'm so sorry, my darling Nagisa...</state>
             </case>
             <case stage="2" totalRounds="0-2">
@@ -1838,13 +1968,16 @@
         </trigger>
 
         <trigger id="female_start_masturbating">
-            <case stage="2" filter="shy">
+            <case stage="2">
+                <condition filter="shy" role="target" />
                 <state img="#-interested.png">It's okay if you don't want us to see. We'll still know if you're enjoying yourself.</state>
             </case>
-            <case stage="3" totalFinished="0">
+            <case stage="3">
+                <condition count="0" status="finished" />
                 <state img="#-aaastripped.png">If it makes you feel any better, most of us are going to have to do that too.</state>
             </case>
-            <case stage="5" totalAlive="3-5">
+            <case stage="5" priority="5">
+                <condition count="3-5" status="alive" />
                 <state img="#-zzzstarting1.png">It's okay if you want to start now. I'll join you as soon as I can.</state>
             </case>
             <case stage="0">
@@ -1875,7 +2008,8 @@
         </trigger>
 
         <trigger id="female_masturbating">
-            <case stage="0-1" target="samus">
+            <case stage="0-1">
+                <condition role="target" character="samus" />
                 <state img="#-concerned.png">
                     <alt-img stage="1">#-interested.png</alt-img>
                     <text>My, Samus! How scandalous!</text>
@@ -1897,7 +2031,9 @@
                 <state img="#-coy.png">~Name~ seems to be enjoying herself, at least.</state>
                 <state img="#-coy.png">Now, now, let's not stare at poor ~name~.</state>
             </case>
-            <case stage="2" totalMasturbating="1" totalFinished="0" priority="0">
+            <case stage="2" priority="0">
+                <condition count="1" status="masturbating" />
+                <condition count="0" status="finished" />
                 <state img="#-interested.png">If you'd like to slow down a little, ~name~, maybe all of us could do this together.</state>
             </case>
             <case stage="3">
@@ -1921,25 +2057,31 @@
                 <state img="#-happy.png">Everyone gets a turn to show off.</state>
                 <state img="#-footcaress.png">Let me know if you want some tips. I read all of the ladies' magazines.</state>
             </case>
-            <case stage="7" filter="confident" priority="0">
+            <case stage="7" priority="0">
+                <condition filter="confident" role="target" />
                 <state img="#-covering.png">Maybe you should be a little more ladylike about this, ~name~.</state>
             </case>
-            <case stage="7" totalAlive="2" priority="0">
+            <case stage="7" priority="0">
+                <condition count="2" status="alive" />
                 <state img="#-happy.png">The game is quickly drawing to a close.</state>
             </case>
-            <case stage="7" totalMasturbating="2" priority="0">
+            <case stage="7" priority="0">
+                <condition count="2" status="masturbating" />
                 <state img="#-covering.png">Keep it down, you two!</state>
             </case>
-            <case stage="7" totalMasturbating="3" priority="0">
+            <case stage="7" priority="0">
+                <condition count="3" status="masturbating" />
                 <state img="#-covering.png">Something a lot like this happened to me when I went to the public bathhouse one afternoon.</state>
             </case>
         </trigger>
 
         <trigger id="female_finished_masturbating">
-            <case stage="7" target="weiss">
+            <case stage="7">
+                <condition role="target" character="weiss" />
                 <state img="#-happy.png">That was beautiful, Weiss. Thank you for sharing it with us. Was it your first time doing it in front of others?</state>
             </case>
-            <case stage="5" totalAlive="2-4">
+            <case stage="5" priority="5">
+                <condition count="2-4" status="alive" />
                 <state img="#-disappointed.png">Oh, but I was so close to joining you. I'm sorry that I wasn't able to show more solidarity.</state>
             </case>
             <case stage="0">
@@ -1982,7 +2124,8 @@
         </trigger>
 
         <trigger id="start_masturbating">
-            <case stage="5" totalFinished="1-4">
+            <case stage="5">
+                <condition count="1-4" status="finished" />
                 <state img="#-zzzstarting1.png">Feel free to look as much as you like!</state>
             </case>
             <case stage="5">
@@ -2072,7 +2215,8 @@
         </trigger>
 
         <trigger id="game_over_defeat">
-            <case stage="7" target="human">
+            <case stage="7">
+                <condition role="target" character="human" />
                 <state img="#-footcaress.png" collectible="sanako_panties">You should be proud, ~player~. It's not every day that such a strong, confident player gets the mastery over us.</state>
             </case>
             <case stage="7">

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 3:11:51 PM on March 19, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 12:33:31 AM on May 20, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.5</version>
+    <version>v5.7.3</version>
     <first>Rin</first>
     <last>Tezuka</last>
     <label>Rin</label>
@@ -40,7 +40,6 @@
         <nickname for="franziska">Crop Lady</nickname>
     </nicknames>
 
-    <start />
 
     <wardrobe>
         <clothing name="panties" generic="panties" position="lower" type="important" />
@@ -1125,7 +1124,7 @@
             <case stage="0-6">
                 <condition count="1" role="other" character="emi" stage="2" sayingMarker="hungry" notSaidMarker="hungry" />
                 <test expr="~background~" value="roof" />
-                <state img="#-doubt.png">...Wait...you haven't brought anything for yourself? That's unusual of you Emi...</state>
+                <state img="#-doubt.png" marker="rin_emi_noeateat">...Wait...you haven't brought anything for yourself? That's unusual of you Emi...</state>
             </case>
             <case stage="0-6">
                 <condition count="1" notSaidMarker="bee" />
@@ -1198,7 +1197,7 @@
             </case>
             <case stage="0-6" id="28">
                 <condition count="1" role="other" character="nami" stage="2-6" timeInStage="0-" sayingMarker="dreams" />
-                <state img="#-pondering.png">My dream?...Well I don't know...A lot of people I should become a famous artist...but...I dream a lot more than that sometimes.</state>
+                <state img="#-pondering.png">My dream?...Well I don't know...A lot of people think I should become a famous artist...but...I dream a lot more than that sometimes.</state>
             </case>
             <case stage="0-6" id="32">
                 <condition count="1" role="other" character="nami" stage="6" timeInStage="0-" sayingMarker="butt1" />
@@ -1229,6 +1228,18 @@
             <case stage="0-6" id="47" alsoPlaying="cammy_white" alsoPlayingStage="1" alsoPlayingTimeInStage="0">
                 <state img="#-pondering.png">Well, anything goes...I think.</state>
                 <state img="#-doubt.png">I wish I had tiny items...</state>
+            </case>
+            <case stage="0-6">
+                <condition role="other" character="chazz" stage="1" timeInStage="0" />
+                <state img="#-lucid.png">It's a lopsided trade off...but at least I gained something from it.</state>
+            </case>
+            <case stage="0-6">
+                <condition role="other" character="chazz" stage="5" timeInStage="0" />
+                <state img="#-DPAmused.png">No...I don't think I will...</state>
+            </case>
+            <case stage="0-6">
+                <condition role="other" character="chazz" stage="6" timeInStage="0" />
+                <state img="#-bored.png">Wait, no...I think you could be onto something, Chazz...</state>
             </case>
             <case stage="0-6" id="4">
                 <condition count="1" filter="akko" />
@@ -1482,8 +1493,10 @@
                 <condition count="3-4" gender="female" />
                 <state img="#-confused.png">...What's an 'orgy'? Should I even be asking this?</state>
             </case>
-            <case stage="0-6" alsoPlaying="emi" notSaidMarker="rin_musiced" alsoPlayingSaidMarker="rin_music">
+            <case stage="0-6">
                 <condition count="1" filter="futaba" />
+                <condition role="self" notSaidMarker="rin_musiced" />
+                <condition role="other" character="emi" saidMarker="rin_music" />
                 <state img="#-doubt.png" marker="rin_musiced">...My taste in music isn't weird...what are you talking about Emi?</state>
             </case>
             <case stage="0-6" totalRounds="0-3" priority="111">
@@ -1503,7 +1516,8 @@
                 <condition count="1" role="other" character="mulan" saidMarker="mulan_duel" />
                 <state img="#-lucid.png" marker="rin_duel_lost">Well...I guess one of my secrets is that I had an interest in Emi at one point. Like...more than friends. She really doesn't feel the same way though, and that's okay.</state>
             </case>
-            <case stage="0-6" id="53" alsoPlaying="emi" alsoPlayingSaidMarker="pirate_story" alsoPlayingSayingMarker="pirate_story2">
+            <case stage="0-6" id="53">
+                <condition role="other" character="emi" saidMarker="pirate_story" sayingMarker="pirate_story2" />
                 <state img="#-lucid.png">A story? Well, I suppose I'll listen...</state>
             </case>
             <case stage="0-6">
@@ -1542,6 +1556,14 @@
             <case stage="0-6" id="166" priority="101">
                 <condition role="other" character="dust" sayingMarker="fidgetQA_beatup" />
                 <state img="#-DPNormal.png">...I'm not that kind of person, but even then...How can I do it? With my feet or my head?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="mary" saidMarker="rin_color" />
+                <state img="#-curious.png" marker="rin_mary_green">Green is a rather odd color...it rarely works well with most colors...but the green you're wearing? It works. it's actually quite nice.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="mary" saidMarker="RinFunnyWords" />
+                <state img="#-bored.png" marker="rin_mary_cucumber">Cu...cum...ber...Really, any word containing 'cum' is already dirty enough.</state>
             </case>
             <case stage="0-6" priority="50">
                 <condition role="self" saidMarker="moon_blaster" />
@@ -1603,9 +1625,7 @@
                 <state img="#-DPAmused.png">Get this...People say the funniest things..when they are funny...</state>
                 <state img="#-amused.png">I feel like it's nice to moo as a cow...Probably feels really good to moo.</state>
                 <state img="#-amused.png">When you reach for the clouds...every inch counts...no matter what you do to grab it.</state>
-                <state img="#-pondering.png" marker="rinprompt_funnywords">I'm just wondering...Are there any words you find...well, "funny" to you? </state>
-                <state img="#-confused.png" marker="rinprompt_weirdwords">Hm...I'm curious to know...What words sound weird to you when you say it out loud?</state>
-                <state img="#-absent.png" marker="rinprompt_favoritecolor">...Does anyone have a particular color that best reflects them?</state>
+                <state img="#-DPAmused.png">...I've explored the Inventory before, it's bigger than you think it is.</state>
             </case>
             <case stage="0-6" totalRounds="8-" priority="10">
                 <state img="#-bored.png" oneShotId="340">What are clouds? I always thought they were thoughts of the sky because you can't touch them...or something like that.</state>
@@ -1722,6 +1742,11 @@
                 <state img="#-absent.png" oneShotId="451">People who use anti-aging creams must have the youngest looking fingertips in the world...Doesn't really apply to me though. I would've just faceplanted into it.</state>
                 <state img="#-pondering.png" oneShotId="452">One brick is good for attacking, but a lot of them is good for defending.</state>
                 <state img="#-confused.png" oneShotId="453">If you're swimming underwater...aren't you also swimming above water as well? English is weird.</state>
+                <state img="#-DPAmused.png" oneShotId="504">Have you ever realized that anything can be a hammer if used wrong enough?</state>
+                <state img="#-doubt.png" oneShotId="506">Why do pockets exist? It's annoying if things are in them, and it's scary if things &lt;i&gt;aren't&lt;/i&gt; in them...</state>
+                <state img="#-pondering.png" oneShotId="505">If there's a "Heavens Yes" and a "Hell No", would that mean a "Purgatory Maybe" exists?</state>
+                <state img="#-curious.png" oneShotId="507">If you have prosthetic legs, like Emi. You can technically be as tall as you want to be.</state>
+                <state img="#-bored.png" oneShotId="508">The rain you hear outside is interesting...as the sounds they make are from the surfaces that they hit...</state>
             </case>
             <case stage="0-6" totalRounds="8-" priority="10">
                 <condition role="other" character="emi" />
@@ -1765,9 +1790,9 @@
             <case stage="0-2" priority="10">
                 <condition role="other" character="emi" />
                 <test expr="~emi.costume~" cmp="!=" value="default" />
-                <state img="#-DPUpset.png">It just feels like the colors were just...drained away from Emi and all that's left is the sadness of her past...</state>
-                <state img="#-doubt.png">...The lack of colors on Emi...makes me feel uneasy...like being on a roller coaster out in space.</state>
-                <state img="#-pondering.png">I don't think even a paint bucket will fix this Emi...</state>
+                <state img="#-DPUpset.png" marker="rin_emi_drained">It just feels like the colors were just...drained away from Emi and all that's left is the sadness of her past...</state>
+                <state img="#-doubt.png" marker="rin_emi_uneasy">...The lack of colors on Emi...makes me feel uneasy...like being on a roller coaster out in space.</state>
+                <state img="#-pondering.png" marker="rin_emi_bucket">I don't think even a paint bucket will fix this Emi...</state>
             </case>
             <case stage="6" priority="10">
                 <condition role="self" saidMarker="hugged2" notSaidMarker="afterhug2" />
@@ -1798,8 +1823,10 @@
                 <condition role="other" character="futaba" />
                 <state img="#-lucid.png" marker="emi_sexuality">Emi and I are very close friends, but...not that close. It's not really a relationship if the other one doesn't feel the same.</state>
             </case>
-            <case stage="2" alsoPlaying="natsuki" timeInStage="0" priority="9">
+            <case stage="2" priority="9">
                 <condition count="1" filter="emi" />
+                <condition role="self" timeInStage="0" />
+                <condition role="other" character="natsuki" />
                 <state img="#-confused.png" marker="emi_sexuality">Gay? Well, I don't know about that myself. Emi though...She only sees me as a friend, and only a friend.</state>
             </case>
             <case stage="0-6" priority="5">
@@ -1879,6 +1906,17 @@
                 <state img="#-DPAmused.png">It all just depends on who's here, Meia. Sometimes Emi helps me..sometimes I may have ~player~ do it. Just as long as ~player~ isn't a cynic about it.</state>
             </case>
             <case stage="0">
+                <condition role="other" character="mary" stage="0-7" />
+                <state img="#-bored.png" marker="rin_mary_fingers">You probably shouldn't put your finger on it, as I really don't have fingers myself...or hands for that matter...</state>
+                <state img="#-lucid.png" marker="rin_mary_lackof">Special?...Are you talking about my lack of arms or my lack of...caring?</state>
+                <state img="#-absent.png" marker="rin_mary_nomiya">Nomiya says that I'm special...But I never really asked in what way...So I might as well pass that question to you...</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="mary" stage="0-7" />
+                <state img="#-DPNormal.png" marker="rin_mary_badluck">...Whatever I want, really...Just as long as we aren't talking about unfinished paintings...That's a lot of bad luck for you...</state>
+                <state img="#-pondering.png" marker="rin_mary_colorwork">...I just paint whatever feels right...I just let the colors do the work for me...</state>
+            </case>
+            <case stage="0">
                 <condition count="0" filter="emi" />
                 <condition count="0" filter="sei" />
                 <condition count="1-1" role="other" character="mulan" />
@@ -1899,8 +1937,9 @@
                 <state img="#-bored.png">...I'm just as surprised as you are.</state>
                 <state img="#-lucid.png">Wouldn't you have to be &lt;i&gt;me&lt;/i&gt; to be as good as me? I...don't think you'd want to be me.</state>
             </case>
-            <case stage="1" alsoPlaying="sei">
+            <case stage="1">
                 <condition count="1" filter="emi" />
+                <condition role="other" character="sei" />
                 <state img="#-lucid.png">I would, though, I usually have someone else for that kind of thing.</state>
             </case>
             <case stage="0" priority="101">
@@ -1957,8 +1996,9 @@
             <case stage="4" alsoPlaying="pit">
                 <state img="#-DPUpset.png">...Unfortunately...</state>
             </case>
-            <case stage="4" alsoPlaying="pit" priority="100">
+            <case stage="4" priority="100">
                 <condition count="1" filter="emi" />
+                <condition role="other" character="pit" />
                 <state img="#-DPUpset.png">...Unfortunately...</state>
             </case>
             <case stage="5" alsoPlaying="pit">
@@ -2323,7 +2363,8 @@
                 <state img="#-amused.png">Sei...my pants, please.</state>
                 <state img="#-DPAmused.png">Sei...my pants, and nothing else.</state>
             </case>
-            <case stage="3" alsoPlaying="emi" priority="200">
+            <case stage="3" priority="200">
+                <condition role="other" character="emi" />
                 <state img="#-doubt.png">I always try to keep the shirt on...it's really a pain to take it off and put on. Emi knows what I'm talking about.</state>
                 <state img="#-confused.png">Emi?</state>
                 <state img="#-DPNormal.png">Emi. You know what to do.</state>
@@ -2337,12 +2378,14 @@
                 <state img="#-DPAmused.png">You know what? ~player~, Go for it.</state>
                 <state img="#-lucid.png">I...usually have trouble with shirts...~player~...you might be able to do this a little better than Sei, good luck.</state>
             </case>
-            <case stage="4" alsoPlaying="emi" priority="200">
+            <case stage="4" priority="200">
+                <condition role="other" character="emi" />
                 <state img="#-DPUpset.png">I really don't want to...but...Emi...my bra...</state>
                 <state img="#-DPNormal.png">I hope you're happy ~player~, because my bra is next.</state>
                 <state img="#-DPAmused.png">Today's your lucky day ~player~, The bra comes off now...You must like watching other girls strip for others, don't ya?</state>
             </case>
-            <case stage="5" alsoPlaying="emi" priority="200">
+            <case stage="5" priority="200">
+                <condition role="other" character="emi" />
                 <state img="#-lucid.png">Well...This is it. Go ahead Emi.</state>
             </case>
             <case stage="1">
@@ -2400,8 +2443,9 @@
                 <condition role="other" character="miko" stage="1-10" />
                 <state img="#-lucid.png">You better listen to your ghost friend...They seemed to have suffered like we all have...</state>
             </case>
-            <case stage="2" alsoPlaying="sayaka" priority="115">
+            <case stage="2" priority="115">
                 <condition count="1" filter="emi" />
+                <condition role="other" character="sayaka" />
                 <state img="#-DPNormal.png">Well, lots of people tell me I'm an artist, therefore, that's what I am. &lt;i&gt;Emi, pants please...&lt;/i&gt;</state>
             </case>
             <case stage="2">
@@ -2472,9 +2516,10 @@
                 <condition count="1-1" role="other" character="sayaka" />
                 <state img="#-DPNormal.png">Well, lots of people tell me I'm an artist, therefore, that's what I am. &lt;i&gt;Sei, pants please...&lt;/i&gt;</state>
             </case>
-            <case stage="5" alsoPlaying="sayaka">
-                <condition count="1-1" filter="emi" />
-                <state img="#-pondering.png">Oh, Emi? It's just like any other day really.</state>
+            <case stage="5">
+                <condition count="1" filter="emi" />
+                <condition role="other" character="sayaka" />
+                <state img="#-pondering.png" marker="rin_emi_anyotherday">Oh, Emi? It's just like any other day really.</state>
             </case>
             <case stage="0" priority="102">
                 <condition role="other" character="sei" saying="I've seen so many field amputations... it's always sad when someone can't get a good prosthetic..." />
@@ -2490,13 +2535,13 @@
             </case>
             <case stage="0">
                 <condition role="other" character="emi" saidMarker="sandal_enigma" />
-                <state img="#-strippingsandals.png">...Trust me Emi, once your start walking barefoot, you'll know.</state>
-                <state img="#-strippingsandals.png">...Isn't it obvious? Don't you know how dirty the ground can be?</state>
+                <state img="#-strippingsandals.png" marker="rin_emi_barefoottrust">...Trust me Emi, once your start walking barefoot, you'll know.</state>
+                <state img="#-strippingsandals.png" marker="rin_emi_dirtyground">...Isn't it obvious? Don't you know how dirty the ground can be?</state>
             </case>
             <case stage="0">
                 <condition role="other" character="emi" saidMarker="sandal_sight" />
-                <state img="#-strippingsandals.png">...Were you peeking, Emi?</state>
-                <state img="#-strippingsandals.png">...Don't cheat, Emi.</state>
+                <state img="#-strippingsandals.png" marker="rin_emi_peekcheat">...Were you peeking, Emi?</state>
+                <state img="#-strippingsandals.png" marker="rin_emi_cheatpeek">...Don't cheat, Emi.</state>
             </case>
             <case stage="0" alsoPlaying="natsuki" alsoPlayingSaying="You can just... kick those off, right?">
                 <state img="#-strippingsandals.png" weight="1.5">Yeah, don't worry Natsuki, I'll be able to take these sandals off without any help.</state>
@@ -2505,8 +2550,8 @@
                 <state img="#-strippingsandals.png">Yeah, I pretty much take these off everyday, so it's no biggie.</state>
             </case>
             <case stage="4">
-                <condition count="1-1" role="other" character="emi" saidMarker="bra_struggle" />
-                <state img="#-DPUpset.png">...That would not be ideal, Emi.</state>
+                <condition count="1" role="other" character="emi" saidMarker="bra_struggle" />
+                <state img="#-DPUpset.png" marker="rin_emi_brastruggle">...That would not be ideal, Emi.</state>
             </case>
             <case stage="1">
                 <condition role="other" character="hk416" sayingMarker="rin_tie=1" />
@@ -2544,8 +2589,9 @@
             <case stage="3" alsoPlaying="pit" priority="100">
                 <state img="#-DPAmused.png">...You heard him.</state>
             </case>
-            <case stage="3" alsoPlaying="pit" priority="100">
+            <case stage="3" priority="100">
                 <condition count="1" filter="emi" />
+                <condition role="other" character="pit" />
                 <state img="#-DPAmused.png">...You heard him, Emi.</state>
             </case>
             <case stage="0">
@@ -2876,13 +2922,15 @@
             <case stage="2" alsoPlaying="pit">
                 <state img="custom:#-stripping">...Seeing as I only trust either Emi or ~player~ to do this, it's no problem.</state>
             </case>
-            <case stage="3" alsoPlaying="emi">
+            <case stage="3">
+                <condition role="other" character="emi" />
                 <state img="custom:#-stripping" marker="pantiessoul">Don't try to stare too much. You're practically peeking at a girl's soul...Even if you're not a girl.</state>
             </case>
             <case stage="3" alsoPlaying="pit">
                 <state img="custom:#-stripping">I don't blame you Pit. I wouldn't really trust anyone else to do this for me anyways. I'd likely just kick them reflexively.</state>
             </case>
-            <case stage="4" alsoPlaying="emi">
+            <case stage="4">
+                <condition role="other" character="emi" />
                 <state img="custom:#-stripping">Now you know why Emi ties my sleeves like that.</state>
                 <state img="custom:#-stripping">Of course, this is the reason why Emi ties my sleeves like that.</state>
             </case>
@@ -2961,6 +3009,10 @@
             <case stage="6">
                 <condition role="other" character="amy" />
                 <state img="custom:#-stripping">Hm...So, If I'm a piece of craft, wouldn't that make us &lt;i&gt;all&lt;/i&gt; paintings?...Either way, I appreciate the sentiment.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="mary" />
+                <state img="#-muddled.png" marker="rin_mary_demfeettho">My feet?...Well...I didn't think I waas going to be complimented in that way...but I appreciate it...</state>
             </case>
             <case stage="1" saidMarker="dirty_floor">
                 <state img="#-annoyed.png">I pretty much use my feet for everything...eating, painting, walking...I guess you could say dirty floors are the bane of my existence.</state>
@@ -3266,19 +3318,19 @@
                 <condition count="1" filter="emi" />
                 <condition count="1" filter="sei" />
                 <condition role="target" character="meia" stage="0" saying="...Are you saying Emi forced you to be here, Rin?" />
-                <state img="#-lucid.png">...Yeah, but...I suppose I should be getting out more, anyways.</state>
+                <state img="#-lucid.png" marker="rin_emi_gettingoutmore">...Yeah, but...I suppose I should be getting out more, anyways.</state>
             </case>
             <case stage="0-8">
                 <condition count="1" filter="emi" />
                 <condition count="1" filter="sei" />
                 <condition role="target" character="meia" stage="0" saying="Are you and Emi not the same way?" />
-                <state img="#-lucid.png">In a way, both of us are opposites of one another, like black and white...sun and moon...sword and shield...</state>
+                <state img="#-lucid.png" marker="rin_emi_bw">In a way, both of us are opposites of one another, like black and white...sun and moon...sword and shield...</state>
             </case>
             <case stage="0-8">
                 <condition count="1" filter="emi" />
                 <condition count="1" filter="sei" />
                 <condition role="target" character="meia" stage="0" saying="...It sounds like you and Emi should work out your differences." />
-                <state img="#-lucid.png">Maybe...but we're basically opposites of one another. I really don't mind it all the same.</state>
+                <state img="#-lucid.png" marker="rin_emi_opposites">Maybe...but we're basically opposites of one another. I really don't mind it all the same.</state>
             </case>
             <case stage="0-8">
                 <condition count="1" filter="emi" />
@@ -3807,7 +3859,7 @@
                 <condition character="sei" />
                 <condition character="emi" />
                 <condition role="target" character="meia" stage="0" saying="...It sounds as if you take in stride whatever Emi demands of you.  I hope you feel satisfied with that." />
-                <state img="#-absent.png">She doesn't really ask for much, really. I mean, I've had to ask for help with stuff all the time, cause...you know.</state>
+                <state img="#-absent.png" marker="rin_emi_takeinstride">She doesn't really ask for much, really. I mean, I've had to ask for help with stuff all the time, cause...you know.</state>
             </case>
             <case stage="0-8">
                 <condition character="sei" />
@@ -3819,13 +3871,13 @@
                 <condition character="sei" />
                 <condition character="emi" />
                 <condition role="target" character="meia" stage="0" saying="...I see.  So Emi tends to take the initiative, and you follow.  For some girls, that works...if you're happy." />
-                <state img="#-DPAmused.png">Well, you know Emi. When it comes to tasks, she's usually the one that just, "goes in", prosthetic legs first.</state>
+                <state img="#-DPAmused.png" marker="rin_emi_legsfirst">Well, you know Emi. When it comes to tasks, she's usually the one that just, "goes in", prosthetic legs first.</state>
             </case>
             <case stage="0-8">
                 <condition character="sei" />
                 <condition character="emi" />
                 <condition role="target" character="meia" stage="0" saying="...I suppose that makes Emi the leader, and you the follower.  Not every girl can be a leader... but that's your choice." />
-                <state img="#-pondering.png">I...really don't see myself as a leader...or even a follower...Honestly I just..."do." if you get the idea.</state>
+                <state img="#-pondering.png" marker="rin_emi_justdo">I...really don't see myself as a leader...or even a follower...Honestly I just..."do." if you get the idea.</state>
             </case>
             <case stage="0-8">
                 <condition count="1" filter="jura" />
@@ -4631,7 +4683,7 @@
             <case stage="0-8" id="69">
                 <condition role="target" character="rainbow_mika" stage="0" />
                 <condition role="other" character="emi" />
-                <state img="#-curious.png">...Could you possibly lift me like that, Emi?</state>
+                <state img="#-curious.png" marker="rin_emi_lift">...Could you possibly lift me like that, Emi?</state>
             </case>
             <case stage="0-8" id="74">
                 <condition role="target" character="catria" stage="3" />
@@ -5090,7 +5142,7 @@
             <case stage="0-8">
                 <condition role="target" character="akko" stage="2" />
                 <condition role="other" character="emi" />
-                <state img="#-surprised.png">Emi, are you seeing this?</state>
+                <state img="#-surprised.png" marker="rin_emi_areyouseeingthis">Emi, are you seeing this?</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="emi" stage="3" saying="My skirt doesn't really need a belt but it looks cool and it hides my daddy issues so let's not ask questions. " />
@@ -5624,12 +5676,12 @@
             <case stage="0-8">
                 <condition filter="athletic" role="target" />
                 <condition role="other" character="emi" />
-                <state img="#-pondering.png">Hey Emi...with that kind of body, would you say that ~name~ would beat you in a race?</state>
+                <state img="#-pondering.png" marker="rin_emi_athletic">Hey Emi...with that kind of body, would you say that ~name~ would beat you in a race?</state>
             </case>
             <case stage="0-8">
                 <condition filter="muscular" role="target" />
                 <condition role="other" character="emi" />
-                <state img="#-DPAmused.png">Hey Emi...you have some competition.</state>
+                <state img="#-DPAmused.png" marker="rin_emi_muscular">Hey Emi...you have some competition.</state>
             </case>
             <case stage="0-8" priority="1">
                 <condition filter="athletic" role="target" />
@@ -5844,30 +5896,30 @@
             <case stage="0-8">
                 <condition role="target" character="emi" saying="I'm running out of purple shit. Purple Phantom's gonna be pissed. " />
                 <test expr="~emi.costume~" cmp="!=" value="default" />
-                <state img="#-doubt.png">...That's...not exactly purple, Emi...I'd say it's more or less the color of sadness...Or a dark primrose...</state>
-                <state img="#-confused.png">Purple...who?</state>
+                <state img="#-doubt.png" marker="rin_emi_darkprimrose">...That's...not exactly purple, Emi...I'd say it's more or less the color of sadness...Or a dark primrose...</state>
+                <state img="#-confused.png" marker="rin_emi_purplewho">Purple...who?</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="emi" saying="What? Want to take a picture? " />
                 <test expr="~emi.costume~" cmp="!=" value="default" />
-                <state img="#-absent.png">...Even with that...I think it would last too long for me.</state>
+                <state img="#-absent.png" marker="rin_emi_picturelength">...Even with that...I think it would last too long for me.</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="emi" saying="I don't run just to have a great body" />
-                <state img="#-pondering.png">I mean, so is painting, but...to each their own.</state>
+                <state img="#-pondering.png" marker="rin_emi_toeachtheirown">I mean, so is painting, but...to each their own.</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="emi" saying="If guys can walk around topless, why can't we?" />
-                <state img="#-curious.png">...You know...Have not thought about that really...</state>
+                <state img="#-curious.png" marker="rin_emi_topless">...You know...Have not thought about that really...</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="emi" saying="It's not polite to stare" />
-                <state img="#-lucid.png">Of course ~player~ stares...</state>
-                <state img="#-DPNormal.png">I bet you like watching girls sleep too huh, ~player~?</state>
+                <state img="#-lucid.png" marker="rin_emi_staring">Of course ~player~ stares...</state>
+                <state img="#-DPNormal.png" marker="rin_emi_staring">I bet you like watching girls sleep too huh, ~player~?</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="emi" saying="That's right. I don't need huge tits to impress." />
-                <state img="#-DPNormal.png">...That's kind of a bold statement there Emi...</state>
+                <state img="#-DPNormal.png" marker="rin_emi_boldstatement">...That's kind of a bold statement there Emi...</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="futaba" saying="What? Bras are uncomfortable." />
@@ -6022,7 +6074,7 @@
                 <condition count="1" filter="emi" />
                 <condition role="target" character="cammy_white" saidMarker="chunli_help" />
                 <condition role="other" character="chun-li" stage="0" />
-                <state img="#-DPNormal.png">...Don't even think about it, Emi.</state>
+                <state img="#-DPNormal.png" marker="rin_emi_donotwant">...Don't even think about it, Emi.</state>
             </case>
             <case stage="0-8" id="48">
                 <condition role="target" character="cammy_white" saidMarker="chunli_help" />
@@ -6612,6 +6664,24 @@
                 <condition role="other" character="rainbow_mika" stage="3" saidMarker="embarrassed" sayingMarker="putting_mask" />
                 <state img="#-muddled.png">So your mood changes from your mask? I wish I could understand feelings a little more, myself...</state>
             </case>
+            <case stage="0" oneShotId="1">
+                <test expr="~clothing.generic~" value="shoes" />
+                <state img="#-DPUpset.png">I never get why people wear shoes...They're uncomfortable and they just let your feet suffocate, like being in a mountain full of jelly.</state>
+                <state img="#-lucid.png">I suppose shoes are better than sandals if you're protecting yourself from gravel, but I never really minded the gravel on the roof anyways.</state>
+                <state img="#-DPAmused.png">Must be hard slipping off shoes with only your feet, hm?</state>
+            </case>
+            <case stage="0" oneShotId="2">
+                <test expr="~clothing.generic~" value="socks" />
+                <state img="#-DPUpset.png">Socks are really just blankets for your feet, but, they just don't go well with sandals.</state>
+                <state img="#-confused.png">Does anyone else think socks with sandals are more of a "Dad" thing?</state>
+                <state img="#-lucid.png">I don't remember the last time I had socks on...And I think it should stay that way...</state>
+            </case>
+            <case stage="0" oneShotId="3">
+                <test expr="~clothing.generic~" value="gloves" />
+                <state img="#-DPAmused.png">Can you &lt;i&gt;hand&lt;/i&gt;-le the truth? Becaause I've gotta &lt;i&gt;hand&lt;/i&gt; it to you, &lt;i&gt;hands&lt;/i&gt; down, you're the most &lt;i&gt;handsome&lt;/i&gt; person in this table.  </state>
+                <state img="#-bored.png">Welp, I forgot my lucky gloves...They're always pretty &lt;i&gt;handy.&lt;/i&gt;</state>
+                <state img="#-curious.png">I've heard of five-fingered gloves and one-fingered gloves...Do they ever make no-fingered gloves?</state>
+            </case>
             <case stage="0-8" id="117">
                 <condition role="self" saidMarker="backwards_talk" notSaidMarker="backwards_talk2" />
                 <state img="#-DPAmused.png" marker="backwards_talk2">.toh gnikool era uoY</state>
@@ -6804,11 +6874,11 @@
                 <condition role="target" character="emi" saidMarker="pirate" />
                 <condition count="0" status="masturbating" />
                 <condition count="0" status="finished" />
-                <state img="#-DPAmused.png">Aye. Looks like you're the first to do so, Ms. Pirate.</state>
+                <state img="#-DPAmused.png" marker="rin_emi_mspirate">Aye. Looks like you're the first to do so, Ms. Pirate.</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="emi" saidMarker="pirate" saying="I be nah sure wha's &lt;i&gt;more&lt;/i&gt; upsettin', losin', or wha' I now 'ave t' do..." />
-                <state img="#-DPAmused.png">Oh, you know what's coming Ms. Pirate.</state>
+                <state img="#-DPAmused.png" marker="rin_emi_comingmspirate">Oh, you know what's coming Ms. Pirate.</state>
             </case>
             <case stage="0-8">
                 <alternative target="emi" targetSaidMarker="pirate" targetSaying="I be convinced this entire game was jus' a plot t' get me t' teach ye all how t' finger paint th' oval cabin." />
@@ -6826,7 +6896,7 @@
             <case stage="0-8">
                 <alternative target="emi" targetSaidMarker="pirate" targetSaying="I was tryin' so hard 'n I still couldn't pull it off..." />
                 <alternative target="emi" targetSaying="I was trying so hard and I still couldn't pull it off..." />
-                <state img="#-lucid.png">...But  in the end, it doesn't even matter.</state>
+                <state img="#-lucid.png" marker="rin_emi_linkinpark">...But  in the end, it doesn't even matter.</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="nagisa" sayingMarker="nagisa_play" />
@@ -6846,8 +6916,8 @@
             </case>
             <case stage="0-8">
                 <condition role="target" character="emi" />
-                <state img="#-surprised.png">Emi...even at your &lt;i&gt;'Emi'&lt;/i&gt;est, you still lost? How is that even possible?</state>
-                <state img="#-lucid.png">Looks like you lost this race Emi...</state>
+                <state img="#-surprised.png" marker="rin_emi_emiestlost">Emi...even at your &lt;i&gt;'Emi'&lt;/i&gt;est, you still lost? How is that even possible?</state>
+                <state img="#-lucid.png" marker="rin_emi_lostrace">Looks like you lost this race Emi...</state>
             </case>
             <case stage="0-8">
                 <condition role="target" character="hanako" />
@@ -6882,13 +6952,13 @@
                 <state img="#-DPUpset.png">Well, you're pretty much gonna find out anyways...</state>
             </case>
             <case stage="0-8" priority="101">
-                <condition count="1-1" role="other" character="emi" notSaidMarker="pirate" saying="Tough break, Rin. Maybe we should have practiced together." />
+                <condition count="1" role="other" character="emi" notSaidMarker="pirate" saying="Tough break, Rin. Maybe we should have practiced together." />
                 <state img="#-DPNormal.png">No worries, Emi. This was bound to happen.</state>
                 <state img="#-lucid.png">Fate brought me here, and I might as well embrace it.</state>
                 <state img="#-pondering.png">...Practice?...Hm...If we did that, we'd probably have to bring Hisao along next time.</state>
             </case>
             <case stage="0-8" priority="101">
-                <condition count="1-1" role="other" character="emi" notSaidMarker="pirate" saying="Sorry Rin, I'm not going to help you with this one!" />
+                <condition count="1" role="other" character="emi" notSaidMarker="pirate" saying="Sorry Rin, I'm not going to help you with this one!" />
                 <state img="#-absent.png">...Don't need to.</state>
             </case>
             <case stage="0-8" priority="101">
@@ -7265,8 +7335,8 @@
                 <state img="#-lucid.png">Yeah, don't worry...I got this.</state>
             </case>
             <case stage="6">
-                <condition count="1-1" role="other" character="tharja" />
-                <state img="#-initiatemasturbate.png">Tharja...just...let me be. I have to focus...</state>
+                <condition count="1" role="other" character="tharja" />
+                <state img="#-annoyed.png">Tharja...just...let me be. I have to focus...</state>
             </case>
             <case stage="6">
                 <condition role="other" character="jessie" />
@@ -7493,6 +7563,14 @@
         </trigger>
 
         <trigger id="global">
+            <case stage="0-8" priority="202">
+                <condition role="other" character="yuelia" pose="crying" />
+                <condition role="self" notSaidMarker="rin_yuelia_crying" />
+                <state img="#-annoyed.png" marker="rin_yuelia_crying">...What is wrong with you? Yuelia hasn't done anything hurtful.</state>
+                <state img="#-doubt.png" marker="rin_yuelia_crying">They say, if you make an angel cry, you'll receive eternal bad luck.</state>
+                <state img="#-DPNormal.png" marker="rin_yuelia_crying">Making an angel cry is worse than talking about unfinished paintings.</state>
+                <state img="#-lucid.png" marker="rin_yuelia_crying">...Who make Yuelia cry? That's just harsh.</state>
+            </case>
             <case stage="0">
                 <condition role="opp" character="misato" pose="Drink" />
                 <state img="#-DPAmused.png">...Oh, you're drinking? I too know when to "destroy" myself sometimes.</state>

@@ -63,7 +63,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private static bool IsExcluded(string value)
+		public static bool IsExcluded(string value)
 		{
 			bool result;
 			if (string.IsNullOrEmpty(value))
@@ -75,6 +75,11 @@ namespace SPNATI_Character_Editor
 				result = value == "filter" || value == "src" || value == "author" || value == "name";
 			}
 			return result;
+		}
+
+		public static IEnumerable<Background> Backgrounds
+		{
+			get { return _list.Backgrounds; }
 		}
 	}
 

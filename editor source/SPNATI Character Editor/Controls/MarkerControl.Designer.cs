@@ -35,7 +35,8 @@
 			this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColOperator = new Desktop.CommonControls.RecordColumn();
 			this.ColValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ColPerTarget = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.ColPerTarget = new Desktop.Skinning.SkinnedDataGridViewCheckBoxColumn();
+			this.ColPersistent = new Desktop.Skinning.SkinnedDataGridViewCheckBoxColumn();
 			this.ColWhen = new Desktop.CommonControls.RecordColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridMarkers)).BeginInit();
 			this.SuspendLayout();
@@ -62,6 +63,7 @@
             this.ColOperator,
             this.ColValue,
             this.ColPerTarget,
+            this.ColPersistent,
             this.ColWhen});
 			this.gridMarkers.Data = null;
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -122,6 +124,12 @@
 			this.ColPerTarget.Name = "ColPerTarget";
 			this.ColPerTarget.Width = 65;
 			// 
+			// ColPersistent
+			// 
+			this.ColPersistent.HeaderText = "Persistent";
+			this.ColPersistent.Name = "ColPersistent";
+			this.ColPersistent.Width = 60;
+			// 
 			// ColWhen
 			// 
 			this.ColWhen.AllowsNew = false;
@@ -148,7 +156,8 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
 		private Desktop.CommonControls.RecordColumn ColOperator;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColValue;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn ColPerTarget;
+		private Desktop.Skinning.SkinnedDataGridViewCheckBoxColumn ColPerTarget;
+		private Desktop.Skinning.SkinnedDataGridViewCheckBoxColumn ColPersistent;
 		private Desktop.CommonControls.RecordColumn ColWhen;
 	}
 }

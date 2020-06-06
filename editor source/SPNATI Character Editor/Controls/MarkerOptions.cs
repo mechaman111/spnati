@@ -39,6 +39,7 @@ namespace SPNATI_Character_Editor.Controls
 			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 			RowIndex = rowIndex;
 			_line = line;
+
 			List<MarkerOperation> markers = new List<MarkerOperation>();
 			if (!string.IsNullOrEmpty(line.Marker))
 			{
@@ -47,13 +48,11 @@ namespace SPNATI_Character_Editor.Controls
 				markers.Add(marker);
 			}
 			markers.AddRange(_line.Markers);
-			gridMarkers.SetMarkers(markers);
-			chkPersistent.Checked = line.IsMarkerPersistent;
+			gridMarkers.SetMarkers(markers, character);
 		}
 
 		public DialogueLine GetLine()
 		{
-			_line.IsMarkerPersistent = chkPersistent.Checked;
 			List<MarkerOperation> markers = gridMarkers.GetMarkers();
 			if (markers.Count > 0)
 			{
