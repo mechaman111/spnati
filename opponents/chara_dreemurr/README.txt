@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited May 31 2020
+README edited June 5 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -111,7 +111,7 @@ HIDDEN BELT - FYI - The second item Chara removes is her belt, which is hidden b
 that unfair. NOTE: This specific callout only references one possible case for Chara stripping her belt. Make sure to target the general 'stripping, in stage 1' case instead. Though this
 points to the Generic Case already, but still. Double-check the functionality.
 
-FOCUS UP - FYI - After removing her shirt, and if the player is still in the game, Chara will tell them to focus on the game.
+FOCUS UP - FYI - After removing her pants, and if the player is still in the game, Chara will tell them to focus on the game.
 
 REFUSE TO REMOVE - NOTEWORTHY - After removing her last layer of clothing, Chara will say she refuses to strip either her knife or locket, saying she would rather forfeit than do so.
 
@@ -228,6 +228,7 @@ AMY
 -Responds to Amy losing one hand, where she references Undertale's character Muffet.
 -Back-and-forth banter with Amy when Chara loses and must strip.
 -Responds to Amy losing and having to masturbate.
+-Responds to Chara herself losing while Amy is still in.
 -Has a PersistAmyFriendship marker that can make some of Chara's dialogue towards Amy less antagonistic if it's high enough.
 
 ARASH
@@ -419,6 +420,7 @@ I do not, under ANY circumstance, want to end up preaching about Chara's power i
 the 'Killer Kid with a Knife'.
 
 I'd had the idea to make two Charas, one male and one female, but decided that the neccesitation of Special Cases for them interacting with each other would make me lose my mind.
+	-Maybe an alternate costume one day ala Kazuma?
 
 I'd had the idea to make Chara somehow notice you're using Debug Mode, but aside from the technical difficulties in actually implementing that, Debug Mode is there for the purpose of,
 well, debugging. It ruins the whole point of a Debug Mode if the game behaves differently when it's in use.
