@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7.3 at 3:14:58 PM on June 02, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 2:19:15 PM on June 07, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7.3</version>
     <first>Chara</first>
@@ -413,6 +413,7 @@
                         <marker name="PersistentOngoingPlayerLostFirst" op="=" value="0" />
                         <marker name="ChatStage" op="=" value="0" />
                         <marker name="SaidPartner" op="=" value="0" />
+                        <marker name="SaidReason" op="=" value="0" />
                     </markers>
                 </state>
             </case>
@@ -562,6 +563,27 @@
                 <state img="#-devious.png" marker="PickedAkko">Enjoy the show, partner.</state>
                 <state img="#-devious.png" marker="PickedAkko">Hmm, I hope to see that special book of hers...</state>
             </case>
+            <case stage="0" id="1096" priority="301">
+                <condition role="target" character="derpy_hooves" />
+                <state img="#-demonangry.png" marker="PickedMuffins">
+                    <text>Her 'nine' is a &lt;i&gt;lie.&lt;/i&gt;</text>
+                    <markers>
+                        <marker name="PickedAprilFools" />
+                    </markers>
+                </state>
+                <state img="#-anger.png" marker="PickedMuffins">
+                    <text>The klutz who dares lie about nine layers?</text>
+                    <markers>
+                        <marker name="PickedAprilFools" />
+                    </markers>
+                </state>
+                <state img="#-anger.png" marker="PickedMuffins">
+                    <text>Nine layer liar.</text>
+                    <markers>
+                        <marker name="PickedAprilFools" />
+                    </markers>
+                </state>
+            </case>
             <case stage="0" id="244">
                 <condition role="target" character="moon" />
                 <state img="#-amused.png" marker="PickedMoon">Moon? Very well. That's one step closer to victory.</state>
@@ -599,61 +621,7 @@
                 <state img="#-demonhappy.png" marker="PickedFlorina">Oh, look. The craven coward.</state>
             </case>
             <case stage="0" id="48" priority="300">
-                <condition count="0-5" />
-                <alternative>
-                    <condition role="target" character="ae86" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="astolfo_bean_plushie" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="azami" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="default-chan" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="el_shaggy_blanco" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="freddie" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="gay_spaghetti_chef" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="glass_joe" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="gray" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="kool-aid" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="mister_clean" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="monique" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="nami_szs" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="nanoko-chan" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="scm" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="shou_tucker" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="yukari" />
-                </alternative>
-                <alternative>
-                    <condition role="target" character="zenobia" />
-                </alternative>
+                <condition filter="april_fools" role="target" />
                 <state img="#-amused.png" marker="PickedAprilFools">Hee hee! It is that time of year, I suppose?</state>
                 <state img="#-amused.png" marker="PickedAprilFools">Hee hee! Oh, how humorous.</state>
                 <state img="#-snark.png" marker="PickedAprilFools">How comedic.</state>
@@ -669,27 +637,6 @@
             <case stage="0" id="923">
                 <condition role="target" character="kizuna" />
                 <state img="#-dismissive.png" marker="PickedKizuna">Kizuna, hmm? Or does she go by 'Ai-chan' at the moment? She should pick a name and stick to it.</state>
-            </case>
-            <case stage="0" id="1096">
-                <condition role="target" character="derpy_hooves" />
-                <state img="#-demonangry.png" marker="PickedMuffins">
-                    <text>Her 'nine' is a &lt;i&gt;lie.&lt;/i&gt;</text>
-                    <markers>
-                        <marker name="PickedAprilFools" />
-                    </markers>
-                </state>
-                <state img="#-anger.png" marker="PickedMuffins">
-                    <text>The klutz who dares lie about nine layers?</text>
-                    <markers>
-                        <marker name="PickedAprilFools" />
-                    </markers>
-                </state>
-                <state img="#-anger.png" marker="PickedMuffins">
-                    <text>Nine layer liar.</text>
-                    <markers>
-                        <marker name="PickedAprilFools" />
-                    </markers>
-                </state>
             </case>
             <case stage="0" id="1365">
                 <condition role="target" character="amy" />
@@ -849,6 +796,24 @@
                 <condition count="1" role="other" character="human" startingLayers="0-6" />
                 <test expr="~player~" value="Frisk" />
                 <state img="#-rigid.png" marker="HardModeStart">Hard Mode is begun, Frisk. How brave of you, to try so the first time you are with me.</state>
+            </case>
+            <case stage="0" id="1458" priority="165">
+                <condition count="0-3" role="other" />
+                <condition count="1" role="other" character="human" startingLayers="0-6" />
+                <test expr="~player~" value="Frisk" />
+                <state img="#-dismissive.png" marker="HardModeFail">You may have the proper name, and the proper amount of clothing, but there are too few opponents for this to be Hard Mode.</state>
+            </case>
+            <case stage="0" id="1460" priority="165">
+                <condition count="4" role="other" />
+                <condition count="1" role="other" character="human" startingLayers="7-" />
+                <test expr="~player~" value="Frisk" />
+                <state img="#-dismissive.png" marker="HardModeFail">You may have the proper name, and the proper number of enemies, but you have too many layers for this to be Hard Mode.</state>
+            </case>
+            <case stage="0" id="1461" priority="160">
+                <condition count="0-3" role="other" />
+                <condition count="1" role="other" character="human" startingLayers="7-" />
+                <test expr="~player~" value="Frisk" />
+                <state img="#-displeased.png" marker="HardModeFail">You have both too many layers and too few enemies for this to be considered a proper Hard Mode, Frisk.</state>
             </case>
             <case stage="0" id="264">
                 <condition role="self" saidMarker="PlayerNameAsgore" />
@@ -1092,7 +1057,7 @@
                 <state img="#-thinking.png">A good hand, but it could be &lt;i&gt;better.&lt;/i&gt;</state>
                 <state img="#-devious.png">Powerful, but not &lt;i&gt;overwhelming.&lt;/i&gt; ~Cards.text~ ~cards.ifPlural(cards|card)~, then.</state>
                 <state img="#-happy.png">I will make this hand more powerful.</state>
-                <state img="#-rigid.png">Swapping ~cards.ifPlural(these|this)~ ~cards.text~ ~cards.ifPlural(cards are|card is)~ most likely to make me stronger.</state>
+                <state img="#-rigid.png">Swapping ~cards.ifPlural(these|this)~ ~cards.text~ ~cards.ifPlural(cards|card)~ is most likely to make me stronger.</state>
                 <state img="#-devious.png">~Cards.text~ ~cards.ifPlural(cards|card)~, then.</state>
             </case>
             <case stage="5-6" id="412">
@@ -1533,6 +1498,18 @@
                         <marker name="Pun" />
                     </markers>
                 </state>
+                <state img="#-amused.png" marker="ResponseJoettaPunReturn" collectible="chara_puns" collectible-value="+1">
+                    <text>Not bad, Joetta. I have some of my own, too; I should give you a &lt;i&gt;demon-&lt;/i&gt;stration!</text>
+                    <markers>
+                        <marker name="Pun" />
+                    </markers>
+                </state>
+                <state img="#-snark.png" marker="ResponseJoettaPunReturn" collectible="chara_puns" collectible-value="+1">
+                    <text>You've a marvelous sense of humor, Joetta. It is ever so &lt;i&gt;knife&lt;/i&gt; to meet someone who shares my taste for puns.</text>
+                    <markers>
+                        <marker name="Pun" />
+                    </markers>
+                </state>
             </case>
             <case stage="0-8" id="78" oneShotId="172" priority="300">
                 <condition count="1" role="other" character="aella" stage="0-1" sayingMarker="AellaAdventures" />
@@ -1750,9 +1727,13 @@
                 <state img="#-dismissive.png" marker="ResponseAmaliaCheat">It matters not what the plant princess does. She will be defeated.</state>
                 <state img="#-dismissive.png" marker="ResponseAmaliaCheat">The plant princess has healed herself by generating more layers. But they, too, are finite.</state>
             </case>
-            <case stage="0" id="1299" oneShotId="168" priority="300">
+            <case stage="0-8" id="1299" oneShotId="168" priority="300">
                 <condition role="other" character="aella" sayingMarker="CharaDemon" />
                 <state img="#-devious.png" marker="ResponseAellaDemon">Correct. I did not start as such, but I &lt;i&gt;am&lt;/i&gt; a demon now. Prison or no prison.</state>
+            </case>
+            <case stage="0-8" id="1452" oneShotId="207" priority="300">
+                <condition role="other" character="aella" saidMarker="CharaDemon" sayingMarker="CharaDemon2" />
+                <state img="#-dismissive.png" marker="ResponseAellaDemonslaying">Duly noted, heroine.</state>
             </case>
             <case stage="5-7" id="993" priority="151">
                 <condition count="1" status="not_lost_all" />
@@ -1806,6 +1787,11 @@
                 <condition count="2" status="alive" />
                 <condition role="self" notSaidMarker="Throwing" />
                 <state img="#-demonhappy.png" marker="LastEnemyB">You were a fool to stand against me, ~opponent~.</state>
+            </case>
+            <case stage="0-8" id="1464" priority="142">
+                <condition role="other" character="erufuda" stage="2" sayingMarker="ask_favorite_food" />
+                <condition role="self" notSaidMarker="ResponseErufudaFood" />
+                <state img="#-demonhappy.png" marker="ResponseErufudaFood">{Red}Chocolate.{!reset}</state>
             </case>
             <case stage="8" id="446" priority="100">
                 <condition count="0" status="not_lost_all" />
@@ -1924,7 +1910,7 @@
                     </markers>
                 </state>
                 <state img="#-dismissive.png" marker="PersistentOngoingChat=1" persist-marker="true">
-                    <text>Do you simply like whittling the enemy down, piece by piece? I am more in favor of irresistibly crushing them.</text>
+                    <text>Do you simply like whittling the enemy down, piece by piece? I am more in favor of winning in a single, crushing strike.</text>
                     <markers>
                         <marker name="SaidChat1" op="=" value="1" />
                         <marker name="ChatStage" op="=" value="1" />
@@ -2585,10 +2571,6 @@
             <case stage="7" id="479">
                 <state img="#-stripping.png">Deep breath.</state>
             </case>
-            <case stage="0-7" id="1031" hidden="1">
-                <condition role="self" saidMarker="EpilogueCount" />
-                <state img="#-dismissive.png" marker="EpilogueCount += 0" persist-marker="true">Marker made persistent here.</state>
-            </case>
             <case stage="6" id="1393" hidden="1">
                 <condition status="alive" character="amy" saying="Oh, you two are &lt;i&gt;so&lt;/i&gt; having sex! Like, the whole murderous rage thing is just belligerent sexual tension, right? " />
                 <condition role="self" notSaidMarker="SeenEpilogue" />
@@ -2796,7 +2778,7 @@
         </trigger>
 
         <trigger id="male_human_must_strip">
-            <case stage="0-10" id="150" priority="99">
+            <case stage="0-10" id="150" priority="999">
                 <condition role="self" saidMarker="HardMode1v1" />
                 <state img="#-demonhappy.png" oneShotId="47" marker="Hard1v1HandLoss">Fall before me.</state>
                 <state img="#-demonhappy.png" oneShotId="48" marker="Hard1v1HandLoss">&lt;i&gt;I&lt;/i&gt; am the one in control, here.</state>
@@ -2805,20 +2787,20 @@
                 <state img="#-devious.png" oneShotId="51" marker="Hard1v1HandLoss">Get to it.</state>
                 <state img="#-devious.png" oneShotId="101" marker="Hard1v1HandLoss">You've no chance.</state>
             </case>
-            <case stage="0-8" id="1240" priority="99">
+            <case stage="0-8" id="1240" priority="999">
                 <condition role="self" saidMarker="Throwing" />
                 <state img="#-surprised.png" marker="ThrowingWin">You... lost? But I was &lt;i&gt;deliberately&lt;/i&gt; trying to get the worst hand possible.</state>
                 <state img="#-surprised.png" marker="ThrowingWin">Oh? How did you lose? I am throwing the game on purpose.</state>
                 <state img="#-thinking.png" marker="ThrowingWin">... &lt;i&gt;you&lt;/i&gt; lost? Are you throwing the game too?</state>
             </case>
-            <case stage="0-10" id="151" priority="98">
+            <case stage="0-10" id="151" priority="998">
                 <condition role="target" consecutiveLosses="3-" />
                 <condition role="self" saidMarker="HardModeStart" />
                 <state img="#-displeased.png" oneShotId="52" marker="HardModeHandLoss">... Frisk, did the words 'Hard Mode' not clue you in to play your best?</state>
                 <state img="#-dismissive.png" oneShotId="53" marker="HardModeHandLoss">For an attempt at Hard Mode, this is going most poorly for you.</state>
                 <state img="#-displeased.png" oneShotId="54" marker="HardModeHandLoss">At this rate, you shall fail Hard Mode &lt;i&gt;most&lt;/i&gt; catastrophically.</state>
             </case>
-            <case stage="0-10" id="152" priority="97">
+            <case stage="0-10" id="152" priority="997">
                 <condition role="self" saidMarker="HardModeStart" />
                 <state img="#-demonhappy.png" oneShotId="36" marker="HardModeHandLoss">Not much longer, partner.</state>
                 <state img="#-snark.png" oneShotId="35" marker="HardModeHandLoss">Is Hard Mode a bit too hard, perhaps?</state>
@@ -2977,7 +2959,7 @@
         </trigger>
 
         <trigger id="female_human_must_strip">
-            <case stage="0-10" id="153" priority="99">
+            <case stage="0-10" id="153" priority="999">
                 <condition role="self" saidMarker="HardMode1v1" />
                 <state img="#-demonhappy.png" oneShotId="42" marker="Hard1v1HandLoss">Fall before me, partner.</state>
                 <state img="#-demonhappy.png" oneShotId="43" marker="Hard1v1HandLoss">&lt;i&gt;I&lt;/i&gt; am the one in control, here.</state>
@@ -2985,20 +2967,20 @@
                 <state img="#-devious.png" oneShotId="45" marker="Hard1v1HandLoss">Not even you will be spared.</state>
                 <state img="#-devious.png" oneShotId="46" marker="Hard1v1HandLoss">Get to it.</state>
             </case>
-            <case stage="0-8" id="1241" priority="99">
+            <case stage="0-8" id="1241" priority="999">
                 <condition role="self" saidMarker="Throwing" />
                 <state img="#-surprised.png" marker="ThrowingWin">You... lost? But I was &lt;i&gt;deliberately&lt;/i&gt; trying to get the worst hand possible.</state>
                 <state img="#-surprised.png" marker="ThrowingWin">Oh? How did you lose? I am throwing the game on purpose.</state>
                 <state img="#-thinking.png" marker="ThrowingWin">... &lt;i&gt;you&lt;/i&gt; lost, partner? Are you throwing the game too?</state>
             </case>
-            <case stage="0-10" id="154" priority="98">
+            <case stage="0-10" id="154" priority="998">
                 <condition role="target" consecutiveLosses="3-" />
                 <condition role="self" saidMarker="HardModeStart" />
                 <state img="#-displeased.png" oneShotId="55" marker="HardModeHandLoss">... Frisk, did the words 'Hard Mode' not clue you in to play your best?</state>
                 <state img="#-dismissive.png" oneShotId="56" marker="HardModeHandLoss">For an attempt at Hard Mode, this is going most poorly for you.</state>
                 <state img="#-displeased.png" oneShotId="57" marker="HardModeHandLoss">At this rate, you shall fail Hard Mode &lt;i&gt;most&lt;/i&gt; catastrophically.</state>
             </case>
-            <case stage="0-10" id="155" priority="97">
+            <case stage="0-10" id="155" priority="997">
                 <condition role="self" saidMarker="HardModeStart" />
                 <state img="#-demonhappy.png" oneShotId="37" marker="HardModeHandLoss">Not much longer, partner.</state>
                 <state img="#-snark.png" oneShotId="38" marker="HardModeHandLoss">Is Hard Mode a bit too hard, perhaps?</state>
@@ -3254,6 +3236,9 @@
                 <state img="#-dismissive.png">You will reach more substantial items eventually.</state>
                 <state img="#-dismissive.png">Bah.</state>
             </case>
+            <case stage="0-10" id="1479">
+                <state img="#-devious.png">One by one.</state>
+            </case>
         </trigger>
 
         <trigger id="male_removed_accessory">
@@ -3269,8 +3254,6 @@
                 <state img="#-rigid.png">Let us move on.</state>
                 <state img="#-rigid.png">~clothing.ifPlural(Those belong|That belongs)~ in the past.</state>
                 <state img="#-dismissive.png">Good riddance to ~clothing.ifPlural(those|that)~ ~clothing~.</state>
-                <state img="#-dismissive.png">An insignificant amount of damage.</state>
-                <state img="#-displeased.png">As unsatisfying as a Whimsun's death.</state>
                 <state img="#-thinking.png">It may be some yet time to reach your goal, partner.</state>
                 <state img="#-rigid.png">Insignificant.</state>
                 <state img="#-devious.png">We have only just begun.</state>
@@ -3281,20 +3264,16 @@
                 <state img="#-displeased.png">I so swear, your ~clothing~ ~clothing.ifPlural(are|is)~ but the beginning of the end for you.</state>
                 <state img="#-displeased.png">How much more of this &lt;i&gt;is&lt;/i&gt; there?</state>
                 <state img="#-dismissive.png">Why even participate, with such worthless trinkets?</state>
-                <state img="#-dismissive.png">An insignificant amount of damage.</state>
                 <state img="#-displeased.png">How many of those trinkets did you bring?</state>
-                <state img="#-displeased.png">As unsatisfying as a Whimsun's death.</state>
                 <state img="#-devious.png">I hope you lose more layers &lt;i&gt;soon.&lt;/i&gt;</state>
                 <state img="#-anger.png">&lt;i&gt;Truly&lt;/i&gt; mortifying.</state>
             </case>
             <case stage="9-10" id="527">
                 <state img="#-rigid.png">It is done.</state>
                 <state img="#-anger.png">&lt;i&gt;Remove more next time.&lt;/i&gt;</state>
-                <state img="#-dismissive.png">An insignificant amount of damage.</state>
                 <state img="#-displeased.png">I presume at least &lt;i&gt;you&lt;/i&gt; are enjoying this, ~player~? I am not.</state>
                 <state img="#-sad.png">Bit by tiny bit.</state>
                 <state img="#-sad.png">If only I were still in the game.</state>
-                <state img="#-displeased.png">As unsatisfying as a Whimsun's death.</state>
                 <state img="#-demonangry.png">Hurry it up.</state>
                 <state img="#-sad.png">~target.ifMale(He|She)~ &lt;i&gt;still&lt;/i&gt; had ~clothing.ifPlural(those|that)~. I have done poorly indeed.</state>
                 <state img="#-thinking.png">I still do not quite understand how I have done &lt;i&gt;this&lt;/i&gt; poorly. Was I truly so unfortunate with the draw?</state>
@@ -3304,6 +3283,12 @@
                 <state img="#-snark.png">You are that much closer to victory, ~player~.</state>
                 <state img="#-happy.png">One hand closer to victory, partner.</state>
                 <state img="#-demonangry.png">How pathetic. I hope ~player~ soundly humiliates you.</state>
+            </case>
+            <case stage="0-10" id="1467" priority="0">
+                <state img="#-dismissive.png">An insignificant amount of damage.</state>
+                <state img="#-displeased.png" marker="ExpositionWhimsun">As unsatisfying as when ~player~ struck down a Whimsun.</state>
+                <state img="#-displeased.png" marker="ExpositionMoldsmal">As unsatisfying as when ~player~ killed a Moldsmal.</state>
+                <state img="#-dismissive.png" marker="ExpositionFroggit">As meager as ~player~ slaying a Froggit.</state>
             </case>
         </trigger>
 
@@ -3407,6 +3392,9 @@
                 <state img="#-dismissive.png">We will reach more substantial items eventually.</state>
                 <state img="#-dismissive.png">Bah.</state>
             </case>
+            <case stage="0-10" id="1480">
+                <state img="#-devious.png">One by one.</state>
+            </case>
         </trigger>
 
         <trigger id="female_removed_accessory">
@@ -3425,11 +3413,9 @@
             <case stage="9-10" id="532">
                 <state img="#-rigid.png">It is done.</state>
                 <state img="#-anger.png">&lt;i&gt;Remove more next time.&lt;/i&gt;</state>
-                <state img="#-dismissive.png">An insignificant amount of damage.</state>
                 <state img="#-displeased.png">I presume at least &lt;i&gt;you&lt;/i&gt; are enjoying this, ~player~? I am not.</state>
                 <state img="#-sad.png">Bit by tiny bit.</state>
                 <state img="#-sad.png">If only I were still in the game.</state>
-                <state img="#-displeased.png">As unsatisfying as a Whimsun's death.</state>
                 <state img="#-demonangry.png">Hurry it up.</state>
                 <state img="#-sad.png">~target.ifMale(He|She)~ &lt;i&gt;still&lt;/i&gt; had ~clothing.ifPlural(those|that)~. I have done poorly indeed.</state>
                 <state img="#-thinking.png">I still do not quite understand how I have done &lt;i&gt;this&lt;/i&gt; poorly. Was I truly so unfortunate with the draw?</state>
@@ -3440,9 +3426,7 @@
                 <state img="#-displeased.png">I so swear, your ~clothing~ ~clothing.ifPlural(are|is)~ but the beginning of the end for you.</state>
                 <state img="#-displeased.png">How much more of this &lt;i&gt;is&lt;/i&gt; there?</state>
                 <state img="#-dismissive.png">Why even participate, with such worthless trinkets?</state>
-                <state img="#-dismissive.png">An insignificant amount of damage.</state>
                 <state img="#-displeased.png">How many of those trinkets did you bring?</state>
-                <state img="#-displeased.png">As unsatisfying as a Whimsun's death.</state>
                 <state img="#-devious.png">I hope you lose more layers &lt;i&gt;soon.&lt;/i&gt;</state>
                 <state img="#-anger.png">&lt;i&gt;Truly&lt;/i&gt; mortifying.</state>
             </case>
@@ -3452,8 +3436,6 @@
                 <state img="#-rigid.png">Let us move on.</state>
                 <state img="#-rigid.png">~clothing.ifPlural(Those belong|That belongs)~ in the past.</state>
                 <state img="#-dismissive.png">Good riddance to ~clothing.ifPlural(those|that)~ ~clothing~.</state>
-                <state img="#-dismissive.png">An insignificant amount of damage.</state>
-                <state img="#-displeased.png">As unsatisfying as a Whimsun's death.</state>
                 <state img="#-thinking.png">It may be some time yet to reach your goal, partner.</state>
                 <state img="#-rigid.png">Insignificant.</state>
                 <state img="#-devious.png">We have only just begun.</state>
@@ -3463,6 +3445,12 @@
                 <state img="#-snark.png">You are that much closer to victory, ~player~.</state>
                 <state img="#-happy.png">One hand closer to victory, partner.</state>
                 <state img="#-demonangry.png">How pathetic. I hope ~player~ soundly humiliates you.</state>
+            </case>
+            <case stage="0-10" id="1468" priority="0">
+                <state img="#-dismissive.png">An insignificant amount of damage.</state>
+                <state img="#-displeased.png" marker="ExpositionWhimsun">As unsatisfying as when ~player~ struck down a Whimsun.</state>
+                <state img="#-displeased.png" marker="ExpositionMoldsmal">As unsatisfying as when ~player~ killed a Moldsmal.</state>
+                <state img="#-dismissive.png" marker="ExpositionFroggit">As meager as ~player~ slaying a Froggit.</state>
             </case>
         </trigger>
 
@@ -3479,7 +3467,6 @@
             <case stage="0-4" id="533">
                 <state img="#-snark.png">As easy as killing a monster, is it not?</state>
                 <state img="#-devious.png">We will always defeat the enemy. Whatever form that 'defeat' may take.</state>
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-thinking.png">Hmm, the... ~clothing~, yes? Excellent.</state>
                 <state img="#-amused.png">Here we go.</state>
                 <state img="#-happy.png">Ah, the ~clothing~? Marvelous.</state>
@@ -3489,7 +3476,6 @@
                 <state img="#-devious.png">As easy as turning a monster to dust.</state>
             </case>
             <case stage="5-8" id="534">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-snark.png">Your ~clothing~ protected you this time, but no more.</state>
                 <state img="#-devious.png">Off ~clothing.ifPlural(they come|it comes)~.</state>
                 <state img="#-thinking.png">~target.ifMale(He|She)~ still has ~target.ifMale(his|her)~ ~clothing~? That bodes poorly...</state>
@@ -3503,7 +3489,6 @@
             <case stage="9-10" id="535">
                 <state img="#-demonhappy.png">There we go!</state>
                 <state img="#-dismissive.png">How humiliating that &lt;i&gt;you&lt;/i&gt; still have ~clothing.ifPlural(those|that)~.</state>
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-displeased.png">Unbelievable. You still &lt;i&gt;have&lt;/i&gt; ~clothing.ifPlural(those|that)~?</state>
                 <state img="#-amused.png">Oh, finally.</state>
                 <state img="#-snark.png">&lt;i&gt;Finally.&lt;/i&gt;</state>
@@ -3521,6 +3506,9 @@
                 <state img="#-sad.png">A shame he is still on his ~clothing~ whereas I have fallen.</state>
                 <state img="#-devious.png">Better you than ~player~.</state>
             </case>
+            <case stage="0-10" id="1481">
+                <state img="#-devious.png">One by one.</state>
+            </case>
         </trigger>
 
         <trigger id="male_removed_minor">
@@ -3537,10 +3525,8 @@
                 <state img="#-snark.png">Your ~clothing~ ~clothing.ifPlural(are|is)~ no more, ~name~.</state>
                 <state img="#-rigid.png">Smells like defeat.</state>
                 <state img="#-devious.png">Much better.</state>
-                <state img="#-happy.png">An acceptable amount of damage.</state>
                 <state img="#-happy.png">Our hopes of victory grow stronger, partner.</state>
                 <state img="#-rigid.png">Another layer destroyed.</state>
-                <state img="#-devious.png">As empowering as a Knight Knight's death.</state>
                 <state img="#-dismissive.png">It is not defeat in a single crushing blow, but it will do. For now.</state>
             </case>
             <case stage="5-8" id="544">
@@ -3550,15 +3536,11 @@
                 <state img="#-rigid.png">We are ever closer to victory.</state>
                 <state img="#-devious.png">Much better.</state>
                 <state img="#-dismissive.png">Even mere ~clothing~ ~clothing.ifPlural(are|is)~ better than nothing.</state>
-                <state img="#-happy.png">An acceptable amount of damage.</state>
-                <state img="#-devious.png">As empowering as a Madjick's death.</state>
                 <state img="#-rigid.png">We grow closer to triumph.</state>
                 <state img="#-devious.png">Gone.</state>
             </case>
             <case stage="9-10" id="545">
                 <state img="#-demonhappy.png">You didn't need ~clothing.ifPlural(those|that)~, ~name~.</state>
-                <state img="#-dismissive.png">An acceptable amount of damage.</state>
-                <state img="#-devious.png">As exhilarating as a Final Froggit's death.</state>
                 <state img="#-rigid.png">Your ~clothing~ ~clothing.ifPlural(are|is)~ fallen from you.</state>
                 <state img="#-rigid.png">And so ~clothing.ifPlural(they are|it is)~ fallen from you.</state>
                 <state img="#-demonhappy.png">You &lt;i&gt;will&lt;/i&gt; fail.</state>
@@ -3569,6 +3551,15 @@
                 <state img="#-rigid.png">You are getting closer, ~player~.</state>
                 <state img="#-devious.png">~Player~ will defeat you, ~name~. This will keep happening to you.</state>
                 <state img="#-happy.png">At least you are still in the game, partner.</state>
+            </case>
+            <case stage="0-10" id="1469" priority="0">
+                <state img="#-happy.png">
+                    <alt-img stage="9-10">#-dismissive.png</alt-img>
+                    <text>An acceptable amount of damage.</text>
+                </state>
+                <state img="#-devious.png" marker="ExpositionKnightKnight">As empowering as when ~player~ killed a Knight Knight.</state>
+                <state img="#-devious.png" marker="ExpositionMadjick">As empowering as when ~player~ killed a Madjick.</state>
+                <state img="#-devious.png" marker="ExpositionFinalFroggit">As empowering as when ~player~ killed a Final Froggit.</state>
             </case>
         </trigger>
 
@@ -3602,7 +3593,6 @@
                 <state img="#-happy.png">See how well I work, partner? ~name~'s number of articles is going down rapidly.</state>
             </case>
             <case stage="5-8" id="540">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-snark.png">Your ~clothing~ protected you this time, but no more.</state>
                 <state img="#-devious.png">Off ~clothing.ifPlural(they come|it comes)~.</state>
                 <state img="#-thinking.png">~target.ifMale(He|She)~ still has ~target.ifMale(his|her)~ ~clothing~? That bodes poorly...</state>
@@ -3616,7 +3606,6 @@
             <case stage="9-10" id="542">
                 <state img="#-demonhappy.png">There we go!</state>
                 <state img="#-dismissive.png">How humiliating that &lt;i&gt;you&lt;/i&gt; still have ~clothing.ifPlural(those|that)~.</state>
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-displeased.png">Unbelievable. You still &lt;i&gt;have&lt;/i&gt; ~clothing.ifPlural(those|that)~?</state>
                 <state img="#-amused.png">Oh, finally.</state>
                 <state img="#-snark.png">&lt;i&gt;Finally.&lt;/i&gt;</state>
@@ -3628,7 +3617,6 @@
             <case stage="0-4" id="538">
                 <state img="#-snark.png">As easy as killing a monster, is it not?</state>
                 <state img="#-devious.png">We will always defeat the enemy. Whatever form that 'defeat' may take.</state>
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-thinking.png">Hmm, the... ~clothing~, yes? Excellent.</state>
                 <state img="#-amused.png">Here we go.</state>
                 <state img="#-happy.png">Ah, the ~clothing~? Marvelous.</state>
@@ -3646,6 +3634,9 @@
                 <state img="#-sad.png">A shame she is still on her ~clothing~ whereas I have fallen.</state>
                 <state img="#-devious.png">Better you than ~player~.</state>
             </case>
+            <case stage="0-10" id="1482">
+                <state img="#-devious.png">One by one.</state>
+            </case>
         </trigger>
 
         <trigger id="female_removed_minor">
@@ -3658,8 +3649,6 @@
             </case>
             <case stage="9-10" id="550">
                 <state img="#-demonhappy.png">You didn't need ~clothing.ifPlural(those|that)~, ~name~.</state>
-                <state img="#-dismissive.png">An acceptable amount of damage.</state>
-                <state img="#-devious.png">As exhilarating as a Final Froggit's death.</state>
                 <state img="#-rigid.png">Your ~clothing~ ~clothing.ifPlural(are|is)~ fallen from you.</state>
                 <state img="#-rigid.png">And so ~clothing.ifPlural(they are|it is)~ fallen from you.</state>
                 <state img="#-demonhappy.png">You &lt;i&gt;will&lt;/i&gt; fail.</state>
@@ -3671,8 +3660,6 @@
                 <state img="#-rigid.png">We are ever closer to victory.</state>
                 <state img="#-devious.png">Much better.</state>
                 <state img="#-dismissive.png">Even mere ~clothing~ ~clothing.ifPlural(are|is)~ better than nothing.</state>
-                <state img="#-happy.png">An acceptable amount of damage.</state>
-                <state img="#-devious.png">As empowering as a Madjick's death.</state>
                 <state img="#-rigid.png">We grow closer to triumph.</state>
                 <state img="#-devious.png">Gone.</state>
             </case>
@@ -3682,10 +3669,8 @@
                 <state img="#-snark.png">Your ~clothing~ ~clothing.ifPlural(are|is)~ no more, ~name~.</state>
                 <state img="#-rigid.png">Smells like defeat.</state>
                 <state img="#-devious.png">Much better.</state>
-                <state img="#-happy.png">An acceptable amount of damage.</state>
                 <state img="#-happy.png">Our hopes of victory grow stronger, partner.</state>
                 <state img="#-rigid.png">Another layer destroyed.</state>
-                <state img="#-devious.png">As empowering as a Knight Knight's death.</state>
                 <state img="#-dismissive.png">It is not defeat in a single crushing blow, but it will do. For now.</state>
             </case>
             <case stage="9-10" id="1152" priority="0">
@@ -3695,6 +3680,15 @@
                 <state img="#-devious.png">~Player~ will defeat you, ~name~. This will keep happening to you.</state>
                 <state img="#-happy.png">At least you are still in the game, partner.</state>
             </case>
+            <case stage="0-10" id="1477" priority="0">
+                <state img="#-happy.png">
+                    <alt-img stage="9-10">#-dismissive.png</alt-img>
+                    <text>An acceptable amount of damage.</text>
+                </state>
+                <state img="#-devious.png" marker="ExpositionKnightKnight">As empowering as when ~player~ killed a Knight Knight.</state>
+                <state img="#-devious.png" marker="ExpositionMadjick">As empowering as when ~player~ killed a Madjick.</state>
+                <state img="#-devious.png" marker="ExpositionFinalFroggit">As empowering as when ~player~ killed a Final Froggit.</state>
+            </case>
         </trigger>
 
         <trigger id="male_removing_major">
@@ -3703,7 +3697,6 @@
                 <state img="#-sad.png">He is removing his ~clothing~. We'd almost have won, partner.</state>
             </case>
             <case stage="0-4" id="551">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-aroused.png">No no... don't rush. Take your time. Let me and ~player~ both savor it.</state>
                 <state img="#-happy.png">As wonderful as making power grow.</state>
                 <state img="#-demonhappy.png">Not long now, ~name~.</state>
@@ -3715,7 +3708,6 @@
                 <state img="#-devious.png">Soon, ~name~. Very soon.</state>
             </case>
             <case stage="5-8" id="552">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-aroused.png">No no... don't rush. Take your time. Let me and ~player~ both savor it.</state>
                 <state img="#-displeased.png">Given my state of undress, this is the least you owe me.</state>
                 <state img="#-demonhappy.png">Time to &lt;i&gt;really&lt;/i&gt; increase the amount of skin you are showing.</state>
@@ -3727,7 +3719,6 @@
                 <state img="#-amused.png">Something substantial, then?</state>
             </case>
             <case stage="9-10" id="553">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-aroused.png">No no... don't rush. Take your time. Let me and ~player~ both savor it.</state>
                 <state img="#-aroused.png">Oh, I &lt;i&gt;really&lt;/i&gt; like this.</state>
                 <state img="#-demonhappy.png">Off ~clothing.ifPlural(they come|it comes)~.</state>
@@ -3742,6 +3733,9 @@
                 <condition count="1" filter="human" status="alive" />
                 <state img="#-happy.png">He is removing his ~clothing~. You are almost there, partner.</state>
             </case>
+            <case stage="0-10" id="1483">
+                <state img="#-devious.png">One by one.</state>
+            </case>
         </trigger>
 
         <trigger id="male_removed_major">
@@ -3755,9 +3749,7 @@
                 <state img="#-devious.png">That's right, ~name~. You are failing.</state>
                 <state img="#-devious.png">Down you fall.</state>
                 <state img="#-demonhappy.png">Hee hee.</state>
-                <state img="#-devious.png">A substantial amount of damage.</state>
                 <state img="#-snark.png">How attractive.</state>
-                <state img="#-amused.png">As invigorating as killing the armored dog was.</state>
                 <state img="#-aroused.png">Oh, how curiously flustering.</state>
                 <state img="#-snark.png">What an attractive sight.</state>
             </case>
@@ -3768,8 +3760,6 @@
                 <state img="#-devious.png">I hope you are enjoying this, partner. I know I am.</state>
                 <state img="#-aroused.png">What a fantastic sight.</state>
                 <state img="#-happy.png">Are you enjoying this, partner? &lt;i&gt;I&lt;/i&gt; certainly am.</state>
-                <state img="#-devious.png">A substantial amount of damage.</state>
-                <state img="#-devious.png">As invigorating as killing the possessed dummy was.</state>
                 <state img="#-snark.png">More exposure.</state>
                 <state img="#-displeased.png">Finally.</state>
             </case>
@@ -3778,8 +3768,6 @@
                 <state img="#-aroused.png">Now &lt;i&gt;this&lt;/i&gt; is entertainment, is it not?</state>
                 <state img="#-devious.png">Let the failure wash over you, ~name~.</state>
                 <state img="#-devious.png">Not long now, ~name~.</state>
-                <state img="#-demonhappy.png">As invigorating as killing the royal guards was.</state>
-                <state img="#-devious.png">A substantial amount of damage.</state>
                 <state img="#-aroused.png">Mmm, yes...</state>
                 <state img="#-amused.png">How entertaining.</state>
                 <state img="#-demonhappy.png">The failure pours over you.</state>
@@ -3788,6 +3776,12 @@
             <case stage="9-10" id="1154" priority="0">
                 <condition count="1" filter="human" status="alive" />
                 <state img="#-happy.png">Almost there, partner.</state>
+            </case>
+            <case stage="0-10" id="1471">
+                <state img="#-devious.png">A substantial amount of damage.</state>
+                <state img="#-amused.png" marker="ExpositionGreaterDog">As invigorating as ~player~ killing the armored dog was.</state>
+                <state img="#-devious.png" marker="ExpositionMadDummy">As invigorating as ~player~ killing the possessed dummy was.</state>
+                <state img="#-demonhappy.png" marker="ExpositionRoyalGuards">As invigorating as ~player~ killing the royal guards was.</state>
             </case>
         </trigger>
 
@@ -3821,7 +3815,6 @@
                 <state img="#-sad.png">She is removing her ~clothing~. We'd almost have won, partner.</state>
             </case>
             <case stage="9-10" id="558">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-aroused.png">No no... don't rush. Take your time. Let me and ~player~ both savor it.</state>
                 <state img="#-aroused.png">Oh, I &lt;i&gt;really&lt;/i&gt; like this.</state>
                 <state img="#-demonhappy.png">Off ~clothing.ifPlural(they come|it comes)~.</state>
@@ -3833,7 +3826,6 @@
                 <state img="#-aroused.png">This is &lt;i&gt;most&lt;/i&gt; enjoyable.</state>
             </case>
             <case stage="5-8" id="556">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-aroused.png">No no... don't rush. Take your time. Let me and ~player~ both savor it.</state>
                 <state img="#-displeased.png">Given my state of undress, this is the least you owe me.</state>
                 <state img="#-demonhappy.png">Time to &lt;i&gt;really&lt;/i&gt; increase the amount of skin you are showing.</state>
@@ -3845,7 +3837,6 @@
                 <state img="#-amused.png">Something substantial, then?</state>
             </case>
             <case stage="0-4" id="555">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-aroused.png">No no... don't rush. Take your time. Let me and ~player~ both savor it.</state>
                 <state img="#-happy.png">As wonderful as making power grow.</state>
                 <state img="#-demonhappy.png">Not long now, ~name~.</state>
@@ -3859,6 +3850,9 @@
             <case stage="9-10" id="1155" priority="0">
                 <condition count="1" filter="human" status="alive" />
                 <state img="#-happy.png">She is removing her ~clothing~. You are almost there, partner.</state>
+            </case>
+            <case stage="0-10" id="1484">
+                <state img="#-devious.png">One by one.</state>
             </case>
         </trigger>
 
@@ -3908,8 +3902,6 @@
                 <state img="#-aroused.png">Now &lt;i&gt;this&lt;/i&gt; is entertainment, is it not?</state>
                 <state img="#-devious.png">Let the failure wash over you, ~name~.</state>
                 <state img="#-devious.png">Not long now, ~name~.</state>
-                <state img="#-demonhappy.png">As invigorating as killing the royal guards was.</state>
-                <state img="#-devious.png">A substantial amount of damage.</state>
                 <state img="#-aroused.png">Mmm, yes...</state>
                 <state img="#-amused.png">How entertaining.</state>
                 <state img="#-demonhappy.png">The failure pours over you.</state>
@@ -3922,8 +3914,6 @@
                 <state img="#-devious.png">I hope you are enjoying this, partner. I know I am.</state>
                 <state img="#-aroused.png">What a fantastic sight.</state>
                 <state img="#-happy.png">Are you enjoying this, partner? &lt;i&gt;I&lt;/i&gt; certainly am.</state>
-                <state img="#-devious.png">A substantial amount of damage.</state>
-                <state img="#-devious.png">As invigorating as killing the possessed dummy was.</state>
                 <state img="#-snark.png">More exposure.</state>
                 <state img="#-displeased.png">Finally.</state>
             </case>
@@ -3933,15 +3923,19 @@
                 <state img="#-devious.png">That's right, ~name~. You are failing.</state>
                 <state img="#-devious.png">Down you fall.</state>
                 <state img="#-demonhappy.png">Hee hee.</state>
-                <state img="#-devious.png">A substantial amount of damage.</state>
                 <state img="#-snark.png">How attractive.</state>
-                <state img="#-amused.png">As invigorating as killing the armored dog was.</state>
                 <state img="#-aroused.png">Oh, how curiously flustering.</state>
                 <state img="#-snark.png">What an attractive sight.</state>
             </case>
             <case stage="9-10" id="1156" priority="0">
                 <condition count="1" filter="human" status="not_alive" />
                 <state img="#-happy.png">Almost there, partner.</state>
+            </case>
+            <case stage="0-10" id="1478">
+                <state img="#-devious.png">A substantial amount of damage.</state>
+                <state img="#-amused.png" marker="ExpositionGreaterDog">As invigorating as ~player~ killing the armored dog was.</state>
+                <state img="#-devious.png" marker="ExpositionMadDummy">As invigorating as ~player~ killing the possessed dummy was.</state>
+                <state img="#-demonhappy.png" marker="ExpositionRoyalGuards">As invigorating as ~player~ killing the royal guards was.</state>
             </case>
         </trigger>
 
@@ -3957,24 +3951,37 @@
                 <state img="#-happy.png" marker="ResponseBrockHitByRocket">My, you must have a lot of defense to survive a direct hit from a rocket.</state>
             </case>
             <case stage="0-4" id="567">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-devious.png">And off ~clothing.ifPlural(come|comes)~ the ~clothing~. We do good work, ~player~.</state>
                 <state img="#-amused.png">Hee hee! That did not take long at all.</state>
                 <state img="#-demonhappy.png">Show us, ~name~. Show us now.</state>
                 <state img="#-happy.png">Excellent.</state>
+                <state img="#-happy.png">Off comes ~target.ifMale(his|her)~ ~clothing~. We are doing well, ~player~.</state>
+                <state img="#-amused.png">Hee hee! Your ~clothing~? Already?</state>
+                <state img="#-devious.png">Go on, ~name~. Show us.</state>
+                <state img="#-snark.png">Marvelous.</state>
+                <state img="#-rigid.png">It would appear it is time for ~name~ to bare his chest.</state>
             </case>
             <case stage="5-8" id="568">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-aroused.png">Oh, oh yes.</state>
                 <state img="#-demonhappy.png">Oh, I can hardly wait.</state>
                 <state img="#-displeased.png">It took you quite long enough, ~name~.</state>
                 <state img="#-devious.png">His chest is to be bared, ~player~. Time to finish what remains.</state>
+                <state img="#-aroused.png">Oh, I &lt;i&gt;quite&lt;/i&gt; wish to see ~name~'s chest.</state>
+                <state img="#-demonhappy.png">I can hardly wait to see.</state>
+                <state img="#-devious.png">Already exposing your chest, ~name~? Let us finish him off, ~player~.</state>
+                <state img="#-aroused.png">Oh? I cannot wait to see.</state>
+                <state img="#-aroused.png">I have been anticipating &lt;i&gt;this.&lt;/i&gt;</state>
             </case>
             <case stage="9-10" id="569">
-                <state img="#-devious.png">One by one.</state>
-                <state img="#-aroused.png">This is quite the treat.</state>
+                <state img="#-aroused.png">This shall be quite the treat.</state>
                 <state img="#-displeased.png">Hurry it up; I have waited long enough.</state>
                 <state img="#-demonhappy.png">You were never meant to win.</state>
+                <state img="#-aroused.png">Oh, your ~clothing~? Do not mind if I do.</state>
+                <state img="#-displeased.png">I have waited long enough. Hurry it up.</state>
+                <state img="#-aroused.png">This will be &lt;i&gt;some&lt;/i&gt; treat indeed.</state>
+                <state img="#-demonhappy.png">You were never going to attain victory.</state>
+                <state img="#-aroused.png">Oh, do not mind me, hee hee.</state>
+                <state img="#-happy.png">Oh, his ~clothing~? How wonderful.</state>
             </case>
             <case stage="9-10" id="1231" priority="0">
                 <condition status="alive" character="human" />
@@ -3983,6 +3990,9 @@
             <case stage="9-10" id="1232" priority="0">
                 <condition status="not_alive" character="human" />
                 <state img="#-snark.png">We may be defeated, ~player~, but we can still enjoy this.</state>
+            </case>
+            <case stage="0-10" id="1485">
+                <state img="#-devious.png">One by one.</state>
             </case>
         </trigger>
 
@@ -4003,23 +4013,39 @@
             </case>
             <case stage="0-4" id="570">
                 <state img="#-happy.png">Already, his chest is bared to us!</state>
-                <state img="#-demonhappy.png">Forgettable.</state>
                 <state img="#-demonhappy.png">Your ~clothing~ ~clothing.ifPlural(were|was)~ never going to protect you.</state>
                 <state img="#-happy.png">We remain strong, partner.</state>
                 <state img="#-dismissive.png">Such failure, so soon. Beneath our notice, really.</state>
+                <state img="#-dismissive.png">Baring your chest and we are still so strong. Hmmph.</state>
+                <state img="#-devious.png">Yet we remain powerful, ~player~.</state>
+                <state img="#-amused.png">His chest is &lt;i&gt;already&lt;/i&gt; exposed to us, hee hee!</state>
+                <state img="#-demonhappy.png">Easy.</state>
+                <state img="#-devious.png">Hardly a challenge. Just the way I like it.</state>
+                <state img="#-happy.png">Ah, ~target~'s bare chest. We are doing splendidly, ~player~.</state>
             </case>
             <case stage="5-8" id="571">
                 <state img="#-rigid.png">Well. That took long enough.</state>
                 <state img="#-aroused.png">How nice. How I'd like to run my hands along you.</state>
-                <state img="#-demonhappy.png">How nice. How I'd like to sink my knife into you.</state>
+                <state img="#-demonhappy.png">How lovely. I'd love to have some &lt;i&gt;fun&lt;/i&gt; with you...</state>
                 <state img="#-snark.png">Enjoying the show, partner?</state>
                 <state img="#-snark.png">Look as long as you want, partner. Either him or I works.</state>
+                <state img="#-aroused.png">Hmm, I'd love to run my hands along &lt;i&gt;him...&lt;/i&gt;</state>
+                <state img="#-aroused.png">This alone makes dying worth it.</state>
+                <state img="#-aroused.png">This stirs a &lt;i&gt;most&lt;/i&gt; pleasurable warmth within me.</state>
+                <state img="#-aroused.png">Oh my, this is getting me &lt;i&gt;most&lt;/i&gt; flustered.</state>
+                <state img="#-aroused.png">This is flustering me &lt;i&gt;quite&lt;/i&gt; a bit, I must say.</state>
             </case>
             <case stage="9-10" id="572">
                 <state img="#-aroused.png">&lt;i&gt;Oh yes...&lt;/i&gt;</state>
                 <state img="#-aroused.png">That is more like it.</state>
                 <state img="#-anger.png">Your hopes are gone, ~name~. Forfeit willingly before you are made to.</state>
                 <state img="#-demonhappy.png">So much bare, defenseless skin...</state>
+                <state img="#-demonhappy.png">So much exposed, bare skin...</state>
+                <state img="#-amused.png">Ah, that is much better.</state>
+                <state img="#-amused.png">&lt;i&gt;Just&lt;/i&gt; is the sort of sight I needed.</state>
+                <state img="#-aroused.png">Dying was worth it, for this alone if nothing else.</state>
+                <state img="#-devious.png">Almost fallen.</state>
+                <state img="#-snark.png">Not bad. Not bad at all...</state>
             </case>
             <case stage="9-10" id="1157" priority="0">
                 <condition count="1" filter="human" status="alive" />
@@ -4029,114 +4055,150 @@
 
         <trigger id="male_crotch_will_be_visible">
             <case stage="0-4" id="574">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-aroused.png">Hee hee, now let's have a look.</state>
                 <state img="#-demonhappy.png">Hurry it up, ~name~.</state>
                 <state img="#-happy.png">His penis is to be revealed, ~player~! We do good work.</state>
                 <state img="#-devious.png">We can not be defeated.</state>
+                <state img="#-demonhappy.png">No stalling, ~name~.</state>
+                <state img="#-happy.png">And now for his genitals, ~player~. We are doing quite well.</state>
+                <state img="#-devious.png">Let's take a look.</state>
+                <state img="#-dismissive.png">Your penis? Already? Simplistic.</state>
+                <state img="#-snark.png">Off with your ~clothing~. Out with your, ahem, &lt;i&gt;parts.&lt;/i&gt;</state>
+                <state img="#-snark.png" marker="BadTime">Exposing yourself already? My my, somebody is having a bad time.</state>
             </case>
             <case stage="5-8" id="575">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-aroused.png">I &lt;i&gt;really&lt;/i&gt; want to see this.</state>
                 <state img="#-aroused.png">So, partner, what are &lt;i&gt;you&lt;/i&gt; imagining doing with him?</state>
-                <state img="#-happy.png">He is almost defeated, ~player~. Enjoy the view</state>
+                <state img="#-happy.png">He is almost defeated, ~player~. Enjoy the view.</state>
                 <state img="#-snark.png">How did you ever think you stood a chance against us?</state>
+                <state img="#-aroused.png">Oh, I would quite like to see &lt;i&gt;this.&lt;/i&gt;</state>
+                <state img="#-snark.png">Did you ever think you stood a chance, ~name~?</state>
+                <state img="#-happy.png">Enjoy the view, ~player~. I know &lt;i&gt;I&lt;/i&gt; will.</state>
+                <state img="#-devious.png">Let me have a look...</state>
+                <state img="#-demonhappy.png">Almost...</state>
+                <state img="#-demonhappy.png">Just a little more...</state>
             </case>
             <case stage="9-10" id="576">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-aroused.png">Mmm...</state>
                 <state img="#-demonhappy.png">That's it. Be humiliated as I have been.</state>
                 <state img="#-snark.png">At long last. Do take your time, ~name~.</state>
-                <state img="#-snark.png">Do make sure to enjoy the sights, partner.</state>
+                <state img="#-snark.png">Do make sure to enjoy the sights, partner. I certainly will.</state>
+                <state img="#-aroused.png">Oh, I do believe I will &lt;i&gt;quite&lt;/i&gt; enjoy this...</state>
+                <state img="#-devious.png">Oh? This is welcome.</state>
+                <state img="#-demonhappy.png">That's right. Fall as I have.</state>
+                <state img="#-aroused.png">Mmm, this is warming me quite nicely.</state>
+                <state img="#-aroused.png">Oh, oh yes...</state>
+                <state img="#-devious.png">Show me.</state>
+            </case>
+            <case stage="0-10" id="1486">
+                <state img="#-devious.png">One by one.</state>
             </case>
         </trigger>
 
         <trigger id="male_small_crotch_is_visible">
             <case stage="0-4" id="577">
-                <state img="#-demonhappy.png" weight="3">Forgettable.</state>
                 <state img="#-dismissive.png">I hope you are impressed, partner. I, for one, am not.</state>
                 <state img="#-devious.png">What a small number of inches.</state>
                 <state img="#-snark.png">That's it?</state>
                 <state img="#-amused.png">Hee hee!</state>
+                <state img="#-dismissive.png">What a small size value.</state>
+                <state img="#-dismissive.png">Is that all?</state>
+                <state img="#-snark.png">In truth? I had not expected much.</state>
+                <state img="#-displeased.png">I am not impressed.</state>
+                <state img="#-devious.png">So very close to forfeit.</state>
+                <state img="#-demonhappy.png">You are almost defeated, ~name~. It will not be long now.</state>
             </case>
             <case stage="5-8" id="578">
-                <state img="#-demonhappy.png" weight="3">Forgettable.</state>
                 <state img="#-devious.png">That's all? All those layers just to hide that?</state>
                 <state img="#-dismissive.png">What a small number of inches.</state>
-                <state img="#-displeased.png">Oh, what a shame. Here I thought my partner and I would receive something to actually &lt;i&gt;look&lt;/i&gt; at.</state>
+                <state img="#-snark.png">Oh, what a shame. Here I thought my partner and I would receive something to actually &lt;i&gt;look&lt;/i&gt; at.</state>
                 <state img="#-amused.png">Hee hee!</state>
+                <state img="#-devious.png">All those clothes, for merely that?</state>
+                <state img="#-dismissive.png">What a low size value.</state>
+                <state img="#-snark.png">What a shame.</state>
+                <state img="#-thinking.png">Hmm, how disappointing.</state>
+                <state img="#-dismissive.png">Disappointing.</state>
+                <state img="#-displeased.png">I had hoped for more.</state>
             </case>
             <case stage="9" id="579">
-                <state img="#-demonhappy.png" weight="3">Forgettable.</state>
                 <state img="#-aroused.png">I suppose I can make do.</state>
                 <state img="#-devious.png">So close to failure, ~name~...</state>
                 <state img="#-dismissive.png">Is that all, ~name~? All that lead-up for nothing.</state>
                 <state img="#-amused.png">Hee hee!</state>
+                <state img="#-aroused.png">That will do in a pinch...</state>
+                <state img="#-demonhappy.png">Hee hee! Is that all?</state>
+                <state img="#-aroused.png">I find myself wanting to straddle even &lt;i&gt;that&lt;/i&gt;...</state>
+                <state img="#-thinking.png">Does &lt;i&gt;that&lt;/i&gt; do anything for you, ~player~? Certainly, it does not for me.</state>
+                <state img="#-displeased.png">Well, it is &lt;i&gt;something.&lt;/i&gt;</state>
+                <state img="#-dismissive.png">All that lead-up, and for what?</state>
             </case>
             <case stage="10" id="580">
-                <state img="#-demonhappy.png" weight="3">Forgettable.</state>
                 <state img="#-displeased.png">Good thing I have already masturbated. &lt;i&gt;That&lt;/i&gt; certainly would not have helped.</state>
                 <state img="#-devious.png">So close to failure, ~name~...</state>
                 <state img="#-dismissive.png">Is that all, ~name~? All that lead-up for nothing.</state>
                 <state img="#-amused.png">Hee hee!</state>
+                <state img="#-demonhappy.png">Is that all?</state>
+                <state img="#-devious.png">You, too, are almost out.</state>
+                <state img="#-devious.png">Soon you, too, will be defeated.</state>
+                <state img="#-dismissive.png">So much build-up, and for what?</state>
+                <state img="#-thinking.png">Well, it is &lt;i&gt;something,&lt;/i&gt; I suppose.</state>
+                <state img="#-dismissive.png">Hmmph. What a low size value.</state>
+            </case>
+            <case stage="0-10" id="1489">
+                <state img="#-demonhappy.png" weight="3">Forgettable.</state>
             </case>
         </trigger>
 
         <trigger id="male_medium_crotch_is_visible">
             <case stage="9" id="583">
-                <state img="#-demonhappy.png" weight="2">Forgettable.</state>
                 <state img="#-aroused.png">Oh, I can use &lt;i&gt;this.&lt;/i&gt;</state>
                 <state img="#-dismissive.png">Mediocre.</state>
                 <state img="#-happy.png">Enjoying the sights, ~player~? I know I am.</state>
                 <state img="#-devious.png">Get used to the idea of stroking that, ~name~.</state>
             </case>
             <case stage="5-8" id="582">
-                <state img="#-demonhappy.png" weight="2">Forgettable.</state>
                 <state img="#-dismissive.png">I suppose it is something.</state>
                 <state img="#-happy.png">Take a good long look, ~player~. You have earned this.</state>
                 <state img="#-snark.png">Everyone is staring at you. Boring their eyes into you.</state>
                 <state img="#-rigid.png">Finally.</state>
             </case>
             <case stage="0-4" id="581">
-                <state img="#-demonhappy.png" weight="2">Forgettable.</state>
                 <state img="#-dismissive.png">Well, I suppose that is good enough.</state>
                 <state img="#-thinking.png">I wonder if I could exert my power upon it? Grow the number of inches?</state>
                 <state img="#-displeased.png">Well, it is something, I suppose.</state>
                 <state img="#-happy.png">I have been waiting for that. Finally.</state>
             </case>
             <case stage="10" id="584">
-                <state img="#-demonhappy.png" weight="2">Forgettable.</state>
                 <state img="#-displeased.png">I could have used that sight.</state>
                 <state img="#-dismissive.png">Mediocre.</state>
                 <state img="#-happy.png">Enjoying the sights, ~player~? I know I am.</state>
                 <state img="#-devious.png">Get used to the idea of stroking that, ~name~.</state>
             </case>
+            <case stage="0-10" id="1490">
+                <state img="#-demonhappy.png">Forgettable.</state>
+            </case>
         </trigger>
 
         <trigger id="male_large_crotch_is_visible">
             <case stage="9" id="586">
-                <state img="#-demonhappy.png">Forgettable.</state>
                 <state img="#-aroused.png">Mmm, picturing that inside me...</state>
                 <state img="#-surprised.png">Oh my word!</state>
                 <state img="#-amused.png">Hee hee! What a show, partner!</state>
                 <state img="#-aroused.png">What a sight indeed...</state>
             </case>
             <case stage="5-8" id="587">
-                <state img="#-demonhappy.png">Forgettable.</state>
                 <state img="#-surprised.png">Oh my.</state>
                 <state img="#-happy.png">Get a good look, partner. It's quite the thing, is it not?</state>
                 <state img="#-happy.png">Who would &lt;i&gt;not&lt;/i&gt; want to look at something like that?</state>
                 <state img="#-rigid.png">Finally. I have been waiting for something like that.</state>
             </case>
             <case stage="0-4" id="588">
-                <state img="#-demonhappy.png">Forgettable.</state>
                 <state img="#-surprised.png">Goodness!</state>
                 <state img="#-surprised.png">Did I increase the number of inches while I was not paying attention?</state>
                 <state img="#-amused.png">Well, you are certainly getting quite the show, partner!</state>
                 <state img="#-happy.png">I have been waiting for that. Finally.</state>
             </case>
             <case stage="10" id="585">
-                <state img="#-demonhappy.png">Forgettable.</state>
                 <state img="#-aroused.png">Mmm, I could have used a sight like this not long ago.</state>
                 <state img="#-surprised.png">Oh my word!</state>
                 <state img="#-amused.png">Hee hee! What a show, partner!</state>
@@ -4172,21 +4234,18 @@
                 <state img="#-amused.png" marker="Pun" collectible="chara_puns" collectible-value="+1">Tit for tat!</state>
             </case>
             <case stage="0-4" id="589">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-devious.png">And off ~clothing.ifPlural(come|comes)~ the ~clothing~. We do good work, ~player~.</state>
                 <state img="#-amused.png">Hee hee! That did not take long at all.</state>
                 <state img="#-demonhappy.png">Show us, ~name~. Show us now.</state>
                 <state img="#-happy.png">Excellent.</state>
             </case>
             <case stage="5-8" id="590">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-aroused.png">Oh, oh yes.</state>
                 <state img="#-demonhappy.png">Oh, I can hardly wait.</state>
                 <state img="#-displeased.png">It took you quite long enough, ~name~.</state>
                 <state img="#-devious.png">Her chest is to be bared, ~player~. Time to finish what remains.</state>
             </case>
             <case stage="9-10" id="591">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-aroused.png">This is quite the treat.</state>
                 <state img="#-displeased.png">Hurry it up; I have waited long enough for this.</state>
                 <state img="#-demonhappy.png">You were never meant to win.</state>
@@ -4198,6 +4257,9 @@
             <case stage="9-10" id="1294" priority="0">
                 <condition status="not_alive" character="human" />
                 <state img="#-devious.png">We may be defeated, ~player~, but we can still enjoy this.</state>
+            </case>
+            <case stage="0-10" id="1487">
+                <state img="#-devious.png">One by one.</state>
             </case>
         </trigger>
 
@@ -4211,27 +4273,23 @@
                 <state img="#-devious.png">You are almost defeated, ~name~. Just a little more.</state>
             </case>
             <case stage="0-4" id="593">
-                <state img="#-demonhappy.png" weight="3">Forgettable.</state>
                 <state img="#-dismissive.png">Hmmph.</state>
                 <state img="#-aroused.png">Don't you want to just cup them in your hands, partner?</state>
                 <state img="#-devious.png">Isn't it embarrassing to show the whole world how small they are, ~name~?</state>
                 <state img="#-happy.png">Well, &lt;i&gt;she's&lt;/i&gt; almost out, partner. Let's finish her.</state>
             </case>
             <case stage="5-8" id="594">
-                <state img="#-demonhappy.png" weight="3">Forgettable.</state>
                 <state img="#-snark.png">Not much longer.</state>
                 <state img="#-aroused.png">Oh, but I &lt;i&gt;do&lt;/i&gt; wish to touch hers, partner.</state>
                 <state img="#-devious.png">She's almost out...</state>
                 <state img="#-devious.png">Not much fight left in &lt;i&gt;you,&lt;/i&gt; ~name~.</state>
             </case>
             <case stage="9" id="595">
-                <state img="#-demonhappy.png" weight="3">Forgettable.</state>
                 <state img="#-aroused.png">A good time for this, do you not agree, ~player~?</state>
                 <state img="#-anger.png">You certainly took your time, did you not?</state>
                 <state img="#-aroused.png">Why don't you let me rub them, ~name~? Give my partner a good show.</state>
             </case>
             <case stage="10" id="596">
-                <state img="#-demonhappy.png" weight="3">Forgettable.</state>
                 <state img="#-displeased.png">A tad late for this.</state>
                 <state img="#-anger.png">You certainly took your time, did you not?</state>
                 <state img="#-aroused.png">Wish I could have rubbed them, ~name~. It'd have been a good show for my partner while I rubbed myself.</state>
@@ -4243,6 +4301,9 @@
             <case stage="10" id="1159" priority="0">
                 <condition count="1" filter="human" status="alive" />
                 <state img="#-devious.png">You have almost defeated her, ~player~. Just a little more.</state>
+            </case>
+            <case stage="0-10" id="1491">
+                <state img="#-demonhappy.png" weight="3">Forgettable.</state>
             </case>
         </trigger>
 
@@ -4256,26 +4317,22 @@
                 <state img="#-devious.png">You are almost defeated, ~name~. Just a little more.</state>
             </case>
             <case stage="10" id="609">
-                <state img="#-demonhappy.png" weight="2">Forgettable.</state>
                 <state img="#-aroused.png">Not bad, I suppose.</state>
                 <state img="#-anger.png">You certainly took your time, did you not?</state>
                 <state img="#-aroused.png">Wish I could have squeezed them, ~name~. It'd have been a good show for my partner while I rubbed myself.</state>
             </case>
             <case stage="9" id="605">
-                <state img="#-demonhappy.png" weight="2">Forgettable.</state>
                 <state img="#-aroused.png">Not bad.</state>
                 <state img="#-anger.png">You certainly took your time, did you not?</state>
                 <state img="#-aroused.png">Why don't you let me squeeze them, ~name~? Give my partner a good show.</state>
             </case>
             <case stage="5-8" id="601">
-                <state img="#-demonhappy.png" weight="2">Forgettable.</state>
                 <state img="#-dismissive.png">Not half bad.</state>
                 <state img="#-aroused.png">Oh, but I &lt;i&gt;do&lt;/i&gt; wish to fondle hers, partner.</state>
                 <state img="#-devious.png">She's almost out...</state>
                 <state img="#-devious.png">Not much fight left in &lt;i&gt;you,&lt;/i&gt; ~name~.</state>
             </case>
             <case stage="0-4" id="599">
-                <state img="#-demonhappy.png" weight="2">Forgettable.</state>
                 <state img="#-dismissive.png">Not bad.</state>
                 <state img="#-aroused.png">Don't you want to just fondle them, partner?</state>
                 <state img="#-devious.png">Isn't it embarrassing to show them to the whole world, ~name~?</state>
@@ -4288,6 +4345,9 @@
             <case stage="10" id="1161" priority="0">
                 <condition count="1" filter="human" status="alive" />
                 <state img="#-devious.png">You have almost defeated her, partner. Just a little more.</state>
+            </case>
+            <case stage="0-10" id="1492">
+                <state img="#-demonhappy.png">Forgettable.</state>
             </case>
         </trigger>
 
@@ -4316,26 +4376,22 @@
                 <state img="#-devious.png">You are almost defeated, ~name~. Just a little more.</state>
             </case>
             <case stage="10" id="610">
-                <state img="#-demonhappy.png">Forgettable.</state>
                 <state img="#-surprised.png">Oh my.</state>
                 <state img="#-anger.png">You certainly took your time, did you not?</state>
                 <state img="#-aroused.png">Wish I could have buried my face in them, ~name~. It'd have been a good show for my partner while I rubbed myself.</state>
             </case>
             <case stage="9" id="606">
-                <state img="#-demonhappy.png">Forgettable.</state>
                 <state img="#-surprised.png">Goodness me.</state>
                 <state img="#-anger.png">You certainly took your time, did you not?</state>
                 <state img="#-aroused.png">Why don't you let me bury my face in them, ~name~? Give my partner a good show.</state>
             </case>
             <case stage="5-8" id="602">
-                <state img="#-demonhappy.png">Forgettable.</state>
                 <state img="#-snark.png">Well, the size value is large, at least.</state>
                 <state img="#-aroused.png">Oh, but I &lt;i&gt;do&lt;/i&gt; wish to bury my face in hers, partner.</state>
                 <state img="#-devious.png">She's almost out...</state>
                 <state img="#-devious.png">Not much fight left in &lt;i&gt;you,&lt;/i&gt; ~name~.</state>
             </case>
             <case stage="0-4" id="600">
-                <state img="#-demonhappy.png">Forgettable.</state>
                 <state img="#-dismissive.png">Well, the size value is large, at least.</state>
                 <state img="#-aroused.png">Don't you want to just bury your face in them, partner?</state>
                 <state img="#-devious.png">Isn't it embarrassing to show them to the whole world, ~name~?</state>
@@ -4378,20 +4434,17 @@
                 <state img="#-snark.png">Did you ever think you could defeat me, ~name~?</state>
             </case>
             <case stage="0-4" id="611">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-amused.png">Ha! ~Name~'s going to show her groin already? We are doing splendidly, ~player~!</state>
                 <state img="#-snark.png">Take ~clothing.ifPlural(those|that)~ ~clothing~ off. Slowly.</state>
                 <state img="#-rigid.png">Almost there.</state>
                 <state img="#-devious.png">We are invincible.</state>
             </case>
             <case stage="5-8" id="612">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-displeased.png">Well, it took longer than I would have liked, but here we are.</state>
                 <state img="#-happy.png">She is almost defeated, ~player~. Enjoy the view.</state>
                 <state img="#-aroused.png">So, partner, what are &lt;i&gt;you&lt;/i&gt; imagining doing with her?</state>
             </case>
             <case stage="9-10" id="613">
-                <state img="#-devious.png">One by one.</state>
                 <state img="#-aroused.png">Mmm...</state>
                 <state img="#-demonhappy.png">That's it. Be humiliated as I have been.</state>
                 <state img="#-snark.png">At long last. Do take your time, ~name~.</state>
@@ -4400,6 +4453,9 @@
             <case stage="5-8" id="1164" priority="0">
                 <condition count="1" filter="human" status="alive" />
                 <state img="#-snark.png">Did you ever think you could defeat ~player~, ~name~?</state>
+            </case>
+            <case stage="0-10" id="1488">
+                <state img="#-devious.png">One by one.</state>
             </case>
         </trigger>
 
@@ -4445,19 +4501,16 @@
                 <state img="#-happy.png">Take a good look, partner. I have brought her to the brink.</state>
             </case>
             <case stage="0-4" id="615">
-                <state img="#-demonhappy.png">Forgettable.</state>
                 <state img="#-aroused.png">How erotic.</state>
                 <state img="#-happy.png">We remain strong, partner.</state>
                 <state img="#-devious.png">You were always going to fail like this.</state>
                 <state img="#-aroused.png">The things I would like to do to her. What about you, partner?</state>
             </case>
             <case stage="5-8" id="616">
-                <state img="#-demonhappy.png">Forgettable.</state>
                 <state img="#-devious.png">That's right, ~name~. Your ~clothing~ ~clothing.ifPlural(were|was)~ never going to avail you.</state>
                 <state img="#-snark.png">Enjoying the show, partner?</state>
             </case>
             <case stage="9-10" id="617">
-                <state img="#-demonhappy.png">Forgettable.</state>
                 <state img="#-aroused.png">You're making me wetter, ~name~.</state>
                 <state img="#-devious.png">Why don't you accept defeat? Forfeit on your own terms.</state>
                 <state img="#-aroused.png">Come over, ~name~. Let us give my partner a show...</state>
@@ -4476,6 +4529,30 @@
         </trigger>
 
         <trigger id="opponent_lost">
+            <case stage="0-10" id="1357" priority="999">
+                <condition status="lost_all" role="target" character="human" />
+                <condition role="self" saidMarker="HardMode1v1" />
+                <state img="#-demonhappy.png" marker="HardMode1v1PlayerLoss">Dashed upon the rocks.</state>
+                <state img="#-demonhappy.png" marker="HardMode1v1PlayerLoss">Your hopes, turned to dust.</state>
+                <state img="#-demonhappy.png" marker="HardMode1v1PlayerLoss">Eliminated.</state>
+            </case>
+            <case stage="0-10" id="210" priority="999">
+                <condition filter="human" status="lost_all" role="target" />
+                <condition role="self" saidMarker="Throwing" />
+                <state img="#-aroused.png" marker="ThrowingVictory">... oh, well, I suppose if you &lt;i&gt;want&lt;/i&gt; me to see you masturbate instead, I shall not complain, partner.</state>
+                <state img="#-aroused.png" marker="ThrowingVictory">Well, if you &lt;i&gt;want&lt;/i&gt; to masturbate so much, I shall not stand in your way, partner.</state>
+                <state img="#-amused.png" marker="ThrowingVictory">Hee hee! I &lt;i&gt;had&lt;/i&gt; tried to give you this game, but I shall accept the win instead.</state>
+            </case>
+            <case stage="0-10" id="157" priority="998">
+                <condition status="lost_all" role="target" character="human" />
+                <condition role="self" saidMarker="HardModeStart" notSaidMarker="HardMode1v1" />
+                <state img="#-amused.png" marker="HardModePlayerLoss">That is a pity, partner, but you &lt;i&gt;did&lt;/i&gt; do this to yourself.</state>
+                <state img="#-devious.png" marker="HardModePlayerLoss">You get no pity from me, partner. You knew what you were doing.</state>
+                <state img="#-amused.png" marker="HardModePlayerLoss">Hard Mode is hard, hmm?</state>
+                <state img="#-snark.png" marker="HardModePlayerLoss">Was Hard Mode too much?</state>
+                <state img="#-dismissive.png" marker="HardModePlayerLoss">Perhaps next time, don't deliberately choose Hard Mode?</state>
+                <state img="#-devious.png" marker="HardModePlayerLoss">You are not above the consequences of pride.</state>
+            </case>
             <case stage="0-8" id="1258" priority="400">
                 <condition status="lost_all" role="target" character="human" />
                 <condition count="0" status="not_alive" />
@@ -4492,30 +4569,6 @@
                 <state img="#-devious.png">At last, ~target.ifMale(he|she)~ is eliminated.</state>
                 <state img="#-dismissive.png">You were never going to come back from this, ~name~.</state>
                 <state img="#-happy.png">It took ~target.ifMale(him|her)~ long enough to admit defeat, no?</state>
-            </case>
-            <case stage="0-10" id="157" priority="385">
-                <condition status="lost_all" role="target" character="human" />
-                <condition role="self" saidMarker="HardModeStart" notSaidMarker="HardMode1v1" />
-                <state img="#-amused.png" marker="HardModePlayerLoss">That is a pity, partner, but you &lt;i&gt;did&lt;/i&gt; do this to yourself.</state>
-                <state img="#-devious.png" marker="HardModePlayerLoss">You get no pity from me, partner. You knew what you were doing.</state>
-                <state img="#-amused.png" marker="HardModePlayerLoss">Hard Mode is hard, hmm?</state>
-                <state img="#-snark.png" marker="HardModePlayerLoss">Was Hard Mode too much?</state>
-                <state img="#-dismissive.png" marker="HardModePlayerLoss">Perhaps next time, don't deliberately choose Hard Mode?</state>
-                <state img="#-devious.png" marker="HardModePlayerLoss">You are not above the consequences of pride.</state>
-            </case>
-            <case stage="0-10" id="210" priority="385">
-                <condition filter="human" status="lost_all" role="target" />
-                <condition role="self" saidMarker="Throwing" />
-                <state img="#-aroused.png" marker="ThrowingVictory">... oh, well, I suppose if you &lt;i&gt;want&lt;/i&gt; me to see you masturbate instead, I shall not complain, partner.</state>
-                <state img="#-aroused.png" marker="ThrowingVictory">Well, if you &lt;i&gt;want&lt;/i&gt; to masturbate so much, I shall not stand in your way, partner.</state>
-                <state img="#-amused.png" marker="ThrowingVictory">Hee hee! I &lt;i&gt;had&lt;/i&gt; tried to give you this game, but I shall accept the win instead.</state>
-            </case>
-            <case stage="0-10" id="1357" priority="385">
-                <condition status="lost_all" role="target" character="human" />
-                <condition role="self" saidMarker="HardMode1v1" />
-                <state img="#-demonhappy.png" marker="HardMode1v1PlayerLoss">Dashed upon the rocks.</state>
-                <state img="#-demonhappy.png" marker="HardMode1v1PlayerLoss">Your hopes, turned to dust.</state>
-                <state img="#-demonhappy.png" marker="HardMode1v1PlayerLoss">Eliminated.</state>
             </case>
             <case stage="0-10" id="30" totalRounds="0">
                 <condition status="lost_all" role="target" character="human" />
@@ -4781,11 +4834,9 @@
                 <state img="#-devious.png">Never stood a chance.</state>
                 <state img="#-dismissive.png">Trivial.</state>
             </case>
-            <case stage="0-8" id="1239" oneShotId="167" totalRounds="5-" priority="150">
+            <case stage="0-8" id="1239" totalRounds="5-" priority="150">
                 <condition status="not_lost_all" role="target" />
-                <alternative oneShotId="137">
-                    <condition filter="aggressive" role="target" />
-                </alternative>
+                <condition role="self" notSaidMarker="TagTargetItDoesntMatter" />
                 <alternative>
                     <condition filter="mean" role="target" />
                 </alternative>
@@ -5028,7 +5079,7 @@
         </trigger>
 
         <trigger id="opponent_stripping">
-            <case stage="0-10" id="158" priority="351">
+            <case stage="0-10" id="158" priority="999">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="HardMode1v1" />
                 <state img="#-aroused.png">No, no. Slow it down, partner.</state>
@@ -5037,14 +5088,14 @@
                 <state img="#-devious.png">One by one.</state>
                 <state img="#-devious.png">Take your time, partner. I am enjoying this greatly.</state>
             </case>
-            <case stage="0-10" id="211" priority="350">
+            <case stage="0-10" id="211" priority="999">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="Throwing" />
                 <state img="#-aroused.png">... though regardless of which of us is losing, I &lt;i&gt;do&lt;/i&gt; like what I am seeing.</state>
                 <state img="#-snark.png">I have to admit, though, I do not mind watching this.</state>
                 <state img="#-happy.png">Ah, partner, you continue to look splendid.</state>
             </case>
-            <case stage="0-10" id="159" priority="350">
+            <case stage="0-10" id="159" priority="998">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="HardModeStart" />
                 <state img="#-dismissive.png">Did you think you could avoid having to strip, partner?</state>
@@ -5169,6 +5220,34 @@
                 <state img="#-devious.png" marker="StrippingSmallAfterLargeMIN">Very well. You are already indecent anyway.</state>
                 <state img="#-snark.png" marker="StrippingSmallAfterLargeMIN">Did you somehow forget you had that on until now?</state>
             </case>
+            <case stage="0-10" id="1453" priority="120">
+                <condition gender="female" role="target" layers="5-" startingLayers="5-" />
+                <alternative>
+                    <test expr="~clothing.type~" value="important" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="major" />
+                </alternative>
+                <state img="#-devious.png" marker="StrippingBigAfterSmall">Removing your larger items first, then?</state>
+                <state img="#-amused.png" marker="StrippingBigAfterSmall">I see someone is using their 'strongest attack' first.</state>
+                <state img="#-snark.png" marker="StrippingBigAfterSmall">You know, ~name~, there &lt;i&gt;is&lt;/i&gt; reason to hold back, here.</state>
+                <state img="#-aroused.png" marker="StrippingBigAfterSmall">Going right for it, then?</state>
+                <state img="#-amused.png" marker="StrippingBigAfterSmall">Hee hee! How curious!</state>
+            </case>
+            <case stage="0-10" id="1454" priority="120">
+                <condition gender="male" role="target" layers="4-" startingLayers="4-" />
+                <alternative>
+                    <test expr="~clothing.type~" value="important" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="major" />
+                </alternative>
+                <state img="#-devious.png" marker="StrippingBigAfterSmall">Removing your larger items first, then?</state>
+                <state img="#-amused.png" marker="StrippingBigAfterSmall">I see someone is using their 'strongest attack' first.</state>
+                <state img="#-snark.png" marker="StrippingBigAfterSmall">You know, ~name~, there &lt;i&gt;is&lt;/i&gt; reason to hold back, here.</state>
+                <state img="#-aroused.png" marker="StrippingBigAfterSmall">Going right for it, then?</state>
+                <state img="#-amused.png" marker="StrippingBigAfterSmall">Hee hee! How curious!</state>
+            </case>
             <case stage="0-4" id="1312" priority="0">
                 <condition count="0" role="target" character="human" />
                 <test expr="~clothing.type~" value="minor" />
@@ -5184,7 +5263,7 @@
         </trigger>
 
         <trigger id="opponent_stripped">
-            <case stage="0-10" id="160" priority="351">
+            <case stage="0-10" id="160" priority="999">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="HardMode1v1" />
                 <state img="#-aroused.png" oneShotId="59">More and more for me to see.</state>
@@ -5194,7 +5273,7 @@
                 <state img="#-snark.png" oneShotId="62">Down and down you fall. Hee hee.</state>
                 <state img="#-aroused.png" oneShotId="103">Bare yourself for me.</state>
             </case>
-            <case stage="0-10" id="212" priority="350">
+            <case stage="0-10" id="212" priority="999">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="Throwing" />
                 <state img="#-devious.png">How attractive.</state>
@@ -5203,7 +5282,7 @@
                 <state img="#-displeased.png">Victory should be easily attainable from here. Just focus, partner.</state>
                 <state img="#-displeased.png">Well, whether you are trying to give &lt;i&gt;me&lt;/i&gt; a victory or not, I shall stay the course.</state>
             </case>
-            <case stage="0-10" id="161" priority="350">
+            <case stage="0-10" id="161" priority="998">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="HardModeStart" />
                 <state img="#-devious.png" oneShotId="63">Thus is another piece of clothing fallen from you.</state>
@@ -5393,6 +5472,16 @@
                 <state img="#-rigid.png">First it is tie. Then it is forfeit.</state>
                 <state img="#-dismissive.png">I shan't suffer you to be my equal for long, ~name~. Lose the next hand and fall before me.</state>
             </case>
+            <case stage="0-4" id="1133" oneShotId="208">
+                <condition count="0" filter="human" role="target" />
+                <condition status="lost_some" role="target" />
+                <test expr="~target.diff(self)~" value="0" />
+                <state img="#-dismissive.png">Neck and neck means little so early.</state>
+                <state img="#-dismissive.png">There is plenty of time yet for you to fall past me.</state>
+                <state img="#-rigid.png">You have tied with me for now. Continue losing, ~target~.</state>
+                <state img="#-devious.png">This tie is but the beginning of the end.</state>
+                <state img="#-devious.png">Your meager lead over me is gone.</state>
+            </case>
             <case stage="0-10" id="986">
                 <condition status="not_decent" role="target" />
                 <test expr="~clothing.type~" value="extra" />
@@ -5411,34 +5500,52 @@
                 <state img="#-snark.png" marker="StrippedSmallAfterLargeMIN">On you march to defeat.</state>
                 <state img="#-devious.png" marker="StrippedSmallAfterLargeMIN">Better late than never, as the saying goes.</state>
             </case>
-            <case stage="0-4" id="1133" hidden="1">
-                <condition count="0" filter="human" role="target" />
-                <condition status="lost_some" role="target" />
-                <test expr="~target.diff(self)~" value="0" />
-                <state img="#-dismissive.png">Neck and neck means little so early.</state>
-                <state img="#-dismissive.png">There is plenty of time yet for you to fall past me.</state>
-                <state img="#-rigid.png">You have tied with me for now. Continue losing, ~target~.</state>
-                <state img="#-devious.png">This tie is but the beginning of the end.</state>
-                <state img="#-devious.png">Your meager lead over me is gone.</state>
+            <case stage="0-10" id="1455" priority="120">
+                <condition gender="female" role="target" layers="4-" startingLayers="5-" />
+                <alternative>
+                    <test expr="~clothing.type~" value="important" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="major" />
+                </alternative>
+                <state img="#-aroused.png" marker="StrippedBigAfterSmall">Not bad. Not bad at all...</state>
+                <state img="#-displeased.png" marker="StrippedBigAfterSmall">Well, it is all downhill after your ~clothing~.</state>
+                <state img="#-aroused.png" marker="StrippedBigAfterSmall">What a &lt;i&gt;sensual&lt;/i&gt; display, and so quickly, too!</state>
+                <state img="#-devious.png" marker="StrippedBigAfterSmall">Substantial damage, and so early too.</state>
+                <state img="#-amused.png" marker="StrippedBigAfterSmall">Hee hee! Does the fool not understand the goal of all this?</state>
+            </case>
+            <case stage="0-10" id="1456" priority="120">
+                <condition gender="male" role="target" layers="3-" startingLayers="4-" />
+                <alternative>
+                    <test expr="~clothing.type~" value="important" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="major" />
+                </alternative>
+                <state img="#-aroused.png" marker="StrippedBigAfterSmall">Not bad. Not bad at all...</state>
+                <state img="#-displeased.png" marker="StrippedBigAfterSmall">Well, it is all downhill after your ~clothing~.</state>
+                <state img="#-aroused.png" marker="StrippedBigAfterSmall">What a &lt;i&gt;sensual&lt;/i&gt; display, and so quickly, too!</state>
+                <state img="#-devious.png" marker="StrippedBigAfterSmall">Substantial damage, and so early too.</state>
+                <state img="#-amused.png" marker="StrippedBigAfterSmall">Hee hee! Does the fool not understand the goal of all this?</state>
             </case>
         </trigger>
 
         <trigger id="opponent_chest_will_be_visible">
-            <case stage="0-10" id="1352" priority="355">
+            <case stage="0-10" id="1352" priority="999">
                 <condition role="self" saidMarker="HardMode1v1" />
                 <condition role="target" character="human" layers="0-1" />
                 <state img="#-demonhappy.png" marker="Hard1v1HandLoss">This will do it.</state>
                 <state img="#-devious.png" marker="Hard1v1HandLoss">Go on, partner. Unless, of course, you want to reset away?</state>
                 <state img="#-devious.png" marker="Hard1v1HandLoss">Come, ~player~. No hesitation.</state>
             </case>
-            <case stage="0-10" id="213" priority="350">
+            <case stage="0-10" id="213" priority="999">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="Throwing" />
                 <state img="#-aroused.png">... though whichever of us is losing, I &lt;i&gt;do&lt;/i&gt; like what I am seeing.</state>
                 <state img="#-snark.png">I have to admit, though, I do not mind watching this.</state>
                 <state img="#-happy.png">Ah, partner you continue to look splendid.</state>
             </case>
-            <case stage="0-10" id="1351" priority="350">
+            <case stage="0-10" id="1351" priority="998">
                 <condition role="self" saidMarker="HardModeStart" />
                 <condition role="target" character="human" layers="0-1" />
                 <state img="#-snark.png" marker="HardModeHandLoss">Last chance to pull off a victory, partner...</state>
@@ -5464,7 +5571,7 @@
         </trigger>
 
         <trigger id="opponent_chest_is_visible">
-            <case stage="0-10" id="694" priority="350">
+            <case stage="0-10" id="694" priority="999">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="Throwing" />
                 <state img="#-devious.png">How attractive.</state>
@@ -5472,6 +5579,26 @@
                 <state img="#-anger.png">Keep in mind, I am &lt;i&gt;trying&lt;/i&gt; to let you win.</state>
                 <state img="#-displeased.png">Victory should be easily attainable from here. Just focus, partner.</state>
                 <state img="#-displeased.png">Well, whether you are trying to give &lt;i&gt;me&lt;/i&gt; a victory or not, I shall stay the course.</state>
+            </case>
+            <case stage="0-10" id="1463" priority="999">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="HardMode1v1" />
+                <state img="#-aroused.png" oneShotId="123">More and more for me to see.</state>
+                <state img="#-demonhappy.png" oneShotId="124" weight="99">Do you still feel lucky? Do you still feel strong? I &lt;i&gt;am&lt;/i&gt; strength.</state>
+                <state img="#-demonhappy.png" oneShotId="125">No mercy.</state>
+                <state img="#-aroused.png" oneShotId="126">It will not be long now, partner; you did not start with much to begin with.</state>
+                <state img="#-snark.png" oneShotId="127">Down and down you fall. Hee hee.</state>
+                <state img="#-aroused.png" oneShotId="128">Bare yourself for me.</state>
+            </case>
+            <case stage="0-10" id="1462" priority="998">
+                <condition role="target" character="human" />
+                <condition role="self" saidMarker="HardModeStart" />
+                <state img="#-devious.png" oneShotId="117">Thus is another piece of clothing fallen from you.</state>
+                <state img="#-aroused.png" oneShotId="118">Take comfort, partner; even if you fail, you will have provided me with... &lt;i&gt;entertainment.&lt;/i&gt;</state>
+                <state img="#-amused.png" oneShotId="119" marker="Pun" collectible="chara_puns" collectible-value="+1">I guess you can't spell Frisk... without &lt;i&gt;risk!&lt;/i&gt;</state>
+                <state img="#-devious.png" oneShotId="120">One by one.</state>
+                <state img="#-aroused.png" oneShotId="121">Do take your time, partner...</state>
+                <state img="#-snark.png" oneShotId="122">Off ~clothing.ifPlural(they go|it goes)~.</state>
             </case>
             <case stage="0-10" id="358" priority="345">
                 <condition filter="small_breasts" role="target" character="human" />
@@ -5494,21 +5621,21 @@
         </trigger>
 
         <trigger id="opponent_crotch_will_be_visible">
-            <case stage="0-10" id="1354" priority="355">
+            <case stage="0-10" id="1354" priority="999">
                 <condition role="self" saidMarker="HardMode1v1" />
                 <condition role="target" character="human" layers="0-1" />
                 <state img="#-demonhappy.png" marker="Hard1v1HandLoss">This will do it.</state>
                 <state img="#-devious.png" marker="Hard1v1HandLoss">Go on, partner. Unless, of course, you want to reset away?</state>
                 <state img="#-devious.png" marker="Hard1v1HandLoss">Come, ~player~. No hesitation.</state>
             </case>
-            <case stage="0-10" id="214" priority="350">
+            <case stage="0-10" id="214" priority="999">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="Throwing" />
                 <state img="#-aroused.png">... though whichever of us is losing, I &lt;i&gt;do&lt;/i&gt; like what I am seeing.</state>
                 <state img="#-snark.png">I have to admit, though, I do not mind watching this.</state>
                 <state img="#-happy.png">Ah, partner you continue to look splendid.</state>
             </case>
-            <case stage="0-10" id="1353" priority="350">
+            <case stage="0-10" id="1353" priority="998">
                 <condition role="self" saidMarker="HardModeStart" />
                 <condition role="target" character="human" layers="0-1" />
                 <state img="#-snark.png" marker="HardModeHandLoss">Last chance to pull off a victory, partner...</state>
@@ -5528,7 +5655,7 @@
         </trigger>
 
         <trigger id="opponent_crotch_is_visible">
-            <case stage="0-10" id="695" priority="350">
+            <case stage="0-10" id="695" priority="999">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="Throwing" />
                 <state img="#-devious.png">How attractive.</state>
@@ -5939,7 +6066,7 @@
         </trigger>
 
         <trigger id="male_start_masturbating">
-            <case stage="0-8" id="215" priority="305">
+            <case stage="0-8" id="215" priority="999">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="Throwing" />
                 <state img="#-aroused.png">Oh partner, you know just how to get me excited.</state>
@@ -5948,7 +6075,7 @@
                 <state img="#-demonhappy.png">There you go. Grab it, and stroke it.</state>
                 <state img="#-aroused.png">How sensual of you.</state>
             </case>
-            <case stage="0-8" id="1018" priority="305">
+            <case stage="0-8" id="1018" priority="999">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="HardMode1v1" notSaidMarker="Throwing" />
                 <state img="#-devious.png">Take this as your consolation prize...</state>
@@ -6217,7 +6344,7 @@
         </trigger>
 
         <trigger id="female_start_masturbating">
-            <case stage="0-8" id="216" priority="305">
+            <case stage="0-8" id="216" priority="999">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="Throwing" />
                 <state img="#-aroused.png">Oh partner, you know just how to get me excited.</state>
@@ -6226,7 +6353,7 @@
                 <state img="#-demonhappy.png">There you go. Rub it. Pinch it.</state>
                 <state img="#-aroused.png">How sensual of you.</state>
             </case>
-            <case stage="0-8" id="1019" priority="305">
+            <case stage="0-8" id="1019" priority="999">
                 <condition role="target" character="human" />
                 <condition role="self" saidMarker="HardMode1v1" notSaidMarker="Throwing" />
                 <state img="#-devious.png">Take this as your consolation prize...</state>
@@ -6596,7 +6723,7 @@
         <trigger id="start_masturbating">
             <case stage="8" id="219" priority="99">
                 <condition role="self" saidMarker="Throwing" />
-                <state img="#-startmasthappy.png">How do I look, partner?</state>
+                <state img="#-startmasthappy.png">How do I look, partner? ~</state>
                 <state img="#-startmasthappy.png">I have been waiting for this.</state>
                 <state img="#-startmasthappy.png">Watching the rabble has gotten me wound up.</state>
             </case>
@@ -6616,85 +6743,6 @@
                 <state img="#-startmast.png">The shame.</state>
                 <state img="#-startmast.png">Disgraceful.</state>
                 <state img="#-startmast.png">What a shameful performance on my part.</state>
-            </case>
-            <case stage="9" id="1326" hidden="1">
-                <condition role="self" notSaidMarker="EpilogueForeplayPsuedo" />
-                <condition role="self" notSaidMarker="EpilogueChangedForeplay" />
-                <state img="#-happy.png" marker="EpilogueForeplayPsuedo=1" persist-marker="true">
-                    <text>Oh look, hidden cases.</text>
-                    <markers>
-                        <marker name="EpilogueChangedForeplay" op="=" value="1" />
-                    </markers>
-                </state>
-            </case>
-            <case stage="9" id="1339" hidden="1" priority="999">
-                <condition role="self" saidMarker="EpilogueForeplayPsuedo==1" />
-                <condition role="self" saidMarker="EpilogueChangedForeplay&lt;1" />
-                <state img="#-happy.png" marker="EpilogueForeplayPsuedo=2" persist-marker="true">
-                    <text>Oh look, hidden cases. Foreplaypsudeo is 1, change to 2.</text>
-                    <markers>
-                        <marker name="EpilogueChangedForeplay" op="=" value="1" />
-                    </markers>
-                </state>
-            </case>
-            <case stage="9" id="1340" hidden="1" priority="999">
-                <condition role="self" saidMarker="EpilogueForeplayPsuedo==2" />
-                <condition role="self" saidMarker="EpilogueChangedForeplay&lt;1" />
-                <state img="#-happy.png" marker="EpilogueForeplayPsuedo=3" persist-marker="true">
-                    <text>Oh look, hidden cases. Foreplaypsudeo is 2, change to 3.</text>
-                    <markers>
-                        <marker name="EpilogueChangedForeplay" op="=" value="1" />
-                    </markers>
-                </state>
-            </case>
-            <case stage="9" id="1341" hidden="1" priority="999">
-                <condition role="self" saidMarker="EpilogueForeplayPsuedo==3" />
-                <condition role="self" saidMarker="EpilogueChangedForeplay&lt;1" />
-                <state img="#-happy.png" marker="EpilogueForeplayPsuedo=1" persist-marker="true">
-                    <text>Oh look, hidden cases. Foreplaypsudeo is 3, change to 1.</text>
-                    <markers>
-                        <marker name="EpilogueChangedForeplay" op="=" value="1" />
-                    </markers>
-                </state>
-            </case>
-            <case stage="9" id="1342" hidden="1">
-                <condition role="self" saidMarker="EpilogueBanterPsuedo==1" />
-                <condition role="self" saidMarker="EpilogueChangedBanter&lt;1" />
-                <state img="#-happy.png" marker="EpilogueBanterPsuedo=2" persist-marker="true">
-                    <text>Oh look, hidden cases.</text>
-                    <markers>
-                        <marker name="EpilogueChangedBanter" op="=" value="1" />
-                    </markers>
-                </state>
-            </case>
-            <case stage="9" id="1343" hidden="1">
-                <condition role="self" saidMarker="EpilogueBanterPsuedo==2" />
-                <condition role="self" saidMarker="EpilogueChangedBanter&lt;1" />
-                <state img="#-happy.png" marker="EpilogueBanterPsuedo=3" persist-marker="true">
-                    <text>Oh look, hidden cases.</text>
-                    <markers>
-                        <marker name="EpilogueChangedBanter" op="=" value="1" />
-                    </markers>
-                </state>
-            </case>
-            <case stage="9" id="1344" hidden="1">
-                <condition role="self" saidMarker="EpilogueBanterPsuedo==3" />
-                <condition role="self" saidMarker="EpilogueChangedBanter&lt;1" />
-                <state img="#-happy.png" marker="EpilogueBanterPsuedo=1" persist-marker="true">
-                    <text>Oh look, hidden cases.</text>
-                    <markers>
-                        <marker name="EpilogueChangedBanter" op="=" value="1" />
-                    </markers>
-                </state>
-            </case>
-            <case stage="9" id="1345" hidden="1">
-                <condition role="self" saidMarker="EpilogueChangedBanter&lt;1" notSaidMarker="EpilogueBanterPsuedo" />
-                <state img="#-happy.png" marker="EpilogueBanterPsuedo=1" persist-marker="true">
-                    <text>Oh look, hidden cases.</text>
-                    <markers>
-                        <marker name="EpilogueChangedBanter" op="=" value="1" />
-                    </markers>
-                </state>
             </case>
         </trigger>
 
@@ -7056,8 +7104,12 @@
                 <state img="#-neutral.png" marker="+PersistFailedNormal" persist-marker="true">Yeah.</state>
             </case>
             <case stage="10" id="924" hidden="1">
-                <condition role="self" />
-                <state img="#-neutral.png" marker="EpilogueBeaten=1">Yeah.</state>
+                <state img="#-neutral.png" marker="EpilogueBeaten=1">
+                    <text>Yeah.</text>
+                    <markers>
+                        <marker name="EpilogueViewerCount" op="=" value="-1" />
+                    </markers>
+                </state>
             </case>
             <case stage="10" id="946" hidden="1">
                 <state img="#-neutral.png" marker="PersistEarlyGame=0" persist-marker="true">
@@ -7207,12 +7259,18 @@
                 <test expr="~human.gender~" value="male" />
                 <state img="#-neutral.png" marker="EpilogueForeplayGender=8">Epilogue stuff.</state>
             </case>
-            <case stage="10" id="1415" hidden="1">
-                <condition role="self" />
-                <state img="#-neutral.png" marker="EpilogueChangedForeplay=0" persist-marker="true">
-                    <text>Yeah.</text>
+        </trigger>
+
+        <trigger id="global">
+            <case stage="0-7" id="1031" hidden="1">
+                <condition role="self" saidMarker="EpilogueCount" />
+                <state img="#-dismissive.png" marker="EpilogueCount += 0" persist-marker="true">
+                    <text>Markers made persistent here.</text>
                     <markers>
-                        <marker name="EpilogueChangedBanter" op="=" value="0" />
+                        <marker name="EpilogueViewerCount" op="+" value="0" />
+                        <marker name="EpilogueBeaten" op="+" value="0" />
+                        <marker name="EpilogueForeplayPsuedo" op="+" value="0" />
+                        <marker name="EpilogueBanterPsuedo" op="+" value="0" />
                     </markers>
                 </state>
             </case>
@@ -7223,6 +7281,7 @@
         <title>Power</title>
         <markers>
             <marker name="EpilogueCount" op="+" value="1" when="always" />
+            <marker name="EpilogueViewerCount" op="+" value="1" when="gallery" />
         </markers>
         <scene id="SceneCharaInteractions" name="CharaInteractions" x="0" y="0" width="300" height="240" zoom="0.0965251">
             <directive type="sprite" id="Chara" src="0-rigid.png" x="-200" y="-650" scalex="1.5" scaley="1.5" pivotx="50%" pivoty="50%" />
