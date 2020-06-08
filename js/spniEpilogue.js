@@ -739,7 +739,7 @@ function populateUnavailableEpilogues() {
   var unavailable = [];
 
   players.forEach(function (opp) {
-    if (opp === humanPlayer || opp.endings.length === 0) return;
+    if (!opp || opp === humanPlayer || !opp.endings || opp.endings.length === 0) return;
 
     opp.endings.each(function() {
       var ending = $(this);
