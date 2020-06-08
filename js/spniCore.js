@@ -13,9 +13,7 @@ var EPILOGUES_ENABLED = true;
 var EPILOGUES_UNLOCKED = false;
 var COLLECTIBLES_ENABLED = true;
 var COLLECTIBLES_UNLOCKED = false;
-var EPILOGUE_BADGES_ENABLED = true;
-var COSTUME_BADGES_ENABLED = true;
-var ALT_COSTUMES_ENABLED = false;
+var ALT_COSTUMES_ENABLED = true;
 var DEFAULT_COSTUME_SET = null;
 var USAGE_TRACKING = undefined;
 var SENTRY_INITIALIZED = false;
@@ -46,8 +44,8 @@ var backgroundImage;
 #Now that opponents can be specified in any folder, this is no longer required.*/
 
 /* Gender Images */
-var MALE_SYMBOL = IMG + 'male.png';
-var FEMALE_SYMBOL = IMG + 'female.png';
+var MALE_SYMBOL = IMG + 'male.svg';
+var FEMALE_SYMBOL = IMG + 'female.svg';
 
 var includedOpponentStatuses = {};
 var alternateCostumeSets = {};
@@ -228,7 +226,7 @@ Player.prototype.resetState = function () {
         if (this.startStates.length > 0) this.updateChosenState(new State(this.startStates[0]));
 
         var appearance = this.default_costume;
-        if (ALT_COSTUMES_ENABLED && this.alt_costume) {
+        if (this.alt_costume) {
             appearance = this.alt_costume;
         }
 
@@ -242,10 +240,7 @@ Player.prototype.resetState = function () {
          * So assume behaviour.xml holds the 'definitive' starting gender
          * for the character.
          */
-        var startGender = this.xml.children('gender').text();
-        if (startGender) {
-            this.gender = startGender;
-        }
+        this.gender = appearance.gender;
 
 		/* Load the player's wardrobe. */
 
@@ -479,15 +474,14 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.highlightStatus = highlightStatus || status || '';
     this.first = $metaXml.children('first').text();
     this.last = $metaXml.children('last').text();
-    
-    /* selectLabel shouldn't change due to e.g. alt costumes selected on
-     * the main select screen.
-     */
-    this.selectLabel = $metaXml.children('label').text();
-    this.label = this.selectLabel;
+
+    // For label and gender, track the original, default value from
+    // meta.xml, the value for the currently selected costume to be
+    // shown on the selection card, and the current in-game value.
+    this.label = this.selectLabel = this.metaLabel = $metaXml.children('label').text();
+    this.gender = this.selectGender = this.metaGender = $metaXml.children('gender').text();
 
     this.image = $metaXml.children('pic').text();
-    this.gender = $metaXml.children('gender').text();
     this.height = $metaXml.children('height').text();
     this.source = $metaXml.children('from').text();
     this.artist = $metaXml.children('artist').text();
@@ -502,17 +496,16 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.posesImageCount = parseInt($metaXml.children('poses').text(), 10) || undefined;
     this.z_index = parseInt($metaXml.children('z-index').text(), 10) || 0;
     this.dialogue_layering = $metaXml.children('dialogue-layer').text();
-    
-    this.endings = $metaXml.children('epilogue');
-    this.ending = $metaXml.children('has_ending').text() === "true";
 
-    if (this.endings.length > 0) {
-        this.endings.each(function (idx, elem) {
+    this.endings = null;
+    if (EPILOGUES_ENABLED) {
+        var $endings = $metaXml.children('epilogue').filter(function (idx, elem) {
             var status = $(elem).attr('status');
-            if (!status || includedOpponentStatuses[status]) {
-                this.ending = true;
-            }
+            return (!status || includedOpponentStatuses[status]);
         }.bind(this));
+        if ($endings.length) {
+            this.endings = $endings;
+        }
     }
 
     if (['over', 'under'].indexOf(this.dialogue_layering) < 0) {
@@ -547,7 +540,8 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
 
     this.alternate_costumes = [];
     this.selection_image = this.folder + this.image;
-    
+
+    if (!ALT_COSTUMES_ENABLED) return;
     $metaXml.find('>alternates>costume').each(function (i, elem) {
         var set = $(elem).attr('set') || 'offline';
         var status = $(elem).attr('status') || 'offline';
@@ -559,8 +553,10 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
 
             var costume_descriptor = {
                 'folder': $(elem).attr('folder'),
-                'label': $(elem).text(),
+                'name': $(elem).text(),
                 'image': $(elem).attr('img'),
+                'gender': $(elem).attr('gender') || this.selectGender,
+                'label': $(elem).attr('label') || this.selectLabel,
                 'set': set,
                 'status': status,
             };
@@ -573,6 +569,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
             this.alternate_costumes.push(costume_descriptor);
         }
     }.bind(this)).get();
+    // Not reached if alt costumes are disabled
 }
 
 Opponent.prototype = Object.create(Player.prototype);
@@ -700,9 +697,13 @@ Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
     if (!costumeDesc) {
         this.selected_costume = null;
         this.selection_image = this.base_folder + this.image;
+        this.selectLabel = this.metaLabel;
+        this.selectGender = this.metaGender;
     } else {
         this.selected_costume = costumeDesc.folder;
         this.selection_image = costumeDesc.folder + costumeDesc.image;
+        this.selectLabel = costumeDesc.label;
+        this.selectGender = costumeDesc.gender;
     }
 
     if (this.selectionCard)
@@ -740,7 +741,8 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
                 tags: [],
                 folder: this.selected_costume,
                 folders: $xml.children('folder'),
-                wardrobe: $xml.children('wardrobe')
+                wardrobe: $xml.children('wardrobe'),
+                gender: $xml.children('gender').text() || this.selectGender,
             };
             
             var poses = $xml.children('poses');
@@ -790,7 +792,6 @@ Opponent.prototype.unloadAlternateCostume = function () {
     }
     
     this.alt_costume = null;
-    this.selectAlternateCostume(null);
     this.resetState();
 }
 
@@ -821,6 +822,138 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
             if (onError) onError(this, status, err);
         }.bind(this)
 	});
+}
+
+/**
+ * Get quick details on epilogue conditions and whether they're met, given
+ * the current player gender and table composition.
+ */
+Opponent.prototype.getAllEpilogueStatus = function () {
+    if (!this.endings) {
+        return [];
+    }
+
+    var ret = [];
+    this.endings.each(function (idx, elem) {
+        var $elem = $(elem);
+
+        var summary = {
+            title: $elem.text(),
+            extraConditions: false,
+            wrongGender: false,
+            needsCharacter: null,
+            missingCharacter: false,
+            hint: undefined,
+        };
+
+        summary.unlocked = save.hasEnding(this.id, $elem.text());
+
+        /* Check what conditions we can for this epilogue: */
+        summary.gender = $elem.attr('gender') || 'any';
+        if (summary.gender !== humanPlayer.gender && summary.gender !== 'any') {
+            summary.wrongGender = true; 
+        }
+
+        var alsoPlaying = $elem.attr("alsoPlaying");
+        if (alsoPlaying) {
+            if (!players.some(function (p) { return p.id == alsoPlaying; })) {
+                /* Player requirement not met */
+                summary.missingCharacter = true;
+            }
+            summary.needsCharacter = alsoPlaying;
+        }
+
+        summary.hint = $elem.attr('hint');
+        summary.extraConditions = $elem.attr('markers') == 'true';
+        summary.score = (summary.wrongGender ? 4 : 0)
+            + (summary.missingCharacter ? 2 : 0)
+            + (summary.needsCharacter || summary.extraConditions ? 1 : 0);
+
+        ret.push(summary);
+    }.bind(this));
+
+    return ret;
+}
+
+/**
+ * Helper function that trims down opponent status into something that'll be
+ * easy to display on a selection screen.
+ *
+ * To be specific, this attempts to identify the epilogue with the most matching
+ * static requirements, taking the player's gender and current table setup into
+ * account.
+ */
+Opponent.prototype.getEpilogueStatus = function(mainSelect) {
+    /* Find the epilogue that matches the most requirements possible.
+     * Prefer matching gender requirements first before character reqs.
+     */
+    if (!this.endings) {
+        return;
+    }
+
+    var epilogueStatus = this.getAllEpilogueStatus();
+    var epilogueTitles = new Set();
+    var epiloguesUnlocked = new Set();
+    var bestMatchEpilogue = null;
+    for (var i = 0; i < epilogueStatus.length; i++) {
+        var status = epilogueStatus[i];
+        epilogueTitles.add(status.title);
+        if (status.unlocked) {
+            epiloguesUnlocked.add(status.title);
+            continue;
+        }
+
+        if (!bestMatchEpilogue || status.score < bestMatchEpilogue.score) {
+            bestMatchEpilogue = status;
+        }
+    }
+
+    /* Prior to main selection screen, show gender icon for wrong
+     * gender and conditional icon for other conditions, fulfilled or
+     * not (on the group selection screen, we'd need to look at the
+     * other characters in the group rather than the currently
+     * selected ones to give an accurate statement; let's do that
+     * later).  On the main selection screen, show the warning icon
+     * for wrong gender or character missing and the conditional icon
+     * for marker conditions.
+     */
+    var badge = '';
+    if (epiloguesUnlocked.size == epilogueTitles.size) {
+        badge = "-completed";
+    } else if (mainSelect && bestMatchEpilogue.score > 1) {
+        badge = "-unavailable";
+    } else if (bestMatchEpilogue.wrongGender) {
+        badge = '-' + bestMatchEpilogue.gender;
+    } else if ((bestMatchEpilogue.needsCharacter && !mainSelect) || bestMatchEpilogue.extraConditions) {
+        badge = "-conditional";
+    }
+    var tooltip;
+    if (bestMatchEpilogue) {
+        if (bestMatchEpilogue.wrongGender) {
+            tooltip = "Play as " + bestMatchEpilogue.gender + " for a chance to unlock another epilogue";
+        } else if (bestMatchEpilogue.needsCharacter && (!mainSelect || bestMatchEpilogue.missingCharacter)) {
+            var opp = loadedOpponents.find(function (p) {
+                return p && p.id === bestMatchEpilogue.needsCharacter;
+            });
+
+            tooltip = "Play with " + (opp ? opp.selectLabel : bestMatchEpilogue.needsCharacter.initCap())
+                + " for a chance to unlock another epilogue";
+        } else if (bestMatchEpilogue.extraConditions) {
+            if (bestMatchEpilogue.hint) {
+                tooltip = "Hint: " + bestMatchEpilogue.hint;
+            } else {
+                tooltip = "Unknown conditions apply";
+            }
+        }
+    }
+
+    return {
+        total: epilogueTitles.size,
+        unlocked: epiloguesUnlocked.size,
+        match: bestMatchEpilogue,
+        badge: 'img/epilogue' + badge + '.svg',
+        tooltip: tooltip,
+    };
 }
 
 /* Called prior to removing a character from the table. */
@@ -915,7 +1048,8 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 labels: $xml.children('label'),
                 tags: null,
                 folders: this.folder,
-                wardrobe: $xml.children('wardrobe')
+                wardrobe: $xml.children('wardrobe'),
+                gender: $xml.children('gender').text(),
             };
             
             var poses = $xml.children('poses');
@@ -1277,6 +1411,9 @@ function initialSetup () {
         loadGeneralCollectibles,
         loadSelectScreen,
         function () {
+            if (!EPILOGUES_ENABLED && !COLLECTIBLES_ENABLED) {
+                $('.title-gallery-edge').css('visibility', 'hidden');
+            }
             /* Make sure that save data is loaded before updateTitleGender(),
              * since the latter uses selectedClothing.
              */
@@ -1414,17 +1551,7 @@ function loadConfigFile () {
                 EPILOGUES_UNLOCKED = false;
             }
 
-            var _epilogue_badges = $(xml).children('epilogue_badges').text();
-            if(_epilogue_badges.toLowerCase() === 'false') {
-                EPILOGUE_BADGES_ENABLED = false;
-                console.log("Epilogue badges are disabled.");
-            } else {
-                console.log("Epilogue badges are enabled.");
-                EPILOGUE_BADGES_ENABLED = true;
-            }
-
-            var _debug = $(xml).children('debug').text();
-
+			var _debug = $(xml).children('debug').text();
             if (_debug === "true") {
                 DEBUG = true;
                 console.log("Debugging is enabled");
@@ -1470,19 +1597,12 @@ function loadConfigFile () {
 
             var _alts = $(xml).children('alternate-costumes').text();
 
-            if(_alts === "true") {
-                ALT_COSTUMES_ENABLED = true;
+            if(_alts === "false") {
+                ALT_COSTUMES_ENABLED = false;
+                console.log("Alternate costumes disabled");
+            } else {
                 console.log("Alternate costumes enabled");
 
-                var _costume_badges = $(xml).children('costume_badges').text();
-                if (_costume_badges.toLowerCase() === 'false') {
-                    COSTUME_BADGES_ENABLED = false;
-                    console.log("Alternate costume badges are disabled.");
-                } else {
-                    console.log("Alternate costume badges are enabled.");
-                    COSTUME_BADGES_ENABLED = true;
-                }
-                
                 DEFAULT_COSTUME_SET = $(xml).children('default-costume-set').text();
                 if (DEFAULT_COSTUME_SET) {
                     console.log("Defaulting to alternate costume set: "+DEFAULT_COSTUME_SET);
@@ -1498,9 +1618,6 @@ function loadConfigFile () {
                         console.log("Including alternate costume set: "+set);
                     }
                 });
-            } else {
-                ALT_COSTUMES_ENABLED = false;
-                console.log("Alternate costumes disabled");
             }
             
             COLLECTIBLES_ENABLED = false;

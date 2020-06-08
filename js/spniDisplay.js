@@ -823,6 +823,16 @@ function MainSelectScreenDisplay (slot) {
         $('#select-name-label-'+slot)
     );
 
+    this.badges = {
+        'epilogue': $('#select-badge-'+slot),
+        'costume': $('#select-costume-badge-'+slot),
+    };
+    this.badges.epilogue.tooltip({placement: 'right', container: this.imageArea, delay: 200});
+    this.allBadges = $('#select-image-area-'+slot+'>.select-badge-bar>img');
+    this.layerIcon = $('#select-layer-'+slot);
+    this.genderIcon = $('#select-gender-'+slot);
+    this.statusIcon = $('#select-status-'+slot);
+    
     this.targetSuggestionsShown = false;
     this.targetSuggestions = Array(4);
     this.suggestionQuad = Array(4);
@@ -910,20 +920,25 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
     this.hideBubble();
     this.drawPose(player.selection_image);
     this.label.html(player.label.initCap()).addClass('suggestion-label');
-    this.simpleImage.addClass('prefill-suggestion');
+    this.imageArea.addClass('prefill-suggestion');
     this.selectButton.html("Select Other Opponent").removeClass("red").addClass("green suggestion-shown");
     this.prefillButton.show();
+    this.altCostumeSelector.hide();
 
-    this.prefillBadgeRow.children().hide();
-
-    if (player.highlightStatus === 'new')
-        this.prefillSuggestionBadges.new.show();
-
-    if (player.ending)
-        this.prefillSuggestionBadges.epilogue.show();
-
-    if (player.alternate_costumes.length > 0)
-        this.prefillSuggestionBadges.costume.show();
+    this.prefillSuggestionBadges.new.toggle(player.highlightStatus === 'new');
+    this.badges.epilogue.toggle(!!player.endings);
+    var epilogueStatus = player.getEpilogueStatus();
+    if (epilogueStatus) {
+        this.badges.epilogue.attr({ 'src': epilogueStatus.badge,
+                                    'data-original-title': epilogueStatus.tooltip });
+    }
+    //this.prefillSuggestionBadges.costume.toggle(player.alternate_costumes.length > 0);
+    this.layerIcon.attr({
+        src: "img/layers" + player.layers + ".png",
+        alt: player.layers + " layers",
+    }).show() ;
+    updateGenderIcon(this.genderIcon, player);
+    this.statusIcon.hide();
 }
 
 MainSelectScreenDisplay.prototype.onSingleSuggestionSelected = function () {
@@ -942,15 +957,18 @@ MainSelectScreenDisplay.prototype.onSingleSuggestionSelected = function () {
 }
 
 MainSelectScreenDisplay.prototype.update = function (player) {
-    if (this.prefillSuggestion && players.some(function (p) { return p && p.id === this.prefillSuggestion.id; }, this))
+    if (this.prefillSuggestion && this.prefillSuggestion != player
+        && players.some(function (p) { return p && p.id === this.prefillSuggestion.id; }, this)) {
         this.setPrefillSuggestion(null);
+        loadDefaultFillSuggestions();
+    }
 
     if (!player && this.prefillSuggestion && !this.targetSuggestionsShown)
         return this.displaySingleSuggestion();
 
     this.prefillBadgeRow.children().hide();
     this.label.removeClass("suggestion-label");
-    this.simpleImage.removeClass("prefill-suggestion");
+    this.imageArea.removeClass("prefill-suggestion");
     this.selectButton.removeClass("suggestion-shown");
     this.prefillButton.hide();
 
@@ -965,8 +983,27 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         this.selectButton.removeClass("red");
         this.selectButton.addClass("green");
         this.altCostumeSelector.hide();
+
+        this.allBadges.hide();
+        this.layerIcon.hide();
+        this.genderIcon.hide();
+        this.statusIcon.hide();
         return;
     }
+    
+    this.badges.epilogue.toggle(!!player.endings);
+    var epilogueStatus = player.getEpilogueStatus(true);
+    if (epilogueStatus) {
+        this.badges.epilogue.attr({'src': epilogueStatus.badge,
+                                   'data-original-title': epilogueStatus.tooltip || ''});
+    }
+    //this.badges.costume.toggle(player.alternate_costumes.length > 0);
+    //updateStatusIcon(this.statusIcon, player);
+    this.layerIcon.attr({
+        src: "img/layers" + player.layers + ".png",
+        alt: player.layers + " layers",
+    }).show() ;
+    updateGenderIcon(this.genderIcon, player);
     
     if (!player.isLoaded()) {
         this.hideBubble();
@@ -978,8 +1015,6 @@ MainSelectScreenDisplay.prototype.update = function (player) {
     } else {
         OpponentDisplay.prototype.update.call(this, player);
         
-        this.setPrefillSuggestion(null);
-
         this.selectButton.attr('disabled', false).html("Remove Opponent");
         this.selectButton.removeClass("green");
         this.selectButton.addClass("red");
@@ -998,37 +1033,16 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         }
 
         this.altCostumeSelector.hide();
-        if (ALT_COSTUMES_ENABLED && player.alternate_costumes.length > 0) {
-            this.altCostumeSelector.empty();
-            
-            this.altCostumeSelector.append($('<option>', {
-                val: '',
-                text: 'Default Costume'
-            }));
-
-            player.alternate_costumes.forEach(function (alt) {
-                this.altCostumeSelector.append(getCostumeOption(alt, player.selected_costume));
-            }.bind(this));
-
-            this.altCostumeSelector.show();
+        if (player.alternate_costumes.length > 0) {
+            fillCostumeSelector(this.altCostumeSelector, player.alternate_costumes, player.selected_costume)
+                .show();
         }
     }
 }
 
 MainSelectScreenDisplay.prototype.altCostumeSelected = function () {
     var opponent = players[this.slot];
-    var selectedCostume = this.altCostumeSelector.val();
-    var costumeDesc = undefined;
-
-    if (selectedCostume.length > 0) {
-        for (let i = 0; i < opponent.alternate_costumes.length; i++) {
-            if (opponent.alternate_costumes[i].folder === selectedCostume) {
-                costumeDesc = opponent.alternate_costumes[i];
-                break;
-            }
-        }
-    }
-
+    var costumeDesc = this.altCostumeSelector.children(':selected').data('costumeDescriptor');
     opponent.selectAlternateCostume(costumeDesc);
     if (opponent.selected_costume) {
         opponent.loadAlternateCostume(true);
@@ -1072,23 +1086,16 @@ function OpponentSelectionCard (opponent) {
 
     var badgeSidebar = this.mainElem.appendChild(createElementWithClass('div', 'badge-sidebar'));
 
-    if (opponent.highlightStatus === 'new') {
-        $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
-            src: "img/new_icon.png",
+    if (opponent.endings) {
+        this.epilogueBadge = $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon epilogue-badge'))).attr({
+            src: "img/epilogue.svg",
             alt: "SPNatI Epilogue available"
-        });
+        }).tooltip({placement: 'right', delay: 200, container: this.mainElem});
     }
 
-    if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
+    if (opponent.alternate_costumes.length > 0) {
         $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
-            src: "img/epilogue_icon.png",
-            alt: "SPNatI Epilogue available"
-        });
-    }
-
-    if (COSTUME_BADGES_ENABLED && opponent.alternate_costumes.length > 0) {
-        $(badgeSidebar.appendChild(createElementWithClass('img', 'badge-icon'))).attr({
-            src: "img/costume_icon.png",
+            src: "img/costume_badge.svg",
             alt: "SPNatI Alternate Costume available"
         });
     }
@@ -1117,16 +1124,21 @@ OpponentSelectionCard.prototype.update = function () {
         src: "img/layers" + this.opponent.layers + ".png",
         alt: this.opponent.layers + " layers",
     }).show() ;
-    this.genderIcon.attr({
-        src: this.opponent.gender === 'male' ? 'img/male.svg' : 'img/female.svg',
-        alt: this.opponent.gender.initCap(),
-    }).show();
+    updateGenderIcon(this.genderIcon, this.opponent);
 
     this.simpleImage.one('load', OpponentDisplay.prototype.rescaleSimplePose.bind(this, this.opponent.scale));
     this.simpleImage.attr('src', this.opponent.selection_image).show();
     
     this.label.text(this.opponent.selectLabel);
     this.source.text(this.opponent.source);
+}
+
+OpponentSelectionCard.prototype.updateEpilogueBadge = function () {
+    if (!this.epilogueBadge || !this.opponent.endings) return;
+
+    var epilogueStatus = this.opponent.getEpilogueStatus();
+    this.epilogueBadge.attr({'src': epilogueStatus.badge,
+                             'data-original-title': epilogueStatus.tooltip || '' });
 }
 
 OpponentSelectionCard.prototype.clear = function () {}
@@ -1156,7 +1168,7 @@ OpponentDetailsDisplay = function () {
     this.descriptionLabel = $("#individual-select-screen .opponent-details-description");
     this.linecountLabel = $("#individual-select-screen .opponent-linecount");
     this.posecountLabel = $("#individual-select-screen .opponent-posecount");
-    this.costumeSelector = $("#individual-select-screen .opponent-costume-select");
+    this.costumeSelector = $("#individual-select-screen .alt-costume-dropdown");
     this.simpleImage = $("#individual-select-screen .opponent-details-simple-image");
     this.imageArea = $("#individual-select-screen .opponent-details-image-area");
     
@@ -1226,18 +1238,7 @@ OpponentDetailsDisplay.prototype.handlePanelNavigation = function (ev) {
 
 OpponentDetailsDisplay.prototype.handleCostumeChange = function () {
     if (!this.opponent) return;
-	var selectedCostume = this.costumeSelector.val();
-	
-	var costumeDesc = undefined;
-	if (selectedCostume.length > 0) {
-		for (let i=0;i<this.opponent.alternate_costumes.length;i++) {
-			if (this.opponent.alternate_costumes[i].folder === selectedCostume) {
-				costumeDesc = this.opponent.alternate_costumes[i];
-				break;
-			}
-		}
-	}
-	
+    var costumeDesc = this.costumeSelector.children(':selected').data('costumeDescriptor');
     this.opponent.selectAlternateCostume(costumeDesc);
     this.simpleImage.attr('src', this.opponent.selection_image);
 }
@@ -1294,7 +1295,7 @@ function isEquivalentEpilogue(e1, e2) {
 }
 
 OpponentDetailsDisplay.prototype.updateEpiloguesView = function () {
-    if (!this.opponent.ending) return;
+    if (!this.opponent.endings) return;
 
     // Group together any epilogues with a shared name and conditional attributes (but with different gender attributes).
     var groups = [];
@@ -1303,11 +1304,6 @@ OpponentDetailsDisplay.prototype.updateEpiloguesView = function () {
         var $elem = $(elem);
         var title = $elem.text();
 
-        var status = $elem.attr('status');
-        if (status && !includedOpponentStatuses[status]) {
-            return;
-        }
-        
         if(!groups.some(function (group) {
             if (group.every(isEquivalentEpilogue.bind(null, $elem))) {
                 // This group contains all equivalent epilogues to the current one, add the current epilogue 
@@ -1423,68 +1419,46 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         this.mainView.removeClass('show-more');
     }
     
-    if (!opponent.ending) {
+    if (!opponent.endings) {
         this.epiloguesField.removeClass('has-epilogues');
     } else {
         this.epiloguesField.addClass('has-epilogues');
-        
-        var endingGenders = {
-            male: false,
-            female: false
-        };
-        
-        var hasConditionalEnding = false;
-        var totalEndings = 0;
-        var unlockedEndings = 0;
-        
-        opponent.endings.each(function (idx, elem) {
-            var $elem = $(elem);
+        var epilogueStatus = opponent.getEpilogueStatus();
 
-            var status = $elem.attr('status');
-            if (status && !includedOpponentStatuses[status]) {
-                return;
-            }
-            
-            totalEndings += 1;
-            if (save.hasEnding(opponent.id, $elem.text())) {
-                unlockedEndings += 1;
-            }
-            
-            if(EPILOGUE_CONDITIONAL_ATTRIBUTES.some(function (attr) { return !!$elem.attr(attr); })) {
-                hasConditionalEnding = true;
-            }
-            
-            var gender = $elem.attr('gender');
-            
-            if (gender === 'male') {
-                endingGenders.male = true;
-            } else if (gender === 'female') {
-                endingGenders.female = true;
+        var ctr = '(' + epilogueStatus.unlocked + '/' + epilogueStatus.total + ' seen)';
+        var text = "";
+
+        var showPositive = false;
+        var bestMatchEpilogue = epilogueStatus.match;
+        if (bestMatchEpilogue == null) {
+            text = 'All unlocked';
+            showPositive = true;
+        } else if (bestMatchEpilogue.wrongGender) {
+            text = bestMatchEpilogue.gender.initCap() + 's Only';
+        } else if (bestMatchEpilogue.missingCharacter) {
+            var opp = loadedOpponents.find(function (p) {
+                return p.id === bestMatchEpilogue.missingCharacter;
+            });
+
+            if (opp) {
+                text = "Requires " + opp.selectLabel;
             } else {
-                endingGenders.male = true;
-                endingGenders.female = true;                
+                text = "Requires Missing Character";
             }
-        });
-        
-        var epilogueAvailable = false;
-        if (endingGenders.male && endingGenders.female) {
-            epilogueAvailable = true;
-        } else if (endingGenders.male) {
-            epilogueAvailable = (humanPlayer.gender === 'male');
-        } else if (endingGenders.female) {
-            epilogueAvailable = (humanPlayer.gender === 'female');
-        }
-        
-        if (epilogueAvailable) {
-            this.epiloguesNavButton
-                .text((hasConditionalEnding ? 'Conditionally ' : '') + 'Available' + ' (' + unlockedEndings +'/' + totalEndings + ' seen)')
-                .removeClass('smooth-button-red')
-                .addClass('smooth-button-blue');
         } else {
-            this.epiloguesNavButton
-                .text((endingGenders.male ? 'Males' : 'Females') + ' Only' + ' (' + unlockedEndings +'/' + totalEndings + ' seen)')
-                .removeClass('smooth-button-blue')
-                .addClass('smooth-button-red');
+            text = (bestMatchEpilogue.extraConditions > 0 ? "Conditionally " : "") + "Available";
+            showPositive = true;
+        }
+
+        this.epiloguesNavButton
+            .removeClass('red blue')
+
+        text += " " + ctr;
+        this.epiloguesNavButton.text(text);
+        if (showPositive) {
+            this.epiloguesNavButton.addClass('blue');
+        } else {
+            this.epiloguesNavButton.addClass('red');
         }
     }
 
@@ -1515,7 +1489,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         
         this.collectiblesNavButton
             .text("Available")
-            .addClass('smooth-button-blue')
+            .addClass('blue')
             .prop('disabled', false);
             
         if (!opponent.collectibles) {
@@ -1527,25 +1501,9 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         this.collectiblesField.removeClass('has-collectibles');
     }
 
-    if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
-        this.costumeSelector.empty().append($('<option>', {val: '', text: 'Default Costume'})).prop('disabled', false);
-        
-        opponent.alternate_costumes.forEach(function (alt) {
-            this.costumeSelector.append($('<option>', {
-                val: alt.folder,
-                text: alt.label,
-                selected: alt.folder === opponent.selected_costume
-            }));
-        }.bind(this));
-        
-        /* Change the default on the selector if DEFAULT_COSTUME_SET is set */
-        opponent.alternate_costumes.some(function (alt) {
-            if (alt.set === DEFAULT_COSTUME_SET) {
-                return true;
-            }
-        }.bind(this));
-        
-        this.costumeSelector.show();
+    if (opponent.alternate_costumes.length > 0) {
+        fillCostumeSelector(this.costumeSelector, opponent.alternate_costumes, opponent.selected_costume)
+            .show().prop('disabled', false);
     } else {
         this.costumeSelector.hide();
     }

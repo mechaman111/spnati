@@ -291,11 +291,14 @@ function loadGalleryScreen(){
     }).sort(function(a, b) { return a.label < b.label ? -1 : 1; }).map(createFilterOption));
     
     $('#epilogue-character-filter').append(loadedOpponents.filter(function (opp) {
-        return opp && opp.ending;
+        return opp && opp.endings;
     }).sort(function(a, b) { return a.label < b.label ? -1 : 1; }).map(createFilterOption));
     
     if (COLLECTIBLES_ENABLED) {
         goToCollectiblesScreen();
+        if (!EPILOGUES_ENABLED) {
+            $('.gallery-switch-button').hide();
+        }
     } else {
         goToEpiloguesScreen();
         $('.gallery-switch-button').hide();
@@ -364,7 +367,7 @@ function loadGalleryEndings(){
 	}
 	
 	for(var i=0; i<loadedOpponents.length; i++){
-		if (loadedOpponents[i] && loadedOpponents[i].ending) {
+		if (loadedOpponents[i] && loadedOpponents[i].endings) {
 			loadedOpponents[i].endings.each(function () {
 				var status = $(this).attr('status');
 				if (status && !includedOpponentStatuses[status]) {

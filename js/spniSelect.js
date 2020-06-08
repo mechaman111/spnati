@@ -68,6 +68,7 @@ $groupNewBadges = [$("#group-new-badge-1"), $("#group-new-badge-2"), $("#group-n
 $groupCostumeBadges = [$("#group-costume-badge-1"), $("#group-costume-badge-2"), $("#group-costume-badge-3"), $("#group-costume-badge-4")];
 $groupStatuses = [$("#group-status-1"), $("#group-status-2"), $("#group-status-3"), $("#group-status-4")];
 $groupLayers = [$("#group-layer-1"), $("#group-layer-2"), $("#group-layer-3"), $("#group-layer-4")];
+$groupGenders = [$("#group-gender-1"), $("#group-gender-2"), $("#group-gender-3"), $("#group-gender-4")];
 $groupCostumeSelectors = [$("#group-costume-select-1"), $("#group-costume-select-2"), $("#group-costume-select-3"), $("#group-costume-select-4")];
 
 $groupImages = [$("#group-image-1"), $("#group-image-2"), $("#group-image-3"), $("#group-image-4")];
@@ -268,7 +269,6 @@ function loadListingFile () {
             updateGroupSelectScreen(true);
             updateSelectionVisuals();
         }
-
         if (outstandingLoads == 0) {
             $(".title-menu-buttons-container>div").removeAttr("hidden");
             $("#title-load-container").hide();
@@ -282,6 +282,7 @@ function loadListingFile () {
             $creatorList.append(Object.keys(creatorSet).sort().map(function(source) {
                 return new Option(source);
             }));
+            loadedOpponents.forEach(function(p) { p.selectionCard.updateEpilogueBadge() });
         } else {
             var progress = Math.floor(100 * (totalLoads - outstandingLoads) / totalLoads);
             $(".game-load-progress").text(progress.toString(10));
@@ -386,20 +387,39 @@ function updateStatusIcon(elem, opp) {
         elem.attr({
             'src': 'img/' + statusIndicators[status].icon,
             'alt': status.initCap(),
-            'data-original-title': statusIndicators[status].tooltip,
+            'data-original-title': statusIndicators[status].tooltip || '',
         }).show();
     } else {
         elem.removeAttr('data-original-title').hide();
     }
 }
 
+function updateGenderIcon(elem, opp) {
+    elem.attr({
+        src: opp.selectGender === 'male' ? MALE_SYMBOL : FEMALE_SYMBOL,
+        alt: opp.selectGender.initCap(),
+    }).show();
+}
 
 /* Creates an <option> element in a jQuery object for an alternate costume.
  * `alt_costume` in this case has only `id` and `label` attributes.
  */
 function getCostumeOption(alt_costume, selected_costume) {
-    return $('<option>', {val: alt_costume.folder, text: 'Costume: '+alt_costume.label,
-                          selected: alt_costume.folder == selected_costume})
+    return $('<option>', {val: alt_costume.folder, text: 'Costume: '+alt_costume.name,
+                          selected: alt_costume.folder == selected_costume, data: alt_costume});
+}
+
+function fillCostumeSelector($selector, costumes, selected_costume) {
+    $selector.empty().append($('<option>', {
+        val: '',
+        text: 'Default Costume'
+    }), costumes.map(function(c) {
+        return $('<option>', {
+            val: c.folder, text: '\u{1f455} '+c.name,
+            selected: c.folder == selected_costume
+        }).data('costumeDescriptor', c);
+    }));
+    return $selector;
 }
 
 /************************************************************
@@ -410,6 +430,10 @@ function updateIndividualSelectScreen () {
     selectableOpponents.forEach(function(opp) {
         $('#individual-select-screen .selection-cards-container').append(opp.selectionCard.mainElem);
         $(opp.selectionCard.mainElem).show();
+
+        if (opp.endings) {
+            opp.selectionCard.updateEpilogueBadge();
+        }
     });
     return;
 }
@@ -492,41 +516,31 @@ function updateGroupSelectScreen (ignore_bg) {
             $groupWriterLabels[i].html(opponent.writer);
             $groupArtistLabels[i].html(opponent.artist);
             $groupDescriptionLabels[i].html(opponent.description);
+            var epilogueStatus = opponent.getEpilogueStatus();
 
-            if (EPILOGUE_BADGES_ENABLED && opponent.ending) {
+            if (opponent.endings) {
                 $groupBadges[i].show();
+                $groupBadges[i].attr({'src': epilogueStatus.badge,
+                                      'data-original-title': epilogueStatus.tooltip || ''});
             } else {
                 $groupBadges[i].hide();
             }
-
+            /*
             if (opponent.highlightStatus === 'new') {
                 $groupNewBadges[i].show();
             } else {
                 $groupNewBadges[i].hide();
             }
-
+            */
             $groupCostumeSelectors[i].hide();
-            if (ALT_COSTUMES_ENABLED && opponent.alternate_costumes.length > 0) {
-                if (COSTUME_BADGES_ENABLED) {
-                    $groupCostumeBadges[i].show();
-                } else {
-                    $groupCostumeBadges[i].hide();
-                }
-
-                $groupCostumeSelectors[i].empty();
-
-                $groupCostumeSelectors[i].append($('<option>', {
-                    val: '',
-                    text: 'Default Costume'
-                }));
-
-                opponent.alternate_costumes.forEach(function (alt) {
-                    $groupCostumeSelectors[i].append(getCostumeOption(alt, opponent.selected_costume));
-                });
-
-                $groupCostumeSelectors[i].show();
+            if (opponent.alternate_costumes.length > 0) {
+                /*
+                $groupCostumeBadges[i].show();
+                */
+                fillCostumeSelector($groupCostumeSelectors[i], opponent.alternate_costumes,
+                                    opponent.selected_costume).show();
             } else {
-                $groupCostumeBadges[i].hide();
+                //$groupCostumeBadges[i].hide();
             }
 
             updateStatusIcon($groupStatuses[i], opponent);
@@ -535,6 +549,7 @@ function updateGroupSelectScreen (ignore_bg) {
                 src: "img/layers" + opponent.layers + ".png",
                 alt: opponent.layers + ' layers',
             }).show();
+            updateGenderIcon($groupGenders[i], opponent);
 
             $groupImages[i].attr('src', opponent.selection_image);
             $groupImages[i].css('height', opponent.scale + '%');
@@ -554,6 +569,7 @@ function updateGroupSelectScreen (ignore_bg) {
             $groupCostumeBadges[i].hide();
             $groupStatuses[i].hide();
             $groupLayers[i].hide();
+            $groupGenders[i].hide();
             $groupImages[i].hide();
             $groupCostumeSelectors[i].hide();
             $groupButton.attr('disabled', true);
@@ -579,7 +595,7 @@ function updateSelectableOpponents(autoclear) {
     selectableOpponents = loadedOpponents.filter(function(opp) {
         // filter by name
         if (name
-            && opp.label.toLowerCase().indexOf(name) < 0
+            && opp.selectLabel.toLowerCase().indexOf(name) < 0
             && opp.first.toLowerCase().indexOf(name) < 0
             && opp.last.toLowerCase().indexOf(name) < 0) {
             return false;
@@ -601,8 +617,8 @@ function updateSelectableOpponents(autoclear) {
         }
 
         // filter by gender
-        if ((chosenGender == 2 && opp.gender !== eGender.MALE)
-            || (chosenGender == 3 && opp.gender !== eGender.FEMALE)) {
+        if ((chosenGender == 2 && opp.selectGender !== eGender.MALE)
+            || (chosenGender == 3 && opp.selectGender !== eGender.FEMALE)) {
             return false;
         }
 
@@ -718,7 +734,7 @@ function updateSelectableGroups(screen) {
         if (groupname && group.title.toLowerCase().indexOf(groupname) < 0) return false;
 
         if (name && !group.opponents.some(function(opp) {
-            return opp.label.toLowerCase().indexOf(name) >= 0
+            return opp.selectLabel.toLowerCase().indexOf(name) >= 0
                 || opp.first.toLowerCase().indexOf(name) >= 0
                 || opp.last.toLowerCase().indexOf(name) >= 0;
         })) return false;
@@ -733,12 +749,12 @@ function updateSelectableGroups(screen) {
 
         if ((chosenGroupGender == 2 || chosenGroupGender == 3)
             && !group.opponents.every(function(opp) {
-                return opp.gender == (chosenGroupGender == 2 ? eGender.MALE : eGender.FEMALE);
+                return opp.selectGender == (chosenGroupGender == 2 ? eGender.MALE : eGender.FEMALE);
             })) return false;
 
         if (chosenGroupGender == 4
-            && !(group.opponents.some(function(opp) { return opp.gender == eGender.MALE; })
-                 && group.opponents.some(function(opp) { return opp.gender == eGender.FEMALE; })))
+            && !(group.opponents.some(function(opp) { return opp.selectGender == eGender.MALE; })
+                 && group.opponents.some(function(opp) { return opp.selectGender == eGender.FEMALE; })))
             return false;
 
         return true;
@@ -777,6 +793,14 @@ function loadGroup (chosenGroup) {
         if (member) {
             if (players.some(function(p, j) { return i != j && p == member; })) {
                 member = member.clone();
+            }
+            
+            var costumeDesc = $groupCostumeSelectors[i-1].children(':selected').data('costumeDescriptor');
+            var selectedCostume = costumeDesc ? costumeDesc.folder : null;
+
+            if ((member.selected_costume && selectedCostume != member.selected_costume)
+                || (!member.selected_costume && selectedCostume != null)) {
+                member.selectAlternateCostume(costumeDesc);
             }
 
             if (SENTRY_INITIALIZED) {
@@ -849,7 +873,7 @@ function loadDefaultFillSuggestions () {
     /* get a copy of the loaded opponents list, same as above */
     var possiblePicks = loadedOpponents.filter(function (opp) {
         return !players.some(function (p) { return p && p.id === opp.id; })
-                && !mainSelectDisplays.some(function (d) { d.prefillSuggestion && d.prefillSuggestion.id === opp.id; })
+                && !mainSelectDisplays.some(function (d) { return d.prefillSuggestion && d.prefillSuggestion.id === opp.id; })
                 && opp.highlightStatus === DEFAULT_FILL;
     });
 
@@ -872,10 +896,8 @@ function loadDefaultFillSuggestions () {
         fillPlayers.push(randomOpponent);
     }
 
-    for (var i = 1; i < players.length; i++) {
-        if (!(i in players)) {
-            if (fillPlayers.length === 0) break;
-
+    for (var i = 1; i < players.length && fillPlayers.length > 0; i++) {
+        if (!(i in players) && !mainSelectDisplays[i - 1].prefillSuggestion) {
             var suggestion = fillPlayers.shift();
             mainSelectDisplays[i - 1].setPrefillSuggestion(suggestion);
         }
@@ -1092,27 +1114,15 @@ function backSelectScreen () {
  * `slot` is the 1-based opponent slot affected.
  * `inGroup` is true if the affected opponent is on the group selection screen.
  */
-function altCostumeSelected(slot, inGroup) {
-	var costumeSelector = (inGroup ? $groupCostumeSelectors[slot-1] : $individualCostumeSelectors[slot-1]);
-	var selectImage = (inGroup ? $groupImages[slot-1] : $individualImages[slot-1]);
-	var opponent = (inGroup ? selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[slot-1] : shownIndividuals[slot-1]);
-	
-	var selectedCostume = costumeSelector.val();
-	
-	var costumeDesc = undefined;
-	if (selectedCostume.length > 0) {
-		for (let i=0;i<opponent.alternate_costumes.length;i++) {
-			if (opponent.alternate_costumes[i].folder === selectedCostume) {
-				costumeDesc = opponent.alternate_costumes[i];
-				break;
-			}
-		}
-	}
-	
-    opponent.selectAlternateCostume(costumeDesc);
-    selectImage.attr('src', opponent.selection_image);
-}
+function altCostumeSelected(slot) {
+    var costumeSelector = $groupCostumeSelectors[slot-1];
+    var opponent = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[slot-1];
 
+    var costumeDesc = costumeSelector.children(':selected').data('costumeDescriptor');
+    opponent.selectAlternateCostume(costumeDesc);
+    $groupImages[slot-1].attr('src', opponent.selection_image);
+    updateGenderIcon($groupGenders[slot-1], opponent);
+}
 
 /**********************************************************************
  *****                     Display Functions                      *****
@@ -1186,26 +1196,6 @@ function updateSelectionVisuals () {
     /* Disable buttons while loading is going on */
     $selectRandomTableButton.attr('disabled', loaded < filled || loadedOpponents.length == 0);
     $groupButton.attr('disabled', loaded < filled);
-}
-
-
-
-/************************************************************
- * This is the callback for the group clicked rows, it
- * updates information on the group screen.
- ************************************************************/
-function updateGroupScreen (playerObject) {
-    /* find a spot to store this player */
-    for (var i = 0; i < storedGroup.length; i++) {
-        if (!storedGroup[i]) {
-            storedGroup[i] = playerObject;
-            $groupLabels[i+1].html(playerObject.label);
-            break;
-        }
-    }
-
-	/* enable the button */
-	$groupButton.attr('disabled', false);
 }
 
 /************************************************************

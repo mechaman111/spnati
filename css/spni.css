@@ -2057,6 +2057,15 @@ ul.dropdown-menu>li {
     transition-duration: 0.5s;
 }
 
+.selection-card[data-highlight=new] {
+  background-image: url("../img/new-corner.svg");
+  background-size: 38%;
+  background-repeat: no-repeat;
+  background-color: rgba(51, 74, 51, 0.65);
+}
+.selection-card[data-highlight="new"]>.badge-sidebar {
+  top: 5%;
+}
 .selection-card[data-highlight="new"]:hover,
 .selection-card[data-highlight="new"]:active {
     background-color: rgba(102, 255, 102, 0.50);
@@ -2212,7 +2221,8 @@ ul.dropdown-menu>li {
     flex: 1;
 }
 
-.smooth-button.select-back-btn:active {
+.smooth-button.select-back-btn:active,
+.smooth-button.show-more-button:active {
     padding-left: 0.55em;
     padding-right: 0.45em;
 }
@@ -2349,12 +2359,10 @@ ul.dropdown-menu>li {
 }
 
 .opponent-details-field>* {
-    display: flex;
-    align-items: center;
-
     padding: 0.5% 2%;
 
     flex: 1;
+    text-align: left;
     word-wrap: break-word;
 }
 
@@ -2365,7 +2373,7 @@ ul.dropdown-menu>li {
 }
 
 .opponent-details-field>.opponent-details-value {
-    flex: 3;
+    flex: 2.5;
 }
 
 .left-cap.opponent-details-field>.opponent-details-value {
@@ -2375,22 +2383,20 @@ ul.dropdown-menu>li {
 .opponent-details-name {
     min-height: 17%;
     padding: 2% 0;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    flex: 2;
-}
-
-.opponent-source {
-    font-size: 1.6rem;
+    display: block;
 }
 
 .opponent-full-name {
     margin-bottom: 0.75rem;
     font-size: 2.1rem;
+    line-height: 1.2em;
+    text-align: center;
+}
+
+.opponent-source {
+    font-size: 1.6rem;
+    line-height: 1.2em;
+    text-align: center;
 }
 
 .opponent-details-name>div {
@@ -2454,7 +2460,7 @@ ul.dropdown-menu>li {
     flex: 1;
 }
 
-#individual-select-screen .opponent-costume-select {
+#individual-select-screen .alt-costume-dropdown {
     flex: 3;
     padding: 0.5% 2%;
     height: auto;
@@ -2467,9 +2473,9 @@ ul.dropdown-menu>li {
 }
 
 .show-more-button {
-    display: block;
     font-size: 0.7em;
     padding: 0 0.5em;
+    white-space: nowrap;
 }
 
 .show-more-button::after {
@@ -2721,11 +2727,11 @@ ul.dropdown-menu>li {
     line-height: 3rem;
 }
 
-.group-badge-bar {
+.select-badge-bar {
     position: absolute;
-    width: 36%;
+    width: 33%;
     left: 0;
-    top: 0;
+    top: 1.5%;
 
     display: flex;
     flex-direction: column;
@@ -2733,8 +2739,8 @@ ul.dropdown-menu>li {
     align-items: center;
 }
 
-.group-badge-bar .badge-icon {
-    opacity: 0.75;
+.select-badge-bar .badge-icon {
+    opacity: 0.7;
 
     width: 100%;
     height: auto;
@@ -2745,7 +2751,7 @@ ul.dropdown-menu>li {
     opacity: 0.60;
     width: 25%;
     right: 0;
-    top: 10.5%;
+    top: 18%;
 }
 
 .status-icon:hover {
@@ -2754,32 +2760,38 @@ ul.dropdown-menu>li {
 
 .layer-icon {
     position: absolute;
-    width: 20%;
+    width: 19%;
     right: 0;
     top: 2%;
+    opacity: 80%;
+}
+
+.gender-icon {
+    position: absolute;
+    width: 19%;
+    right: 0;
+    top: 10%;
+    filter: drop-shadow(0.5rem 0.5rem 0.5rem #222);
+    opacity: 80%;
 }
 
 .wrap-text {
     overflow-wrap: anywhere;
 }
 
+.alt-costume-dropdown {
+    background-color: rgb(243, 184, 232);
+    border-color: rgb(158, 48, 175);
+    padding: 0.125em;
+}
+
 .opponent-image-area .alt-costume-dropdown {
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 48%;
     -webkit-transform: translateX(-50%);
     -moz-transform: translateX(-50%);
     transform: translateX(-50%);
-}
-
-#main-select-screen .alt-costume-dropdown {
-    top: 57%;
-}
-
-.alt-costume-dropdown[disabled] {
-    background-color: #eee;
-    color: #606060;
-    cursor: not-allowed;   
 }
 
 /************************************************************
@@ -2935,9 +2947,17 @@ ul.dropdown-menu>li {
     background-color: rgba(40, 40, 40, 0.75);
 }
 
-.opponent-area .name-label {
-    text-align: center;
+#group-select-table .alt-costume-dropdown {
+    position: absolute;
+    width: 22rem;
+    margin: 0 1.5rem;
+    bottom: 38%;
+}
+
+.opponent-area .name-label,
+.opponent-area .alt-costume-dropdown {
     margin-bottom: 0.2rem;
+    width: 100%;
 }
 
 .opponent-card-area {
