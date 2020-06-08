@@ -630,6 +630,93 @@ function parseLegacyEpilogue(player, epilogue, $xml) {
   });
 }
 
+function parseSceneContent(player, scene, $scene) {
+  var directive;
+  var backgroundTransform = [$scene.attr('background-position-x'), $scene.attr('background-position-y'), $scene.attr('background-zoom') || 100];
+  var addedPause = false;
+  try {
+    scene.x = toSceneX(backgroundTransform[0], scene);
+    scene.y = toSceneY(backgroundTransform[1], scene);
+    scene.zoom = parseFloat(backgroundTransform[2]) / 100;
+  } catch (e) { }
+
+  // Find the image data for this shot
+  $scene.find('sprite').each(function () {
+    var x = $(this).find("x").html().trim();
+    var y = $(this).find("y").html().trim();
+    var width = $(this).find("width").html().trim();
+    var src = $(this).find('src').html().trim();
+
+    var css = $(this).attr('css');
+
+    directive = {
+      type: "sprite",
+      id: "obj" + (epilogueSuffix++),
+      x: toSceneX(x, scene),
+      y: toSceneY(y, scene),
+      width: width,
+      src: src,
+      css: css,
+    }
+    scene.directives.push(directive);
+
+  });
+
+  //get the information for all the text boxes
+  $scene.find("text").each(function () {
+
+    //the text box's position and width
+    var x = $(this).find("x").html().trim();
+    var y = $(this).find("y").html().trim();
+    var w = $(this).find("width").html();
+    var a = $(this).find("arrow").html();
+
+    //the width component is optional. Use a default of 20%.
+    if (w) {
+      w = w.trim();
+    }
+    if (!w || (w.length <= 0)) {
+      w = "20%"; //default to text boxes having a width of 20%
+    }
+
+    //dialogue bubble arrow
+    if (a) {
+      a = a.trim().toLowerCase();
+      if (a.length >= 1) {
+        a = "arrow-" + a; //class name for the different arrows. Only use if the writer specified something.
+      }
+    } else {
+      a = "";
+    }
+
+    //automatically centre the text box, if the writer wants that.
+    if (x && x.toLowerCase() == "centered") {
+      x = getCenteredPosition(w);
+    }
+
+    var text = fixupDialogue($(this).find("content").html().trim()); //the actual content of the text box
+
+    var css = $(this).attr('css');
+
+    directive = {
+      type: "text",
+      id: "obj" + (epilogueSuffix++),
+      x: x,
+      y: y,
+      arrow: a,
+      width: w,
+      text: text,
+      css: css,
+    }
+    scene.directives.push(directive);
+    scene.directives.push({ type: "pause" });
+    addedPause = true;
+  });
+  if (!addedPause) {
+    scene.directives.push({ type: "pause" });
+  }
+}
+
 /************************************************************
 * Read attributes from a source XML object and put them into properties of a JS object
 ************************************************************/
