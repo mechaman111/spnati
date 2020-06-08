@@ -1094,8 +1094,8 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
              * alternatives must always be fulfilled, along with all
              * the conditions of tests inside any of the alternative
              * elements. */
-            $xml.children('behaviour').find('case>alternative:first-child').each(function() {
-                var $case = $(this).parent();
+            $xml.children('behaviour').find('case:has(>alternative)').each(function() {
+                var $case = $(this);
                 $case.children('alternative').each(function() {
                     // Make clone and insert after original case
                     var $clone = $case.clone().insertAfter($case);
