@@ -1109,9 +1109,14 @@ function OpponentSelectionCard (opponent) {
     this.label = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-name')));
     this.source = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-source')));
     
+    /** Has this opponent been filtered out of the individual selection screen? */
+    this.filtered = false;
+
     this.update();
 
     this.mainElem.addEventListener('click', this.handleClick.bind(this));
+
+    $(this.mainElem).appendTo($indivSelectionCardContainer);
 }
 
 OpponentSelectionCard.prototype = Object.create(OpponentDisplay.prototype);
@@ -1145,6 +1150,24 @@ OpponentSelectionCard.prototype.clear = function () {}
 
 OpponentSelectionCard.prototype.handleClick = function (ev) {
     individualDetailDisplay.update(this.opponent);
+}
+
+/** Should this card be visible? */
+OpponentSelectionCard.prototype.isVisible = function () {
+    /* hide already selected opponents */
+    if (this.opponent.slot) return false;
+
+    /* hide filtered opponents */
+    return !this.filtered;
+}
+
+/**
+ * Set whether this card should be hidden due to filtering.
+ * 
+ * @param {boolean} val If true, this card will be "filtered" and hidden.
+ */
+OpponentSelectionCard.prototype.setFiltered = function (val) {
+    this.filtered = val;
 }
 
 OpponentDetailsDisplay = function () {

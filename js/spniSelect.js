@@ -110,6 +110,8 @@ $groupSearchModal.on('shown.bs.modal', function() {
 	$groupSearchGroupName.focus();
 });
 
+var $indivSelectionCardContainer = $('#individual-select-screen .selection-cards-container');
+
 /**********************************************************************
  *****                  Select Screen Variables                   *****
  **********************************************************************/
@@ -146,7 +148,6 @@ var sortingOptionsMap = {
     "Name (Z-A)" : sortOpponentsByMultipleFields("-first", "-last"),
     "Talks to selected" : sortOpponentsByMostTargeted(),
 };
-var individualCreditsShown = false;
 var groupCreditsShown = false;
 
 /* consistence variables */
@@ -264,8 +265,6 @@ function loadListingFile () {
 		}
         
         if (--outstandingLoads % 16 == 0) {
-            updateSelectableOpponents();
-            updateIndividualSelectScreen();
             updateSelectableGroups(0);
             updateSelectableGroups(1);
             updateGroupSelectScreen(true);
@@ -429,20 +428,16 @@ function fillCostumeSelector($selector, costumes, selected_costume) {
     return $selector;
 }
 
-/************************************************************
- * Loads opponents onto the individual select screen.
- ************************************************************/
-function updateIndividualSelectScreen () {
-    $('#individual-select-screen .selection-cards-container .selection-card').hide();
+/** 
+ * Update displayed epilogue badges for opponents on the individual
+ * selection screen.
+ */
+function updateIndividualEpilogueBadges (autoclear) {
     selectableOpponents.forEach(function(opp) {
-        $('#individual-select-screen .selection-cards-container').append(opp.selectionCard.mainElem);
-        $(opp.selectionCard.mainElem).show();
-
         if (opp.endings) {
             opp.selectionCard.updateEpilogueBadge();
         }
     });
-    return;
 }
 
 /************************************************************
@@ -602,53 +597,61 @@ function updateGroupSelectScreen (ignore_bg) {
  *****                   Interaction Functions                    *****
  **********************************************************************/
 
+/* A filter predicate encompassing the filter options on the individual select
+ * screen.
+ */
+function filterOpponent(opp, name, source, creator, tag) {
+    // filter by name
+    if (name
+        && opp.selectLabel.toLowerCase().indexOf(name) < 0
+        && opp.first.toLowerCase().indexOf(name) < 0
+        && opp.last.toLowerCase().indexOf(name) < 0) {
+        return false;
+    }
+
+    // filter by source
+    if (source && opp.source.toLowerCase().indexOf(source) < 0) {
+        return false;
+    }
+
+    // filter by tag
+    if (tag && !(opp.searchTags && opp.searchTags.indexOf(tag) >= 0)) {
+        return false;
+    }
+    
+    // filter by creator
+    if (creator && opp.artist.toLowerCase().indexOf(creator) < 0 && opp.writer.toLowerCase().indexOf(creator) < 0) {
+        return false;
+    }
+
+    // filter by gender
+    if ((chosenGender == 2 && opp.selectGender !== eGender.MALE)
+        || (chosenGender == 3 && opp.selectGender !== eGender.FEMALE)) {
+        return false;
+    }
+    
+    return true;
+}
+
 /************************************************************
  * Filters the list of selectable opponents based on those
- * already selected and performs search and sort logic.
+ * already selected and performs search logic.
  ************************************************************/
-function updateSelectableOpponents(autoclear) {
+function updateIndividualSelectFilters(autoclear) {
     var name = $searchName.val().toLowerCase();
     var source = $searchSource.val().toLowerCase();
     var creator = $searchCreator.val().toLowerCase();
     var tag = canonicalizeTag($searchTag.val());
 
     // Array.prototype.filter automatically skips empty slots
-    selectableOpponents = loadedOpponents.filter(function(opp) {
-        // filter by name
-        if (name
-            && opp.selectLabel.toLowerCase().indexOf(name) < 0
-            && opp.first.toLowerCase().indexOf(name) < 0
-            && opp.last.toLowerCase().indexOf(name) < 0) {
-            return false;
-        }
+    loadedOpponents.forEach(function (opp) {
+        opp.selectionCard.setFiltered(!filterOpponent(opp, name, source, creator, tag));
 
-        // filter by source
-        if (source && opp.source.toLowerCase().indexOf(source) < 0) {
-            return false;
+        if (opp.selectionCard.isVisible()) {
+            $(opp.selectionCard.mainElem).show();
+        } else {
+            $(opp.selectionCard.mainElem).hide();
         }
-
-        // filter by tag
-        if (tag && !(opp.searchTags && opp.searchTags.indexOf(canonicalizeTag(tag)) >= 0)) {
-            return false;
-        }
-        
-        // filter by creator
-        if (creator && opp.artist.toLowerCase().indexOf(creator) < 0 && opp.writer.toLowerCase().indexOf(creator) < 0) {
-            return false;
-        }
-
-        // filter by gender
-        if ((chosenGender == 2 && opp.selectGender !== eGender.MALE)
-            || (chosenGender == 3 && opp.selectGender !== eGender.FEMALE)) {
-            return false;
-        }
-
-        /* hide selected opponents */
-        if (players.some(function(p) { return p && p.id == opp.id; })) {
-            return false;
-        }
-        
-        return true;
     });
 
     // If a unique match was made, automatically clear the search so
@@ -657,19 +660,38 @@ function updateSelectableOpponents(autoclear) {
         clearSearch();
         return;
     }
+}
+
+/** Updates the sort order of opponents on the individual select screen. */
+function updateIndividualSelectSort() {
+    var ordered = loadedOpponents;
 
     /* sort opponents */
-    // Since selectableOpponents is always reloaded here with featured order,
+    // Since ordered is always initialized here with featured order,
     // check if a different sorting mode is selected, and if yes, sort it.
     if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
-        selectableOpponents.sort(sortingOptionsMap[sortingMode]);
+        ordered = loadedOpponents.slice();
+        ordered.sort(sortingOptionsMap[sortingMode]);
     }
+
+    ordered.forEach(function (opp) {
+        $(opp.selectionCard.mainElem).appendTo($indivSelectionCardContainer);
+    });
 }
 
 $('#individual-select-screen .sort-filter-field').on('input', function () {
-    updateSelectableOpponents(false);
-    updateIndividualSelectScreen();
+    updateIndividualSelectFilters();
 });
+
+function updateIndividualSelectVisibility() {
+    loadedOpponents.forEach(function (opp) {
+        if (opp.selectionCard.isVisible()) {
+            $(opp.selectionCard.mainElem).show();
+        } else {
+            $(opp.selectionCard.mainElem).hide();
+        }
+    });
+}
 
 /************************************************************
  * The player clicked on an opponent slot.
@@ -679,6 +701,10 @@ function selectOpponentSlot (slot) {
         /* add a new opponent */
         selectedSlot = slot;
 
+        /* update the list of selectable opponents based on those that are
+         * already selected */
+        updateIndividualSelectVisibility();
+
         /* Make sure the user doesn't have target-count sorting set if
          * the amount of loaded opponents drops to 0. */
         if (sortingMode === "Talks to selected") {
@@ -687,11 +713,11 @@ function selectOpponentSlot (slot) {
             }
         }
 
-		/* update the list of selectable opponents based on those that are already selected, search, and sort options */
-		updateSelectableOpponents(true);
-
-		/* reload selection screen */
-		updateIndividualSelectScreen();
+        /* We don't need to update filtering or sorting when moving from the 
+         * main select screen to the indiv. select screen, since the filters
+         * and sort method cannot actually change unless the user is already
+         * on said screen.
+         */
 
         /* switch screens */
         if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-individual");
@@ -1282,27 +1308,19 @@ function openSearchModal() {
     $searchModal.modal('show');
 }
 
-function closeSearchModal() {
-    // perform the search and sort logic
-    updateSelectableOpponents();
-
-    // update
-    updateIndividualSelectScreen();
-    updateIndividualCountStats();
-}
-
 function clearSearch() {
     $searchName.val(null);
     $searchTag.val(null);
     $searchSource.val(null);
-    closeSearchModal();
+
+    // perform the search and sort logic, then update
+    updateIndividualSelectFilters();
 }
 
 function changeSearchGender(gender) {
     chosenGender = gender;
     setActiveOption("search-gender", gender);
-    updateSelectableOpponents(true);
-    updateIndividualSelectScreen();
+    updateIndividualSelectFilters(true);
 }
 
 $('ul#search-gender').on('click', 'a', function() {
@@ -1419,8 +1437,7 @@ function sortOpponentsByMostTargeted() {
 function setSortingMode(mode) {
     sortingMode = mode;
     $("#sort-dropdown-selection").html(sortingMode); // change the dropdown text to the selected option
-    updateSelectableOpponents(false);
-    updateIndividualSelectScreen();
+    updateIndividualSelectSort();
 }
 
 /** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */
@@ -1485,18 +1502,6 @@ function updateOpponentCountStats(opponentArr, uiElements) {
             }
         }
     });
-}
-
-/** Dialogue/image count update function for the individual selection screen. */
-function updateIndividualCountStats() {
-    if (individualCreditsShown) {
-        var individualUIElements = {
-            countBoxes : $individualCountBoxes,
-            lineLabels : $individualLineCountLabels,
-            poseLabels : $individualPoseCountLabels
-        };
-        updateOpponentCountStats(shownIndividuals, individualUIElements);
-    }
 }
 
 /** Dialogue/image count update function for the group selection screen. */

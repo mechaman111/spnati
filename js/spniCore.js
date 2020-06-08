@@ -970,6 +970,8 @@ Opponent.prototype.unloadOpponent = function () {
         /* Remove the <link> to this opponent's stylesheet. */
         $('link[href=\"'+this.stylesheet+'\"]').remove();
     }
+
+    this.slot = undefined;
 }
 
 Opponent.prototype.fetchBehavior = function() {
