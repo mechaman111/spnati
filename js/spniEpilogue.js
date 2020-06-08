@@ -294,7 +294,7 @@ function loadEpilogueData(player) {
   //get the XML tree that relates to the epilogue, for the specific player gender
   //var epXML = $($.parseXML(xml)).find('epilogue[gender="'+playerGender+'"]'); //use parseXML() so that <image> tags come through properly //IE doesn't like this
 
-  var epilogues = player.xml.find('epilogue').filter(function (index) {
+  var epilogues = player.xml.children('epilogue').filter(function (index) {
     /* Returning true from this function adds the current epilogue to the list of selectable epilogues.
      * Conversely, returning false from this function will make the current epilogue not selectable.
      */
@@ -486,7 +486,7 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
   player.markers = player.markers || {}; //ensure markers collection exists in the gallery even though they'll be empty
 
   var $epilogue = $(rawEpilogue);
-  var title = $epilogue.find("title").html().trim();
+  var title = $epilogue.children("title").html().trim();
   var gender = $epilogue.attr("gender") || 'any';
 
   var markers = [];
@@ -530,16 +530,6 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
   if (isLegacy) {
     parseLegacyEpilogue(player, epilogue, $epilogue);
   }
-  else if ($epilogue.children("background").length > 0) {
-    var sceneWidth, sceneHeight;
-    var rawRatio = $epilogue.attr('ratio');
-    if (rawRatio) {
-      rawRatio = rawRatio.split(':');
-      sceneWidth = parseFloat(rawRatio[0]);
-      sceneHeight = parseFloat(rawRatio[1]);
-    }
-    parseNotQuiteLegacyEpilogue(player, epilogue, $epilogue, sceneWidth, sceneHeight);
-  }
   else {
     var scene;
     $epilogue.children("scene").each(function (index, rawScene) {
@@ -577,11 +567,11 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
 
         var directives = scene.directives;
 
-        $scene.find("directive").each(function (i, item) {
+        $scene.children("directive").each(function (i, item) {
           var totalTime = 0;
           var directive = readProperties(item, scene);
           directive.keyframes = [];
-          $(item).find("keyframe").each(function (i2, frame) {
+          $(item).children("keyframe").each(function (i2, frame) {
             var keyframe = readProperties(frame, scene);
             keyframe.ease = keyframe.ease || directive.ease;
             keyframe.start = totalTime;
@@ -625,7 +615,7 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
  */
 function parseLegacyEpilogue(player, epilogue, $xml) {
   var scenes = epilogue.scenes;
-  $xml.find("screen").each(function () {
+  $xml.children("screen").each(function () {
     var $this = $(this);
 
     var image = $this.attr("img").trim();
@@ -638,120 +628,6 @@ function parseLegacyEpilogue(player, epilogue, $xml) {
     scenes.push(scene);
     parseSceneContent(player, scene, $this);
   });
-}
-
-/**
- * Parses an epilogue that came in the format background > scene > sprite/text and converts it into directive format
- */
-function parseNotQuiteLegacyEpilogue(player, epilogue, $xml, sceneWidth, sceneHeight) {
-  var scenes = epilogue.scenes;
-  $xml.find('background').each(function () {
-    var $this = $(this);
-    var image = $this.attr('img').trim();
-    if (image.length == 0) {
-      image = '';
-    }
-
-    //create a directive-based scene for each scene in the background
-    $this.find('scene').each(function () {
-      var scene = {
-        directives: [],
-        background: image,
-        width: sceneWidth,
-        height: sceneHeight,
-        aspectRatio: sceneWidth / sceneHeight,
-      };
-      scenes.push(scene);
-      parseSceneContent(player, scene, $(this)); //this is intentionally $(this) instead of $this like in parseLegacyEpilogue
-    });
-  });
-}
-
-function parseSceneContent(player, scene, $scene) {
-  var directive;
-  var backgroundTransform = [$scene.attr('background-position-x'), $scene.attr('background-position-y'), $scene.attr('background-zoom') || 100];
-  var addedPause = false;
-  try {
-    scene.x = toSceneX(backgroundTransform[0], scene);
-    scene.y = toSceneY(backgroundTransform[1], scene);
-    scene.zoom = parseFloat(backgroundTransform[2]) / 100;
-  } catch (e) { }
-
-  // Find the image data for this shot
-  $scene.find('sprite').each(function () {
-    var x = $(this).find("x").html().trim();
-    var y = $(this).find("y").html().trim();
-    var width = $(this).find("width").html().trim();
-    var src = $(this).find('src').html().trim();
-
-    var css = $(this).attr('css');
-
-    directive = {
-      type: "sprite",
-      id: "obj" + (epilogueSuffix++),
-      x: toSceneX(x, scene),
-      y: toSceneY(y, scene),
-      width: width,
-      src: src,
-      css: css,
-    }
-    scene.directives.push(directive);
-
-  });
-
-  //get the information for all the text boxes
-  $scene.find("text").each(function () {
-
-    //the text box's position and width
-    var x = $(this).find("x").html().trim();
-    var y = $(this).find("y").html().trim();
-    var w = $(this).find("width").html();
-    var a = $(this).find("arrow").html();
-
-    //the width component is optional. Use a default of 20%.
-    if (w) {
-      w = w.trim();
-    }
-    if (!w || (w.length <= 0)) {
-      w = "20%"; //default to text boxes having a width of 20%
-    }
-
-    //dialogue bubble arrow
-    if (a) {
-      a = a.trim().toLowerCase();
-      if (a.length >= 1) {
-        a = "arrow-" + a; //class name for the different arrows. Only use if the writer specified something.
-      }
-    } else {
-      a = "";
-    }
-
-    //automatically centre the text box, if the writer wants that.
-    if (x && x.toLowerCase() == "centered") {
-      x = getCenteredPosition(w);
-    }
-
-    var text = fixupDialogue($(this).find("content").html().trim()); //the actual content of the text box
-
-    var css = $(this).attr('css');
-
-    directive = {
-      type: "text",
-      id: "obj" + (epilogueSuffix++),
-      x: x,
-      y: y,
-      arrow: a,
-      width: w,
-      text: text,
-      css: css,
-    }
-    scene.directives.push(directive);
-    scene.directives.push({ type: "pause" });
-    addedPause = true;
-  });
-  if (!addedPause) {
-    scene.directives.push({ type: "pause" });
-  }
 }
 
 /************************************************************
@@ -1180,8 +1056,8 @@ function hotReloadEpilogue () {
       var $xml = $(xml);
       var endingElem = null;
 
-      $xml.find('epilogue').each(function () {
-        if ($(this).find('title').html() === epilogueTitle && $(this).attr('gender') === epilogueGender) {
+      $xml.children('epilogue').each(function () {
+        if ($(this).children('title').html() === epilogueTitle && $(this).attr('gender') === epilogueGender) {
           endingElem = this;
         }
       });

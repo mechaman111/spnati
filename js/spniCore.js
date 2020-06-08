@@ -242,7 +242,7 @@ Player.prototype.resetState = function () {
          * So assume behaviour.xml holds the 'definitive' starting gender
          * for the character.
          */
-        var startGender = this.xml.find('gender').text();
+        var startGender = this.xml.children('gender').text();
         if (startGender) {
             this.gender = startGender;
         }
@@ -254,7 +254,7 @@ Player.prototype.resetState = function () {
 
     	/* find and create all of their clothing */
         var clothingArr = [];
-    	$wardrobe.find('clothing').each(function () {
+        $wardrobe.children('clothing').each(function () {
             var generic = $(this).attr('generic');
             var name = $(this).attr('name') || $(this).attr('lowercase');
             var type = $(this).attr('type');
@@ -477,34 +477,34 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
 
     this.status = status;
     this.highlightStatus = highlightStatus || status || '';
-    this.first = $metaXml.find('first').text();
-    this.last = $metaXml.find('last').text();
+    this.first = $metaXml.children('first').text();
+    this.last = $metaXml.children('last').text();
     
     /* selectLabel shouldn't change due to e.g. alt costumes selected on
      * the main select screen.
      */
-    this.selectLabel = $metaXml.find('label').text();
+    this.selectLabel = $metaXml.children('label').text();
     this.label = this.selectLabel;
 
-    this.image = $metaXml.find('pic').text();
-    this.gender = $metaXml.find('gender').text();
-    this.height = $metaXml.find('height').text();
-    this.source = $metaXml.find('from').text();
-    this.artist = $metaXml.find('artist').text();
-    this.writer = $metaXml.find('writer').text();
-    this.description = fixupDialogue($metaXml.find('description').html());
-    this.has_collectibles = $metaXml.find('has_collectibles').text() === "true";
+    this.image = $metaXml.children('pic').text();
+    this.gender = $metaXml.children('gender').text();
+    this.height = $metaXml.children('height').text();
+    this.source = $metaXml.children('from').text();
+    this.artist = $metaXml.children('artist').text();
+    this.writer = $metaXml.children('writer').text();
+    this.description = fixupDialogue($metaXml.children('description').html());
+    this.has_collectibles = $metaXml.children('has_collectibles').text() === "true";
     this.collectibles = null;
-    this.layers = parseInt($metaXml.find('layers').text(), 10);
-    this.scale = Number($metaXml.find('scale').text()) || 100.0;
+    this.layers = parseInt($metaXml.children('layers').text(), 10);
+    this.scale = Number($metaXml.children('scale').text()) || 100.0;
     this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
-    this.uniqueLineCount = parseInt($metaXml.find('lines').text(), 10) || undefined;
-    this.posesImageCount = parseInt($metaXml.find('poses').text(), 10) || undefined;
-    this.z_index = parseInt($metaXml.find('z-index').text(), 10) || 0;
-    this.dialogue_layering = $metaXml.find('dialogue-layer').text();
+    this.uniqueLineCount = parseInt($metaXml.children('lines').text(), 10) || undefined;
+    this.posesImageCount = parseInt($metaXml.children('poses').text(), 10) || undefined;
+    this.z_index = parseInt($metaXml.children('z-index').text(), 10) || 0;
+    this.dialogue_layering = $metaXml.children('dialogue-layer').text();
     
-    this.endings = $metaXml.find('epilogue');
-    this.ending = $metaXml.find('has_ending').text() === "true";
+    this.endings = $metaXml.children('epilogue');
+    this.ending = $metaXml.children('has_ending').text() === "true";
 
     if (this.endings.length > 0) {
         this.endings.each(function (idx, elem) {
@@ -535,7 +535,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
      * The tags list stores the fully-expanded list of tags for the opponent,
      * including implied tags.
      */
-    this.baseTags = $metaXml.find('tags').children().map(function() { return canonicalizeTag($(this).text()); }).get();
+    this.baseTags = $metaXml.find('>tags>tag').map(function() { return canonicalizeTag($(this).text()); }).get();
     this.removeTag(this.id);
     this.updateTags();
     this.searchTags = expandTagsList(this.baseTags);
@@ -548,7 +548,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.alternate_costumes = [];
     this.selection_image = this.folder + this.image;
     
-    $metaXml.find('alternates').find('costume').each(function (i, elem) {
+    $metaXml.find('>alternates>costume').each(function (i, elem) {
         var set = $(elem).attr('set') || 'offline';
         var status = $(elem).attr('status') || 'offline';
         
@@ -735,17 +735,17 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
             }
 
             this.alt_costume = {
-                id: $xml.find('id').text(),
-                labels: $xml.find('label'),
+                id: $xml.children('id').text(),
+                labels: $xml.children('label'),
                 tags: [],
                 folder: this.selected_costume,
-                folders: $xml.find('folder'),
-                wardrobe: $xml.find('wardrobe')
+                folders: $xml.children('folder'),
+                wardrobe: $xml.children('wardrobe')
             };
             
-            var poses = $xml.find('poses');
+            var poses = $xml.children('poses');
             var poseDefs = {};
-            $(poses).find('pose').each(function (i, elem) {
+            $(poses).children('pose').each(function (i, elem) {
                 var def = new PoseDefinition($(elem), this);
                 poseDefs[def.id] = def;
             }.bind(this));
@@ -753,10 +753,10 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
             this.alt_costume.poses = poseDefs;
 
             var costumeTags = this.default_costume.tags.slice();
-            var tagMods = $xml.find('tags');
+            var tagMods = $xml.children('tags');
             if (tagMods) {
                 var newTags = [];
-                tagMods.find('tag').each(function (idx, elem) {
+                tagMods.children('tag').each(function (idx, elem) {
                     var $elem = $(elem);
                     var tag = canonicalizeTag($elem.text());
                     var removed = $elem.attr('remove') || '';
@@ -804,7 +804,7 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
 		dataType: "text",
 		success: function(xml) {
 			var collectiblesArray = [];
-			$(xml).find('collectible').each(function (idx, elem) {
+			$(xml).children('collectible').each(function (idx, elem) {
 				collectiblesArray.push(new Collectible($(elem), this));
             }.bind(this));
             
@@ -887,9 +887,9 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             }
             
             this.xml = $xml;
-            this.size = $xml.find('size').text();
-            this.stamina = Number($xml.find('timer').text());
-            this.intelligences = $xml.find('intelligence');
+            this.size = $xml.children('size').text();
+            this.stamina = Number($xml.children('timer').text());
+            this.intelligences = $xml.children('intelligence');
 
             /* Load in the legacy "start" lines, and also
              * initialize player.chosenState to the first listed line.
@@ -902,7 +902,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             this.stylesheet = null;
             
-            var stylesheet = $xml.find('stylesheet').text();
+            var stylesheet = $xml.children('stylesheet').text();
             if (stylesheet) {
                 var m = stylesheet.match(/[a-zA-Z0-9()~!*:@,;\-.\/]+\.css/i);
                 if (m) {
@@ -912,39 +912,35 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             this.default_costume = {
                 id: null,
-                labels: $xml.find('label'),
+                labels: $xml.children('label'),
                 tags: null,
                 folders: this.folder,
-                wardrobe: $xml.find('wardrobe')
+                wardrobe: $xml.children('wardrobe')
             };
             
-            var poses = $xml.find('poses');
+            var poses = $xml.children('poses');
             var poseDefs = {};
-            $(poses).find('pose').each(function (i, elem) {
+            $(poses).children('pose').each(function (i, elem) {
                 var def = new PoseDefinition($(elem), this);
                 poseDefs[def.id] = def;
             }.bind(this));
             
             this.default_costume.poses = poseDefs;
 
-            var tags = $xml.find('tags');
-            var tagsArray = [];
-            if (typeof tags !== typeof undefined && tags !== false) {
-                tagsArray = $(tags).find('tag').map(function () {
-                    return {
-                        'tag': canonicalizeTag($(this).text()),
-                        'from': $(this).attr('from'),
-                        'to': $(this).attr('to'),
-                    }
-                }).get();
-            }
+            var tagsArray = $xml.find('>tags>tag').map(function () {
+                return {
+                    'tag': canonicalizeTag($(this).text()),
+                    'from': $(this).attr('from'),
+                    'to': $(this).attr('to'),
+                }
+            }).get();
 
             this.default_costume.tags = tagsArray;
 
             /* Load forward-declarations for persistent markers. */
-            var persistentMarkers = $xml.find('persistent-markers');
+            var persistentMarkers = $xml.children('persistent-markers');
             if (typeof persistentMarkers !== typeof undefined && persistentMarkers) {
-                $(persistentMarkers).find('marker').each(function (i, elem) {
+                $(persistentMarkers).children('marker').each(function (i, elem) {
                     var markerName = $(elem).text();
                     this.persistentMarkers[markerName] = true;
                 }.bind(this));
@@ -964,8 +960,8 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
              * alternatives must always be fulfilled, along with all
              * the conditions of tests inside any of the alternative
              * elements. */
-            $xml.find('>behaviour case:has(>alternative)').each(function() {
-                var $case = $(this);
+            $xml.children('behaviour').find('case>alternative:first-child').each(function() {
+                var $case = $(this).parent();
                 $case.children('alternative').each(function() {
                     // Make clone and insert after original case
                     var $clone = $case.clone().insertAfter($case);
@@ -981,7 +977,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             });
 
             var nicknames = {};
-            $xml.find('nicknames>nickname').each(function() {
+            $xml.children('nicknames').children('nickname').each(function() {
                 if ($(this).attr('for') in nicknames) {
                     nicknames[$(this).attr('for')].push($(this).text());
                 } else {
@@ -990,7 +986,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             });
             this.nicknames = nicknames;
 
-            if (this.xml.find('behaviour>trigger').length > 0) {
+            if (this.xml.children('behaviour').children('trigger').length > 0) {
                 var cachePromise = this.loadXMLTriggers();
             } else {
                 var cachePromise = this.loadXMLStages();
@@ -1068,33 +1064,28 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
 Opponent.prototype.loadXMLTriggers = function () {
     var deferred = $.Deferred();
 
-    var triggerQueue = this.xml.find('behaviour>trigger').get();
-    if (triggerQueue.length <= 0) {
-        deferred.resolveWith(this, [0]);
-        return deferred.promise();
-    }
+    var $cases = this.xml.find('>behaviour>trigger>case');
 
-    var loadItemsTotal = this.xml.find('behaviour>trigger>case').length;
+    var loadItemsTotal = $cases.length;
+    if (loadItemsTotal == 0) {
+        return deferred.resolveWith(this, [0]).promise();
+    }
     var loadItemsCompleted = 0;
 
-    function process(tag, elemQueue) {
+    function process() {
         var startTS = performance.now();
 
         /* break tasks into roughly 50ms chunks */
         while (performance.now() - startTS < 50) {
-            while (elemQueue.length <= 0) {
-                /* If triggerQueue is empty, then we are done. */
-                if (triggerQueue.length <= 0) {
-                    return deferred.resolveWith(this, [loadItemsCompleted]);
-                }
-
-                let $trigger = $(triggerQueue.shift());
-                tag = $trigger.attr('id');
-                elemQueue = $trigger.children('case').get();
+            if (loadItemsCompleted >= loadItemsTotal) {
+                deferred.resolveWith(this, [loadItemsCompleted]);
+                return;
             }
 
-            let c = new Case($(elemQueue.shift()));
-            this.recordTargetedCase(c);            
+            let $case = $($cases.get(loadItemsCompleted));
+            let c = new Case($case);
+            let tag = $case.parent().attr('id');
+            this.recordTargetedCase(c);
 
             c.getStages().forEach(function (stage) {
                 var key = tag+':'+stage;
@@ -1109,14 +1100,10 @@ Opponent.prototype.loadXMLTriggers = function () {
         }
 
         deferred.notifyWith(this, [loadItemsCompleted, loadItemsTotal]);
-        setTimeout(process.bind(this, tag, elemQueue), 50);
+        setTimeout(process.bind(this), 10);
     }
 
-    let $trigger = $(triggerQueue.shift());
-    let tag = $trigger.attr('id');
-    let cases = $trigger.children('case').get();
-
-    setTimeout(process.bind(this, tag, cases), 0);
+    setTimeout(process.bind(this), 0);
     return deferred.promise();
 }
 
@@ -1133,30 +1120,27 @@ Opponent.prototype.loadXMLTriggers = function () {
 Opponent.prototype.loadXMLStages = function (onComplete) {
     var deferred = $.Deferred();
 
-    var stageQueue = this.xml.find('behaviour>stage').get();
-    if (stageQueue.length <= 0) {
-        deferred.resolveWith(this, [0]);
-        return deferred.promise();
-    }
+    var $cases = this.xml.find('>behaviour>stage>case');
 
-    var loadItemsTotal = this.xml.find('behaviour>stage>case').length;
+    var loadItemsTotal = $cases.length;
+    if (loadItemsTotal == 0) {
+        return deferred.resolveWith(this, [0]).promise();
+    }
     var loadItemsCompleted = 0;
 
-    function process(stage, elemQueue) {
+    function process() {
         var startTS = performance.now();
 
+        /* break tasks into roughly 50ms chunks */
         while (performance.now() - startTS < 50) {
-            while (elemQueue.length <= 0) {
-                if (stageQueue.length <= 0) {
-                    return deferred.resolveWith(this, [loadItemsCompleted]);
-                }
-
-                let $stage = $(stageQueue.shift());
-                stage = parseInt($stage.attr('id'), 10);
-                elemQueue = $stage.children('case').get();
+            if (loadItemsCompleted >= loadItemsTotal) {
+                deferred.resolveWith(this, [loadItemsCompleted]);
+                return;
             }
 
-            let c = new Case($(elemQueue.shift()));
+            let $case = $($cases.get(loadItemsCompleted));
+            let c = new Case($case);
+            let stage = $case.parent().attr('id');
             this.recordTargetedCase(c);
 
             var key = c.tag + ':' + stage;
@@ -1165,19 +1149,15 @@ Opponent.prototype.loadXMLStages = function (onComplete) {
             }
 
             this.cases.get(key).push(c);
-            
+
             loadItemsCompleted++;
         }
 
-        deferred.notifyWith(this, [loadItemsCompleted, loadItemsTotal])
-        setTimeout(process.bind(this, stage, elemQueue), 50);
+        deferred.notifyWith(this, [loadItemsCompleted, loadItemsTotal]);
+        setTimeout(process.bind(this), 10);
     }
 
-    let $stage = $(stageQueue.shift());
-    let stage = parseInt($stage.attr('id'), 10);
-    let cases = $stage.children('case').get();
-
-    setTimeout(process.bind(this, stage, cases), 0);
+    setTimeout(process.bind(this), 0);
     return deferred.promise();
 }
 
@@ -1370,14 +1350,14 @@ function loadVersionInfo () {
 		dataType: "text",
 		success: function(xml) {
             versionInfo = $(xml);
-            CURRENT_VERSION = versionInfo.find('current').attr('version');
+            CURRENT_VERSION = versionInfo.children('current').attr('version');
 
             if (SENTRY_INITIALIZED) Sentry.setTag("game_version", CURRENT_VERSION);
             
             $('.substitute-version').text('v'+CURRENT_VERSION);
             console.log("Running SPNATI version "+CURRENT_VERSION);
             
-            version_ts = versionInfo.find('changelog > version[number=\"'+CURRENT_VERSION+'\"]').attr('timestamp');        
+            version_ts = versionInfo.find('>changelog > version[number=\"'+CURRENT_VERSION+'\"]').attr('timestamp');
             
             version_ts = parseInt(version_ts, 10);
             now = Date.now();
@@ -1416,7 +1396,7 @@ function loadConfigFile () {
 		url: "config.xml",
 		dataType: "text",
 		success: function(xml) {
-			var _epilogues = $(xml).find('epilogues').text();
+			var _epilogues = $(xml).children('epilogues').text();
             if(_epilogues.toLowerCase() === 'false') {
                 EPILOGUES_ENABLED = false;
                 console.log("Epilogues are disabled.");
@@ -1426,7 +1406,7 @@ function loadConfigFile () {
                 EPILOGUES_ENABLED = true;
             }
 
-            var _epilogues_unlocked = $(xml).find('epilogues-unlocked').text().trim();
+            var _epilogues_unlocked = $(xml).children('epilogues-unlocked').text().trim();
             if (_epilogues_unlocked.toLowerCase() === 'true') {
                 EPILOGUES_UNLOCKED = true;
                 console.error('All epilogues unlocked in config file. You better be using this for development only and not cheating!');
@@ -1434,7 +1414,7 @@ function loadConfigFile () {
                 EPILOGUES_UNLOCKED = false;
             }
 
-            var _epilogue_badges = $(xml).find('epilogue_badges').text();
+            var _epilogue_badges = $(xml).children('epilogue_badges').text();
             if(_epilogue_badges.toLowerCase() === 'false') {
                 EPILOGUE_BADGES_ENABLED = false;
                 console.log("Epilogue badges are disabled.");
@@ -1443,7 +1423,7 @@ function loadConfigFile () {
                 EPILOGUE_BADGES_ENABLED = true;
             }
 
-			var _debug = $(xml).find('debug').text();
+            var _debug = $(xml).children('debug').text();
 
             if (_debug === "true") {
                 DEBUG = true;
@@ -1454,7 +1434,7 @@ function loadConfigFile () {
                 console.log("Debugging is disabled");
             }
 
-            var _default_fill_mode = $(xml).find('default-fill').text();
+            var _default_fill_mode = $(xml).children('default-fill').text();
             if (!_default_fill_mode || _default_fill_mode === 'none') {
                 DEFAULT_FILL = undefined;
                 console.log("Startup table filling disabled");
@@ -1463,7 +1443,7 @@ function loadConfigFile () {
                 console.log("Using startup table fill mode " + DEFAULT_FILL + '.');
             }
 
-            var _game_commit = $(xml).find('commit').text();
+            var _game_commit = $(xml).children('commit').text();
             if (_game_commit) {
                 VERSION_COMMIT = _game_commit;
                 console.log("Running SPNATI commit "+VERSION_COMMIT+'.');
@@ -1471,7 +1451,7 @@ function loadConfigFile () {
                 console.log("Could not find currently deployed Git commit!");
             }
 
-            var _version_tag = $(xml).find('version-tag').text();
+            var _version_tag = $(xml).children('version-tag').text();
             if (_version_tag) {
                 VERSION_TAG = _version_tag;
                 console.log("Running SPNATI production version " + VERSION_TAG + '.');
@@ -1479,7 +1459,7 @@ function loadConfigFile () {
                 console.log("Could not find currently deployed production version tag!");
             }
 
-            var _default_bg = $(xml).find('default-background').text();
+            var _default_bg = $(xml).children('default-background').text();
             if (_default_bg) {
                 defaultBackgroundID = _default_bg;
                 console.log("Using default background: "+defaultBackgroundID);
@@ -1488,13 +1468,13 @@ function loadConfigFile () {
                 console.log("No default background ID set, defaulting to 'inventory'...");
             }
 
-            var _alts = $(xml).find('alternate-costumes').text();
+            var _alts = $(xml).children('alternate-costumes').text();
 
             if(_alts === "true") {
                 ALT_COSTUMES_ENABLED = true;
                 console.log("Alternate costumes enabled");
 
-                var _costume_badges = $(xml).find('costume_badges').text();
+                var _costume_badges = $(xml).children('costume_badges').text();
                 if (_costume_badges.toLowerCase() === 'false') {
                     COSTUME_BADGES_ENABLED = false;
                     console.log("Alternate costume badges are disabled.");
@@ -1503,13 +1483,13 @@ function loadConfigFile () {
                     COSTUME_BADGES_ENABLED = true;
                 }
                 
-                DEFAULT_COSTUME_SET = $(xml).find('default-costume-set').text();
+                DEFAULT_COSTUME_SET = $(xml).children('default-costume-set').text();
                 if (DEFAULT_COSTUME_SET) {
                     console.log("Defaulting to alternate costume set: "+DEFAULT_COSTUME_SET);
                     alternateCostumeSets[DEFAULT_COSTUME_SET] = true;
                 }
 
-                $(xml).find('alternate-costume-sets').each(function () {
+                $(xml).children('alternate-costume-sets').each(function () {
                     var set = $(this).text();
                     alternateCostumeSets[set] = true;
                     if (set === 'all') {
@@ -1526,11 +1506,11 @@ function loadConfigFile () {
             COLLECTIBLES_ENABLED = false;
             COLLECTIBLES_UNLOCKED = false;
             
-            if ($(xml).find('collectibles').text() === 'true') {
+            if ($(xml).children('collectibles').text() === 'true') {
                 COLLECTIBLES_ENABLED = true;
                 console.log("Collectibles enabled");
                 
-                if ($(xml).find('collectibles-unlocked').text() === 'true') {
+                if ($(xml).children('collectibles-unlocked').text() === 'true') {
                     COLLECTIBLES_UNLOCKED = true;
                     console.log("All collectibles force-unlocked");
                 }
@@ -1538,7 +1518,7 @@ function loadConfigFile () {
                 console.log("Collectibles disabled");
             }
             
-            var _resort_mode = $(xml).find('resort').text();
+            var _resort_mode = $(xml).children('resort').text();
             if (_resort_mode.toLowerCase() === 'true') {
                 console.log("Resort mode active!");
                 RESORT_ACTIVE = true;
@@ -1548,7 +1528,7 @@ function loadConfigFile () {
             }
 
             includedOpponentStatuses.online = true;
-			$(xml).find('include-status').each(function() {
+			$(xml).children('include-status').each(function() {
 				includedOpponentStatuses[$(this).text()] = true;
 				console.log("Including", $(this).text(), "opponents");
 			});
@@ -1563,7 +1543,7 @@ function loadGeneralCollectibles () {
 		dataType: "text",
 		success: function(xml) {
 			var collectiblesArray = [];
-			$(xml).find('collectible').each(function (idx, elem) {
+			$(xml).children('collectible').each(function (idx, elem) {
 				generalCollectibles.push(new Collectible($(elem), undefined));
 			});
 		},
@@ -1793,7 +1773,7 @@ function showVersionModal () {
     var entries = [];
     
     /* Get changelog info: */
-    versionInfo.find('changelog > version').each(function (idx, elem) {
+    versionInfo.find('> changelog > version').each(function (idx, elem) {
         entries.push({
             version: $(elem).attr('number'),
             timestamp: parseInt($(elem).attr('timestamp'), 10) || undefined,
