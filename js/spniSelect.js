@@ -132,6 +132,11 @@ var hiddenOpponents = [];
 var loadedGroups = [[], []];
 var selectableGroups = [loadedGroups[0], loadedGroups[1]];
 
+/* indiv. select view variables */
+
+/** Should the individual selection view be in "Testing" mode? */
+var individualSelectTesting = false;
+
 /* page variables */
 var groupSelectScreen = 0; /** testing = 1, released presets = 0 */
 var individualPage = 0;
@@ -647,7 +652,7 @@ function updateIndividualSelectFilters(autoclear) {
     loadedOpponents.forEach(function (opp) {
         opp.selectionCard.setFiltered(!filterOpponent(opp, name, source, creator, tag));
 
-        if (opp.selectionCard.isVisible()) {
+        if (opp.selectionCard.isVisible(individualSelectTesting)) {
             $(opp.selectionCard.mainElem).show();
         } else {
             $(opp.selectionCard.mainElem).hide();
@@ -685,7 +690,7 @@ $('#individual-select-screen .sort-filter-field').on('input', function () {
 
 function updateIndividualSelectVisibility() {
     loadedOpponents.forEach(function (opp) {
-        if (opp.selectionCard.isVisible()) {
+        if (opp.selectionCard.isVisible(individualSelectTesting)) {
             $(opp.selectionCard.mainElem).show();
         } else {
             $(opp.selectionCard.mainElem).hide();
@@ -1421,12 +1426,7 @@ function sortOpponentsByMultipleFields() {
 function sortOpponentsByMostTargeted() {
 	return function(opp1, opp2) {
 		counts = [opp1, opp2].map(function(opp) {
-			return players.reduce(function(sum, p) {
-				if (p && p.targetedLines && opp.id in p.targetedLines) {
-					sum += p.targetedLines[opp.id].seen.size;
-				}
-				return sum;
-			}, 0);
+			return opp.inboundLinesFromSelected();
 		});
 		if (counts[0] > counts[1]) return -1;
 		if (counts[0] < counts[1]) return 1;

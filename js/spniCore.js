@@ -450,6 +450,27 @@ Player.prototype.setMarker = function (baseName, target, value) {
     }
 }
 
+/**
+ * Calculates how many lines from currently-selected characters target this
+ * character.
+ * 
+ * @param {string} filterStatus? If passed, only lines from characters with the
+ * given status will be considered.
+ * 
+ * @returns {number}
+ */
+Player.prototype.inboundLinesFromSelected = function (filterStatus) {
+    var id = this.id;
+
+    return players.reduce(function(sum, p) {
+        if (p && p.targetedLines && id in p.targetedLines
+            && (!filterStatus || p.status === filterStatus)) {
+            sum += p.targetedLines[id].seen.size;
+        }
+
+        return sum;
+    }, 0);
+}
 
 /**
  * Subclass of Player for AI-controlled players.

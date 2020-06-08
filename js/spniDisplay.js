@@ -1152,10 +1152,32 @@ OpponentSelectionCard.prototype.handleClick = function (ev) {
     individualDetailDisplay.update(this.opponent);
 }
 
-/** Should this card be visible? */
-OpponentSelectionCard.prototype.isVisible = function () {
+/**
+ * Should this card be visible?
+ * 
+ * @param {boolean} testingView If true, visibility will be calculated for the
+ * Testing Tables view instead of the regular roster view.
+ */
+OpponentSelectionCard.prototype.isVisible = function (testingView) {
     /* hide already selected opponents */
     if (this.opponent.slot) return false;
+
+    var status = this.opponent.status;
+
+    // Should this opponent be on the "main roster view"?
+    var onMainView = (status === undefined || includedOpponentStatuses[status]);
+
+    if (!testingView) {
+        // Regular view: include all opponents with undefined status and with
+        // included statuses.
+        if (!onMainView) return false;
+    } else {
+        /* Testing view: include all opponents with `testing` status and those
+         * targeted by testing opponents with 5+ lines.
+         */
+        if (status !== "testing" && this.opponent.inboundLinesFromSelected("testing") < 5)
+            return false;
+    }
 
     /* hide filtered opponents */
     return !this.filtered;
