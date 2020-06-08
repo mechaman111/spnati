@@ -521,7 +521,7 @@ function updateGroupSelectScreen (ignore_bg) {
                 if (costume == "default") {
                     opponent.selectAlternateCostume(null);
                 } else {
-                    for (let j=0;j<opponent.alternate_costumes.length;j++) {
+                    for (let j = 0; j < opponent.alternate_costumes.length; j++) {
                         if (opponent.alternate_costumes[j].label === costume) {
                             opponent.selectAlternateCostume(opponent.alternate_costumes[j]);
                             break;
@@ -855,13 +855,13 @@ function clickedRandomGroupButton () {
 	    
         if (costume) {
             if (costume == "default") {
-                $groupCostumeSelectors[i].val('');
+                fillCostumeSelector($groupCostumeSelectors[i], opponent.alternate_costumes, '');
             } else {
                 var opponent = chosenGroup.opponents[i];
                 
-                for (let j=0;j<opponent.alternate_costumes.length;j++) {
+                for (let j = 0; j < opponent.alternate_costumes.length; j++) {
                     if (opponent.alternate_costumes[j].label === costume) {
-                        $groupCostumeSelectors[i].append($('<option>', {val: opponent.alternate_costumes[j].folder, selected: true}));
+                        fillCostumeSelector($groupCostumeSelectors[i], opponent.alternate_costumes, opponent.alternate_costumes[j].folder);
                         break;
                     }
                 }
