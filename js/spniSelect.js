@@ -431,18 +431,6 @@ function fillCostumeSelector($selector, costumes, selected_costume) {
     return $selector;
 }
 
-/** 
- * Update displayed epilogue badges for opponents on the individual
- * selection screen.
- */
-function updateIndividualEpilogueBadges (autoclear) {
-    selectableOpponents.forEach(function(opp) {
-        if (opp.endings) {
-            opp.selectionCard.updateEpilogueBadge();
-        }
-    });
-}
-
 /************************************************************
  * Loads opponents onto the group select screen based on the
  * currently selected page.
@@ -710,6 +698,19 @@ function isIndividualSelectViewTypeLocked() {
     return players.some(function (opp) { return opp && opp !== humanPlayer; });
 }
 
+/** 
+ * Update displayed epilogue badges for opponents on the individual
+ * selection screen.
+ */
+function updateIndividualEpilogueBadges (autoclear) {
+    loadedOpponents.forEach(function(opp) {
+        if (opp.endings) {
+            opp.selectionCard.updateEpilogueBadge();
+        }
+    });
+}
+
+
 /************************************************************
  * The player clicked on an opponent slot.
  ************************************************************/
@@ -756,6 +757,7 @@ function showIndividualSelectionScreen() {
         }
     }
 
+    updateIndividualEpilogueBadges();
 
     /* switch screens */
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-individual");
