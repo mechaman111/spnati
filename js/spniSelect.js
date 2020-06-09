@@ -1286,6 +1286,13 @@ function updateSelectionVisuals () {
      */
     $("#select-group-testing-button").attr("disabled", isIndividualSelectViewTypeLocked());
 
+    /* Hide the "Preset Tables" button when viewing the Testing roster. */
+    if (individualSelectTesting) {
+        $("#select-group-button").hide();
+    } else {
+        $("#select-group-button").show();
+    }
+
     /* if enough opponents are selected, and all those are loaded, then enable progression */
     $selectMainButton.attr('disabled', filled < 2 || loaded < filled);
 
