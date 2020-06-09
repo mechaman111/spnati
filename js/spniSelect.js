@@ -129,8 +129,8 @@ var metaFile = "meta.xml";
 var loadedOpponents = [];
 var selectableOpponents = loadedOpponents;
 var hiddenOpponents = [];
-var loadedGroups = [[], []];
-var selectableGroups = [loadedGroups[0], loadedGroups[1]];
+var loadedGroups = [];
+var selectableGroups = loadedGroups;
 
 /* indiv. select view variables */
 
@@ -141,9 +141,8 @@ var individualSelectTesting = false;
 var suggestedTestingOpponents = undefined;
 
 /* page variables */
-var groupSelectScreen = 0; /** testing = 1, released presets = 0 */
 var individualPage = 0;
-var groupPage = [0, 0];
+var groupPage = 0;
 var chosenGender = -1;
 var chosenGroupGender = -1;
 var sortingMode = "Featured";
@@ -273,8 +272,7 @@ function loadListingFile () {
 		}
         
         if (--outstandingLoads % 16 == 0) {
-            updateSelectableGroups(0);
-            updateSelectableGroups(1);
+            updateSelectableGroups();
             updateGroupSelectScreen(true);
             updateSelectionVisuals();
         }
@@ -339,7 +337,7 @@ function loadListingFile () {
 					}
 					opponentGroupMap[id].push({ group: newGroup, idx: idx, costume: costumes[idx] });
 				});
-				loadedGroups[$(this).attr('testing') ? 1 : 0].push(newGroup);
+				loadedGroups.push(newGroup);
 			});
 
             /* now actually load the characters */
@@ -455,20 +453,20 @@ function updateIndividualEpilogueBadges (autoclear) {
  ************************************************************/
 function updateGroupSelectScreen (ignore_bg) {
 	/* safety wrap around */
-    if (groupPage[groupSelectScreen] < 0) {
+    if (groupPage < 0) {
 		/* wrap to last page */
-		groupPage[groupSelectScreen] = (selectableGroups[groupSelectScreen].length)-1;
-	} else if (groupPage[groupSelectScreen] > selectableGroups[groupSelectScreen].length-1) {
+		groupPage = (selectableGroups.length)-1;
+	} else if (groupPage > selectableGroups.length-1) {
 		/* wrap to the first page */
-		groupPage[groupSelectScreen] = 0;
+		groupPage = 0;
 	}
-	$groupPageIndicator.val(groupPage[groupSelectScreen]+1);
-    $groupMaxPageIndicator.html("of "+selectableGroups[groupSelectScreen].length);
+	$groupPageIndicator.val(groupPage+1);
+    $groupMaxPageIndicator.html("of "+selectableGroups.length);
 
     /* create and load all of the individual opponents */
     $groupButton.attr('disabled', false);
     
-    var group = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]];
+    var group = selectableGroups[groupPage];
     
     if (group) {
         $groupNameLabel.html(group.title);
@@ -796,10 +794,8 @@ function showTestingTables() {
  * The player clicked on the Preset Tables button.
  ************************************************************/
 function showPresetTables () {
-    groupSelectScreen = 0;
-
     $groupSwitchTestingButton.html("Testing Tables");
-    updateSelectableGroups(groupSelectScreen);
+    updateSelectableGroups();
     updateGroupSelectScreen();
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-group");
@@ -812,14 +808,14 @@ function showPresetTables () {
  * Filters the list of selectable opponents based on those
  * already selected and performs search and sort logic.
  ************************************************************/
-function updateSelectableGroups(screen) {
+function updateSelectableGroups() {
     var groupname = $groupSearchGroupName.val().toLowerCase();
     var name = $groupSearchName.val().toLowerCase();
     var source = $groupSearchSource.val().toLowerCase();
     var tag = canonicalizeTag($groupSearchTag.val());
 
     // reset filters
-    selectableGroups[screen] = loadedGroups[screen].filter(function(group) {
+    selectableGroups = loadedGroups.filter(function(group) {
         if (!group.opponents.every(function(opp) { return opp; })) return false;
 
         if (groupname && group.title.toLowerCase().indexOf(groupname) < 0) return false;
@@ -916,8 +912,8 @@ function loadGroup (chosenGroup) {
 function clickedRandomGroupButton () {
 	selectedSlot = 1;
 	/* get a random number for the group listings */
-	var randomGroupNumber = getRandomNumber(0, loadedGroups[0].length);
-	var chosenGroup = loadedGroups[0][randomGroupNumber];
+	var randomGroupNumber = getRandomNumber(0, loadedGroups.length);
+	var chosenGroup = loadedGroups[randomGroupNumber];
 
     /* workaround for preset costumes */
 	for (var i = 0; i < 4; i++) {
@@ -1068,12 +1064,12 @@ function selectGroup () {
     if (SENTRY_INITIALIZED) {
         Sentry.addBreadcrumb({
             'category': 'select',
-            'message': 'Loading group at screen '+groupSelectScreen+', page '+groupPage[groupSelectScreen],
+            'message': 'Loading group at page '+groupPage,
             'level': 'info'
         });
     }
 
-    loadGroup(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]]);
+    loadGroup(selectableGroups[groupPage]);
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
 
@@ -1088,23 +1084,23 @@ function changeGroupPage (skip, page) {
 	if (skip) {
 		if (page == -1) {
 			/* go to first page */
-            groupPage[groupSelectScreen] = 0;
+            groupPage = 0;
 		} else if (page == 1) {
 			/* go to last page */
-			groupPage[groupSelectScreen] = selectableGroups[groupSelectScreen].length-1;
+			groupPage = selectableGroups.length-1;
 		} else {
 			/* go to selected page */
-			groupPage[groupSelectScreen] = Number($groupPageIndicator.val()) - 1;
+			groupPage = Number($groupPageIndicator.val()) - 1;
 		}
 	} else {
-		groupPage[groupSelectScreen] += page;
+		groupPage += page;
     }
     
     if (SENTRY_INITIALIZED) {
         Sentry.addBreadcrumb({
             'category': 'select',
             'level': 'info',
-            'message': 'Going to ' + (groupSelectScreen ? 'testing' : 'preset') + ' table page ' + groupPage[groupSelectScreen] + ' / ' + (selectableGroups[groupSelectScreen].length-1),
+            'message': 'Going to preset table page ' + groupPage + ' / ' + (selectableGroups.length-1),
             'data': {
                 'skip': String(skip),
                 'page': String(page)
@@ -1240,7 +1236,7 @@ function backSelectScreen () {
  */
 function altCostumeSelected(slot) {
     var costumeSelector = $groupCostumeSelectors[slot-1];
-    var opponent = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[slot-1];
+    var opponent = selectableGroups[groupPage].opponents[slot-1];
 
     var costumeDesc = costumeSelector.children(':selected').data('costumeDescriptor');
     opponent.selectAlternateCostume(costumeDesc);
@@ -1395,7 +1391,7 @@ function openGroupSearchModal() {
 
 function closeGroupSearchModal() {
     // perform the search and sort logic
-    updateSelectableGroups(groupSelectScreen);
+    updateSelectableGroups();
 
     // update
     updateGroupSelectScreen();
