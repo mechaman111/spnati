@@ -7,11 +7,9 @@ namespace Desktop
 	{
 		void SetContext(object context);
 
-		string GetLookupCaption();
-		List<IRecord> GetRecords(string text);
-		string[] GetColumns();
-		int[] GetColumnWidths();
+		List<IRecord> GetRecords(string text, LookupArgs args);
 		ListViewItem FormatItem(IRecord record);
+		void SetFormatInfo(LookupFormat info);
 
 		IRecord Create(string key);
 		void Delete(IRecord record);
@@ -24,5 +22,18 @@ namespace Desktop
 	public interface IRecordProvider<T> : IRecordProvider where T : IRecord
 	{
 
+	}
+
+	public class LookupArgs
+	{
+		public string[] ExtraText;
+	}
+
+	public class LookupFormat
+	{
+		public string Caption = "Look Up Record";
+		public string[] Columns = new string[1];
+		public int[] ColumnWidths = null;
+		public List<string> ExtraFields = new List<string>();
 	}
 }

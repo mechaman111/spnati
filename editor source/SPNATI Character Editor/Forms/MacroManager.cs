@@ -33,7 +33,7 @@ namespace SPNATI_Character_Editor.Forms
 		{
 			Macro selected = lstMacros.SelectedItem as Macro;
 			lstMacros.Items.Clear();
-			foreach (IRecord record in _provider.GetRecords(""))
+			foreach (IRecord record in _provider.GetRecords("", new LookupArgs()))
 			{
 				Macro macro = record as Macro;
 				lstMacros.Items.Add(macro);

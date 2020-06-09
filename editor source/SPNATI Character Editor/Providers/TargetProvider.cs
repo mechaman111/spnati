@@ -41,22 +41,13 @@ namespace SPNATI_Character_Editor.Providers
 			return new ListViewItem(new string[] { target.Name, target.Key, target.Description });
 		}
 
-		public string[] GetColumns()
+		public void SetFormatInfo(LookupFormat info)
 		{
-			return new string[] { "Name", "Folder", "Description" };
+			info.Caption = "Target Select";
+			info.Columns = new string[] { "Name", "Folder", "Description" };
 		}
 
-		public int[] GetColumnWidths()
-		{
-			return null;
-		}
-
-		public string GetLookupCaption()
-		{
-			return "Target Select";
-		}
-
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			text = text.ToLower();
 			List<IRecord> list = new List<IRecord>();

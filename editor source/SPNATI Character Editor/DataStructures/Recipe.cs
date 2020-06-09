@@ -125,14 +125,11 @@ namespace SPNATI_Character_Editor
 			return new ListViewItem(new string[] { used ? "✓" : "", def.Name, def.Description });
 		}
 
-		public override string[] GetColumns()
+		public override void SetFormatInfo(LookupFormat info)
 		{
-			return new string[] { "", "Name", "Description" };
-		}
-
-		public override int[] GetColumnWidths()
-		{
-			return new int[] { 30, 150, -2 };
+			info.Caption = "Choose a Recipe";
+			info.Columns = new string[] { "", "Name", "Description" };
+			info.ColumnWidths = new int[] { 30, 150, -2 };
 		}
 
 		public static void Load()

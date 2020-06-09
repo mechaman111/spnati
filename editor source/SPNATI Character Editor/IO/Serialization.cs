@@ -97,8 +97,6 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
-			character.LastUpdate = DateTime.Now;
-
 			// clean up old files
 			DeleteFile(character, "markers.xml");
 			DeleteFile(character, "behaviour.edit.bak");
@@ -302,7 +300,6 @@ namespace SPNATI_Character_Editor
 			{
 				character.Source = EditorSource.CharacterEditor;
 			}
-			character.LastUpdate = timestamp;
 
 			character.FolderName = Path.GetFileName(folderName);
 

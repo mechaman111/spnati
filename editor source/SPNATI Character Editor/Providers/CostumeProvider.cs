@@ -7,11 +7,6 @@ namespace SPNATI_Character_Editor.Providers
 {
 	public class CostumeProvider : IRecordProvider<Costume>
 	{
-		public string GetLookupCaption()
-		{
-			return "Skin Select";
-		}
-
 		public bool AllowsNew
 		{
 			get { return true; }
@@ -66,7 +61,7 @@ namespace SPNATI_Character_Editor.Providers
 			throw new NotImplementedException();
 		}
 
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			text = text.ToLower();
 			List<IRecord> list = new List<IRecord>();
@@ -111,9 +106,10 @@ namespace SPNATI_Character_Editor.Providers
 			});
 		}
 
-		public string[] GetColumns()
+		public void SetFormatInfo(LookupFormat info)
 		{
-			return new string[] { "Name", "Id", "Character", "Folder" };
+			info.Caption = "Skin Select";
+			info.Columns = new string[] { "Name", "ID", "Character", "Folder" };
 		}
 
 		public int[] GetColumnWidths()

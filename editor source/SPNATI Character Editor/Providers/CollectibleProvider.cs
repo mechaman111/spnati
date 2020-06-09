@@ -55,21 +55,13 @@ namespace SPNATI_Character_Editor.Providers
 			return new ListViewItem(new string[] { collectible.Id, collectible.Name, collectible.Subtitle });
 		}
 
-		public string[] GetColumns()
+		public void SetFormatInfo(LookupFormat info)
 		{
-			return new string[] { "ID", "Title", "Subtitle" };
+			info.Caption = "Select a Collectible";
+			info.Columns = new string[] { "ID", "Title", "Subtitle" };
 		}
 
-		public int[] GetColumnWidths()
-		{
-			return null;
-		}
-
-		public string GetLookupCaption()
-		{
-			return "Select a Collectible";
-		}
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			text = text.ToLower();
 			ObservableCollection<Collectible> source = _genericCollectibles;

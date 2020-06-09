@@ -39,19 +39,15 @@ namespace SPNATI_Character_Editor.Providers
 			return new ListViewItem(new string[] { def.Name, def.Description });
 		}
 
-		public virtual string[] GetColumns()
+		public virtual void SetFormatInfo(LookupFormat info)
 		{
-			return new string[] { "Name", "Description" };
-		}
-
-		public virtual int[] GetColumnWidths()
-		{
-			return null;
+			info.Caption = GetLookupCaption();
+			info.Columns = new string[] { "Name", "Description" };
 		}
 
 		public abstract string GetLookupCaption();
 
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			text = text.ToLower();
 			var list = new List<IRecord>();

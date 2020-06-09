@@ -19,11 +19,6 @@ namespace SPNATI_Character_Editor.Providers
 			_roles.Add(new FilterRole("winner", "Winner", "Only counts the winner of the most recent hand"));
 		}
 
-		public string GetLookupCaption()
-		{
-			return "Role Select";
-		}
-
 		public bool TrackRecent
 		{
 			get { return false; }
@@ -44,7 +39,7 @@ namespace SPNATI_Character_Editor.Providers
 			throw new NotImplementedException();
 		}
 
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			text = text.ToLower();
 			List<IRecord> list = new List<IRecord>();
@@ -64,14 +59,10 @@ namespace SPNATI_Character_Editor.Providers
 			list.Sort((record1, record2) => record1.CompareTo(record2));
 		}
 
-		public string[] GetColumns()
+		public void SetFormatInfo(LookupFormat info)
 		{
-			return new string[] { "Name", "Description" };
-		}
-
-		public int[] GetColumnWidths()
-		{
-			return null;
+			info.Caption = "Role Select";
+			info.Columns = new string[] { "Name", "Description" };
 		}
 
 		public ListViewItem FormatItem(IRecord record)

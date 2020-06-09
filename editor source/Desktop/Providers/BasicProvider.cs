@@ -32,6 +32,12 @@ namespace Desktop
 			return "Record Lookup";
 		}
 
+		public void SetFormatInfo(LookupFormat info)
+		{
+			info.Columns = new string[] { "Name" };
+			info.Caption = "Record Lookup";
+		}
+
 		public IRecord Create(string key)
 		{
 			throw new NotImplementedException();
@@ -46,7 +52,7 @@ namespace Desktop
 			record.Sort();
 		}
 
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			BasicRecord record = BasicRecordStash.Retrieve<T>();
 			record.Key = record.Key ?? text;
@@ -64,16 +70,6 @@ namespace Desktop
 		public bool TrackRecent
 		{
 			get { return false; }
-		}
-
-		public string[] GetColumns()
-		{
-			return new string[] { "Name" };
-		}
-
-		public virtual int[] GetColumnWidths()
-		{
-			return null;
 		}
 
 		public ListViewItem FormatItem(IRecord record)

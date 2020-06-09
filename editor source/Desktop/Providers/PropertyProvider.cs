@@ -15,7 +15,7 @@ namespace Desktop.Providers
 		public IRecord Create(string key) { throw new NotImplementedException(); }
 		public void Delete(IRecord record) { }
 
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			text = text.ToLower();
 			var list = new List<IRecord>();
@@ -61,25 +61,16 @@ namespace Desktop.Providers
 			}
 		}
 
-		public string[] GetColumns()
-		{
-			return new string[] { "Type", "Description" };
-		}
-
-		public virtual int[] GetColumnWidths()
-		{
-			return null;
-		}
-
 		public ListViewItem FormatItem(IRecord record)
 		{
 			PropertyRecord data = record as PropertyRecord;
 			return new ListViewItem(new string[] { data.Name, data.Description });
 		}
 
-		public string GetLookupCaption()
+		public void SetFormatInfo(LookupFormat info)
 		{
-			return "Select a Property";
+			info.Caption = "Select a Property";
+			info.Columns = new string[] { "Type", "Description" };
 		}
 
 		public void Sort(List<IRecord> list)

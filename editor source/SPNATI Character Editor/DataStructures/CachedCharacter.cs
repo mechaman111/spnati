@@ -18,7 +18,7 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public class CachedCharacter : Character
 	{
-		public static int CurrentVersion = 3;
+		public static int CurrentVersion = 4;
 
 		[XmlElement("cacheVersion")]
 		public int CacheVersion;
@@ -42,7 +42,13 @@ namespace SPNATI_Character_Editor
 		[XmlArray("altCostumes")]
 		[XmlArrayItem("alternate")]
 		public List<AlternateSkin> Skins = new List<AlternateSkin>();
-		
+
+		[XmlElement("writer")]
+		public string Writer;
+
+		[XmlElement("lastupdate")]
+		public long LastUpdate;
+
 		public override bool IsFullyLoaded { get { return false; } }
 
 		public CachedCharacter() { }
@@ -56,7 +62,6 @@ namespace SPNATI_Character_Editor
 			character.PrepareForEdit();
 
 			string behaviourPath = Path.Combine(character.GetDirectory(), "behaviour.xml");
-			LastUpdate = File.GetLastWriteTime(behaviourPath);
 
 			//Basic info to copy over
 			CacheVersion = CurrentVersion;
@@ -69,6 +74,8 @@ namespace SPNATI_Character_Editor
 			Gender = character.Gender;
 			Size = character.Size;
 			Wardrobe = character.Wardrobe;
+			Writer = character.Metadata.Writer;
+			LastUpdate = character.Metadata.LastUpdate;
 
 			Metadata.AlternateSkins = character.Metadata.AlternateSkins;
 			Skins.AddRange(character.Metadata.AlternateSkins);
@@ -131,6 +138,8 @@ namespace SPNATI_Character_Editor
 			}
 
 			Metadata.CrossGender = CrossGender;
+			Metadata.Writer = Writer;
+			Metadata.LastUpdate = LastUpdate;
 		}
 
 		public int GetTargetedCountTowards(string folderName)

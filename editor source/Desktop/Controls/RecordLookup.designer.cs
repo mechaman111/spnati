@@ -79,7 +79,7 @@
 			this.cmdNew.Location = new System.Drawing.Point(355, 3);
 			this.cmdNew.Name = "cmdNew";
 			this.cmdNew.Size = new System.Drawing.Size(97, 23);
-			this.cmdNew.TabIndex = 3;
+			this.cmdNew.TabIndex = 23;
 			this.cmdNew.Text = "Create New";
 			this.cmdNew.UseVisualStyleBackColor = true;
 			this.cmdNew.Click += new System.EventHandler(this.cmdNew_Click);
@@ -94,7 +94,7 @@
 			this.cmdAccept.Location = new System.Drawing.Point(458, 3);
 			this.cmdAccept.Name = "cmdAccept";
 			this.cmdAccept.Size = new System.Drawing.Size(97, 23);
-			this.cmdAccept.TabIndex = 4;
+			this.cmdAccept.TabIndex = 24;
 			this.cmdAccept.Text = "Accept";
 			this.cmdAccept.UseVisualStyleBackColor = true;
 			this.cmdAccept.Click += new System.EventHandler(this.cmdAccept_Click);
@@ -110,7 +110,7 @@
 			this.cmdCancel.Location = new System.Drawing.Point(561, 3);
 			this.cmdCancel.Name = "cmdCancel";
 			this.cmdCancel.Size = new System.Drawing.Size(97, 23);
-			this.cmdCancel.TabIndex = 5;
+			this.cmdCancel.TabIndex = 25;
 			this.cmdCancel.Text = "Cancel";
 			this.cmdCancel.UseVisualStyleBackColor = true;
 			this.cmdCancel.Click += new System.EventHandler(this.cmdCancel_Click);
@@ -129,7 +129,7 @@
 			this.lstItems.OwnerDraw = true;
 			this.lstItems.ShowItemToolTips = true;
 			this.lstItems.Size = new System.Drawing.Size(637, 199);
-			this.lstItems.TabIndex = 6;
+			this.lstItems.TabIndex = 20;
 			this.lstItems.UseCompatibleStateImageBehavior = false;
 			this.lstItems.View = System.Windows.Forms.View.Tile;
 			this.lstItems.DoubleClick += new System.EventHandler(this.lstItems_DoubleClick);
@@ -143,7 +143,7 @@
 			this.cmdDelete.Location = new System.Drawing.Point(3, 3);
 			this.cmdDelete.Name = "cmdDelete";
 			this.cmdDelete.Size = new System.Drawing.Size(97, 23);
-			this.cmdDelete.TabIndex = 7;
+			this.cmdDelete.TabIndex = 22;
 			this.cmdDelete.Text = "Delete";
 			this.cmdDelete.UseVisualStyleBackColor = true;
 			this.cmdDelete.Visible = false;
@@ -175,7 +175,7 @@
 			this.lstRecent.Name = "lstRecent";
 			this.lstRecent.OwnerDraw = true;
 			this.lstRecent.Size = new System.Drawing.Size(637, 71);
-			this.lstRecent.TabIndex = 9;
+			this.lstRecent.TabIndex = 21;
 			this.lstRecent.UseCompatibleStateImageBehavior = false;
 			this.lstRecent.View = System.Windows.Forms.View.Tile;
 			this.lstRecent.SelectedIndexChanged += new System.EventHandler(this.lstRecent_SelectedIndexChanged);

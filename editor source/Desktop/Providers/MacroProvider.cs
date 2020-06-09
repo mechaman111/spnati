@@ -44,25 +44,16 @@ namespace Desktop.Providers
 			_macros.Set(type, macro.Name, macro);
 		}
 
-		public string[] GetColumns()
+		public void SetFormatInfo(LookupFormat info)
 		{
-			return new string[] { "Name" };
-		}
-
-		public virtual int[] GetColumnWidths()
-		{
-			return null;
+			info.Columns = new string[] { "Name" };
+			info.Caption = "Select a Macro";
 		}
 
 		public ListViewItem FormatItem(IRecord record)
 		{
 			Macro data = record as Macro;
 			return new ListViewItem(new string[] { data.Name });
-		}
-
-		public string GetLookupCaption()
-		{
-			return "Select a Macro";
 		}
 
 		public bool TrackRecent
@@ -75,7 +66,7 @@ namespace Desktop.Providers
 			return _macros.Get(type, name);
 		}
 
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			text = text.ToLower();
 			var list = new List<IRecord>();
