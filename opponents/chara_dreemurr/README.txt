@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited June 5 2020
+README edited June 9 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -214,6 +214,7 @@ Most, if not all, of these come with a documented Marker. If you find one withou
 AELLA
 -Responds to Aella's question about adventures. For some reason, this is also a Pinkie Pie case?!?!
 -Responds to Aella asking Chara if she's a demon.
+-Responds to Aella warning Chara to behave.
 
 AIMEE
 -Responds to Aimee shooting her clothes off.
@@ -249,6 +250,7 @@ TOYOTA SPRINTER
 BROCK
 -Responds to Brock launching a missile.
 -Responds to Brock getting hit by a missile.
+-Responds to Brock explaining how he survived getting hit by a missile.
 
 CHAZZ
 -Responds to Chazz attempting to leave the game.
@@ -267,6 +269,9 @@ ELIZABETH
 
 EMI
 -Responds to Emi stripping her prosthetic legs.
+
+ERUFUDA
+-Responds to Erufuda's question about favorite foods.
 
 FLORINA
 -Responds to Florina fleeing the game.
