@@ -137,6 +137,9 @@ var selectableGroups = [loadedGroups[0], loadedGroups[1]];
 /** Should the individual selection view be in "Testing" mode? */
 var individualSelectTesting = false;
 
+/** Are the default fill suggestions using Testing opponents? */
+var suggestedTestingOpponents = undefined;
+
 /* page variables */
 var groupSelectScreen = 0; /** testing = 1, released presets = 0 */
 var individualPage = 0;
@@ -347,14 +350,11 @@ function loadListingFile () {
                 var id = $(this).text();
                 var releaseNumber = $(this).attr('release');
                 var highlightStatus = $(this).attr('highlight');
-                var doInclude = (oppStatus === undefined || includedOpponentStatuses[oppStatus]);
 
                 if (available[id]) {
                     outstandingLoads++;
                     totalLoads++;
-					if (doInclude) {
-						opponentMap[id] = oppDefaultIndex++;
-					}
+                    opponentMap[id] = oppDefaultIndex++;
                     loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus, onComplete);
                 }
             });
@@ -652,7 +652,7 @@ function updateIndividualSelectFilters(autoclear) {
     loadedOpponents.forEach(function (opp) {
         opp.selectionCard.setFiltered(!filterOpponent(opp, name, source, creator, tag));
 
-        if (opp.selectionCard.isVisible(individualSelectTesting)) {
+        if (opp.selectionCard.isVisible(individualSelectTesting, false)) {
             $(opp.selectionCard.mainElem).show();
         } else {
             $(opp.selectionCard.mainElem).hide();
@@ -669,14 +669,26 @@ function updateIndividualSelectFilters(autoclear) {
 
 /** Updates the sort order of opponents on the individual select screen. */
 function updateIndividualSelectSort() {
-    var ordered = loadedOpponents;
+    var ordered = loadedOpponents.slice();
 
     /* sort opponents */
     // Since ordered is always initialized here with featured order,
     // check if a different sorting mode is selected, and if yes, sort it.
     if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
-        ordered = loadedOpponents.slice();
         ordered.sort(sortingOptionsMap[sortingMode]);
+    } else if (individualSelectTesting) {
+        /*
+         * The default "Featured" sort mode for the Testing view sorts in
+         * order of decreasing submission date (for now). This is the reverse
+         * of the listing.xml ordering (where the newest characters are placed
+         * at the end).
+         * 
+         * As a special case, if the default Featured sort mode is selected for
+         * use in the Testing view, sort all Testing opponents before all
+         * main-roster opponents.
+         */
+        ordered.reverse();
+        ordered.sort(sortTestingOpponentsFirst);
     }
 
     ordered.forEach(function (opp) {
@@ -690,12 +702,17 @@ $('#individual-select-screen .sort-filter-field').on('input', function () {
 
 function updateIndividualSelectVisibility() {
     loadedOpponents.forEach(function (opp) {
-        if (opp.selectionCard.isVisible(individualSelectTesting)) {
+        if (opp.selectionCard.isVisible(individualSelectTesting, false)) {
             $(opp.selectionCard.mainElem).show();
         } else {
             $(opp.selectionCard.mainElem).hide();
         }
     });
+}
+
+/** Is the individual select screen locked to Testing or Main Roster mode? */
+function isIndividualSelectViewTypeLocked() {
+    return players.some(function (opp) { return opp && opp !== humanPlayer; });
 }
 
 /************************************************************
@@ -706,27 +723,14 @@ function selectOpponentSlot (slot) {
         /* add a new opponent */
         selectedSlot = slot;
 
-        /* update the list of selectable opponents based on those that are
-         * already selected */
-        updateIndividualSelectVisibility();
-
-        /* Make sure the user doesn't have target-count sorting set if
-         * the amount of loaded opponents drops to 0. */
-        if (sortingMode === "Talks to selected") {
-            if (players.countTrue() <= 1) {
-                setSortingMode("Featured");
-            }
+        if (!isIndividualSelectViewTypeLocked()) {
+            /* Use the "main roster" display when entering via the "Select
+             * Other Opponent" buttons, if the view type isn't already locked.
+             */
+            individualSelectTesting = false;
         }
 
-        /* We don't need to update filtering or sorting when moving from the 
-         * main select screen to the indiv. select screen, since the filters
-         * and sort method cannot actually change unless the user is already
-         * on said screen.
-         */
-
-        /* switch screens */
-        if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-individual");
-		screenTransition($selectScreen, $individualSelectScreen);
+        showIndividualSelectionScreen();
     } else {
         /* remove the opponent that's there */
         $selectImages[slot-1].off('load');
@@ -738,35 +742,70 @@ function selectOpponentSlot (slot) {
     }
 }
 
+function showIndividualSelectionScreen() {
+    /* We don't need to update filtering when moving from the main select screen
+     * to the indiv. select screen, since the filters cannot actually change
+     * unless the user is already on said screen.
+     * 
+     * The sort mode and visibility of characters might change, however,
+     * depending on the view type and what characters have already been selected.
+     */
+    updateIndividualSelectVisibility();
+    updateIndividualSelectSort();
+
+    /* Make sure the user doesn't have target-count sorting set if
+     * the amount of loaded opponents drops to 0. */
+    if (sortingMode === "Talks to selected") {
+        if (players.countTrue() <= 1) {
+            setSortingMode("Featured");
+        }
+    }
+
+
+    /* switch screens */
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-individual");
+    screenTransition($selectScreen, $individualSelectScreen);
+}
+
+/** The player clicked on the Testing Tables button. */
+function showTestingTables() {
+    var emptySlot = undefined;
+    for (var i=1; i < players.length; i++) {
+        if (!players[i]) {
+            emptySlot = i;
+            break;
+        }
+    }
+
+    if (!emptySlot) {
+        // Shouldn't happen?
+        console.error("Could not find an empty slot for selecting Testing character");
+        if (SENTRY_INITIALIZED) {
+            Sentry.captureMessage("Could not find an empty slot for selecting Testing character");
+        }
+
+        return;
+    }
+
+    individualSelectTesting = true;
+    selectedSlot = emptySlot;
+    showIndividualSelectionScreen();
+}
+
 /************************************************************
- * The player clicked on the Preset Tables or Testing Tables button.
+ * The player clicked on the Preset Tables button.
  ************************************************************/
-function clickedSelectGroupButton (screen) {
-    switchSelectGroupScreen(screen);
+function showPresetTables () {
+    groupSelectScreen = 0;
+
+    $groupSwitchTestingButton.html("Testing Tables");
+    updateSelectableGroups(groupSelectScreen);
+    updateGroupSelectScreen();
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-group");
 
 	/* switch screens */
 	screenTransition($selectScreen, $groupSelectScreen);
-}
-
-/************************************************************
- * The player clicked on the Preset Tables or Testing Tables
- * button from within the table select screen.
- ************************************************************/
-function switchSelectGroupScreen (screen) {
-    if (screen !== undefined) {
-        groupSelectScreen = screen;
-    } else {
-        groupSelectScreen = 1 - groupSelectScreen;
-    }
-    if (groupSelectScreen == 1) {
-        $groupSwitchTestingButton.html("Preset Tables");
-    } else {
-        $groupSwitchTestingButton.html("Testing Tables");
-    }
-    updateSelectableGroups(groupSelectScreen);
-    updateGroupSelectScreen();
 }
 
 /************************************************************
@@ -909,9 +948,9 @@ function clickedRandomGroupButton () {
 function clickedRandomFillButton (predicate) {
 	/* compose a copy of the loaded opponents list */
 	var loadedOpponentsCopy = loadedOpponents.filter(function(opp) {
-        // Filter out already selected characters
-        return (!players.some(function(p) { return p && p.id == opp.id; })
-                && (!predicate || predicate(opp)));
+        // Filter out characters that can't be selected via the regular view
+        return (opp.selectionCard.isVisible(individualSelectTesting, true) && 
+                (!predicate || predicate(opp)));
     });
 
 	/* select random opponents */
@@ -944,21 +983,27 @@ function clickedRandomFillButton (predicate) {
 function loadDefaultFillSuggestions () {
     /* get a copy of the loaded opponents list, same as above */
     var possiblePicks = loadedOpponents.filter(function (opp) {
-        return !players.some(function (p) { return p && p.id === opp.id; })
-                && !mainSelectDisplays.some(function (d) { return d.prefillSuggestion && d.prefillSuggestion.id === opp.id; })
-                && opp.highlightStatus === DEFAULT_FILL;
+        if (players.some(function (p) { return p && p.id === opp.id; })) {
+            return false;
+        }
+
+        if (!individualSelectTesting) {
+            return opp.highlightStatus === DEFAULT_FILL;
+        } else {
+            return opp.status === "testing";
+        }
     });
 
-    var nFill = 5 - players.countTrue();
-    if (nFill === 0) return;
     
     var fillPlayers = [];
     if (DEFAULT_FILL === 'new') {
-        /* Always suggest the most recently-added character. */
+        /* Special case: for the 'new' fill mode, always suggest the most
+         * recently-added character.
+         */
         fillPlayers.push(possiblePicks.pop());
     }
 
-    for (var i = fillPlayers.length; i < nFill; i++) {
+    for (var i = fillPlayers.length; i < players.length-1; i++) {
         if (possiblePicks.length === 0) break;
         /* select random opponent */
         var idx = getRandomNumber(0, possiblePicks.length);
@@ -969,13 +1014,16 @@ function loadDefaultFillSuggestions () {
     }
 
     for (var i = 1; i < players.length && fillPlayers.length > 0; i++) {
-        if (!(i in players) && !mainSelectDisplays[i - 1].prefillSuggestion) {
-            var suggestion = fillPlayers.shift();
-            mainSelectDisplays[i - 1].setPrefillSuggestion(suggestion);
-        }
+        var suggestion = fillPlayers.shift();
+        mainSelectDisplays[i - 1].setPrefillSuggestion(suggestion);
     }
+}
 
-    updateSelectionVisuals();
+function updateDefaultFillView() {
+    if (suggestedTestingOpponents !== individualSelectTesting) {
+        loadDefaultFillSuggestions();
+        suggestedTestingOpponents = individualSelectTesting;
+    }
 }
 
 /************************************************************
@@ -1102,6 +1150,10 @@ function backToSelect () {
 
     if (useGroupBackgrounds) optionsBackground.activateBackground();
 
+    if (!isIndividualSelectViewTypeLocked()) {
+        individualSelectTesting = false;
+    }
+
 	screenTransition($individualSelectScreen, $selectScreen);
 	screenTransition($groupSelectScreen, $selectScreen);
 }
@@ -1217,14 +1269,12 @@ function updateSelectionVisuals () {
     });
 
     /* Update suggestions images. */
+    updateDefaultFillView();
+
     if (loaded >= 2) {
         var suggested_opponents = loadedOpponents.filter(function(opp) {
-            /* hide selected opponents */
-            if (players.some(function(p) { return p && p.id == opp.id; })) {
-                return false;
-            }
-
-            return true;
+            if (individualSelectTesting && opp.status !== "testing") return false;
+            return opp.selectionCard.isVisible(individualSelectTesting, true);
         });
 
         /* sort opponents */
@@ -1255,6 +1305,13 @@ function updateSelectionVisuals () {
     for (var i = 1; i < players.length; i++) {
         mainSelectDisplays[i - 1].update(players[i]);
     }
+
+    /* If the individual selection view type is locked to the main roster, then
+     * disable the Testing Tables button.
+     * 
+     * Also disable the TT button if all slots are filled.
+     */
+    $("#select-group-testing-button").attr("disabled", (isIndividualSelectViewTypeLocked() && !individualSelectTesting) || (filled === 4));
 
     /* if enough opponents are selected, and all those are loaded, then enable progression */
     $selectMainButton.attr('disabled', filled < 2 || loaded < filled);
@@ -1426,12 +1483,22 @@ function sortOpponentsByMultipleFields() {
 function sortOpponentsByMostTargeted() {
 	return function(opp1, opp2) {
 		counts = [opp1, opp2].map(function(opp) {
-			return opp.inboundLinesFromSelected();
+			return opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined);
 		});
 		if (counts[0] > counts[1]) return -1;
 		if (counts[0] < counts[1]) return 1;
 		return 0;
 	}
+}
+
+/**
+ * Special callback for Arrays.sort to sort an array of opponents so that
+ * Testing opponents are sorted before everyone else.
+ */
+function sortTestingOpponentsFirst(opp1, opp2) {
+    var a = (opp1.status === "testing") ? 1 : 0;
+    var b = (opp2.status === "testing") ? 1 : 0;
+    return b - a;
 }
 
 function setSortingMode(mode) {

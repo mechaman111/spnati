@@ -959,12 +959,18 @@ MainSelectScreenDisplay.prototype.onSingleSuggestionSelected = function () {
 MainSelectScreenDisplay.prototype.update = function (player) {
     if (this.prefillSuggestion && this.prefillSuggestion != player
         && players.some(function (p) { return p && p.id === this.prefillSuggestion.id; }, this)) {
-        this.setPrefillSuggestion(null);
         loadDefaultFillSuggestions();
+        return updateSelectionVisuals();
     }
 
-    if (!player && this.prefillSuggestion && !this.targetSuggestionsShown)
-        return this.displaySingleSuggestion();
+    if (!player && !this.targetSuggestionsShown) {
+        // attempt to load a prefill suggestion if missing
+        if (!this.prefillSuggestion) loadDefaultFillSuggestions();
+
+        // if we had one to begin with, or if we were able to load one, display
+        // it
+        if (this.prefillSuggestion) return this.displaySingleSuggestion();
+    }
 
     this.prefillBadgeRow.children().hide();
     this.label.removeClass("suggestion-label");
@@ -1157,8 +1163,11 @@ OpponentSelectionCard.prototype.handleClick = function (ev) {
  * 
  * @param {boolean} testingView If true, visibility will be calculated for the
  * Testing Tables view instead of the regular roster view.
+ * 
+ * @param {boolean} ignoreFilter If true, any previous filtering status will be
+ * ignored.
  */
-OpponentSelectionCard.prototype.isVisible = function (testingView) {
+OpponentSelectionCard.prototype.isVisible = function (testingView, ignoreFilter) {
     /* hide already selected opponents */
     if (this.opponent.slot) return false;
 
@@ -1180,7 +1189,7 @@ OpponentSelectionCard.prototype.isVisible = function (testingView) {
     }
 
     /* hide filtered opponents */
-    return !this.filtered;
+    return ignoreFilter || !this.filtered;
 }
 
 /**
