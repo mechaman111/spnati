@@ -677,15 +677,12 @@ function updateIndividualSelectSort() {
     } else if (individualSelectTesting) {
         /*
          * The default "Featured" sort mode for the Testing view sorts in
-         * order of decreasing submission date (for now). This is the reverse
-         * of the listing.xml ordering (where the newest characters are placed
-         * at the end).
+         * order of decreasing (newest-first) submission date (for now).
          * 
          * As a special case, if the default Featured sort mode is selected for
          * use in the Testing view, sort all Testing opponents before all
          * main-roster opponents.
          */
-        ordered.reverse();
         ordered.sort(sortTestingOpponentsFirst);
     }
 
@@ -995,8 +992,15 @@ function loadDefaultFillSuggestions () {
     if (DEFAULT_FILL === 'new') {
         /* Special case: for the 'new' fill mode, always suggest the most
          * recently-added character.
+         *
+         * For the main roster view, this will be at the back of the list.
+         * For the testing roster, this will be at the front.
          */
-        fillPlayers.push(possiblePicks.pop());
+        if (!individualSelectTesting) {
+            fillPlayers.push(possiblePicks.pop());
+        } else {
+            fillPlayers.push(possiblePicks.shift());
+        }
     }
 
     for (var i = fillPlayers.length; i < players.length-1; i++) {
