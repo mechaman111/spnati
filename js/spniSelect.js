@@ -718,14 +718,6 @@ function selectOpponentSlot (slot) {
     if (!(slot in players)) {
         /* add a new opponent */
         selectedSlot = slot;
-
-        if (!isIndividualSelectViewTypeLocked()) {
-            /* Use the "main roster" display when entering via the "Select
-             * Other Opponent" buttons, if the view type isn't already locked.
-             */
-            individualSelectTesting = false;
-        }
-
         showIndividualSelectionScreen();
     } else {
         /* remove the opponent that's there */
@@ -764,29 +756,13 @@ function showIndividualSelectionScreen() {
     screenTransition($selectScreen, $individualSelectScreen);
 }
 
-/** The player clicked on the Testing Tables button. */
-function showTestingTables() {
-    var emptySlot = undefined;
-    for (var i=1; i < players.length; i++) {
-        if (!players[i]) {
-            emptySlot = i;
-            break;
-        }
-    }
+function toggleIndividualSelectView() {
+    individualSelectTesting = !individualSelectTesting;
+    updateSelectionVisuals();
 
-    if (!emptySlot) {
-        // Shouldn't happen?
-        console.error("Could not find an empty slot for selecting Testing character");
-        if (SENTRY_INITIALIZED) {
-            Sentry.captureMessage("Could not find an empty slot for selecting Testing character");
-        }
-
-        return;
-    }
-
-    individualSelectTesting = true;
-    selectedSlot = emptySlot;
-    showIndividualSelectionScreen();
+    $("#select-group-testing-button").text(
+        individualSelectTesting ? "Main Roster" : "Testing Roster"
+    );
 }
 
 /************************************************************
@@ -1019,12 +995,13 @@ function loadDefaultFillSuggestions () {
         var suggestion = fillPlayers.shift();
         mainSelectDisplays[i - 1].setPrefillSuggestion(suggestion);
     }
+
+    suggestedTestingOpponents = individualSelectTesting;
 }
 
 function updateDefaultFillView() {
     if (suggestedTestingOpponents !== individualSelectTesting) {
         loadDefaultFillSuggestions();
-        suggestedTestingOpponents = individualSelectTesting;
     }
 }
 
@@ -1151,10 +1128,6 @@ function backToSelect () {
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
 
     if (useGroupBackgrounds) optionsBackground.activateBackground();
-
-    if (!isIndividualSelectViewTypeLocked()) {
-        individualSelectTesting = false;
-    }
 
 	screenTransition($individualSelectScreen, $selectScreen);
 	screenTransition($groupSelectScreen, $selectScreen);
@@ -1308,12 +1281,10 @@ function updateSelectionVisuals () {
         mainSelectDisplays[i - 1].update(players[i]);
     }
 
-    /* If the individual selection view type is locked to the main roster, then
-     * disable the Testing Tables button.
-     * 
-     * Also disable the TT button if all slots are filled.
+    /* If the individual selection view type is locked, then disable the view
+     * mode toggle button.
      */
-    $("#select-group-testing-button").attr("disabled", (isIndividualSelectViewTypeLocked() && !individualSelectTesting) || (filled === 4));
+    $("#select-group-testing-button").attr("disabled", isIndividualSelectViewTypeLocked());
 
     /* if enough opponents are selected, and all those are loaded, then enable progression */
     $selectMainButton.attr('disabled', filled < 2 || loaded < filled);
