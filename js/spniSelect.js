@@ -978,16 +978,19 @@ function loadDefaultFillSuggestions () {
     var fillPlayers = [];
     if (DEFAULT_FILL === 'new') {
         /* Special case: for the 'new' fill mode, always suggest the most
-         * recently-added character.
+         * recently-added or recently-updated character.
          *
-         * For the main roster view, this will be at the back of the list.
-         * For the testing roster, this will be at the front.
+         * For the testing view, this requires sorting the list of prefills by
+         * increasing chronological order.
+         *
+         * In both cases, the character to suggest first is always at the back
+         * of the list.
          */
-        if (!individualSelectTesting) {
-            fillPlayers.push(possiblePicks.pop());
-        } else {
-            fillPlayers.push(possiblePicks.shift());
+        if (individualSelectTesting) {
+            possiblePicks.sort(sortOpponentsByMultipleFields("lastUpdated"));
         }
+
+        fillPlayers.push(possiblePicks.pop());
     }
 
     for (var i = fillPlayers.length; i < players.length-1; i++) {
