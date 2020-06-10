@@ -272,12 +272,7 @@ function loadListingFile () {
 			}
 		}
         
-        if (--outstandingLoads % 16 == 0) {
-            updateSelectableGroups();
-            updateGroupSelectScreen(true);
-            updateSelectionVisuals();
-        }
-        if (outstandingLoads == 0) {
+        if (--outstandingLoads == 0) {
             $(".title-menu-buttons-container>div").removeAttr("hidden");
             $("#title-load-container").hide();
             
@@ -973,7 +968,6 @@ function loadDefaultFillSuggestions () {
             return opp.status === "testing";
         }
     });
-
     
     var fillPlayers = [];
     if (DEFAULT_FILL === 'new') {
@@ -1003,9 +997,8 @@ function loadDefaultFillSuggestions () {
         fillPlayers.push(randomOpponent);
     }
 
-    for (var i = 1; i < players.length && fillPlayers.length > 0; i++) {
-        var suggestion = fillPlayers.shift();
-        mainSelectDisplays[i - 1].setPrefillSuggestion(suggestion);
+    for (var i = 0; i < mainSelectDisplays.length; i++) {
+        mainSelectDisplays[i].setPrefillSuggestion(fillPlayers[i]);
     }
 
     suggestedTestingOpponents = individualSelectTesting;

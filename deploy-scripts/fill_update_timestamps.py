@@ -6,7 +6,7 @@ import subprocess as sp
 import sys
 from bs4 import BeautifulSoup
 
-def process(opponent_folder_path: str):
+def process(opponent_folder_path: str, original_path: str):
     meta_path = osp.join(opponent_folder_path, 'meta.xml')
     
     if not osp.exists(meta_path):
@@ -22,7 +22,7 @@ def process(opponent_folder_path: str):
     # "--show-pulls"   : Treat merges as pulling changes from other branches
     #                    (see man git-rev-list for more details)
     proc = sp.run(
-        ["git", "log", "-n", "1", "--pretty=format:%ct", "--first-parent", "--", "--show-pulls", opponent_folder_path],
+        ["git", "log", "-n", "1", "--pretty=format:%ct", "--first-parent", "--", "--show-pulls", original_path],
         stdout=sp.PIPE, encoding="utf-8", check=True, timeout=15
     )
 
@@ -49,8 +49,13 @@ def process(opponent_folder_path: str):
     with open(meta_path, 'w', encoding='utf-8') as f:
         f.write(str(meta_soup))
 
-for arg in sys.argv[1:]:
-    for name in os.listdir(arg):
-        path = osp.join(arg, name)
-        if osp.isdir(path):
-            process(path)
+if __name__ == "__main__":
+    target_path = sys.argv[1]
+    timestamp_src = sys.argv[2]
+
+    for name in os.listdir(target_path):
+        opponent_path = osp.join(target_path, name)
+        orig_path = osp.join(timestamp_src, name)
+
+        if osp.isdir(opponent_path) and osp.isdir(orig_path):
+            process(opponent_path, orig_path)
