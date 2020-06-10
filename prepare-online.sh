@@ -16,7 +16,7 @@ python3 deploy-scripts/copy_backgrounds.py .public/
 
 # tar may be the easiest way to copy an arbitrary
 # list of files, keeping the directory structure.
-# Include *.js and *.css to accomodate Monika.
+# Include *.js and *.css to accommodate Monika.
 find `python opponents/list_opponents.py` -iname "*.png" -o -iname "*.gif" -o -iname "*.jpg" -o -iname "*.xml" -o -iname "*.js" -o -iname "*.css" -o -iname "*.woff" -o -iname "*.woff2" | tar -cT - | tar -C .public -x
 
 # Copy alternate costume files for deployment.
