@@ -147,6 +147,7 @@ var chosenGender = -1;
 var chosenGroupGender = -1;
 var sortingMode = "Featured";
 var sortingOptionsMap = {
+    "Recently Updated": sortOpponentsByMultipleFields("-lastUpdated"),
     "Newest" : sortOpponentsByMultipleFields("-release"),
     "Oldest" : sortOpponentsByMultipleFields("release"),
     "Most Layers" : sortOpponentsByMultipleFields("-layers"),
@@ -662,16 +663,14 @@ function updateIndividualSelectSort() {
     // check if a different sorting mode is selected, and if yes, sort it.
     if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
         ordered.sort(sortingOptionsMap[sortingMode]);
-    } else if (individualSelectTesting) {
+    }
+    
+    if (individualSelectTesting && (sortingMode === "Featured" || sortingMode === "Recently Updated")) {
         /*
-         * The default "Featured" sort mode for the Testing view sorts in
-         * order of decreasing (newest-first) submission date (for now).
-         * 
-         * As a special case, if the default Featured sort mode is selected for
-         * use in the Testing view, sort all Testing opponents before all
-         * main-roster opponents.
+         * As special cases, when using these sort modes in the Testing view,
+         * additionally sort all Testing opponents before main-roster opponents.
          */
-        ordered.sort(sortTestingOpponentsFirst);
+        ordered.sort(sortTestingOpponents);
     }
 
     ordered.forEach(function (opp) {
@@ -735,11 +734,13 @@ function showIndividualSelectionScreen() {
      * to the indiv. select screen, since the filters cannot actually change
      * unless the user is already on said screen.
      * 
-     * The sort mode and visibility of characters might change, however,
-     * depending on the view type and what characters have already been selected.
+     * We also don't need to update sorting, since any change to the sort mode
+     * (anywhere) automatically updates the display order.
+     * 
+     * The visibility of characters might change, however, depending on the
+     * view type and what characters have already been selected.
      */
     updateIndividualSelectVisibility();
-    updateIndividualSelectSort();
 
     /* Make sure the user doesn't have target-count sorting set if
      * the amount of loaded opponents drops to 0. */
@@ -758,6 +759,14 @@ function showIndividualSelectionScreen() {
 
 function toggleIndividualSelectView() {
     individualSelectTesting = !individualSelectTesting;
+
+    /* Switch to the default sort mode for the selected view. */
+    if (individualSelectTesting) {
+        setSortingMode("Recently Updated");
+    } else {
+        setSortingMode("Featured");
+    }
+
     updateSelectionVisuals();
 
     $("#select-group-testing-button").text(
@@ -1475,13 +1484,24 @@ function sortOpponentsByMostTargeted() {
 }
 
 /**
- * Special callback for Arrays.sort to sort an array of opponents so that
- * Testing opponents are sorted before everyone else.
+ * Special callback for Arrays.sort to sort an array of opponents using the
+ * Testing-specific rules. The sort order produced by this callback is:
+ * - highlight="sponsorship"
+ * - status="testing"
+ * - everything else
  */
-function sortTestingOpponentsFirst(opp1, opp2) {
-    var a = (opp1.status === "testing") ? 1 : 0;
-    var b = (opp2.status === "testing") ? 1 : 0;
-    return b - a;
+function sortTestingOpponents(opp1, opp2) {
+    var scores = [opp1, opp2].map(function (opp) {
+        if (opp.highlightStatus === "sponsorship") {
+            return 2;
+        } else if (opp.status === "testing") {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+
+    return scores[1] - scores[0];
 }
 
 function setSortingMode(mode) {

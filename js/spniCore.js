@@ -517,6 +517,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.posesImageCount = parseInt($metaXml.children('poses').text(), 10) || undefined;
     this.z_index = parseInt($metaXml.children('z-index').text(), 10) || 0;
     this.dialogue_layering = $metaXml.children('dialogue-layer').text();
+    this.lastUpdated = parseInt($metaXml.children('lastupdate').text(), 10) || 0;
 
     this.endings = null;
     if (EPILOGUES_ENABLED) {
