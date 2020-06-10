@@ -1072,13 +1072,9 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.default_costume.tags = tagsArray;
 
             /* Load forward-declarations for persistent markers. */
-            var persistentMarkers = $xml.children('persistent-markers');
-            if (typeof persistentMarkers !== typeof undefined && persistentMarkers) {
-                $(persistentMarkers).children('marker').each(function (i, elem) {
-                    var markerName = $(elem).text();
-                    this.persistentMarkers[markerName] = true;
-                }.bind(this));
-            }
+            $xml.find('persistent-markers>marker').each(function (i, elem) {
+                this.persistentMarkers[$(elem).text()] = true;
+            }.bind(this));
 
             this.targetedLines = {};
 
