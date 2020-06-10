@@ -29,7 +29,12 @@ def process(opponent_folder_path: str):
     # Technically, we don't _have_ to do this, and could just append "000" to
     # the end of the stdout string. But _just to be sure_, this validates the
     # output from git log.
-    ts = int(proc.stdout) * 1000
+    try:
+        ts = int(proc.stdout) * 1000
+    except ValueError:
+        sys.stderr.write("Could not find last-update timestamp for " + opponent_folder_path + "\n")
+        sys.stderr.flush()
+        return
     
     # Always pull times from Git when deploying to production, to keep things
     # consistent.
