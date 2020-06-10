@@ -75,22 +75,13 @@ namespace Desktop.Providers
 			return item;
 		}
 
-		public string[] GetColumns()
+		public void SetFormatInfo(LookupFormat info)
 		{
-			return new string[] { "Name", "Description" };
+			info.Columns = new string[] { "Name", "Description" };
+			info.Caption = "Slice on Data";
 		}
 
-		public virtual int[] GetColumnWidths()
-		{
-			return null;
-		}
-
-		public string GetLookupCaption()
-		{
-			return "Slice on Data";
-		}
-
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			text = text.ToLower();
 			var list = new List<IRecord>();

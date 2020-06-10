@@ -940,7 +940,7 @@ namespace Desktop.CommonControls
 
 			MacroProvider provider = new MacroProvider();
 			provider.SetContext(Data.GetType());
-			foreach (Macro macro in provider.GetRecords(""))
+			foreach (Macro macro in provider.GetRecords("", new LookupArgs()))
 			{
 				AddMacro(macro);
 			}

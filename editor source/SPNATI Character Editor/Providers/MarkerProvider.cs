@@ -51,21 +51,13 @@ namespace SPNATI_Character_Editor.Providers
 			return new ListViewItem(new string[] { marker.Name, marker.Description });
 		}
 
-		public string[] GetColumns()
+		public void SetFormatInfo(LookupFormat info)
 		{
-			return new string[] { "Name", "Description" };
+			info.Caption = "Select a Marker";
+			info.Columns = new string[] { "Name", "Description" };
 		}
 
-		public int[] GetColumnWidths()
-		{
-			return null;
-		}
-
-		public string GetLookupCaption()
-		{
-			return "Select a Marker";
-		}
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			text = text.ToLower();
 			var list = new List<IRecord>();

@@ -476,22 +476,13 @@ namespace SPNATI_Character_Editor
 			return item;
 		}
 
-		public string[] GetColumns()
+		public void SetFormatInfo(LookupFormat info)
 		{
-			return new string[] { "Tag", "Label" };
+			info.Caption = "Select a Case Type";
+			info.Columns = new string[] { "Tag", "Label" };
 		}
 
-		public int[] GetColumnWidths()
-		{
-			return null;
-		}
-
-		public string GetLookupCaption()
-		{
-			return "Select a Case Type";
-		}
-
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			text = text.ToLower();
 			List<IRecord> list = new List<IRecord>();

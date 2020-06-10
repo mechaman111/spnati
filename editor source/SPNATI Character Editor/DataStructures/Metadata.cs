@@ -14,6 +14,9 @@ namespace SPNATI_Character_Editor
 	[XmlRoot("opponent")]
 	public class Metadata : BindableObject, IHookSerialization
 	{
+		[XmlElement("lastupdate")]
+		public long LastUpdate { get; set; }
+
 		[XmlElement("enabled")]
 		public bool Enabled
 		{

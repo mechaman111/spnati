@@ -205,7 +205,13 @@ namespace KisekaeImporter.ImageImport
 							{
 								int amount = (int)Math.Floor(v / 100.0f * 255);
 								ServerRequest partRequest = new ServerRequest("alpha_direct", "op", "set", "character", "0", "path", subpiece, "alpha", amount.ToString());
-								_client.SendCommand(partRequest).Wait();
+								Task<ServerResponse> alphaTask = _client.SendCommand(partRequest);
+								alphaTask.Wait();
+								ServerResponse r = alphaTask.Result;
+								if (!r.IsSuccess)
+								{
+									return null;
+								}
 							}
 						}
 					}
@@ -214,43 +220,48 @@ namespace KisekaeImporter.ImageImport
 					Task<ServerResponse> task = _client.SendCommand(request);
 					task.Wait();
 					ServerResponse response = task.Result;
-
-					if (extraData.Count > 0)
+					if (response.IsSuccess)
 					{
-						//reset transparencies
-						ServerRequest partRequest = new ServerRequest("alpha_direct", "op", "reset_all");
-						_client.SendCommand(partRequest).Wait();
-					}
+						if (extraData.Count > 0)
+						{
+							//reset transparencies
+							ServerRequest partRequest = new ServerRequest("alpha_direct", "op", "reset_all");
+							_client.SendCommand(partRequest).Wait();
+						}
 
-					return (response as ImageResponse)?.Image;
+						return (response as ImageResponse)?.Image;
+					}
+					else
+					{
+						//maybe they restarted KKL, so try to connect again for next time
+						_client.Connect();
+					}
 				}
-				else
+
+				//fall back to the text file method
+
+				string baseFile = Path.Combine(KklAppData, "zzReimport");
+				string dataFileName = baseFile + ".txt";
+				string[] imageFileNames = new string[] { baseFile + "..png", baseFile + ".png" }; //Different versions expect different names
+
+				//Conversion can fail if the image already exists
+				foreach (string file in imageFileNames)
 				{
-					//fall back to the text file method
-
-					string baseFile = Path.Combine(KklAppData, "zzReimport");
-					string dataFileName = baseFile + ".txt";
-					string[] imageFileNames = new string[] { baseFile + "..png", baseFile + ".png" }; //Different versions expect different names
-
-					//Conversion can fail if the image already exists
-					foreach (string file in imageFileNames)
-					{
-						File.Delete(file);
-					}
-
-					//Write the image data where kkl can find it
-					File.WriteAllLines(dataFileName, lines);
-
-					//Wait for KKL to pick it up and create an image
-					Image result = null;
-					Image tmp = WaitForImage(imageFileNames);
-					if (tmp != null)
-					{
-						result = new Bitmap(tmp); //free up the file so it can be deleted later
-						tmp.Dispose();
-					}
-					return result;
+					File.Delete(file);
 				}
+
+				//Write the image data where kkl can find it
+				File.WriteAllLines(dataFileName, lines);
+
+				//Wait for KKL to pick it up and create an image
+				Image result = null;
+				Image tmp = WaitForImage(imageFileNames);
+				if (tmp != null)
+				{
+					result = new Bitmap(tmp); //free up the file so it can be deleted later
+					tmp.Dispose();
+				}
+				return result;
 			}
 			catch
 			{

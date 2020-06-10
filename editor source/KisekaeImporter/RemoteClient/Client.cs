@@ -57,7 +57,11 @@ namespace KisekaeImporter.RemoteClient
 		{
 			if (Connected)
 			{
-				_clientSocket.Dispose();
+				try
+				{
+					_clientSocket.Dispose();
+				}
+				catch { }
 				_clientSocket = null;
 			}
 		}
@@ -84,7 +88,16 @@ namespace KisekaeImporter.RemoteClient
 					LastHeartbeat = DateTime.Now;
 					continue;
 				}
-
+				else if (response.Type == MessageType.Disconnect)
+				{
+					//fail every pending request
+					foreach (PendingRequest pr in _pendingRequests.Values)
+					{
+						pr.SetResponse(response);
+					}
+					_pendingRequests.Clear();
+				}
+				
 				int id = response.RequestId;
 				PendingRequest request;
 				if (_pendingRequests.TryGetValue(id, out request))
@@ -105,60 +118,79 @@ namespace KisekaeImporter.RemoteClient
 
 		private async Task<ServerResponse> ReadMessage(NetworkStream stream)
 		{
-			MessageHeader header = await ReadMessageHeader(stream);
-			if (header.Type == MessageType.Disconnect)
+			try
+			{
+				MessageHeader header = await ReadMessageHeader(stream);
+				if (header.Type == MessageType.Disconnect)
+				{
+					return new ServerResponse() { Type = MessageType.Disconnect, IsComplete = true };
+				}
+				byte[] bytes = new byte[header.Length];
+				await stream.ReadAsync(bytes, 0, header.Length);
+				switch (header.Type)
+				{
+					case MessageType.CommandResponse:
+						string payload = Encoding.UTF8.GetString(bytes);
+						return new JSONResponse(payload);
+					case MessageType.ImageData:
+						int identifier = GetInt(bytes, 0);
+						byte[] data = new byte[bytes.Length - 4];
+						Array.Copy(bytes, 4, data, 0, data.Length);
+						return new ImageResponse(identifier, data);
+					case MessageType.Disconnect:
+						return new ServerResponse() { Type = MessageType.Disconnect, IsComplete = true };
+					default:
+						return new ServerResponse() { Type = header.Type };
+				}
+			}
+			catch
 			{
 				return new ServerResponse() { Type = MessageType.Disconnect };
-			}
-			byte[] bytes = new byte[header.Length];
-			await stream.ReadAsync(bytes, 0, header.Length);
-			switch (header.Type)
-			{
-				case MessageType.CommandResponse:
-					string payload = Encoding.UTF8.GetString(bytes);
-					return new JSONResponse(payload);
-				case MessageType.ImageData:
-					int identifier = GetInt(bytes, 0);
-					byte[] data = new byte[bytes.Length - 4];
-					Array.Copy(bytes, 4, data, 0, data.Length);
-					return new ImageResponse(identifier, data);
-				default:
-					return new ServerResponse() { Type = header.Type };
 			}
 		}
 
 		private async Task<MessageHeader> ReadMessageHeader(NetworkStream stream)
 		{
-			int i = 0;
-			byte[] buffer = new byte[5];
-			while (true)
+			try
 			{
-				await stream.ReadAsync(buffer, 0, 1);
-				if (buffer[0] != PROTOCOL_HEADER[i])
+				int i = 0;
+				byte[] buffer = new byte[5];
+				while (true)
 				{
-					i = 0;
-					continue;
-				}
-				else
-				{
-					i++;
-					if (i >= PROTOCOL_HEADER.Length)
+					await stream.ReadAsync(buffer, 0, 1);
+					if (buffer[0] != PROTOCOL_HEADER[i])
 					{
-						break;
+						i = 0;
+						continue;
+					}
+					else
+					{
+						i++;
+						if (i >= PROTOCOL_HEADER.Length)
+						{
+							break;
+						}
 					}
 				}
-			}
 
-			await stream.ReadAsync(buffer, 0, 5);
-			int type;
-			int length;
-			type = BitConverter.ToChar(buffer, 0);
-			length = GetInt(buffer, 1);
-			return new MessageHeader()
+				await stream.ReadAsync(buffer, 0, 5);
+				int type;
+				int length;
+				type = BitConverter.ToChar(buffer, 0);
+				length = GetInt(buffer, 1);
+				return new MessageHeader()
+				{
+					Type = (MessageType)type,
+					Length = length
+				};
+			}
+			catch
 			{
-				Type = (MessageType)type,
-				Length = length
-			};
+				return new MessageHeader()
+				{
+					Type = MessageType.Disconnect
+				};
+			}
 		}
 
 		/// <summary>

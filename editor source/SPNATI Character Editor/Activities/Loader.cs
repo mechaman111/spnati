@@ -2,11 +2,9 @@
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {

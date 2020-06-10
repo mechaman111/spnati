@@ -105,14 +105,10 @@ namespace SPNATI_Character_Editor.Controls.Reference
 			return false;
 		}
 
-		public string[] GetColumns()
+		public void SetFormatInfo(LookupFormat info)
 		{
-			return new string[] { "Name", "Value" };
-		}
-
-		public int[] GetColumnWidths()
-		{
-			return null;
+			info.Caption = "Choose a Background";
+			info.Columns = new string[] { "Name", "Value" };
 		}
 
 		public ListViewItem FormatItem(IRecord record)
@@ -120,12 +116,7 @@ namespace SPNATI_Character_Editor.Controls.Reference
 			return new ListViewItem(new string[] { record.Key, record.Name });
 		}
 
-		public string GetLookupCaption()
-		{
-			return "Choose a Background";
-		}
-
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			text = text.ToLower();
 			var list = new List<IRecord>();

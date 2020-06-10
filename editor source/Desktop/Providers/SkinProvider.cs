@@ -30,28 +30,19 @@ namespace Desktop.Providers
 			
 		}
 
+		public void SetFormatInfo(LookupFormat info)
+		{
+			info.Columns = new string[] { "Name", "Group" };
+			info.Caption = "Select Skin";
+		}
+
 		public ListViewItem FormatItem(IRecord record)
 		{
 			ListViewItem item = new ListViewItem(record.Name, record.Group);
 			return item;
 		}
 
-		public string[] GetColumns()
-		{
-			return new string[] { "Name", "Group" };
-		}
-
-		public virtual int[] GetColumnWidths()
-		{
-			return null;
-		}
-
-		public string GetLookupCaption()
-		{
-			return "Select Skin";
-		}
-
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			SkinManager skinManager = SkinManager.Instance;
 			text = text.ToLower();

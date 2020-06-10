@@ -35,14 +35,10 @@ namespace Desktop.Providers
 			return item;
 		}
 
-		public string[] GetColumns()
+		public void SetFormatInfo(LookupFormat info)
 		{
-			return new string[] { "Key", "Value" };
-		}
-
-		public virtual int[] GetColumnWidths()
-		{
-			return null;
+			info.Columns = new string[] { "Key", "Value" };
+			info.Caption = GetLookupCaption();
 		}
 
 		public virtual bool FilterFromUI(IRecord record)
@@ -54,7 +50,7 @@ namespace Desktop.Providers
 
 		protected abstract T[] GetCategoryValues();
 
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			if (_categoryValues == null)
 			{

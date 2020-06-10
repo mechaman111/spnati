@@ -1,6 +1,7 @@
 ﻿using Desktop.Skinning;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Desktop
@@ -24,7 +25,7 @@ namespace Desktop
 			if (_recordProviders.TryGetValue(type, out provider))
 			{
 				provider.SetContext(recordContext);
-				List<IRecord> records = provider.GetRecords(key);
+				List<IRecord> records = provider.GetRecords(key, new LookupArgs());
 				foreach (IRecord record in records)
 				{
 					if (record.Key == key)
@@ -72,7 +73,7 @@ namespace Desktop
 				if (!forceOpen/* && (!allowCreate || !provider.AllowsNew)*/)
 				{
 					//No point in bringing up the form if there's only one record
-					List<IRecord> records = provider.GetRecords(text);
+					List<IRecord> records = provider.GetRecords(text, new LookupArgs());
 					IRecord exactMatch = records.Find(r => r.Key == text);
 					if (exactMatch != null && (filter == null || filter(exactMatch)))
 					{
@@ -93,10 +94,13 @@ namespace Desktop
 				}
 			}
 
+			LookupFormat formatData = new LookupFormat();
+			provider.SetFormatInfo(formatData);
 			RecordLookup form = new RecordLookup();
 			form.AllowCreate = allowCreate;
-			form.Text = provider.GetLookupCaption();
-			form.SetContext(type, text, filter);
+			form.Text = formatData.Caption;
+			form.SetFields(formatData.ExtraFields);
+			form.SetContext(type, text, filter, formatData);
 			form.Filter = filter;
 			IsOpen = true;
 			if (form.ShowDialog() == DialogResult.OK)
@@ -167,7 +171,7 @@ namespace Desktop
 			if (_recordProviders.TryGetValue(type, out provider))
 			{
 				provider.SetContext(recordContext);
-				foreach (IRecord record in provider.GetRecords(""))
+				foreach (IRecord record in provider.GetRecords("", new LookupArgs()))
 				{
 					if (filter == null || filter(record))
 					{
@@ -216,6 +220,7 @@ namespace Desktop
 		private Type _recordType;
 		private IRecordProvider _provider;
 		private IRecord Record { get; set; }
+		private List<SkinnedTextBox> _extraFields = new List<SkinnedTextBox>();
 
 		private static Dictionary<Type, string> _lastLookups = new Dictionary<Type, string>();
 
@@ -245,7 +250,7 @@ namespace Desktop
 			return key;
 		}
 
-		public void SetContext(Type recordType, string startText, Func<IRecord, bool> filter)
+		private void SetContext(Type recordType, string startText, Func<IRecord, bool> filter, LookupFormat formatData)
 		{
 			_loading = true;
 			_recordType = recordType;
@@ -257,8 +262,8 @@ namespace Desktop
 			lstRecent.HeaderStyle = ColumnHeaderStyle.None;
 			lstRecent.Columns.Clear();
 			lstItems.Columns.Clear();
-			string[] cols = _provider.GetColumns();
-			int[] widths = _provider.GetColumnWidths();
+			string[] cols = formatData.Columns;
+			int[] widths = formatData.ColumnWidths;
 			for (int i = 0; i < cols.Length; i++)
 			{
 				string col = cols[i];
@@ -325,6 +330,13 @@ namespace Desktop
 			UpdateSearch();
 		}
 
+		private LookupArgs GetLookupArgs()
+		{
+			LookupArgs args = new LookupArgs();
+			args.ExtraText = _extraFields.Select(box => box.Text).ToArray();
+			return args;
+		}
+
 		private void UpdateSearch()
 		{
 			_usingRecent = false;
@@ -343,7 +355,7 @@ namespace Desktop
 			}
 			cmdNew.Enabled = (txtName.Text.Length > 0);
 			AcceptButton = cmdAccept;
-			List<IRecord> records = _provider.GetRecords(txtName.Text);
+			List<IRecord> records = _provider.GetRecords(txtName.Text, GetLookupArgs());
 			_provider.Sort(records);
 			lstItems.Items.Clear();
 			lstItems.Groups.Clear();
@@ -560,6 +572,37 @@ namespace Desktop
 				records = new List<IRecord>();
 			}
 			return records;
+		}
+
+		public void SetFields(List<string> fields)
+		{
+			int tabIndex = txtName.TabIndex + 1;
+			foreach (string name in fields)
+			{
+				SkinnedLabel label = new SkinnedLabel()
+				{
+					Text = name
+				};
+				SkinnedTextBox box = new SkinnedTextBox();
+				Controls.Add(label);
+				Controls.Add(box);
+				label.Top = lstItems.Top + 3;
+				label.Left = label1.Left;
+				label.Width = label1.Width;
+				label.TabIndex = tabIndex++;
+				box.TabIndex = tabIndex++;
+				box.Top = lstItems.Top;
+				box.Left = txtName.Left;
+				box.Width = txtName.Width;
+				box.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+				box.TextChanged += txtName_TextChanged;
+
+				const int Margin = 0;
+				lstItems.Top = label.Bottom + Margin;
+				lstItems.Height -= label.Height + Margin;
+
+				_extraFields.Add(box);
+			}
 		}
 	}
 }

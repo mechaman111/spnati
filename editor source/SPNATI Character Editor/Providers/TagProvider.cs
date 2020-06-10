@@ -16,12 +16,7 @@ namespace SPNATI_Character_Editor.Providers
 			get { return false; }
 		}
 
-		public string GetLookupCaption()
-		{
-			return "Select a Tag";
-		}
-
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			text = text.ToLower();
 			List<IRecord> list = new List<IRecord>();
@@ -36,16 +31,12 @@ namespace SPNATI_Character_Editor.Providers
 			return list;
 		}
 
-		public string[] GetColumns()
+		public void SetFormatInfo(LookupFormat info)
 		{
-			return new string[] { "Name", "Value", "Description" };
+			info.Caption = "Select a Tag";
+			info.Columns = new string[] { "Name", "Value", "Description" };
 		}
-
-		public int[] GetColumnWidths()
-		{
-			return null;
-		}
-
+		
 		public ListViewItem FormatItem(IRecord record)
 		{
 			Tag tag = record as Tag;

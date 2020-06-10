@@ -198,7 +198,6 @@ namespace SPNATI_Character_Editor
 						{
 							stale = true;
 						}
-						cachedCharacter.LastUpdate = lastChange.ToLocalTime();
 					}
 				}
 				catch

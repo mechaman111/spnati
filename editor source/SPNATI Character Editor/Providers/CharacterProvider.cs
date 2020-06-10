@@ -1,6 +1,7 @@
 ﻿using Desktop;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Providers
@@ -9,15 +10,6 @@ namespace SPNATI_Character_Editor.Providers
 	{
 		private Costume _skinContext;
 		private Character _characterContext;
-
-		public string GetLookupCaption()
-		{
-			if (_skinContext != null)
-			{
-				return "Choose a character for which the reskin belongs";
-			}
-			return "Character Select";
-		}
 
 		public bool AllowsNew
 		{
@@ -75,19 +67,51 @@ namespace SPNATI_Character_Editor.Providers
 			throw new NotImplementedException();
 		}
 
-		public List<IRecord> GetRecords(string text)
+		public void SetFormatInfo(LookupFormat info)
+		{
+			info.Columns = new string[] { "Name", "Folder", "Last Update", "Writer", "Status" };
+			if (_skinContext != null)
+			{
+				info.Caption = "Choose a character for which the reskin belongs";
+			}
+			info.Caption = "Character Select";
+			info.ExtraFields.Add("Writer:");
+		}
+
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			text = text.ToLower();
+			string writer = "";
 			List<IRecord> list = new List<IRecord>();
+			if (args.ExtraText != null && args.ExtraText.Length > 0)
+			{
+				writer = args.ExtraText[0]?.ToLower() ?? "";
+			}
 			foreach (Character record in CharacterDatabase.Characters)
 			{
-				if (record.Key.ToLower().Contains(text) || record.Name.ToLower().Contains(text))
+				Character c = record as Character;
+				if (!string.IsNullOrEmpty(writer))
+				{
+					string actualWriter = c.Metadata.Writer?.ToLower() ?? "";
+					if (!actualWriter.Contains(writer))
+					{
+						continue;
+					}
+				}
+				if (NameMatches(c.Name, text) ||
+					NameMatches(c.FolderName, text) ||
+					c.Labels.Any(l => NameMatches(l.Value, text)))
 				{
 					//partial match
 					list.Add(record);
 				}
 			}
 			return list;
+		}
+
+		private bool NameMatches(string name, string expected)
+		{
+			return (name?.ToLower() ?? "").Contains(expected);
 		}
 
 		public bool FilterFromUI(IRecord record)
@@ -101,22 +125,13 @@ namespace SPNATI_Character_Editor.Providers
 			list.Sort((record1, record2) => record1.CompareTo(record2));
 		}
 
-		public string[] GetColumns()
-		{
-			return new string[] { "Name", "Folder", "Last Update", "Status" };
-		}
-
-		public int[] GetColumnWidths()
-		{
-			return null;
-		}
-
 		public ListViewItem FormatItem(IRecord record)
 		{
 			string status = Listing.Instance.GetCharacterStatus(record.Key) ?? "";
 			Character c = record as Character;
-			string lastUpdate = GetTimeSince(c.LastUpdate, DateTime.Now);
-			return new ListViewItem(new string[] { record.Name, record.Key, lastUpdate, status == OpponentStatus.Testing || status == OpponentStatus.Main ? "" : status });
+			DateTime updateTime = DateTimeOffset.FromUnixTimeMilliseconds(c.Metadata.LastUpdate).DateTime.ToLocalTime();
+			string lastUpdate = GetTimeSince(updateTime, DateTime.Now);
+			return new ListViewItem(new string[] { record.Name, record.Key, lastUpdate, c.Metadata.Writer, status == OpponentStatus.Testing || status == OpponentStatus.Main ? "" : status });
 		}
 
 		public void SetContext(object context)
@@ -137,6 +152,10 @@ namespace SPNATI_Character_Editor.Providers
 					int months = weeks / 4;
 					if (months >= 12)
 					{
+						if (date.Year < 2000)
+						{
+							return "";
+						}
 						return "Over a year ago";
 					}
 					else if (months == 0)

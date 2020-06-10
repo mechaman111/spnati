@@ -66,22 +66,13 @@ namespace SPNATI_Character_Editor.Providers
 			return new ListViewItem(new string[] { target.Name, target.Key, target.Description });
 		}
 
-		public string[] GetColumns()
+		public void SetFormatInfo(LookupFormat info)
 		{
-			return new string[] { "Name", "Key", "Description" };
+			info.Caption = "Match Condition On";
+			info.Columns = new string[] { "Name", "Key", "Description" };
 		}
 
-		public int[] GetColumnWidths()
-		{
-			return null;
-		}
-
-		public string GetLookupCaption()
-		{
-			return "Match Condition On";
-		}
-
-		public List<IRecord> GetRecords(string text)
+		public List<IRecord> GetRecords(string text, LookupArgs args)
 		{
 			text = text.ToLower();
 			List<IRecord> list = new List<IRecord>();
