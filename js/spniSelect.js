@@ -500,11 +500,13 @@ function updateGroupSelectScreen (ignore_bg) {
             shownGroup[i] = opponent;
 
             if (costume) {
-                if (costume == "default") {
+                if (costume.toLowerCase() == "default") {
                     opponent.selectAlternateCostume(null);
                 } else {
-                    for (let j=0;j<opponent.alternate_costumes.length;j++) {
-                        if (opponent.alternate_costumes[j].label === costume) {
+                    costume = "opponents/reskins/" + costume;
+                    
+                    for (let j = 0; j < opponent.alternate_costumes.length; j++) {
+                        if (opponent.alternate_costumes[j].folder === costume) {
                             opponent.selectAlternateCostume(opponent.alternate_costumes[j]);
                             break;
                         }
@@ -899,18 +901,11 @@ function clickedRandomGroupButton () {
 	    var costume = chosenGroup.costumes[i];
 	    
         if (costume) {
-            if (costume == "default") {
-                $groupCostumeSelectors[i].val('');
-            } else {
-                var opponent = chosenGroup.opponents[i];
-                
-                for (let j=0;j<opponent.alternate_costumes.length;j++) {
-                    if (opponent.alternate_costumes[j].label === costume) {
-                        $groupCostumeSelectors[i].append($('<option>', {val: opponent.alternate_costumes[j].folder, selected: true}));
-                        break;
-                    }
-                }
-            }
+            var costumeFolder = (costume.toLowerCase() == "default") ? '' : "opponents/reskins/" + costume;
+            
+            fillCostumeSelector($groupCostumeSelectors[i], chosenGroup.opponents[i].alternate_costumes, costumeFolder);
+        } else {
+            $groupCostumeSelectors[i].empty();
         }
 	}
 
