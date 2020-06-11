@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.8.1 at 11:03:54  on juni 10, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.8.1 at 12:08:22  on juni 11, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.8.1</version>
     <first>Stella</first>
@@ -117,6 +117,7 @@
             <case stage="0-3">
                 <state img="#-excited.png">Yeah! I'm winning this round!</state>
                 <state img="#-excited.png">Good luck beating THIS!</state>
+                <state img="#-giggle.png">This reminds me of the time my powers got swapped with that super-lucky girl!</state>
             </case>
             <case stage="4-8">
                 <state img="#-excited.png">I'm not losing just yet!</state>
@@ -147,6 +148,11 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0-8" priority="298">
+                <condition role="other" character="revy" stage="7" timeInStage="0" sayingMarker="stance" />
+                <condition role="other" character="meia" stage="5" saidMarker="revyfight" sayingMarker="stance" />
+                <state img="#-angry.png" marker="FightMe">Both of you, STOP! If you want a fight, fight me. If not, then leave each other alone, PLEASE! </state>
+            </case>
             <case stage="0-8" id="7">
                 <condition role="other" character="aella" stage="0-1" sayingMarker="AellaAdventures" />
                 <alternative alsoPlaying="aella" alsoPlayingStage="0-1" totalRounds="2">
@@ -352,6 +358,16 @@
                 <condition role="other" character="jessie" sayingMarker="QA_StupidMistakes_Supernova" />
                 <state img="#-pensive.png" marker="ShadowCat1">Okay, so the friend I'm talking about is known as Shadow Cat. Mind you, she wasn't my friend at first.</state>
             </case>
+            <case stage="0-8">
+                <condition role="self" saidMarker="JustGotHere" />
+                <condition role="other" character="meia" sayingMarker="stella_sightseeing" saying="The Earth of this time" />
+                <state img="#-pensive.png" marker="NoTimeTravel">The Earth of this... time? I'm not a time traveler, Meia. I just visit alternate realities.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="self" saidMarker="ShadowCat1" notSaidMarker="ShadowCat2" />
+                <condition role="other" character="jessie" sayingMarker="SupernovaShadowCat2" />
+                <state img="#-pensive.png" marker="ShadowCat2">Alright, I'll tell you. Where to start... Shadow Cat was, still is, in fact, a cat-burglar extraordinaire. Sort of a mix between a ninja and a master thief. There's no place she can't get into, no matter the security measures.</state>
+            </case>
             <case stage="0-8" id="133" priority="102">
                 <condition role="other" character="arash" saidMarker="waver-iskandar" sayingMarker="question-waver-iskandar" />
                 <state img="#-calm.png">Zip and Amber. Much as he annoys me, I must admit, they do make a cute couple.</state>
@@ -390,12 +406,7 @@
             <case stage="0-8">
                 <condition role="self" saidMarker="JustGotHere" />
                 <condition role="other" character="meia" sayingMarker="stella_sightseeing" />
-                <state img="#-pensive.png">Hmm... I can't say I've come across that one, Meia. Though I &lt;i&gt;have&lt;/i&gt; visited my fair share of ruined worlds...</state>
-            </case>
-            <case stage="0-8">
-                <condition role="self" saidMarker="JustGotHere" />
-                <condition role="other" character="meia" sayingMarker="stella_sightseeing" />
-                <state img="#-pensive.png">The Earth of this... time? I'm not a time traveler, Meia. I just visit alternate realities.</state>
+                <state img="#-pensive.png" marker="RuinedWorlds">Hmm... I can't say I've come across that one, Meia. Though I &lt;i&gt;have&lt;/i&gt; visited my fair share of ruined worlds...</state>
             </case>
             <case stage="0-8">
                 <condition role="self" saidMarker="TooManySecrets" />
@@ -411,11 +422,6 @@
                 <condition role="self" saidMarker="OtherMeWouldKnow" />
                 <condition role="other" character="jessie" sayingMarker="QA_Million_Supernova" />
                 <state img="#-giggle.png" marker="youdlikethat">Hahaha! You'd like that, wouldn't you?</state>
-            </case>
-            <case stage="0-8">
-                <condition role="self" saidMarker="ShadowCat1" notSaidMarker="ShadowCat2" />
-                <condition role="other" character="jessie" />
-                <state img="#-pensive.png" marker="ShadowCat2">Shadow Cat was, still is, in fact, a cat-burglar extraordinaire. Sort of a mix between a ninja and a master thief. There's no place she can't get into, no matter the security measures.</state>
             </case>
             <case stage="0-8">
                 <condition role="self" saidMarker="ShadowCat2" notSaidMarker="ShadowCat3" />
@@ -446,6 +452,31 @@
                 <condition role="self" saidMarker="ShadowCat7" notSaidMarker="ShadowCat8" />
                 <condition role="other" character="jessie" />
                 <state img="#-pensive.png" marker="ShadowCat8">I think she still steals sometimes, but only from evil people, not just whoever has the best security system. I don't really see her much these days. But yeah, that's the story of how a supervillain became one of my friends.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="self" saidMarker="NotAbandon" />
+                <condition role="other" character="jessie" sayingMarker="SupernovaFamily2" />
+                <state img="#-giggle.png" marker="ChocolateCoins">Oh, you have &lt;i&gt;no idea&lt;/i&gt;. He's got super speed, and the tendency to get really drunk. I once caught him tossing around mountains of chocolate coins all over the city!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="self" saidMarker="HairDye" />
+                <condition role="other" character="jessie" sayingMarker="SupernovaDyed2" />
+                <state img="#-giggle.png" marker="HairIsNatural">You're missing the point, Jessie! My hair &lt;i&gt;is&lt;/i&gt; natural, but everyone refuses to believe it!</state>
+            </case>
+            <case stage="0-8">
+                <condition role="self" saidMarker="lung_damage" />
+                <condition role="other" character="jessie" sayingMarker="SupernovaSmoking2" />
+                <state img="#-calm.png" marker="SafeThanSorry">Even so, I'd much rather be safe than sorry. Besides, I need to remain physically fit to do my job as a superhero.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="self" saidMarker="ShadowCat8" />
+                <condition role="other" character="jessie" saidMarker="SupernovaShadowCatEnd" />
+                <state img="#-giggle.png" marker="WholeOtherStory">Yeah, I've been through some pretty interesting stuff over the years. How exactly we dealt with Hypno is a whole other story, but I think I'd better save that one for another time.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="self" saidMarker="begging_pickpocketing" />
+                <condition role="other" character="jessie" sayingMarker="SupernovaHomeless1" />
+                <state img="#-veryworried.png" marker="ItWasRough">Trust me, Jessie, it was. I'm glad I don't have to live like that anymore.</state>
             </case>
             <case stage="0-8" id="158" priority="101">
                 <condition role="other" character="saki_zls" sayingMarker="q_saki_badluck" />
@@ -499,6 +530,16 @@
                 <condition role="other" character="jessie" />
                 <test expr="~self.tag.exotic_hair~" value="true" />
                 <state img="#-calm.png">Thanks! It's not dyed, though. I'm just... weird.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="natsuki" stage="4-6" saying="Why do you have to be so nice" />
+                <test expr="~self.tag.kind~" value="true" />
+                <state img="#-angry.png">You want me to be less nice? Just say the word, Natsuki!</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="raven" stage="3-4" saying="I can't stand it!" />
+                <test expr="~self.tag.cheerful~" value="true" />
+                <state img="#-angry.png">Oh, so you want me to be less happy, do you, Raven?</state>
             </case>
             <case stage="0-1">
                 <condition role="other" character="akko" stage="1-2" />
@@ -555,20 +596,15 @@
                 <test expr="~self.tag.kind~" value="true" />
                 <state img="#-angry.png">Only a fool would mistake my kindness for naivete, Franziska. I can assure you, nobody will take advantage of me without my consent.</state>
             </case>
-            <case stage="0-7">
-                <condition role="other" character="natsuki" stage="4-6" />
-                <test expr="~self.tag.kind~" value="true" />
-                <state img="#-angry.png">You want me to be less nice? Just say the word, Natsuki!</state>
-            </case>
-            <case stage="0-7">
-                <condition role="other" character="raven" stage="3-4" />
-                <test expr="~self.tag.cheerful~" value="true" />
-                <state img="#-angry.png">Oh, so you want me to be less happy, do you, Raven?</state>
-            </case>
             <case stage="1">
-                <condition role="other" character="gwen" />
+                <condition role="other" character="gwen" saying="What part of the country are you from" />
                 <test expr="~self.tag.american~" value="true" />
                 <state img="#-pensive.png">I'm from Starlight City, which is... sorta like your world's Las Vegas, I guess?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="twilight" saying="Power Ponies" />
+                <test expr="~self.tag.hero~" value="true" />
+                <state img="#-pensive.png">Never met them, I'm afraid. Maybe I should visit your world sometime... Twilight, right?</state>
             </case>
             <case stage="0-7">
                 <condition role="other" character="mulan" />
@@ -581,11 +617,6 @@
                 <state img="#-calm.png">Well, I can create portals...</state>
             </case>
             <case stage="0-7">
-                <condition role="other" character="twilight" />
-                <test expr="~self.tag.hero~" value="true" />
-                <state img="#-calm.png">Never met them, I'm afraid. Maybe I should visit your world sometime... Twilight, right?</state>
-            </case>
-            <case stage="0-7">
                 <condition role="other" character="juri" />
                 <test expr="~self.tag.superhero~" value="true" />
                 <state img="#-angry.png">I would be if I was a &lt;i&gt;fake&lt;/i&gt; superhero, like you are.</state>
@@ -596,16 +627,16 @@
                 <state img="#-angry.png">Why don't you mind your own business, before anyone gets hurt?</state>
             </case>
             <case stage="0">
-                <condition role="other" character="jura" stage="0-6" sayingMarker="stella0" />
-                <state img="#-calm.png">Depends... Do your plans involve harming innocent people? If not, I'm not your enemy.</state>
+                <condition role="other" character="jura" stage="0-6" sayingMarker="stella0" saying="enemy" />
+                <state img="#-calm.png" marker="NotYourEnemy">Depends... Do your plans involve harming innocent people? If not, I'm not your enemy.</state>
             </case>
             <case stage="0">
-                <condition role="other" character="jura" stage="0-6" sayingMarker="stella0" />
-                <state img="#-pensive.png">I don't know about any... 'attack fleets', but I've got my own portals because that's just my superpower. Are portals... normal where you're from?</state>
+                <condition role="other" character="jura" stage="0-6" sayingMarker="stella0" saying="attack fleets" />
+                <state img="#-pensive.png" marker="JustMySuperpower">I don't know about any... 'attack fleets', but I've got my own portals because that's just my superpower. Are portals... normal where you're from?</state>
             </case>
             <case stage="0">
                 <condition role="other" character="meia" stage="0-5" sayingMarker="stella0" />
-                <state img="#-pensive.png">I don't think I'm really using any kind of technology, Meia. It's just... something I can do. With my mind. I don't fully understand how it works either.</state>
+                <state img="#-pensive.png" marker="NoTechnology">I don't think I'm really using any kind of technology, Meia. It's just... something I can do. With my mind. I don't fully understand how it works either.</state>
             </case>
             <case stage="0">
                 <condition role="other" character="revy" stage="0-7" sayingMarker="stella0" />
@@ -618,6 +649,10 @@
             <case stage="0">
                 <condition role="other" character="aella" />
                 <state img="#-giggle.png">Same, except &lt;i&gt;I&lt;/i&gt; was the one who accidentally opened the portal and stepped through it. I tend to do that a lot.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="jessie" />
+                <state img="#-giggle.png" marker="NotIllusion">I really did come out of a portal, Jessie! You're not hallucinating and it wasn't an illusion!</state>
             </case>
         </trigger>
 
@@ -666,22 +701,46 @@
             <case stage="1">
                 <condition role="other" character="revy" stage="0-7" />
                 <test expr="~self.tag.kind~" value="true" />
-                <state img="#-angry.png">Oh, don't worry, Revy. I can definitely hold my own against the likes of &lt;i&gt;you.&lt;/i&gt;</state>
+                <state img="#-angry.png" marker="CanHoldOwn">Oh, don't worry, Revy. I can definitely hold my own against the likes of &lt;i&gt;you.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="pascal" saying="Amarcian" />
+                <test expr="~self.tag.american~" value="true" />
+                <state img="#-stripping.png">Um... no, I'm from Starlight City. What's Amarcian?</state>
             </case>
             <case stage="7">
                 <condition role="other" character="futaba" />
                 <test expr="~self.tag.exotic_hair~" value="true" />
                 <state img="#-stripping.png">Dyed? Oh, the purple. No, it just grows that way.</state>
             </case>
-            <case stage="0-7">
-                <condition role="other" character="pascal" />
-                <test expr="~self.tag.american~" value="true" />
-                <state img="#-stripping.png">Um... no, I'm from Starlight City. What's Amarcian?</state>
-            </case>
             <case stage="4-5">
                 <condition role="other" character="mileena" />
                 <test expr="~self.tag.american~" value="true" />
                 <state img="#-angry.png">Bring it on! I visited more worlds than you probably have in a lifetime!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="meia" stage="0-5" sayingMarker="stella01" saying="no distinction between the mind and technology" />
+                <state img="#-stripping.png" marker="DontExistYet">I don't know what your world is like, Meia, but in &lt;i&gt;my&lt;/i&gt; world telekinetic implants don't exist yet. Or the technology to artificially create wormholes. It really is just me.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="meia" stage="0-5" sayingMarker="stella01" saying="We met a child" />
+                <state img="#-pensive.png" marker="AlsoWarpKey">You met someone with the same abilities as me? Interesting... Did he also make use of a Warp Key, like I have on my necklace?</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="revy" stage="0-7" sayingMarker="stella01" saying="where'd you come from" />
+                <state img="#-pensive.png" marker="FromAU">Where I came from? An alternate universe... It's kinda hard to explain.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="jura" stage="0-6" sayingMarker="stella01" saying="portal-necklace" />
+                <state img="#-stripping.png" marker="OnlyOne">No, I think I'm the only one. In the universe where I came from, at least.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="jura" stage="0-6" sayingMarker="stella01" saying="Where do you get the nerve" />
+                <state img="#-stripping.png" marker="FarFromNormal">Well, sorry for disappointing you, Jura, but I'm about as far from "normal" as you can get.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="revy" stage="0-7" sayingMarker="stella01" />
+                <state img="#-stripping.png" marker="AccidentalPortal">Honestly, I was a bit confused and I just... accidentally opened a portal to here instead of home.</state>
             </case>
             <case stage="0">
                 <condition role="other" character="aella" />
@@ -756,7 +815,7 @@
                 <state img="#-calm.png">Actually, it has. Weirdly enough, I've always had purple hair. Don't really know why.</state>
             </case>
             <case stage="8">
-                <condition role="other" character="uravity" stage="3-7" saidMarker="enf_3a" notSaidMarker="enf_3b" />
+                <condition role="other" character="uravity" stage="3-7" saidMarker="enf_3a" notSaidMarker="enf_3b" saying="turn invisible" />
                 <test expr="~self.tag.hero~" value="true" />
                 <state img="#-worried.png">Sorry, I'm not the one with invisibility powers. That's Illura's thing. I have portals.</state>
             </case>
@@ -1870,11 +1929,6 @@
                 <state img="#-masturbating2.png">I'd grab them for you, but I can't portal to places I've never... Ooh! Ah!</state>
             </case>
             <case stage="9">
-                <condition role="other" character="akko" />
-                <test expr="~self.tag.uses_toy~" value="true" />
-                <state img="#-masturbating1.png">I didn't, actually. I just made a quick portal back to where I usually keep i-OOH!</state>
-            </case>
-            <case stage="9">
                 <state img="#-masturbating2.png">Ooh! It's going in deep!</state>
                 <state img="#-masturbating1.png">Ooh! Aah!</state>
             </case>
@@ -1895,6 +1949,18 @@
         <trigger id="finished_masturbating">
             <case stage="10">
                 <state img="#-calm.png">*pant* T-that was *pant* certainly an experience!</state>
+            </case>
+        </trigger>
+
+        <trigger id="after_masturbating">
+            <case stage="10" id="176">
+                <state img="#-pensive.png" marker="Amber">Maybe I should bring Amber along next time, she might enjoy this. That is, if she doesn't burn the place down on accident.</state>
+                <state img="#-pensive.png" marker="Illura">If I bring Illura in here with me, it might help her loosen up. Too bad she's not old enough yet... Oh well, maybe in a few years.</state>
+                <state img="#-pensive.png" marker="Professor">I wonder if the Professor would enjoy this? He'd probably be quite good at it!</state>
+                <state img="#-pensive.png" marker="Zip">Should I bring Zip here next time? This doesn't really seem like his thing, though. Not enough running involved.</state>
+                <state img="#-pensive.png" marker="Zaman">I wonder if Zaman would be allowed to participate? Would he even have time for it? What am I saying, of course he has time. He's the Spirit of Time!</state>
+                <state img="#-pensive.png" marker="Dez">Maybe Dez could benefit from coming here. It might help her issues with visibility if she could practice on all sorts of different minds.</state>
+                <state img="#-pensive.png" marker="ShadowCat">Shadow Cat might enjoy this. She's always liked any form of mental challenge. Then again, she hates wasting time, so maybe not.</state>
             </case>
         </trigger>
 
