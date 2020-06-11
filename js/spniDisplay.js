@@ -959,12 +959,18 @@ MainSelectScreenDisplay.prototype.onSingleSuggestionSelected = function () {
 MainSelectScreenDisplay.prototype.update = function (player) {
     if (this.prefillSuggestion && this.prefillSuggestion != player
         && players.some(function (p) { return p && p.id === this.prefillSuggestion.id; }, this)) {
-        this.setPrefillSuggestion(null);
         loadDefaultFillSuggestions();
+        return updateSelectionVisuals();
     }
 
-    if (!player && this.prefillSuggestion && !this.targetSuggestionsShown)
-        return this.displaySingleSuggestion();
+    if (!player && !this.targetSuggestionsShown) {
+        // attempt to load a prefill suggestion if missing
+        if (!this.prefillSuggestion) loadDefaultFillSuggestions();
+
+        // if we had one to begin with, or if we were able to load one, display
+        // it
+        if (this.prefillSuggestion) return this.displaySingleSuggestion();
+    }
 
     this.prefillBadgeRow.children().hide();
     this.label.removeClass("suggestion-label");
@@ -1109,9 +1115,14 @@ function OpponentSelectionCard (opponent) {
     this.label = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-name')));
     this.source = $(footerElem.appendChild(createElementWithClass('div', 'selection-card-label selection-card-source')));
     
+    /** Has this opponent been filtered out of the individual selection screen? */
+    this.filtered = false;
+
     this.update();
 
     this.mainElem.addEventListener('click', this.handleClick.bind(this));
+
+    $(this.mainElem).appendTo($indivSelectionCardContainer);
 }
 
 OpponentSelectionCard.prototype = Object.create(OpponentDisplay.prototype);
@@ -1145,6 +1156,49 @@ OpponentSelectionCard.prototype.clear = function () {}
 
 OpponentSelectionCard.prototype.handleClick = function (ev) {
     individualDetailDisplay.update(this.opponent);
+}
+
+/**
+ * Should this card be visible?
+ * 
+ * @param {boolean} testingView If true, visibility will be calculated for the
+ * Testing Tables view instead of the regular roster view.
+ * 
+ * @param {boolean} ignoreFilter If true, any previous filtering status will be
+ * ignored.
+ */
+OpponentSelectionCard.prototype.isVisible = function (testingView, ignoreFilter) {
+    /* hide already selected opponents */
+    if (this.opponent.slot) return false;
+
+    var status = this.opponent.status;
+
+    // Should this opponent be on the "main roster view"?
+    var onMainView = (status === undefined || includedOpponentStatuses[status]);
+
+    if (!testingView) {
+        // Regular view: include all opponents with undefined status and with
+        // included statuses.
+        if (!onMainView) return false;
+    } else {
+        /* Testing view: include all opponents with `testing` status and those
+         * targeted by testing opponents with 5+ lines.
+         */
+        if (status !== "testing" && this.opponent.inboundLinesFromSelected("testing") < 5)
+            return false;
+    }
+
+    /* hide filtered opponents */
+    return ignoreFilter || !this.filtered;
+}
+
+/**
+ * Set whether this card should be hidden due to filtering.
+ * 
+ * @param {boolean} val If true, this card will be "filtered" and hidden.
+ */
+OpponentSelectionCard.prototype.setFiltered = function (val) {
+    this.filtered = val;
 }
 
 OpponentDetailsDisplay = function () {

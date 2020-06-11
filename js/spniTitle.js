@@ -519,8 +519,8 @@ function validateTitleScreen () {
 
     save.savePlayer();
     console.log(players[0]);
-
-    loadDefaultFillSuggestions();
+    
+    updateSelectionVisuals();
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
     screenTransition($titleScreen, $selectScreen);

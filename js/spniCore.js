@@ -450,6 +450,27 @@ Player.prototype.setMarker = function (baseName, target, value) {
     }
 }
 
+/**
+ * Calculates how many lines from currently-selected characters target this
+ * character.
+ * 
+ * @param {string} filterStatus? If passed, only lines from characters with the
+ * given status will be considered.
+ * 
+ * @returns {number}
+ */
+Player.prototype.inboundLinesFromSelected = function (filterStatus) {
+    var id = this.id;
+
+    return players.reduce(function(sum, p) {
+        if (p && p.targetedLines && id in p.targetedLines
+            && (!filterStatus || p.status === filterStatus)) {
+            sum += p.targetedLines[id].seen.size;
+        }
+
+        return sum;
+    }, 0);
+}
 
 /**
  * Subclass of Player for AI-controlled players.
@@ -496,6 +517,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.posesImageCount = parseInt($metaXml.children('poses').text(), 10) || undefined;
     this.z_index = parseInt($metaXml.children('z-index').text(), 10) || 0;
     this.dialogue_layering = $metaXml.children('dialogue-layer').text();
+    this.lastUpdated = parseInt($metaXml.children('lastupdate').text(), 10) || 0;
 
     this.endings = null;
     if (EPILOGUES_ENABLED) {
@@ -970,6 +992,8 @@ Opponent.prototype.unloadOpponent = function () {
         /* Remove the <link> to this opponent's stylesheet. */
         $('link[href=\"'+this.stylesheet+'\"]').remove();
     }
+
+    this.slot = undefined;
 }
 
 Opponent.prototype.fetchBehavior = function() {

@@ -26,5 +26,6 @@ python3 deploy-scripts/copy_alternate_costumes.py .public/ ./ all
 python3 deploy-scripts/cache_bust.py .public/
 
 python3 opponents/fill_linecount_metadata.py .public/opponents
+python3 deploy-scripts/fill_update_timestamps.py .public/opponents opponents
 python opponents/gzip_dialogue.py .public/opponents/*/behaviour.xml
 python opponents/analyze_image_space.py .public/opponents

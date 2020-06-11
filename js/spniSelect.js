@@ -110,6 +110,8 @@ $groupSearchModal.on('shown.bs.modal', function() {
 	$groupSearchGroupName.focus();
 });
 
+var $indivSelectionCardContainer = $('#individual-select-screen .selection-cards-container');
+
 /**********************************************************************
  *****                  Select Screen Variables                   *****
  **********************************************************************/
@@ -127,17 +129,25 @@ var metaFile = "meta.xml";
 var loadedOpponents = [];
 var selectableOpponents = loadedOpponents;
 var hiddenOpponents = [];
-var loadedGroups = [[], []];
-var selectableGroups = [loadedGroups[0], loadedGroups[1]];
+var loadedGroups = [];
+var selectableGroups = loadedGroups;
+
+/* indiv. select view variables */
+
+/** Should the individual selection view be in "Testing" mode? */
+var individualSelectTesting = false;
+
+/** Are the default fill suggestions using Testing opponents? */
+var suggestedTestingOpponents = undefined;
 
 /* page variables */
-var groupSelectScreen = 0; /** testing = 1, released presets = 0 */
 var individualPage = 0;
-var groupPage = [0, 0];
+var groupPage = 0;
 var chosenGender = -1;
 var chosenGroupGender = -1;
 var sortingMode = "Featured";
 var sortingOptionsMap = {
+    "Recently Updated": sortOpponentsByMultipleFields("-lastUpdated"),
     "Newest" : sortOpponentsByMultipleFields("-release"),
     "Oldest" : sortOpponentsByMultipleFields("release"),
     "Most Layers" : sortOpponentsByMultipleFields("-layers"),
@@ -146,7 +156,6 @@ var sortingOptionsMap = {
     "Name (Z-A)" : sortOpponentsByMultipleFields("-first", "-last"),
     "Talks to selected" : sortOpponentsByMostTargeted(),
 };
-var individualCreditsShown = false;
 var groupCreditsShown = false;
 
 /* consistence variables */
@@ -263,15 +272,7 @@ function loadListingFile () {
 			}
 		}
         
-        if (--outstandingLoads % 16 == 0) {
-            updateSelectableOpponents();
-            updateIndividualSelectScreen();
-            updateSelectableGroups(0);
-            updateSelectableGroups(1);
-            updateGroupSelectScreen(true);
-            updateSelectionVisuals();
-        }
-        if (outstandingLoads == 0) {
+        if (--outstandingLoads == 0) {
             $(".title-menu-buttons-container>div").removeAttr("hidden");
             $("#title-load-container").hide();
             
@@ -332,7 +333,7 @@ function loadListingFile () {
 					}
 					opponentGroupMap[id].push({ group: newGroup, idx: idx, costume: costumes[idx] });
 				});
-				loadedGroups[$(this).attr('testing') ? 1 : 0].push(newGroup);
+				loadedGroups.push(newGroup);
 			});
 
             /* now actually load the characters */
@@ -343,14 +344,11 @@ function loadListingFile () {
                 var id = $(this).text();
                 var releaseNumber = $(this).attr('release');
                 var highlightStatus = $(this).attr('highlight');
-                var doInclude = (oppStatus === undefined || includedOpponentStatuses[oppStatus]);
 
                 if (available[id]) {
                     outstandingLoads++;
                     totalLoads++;
-					if (doInclude) {
-						opponentMap[id] = oppDefaultIndex++;
-					}
+                    opponentMap[id] = oppDefaultIndex++;
                     loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus, onComplete);
                 }
             });
@@ -430,22 +428,6 @@ function fillCostumeSelector($selector, costumes, selected_costume) {
 }
 
 /************************************************************
- * Loads opponents onto the individual select screen.
- ************************************************************/
-function updateIndividualSelectScreen () {
-    $('#individual-select-screen .selection-cards-container .selection-card').hide();
-    selectableOpponents.forEach(function(opp) {
-        $('#individual-select-screen .selection-cards-container').append(opp.selectionCard.mainElem);
-        $(opp.selectionCard.mainElem).show();
-
-        if (opp.endings) {
-            opp.selectionCard.updateEpilogueBadge();
-        }
-    });
-    return;
-}
-
-/************************************************************
  * Loads opponents onto the group select screen based on the
  * currently selected page.
  * 
@@ -455,20 +437,20 @@ function updateIndividualSelectScreen () {
  ************************************************************/
 function updateGroupSelectScreen (ignore_bg) {
 	/* safety wrap around */
-    if (groupPage[groupSelectScreen] < 0) {
+    if (groupPage < 0) {
 		/* wrap to last page */
-		groupPage[groupSelectScreen] = (selectableGroups[groupSelectScreen].length)-1;
-	} else if (groupPage[groupSelectScreen] > selectableGroups[groupSelectScreen].length-1) {
+		groupPage = (selectableGroups.length)-1;
+	} else if (groupPage > selectableGroups.length-1) {
 		/* wrap to the first page */
-		groupPage[groupSelectScreen] = 0;
+		groupPage = 0;
 	}
-	$groupPageIndicator.val(groupPage[groupSelectScreen]+1);
-    $groupMaxPageIndicator.html("of "+selectableGroups[groupSelectScreen].length);
+	$groupPageIndicator.val(groupPage+1);
+    $groupMaxPageIndicator.html("of "+selectableGroups.length);
 
     /* create and load all of the individual opponents */
     $groupButton.attr('disabled', false);
     
-    var group = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]];
+    var group = selectableGroups[groupPage];
     
     if (group) {
         $groupNameLabel.html(group.title);
@@ -602,53 +584,61 @@ function updateGroupSelectScreen (ignore_bg) {
  *****                   Interaction Functions                    *****
  **********************************************************************/
 
+/* A filter predicate encompassing the filter options on the individual select
+ * screen.
+ */
+function filterOpponent(opp, name, source, creator, tag) {
+    // filter by name
+    if (name
+        && opp.selectLabel.toLowerCase().indexOf(name) < 0
+        && opp.first.toLowerCase().indexOf(name) < 0
+        && opp.last.toLowerCase().indexOf(name) < 0) {
+        return false;
+    }
+
+    // filter by source
+    if (source && opp.source.toLowerCase().indexOf(source) < 0) {
+        return false;
+    }
+
+    // filter by tag
+    if (tag && !(opp.searchTags && opp.searchTags.indexOf(tag) >= 0)) {
+        return false;
+    }
+    
+    // filter by creator
+    if (creator && opp.artist.toLowerCase().indexOf(creator) < 0 && opp.writer.toLowerCase().indexOf(creator) < 0) {
+        return false;
+    }
+
+    // filter by gender
+    if ((chosenGender == 2 && opp.selectGender !== eGender.MALE)
+        || (chosenGender == 3 && opp.selectGender !== eGender.FEMALE)) {
+        return false;
+    }
+    
+    return true;
+}
+
 /************************************************************
  * Filters the list of selectable opponents based on those
- * already selected and performs search and sort logic.
+ * already selected and performs search logic.
  ************************************************************/
-function updateSelectableOpponents(autoclear) {
+function updateIndividualSelectFilters(autoclear) {
     var name = $searchName.val().toLowerCase();
     var source = $searchSource.val().toLowerCase();
     var creator = $searchCreator.val().toLowerCase();
     var tag = canonicalizeTag($searchTag.val());
 
     // Array.prototype.filter automatically skips empty slots
-    selectableOpponents = loadedOpponents.filter(function(opp) {
-        // filter by name
-        if (name
-            && opp.selectLabel.toLowerCase().indexOf(name) < 0
-            && opp.first.toLowerCase().indexOf(name) < 0
-            && opp.last.toLowerCase().indexOf(name) < 0) {
-            return false;
-        }
+    loadedOpponents.forEach(function (opp) {
+        opp.selectionCard.setFiltered(!filterOpponent(opp, name, source, creator, tag));
 
-        // filter by source
-        if (source && opp.source.toLowerCase().indexOf(source) < 0) {
-            return false;
+        if (opp.selectionCard.isVisible(individualSelectTesting, false)) {
+            $(opp.selectionCard.mainElem).show();
+        } else {
+            $(opp.selectionCard.mainElem).hide();
         }
-
-        // filter by tag
-        if (tag && !(opp.searchTags && opp.searchTags.indexOf(canonicalizeTag(tag)) >= 0)) {
-            return false;
-        }
-        
-        // filter by creator
-        if (creator && opp.artist.toLowerCase().indexOf(creator) < 0 && opp.writer.toLowerCase().indexOf(creator) < 0) {
-            return false;
-        }
-
-        // filter by gender
-        if ((chosenGender == 2 && opp.selectGender !== eGender.MALE)
-            || (chosenGender == 3 && opp.selectGender !== eGender.FEMALE)) {
-            return false;
-        }
-
-        /* hide selected opponents */
-        if (players.some(function(p) { return p && p.id == opp.id; })) {
-            return false;
-        }
-        
-        return true;
     });
 
     // If a unique match was made, automatically clear the search so
@@ -657,19 +647,63 @@ function updateSelectableOpponents(autoclear) {
         clearSearch();
         return;
     }
+}
+
+/** Updates the sort order of opponents on the individual select screen. */
+function updateIndividualSelectSort() {
+    var ordered = loadedOpponents.slice();
 
     /* sort opponents */
-    // Since selectableOpponents is always reloaded here with featured order,
+    // Since ordered is always initialized here with featured order,
     // check if a different sorting mode is selected, and if yes, sort it.
     if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
-        selectableOpponents.sort(sortingOptionsMap[sortingMode]);
+        ordered.sort(sortingOptionsMap[sortingMode]);
     }
+    
+    if (individualSelectTesting && (sortingMode === "Featured" || sortingMode === "Recently Updated")) {
+        /*
+         * As special cases, when using these sort modes in the Testing view,
+         * additionally sort all Testing opponents before main-roster opponents.
+         */
+        ordered.sort(sortTestingOpponents);
+    }
+
+    ordered.forEach(function (opp) {
+        $(opp.selectionCard.mainElem).appendTo($indivSelectionCardContainer);
+    });
 }
 
 $('#individual-select-screen .sort-filter-field').on('input', function () {
-    updateSelectableOpponents(false);
-    updateIndividualSelectScreen();
+    updateIndividualSelectFilters();
 });
+
+function updateIndividualSelectVisibility() {
+    loadedOpponents.forEach(function (opp) {
+        if (opp.selectionCard.isVisible(individualSelectTesting, false)) {
+            $(opp.selectionCard.mainElem).show();
+        } else {
+            $(opp.selectionCard.mainElem).hide();
+        }
+    });
+}
+
+/** Is the individual select screen locked to Testing or Main Roster mode? */
+function isIndividualSelectViewTypeLocked() {
+    return players.some(function (opp) { return opp && opp !== humanPlayer; });
+}
+
+/** 
+ * Update displayed epilogue badges for opponents on the individual
+ * selection screen.
+ */
+function updateIndividualEpilogueBadges (autoclear) {
+    loadedOpponents.forEach(function(opp) {
+        if (opp.endings) {
+            opp.selectionCard.updateEpilogueBadge();
+        }
+    });
+}
+
 
 /************************************************************
  * The player clicked on an opponent slot.
@@ -678,24 +712,7 @@ function selectOpponentSlot (slot) {
     if (!(slot in players)) {
         /* add a new opponent */
         selectedSlot = slot;
-
-        /* Make sure the user doesn't have target-count sorting set if
-         * the amount of loaded opponents drops to 0. */
-        if (sortingMode === "Talks to selected") {
-            if (players.countTrue() <= 1) {
-                setSortingMode("Featured");
-            }
-        }
-
-		/* update the list of selectable opponents based on those that are already selected, search, and sort options */
-		updateSelectableOpponents(true);
-
-		/* reload selection screen */
-		updateIndividualSelectScreen();
-
-        /* switch screens */
-        if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-individual");
-		screenTransition($selectScreen, $individualSelectScreen);
+        showIndividualSelectionScreen();
     } else {
         /* remove the opponent that's there */
         $selectImages[slot-1].off('load');
@@ -707,11 +724,58 @@ function selectOpponentSlot (slot) {
     }
 }
 
+function showIndividualSelectionScreen() {
+    /* We don't need to update filtering when moving from the main select screen
+     * to the indiv. select screen, since the filters cannot actually change
+     * unless the user is already on said screen.
+     * 
+     * We also don't need to update sorting, since any change to the sort mode
+     * (anywhere) automatically updates the display order.
+     * 
+     * The visibility of characters might change, however, depending on the
+     * view type and what characters have already been selected.
+     */
+    updateIndividualSelectVisibility();
+
+    /* Make sure the user doesn't have target-count sorting set if
+     * the amount of loaded opponents drops to 0. */
+    if (sortingMode === "Talks to selected") {
+        if (players.countTrue() <= 1) {
+            setSortingMode("Featured");
+        }
+    }
+
+    updateIndividualEpilogueBadges();
+
+    /* switch screens */
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-individual");
+    screenTransition($selectScreen, $individualSelectScreen);
+}
+
+function toggleIndividualSelectView() {
+    individualSelectTesting = !individualSelectTesting;
+
+    /* Switch to the default sort mode for the selected view. */
+    if (individualSelectTesting) {
+        setSortingMode("Recently Updated");
+    } else {
+        setSortingMode("Featured");
+    }
+
+    updateSelectionVisuals();
+
+    $("#select-group-testing-button").text(
+        individualSelectTesting ? "Main Roster" : "Testing Roster"
+    );
+}
+
 /************************************************************
- * The player clicked on the Preset Tables or Testing Tables button.
+ * The player clicked on the Preset Tables button.
  ************************************************************/
-function clickedSelectGroupButton (screen) {
-    switchSelectGroupScreen(screen);
+function showPresetTables () {
+    $groupSwitchTestingButton.html("Testing Tables");
+    updateSelectableGroups();
+    updateGroupSelectScreen();
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-group");
 
@@ -720,36 +784,17 @@ function clickedSelectGroupButton (screen) {
 }
 
 /************************************************************
- * The player clicked on the Preset Tables or Testing Tables
- * button from within the table select screen.
- ************************************************************/
-function switchSelectGroupScreen (screen) {
-    if (screen !== undefined) {
-        groupSelectScreen = screen;
-    } else {
-        groupSelectScreen = 1 - groupSelectScreen;
-    }
-    if (groupSelectScreen == 1) {
-        $groupSwitchTestingButton.html("Preset Tables");
-    } else {
-        $groupSwitchTestingButton.html("Testing Tables");
-    }
-    updateSelectableGroups(groupSelectScreen);
-    updateGroupSelectScreen();
-}
-
-/************************************************************
  * Filters the list of selectable opponents based on those
  * already selected and performs search and sort logic.
  ************************************************************/
-function updateSelectableGroups(screen) {
+function updateSelectableGroups() {
     var groupname = $groupSearchGroupName.val().toLowerCase();
     var name = $groupSearchName.val().toLowerCase();
     var source = $groupSearchSource.val().toLowerCase();
     var tag = canonicalizeTag($groupSearchTag.val());
 
     // reset filters
-    selectableGroups[screen] = loadedGroups[screen].filter(function(group) {
+    selectableGroups = loadedGroups.filter(function(group) {
         if (!group.opponents.every(function(opp) { return opp; })) return false;
 
         if (groupname && group.title.toLowerCase().indexOf(groupname) < 0) return false;
@@ -846,8 +891,8 @@ function loadGroup (chosenGroup) {
 function clickedRandomGroupButton () {
 	selectedSlot = 1;
 	/* get a random number for the group listings */
-	var randomGroupNumber = getRandomNumber(0, loadedGroups[0].length);
-	var chosenGroup = loadedGroups[0][randomGroupNumber];
+	var randomGroupNumber = getRandomNumber(0, loadedGroups.length);
+	var chosenGroup = loadedGroups[randomGroupNumber];
 
     /* workaround for preset costumes */
 	for (var i = 0; i < 4; i++) {
@@ -878,9 +923,9 @@ function clickedRandomGroupButton () {
 function clickedRandomFillButton (predicate) {
 	/* compose a copy of the loaded opponents list */
 	var loadedOpponentsCopy = loadedOpponents.filter(function(opp) {
-        // Filter out already selected characters
-        return (!players.some(function(p) { return p && p.id == opp.id; })
-                && (!predicate || predicate(opp)));
+        // Filter out characters that can't be selected via the regular view
+        return (opp.selectionCard.isVisible(individualSelectTesting, true) && 
+                (!predicate || predicate(opp)));
     });
 
 	/* select random opponents */
@@ -913,21 +958,36 @@ function clickedRandomFillButton (predicate) {
 function loadDefaultFillSuggestions () {
     /* get a copy of the loaded opponents list, same as above */
     var possiblePicks = loadedOpponents.filter(function (opp) {
-        return !players.some(function (p) { return p && p.id === opp.id; })
-                && !mainSelectDisplays.some(function (d) { return d.prefillSuggestion && d.prefillSuggestion.id === opp.id; })
-                && opp.highlightStatus === DEFAULT_FILL;
-    });
+        if (players.some(function (p) { return p && p.id === opp.id; })) {
+            return false;
+        }
 
-    var nFill = 5 - players.countTrue();
-    if (nFill === 0) return;
+        if (!individualSelectTesting) {
+            return opp.highlightStatus === DEFAULT_FILL;
+        } else {
+            return opp.status === "testing";
+        }
+    });
     
     var fillPlayers = [];
     if (DEFAULT_FILL === 'new') {
-        /* Always suggest the most recently-added character. */
+        /* Special case: for the 'new' fill mode, always suggest the most
+         * recently-added or recently-updated character.
+         *
+         * For the testing view, this requires sorting the list of prefills by
+         * increasing chronological order.
+         *
+         * In both cases, the character to suggest first is always at the back
+         * of the list.
+         */
+        if (individualSelectTesting) {
+            possiblePicks.sort(sortOpponentsByMultipleFields("lastUpdated"));
+        }
+
         fillPlayers.push(possiblePicks.pop());
     }
 
-    for (var i = fillPlayers.length; i < nFill; i++) {
+    for (var i = fillPlayers.length; i < players.length-1; i++) {
         if (possiblePicks.length === 0) break;
         /* select random opponent */
         var idx = getRandomNumber(0, possiblePicks.length);
@@ -937,14 +997,17 @@ function loadDefaultFillSuggestions () {
         fillPlayers.push(randomOpponent);
     }
 
-    for (var i = 1; i < players.length && fillPlayers.length > 0; i++) {
-        if (!(i in players) && !mainSelectDisplays[i - 1].prefillSuggestion) {
-            var suggestion = fillPlayers.shift();
-            mainSelectDisplays[i - 1].setPrefillSuggestion(suggestion);
-        }
+    for (var i = 0; i < mainSelectDisplays.length; i++) {
+        mainSelectDisplays[i].setPrefillSuggestion(fillPlayers[i]);
     }
 
-    updateSelectionVisuals();
+    suggestedTestingOpponents = individualSelectTesting;
+}
+
+function updateDefaultFillView() {
+    if (suggestedTestingOpponents !== individualSelectTesting) {
+        loadDefaultFillSuggestions();
+    }
 }
 
 /************************************************************
@@ -989,12 +1052,12 @@ function selectGroup () {
     if (SENTRY_INITIALIZED) {
         Sentry.addBreadcrumb({
             'category': 'select',
-            'message': 'Loading group at screen '+groupSelectScreen+', page '+groupPage[groupSelectScreen],
+            'message': 'Loading group at page '+groupPage,
             'level': 'info'
         });
     }
 
-    loadGroup(selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]]);
+    loadGroup(selectableGroups[groupPage]);
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
 
@@ -1009,23 +1072,23 @@ function changeGroupPage (skip, page) {
 	if (skip) {
 		if (page == -1) {
 			/* go to first page */
-            groupPage[groupSelectScreen] = 0;
+            groupPage = 0;
 		} else if (page == 1) {
 			/* go to last page */
-			groupPage[groupSelectScreen] = selectableGroups[groupSelectScreen].length-1;
+			groupPage = selectableGroups.length-1;
 		} else {
 			/* go to selected page */
-			groupPage[groupSelectScreen] = Number($groupPageIndicator.val()) - 1;
+			groupPage = Number($groupPageIndicator.val()) - 1;
 		}
 	} else {
-		groupPage[groupSelectScreen] += page;
+		groupPage += page;
     }
     
     if (SENTRY_INITIALIZED) {
         Sentry.addBreadcrumb({
             'category': 'select',
             'level': 'info',
-            'message': 'Going to ' + (groupSelectScreen ? 'testing' : 'preset') + ' table page ' + groupPage[groupSelectScreen] + ' / ' + (selectableGroups[groupSelectScreen].length-1),
+            'message': 'Going to preset table page ' + groupPage + ' / ' + (selectableGroups.length-1),
             'data': {
                 'skip': String(skip),
                 'page': String(page)
@@ -1157,7 +1220,7 @@ function backSelectScreen () {
  */
 function altCostumeSelected(slot) {
     var costumeSelector = $groupCostumeSelectors[slot-1];
-    var opponent = selectableGroups[groupSelectScreen][groupPage[groupSelectScreen]].opponents[slot-1];
+    var opponent = selectableGroups[groupPage].opponents[slot-1];
 
     var costumeDesc = costumeSelector.children(':selected').data('costumeDescriptor');
     opponent.selectAlternateCostume(costumeDesc);
@@ -1186,14 +1249,12 @@ function updateSelectionVisuals () {
     });
 
     /* Update suggestions images. */
+    updateDefaultFillView();
+
     if (loaded >= 2) {
         var suggested_opponents = loadedOpponents.filter(function(opp) {
-            /* hide selected opponents */
-            if (players.some(function(p) { return p && p.id == opp.id; })) {
-                return false;
-            }
-
-            return true;
+            if (individualSelectTesting && opp.status !== "testing") return false;
+            return opp.selectionCard.isVisible(individualSelectTesting, true);
         });
 
         /* sort opponents */
@@ -1223,6 +1284,21 @@ function updateSelectionVisuals () {
     /* update all opponents */
     for (var i = 1; i < players.length; i++) {
         mainSelectDisplays[i - 1].update(players[i]);
+    }
+
+    /* If the individual selection view type is locked, then disable the view
+     * mode toggle button.
+     */
+    $("#select-group-testing-button").attr("disabled", isIndividualSelectViewTypeLocked());
+
+    /* Hide the "Preset Tables" and "Random Table" buttons when viewing the
+     * Testing roster. */
+    if (individualSelectTesting) {
+        $("#select-group-button").hide();
+        $selectRandomTableButton.hide();
+    } else {
+        $("#select-group-button").show();
+        $selectRandomTableButton.show();
     }
 
     /* if enough opponents are selected, and all those are loaded, then enable progression */
@@ -1282,27 +1358,19 @@ function openSearchModal() {
     $searchModal.modal('show');
 }
 
-function closeSearchModal() {
-    // perform the search and sort logic
-    updateSelectableOpponents();
-
-    // update
-    updateIndividualSelectScreen();
-    updateIndividualCountStats();
-}
-
 function clearSearch() {
     $searchName.val(null);
     $searchTag.val(null);
     $searchSource.val(null);
-    closeSearchModal();
+
+    // perform the search and sort logic, then update
+    updateIndividualSelectFilters();
 }
 
 function changeSearchGender(gender) {
     chosenGender = gender;
     setActiveOption("search-gender", gender);
-    updateSelectableOpponents(true);
-    updateIndividualSelectScreen();
+    updateIndividualSelectFilters(true);
 }
 
 $('ul#search-gender').on('click', 'a', function() {
@@ -1315,7 +1383,7 @@ function openGroupSearchModal() {
 
 function closeGroupSearchModal() {
     // perform the search and sort logic
-    updateSelectableGroups(groupSelectScreen);
+    updateSelectableGroups();
 
     // update
     updateGroupSelectScreen();
@@ -1403,12 +1471,7 @@ function sortOpponentsByMultipleFields() {
 function sortOpponentsByMostTargeted() {
 	return function(opp1, opp2) {
 		counts = [opp1, opp2].map(function(opp) {
-			return players.reduce(function(sum, p) {
-				if (p && p.targetedLines && opp.id in p.targetedLines) {
-					sum += p.targetedLines[opp.id].seen.size;
-				}
-				return sum;
-			}, 0);
+			return opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined);
 		});
 		if (counts[0] > counts[1]) return -1;
 		if (counts[0] < counts[1]) return 1;
@@ -1416,11 +1479,31 @@ function sortOpponentsByMostTargeted() {
 	}
 }
 
+/**
+ * Special callback for Arrays.sort to sort an array of opponents using the
+ * Testing-specific rules. The sort order produced by this callback is:
+ * - highlight="sponsorship"
+ * - status="testing"
+ * - everything else
+ */
+function sortTestingOpponents(opp1, opp2) {
+    var scores = [opp1, opp2].map(function (opp) {
+        if (opp.highlightStatus === "sponsorship") {
+            return 2;
+        } else if (opp.status === "testing") {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+
+    return scores[1] - scores[0];
+}
+
 function setSortingMode(mode) {
     sortingMode = mode;
     $("#sort-dropdown-selection").html(sortingMode); // change the dropdown text to the selected option
-    updateSelectableOpponents(false);
-    updateIndividualSelectScreen();
+    updateIndividualSelectSort();
 }
 
 /** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */
@@ -1485,18 +1568,6 @@ function updateOpponentCountStats(opponentArr, uiElements) {
             }
         }
     });
-}
-
-/** Dialogue/image count update function for the individual selection screen. */
-function updateIndividualCountStats() {
-    if (individualCreditsShown) {
-        var individualUIElements = {
-            countBoxes : $individualCountBoxes,
-            lineLabels : $individualLineCountLabels,
-            poseLabels : $individualPoseCountLabels
-        };
-        updateOpponentCountStats(shownIndividuals, individualUIElements);
-    }
 }
 
 /** Dialogue/image count update function for the group selection screen. */
