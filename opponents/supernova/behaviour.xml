@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.8.1 at 12:08:22  on juni 11, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.8.1 at 4:01:14  on juni 12, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.8.1</version>
     <first>Stella</first>
@@ -152,6 +152,12 @@
                 <condition role="other" character="revy" stage="7" timeInStage="0" sayingMarker="stance" />
                 <condition role="other" character="meia" stage="5" saidMarker="revyfight" sayingMarker="stance" />
                 <state img="#-angry.png" marker="FightMe">Both of you, STOP! If you want a fight, fight me. If not, then leave each other alone, PLEASE! </state>
+            </case>
+            <case stage="0-8">
+                <condition role="other" character="revy" stage="7" timeInStage="0" />
+                <condition role="self" sayingMarker="FightMe" />
+                <condition role="other" character="meia" stage="5" sayingMarker="stance" />
+                <state img="#-angry.png" marker="ItsMyJob">Look, I get that you're mad at each other and all, but stopping things like this is my FUCKING JOB!!! If you're so hell-bent on fighting each other, do it in a wrestling ring or something! Not here in the middle of a poker game! </state>
             </case>
             <case stage="0-8" id="7">
                 <condition role="other" character="aella" stage="0-1" sayingMarker="AellaAdventures" />
@@ -531,6 +537,36 @@
                 <test expr="~self.tag.exotic_hair~" value="true" />
                 <state img="#-calm.png">Thanks! It's not dyed, though. I'm just... weird.</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="elizabeth" stage="0" saying="heard of Columbia" />
+                <test expr="~self.tag.american~" value="true" />
+                <state img="#-pensive.png">Oh, technically, I'm not really American. Starlight City, where I'm from, is sorta like Las Vegas, but America doesn't really exist in my world.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="elizabeth" stage="0" saying="not American anymore" />
+                <test expr="~self.tag.american~" value="true" />
+                <state img="#-pensive.png">Oh, technically, I'm not really American either. Starlight City, where I'm from, is sorta like Las Vegas, but America doesn't really exist in my world.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="elizabeth" stage="0" saying="floating above American territory" />
+                <test expr="~self.tag.american~" value="true" />
+                <state img="#-pensive.png">Oh, technically, I'm not really American either. Starlight City, where I'm from, is sorta like Las Vegas, but... Wait, you live in a floating city?</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="ini" stage="5-8" saying="naturally that stupid color" />
+                <test expr="~self.tag.exotic_hair~" value="true" />
+                <state img="#-calm.png">It's natural, if you can believe it. So are my eyes.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="faye" stage="0-8" saying="go rescue a cat" />
+                <test expr="~self.tag.superhero~" value="true" />
+                <state img="#-angry.png">Why don't you mind your own business, &lt;i&gt;Faye?&lt;/i&gt;</state>
+            </case>
+            <case stage="0-7">
+                <condition role="other" character="franziska" stage="0-8" saying="Only a fool" />
+                <test expr="~self.tag.kind~" value="true" />
+                <state img="#-angry.png">Only a fool would mistake my kindness for naivete, Franziska. I can assure you, nobody will take advantage of me without my consent.</state>
+            </case>
             <case stage="0-7">
                 <condition role="other" character="natsuki" stage="4-6" saying="Why do you have to be so nice" />
                 <test expr="~self.tag.kind~" value="true" />
@@ -546,31 +582,6 @@
                 <test expr="~self.tag.exotic_hair~" value="true" />
                 <state img="#-pensive.png">Purple, you mean? I don't know, it just... grows that way, I guess.</state>
             </case>
-            <case stage="0">
-                <condition role="other" character="elizabeth" stage="0" />
-                <test expr="~self.tag.american~" value="true" />
-                <state img="#-pensive.png">Oh, technically, I'm not really American. Starlight City, where I'm from, is sorta like Las Vegas, but America doesn't really exist in my world.</state>
-            </case>
-            <case stage="0">
-                <condition role="other" character="elizabeth" stage="0" />
-                <test expr="~self.tag.american~" value="true" />
-                <state img="#-pensive.png">Oh, technically, I'm not really American. Starlight City, where I'm from, is sorta like Las Vegas, but America doesn't really exist in my world.</state>
-            </case>
-            <case stage="0">
-                <condition role="other" character="elizabeth" stage="0" />
-                <test expr="~self.tag.american~" value="true" />
-                <state img="#-pensive.png">Oh, technically, I'm not really American either. Starlight City, where I'm from, is sorta like Las Vegas, but America doesn't really exist in my world.</state>
-            </case>
-            <case stage="0">
-                <condition role="other" character="elizabeth" stage="0" />
-                <test expr="~self.tag.american~" value="true" />
-                <state img="#-pensive.png">Oh, technically, I'm not really American either. Starlight City, where I'm from, is sorta like Las Vegas, but... Wait, you live in a floating city?</state>
-            </case>
-            <case stage="0-7">
-                <condition role="other" character="ini" stage="5-8" />
-                <test expr="~self.tag.exotic_hair~" value="true" />
-                <state img="#-calm.png">It's natural, if you can believe it. So are my eyes.</state>
-            </case>
             <case stage="0-7">
                 <condition role="other" character="sei" stage="3-5" />
                 <test expr="~self.tag.violet_eyes~" value="true" />
@@ -585,16 +596,6 @@
                 <condition role="other" character="calisto" stage="10" />
                 <test expr="~self.tag.cheerful~" value="true" />
                 <state img="#-angry.png">That's tough talk coming from someone &lt;i&gt;who's already lost&lt;/i&gt;, Calisto!</state>
-            </case>
-            <case stage="0">
-                <condition role="other" character="faye" stage="0-8" />
-                <test expr="~self.tag.superhero~" value="true" />
-                <state img="#-angry.png">Why don't you mind your own business, &lt;i&gt;Faye?&lt;/i&gt;</state>
-            </case>
-            <case stage="0-7">
-                <condition role="other" character="franziska" stage="0-8" />
-                <test expr="~self.tag.kind~" value="true" />
-                <state img="#-angry.png">Only a fool would mistake my kindness for naivete, Franziska. I can assure you, nobody will take advantage of me without my consent.</state>
             </case>
             <case stage="1">
                 <condition role="other" character="gwen" saying="What part of the country are you from" />
@@ -708,11 +709,6 @@
                 <test expr="~self.tag.american~" value="true" />
                 <state img="#-stripping.png">Um... no, I'm from Starlight City. What's Amarcian?</state>
             </case>
-            <case stage="7">
-                <condition role="other" character="futaba" />
-                <test expr="~self.tag.exotic_hair~" value="true" />
-                <state img="#-stripping.png">Dyed? Oh, the purple. No, it just grows that way.</state>
-            </case>
             <case stage="4-5">
                 <condition role="other" character="mileena" />
                 <test expr="~self.tag.american~" value="true" />
@@ -796,12 +792,6 @@
         </trigger>
 
         <trigger id="stripped">
-            <case stage="8">
-                <condition count="1" filter="zone-tan" role="other" />
-                <condition role="other" character="gwen" stage="8" />
-                <test expr="~self.tag.hairy~" value="true" />
-                <state img="#-pensive.png">Zone-tan's videos? ...No, can't say that I have. Maybe some alternate version of me has?</state>
-            </case>
             <case stage="1-8">
                 <condition role="other" character="mulan" stage="2-7" notSaidMarker="challenge_answer" />
                 <condition count="1" status="naked" />
@@ -828,6 +818,36 @@
                 <condition role="other" character="april" />
                 <test expr="~self.tag.superhero~" value="true" />
                 <state img="#-angry.png">Does interviewing a naked person limit &lt;i&gt;your&lt;/i&gt; credibility, April?</state>
+            </case>
+            <case stage="1">
+                <condition role="self" saidMarker="FarFromNormal" />
+                <condition role="other" character="jura" stage="0-6" sayingMarker="stella1s" />
+                <state img="#-veryworried.png" marker="Unpredictable">Yeah... sorry about that. I can't always predict where I'll end up.</state>
+            </case>
+            <case stage="1">
+                <condition role="self" saidMarker="OnlyOne" />
+                <condition role="other" character="jura" stage="0-6" sayingMarker="stella1s" />
+                <state img="#-giggle.png" marker="NotThatDifferent">Don't worry, I'm not that different from you, I think. We both look human, at least.</state>
+            </case>
+            <case stage="1">
+                <condition role="self" saidMarker="DontExistYet" />
+                <condition role="other" character="meia" stage="0-5" sayingMarker="stella1s" />
+                <state img="#-pensive.png" marker="ModernWorld.">My homeworld is... modern, but not futuristic. Cars. Smartphones. Cities. As to how I got this ability, I was born with it, but only learned to control it later.</state>
+            </case>
+            <case stage="1">
+                <condition role="self" saidMarker="AlsoWarpKey" />
+                <condition role="other" character="meia" stage="0-5" sayingMarker="stella1s" />
+                <state img="#-pensive.png" marker="BendingSpacetime">So still a powerful source of energy. I guess that makes sense. Bending spacetime takes a lot of energy.</state>
+            </case>
+            <case stage="1">
+                <condition role="self" saidMarker="FromAU" />
+                <condition role="other" character="revy" stage="0-7" sayingMarker="stella1s" />
+                <state img="#-pensive.png" marker="many-worlds">Okay then, I'll try to explain. Are you familiar with the many-worlds interpretation of quantum mechanics?</state>
+            </case>
+            <case stage="1">
+                <condition role="self" saidMarker="AccidentalPortal" />
+                <condition role="other" character="revy" stage="0-7" sayingMarker="stella1s" />
+                <state img="#-giggle.png" marker="RiggedAgainstLeaving">Maybe I am? Anyway, it seems this place is rigged against people leaving it halfway through a game, so I guess I'm stuck here for now. </state>
             </case>
             <case stage="1-4">
                 <state img="#-calm.png">I can still win this. Let's go.</state>
@@ -872,11 +892,6 @@
         </trigger>
 
         <trigger id="female_human_must_strip">
-            <case stage="0-8 10">
-                <condition role="other" character="ini" stage="0-4" />
-                <test expr="~self.tag.violet_eyes~" value="true" />
-                <state img="#-pensive.png">I guess? I mean, I'm pretty unnatural to begin with, so...</state>
-            </case>
             <case stage="0-8 10">
                 <condition role="other" character="ryuko" notSaidMarker="exohairf" />
                 <test expr="~self.tag.exotic_hair~" value="true" />
