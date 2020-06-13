@@ -540,13 +540,10 @@ function updateGroupSelectScreen (ignore_bg) {
             */
             $groupCostumeSelectors[i].hide();
             if (opponent.alternate_costumes.length > 0) {
-                /*
-                $groupCostumeBadges[i].show();
-                */
                 fillCostumeSelector($groupCostumeSelectors[i], opponent.alternate_costumes,
                                     opponent.selected_costume).show();
             } else {
-                //$groupCostumeBadges[i].hide();
+                $groupCostumeSelectors[i].empty();
             }
 
             updateStatusIcon($groupStatuses[i], opponent);
