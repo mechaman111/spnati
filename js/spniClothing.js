@@ -73,6 +73,37 @@ Player.prototype.isCovered = function(position) {
     });
 };
 
+/**************************************************************
+ * Look through player's remaining clothing for items of certain
+ * types, in certain positions, and with certain names, excluding ones
+ * covered by others. 
+ **************************************************************/
+Player.prototype.findClothing = function(types, positions, names) {
+    var covered = { upper: false, lower: false };
+    var matches = [];
+    for (var i = this.clothing.length - 1; i >= 0; i--) {
+        var article = this.clothing[i];
+        if ((types == undefined || types.indexOf(article.type) >= 0)
+            && (positions == undefined || positions.indexOf(article.position) >= 0)
+                && (names == undefined || names.indexOf(article.name) >= 0
+                    || names.indexOf(article.generic) >= 0)) {
+            if (!(article.position == FULL_ARTICLE && covered.upper && covered.lower)
+                && !covered[article.position]) {
+                matches.push(article);
+            }
+        }
+        if ([MINOR_ARTICLE, MAJOR_ARTICLE, IMPORTANT_ARTICLE].indexOf(article.type) >= 0) {
+            for (var position in covered) {
+                if (article.position == position || article.position == FULL_ARTICLE) {
+                    covered[position] = true;
+                }
+            }
+        }
+    }
+    return matches;
+};
+
+
 /**********************************************************************
  *****                    Stripping Variables                     *****
  **********************************************************************/
