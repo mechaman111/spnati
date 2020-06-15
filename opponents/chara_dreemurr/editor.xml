@@ -17,6 +17,9 @@
         <case name="Refuse to Remove" id="453" priority="Noteworthy" min="8" max="8">
             <description>When out of layers, Chara notes that she refuses to use her knife and locket for 2 more layers; she'll forfeit if she loses instead.</description>
         </case>
+        <case name="Knifeturbate" id="664" priority="FYI" min="8" max="8">
+            <description>Description about what's interesting happening with the character (i.e. why should others target this?)</description>
+        </case>
     </noteworthy>
     <reviewed>true</reviewed>
     <responses>
@@ -1326,7 +1329,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1185">Chara has a bad hand and is nearly out. She got the bad hand despite swapping everything.</note>
         <note id="1188">The first time Jotaro uses 'The World' to stop time and strip, Chara remarks on it.</note>
         <note id="1189">Chara wins 9 in a row. This is a hidden case, incase, say, you're in Hard Mode and the player loses, prompting Chara to give the higher-priority "Player lost in hard mode" line instead of her 9-in-a-row.</note>
-        <note id="1190">Gaster crashes the game. This dialogue shouldn't actually be visible ingame. If it is, something is wrong.</note>
+        <note id="1190">Gaster crashes the game. If this is visible, something has gone wrong.</note>
         <note id="1191">Gaster is about to crash the game.</note>
         <note id="1192">Hard Mode is ongoing, the player is still ingame, it's not a 1v1 vs Chara, and the player has just taken the lead despite Hard Mode neccesitating they start at a disadvantage.</note>
         <note id="1193">Chara has lost and must strip after being in her current stage a long time. This is specifically if she loses her first hand.</note>
@@ -1639,6 +1642,12 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1498">Possible response for Huge breasts.</note>
         <note id="1499">Possible response for Huge penis.</note>
         <note id="1500">Chara responds to Brock explaining his recovery, not defense, let him survive the rocket.</note>
+        <note id="1520">Chara responds to Aella having sewing magic.</note>
+        <note id="1551">Ongoing chat between Megumin and Chara; Megumin losing version.</note>
+        <note id="1541">This can fire REGARDLESS of the Knife's counter. Chara notices the player is named Gaster and warns them.</note>
+        <note id="1542">Gaster is about to crash the game.</note>
+        <note id="1555">This fires when Chara is selected, and the player selects Chihiro and has done so repeatedly.</note>
+        <note id="1554">This fires when Chara is selected, and the player selects Chihiro.</note>
     </notes>
     <labels>
         <label id="133" label="" folder="HardModePrep" sort="5" />
@@ -2642,8 +2651,34 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <label id="1496" label="" folder="CharaChats" sort="0" />
         <label id="1497" label="" folder="CharaChats" sort="0" />
         <label id="1500" label="" folder="CharacterInteractions" sort="156" />
+        <label id="1520" label="" folder="CharacterInteractions" sort="32" />
+        <label id="1551" label="" folder="CharacterInteractions" sort="63" />
+        <label id="1555" label="" folder="SpecificOpponentSelection" sort="21" />
+        <label id="1554" label="" folder="SpecificOpponentSelection" sort="36" />
+        <label id="1541" label="" folder="SpecialPlayerNames" sort="2" />
+        <label id="1542" label="" folder="SpecialPlayerNames" sort="33" />
+        <label id="1522" label="" folder="Throwing" sort="28" />
+        <label id="1523" label="" folder="Throwing" sort="29" />
+        <label id="1524" label="" folder="Throwing" sort="30" />
+        <label id="1526" label="" folder="Throwing" sort="31" />
+        <label id="1525" label="" folder="Throwing" sort="32" />
+        <label id="1553" label="" folder="Throwing" sort="33" />
+        <label id="1536" label="" folder="Throwing" sort="34" />
+        <label id="1527" label="" folder="Throwing" sort="37" />
+        <label id="1528" label="" folder="Throwing" sort="38" />
+        <label id="1531" label="" folder="Throwing" sort="42" />
+        <label id="1530" label="" folder="Throwing" sort="41" />
+        <label id="1529" label="" folder="Throwing" sort="43" />
+        <label id="1556" label="" folder="Throwing" sort="45" />
+        <label id="1557" label="" folder="Throwing" sort="46" />
+        <label id="1532" label="" folder="Throwing" sort="47" />
+        <label id="1537" label="" folder="Throwing" sort="51" />
+        <label id="1538" label="" folder="Throwing" sort="53" />
+        <label id="1539" label="" folder="Throwing" sort="58" />
+        <label id="1505" label="" folder="EpilogueMarkers" sort="0" />
+        <label id="1504" label="" folder="EpilogueMarkers" sort="0" />
     </labels>
-    <nextId>1500</nextId>
+    <nextId>1559</nextId>
     <markers>
         <marker scope="Public" name="9">Chara has a high-card, and it's a 9.</marker>
         <marker scope="Public" name="99">Chara has a one pair of 9s. Or a two-pair, with leading 9s.</marker>
@@ -2666,6 +2701,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ChatStage">If this has fired, Chara's variable once-per-game chat has fired.</marker>
         <marker scope="Public" name="Countdown1Left">Chara notes that, aside from herself and the player, there is 1 AI left.</marker>
         <marker scope="Public" name="Countdown2Left">Chara notes that, aside from herself and the player, there are 2 AIs left.</marker>
+        <marker scope="Public" name="DetectAellaSewingMagic">Chara has detected Aella talking about sewing magic and will respond.</marker>
         <marker scope="Public" name="Determination">Chara mentions Determination in some form.</marker>
         <marker scope="Public" name="EnemyCount2">There are 2 AI enemies to start, including Chara.</marker>
         <marker scope="Public" name="EnemyCount3">There are 3 AI enemies to start, including Chara.</marker>
@@ -2677,6 +2713,8 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="EpilogueCount">EPILOGUE: Determines how many times you've seen the epilogue.</marker>
         <marker scope="Public" name="EpilogueDo2Plus">EPILOGUE: If this fires, you get the 'seen Chara's epilogue 2+ times'.</marker>
         <marker scope="Public" name="EpilogueDoFirst">EPILOGUE: If this fires, you get the 'seen Chara's epilogue once'.</marker>
+        <marker scope="Public" name="EpilogueDoFirstFemale">EPILOGUE: If this is fires, it's the 1-time epilogue as female.</marker>
+        <marker scope="Public" name="EpilogueDoFirstMale">EPILOGUE: If this fires, it's the 1-time epilogue as male.</marker>
         <marker scope="Public" name="EpilogueForeplay">EPILOGUE: Controls which type of foreplay Chara uses.</marker>
         <marker scope="Public" name="EpilogueForeplayGender">EPILOGUE: Further controls which type of foreplay Chara uses.</marker>
         <marker scope="Public" name="EpilogueForeplayPsuedo">EPILOGUE: Controls which type of foreplay Chara uses. This is the persistent one that is used to prevent Foreplay Lines from firing in the sex-free Viewed From Gallery case.</marker>
@@ -2779,6 +2817,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="PickedAprilFools">The player has selected an April Fools character.</marker>
         <marker scope="Public" name="PickedBlade">The player has selected a character with a Blade.</marker>
         <marker scope="Public" name="PickedChara">The player has selected the other Chara.</marker>
+        <marker scope="Public" name="PickedChihiro">The player has selected Chihiro.</marker>
         <marker scope="Public" name="PickedDeity">The player has selected a Deity character.</marker>
         <marker scope="Public" name="PickedEasy">The player has selected someone with substantially fewer layers than themselves.</marker>
         <marker scope="Public" name="PickedFlorina">The player has selected Florina.</marker>
@@ -2835,6 +2874,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ResponseAellaAdventures">Chara responds to Aella asking about adventures.</marker>
         <marker scope="Public" name="ResponseAellaDemon">Chara responds to Aella asking if she's a demon.</marker>
         <marker scope="Public" name="ResponseAellaDemonslaying">Chara responds to Aella saying she's experienced in demon slaying.</marker>
+        <marker scope="Public" name="ResponseAellaSewingMagic">Chara responds to Aella having sewing magic.</marker>
         <marker scope="Public" name="ResponseAimeeBulletStrip">Chara responds to Aimee shooting her clothes off.</marker>
         <marker scope="Public" name="ResponseAmaliaCheat">Chara responds to Amalia growing flowers as layers.</marker>
         <marker scope="Public" name="ResponseAmaliaFlowerStripped1">Amalia has stripped her top layer of Flowers.</marker>
@@ -2889,6 +2929,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ResponseCarStartMast">Chara responds to the car 'starting masturbation'.</marker>
         <marker scope="Public" name="ResponseCarStripped">Chara responds to the car having 'stripped'.</marker>
         <marker scope="Public" name="ResponseCarStripping">Chara responds to the car 'stripping'.</marker>
+        <marker scope="Public" name="ResponseCharaMeguminMustStrip1">Megumin has a series of dialogue where Megumin is losing. This is the Must Strip case.</marker>
         <marker scope="Public" name="ResponseChazzBlame">Chara responds to Chazz accusing the player.</marker>
         <marker scope="Public" name="ResponseChazzRun">Chara responds to Chazz attempting, and failing, to run.</marker>
         <marker scope="Public" name="ResponseChihiroFlee">Chara responds to Chihiro attempting to run.</marker>
@@ -3006,10 +3047,13 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ThrowingGood">While throwing, Chara has a good hand.</marker>
         <marker scope="Public" name="ThrowingLose">While throwing, Chara lost a hand and must strip.</marker>
         <marker scope="Public" name="ThrowingOkay">While throwing, Chara has an okay hand.</marker>
+        <marker scope="Public" name="ThrowingPlayerClose">Chara starts throwing, but she has clothes and the player does not.</marker>
         <marker scope="Public" name="ThrowingStripped">Chara has stripped something while trying to throw the game.</marker>
         <marker scope="Public" name="ThrowingStripping">Chara is stripping something while trying to throw the game.</marker>
         <marker scope="Public" name="ThrowingSwap">While throwing, Chara swaps cards.</marker>
         <marker scope="Public" name="ThrowingVictory">While throwing, Chara still manages to beat the player entirely and has won the game.</marker>
+        <marker scope="Public" name="ThrowingVictoryGoodHand">Chara eliminates the player, while throwing, and her hand was not bad.</marker>
+        <marker scope="Public" name="ThrowingVictoryStartedWeak">Chara eliminates the player, who started the Throw with no clothes, and she started the throw with clothes.</marker>
         <marker scope="Public" name="ThrowingWin">While throwing, Chara still wins the hand.</marker>
         <marker scope="Public" name="WinBadHand">Chara wins a round despite having a bad hand.</marker>
     </markers>
