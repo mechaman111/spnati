@@ -69,7 +69,7 @@ var CANDY_LIST = [
     "reskins/nagisa_maid_cafe/3-veryembarrassed.png",
 */
 
-/* SUMMER EVENT - add Sayaka if she re-joins*/
+/* SUMMER EVENT */
 
     "reskins/juri_summer/0-calm.png",
     "reskins/juri_summer/0-horny.png",
@@ -106,10 +106,15 @@ var CANDY_LIST = [
     "reskins/estelle_refreshing_dress/2-happy.png",
     "reskins/estelle_refreshing_dress/2-after.png",
 
-    "reskins/summer_zizou/0-appreciative.png",
-    "reskins/summer_zizou/0-victory.png",
-    "reskins/summer_zizou/0-angry.png",
-    "reskins/summer_zizou/0-awkward.png",
+    "reskins/zizou_summer/0-appreciative.png",
+    "reskins/zizou_summer/0-victory.png",
+    "reskins/zizou_summer/0-angry.png",
+    "reskins/zizou_summer/0-awkward.png",
+
+    "reskins/summertime_sayaka/0-happy.png",
+    "reskins/summertime_sayaka/1-calm.png",
+    "reskins/summertime_sayaka/2-bored.png",
+    "reskins/summertime_sayaka/3-awkward.png",
 
 /*
     "9s/0-happy.png",
