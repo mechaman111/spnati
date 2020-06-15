@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited June 9 2020
+README edited June 14 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -115,6 +115,8 @@ FOCUS UP - FYI - After removing her pants, and if the player is still in the gam
 
 REFUSE TO REMOVE - NOTEWORTHY - After removing her last layer of clothing, Chara will say she refuses to strip either her knife or locket, saying she would rather forfeit than do so.
 
+KNIFETURBATE - FYI - Chara does not let go of her knife at any point in the game, including her masturbation sequence.
+
 -------------------------------------------------------------------------------------------
 PERSISTENTS
 -------------------------------------------------------------------------------------------
@@ -205,6 +207,13 @@ To unlock, do the following:
 	-Beat them all.
 The 99 counter is to reference how, in Undertale, the Locket item has 99 Defense. You do not actually need to beat 'Hard Mode' 99 times.
 
+☯☼☜👎✌👍❄☜👎☸
+-It spells [REDACTED] in wingdings. This is a secret collectible and, as such, not normally visible. Name yourself Gaster and attempt to start a game to unlock.
+	-Subtitle is A BLAST FROM THE PAST
+	-Text is SEE YOU SOON
+	-Unlock Hint is NAME YOURSELF GASTER AND ATTEMPT TO START A GAME
+Please make it known if having wingdings in text causes problems in some devices. This was not tested, for instance, on mobile.
+
 -------------------------------------------------------------------------------------------
 CHARACTER INTERACTIONS
 -------------------------------------------------------------------------------------------
@@ -215,6 +224,7 @@ AELLA
 -Responds to Aella's question about adventures. For some reason, this is also a Pinkie Pie case?!?!
 -Responds to Aella asking Chara if she's a demon.
 -Responds to Aella warning Chara to behave.
+-Responds to Aella mentioning she has sewing magic.
 
 AIMEE
 -Responds to Aimee shooting her clothes off.
@@ -311,6 +321,7 @@ MARINETTE
 
 MEGUMIN
 -Responds to Megumin's question about all-seeing demons.
+-Responds to Megumin must-strip on Fully Clothed with a comment about Explosion's ability to 1-shot things.
 
 MEIA/REVY
 -Responds to Meia and Revy fighting.
