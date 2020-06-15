@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.6.1 at 11:02:06 AM on May 18, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.8.1 at 10:31:24 PM on June 14, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
-    <version>v5.6.1</version>
+    <version>v5.8.1</version>
     <first>Kokichi</first>
     <last>Ouma</last>
     <label>Kokichi</label>
@@ -72,6 +72,13 @@
     </poses>
 
     <behaviour>
+        <persistent-markers>
+            <marker>kokichi_win3</marker>
+            <marker>kokichi_win2</marker>
+            <marker>kokichi_win4</marker>
+            <marker>kokichi_win5</marker>
+            <marker>kokichi_win1</marker>
+        </persistent-markers>
         <trigger id="selected">
             <case stage="0">
                 <state img="#-grandiose.png">Who's ready to play a game with the Ultimate Supreme Leader!</state>
@@ -269,12 +276,18 @@
                 <state img="#-huh.png">Smells like spaghetti and homosexuality in here...</state>
                 <state img="#-mock.png">Pizza time.</state>
             </case>
-            <case stage="0-8" id="6" priority="102">
+            <case stage="0-7" id="6" priority="102">
                 <condition role="other" character="arash" saidMarker="martha" sayingMarker="question-martha" />
                 <state img="#-mock.png">You didn't hear it from me, but Shuichi Saihara &lt;i&gt;totally&lt;/i&gt; bottoms.</state>
+                <state img="#-mock.png">Shuichi Saihara is a bottom. This stays between us.</state>
             </case>
-            <case stage="0-8" alsoPlaying="futaba" alsoPlayingSaidMarker="futaba_jukebox" alsoPlayingSayingMarker="futaba_juke_ask">
+            <case stage="0-8">
+                <condition role="other" character="futaba" saidMarker="futaba_jukebox" sayingMarker="futaba_juke_ask" />
                 <state img="#-mock.png">&lt;i&gt;Der Flohwalzer.&lt;/i&gt; No reason... no reason at all.</state>
+            </case>
+            <case stage="8" id="28" priority="102">
+                <condition role="other" character="arash" saidMarker="martha" sayingMarker="question-martha" />
+                <state>...Not disclosing anything of that nature. I don't have it in me to.</state>
             </case>
             <case stage="0-8" id="1">
                 <condition role="other" character="mary" sayingMarker="imnotlooking" />
@@ -443,6 +456,10 @@
                 <condition role="other" character="mary" />
                 <state img="#-strip.png">Bold words from someone who's wearin' &lt;i&gt;Crocs.&lt;/i&gt;</state>
             </case>
+            <case stage="0">
+                <condition role="other" character="jessie" />
+                <state img="#-strip.png">That's weird. People usually don't &lt;i&gt;offer&lt;/i&gt; to &lt;i&gt;go down&lt;/i&gt; with the ship.</state>
+            </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="foundout" />
                 <state img="#-mock.png" marker="leave">Byeeeeeee!</state>
@@ -590,7 +607,8 @@
                 <condition role="target" character="yukari" stage="0" />
                 <state img="#-excited.png">Will you "ara ara" me, miss? I'm such a small little Supreme Leader!</state>
             </case>
-            <case stage="0-10" id="23" alsoPlaying="streaming-chan" alsoPlayingSayingMarker="gen_lines">
+            <case stage="0-10" id="23">
+                <condition role="other" character="streaming-chan" sayingMarker="gen_lines" />
                 <state img="#-upset.png">Less than a thousand is &lt;i&gt;enough&lt;/i&gt; as long as they're &lt;i&gt;good&lt;/i&gt; lines.</state>
             </case>
             <case stage="0-7 10">
@@ -843,7 +861,8 @@
                 <condition role="target" character="marinette" stage="2" />
                 <state img="#-menacing.png">{menacing}ME AND YOU CAN RULE THIS CITY, LADYBUG! OR WE CAN JUST FIGHT TO THE DEATH!{!reset}</state>
             </case>
-            <case stage="0-10" id="27" target="jasmine" targetStage="2">
+            <case stage="0-10" id="27">
+                <condition role="target" character="jasmine" stage="2" />
                 <state img="#-bored.png">Coward.</state>
             </case>
             <case stage="0-10">
@@ -943,7 +962,7 @@
         </trigger>
 
         <trigger id="female_chest_will_be_visible">
-            <case stage="0-10" id="22" target="florina" targetSayingMarker="bee3">
+            <case stage="0-10" id="22" priority="302">
                 <condition role="target" character="florina" saidMarker="bee2" sayingMarker="bee3" />
                 <state img="#-mock.png">You know what they say. It's hip to fuck bees!</state>
             </case>
@@ -955,7 +974,8 @@
         </trigger>
 
         <trigger id="female_small_chest_is_visible">
-            <case stage="0-10" id="14" target="raven">
+            <case stage="0-10" id="14">
+                <condition role="target" character="raven" />
                 <state img="#-lewd.png">Daaaamn. Now &lt;i&gt;that's&lt;/i&gt; an ass.</state>
             </case>
             <case stage="0-10">
@@ -1011,7 +1031,8 @@
                 <condition role="target" character="sheena" stage="6" />
                 <state img="#-mock.png">What, did you send your pants to the Shadow Realm or something?</state>
             </case>
-            <case stage="0-10" id="21" target="aimee">
+            <case stage="0-10" id="21">
+                <condition role="target" character="aimee" />
                 <state img="#-upset.png">I do &lt;i&gt;not&lt;/i&gt; enjoy your shenanigans, you joke of a markswoman.</state>
             </case>
             <case stage="0-10">
@@ -1228,7 +1249,8 @@
                 <state img="#-mock.png">Who ya gonna call? &lt;i&gt;NUTBUSTERS!&lt;/i&gt;</state>
                 <state img="#-mock.png">Bustin' makes me feeeeel goood!</state>
             </case>
-            <case stage="0-10" id="24" target="joey">
+            <case stage="0-10" id="24">
+                <condition role="target" character="joey" />
                 <state img="#-bored.png">Blegh. I hate cheap circus tricks.</state>
             </case>
             <case stage="0-8">
@@ -1256,13 +1278,16 @@
                 <condition count="1" status="masturbating" role="opp" />
                 <state img="#-neutral.png">....</state>
             </case>
-            <case stage="0-10" id="9" target="akko" targetSaidMarker="akko_second_climax" targetNotSaidMarker="akko_third_climax">
+            <case stage="0-10" id="9">
+                <condition role="target" character="akko" saidMarker="akko_second_climax" notSaidMarker="akko_third_climax" />
                 <state img="#-grandiose.png">A &lt;i&gt;supreme&lt;/I&gt; climax, if I do say so myself!</state>
             </case>
-            <case stage="0-10" target="gwen">
+            <case stage="0-10">
+                <condition role="target" character="gwen" />
                 <state img="#-mock.png">Careful now, Gwen. Wouldn't wanna slip off a clock tower and fall to your death doin' shit like that.</state>
             </case>
-            <case stage="0-10" id="17" target="elizabeth">
+            <case stage="0-10" id="17">
+                <condition role="target" character="elizabeth" />
                 <state img="#-huh.png">Hmm... is that masturbation, or incest?</state>
             </case>
             <case stage="0-8 10">
@@ -1382,6 +1407,7 @@
             <case stage="9" oneShotId="15">
                 <condition role="other" character="astolfo_bean_plushie" />
                 <state img="#-reprimand.png">Astolfoooooo! I want my dick sucked and I want you to call me gay! Your Supreme Leader demands it!</state>
+                <state img="#-reprimand.png">Suck my dick and call me gay! Or else... I'm gonna leave a bad review on Etsy!</state>
             </case>
             <case stage="9" oneShotId="19">
                 <condition filter="big_butt" role="opp" />
@@ -1464,40 +1490,40 @@
         <trigger id="game_over_victory">
             <case stage="0-7">
                 <condition role="self" saidMarker="kokichi_win2" />
-                <state img="#-lewd.png" marker="kokichi_win3" persist-marker="true">Aww, what's wrong, ~player~? Angry you can't win against me?</state>
-                <state img="#-huh.png" marker="kokichi_win3" persist-marker="true">This must be the third time you failed to beat me, huh? Tell me, ~player~, do you think this is time well spent?</state>
-                <state img="#-excited.png" marker="kokichi_win3" persist-marker="true">What's wrong, ~player~? What's wrong? Hey, what's wrong? Hey, hey, hey, hey, hey, hey, HEY, HEY! Don't tell me you're still angry that you lost a third time!</state>
-                <state img="#-bored.png" marker="kokichi_win3" persist-marker="true">You wanna beat me, ~player~? Get better at cards.</state>
+                <state img="#-lewd.png" marker="kokichi_win3">Aww, what's wrong, ~player~? Angry you can't win against me?</state>
+                <state img="#-huh.png" marker="kokichi_win3">This must be the third time you failed to beat me, huh? Tell me, ~player~, do you think this is time well spent?</state>
+                <state img="#-excited.png" marker="kokichi_win3">What's wrong, ~player~? What's wrong? Hey, what's wrong? Hey, hey, hey, hey, hey, hey, HEY, HEY! Don't tell me you're still angry that you lost a third time!</state>
+                <state img="#-bored.png" marker="kokichi_win3">You wanna beat me, ~player~? Get better at cards.</state>
             </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="kokichi_win1" />
-                <state img="#-grandiose.png" marker="kokichi_win2" persist-marker="true">Oh? Won't you look at that! I won &lt;i&gt;again!&lt;/i&gt;</state>
-                <state img="#-mock.png" marker="kokichi_win2" persist-marker="true">Nee-hee-hee! Looks like victory is mine once again! Better luck next time!~</state>
+                <state img="#-grandiose.png" marker="kokichi_win2">Oh? Won't you look at that! I won &lt;i&gt;again!&lt;/i&gt;</state>
+                <state img="#-mock.png" marker="kokichi_win2">Nee-hee-hee! Looks like victory is mine once again! Better luck next time!~</state>
             </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="kokichi_win3" />
-                <state img="#-huh.png" marker="kokichi_win4" persist-marker="true">Jeez, you're determined. I'll give you that.</state>
-                <state img="#-huh.png" marker="kokichi_win4" persist-marker="true">You're going so much effort to beat a fictional character in a game of strip poker. I'm not even a real character here, y'know?</state>
+                <state img="#-huh.png" marker="kokichi_win4">Jeez, you're determined. I'll give you that.</state>
+                <state img="#-huh.png" marker="kokichi_win4">You're going so much effort to beat a fictional character in a game of strip poker. I'm not even a real character here, y'know?</state>
             </case>
             <case stage="0-7">
                 <condition role="self" saidMarker="kokichi_win4" />
-                <state img="#-bored.png" marker="kokichi_win5" persist-marker="true">Ugh, I'm not gonna comment anymore.</state>
+                <state img="#-bored.png" marker="kokichi_win5">Ugh, I'm not gonna comment anymore.</state>
                 <state img="#-bored.png" marker="kokichi_win5">How sad.</state>
             </case>
             <case stage="0">
-                <state img="#-mock.png" marker="kokichi_win1" persist-marker="true">That's it? You know that barely counts, right? Riiiiight?</state>
+                <state img="#-mock.png" marker="kokichi_win1">That's it? You know that barely counts, right? Riiiiight?</state>
             </case>
             <case stage="1-5">
-                <state img="#-mock.png" marker="kokichi_win1" persist-marker="true">Awww, ~player~, are you sad because you couldn't beat me? Huh? Huuuuuh? Oh well, better luck next time! If you're not too mad, why not play with me again?</state>
-                <state img="#-bored.png" marker="kokichi_win1" persist-marker="true">Looks like I'm victorious---not that it surprises me too much. I didn't expect to play with a bunch of losers!</state>
-                <state img="#-neutral.png" marker="kokichi_win1" persist-marker="true">To think you could've seen the Ultimate Supreme Leader naked and masturbating. My subordinates once gambled away aaaaall their money just for a chance to see me naked!</state>
-                <state img="#-mock.png" marker="kokichi_win1" persist-marker="true">Don't be mad, ~player~! I knew you were going to lose anyways!</state>
-                <state img="#-menacing.png" marker="kokichi_win1" persist-marker="true">Why the shocked expression, ~player~? You know you can't win &lt;i&gt;all&lt;/i&gt; the time.</state>
+                <state img="#-mock.png" marker="kokichi_win1">Awww, ~player~, are you sad because you couldn't beat me? Huh? Huuuuuh? Oh well, better luck next time! If you're not too mad, why not play with me again?</state>
+                <state img="#-bored.png" marker="kokichi_win1">Looks like I'm victorious---not that it surprises me too much. I didn't expect to play with a bunch of losers!</state>
+                <state img="#-neutral.png" marker="kokichi_win1">To think you could've seen the Ultimate Supreme Leader naked and masturbating. My subordinates once gambled away aaaaall their money just for a chance to see me naked!</state>
+                <state img="#-mock.png" marker="kokichi_win1">Don't be mad, ~player~! I knew you were going to lose anyways!</state>
+                <state img="#-menacing.png" marker="kokichi_win1">Why the shocked expression, ~player~? You know you can't win &lt;i&gt;all&lt;/i&gt; the time.</state>
             </case>
             <case stage="6-7">
-                <state img="#-excited.png" marker="kokichi_win1" persist-marker="true">Aww, you were sooooo close! So so so so so so so so so so close!</state>
-                <state img="#-mock.png" marker="kokichi_win1" persist-marker="true">Whew! I thought I was gonna lose there... &lt;br&gt; Just kidding, I knew I was gonna win here! Ahahaha!</state>
-                <state img="#-wehhhhh.png" marker="kokichi_win1" persist-marker="true">I showed you some skin, ~player~. A-Are you not excited to see me like this? I thought we &lt;i&gt;had&lt;/i&gt; something!</state>
+                <state img="#-excited.png" marker="kokichi_win1">Aww, you were sooooo close! So so so so so so so so so so close!</state>
+                <state img="#-mock.png" marker="kokichi_win1">Whew! I thought I was gonna lose there... &lt;br&gt; Just kidding, I knew I was gonna win here! Ahahaha!</state>
+                <state img="#-wehhhhh.png" marker="kokichi_win1">I showed you some skin, ~player~. A-Are you not excited to see me like this? I thought we &lt;i&gt;had&lt;/i&gt; something!</state>
                 <state img="#-grandiose.png" marker="kokichi_win1">I WIN! MY WIN!</state>
             </case>
             <case stage="8">
