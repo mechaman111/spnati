@@ -80,7 +80,6 @@ var jsErrors = [];
 var sessionID = '';
 var gameID = '';
 var generalCollectibles = [];
-var codeImportEnabled = false;
 
 /**********************************************************************
  * Screens & Modals
@@ -952,14 +951,6 @@ function showImportModal() {
     $("#export-code").val(save.serializeStorage());
     
     $('#import-invalid-code').hide();
-
-    if (codeImportEnabled) {
-        $('#import-progress').prop('disabled', false);
-        $('#import-restriction-warning').hide();
-    } else {
-        $('#import-progress').prop('disabled', true);
-        $('#import-restriction-warning').show();
-    }
     
     $ioModal.modal('show');
 

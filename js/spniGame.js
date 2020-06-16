@@ -698,7 +698,6 @@ function endRound () {
 		console.log("The game has ended!");
 		$gameBanner.html("Game Over! "+players[lastPlayer].label+" won Strip Poker Night at the Inventory!");
 		gameOver = true;
-        codeImportEnabled = true;
 
         if (SENTRY_INITIALIZED) {
             Sentry.addBreadcrumb({
