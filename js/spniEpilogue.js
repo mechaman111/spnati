@@ -58,7 +58,7 @@ var endingTips = [
   "Poker is mostly a game of luck. If you don't win the first time, try again!",
   "If you have no other hand, then you're dependent on your high card. Good luck.",
   "If you have two cards of the same rank, that is called a Pair. Pairs are the easiest and most efficient hand to go for. Get them whenever you can!",
-  "The Two Pair hand is pretty self explanatory: It's when you have two sets of two of the same rank card. These are stronger than a Pair, and you don't have to risk losing a 0air to get it.",
+  "The Two Pair hand is pretty self explanatory: It's when you have two sets of two of the same rank card. These are stronger than a Pair, and you don't have to risk losing a Pair to get it.",
   "The Three of a Kind hand is, naturally, what having three of the same rank card is called. This is stronger than the Two Pair hand, and if you go for it and fail you might still get a Pair.",
   "Five cards in a sequence (for example, 2/3/4/5/6) is called a Straight. Straights beat Three of a Kind and lower. Remember that, even if you are only one card away from a Straight, you still only have at best a nearly one in thirteen chance of getting it.",
   "Five cards of the same suit with no other hand is called a Flush, and it's stronger than a Straight. Remember that, even if you are only card away, you still only have at best a nearly one in four chance of getting this hand.",
