@@ -65,11 +65,11 @@
 			this.tsDuplicate = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsLock = new System.Windows.Forms.ToolStripButton();
+			this.tsCollapse = new System.Windows.Forms.ToolStripButton();
+			this.tsExpandAll = new System.Windows.Forms.ToolStripButton();
 			this.lblDragger = new System.Windows.Forms.Label();
 			this.treeScenes = new Desktop.CommonControls.DBTreeView();
 			this.openFileDialog = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
-			this.tsCollapse = new System.Windows.Forms.ToolStripButton();
-			this.tsExpandAll = new System.Windows.Forms.ToolStripButton();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -363,7 +363,7 @@
 			this.tsAddKeyframe.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsAddKeyframe.Name = "tsAddKeyframe";
 			this.tsAddKeyframe.Size = new System.Drawing.Size(23, 22);
-			this.tsAddKeyframe.Text = "Add Keyframe or Choice";
+			this.tsAddKeyframe.Text = "Add Keyframe";
 			this.tsAddKeyframe.Click += new System.EventHandler(this.TsAddKeyframe_Click);
 			// 
 			// toolStripSeparator1
@@ -453,6 +453,26 @@
 			this.tsLock.Text = "Lock changes in canvas";
 			this.tsLock.Click += new System.EventHandler(this.tsLock_Click);
 			// 
+			// tsCollapse
+			// 
+			this.tsCollapse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsCollapse.Image = global::SPNATI_Character_Editor.Properties.Resources.CollapseAll;
+			this.tsCollapse.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsCollapse.Name = "tsCollapse";
+			this.tsCollapse.Size = new System.Drawing.Size(23, 22);
+			this.tsCollapse.Text = "Collapse all";
+			this.tsCollapse.Click += new System.EventHandler(this.tsCollapse_Click);
+			// 
+			// tsExpandAll
+			// 
+			this.tsExpandAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsExpandAll.Image = global::SPNATI_Character_Editor.Properties.Resources.ExpandAll;
+			this.tsExpandAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsExpandAll.Name = "tsExpandAll";
+			this.tsExpandAll.Size = new System.Drawing.Size(23, 20);
+			this.tsExpandAll.Text = "Expand all";
+			this.tsExpandAll.Click += new System.EventHandler(this.tsExpandAll_Click);
+			// 
 			// lblDragger
 			// 
 			this.lblDragger.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -487,26 +507,6 @@
 			this.openFileDialog.Filter = "";
 			this.openFileDialog.IncludeOpponents = false;
 			this.openFileDialog.UseAbsolutePaths = false;
-			// 
-			// tsCollapse
-			// 
-			this.tsCollapse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsCollapse.Image = global::SPNATI_Character_Editor.Properties.Resources.CollapseAll;
-			this.tsCollapse.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsCollapse.Name = "tsCollapse";
-			this.tsCollapse.Size = new System.Drawing.Size(23, 22);
-			this.tsCollapse.Text = "Collapse all";
-			this.tsCollapse.Click += new System.EventHandler(this.tsCollapse_Click);
-			// 
-			// tsExpandAll
-			// 
-			this.tsExpandAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsExpandAll.Image = global::SPNATI_Character_Editor.Properties.Resources.ExpandAll;
-			this.tsExpandAll.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsExpandAll.Name = "tsExpandAll";
-			this.tsExpandAll.Size = new System.Drawing.Size(23, 20);
-			this.tsExpandAll.Text = "Expand all";
-			this.tsExpandAll.Click += new System.EventHandler(this.tsExpandAll_Click);
 			// 
 			// SceneTree
 			// 
