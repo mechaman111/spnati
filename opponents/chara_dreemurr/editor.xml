@@ -11,11 +11,14 @@
         <case name="Demon Eyes" id="992" priority="Noteworthy" min="0" max="4">
             <description>Chara uses her Demon Eyes. NOTE: this situation is only for one of the times; look for the poses DemonHappy and DemonAngry to catch other instances!</description>
         </case>
-        <case name="Focus Up" id="1298" priority="FYI" min="5" max="8">
-            <description>After removing her shirt, Chara tells the player to not get distracted and focus on the game.</description>
+        <case name="Focus Up" id="1298" priority="FYI" min="6" max="8">
+            <description>After removing her pants, Chara tells the player to not get distracted and focus on the game.</description>
         </case>
         <case name="Refuse to Remove" id="453" priority="Noteworthy" min="8" max="8">
             <description>When out of layers, Chara notes that she refuses to use her knife and locket for 2 more layers; she'll forfeit if she loses instead.</description>
+        </case>
+        <case name="Knifeturbate" id="664" priority="FYI" min="8" max="8">
+            <description>Description about what's interesting happening with the character (i.e. why should others target this?)</description>
         </case>
     </noteworthy>
     <reviewed>true</reviewed>
@@ -82,6 +85,7 @@
         <response id="1311" opponent="shantae" opponentId="10" />
         <response id="1360" opponent="sakura" opponentId="2" />
         <response id="1361" opponent="saki_zls" opponentId="1" />
+        <response id="1464" opponent="erufuda" opponentId="76" />
     </responses>
     <notes>
         <note id="398">This is the selection for the first time you ever choose Chara. It sets the counter of her Knife to keep track of this.
@@ -1170,7 +1174,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1028">Marker for Chara's epilogue.</note>
         <note id="1029">Marker for Chara's epilogue.</note>
         <note id="1030">Marker for Chara's epilogue.</note>
-        <note id="1031">Supposedly, if a marker is persistent anywhere it is persistent everywhere. This handles that for the EpilogueCount marker.</note>
+        <note id="1031">Supposedly, if a marker is persistent anywhere it is persistent everywhere. This handles that for the EpilogueCount marker, and the EpilogueViewerCount marker. Also: EpilogueBeaten EpilogueViewerCount maybe some others as I need to add them.</note>
         <note id="1032">Handles which epilogue the player gets.</note>
         <note id="1033">Handles which epilogue the player gets.</note>
         <note id="1034">Handles which epilogue the player gets.</note>
@@ -1270,7 +1274,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1130">Reset while Chara was out.</note>
         <note id="1131">Chara responds to the Male player finishing. She is still in the game. Holds a case where Chara is also still fighting someone.</note>
         <note id="1132">Chara responds to the Female player finishing. She is still in the game. Holds a case where Chara is also still fighting someone.</note>
-        <note id="1133">Chara responds to an AI losing something while they have lost at least one layer. She also has a lot of clothes left. DEPRECATED: Was firing too often and seemed a bit samey.</note>
+        <note id="1133">Chara responds to an AI losing something while they have lost at least one layer. She also has a lot of clothes left.</note>
         <note id="1134">This fires when Chara is selected, and the player selects a copied version of this Chara.</note>
         <note id="1135">Chara removes her 2nd layer. Despite having stripped this layer before, she is losing, so she uses the Unhappy Stripping poses.</note>
         <note id="1136">This fires when Chara is selected, and the player selects Azami.</note>
@@ -1325,7 +1329,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1185">Chara has a bad hand and is nearly out. She got the bad hand despite swapping everything.</note>
         <note id="1188">The first time Jotaro uses 'The World' to stop time and strip, Chara remarks on it.</note>
         <note id="1189">Chara wins 9 in a row. This is a hidden case, incase, say, you're in Hard Mode and the player loses, prompting Chara to give the higher-priority "Player lost in hard mode" line instead of her 9-in-a-row.</note>
-        <note id="1190">Gaster crashes the game. This dialogue shouldn't actually be visible ingame. If it is, something is wrong.</note>
+        <note id="1190">Gaster crashes the game. If this is visible, something has gone wrong.</note>
         <note id="1191">Gaster is about to crash the game.</note>
         <note id="1192">Hard Mode is ongoing, the player is still ingame, it's not a 1v1 vs Chara, and the player has just taken the lead despite Hard Mode neccesitating they start at a disadvantage.</note>
         <note id="1193">Chara has lost and must strip after being in her current stage a long time. This is specifically if she loses her first hand.</note>
@@ -1441,7 +1445,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1295">Chara briefly explains her 'partnership' with you. This is the first time she does.</note>
         <note id="1296">Chara briefly explains her 'partnership' with you. This is not the first time she does.</note>
         <note id="1427">This fires when Chara is selected, and the player selects Astolfo.</note>
-        <note id="1298">After being indecent, Chara tells the player not to get distracted.</note>
+        <note id="1298">After being without any major items, Chara tells the player not to get distracted.</note>
         <note id="1299">Responds to Aella's 'are you a demon' question.</note>
         <note id="1301">Chara responds to Arash's remark about flowers.</note>
         <note id="1300">Chara responds to Arash's remark about cooking.</note>
@@ -1578,6 +1582,72 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1434">This fires when Chara is selected, and the player selects Mister Clean.</note>
         <note id="1435">This fires when Chara is selected, and the player selects Monique.</note>
         <note id="1436">This fires when Chara is selected, and the player selects Nanoko-chan.</note>
+        <note id="1437">After someone is indecent, Chara starts to feel aroused and remarks on it. This is the first time this has happened. This is the non-Chara, non-Player case.</note>
+        <note id="1438">After someone is indecent, Chara starts to feel aroused and remarks on it. This is not the first time this has happened. This is the non-Chara, non-Player case.</note>
+        <note id="1439">After someone is indecent, Chara starts to feel aroused and remarks on it. This is the first time this has happened. This is the Chara case.</note>
+        <note id="1440">After someone is indecent, Chara starts to feel aroused and remarks on it. This is the not first time this has happened. This is the Chara case.</note>
+        <note id="1441">After someone is indecent, Chara starts to feel aroused and remarks on it. This is the first time this has happened. This is the player case.</note>
+        <note id="1442">After someone is indecent, Chara starts to feel aroused and remarks on it. This is the not first time this has happened. This is the Player case.</note>
+        <note id="1443">After someone is indecent Chara starts to feel aroused and remarks on it. This is not the first time this has happened. This is the non-player non-Chara case.</note>
+        <note id="1444">After someone is exposed, Chara starts to feel aroused and remarks on it. This is the first time this has happened. This is the non-Chara, non-Player case.</note>
+        <note id="1445">After someone is exposed, Chara starts to feel aroused and remarks on it. This is the first time this has happened. This is the Chara case.</note>
+        <note id="1446">After someone is exposed, Chara starts to feel aroused and remarks on it. This is the first time this has happened. This is the Player case.</note>
+        <note id="1447">After someone is exposed. Chara starts to feel aroused and remarks on it. This is not the first time this has happened. This is the Player case.</note>
+        <note id="1448">After someone is indecent, Chara starts to feel aroused and remarks on it. This is not the first time this has happened. This is the non-Chara, non-Player case.</note>
+        <note id="1449">After someone is indecent, Chara starts to feel aroused and remarks on it. This is not the first time this has happened. This is the non-Chara, non-Player case.</note>
+        <note id="1450">Since 2+ Case epilogue has a marker that depends on Foreplay Type, it is set here so that it's already in place by then. 1-time case overrides this. This SHOULD randomize the foreplay Chara uses.</note>
+        <note id="1451">Since 2+ Case epilogue has a marker that depends on Foreplay Type, it is set here so that it's already in place by then. 1-time case overrides this. This SHOULD randomize the foreplay Chara uses.</note>
+        <note id="1453">Chara responds to an AI removing a major or important item. Female case.</note>
+        <note id="1454">Chara responds to an AI removing a major or important item. Male case.</note>
+        <note id="1455">Chara responds to an AI having removed a major or important item. Female case.</note>
+        <note id="1456">Chara responds to an AI having removed a major or important item. Male case.</note>
+        <note id="1457">The game starts, but despite being named Frisk the criteria for hard mode are not met. This only checks for the name Frisk, and relies on having a lower weight than the dialogue for when the criteria ARE met.</note>
+        <note id="1458">The game starts, the player is named Frisk and the criteria for hard mode are NOT met.</note>
+        <note id="1459">The game starts, the player is named Frisk and the criteria for hard mode are NOT met.</note>
+        <note id="1460">The game starts, the player is named Frisk and the criteria for hard mode are NOT met.</note>
+        <note id="1461">The game starts, the player is named Frisk and the criteria for hard mode are NOT met.</note>
+        <note id="1462">Chara responds to the player having stripped after activating Hard Mode.</note>
+        <note id="1463">Chara responds to the player having stripped while in a Hard Mode 1v1 with them.</note>
+        <note id="1464">Chara responds to Erufuda's question about favorite foods.</note>
+        <note id="1465">Chara references the extremely-weak undertale enemy Whimsun.</note>
+        <note id="1466">Chara references more-powerful Undertale enemies.</note>
+        <note id="1467">A Removed Accessory case that can always fire, regardless of stage.</note>
+        <note id="1468">A Removed Accessory case that can always fire, regardless of stage.</note>
+        <note id="1469">A Removed Minor case that can always fire, regardless of stage.</note>
+        <note id="1470">A Removed Minor case that can always fire, regardless of stage.</note>
+        <note id="1471">A Removed Major case that can always fire, regardless of stage.</note>
+        <note id="1472">A Removed Major case that can always fire, regardless of stage.</note>
+        <note id="1473">Chara references Undertale minibosses.</note>
+        <note id="1474">Chara references more-powerful Undertale enemies.</note>
+        <note id="1475">Chara references more-powerful Undertale enemies.</note>
+        <note id="1476">Whenever an enemy is stripping, Chara can say 'One by one' as a generic.</note>
+        <note id="1477">A Removed Minor case that can always fire, regardless of stage.</note>
+        <note id="1478">A Removed Major case that can always fire, regardless of stage.</note>
+        <note id="1479">A stripping opponent can cause Chara to say 'One by one' regardless of stage or item.</note>
+        <note id="1480">A stripping opponent can cause Chara to say 'One by one' regardless of stage or item.</note>
+        <note id="1481">A stripping opponent can cause Chara to say 'One by one' regardless of stage or item.</note>
+        <note id="1482">A stripping opponent can cause Chara to say 'One by one' regardless of stage or item.</note>
+        <note id="1483">A stripping opponent can cause Chara to say 'One by one' regardless of stage or item.</note>
+        <note id="1484">A stripping opponent can cause Chara to say 'One by one' regardless of stage or item.</note>
+        <note id="1485">A stripping opponent can cause Chara to say 'One by one' regardless of stage or item.</note>
+        <note id="1486">A stripping opponent can cause Chara to say 'One by one' regardless of stage or item.</note>
+        <note id="1487">A stripping opponent can cause Chara to say 'One by one' regardless of stage or item.</note>
+        <note id="1488">A stripping opponent can cause Chara to say 'One by one' regardless of stage or item.</note>
+        <note id="1489">Chara can call small penises/breasts Forgettable regardless of stage. Higher weight than medium penises/breasts.</note>
+        <note id="1490">Chara can call medium penises/breasts Forgettable regardless of stage. Lower weight than small penises/breasts.</note>
+        <note id="1491">Chara can call small penises/breasts Forgettable regardless of stage. Higher weight than medium penises/breasts.</note>
+        <note id="1492">Chara can call medium penises/breasts Forgettable regardless of stage. Lower weight than small penises/breasts.</note>
+        <note id="1494">After being indecent, Chara notices she is feeling aroused. This is the first time.</note>
+        <note id="1495">After being indecent, Chara notices she is feeling aroused. This is not the first time.</note>
+        <note id="1498">Possible response for Huge breasts.</note>
+        <note id="1499">Possible response for Huge penis.</note>
+        <note id="1500">Chara responds to Brock explaining his recovery, not defense, let him survive the rocket.</note>
+        <note id="1520">Chara responds to Aella having sewing magic.</note>
+        <note id="1551">Ongoing chat between Megumin and Chara; Megumin losing version.</note>
+        <note id="1541">This can fire REGARDLESS of the Knife's counter. Chara notices the player is named Gaster and warns them.</note>
+        <note id="1542">Gaster is about to crash the game.</note>
+        <note id="1555">This fires when Chara is selected, and the player selects Chihiro and has done so repeatedly.</note>
+        <note id="1554">This fires when Chara is selected, and the player selects Chihiro.</note>
     </notes>
     <labels>
         <label id="133" label="" folder="HardModePrep" sort="5" />
@@ -2219,7 +2289,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <label id="1028" label="" folder="EpilogueMarkers" sort="6" />
         <label id="1029" label="" folder="EpilogueMarkers" sort="0" />
         <label id="1030" label="" folder="EpilogueMarkers" sort="0" />
-        <label id="1031" label="" folder="EpilogueMarkers" sort="0" />
+        <label id="1031" label="" folder="EpilogueMarkers" sort="26" />
         <label id="1032" label="" folder="EpilogueMarkers" sort="3" />
         <label id="1033" label="" folder="EpilogueMarkers" sort="4" />
         <label id="1034" label="" folder="EpilogueMarkers" sort="0" />
@@ -2317,7 +2387,6 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <label id="1176" label="" folder="HardMode" sort="46" />
         <label id="1177" label="" folder="CharacterInteractions" sort="109" />
         <label id="1178" label="" folder="FilterInteractions" sort="7" />
-        <label id="1133" label="" folder="Deprecated" sort="0" />
         <label id="1187" label="" folder="TargetingPlayer" sort="0" />
         <label id="1188" label="" folder="CharacterInteractions" sort="80" />
         <label id="1189" label="" folder="HiddenCases" sort="24" />
@@ -2437,7 +2506,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <label id="1323" label="" folder="EpilogueMarkers" sort="6" />
         <label id="1324" label="" folder="EpilogueMarkers" sort="7" />
         <label id="1325" label="" folder="EpilogueMarkers" sort="0" />
-        <label id="1326" label="" folder="EpilogueMarkers" sort="2" />
+        <label id="1326" label="" folder="EpilogueMarkers" sort="0" />
         <label id="1327" label="" folder="EpilogueMarkers" sort="8" />
         <label id="1328" label="" folder="EpilogueMarkers" sort="9" />
         <label id="1329" label="" folder="EpilogueMarkers" sort="10" />
@@ -2450,14 +2519,14 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <label id="1336" label="" folder="EpilogueMarkers" sort="16" />
         <label id="1337" label="" folder="EpilogueMarkers" sort="17" />
         <label id="1338" label="" folder="EpilogueMarkers" sort="18" />
-        <label id="1339" label="" folder="EpilogueMarkers" sort="19" />
-        <label id="1340" label="" folder="EpilogueMarkers" sort="20" />
-        <label id="1341" label="" folder="EpilogueMarkers" sort="21" />
+        <label id="1339" label="" folder="EpilogueMarkers" sort="0" />
+        <label id="1340" label="" folder="EpilogueMarkers" sort="0" />
+        <label id="1341" label="" folder="EpilogueMarkers" sort="0" />
         <label id="1246" label="" folder="UndertaleExposition" sort="0" />
-        <label id="1342" label="" folder="EpilogueMarkers" sort="6" />
-        <label id="1343" label="" folder="EpilogueMarkers" sort="7" />
-        <label id="1344" label="" folder="EpilogueMarkers" sort="8" />
-        <label id="1345" label="" folder="EpilogueMarkers" sort="9" />
+        <label id="1342" label="" folder="EpilogueMarkers" sort="0" />
+        <label id="1343" label="" folder="EpilogueMarkers" sort="0" />
+        <label id="1344" label="" folder="EpilogueMarkers" sort="0" />
+        <label id="1345" label="" folder="EpilogueMarkers" sort="0" />
         <label id="1346" label="" folder="EpilogueMarkers" sort="25" />
         <label id="1347" label="" folder="EpilogueMarkers" sort="26" />
         <label id="1348" label="" folder="EpilogueMarkers" sort="27" />
@@ -2476,7 +2545,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <label id="1365" label="" folder="SpecificOpponentSelection" sort="39" />
         <label id="1366" label="" folder="SpecificOpponentSelection" sort="7" />
         <label id="1367" label="" folder="SpecificOpponentSelection" sort="6" />
-        <label id="1368" label="" folder="CharacterInteractions" sort="105" />
+        <label id="1368" label="" folder="CharacterInteractions" sort="0" />
         <label id="1369" label="" folder="CharacterInteractions" sort="32" />
         <label id="1370" label="" folder="CharacterInteractions" sort="46" />
         <label id="1372" label="" folder="CharacterInteractions" sort="57" />
@@ -2506,13 +2575,13 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <label id="1396" label="" folder="CharacterInteractions" sort="38" />
         <label id="1397" label="" folder="CharacterInteractions" sort="52" />
         <label id="1398" label="" folder="CharacterInteractions" sort="62" />
-        <label id="1399" label="" folder="CharacterInteractions" sort="39" />
-        <label id="1400" label="" folder="CharacterInteractions" sort="40" />
-        <label id="1401" label="" folder="CharacterInteractions" sort="41" />
-        <label id="1402" label="" folder="CharacterInteractions" sort="54" />
-        <label id="1403" label="" folder="CharacterInteractions" sort="55" />
-        <label id="1404" label="" folder="CharacterInteractions" sort="65" />
-        <label id="1405" label="" folder="CharacterInteractions" sort="42" />
+        <label id="1399" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1400" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1401" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1402" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1403" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1404" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1405" label="" folder="CharacterInteractions" sort="0" />
         <label id="1406" label="" folder="CharacterInteractions" sort="103" />
         <label id="1407" label="" folder="CharacterInteractions" sort="161" />
         <label id="1408" label="" folder="CharacterInteractions" sort="153" />
@@ -2520,9 +2589,9 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <label id="1410" label="" folder="CharacterInteractions" sort="151" />
         <label id="1411" label="" folder="CharacterInteractions" sort="160" />
         <label id="1412" label="" folder="CharacterInteractions" sort="157" />
-        <label id="1413" label="" folder="CharacterInteractions" sort="159" />
-        <label id="1414" label="" folder="CharacterInteractions" sort="162" />
-        <label id="1415" label="" folder="EpilogueMarkers" sort="32" />
+        <label id="1413" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1414" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1415" label="" folder="EpilogueMarkers" sort="0" />
         <label id="1416" label="" folder="CharacterInteractions" sort="163" />
         <label id="1417" label="" folder="EpilogueMarkers" sort="10" />
         <label id="1418" label="" folder="EpilogueMarkers" sort="11" />
@@ -2530,8 +2599,8 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <label id="1420" label="" folder="CharacterInteractions" sort="0" />
         <label id="1423" label="" folder="CharaChats" sort="0" />
         <label id="1424" label="" folder="CharaChats" sort="0" />
-        <label id="1425" label="" folder="CharaChats" sort="0" />
-        <label id="1426" label="" folder="CharaChats" sort="0" />
+        <label id="1425" label="" folder="CharaChats" sort="8" />
+        <label id="1426" label="" folder="CharaChats" sort="7" />
         <label id="1428" label="" folder="SpecificOpponentSelection" sort="0" />
         <label id="1429" label="" folder="SpecificOpponentSelection" sort="0" />
         <label id="1430" label="" folder="SpecificOpponentSelection" sort="0" />
@@ -2541,9 +2610,75 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <label id="1434" label="" folder="SpecificOpponentSelection" sort="0" />
         <label id="1435" label="" folder="SpecificOpponentSelection" sort="0" />
         <label id="1436" label="" folder="SpecificOpponentSelection" sort="0" />
-        <label id="1297" label="" folder="CharaChats" sort="0" />
+        <label id="1297" label="" folder="CharaChats" sort="9" />
+        <label id="1437" label="" folder="SexualAwakening" sort="0" />
+        <label id="1438" label="" folder="SexualAwakening" sort="0" />
+        <label id="1439" label="" folder="SexualAwakening" sort="0" />
+        <label id="1440" label="" folder="SexualAwakening" sort="0" />
+        <label id="1441" label="" folder="SexualAwakening" sort="0" />
+        <label id="1442" label="" folder="SexualAwakening" sort="0" />
+        <label id="1443" label="" folder="SexualAwakening" sort="0" />
+        <label id="1444" label="" folder="SexualAwakening" sort="0" />
+        <label id="1445" label="" folder="SexualAwakening" sort="0" />
+        <label id="1446" label="" folder="SexualAwakening" sort="0" />
+        <label id="1447" label="" folder="SexualAwakening" sort="0" />
+        <label id="1448" label="" folder="SexualAwakening" sort="0" />
+        <label id="1449" label="" folder="SexualAwakening" sort="0" />
+        <label id="1450" label="" folder="EpilogueMarkers" sort="0" />
+        <label id="1451" label="" folder="EpilogueMarkers" sort="0" />
+        <label id="1452" label="" folder="CharacterInteractions" sort="29" />
+        <label id="1453" label="" folder="OutOfOrder" sort="3" />
+        <label id="1454" label="" folder="OutOfOrder" sort="4" />
+        <label id="1455" label="" folder="OutOfOrder" sort="7" />
+        <label id="1456" label="" folder="OutOfOrder" sort="8" />
+        <label id="1457" label="" folder="HardModePrep" sort="0" />
+        <label id="1458" label="" folder="HardModePrep" sort="12" />
+        <label id="1459" label="" folder="HardModePrep" sort="0" />
+        <label id="1460" label="" folder="HardModePrep" sort="13" />
+        <label id="1461" label="" folder="HardModePrep" sort="14" />
+        <label id="1462" label="" folder="HardMode" sort="26" />
+        <label id="1463" label="" folder="HardMode" sort="25" />
+        <label id="1465" label="" folder="UndertaleExposition" sort="0" />
+        <label id="1473" label="" folder="UndertaleExposition" sort="0" />
+        <label id="1474" label="" folder="UndertaleExposition" sort="0" />
+        <label id="1475" label="" folder="UndertaleExposition" sort="0" />
+        <label id="1476" label="" folder=" " sort="0" />
+        <label id="1493" label="" folder="EpilogueMarkers" sort="0" />
+        <label id="1494" label="" folder="CharaChats" sort="0" />
+        <label id="1495" label="" folder="CharaChats" sort="0" />
+        <label id="1464" label="" folder="CharacterInteractions" sort="30" />
+        <label id="1226" label="" folder="HiddenCases" sort="8" />
+        <label id="1496" label="" folder="CharaChats" sort="0" />
+        <label id="1497" label="" folder="CharaChats" sort="0" />
+        <label id="1500" label="" folder="CharacterInteractions" sort="156" />
+        <label id="1520" label="" folder="CharacterInteractions" sort="32" />
+        <label id="1551" label="" folder="CharacterInteractions" sort="63" />
+        <label id="1555" label="" folder="SpecificOpponentSelection" sort="21" />
+        <label id="1554" label="" folder="SpecificOpponentSelection" sort="36" />
+        <label id="1541" label="" folder="SpecialPlayerNames" sort="2" />
+        <label id="1542" label="" folder="SpecialPlayerNames" sort="33" />
+        <label id="1522" label="" folder="Throwing" sort="28" />
+        <label id="1523" label="" folder="Throwing" sort="29" />
+        <label id="1524" label="" folder="Throwing" sort="30" />
+        <label id="1526" label="" folder="Throwing" sort="31" />
+        <label id="1525" label="" folder="Throwing" sort="32" />
+        <label id="1553" label="" folder="Throwing" sort="33" />
+        <label id="1536" label="" folder="Throwing" sort="34" />
+        <label id="1527" label="" folder="Throwing" sort="37" />
+        <label id="1528" label="" folder="Throwing" sort="38" />
+        <label id="1531" label="" folder="Throwing" sort="42" />
+        <label id="1530" label="" folder="Throwing" sort="41" />
+        <label id="1529" label="" folder="Throwing" sort="43" />
+        <label id="1556" label="" folder="Throwing" sort="45" />
+        <label id="1557" label="" folder="Throwing" sort="46" />
+        <label id="1532" label="" folder="Throwing" sort="47" />
+        <label id="1537" label="" folder="Throwing" sort="51" />
+        <label id="1538" label="" folder="Throwing" sort="53" />
+        <label id="1539" label="" folder="Throwing" sort="58" />
+        <label id="1505" label="" folder="EpilogueMarkers" sort="0" />
+        <label id="1504" label="" folder="EpilogueMarkers" sort="0" />
     </labels>
-    <nextId>1436</nextId>
+    <nextId>1559</nextId>
     <markers>
         <marker scope="Public" name="9">Chara has a high-card, and it's a 9.</marker>
         <marker scope="Public" name="99">Chara has a one pair of 9s. Or a two-pair, with leading 9s.</marker>
@@ -2566,6 +2701,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ChatStage">If this has fired, Chara's variable once-per-game chat has fired.</marker>
         <marker scope="Public" name="Countdown1Left">Chara notes that, aside from herself and the player, there is 1 AI left.</marker>
         <marker scope="Public" name="Countdown2Left">Chara notes that, aside from herself and the player, there are 2 AIs left.</marker>
+        <marker scope="Public" name="DetectAellaSewingMagic">Chara has detected Aella talking about sewing magic and will respond.</marker>
         <marker scope="Public" name="Determination">Chara mentions Determination in some form.</marker>
         <marker scope="Public" name="EnemyCount2">There are 2 AI enemies to start, including Chara.</marker>
         <marker scope="Public" name="EnemyCount3">There are 3 AI enemies to start, including Chara.</marker>
@@ -2577,23 +2713,35 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="EpilogueCount">EPILOGUE: Determines how many times you've seen the epilogue.</marker>
         <marker scope="Public" name="EpilogueDo2Plus">EPILOGUE: If this fires, you get the 'seen Chara's epilogue 2+ times'.</marker>
         <marker scope="Public" name="EpilogueDoFirst">EPILOGUE: If this fires, you get the 'seen Chara's epilogue once'.</marker>
+        <marker scope="Public" name="EpilogueDoFirstFemale">EPILOGUE: If this is fires, it's the 1-time epilogue as female.</marker>
+        <marker scope="Public" name="EpilogueDoFirstMale">EPILOGUE: If this fires, it's the 1-time epilogue as male.</marker>
         <marker scope="Public" name="EpilogueForeplay">EPILOGUE: Controls which type of foreplay Chara uses.</marker>
         <marker scope="Public" name="EpilogueForeplayGender">EPILOGUE: Further controls which type of foreplay Chara uses.</marker>
         <marker scope="Public" name="EpilogueForeplayPsuedo">EPILOGUE: Controls which type of foreplay Chara uses. This is the persistent one that is used to prevent Foreplay Lines from firing in the sex-free Viewed From Gallery case.</marker>
         <marker scope="Public" name="EpilogueSex">EPILOGUE: Gets whether Chara is having sex with a male or female player.</marker>
+        <marker scope="Public" name="EpilogueViewerCount">EPILOGUE: Determines how many times in a row the player has viewed the epilogue from the gallery.</marker>
         <marker scope="Public" name="ExpositionAsgoreDeath">When someone must masturbate, Chara can briefly mention killing Asgore.</marker>
         <marker scope="Public" name="ExpositionErased">Chara starts talking about erasing the world when someone is stripping a minor item.</marker>
         <marker scope="Public" name="ExpositionErased2">Chara finishes talking about erasing the world when someone stripped a minor item.</marker>
+        <marker scope="Public" name="ExpositionFinalFroggit">When someone strips a Minor item, Chara mentions the Final Froggit enemy.</marker>
+        <marker scope="Public" name="ExpositionFroggit">When someone strips an Accessory, Chara mentions the Froggit enemy.</marker>
+        <marker scope="Public" name="ExpositionGreaterDog">When someone strips a Major item, Chara mentions the Greater Dog miniboss.</marker>
+        <marker scope="Public" name="ExpositionKnightKnight">When someone strips a Minor item, Chara mentions the Knight Knight enemy.</marker>
+        <marker scope="Public" name="ExpositionMadDummy">When someone strips a Major item, Chara mentions the Mad Dummy miniboss.</marker>
+        <marker scope="Public" name="ExpositionMadjick">When someone strips a Minor item, Chara mentions the Madjick enemy.</marker>
         <marker scope="Public" name="ExpositionMercy">Chara starts talking about mercy when someone is stripping a minor item.</marker>
         <marker scope="Public" name="ExpositionMercy2">Chara finishes talking about mercy when someone stripped a minor item.</marker>
+        <marker scope="Public" name="ExpositionMoldsmal">When someone strips an Accessory, Chara mentions the Moldsmal enemy.</marker>
         <marker scope="Public" name="ExpositionMTTDeath">When someone must masturbate, Chara can briefly mention killing Mettaton.</marker>
         <marker scope="Public" name="ExpositionPapyrusDeath">When someone must masturbate, Chara can briefly mention killing Papyrus.</marker>
+        <marker scope="Public" name="ExpositionRoyalGuards">When someone strips a Major item, Chara mentions the Royal Guards miniboss.</marker>
         <marker scope="Public" name="ExpositionStrength">Chara starts talking about power when someone is stripping a minor item.</marker>
         <marker scope="Public" name="ExpositionStrength2">Chara finishes talking about power when someone stripped a minor item.</marker>
         <marker scope="Public" name="ExpositionTakingAWhile">Chara starts talking about things taking a while when someone is stripping a minor item.</marker>
         <marker scope="Public" name="ExpositionTakingAWhile2">Chara finishes talking about things taking a while when someone stripped a minor item.</marker>
         <marker scope="Public" name="ExpositionTorielDeath">When someone must masturbate, Chara can briefly mention killing Toriel.</marker>
         <marker scope="Public" name="ExpositionUndyneDeath">When someone must masturbate, Chara can briefly mention killing Undyne.</marker>
+        <marker scope="Public" name="ExpositionWhimsun">When someone strips an Accessory, Chara mentions the Whimsun enemy.</marker>
         <marker scope="Public" name="Hard1v1Bad">The player has initiated hard mode and, in a 1v1 with Chara, she has drawn a Bad hand.</marker>
         <marker scope="Public" name="Hard1v1Good">The player has initiated hard mode and, in a 1v1 with Chara, she has drawn a Good hand.</marker>
         <marker scope="Public" name="Hard1v1HandLoss">The player has initiated hard mode and, in a 1v1 with Chara, lost a hand.</marker>
@@ -2603,6 +2751,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="HardMode1v1">The player has initiated hard mode, and it's down to just them and Chara. In hard mode, Chara does not begin to throw at 1v1 and will continue using Best intelligence.</marker>
         <marker scope="Public" name="HardMode1v1PlayerLoss">The player has initiated hard mode and, in a 1v1 with Chara, been eliminated from the game.</marker>
         <marker scope="Public" name="HardModeBeaten">The player has initiated hard mode, and is the last one standing.</marker>
+        <marker scope="Public" name="HardModeFail">The player has gone for hard mode, but failed one or more conditions despite being named Frisk.</marker>
         <marker scope="Public" name="HardModeHandLoss">The player has initiated hard mode, and lost a hand.</marker>
         <marker scope="Public" name="HardModeHelp">The player has selected the name Frisk, but does not meet the criteria for Hard Mode. When selecting an opponent, Chara will give advice on how to do so.</marker>
         <marker scope="Public" name="HardModeHelpReady">The player has selected the last opponent needed and meets the criteria for Hard Mode. Chara confirms that it is ready.</marker>
@@ -2668,6 +2817,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="PickedAprilFools">The player has selected an April Fools character.</marker>
         <marker scope="Public" name="PickedBlade">The player has selected a character with a Blade.</marker>
         <marker scope="Public" name="PickedChara">The player has selected the other Chara.</marker>
+        <marker scope="Public" name="PickedChihiro">The player has selected Chihiro.</marker>
         <marker scope="Public" name="PickedDeity">The player has selected a Deity character.</marker>
         <marker scope="Public" name="PickedEasy">The player has selected someone with substantially fewer layers than themselves.</marker>
         <marker scope="Public" name="PickedFlorina">The player has selected Florina.</marker>
@@ -2723,6 +2873,8 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="RemoveRefuse">When she's out of layers, Chara remarks that she refuses to strip her knife and locket and would rather simply forfeit.</marker>
         <marker scope="Public" name="ResponseAellaAdventures">Chara responds to Aella asking about adventures.</marker>
         <marker scope="Public" name="ResponseAellaDemon">Chara responds to Aella asking if she's a demon.</marker>
+        <marker scope="Public" name="ResponseAellaDemonslaying">Chara responds to Aella saying she's experienced in demon slaying.</marker>
+        <marker scope="Public" name="ResponseAellaSewingMagic">Chara responds to Aella having sewing magic.</marker>
         <marker scope="Public" name="ResponseAimeeBulletStrip">Chara responds to Aimee shooting her clothes off.</marker>
         <marker scope="Public" name="ResponseAmaliaCheat">Chara responds to Amalia growing flowers as layers.</marker>
         <marker scope="Public" name="ResponseAmaliaFlowerStripped1">Amalia has stripped her top layer of Flowers.</marker>
@@ -2757,6 +2909,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ResponseAmyInsane">Chara responds to Amy going insane and entering her planar form.</marker>
         <marker scope="Public" name="ResponseAmyInsaneNice">Chara responds to Amy going insane and entering her planar form. This is a case where Chara is more kind about it.</marker>
         <marker scope="Public" name="ResponseAmyLost">Amy has lost a hand, and Chara remarks on how Amy likes spiders, as a tie in to Undertale's character Muffet.</marker>
+        <marker scope="Public" name="ResponseAmySayingEldritchName">Chara is saying Amy's eldritch name Amygdala.</marker>
         <marker scope="Public" name="ResponseAmyWon">Chara responds to being forced to masturbate before Amy.</marker>
         <marker scope="Public" name="ResponseArashCooking">Chara responds to Arash's comment about cooking.</marker>
         <marker scope="Public" name="ResponseArashFlowers">Chara responds to Arash's comment about flowers.</marker>
@@ -2768,6 +2921,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ResponseAzamiStartMast">Chara responds to Azami 'starting masturbation'.</marker>
         <marker scope="Public" name="ResponseBrockHitByRocket">Chara responds to Brock getting hit BY a rocket.</marker>
         <marker scope="Public" name="ResponseBrockLaunch">Chara responds to Brock launching a rocket.</marker>
+        <marker scope="Public" name="ResponseBrockRecovery">Chara responds to Brock explaining how he survived getting hit by a rocket.</marker>
         <marker scope="Public" name="ResponseCarFinished">Chara responds to the car 'finishing'.</marker>
         <marker scope="Public" name="ResponseCarLeaves">Chara responds to the car leaving.</marker>
         <marker scope="Public" name="ResponseCarLost">Chara reacts to the car losing.</marker>
@@ -2775,6 +2929,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ResponseCarStartMast">Chara responds to the car 'starting masturbation'.</marker>
         <marker scope="Public" name="ResponseCarStripped">Chara responds to the car having 'stripped'.</marker>
         <marker scope="Public" name="ResponseCarStripping">Chara responds to the car 'stripping'.</marker>
+        <marker scope="Public" name="ResponseCharaMeguminMustStrip1">Megumin has a series of dialogue where Megumin is losing. This is the Must Strip case.</marker>
         <marker scope="Public" name="ResponseChazzBlame">Chara responds to Chazz accusing the player.</marker>
         <marker scope="Public" name="ResponseChazzRun">Chara responds to Chazz attempting, and failing, to run.</marker>
         <marker scope="Public" name="ResponseChihiroFlee">Chara responds to Chihiro attempting to run.</marker>
@@ -2783,6 +2938,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ResponseDustSnacks">Chara responds to Dust's comment about snacks.</marker>
         <marker scope="Public" name="ResponseElizabethSelfMast">Chara responds to Elizabeth using her alternate self to strip.</marker>
         <marker scope="Public" name="ResponseEmiLegsOff">Chara responds to Emi taking her legs off.</marker>
+        <marker scope="Public" name="ResponseErufudaFood">Chara responds to Erufuda's question about favorite foods.</marker>
         <marker scope="Public" name="ResponseFlorinaFlee">Chara responds to Florina fleeing.</marker>
         <marker scope="Public" name="ResponseJasmineReveal">Chara response to Princess Jasmine revealing her identity.</marker>
         <marker scope="Public" name="ResponseJoettaPun">Joetta says a pun and Chara responds favorably.</marker>
@@ -2804,6 +2960,9 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ResponseMeiaRevyFight">Chara responds to Meia and Revy getting into a fight.</marker>
         <marker scope="Public" name="ResponseMeiIce">Chara responds to Mei encasing herself in ice.</marker>
         <marker scope="Public" name="ResponseMoonComplain">Chara responds to Moon complaining about having to remove small stuff.</marker>
+        <marker scope="Public" name="ResponseMoonComplain_Hurry">Chara responds to Moon compaining - specific line "Hurry"</marker>
+        <marker scope="Public" name="ResponseMoonComplain_Purpose">Chara responds to Moon compaining - specific line "Purpose"</marker>
+        <marker scope="Public" name="ResponseMoonComplain_Reason">Chara responds to Moon compaining - specific line "Reason"</marker>
         <marker scope="Public" name="ResponseMoonLost">Chara responds to Moon losing a hand.</marker>
         <marker scope="Public" name="ResponseMoonLost_Cretin">Chara responds to Moon losing a hand - specific line "Cretin."</marker>
         <marker scope="Public" name="ResponseMoonLost_Crushed">Chara responds to Moon losing a hand - specific line "Crushed."</marker>
@@ -2854,18 +3013,20 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="SaidChat1">PERSISTENT: Handles Chara's once-per-game Chat 1 being different on successive times.</marker>
         <marker scope="Public" name="SaidChat2">PERSISTENT: Handles Chara's once-per-game Chat 2 being different on successive times.</marker>
         <marker scope="Public" name="SaidChat3">PERSISTENT: Handles Chara's once-per-game Chat 3 being different on successive times.</marker>
-        <marker scope="Public" name="SaidPartner">PERSISTENT: But only technically; I have to add cases in the game start/end to make it reset. This keeps Chara from repeating her partner-explanation when she shouldn't.</marker>
-        <marker scope="Public" name="SaidReason">PERSISTENT: But only technically; I have to add cases in the game start/end to make it reset. This keeps Chara from repeating her reason-explanation when she shouldn't.</marker>
+        <marker scope="Public" name="SaidPartner">This keeps Chara from repeating her partner-explanation when she shouldn't.</marker>
+        <marker scope="Public" name="SaidReason">This keeps Chara from repeating her reason-explanation when she shouldn't.</marker>
         <marker scope="Public" name="ScandalousSocks">Chara responds to someone stripping socks.</marker>
         <marker scope="Public" name="SeenEpilogue">EPILOGUE: Keeps track of if the epilogue has been seen at last once.</marker>
         <marker scope="Public" name="StartBad">Chara's first hand is bad.</marker>
         <marker scope="Public" name="StartGood">Chara's first hand is good.</marker>
         <marker scope="Public" name="StartOkay">Chara's first hand is okay.</marker>
+        <marker scope="Public" name="StrippedBigAfterSmall">Chara responds to an AI having stripped an Important or Major item early.</marker>
         <marker scope="Public" name="StrippedSmallAfterLargeACC">Chara responds to an AI having stripped an Accessory after being indecent.</marker>
         <marker scope="Public" name="StrippedSmallAfterLargeMIN">Chara responds to an AI having stripped a Minor item after being indecent.</marker>
         <marker scope="Public" name="StrippedVeryFirstACC">An enemy has stripped the first item of the game; an Accessory.</marker>
         <marker scope="Public" name="StrippedVeryFirstMAJ">An enemy has stripped the first item of the game; a Major.</marker>
         <marker scope="Public" name="StrippedVeryFirstMIN">An enemy has stripped the first item of the game; a Minor.</marker>
+        <marker scope="Public" name="StrippingBigAfterSmall">Chara responds to an AI stripping an Important or Major item while still having a lot of clothes.</marker>
         <marker scope="Public" name="StrippingSmallAfterLargeACC">Chara responds to an AI stripping an Accessory after being indecent.</marker>
         <marker scope="Public" name="StrippingSmallAfterLargeMIN">Chara responds to an AI stripping a Minor item after being indecent.</marker>
         <marker scope="Public" name="StrippingVeryFirstACC">An enemy is stripping the first item of the game; an Accessory.</marker>
@@ -2886,10 +3047,13 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ThrowingGood">While throwing, Chara has a good hand.</marker>
         <marker scope="Public" name="ThrowingLose">While throwing, Chara lost a hand and must strip.</marker>
         <marker scope="Public" name="ThrowingOkay">While throwing, Chara has an okay hand.</marker>
+        <marker scope="Public" name="ThrowingPlayerClose">Chara starts throwing, but she has clothes and the player does not.</marker>
         <marker scope="Public" name="ThrowingStripped">Chara has stripped something while trying to throw the game.</marker>
         <marker scope="Public" name="ThrowingStripping">Chara is stripping something while trying to throw the game.</marker>
         <marker scope="Public" name="ThrowingSwap">While throwing, Chara swaps cards.</marker>
         <marker scope="Public" name="ThrowingVictory">While throwing, Chara still manages to beat the player entirely and has won the game.</marker>
+        <marker scope="Public" name="ThrowingVictoryGoodHand">Chara eliminates the player, while throwing, and her hand was not bad.</marker>
+        <marker scope="Public" name="ThrowingVictoryStartedWeak">Chara eliminates the player, who started the Throw with no clothes, and she started the throw with clothes.</marker>
         <marker scope="Public" name="ThrowingWin">While throwing, Chara still wins the hand.</marker>
         <marker scope="Public" name="WinBadHand">Chara wins a round despite having a bad hand.</marker>
     </markers>

@@ -46,7 +46,7 @@ appearance_tag = "appearance" #general appearance of the character
 image_tag = "image_name" #image/emotion filename
 image_description_tag = "image_desc" #emotion/image name description
 image_emotion_tag = "image_emotion" #modifier for emotion level from image name
-emotion_tag = "emotion" #descripotion of emotion/blush level/blue face values
+emotion_tag = "emotion" #description of emotion/blush level/blue face values
 stage_tag = "stage" #stage description. mostly clothes, but also has emotion and love juice values
 stage_modification = "stage_emotion" #base emotion level for a stage
 love_juice_tag = "stage_lj" #love juice level for a tag
@@ -136,7 +136,7 @@ def read_description_files(in_filename):
 	images = list() #list of different image names
 	
 	image = None #current image name (mostly pose/emotion)
-	stage = None #current stange (mostly clothing)
+	stage = None #current stage (mostly clothing)
 	
 	with open(in_filename, "r") as f:
 		for linenumber, line in enumerate(f):

@@ -58,7 +58,7 @@ var endingTips = [
   "Poker is mostly a game of luck. If you don't win the first time, try again!",
   "If you have no other hand, then you're dependent on your high card. Good luck.",
   "If you have two cards of the same rank, that is called a Pair. Pairs are the easiest and most efficient hand to go for. Get them whenever you can!",
-  "The Two Pair hand is pretty self explanatory: It's when you have two sets of two of the same rank card. These are stronger than a Pair, and you don't have to risk losing a 0air to get it.",
+  "The Two Pair hand is pretty self explanatory: It's when you have two sets of two of the same rank card. These are stronger than a Pair, and you don't have to risk losing a Pair to get it.",
   "The Three of a Kind hand is, naturally, what having three of the same rank card is called. This is stronger than the Two Pair hand, and if you go for it and fail you might still get a Pair.",
   "Five cards in a sequence (for example, 2/3/4/5/6) is called a Straight. Straights beat Three of a Kind and lower. Remember that, even if you are only one card away from a Straight, you still only have at best a nearly one in thirteen chance of getting it.",
   "Five cards of the same suit with no other hand is called a Flush, and it's stronger than a Straight. Remember that, even if you are only card away, you still only have at best a nearly one in four chance of getting this hand.",
@@ -294,7 +294,7 @@ function loadEpilogueData(player) {
   //get the XML tree that relates to the epilogue, for the specific player gender
   //var epXML = $($.parseXML(xml)).find('epilogue[gender="'+playerGender+'"]'); //use parseXML() so that <image> tags come through properly //IE doesn't like this
 
-  var epilogues = player.xml.find('epilogue').filter(function (index) {
+  var epilogues = player.xml.children('epilogue').filter(function (index) {
     /* Returning true from this function adds the current epilogue to the list of selectable epilogues.
      * Conversely, returning false from this function will make the current epilogue not selectable.
      */
@@ -486,7 +486,7 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
   player.markers = player.markers || {}; //ensure markers collection exists in the gallery even though they'll be empty
 
   var $epilogue = $(rawEpilogue);
-  var title = $epilogue.find("title").html().trim();
+  var title = $epilogue.children("title").html().trim();
   var gender = $epilogue.attr("gender") || 'any';
 
   var markers = [];
@@ -530,16 +530,6 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
   if (isLegacy) {
     parseLegacyEpilogue(player, epilogue, $epilogue);
   }
-  else if ($epilogue.children("background").length > 0) {
-    var sceneWidth, sceneHeight;
-    var rawRatio = $epilogue.attr('ratio');
-    if (rawRatio) {
-      rawRatio = rawRatio.split(':');
-      sceneWidth = parseFloat(rawRatio[0]);
-      sceneHeight = parseFloat(rawRatio[1]);
-    }
-    parseNotQuiteLegacyEpilogue(player, epilogue, $epilogue, sceneWidth, sceneHeight);
-  }
   else {
     var scene;
     $epilogue.children("scene").each(function (index, rawScene) {
@@ -577,11 +567,11 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
 
         var directives = scene.directives;
 
-        $scene.find("directive").each(function (i, item) {
+        $scene.children("directive").each(function (i, item) {
           var totalTime = 0;
           var directive = readProperties(item, scene);
           directive.keyframes = [];
-          $(item).find("keyframe").each(function (i2, frame) {
+          $(item).children("keyframe").each(function (i2, frame) {
             var keyframe = readProperties(frame, scene);
             keyframe.ease = keyframe.ease || directive.ease;
             keyframe.start = totalTime;
@@ -625,7 +615,7 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
  */
 function parseLegacyEpilogue(player, epilogue, $xml) {
   var scenes = epilogue.scenes;
-  $xml.find("screen").each(function () {
+  $xml.children("screen").each(function () {
     var $this = $(this);
 
     var image = $this.attr("img").trim();
@@ -637,33 +627,6 @@ function parseLegacyEpilogue(player, epilogue, $xml) {
     };
     scenes.push(scene);
     parseSceneContent(player, scene, $this);
-  });
-}
-
-/**
- * Parses an epilogue that came in the format background > scene > sprite/text and converts it into directive format
- */
-function parseNotQuiteLegacyEpilogue(player, epilogue, $xml, sceneWidth, sceneHeight) {
-  var scenes = epilogue.scenes;
-  $xml.find('background').each(function () {
-    var $this = $(this);
-    var image = $this.attr('img').trim();
-    if (image.length == 0) {
-      image = '';
-    }
-
-    //create a directive-based scene for each scene in the background
-    $this.find('scene').each(function () {
-      var scene = {
-        directives: [],
-        background: image,
-        width: sceneWidth,
-        height: sceneHeight,
-        aspectRatio: sceneWidth / sceneHeight,
-      };
-      scenes.push(scene);
-      parseSceneContent(player, scene, $(this)); //this is intentionally $(this) instead of $this like in parseLegacyEpilogue
-    });
   });
 }
 
@@ -863,7 +826,7 @@ function populateUnavailableEpilogues() {
   var unavailable = [];
 
   players.forEach(function (opp) {
-    if (opp === humanPlayer || opp.endings.length === 0) return;
+    if (!opp || opp === humanPlayer || !opp.endings || opp.endings.length === 0) return;
 
     opp.endings.each(function() {
       var ending = $(this);
@@ -1180,8 +1143,8 @@ function hotReloadEpilogue () {
       var $xml = $(xml);
       var endingElem = null;
 
-      $xml.find('epilogue').each(function () {
-        if ($(this).find('title').html() === epilogueTitle && $(this).attr('gender') === epilogueGender) {
+      $xml.children('epilogue').each(function () {
+        if ($(this).children('title').html() === epilogueTitle && $(this).attr('gender') === epilogueGender) {
           endingElem = this;
         }
       });

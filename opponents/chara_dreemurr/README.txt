@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited May 31 2020
+README edited June 14 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -111,9 +111,11 @@ HIDDEN BELT - FYI - The second item Chara removes is her belt, which is hidden b
 that unfair. NOTE: This specific callout only references one possible case for Chara stripping her belt. Make sure to target the general 'stripping, in stage 1' case instead. Though this
 points to the Generic Case already, but still. Double-check the functionality.
 
-FOCUS UP - FYI - After removing her shirt, and if the player is still in the game, Chara will tell them to focus on the game.
+FOCUS UP - FYI - After removing her pants, and if the player is still in the game, Chara will tell them to focus on the game.
 
 REFUSE TO REMOVE - NOTEWORTHY - After removing her last layer of clothing, Chara will say she refuses to strip either her knife or locket, saying she would rather forfeit than do so.
+
+KNIFETURBATE - FYI - Chara does not let go of her knife at any point in the game, including her masturbation sequence.
 
 -------------------------------------------------------------------------------------------
 PERSISTENTS
@@ -205,6 +207,13 @@ To unlock, do the following:
 	-Beat them all.
 The 99 counter is to reference how, in Undertale, the Locket item has 99 Defense. You do not actually need to beat 'Hard Mode' 99 times.
 
+☯☼☜👎✌👍❄☜👎☸
+-It spells [REDACTED] in wingdings. This is a secret collectible and, as such, not normally visible. Name yourself Gaster and attempt to start a game to unlock.
+	-Subtitle is A BLAST FROM THE PAST
+	-Text is SEE YOU SOON
+	-Unlock Hint is NAME YOURSELF GASTER AND ATTEMPT TO START A GAME
+Please make it known if having wingdings in text causes problems in some devices. This was not tested, for instance, on mobile.
+
 -------------------------------------------------------------------------------------------
 CHARACTER INTERACTIONS
 -------------------------------------------------------------------------------------------
@@ -214,6 +223,8 @@ Most, if not all, of these come with a documented Marker. If you find one withou
 AELLA
 -Responds to Aella's question about adventures. For some reason, this is also a Pinkie Pie case?!?!
 -Responds to Aella asking Chara if she's a demon.
+-Responds to Aella warning Chara to behave.
+-Responds to Aella mentioning she has sewing magic.
 
 AIMEE
 -Responds to Aimee shooting her clothes off.
@@ -228,6 +239,7 @@ AMY
 -Responds to Amy losing one hand, where she references Undertale's character Muffet.
 -Back-and-forth banter with Amy when Chara loses and must strip.
 -Responds to Amy losing and having to masturbate.
+-Responds to Chara herself losing while Amy is still in.
 -Has a PersistAmyFriendship marker that can make some of Chara's dialogue towards Amy less antagonistic if it's high enough.
 
 ARASH
@@ -248,6 +260,7 @@ TOYOTA SPRINTER
 BROCK
 -Responds to Brock launching a missile.
 -Responds to Brock getting hit by a missile.
+-Responds to Brock explaining how he survived getting hit by a missile.
 
 CHAZZ
 -Responds to Chazz attempting to leave the game.
@@ -266,6 +279,9 @@ ELIZABETH
 
 EMI
 -Responds to Emi stripping her prosthetic legs.
+
+ERUFUDA
+-Responds to Erufuda's question about favorite foods.
 
 FLORINA
 -Responds to Florina fleeing the game.
@@ -305,6 +321,7 @@ MARINETTE
 
 MEGUMIN
 -Responds to Megumin's question about all-seeing demons.
+-Responds to Megumin must-strip on Fully Clothed with a comment about Explosion's ability to 1-shot things.
 
 MEIA/REVY
 -Responds to Meia and Revy fighting.
@@ -419,6 +436,7 @@ I do not, under ANY circumstance, want to end up preaching about Chara's power i
 the 'Killer Kid with a Knife'.
 
 I'd had the idea to make two Charas, one male and one female, but decided that the neccesitation of Special Cases for them interacting with each other would make me lose my mind.
+	-Maybe an alternate costume one day ala Kazuma?
 
 I'd had the idea to make Chara somehow notice you're using Debug Mode, but aside from the technical difficulties in actually implementing that, Debug Mode is there for the purpose of,
 well, debugging. It ruins the whole point of a Debug Mode if the game behaves differently when it's in use.
