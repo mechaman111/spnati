@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited June 14 2020
+README edited June 19 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -43,8 +43,10 @@ justification in tagging her as Large Breasts or even Huge Breasts, but I felt t
 	-UPDATE May 31 2020 - Based on feedback, the formerly Medium Breasts tag was updated to Large Breasts due to - despite using a size that is the upper range of medium characters -
 Chara's body frame would have her in the updated Large Breasts category. I guess this sort of lets me use the 'making numbers grow' justification?
 
-CLOTHING DESTRUCTION - UPDATE MAY 31 2020 - Based on feedback, added Clothing Destruction tab to stages 2, 6, and 7 (Lost Belt, Lost Pants, Lost Bra, all of which Chara uses her knife
+CLOTHING DESTRUCTION - UPDATE MAY 31 2020 - Based on feedback, added Clothing Destruction tag to stages 2, 6, and 7 (Lost Belt, Lost Pants, Lost Bra, all of which Chara uses her knife
 to strip.
+	-UPDATE JUNE 16 - Based on testing, characters were telling Chara to stop destroying her clothes, when stripping something she was not destroying but came after something she had.
+In light of this, I removed the Clothing Destruction tag from all stages and created hidden cases to apply/remove it in the relevant places.
 
 SUPERNATURAL - Post-Genocide, Chara is a literal demon, powerful enough to destroy the entire universe - multiple sources of evidence in Undertale point to that it is indeed
 the whole universe, not just 'the world' or even just 'the Underground' - and if that's not worth a Supernatural tag I do not know what is.
@@ -225,6 +227,7 @@ AELLA
 -Responds to Aella asking Chara if she's a demon.
 -Responds to Aella warning Chara to behave.
 -Responds to Aella mentioning she has sewing magic.
+-Responds to Aella saying Chara looks good for an animate corpse.
 
 AIMEE
 -Responds to Aimee shooting her clothes off.
@@ -237,6 +240,7 @@ AMALIA
 AMY
 -Responds to Amy's planar form.
 -Responds to Amy losing one hand, where she references Undertale's character Muffet.
+-Responds to Amy losing a second hand.
 -Back-and-forth banter with Amy when Chara loses and must strip.
 -Responds to Amy losing and having to masturbate.
 -Responds to Chara herself losing while Amy is still in.
@@ -313,6 +317,9 @@ KYU
 L'ARACHEL
 -Responds to L'Arachel's staff breaking.
 
+LUCY
+-Responds to Lucy attempting to cheat, targeting the Must Strip, Removing, and Removed cases for it.
+
 MAKI
 -Responds to Maki's question about favorite foods.
 
@@ -322,6 +329,7 @@ MARINETTE
 MEGUMIN
 -Responds to Megumin's question about all-seeing demons.
 -Responds to Megumin must-strip on Fully Clothed with a comment about Explosion's ability to 1-shot things.
+-Responds to Megumin's comment about Chara being a troublesome demon or not.
 
 MEIA/REVY
 -Responds to Meia and Revy fighting.
@@ -353,6 +361,9 @@ NAVI
 
 NAYRU
 -Responds to Nayru getting possessed.
+
+NEPTUNE
+-Responds to Neptune having to strip her first layer.
 
 REMILIA
 -Responds the first time Remilia's maid uses her time-stop powers to strip her.
@@ -421,10 +432,9 @@ PLANNED CHARACTER INTERACTIONS
 
 Planned interactions not yet implemented for any number of reasons.
 
--Narrator Chara indicates Chara used to knit. Maybe tie in to Aella's 'sewing magic' remarks somehow?
 -Narrator Chara indicates Chara used to like gardening. Something with this?
 -Chara embodies the feeling you get when a number grows, among them 'gold' ie currency. Something with Anna, maybe?
--Lucy's attempt to cheat at low layers.
+-A 'spider donut, don't worry, spider didn't' joke with Amy.
 
 -------------------------------------------------------------------------------------------
 MISC
