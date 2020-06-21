@@ -444,6 +444,7 @@ function closeStrippingModal (id) {
         humanPlayer.clothing.splice(id, 1);
         humanPlayer.timeInStage = -1;
         humanPlayer.removedClothing = removedClothing;
+        humanPlayer.numStripped[removedClothing.type]++;
 
         /* figure out if it should be important */
         if ([UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(removedClothing.position) >= 0
@@ -508,6 +509,7 @@ function stripAIPlayer (player) {
     /* grab the removed article of clothing and determine its dialogue trigger */
     var removedClothing = players[player].clothing.pop();
     players[player].removedClothing = removedClothing;
+    players[player].numStripped[removedClothing.type]++;
     if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE, MINOR_ARTICLE].indexOf(removedClothing.type) >= 0) {
         players[player].mostlyClothed = false;
     }
