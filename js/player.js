@@ -542,7 +542,7 @@ Opponent.prototype.onSelected = function(individual) {
         });
     }
 
-    this.preloadStageImages(-1);
+    this.preloadStageImages(0);
     if (individual) {
         updateAllBehaviours(this.slot, SELECTED, [[OPPONENT_SELECTED]]);
     } else {
@@ -632,20 +632,24 @@ Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
         this.selectionCard.update();
 };
 
-Opponent.prototype.loadAlternateCostume = function (individual) {
+Opponent.prototype.loadAlternateCostume = function () {
     if (this.alt_costume) {
         if (this.alt_costume.folder != this.selected_costume) {
             this.unloadAlternateCostume();
         } else {
-            setTimeout(this.onSelected.bind(this), 1, individual);
-            return;
+            var d = $.Deferred();
+            setTimeout(function () { d.resolveWith(this); }.bind(this), 1);
+            return d.promise();
         }
     }
+
     console.log("Loading alternate costume: "+this.selected_costume);
-    $.ajax({
+
+    return $.ajax({
         type: "GET",
         url: this.selected_costume+'costume.xml',
         dataType: "text",
+        context: this,
         success: function (xml) {
             var $xml = $(xml);
 
@@ -699,13 +703,11 @@ Opponent.prototype.loadAlternateCostume = function (individual) {
             }
 
             this.alt_costume.tags = costumeTags;
-
-            this.onSelected(individual);
-        }.bind(this),
+        },
         error: function () {
             console.error("Failed to load alternate costume: "+this.selected_costume);
         },
-    })
+    });
 }
 
 Opponent.prototype.unloadAlternateCostume = function () {
@@ -902,6 +904,7 @@ Opponent.prototype.fetchBehavior = function() {
         type: "GET",
         url: this.folder + "behaviour.xml",
         dataType: "text",
+        context: this,
     });
 }
 
@@ -909,25 +912,29 @@ Opponent.prototype.fetchBehavior = function() {
  * Loads and parses the start of the behaviour XML file of the
  * given opponent.
  *
- * The onLoadFinished parameter must be a function capable of
- * receiving a new player object and a slot number.
+ * Returns a Promise that resolves after all loading is complete.
+ * This includes calls to loadAlternateCostume() and onSelected().
  ************************************************************/
 Opponent.prototype.loadBehaviour = function (slot, individual) {
     this.slot = slot;
     if (this.isLoaded()) {
+        var p = null;
+        
         if (this.selected_costume) {
-            this.loadAlternateCostume(individual);
+            p = this.loadAlternateCostume();
         } else {
             this.unloadAlternateCostume();
-            setTimeout(this.onSelected.bind(this), 1, individual);
+            p = $.Deferred();
+            setTimeout(function () { p.resolveWith(this); }.bind(this), 1);
         }
-        return;
+
+        return p.then(function () { this.onSelected(individual); });
     }
 
-        /* Success callback.
-         * 'this' is bound to the Opponent object.
-         */
-    this.fetchBehavior()
+    /* Success callback.
+     * 'this' is bound to the Opponent object.
+     */
+    return this.fetchBehavior()
         .then(function(xml) {
             var $xml = $(xml);
 
@@ -1051,20 +1058,20 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
             });
 
-            cachePromise.then(function () {
-                this.loaded = true;
-
-                if (this.selected_costume) {
-                    return this.loadAlternateCostume(individual);
-                }
-
-                return this.onSelected(individual);
-            });
-        }.bind(this))
-        /* Error callback. */
-        .fail(function(err) {
+            return cachePromise;
+        }, function(err) {
+            /* Error callback. */
             console.log("Failed reading \""+this.id+"\" behaviour.xml");
             delete players[this.slot];
+        }).then(function () {
+            /* Mark as loaded and load any selected alt costumes: */
+            this.loaded = true;
+            if (this.selected_costume) {
+                return this.loadAlternateCostume();
+            }
+        }.bind(this)).then(function () {
+            /* Loading complete: */
+            this.onSelected(individual);
         }.bind(this));
 }
 
@@ -1222,7 +1229,7 @@ Player.prototype.getImagesForStage = function (stage) {
     var imageSet = {};
     var folder = this.folders ? this.getByStage(this.folders, stage) : this.folder;
     var advPoses = this.poses;
-
+    
     function processCase (c) {
         /* Skip cases requiring characters that aren't present. */
         if (c.target && !players.some(function (p) { return p.id === c.target; })) return;
