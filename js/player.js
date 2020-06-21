@@ -916,7 +916,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
     this.slot = slot;
     if (this.isLoaded()) {
         if (this.selected_costume) {
-            this.loadAlternateCostume();
+            this.loadAlternateCostume(individual);
         } else {
             this.unloadAlternateCostume();
             setTimeout(this.onSelected.bind(this), 1, individual);
@@ -1055,7 +1055,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 this.loaded = true;
 
                 if (this.selected_costume) {
-                    return this.loadAlternateCostume();
+                    return this.loadAlternateCostume(individual);
                 }
 
                 return this.onSelected(individual);
