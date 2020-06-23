@@ -325,8 +325,8 @@ function loadAllCollectibles() {
                 updateCollectiblesScreen();
             });
         } else {
-			return Promise.resolve();
-		}
+            return Promise.resolve();
+        }
     }));
 }
 

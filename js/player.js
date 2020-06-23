@@ -1108,8 +1108,7 @@ Opponent.prototype.loadXMLTriggers = function () {
 
         var loadItemsTotal = $cases.length;
         if (loadItemsTotal == 0) {
-            resolve(0);
-            return;
+            return resolve(0);
         }
 
         var loadItemsCompleted = 0;
@@ -1119,8 +1118,7 @@ Opponent.prototype.loadXMLTriggers = function () {
             /* break tasks into roughly 50ms chunks */
             while (performance.now() - startTS < 50) {
                 if (loadItemsCompleted >= loadItemsTotal) {
-                    resolve(loadItemsCompleted);
-                    return;
+                    return resolve(loadItemsCompleted);
                 }
 
                 let $case = $($cases.get(loadItemsCompleted));
@@ -1164,8 +1162,7 @@ Opponent.prototype.loadXMLStages = function () {
     
         var loadItemsTotal = $cases.length;
         if (loadItemsTotal == 0) {
-            resolve(0);
-            return;
+            return resolve(0);
         }
         var loadItemsCompleted = 0;
     
@@ -1175,8 +1172,7 @@ Opponent.prototype.loadXMLStages = function () {
             /* break tasks into roughly 50ms chunks */
             while (performance.now() - startTS < 50) {
                 if (loadItemsCompleted >= loadItemsTotal) {
-                    resolve(loadItemsCompleted);
-                    return;
+                    return resolve(loadItemsCompleted);
                 }
     
                 let $case = $($cases.get(loadItemsCompleted));
