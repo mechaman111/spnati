@@ -1051,7 +1051,9 @@ MainSelectScreenDisplay.prototype.altCostumeSelected = function () {
     var costumeDesc = this.altCostumeSelector.children(':selected').data('costumeDescriptor');
     opponent.selectAlternateCostume(costumeDesc);
     if (opponent.selected_costume) {
-        opponent.loadAlternateCostume(true);
+        opponent.loadAlternateCostume().then(function () {
+            opponent.onSelected(true);
+        })
     } else {
         opponent.unloadAlternateCostume();
         opponent.onSelected(true);

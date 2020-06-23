@@ -542,6 +542,8 @@ Opponent.prototype.onSelected = function(individual) {
         });
     }
 
+    this.loaded = true;
+
     this.preloadStageImages(0);
     if (individual) {
         updateAllBehaviours(this.slot, SELECTED, [[OPPONENT_SELECTED]]);
@@ -1064,8 +1066,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             console.log("Failed reading \""+this.id+"\" behaviour.xml");
             delete players[this.slot];
         }).then(function () {
-            /* Mark as loaded and load any selected alt costumes: */
-            this.loaded = true;
+            /* Load any selected alt costumes: */
             if (this.selected_costume) {
                 return this.loadAlternateCostume();
             }
