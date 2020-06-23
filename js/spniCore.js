@@ -1082,6 +1082,18 @@ function generateRandomID() {
     return ret;
 }
 
+/************************************************************
+ * Returns a Promise object that resolves (near-)immediately.
+ * 
+ * This can be used to create "dummy" promises that fill in
+ * for actions that are potentially skippable.
+ ************************************************************/
+function immediateDeferred(context, args) {
+    var d = $.Deferred();
+    setTimeout(function () { d.resolveWith(context, args); }, 1);
+    return d.promise();
+}
+
 /**********************************************************************
  * Automatically adjusts the size of all font based on screen width.
  **/

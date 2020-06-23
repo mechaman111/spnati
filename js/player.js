@@ -639,9 +639,7 @@ Opponent.prototype.loadAlternateCostume = function () {
         if (this.alt_costume.folder != this.selected_costume) {
             this.unloadAlternateCostume();
         } else {
-            var d = $.Deferred();
-            setTimeout(function () { d.resolveWith(this); }.bind(this), 1);
-            return d.promise();
+            return immediateDeferred(this);
         }
     }
 
@@ -721,14 +719,16 @@ Opponent.prototype.unloadAlternateCostume = function () {
     this.resetState();
 }
 
-Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
-    if (!this.has_collectibles) return;
-    if (this.collectibles !== null) return;
+Opponent.prototype.loadCollectibles = function () {
+    if (!this.has_collectibles || this.collectibles !== null) {
+        return immediateDeferred(this);
+    }
 
-    $.ajax({
+    return $.ajax({
         type: "GET",
         url: this.folder + 'collectibles.xml',
         dataType: "text",
+        context: this,
         success: function(xml) {
             var collectiblesArray = [];
             $(xml).children('collectible').each(function (idx, elem) {
@@ -740,12 +740,9 @@ Opponent.prototype.loadCollectibles = function (onLoaded, onError) {
             this.has_collectibles = this.collectibles.some(function (c) {
                 return !c.status || includedOpponentStatuses[c.status];
             });
-
-            if (onLoaded) onLoaded(this);
         }.bind(this),
         error: function (jqXHR, status, err) {
             console.error("Error loading collectibles for "+this.id+": "+status+" - "+err);
-            if (onError) onError(this, status, err);
         }.bind(this)
     });
 }
@@ -926,12 +923,14 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             p = this.loadAlternateCostume();
         } else {
             this.unloadAlternateCostume();
-            p = $.Deferred();
-            setTimeout(function () { p.resolveWith(this); }.bind(this), 1);
+            p = immediateDeferred(this);
         }
 
         return p.then(function () { this.onSelected(individual); });
     }
+
+    // start loading collectibles in parallel with behaviour.xml
+    var collectiblesPromise = this.loadCollectibles();
 
     /* Success callback.
      * 'this' is bound to the Opponent object.
@@ -946,10 +945,6 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                     message: 'Fetched and parsed opponent ' + this.id + ', initializing...',
                     level: 'info'
                 });
-            }
-
-            if (this.has_collectibles) {
-                this.loadCollectibles();
             }
 
             this.xml = $xml;
@@ -1066,10 +1061,12 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             console.log("Failed reading \""+this.id+"\" behaviour.xml");
             delete players[this.slot];
         }).then(function () {
-            /* Load any selected alt costumes: */
+            /* Wait for loading of all other stuff to complete: */
             if (this.selected_costume) {
-                return this.loadAlternateCostume();
+                return $.when(this.loadAlternateCostume(), collectiblesPromise);
             }
+
+            return collectiblesPromise;
         }.bind(this)).then(function () {
             /* Loading complete: */
             this.onSelected(individual);

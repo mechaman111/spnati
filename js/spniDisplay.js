@@ -1518,8 +1518,14 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         }
     }
 
-    if (COLLECTIBLES_ENABLED && opponent.has_collectibles) {        
-        var updateCollectiblesBtn = function () {
+    if (COLLECTIBLES_ENABLED && opponent.has_collectibles) {
+        this.collectiblesField.addClass('has-collectibles');
+        this.collectiblesNavButton
+            .text("Available")
+            .addClass('blue')
+            .prop('disabled', false);
+        
+        opponent.loadCollectibles().then(function () {
             if (!opponent.has_collectibles) {
                 this.collectiblesField.removeClass('has-collectibles');
             }
@@ -1539,20 +1545,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
             }, {unlocked:0, total:0});
             
             this.collectiblesNavButton.text("Available ("+counts.unlocked+"/"+counts.total+" unlocked)");
-        }.bind(this);
-        
-        this.collectiblesField.addClass('has-collectibles');
-        
-        this.collectiblesNavButton
-            .text("Available")
-            .addClass('blue')
-            .prop('disabled', false);
-            
-        if (!opponent.collectibles) {
-            opponent.loadCollectibles(updateCollectiblesBtn);
-        } else {
-            updateCollectiblesBtn();
-        }
+        }.bind(this));
     } else {
         this.collectiblesField.removeClass('has-collectibles');
     }
