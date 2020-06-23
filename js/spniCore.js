@@ -216,7 +216,8 @@ function initialSetup () {
 function loadVersionInfo () {
     $('.substitute-version').text('Unknown Version');
     
-    return fetchXML("version-info.xml").then(function(versionInfo) {
+    return fetchXML("version-info.xml").then(function($xml) {
+        versionInfo = $xml;
         CURRENT_VERSION = versionInfo.children('current').attr('version');
 
         if (SENTRY_INITIALIZED) Sentry.setTag("game_version", CURRENT_VERSION);
