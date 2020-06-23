@@ -1201,7 +1201,7 @@ Opponent.prototype.loadXMLStages = function () {
         }
     
         setTimeout(process.bind(this), 0);
-    });
+    }.bind(this));
 }
 
 Player.prototype.getImagesForStage = function (stage) {
