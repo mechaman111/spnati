@@ -1139,8 +1139,7 @@ function hotReloadEpilogue () {
     /* Success callback.
     * 'this' is bound to the Opponent object.
     */
-    .then(function(xml) {
-      var $xml = $(xml);
+    .then(function($xml) {
       var endingElem = null;
 
       $xml.children('epilogue').each(function () {

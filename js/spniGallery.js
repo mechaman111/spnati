@@ -319,13 +319,15 @@ function changeCharacterFilter (collectibleScreen) {
 }
 
 function loadAllCollectibles() {
-    loadedOpponents.forEach(function (opp) {
+    return Promise.all(loadedOpponents.map(function (opp) {
         if (opp && opp.has_collectibles) {
-            opp.loadCollectibles().then(function () {
+            return opp.loadCollectibles().then(function () {
                 updateCollectiblesScreen();
             });
-        }
-    });
+        } else {
+			return Promise.resolve();
+		}
+    }));
 }
 
 function updateCollectiblesScreen() {	
@@ -538,9 +540,7 @@ function doEpilogueFromGallery(){
 		/* Success callback.
 		 * 'this' is bound to the Opponent object.
 		 */
-		.then(function(xml) {
-			var $xml = $(xml);
-			
+		.then(function($xml) {			
 			var endingElem = null;
 			
 			$xml.children('epilogue').each(function () {

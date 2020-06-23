@@ -634,80 +634,77 @@ Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
         this.selectionCard.update();
 };
 
+/**
+ * Loads and parses the selected alternate costume for this opponent.
+ * 
+ * @returns {Promise<void>} A Promise that resolves after all loading for the
+ * selected costume is complete.
+ */
 Opponent.prototype.loadAlternateCostume = function () {
     if (this.alt_costume) {
         if (this.alt_costume.folder != this.selected_costume) {
             this.unloadAlternateCostume();
         } else {
-            return immediateDeferred(this);
+            return immediatePromise();
         }
     }
 
     console.log("Loading alternate costume: "+this.selected_costume);
 
-    return $.ajax({
-        type: "GET",
-        url: this.selected_costume+'costume.xml',
-        dataType: "text",
-        context: this,
-        success: function (xml) {
-            var $xml = $(xml);
+    return fetchXML(this.selected_costume+'costume.xml').then(function ($xml) {
+        if (SENTRY_INITIALIZED) {
+            Sentry.addBreadcrumb({
+                category: 'select',
+                message: 'Initializing alternate costume for ' + this.id + ': ' + this.selected_costume,
+                level: 'info'
+            });
+        }
 
-            if (SENTRY_INITIALIZED) {
-                Sentry.addBreadcrumb({
-                    category: 'select',
-                    message: 'Initializing alternate costume for ' + this.id + ': ' + this.selected_costume,
-                    level: 'info'
-                });
-            }
+        this.alt_costume = {
+            id: $xml.children('id').text(),
+            labels: $xml.children('label'),
+            tags: [],
+            folder: this.selected_costume,
+            folders: $xml.children('folder'),
+            wardrobe: $xml.children('wardrobe'),
+            gender: $xml.children('gender').text() || this.selectGender,
+        };
 
-            this.alt_costume = {
-                id: $xml.children('id').text(),
-                labels: $xml.children('label'),
-                tags: [],
-                folder: this.selected_costume,
-                folders: $xml.children('folder'),
-                wardrobe: $xml.children('wardrobe'),
-                gender: $xml.children('gender').text() || this.selectGender,
-            };
+        var poses = $xml.children('poses');
+        var poseDefs = {};
+        $(poses).children('pose').each(function (i, elem) {
+            var def = new PoseDefinition($(elem), this);
+            poseDefs[def.id] = def;
+        }.bind(this));
 
-            var poses = $xml.children('poses');
-            var poseDefs = {};
-            $(poses).children('pose').each(function (i, elem) {
-                var def = new PoseDefinition($(elem), this);
-                poseDefs[def.id] = def;
-            }.bind(this));
+        this.alt_costume.poses = poseDefs;
 
-            this.alt_costume.poses = poseDefs;
+        var costumeTags = this.default_costume.tags.slice();
+        var tagMods = $xml.children('tags');
+        if (tagMods) {
+            var newTags = [];
+            tagMods.children('tag').each(function (idx, elem) {
+                var $elem = $(elem);
+                var tag = canonicalizeTag($elem.text());
+                var removed = $elem.attr('remove') || '';
+                var fromStage = $elem.attr('from');
+                var toStage = $elem.attr('to');
 
-            var costumeTags = this.default_costume.tags.slice();
-            var tagMods = $xml.children('tags');
-            if (tagMods) {
-                var newTags = [];
-                tagMods.children('tag').each(function (idx, elem) {
-                    var $elem = $(elem);
-                    var tag = canonicalizeTag($elem.text());
-                    var removed = $elem.attr('remove') || '';
-                    var fromStage = $elem.attr('from');
-                    var toStage = $elem.attr('to');
+                // Remove previous declarations for this tag
+                costumeTags = costumeTags.filter(function (t) { return t.tag !== tag; });
 
-                    // Remove previous declarations for this tag
-                    costumeTags = costumeTags.filter(function (t) { return t.tag !== tag; });
+                if (removed.toLowerCase() !== 'true') {
+                    newTags.push({'tag': tag, 'from': fromStage, 'to': toStage});
+                }
+            });
 
-                    if (removed.toLowerCase() !== 'true') {
-                        newTags.push({'tag': tag, 'from': fromStage, 'to': toStage});
-                    }
-                });
+            Array.prototype.push.apply(costumeTags, newTags);
+        }
 
-                Array.prototype.push.apply(costumeTags, newTags);
-            }
-
-            this.alt_costume.tags = costumeTags;
-        },
-        error: function () {
-            console.error("Failed to load alternate costume: "+this.selected_costume);
-        },
-    });
+        this.alt_costume.tags = costumeTags;
+    }.bind(this), function () {
+        console.error("Failed to load alternate costume: "+this.selected_costume);
+    }.bind(this));
 }
 
 Opponent.prototype.unloadAlternateCostume = function () {
@@ -719,32 +716,31 @@ Opponent.prototype.unloadAlternateCostume = function () {
     this.resetState();
 }
 
+/**
+ * Loads the collectibles for this opponent.
+ * 
+ * @returns {Promise<void>} A Promise that resolves after all collectibles are
+ * loaded.
+ */
 Opponent.prototype.loadCollectibles = function () {
     if (!this.has_collectibles || this.collectibles !== null) {
-        return immediateDeferred(this);
+        return immediatePromise();
     }
 
-    return $.ajax({
-        type: "GET",
-        url: this.folder + 'collectibles.xml',
-        dataType: "text",
-        context: this,
-        success: function(xml) {
-            var collectiblesArray = [];
-            $(xml).children('collectible').each(function (idx, elem) {
-                collectiblesArray.push(new Collectible($(elem), this));
-            }.bind(this));
+    return fetchXML(this.folder + 'collectibles.xml').then(function($xml) {
+        var collectiblesArray = [];
+        $xml.children('collectible').each(function (idx, elem) {
+            collectiblesArray.push(new Collectible($(elem), this));
+        }.bind(this));
 
-            this.collectibles = collectiblesArray;
+        this.collectibles = collectiblesArray;
 
-            this.has_collectibles = this.collectibles.some(function (c) {
-                return !c.status || includedOpponentStatuses[c.status];
-            });
-        }.bind(this),
-        error: function (jqXHR, status, err) {
-            console.error("Error loading collectibles for "+this.id+": "+status+" - "+err);
-        }.bind(this)
-    });
+        this.has_collectibles = this.collectibles.some(function (c) {
+            return !c.status || includedOpponentStatuses[c.status];
+        });
+    }.bind(this), function () {
+        console.error("Error loading collectibles for "+this.id);
+    }.bind(this));
 }
 
 /**
@@ -899,21 +895,18 @@ Opponent.prototype.unloadOpponent = function () {
 
 Opponent.prototype.fetchBehavior = function() {
     // Optionally, replace with fetchCompressedURL(this.folder + "behaviour.xml")
-    return $.ajax({
-        type: "GET",
-        url: this.folder + "behaviour.xml",
-        dataType: "text",
-        context: this,
-    });
+    return fetchXML(this.folder + "behaviour.xml");
 }
 
-/************************************************************
+/**
  * Loads and parses the start of the behaviour XML file of the
  * given opponent.
  *
  * Returns a Promise that resolves after all loading is complete.
  * This includes calls to loadAlternateCostume() and onSelected().
- ************************************************************/
+ * 
+ * @returns {Promise<void>}
+ */
 Opponent.prototype.loadBehaviour = function (slot, individual) {
     this.slot = slot;
     if (this.isLoaded()) {
@@ -923,10 +916,10 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             p = this.loadAlternateCostume();
         } else {
             this.unloadAlternateCostume();
-            p = immediateDeferred(this);
+            p = immediatePromise();
         }
 
-        return p.then(function () { this.onSelected(individual); });
+        return p.then(function () { this.onSelected(individual); }.bind(this));
     }
 
     // start loading collectibles in parallel with behaviour.xml
@@ -936,9 +929,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
      * 'this' is bound to the Opponent object.
      */
     return this.fetchBehavior()
-        .then(function(xml) {
-            var $xml = $(xml);
-
+        .then(function($xml) {
             if (SENTRY_INITIALIZED) {
                 Sentry.addBreadcrumb({
                     category: 'select',
@@ -1045,25 +1036,18 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.nicknames = nicknames;
 
             if (this.xml.children('behaviour').children('trigger').length > 0) {
-                var cachePromise = this.loadXMLTriggers();
+                return this.loadXMLTriggers();
             } else {
-                var cachePromise = this.loadXMLStages();
+                return this.loadXMLStages();
             }
-
-            cachePromise.progress(function (completed, total) {
-                this.loadProgress = completed / total;
-                mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
-            });
-
-            return cachePromise;
-        }, function(err) {
+        }.bind(this), function() {
             /* Error callback. */
             console.log("Failed reading \""+this.id+"\" behaviour.xml");
             delete players[this.slot];
-        }).then(function () {
+        }.bind(this)).then(function () {
             /* Wait for loading of all other stuff to complete: */
             if (this.selected_costume) {
-                return $.when(this.loadAlternateCostume(), collectiblesPromise);
+                return Promise.all([this.loadAlternateCostume(), collectiblesPromise]);
             }
 
             return collectiblesPromise;
@@ -1116,54 +1100,54 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
  * and pre-emptively adds their Cases to the opponent's cases structure.
  * This is done in 50ms chunks to avoid blocking the UI.
  *
- * @returns {$.Promise} A Promise. Progress callbacks are fired after each
- * chunk of work, and the promise resolves once all cases have been processed.
- * All callbacks are fired with the Opponent as `this`.
+ * @returns {Promise<number>} A Promise that resolves once all cases have been processed.
  */
 Opponent.prototype.loadXMLTriggers = function () {
-    var deferred = $.Deferred();
+    return new Promise(function (resolve) {
+        var $cases = this.xml.find('>behaviour>trigger>case');
 
-    var $cases = this.xml.find('>behaviour>trigger>case');
-
-    var loadItemsTotal = $cases.length;
-    if (loadItemsTotal == 0) {
-        return deferred.resolveWith(this, [0]).promise();
-    }
-    var loadItemsCompleted = 0;
-
-    function process() {
-        var startTS = performance.now();
-
-        /* break tasks into roughly 50ms chunks */
-        while (performance.now() - startTS < 50) {
-            if (loadItemsCompleted >= loadItemsTotal) {
-                deferred.resolveWith(this, [loadItemsCompleted]);
-                return;
-            }
-
-            let $case = $($cases.get(loadItemsCompleted));
-            let c = new Case($case);
-            let tag = $case.parent().attr('id');
-            this.recordTargetedCase(c);
-
-            c.getStages().forEach(function (stage) {
-                var key = tag+':'+stage;
-                if (!this.cases.has(key)) {
-                    this.cases.set(key, []);
-                }
-
-                this.cases.get(key).push(c);
-            }, this);
-
-            loadItemsCompleted++;
+        var loadItemsTotal = $cases.length;
+        if (loadItemsTotal == 0) {
+            resolve(0);
+            return;
         }
 
-        deferred.notifyWith(this, [loadItemsCompleted, loadItemsTotal]);
-        setTimeout(process.bind(this), 10);
-    }
+        var loadItemsCompleted = 0;
+        function process() {
+            var startTS = performance.now();
 
-    setTimeout(process.bind(this), 0);
-    return deferred.promise();
+            /* break tasks into roughly 50ms chunks */
+            while (performance.now() - startTS < 50) {
+                if (loadItemsCompleted >= loadItemsTotal) {
+                    resolve(loadItemsCompleted);
+                    return;
+                }
+
+                let $case = $($cases.get(loadItemsCompleted));
+                let c = new Case($case);
+                let tag = $case.parent().attr('id');
+                this.recordTargetedCase(c);
+
+                c.getStages().forEach(function (stage) {
+                    var key = tag+':'+stage;
+                    if (!this.cases.has(key)) {
+                        this.cases.set(key, []);
+                    }
+
+                    this.cases.get(key).push(c);
+                }, this);
+
+                loadItemsCompleted++;
+            }
+
+            this.loadProgress = loadItemsCompleted / loadItemsTotal;
+            mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
+
+            setTimeout(process.bind(this), 10);
+        }
+
+        setTimeout(process.bind(this), 0);
+    }.bind(this));
 }
 
 /**
@@ -1172,52 +1156,52 @@ Opponent.prototype.loadXMLTriggers = function () {
  * This is done in 50ms chunks to avoid blocking the UI, similarly to
  * loadXMLTriggers.
  *
- * @returns {$.Promise} A Promise. Progress callbacks are fired after each
- * chunk of work, and the promise resolves once all cases have been processed.
- * All callbacks are fired with the Opponent as `this`.
+ * @returns {Promise<number>} A Promise that resolves once all cases have been processed.
  */
-Opponent.prototype.loadXMLStages = function (onComplete) {
-    var deferred = $.Deferred();
-
-    var $cases = this.xml.find('>behaviour>stage>case');
-
-    var loadItemsTotal = $cases.length;
-    if (loadItemsTotal == 0) {
-        return deferred.resolveWith(this, [0]).promise();
-    }
-    var loadItemsCompleted = 0;
-
-    function process() {
-        var startTS = performance.now();
-
-        /* break tasks into roughly 50ms chunks */
-        while (performance.now() - startTS < 50) {
-            if (loadItemsCompleted >= loadItemsTotal) {
-                deferred.resolveWith(this, [loadItemsCompleted]);
-                return;
-            }
-
-            let $case = $($cases.get(loadItemsCompleted));
-            let c = new Case($case);
-            let stage = $case.parent().attr('id');
-            this.recordTargetedCase(c);
-
-            var key = c.tag + ':' + stage;
-            if (!this.cases.has(key)) {
-                this.cases.set(key, []);
-            }
-
-            this.cases.get(key).push(c);
-
-            loadItemsCompleted++;
+Opponent.prototype.loadXMLStages = function () {
+    return new Promise(function(resolve) {
+        var $cases = this.xml.find('>behaviour>stage>case');
+    
+        var loadItemsTotal = $cases.length;
+        if (loadItemsTotal == 0) {
+            resolve(0);
+            return;
         }
-
-        deferred.notifyWith(this, [loadItemsCompleted, loadItemsTotal]);
-        setTimeout(process.bind(this), 10);
-    }
-
-    setTimeout(process.bind(this), 0);
-    return deferred.promise();
+        var loadItemsCompleted = 0;
+    
+        function process() {
+            var startTS = performance.now();
+    
+            /* break tasks into roughly 50ms chunks */
+            while (performance.now() - startTS < 50) {
+                if (loadItemsCompleted >= loadItemsTotal) {
+                    resolve(loadItemsCompleted);
+                    return;
+                }
+    
+                let $case = $($cases.get(loadItemsCompleted));
+                let c = new Case($case);
+                let stage = $case.parent().attr('id');
+                this.recordTargetedCase(c);
+    
+                var key = c.tag + ':' + stage;
+                if (!this.cases.has(key)) {
+                    this.cases.set(key, []);
+                }
+    
+                this.cases.get(key).push(c);
+    
+                loadItemsCompleted++;
+            }
+            
+            this.loadProgress = loadItemsCompleted / loadItemsTotal;
+            mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
+                
+            setTimeout(process.bind(this), 10);
+        }
+    
+        setTimeout(process.bind(this), 0);
+    });
 }
 
 Player.prototype.getImagesForStage = function (stage) {

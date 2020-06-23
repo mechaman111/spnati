@@ -111,29 +111,6 @@ $previousScreen = null;
 /* CSS rules for arrow offsets */
 var bubbleArrowOffsetRules;
 
-/********************************************************************************
- * Game Wide Utility Functions
- ********************************************************************************/
-
-/* Fetch a possibly compressed file.
- * Attempts to fetch a compressed version of the file first,
- * then fetches the uncompressed version of the file if that isn't found.
- */
-function fetchCompressedURL(baseUrl) {
-    return $.ajax(baseUrl+'.gz', {
-        xhrFields: { responseType: 'arraybuffer' },
-    }).then(function(data) {
-        return pako.inflate(new Uint8Array(data), { to: 'string' });
-    }, function(jqXHR) {
-        if (jqXHR.status == 404) {
-            return $.ajax(baseUrl, {
-                dataType: 'text',
-            });
-        }
-    });
-}
-
-
 /**********************************************************************
  *****              Overarching Game Flow Functions               *****
  **********************************************************************/
@@ -165,27 +142,23 @@ function initialSetup () {
      *
      * Also ensure that the config file is loaded before initializing Sentry,
      * which requires the commit SHA.
-     * 
-     * Also: .done() and .always() do not chain like .then() does.
      */
-    loadConfigFile().then(loadBackgrounds, loadBackgrounds).always(
-        loadVersionInfo,
-        loadGeneralCollectibles,
-        loadSelectScreen,
-        function () {
-            if (!EPILOGUES_ENABLED && !COLLECTIBLES_ENABLED) {
-                $('.title-gallery-edge').css('visibility', 'hidden');
-            }
-            /* Make sure that save data is loaded before updateTitleGender(),
-             * since the latter uses selectedClothing.
-             */
-            save.load();
-            updateTitleGender();
-        },
-        function () {
-            if (USAGE_TRACKING && !SENTRY_INITIALIZED) sentryInit();
+    loadConfigFile().then(loadBackgrounds, loadBackgrounds).then(function () {
+        loadVersionInfo();
+        loadGeneralCollectibles();
+        loadSelectScreen();
+
+        if (!EPILOGUES_ENABLED && !COLLECTIBLES_ENABLED) {
+            $('.title-gallery-edge').css('visibility', 'hidden');
         }
-    );
+        /* Make sure that save data is loaded before updateTitleGender(),
+         * since the latter uses selectedClothing.
+         */
+        save.load();
+        updateTitleGender();
+
+        if (USAGE_TRACKING && !SENTRY_INITIALIZED) sentryInit();
+    });
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
 
@@ -243,193 +216,175 @@ function initialSetup () {
 function loadVersionInfo () {
     $('.substitute-version').text('Unknown Version');
     
-    return $.ajax({
-        type: "GET",
-		url: "version-info.xml",
-		dataType: "text",
-		success: function(xml) {
-            versionInfo = $(xml);
-            CURRENT_VERSION = versionInfo.children('current').attr('version');
+    return fetchXML("version-info.xml").then(function(versionInfo) {
+        CURRENT_VERSION = versionInfo.children('current').attr('version');
 
-            if (SENTRY_INITIALIZED) Sentry.setTag("game_version", CURRENT_VERSION);
-            
-            $('.substitute-version').text('v'+CURRENT_VERSION);
-            console.log("Running SPNATI version "+CURRENT_VERSION);
-            
-            version_ts = versionInfo.find('>changelog > version[number=\"'+CURRENT_VERSION+'\"]').attr('timestamp');
-            
-            version_ts = parseInt(version_ts, 10);
-            now = Date.now();
-            
-            elapsed_time = now - version_ts;
-            
-            /* Format last update time */
-            last_update_string = '';
-            if (elapsed_time < 5 * 60 * 1000) {
-                // <5 minutes ago - display 'just now'
-                last_update_string = 'just now';
-            } else if (elapsed_time < 60 * 60 * 1000) {
-                // < 1 hour ago - display minutes since last update
-                last_update_string = Math.floor(elapsed_time / (60 * 1000))+' minutes ago';
-            } else if (elapsed_time < 24 * 60 * 60 * 1000) {
-                // < 1 day ago - display hours since last update
-                var n_hours = Math.floor(elapsed_time / (60 * 60 * 1000));
-                last_update_string = n_hours + (n_hours === 1 ? ' hour ago' : ' hours ago');
-            } else {
-                // otherwise just display days since last update
-                var n_days = Math.floor(elapsed_time / (24 * 60 * 60 * 1000));
-                last_update_string =  n_days + (n_days === 1 ? ' day ago' : ' days ago');
-            }
-            
-            $('.substitute-version-time').text('(updated '+last_update_string+')');
-
-            $('.version-button').click(showVersionModal);
+        if (SENTRY_INITIALIZED) Sentry.setTag("game_version", CURRENT_VERSION);
+        
+        $('.substitute-version').text('v'+CURRENT_VERSION);
+        console.log("Running SPNATI version "+CURRENT_VERSION);
+        
+        version_ts = versionInfo.find('>changelog > version[number=\"'+CURRENT_VERSION+'\"]').attr('timestamp');
+        
+        version_ts = parseInt(version_ts, 10);
+        now = Date.now();
+        
+        elapsed_time = now - version_ts;
+        
+        /* Format last update time */
+        last_update_string = '';
+        if (elapsed_time < 5 * 60 * 1000) {
+            // <5 minutes ago - display 'just now'
+            last_update_string = 'just now';
+        } else if (elapsed_time < 60 * 60 * 1000) {
+            // < 1 hour ago - display minutes since last update
+            last_update_string = Math.floor(elapsed_time / (60 * 1000))+' minutes ago';
+        } else if (elapsed_time < 24 * 60 * 60 * 1000) {
+            // < 1 day ago - display hours since last update
+            var n_hours = Math.floor(elapsed_time / (60 * 60 * 1000));
+            last_update_string = n_hours + (n_hours === 1 ? ' hour ago' : ' hours ago');
+        } else {
+            // otherwise just display days since last update
+            var n_days = Math.floor(elapsed_time / (24 * 60 * 60 * 1000));
+            last_update_string =  n_days + (n_days === 1 ? ' day ago' : ' days ago');
         }
+        
+        $('.substitute-version-time').text('(updated '+last_update_string+')');
+
+        $('.version-button').click(showVersionModal);
     });
 }
 
 
 function loadConfigFile () {
-	return $.ajax({
-        type: "GET",
-		url: "config.xml",
-		dataType: "text",
-		success: function(xml) {
-			var _epilogues = $(xml).children('epilogues').text();
-            if(_epilogues.toLowerCase() === 'false') {
-                EPILOGUES_ENABLED = false;
-                console.log("Epilogues are disabled.");
-                $("#title-gallery-edge").hide();
-            } else {
-                console.log("Epilogues are enabled.");
-                EPILOGUES_ENABLED = true;
-            }
-
-            var _epilogues_unlocked = $(xml).children('epilogues-unlocked').text().trim();
-            if (_epilogues_unlocked.toLowerCase() === 'true') {
-                EPILOGUES_UNLOCKED = true;
-                console.error('All epilogues unlocked in config file. You better be using this for development only and not cheating!');
-            } else {
-                EPILOGUES_UNLOCKED = false;
-            }
-
-			var _debug = $(xml).children('debug').text();
-            if (_debug === "true") {
-                DEBUG = true;
-                console.log("Debugging is enabled");
-            }
-            else {
-                DEBUG = false;
-                console.log("Debugging is disabled");
-            }
-
-            var _default_fill_mode = $(xml).children('default-fill').text();
-            if (!_default_fill_mode || _default_fill_mode === 'none') {
-                DEFAULT_FILL = undefined;
-                console.log("Startup table filling disabled");
-            } else {
-                DEFAULT_FILL = _default_fill_mode;
-                console.log("Using startup table fill mode " + DEFAULT_FILL + '.');
-            }
-
-            var _game_commit = $(xml).children('commit').text();
-            if (_game_commit) {
-                VERSION_COMMIT = _game_commit;
-                console.log("Running SPNATI commit "+VERSION_COMMIT+'.');
-            } else {
-                console.log("Could not find currently deployed Git commit!");
-            }
-
-            var _version_tag = $(xml).children('version-tag').text();
-            if (_version_tag) {
-                VERSION_TAG = _version_tag;
-                console.log("Running SPNATI production version " + VERSION_TAG + '.');
-            } else {
-                console.log("Could not find currently deployed production version tag!");
-            }
-
-            var _default_bg = $(xml).children('default-background').text();
-            if (_default_bg) {
-                defaultBackgroundID = _default_bg;
-                console.log("Using default background: "+defaultBackgroundID);
-            } else {
-                defaultBackgroundID = 'inventory';
-                console.log("No default background ID set, defaulting to 'inventory'...");
-            }
-
-            var _alts = $(xml).children('alternate-costumes').text();
-
-            if(_alts === "false") {
-                ALT_COSTUMES_ENABLED = false;
-                console.log("Alternate costumes disabled");
-            } else {
-                console.log("Alternate costumes enabled");
-
-                DEFAULT_COSTUME_SET = $(xml).children('default-costume-set').text();
-                if (DEFAULT_COSTUME_SET) {
-                    console.log("Defaulting to alternate costume set: "+DEFAULT_COSTUME_SET);
-                    alternateCostumeSets[DEFAULT_COSTUME_SET] = true;
-                }
-
-                $(xml).children('alternate-costume-sets').each(function () {
-                    var set = $(this).text();
-                    alternateCostumeSets[set] = true;
-                    if (set === 'all') {
-                        console.log("Including all alternate costume sets");
-                    } else {
-                        console.log("Including alternate costume set: "+set);
-                    }
-                });
-            }
-            
-            COLLECTIBLES_ENABLED = false;
-            COLLECTIBLES_UNLOCKED = false;
-            
-            if ($(xml).children('collectibles').text() === 'true') {
-                COLLECTIBLES_ENABLED = true;
-                console.log("Collectibles enabled");
-                
-                if ($(xml).children('collectibles-unlocked').text() === 'true') {
-                    COLLECTIBLES_UNLOCKED = true;
-                    console.log("All collectibles force-unlocked");
-                }
-            } else {
-                console.log("Collectibles disabled");
-            }
-            
-            var _resort_mode = $(xml).children('resort').text();
-            if (_resort_mode.toLowerCase() === 'true') {
-                console.log("Resort mode active!");
-                RESORT_ACTIVE = true;
-            } else {
-                RESORT_ACTIVE = false;
-                console.log("Resort mode disabled.");
-            }
-
-            includedOpponentStatuses.online = true;
-			$(xml).children('include-status').each(function() {
-				includedOpponentStatuses[$(this).text()] = true;
-				console.log("Including", $(this).text(), "opponents");
-			});
+    return fetchXML("config.xml").then(function($xml) {
+        var _epilogues = $xml.children('epilogues').text();
+        if(_epilogues.toLowerCase() === 'false') {
+            EPILOGUES_ENABLED = false;
+            console.log("Epilogues are disabled.");
+            $("#title-gallery-edge").hide();
+        } else {
+            console.log("Epilogues are enabled.");
+            EPILOGUES_ENABLED = true;
         }
-	});
+
+        var _epilogues_unlocked = $xml.children('epilogues-unlocked').text().trim();
+        if (_epilogues_unlocked.toLowerCase() === 'true') {
+            EPILOGUES_UNLOCKED = true;
+            console.error('All epilogues unlocked in config file. You better be using this for development only and not cheating!');
+        } else {
+            EPILOGUES_UNLOCKED = false;
+        }
+
+        var _debug = $xml.children('debug').text();
+        if (_debug === "true") {
+            DEBUG = true;
+            console.log("Debugging is enabled");
+        }
+        else {
+            DEBUG = false;
+            console.log("Debugging is disabled");
+        }
+
+        var _default_fill_mode = $xml.children('default-fill').text();
+        if (!_default_fill_mode || _default_fill_mode === 'none') {
+            DEFAULT_FILL = undefined;
+            console.log("Startup table filling disabled");
+        } else {
+            DEFAULT_FILL = _default_fill_mode;
+            console.log("Using startup table fill mode " + DEFAULT_FILL + '.');
+        }
+
+        var _game_commit = $xml.children('commit').text();
+        if (_game_commit) {
+            VERSION_COMMIT = _game_commit;
+            console.log("Running SPNATI commit "+VERSION_COMMIT+'.');
+        } else {
+            console.log("Could not find currently deployed Git commit!");
+        }
+
+        var _version_tag = $xml.children('version-tag').text();
+        if (_version_tag) {
+            VERSION_TAG = _version_tag;
+            console.log("Running SPNATI production version " + VERSION_TAG + '.');
+        } else {
+            console.log("Could not find currently deployed production version tag!");
+        }
+
+        var _default_bg = $xml.children('default-background').text();
+        if (_default_bg) {
+            defaultBackgroundID = _default_bg;
+            console.log("Using default background: "+defaultBackgroundID);
+        } else {
+            defaultBackgroundID = 'inventory';
+            console.log("No default background ID set, defaulting to 'inventory'...");
+        }
+
+        var _alts = $xml.children('alternate-costumes').text();
+
+        if(_alts === "false") {
+            ALT_COSTUMES_ENABLED = false;
+            console.log("Alternate costumes disabled");
+        } else {
+            console.log("Alternate costumes enabled");
+
+            DEFAULT_COSTUME_SET = $xml.children('default-costume-set').text();
+            if (DEFAULT_COSTUME_SET) {
+                console.log("Defaulting to alternate costume set: "+DEFAULT_COSTUME_SET);
+                alternateCostumeSets[DEFAULT_COSTUME_SET] = true;
+            }
+
+            $xml.children('alternate-costume-sets').each(function () {
+                var set = $(this).text();
+                alternateCostumeSets[set] = true;
+                if (set === 'all') {
+                    console.log("Including all alternate costume sets");
+                } else {
+                    console.log("Including alternate costume set: "+set);
+                }
+            });
+        }
+        
+        COLLECTIBLES_ENABLED = false;
+        COLLECTIBLES_UNLOCKED = false;
+        
+        if ($xml.children('collectibles').text() === 'true') {
+            COLLECTIBLES_ENABLED = true;
+            console.log("Collectibles enabled");
+            
+            if ($xml.children('collectibles-unlocked').text() === 'true') {
+                COLLECTIBLES_UNLOCKED = true;
+                console.log("All collectibles force-unlocked");
+            }
+        } else {
+            console.log("Collectibles disabled");
+        }
+        
+        var _resort_mode = $xml.children('resort').text();
+        if (_resort_mode.toLowerCase() === 'true') {
+            console.log("Resort mode active!");
+            RESORT_ACTIVE = true;
+        } else {
+            RESORT_ACTIVE = false;
+            console.log("Resort mode disabled.");
+        }
+
+        includedOpponentStatuses.online = true;
+        $xml.children('include-status').each(function() {
+            includedOpponentStatuses[$(this).text()] = true;
+            console.log("Including", $(this).text(), "opponents");
+        });
+    });
 }
 
 function loadGeneralCollectibles () {
-    return $.ajax({
-		type: "GET",
-		url: 'opponents/general_collectibles.xml',
-		dataType: "text",
-		success: function(xml) {
-			var collectiblesArray = [];
-			$(xml).children('collectible').each(function (idx, elem) {
-				generalCollectibles.push(new Collectible($(elem), undefined));
-			});
-		},
-        error: function (jqXHR, status, err) {
-            console.error("Error loading general collectibles: "+status+" - "+err);
-        }
-	});
+    return fetchXML('opponents/general_collectibles.xml').then(function($xml) {
+        $xml.children('collectible').each(function (idx, elem) {
+            generalCollectibles.push(new Collectible($(elem), undefined));
+        });
+    }, function (err) {
+        console.error("Error loading general collectibles: " + err);
+    });
 }
 
 /**
@@ -1082,17 +1037,61 @@ function generateRandomID() {
     return ret;
 }
 
-/************************************************************
+/**
  * Returns a Promise object that resolves (near-)immediately.
  * 
  * This can be used to create "dummy" promises that fill in
  * for actions that are potentially skippable.
- ************************************************************/
-function immediateDeferred(context, args) {
-    var d = $.Deferred();
-    setTimeout(function () { d.resolveWith(context, args); }, 1);
-    return d.promise();
+ * 
+ * @returns {Promise<void>}
+ */
+function immediatePromise() {
+    return new Promise(function (resolve) {
+        setTimeout(resolve, 1);
+    });
 }
+
+/**
+ * Fetch an XML resource and parse it.
+ * 
+ * @param {string} url The resource to fetch.
+ * @returns {Promise<jQuery>} The fetched XML contents as a jQuery object.
+ */
+function fetchXML(url) {
+    return fetch(url, { method: "GET" }).then(function (resp) {
+        if (resp.status < 200 || resp.status > 299) {
+            return Promise.reject(resp);
+        } else {
+            return resp.text();
+        }
+    }).then(function (xml) { return $(xml); });
+}
+
+/**
+ * Fetch a possibly compressed XML file.
+ * Attempts to fetch a compressed version of the file first,
+ * then fetches the uncompressed version of the file if that isn't found.
+ * 
+ * @param {string} url The resource to fetch.
+ * @returns {Promise<jQuery>} The fetched and possibly decompressed text contents,
+ * parsed as XML using jQuery.
+ */
+function fetchCompressedURL(baseUrl) {
+    return fetch(baseUrl+'.gz', {method: "GET"}).then(function (resp) {
+        if (resp.status >= 200 && resp.status <= 299) {
+            /* Found compressed data */
+            return resp.arrayBuffer().then(function (data) {
+                return pako.inflate(new Uint8Array(data), { to: 'string' });
+            }).then(function (xml) { return $(xml); });
+        } else if (resp.status == 404) {
+            /* Fallback to fetching uncompressed */
+            return fetchXML(baseUrl);
+        } else {
+            return Promise.reject(resp);
+        }
+    });
+}
+
 
 /**********************************************************************
  * Automatically adjusts the size of all font based on screen width.

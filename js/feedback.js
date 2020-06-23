@@ -330,21 +330,22 @@ function showFeedbackReportModal($fromModal) {
 
     var feedbackCharacters = epiloguePlayer && !inGame ? [ epiloguePlayer.epilogue.player ] : players.opponents;
 
-    $.when.apply($, feedbackCharacters.map(function(p) {
+
+    Promise.all(feedbackCharacters.map(function(p) {
         $("#feedback-report-character").append($('<option>', { text: p.id.initCap(), value: p.id }).data('character', p));
         if (p.feedbackData) {
-            return true;
+            return Promise.resolve();
         } else {
-            return $.ajax({
-                url: FEEDBACK_ROUTE + p.id,
-                type: "GET",
-                dataType: "json",
+            return fetch(FEEDBACK_ROUTE + p.id, { method: "GET" }).then(function (resp) {
+                if (resp.status < 200 || resp.status > 299) {
+                    return Promise.reject(resp);
+                } else {
+                    return resp.json();
+                }
             }).then(function(data) {
                 p.feedbackData = data;
             }, function() {
                 console.error("Failed to get feedback message data for " + p.id);
-                return $.Deferred().resolve().promise(); /* This is meant to avoid hiding the "Loading..." 
-                                                            entry right away if one GET fails. */
             });
         }
     })).then(function() {

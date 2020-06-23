@@ -1053,7 +1053,7 @@ MainSelectScreenDisplay.prototype.altCostumeSelected = function () {
     if (opponent.selected_costume) {
         opponent.loadAlternateCostume().then(function () {
             opponent.onSelected(true);
-        })
+        });
     } else {
         opponent.unloadAlternateCostume();
         opponent.onSelected(true);
