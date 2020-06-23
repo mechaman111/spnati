@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7.3 at 5:51:44 PM on June 21, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 3:38:09 AM on June 23, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7.3</version>
     <first>Saki</first>
@@ -51,6 +51,7 @@
         <nickname for="bi">Bi (I don’t care enough to think up a nickname for him)</nickname>
         <nickname for="catria">Catty</nickname>
         <nickname for="caulifla">Cauliflower</nickname>
+        <nickname for="chara_dreemurr">Buttercup</nickname>
         <nickname for="chazz">The Cash</nickname>
         <nickname for="chiaki">Squishy</nickname>
         <nickname for="chihiro">Softie</nickname>
@@ -448,7 +449,16 @@
         <trigger id="opponent_selected">
             <case stage="0" priority="500">
                 <condition role="target" character="sakura" />
-                <state img="#-Selected.png">Hell yeah! It’s Saki Nikaidou and her girl Sakura the Egghead, the sexiest pair of traffic accidents turned zombies you ever seen!</state>
+                <condition count="2" filter="zombieland_saga" />
+                <state img="#-Selected.png" marker="ZlsGalPal=Egghead">Hell yeah! It’s Saki Nikaidou and her girl Sakura the Egghead, the sexiest pair of traffic accidents turned zombies you ever seen!</state>
+            </case>
+            <case stage="0">
+                <condition filter="zombieland_saga" role="target" />
+                <condition count="0" role="target" character="sakura" />
+                <condition count="2" filter="zombieland_saga" />
+                <state img="#-Selected.png" marker="ZlsGalPal=~name~">Hot damn! You’re here too, ~name~? Hope these other losers here are ready to be tag teamed by a pair of kick-ass zombie sisters!</state>
+                <state img="#-Selected.png" marker="ZlsGalPal=~name~">If you thought one gorgeous idol was too much f’r ya, now the Legendary Saki Nikaidou is taggin’ in ~name~! Gettin’ to play with two zombie sisters, how lucky for the rest of ya.</state>
+                <state img="#-Selected.png" marker="ZlsGalPal=~name~">If one Franchouchou bombshell weren’t enough, it’s Saki’s heinous sister from another mister, ~name~! How ya doin’, girl?</state>
             </case>
             <case stage="0">
                 <condition role="target" character="kyu" saying="these other cuties" />
@@ -457,8 +467,17 @@
         </trigger>
 
         <trigger id="game_start">
+            <case stage="0" priority="501">
+                <condition count="3" filter="zombieland_saga" />
+                <state img="#-Thinking.png">Tonight we’re serving up a bevy of the world’s sexiest undead idols! Uh, Wait, wasn’t I plannin’ on not mentioning the idol thing? Us three are just sexy… random people.</state>
+            </case>
+            <case stage="0" priority="501">
+                <condition count="4" filter="zombieland_saga" />
+                <state img="#-Happy.png">GLAD TO HAVE YA! The sexiest dead broads to ever grace the stage n’… whoever the fuck ~player~ is. I forgot what I said, but if it was anything about idols or zombies, ignore it.</state>
+            </case>
             <case stage="0" priority="500">
                 <condition role="other" character="sakura" />
+                <condition count="2" />
                 <state img="#-Thinking.png">However, we’re &lt;i&gt;not&lt;/i&gt; idols from the Saga’s number one group, Franchouchou, so it’s all right for us to play sexy games! Wait, Egghead, weren’t there somethin’ else I wasn’t s’posed to admit?</state>
             </case>
             <case stage="0">
@@ -479,6 +498,9 @@
             <case stage="0">
                 <condition role="self" saidMarker="intro_03" />
                 <state img="#-Excited.png">Most importantly, I have no relationship to the gorgeous Number Two of Saga’s own Franchouchou idol group! Also I’m not a zombie!</state>
+            </case>
+            <case stage="0">
+                <state img="#-Horny.png">Now then, let's see some &lt;i&gt;sexy&lt;/i&gt;!</state>
             </case>
         </trigger>
 
@@ -534,11 +556,15 @@
                 <state img="#-Smug.png">Betcha can’t tell what kinda hand I got!</state>
                 <state img="#-Smug.png">Get outta the way or get run over!</state>
                 <state img="#-Horny.png">Looks like I can sit back, relax, and enjoy the strippin’.</state>
+                <state img="#-Smug.png">I wonder which one a’ you got the worse hand. Hope you show off something good.</state>
+                <state img="#-Smug.png">You got guts to take me on.</state>
             </case>
             <case stage="0-2">
                 <state img="#-Excited.png">SHIT YEAH THAT’S WHAT I’M TALKING ABOUT!</state>
                 <state img="#-Smug.png">Screw with me and you’ll regret it. I’m the number one biker queen in all of Saga, got it?</state>
                 <state img="#-Horny.png">Winnin’ cards and strippin’ hotties. That’s what bein’ an idol’s all about!</state>
+                <state img="#-Happy.png">Is it too early to break out the celebratory squid?</state>
+                <state img="#-Excited.png">Next round a’ beer n’ yakiniku’s on me!</state>
             </case>
             <case stage="0-8" priority="0">
                 <condition role="self" notSaidMarker="sundaymorning" />
@@ -550,6 +576,8 @@
                 <state img="#-Smug.png">Can’t win ‘em all— is what you oughta think!</state>
                 <state img="#-Shocked.png">Shit! Wait no, that’s actually good!</state>
                 <state img="#-Excited.png">So whaddya you all have? Can we raise?</state>
+                <state img="#-Laughing.png">Would be disappointing if I win without gettin’ a tit out. Oh well, I’ll survive.</state>
+                <state img="#-Smug.png">I ain’t gonna rest ’til I’ve taken over the country, n’ you best believe that’s a fact.</state>
             </case>
             <case stage="3-5" notSaidMarker="pokerface" priority="0">
                 <state img="#-Singing.png" marker="pokerface">&lt;i&gt;No you can’t read through my pooooker face!&lt;/i&gt; Hmm, is that one too obvious?</state>
@@ -558,15 +586,25 @@
                 <state img="custom:#-FOH_ANI">Don’t pick fights you’re not ready for.</state>
                 <state img="#-Horny.png">Imaginin’ all you on the ground, writhin’ in pleasure… is it wet in here or just me?</state>
                 <state img="#-Horny.png">So what kinda jerkin’ off am I gonna see today?</state>
+                <state img="#-Happy.png">This oughta be a much tidier victory than my final game of chicken.</state>
+                <state img="#-Smug.png">My luck is lookin’ up! Couldn’t get much &lt;i&gt;worse&lt;/i&gt;, all things considered.</state>
+                <state img="#-Singing.png" oneShotId="124">Hmm, this gives me a new idea for a song. &lt;i&gt;I thought it was all over, I felt that I was weak. But with my final draw I found the card that I did seek.&lt;/i&gt;</state>
             </case>
             <case stage="7-8" totalMasturbating="0" priority="0">
                 <condition count="1" status="exposed" />
                 <state img="#-Singing.png" marker="adabananecromancy">&lt;i&gt;OUR CHANCE AT VICTORY SHINES FROM A GAP IN THE CLOUDS!&lt;/i&gt;</state>
                 <state img="#-Singing.png" marker="firstwetakemanhattan">&lt;i&gt;Well you loved me as a loser, but now you’re worried that I just might win.&lt;/i&gt;</state>
             </case>
+            <case stage="8">
+                <state img="#-Butt.png">Get a good look, cause my tail lights’re all you’re gonna see tonight.</state>
+            </case>
         </trigger>
 
         <trigger id="okay_hand">
+            <case stage="0-8">
+                <test expr="~background~" value="inventory" />
+                <state img="#-Happy.png" oneShotId="125">This place reminds me a bit of Drive-In Tori. food’s not as good, but it’s got a surprisingly comfy atmosphere.</state>
+            </case>
             <case stage="3" timeInStage="0">
                 <condition count="1-3" filter="no_underwear" status="crotch_visible" />
                 <state img="#-Shocked.png">Hey ~player~, did, uh, everyone remember to wear underwear today? Oh, shi-- but I did? Um, let's just forget about this then.</state>
@@ -589,11 +627,15 @@
                 <state img="#-Excited.png">I brought my hand back from the dead!</state>
                 <state img="#-Horny.png">You sure we can’t do strip motorbike stunts instead?</state>
                 <state img="#-Smug.png">Weed ‘em n’ reap, ya dumb nerds!</state>
+                <state img="#-Excited.png">This hand could go  either way. I’ll have to rely on &lt;i&gt;guts&lt;/i&gt;!</state>
+                <state img="#-Thinking.png">What kinda snacks they got here? Dried squid’s good n’ all, but minchi really hits the spot!</state>
             </case>
             <case stage="0-2">
                 <state img="#-Thinking.png">Now that I think about it, I ain’t even die in these clothes. I mean yeah, not much of my outfit probably left after I blew the fuck up, but where’d Shades get these threads?</state>
                 <state img="#-Happy.png">No one can beat me in a race! Sucks this ain’t a race though.</state>
                 <state img="#-Horny.png">Ya know, ~player~, if your hand’s got you down, I recommend checking out the Franchouchou concert later. Those cute gals’ll pep you right up!</state>
+                <state img="#-Thinking.png">Just gotta ride with faith, I guess.</state>
+                <state img="#-Smug.png">Nothin’ now but to lay ‘em down. Don’t be stallin’ ~player~!</state>
             </case>
             <case stage="0-8" notSaidMarker="luckbealady" priority="0">
                 <state img="#-Singing.png" marker="luckbealady">&lt;i&gt;Luck be a lady toniiiiiiight!&lt;/i&gt;</state>
@@ -629,17 +671,28 @@
             <case stage="3-5">
                 <state img="#-Smug.png">I’m ready to throw down. Cards though, don’t wanna start a barfight ’til after the concert.</state>
                 <state img="#-Thinking.png">Used to play this with the girls in my gang, Dorami. Never could beat Reiko though. Hell, couldn’t beat no one, my poker face’s shit.</state>
+                <state img="#-Laughing.png">The cards are what they are. N’ what they are is still better than what happened to the last two choppers I rode.</state>
+                <state img="#-Thinking.png">What would Reiko do here? She was always the brains of any operation.</state>
+                <state img="#-Horny.png">This ain’t the place for good boys n’ girls. If you’re here, you best be ready to take off everything!</state>
             </case>
             <case stage="6-8">
                 <state img="#-Smug.png">You guys got the guts to throw down? Or will ya all wuss out?</state>
                 <state img="#-Horny.png">I’ll cream ya! Or make ya cream. Probably both, honestly.</state>
+                <state img="#-Happy.png">Could really go for some dried squid right about now. Really satisfies those zombie cravings for flesh! Oh don’t worry, I’m joking. Mostly.</state>
+                <state img="#-Annoyed.png">Bettern’ than the hands any a’ my sisters got dealt in life, that’s for sure!</state>
+                <state img="#-Laughing.png">This hand ain’t gonna kill me. N’ trust me, I know what kills me.</state>
             </case>
             <case stage="8">
                 <state img="#-Butt.png">Hey ~player~, don’t just stare at my tits and pussy all day! I have a fine ass too.</state>
+                <state img="#-Butt.png">Hope you guys don’t get distracted by a little T&amp;A.</state>
             </case>
             <case stage="0-8" priority="0">
                 <test expr="~background~" value="classroom" />
                 <state img="#-Thinking.png" oneShotId="66">Why does this bar have a classroom setup? Is it a fetish thing, or do they actually teach shit here?</state>
+            </case>
+            <case stage="0-8" priority="0">
+                <condition role="self" notSaidMarker="TheGambler" />
+                <state img="#-Singing.png" marker="TheGambler" weight="0.125">&lt;i&gt;You got to know when to hold 'em, know when to fold 'em, know when to walk away, and know when to run!&lt;/i&gt;</state>
             </case>
         </trigger>
 
@@ -647,7 +700,7 @@
             <case stage="8">
                 <condition count="1" filter="human" status="alive" />
                 <condition count="2" status="alive" />
-                <state img="#-Happy.png">There’s no way in hell I’m dying.</state>
+                <state img="#-Happy.png" oneShotId="126">There’s no way in hell I’m dying.</state>
             </case>
             <case stage="1">
                 <condition role="self" timeInStage="0" />
@@ -670,6 +723,9 @@
                 <state img="#-Annoyed.png">Eh, whatever. This is a nerd game anyway.</state>
                 <state img="#-Thinking.png">What am I doin’ wrong?</state>
                 <state img="#-Confused.png">I’m a speed demon, not a card shark. Just not my game.</state>
+                <state img="#-Annoyed.png">This hand ain’t even a sad song. This is a fuckin’ commercial jingle.</state>
+                <state img="#-Smug.png">My hand’s shitty. I aim to win anyway. Don’t hold back, any a’ you!</state>
+                <state img="#-Angry.png">Piss off, Dealer! I came here to get fucked, but not by you!</state>
             </case>
             <case stage="0-2">
                 <state img="#-Excited.png">YEEEEEEEEEEEEAAAAAAAAoh wait, that’s not good.</state>
@@ -677,6 +733,8 @@
                 <state img="#-Confused.png">Ummmmmm… I don’t get it.</state>
                 <state img="#-Happy.png">Hell yeah, time to show off my bluffin’ skills! This hand… does not suck shit.</state>
                 <state img="#-Annoyed.png">It’s a good thing I’m definitely not an idol, so I can say out loud this hand is turds from a dumpster’s butthole.</state>
+                <state img="#-Confused.png">Wish I could draw on my arcade playin’ days for this kind of game. But most a’ what I played was fightin’ games.</state>
+                <state img="#-Laughing.png">Ain’t a guaranteed winner this round, but where’s the fun in that?</state>
             </case>
             <case stage="3-5">
                 <state img="#-Annoyed.png">Need Big Sis Yuugiri to slap the shit outta this deck.</state>
@@ -685,11 +743,17 @@
                 <state img="#-Angry.png">I ain’t gonna let the dealer push me around! Hear me? You want me to kick your ass, dealer?</state>
                 <state img="#-Angry.png">Shit. Well, even if I lose my undies, I still got my giant fuck-off ponytail.</state>
                 <state img="#-Angry.png">Hey dealer, this deck on the up n' up right? I only ask 'cause my Dorami sister's n' me once hadda knock some sense into a punk thought he could cheat us. Geddit?</state>
+                <state img="#-Confused.png">So, has anyone tried to stall by gettin’ one tit out at a time? No reason for askin’.</state>
+                <state img="#-Smug.png">Ties are borin’. Hope one a’ you got good enough cards to win this round outright.</state>
+                <state img="#-Smug.png">At least my fist ain’t never let me down.</state>
             </case>
             <case stage="6-8">
                 <state img="#-Annoyed.png">Right, sweet. Just gonna crawl back into whatever hole Shades dug me out of.</state>
                 <state img="#-Excited.png">There’s only one way Saki Nikaidou lives her life, n’ that’s going full throttle towards your goal, even if it means crashing and burning!</state>
                 <state img="#-Angry.png">What middle school you go to, punk?</state>
+                <state img="#-Happy.png">Heh, just my luck.</state>
+                <state img="#-Serious.png">I’m glad Shrimpy isn’t here to see her cool and beloved big sister get her ass whupped at strip poker. Or that her cool and beloved big sister is playin’ strip poker.</state>
+                <state img="custom:#-FOH_ANI">{b}!?{!reset}&lt;br&gt; Sorry, don’t mean to intimidate. Jus’ my reaction to this hand.</state>
             </case>
             <case stage="6-8" notSaidMarker="nobodytoldme" priority="0">
                 <state img="#-Singing.png" marker="nobodytoldme">&lt;i&gt;Nobody told me there’d be days like these. Strange days indeed!&lt;/i&gt;</state>
@@ -699,9 +763,18 @@
                 <state img="#-Annoyed.png" oneShotId="1" marker="q_saki_badluck">Just my luck, a shit hand. You people think ya got worse luck than a bitch who died? Out with it then. What was the unluckiest thing that ever happened to &lt;i&gt;you&lt;/i&gt;?</state>
                 <state img="#-Thinking.png" oneShotId="10" marker="q_saki_badluck">This hand, man. Is my luck that shitty? What am I sayin’ I &lt;i&gt;died&lt;/i&gt;! What about you folks, any bad luck stories you got to share?</state>
             </case>
+            <case stage="8">
+                <state img="#-Butt.png">Ya know what you can kiss, dealer?</state>
+                <state img="#-Butt.png">Ya know what this hand is? Here’s a visual metaphor.</state>
+            </case>
         </trigger>
 
         <trigger id="hand">
+            <case stage="0" totalRounds="0" priority="505">
+                <condition count="3-4" filter="zombieland_saga" />
+                <state img="#-Happy.png">Wait, are you guys going by yer stage names or not? See, my plan was drum up excitement f’r the concert &lt;i&gt;incognito-style&lt;/i&gt;. Ain’t no one who matters knows who Saki Nikaidou is.</state>
+                <state img="#-Laughing.png">Hold up, fellas, were you thinking of usin’ your stage names here? I’m tryin’ to hide my ID. ’Snot like anyone would care who that bitch “Saki Nikaidou” was, right?</state>
+            </case>
             <case stage="7" priority="500">
                 <condition role="self" timeInStage="0" />
                 <condition role="other" character="sakura" stage="0-7" />
@@ -717,7 +790,7 @@
                 <condition count="2" filter="zombieland_saga" />
                 <condition role="self" timeInStage="0" />
                 <condition role="other" character="sakura" stage="4-7" />
-                <state img="#-Happy.png">Nah, these dudes ain’t look like they ever got horribly mutilated. Listen kids, drivin’ off cliffs don’t make ya cool!</state>
+                <state img="#-Happy.png">Maybe, but those gals at least knew how to take care of themselves. Listen kids, drivin’ off cliffs don’t make ya cool!</state>
             </case>
             <case stage="0-8" priority="500">
                 <condition role="other" character="sakura" stage="1" timeInStage="0" />
@@ -747,6 +820,7 @@
             </case>
             <case stage="0" totalRounds="0" priority="500">
                 <condition role="other" character="sakura" />
+                <condition count="2" filter="zombieland_saga" />
                 <state img="#-Happy.png">So you just goin’ by “Number One” here, Egghead? I thought I’d drum up support, &lt;i&gt;incognito&lt;/i&gt;! No one knows “Saki Nikaidou,” ‘cept as a broken body at the bottom of a cliff.</state>
             </case>
             <case stage="0-8" priority="306">
@@ -789,6 +863,11 @@
                 <condition count="1" filter="revy" status="naked" />
                 <condition role="other" character="meia" stage="5" timeInStage="0" />
                 <state img="#-Serious.png">If you were both girls in my gang, I’d kick your ass for fighting! But since you’re not: Hell yeah, that was awesome!</state>
+            </case>
+            <case stage="0" totalRounds="0">
+                <condition role="other" character="nugi-chan" />
+                <test expr="~nugichan.costume~" value="nugi-chan_bikini" />
+                <state img="#-Excited.png" marker="nugi_summer_booze">Hell yeah, two things I love to see. A sexy chick carryin’ booze, n’ booze carried by a sexy chick!</state>
             </case>
             <case stage="0-8">
                 <condition role="other" character="mulan" stage="1" timeInStage="0" sayingMarker="honorable_others" />
@@ -861,10 +940,6 @@
             <case stage="0-8">
                 <condition role="other" character="ryuko" stage="0-1" sayingMarker="mako" />
                 <state img="#-Happy.png">Oh-ho-ho, looks like Scissors brought backup. What up, Shortstack? Guess I oughta have brought Tae with me.</state>
-            </case>
-            <case stage="0" totalRounds="0">
-                <condition filter="nugi-chan_bikini" role="other" character="nugi-chan" />
-                <state img="#-Excited.png" marker="nugi_summer_booze">Hell yeah, two things I love to see. A sexy chick carryin’ booze, n’ booze carried by a sexy chick!</state>
             </case>
             <case stage="0-8" id="8">
                 <condition count="1" filter="meia" />
@@ -980,6 +1055,11 @@
                 <condition role="other" character="pa-15" saidMarker="saki_badluck" />
                 <condition role="self" saidMarker="q_saki_badluck" />
                 <state img="#-Laughing.png" oneShotId="46">You were talkin’ about a 404? Yeah, I get a lot of them errors too. Maybe you oughta spend less time on the web, Auntie Flo.</state>
+            </case>
+            <case stage="0-8">
+                <condition role="self" saidMarker="q_saki_badluck" />
+                <condition role="other" character="chara_dreemurr" saidMarker="ResponseSakiLuck" />
+                <state img="#-Serious.png" oneShotId="123">I can kinda feel yer story, Buttercup. Still better than my sacrifice. I tried to prove I was the baddest bitch around, and it turns out the emphasis had to be placed on &lt;i&gt;was&lt;/i&gt;.</state>
             </case>
             <case stage="0-8" alsoPlaying="akko" alsoPlayingSayingMarker="shiny_rod">
                 <state img="#-Annoyed.png">Clive Sollish? How the hell you spell that shit?</state>
@@ -1236,7 +1316,7 @@
                 <state img="#-Excited.png">Love me summa the chicken from Drive-in Tori! It’s this yakiniku place in Saga, ya oughta stop by sometime!</state>
             </case>
             <case stage="0">
-                <condition count="3" filter="street_fighter" />
+                <condition count="2-3" filter="street_fighter" />
                 <condition role="self" timeInStage="0" />
                 <state img="#-Confused.png">Yo, I asked the dudes if they had any Street Fighter here, and they put me at this table. What gives?</state>
             </case>
@@ -1248,6 +1328,7 @@
             <case stage="0-8" priority="0">
                 <condition role="self" notSaidMarker="sakura_q_ai" />
                 <condition role="other" character="sakura" stage="0-7" />
+                <condition count="2" filter="zombieland_saga" />
                 <state img="#-Happy.png" marker="sakura_q_ai">Egghead, oughta we invite Ai next time? She’s always so serious, we gotta get her laid! Though I dunno what people’ll think when the bandages come off.</state>
             </case>
             <case stage="0-2" priority="0">
@@ -1273,6 +1354,7 @@
             <case stage="0-8" priority="0">
                 <condition role="self" notSaidMarker="sakura_q_junko" />
                 <condition role="other" character="sakura" stage="0-7" />
+                <condition count="2" filter="zombieland_saga" />
                 <state img="#-Thinking.png" marker="sakura_q_junko">Don’t seem much like Junko’s wheelhouse, do it Egghead? Though maybe it’d do Mushroomhead some good, get her outta her shell.</state>
             </case>
             <case stage="0-8" priority="0">
@@ -1298,11 +1380,13 @@
             <case stage="0-8" priority="0">
                 <condition role="self" notSaidMarker="sakura_q_tae" />
                 <condition role="other" character="sakura" stage="0-7" />
+                <condition count="2" filter="zombieland_saga" />
                 <state img="#-Happy.png" marker="sakura_q_tae">You think they’d let Tae in here? Sure, she ain’t much for conversation and maybe she’ll bite someone, but you know she's got a ton of fans.</state>
             </case>
             <case stage="0-8" priority="0">
                 <condition role="self" notSaidMarker="sakura_q_yuugiri" />
                 <condition role="other" character="sakura" stage="0-7" />
+                <condition count="2" filter="zombieland_saga" />
                 <state img="#-Happy.png" marker="sakura_q_yuugiri">Egghead, ya think Big Sis Yuugiri’d like this place? This seems like her joint. ‘Course knowin’ her, she’d clean house in more ways than one.</state>
             </case>
             <case stage="0-2" priority="0">
@@ -1358,12 +1442,49 @@
             <case stage="6-8" priority="0">
                 <condition role="self" notSaidMarker="sakura_q_taedeath" />
                 <condition role="other" character="sakura" stage="0-7" />
+                <condition count="2" filter="zombieland_saga" />
                 <state img="#-Confused.png" marker="sakura_q_taedeath">Egghead, How d’ya think Tae died? Got to be a hell of a thing. Dunno what could even knock that girl off her feet.</state>
             </case>
             <case stage="6-8" priority="0">
                 <condition role="self" notSaidMarker="sakura_q_cremation" />
                 <condition role="other" character="sakura" stage="3-7" />
+                <condition count="2" filter="zombieland_saga" />
                 <state img="#-Thinking.png" marker="sakura_q_cremation">Why you think we never got cremated, Egghead? Hell, I oughta been regardless. My bike had a full tank a’ gas.</state>
+            </case>
+            <case stage="0-2" priority="0">
+                <condition role="self" saidMarker="ZlsGalPal" notSaidMarker="zls_q_escape" />
+                <state img="#-Happy.png" marker="zls_q_escape">Say, ~marker.ZlsGalPal~, how’dja manage to sneak away from Shades? I told him I was gonna flyer the place f’r the concert. Just in case I hid some squid in his shoes. Made Romero go nuts.</state>
+            </case>
+            <case stage="6-8" priority="0">
+                <condition role="self" saidMarker="ZlsGalPal" notSaidMarker="zls_q_bodies" />
+                <condition count="0" filter="sakura" />
+                <state img="#-Thinking.png" marker="zls_q_bodies">Bodies in Japan are usually cremated, right ~marker.ZlsGalPal~? So how d’ya think Shades got yours? Mine mighta been blown all the way to Hokkaido, it was a big explosion.</state>
+            </case>
+            <case stage="3-5" priority="0">
+                <condition role="self" saidMarker="ZlsGalPal" notSaidMarker="zls_q_sexualpref" />
+                <state img="#-Horny.png" marker="zls_q_sexualpref">We sisters, n’ it’s this kinda game, so… ~marker.ZlsGalPal~. You know me, I’m bad about choosin’. What about you? You got a preference between boys n’ girls?</state>
+            </case>
+            <case stage="6-8" priority="0">
+                <condition role="self" saidMarker="ZlsGalPal" notSaidMarker="zls_q_sexualhist" />
+                <state img="#-Horny.png" marker="zls_q_sexualhist">Sooooo ~marker.ZlsGalPal~. Be honest with yer sister. You die a virg? Or did you manage to get some before you got gone?</state>
+            </case>
+            <case stage="0-8" priority="0">
+                <condition role="self" saidMarker="ZlsGalPal" notSaidMarker="zls_q_sakura" />
+                <condition count="0" filter="sakura" />
+                <state img="#-Thinking.png" marker="zls_q_sakura">Shame we didn’t invite Egghead this time, huh ~marker.ZlsGalPal~? Ya know her “What Do I Do” Body makes the guys &lt;i&gt;n’&lt;/i&gt; gals go nuts. But how d’ya think she’d hold up?</state>
+            </case>
+            <case stage="3-5" priority="0">
+                <condition role="self" saidMarker="ZlsGalPal" notSaidMarker="zls_q_intact" />
+                <condition count="0" filter="sakura" />
+                <state img="#-Confused.png" marker="zls_q_intact">Your, uh, method of departure didn’t ruin any of yer best bits, did it ~marker.ZlsGalPal~? I was worried my pussy mighta melted off, but it’s still there. Still feels tight too!</state>
+            </case>
+            <case stage="0-8" priority="0">
+                <condition role="self" saidMarker="ZlsGalPal" notSaidMarker="zls_q_confidence" />
+                <state img="#-Serious.png" marker="zls_q_confidence">I’m too stubborn to let death shake me, so I was still gonna take over Japan. But what about you, ~marker.ZlsGalPal~? How’d you get your confidence back after… what happened.</state>
+            </case>
+            <case stage="3-5" priority="0">
+                <condition role="self" saidMarker="ZlsGalPal" notSaidMarker="zls_q_pubes" />
+                <state img="#-Horny.png" marker="zls_q_pubes">Hey ~marker.ZlsGalPal~, personal question, but back in yer day did gals care much ‘bout their pubes? Shavin’ wasn’t in vogue n’ the 90s, n’ it’s not like &lt;i&gt;I&lt;/i&gt; ever cared.</state>
             </case>
         </trigger>
 
@@ -1569,6 +1690,10 @@
             <case stage="6">
                 <condition role="other" character="natsuki" />
                 <state img="#-Lost.png">Bein’ dead don’t make you cool, Pink Shrimpy. Thankfully, I’m still cool as shit with what I got left.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="neptune" />
+                <state img="#-Lost.png">I’m a sweet gal once ya get to know me, Neppy. But back in the 90s, I was second in command of the most feared biker gang in Kyushu!</state>
             </case>
             <case stage="0">
                 <alternative hasHand="Three of a Kind" priority="0" />
@@ -1908,6 +2033,14 @@
                 <state img="#-Stripping.png">Aw balls, I need summa those still. Pink Shrimpy, you gonna help? No, yer just gonna stand there. ~Player~?</state>
             </case>
             <case stage="0">
+                <condition role="other" character="neptune" />
+                <state img="#-Stripping.png">Yer friend seems a lot like how I was, I’d get super pissed if anyone touched my wheels. ‘Course, then I drove ‘em off a cliff, so who was I to complain?</state>
+            </case>
+            <case stage="6">
+                <condition role="other" character="chara_dreemurr" />
+                <state img="#-Stripping.png" location="10%">Heheh, that’s a good one Buttercup! Uh… you mind picking me up as well?</state>
+            </case>
+            <case stage="0">
                 <state img="#-Stripping.png">…</state>
             </case>
             <case stage="1">
@@ -2173,6 +2306,10 @@
                 <condition role="other" character="natsuki" />
                 <state img="#-Stripped.png">Good thing’s the feelin’s mutual, Pink Shrimpy. I ain’t in the business of bein’ intimidating no more— I’m an idol now, n’ damn proud a’ that.</state>
             </case>
+            <case stage="1">
+                <condition role="other" character="neptune" />
+                <state img="#-Stripped.png">Hell yeah, Neppy! I’d love to discuss choppers with your gal pal. We all tricked our bikes out back in the day, I’ll give her a dope-ass paint job!</state>
+            </case>
             <case stage="4">
                 <condition role="self" saidMarker="HotAsHell" />
                 <state img="#-Stripped.png">And, to be honest? Why wouldn’t you? I am hot as Hell!</state>
@@ -2401,16 +2538,6 @@
 
         <trigger id="female_must_strip">
             <case stage="0-10">
-                <condition role="target" character="nugi-chan" stage="0" />
-                <condition count="0" filter="nugi-chan_bikini" role="target" />
-                <state img="#-Laughing.png" marker="nugi_opp_0_lost">So Nugs, you the joint’s cleaning staff? Or is the maid outfit some kinda sex thing?</state>
-            </case>
-            <case stage="0-10">
-                <condition role="target" character="nugi-chan" stage="1" />
-                <condition count="0" filter="nugi-chan_bikini" role="target" />
-                <state img="#-Thinking.png" marker="nugi_opp_1_lost">So how didja become a janitor of a weird hybrid bar/casino/sex club?</state>
-            </case>
-            <case stage="0-10">
                 <condition role="target" character="misty_hgss" stage="0" />
                 <condition count="0" filter="nostalgia_misty" role="target" />
                 <state img="#-Happy.png">So ya run a gym? That’s pretty cool. That’s a pretty high-quality swimsuit, you must be serious about this stuff.</state>
@@ -2500,6 +2627,11 @@
                 <condition role="other" character="sakura" />
                 <state img="#-Thinking.png">I’m guessin’ as big as Big Sis Yuugiri… but still not &lt;i&gt;legendary&lt;/i&gt; size.</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="nugi-chan" stage="1" />
+                <test expr="~nugichan.costume~" value="default" />
+                <state img="#-Thinking.png" marker="nugi_opp_1_lost">So how didja become a janitor of a weird hybrid bar/casino/sex club?</state>
+            </case>
             <case stage="0-10" totalRounds="0">
                 <condition role="target" character="yuelia" stage="0" />
                 <state img="#-Confused.png">Wait, they gave cards to the bug? An’ now it’s s’posed to strip?</state>
@@ -2511,6 +2643,10 @@
             <case stage="0-10">
                 <condition role="target" character="meia" stage="0" sayingMarker="tablet" />
                 <state img="#-Laughing.png">What’s that doohicky ya got there, Cosmonaut Carla? Makin’ a spreadsheet of your favorite Star Trek episodes?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nugi-chan" stage="0" />
+                <state img="#-Laughing.png" marker="nugi_opp_0_lost">So Nugs, you the joint’s cleaning staff? Or is the maid outfit some kinda sex thing?</state>
             </case>
             <case stage="0-10" target="akko" targetStage="0">
                 <state img="#-Laughing.png">You a good witch or a bad-at-poker witch?</state>
@@ -3108,6 +3244,18 @@
                 <condition role="target" character="neptune" stage="0" />
                 <state img="#-Laughing.png">I heard ya talkin’ some shit the back there, Neppy. Callin’ yerself “The Goddess of Games” or something.</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="chara_dreemurr" stage="0" />
+                <state img="#-Thinking.png">Red eyes, talkin’ ‘bout how ~player~ brought you back, doing whatever ~human.ifMale(he|she)~ says… hold up, this all seems familiar.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="chara_dreemurr" stage="1" />
+                <state img="#-Serious.png">So Buttercup, how’dja get gone? If ya don’t mind me askin’, how ya died can get a bit personal.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="chara_dreemurr" stage="2" />
+                <state img="#-Confused.png">So what’s with the knife, Buttercup? Even if we’re both zombies, that’s dangerous.</state>
+            </case>
             <case stage="0-10" target="miko">
                 <state img="#-Excited.png">Awwright, here we go! Greenie, time ta strip your wife &lt;i&gt;bare&lt;/i&gt;!</state>
             </case>
@@ -3241,12 +3389,14 @@
                 <state img="#-Annoyed.png">~clothing.ifPlural(~Clothing~|A ~clothing~)~? Ehhh, come on! You can do better’n that!</state>
                 <state img="#-Annoyed.png" marker="Teasing">~clothing.ifPlural(~Clothing~|A ~clothing~)~? Ya gotta be kiddin’ me!</state>
                 <state img="#-Happy.png">Hey, speakin’ of not enough nudity, Franchouchou will be fully clothed and performin’ later!</state>
+                <state img="#-Laughing.png">If that’s the way you wanna be, I won’t stop you. But I might get bored and wander off.</state>
             </case>
             <case stage="3-5">
                 <state img="#-Annoyed.png">Are you planning to take off your ~clothing~? Nothin’ else? Man, you’re as annoyin’ as Shades.</state>
                 <state img="#-Smug.png">Fine, fine. But keep takin’ off small stuff, n’ I’mma go wild on you like I’m Tae. Maybe I can’t pull off all the moves she can, but I got wiry strength.</state>
                 <state img="#-Annoyed.png">I ain’t mad that yer taking off your ~clothing~ this round. I’m mad ‘cause it’s the smart choice.</state>
                 <state img="#-Thinking.png">Do people these days like shit like ~clothing.ifPlural(~clothing~|~clothing~s)~? Maybe I oughta get Shades to sell some at Franchouchou concerts.</state>
+                <state img="#-Annoyed.png">That’s… &lt;i&gt;a&lt;/i&gt; choice. Not too thrillin’, though.</state>
             </case>
             <case stage="6-8">
                 <state img="#-Shocked.png">Don’t wuss out now, dude!</state>
@@ -3257,6 +3407,7 @@
                 <state img="#-Annoyed.png">Oh, fuck that. I ain’t gonna let myself get pissed off by what ~name~’s stripping now.</state>
                 <state img="#-Angry.png">I died goin’ faster than you strip!</state>
                 <state img="#-Happy.png">Who cares, Franchouchou’s performing later. Reminder I’m not a member of Franchouchou, there’s no reason to think we’re all zombies.</state>
+                <state img="#-Confused.png">Why’re you only takin’ &lt;i&gt;that&lt;/i&gt; off? What, zombie girls ain’t good enough for ya?</state>
             </case>
             <case stage="7-10">
                 <state img="#-Shocked.png">I showed you my tits, you &lt;i&gt;can’t&lt;/i&gt; just take off ~clothing.ifPlural(some|a)~ ~clothing~!</state>
@@ -3265,6 +3416,7 @@
                 <state img="#-Thinking.png">Soooo… when we get to the good stuff?</state>
                 <state img="#-Happy.png">Okay, so we ain’t to the good stuff yet. Lemme instead remind you about Franchouchou’s concert here later. Anyone who misses it is lame as shit.</state>
                 <state img="#-Annoyed.png">~clothing.ifPlural(~Clothing~| A ~clothing~)~? Fiiiiine. But that small shit don’t last forever.</state>
+                <state img="#-Happy.png">I’d do the same thing if I had ~clothing.ifPlural(some|a)~ ~clothing~ left. Still wanna see your cock though, dude.</state>
             </case>
             <case stage="9-10">
                 <state img="#-Happy.png">Dope. Hey ~name~, when you’re done feel free to kill me again for bein’ so shitty at this game.</state>
@@ -3369,18 +3521,21 @@
                 <state img="#-Confused.png">I’m still mostly clothed myself. But we &lt;i&gt;are&lt;/i&gt; gonna see the good stuff sometime, right?</state>
                 <state img="#-Annoyed.png">Ain’t worth complainin’ about, but ain’t worth carin’ about.</state>
                 <state img="#-Smug.png">We both playin’ to win, seems like, ~name~. Well, bring it on!</state>
+                <state img="#-Smug.png">N’ what happens when ya run out of small stuff, ~name~? All but one of us is gonna be datin’ Rosie Palms in the end.</state>
             </case>
             <case stage="0-10">
                 <state img="#-Annoyed.png">Hurry it up, bud. We got a concert startin’ here in a bit.</state>
                 <state img="#-Laughing.png">Ahahahahha! That’s so lame, it’s funny!</state>
                 <state img="#-Smug.png" oneShotId="51" marker="Teasing">Oh, I get it. You wanna get yer ass kicked!</state>
                 <state img="#-Annoyed.png">Fine, but don’t stall too much, ~name~. Shades might figure out I’m missin’.</state>
+                <state img="#-Serious.png">Nothin’ ventured, nothin’ gained, ~name~. If it was only ever easy, it wouldn’t be worth no one’s time!</state>
             </case>
             <case stage="3-5">
                 <state img="#-Laughing.png">Heh, I bet Shimpy’s manly man dad wore crap like ~clothing.ifPlural(those|that)~ ~Clothing~ around the house.</state>
                 <state img="#-Annoyed.png">I only ever played strip poker before with my Dorami gals, so we never had any men around to harsh the vibe with their crappy ~clothing~.</state>
                 <state img="#-Smug.png">If someone doesn’t start rippin’ off the good shit soon, &lt;i&gt;I’m&lt;/i&gt; gonna have to be the one to get forceful, n’ that never turns out good.</state>
                 <state img="#-Smug.png">You’re still gonna hafta to do better to win, ~name~.</state>
+                <state img="#-Horny.png">Thing’s are only gonna get harder from here, ~name~. Hopefully, &lt;i&gt;your&lt;/i&gt; thing specifically.</state>
             </case>
             <case stage="6-8">
                 <state img="#-Thinking.png">You still had shit like that? Am I bein’ lapped?</state>
@@ -3391,6 +3546,7 @@
                 <state img="#-Annoyed.png">Come on buddy. You got any respect for the dead?</state>
                 <state img="#-Confused.png">This is turnin’ into the worst thing that… this is turnin’ into the second worst thing that’s ever happened to me.</state>
                 <state img="custom:#-FOH_ANI">Even if I’m dead, I ain’t gonna take that lyin’ down.</state>
+                <state img="#-Horny.png">Come on dude. You ain’t gonna get none a’ this cadaver pussy if you keep that up.</state>
             </case>
             <case stage="9">
                 <state img="#-Annoyed.png">I'm tryin' ta fap here! Do you even care?</state>
@@ -3399,11 +3555,6 @@
         </trigger>
 
         <trigger id="female_removing_accessory">
-            <case stage="0-10">
-                <condition role="target" character="nugi-chan" stage="0" />
-                <condition count="0" filter="nugi-chan_bikini" role="target" />
-                <state img="#-Happy.png" marker="nugi_opp_0_Stripping">I guess it can be both though. Cleaning ladies need love too.</state>
-            </case>
             <case stage="0-10" priority="500">
                 <condition role="target" character="sakura" stage="0" />
                 <condition role="self" notSaidMarker="ss_threesome" />
@@ -3421,6 +3572,11 @@
             <case stage="0-10" target="ryuko" targetStage="0">
                 <condition count="1" character="sakura" />
                 <state img="#-Laughing.png">Bwahaha! Look Egghead, she’s gettin’ Shortstack to strip her. Ain’t that a heart-warmin’ sight?</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nugi-chan" stage="0" />
+                <test expr="~nugichan.costume~" value="default" />
+                <state img="#-Happy.png" marker="nugi_opp_0_Stripping">I guess it can be both though. Cleaning ladies need love too.</state>
             </case>
             <case stage="0-10" target="ryuko" targetStage="0" totalRounds="0">
                 <state img="#-Laughing.png">Bwahaha! I can’t take ya seriously when ya brought a friend ta strip with ya! Hey Shortstack, next time I’m here I’ll bring along my Egghead!</state>
@@ -3698,6 +3854,14 @@
                 <state img="#-Smug.png">Well guess what, sister? Back in the day, me n’ my Dorami gals used to hit up the arcade. N’ I was pretty, &lt;i&gt;pretty&lt;/i&gt; good.</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="chara_dreemurr" stage="0" />
+                <state img="#-Excited.png">Aw shit, I geddit! Yer a zombie, Buttercup— like me!</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="chara_dreemurr" stage="1" />
+                <state img="#-Laughing.png">Eatin’? Oh, I geddit. You ate so much you exploded. Honestly, that’s the way to go if you hafta.</state>
+            </case>
+            <case stage="0-10">
                 <condition role="target" character="default-chan" />
                 <state img="#-Serious.png">You're only taking off your ~clothing~, ~name~? That doesn't seem fair.</state>
             </case>
@@ -3705,16 +3869,19 @@
                 <state img="#-Annoyed.png">“Safe” never won no races, ~name~! ‘Course, it also didn’t drive off no roads neither…</state>
                 <state img="#-Smug.png">Man, when me n’ my gal pals played strip poker back in the day, we went right for the good stuff. No stallin’ with crap.</state>
                 <state img="#-Smug.png">So you’re playin’ it smart, huh? Well I’m too dumb to not be stubborn. Let’s see which a’ us bends first.</state>
+                <state img="#-Angry.png">Are you just doing that cause it’s &lt;i&gt;expected&lt;/i&gt; to take off your ~clothing~?</state>
             </case>
             <case stage="0-10">
                 <state img="#-Annoyed.png">So I’ll just go ahead and assume ~clothing.ifPlural(those ~clothing~ are|that ~clothing~ is)~ attached to somethin’ bigger. &lt;i&gt;Riiiiiiight?&lt;/i&gt;</state>
                 <state img="#-Smug.png">So you playin’ to win too, ~name~? Good. Woulda been borin’ if no one else was trying.</state>
                 <state img="#-Excited.png">Hell yeah! You havin’ less small crap means soon you’ll have less undies!</state>
                 <state img="#-Annoyed.png" oneShotId="55">I might not’ve graduated high school, ~name~, but I know a trinket when I see one.</state>
+                <state img="#-Thinking.png">Small stuff don’t impress, but it makes sense if you wanna win.</state>
             </case>
             <case stage="3-5">
                 <state img="#-Thinking.png">Wonder how a costume with ~clothing.ifPlural(~clothing~|a ~clothing~)~ like that would look on us…</state>
                 <state img="#-Smug.png">Whatever you take off is fine. Just know, like breaking two inches from the guardrail, it won’t stop the inevitable.</state>
+                <state img="#-Annoyed.png">Wish I wasn’t more mature these days, so I could get mad at this.</state>
             </case>
             <case stage="6-8">
                 <state img="#-Confused.png" oneShotId="57" marker="Teasing">What, your just takin’ off your ~clothing~? I’m gonna kill ya if you don’t take off anything better next time.</state>
@@ -3724,6 +3891,7 @@
                 <state img="#-Confused.png">It’s gonna be one a’ &lt;i&gt;those&lt;/i&gt; days, huh? When everyone just takes off their ~clothing~ n’ I forget to brake at the edge of the cliff.</state>
                 <state img="#-Annoyed.png">I’m literally a corpse, but you’re the one playin’ possum.</state>
                 <state img="#-Confused.png">You’re takin’ off your ~clothing~? &lt;i&gt;Little&lt;/i&gt; disappointed this is all I’m gettin’ after my big zombie reveal.</state>
+                <state img="#-Smug.png">&lt;i&gt;Yaaaaawn.&lt;/i&gt; Think I’m gonna return to the grave for a little nap, wake me when something cool happens.</state>
             </case>
             <case stage="6-10">
                 <state img="#-Confused.png">I died fighting a woman with a bird for hair and now you’re taking off yer ~clothing~ while I’m like this. Is this really how the saga of Saki the Legendary ends?</state>
@@ -3731,11 +3899,6 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
-            <case stage="0-10">
-                <condition role="target" character="nugi-chan" stage="1" />
-                <condition count="0" filter="nugi-chan_bikini" role="target" />
-                <state img="#-Happy.png" marker="nugi_opp_0_Stripped">Well Nugs, ya better watch out, else I’m gonna mop the floor with &lt;i&gt;you&lt;/i&gt;!</state>
-            </case>
             <case stage="0-10" priority="500">
                 <condition role="target" character="sakura" stage="1" />
                 <condition role="self" notSaidMarker="ss_threesome" />
@@ -3761,6 +3924,11 @@
             </case>
             <case stage="0-10" target="sei" targetStage="2" alsoPlaying="sakura">
                 <state img="#-Thinking.png">&lt;i&gt;Psst, Egghead, is that, like, a chord progression? I leave the song writin’ to Shades, you know.&lt;/i&gt;</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nugi-chan" stage="1" />
+                <test expr="~nugichan.costume~" value="default" />
+                <state img="#-Happy.png" marker="nugi_opp_0_Stripped">Well Nugs, ya better watch out, else I’m gonna mop the floor with &lt;i&gt;you&lt;/i&gt;!</state>
             </case>
             <case stage="0-10">
                 <condition role="target" character="shimakaze" stage="4" sayingMarker="dizzy" />
@@ -4048,6 +4216,14 @@
                 <condition role="target" character="neptune" stage="1" />
                 <state img="#-Excited.png">So if you wanna rumble, jus’ pick yer poison! &lt;i&gt;Street Fighter&lt;/i&gt;! &lt;i&gt;Daytona USA&lt;/i&gt;! &lt;i&gt;Tekken&lt;/i&gt;! Not &lt;i&gt;Time Crisis&lt;/i&gt;, I suck at that.</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="chara_dreemurr" stage="1" />
+                <state img="#-Thinking.png">~Player~, are you a necromancer? Naw, no way, you must’ve been gifted Buttercup or somethin’. Too bad, I was hopin’ you could tell me how it worked.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="chara_dreemurr" stage="2" />
+                <state img="#-Happy.png">Me, I died ridin’! Bet a rival bitch I could hit the breaks closer to the edge of the cliff, n’ boy howdy was I right.</state>
+            </case>
             <case stage="0-10" target="human" saidMarker="choices" notSaidMarker="choices02">
                 <state img="#-Rapping.png" marker="choices02">&lt;i&gt;NOPE!&lt;/i&gt;</state>
             </case>
@@ -4074,11 +4250,13 @@
                 <state img="#-Happy.png">We shouldn’t even be countin’ small stuff, but hell. Fine by me.</state>
                 <state img="#-Happy.png">Let’s hurry along so we can get to the good shit!</state>
                 <state img="#-Smug.png">One at a time, or all at once. I’mma knock ‘em down either way!</state>
+                <state img="#-Serious.png">Anything worth doin’ ain’t gonna be smooth sailin’ all the time., ~name~. You best not chicken out.</state>
             </case>
             <case stage="0-2">
                 <state img="#-Confused.png">Yeah I guess I ain’t done nothin’ special either. But I wanna see some tits!</state>
                 <state img="#-Thinking.png">Wanna see the kinda ~clothing~ Shrimpy would have. Knowin’ her, she’d make it all frilly and sparkly.</state>
                 <state img="#-Smug.png">I ain’t backin’ down. I hope you don’t back down neither. I want a fair fight! That I eventually win.</state>
+                <state img="#-Horny.png">Whatever, all but one of us is gonna be dancin’ solo once this is over. Though, if the last person wants to join in anyway, I won’t stop ‘em.</state>
             </case>
             <case stage="0-10" priority="0">
                 <condition count="0" filter="sakura" />
@@ -4097,6 +4275,7 @@
                 <state img="#-Smug.png">If any sisters in my gang tried to stiff me like that, I’d line ‘em up and kick their ass. I’m a lot more mature now, but best not to test me.</state>
                 <state img="#-Smug.png">Yeah, you’re doin’ better n’ me. &lt;i&gt;For now.&lt;/i&gt;</state>
                 <state img="#-Smug.png">Sure, I could be puttin’ up a better showin’ now. But I ain’t gonna give up, even if the road seems long! It ain’t over ’til the busty &lt;i&gt;oiran&lt;/i&gt; sings!</state>
+                <state img="#-Confused.png">I mean… I ain’t gonna bother tellin’ my sisters about &lt;i&gt;this&lt;/i&gt; part.</state>
             </case>
             <case stage="6-8">
                 <state img="#-Confused.png">Man, I’m getting wrecked out here. Pisses me off.</state>
@@ -4104,6 +4283,7 @@
                 <state img="#-Happy.png">Neat, neat. Hey, ~player~, wanna ditch these losers and race bikes?</state>
                 <state img="#-Confused.png">I guess guts don’t make up for poker skill.</state>
                 <state img="#-Angry.png">I ain’t never backed down, even at the price a’ death. Let’s see what you got next!</state>
+                <state img="#-Serious.png">I understand you wanna win, ~name~. But don’t want it so hard ya end up crashin’ and burnin’, ya hear?</state>
             </case>
         </trigger>
 
@@ -4153,21 +4333,25 @@
                 <state img="#-Smug.png">I got my eye on ya. But if you want any better body parts, you’ll have to do better than that.</state>
                 <state img="#-Happy.png">I feel like all the dudes back home were scared of me. Guess I was too intimidatin’? But you ain’t run off yet, ~name~, guess ya got balls after all.</state>
                 <state img="#-Horny.png">Dudes back home were too pussy to get it on with me. Guess that’s one thing I can respect about you, ~name~— you coulda wussed out but didn’t. Anyway, take off some good shit.</state>
+                <state img="#-Excited.png">Whatever you’re taking off, it means I’m winnin’, so hooray Saki!</state>
             </case>
             <case stage="0-2">
                 <state img="#-Thinking.png">Shades just designs our outfits. I got no idea if an idol could wear ~clothing.ifPlural(~clothing~ like those|a ~clothing~ like that)~.</state>
                 <state img="#-Annoyed.png">Ain’t my first time playin’ strip poker, ~name~, but it is the first time I seen someone make such a big fuss over takin’ off~clothing.ifPlural(| a)~ ~clothing~.</state>
                 <state img="#-Smug.png">Ya got a lotta nerve comin’ here with such weak game. Good thing for you I’m all about second chances. Impress me your next go-round.</state>
+                <state img="#-Laughing.png">I guess ya can’t go full tilt forever. N’ I should know, I &lt;i&gt;tried&lt;/i&gt;.</state>
             </case>
             <case stage="3-5">
                 <state img="#-Horny.png">I never wore no ~clothing~ or nothin’ when out ridin’. No extras. I hadda keep myself aerodynamic.</state>
                 <state img="#-Laughing.png">Man, this reminds me of this one bitch-ass punk who tried to start shit with me n’ my Dorami girls. Well, long story short, we stole all his clothes.</state>
                 <state img="#-Happy.png">Yeah, sure, ya can take off whatever. Just remember, this ain’t the last hand.</state>
+                <state img="#-Annoyed.png">Even I ain’t so dumb I’m gonna be awed by ~clothing.ifPlural(removing ~clothing~|some ~clothing~ removal)~.</state>
             </case>
             <case stage="6-8">
                 <state img="#-Smug.png" oneShotId="58" marker="Teasing">You're a man, but you don’t got the balls to take off more than your ~clothing~?</state>
                 <state img="#-Horny.png">Come on, ~name~. Yer not reeeeeaaly gonna take off just your ~clothing~, right?</state>
                 <state img="#-Annoyed.png">Don’t take so long next time, we ain’t gonna live forever! Shit, I &lt;i&gt;already&lt;/i&gt; kicked the bucket!</state>
+                <state img="#-Horny.png">You got a chance to mack on an eternally 18-year-old idol. Ya can’t impress me more than that?</state>
             </case>
         </trigger>
 
@@ -4230,23 +4414,27 @@
                 <state img="#-Horny.png">Your ~clothing~~clothing.ifPlural(‘re|’s)~ a good start, but you ain’t beat yet. Or beatin’ off.</state>
                 <state img="#-Thinking.png">Maybe things woulda ended up better if the chicks in my gang were as good at playin’ it smart as ~name~ is. Or at least me.</state>
                 <state img="#-Angry.png">I’mma die of old age before this game gets finished! They’ll write on my second tombstone: “Here Lies Saki, Bitch Still Couldn’t Catch No Dick.”</state>
+                <state img="#-Happy.png">Ehhh, nothin’ really to care about here. Let’s move on n’ hopefully see some more sexy.</state>
             </case>
             <case stage="0-2">
                 <state img="#-Smug.png">Takin’ that off’s good game playin’, sure. But it doesn't impress. I want you to show me some guts!</state>
                 <state img="#-Annoyed.png">That’s all we’re gettin’? Guess I’m the exact amount of too intimidating to score a guy, not intimating enough to get guys to take off more’n their ~clothing~.</state>
                 <state img="#-Laughing.png">Gonna tie yer ~clothing~ to the back of my wheels n’ ride around with ‘em. You know, if I still had wheels.</state>
+                <state img="#-Happy.png">Aw, wow, it just so happens that ~clothing.toPlural~ are my exact fetish! My cooter is so drenched right now!</state>
             </case>
             <case stage="3-5">
                 <state img="#-Happy.png">You think ~clothing.ifPlural(~clothing~’re|a ~clothing~’s)~  gonna impress me? I’m plannin’ to take the whole damn country over.</state>
                 <state img="#-Smug.png">Ya know how they say “pain is weakness leavin’ the body”? Well, that was a weak move. Let’s rectify that, aight?</state>
                 <state img="#-Shocked.png">This game sure is draggin’ on. Shit, wait— oh good, I still got time before the concert.</state>
                 <state img="#-Angry.png">That’s the kinda shit a cop would take off. You a badge, ~name~? Don’t fuck with me.</state>
+                <state img="#-Thinking.png">I’m just dumb muscle. No idea what removin’ your ~clothing~ means in terms of me winnin’ or losin’.</state>
             </case>
             <case stage="6-8">
                 <state img="#-Excited.png">One lap closer to victory!</state>
                 <state img="#-Confused.png">I deserved to die if I don’t get you out of more than your ~clothing~ by the time this game’s over.</state>
                 <state img="#-Smug.png">Startin’ to think I ain’t gonna win this. But who the hell cares! I’m a Franchouchou girl, n’ that means I ain’t gonna give up even if death stands in my way!</state>
                 <state img="#-Thinking.png">Guess I really am just roadkill? Eh… naw, I rule.</state>
+                <state img="#-Happy.png">The only bar ya gotta clear is “better’n bein’ dead”, ~name~, so congrats on that.</state>
             </case>
         </trigger>
 
@@ -4410,6 +4598,10 @@
                 <state img="#-Smug.png">I don’t get that kind of mindset. I either do what I say, or I don’t say it! Or I forget I said it, that happens too.</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="chara_dreemurr" stage="2" />
+                <state img="#-Annoyed.png">Both guys n’ gals have some real nice bits that’re also awfully soft. Don’t wanna cut nothin’ off accidentally when it’s time f’r some hanky-panky.</state>
+            </case>
+            <case stage="0-10">
                 <condition role="target" character="default-chan" />
                 <state img="#-Serious.png">I guess your ~clothing~ is something, at least.</state>
             </case>
@@ -4418,30 +4610,30 @@
                 <state img="#-Horny.png">I heard that Franchouchou’s super popular Number Two has a thing for girls who wear ~clothing~~clothing.ifPlural(|s)~.</state>
                 <state img="#-Horny.png">Most a’ the girls back home thought I was too butch f’r them. Guess if you’re still in this, you got guts, ~name~. Not that I’m butterin’ ya up in the hopes of seeing some tits n’ ass.</state>
                 <state img="#-Excited.png">Don’t matter if yer racin’, singin’, or strippin’, if you ain’t got passion, it don’t mean a thing!</state>
+                <state img="#-Excited.png">The crap you take off doesn’t matter. What matters is ya do it with style. Make me care about your ~clothing~!</state>
+                <state img="#-Laughing.png">Nice ~clothing~… f’r a dumbass to have!</state>
             </case>
             <case stage="0-2">
                 <state img="#-Thinking.png">Never had much of an eye for fashion. ~clothing.ifPlural(Are those|Is that)~ ~clothing~ the same as the kind in the Nineties?</state>
                 <state img="#-Thinking.png">Hmmm… maybe when it’s my turn next, I oughta try out some new dance moves.</state>
                 <state img="#-Thinking.png">Wish Reiko woulda let me make all the new probates streak to get initiated. Probably figured I was only doing it to scope their asses.</state>
+                <state img="#-Thinking.png">Smart choice, but ain’t the kind a’ thing anyone’s gonna mention in your eulogy.</state>
             </case>
             <case stage="3-5">
                 <state img="#-Thinking.png">Forget how many a’ the girls in my gang wore ~clothing.ifPlural(|a)~ ~clothing~. Maybe none a’ them?</state>
                 <state img="#-Horny.png">You gotta gimme more than ~clothing.ifPlural(some|a)~ ~clothing~, ~name~. I wanna see somethin’ good!</state>
                 <state img="#-Smug.png">Listen, I ain’t so easy I’d be turned on by ya removin’ your ~clothing~. I’m a gal with standards!</state>
+                <state img="#-Laughing.png">Nice ~clothing~, did Shades design ~clothing.ifPlural(‘em|it)~?</state>
             </case>
             <case stage="6-8">
                 <state img="#-Confused.png">Yeah, yeah, don’t worry about the dead broad over here, just take off your ~clothing~.</state>
                 <state img="#-Horny.png">I… hunger… for puss. Get a move on!</state>
                 <state img="#-Laughing.png">Is that all ya got, ~name~? I need ta bring Big Sis Yuugiri here, show you what a striptease really looks like.</state>
+                <state img="#-Horny.png">Don’t think I ain’t above just rippin’ off your clothes myself, ~name~.</state>
             </case>
         </trigger>
 
         <trigger id="female_removed_minor">
-            <case stage="0-10">
-                <condition role="target" character="nugi-chan" stage="2" />
-                <condition filter="nugi-chan_bikini" role="target" />
-                <state img="#-Excited.png" marker="nugi_opp_2_Stripped">Hey, you wanna hang with Franchouchou after the show? You can blow off cleanin’ for one night, right?</state>
-            </case>
             <case stage="0-10" priority="500">
                 <condition role="target" character="sakura" stage="2" />
                 <state img="#-Horny.png">Don’t worry Egghead, ~player~ seems like the type who’ll appreciate your beauty no matter if you're all made-up or not.</state>
@@ -4460,6 +4652,11 @@
                 <condition role="target" character="meia" stage="2" />
                 <condition role="other" character="jura" />
                 <state img="#-Shocked.png">Girl’s Love Space Pirates? Is Captain here tellin’ the truth, Blondie? She doesn’t &lt;i&gt;seem&lt;/i&gt; that super cool at first glance.</state>
+            </case>
+            <case stage="0-10">
+                <condition role="target" character="nugi-chan" stage="2" />
+                <test expr="~nugichan.costume~" value="default" />
+                <state img="#-Excited.png" marker="nugi_opp_2_Stripped">Hey, you wanna hang with Franchouchou after the show? You can blow off cleanin’ for one night, right?</state>
             </case>
             <case stage="0-10" target="alice_mgq" targetStage="1">
                 <state img="#-Happy.png">Between your eyeball decorations and your rotten luck, I’m gonna call you Snake Eyes from here on out. That okay, Snake Eyes?</state>
@@ -4593,6 +4790,10 @@
                 <condition role="target" character="natsuki" stage="2" />
                 <state img="#-Happy.png">All of my gals in Franchouchou are open and honest, that how we built our sisterhood of trust! Also I’m not in Franchouchou, that’s a totally different gal who isn’t me.</state>
             </case>
+            <case stage="0-10">
+                <condition role="target" character="chara_dreemurr" stage="3" />
+                <state img="#-Serious.png">Or wait, is ~player~ a danger slut? Please, be careful, ~player~. Take it from me, the thrills are fun, ’til ya get hurt.</state>
+            </case>
             <case stage="0-10" target="human" saidMarker="choices" notSaidMarker="choices02">
                 <state img="#-Rapping.png" marker="choices02">&lt;i&gt;NOPE!&lt;/i&gt;</state>
             </case>
@@ -4614,11 +4815,13 @@
                 <state img="#-Confused.png">I say don’t sweat the small stuff, ~name~, but you can’t take off nothin’ bigger’n ~clothing.ifPlural(~clothing~|a ~clothing~)~?</state>
                 <state img="#-Annoyed.png">I was hopin’ to pick up a groupie or somethin’ here. Way yer takin’ off your ~clothing~, ~name~, I ain’t sure you’re the one.</state>
                 <state img="#-Confused.png">Takin’ off your ~clothing~ ain’t exciting, but it beats bein’ dead.</state>
+                <state img="#-Happy.png">I prefer speed over smarts. ‘Course, that tactic don’t always serve me well. Feel free to do things yer own way.</state>
             </case>
             <case stage="0-2">
                 <state img="#-Smug.png">I coulda got naked in the time it took to remove your ~clothing~! Don’t stall in front of the second fastest biker chick in Dorami.</state>
                 <state img="#-Angry.png">If any prospect showed up wearin’ ~clothing.ifPlural(~clothing~ like those|a ~clothing~ like that)~, I’d’ve sent ‘em straight home.</state>
                 <state img="#-Smug.png">Don’t get cocky, ~name~. Leave the cockiness to me. Overconfidence ain’t failed me twice!</state>
+                <state img="#-Laughing.png">~Name~, I know old people with more hop than you! No seriously, those grandparents were crazy sprightly.</state>
             </case>
             <case stage="0-10" priority="0">
                 <condition filter="drunk" role="target" />
@@ -4635,11 +4838,13 @@
                 <state img="#-Horny.png">Ah whatever. You’re up against me, so you’ll be showin’ us your O face soon!</state>
                 <state img="#-Smug.png">You’d a’ never survived on the mean streets of Saga, ~name~. We played for keeps there.</state>
                 <state img="#-Angry.png">Dorami was a sisterhood. If one of us hadda take off our ~clothing~, we all would! Guess that don’t got much to do with this though.</state>
+                <state img="#-Horny.png">You playin’ hard to get? I’m up for the challenge.</state>
             </case>
             <case stage="6-8">
                 <state img="#-Confused.png">~Clothing.ifPlural(Those|That)~ took so long to take off, I almost died of old age! Aw wait.</state>
                 <state img="#-Laughing.png">~clothing.ifPlural(~Clothing~|A ~clothing~)~? Aw, don’t worry about it, ~name~. Stardom ain’t for everyone.</state>
                 <state img="#-Thinking.png">I’m starting… to get hungry… for &lt;i&gt;minchi&lt;/i&gt;. They got any here?</state>
+                <state img="#-Smug.png">You managed to come all this way without dyin’ once, so I suppose you know what you’re doing. Maybe.</state>
             </case>
         </trigger>
 
@@ -4666,10 +4871,12 @@
                 <state img="#-Horny.png">Why d’ya wanna hold onto your ~clothing~ so much? After all, you can’t take ~clothing.ifPlural('em|it)~ with ya!</state>
                 <state img="#-Horny.png">I ain’t got a problem with how things are turnin’ out.</state>
                 <state img="#-Excited.png">We gettin’ to the good stuff now! Don’t take too long, ~name~, I’m impatient n’ might just rip it all off myself.</state>
+                <state img="#-Excited.png">Take off yer ~clothing~ with some &lt;i&gt;oomph&lt;/i&gt;, dude!</state>
             </case>
             <case stage="0-2">
                 <state img="#-Shocked.png">Awww, yer just takin’ off your ~clothing~? Wait though, that’s good!</state>
                 <state img="#-Smug.png">Hope I ain’t too intimidating for you. Unless the intimidation is making you take off your ~clothing~. Then I hope I’m just the right amount of intimidating.</state>
+                <state img="#-Excited.png">Strip poker involves strippin’! You know what you were gettin’ into, so let’s see some skin.</state>
             </case>
             <case stage="0-10" notSaidMarker="majortom" priority="0">
                 <state img="#-Singing.png" marker="majortom">&lt;i&gt;Ground control to Major ~Clothing~, your circuit’s dead, there’s something wrong!&lt;/i&gt;</state>
@@ -4677,11 +4884,13 @@
             <case stage="3-5">
                 <state img="#-Horny.png">Don’t just “take off” your ~clothing~. Shimmy outta them, all sexual like.</state>
                 <state img="#-Horny.png">Look like I’m rackin’ up the points! N’ by points, I mean dicks.</state>
+                <state img="#-Happy.png">If yer havin’ trouble moving, ~name~, Franchouchou got a sponsorship deal with Saganship Z. Slap some on you and you’ll be right as rain.</state>
             </case>
             <case stage="6-8">
                 <state img="#-Horny.png">Please take pity on the dearly departed and take off somethin’ hot!</state>
                 <state img="#-Horny.png">With my luck I was worried Shades would interrupt me before this part. Well, with my luck, I shoulda been worried I’d die horribly again before this part.</state>
                 <state img="#-Horny.png">Idols probably shouldn’t be super horny for this part, right? Good thing I ain’t an idol &lt;i&gt;or&lt;/i&gt; a zombie! No wait, I gave up on hidin’ the second one.</state>
+                <state img="#-Laughing.png">I was worried I wouldn’t live long enough to see the day.</state>
             </case>
         </trigger>
 
@@ -4724,21 +4933,25 @@
                 <state img="#-Horny.png">Now that’s a sight for sore eyes.</state>
                 <state img="#-Excited.png">Now onto the next one, we still gotta make ~name~ nut!</state>
                 <state img="#-Smug.png">You’re lucky I’m just takin’ yer ~clothing~ n’ not yer life.</state>
+                <state img="#-Horny.png">I’ve been gone for 20 yeahs, so I gotta &lt;i&gt;lot&lt;/i&gt; of naughtiness to catch up on.</state>
             </case>
             <case stage="0-2">
                 <state img="#-Horny.png">That’s the sort of thing I like to see in a man. A lack of~clothing.ifPlural( ~clothing~| ~clothing~s)~.</state>
                 <state img="#-Excited.png">This is what we in the biz call “winning”!</state>
                 <state img="#-Smug.png">The only cock &lt;i&gt;I’ll&lt;/i&gt; ever lose to is the delicious chicken at Drive-in Tori’s! I am a slut for that yakiniku.</state>
+                <state img="#-Horny.png">Still more work to do by this Legendary Kamikaze Squad Leader. Let’s see what more we can feast our eyeballs on.</state>
             </case>
             <case stage="3-5">
                 <state img="#-Excited.png">Heehee! We're gettin’ to the best bits. &lt;i&gt;Your&lt;/i&gt; best bits.</state>
                 <state img="#-Horny.png">I ain’t done with ya yet, ~name~! Ya still got more losin’ to do!</state>
                 <state img="#-Smug.png">If I die, I die. But I aim to die without regrets, n’ that means scorin’ some dick!</state>
+                <state img="#-Thinking.png">Feels like guys don’t wear as much as girls. I don’t give a shit about fashion, and even I’m surprised at the amount of layers I got.</state>
             </case>
             <case stage="6-8">
                 <state img="#-Happy.png">Ya don’t need ~clothing.ifPlural(~clothing~|a ~clothing~)~ to win, ~name~. You only need GUTS!</state>
                 <state img="#-Horny.png">Things’re heating up now! N’ trust me, I dealt with heat before.</state>
                 <state img="#-Smug.png">Oh, I ain’t about to die with any regrets… this time. Now hurry up n’ lose more so I can see ya jerkin’ it!</state>
+                <state img="#-Excited.png">Awww yeah! This was worth comin’ back for.</state>
             </case>
             <case stage="9">
                 <state img="#-Confused.png">Woulda been okay earlier, but now I’m gonna need to see more, ~name~.</state>
@@ -4904,11 +5117,13 @@
                 <state img="#-Excited.png">Hell yeah, we fast approachin’ schlick time!</state>
                 <state img="#-Horny.png">Please please please have forgotten to wear undies.</state>
                 <state img="#-Excited.png">Oh hell yeah, ~name~’s takin’ off her ~clothing~! That’s one of the big ones!</state>
+                <state img="#-Excited.png">Now’s when the real performance starts!</state>
             </case>
             <case stage="0-2">
                 <state img="#-Smug.png">If I was in front of me, I couldn’t wait to get naked neither.</state>
                 <state img="#-Horny.png">Feels like I’m playin’ arcade games on easy mode! ‘Cept it’s still fun.</state>
                 <state img="#-Smug.png">The swagger of us Dorami gals ain’t just for show. Our hits are real.</state>
+                <state img="#-Horny.png">You knew comin’ in that strip poker involved stripping. Let’s see what’s under ~clothing.ifPlural(those|that)~ ~clothing~.</state>
             </case>
             <case stage="0-10" filter="drunk" priority="0">
                 <state img="#-Laughing.png">You sure you can handle that, ~name~? You seem pretty sloshed right now!</state>
@@ -4917,11 +5132,13 @@
                 <state img="#-Happy.png">Moment of truth, nerd. You a winner or a wuss?</state>
                 <state img="#-Horny.png">Come on, ~name~, think a’ yourself as a Dorami prospect. What’re ya gonna do to impress us?</state>
                 <state img="#-Horny.png">&lt;i&gt;Now&lt;/i&gt; yer startin’ to get my attention, ~name~.</state>
+                <state img="#-Happy.png">Unless you’re wearing a bodysuit under there, we’re about to see some skin.</state>
             </case>
             <case stage="6-8">
                 <state img="#-Excited.png">Rip off your ~clothing~! Tear it off!</state>
                 <state img="#-Happy.png">Glad we ain’t gonna have a problem this round, from the looks of things.</state>
                 <state img="#-Horny.png">That ain’t nothin’ piddly. Glad you’re comin’ along for the ride, then.</state>
+                <state img="#-Horny.png">Gotta make the most of the time we have. And making the most is watching sexy gals strip!</state>
             </case>
         </trigger>
 
@@ -4939,7 +5156,9 @@
             <case stage="0-10" target="ryuko" targetStage="3" alsoPlaying="sakura">
                 <state img="#-Thinking.png">Hey Egghead, let’s get shades to design an outfit like that for one of our concerts! Aw, but no way Junko’d go for that. And it’s not appropriate for Shrimpy.</state>
             </case>
-            <case stage="0-10" target="jessie" targetStage="3" alsoPlaying="sakura">
+            <case stage="0-10">
+                <condition role="target" character="jessie" stage="3" />
+                <condition role="other" character="sakura" />
                 <state img="#-Horny.png">Me too, Pornstar. Got any tips for easin’ a virgin dork into her first threesome? Feel free to chime in too, ~player~.</state>
             </case>
             <case stage="0-10">
@@ -5103,20 +5322,24 @@
                 <state img="#-Horny.png">Eheheh! You’re lookin’ better the less ~clothing.toPlural~ you got on!</state>
                 <state img="#-Smug.png">Eheheheh! Does this look like the face of mercy to you, ~name~?</state>
                 <state img="#-Horny.png">There’s still more losin’ you can do, ~name~. I’m gonna enjoy it!</state>
+                <state img="#-Excited.png">Come on, ~name~, don’t give up now! When the going gets tough, the tough get horny!</state>
             </case>
             <case stage="0-2">
                 <state img="#-Horny.png">I joined strip poker to see some tits and bush, so far so good.</state>
                 <state img="#-Smug.png">I dealt with worse gals than you, ~name~. Don’t bet on yer bean goin’ unflicked tonight.</state>
+                <state img="#-Horny.png">I like what I’m seein’, though I think i’d like it even &lt;i&gt;more&lt;/i&gt; if I could see &lt;i&gt;less&lt;/i&gt;.</state>
             </case>
             <case stage="3-5">
                 <state img="#-Happy.png">That ain’t the last piece of clothin’ you’re gonna lose. Biker Babe Saki Nikaidou gonna run roughshod over ya!</state>
                 <state img="#-Smug.png">Did ya really think lil’ ol’ ~name~ was gonna be a problem for this bitch? I ain’t lost even once versus Kurosuke. One time I died though.</state>
                 <state img="#-Smug.png">The moment of truth’s fast approachin’, ~name~. Will ya pull out a victory, or will ya crash n’ burn?</state>
+                <state img="#-Happy.png">You can’t stay in your comfort zone forever, that’s borin’. This is a good start, ~name~!</state>
             </case>
             <case stage="6-8">
                 <state img="#-Horny.png">My heart’s ‘bout to beat outta my chest! Maybe literally, if Shrimpy’s anything to go by.</state>
                 <state img="#-Happy.png">This was worth gettin’ out of the grave for.</state>
                 <state img="#-Horny.png">Gotta say, I like this this new look a’ yours. Almost as good a glow up as what Shades gave me.</state>
+                <state img="#-Smug.png">If if this wasn’t your round, you’re still in this to win this, right, ~name~? I don’t wanna see no quitters!</state>
             </case>
             <case stage="9">
                 <state img="#-Horny.png">Awww, take off another piece? Just for me, pleeeeease?</state>
@@ -5132,6 +5355,11 @@
                 <state img="#-Horny.png">You ain’t lived ’til ya done a topless motorcycle run, ~name~.</state>
                 <state img="#-Happy.png">Don’t draw this part out too much, ~name~. ~Clothing~ or not, this show must go on.</state>
                 <state img="#-Excited.png">KAMIKAZE SQUAD LEADER SAKI NIKAIDOU, REPORTING FOR DUTY! GOOD TO HAVE YOU!</state>
+                <state img="#-Horny.png">Nothin’ under there, right? This’ll be fun to see.</state>
+                <state img="#-Thinking.png">I wish ladies could go around topless like guys can. But I also know how sexy my titties are.</state>
+                <state img="#-Smug.png">If I stare ya down, will Little ~Name~ rise to the challenge, or shrink from duty?</state>
+                <state img="#-Horny.png">Let’s see what yer packin’, ~name~.</state>
+                <state img="#-Horny.png">Small, medium, large. The rider matters more’n the hog.</state>
             </case>
             <case stage="6-10">
                 <state img="#-Horny.png">Must… tear… your clothes offa your chest…</state>
@@ -5150,8 +5378,11 @@
                 <state img="#-Happy.png">Don’t matter to me whether you a guy or a girl. What matters is you get your dick out.</state>
                 <state img="#-Horny.png">Well well well. Well. Aw, I don’t got nothin’ clever to say. Lemme touch your chest.</state>
                 <state img="#-Happy.png">Is there a no gropin’ rule? Oh, there is? Good thing I don’t follow the rules then!</state>
+                <state img="#-Thinking.png">Shades winds up shirtless more often than not. Well, the fan service has to come from somewhere, n’ better him than my sisters.</state>
+                <state img="#-Horny.png">Daaaamn, dude. I like what I’m seeing.</state>
             </case>
-            <case stage="0-10" filter="muscular" priority="0">
+            <case stage="0-10" priority="0">
+                <condition filter="muscular" role="target" />
                 <state img="#-Shocked.png">Woah, you some kinda yak? You here to shake down Shades? Can I help?</state>
                 <state img="#-Horny.png">Damn dude, what kinda regimen you do?</state>
             </case>
@@ -5210,7 +5441,9 @@
         </trigger>
 
         <trigger id="male_small_crotch_is_visible">
-            <case stage="0-10" target="human" alsoPlaying="sakura">
+            <case stage="0-10">
+                <condition role="target" character="human" />
+                <condition role="other" character="sakura" />
                 <state img="#-Happy.png">Okay, bored now. Hey Egghead, you wanna find a back room n’ play thumb wrestling with our clits?</state>
             </case>
             <case stage="0-8 10">
@@ -5442,6 +5675,8 @@ Then he’ll smoke you like a Juul pod&lt;/i&gt;</state>
                 <state img="#-Serious.png">Show off them hooters with pride, girl. Big, small, it don’t matter, so long as ya got the swagger.</state>
                 <state img="#-Horny.png">Don’t matter the size, all tits are good tits! Though if those are actually stinkin’ huge, I might wanna feel a bit.</state>
                 <state img="#-Horny.png">Let’s see if your ~clothing.ifPlural(~clothing~ are|~clothing~ is)~ bein’ deceptive, ~name~.</state>
+                <state img="#-Excited.png">Don’t be afraid to flash them hooters. Ain’t no such thing as a bad titty.</state>
+                <state img="#-Excited.png">Thank you, thank you, &lt;i&gt;thank you&lt;/i&gt;! I ain’t seen living boobies in a long time!</state>
             </case>
             <case stage="9">
                 <state img="#-Masturbating-C.png">Gotta slow down, I’m seein’ headlights!</state>
@@ -5559,6 +5794,10 @@ Then he’ll smoke you like a Juul pod&lt;/i&gt;</state>
             <case stage="9">
                 <state img="#-Horny.png">Lemme get a taste. I just need one a’ them.</state>
             </case>
+            <case stage="0" priority="0">
+                <condition count="0" filter="sakura" />
+                <state img="#-Horny.png">You got that nice lookin’ “What Do I Do?” type body, like Egghead’s got.</state>
+            </case>
         </trigger>
 
         <trigger id="female_chest_is_visible">
@@ -5656,6 +5895,7 @@ Then he’ll smoke you like a Juul pod&lt;/i&gt;</state>
                 <state img="#-Excited.png">The moment of truth! Do the curtains match the drapes? Or did ~name~ just take a weed whacker to the whole shebang? Let’s find out!</state>
                 <state img="#-Horny.png">Is it time ta see ~name~’s vajayjay? The hole? The clit? The flaps? All a’ it?</state>
                 <state img="#-Horny.png">The big reveal! Go ahead n’ do this as slow and sensuous as ya want. Maybe bend over a smidge?</state>
+                <state img="#-Horny.png">Pussies are honest. It’s like they say, cunts are the windows into the soul.</state>
             </case>
             <case stage="0-10" filter="exotic_hair" priority="0">
                 <state img="#-Thinking.png">I’m &lt;i&gt;real&lt;/i&gt; curious what the pussy hair’s gonna be like. Will it be normal? Or some even crazier color, like chartreuse?</state>
@@ -6635,6 +6875,10 @@ Then he’ll smoke you like a Juul pod&lt;/i&gt;</state>
                 <state img="#-Confused.png" marker="HarderToBreathe">&lt;i&gt;Is there anyone out there ‘cause it’s getting harder and harder to breathe!&lt;/i&gt; Huh, why’d that song pop into my head?</state>
             </case>
             <case stage="0-10">
+                <condition role="target" character="chara_dreemurr" />
+                <state img="#-Horny.png">Let’s see if Buttercup’s the demon who calls your name when she comes.</state>
+            </case>
+            <case stage="0-10">
                 <condition filter="tandem" role="target" />
                 <condition role="other" character="sakura" stage="0-7" />
                 <state img="#-Laughing.png">Lookit ~name~, Egghead! That could be us, but you still playin’. Poker, that is. Hurry up n’ lose so we can do that too.</state>
@@ -7010,13 +7254,9 @@ Then he’ll smoke you like a Juul pod&lt;/i&gt;</state>
                 <state img="#-Finished.png">Oh, shoot. I was plannin’ on shoutin’ ~player~’s name &lt;i&gt;later&lt;/i&gt;. Well, we’ll call this one a dress rehearsal, alright?</state>
             </case>
             <case stage="10">
-                <state img="#-Finished.png">Man, all that fapping made me hungry. Wanna get Drive-In Tori?</state>
-                <state img="#-Finished.png">Dang. Now what do I do, just sit around?</state>
-            </case>
-            <case stage="10" priority="0">
-                <condition count="1" filter="human_male" />
-                <condition count="4" gender="female" />
-                <state img="#-Thinking.png">Why ain’t we got any guys here?  ~player~’s gotta be hoarding all the cocks for himself!</state>
+                <state img="#-Finished.png">Woah. That made me feel &lt;i&gt;alive&lt;/i&gt;.</state>
+                <state img="#-Finished.png">I ain’t felt that good in a &lt;i&gt;long-ass&lt;/i&gt; time.</state>
+                <state img="#-Finished.png">Woo, gimme a minute to gather myself. Metaphorically, this time.</state>
             </case>
         </trigger>
 
@@ -7063,12 +7303,56 @@ Then he’ll smoke you like a Juul pod&lt;/i&gt;</state>
                 <condition role="other" character="sakura" sayingMarker="saki_rap_battle" />
                 <state img="#-Annoyed.png">Egghead, don’t embarrass yourself. I’m tryin’ to wing-woman you here! Let’s focus on gettin’ laid— &lt;i&gt;tonight&lt;/i&gt;, not next year!</state>
             </case>
+            <case stage="10" priority="0">
+                <condition count="1" filter="human_male" />
+                <condition count="4" gender="female" />
+                <state img="#-Thinking.png">Why ain’t we got any guys here?  ~player~’s gotta be hoarding all the cocks for himself!</state>
+            </case>
+            <case stage="10">
+                <state img="#-Laughing.png">Man, all that fapping made me hungry. Wanna get Drive-In Tori?</state>
+                <state img="#-Confused.png">Dang. Now what do I do, just sit around?</state>
+                <state img="#-Horny.png">Who came up with the “You lose, you masturbate” rule? I ain’t complainin’, I’m just impressed with that caliber of perviness.</state>
+                <state img="#-Finished.png">Good thing the concert’s not for a hot minute. Us zombies have crazy tough stamina n’ I still need some time to recover!</state>
+                <state img="#-Happy.png" oneShotId="127">Hey ~player~, anyone you wanna invite to this place for some fun times? ‘Course, you’re gonna have to bring ‘em yourself. Ain’t no one your bitch but yourself.</state>
+                <state img="#-Horny.png">Even though I lost, I still get to see other people playin’ with themselves. At the end of the day, that’s a win in my book.</state>
+                <state img="#-Shocked.png">&lt;i&gt;Shit&lt;/i&gt;, I just realized— how am I gonna explain what happened to my makeup to Shades?</state>
+                <state img="#-Confused.png">I feel bad, but I’m gonna have to let Tae take the blame f’r what happened to my makeup. She’s a real sister though. I know she’d play along.</state>
+                <state img="#-Annoyed.png">After all this excitement, the trip back to Kyushu’s gonna be borin’ as shit.</state>
+                <state img="#-Excited.png">Some people think Saga’s the boonies of Japan. But Franchouchou will show ‘em what we’re all about! You oughta come visit sometime, ~player~.</state>
+                <state img="#-Confused.png">I feel like fiddlin’ with somethin’ while I’m just sitting here. Wish my Tamagotchi was still alive.</state>
+                <state img="#-Laughing.png">Maybe I can petition to have strip poker added to the slate at the Kashima Gatalympics. Buuuut then mud might get in some unfortunate places.</state>
+                <state img="#-Thinking.png">I guess it ain’t so surprising I didn’t come out on top tonight. Never once beat Reiko at nothing either.</state>
+                <state img="#-Happy.png">All the old, grizzled bikers have stories ‘bout when they hadda lay down their chopper to avoid an early grave. I &lt;i&gt;don’t&lt;/i&gt; have a story like that.</state>
+                <state img="#-Thinking.png" oneShotId="128">{small}Hmm, I don’t wanna play homewrecker, n’ settlin’ down’s probably what she needed. Plus knowing Reiko, she wears the pants in the house. But then, how do I satisfy my milf lust…&lt;br&gt; {!reset} Uh, nothin’, just talkin’ to myself!</state>
+                <state img="#-Laughing.png">I ain’t too torn up about losing. Last time I jumped into a challenge without thinking, I &lt;i&gt;won&lt;/i&gt; at a helluva cost.</state>
+                <state img="#-Thinking.png">I heard someone say there used to be an arcade here at the Inventory. What happened to it?</state>
+                <state img="#-Thinking.png">Ya know, all us Franchouchou gals talk about how unlucky it was that we all died. But I drove off that cliff on my own. Is that really a case of bad luck?</state>
+                <state img="#-Happy.png">I don’t mind actin’ mature when we gotta impress as idols. But every now and again, I just gotta let my flag fly, ya know?</state>
+                <state img="#-Horny.png">I don’t know what people see in bein’ “normal”. It ain’t normal to frig yerself in front of a bunch a people… but it’s fun.</state>
+                <state img="#-Confused.png">Weird that Shades would let us sneak off in a place like this, or that he hasn’t come looking for me. Almost as if… &lt;i&gt;nah&lt;/i&gt;.</state>
+                <state img="#-Serious.png">I’m glad I ended up turnin’ over a new leaf. I much more prefer beatin’ meat to beatin’ people.</state>
+                <state img="#-Confused.png">How am I gonna tell the other girls I got my butt kicked at poker by a buncha nerds?</state>
+                <state img="#-Shocked.png">I know I made that joke earlier, but what if my vag really was blown off in that explosion? Think it’d have been better to stay dead at that point.</state>
+                <state img="#-Laughing.png">I love Drive-In Tori, so it almost makes sense &lt;i&gt;chicken&lt;/i&gt; would be my downfall.</state>
+            </case>
+            <case stage="10" priority="0">
+                <condition count="1" status="finished" />
+                <state img="#-Annoyed.png">Man, it’s lonely sittin’ here. Someone hurry up n’ nut.</state>
+                <state img="#-Annoyed.png">All a’ us in Franchouchou got shit luck. Look at me, forced to sit here all alone in post-nut clarity.</state>
+                <state img="#-Horny.png">Everyone else is getting turned on n’ I already came. Guess I just gotta get horny again.</state>
+            </case>
         </trigger>
 
         <trigger id="game_over_victory">
             <case stage="1-8" priority="500">
                 <condition role="other" character="sakura" />
+                <condition count="2" filter="zombieland_saga" />
                 <state img="#-Confused.png">Haw! Once again ain’t no one can fuck with Saki— aw shit, I forgot about you Egghead. Guess I fucked up tryin’ ta get ya laid. I’ll make it up to you, I swear.</state>
+            </case>
+            <case stage="0-8" priority="500">
+                <condition count="3-4" filter="zombieland_saga" />
+                <state img="#-Laughing.png">Now the rest a’ you numbskulls know why &lt;i&gt;I’m&lt;/i&gt; the leader! Aw, I’m joshin’ ya.You know I love ya girls.</state>
+                <state img="#-Confused.png">Was hoping I could get us all laid, but looks like I was too competitive f’r that. ~Player~ even seemed like a decent ~human.ifMale(guy, but he’s|chick, but she’s)~ down for the count. Well, maybe next time.</state>
             </case>
             <case stage="0">
                 <state img="#-Confused.png">I won, but now I’m sweaty and horny as Hell. Definitely my second most pyrric victory ever.</state>
@@ -7084,7 +7368,19 @@ Then he’ll smoke you like a Juul pod&lt;/i&gt;</state>
                 <condition role="target" character="human" />
                 <condition role="self" notSaidMarker="humanlost" />
                 <condition role="other" character="sakura" />
+                <condition count="2" filter="zombieland_saga" />
                 <state img="custom:#-SakiSaku">We all got to get off, ‘cept for poor ~player~ here. Boy, you look really stuffed up there. Might be a two gal job. Whaddya say, Egghead?</state>
+            </case>
+            <case stage="10" priority="900">
+                <condition role="target" character="human" />
+                <condition count="3-4" filter="zombieland_saga" />
+                <state img="#-Horny.png">Just the kinda luck us Franchouchou girls expect, huh? At least ~player~ seems like less of a nerd than we expected. Hope to see more of you, ~player.ifMale(dude|girl)~.</state>
+            </case>
+            <case stage="10" priority="900">
+                <condition role="target" character="human" />
+                <condition count="3-4" filter="zombieland_saga" />
+                <condition role="other" character="sakura" />
+                <state img="custom:#-SakiSaku">Let’s mosey backstage n’ gussy up ‘fore Shades figures out we’re missing. Maybe after the concert, we can see more of ~player~.</state>
             </case>
             <case stage="10" priority="500">
                 <condition filter="human_female" role="target" character="human" />
@@ -7101,6 +7397,7 @@ Then he’ll smoke you like a Juul pod&lt;/i&gt;</state>
             <case stage="10" priority="500">
                 <condition role="self" saidMarker="humanlost" />
                 <condition role="other" character="sakura" stage="9" />
+                <condition count="2" filter="zombieland_saga" />
                 <state img="#-Horny.png">I feel like I could go another round. Too bad ~player~ looks tapped out. Ah well, wanna find a back room, just the two of us, Egghead?</state>
                 <state img="#-Horny.png">Wow, ~player~’s spent. Too bad too, I coulda gone another round. Well, let’s find a love hotel for us two, Egghead.</state>
                 <state img="#-Horny.png">I could go another round, and from the looks of things, so could you Egghead. ~Player~? Naw, you down for the count. Oh well, looks we’re singin’ by ourselves tonight.</state>
@@ -7111,6 +7408,12 @@ Then he’ll smoke you like a Juul pod&lt;/i&gt;</state>
                 <condition count="1" filter="ryuji" />
                 <condition role="target" character="human" />
                 <state img="#-Happy.png">You did a damn good job whuppin’ our asses, ~player~. Too bad you didn’t get off, horny as you look! Maybe after the concert I can help with that! …Um, are those nerds even paying attention to us?</state>
+            </case>
+            <case stage="10">
+                <condition count="3-4" filter="zombieland_saga" />
+                <condition count="0" role="target" character="human" />
+                <state img="#-Horny.png">Since we’re zombies, we’ll be ready to go another round soon enough. ~Player~… won’t be. Oh well. Any of you girls wanna fool around backstage, then?</state>
+                <state img="#-Confused.png">That was fun, but I still want more. Pretty clear that ~player~ ain’t gonna be able to keep up with us. Maybe us zombies should just stick to ourselves, huh?</state>
             </case>
             <case stage="10">
                 <condition role="target" character="kira" />
