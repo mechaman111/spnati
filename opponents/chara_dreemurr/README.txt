@@ -366,7 +366,8 @@ NAYRU
 -Responds to Nayru getting possessed.
 
 NEPTUNE
--Responds to Neptune having to strip her first layer.
+-Responds to Neptune having to stripping layer 1.
+-Responds to Neptune stipping layer 1.
 
 REMILIA
 -Responds the first time Remilia's maid uses her time-stop powers to strip her.
@@ -382,6 +383,7 @@ SAKI (ZLS)
 -Responds to Saki revealing she's a zombie.
 -Responds to Saki's head falling off.
 -Responds to Saki removing her makeup via water bucket.
+-Back-and-forth banter with Saki when Chara loses and must strip.
 
 SAKURA
 -Responds to Sakura's head falling off.
