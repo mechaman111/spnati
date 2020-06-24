@@ -1132,9 +1132,6 @@ function hotReloadEpilogue () {
   var epilogueGender = epiloguePlayer.epilogue.gender;
   var player = epiloguePlayer.epilogue.player;
 
-  /* Clean up the old EpiloguePlayer. */
-  clearEpilogue();
-
   player.fetchBehavior()
     /* Success callback.
     * 'this' is bound to the Opponent object.
@@ -1149,6 +1146,9 @@ function hotReloadEpilogue () {
       });
 
       epilogue = parseEpilogue(player, endingElem);
+
+      /* Clean up the old EpiloguePlayer. */
+      clearEpilogue();
 
       loadEpilogue(epilogue, curScene);
       $epilogueHotReloadBtn.attr('disabled', false);

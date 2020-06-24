@@ -143,7 +143,7 @@ function initialSetup () {
      * Also ensure that the config file is loaded before initializing Sentry,
      * which requires the commit SHA.
      */
-    loadConfigFile().then(loadBackgrounds, loadBackgrounds).then(function () {
+    loadConfigFile().then(loadBackgrounds).then(function () {
         loadVersionInfo();
         loadGeneralCollectibles();
         loadSelectScreen();
@@ -253,6 +253,9 @@ function loadVersionInfo () {
         $('.substitute-version-time').text('(updated '+last_update_string+')');
 
         $('.version-button').click(showVersionModal);
+    }).catch(function (err) {
+        console.error("Failed to load version info");
+        captureError(err);
     });
 }
 
@@ -375,6 +378,9 @@ function loadConfigFile () {
             includedOpponentStatuses[$(this).text()] = true;
             console.log("Including", $(this).text(), "opponents");
         });
+    }).catch(function (err) {
+        console.error("Failed to load configuration");
+        captureError(err);
     });
 }
 
@@ -383,8 +389,9 @@ function loadGeneralCollectibles () {
         $xml.children('collectible').each(function (idx, elem) {
             generalCollectibles.push(new Collectible($(elem), undefined));
         });
-    }, function (err) {
-        console.error("Error loading general collectibles: " + err);
+    }).catch(function (err) {
+        console.error("Failed to load general collectibles");
+        captureError(err);
     });
 }
 
@@ -1061,7 +1068,7 @@ function immediatePromise() {
 function fetchXML(url) {
     return fetch(url, { method: "GET" }).then(function (resp) {
         if (resp.status < 200 || resp.status > 299) {
-            return Promise.reject(resp);
+            throw new Error("Fetching " + url + " failed with error " + resp.status + ": " + resp.statusText);
         } else {
             return resp.text();
         }
@@ -1088,7 +1095,7 @@ function fetchCompressedURL(baseUrl) {
             /* Fallback to fetching uncompressed */
             return fetchXML(baseUrl);
         } else {
-            return Promise.reject(resp);
+            throw new Error("Fetching " + baseUrl + ".gz failed with error " + resp.status + ": " + resp.statusText);
         }
     });
 }

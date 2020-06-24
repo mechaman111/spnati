@@ -221,10 +221,15 @@ function loadBackgrounds() {
         if (defaultBackgroundID && backgrounds[defaultBackgroundID]) {
             defaultBackground = backgrounds[defaultBackgroundID];
         }
+    }).catch(function (err) {
+        console.error("Could not load backgrounds:");
+        captureError(err);
     }).then(
-        save.loadOptionsBackground.bind(save, undefined),
         save.loadOptionsBackground.bind(save, undefined)
-    );
+    ).catch(function (err) {
+        console.error("Could not activate background in player options:");
+        captureError(err);
+    });
 }
 
 /**********************************************************************

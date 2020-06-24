@@ -121,18 +121,19 @@ function compileBaseErrorReport(userDesc, bugType) {
     return data;
 }
 
-window.addEventListener('error', function (ev) {
-    var errData = {
-        'date': (new Date()).toISOString(),
-        'message': ev.message,
-        'filename': ev.filename,
-        'lineno': ev.lineno,
+function logError(err, message, fileName, lineNum) {
+    var errData = { 'date': (new Date()).toISOString() };
+    if (err) {
+        errData.type = err.name;
+        errData.stack = err.stack;
 
-    }
+        if (!message) message = err.message;
+        if (!fileName) fileName = err.fileName;
+        if (!lineNum) lineNum = err.lineNumber;
 
-    if (ev.error) {
-        errData.type = ev.error.name;
-        errData.stack = ev.error.stack;
+        errData.message = message;
+        errData.filename = fileName;
+        errData.lineno = lineNum;
     }
 
     jsErrors.push(errData);
@@ -150,7 +151,36 @@ window.addEventListener('error', function (ev) {
             },
         });
     }
+}
+
+/** Helper function for manually logging / capturing errors. */
+function captureError(err) {
+    console.error(err);
+    
+    if (!(err instanceof Error)) {
+        return;
+    }
+
+    logError(err);
+    if (SENTRY_INITIALIZED) Sentry.captureException(err);
+}
+
+
+window.addEventListener('error', function (ev) {
+    /* Sentry has its own listener for capturing exceptions, so we don't need
+     * captureException here
+     */
+    logError(ev.error, ev.message, ev.filename, ev.lineno);
 });
+
+window.addEventListener('onunhandledrejection', function (ev) {
+    if (!(ev.reason instanceof Error)) {
+        return;
+    }
+
+    logError(ev.reason);
+});
+
 
 /*
  * Bug Report Modal functions
@@ -338,14 +368,15 @@ function showFeedbackReportModal($fromModal) {
         } else {
             return fetch(FEEDBACK_ROUTE + p.id, { method: "GET" }).then(function (resp) {
                 if (resp.status < 200 || resp.status > 299) {
-                    return Promise.reject(resp);
+                    throw new Error("Fetching " + FEEDBACK_ROUTE + p.id + " failed with error " + resp.status + ": " + resp.statusText);
                 } else {
                     return resp.json();
                 }
             }).then(function(data) {
                 p.feedbackData = data;
-            }, function() {
+            }).catch(function (err) {
                 console.error("Failed to get feedback message data for " + p.id);
+                captureError(err);
             });
         }
     })).then(function() {

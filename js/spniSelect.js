@@ -345,7 +345,10 @@ function loadListingFile () {
                 outstandingLoads++;
                 totalLoads++;
                 opponentMap[id] = oppDefaultIndex++;
-                loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus).then(onComplete);
+                loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus).then(onComplete).catch(function (err) {
+                    console.error("Could not load metadata for " + id + ":");
+                    captureError(err);
+                });
             }
         });
     });
@@ -360,8 +363,9 @@ function loadOpponentMeta (id, status, releaseNumber, highlightStatus) {
 
     return fetchXML('opponents/' + id + '/' + metaFile).then(function($xml) {
         return new Opponent(id, $xml, status, releaseNumber, highlightStatus);
-    }, function() {
-        console.log("Failed reading \""+id+"\"");
+    }, function(err) {
+        console.error("Failed reading \""+id+"\":");
+        captureError(err);
         return null;
     });
 }
@@ -1523,6 +1527,11 @@ function updateOpponentCountStats(opponentArr, uiElements) {
                 }
                 uiElements.lineLabels[idx].html(opp.uniqueLineCount);
                 uiElements.poseLabels[idx].html(opp.posesImageCount);
+            }).catch(function (err) {
+                console.error("Could not fetch counts for " + opp.id);
+                captureError(err);
+                uiElements.lineLabels[idx].html("???");
+                uiElements.poseLabels[idx].html("???");
             });
         }
         else {

@@ -639,6 +639,9 @@ Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
  * 
  * @returns {Promise<void>} A Promise that resolves after all loading for the
  * selected costume is complete.
+ * 
+ * @throws The returned Promise will reject if the costume data cannot be fetched
+ * or if an error is encountered during loading.
  */
 Opponent.prototype.loadAlternateCostume = function () {
     if (this.alt_costume) {
@@ -702,8 +705,9 @@ Opponent.prototype.loadAlternateCostume = function () {
         }
 
         this.alt_costume.tags = costumeTags;
-    }.bind(this), function () {
+    }.bind(this)).catch(function (err) {
         console.error("Failed to load alternate costume: "+this.selected_costume);
+        throw err;
     }.bind(this));
 }
 
@@ -721,6 +725,9 @@ Opponent.prototype.unloadAlternateCostume = function () {
  * 
  * @returns {Promise<void>} A Promise that resolves after all collectibles are
  * loaded.
+ * 
+ * @throws The returned Promise will reject if the collectibles for this character
+ * cannot be fetched or if loading them causes an error.
  */
 Opponent.prototype.loadCollectibles = function () {
     if (!this.has_collectibles || this.collectibles !== null) {
@@ -738,8 +745,9 @@ Opponent.prototype.loadCollectibles = function () {
         this.has_collectibles = this.collectibles.some(function (c) {
             return !c.status || includedOpponentStatuses[c.status];
         });
-    }.bind(this), function () {
+    }.bind(this)).catch(function (err) {
         console.error("Error loading collectibles for "+this.id);
+        throw err;
     }.bind(this));
 }
 
@@ -902,10 +910,8 @@ Opponent.prototype.fetchBehavior = function() {
  * Loads and parses the start of the behaviour XML file of the
  * given opponent.
  *
- * Returns a Promise that resolves after all loading is complete.
+ * @returns {Promise<void>} A Promise that resolves after all loading is complete.
  * This includes calls to loadAlternateCostume() and onSelected().
- * 
- * @returns {Promise<void>}
  */
 Opponent.prototype.loadBehaviour = function (slot, individual) {
     this.slot = slot;
@@ -919,7 +925,16 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             p = immediatePromise();
         }
 
-        return p.then(function () { this.onSelected(individual); }.bind(this));
+        return p.then(function () {
+            this.onSelected(individual);
+        }.bind(this)).catch(function(err) {
+            /* Handle any errors that loadAlternateCostume might throw. */
+            console.error("Failed to load " + this.id);
+            captureError(err);
+
+            delete players[this.slot];
+            updateSelectionVisuals();
+        }.bind(this));
     }
 
     // start loading collectibles in parallel with behaviour.xml
@@ -1040,10 +1055,6 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             } else {
                 return this.loadXMLStages();
             }
-        }.bind(this), function() {
-            /* Error callback. */
-            console.log("Failed reading \""+this.id+"\" behaviour.xml");
-            delete players[this.slot];
         }.bind(this)).then(function () {
             /* Wait for loading of all other stuff to complete: */
             if (this.selected_costume) {
@@ -1051,9 +1062,15 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             }
 
             return collectiblesPromise;
-        }.bind(this)).then(function () {
-            /* Loading complete: */
-            this.onSelected(individual);
+        }.bind(this)).then(
+            this.onSelected.bind(this, individual)
+        ).catch(function(err) {
+            /* Error callback. */
+            console.error("Failed to load " + this.id);
+            captureError(err);
+            
+            delete players[this.slot];
+            updateSelectionVisuals();
         }.bind(this));
 }
 
