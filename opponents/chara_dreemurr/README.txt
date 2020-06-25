@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited June 14 2020
+README edited June 22 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -43,8 +43,10 @@ justification in tagging her as Large Breasts or even Huge Breasts, but I felt t
 	-UPDATE May 31 2020 - Based on feedback, the formerly Medium Breasts tag was updated to Large Breasts due to - despite using a size that is the upper range of medium characters -
 Chara's body frame would have her in the updated Large Breasts category. I guess this sort of lets me use the 'making numbers grow' justification?
 
-CLOTHING DESTRUCTION - UPDATE MAY 31 2020 - Based on feedback, added Clothing Destruction tab to stages 2, 6, and 7 (Lost Belt, Lost Pants, Lost Bra, all of which Chara uses her knife
+CLOTHING DESTRUCTION - UPDATE MAY 31 2020 - Based on feedback, added Clothing Destruction tag to stages 2, 6, and 7 (Lost Belt, Lost Pants, Lost Bra, all of which Chara uses her knife
 to strip.
+	-UPDATE JUNE 16 - Based on testing, characters were telling Chara to stop destroying her clothes, when stripping something she was not destroying but came after something she had.
+In light of this, I removed the Clothing Destruction tag from all stages and created hidden cases to apply/remove it in the relevant places.
 
 SUPERNATURAL - Post-Genocide, Chara is a literal demon, powerful enough to destroy the entire universe - multiple sources of evidence in Undertale point to that it is indeed
 the whole universe, not just 'the world' or even just 'the Underground' - and if that's not worth a Supernatural tag I do not know what is.
@@ -220,11 +222,15 @@ CHARACTER INTERACTIONS
 Below follows a list of Chara's specific interactions with other opponents. Note: Chara's reactions to an opponent being selected on the pregame screen are NOT listed here.
 Most, if not all, of these come with a documented Marker. If you find one without a Marker, let me know!
 
+9S
+-Responds to 9S having to strip.
+
 AELLA
 -Responds to Aella's question about adventures. For some reason, this is also a Pinkie Pie case?!?!
 -Responds to Aella asking Chara if she's a demon.
 -Responds to Aella warning Chara to behave.
 -Responds to Aella mentioning she has sewing magic.
+-Responds to Aella saying Chara looks good for an animate corpse.
 
 AIMEE
 -Responds to Aimee shooting her clothes off.
@@ -237,6 +243,7 @@ AMALIA
 AMY
 -Responds to Amy's planar form.
 -Responds to Amy losing one hand, where she references Undertale's character Muffet.
+-Responds to Amy losing a second hand.
 -Back-and-forth banter with Amy when Chara loses and must strip.
 -Responds to Amy losing and having to masturbate.
 -Responds to Chara herself losing while Amy is still in.
@@ -313,6 +320,9 @@ KYU
 L'ARACHEL
 -Responds to L'Arachel's staff breaking.
 
+LUCY
+-Responds to Lucy attempting to cheat, targeting the Must Strip, Removing, and Removed cases for it.
+
 MAKI
 -Responds to Maki's question about favorite foods.
 
@@ -322,6 +332,7 @@ MARINETTE
 MEGUMIN
 -Responds to Megumin's question about all-seeing demons.
 -Responds to Megumin must-strip on Fully Clothed with a comment about Explosion's ability to 1-shot things.
+-Responds to Megumin's comment about Chara being a troublesome demon or not.
 
 MEIA/REVY
 -Responds to Meia and Revy fighting.
@@ -354,6 +365,10 @@ NAVI
 NAYRU
 -Responds to Nayru getting possessed.
 
+NEPTUNE
+-Responds to Neptune having to stripping layer 1.
+-Responds to Neptune stipping layer 1.
+
 REMILIA
 -Responds the first time Remilia's maid uses her time-stop powers to strip her.
 
@@ -368,6 +383,7 @@ SAKI (ZLS)
 -Responds to Saki revealing she's a zombie.
 -Responds to Saki's head falling off.
 -Responds to Saki removing her makeup via water bucket.
+-Back-and-forth banter with Saki when Chara loses and must strip.
 
 SAKURA
 -Responds to Sakura's head falling off.
@@ -396,6 +412,7 @@ YUELIA
 -Responds to Yuelia's question about fetishes - since Chara is tagged MEAN she gets the question about Edging.
 -Responds to Yuelia transforming from a butterfly.
 -Responds to Yuelia magic-ing away her cloak.
+-Responds to random questions about: Lauren, Ophelia.
 
 YUKARI
 -Responds to Yukari revealing her disguise.
@@ -412,8 +429,8 @@ ZONE-TAN
 PLANNED FEATURES
 -------------------------------------------------------------------------------------------
 
--Huge Generics Upgrade. Currently most are at ~5, some at 3. Gotta bump those numbers up, those are rookie numbers! <-Bumping up of rookie numbers is in progress.
--I would like to add a sex scene to the epilogue. Just have to get the writing right.
+-I would like to add a sex scene to the epilogue. Just have to get the writing right. Though I am having second thoughts about that. I've done a lot of work on the new epilogue but
+I don't want to 'sunk cost' myself. Not every epilogue needs to be a sex scene.
 
 -------------------------------------------------------------------------------------------
 PLANNED CHARACTER INTERACTIONS
@@ -421,10 +438,9 @@ PLANNED CHARACTER INTERACTIONS
 
 Planned interactions not yet implemented for any number of reasons.
 
--Narrator Chara indicates Chara used to knit. Maybe tie in to Aella's 'sewing magic' remarks somehow?
 -Narrator Chara indicates Chara used to like gardening. Something with this?
 -Chara embodies the feeling you get when a number grows, among them 'gold' ie currency. Something with Anna, maybe?
--Lucy's attempt to cheat at low layers.
+-A 'spider donut, don't worry, spider didn't' joke with Amy.
 
 -------------------------------------------------------------------------------------------
 MISC
