@@ -377,7 +377,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 		{
 			const int Threshold = 20;
 			int count = 0;
-			List<Character> characters = CharacterDatabase.Characters.ToList();
+			List<Character> characters = CharacterDatabase.FilteredCharacters.ToList();
 			characters.Shuffle();
 			foreach (Character c in characters)
 			{
@@ -412,7 +412,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			const int Threshold = 20;
 			CharacterHistory history = CharacterHistory.Get(_character, false);
 			LineWork current = history.Current;
-			List<Character> characters = CharacterDatabase.Characters.ToList();
+			List<Character> characters = CharacterDatabase.FilteredCharacters.ToList();
 			characters.Shuffle();
 			int count = 0;
 			foreach (Character c in characters)

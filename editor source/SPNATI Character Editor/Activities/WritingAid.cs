@@ -94,7 +94,7 @@ namespace SPNATI_Character_Editor.Activities
 			_activated = true;
 			splitContainer1.Panel2Collapsed = true;
 			_maxSuggestions = 0;
-			foreach (Character c in CharacterDatabase.Characters)
+			foreach (Character c in CharacterDatabase.FilteredCharacters)
 			{
 				if (c.FolderName == "human" || c == _character)
 				{
@@ -170,7 +170,7 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			else
 			{
-				possibleCharacters.AddRange(CharacterDatabase.Characters);
+				possibleCharacters.AddRange(CharacterDatabase.FilteredCharacters);
 			}
 
 			List<Tuple<Character, Situation>> suggestions = new List<Tuple<Character, Situation>>();

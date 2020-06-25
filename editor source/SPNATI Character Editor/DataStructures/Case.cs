@@ -2310,7 +2310,7 @@ namespace SPNATI_Character_Editor
 			{
 				tag = tag.Substring(5);
 			}
-			else if (tag != null && tag.StartsWith("opponent_"))
+			else if (tag != null && tag.StartsWith("opponent_") && tag != "opponent_selected")
 			{
 				tag = tag.Substring(9);
 			}
@@ -2362,6 +2362,10 @@ namespace SPNATI_Character_Editor
 				else if (tag == "game_over_defeat")
 				{
 					return "game_over_victory";
+				}
+				else if (tag == "opponent_selected")
+				{
+					return "selected";
 				}
 			}
 

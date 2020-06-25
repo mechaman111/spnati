@@ -219,7 +219,7 @@ namespace SPNATI_Character_Editor
 					foreach (Sprite sprite in pose.Sprites)
 					{
 						string path = sprite.Src;
-						if (path.StartsWith(_character.FolderName + "/"))
+						if (!string.IsNullOrEmpty(path) && path.StartsWith(_character.FolderName + "/"))
 						{
 							path = path.Substring(_character.FolderName.Length + 1);
 							customPoseAssets.Add(path);

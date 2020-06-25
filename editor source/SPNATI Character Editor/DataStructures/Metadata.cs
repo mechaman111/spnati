@@ -231,7 +231,7 @@ namespace SPNATI_Character_Editor
 
 	public class EpilogueMeta
 	{
-		[DefaultValue("")]
+		[DefaultValue("online")]
 		[XmlAttribute("status")]
 		public string Status;
 
