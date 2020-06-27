@@ -159,7 +159,7 @@ namespace SPNATI_Character_Editor
 		}
 		public void MarkBannerAsDisplayed()
 		{
-			LastGoalBanner = DateTime.UtcNow.Date;
+			LastGoalBanner = DateTime.UtcNow;
 		}
 
 		/// <summary>
