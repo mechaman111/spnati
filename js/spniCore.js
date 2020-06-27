@@ -975,9 +975,8 @@ function showImportModal() {
 
 function showResortModal() {
     var playedCharacters = save.getPlayedCharacterSet();
-    
-    /* NOTE: Vis is a slepy boi */
-    if (RESORT_ACTIVE && playedCharacters.length >= 30) {
+
+    if (RESORT_ACTIVE && playedCharacters.length >= 65) {
         if (!save.hasShownResortModal()) {
             $resortModal.modal('show');
         }
