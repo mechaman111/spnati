@@ -181,6 +181,12 @@ function initialSetup () {
              */
             save.load();
             updateTitleGender();
+
+            if (RESORT_ACTIVE && save.getPlayedCharacterSet().length >= 65) {
+                $(".title-resort-button").show();
+            } else {
+                $(".title-resort-button").hide();
+            }
         },
         function () {
             if (USAGE_TRACKING && !SENTRY_INITIALIZED) sentryInit();
@@ -980,8 +986,10 @@ function showResortModal() {
         if (!save.hasShownResortModal()) {
             $resortModal.modal('show');
         }
+        $(".title-resort-button").show();
         save.setResortModalFlag(true);
     } else {
+        $(".title-resort-button").hide();
         save.setResortModalFlag(false);
     }
 }
