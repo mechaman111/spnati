@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited June 19 2020
+README edited June 27 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -222,6 +222,9 @@ CHARACTER INTERACTIONS
 Below follows a list of Chara's specific interactions with other opponents. Note: Chara's reactions to an opponent being selected on the pregame screen are NOT listed here.
 Most, if not all, of these come with a documented Marker. If you find one without a Marker, let me know!
 
+9S
+-Responds to 9S having to strip.
+
 AELLA
 -Responds to Aella's question about adventures. For some reason, this is also a Pinkie Pie case?!?!
 -Responds to Aella asking Chara if she's a demon.
@@ -293,6 +296,9 @@ FLORINA
 PRINCESS JASMINE
 -Responds to Princess Jasmine revealing her identity.
 
+JASON
+-Responds to Jason having to strip the first time.
+
 JOETTA
 -Responds to the first time Joetta does a 'sleight of hand' strip.
 -Responds to Joetta's Hand=Any Stage jokes that contain puns.
@@ -363,7 +369,7 @@ NAYRU
 -Responds to Nayru getting possessed.
 
 NEPTUNE
--Responds to Neptune having to strip her first layer.
+-Back and forth between Chara and Neptune as either one loses and must strip.
 
 REMILIA
 -Responds the first time Remilia's maid uses her time-stop powers to strip her.
@@ -379,6 +385,7 @@ SAKI (ZLS)
 -Responds to Saki revealing she's a zombie.
 -Responds to Saki's head falling off.
 -Responds to Saki removing her makeup via water bucket.
+-Back-and-forth banter with Saki when Chara loses and must strip.
 
 SAKURA
 -Responds to Sakura's head falling off.
@@ -407,6 +414,7 @@ YUELIA
 -Responds to Yuelia's question about fetishes - since Chara is tagged MEAN she gets the question about Edging.
 -Responds to Yuelia transforming from a butterfly.
 -Responds to Yuelia magic-ing away her cloak.
+-Responds to random questions about: Lauren, Ophelia.
 
 YUKARI
 -Responds to Yukari revealing her disguise.
@@ -423,8 +431,8 @@ ZONE-TAN
 PLANNED FEATURES
 -------------------------------------------------------------------------------------------
 
--Huge Generics Upgrade. Currently most are at ~5, some at 3. Gotta bump those numbers up, those are rookie numbers! <-Bumping up of rookie numbers is in progress.
--I would like to add a sex scene to the epilogue. Just have to get the writing right.
+-I would like to add a sex scene to the epilogue. Just have to get the writing right. Though I am having second thoughts about that. I've done a lot of work on the new epilogue but
+I don't want to 'sunk cost' myself. Not every epilogue needs to be a sex scene.
 
 -------------------------------------------------------------------------------------------
 PLANNED CHARACTER INTERACTIONS

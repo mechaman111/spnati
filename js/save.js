@@ -519,7 +519,11 @@ Save.prototype.getPlayedCharacterSet = function () {
 Save.prototype.savePlayedCharacterSet = function (set) {
     /* Get unique characters in set. */
     var o = {};
-    set.forEach(function (v) { o[v] = true; });
+    set.forEach(function (v) {
+        if (loadedOpponents.some(function (pl) { return !pl.status && pl.id === v })) {
+            o[v] = true;
+        }
+    });
 
     this.setItem("playedCharacters", Object.keys(o));
 }

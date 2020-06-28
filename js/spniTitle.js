@@ -70,7 +70,7 @@ var CANDY_LIST = [
 */
 
 /* SUMMER EVENT */
-
+/*
     "reskins/juri_summer/0-calm.png",
     "reskins/juri_summer/0-horny.png",
     "reskins/juri_summer/1-excited.png",
@@ -115,8 +115,8 @@ var CANDY_LIST = [
     "reskins/summertime_sayaka/1-calm.png",
     "reskins/summertime_sayaka/2-bored.png",
     "reskins/summertime_sayaka/3-awkward.png",
+*/
 
-/*
     "9s/0-happy.png",
     "9s/1-excited.png",
     "9s/2-clever.png",
@@ -273,7 +273,7 @@ var CANDY_LIST = [
     "zone-tan/1-explain.png",
     "zone-tan/1-smirk.png",
     "zone-tan/2-stroking.png",
-*/
+
 ];
 
 var clothingChoices = [];
@@ -526,7 +526,7 @@ function setPlayerTags () {
 function validateTitleScreen () {
     /* determine the player's name */
     var playerName = '';
-    
+
 	if ($nameField.val() != "") {
         playerName = $nameField.val();
 	} else if (humanPlayer.gender == "male") {
@@ -534,13 +534,13 @@ function validateTitleScreen () {
 	} else if (humanPlayer.gender == "female") {
         playerName = 'Missy';
 	}
-    
+
     // Nuke all angle-brackets
     playerName = playerName.replace(/<|>/g, '');
-    
+
     humanPlayer.first = playerName;
     humanPlayer.label = playerName;
-    
+
 	$gameLabels[HUMAN_PLAYER].html(humanPlayer.label);
 
 	/* count clothing */
@@ -572,7 +572,7 @@ function validateTitleScreen () {
 
     save.savePlayer();
     console.log(players[0]);
-    
+
     updateSelectionVisuals();
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
@@ -648,7 +648,7 @@ function selectTitleCandy() {
 	var candy2 = CANDY_LIST[getRandomNumber(0, CANDY_LIST.length)];
 
 
-    
+
     while (candy1.slice(0, candy1.lastIndexOf("/")) == candy2.slice(0, candy2.lastIndexOf("/"))) {
 		candy2 = CANDY_LIST[getRandomNumber(0, CANDY_LIST.length)];
 	}

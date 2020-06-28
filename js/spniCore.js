@@ -158,6 +158,11 @@ function initialSetup () {
         updateTitleGender();
 
         if (USAGE_TRACKING && !SENTRY_INITIALIZED) sentryInit();
+        if (RESORT_ACTIVE && save.getPlayedCharacterSet().length >= 65) {
+            $(".title-resort-button").show();
+        } else {
+            $(".title-resort-button").hide();
+        }
     });
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
@@ -938,14 +943,15 @@ function showImportModal() {
 
 function showResortModal() {
     var playedCharacters = save.getPlayedCharacterSet();
-    
-    /* NOTE: Vis is a slepy boi */
-    if (RESORT_ACTIVE && playedCharacters.length >= 30) {
+
+    if (RESORT_ACTIVE && playedCharacters.length >= 65) {
         if (!save.hasShownResortModal()) {
             $resortModal.modal('show');
         }
+        $(".title-resort-button").show();
         save.setResortModalFlag(true);
     } else {
+        $(".title-resort-button").hide();
         save.setResortModalFlag(false);
     }
 }
