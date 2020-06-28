@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited June 22 2020
+README edited June 27 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -296,6 +296,9 @@ FLORINA
 PRINCESS JASMINE
 -Responds to Princess Jasmine revealing her identity.
 
+JASON
+-Responds to Jason having to strip the first time.
+
 JOETTA
 -Responds to the first time Joetta does a 'sleight of hand' strip.
 -Responds to Joetta's Hand=Any Stage jokes that contain puns.
@@ -366,8 +369,7 @@ NAYRU
 -Responds to Nayru getting possessed.
 
 NEPTUNE
--Responds to Neptune having to stripping layer 1.
--Responds to Neptune stipping layer 1.
+-Back and forth between Chara and Neptune as either one loses and must strip.
 
 REMILIA
 -Responds the first time Remilia's maid uses her time-stop powers to strip her.

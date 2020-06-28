@@ -582,7 +582,7 @@ Chara has played at least once.</note>
         <note id="212">Chara responds to the player having stripped while she is throwing the game.</note>
         <note id="161">Chara responds to the player having stripped after activating Hard Mode.</note>
         <note id="160">Chara responds to the player having stripped while in a Hard Mode 1v1 with them.</note>
-        <note id="354">Generic. Player responds to the Player having stripped.</note>
+        <note id="354">Generic. Player responds to the Player having stripped. This is slightly higher priority to cut down on repeats, while still having fallbacks if the player somehow exhausts these but does not trigger anything else.</note>
         <note id="391">Chara responds to the player having stripped and no longer having only lost accessories.</note>
         <note id="392">Chara responds to the player having stripped and no longer being covered by major articles.</note>
         <note id="11">Chara responds to the player being the first to be exposed, after having held a large lead earlier.</note>
@@ -1691,8 +1691,8 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1598">Chara's first masturbation, unhappy side.</note>
         <note id="1599">Chara's first masturbation, happy side.</note>
         <note id="1600">Counts how long Chara has masturbated.</note>
-        <note id="1606">Chara masturbates, vocal.</note>
-        <note id="1605">Chara masturbates, nonvocal.</note>
+        <note id="1606">Chara masturbates, verbal.</note>
+        <note id="1605">Chara masturbates, nonverbal.</note>
         <note id="1607">Resets some epilogue markers.</note>
         <note id="1608">Detects if the player was a female in the epilogue last time.</note>
         <note id="1609">Detects if the player was a male in the epilogue last time.</note>
@@ -1718,6 +1718,16 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1630">Ongoing chat between Saki and Chara; Chara losing version.</note>
         <note id="1631">Ongoing chat between Saki and Chara; Chara losing version.</note>
         <note id="1632">Chara responds to Saki ZLS revealing herself to be a zombie.</note>
+        <note id="1633">Ongoing chat between Neptune and Chara; Chara losing version.</note>
+        <note id="1634">Ongoing chat between Neptune and Chara; Chara losing version.</note>
+        <note id="1635">Chara talks to Neptune while Neptune is losing. Requires Chara or the Player to still be in the game, otherwise it doesn't make sense.</note>
+        <note id="1636">Ongoing chat between Emi and Chara; Chara losing version.</note>
+        <note id="1637">Ongoing chat between Emi and Chara; Chara losing version.</note>
+        <note id="1638">Ongoing chat between Emi and Chara; Chara losing version.</note>
+        <note id="1639">Ongoing chat between Emi and Chara; Chara losing version.</note>
+        <note id="1640">This fires when Chara is selected, and the player selects an April Fools character. But it's not April Fools.</note>
+        <note id="1641">Generic. Player responds to the Player having stripped.</note>
+        <note id="1642">Ongoing chat between Jason and Chara; Jason losing version.</note>
     </notes>
     <labels>
         <label id="133" label="" folder="HardModePrep" sort="5" />
@@ -1839,7 +1849,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <label id="248" label="" folder="SpecificOpponentSelection" sort="12" />
         <label id="31" label="" folder="SpecificOpponentSelection" sort="0" />
         <label id="249" label="" folder="SpecificOpponentSelection" sort="8" />
-        <label id="48" label="" folder="SpecificOpponentSelection" sort="16" />
+        <label id="48" label="" folder="FilterOpponentSelection" sort="16" />
         <label id="116" label="" folder="SpecificOpponentSelection" sort="0" />
         <label id="120" label="" folder="SpecificOpponentSelection" sort="0" />
         <label id="117" label="" folder="SpecificOpponentSelection" sort="0" />
@@ -2807,8 +2817,18 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <label id="1630" label="" folder="CharacterInteractions" sort="0" />
         <label id="1631" label="" folder="CharacterInteractions" sort="0" />
         <label id="1632" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1633" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1634" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1635" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1636" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1637" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1638" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1639" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1640" label="" folder="FilterOpponentSelection" sort="0" />
+        <label id="1641" label="" folder="TargetingPlayer" sort="0" />
+        <label id="1642" label="" folder="CharacterInteractions" sort="0" />
     </labels>
-    <nextId>1632</nextId>
+    <nextId>1642</nextId>
     <markers>
         <marker scope="Public" name="9">Chara has a high-card, and it's a 9.</marker>
         <marker scope="Public" name="99">Chara has a one pair of 9s. Or a two-pair, with leading 9s.</marker>
@@ -3089,9 +3109,11 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ResponseCarStartMast">Chara responds to the car 'starting masturbation'.</marker>
         <marker scope="Public" name="ResponseCarStripped">Chara responds to the car having 'stripped'.</marker>
         <marker scope="Public" name="ResponseCarStripping">Chara responds to the car 'stripping'.</marker>
-        <marker scope="Public" name="ResponseCharaMeguminMustStrip1">Megumin has a series of dialogue where Megumin is losing. This is the Must Strip case.</marker>
-        <marker scope="Public" name="ResponseCharaNeptuneMustStrip1">Neptune has dialogue where Neptune is losing. This is the Must Strip case.</marker>
-        <marker scope="Public" name="ResponseCharaNeptuneStripping1">Neptune has dialogue where Neptune is losing. This is the Stripping case.</marker>
+        <marker scope="Public" name="ResponseCharaJasonMustStrip1">Chara has a series of dialogue where Jason is losing. This is the Must Strip case.</marker>
+        <marker scope="Public" name="ResponseCharaMeguminMustStrip1">Chara has a series of dialogue where Megumin is losing. This is the Must Strip case.</marker>
+        <marker scope="Public" name="ResponseCharaNeptuneMustStrip1">Chara has dialogue where Neptune is losing. This is the Must Strip case.</marker>
+        <marker scope="Public" name="ResponseCharaNeptuneStripped1">Chara has dialogue where Neptune is losing. This is the Stripped case.</marker>
+        <marker scope="Public" name="ResponseCharaNeptuneStripping1">Chara has dialogue where Neptune is losing. This is the Stripping case.</marker>
         <marker scope="Public" name="ResponseChazzBlame">Chara responds to Chazz accusing the player.</marker>
         <marker scope="Public" name="ResponseChazzRun">Chara responds to Chazz attempting, and failing, to run.</marker>
         <marker scope="Public" name="ResponseChihiroFlee">Chara responds to Chihiro attempting to run.</marker>
@@ -3099,6 +3121,10 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ResponseDustDoubts">Chara responds to Dust's comment about doubts.</marker>
         <marker scope="Public" name="ResponseDustSnacks">Chara responds to Dust's comment about snacks.</marker>
         <marker scope="Public" name="ResponseElizabethSelfMast">Chara responds to Elizabeth using her alternate self to strip.</marker>
+        <marker scope="Public" name="ResponseEmiCharaMustStrip1">Emi has a series of dialogue where Chara is losing. This is the Must Strip case.</marker>
+        <marker scope="Public" name="ResponseEmiCharaMustStrip2">Emi has a series of dialogue where Chara is losing. This is the Must Strip case.</marker>
+        <marker scope="Public" name="ResponseEmiCharaMustStrip3">Emi has a series of dialogue where Chara is losing. This is the Must Strip case.</marker>
+        <marker scope="Public" name="ResponseEmiCharaStripping2">Emi has a series of dialogue where Chara is losing. This is the Stripping case.</marker>
         <marker scope="Public" name="ResponseEmiLegsOff">Chara responds to Emi taking her legs off.</marker>
         <marker scope="Public" name="ResponseErufudaFood">Chara responds to Erufuda's question about favorite foods.</marker>
         <marker scope="Public" name="ResponseFlorinaFlee">Chara responds to Florina fleeing.</marker>
@@ -3146,6 +3172,8 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ResponseNamiRaining">Chara responds to Nami using her rain stick.</marker>
         <marker scope="Public" name="ResponseNaviTransform">Chara responds to Navi transforming.</marker>
         <marker scope="Public" name="ResponseNayruPossessed">Chara responds to Nayru being possessed.</marker>
+        <marker scope="Public" name="ResponseNeptuneCharaMustStrip1" />
+        <marker scope="Public" name="ResponseNeptuneCharaStripping1" />
         <marker scope="Public" name="ResponseRemiliaTimeStrip">Chara responds to Remilia's made stopping time to strip her. She only does this the first time.</marker>
         <marker scope="Public" name="ResponseRevyKilling">Chara responds to Revy's question about killing.</marker>
         <marker scope="Public" name="ResponseRinArmless">Chara responds to Rin showing off her lack of arms.</marker>

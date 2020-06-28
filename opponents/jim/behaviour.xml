@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7.3 at 12:45:27 PM on June 19, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7.3 at 9:01:47 AM on June 28, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7.3</version>
     <first>Jim</first>
@@ -38,10 +38,12 @@
         <tag>military</tag>
         <tag>drunk</tag>
         <tag>hero</tag>
+        <tag>starcraft</tag>
     </tags>
     <nicknames>
         <nickname for="aimee">cowgirl</nickname>
         <nickname for="akko">Miss Kagari</nickname>
+        <nickname for="futaba">little miss</nickname>
         <nickname for="jessie">Jess</nickname>
         <nickname for="yang">blondie</nickname>
     </nicknames>
@@ -124,11 +126,11 @@
                 <state img="#-Relaxed.png">Mind passin' ~cards~ over?</state>
                 <state img="#-Neutral.png">Swappin' ~cards~.</state>
                 <state img="#-Neutral.png">Hm... ~cards~.</state>
-                <state img="#-Heating up.png">Odds could be better... gimmie ~cards~.</state>
+                <state img="#-Heating up.png">Odds could be better... gimme ~cards~.</state>
                 <state img="#-Neutral.png">Changin' ~cards~.</state>
                 <state img="#-Conversational.png">You got ~cards~ for me, dealer?</state>
                 <state img="#-Neutral.png">~cards~ seems good.</state>
-                <state img="#-Neutral.png">Well, this one... I guess I'll take ~cards~.</state>
+                <state img="#-Forlorn.png">Well, this one... I guess I'll take ~cards~.</state>
                 <state img="#-Neutral.png">Exchangin' for ~cards~.</state>
                 <state img="#-Neutral.png">Go ahead, dealer.</state>
             </case>
@@ -271,7 +273,7 @@
             </case>
             <case stage="0-6" totalRounds="2">
                 <condition count="1-4" filter="insane" role="other" var="insanetarget" />
-                <state img="#-Miffed.png" oneShotId="58">We sure ~insanetarget~ should be here? ~target.ifMale(He's|She's)~ actin' like ~target.ifMale(he|she)~ just inhaled a whole silo of Terrazine before coming here...</state>
+                <state img="#-Miffed.png" oneShotId="58">We sure ~insanetarget~ should be here? ~insanetarget.ifMale(He's|She's)~ actin' like ~insanetarget.ifMale(he|she)~ just inhaled a whole silo of Terrazine before coming here...</state>
             </case>
             <case stage="0-8">
                 <state img="#-Conversational.png">Hey, mind playin' some Liberty Rock in here? Much obliged.</state>
@@ -480,9 +482,93 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="1">
+                <condition role="other" character="jessie" sayingMarker="JimExperience2" />
+                <alternative alsoPlaying="jessie">
+                    <condition role="self" saidMarker="Jessie1a" />
+                </alternative>
+                <alternative alsoPlaying="jessie">
+                    <condition role="self" saidMarker="Jessie1b" />
+                </alternative>
+                <state img="#-Stripping.png">You said it. It's only just hittin' me how long it's been since I was last somewhere that &lt;i&gt;wasn't&lt;/i&gt; some battlefield or the Hyperion.</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="jessie" sayingMarker="JimExperience2" />
+                <alternative alsoPlaying="jessie">
+                    <condition role="self" saidMarker="Jessie1a" />
+                </alternative>
+                <alternative alsoPlaying="jessie">
+                    <condition role="self" saidMarker="Jessie1b" />
+                </alternative>
+                <state img="#-Stripping.png">About as far away as I could've ever hoped for, pretty much. I don't think I've even been outside Koprulu before... besides the Nexus, that is.</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="Meia0a" />
+                <condition role="other" character="meia" stage="0-5" sayingMarker="jim01a" />
+                <state img="#-Stripping.png">Hell, where do I even start? The Zerg, the Tal'Darim, nearly every pirate and bounty hunter that ever held a gun... and of course the ol' Dominion. Pick your poison.</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="Meia0b" />
+                <condition role="other" character="meia" stage="0-5" sayingMarker="jim01b" />
+                <state img="#-Stripping.png">"Homeworld"? You mean to tell me that there's a whole Terran planet that only has women?</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="Jura0b" />
+                <condition role="other" character="jura" stage="0-6" sayingMarker="jim01b" />
+                <state img="#-Stripping.png">Well, I certainly don't think &lt;i&gt;he&lt;/i&gt; would... but Mira probably would, unfortunately.</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="Jura0c" />
+                <condition role="other" character="jura" stage="0-6" sayingMarker="jim01c" />
+                <state img="#-Stripping.png">Don't get too discouraged, now. If you're really wantin' a kid, I'm sure there's plenty of donor banks in your sector, right?</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="Jura0a" />
+                <condition role="other" character="jura" stage="0-6" sayingMarker="jim01a" />
+                <state img="#-Stripping.png">Hm... beats the hell outta me. Most often I feel like the same farmboy outta his depth that I was 15 years ago.</state>
+            </case>
             <case stage="0">
                 <condition role="other" character="pa-15" stage="0-6" sayingMarker="nickname*=James" />
                 <state img="#-Confident.png" marker="nickname*=Florence">Florence, eh? Well, it's quite a pleasure to meet ya.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="revy" stage="0-7" sayingMarker="jim01" />
+                <state img="#-Stripping.png">It ain't always nice, but it usually doesn't end another way. Some kid with a gun thinkin' he's invincible may be stupid, but he's also dangerous.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="revy" stage="0-7" sayingMarker="jim01" />
+                <state img="#-Stripping.png">Well, partner, if you're ever interested in some work outside of Earth, I'm sure Graven would have some nice, high-payin' jobs for ya.</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="Jessie0c" />
+                <condition role="other" character="jessie" saying="I look quite young for my age, don't I? I don't look a day over 25, but I have the horniness of a 15 year old." />
+                <state img="#-Stripping.png">Sounds like you sure know how to have a fun night, Jess. You come to a lot of games like this?</state>
+                <state img="#-Stripping.png">Heh, you're definitely quite the looker, Jess. Kinda feel bad I didn't tidy up before comin' here.</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="Jessie0c" />
+                <condition role="other" character="jessie" saying="If you think I already look young outside, wait 'till you see what I have &lt;i&gt;under the hood&lt;/i&gt;. Quite unbelievable, I have to tell you." />
+                <state img="#-Stripping.png">Well then... guess I'll have to start playin' better if I want to see it, don't I?</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="Jessie0b" />
+                <condition role="other" character="jessie" saying="So many have tried getting the prize, but so few have succeeded. The reward is all worth it, though." />
+                <state img="#-Stripping.png">High stakes, high reward... just what I'm used to anyway.</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="Jessie0b" />
+                <condition role="other" character="jessie" saying="I suppose that true. &lt;i&gt;But not everyone will get the prize by the end of the night. Only the winner would.&lt;/i&gt;" />
+                <state img="#-Stripping.png">Not gonna make it easy, then? Guess that's fair. Easy ain't my thing neither.</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="Jessie0a" />
+                <condition role="other" character="jessie" saying="Oh, I get what you mean. Lucky for you, I am quite the expert in helping men like you &lt;i&gt;relieve their tension&lt;/i&gt;. I've been doing my part for more than two decades now." />
+                <state img="#-Stripping.png">Heh, well, you might have your work cut out for you, Jess. Feels like I've got a whole hive of tension in my head sometimes.</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="Jessie0a" />
+                <condition role="other" character="jessie" saying="I can take care of your &lt;i&gt;stress&lt;/i&gt; if you're interested. I have perfected the &lt;i&gt;massage technique&lt;/i&gt; that would help ease your tension. I've only been doing it for the better part of two decades after all." />
+                <state img="#-Stripping.png">Damn, don't tempt me with somethin' too good to be true. Feels like half my muscles are held up just by stress alone sometimes.</state>
             </case>
             <case stage="1">
                 <condition role="other" character="nami" saying="But then what's all that stuff for?" />
@@ -551,7 +637,7 @@
                 <state img="#-Stripping.png">I'm hoping there's a good reason they didn't have you check your gun at the door.</state>
             </case>
             <case stage="0-7">
-                <state img="#-Stripping.png" oneShotId="35">Fine, just gimmie a moment here.</state>
+                <state img="#-Stripping.png" oneShotId="35">Fine, just gimme a moment here.</state>
                 <state img="#-Stripping.png" oneShotId="36">Let's see... I guess I'll go with this now.</state>
                 <state img="#-Stripping.png" oneShotId="37">Bring me somethin' strong while I'm doing this, will ya?</state>
             </case>
@@ -703,7 +789,7 @@
             <case stage="0-8 10" priority="90">
                 <condition role="target" layers="1-3" />
                 <state img="#-Relaxed.png">Well? Show us what you're workin' with.</state>
-                <state img="#-Relaxed.png">Hey, I've seen Protoss with nothin' on 'em. I doubt this'll worse, partner.</state>
+                <state img="#-Relaxed.png">Hey, I've seen Protoss with nothin' on 'em. I doubt this'll be worse, partner.</state>
             </case>
             <case stage="0-8 10">
                 <condition role="target" layers="1-3" />
@@ -813,6 +899,14 @@
                 </alternative>
                 <state img="#-Relaxed.png" oneShotId="25">So... an academy for magic kids, huh? Sure hope it's better than the Confederacy or Dominion's Ghost academies.</state>
             </case>
+            <case stage="0-8 10">
+                <condition role="target" character="saki_zls" stage="0" />
+                <state img="#-Relaxed.png" marker="Saki_zls0a">So, you used to lead a biker gang, Saki? Bet you were known as quite the hellraiser.</state>
+            </case>
+            <case stage="0-8 10">
+                <condition role="target" character="saki_zls" stage="1" />
+                <state img="#-Conversational.png" marker="Saki_zls1a">Heh, with your kinda rep, Saki, I bet you'd be hell on wheels in the seat of a Vulture.</state>
+            </case>
             <case stage="0-7" priority="50">
                 <condition role="target" character="aimee" />
                 <state img="#-Confident.png" oneShotId="30">Gotta say, cowgirl, I like your style. Good to see the ol' tradition's still alive.</state>
@@ -873,7 +967,7 @@
                 <state img="#-Miffed.png">Not the daring type, ~name~?</state>
                 <state img="#-Neutral.png">Still playing close to your chest. So to speak.</state>
                 <state img="#-Miffed.png">Can't hold off the big guns forever, ~name~.</state>
-                <state img="#-Heating up.png">Hm... I think one of my firebats has something just like that ~clothing~.</state>
+                <state img="#-Heating up.png">Hm... I think one of my firebats has something just like ~clothing.ifPlural(those|that)~ ~clothing~.</state>
             </case>
             <case stage="9">
                 <state img="#-Masturbating_04.png">
@@ -919,7 +1013,7 @@
         <trigger id="female_removing_accessory">
             <case stage="0-8 10">
                 <state img="#-Confident.png">Looks pretty on you, if you don't mind me sayin'.</state>
-                <state img="#-Neutral.png">Didn't I see one of my Spectres with that exact ~clothing~ last week?</state>
+                <state img="#-Neutral.png">Didn't I see one of my Spectres with ~clothing.ifPlural(those|that)~ exact ~clothing~ last week?</state>
                 <state img="#-Forlorn.png">Hm... wonder how that would look on Sarah...</state>
             </case>
             <case stage="0-4">
@@ -1179,7 +1273,7 @@
         <trigger id="female_removed_major">
             <case stage="0-8 10">
                 <state img="#-Conversational.png">And now the grand reason most people choose to come here...</state>
-                <state img="#-Relaxed.png">If you don't mind me sayin - and I sure hope you don't, considering you're here and all... well, I think you're mighty fine.</state>
+                <state img="#-Relaxed.png">If you don't mind me sayin' - and I sure hope you don't, considering you're here and all... well, I think you're mighty fine.</state>
                 <state img="#-Relaxed.png">If it makes you feel better, ~name~, I think you're quite pretty all around.</state>
             </case>
             <case stage="0-4">
@@ -1340,6 +1434,7 @@
         <trigger id="female_chest_will_be_visible">
             <case stage="0-8 10">
                 <condition count="0" filter="robot" role="target" />
+                <condition count="0" gender="female" status="chest_visible" />
                 <state img="#-Relaxed.png">Sorry if I sound eager, ~name~, but this'll be the first human pair I've seen in a long time.</state>
             </case>
             <case stage="0-8 10">
@@ -1402,8 +1497,8 @@
         <trigger id="female_chest_is_visible">
             <case stage="0-8 10">
                 <condition filter="robot" role="target" />
-                <state>Heh, &lt;i&gt;way&lt;/i&gt; nicer than our adjutant units.</state>
-                <state>Woah... guess robotics came one hell of a long way where you're from, ~name~.</state>
+                <state img="#-Confident.png">Heh, &lt;i&gt;way&lt;/i&gt; nicer than our adjutant units.</state>
+                <state img="#-Conversational.png">Woah... guess robotics came one hell of a long way where you're from, ~name~.</state>
             </case>
             <case stage="0-8 10">
                 <state img="#-Relaxed.png">Sure beats the holo-stripper in the Hyperion's bar.</state>
@@ -1492,6 +1587,20 @@
             <case stage="2-8 10" priority="2">
                 <condition filter="phantom_thieves" role="target" />
                 <state img="#-Relaxed.png" oneShotId="23">Can't help but wish we knew about your lot sooner, ~Name~. With your help, we might've taken down Mengsk in a matter of days.</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_stripping">
+            <case stage="0-8 10">
+                <condition role="target" character="saki_zls" stage="0" />
+                <state img="#-Confident.png" marker="Saki_zls0b">Heh, well, my mates from the Confederacy days sure had a likin' for gangs like yours - probably would've started one of their own if not for the Guild Wars.</state>
+            </case>
+        </trigger>
+
+        <trigger id="opponent_stripped">
+            <case stage="0-8 10">
+                <condition role="target" character="saki_zls" stage="1" />
+                <state img="#-Neutral.png" marker="Saki_zls0c">'Course, they wouldn't have been as young as you... but hey, if you got the grit, you got the grit.</state>
             </case>
         </trigger>
 
