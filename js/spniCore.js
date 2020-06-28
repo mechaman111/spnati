@@ -21,10 +21,6 @@ var RESORT_ACTIVE = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
-var USAGE_TRACKING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/report';
-var BUG_REPORTING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/bug_report';
-var FEEDBACK_ROUTE = "https://spnati.faraway-vision.io/usage/feedback/";
-
 var CURRENT_VERSION = undefined;
 var VERSION_COMMIT = undefined;
 var VERSION_TAG = undefined;
@@ -406,35 +402,44 @@ function loadGeneralCollectibles () {
  * - Can we load resources using XHR?
  * - Have image LFS pointers been properly replaced with actual content?
  * If either of these checks fail, the broken offline modal is shown.
+ * 
+ * @returns {Promise<void>}
  */
 function detectBrokenOffline() {
     $("#broken-offline-modal .section").hide();
 
-    $.ajax({
-        type: "GET",
-        url: "img/enter.png",
-        dataType: "text",
-        success: function (data) {
-            if (data.startsWith("version ")) {
-                /* Returned data is indicative of an LFS pointer file.
-                 * PNG files start with a different 8-byte signature.
-                 */
-                $("#broken-images-section").show();
-                $("#broken-offline-modal").modal('show');
-            }
-        },
-        error: function (jqXHR, status, err) {
-            $("#broken-xhr-section").show();
-            $("#broken-offline-modal").modal('show');
+    var p1 = fetch('img/enter.png', { method: "GET" }).then(function (resp) {
+        if (resp.status < 200 || resp.status > 299) {
+            throw new Error();
+        } else {
+            return resp.arrayBuffer();
         }
+    }).catch(function () {
+        $("#broken-xhr-section").show();
+        $("#broken-offline-modal").modal('show');
+    }).then(function (buf) {
+        if (!buf) return;
+        var bytes = new Uint8Array(buf, 0, 8);
+        var header = [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A];
+        if (!header.every(function (v, i) { return bytes[i] === v; })) {
+            throw new Error();
+        }
+    }).catch(function () {
+        $("#broken-images-section").show();
+        $("#broken-offline-modal").modal('show');
     });
 
-    var img = new Image();
-    img.onerror = function () {
+    var p2 = new Promise(function (resolve, reject) {
+        var img = new Image();
+        img.onerror = reject.bind(null);
+        img.onload = resolve.bind(null);
+        img.src = "img/enter.png";
+    }).catch(function () {
         $("#broken-images-section").show();
-    }
+        $("#broken-offline-modal").modal('show');
+    });
 
-    img.src = "img/enter.png";
+    return Promise.all([p1, p2]);
 }
 
 function enterTitleScreen() {
@@ -1103,6 +1108,25 @@ function fetchCompressedURL(baseUrl) {
         } else {
             throw new Error("Fetching " + baseUrl + ".gz failed with error " + resp.status + ": " + resp.statusText);
         }
+    });
+}
+
+/**
+ * POST a JSON object to the given URL.
+ * @param {string} url The endpoint to POST to.
+ * @param {Object} data The object to stringify and send.
+ * @returns {Promise<Response>}
+ */
+function postJSON(url, data) {
+    return fetch(url, {
+        'method': 'POST',
+        'headers': { 'Content-Type': 'application/json' },
+        'body': JSON.stringify(data)
+    }).then(function (resp) {
+        if (resp.status < 200 || resp.status > 299) {
+            throw new Error("POST " + url + " failed with HTTP " + resp.status + " " + resp.statusText);
+        }
+        return resp;
     });
 }
 

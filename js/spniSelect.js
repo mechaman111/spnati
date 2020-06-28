@@ -1128,44 +1128,7 @@ function advanceSelectScreen () {
     gameID = generateRandomID();
 
     if (USAGE_TRACKING) {
-        if (SENTRY_INITIALIZED) {
-            Sentry.setTag("in_game", true);
-            Sentry.setTag("screen", "game");
-
-            Sentry.addBreadcrumb({
-                category: 'game',
-                message: 'Starting game.',
-                level: 'info'
-            });
-        }
-
-        var usage_tracking_report = {
-            'date': (new Date()).toISOString(),
-			'commit': VERSION_COMMIT,
-            'type': 'start_game',
-            'session': sessionID,
-            'game': gameID,
-            'userAgent': navigator.userAgent,
-            'origin': getReportedOrigin(),
-            'table': {},
-			'tags': humanPlayer.tags
-        };
-
-        for (let i=1;i<5;i++) {
-            if (players[i]) {
-                usage_tracking_report.table[i] = players[i].id;
-            }
-        }
-
-        $.ajax({
-            url: USAGE_TRACKING_ENDPOINT,
-            method: 'POST',
-            data: JSON.stringify(usage_tracking_report),
-            contentType: 'application/json',
-            error: function (jqXHR, status, err) {
-                console.error("Could not send usage tracking report - error "+status+": "+err);
-            },
-        });
+        recordStartGameEvent();
     }
 
     var playedCharacters = save.getPlayedCharacterSet();
