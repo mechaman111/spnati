@@ -145,6 +145,10 @@ var CANDY_LIST = [
     "elizabeth/1-awkward.png",
     "elizabeth/2-interested.png",
     "elizabeth/3-happy.png",
+    "emi/1-excited.png",
+    "emi/1-laughing.png",
+    "emi/2-excited.png",
+    "emi/2-interested.png",
     "futaba/0-happy.png",
     "futaba/1-triumphant.png",
     "futaba/2-awkward.png",
@@ -185,10 +189,12 @@ var CANDY_LIST = [
     "kyu/1-mischievous.png",
     "kyu/2-excited.png",
     "kyu/3-cheerful.png",
+/*  // Marinette temporarily offline
     "marinette/0-wink.png",
     "marinette/2-confident.png",
     "marinette/3-bored.png",
     "marinette/4-excited.png",
+*/
     "meia/0-disappointed.png",
     "meia/1-busy.png",
     "meia/2-addressing.png",
