@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited June 27 2020
+README edited June 30 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -297,7 +297,7 @@ PRINCESS JASMINE
 -Responds to Princess Jasmine revealing her identity.
 
 JASON
--Responds to Jason having to strip the first time.
+-Back and forth as Jason is losing.
 
 JOETTA
 -Responds to the first time Joetta does a 'sleight of hand' strip.
@@ -350,6 +350,9 @@ MOON
 METTATON
 -Responds to Mettaton showing he has breasts.
 -Responds to Mettaton being forced to forfeit.
+
+MIKO
+-Back and forth when Miko or Chara are losing.
 
 MULAN
 -Responds to Mulan's 'Fapping' joke.
