@@ -572,11 +572,10 @@ function recordEndGameEvent(winner) {
 /**
  * Log the start of an epilogue for bug reporting and analytics.
  * @param {bool} gallery Whether the epilogue was played from the Gallery.
- * @param {string} chosenPlayer The ID of the character whose epilogue was chosen.
- * @param {string} chosenTitle The title of the chosen epilogue.
+ * @param {Epilogue} epilogue The epilogue that was chosen.
  * @returns {Promise<void>}
  */
-function recordEpilogueEvent(gallery, chosenPlayer, chosenTitle) {
+function recordEpilogueEvent(gallery, epilogue) {
     if (SENTRY_INITIALIZED) {
         Sentry.addBreadcrumb({
             category: 'epilogue',
@@ -594,6 +593,6 @@ function recordEpilogueEvent(gallery, chosenPlayer, chosenTitle) {
     } else {
         report.game = gameID;
     }
-    report.chosen = { 'id': chosenPlayer, 'title': chosenTitle };
+    report.chosen = { 'id': epilogue.player.id, 'title': epilogue.title };
     return sendUsageReport(report);
 }

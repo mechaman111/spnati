@@ -574,7 +574,7 @@ function doEpilogueFromGallery(){
 			});
 		
 			if (USAGE_TRACKING) {
-				recordEpilogueEvent(true, epilogue.player.id, epilogue.title);
+				recordEpilogueEvent(true, epilogue);
 			}
 		
 			loadEpilogue(epilogue); //initialise buttons and text boxes

@@ -999,7 +999,7 @@ function doEpilogue() {
   });
 
   if (USAGE_TRACKING) {
-    recordEpilogueEvent(false, chosenEpilogue.player.id, chosenEpilogue.title);
+    recordEpilogueEvent(false, chosenEpilogue);
   }
 
   loadEpilogue(chosenEpilogue);
