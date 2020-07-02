@@ -321,9 +321,7 @@ function changeCharacterFilter (collectibleScreen) {
 function loadAllCollectibles() {
     return Promise.all(loadedOpponents.map(function (opp) {
         if (opp && opp.has_collectibles) {
-            return opp.loadCollectibles().then(function () {
-                updateCollectiblesScreen();
-            });
+            return opp.loadCollectibles().then(updateCollectiblesScreen);
         } else {
             return Promise.resolve();
         }

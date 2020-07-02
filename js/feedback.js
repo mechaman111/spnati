@@ -298,19 +298,11 @@ function sendFeedbackReport() {
     var report = compileBaseErrorReport(desc, "feedback");
     var endpoint = FEEDBACK_ROUTE + (character || "");
 
-    return fetch(endpoint, {
-        'method': 'POST',
-        'headers': { 'Content-Type': 'application/json' },
-        'body': JSON.stringify(report),
-    }).then(function (resp) {
-        if (resp.status < 200 || resp.status > 299) {
-            throw new Error("POST " + endpoint + " failed with HTTP " + resp.status + " " + resp.statusText);
-        } else {
-            $('#feedback-report-status').text("Feedback sent!");
-            $('#feedback-report-desc').val("");
-            $('#feedback-report-character').empty()
-            closeFeedbackReportModal();
-        }
+    return postJSON(endpoint, report).then(function () {
+        $('#feedback-report-status').text("Feedback sent!");
+        $('#feedback-report-desc').val("");
+        $('#feedback-report-character').empty()
+        closeFeedbackReportModal();
     }).catch(function (err) {
         captureError(err);
         var msg = "";

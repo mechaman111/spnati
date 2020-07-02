@@ -363,7 +363,7 @@ function loadOpponentMeta (id, status, releaseNumber, highlightStatus) {
 
     return fetchXML('opponents/' + id + '/' + metaFile).then(function($xml) {
         return new Opponent(id, $xml, status, releaseNumber, highlightStatus);
-    }, function(err) {
+    }).catch(function(err) {
         console.error("Failed reading \""+id+"\":");
         captureError(err);
         return null;
