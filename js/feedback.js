@@ -183,13 +183,11 @@ window.addEventListener('onunhandledrejection', function (ev) {
  * Bug Report Modal functions
  */
 
-function getBugReportJSON() {
+function getBugReport() {
     var desc = $('#bug-report-desc').val();
     var type = $('#bug-report-type').val();
-    var character = undefined;
 
-    var report = compileBaseErrorReport(desc, type);
-    return JSON.stringify(report);
+    return compileBaseErrorReport(desc, type);
 }
 
 function updateBugReportSendButton() {
@@ -204,7 +202,7 @@ $('#bug-report-desc').keyup(updateBugReportSendButton);
 
 /* Update the bug report text dump. */
 function updateBugReportOutput() {
-    $('#bug-report-output').val(getBugReportJSON());
+    $('#bug-report-output').val(JSON.stringify(getBugReport()));
     $('#bug-report-status').text("");
 
     updateBugReportSendButton();
@@ -222,7 +220,7 @@ function sendBugReport() {
         return false;
     }
 
-    return postJSON(BUG_REPORTING_ENDPOINT, getBugReportJSON()).then(function () {
+    return postJSON(BUG_REPORTING_ENDPOINT, getBugReport()).then(function () {
         $('#bug-report-status').text("Bug report sent!");
         $('#bug-report-desc').val("");
         $('#bug-report-type').empty();
