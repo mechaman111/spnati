@@ -544,7 +544,7 @@ Opponent.prototype.onSelected = function(individual) {
 
     this.loaded = true;
 
-    this.preloadStageImages(0);
+    this.preloadStageImages(-1);
     if (individual) {
         updateAllBehaviours(this.slot, SELECTED, [[OPPONENT_SELECTED]]);
     } else {
@@ -1222,7 +1222,7 @@ Player.prototype.getImagesForStage = function (stage) {
 
     var poseSet = {};
     var imageSet = {};
-    var folder = this.folders ? this.getByStage(this.folders, stage) : this.folder;
+    var folder = this.folders ? this.getByStage(this.folders, stage === -1 ? 0 : stage) : this.folder;
     var advPoses = this.poses;
     
     function processCase (c) {
