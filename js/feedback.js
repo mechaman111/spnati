@@ -4,7 +4,7 @@
 
 var USAGE_TRACKING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/report';
 var BUG_REPORTING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/bug_report';
-var FEEDBACK_ROUTE = "https://spnati.faraway-vision.io/usage/feedback/";
+var FEEDBACK_ROUTE = "https://spnati.faraway-vision.io/usage/feedback";
 
 $bugReportModal = $('#bug-report-modal');
 $feedbackReportModal = $('#feedback-report-modal');
@@ -294,7 +294,7 @@ function sendFeedbackReport() {
     var desc = $('#feedback-report-desc').val();
     var character = $('#feedback-report-character').val();
     var report = compileBaseErrorReport(desc, "feedback");
-    var endpoint = FEEDBACK_ROUTE + (character || "");
+    var endpoint = FEEDBACK_ROUTE + (character ? '/' + character : '');
 
     return postJSON(endpoint, report).then(function () {
         $('#feedback-report-status').text("Feedback sent!");
@@ -316,10 +316,7 @@ function sendFeedbackReport() {
 }
 
 function updateFeedbackSendButton() {
-    if (
-        !!$("#feedback-report-character").val() &&
-        $('#feedback-report-desc').val().trim().length > 0
-    ) {
+    if ($('#feedback-report-desc').val().trim().length > 0) {
         $("#feedback-report-modal-send-button").removeAttr('disabled');
     } else {
         $("#feedback-report-modal-send-button").attr('disabled', 'true');
@@ -362,7 +359,7 @@ function showFeedbackReportModal($fromModal) {
         if (p.feedbackData) {
             return Promise.resolve();
         } else {
-            return fetch(FEEDBACK_ROUTE + p.id, { method: "GET" }).then(function (resp) {
+            return fetch(FEEDBACK_ROUTE + '/' + p.id, { method: "GET" }).then(function (resp) {
                 if (resp.status < 200 || resp.status > 299) {
                     throw new Error("Fetching " + FEEDBACK_ROUTE + p.id + " failed with error " + resp.status + ": " + resp.statusText);
                 } else {
