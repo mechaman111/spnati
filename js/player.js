@@ -567,7 +567,7 @@ Opponent.prototype.setLabel = function(label) {
     if (label) {
         this.label = label;
         this.labelOverridden = true;
-    } else {
+    } else if (label !== undefined) {
         this.labelOverridden = false;
         this.updateLabel();
     }
@@ -587,7 +587,7 @@ Opponent.prototype.setIntelligence = function (intelligence) {
     if (intelligence) {
         this.intelligence = intelligence;
         this.intelligenceOverridden = true;
-    } else {
+    } else if (intelligence !== undefined) {
         this.intelligenceOverridden = false;
         this.updateIntelligence();
     }
