@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited June 30 2020
+README edited July 4 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -286,12 +286,16 @@ ELIZABETH
 
 EMI
 -Responds to Emi stripping her prosthetic legs.
+-Back and forth between Emi and Chara as the latter loses.
 
 ERUFUDA
 -Responds to Erufuda's question about favorite foods.
 
 FLORINA
 -Responds to Florina fleeing the game.
+
+GALATEA
+-Responds to Galatea having to strip with rock puns.
 
 PRINCESS JASMINE
 -Responds to Princess Jasmine revealing her identity.
@@ -337,6 +341,9 @@ MEGUMIN
 -Responds to Megumin must-strip on Fully Clothed with a comment about Explosion's ability to 1-shot things.
 -Responds to Megumin's comment about Chara being a troublesome demon or not.
 
+MEIA
+-Responds to Meia's remark on Chara having to strip.
+
 MEIA/REVY
 -Responds to Meia and Revy fighting.
 
@@ -357,6 +364,9 @@ MIKO
 MULAN
 -Responds to Mulan's 'Fapping' joke.
 -Responds to Mulan revealing her identity.
+
+MYRIAM
+-Responds to Myriam talking to her.
 
 NAMI (ZSZ)
 -Responds to Nami leaving the game.
