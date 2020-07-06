@@ -591,14 +591,14 @@ State.prototype.expandDialogue = function(self, target) {
  */
 State.prototype.getPossibleImages = function (stage) {
     if (this.alt_images) {
-        return this.alt_images.filter(function () {
+        var images = this.alt_images.filter(function () {
             return checkStage(stage, $(this).attr('stage'));
         }).map(function () {
             return $(this).text().replace('#', stage);
         }).get();
-    } else {
-        return this.image ? [ this.image.replace('#', stage) ] : [];
+        if (images.length) return images;
     }
+    return this.image ? [ this.image.replace('#', stage) ] : [];
 }
 
 State.prototype.selectImage = function (stage) {
