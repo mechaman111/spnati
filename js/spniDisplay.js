@@ -1058,6 +1058,7 @@ MainSelectScreenDisplay.prototype.altCostumeSelected = function () {
         opponent.unloadAlternateCostume();
         opponent.onSelected(true);
     }
+    updateSelectionVisuals();
 }
 
 MainSelectScreenDisplay.prototype.updateLoadPercentage = function (player) {

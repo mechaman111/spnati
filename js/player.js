@@ -653,6 +653,7 @@ Opponent.prototype.loadAlternateCostume = function () {
     }
 
     console.log("Loading alternate costume: "+this.selected_costume);
+    this.loaded = false;
 
     return fetchXML(this.selected_costume+'costume.xml').then(function ($xml) {
         if (SENTRY_INITIALIZED) {
@@ -1135,6 +1136,7 @@ Opponent.prototype.loadXMLTriggers = function () {
             /* break tasks into roughly 50ms chunks */
             while (performance.now() - startTS < 50) {
                 if (loadItemsCompleted >= loadItemsTotal) {
+                    this.loadProgress = undefined;
                     return resolve(loadItemsCompleted);
                 }
 
@@ -1189,6 +1191,7 @@ Opponent.prototype.loadXMLStages = function () {
             /* break tasks into roughly 50ms chunks */
             while (performance.now() - startTS < 50) {
                 if (loadItemsCompleted >= loadItemsTotal) {
+                    this.loadProgress = undefined;
                     return resolve(loadItemsCompleted);
                 }
     
