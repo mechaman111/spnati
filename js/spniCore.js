@@ -530,7 +530,6 @@ function resetPlayers () {
     players.forEach(function(p) {
         p.resetState();
     });
-    updateAllBehaviours(null, null, SELECTED);
 }
 
 /************************************************************

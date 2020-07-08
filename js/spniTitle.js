@@ -579,6 +579,7 @@ function validateTitleScreen () {
     save.savePlayer();
     console.log(players[0]);
 
+    updateAllBehaviours(null, null, SELECTED);
     updateSelectionVisuals();
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
