@@ -999,47 +999,7 @@ function doEpilogue() {
   });
 
   if (USAGE_TRACKING) {
-    var usage_tracking_report = {
-      'date': (new Date()).toISOString(),
-      'commit': VERSION_COMMIT,
-      'type': 'epilogue',
-      'session': sessionID,
-      'game': gameID,
-      'userAgent': navigator.userAgent,
-      'origin': getReportedOrigin(),
-      'table': {},
-      'chosen': {
-        'id': chosenEpilogue.player.id,
-        'title': chosenEpilogue.title
-      }
-    };
-
-    if (SENTRY_INITIALIZED) {
-      Sentry.addBreadcrumb({
-        category: 'epilogue',
-        message: 'Starting '+chosenEpilogue.player.id+' epilogue: '+chosenEpilogue.title,
-        level: 'info'
-      });
-
-      Sentry.setTag("epilogue_gallery", false);
-      Sentry.setTag("screen", "epilogue");
-    }
-
-    for (let i = 1; i < 5; i++) {
-      if (players[i]) {
-        usage_tracking_report.table[i] = players[i].id;
-      }
-    }
-
-    $.ajax({
-      url: USAGE_TRACKING_ENDPOINT,
-      method: 'POST',
-      data: JSON.stringify(usage_tracking_report),
-      contentType: 'application/json',
-      error: function (jqXHR, status, err) {
-        console.error("Could not send usage tracking report - error " + status + ": " + err);
-      },
-    });
+    recordEpilogueEvent(false, chosenEpilogue);
   }
 
   loadEpilogue(chosenEpilogue);
@@ -1132,15 +1092,11 @@ function hotReloadEpilogue () {
   var epilogueGender = epiloguePlayer.epilogue.gender;
   var player = epiloguePlayer.epilogue.player;
 
-  /* Clean up the old EpiloguePlayer. */
-  clearEpilogue();
-
   player.fetchBehavior()
     /* Success callback.
     * 'this' is bound to the Opponent object.
     */
-    .then(function(xml) {
-      var $xml = $(xml);
+    .then(function($xml) {
       var endingElem = null;
 
       $xml.children('epilogue').each(function () {
@@ -1150,6 +1106,9 @@ function hotReloadEpilogue () {
       });
 
       epilogue = parseEpilogue(player, endingElem);
+
+      /* Clean up the old EpiloguePlayer. */
+      clearEpilogue();
 
       loadEpilogue(epilogue, curScene);
       $epilogueHotReloadBtn.attr('disabled', false);

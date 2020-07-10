@@ -2,6 +2,10 @@
  * Bug reporting (automatic and manual) and feedback
  ********************************************************************************/
 
+var USAGE_TRACKING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/report';
+var BUG_REPORTING_ENDPOINT = 'https://spnati.faraway-vision.io/usage/bug_report';
+var FEEDBACK_ROUTE = "https://spnati.faraway-vision.io/usage/feedback";
+
 $bugReportModal = $('#bug-report-modal');
 $feedbackReportModal = $('#feedback-report-modal');
 $usageTrackingModal = $('#usage-reporting-modal');
@@ -121,48 +125,69 @@ function compileBaseErrorReport(userDesc, bugType) {
     return data;
 }
 
-window.addEventListener('error', function (ev) {
-    var errData = {
-        'date': (new Date()).toISOString(),
-        'message': ev.message,
-        'filename': ev.filename,
-        'lineno': ev.lineno,
+function logError(err, message, fileName, lineNum) {
+    var errData = { 'date': (new Date()).toISOString() };
+    if (err) {
+        errData.type = err.name;
+        errData.stack = err.stack;
 
-    }
+        if (!message) message = err.message;
+        if (!fileName) fileName = err.fileName;
+        if (!lineNum) lineNum = err.lineNumber;
 
-    if (ev.error) {
-        errData.type = ev.error.name;
-        errData.stack = ev.error.stack;
+        errData.message = message;
+        errData.filename = fileName;
+        errData.lineno = lineNum;
     }
 
     jsErrors.push(errData);
 
     if (USAGE_TRACKING) {
         var report = compileBaseErrorReport('Automatically generated after Javascript error.', 'auto');
-
-        $.ajax({
-            url: BUG_REPORTING_ENDPOINT,
-            method: 'POST',
-            data: JSON.stringify(report),
-            contentType: 'application/json',
-            error: function (jqXHR, status, err) {
-                console.error("Could not send bug report - error "+status+": "+err);
-            },
+        return postJSON(BUG_REPORTING_ENDPOINT, report).catch(function (err) {
+            captureError(err);
         });
     }
+}
+
+/** Helper function for manually logging / capturing errors. */
+function captureError(err) {
+    console.error(err);
+    
+    if (!(err instanceof Error)) {
+        return;
+    }
+
+    logError(err);
+    if (SENTRY_INITIALIZED) Sentry.captureException(err);
+}
+
+
+window.addEventListener('error', function (ev) {
+    /* Sentry has its own listener for capturing exceptions, so we don't need
+     * captureException here
+     */
+    logError(ev.error, ev.message, ev.filename, ev.lineno);
 });
+
+window.addEventListener('onunhandledrejection', function (ev) {
+    if (!(ev.reason instanceof Error)) {
+        return;
+    }
+
+    logError(ev.reason);
+});
+
 
 /*
  * Bug Report Modal functions
  */
 
-function getBugReportJSON() {
+function getBugReport() {
     var desc = $('#bug-report-desc').val();
     var type = $('#bug-report-type').val();
-    var character = undefined;
 
-    var report = compileBaseErrorReport(desc, type);
-    return JSON.stringify(report);
+    return compileBaseErrorReport(desc, type);
 }
 
 function updateBugReportSendButton() {
@@ -177,7 +202,7 @@ $('#bug-report-desc').keyup(updateBugReportSendButton);
 
 /* Update the bug report text dump. */
 function updateBugReportOutput() {
-    $('#bug-report-output').val(getBugReportJSON());
+    $('#bug-report-output').val(JSON.stringify(getBugReport()));
     $('#bug-report-status').text("");
 
     updateBugReportSendButton();
@@ -195,21 +220,20 @@ function sendBugReport() {
         return false;
     }
 
-    $.ajax({
-        url: BUG_REPORTING_ENDPOINT,
-        method: 'POST',
-        data: getBugReportJSON(),
-        contentType: 'application/json',
-        error: function (jqXHR, status, err) {
-            console.error("Could not send bug report - error "+status+": "+err);
-            $('#bug-report-status').text("Failed to send bug report (error "+status+")");
-        },
-        success: function () {
-            $('#bug-report-status').text("Bug report sent!");
-            $('#bug-report-desc').val("");
-            $('#bug-report-type').empty();
-            closeBugReportModal();
+    return postJSON(BUG_REPORTING_ENDPOINT, getBugReport()).then(function () {
+        $('#bug-report-status').text("Bug report sent!");
+        $('#bug-report-desc').val("");
+        $('#bug-report-type').empty();
+        closeBugReportModal();
+    }).catch(function (err) {
+        captureError(err);
+        var msg = "";
+        if (err instanceof Error) {
+            msg = err.message;
+        } else {
+            msg = err.toString();
         }
+        $('#bug-report-status').text("Failed to send bug report (" + msg + ")");
     });
 }
 
@@ -270,30 +294,29 @@ function sendFeedbackReport() {
     var desc = $('#feedback-report-desc').val();
     var character = $('#feedback-report-character').val();
     var report = compileBaseErrorReport(desc, "feedback");
+    var endpoint = FEEDBACK_ROUTE + (character ? '/' + character : '');
 
-    $.ajax({
-        url: FEEDBACK_ROUTE + (character || ""),
-        method: 'POST',
-        data: JSON.stringify(report),
-        contentType: 'application/json',
-        error: function (jqXHR, status, err) {
-            console.error("Could not send feedback report - error " + status + ": " + err);
-            $('#feedback-report-status').text("Failed to send feedback report (error " + err + ")");
-        },
-        success: function () {
-            $('#feedback-report-status').text("Feedback sent!");
-            $('#feedback-report-desc').val("");
-            $('#feedback-report-character').empty()
-            closeFeedbackReportModal();
+    return postJSON(endpoint, report).then(function () {
+        $('#feedback-report-status').text("Feedback sent!");
+        $('#feedback-report-desc').val("");
+        $('#feedback-report-character').empty()
+        closeFeedbackReportModal();
+    }).catch(function (err) {
+        captureError(err);
+        var msg = "";
+        if (err instanceof Error) {
+            msg = err.message;
+        } else {
+            msg = err.toString();
         }
+
+        console.error("Could not send feedback report - " + msg);
+        $('#feedback-report-status').text("Failed to send feedback report (" + msg + ")");
     });
 }
 
 function updateFeedbackSendButton() {
-    if (
-        !!$("#feedback-report-character").val() &&
-        $('#feedback-report-desc').val().trim().length > 0
-    ) {
+    if ($('#feedback-report-desc').val().trim().length > 0) {
         $("#feedback-report-modal-send-button").removeAttr('disabled');
     } else {
         $("#feedback-report-modal-send-button").attr('disabled', 'true');
@@ -330,21 +353,23 @@ function showFeedbackReportModal($fromModal) {
 
     var feedbackCharacters = epiloguePlayer && !inGame ? [ epiloguePlayer.epilogue.player ] : players.opponents;
 
-    $.when.apply($, feedbackCharacters.map(function(p) {
+
+    Promise.all(feedbackCharacters.map(function(p) {
         $("#feedback-report-character").append($('<option>', { text: p.id.initCap(), value: p.id }).data('character', p));
         if (p.feedbackData) {
-            return true;
+            return Promise.resolve();
         } else {
-            return $.ajax({
-                url: FEEDBACK_ROUTE + p.id,
-                type: "GET",
-                dataType: "json",
+            return fetch(FEEDBACK_ROUTE + '/' + p.id, { method: "GET" }).then(function (resp) {
+                if (resp.status < 200 || resp.status > 299) {
+                    throw new Error("Fetching " + FEEDBACK_ROUTE + p.id + " failed with error " + resp.status + ": " + resp.statusText);
+                } else {
+                    return resp.json();
+                }
             }).then(function(data) {
                 p.feedbackData = data;
-            }, function() {
+            }).catch(function (err) {
                 console.error("Failed to get feedback message data for " + p.id);
-                return $.Deferred().resolve().promise(); /* This is meant to avoid hiding the "Loading..." 
-                                                            entry right away if one GET fails. */
+                captureError(err);
             });
         }
     })).then(function() {
@@ -468,4 +493,101 @@ function sentryInit() {
 
         SENTRY_INITIALIZED = true;
     }
+}
+
+function collectBaseUsageInfo(type) {
+    var report = {
+        'date': (new Date()).toISOString(),
+        'commit': VERSION_COMMIT,
+        'type': type,
+        'session': sessionID,
+        'userAgent': navigator.userAgent,
+        'origin': getReportedOrigin(),
+        'table': {},
+        'tags': humanPlayer.tags,
+    };
+
+
+    for (let i=1;i<5;i++) {
+        if (players[i]) {
+            report.table[i] = players[i].id;
+        }
+    }
+
+    return report;
+}
+
+function sendUsageReport(report) {
+    return postJSON(USAGE_TRACKING_ENDPOINT, report).catch(function (err) {
+        captureError(err);
+    });
+}
+
+/**
+ * Log the start of a game for bug reporting and analytics.
+ * @returns {Promise<void>}
+ */
+function recordStartGameEvent() {
+    if (SENTRY_INITIALIZED) {
+        Sentry.setTag("in_game", true);
+        Sentry.setTag("screen", "game");
+
+        Sentry.addBreadcrumb({
+            category: 'game',
+            message: 'Starting game.',
+            level: 'info'
+        });
+    }
+
+    var report = collectBaseUsageInfo('start_game');
+    report.game = gameID;
+    return sendUsageReport(report);
+}
+
+/**
+ * Log the end of a game for bug reporting and analytics.
+ * @param {string} winner The ID of the winning character.
+ * @returns {Promise<void>}
+ */
+function recordEndGameEvent(winner) {
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'game',
+            message: 'Game ended with ' + winner + ' winning.',
+            level: 'info'
+        });
+    }
+
+    var report = collectBaseUsageInfo('end_game');
+    report.game = gameID;
+    report.winner = winner;
+    return sendUsageReport(report);
+}
+
+/**
+ * Log the start of an epilogue for bug reporting and analytics.
+ * @param {bool} gallery Whether the epilogue was played from the Gallery.
+ * @param {Epilogue} epilogue The epilogue that was chosen.
+ * @returns {Promise<void>}
+ */
+function recordEpilogueEvent(gallery, epilogue) {
+    if (SENTRY_INITIALIZED) {
+        Sentry.addBreadcrumb({
+            category: 'epilogue',
+            message: 'Starting ' + epilogue.player.id + ' epilogue: ' + epilogue.title,
+            level: 'info'
+        });
+
+        Sentry.setTag("epilogue_gallery", gallery);
+        Sentry.setTag("screen", "epilogue");
+    }
+
+    var report = collectBaseUsageInfo(gallery ? 'gallery' : 'epilogue');
+    if (gallery) {
+        delete report.table;
+    } else {
+        report.game = gameID;
+    }
+    report.chosen = { 'id': epilogue.player.id, 'title': epilogue.title };
+    return sendUsageReport(report);
 }

@@ -319,11 +319,13 @@ function changeCharacterFilter (collectibleScreen) {
 }
 
 function loadAllCollectibles() {
-    loadedOpponents.forEach(function (opp) {
+    return Promise.all(loadedOpponents.map(function (opp) {
         if (opp && opp.has_collectibles) {
-            opp.loadCollectibles(updateCollectiblesScreen);
+            return opp.loadCollectibles().then(updateCollectiblesScreen);
+        } else {
+            return Promise.resolve();
         }
-    });
+    }));
 }
 
 function updateCollectiblesScreen() {	
@@ -536,9 +538,7 @@ function doEpilogueFromGallery(){
 		/* Success callback.
 		 * 'this' is bound to the Opponent object.
 		 */
-		.then(function(xml) {
-			var $xml = $(xml);
-			
+		.then(function($xml) {			
 			var endingElem = null;
 			
 			$xml.children('epilogue').each(function () {
@@ -574,39 +574,7 @@ function doEpilogueFromGallery(){
 			});
 		
 			if (USAGE_TRACKING) {
-				var usage_tracking_report = {
-					'date': (new Date()).toISOString(),
-					'commit': VERSION_COMMIT,
-					'type': 'gallery',
-					'session': sessionID,
-					'userAgent': navigator.userAgent,
-					'origin': getReportedOrigin(),
-					'chosen': {
-						'id': epilogue.player.id,
-						'title': epilogue.title
-					}
-				};
-
-				if (SENTRY_INITIALIZED) {
-					Sentry.addBreadcrumb({
-						category: 'epilogue',
-						message: 'Starting ' + epilogue.player.id + ' epilogue: ' + epilogue.title,
-						level: 'info'
-					});
-
-					Sentry.setTag("epilogue_gallery", true);
-					Sentry.setTag("screen", "epilogue");
-				}
-		
-				$.ajax({
-					url: USAGE_TRACKING_ENDPOINT,
-					method: 'POST',
-					data: JSON.stringify(usage_tracking_report),
-					contentType: 'application/json',
-					error: function (jqXHR, status, err) {
-						console.error("Could not send usage tracking report - error "+status+": "+err);
-					},
-				});
+				recordEpilogueEvent(true, epilogue);
 			}
 		
 			loadEpilogue(epilogue); //initialise buttons and text boxes

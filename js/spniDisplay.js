@@ -921,7 +921,7 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
     this.drawPose(player.selection_image);
     this.label.html(player.label.initCap()).addClass('suggestion-label');
     this.imageArea.addClass('prefill-suggestion');
-    this.selectButton.html("Select Other Opponent").removeClass("red").addClass("green suggestion-shown");
+    this.selectButton.html("Select Other Opponent").removeClass("red").addClass("green suggestion-shown").attr('disabled', false);
     this.prefillButton.show();
     this.altCostumeSelector.hide();
 
@@ -987,7 +987,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         /* change the button */
         this.selectButton.html("Select Opponent");
         this.selectButton.removeClass("red");
-        this.selectButton.addClass("green");
+        this.selectButton.addClass("green").attr('disabled', false);
         this.altCostumeSelector.hide();
 
         this.allBadges.hide();
@@ -1051,11 +1051,14 @@ MainSelectScreenDisplay.prototype.altCostumeSelected = function () {
     var costumeDesc = this.altCostumeSelector.children(':selected').data('costumeDescriptor');
     opponent.selectAlternateCostume(costumeDesc);
     if (opponent.selected_costume) {
-        opponent.loadAlternateCostume(true);
+        opponent.loadAlternateCostume().then(
+            opponent.onSelected.bind(opponent, true)
+        );
     } else {
         opponent.unloadAlternateCostume();
         opponent.onSelected(true);
     }
+    updateSelectionVisuals();
 }
 
 MainSelectScreenDisplay.prototype.updateLoadPercentage = function (player) {
@@ -1516,8 +1519,14 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
         }
     }
 
-    if (COLLECTIBLES_ENABLED && opponent.has_collectibles) {        
-        var updateCollectiblesBtn = function () {
+    if (COLLECTIBLES_ENABLED && opponent.has_collectibles) {
+        this.collectiblesField.addClass('has-collectibles');
+        this.collectiblesNavButton
+            .text("Available")
+            .addClass('blue')
+            .prop('disabled', false);
+        
+        opponent.loadCollectibles().then(function () {
             if (!opponent.has_collectibles) {
                 this.collectiblesField.removeClass('has-collectibles');
             }
@@ -1537,20 +1546,10 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
             }, {unlocked:0, total:0});
             
             this.collectiblesNavButton.text("Available ("+counts.unlocked+"/"+counts.total+" unlocked)");
-        }.bind(this);
-        
-        this.collectiblesField.addClass('has-collectibles');
-        
-        this.collectiblesNavButton
-            .text("Available")
-            .addClass('blue')
-            .prop('disabled', false);
-            
-        if (!opponent.collectibles) {
-            opponent.loadCollectibles(updateCollectiblesBtn);
-        } else {
-            updateCollectiblesBtn();
-        }
+        }.bind(this)).catch(function (err) {
+            captureError(err);
+            this.collectiblesField.removeClass('has-collectibles');
+        }.bind(this));
     } else {
         this.collectiblesField.removeClass('has-collectibles');
     }
@@ -1583,6 +1582,11 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
             
             this.linecountLabel.text(opponent.uniqueLineCount);
             this.posecountLabel.text(opponent.posesImageCount);
+        }.bind(this)).catch(function (err) {
+            console.error("Could not fetch counts for " + opponent.id);
+            captureError(err);
+            this.linecountLabel.text("???");
+            this.posecountLabel.text("???");
         }.bind(this));
     }
     else {
