@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.4 at 5:07:16  on juin 28, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.4 at 10:04:41  on juillet 05, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.4</version>
     <first>Elsa</first>
@@ -67,12 +67,16 @@
 
         <trigger id="game_start">
             <case stage="0">
+                <condition role="other" character="mulan" />
+                <state img="#-_selected.png">Hey! Mul... "Ping"!&lt;br&gt;How are you?</state>
+            </case>
+            <case stage="0" priority="90">
                 <condition role="other" character="jasmine" />
                 <state img="#-_start.png">Jasmine, you're here? &lt;br&gt; Maybe stripping you will be a well-deserved revenge for last time...</state>
             </case>
-            <case stage="0" priority="90">
-                <condition role="other" character="mulan" />
-                <state img="#-_selected.png">Hey! Mul... "Ping"!&lt;br&gt;How are you?</state>
+            <case stage="0">
+                <test expr="~background.temperature~" value="cold" />
+                <state img="#-little_surprise.png">Strip poker? In this place? &lt;br&gt; No problem, the cold never bothered me anyway... &lt;br&gt; But... What about you?</state>
             </case>
             <case stage="0">
                 <state img="#-_start.png">A strip poker game? &lt;br&gt; Well... Why not? &lt;br&gt; The cold never bothered me anyway...</state>
@@ -266,6 +270,13 @@
                 <condition role="other" character="natsuki" />
                 <state img="#-power.png">Do you want some ice cubes in your shake, Amy?</state>
             </case>
+            <case stage="0-8" id="571" priority="171">
+                <condition role="other" character="mulan" stage="2-4" timeInStage="1" sayingMarker="mulan_duel" />
+                <condition count="0" status="naked" />
+                <condition count="0" status="masturbating" />
+                <condition count="0" status="finished" />
+                <state img="#-thinking.png">Hm... That could be interesting. Yes, why not?</state>
+            </case>
             <case stage="0-8" id="540" totalRounds="5-">
                 <condition role="other" character="d.va" stage="0" sayingMarker="d.va_wager_set" />
                 <state img="#-yummy.png" marker="wager=~player~">OK, so... If I win, I'll create two doubles of me with snow, and ~player~ will have to make me come before them...</state>
@@ -277,6 +288,13 @@
             <case stage="0-8" id="542">
                 <condition role="other" character="ribbon_girl" saidMarker="PlayerWager2" sayingMarker="WagerStart" />
                 <state img="#-yummy.png" marker="wager=1">OK, so... If I win, I'll create two doubles of me with snow, and the loser will have to make me come before them...</state>
+            </case>
+            <case stage="1-3" id="569" priority="0">
+                <test expr="~self.costume~" value="default" />
+                <state img="#-frozen_cards.png" marker="ice_cards" weight="0.33">Did I just...?</state>
+                <state img="#-frozen_cards.png" marker="ice_cards" weight="0.33">I... I should keep my gloves for now...</state>
+                <state img="#-frozen_cards.png" marker="ice_cards" weight="0.33">Did I really freeze my cards?</state>
+                <state img="#-frozen_cards.png" marker="ice_cards" weight="0.33">Hum... Sorry... &lt;br&gt; I can't control my powers as well as I would like...</state>
             </case>
         </trigger>
 
@@ -310,6 +328,13 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="7">
+                <condition role="other" character="mulan" saidMarker="mulan_duel" />
+                <condition count="0" status="naked" />
+                <condition count="0" status="masturbating" />
+                <condition count="0" status="finished" />
+                <state img="#-stripping.png">Oh yes, we did agree on a wager... I have to reveal a secret, right?</state>
+            </case>
             <case stage="3" id="537">
                 <test expr="~self.costume~" value="default" />
                 <state img="#-stripping.png">Okay! Now...</state>
@@ -339,6 +364,13 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="8">
+                <condition role="other" character="mulan" saidMarker="mulan_duel" />
+                <condition count="1" status="naked" />
+                <condition count="0" status="masturbating" />
+                <condition count="0" status="finished" />
+                <state img="#-painting.png" collectible="painting">I don't really like to talk about this, but when I was younger, I had a Gothic period. &lt;br&gt; And this is nothing. Earlier still, I had a blue skin.</state>
+            </case>
             <case stage="4" id="162">
                 <test expr="~self.costume~" value="default" />
                 <state img="#-after_stripping.png">That perfect girl is gone!</state>
@@ -612,9 +644,9 @@
                 <state img="#-surprised.png">~clothing.ifPlural(Were they ~clothing~? | Was it a ~clothing~?)~</state>
                 <state img="#-surprised.png">Why this?</state>
             </case>
-            <case stage="6-8 10">
+            <case stage="6-8">
                 <state img="#-angry.png">Okay... Next round...</state>
-                <state img="#-angry.png">I have to win this round...</state>
+                <state img="#-angry.png">I have to win this round!</state>
                 <state img="#-angry.png">Don't smile, ~target~...</state>
                 <state img="#-angry.png">How dare you?</state>
             </case>
@@ -680,6 +712,14 @@
                 <state img="#-masturbating_D.png" marker="+masturbate">One touch crystallizes like an icy blast.</state>
                 <state img="#-masturbating_D.png" marker="+masturbate">So  hot...</state>
                 <state img="#-masturbating_D.png" marker="+masturbate">Mmmmmmm... &lt;br&gt; It's cool...</state>
+            </case>
+            <case stage="10">
+                <state img="#-classic.png" weight="0.5">Anyway, I really can wait now...</state>
+                <state img="#-confident.png" weight="0.5">Anyway, I really can wait now...</state>
+                <state img="#-little_surprise.png">Your ~clothing~?</state>
+                <state img="#-its_cute.png">Only your ~clothing~ after all this time? You are more shy than I thought...</state>
+                <state img="#-classic.png" weight="0.5">I'm already finished, I'm not in a hurry...</state>
+                <state img="#-confident.png" weight="0.5">I'm already finished, I'm not in a hurry...</state>
             </case>
         </trigger>
 
@@ -820,9 +860,9 @@
                 <state img="#-surprised.png">~clothing.ifPlural(Were they ~clothing~? | Was it a ~clothing~?)~</state>
                 <state img="#-surprised.png">Why this?</state>
             </case>
-            <case stage="6-8 10">
+            <case stage="6-8">
                 <state img="#-angry.png">Okay... Next round...</state>
-                <state img="#-angry.png">I have to win this round...</state>
+                <state img="#-angry.png">I have to win this round!</state>
                 <state img="#-angry.png">Don't smile, ~target~...</state>
                 <state img="#-angry.png">How dare you?</state>
             </case>
@@ -888,6 +928,14 @@
                 <state img="#-masturbating_D.png" marker="+masturbate">One touch crystallizes like an icy blast.</state>
                 <state img="#-masturbating_D.png" marker="+masturbate">So  hot...</state>
                 <state img="#-masturbating_D.png" marker="+masturbate">Mmmmmmm... &lt;br&gt; It's cool...</state>
+            </case>
+            <case stage="10">
+                <state img="#-classic.png" weight="0.5">Anyway, I really can wait now...</state>
+                <state img="#-confident.png" weight="0.5">Anyway, I really can wait now...</state>
+                <state img="#-little_surprise.png">Your ~clothing~?</state>
+                <state img="#-its_cute.png">Only your ~clothing~ after all this time? You are more shy than I thought...</state>
+                <state img="#-classic.png" weight="0.5">I'm already finished, I'm not in a hurry...</state>
+                <state img="#-confident.png" weight="0.5">I'm already finished, I'm not in a hurry...</state>
             </case>
         </trigger>
 
@@ -984,9 +1032,9 @@
                 <state img="#-surprised.png">~clothing.ifPlural(Were they ~clothing~? | Was it a ~clothing~?)~</state>
                 <state img="#-surprised.png">Why this?</state>
             </case>
-            <case stage="6-8 10">
+            <case stage="6-8">
                 <state img="#-angry.png">Okay... Next round...</state>
-                <state img="#-angry.png">I have to win this round...</state>
+                <state img="#-angry.png">I have to win this round!</state>
                 <state img="#-angry.png">Don't smile, ~target~...</state>
                 <state img="#-angry.png">How dare you?</state>
             </case>
@@ -1052,6 +1100,14 @@
                 <state img="#-masturbating_D.png" marker="+masturbate">One touch crystallizes like an icy blast.</state>
                 <state img="#-masturbating_D.png" marker="+masturbate">So  hot...</state>
                 <state img="#-masturbating_D.png" marker="+masturbate">Mmmmmmm... &lt;br&gt; It's cool...</state>
+            </case>
+            <case stage="10">
+                <state img="#-classic.png" weight="0.5">Anyway, I really can wait now...</state>
+                <state img="#-confident.png" weight="0.5">Anyway, I really can wait now...</state>
+                <state img="#-little_surprise.png">Your ~clothing~?</state>
+                <state img="#-its_cute.png">Only your ~clothing~ after all this time? You are more shy than I thought...</state>
+                <state img="#-classic.png" weight="0.5">I'm already finished, I'm not in a hurry...</state>
+                <state img="#-confident.png" weight="0.5">I'm already finished, I'm not in a hurry...</state>
             </case>
         </trigger>
 
@@ -1164,9 +1220,9 @@
                 <state img="#-surprised.png">~clothing.ifPlural(Were they ~clothing~? | Was it a ~clothing~?)~</state>
                 <state img="#-surprised.png">Why this?</state>
             </case>
-            <case stage="6-8 10">
+            <case stage="6-8">
                 <state img="#-angry.png">Okay... Next round...</state>
-                <state img="#-angry.png">I have to win this round...</state>
+                <state img="#-angry.png">I have to win this round!</state>
                 <state img="#-angry.png">Don't smile, ~target~...</state>
                 <state img="#-angry.png">How dare you?</state>
             </case>
@@ -1232,6 +1288,14 @@
                 <state img="#-masturbating_D.png" marker="+masturbate">One touch crystallizes like an icy blast.</state>
                 <state img="#-masturbating_D.png" marker="+masturbate">So  hot...</state>
                 <state img="#-masturbating_D.png" marker="+masturbate">Mmmmmmm... &lt;br&gt; It's cool...</state>
+            </case>
+            <case stage="10">
+                <state img="#-classic.png" weight="0.5">Anyway, I really can wait now...</state>
+                <state img="#-confident.png" weight="0.5">Anyway, I really can wait now...</state>
+                <state img="#-little_surprise.png">Your ~clothing~?</state>
+                <state img="#-its_cute.png">Only your ~clothing~ after all this time? You are more shy than I thought...</state>
+                <state img="#-classic.png" weight="0.5">I'm already finished, I'm not in a hurry...</state>
+                <state img="#-confident.png" weight="0.5">I'm already finished, I'm not in a hurry...</state>
             </case>
         </trigger>
 
@@ -1485,6 +1549,10 @@
             <case stage="0-10" id="565">
                 <condition role="target" character="amy" stage="5" />
                 <state img="#-little_surprise.png" marker="+masturbate">Hm... I think you can put your shirt back... &lt;br&gt; Am I wrong?</state>
+            </case>
+            <case stage="0-10" id="570">
+                <condition role="target" character="mulan" stage="2" />
+                <state img="#-classic.png" marker="nickname*=Mulan">Hi Mulan!</state>
             </case>
             <case stage="0-3">
                 <condition role="target" character="human" />
@@ -2269,7 +2337,7 @@
                 <state img="#-yummy.png">Let it go!</state>
                 <state img="#-classic.png">Let it go!</state>
             </case>
-            <case stage="10">
+            <case stage="10" priority="5">
                 <state img="#-classic.png">That's good...</state>
                 <state img="#-classic.png">I love it!</state>
                 <state img="#-classic.png">Mmmm... This view...</state>
@@ -2591,8 +2659,7 @@
                 <state img="#-yummy.png">Let it go!</state>
                 <state img="#-classic.png">Let it go!</state>
             </case>
-            <case stage="0-8" />
-            <case stage="10">
+            <case stage="10" priority="5">
                 <state img="#-classic.png">That's good...</state>
                 <state img="#-classic.png">I love it!</state>
                 <state img="#-classic.png">Mmmm... This view...</state>
@@ -2638,6 +2705,7 @@
                 <state img="#-yummy.png">Let it go!</state>
                 <state img="#-classic.png">Let it go!</state>
             </case>
+            <case stage="0-8" />
             <case stage="9">
                 <state img="#-masturbating_A.png" marker="+masturbate">The wind is howling like my swirling fingers inside...</state>
                 <state img="#-masturbating_A.png" marker="+masturbate">I'm not the good girl I always have to be...</state>

@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited June 27 2020
+README edited July 7 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -181,7 +181,7 @@ Chara has one Epilogue, Power, available with the only prerequisite being to win
 markers, depending on the following conditions:
 
 Case 1 - The player is seeing the epilogue for the first time.
-Case 2 - The player is seeing the epilogue in the epilogue viewer.
+Case 2 - The player is seeing the epilogue in the epilogue viewer, with additional sub-cases if the player does this multiple times.
 Case 3 - The player is seeing the epilogue normally, for the 2+ time.
 
 After the epilogue, the player is forcibly booted to the start screen. This is intentional.
@@ -286,6 +286,7 @@ ELIZABETH
 
 EMI
 -Responds to Emi stripping her prosthetic legs.
+-Back and forth between Emi and Chara as the latter loses.
 
 ERUFUDA
 -Responds to Erufuda's question about favorite foods.
@@ -293,11 +294,14 @@ ERUFUDA
 FLORINA
 -Responds to Florina fleeing the game.
 
+GALATEA
+-Responds to Galatea having to strip with rock puns.
+
 PRINCESS JASMINE
 -Responds to Princess Jasmine revealing her identity.
 
 JASON
--Responds to Jason having to strip the first time.
+-Back and forth as Jason is losing.
 
 JOETTA
 -Responds to the first time Joetta does a 'sleight of hand' strip.
@@ -337,6 +341,9 @@ MEGUMIN
 -Responds to Megumin must-strip on Fully Clothed with a comment about Explosion's ability to 1-shot things.
 -Responds to Megumin's comment about Chara being a troublesome demon or not.
 
+MEIA
+-Responds to Meia's remark on Chara having to strip.
+
 MEIA/REVY
 -Responds to Meia and Revy fighting.
 
@@ -351,9 +358,15 @@ METTATON
 -Responds to Mettaton showing he has breasts.
 -Responds to Mettaton being forced to forfeit.
 
+MIKO
+-Back and forth when Miko or Chara are losing.
+
 MULAN
 -Responds to Mulan's 'Fapping' joke.
 -Responds to Mulan revealing her identity.
+
+MYRIAM
+-Responds to Myriam talking to her.
 
 NAMI (ZSZ)
 -Responds to Nami leaving the game.

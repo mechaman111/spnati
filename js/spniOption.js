@@ -102,7 +102,7 @@ function Background (id, src, metadata) {
 /**
  * Sets this background to be displayed.
  * 
- * @returns {Deferred} A jQuery Deferred that settles once this background
+ * @returns {Promise<Background>} A Promise that resolves once this background
  * loads.
  */
 Background.prototype.activateBackground = function () {
@@ -112,25 +112,23 @@ Background.prototype.activateBackground = function () {
     }
 
     console.log("Activating background: " + this.id);
-    var deferred = $.Deferred();
+    return new Promise(function (resolve, reject) {
+        backgroundImage.onload = function () {
+            $("body").css("background-image", "url(" + this.src + ")");
+            activeBackground = this;
 
-    backgroundImage.onload = function () {
-        $("body").css("background-image", "url(" + this.src + ")");
-        activeBackground = this;
+            $('.screen').css('filter', this.filter || '');
+            autoResizeFont();
 
-        $('.screen').css('filter', this.filter || '');
-        autoResizeFont();
+            resolve(this);
+        }.bind(this);
 
-        deferred.resolve(this);
-    }.bind(this);
+        backgroundImage.onerror = function () {
+            reject();
+        }
 
-    backgroundImage.onerror = function () {
-        deferred.reject();
-    }
-
-    backgroundImage.src = this.src;
-
-    return deferred.promise();
+        backgroundImage.src = this.src;
+    }.bind(this));
 }
 
 /**
@@ -192,49 +190,46 @@ function loadBackgroundFromXml($xml, auto_tag_values) {
  */
 function loadBackgrounds() {
     console.log("Loading backgrounds...");
+    return fetchXML(BACKGROUND_CONFIG_FILE).then(function ($xml) {
+        var auto_tag_metadata = {};
 
-    return $.ajax({
-        type: "GET",
-        url: BACKGROUND_CONFIG_FILE,
-        dataType: "text",
-        success: function (xml) {
-            var $xml = $(xml);
+        /* Find metadata keys to automatically tag. */
+        $xml.children('auto-tag-metadata').each(function () {
+            var $elem = $(this);
 
-            var auto_tag_metadata = {};
-
-            /* Find metadata keys to automatically tag. */
-            $xml.children('auto-tag-metadata').each(function () {
-                var $elem = $(this);
-
-                $elem.children('key').each(function () {
-                    var $key = $(this);
-                    var key_name = $key.text();
-                    
-                    if ($key.attr('type') === 'boolean') {
-                        auto_tag_metadata[key_name] = 'boolean';
-                    } else {
-                        auto_tag_metadata[key_name] = 'value';
-                    }
-                });
+            $elem.children('key').each(function () {
+                var $key = $(this);
+                var key_name = $key.text();
+                
+                if ($key.attr('type') === 'boolean') {
+                    auto_tag_metadata[key_name] = 'boolean';
+                } else {
+                    auto_tag_metadata[key_name] = 'value';
+                }
             });
+        });
 
-            $xml.children('background').each(function () {
-                var bg = loadBackgroundFromXml($(this), auto_tag_metadata);
-                /* If the background has a listed status, check to ensure it's
-                 * available with the current configuration.
-                 */
-                if (bg.status && !includedOpponentStatuses[bg.status]) return;
-                backgrounds[bg.id] = bg;
-            });
+        $xml.children('background').each(function () {
+            var bg = loadBackgroundFromXml($(this), auto_tag_metadata);
+            /* If the background has a listed status, check to ensure it's
+             * available with the current configuration.
+             */
+            if (bg.status && !includedOpponentStatuses[bg.status]) return;
+            backgrounds[bg.id] = bg;
+        });
 
-            if (defaultBackgroundID && backgrounds[defaultBackgroundID]) {
-                defaultBackground = backgrounds[defaultBackgroundID];
-            }
+        if (defaultBackgroundID && backgrounds[defaultBackgroundID]) {
+            defaultBackground = backgrounds[defaultBackgroundID];
         }
+    }).catch(function (err) {
+        console.error("Could not load backgrounds:");
+        captureError(err);
     }).then(
-        save.loadOptionsBackground.bind(save, undefined),
         save.loadOptionsBackground.bind(save, undefined)
-    );
+    ).catch(function (err) {
+        console.error("Could not activate background in player options:");
+        captureError(err);
+    });
 }
 
 /**********************************************************************
