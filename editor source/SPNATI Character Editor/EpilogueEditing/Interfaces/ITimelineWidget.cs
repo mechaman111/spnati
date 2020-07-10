@@ -63,6 +63,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <param name="rowHeight"></param>
 		void DrawHeaderIcon(Graphics g, int rowIndex, int iconIndex, int x, int y, int size, int highlightedIconIndex);
 		LiveEvent GetEventBetween(float start, float end);
+		Color GetAccent();
 	}
 
 	public class WidgetOperationArgs

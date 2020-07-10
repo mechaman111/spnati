@@ -29,7 +29,6 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EpilogueEditor));
 			this.cboEnding = new Desktop.Skinning.SkinnedComboBox();
 			this.label1 = new Desktop.Skinning.SkinnedLabel();
 			this.imageFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -40,39 +39,42 @@
 			this.tmrActivate = new System.Windows.Forms.Timer(this.components);
 			this.tabs = new Desktop.Skinning.SkinnedTabControl();
 			this.pageGeneral = new System.Windows.Forms.TabPage();
+			this.grpMarkers = new Desktop.Skinning.SkinnedGroupBox();
+			this.gridMarkers = new SPNATI_Character_Editor.Controls.MarkerControl();
 			this.grpConditions = new Desktop.Skinning.SkinnedGroupBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBox2 = new Desktop.Skinning.SkinnedGroupBox();
-			this.selAlsoPlayingAnyMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
+			this.selAlsoPlayingAnyMarkers = new SPNATI_Character_Editor.Controls.RecordSelectBox();
+			this.selAlsoPlayingNotMarkers = new SPNATI_Character_Editor.Controls.RecordSelectBox();
+			this.selAlsoPlayingAllMarkers = new SPNATI_Character_Editor.Controls.RecordSelectBox();
 			this.label4 = new Desktop.Skinning.SkinnedLabel();
-			this.selAlsoPlayingNotMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
 			this.label5 = new Desktop.Skinning.SkinnedLabel();
-			this.selAlsoPlayingAllMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
 			this.label6 = new Desktop.Skinning.SkinnedLabel();
 			this.groupBox1 = new Desktop.Skinning.SkinnedGroupBox();
-			this.selAnyMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
+			this.selAnyMarkers = new SPNATI_Character_Editor.Controls.RecordSelectBox();
+			this.selNotMarkers = new SPNATI_Character_Editor.Controls.RecordSelectBox();
+			this.selAllMarkers = new SPNATI_Character_Editor.Controls.RecordSelectBox();
 			this.label3 = new Desktop.Skinning.SkinnedLabel();
-			this.selNotMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
 			this.label2 = new Desktop.Skinning.SkinnedLabel();
-			this.selAllMarkers = new SPNATI_Character_Editor.Controls.SelectBox();
 			this.label7 = new Desktop.Skinning.SkinnedLabel();
 			this.grpInfo = new Desktop.Skinning.SkinnedGroupBox();
 			this.tableGeneral = new Desktop.CommonControls.PropertyTable();
 			this.pageScenes = new System.Windows.Forms.TabPage();
 			this.canvas = new SPNATI_Character_Editor.Controls.EpilogueCanvas();
+			this.pageEditor = new System.Windows.Forms.TabPage();
+			this.liveEditor = new SPNATI_Character_Editor.Controls.LiveEpilogueEditor();
 			this.strip = new Desktop.Skinning.SkinnedTabStrip();
-			this.grpMarkers = new Desktop.Skinning.SkinnedGroupBox();
-			this.gridMarkers = new SPNATI_Character_Editor.Controls.MarkerControl();
 			this.pnlHeader.SuspendLayout();
 			this.tabs.SuspendLayout();
 			this.pageGeneral.SuspendLayout();
+			this.grpMarkers.SuspendLayout();
 			this.grpConditions.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.grpInfo.SuspendLayout();
 			this.pageScenes.SuspendLayout();
-			this.grpMarkers.SuspendLayout();
+			this.pageEditor.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// cboEnding
@@ -169,6 +171,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabs.Controls.Add(this.pageGeneral);
 			this.tabs.Controls.Add(this.pageScenes);
+			this.tabs.Controls.Add(this.pageEditor);
 			this.tabs.Enabled = false;
 			this.tabs.Location = new System.Drawing.Point(0, 57);
 			this.tabs.Name = "tabs";
@@ -189,6 +192,34 @@
 			this.pageGeneral.Size = new System.Drawing.Size(965, 563);
 			this.pageGeneral.TabIndex = 0;
 			this.pageGeneral.Text = "General";
+			// 
+			// grpMarkers
+			// 
+			this.grpMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.grpMarkers.BackColor = System.Drawing.Color.White;
+			this.grpMarkers.Controls.Add(this.gridMarkers);
+			this.grpMarkers.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.grpMarkers.Image = null;
+			this.grpMarkers.Location = new System.Drawing.Point(374, 409);
+			this.grpMarkers.Name = "grpMarkers";
+			this.grpMarkers.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.grpMarkers.ShowIndicatorBar = false;
+			this.grpMarkers.Size = new System.Drawing.Size(585, 151);
+			this.grpMarkers.TabIndex = 3;
+			this.grpMarkers.TabStop = false;
+			this.grpMarkers.Text = "Markers to Set";
+			// 
+			// gridMarkers
+			// 
+			this.gridMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gridMarkers.Location = new System.Drawing.Point(5, 23);
+			this.gridMarkers.Name = "gridMarkers";
+			this.gridMarkers.ShowWhen = true;
+			this.gridMarkers.Size = new System.Drawing.Size(577, 123);
+			this.gridMarkers.TabIndex = 0;
 			// 
 			// grpConditions
 			// 
@@ -226,10 +257,10 @@
 			// 
 			this.groupBox2.BackColor = System.Drawing.Color.White;
 			this.groupBox2.Controls.Add(this.selAlsoPlayingAnyMarkers);
-			this.groupBox2.Controls.Add(this.label4);
 			this.groupBox2.Controls.Add(this.selAlsoPlayingNotMarkers);
-			this.groupBox2.Controls.Add(this.label5);
 			this.groupBox2.Controls.Add(this.selAlsoPlayingAllMarkers);
+			this.groupBox2.Controls.Add(this.label4);
+			this.groupBox2.Controls.Add(this.label5);
 			this.groupBox2.Controls.Add(this.label6);
 			this.groupBox2.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
 			this.groupBox2.Image = null;
@@ -240,17 +271,46 @@
 			this.groupBox2.Size = new System.Drawing.Size(279, 360);
 			this.groupBox2.TabIndex = 45;
 			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Other markers";
+			this.groupBox2.Text = "Other characters\' markers";
 			// 
 			// selAlsoPlayingAnyMarkers
 			// 
 			this.selAlsoPlayingAnyMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.selAlsoPlayingAnyMarkers.Location = new System.Drawing.Point(10, 264);
+			this.selAlsoPlayingAnyMarkers.Location = new System.Drawing.Point(6, 263);
 			this.selAlsoPlayingAnyMarkers.Name = "selAlsoPlayingAnyMarkers";
+			this.selAlsoPlayingAnyMarkers.RecordContext = null;
+			this.selAlsoPlayingAnyMarkers.RecordFilter = null;
+			this.selAlsoPlayingAnyMarkers.RecordType = null;
 			this.selAlsoPlayingAnyMarkers.SelectedItems = new string[0];
-			this.selAlsoPlayingAnyMarkers.Size = new System.Drawing.Size(263, 85);
-			this.selAlsoPlayingAnyMarkers.TabIndex = 1;
+			this.selAlsoPlayingAnyMarkers.Size = new System.Drawing.Size(267, 86);
+			this.selAlsoPlayingAnyMarkers.TabIndex = 7;
+			// 
+			// selAlsoPlayingNotMarkers
+			// 
+			this.selAlsoPlayingNotMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.selAlsoPlayingNotMarkers.Location = new System.Drawing.Point(6, 150);
+			this.selAlsoPlayingNotMarkers.Name = "selAlsoPlayingNotMarkers";
+			this.selAlsoPlayingNotMarkers.RecordContext = null;
+			this.selAlsoPlayingNotMarkers.RecordFilter = null;
+			this.selAlsoPlayingNotMarkers.RecordType = null;
+			this.selAlsoPlayingNotMarkers.SelectedItems = new string[0];
+			this.selAlsoPlayingNotMarkers.Size = new System.Drawing.Size(267, 86);
+			this.selAlsoPlayingNotMarkers.TabIndex = 6;
+			// 
+			// selAlsoPlayingAllMarkers
+			// 
+			this.selAlsoPlayingAllMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.selAlsoPlayingAllMarkers.Location = new System.Drawing.Point(6, 38);
+			this.selAlsoPlayingAllMarkers.Name = "selAlsoPlayingAllMarkers";
+			this.selAlsoPlayingAllMarkers.RecordContext = null;
+			this.selAlsoPlayingAllMarkers.RecordFilter = null;
+			this.selAlsoPlayingAllMarkers.RecordType = null;
+			this.selAlsoPlayingAllMarkers.SelectedItems = new string[0];
+			this.selAlsoPlayingAllMarkers.Size = new System.Drawing.Size(267, 86);
+			this.selAlsoPlayingAllMarkers.TabIndex = 5;
 			// 
 			// label4
 			// 
@@ -265,16 +325,6 @@
 			this.label4.TabIndex = 0;
 			this.label4.Text = "Require any of the following markers to be set:";
 			// 
-			// selAlsoPlayingNotMarkers
-			// 
-			this.selAlsoPlayingNotMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.selAlsoPlayingNotMarkers.Location = new System.Drawing.Point(10, 151);
-			this.selAlsoPlayingNotMarkers.Name = "selAlsoPlayingNotMarkers";
-			this.selAlsoPlayingNotMarkers.SelectedItems = new string[0];
-			this.selAlsoPlayingNotMarkers.Size = new System.Drawing.Size(263, 85);
-			this.selAlsoPlayingNotMarkers.TabIndex = 1;
-			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
@@ -287,16 +337,6 @@
 			this.label5.Size = new System.Drawing.Size(232, 13);
 			this.label5.TabIndex = 0;
 			this.label5.Text = "Require none of the following markers to be set:";
-			// 
-			// selAlsoPlayingAllMarkers
-			// 
-			this.selAlsoPlayingAllMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.selAlsoPlayingAllMarkers.Location = new System.Drawing.Point(7, 39);
-			this.selAlsoPlayingAllMarkers.Name = "selAlsoPlayingAllMarkers";
-			this.selAlsoPlayingAllMarkers.SelectedItems = new string[0];
-			this.selAlsoPlayingAllMarkers.Size = new System.Drawing.Size(266, 85);
-			this.selAlsoPlayingAllMarkers.TabIndex = 1;
 			// 
 			// label6
 			// 
@@ -315,10 +355,10 @@
 			// 
 			this.groupBox1.BackColor = System.Drawing.Color.White;
 			this.groupBox1.Controls.Add(this.selAnyMarkers);
-			this.groupBox1.Controls.Add(this.label3);
 			this.groupBox1.Controls.Add(this.selNotMarkers);
-			this.groupBox1.Controls.Add(this.label2);
 			this.groupBox1.Controls.Add(this.selAllMarkers);
+			this.groupBox1.Controls.Add(this.label3);
+			this.groupBox1.Controls.Add(this.label2);
 			this.groupBox1.Controls.Add(this.label7);
 			this.groupBox1.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
 			this.groupBox1.Image = null;
@@ -335,11 +375,40 @@
 			// 
 			this.selAnyMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.selAnyMarkers.Location = new System.Drawing.Point(10, 264);
+			this.selAnyMarkers.Location = new System.Drawing.Point(6, 263);
 			this.selAnyMarkers.Name = "selAnyMarkers";
+			this.selAnyMarkers.RecordContext = null;
+			this.selAnyMarkers.RecordFilter = null;
+			this.selAnyMarkers.RecordType = null;
 			this.selAnyMarkers.SelectedItems = new string[0];
-			this.selAnyMarkers.Size = new System.Drawing.Size(267, 85);
-			this.selAnyMarkers.TabIndex = 1;
+			this.selAnyMarkers.Size = new System.Drawing.Size(271, 86);
+			this.selAnyMarkers.TabIndex = 4;
+			// 
+			// selNotMarkers
+			// 
+			this.selNotMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.selNotMarkers.Location = new System.Drawing.Point(6, 150);
+			this.selNotMarkers.Name = "selNotMarkers";
+			this.selNotMarkers.RecordContext = null;
+			this.selNotMarkers.RecordFilter = null;
+			this.selNotMarkers.RecordType = null;
+			this.selNotMarkers.SelectedItems = new string[0];
+			this.selNotMarkers.Size = new System.Drawing.Size(271, 86);
+			this.selNotMarkers.TabIndex = 3;
+			// 
+			// selAllMarkers
+			// 
+			this.selAllMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.selAllMarkers.Location = new System.Drawing.Point(6, 38);
+			this.selAllMarkers.Name = "selAllMarkers";
+			this.selAllMarkers.RecordContext = null;
+			this.selAllMarkers.RecordFilter = null;
+			this.selAllMarkers.RecordType = null;
+			this.selAllMarkers.SelectedItems = new string[0];
+			this.selAllMarkers.Size = new System.Drawing.Size(271, 86);
+			this.selAllMarkers.TabIndex = 2;
 			// 
 			// label3
 			// 
@@ -354,16 +423,6 @@
 			this.label3.TabIndex = 0;
 			this.label3.Text = "Require any of the following markers to be set:";
 			// 
-			// selNotMarkers
-			// 
-			this.selNotMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.selNotMarkers.Location = new System.Drawing.Point(10, 151);
-			this.selNotMarkers.Name = "selNotMarkers";
-			this.selNotMarkers.SelectedItems = new string[0];
-			this.selNotMarkers.Size = new System.Drawing.Size(267, 85);
-			this.selNotMarkers.TabIndex = 1;
-			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
@@ -376,16 +435,6 @@
 			this.label2.Size = new System.Drawing.Size(232, 13);
 			this.label2.TabIndex = 0;
 			this.label2.Text = "Require none of the following markers to be set:";
-			// 
-			// selAllMarkers
-			// 
-			this.selAllMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.selAllMarkers.Location = new System.Drawing.Point(7, 39);
-			this.selAllMarkers.Name = "selAllMarkers";
-			this.selAllMarkers.SelectedItems = new string[0];
-			this.selAllMarkers.Size = new System.Drawing.Size(270, 85);
-			this.selAllMarkers.TabIndex = 1;
 			// 
 			// label7
 			// 
@@ -469,6 +518,26 @@
 			this.canvas.TabIndex = 23;
 			this.canvas.ZoomLevel = 1F;
 			// 
+			// pageEditor
+			// 
+			this.pageEditor.BackColor = System.Drawing.Color.White;
+			this.pageEditor.Controls.Add(this.liveEditor);
+			this.pageEditor.ForeColor = System.Drawing.Color.Black;
+			this.pageEditor.Location = new System.Drawing.Point(4, 22);
+			this.pageEditor.Name = "pageEditor";
+			this.pageEditor.Padding = new System.Windows.Forms.Padding(3);
+			this.pageEditor.Size = new System.Drawing.Size(965, 563);
+			this.pageEditor.TabIndex = 2;
+			this.pageEditor.Text = "Scenes";
+			// 
+			// liveEditor
+			// 
+			this.liveEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.liveEditor.Location = new System.Drawing.Point(3, 3);
+			this.liveEditor.Name = "liveEditor";
+			this.liveEditor.Size = new System.Drawing.Size(959, 557);
+			this.liveEditor.TabIndex = 0;
+			// 
 			// strip
 			// 
 			this.strip.AddCaption = null;
@@ -491,34 +560,6 @@
 			this.strip.Text = "skinnedTabStrip1";
 			this.strip.Vertical = false;
 			// 
-			// grpMarkers
-			// 
-			this.grpMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.grpMarkers.BackColor = System.Drawing.Color.White;
-			this.grpMarkers.Controls.Add(this.gridMarkers);
-			this.grpMarkers.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
-			this.grpMarkers.Image = null;
-			this.grpMarkers.Location = new System.Drawing.Point(374, 409);
-			this.grpMarkers.Name = "grpMarkers";
-			this.grpMarkers.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
-			this.grpMarkers.ShowIndicatorBar = false;
-			this.grpMarkers.Size = new System.Drawing.Size(585, 151);
-			this.grpMarkers.TabIndex = 3;
-			this.grpMarkers.TabStop = false;
-			this.grpMarkers.Text = "Markers to Set";
-			// 
-			// gridMarkers
-			// 
-			this.gridMarkers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gridMarkers.Location = new System.Drawing.Point(5, 19);
-			this.gridMarkers.Name = "gridMarkers";
-			this.gridMarkers.ShowWhen = true;
-			this.gridMarkers.Size = new System.Drawing.Size(577, 126);
-			this.gridMarkers.TabIndex = 0;
-			// 
 			// EpilogueEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -532,6 +573,7 @@
 			this.pnlHeader.PerformLayout();
 			this.tabs.ResumeLayout(false);
 			this.pageGeneral.ResumeLayout(false);
+			this.grpMarkers.ResumeLayout(false);
 			this.grpConditions.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
@@ -540,7 +582,7 @@
 			this.groupBox1.PerformLayout();
 			this.grpInfo.ResumeLayout(false);
 			this.pageScenes.ResumeLayout(false);
-			this.grpMarkers.ResumeLayout(false);
+			this.pageEditor.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -562,22 +604,24 @@
 		private Desktop.Skinning.SkinnedGroupBox grpInfo;
 		private Desktop.Skinning.SkinnedGroupBox grpConditions;
 		private Desktop.Skinning.SkinnedGroupBox groupBox2;
-		private SelectBox selAlsoPlayingAnyMarkers;
 		private Desktop.Skinning.SkinnedLabel label4;
-		private SelectBox selAlsoPlayingNotMarkers;
 		private Desktop.Skinning.SkinnedLabel label5;
-		private SelectBox selAlsoPlayingAllMarkers;
 		private Desktop.Skinning.SkinnedLabel label6;
 		private Desktop.Skinning.SkinnedGroupBox groupBox1;
-		private SelectBox selAnyMarkers;
 		private Desktop.Skinning.SkinnedLabel label3;
-		private SelectBox selNotMarkers;
 		private Desktop.Skinning.SkinnedLabel label2;
-		private SelectBox selAllMarkers;
 		private Desktop.Skinning.SkinnedLabel label7;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private Desktop.Skinning.SkinnedTabStrip strip;
 		private Desktop.Skinning.SkinnedGroupBox grpMarkers;
 		private MarkerControl gridMarkers;
+		private RecordSelectBox selAllMarkers;
+		private RecordSelectBox selAnyMarkers;
+		private RecordSelectBox selNotMarkers;
+		private RecordSelectBox selAlsoPlayingAllMarkers;
+		private RecordSelectBox selAlsoPlayingAnyMarkers;
+		private RecordSelectBox selAlsoPlayingNotMarkers;
+		private System.Windows.Forms.TabPage pageEditor;
+		private LiveEpilogueEditor liveEditor;
 	}
 }

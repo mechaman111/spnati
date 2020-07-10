@@ -5,13 +5,14 @@ using System.IO;
 using System.Windows.Forms;
 using Desktop;
 using Desktop.CommonControls;
+using Desktop.Skinning;
 using SPNATI_Character_Editor.Actions;
 using SPNATI_Character_Editor.EpilogueEditing;
 using SPNATI_Character_Editor.EpilogueEditor;
 
 namespace SPNATI_Character_Editor.Controls
 {
-	public partial class LiveEpilogueEditor : UserControl
+	public partial class LiveEpilogueEditor : UserControl, ISkinControl
 	{
 		private Character _character;
 		private Epilogue _epilogue;
@@ -206,6 +207,7 @@ namespace SPNATI_Character_Editor.Controls
 			_scene = null;
 			_sourceScene = null;
 			_epilogue = epilogue;
+			lstScenes.DisplayMember = "SceneName";
 			lstScenes.Items.Clear();
 			if (epilogue != null)
 			{
@@ -247,6 +249,7 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					SetSubTableData(null, null);
 				}
+				SetTableData(data.Data, data.PreviewData);
 			}
 			UpdateToolbar();
 		}
@@ -277,6 +280,7 @@ namespace SPNATI_Character_Editor.Controls
 				_sublabelData.LabelChanged -= _labelData_LabelChanged;
 				_sublabelData = null;
 			}
+			splitContainer4.Panel2Collapsed = data == null;
 			subTable.SetDataAsync(data, previewData);
 			_sublabelData = data as ILabel;
 			if (_sublabelData != null)
@@ -309,7 +313,14 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void SaveScene()
 		{
-			if (_scene == null) { return; }
+			if (_scene == null || _sourceScene == null) { return; }
+
+			_sourceScene.CreateFrom(_scene);
+		}
+
+		public void Save()
+		{
+			SaveScene();
 		}
 
 		private void lstScenes_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -324,9 +335,11 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				if (_sourceScene.Transition) { return; }
 				SetTableData(_scene, null);
+				SetSubTableData(null, null);
 				return;
 			}
 			SaveScene();
+			SetActive(false);
 			_sceneTransition = null;
 			if (_scene != null)
 			{
@@ -361,12 +374,14 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				data = _sourceScene;
 			}
+			SetActive(true);
 			SetTableData(data, null);
 			tsToolbar.Enabled = enabled;
 			canvas.Enabled = enabled;
 			table.Enabled = data != null;
 			subTable.Enabled = data != null;
 			timeline.Enabled = enabled;
+			SetSubTableData(null, null);
 			canvas.FitScreen();
 		}
 
@@ -376,6 +391,10 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				_sourceScene.Name = _scene.Name;
 				lstScenes.RefreshListItems();
+			}
+			else if (e.PropertyName == "BackgroundImage")
+			{
+				canvas.FitScreen();
 			}
 		}
 
@@ -387,7 +406,9 @@ namespace SPNATI_Character_Editor.Controls
 			tsRemoveSprite.Enabled = tsAddEndFrame.Enabled = (selectedWidget != null);
 			tsAddKeyframe.Enabled = false;
 			tsRemoveKeyframe.Enabled = false;
-			tsFrameType.Enabled = false;
+			tsTypeNormal.Enabled = tsTypeSplit.Enabled = tsTypeBegin.Enabled = false;
+			tsAddEndFrame.Enabled = selectedWidget != null;
+			tsRemove.Enabled = !(selectedWidget is CameraWidget);
 			if (selectedWidget != null)
 			{
 				tsRemoveSprite.Enabled = true;
@@ -403,7 +424,7 @@ namespace SPNATI_Character_Editor.Controls
 				if (selectedWidget.SelectedFrame != null && selectedWidget.SelectedFrame.Time != 0)
 				{
 					tsRemoveKeyframe.Enabled = true;
-					tsFrameType.Enabled = true;
+					tsTypeNormal.Enabled = tsTypeSplit.Enabled = tsTypeBegin.Enabled = true;
 				}
 			}
 		}
@@ -461,9 +482,13 @@ namespace SPNATI_Character_Editor.Controls
 				_sceneTransition.Update(elapsedSec);
 				canvas.InvalidateCanvas();
 			}
-			else
+			else if(_scene != null)
 			{
-				_scene?.UpdateRealTime(elapsed, canvas.Playing);
+				bool invalidated = _scene.UpdateRealTime(elapsed, canvas.Playing);
+				if (invalidated)
+				{
+					canvas.InvalidateCanvas();
+				}
 			}
 			_lastTick = now;
 		}
@@ -544,24 +569,6 @@ namespace SPNATI_Character_Editor.Controls
 				PasteKeyframeCommand command = new PasteKeyframeCommand(sprite, kf, widget.GetEnd(timeline.Duration));
 				_history.Commit(command);
 				timeline.CurrentTime = command.NewKeyframe.Time;
-			}
-			UpdateToolbar();
-		}
-
-		private void tsFrameType_Click(object sender, EventArgs e)
-		{
-			if (timeline.SelectedObject == null) { return; }
-			KeyframedWidget widget = timeline.SelectedObject as KeyframedWidget;
-			LiveKeyframe frame = widget.SelectedFrame;
-			if (frame != null)
-			{
-				HashSet<string> props = new HashSet<string>();
-				foreach (string p in widget.SelectedProperties)
-				{
-					props.Add(p);
-				}
-				ToggleKeyframeTypeCommand command = new ToggleKeyframeTypeCommand(widget.Data, frame, props);
-				_history.Commit(command);
 			}
 			UpdateToolbar();
 		}
@@ -690,6 +697,44 @@ namespace SPNATI_Character_Editor.Controls
 				lstScenes.SelectedIndex = index + 1;
 				lstScenes.SelectedIndexChanged += lstScenes_SelectedIndexChanged;
 			}
+		}
+
+		public void OnUpdateSkin(Skin skin)
+		{
+			BackColor = skin.Background.Normal;
+		}
+
+		private void tsTypeNormal_Click(object sender, EventArgs e)
+		{
+			ToggleKeyframeType(KeyframeType.Normal);
+		}
+
+		private void tsTypeSplit_Click(object sender, EventArgs e)
+		{
+			ToggleKeyframeType(KeyframeType.Split);
+		}
+
+		private void tsTypeBegin_Click(object sender, EventArgs e)
+		{
+			ToggleKeyframeType(KeyframeType.Begin);
+		}
+
+		private void ToggleKeyframeType(KeyframeType type)
+		{
+			if (timeline.SelectedObject == null) { return; }
+			KeyframedWidget widget = timeline.SelectedObject as KeyframedWidget;
+			LiveKeyframe frame = widget.SelectedFrame;
+			if (frame != null)
+			{
+				HashSet<string> props = new HashSet<string>();
+				foreach (string p in widget.SelectedProperties)
+				{
+					props.Add(p);
+				}
+				ToggleKeyframeTypeCommand command = new ToggleKeyframeTypeCommand(widget.Data, frame, props, type);
+				_history.Commit(command);
+			}
+			UpdateToolbar();
 		}
 	}
 }

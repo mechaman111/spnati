@@ -43,12 +43,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			CenterY = true;
 
 			//randomize the rotation by the emission angle range
-			float rotation = emitter.Rotation;
+			float rotation = emitter.ToWorldRotation(emitter.Rotation);
 			float angle = emitter.Random.Next(-(int)emitter.Angle, (int)emitter.Angle + 1);
 			rotation += angle;
 
-			X = emitter.X;
-			Y = emitter.Y;
+			PointF worldPoint = emitter.ToWorldPt(emitter.X, emitter.Y);
+			X = worldPoint.X;
+			Y = worldPoint.Y;
 
 			Image = emitter.Image;
 			Width = emitter.ParticleWidth;
@@ -91,6 +92,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			Elapsed = 0;
 			Duration = (emitter.Lifetime ?? new RandomParameter(1, 1)).Get() * 1000;
+
 			UpdateRealTime(0, false);
 		}
 
@@ -165,13 +167,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		public override void UpdateRealTime(float deltaTime, bool inPlayback)
+		public override bool UpdateRealTime(float deltaTime, bool inPlayback)
 		{
 			Elapsed += deltaTime;
 
 			if (IsDead)
 			{
-				return;
+				return false;
 			}
 
 			float elapsedSec = deltaTime / 1000.0f;
@@ -202,6 +204,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			X += dt * SpeedX;
 			Y += dt * SpeedY;
+			return true;
 		}
 	}
 }

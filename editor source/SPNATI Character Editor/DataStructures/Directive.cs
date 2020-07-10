@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
+﻿using Desktop;
 using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Controls;
-using SPNATI_Character_Editor.EditControls;
-using System.ComponentModel;
-using System;
 using SPNATI_Character_Editor.Controls.EditControls;
+using SPNATI_Character_Editor.EditControls;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
+using System.Text;
+using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
 {
@@ -56,6 +58,9 @@ namespace SPNATI_Character_Editor
 		[Float(DisplayName = "Delay (s)", Key = "delay", GroupOrder = 39, Description = "Time in seconds before the animation begins", Minimum = 0, Maximum = 100, Increment = 0.5f)]
 		[XmlAttribute("delay")]
 		public string Delay;
+
+		[XmlAttribute("animid")]
+		public string AnimationId;
 
 		[Boolean(DisplayName = "Looped", Key = "loop", GroupOrder = 42, Description = "If true, the animation will repeat indefinitely until stopped")]
 		[DefaultValue(false)]
@@ -252,7 +257,7 @@ namespace SPNATI_Character_Editor
 					text = $"Camera {time}{loop}{(props.Length > 0 ? "-" + props : "")}";
 					break;
 				case "stop":
-					text = $"Stop {Id}";
+					text = $"Stop {Id} {(!string.IsNullOrEmpty(AnimationId) ? "- " + AnimationId : "")}";
 					break;
 				case "remove":
 					text = $"Remove {Id}";
@@ -364,6 +369,47 @@ namespace SPNATI_Character_Editor
 			}
 			return null;
 		}
+
+		/// <summary>
+		/// Copies all keyframes into another directive
+		/// </summary>
+		/// <param name="destination"></param>
+		public void CopyInto(Directive destination)
+		{
+			MergeInto(destination);
+			foreach (Keyframe kf in Keyframes)
+			{
+				float srcTime;
+				float.TryParse(kf.Time, out srcTime);
+
+				bool found = false;
+				for (int i = 0; i < destination.Keyframes.Count; i++)
+				{
+					Keyframe destFrame = destination.Keyframes[i];
+					float destTime;
+					float.TryParse(destFrame.Time, out destTime);
+					if (srcTime == destTime)
+					{
+						//found a matching frame
+						kf.MergeInto(destFrame);
+						found = true;
+						break;
+					}
+					else if (destTime > srcTime)
+					{
+						//passed where the frame would go, so insert it
+						destination.Keyframes.Insert(i, kf);
+						found = true;
+						break;
+					}
+				}
+				if (!found)
+				{
+					//can copy the whole frame over directly
+					destination.Keyframes.Add(kf);
+				}
+			}
+		}
 	}
 
 	/// <summary>
@@ -441,6 +487,9 @@ namespace SPNATI_Character_Editor
 		public string Zoom;
 
 		[XmlIgnore]
+		public Dictionary<string, object> Properties = new Dictionary<string, object>();
+
+		[XmlIgnore]
 		public bool Locked;
 
 		/// <summary>
@@ -491,6 +540,36 @@ namespace SPNATI_Character_Editor
 			src.SkewX = null;
 			src.SkewY = null;
 			src.Src = null;
+
+			Properties = src.Properties;
+			src.Properties = new Dictionary<string, object>();
+		}
+
+		/// <summary>
+		/// Moves all non-null properties from this frame into another one
+		/// </summary>
+		/// <param name="dest"></param>
+		public void MergeInto(Keyframe dest)
+		{
+			foreach (KeyValuePair<string, object> kvp in Properties)
+			{
+				dest.Properties[kvp.Key] = kvp.Value;
+			}
+		}
+
+		/// <summary>
+		/// "Bakes" the properties dictionary into the actual property fields
+		/// </summary>
+		public void BakeProperties()
+		{
+			Type type = GetType();
+			foreach (KeyValuePair<string, object> kvp in Properties)
+			{
+				string property = kvp.Key;
+				object value = kvp.Value;
+				FieldInfo fi = PropertyTypeInfo.GetFieldInfo(type, property);
+				fi.SetValue(this, value);
+			}
 		}
 
 		public string GetProperties()

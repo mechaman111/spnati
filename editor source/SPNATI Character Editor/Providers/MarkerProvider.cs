@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -8,6 +9,7 @@ namespace SPNATI_Character_Editor.Providers
 	{
 		private Character _character;
 		private static List<Marker> _placeholders = new List<Marker>();
+		private bool _excludeCharacter = false;
 
 		public bool AllowsNew { get { return true; } }
 
@@ -18,7 +20,18 @@ namespace SPNATI_Character_Editor.Providers
 
 		public void SetContext(object context)
 		{
-			_character = context as Character;
+			_excludeCharacter = false;
+			_character = null;
+			if (context is Character)
+			{
+				_character = context as Character;
+			}
+			else if (context is Tuple<Character, bool>)
+			{
+				Tuple<Character, bool> c = context as Tuple<Character, bool>;
+				_character = c.Item1;
+				_excludeCharacter = c.Item2;
+			}
 		}
 
 		public IRecord Create(string key)
@@ -70,16 +83,41 @@ namespace SPNATI_Character_Editor.Providers
 			}
 			if (_character == null) { return list; }
 
-			foreach (Marker record in _character.Markers.Value.Values)
+			if (_excludeCharacter)
 			{
-				if (string.IsNullOrEmpty(record.Key))
+				HashSet<string> otherMarkers = new HashSet<string>();
+				foreach (Character c in CharacterDatabase.FilteredCharacters)
 				{
-					continue;
+					if (c != _character)
+					{
+						foreach (Marker m in c.Markers.Value.Values)
+						{
+							if (m.Scope == MarkerScope.Public && !otherMarkers.Contains(m.Name) && !string.IsNullOrEmpty(m.Name))
+							{
+								otherMarkers.Add(m.Name);
+								if (m.Key.ToLower().Contains(text) || m.Name.ToLower().Contains(text))
+								{
+									//partial match
+									list.Add(m);
+								}
+							}							
+						}
+					}
 				}
-				if (record.Key.ToLower().Contains(text) || record.Name.ToLower().Contains(text))
+			}
+			else
+			{
+				foreach (Marker record in _character.Markers.Value.Values)
 				{
-					//partial match
-					list.Add(record);
+					if (string.IsNullOrEmpty(record.Key))
+					{
+						continue;
+					}
+					if (record.Key.ToLower().Contains(text) || record.Name.ToLower().Contains(text))
+					{
+						//partial match
+						list.Add(record);
+					}
 				}
 			}
 			return list;

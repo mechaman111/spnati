@@ -20,6 +20,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public bool CenterX { get; set; } = true;
 		public bool CenterY { get; set; } = false;
 
+		/** LiveObject describing the characteristics of this one prior to the data's start */
+		public LiveObject Previous;
+
 		private static Pen _penOuterSelection;
 		private static Pen _penInnerSelection;
 		private static Brush _brushHandle;
@@ -61,7 +64,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				Set(value);
 				Parent = Data.Find(value);
-				UpdateLocalTransform();
+				InvalidateTransform();
 			}
 		}
 
@@ -126,7 +129,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					value = 0;
 				}
 				Set(value);
-				UpdateLocalTransform();
+				InvalidateTransform();
 			}
 		}
 		[Float(DisplayName = "Pivot Y", Key = "pivoty", GroupOrder = 20, Description = "Y value of rotation/scale point of origin as a percentage of the sprite's physical size.", Minimum = -1000, Maximum = 1000, Increment = 0.1f)]
@@ -140,7 +143,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					value = 0;
 				}
 				Set(value);
-				UpdateLocalTransform();
+				InvalidateTransform();
 			}
 		}
 
@@ -200,7 +203,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (_x != value)
 				{
-					_x = (float)Math.Round(value, 0); UpdateLocalTransform(); NotifyPropertyChanged(nameof(X));
+					_x = (float)Math.Round(value, 0); InvalidateTransform(); NotifyPropertyChanged(nameof(X));
 				}
 			}
 		}
@@ -213,7 +216,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (_y != value)
 				{
-					_y = (float)Math.Round(value, 0); UpdateLocalTransform(); NotifyPropertyChanged(nameof(Y));
+					_y = (float)Math.Round(value, 0); InvalidateTransform(); NotifyPropertyChanged(nameof(Y));
 				}
 			}
 		}
@@ -222,7 +225,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public float Rotation
 		{
 			get { return _rotation; }
-			set { _rotation = (float)Math.Round(value, 2); UpdateLocalTransform(); }
+			set { _rotation = (float)Math.Round(value, 2); InvalidateTransform(); }
 		}
 
 		private float _scaleX = 1;
@@ -237,7 +240,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					value = 0.01f;
 				}
 				_scaleX = value;
-				UpdateLocalTransform();
+				InvalidateTransform();
 			}
 		}
 
@@ -253,7 +256,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					value = 0.01f;
 				}
 				_scaleY = value;
-				UpdateLocalTransform();
+				InvalidateTransform();
 			}
 		}
 
@@ -265,6 +268,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				value = (float)Math.Round(value, 2);
 				_skewX = value;
+				InvalidateTransform();
 			}
 		}
 
@@ -276,14 +280,31 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				value = (float)Math.Round(value, 2);
 				_skewY = value;
+				InvalidateTransform();
 			}
 		}
 
 		public float Alpha = 100;
 
-		public Matrix LocalTransform { get; protected set; }
+		private Matrix _localTransform;
+		public Matrix LocalTransform
+		{
+			get
+			{
+				if (_localTransform == null)
+				{
+					_localTransform = UpdateLocalTransform();
+				}
+				return _localTransform;
+			}
+		}
 
-		protected virtual void UpdateLocalTransform()
+		public void InvalidateTransform()
+		{
+			_localTransform = null;
+		}
+
+		protected virtual Matrix UpdateLocalTransform()
 		{
 			Matrix transform = new Matrix();
 			float pivotX = PivotX * Width;
@@ -294,7 +315,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			transform.Translate(pivotX, pivotY, MatrixOrder.Append);
 
 			transform.Translate(X - (Parent == null && CenterX ? Width / 2 : 0), Y - (Parent == null && CenterY ? Height / 2 : 0), MatrixOrder.Append); //local position
-			LocalTransform = transform;
+			return transform;	
 		}
 
 		public Matrix WorldTransform
@@ -352,6 +373,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 				return m;
 			}
+		}
+
+		public bool LinkedFromPrevious
+		{
+			get { return Previous != null; }
 		}
 
 		/// <summary>
@@ -440,6 +466,22 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		/// <summary>
+		/// Converts a rotation into world space
+		/// </summary>
+		/// <param name="rot"></param>
+		/// <returns></returns>
+		public float ToWorldRotation(float rot)
+		{
+			LiveObject parent = Parent;
+			while (parent != null)
+			{
+				rot += parent.Rotation;
+				parent = parent.Parent;
+			}
+			return rot;
+		}
+
+		/// <summary>
 		/// Converts one or more points in screen space to world space
 		/// </summary>
 		/// <param name="sceneTransform"></param>
@@ -510,7 +552,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			CopyPropertiesInto(copy);
 			OnCopyTo(copy);
 			copy.Parent = Parent;
-			copy.UpdateLocalTransform();
+			copy.InvalidateTransform();
 			return copy;
 		}
 		protected virtual void OnCopyTo(LiveObject copy)
@@ -547,7 +589,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public abstract LiveObject CreateLivePreview(float time);
 		public abstract void DestroyLivePreview();
 
-		public abstract void UpdateRealTime(float deltaTime, bool inPlayback);
+		public abstract bool UpdateRealTime(float deltaTime, bool inPlayback);
 		public abstract void Update(float time, float elapsedTime, bool inPlayback);
 
 		public abstract void Draw(Graphics g, Matrix sceneTransform, List<string> markers, bool inPlayback);
@@ -819,6 +861,16 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public virtual bool FilterRecord(string key)
 		{
 			return true;
+		}
+
+		/// <summary>
+		/// Adds this object to a scene using directives
+		/// </summary>
+		/// <param name="scene">Scene to add to</param>
+		/// <returns>A Directive that initially creates this object, if any</returns>
+		public virtual Directive AddToScene(Scene scene)
+		{
+			return null;
 		}
 	}
 }

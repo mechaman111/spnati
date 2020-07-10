@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
 using Desktop;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
@@ -14,19 +13,20 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 	/// <summary>
 	/// Root class for LiveObjects that can be animated with key frames
 	/// </summary>
-	public abstract class LiveAnimatedObject : LiveObject
+	public abstract class LiveAnimatedObject : LiveObject, IFixedLength
 	{
 		public Character Character;
 		public bool DisplayPastEnd = true;
 
 		private float _lastPlaybackTime;
 		private float _lastElapsedTime;
+		protected Dictionary<string, string> _animationIds = new Dictionary<string, string>();
 
 		public float Length
 		{
 			get
 			{
-				if (!AllowLinkToEnd && Keyframes.Count > 1)
+				if (Keyframes.Count > 1)
 				{
 					float time = Keyframes[Keyframes.Count - 1].Time;
 					return time;
@@ -586,7 +586,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			LiveKeyframeMetadata metadata = GetBlockMetadata(property, time);
 			string ease = easeOverride ?? metadata.Ease;
-			bool looped = loopOverride.HasValue ? loopOverride.Value : metadata.Looped;
+			bool looped = loopOverride ?? metadata.Looped;
 
 			if (looped)
 			{
@@ -925,7 +925,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			InvalidatePreview();
 		}
 
-		public override void UpdateRealTime(float deltaTime, bool inPlayback) { }
+		public override bool UpdateRealTime(float deltaTime, bool inPlayback)
+		{
+			return false;
+		}
 
 		public sealed override void Update(float time, float elapsedTime, bool inPlayback)
 		{
@@ -973,7 +976,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				Width = newWidth;
 				Height = newHeight;
-				UpdateLocalTransform();
+				InvalidateTransform();
 			}
 		}
 
@@ -982,7 +985,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// </summary>
 		/// <param name="kf"></param>
 		/// <param name="timeOffset">Relative time from start of animation</param>
-		public HashSet<string> AddKeyframe(Keyframe kf, float timeOffset, bool addBreak, out LiveKeyframe frame)
+		public HashSet<string> AddKeyframe(Keyframe kf, float timeOffset, bool addBreak, float origin)
 		{
 			HashSet<string> properties = new HashSet<string>();
 
@@ -990,13 +993,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			float.TryParse(kf.Time, NumberStyles.Number, CultureInfo.InvariantCulture, out time);
 			time += timeOffset;
 
-			ParseKeyframe(kf, addBreak, properties, time);
-
-			frame = Keyframes.Find(k => k.Time == time);
+			ParseKeyframe(kf, addBreak, properties, time, origin);
 			return properties;
 		}
 
-		protected virtual void ParseKeyframe(Keyframe kf, bool addBreak, HashSet<string> properties, float time)
+		protected virtual void ParseKeyframe(Keyframe kf, bool addBreak, HashSet<string> properties, float time, float origin)
 		{
 		}
 
@@ -1005,7 +1006,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// </summary>
 		/// <param name="directive"></param>
 		/// <param name="offset">Absolute time that this animation block starts</param>
-		public void AddKeyframeDirective(Directive directive, float offset, string defaultEase, string defaultInterpolation)
+		/// <param name="linkToPrevious">IF true, previous keyframes will be copied/updated to match the split</param>
+		public void AddKeyframeDirective(Directive directive, float offset, string defaultEase, string defaultInterpolation, bool linkToPrevious)
 		{
 			float startTime = offset - Start;
 			if (!string.IsNullOrEmpty(directive.Delay))
@@ -1022,38 +1024,98 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 
 			HashSet<string> affectedProperties = new HashSet<string>();
-			directive.Keyframes.Sort((k1, k2) =>
+			if (directive.Keyframes.Count == 0)
 			{
-				string t1 = k1.Time ?? "0";
-				string t2 = k2.Time ?? "0";
-				float f1, f2;
-				float.TryParse(t1, NumberStyles.Number, CultureInfo.InvariantCulture, out f1);
-				float.TryParse(t2, NumberStyles.Number, CultureInfo.InvariantCulture, out f2);
-				return f1.CompareTo(f2);
-			});
-			for (int i = 0; i < directive.Keyframes.Count; i++)
+				bool addBreak = !linkToPrevious && startTime > 0;
+				HashSet<string> properties = AddKeyframe(directive, startTime, addBreak, offset);
+				affectedProperties.AddRange(properties);
+			}
+			else
 			{
-				Keyframe kf = directive.Keyframes[i];
-				bool addBreak = (i == 0 && startTime > 0);
-				LiveKeyframe liveFrame;
-				HashSet<string> properties = AddKeyframe(kf, startTime, addBreak, out liveFrame);
-
-				foreach (string prop in properties)
+				directive.Keyframes.Sort((k1, k2) =>
 				{
-					affectedProperties.Add(prop);
+					string t1 = k1.Time ?? "0";
+					string t2 = k2.Time ?? "0";
+					float f1, f2;
+					float.TryParse(t1, NumberStyles.Number, CultureInfo.InvariantCulture, out f1);
+					float.TryParse(t2, NumberStyles.Number, CultureInfo.InvariantCulture, out f2);
+					return f1.CompareTo(f2);
+				});
+				for (int i = 0; i < directive.Keyframes.Count; i++)
+				{
+					Keyframe kf = directive.Keyframes[i];
+					bool addBreak = !linkToPrevious && (i == 0 && startTime > 0 && (string.IsNullOrEmpty(kf.Time) || kf.Time == "0"));
+					HashSet<string> properties = AddKeyframe(kf, startTime, addBreak, offset);
+					affectedProperties.AddRange(properties);
 				}
 			}
-
 			LiveKeyframe startFrame = Keyframes.Find(kf => kf.Time == startTime);
-			if (startFrame == null)
+			Dictionary<string, KeyframeType> frameTypes = new Dictionary<string, KeyframeType>();
+
+			if (linkToPrevious)
+			{
+				//may need to update the previous keyframe or copy it
+				foreach (string prop in affectedProperties)
+				{
+					LiveKeyframe mostRecent = null;
+					int count = 0;
+					for (int i = 0; i < Keyframes.Count; i++)
+					{
+						LiveKeyframe k = Keyframes[i];
+						if (k.HasProperty(prop))
+						{
+							if (k.Time > startTime)
+							{
+								break;
+							}
+							else
+							{
+								count++;
+								mostRecent = k;
+							}
+						}
+					}
+					if (mostRecent != null)
+					{
+						if (mostRecent == startFrame && startFrame.HasProperty(prop))
+						{
+							//this was a split
+							frameTypes[prop] = count > 1 ? KeyframeType.Split : KeyframeType.Begin;
+						}
+						else
+						{
+							//no frame at the directive's delay, so this must be a Begin type
+							//copy the most recent frame to the delay time
+							if (startFrame == null)
+							{
+								startFrame = AddKeyframe(startTime);
+							}
+							startFrame.Set(mostRecent.Get<object>(prop), prop);
+							frameTypes[prop] = KeyframeType.Begin;
+						}
+					}
+
+					_animationIds[prop] = directive.AnimationId;
+				}
+			}
+			else if (startFrame == null)
 			{
 				startFrame = AddKeyframe(startTime);
 			}
+
 			if (startFrame != null)
 			{
 				foreach (string prop in affectedProperties)
 				{
 					LiveKeyframeMetadata metadata = startFrame.GetMetadata(prop, true);
+					if (linkToPrevious)
+					{
+						KeyframeType frameType;
+						if (frameTypes.TryGetValue(prop, out frameType))
+						{
+							metadata.FrameType = frameType;
+						}
+					}
 					string ease = directive.EasingMethod ?? defaultEase;
 					string interpolation = directive.InterpolationMethod ?? defaultInterpolation;
 					bool looped = directive.Looped;
@@ -1073,6 +1135,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			offset -= Start;
 
+			string animId = directive.AnimationId;
+
 			//Add a new begin frame with the same values as the last keyframe of every looping property
 			foreach (string property in Properties)
 			{
@@ -1082,8 +1146,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					if (kf.HasProperty(property))
 					{
 						LiveKeyframeMetadata metadata = GetBlockMetadata(property, kf.Time);
-						if (metadata.Looped)
+						string propertyAnimationId;
+						_animationIds.TryGetValue(property, out propertyAnimationId);
+						if (metadata.Looped && (string.IsNullOrEmpty(animId) || propertyAnimationId == animId))
 						{
+							_animationIds[property] = null;
 							HashSet<string> properties = new HashSet<string>();
 							properties.Add(property);
 							LiveKeyframe copy = CopyKeyframe(kf, properties);
@@ -1229,9 +1296,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				start = last;
 			}
-			end = (last == null ? start : last);
+			end = (last ?? start);
 		}
-		
+
 		/// <summary>
 		/// Adds an event at the given point
 		/// </summary>

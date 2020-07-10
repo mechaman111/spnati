@@ -130,7 +130,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						sprites[preview.Id] = preview;
 					}
 				}
-				preview.AddKeyframeDirective(directive, 0, "linear", "none");
+				preview.AddKeyframeDirective(directive, 0, "linear", "none", false);
 			}
 		}
 
@@ -400,9 +400,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		public override void UpdateRealTime(float deltaTime, bool inPlayback)
+		public override bool UpdateRealTime(float deltaTime, bool inPlayback)
 		{
-
+			return false;
 		}
 
 		public override void Draw(Graphics g, Matrix sceneTransform, List<string> markers, LiveObject selectedObject, LiveObject selectedPreview, bool inPlayback)

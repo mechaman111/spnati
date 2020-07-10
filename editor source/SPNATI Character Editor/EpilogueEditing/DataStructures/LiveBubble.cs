@@ -15,10 +15,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 	/// <summary>
 	/// Editable speech bubble
 	/// </summary>
-	public class LiveBubble : LiveAnimatedObject
+	public class LiveBubble : LiveObject, IFixedLength
 	{
-		private const int Padding = 5;
-
 		private static Font _font;
 		private static StringFormat _stringFormat;
 		private static Graphics _graphics;
@@ -34,7 +32,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public LiveBubble()
 		{
-			DisplayPastEnd = false;
 			CenterX = false;
 		}
 		public LiveBubble(LiveData data, float time) : this()
@@ -42,17 +39,15 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Data = data;
 			Length = 1;
 			Start = time;
-			LiveBubbleKeyframe startFrame = CreateKeyframe(0) as LiveBubbleKeyframe;
-			startFrame.Text = "New text";
+			Text = "New text";
 			TextWidth = "20%";
-			AddKeyframe(startFrame);
+
 			Update(time, 0, false);
-			UpdateLocalTransform();
+			InvalidateTransform();
 		}
 
 		public LiveBubble(LiveData data, Directive directive, float time) : this()
 		{
-			DisplayPastEnd = false;
 			Data = data;
 			Start = time;
 			Length = 1;
@@ -62,15 +57,24 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			TextY = directive.Y;
 			TextWidth = directive.Width;
 			Id = directive.Id;
+			Arrow = directive.Arrow;
+			Text = directive.Text;
 
-			LiveKeyframe temp;
-			AddKeyframe(directive, 0, false, out temp);
 			Update(time, 0, false);
 		}
 
+		[Text(DisplayName = "Text", Key = "text", GroupOrder = 3, Description = "Speech bubble text", RowHeight = 52, Multiline = true)]
 		public string Text
 		{
 			get { return Get<string>(); }
+			set { Set(value); }
+		}
+
+
+		[Float(DisplayName = "Length", Key = "duration", GroupOrder = 4, Description = "Length the bubble displays")]
+		public float Length
+		{
+			get { return Get<float>(); }
 			set { Set(value); }
 		}
 
@@ -117,34 +121,16 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			set { Set(value); }
 		}
 
-		protected override void OnUpdateDimensions() { }
+		public bool IsPreview;
 
-		public override Type GetKeyframeType()
+		public override bool IsVisible
 		{
-			return typeof(LiveBubbleKeyframe);
+			get { return Time >= Start && (IsPreview || LinkedToEnd || Time <= Start + Length); }
 		}
 
 		public override ITimelineWidget CreateWidget(Timeline timeline)
 		{
 			return new TextWidget(this, timeline);
-		}
-
-		protected override void ParseKeyframe(Keyframe kf, bool addBreak, HashSet<string> properties, float time)
-		{
-			Directive dir = kf as Directive;
-			if (dir != null)
-			{
-				if (!string.IsNullOrEmpty(dir.Text))
-				{
-					AddValue<string>(time, "Text", dir.Text);
-					properties.Add("Text");
-				}
-			}
-		}
-
-		protected override void OnUpdate(float time, float offset, string ease, string interpolation, bool? looped, bool inPlayback)
-		{
-			Text = GetPropertyValue<string>("Text", time, offset, null, "linear", "none", false);
 		}
 
 		public bool Contains(Point pt, Matrix sceneTransform)
@@ -155,15 +141,17 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private RectangleF GetRectangle()
 		{
+			int Padding = (int)(_font.Size * 0.9f);
 			LiveScene scene = Data as LiveScene;
 			float width = EpilogueEditing.SceneObject.Parse(TextWidth, scene.Width);
-			float x = EpilogueEditing.SceneObject.Parse(TextX, scene.Width);
+			float x = (int)EpilogueEditing.SceneObject.Parse(TextX, scene.Width);
 			if (TextX == "centered")
 			{
 				x = scene.Width / 2 - width / 2;
 			}
-			float y = EpilogueEditing.SceneObject.Parse(TextY, scene.Height);
-
+			//weirdest bug ever: using floats here can cause the UI thread to stop processing events. probably something GDI+ doesn't like
+			float y = (int)EpilogueEditing.SceneObject.Parse(TextY, scene.Height);
+	
 			SizeF size = _graphics.MeasureString(Text, _font, (int)(width - Padding * 2), _stringFormat);
 			float height = size.Height + Padding * 2;
 
@@ -206,6 +194,18 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				return;
 			}
+			
+			LiveCamera camera = (Data as LiveScene)?.Camera;
+			if (camera != null)
+			{
+				//size to the camera
+				float size = Math.Max(6, camera.Height / 75.0f);
+				if (size != _font.Size)
+				{
+					_font?.Dispose();
+					_font = new Font("Trebuchet MS", size);
+				}
+			}
 
 			RectangleF bounds = GetRectangle();
 
@@ -235,6 +235,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 
 			g.FillRectangle(Brushes.White, bounds);
+			int Padding = (int)(_font.Size * 0.9f);
 			g.DrawString(Text, _font, Brushes.Black, new RectangleF(bounds.X, bounds.Y + Padding, bounds.Width, bounds.Height - Padding * 2), _stringFormat);
 			g.DrawRectangle(Pens.Black, bounds.X, bounds.Y, bounds.Width, bounds.Height);
 
@@ -248,7 +249,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			using (SolidBrush fillBrush = new SolidBrush(opaque ? Color.White : Color.FromArgb(127, Color.White)))
 			{
-				const int ArrowSize = 16;
+				int ArrowSize = (int)_font.Size;// 16;
 				if (side == "down")
 				{
 					float center = bounds.X + bounds.Width / 2;
@@ -413,56 +414,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return pts;
 		}
 
-		protected override void OnPreviewPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			LiveBubble preview = LinkedPreview as LiveBubble;
-			if (e.PropertyName == "TextX")
-			{
-				TextX = preview.TextX;
-			}
-			else if (e.PropertyName == "TextY")
-			{
-				TextY = preview.TextY;
-			}
-			else if (e.PropertyName == "Arrow")
-			{
-				Arrow = preview.Arrow;
-			}
-			else if (e.PropertyName == "TextWidth")
-			{
-				TextWidth = preview.TextWidth;
-			}
-		}
-
-		protected override void OnSourcePropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			LiveBubble preview = LinkedPreview as LiveBubble;
-			if (e.PropertyName == "TextX")
-			{
-				preview.TextX = TextX;
-			}
-			else if (e.PropertyName == "TextY")
-			{
-				preview.TextY = TextY;
-			}
-			else if (e.PropertyName == "Arrow")
-			{
-				preview.Arrow = Arrow;
-			}
-			else if (e.PropertyName == "TextWidth")
-			{
-				preview.TextWidth = TextWidth;
-			}
-			else if (e.PropertyName == "AlignmentX")
-			{
-				preview.AlignmentX = AlignmentX;
-			}
-			else if (e.PropertyName == "AlignmentY")
-			{
-				preview.AlignmentY = AlignmentY;
-			}
-		}
-
 		public override bool CanPivot { get { return false; } }
 		public override bool CanRotate { get { return false; } }
 		public override bool CanSkew { get { return false; } }
@@ -530,65 +481,73 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				case "pivoty":
 				case "z":
 					return false;
+				case "duration":
+					return !LinkedToEnd;
 				default:
 					return true;
 			}
 		}
 
-		public override void GetBlock(string property, float time, bool useNextBlock, out LiveKeyframe start, out LiveKeyframe end)
-		{
-			start = null;
-			end = null;
-			if (Keyframes.Count == 0)
-			{
-				return;
-			}
-			for (int i = 0; i < Keyframes.Count; i++)
-			{
-				LiveKeyframe kf = Keyframes[i];
-				if (kf.Time <= time)
-				{
-					start = kf;
-				}
-				else if (kf.Time > time)
-				{
-					if (start == null)
-					{
-						start = kf;
-					}
-					end = kf;
-					return;
-				}
-			}
-			end = start = Keyframes[0];
-		}
-
-		public override Directive CreateCreationDirective(Scene scene)
+		public Directive CreateCreationDirective(Scene scene)
 		{
 			Directive text = new Directive()
 			{
 				Id = Id,
-				DirectiveType = "text"
+				DirectiveType = "text",
+				Delay = Start.ToString(CultureInfo.InvariantCulture),
+				Marker = Marker,
+				X = TextX,
+				Y = TextY,
+				Width = TextWidth,
+				AlignmentX = AlignmentX,
+				AlignmentY = AlignmentY,
+				Arrow = Arrow,
+				Text = Text
 			};
 
-			text.Marker = Marker;
-			text.X = TextX;
-			text.Y = TextY;
-			text.Width = TextWidth;
-			text.AlignmentX = AlignmentX;
-			text.AlignmentY = AlignmentY;
-			text.Arrow = Arrow;
-
-			if (Keyframes.Count > 0)
-			{
-				LiveBubbleKeyframe initialFrame = Keyframes[0] as LiveBubbleKeyframe;
-				if (!string.IsNullOrEmpty(initialFrame.Text))
-				{
-					text.Text = initialFrame.Text;
-				}
-			}
-
 			return text;
+		}
+
+		public override LiveObject CreateLivePreview(float time)
+		{
+			return this;
+			//LiveBubble preview = Copy() as LiveBubble;
+			//LinkedPreview = preview;
+			//preview.IsPreview = true;
+			//preview.Data = Data;
+			//preview.Hidden = false;
+			//preview.PropertyChanged += Preview_PropertyChanged;
+			//preview.Update(time, 0, false);
+			//AttachSourceListener();
+			//return preview;
+		}
+
+		public override void DestroyLivePreview()
+		{
+			//if (LinkedPreview == null) { return; }
+			//LinkedPreview.PropertyChanged -= Preview_PropertyChanged;
+			//DetachSourceListener();
+			//LinkedPreview = null;
+		}
+
+		private void Preview_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			//DetachSourceListener();
+			//if (e.PropertyName == "Text")
+			//{
+			//	Text = LinkedPreview.Text;
+			//}
+			//AttachSourceListener();
+		}
+
+		public override bool UpdateRealTime(float deltaTime, bool inPlayback)
+		{
+			return false;
+		}
+
+		public override void Update(float time, float elapsedTime, bool inPlayback)
+		{
+			Time = time;
 		}
 	}
 }

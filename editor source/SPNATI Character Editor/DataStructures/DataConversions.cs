@@ -290,7 +290,7 @@ namespace SPNATI_Character_Editor
 				}
 				ConvertCase5_8(wc, character);
 			}
-			if (count > 0)
+			if (count > 0 && Shell.Instance != null)
 			{
 				Shell.Instance.SetStatus("Auto-converted conditions for " + count + " cases.");
 			}

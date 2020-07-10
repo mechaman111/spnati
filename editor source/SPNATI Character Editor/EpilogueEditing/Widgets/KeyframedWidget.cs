@@ -26,6 +26,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private static SolidBrush _headerKeyframeFill;
 		private static SolidBrush _keyframeFill;
 		private static SolidBrush _keyframeFillSelected;
+		private static SolidBrush _eventFill;
+		private static SolidBrush _eventFillSelected;
 		private static Pen _penKeyframe;
 
 		private const int KeyframeRadius = 5;
@@ -65,6 +67,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_headerKeyframeFill = new SolidBrush(Color.FromArgb(255, 226, 66));
 			_keyframeFill = new SolidBrush(Color.FromArgb(180, 180, 180));
 			_keyframeFillSelected = new SolidBrush(Color.FromArgb(245, 245, 255));
+			_eventFill = new SolidBrush(Color.Gray);
+			_eventFillSelected = new SolidBrush(Color.White);
 
 			_penKeyframe = new Pen(Color.Black);
 
@@ -123,6 +127,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_keyframeFill.Color = skin.GetAppColor("Keyframe0");
 			_penKeyframe.Color = skin.GetAppColor("KeyframeBorder");
 			_keyframeFillSelected.Color = skin.GetAppColor("KeyframeSelected");
+			_eventFill.Color = skin.GetAppColor("EventBack");
+			_eventFillSelected.Color = skin.GetAppColor("EventSelected");
 		}
 
 		public KeyframedWidget(LiveAnimatedObject data, Timeline timeline)
@@ -131,6 +137,16 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Data = data;
 			data.PropertyChanged += Data_PropertyChanged;
 			data.Keyframes.CollectionChanged += Keyframes_CollectionChanged;
+		}
+
+		public Color GetAccent()
+		{
+			return GetAccentColor();
+		}
+
+		protected virtual Color GetAccentColor()
+		{
+			return Color.Blue;
 		}
 
 		private void Keyframes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -303,12 +319,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		private Brush GetFillBrush()
+		private SolidBrush GetFillBrush()
 		{
 			return GetFillBrush(_selected);
 		}
-		protected abstract Brush GetFillBrush(bool selected);
-		protected abstract Brush GetTitleBrush();
+		protected abstract SolidBrush GetFillBrush(bool selected);
+		protected abstract SolidBrush GetTitleBrush();
 
 		private Pen GetOutline()
 		{
@@ -395,14 +411,16 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private int GetStandardIconCount()
 		{
+			int count = 1;
 			if (AllowParenting)
 			{
-				return 2;
+				count++;
 			}
-			else
+			if (Data.AllowLinkToEnd)
 			{
-				return 1;
+				count++;
 			}
+			return count;
 		}
 
 		public int GetHeaderIconCount(int row)
@@ -442,12 +460,33 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 									icon = Properties.Resources.AddLink;
 								}
 							}
+							else if (Data.AllowLinkToEnd)
+							{
+								if (Data.LinkedToEnd)
+								{
+									icon = Properties.Resources.LinkToEndFill;
+								}
+								else
+								{
+									icon = Properties.Resources.LinkToEnd;
+								}
+							}
+							break;
+						case 2:
+							if (Data.LinkedToEnd)
+							{
+								icon = Properties.Resources.LinkToEndFill;
+							}
+							else
+							{
+								icon = Properties.Resources.LinkToEnd;
+							}
 							break;
 					}
 				}
 				else
 				{
-					icon = GetExtraHeaderIcon(iconIndex - GetStandardIconCount());
+					icon = GetExtraHeaderIcon(iconIndex - count);
 				}
 			}
 			else
@@ -524,8 +563,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						endTime = Data.Start + Data.Length;
 					}
 				}
-				drawInfo.Draw(g, GetTitleBrush(), Timeline.WidgetOutline, y, pps, rowHeight, endTime);
-
+				drawInfo.Draw(g, GetTitleBrush(), Timeline.WidgetOutline, y, pps, rowHeight, GetAccentColor(), Data.LinkedToEnd ? endTime : 0);
+				
 				//global keyframes
 				foreach (LiveKeyframe kf in Data.Keyframes)
 				{
@@ -534,12 +573,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 				foreach (LiveEvent evt in Data.Events)
 				{
-					DrawEvent(g, evt == _selectedEvent || evt == _hoverEvent ? Brushes.White : Brushes.Pink, TimeToX(Data.Start + evt.Time, pps), y);
-				}
-
-				if (Data.LinkedToEnd && Data.Start + GetLength(0) < endTime)
-				{
-					g.DrawImage(Properties.Resources.Lock, TimeToX(endTime, pps), y + rowHeight / 2 - Properties.Resources.Lock.Height / 2);
+					DrawEvent(g, evt == _selectedEvent || evt == _hoverEvent ? _eventFillSelected : _eventFill, TimeToX(Data.Start + evt.Time, pps), y);
 				}
 			}
 			else
@@ -549,7 +583,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				WidgetDrawInfo drawInfo;
 				if (_drawInfo.TryGetValue(property, out drawInfo))
 				{
-					drawInfo.Draw(g, GetFillBrush(), GetOutline(), y, pps, rowHeight, 0);
+					drawInfo.Draw(g, GetFillBrush(), GetOutline(), y, pps, rowHeight, null, 0);
 
 					if (_playing)
 					{
@@ -653,7 +687,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						case 0:
 							return "Toggle visibility";
 						case 1:
-							return AllowParenting ? (Data.Parent == null ? "Unlinked" : $"Linked to: {Data.ParentId}") : "";
+							return AllowParenting ? (Data.Parent == null ? "Unlinked" : $"Linked to: {Data.ParentId}") : "Toggle fixed length";
+						case 2:
+							return "Toggle fixed length";
 					}
 				}
 				else
@@ -678,41 +714,24 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						case 1:
 							if (AllowParenting)
 							{
-								List<LiveSprite> sprites = new List<LiveSprite>();
-								LivePose pose = Data.Data as LivePose;
-								foreach (LiveSprite sprite in pose.Sprites)
-								{
-									if (string.IsNullOrEmpty(sprite.Id) || sprite == Data)
-									{
-										continue;
-									}
-									//if this is an ancestor of the sprite, disallow it to avoid infinite chains
-									LiveObject parent = sprite.Parent;
-									bool isAncestor = false;
-									while (parent != null)
-									{
-										if (parent == Data)
-										{
-											isAncestor = true;
-											break;
-										}
-										parent = parent.Parent;
-									}
-									if (!isAncestor)
-									{
-										sprites.Add(sprite);
-									}
-								}
+								List<LiveObject> sprites = Data.Data.GetAvailableParents(Data);
 								sprites.Sort();
 								ContextMenuItem[] items = new ContextMenuItem[sprites.Count + 1];
 								items[0] = new ContextMenuItem("Unlinked", null, SelectParent, null, Data.Parent == null);
 								for (int i = 0; i < sprites.Count; i++)
 								{
-									LiveSprite sprite = sprites[i];
+									LiveObject sprite = sprites[i];
 									items[i + 1] = new ContextMenuItem(sprite.Id, sprite.Image, SelectParent, sprite.Id, Data.Parent == sprite);
 								}
 								args.Timeline.ShowContextMenu(items);
 							}
+							else
+							{
+								Data.LinkedToEnd = !Data.LinkedToEnd;
+							}
+							break;
+						case 2:
+							Data.LinkedToEnd = !Data.LinkedToEnd;
 							break;
 					}
 				}

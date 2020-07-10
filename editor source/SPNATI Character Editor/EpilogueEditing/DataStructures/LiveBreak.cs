@@ -43,8 +43,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public static void UpdateColors(Skin skin)
 		{
 			_penInner.Color = Color.Gray;
-			_penOuter.Color = Color.White;
-			_penSelection.Color = Color.FromArgb(0, 165, 255);
+			_penOuter.Color = skin.GetAppColor("BreakGradient");
+			_penSelection.Color = skin.GetAppColor("BreakGradientSelected");
 		}
 
 		public void UpdateSkin(Skin skin)
@@ -77,13 +77,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public void Draw(Graphics g, float pps, int height, bool selected)
 		{
-			float x = Time * pps;
-			g.DrawLine(_penOuter, x, 0, x, height);
-			g.DrawLine(_penInner, x, 0, x, height);
-			if (selected)
-			{
-				g.DrawRectangle(_penSelection, x - 2, 0, 4, height - 1);
-			}
+			//float x = Time * pps;
+			//g.DrawLine(_penOuter, x, 0, x, height);
+			//g.DrawLine(_penInner, x, 0, x, height);
+			//if (selected)
+			//{
+			//	g.DrawRectangle(_penSelection, x - 2, 0, 4, height - 1);
+			//}
 		}
 
 		public override string ToString()
@@ -112,7 +112,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public ITimelineAction GetAction(int x, float start, int row, int timelineWidth, float pps)
 		{
-			return new MoveBreakTimelineAction();
+			return null;
 		}
 
 		public void UpdateSelection(WidgetSelectionArgs args)

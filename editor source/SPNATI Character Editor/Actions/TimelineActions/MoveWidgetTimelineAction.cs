@@ -56,6 +56,11 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 			int track = args.Track;
 			float time = args.Modifiers.HasFlag(Keys.Shift) ? args.Time : args.SnapTime();
 			float start = Math.Max(0, time - _startOffset);
+			if (Math.Abs(start) > 0.001f && !args.Modifiers.HasFlag(Keys.Shift))
+			{
+				start = args.Snap(start);
+			}
+			
 			if (start != _widget.GetStart() || (_allowTrackSwitch && track != Track))
 			{
 				if (_moved)

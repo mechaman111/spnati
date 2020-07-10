@@ -36,6 +36,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private SolidBrush _trackFillSelected;
 		private SolidBrush _timelineBack;
 		private SolidBrush _widgetHeaderFill;
+		private SolidBrush _accentFill;
 		private Pen _penTickMajor;
 		private Pen _penTick;
 		private Pen _penTickMinor;
@@ -168,6 +169,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_trackFillSelected = new SolidBrush(Color.FromArgb(230, 230, 255));
 			_timelineBack = new SolidBrush(Color.FromArgb(230, 230, 230));
 			_widgetHeaderFill = new SolidBrush(Color.FromArgb(185, 185, 185));
+			_accentFill = new SolidBrush(Color.Black);
 			_fontTimeline = new Font("Arial", 8);
 			_timelineFore = new SolidBrush(Color.Black);
 			_penTickMajor = new Pen(Color.FromArgb(0, 0, 0));
@@ -245,6 +247,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			foreach (ITimelineWidget widget in _widgets)
 			{
 				widget.UpdateSkin(skin);
+			}
+			foreach (ITimelineBreak b in _breaks)
+			{
+				b.UpdateSkin(skin);
 			}
 		}
 
@@ -695,49 +701,54 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					{
 						g.FillRectangle(_trackFillSelected, 0, trackY + 1, panelHeader.Width, rowCount * RowHeight - 1);
 					}
+					_accentFill.Color = widget.GetAccent();
 
 					for (int row = 0; row < rowCount; row++)
 					{
 						int rowY = trackY + row * RowHeight;
-						if (row == 0 || _selectedObject == widget)
+						if (rowY + RowHeight >= 0 && rowY < panelHeader.Height)
 						{
-							bool highlighted = widget.IsRowHighlighted(row);
-							if (row == 0 || highlighted)
+							if (row == 0 || _selectedObject == widget)
 							{
-								g.FillRectangle(_selectedObject == widget && highlighted ? _widgetSelectedFill : _widgetHeaderFill, 0, rowY + 1, width, RowHeight - 1);
+								bool highlighted = widget.IsRowHighlighted(row);
+								if (row == 0 || highlighted)
+								{
+									g.FillRectangle(_selectedObject == widget && highlighted ? _widgetSelectedFill : _widgetHeaderFill, 0, rowY + 1, width, RowHeight - 1);
+								}
 							}
-						}
-						string label = widget.GetLabel(row);
-						if (row == 0 && widget.IsCollapsible)
-						{
-							g.DrawImage(widget.IsCollapsed ? Properties.Resources.Expand : Properties.Resources.Collapse, 0, rowY + RowHeight / 2 - Properties.Resources.Expand.Height / 2);
-						}
-						int left = Properties.Resources.Expand.Width;
-						Image thumbnail = widget.GetThumbnail();
-						if (thumbnail != null && row == 0)
-						{
-							g.DrawImage(thumbnail, new Rectangle(left + 2, rowY + 1, RowHeight - 2, RowHeight - 2), new Rectangle(0, 0, thumbnail.Width, thumbnail.Height), GraphicsUnit.Pixel);
-							left += RowHeight;
-						}
-						int headerIconCount = widget.GetHeaderIconCount(row);
-						int iconLeft = panelHeader.Width - IconPadding - IconSize;
-
-						g.DrawString(label, _fontTimeline, _widgetTitleFore, new Rectangle(left, rowY, width - left - (panelHeader.Width - iconLeft), RowHeight), _rowHeaderFormat);
-
-						int iconTop = rowY + RowHeight / 2 - IconSize / 2;
-						for (int i = 0; i < headerIconCount; i++)
-						{
-							int index = -1;
-							if (widget == _headerHoverWidget && i == _headerHoverIconIndex && row == _headerHoverRow)
+							g.FillRectangle(_accentFill, 0, rowY + 1, 3, RowHeight - 1);
+							string label = widget.GetLabel(row);
+							if (row == 0 && widget.IsCollapsible)
 							{
-								g.FillRectangle(_iconHoverFill, iconLeft, iconTop, IconSize, IconSize);
-								index = _headerHoverIconIndex;
+								g.DrawImage(widget.IsCollapsed ? Properties.Resources.Expand : Properties.Resources.Collapse, 2, rowY + RowHeight / 2 - Properties.Resources.Expand.Height / 2);
 							}
-							widget.DrawHeaderIcon(g, row, i, iconLeft, iconTop, IconSize, index);
-							iconLeft -= IconSize + IconPadding;
-						}
+							int left = Properties.Resources.Expand.Width;
+							Image thumbnail = widget.GetThumbnail();
+							if (thumbnail != null && row == 0)
+							{
+								g.DrawImage(thumbnail, new Rectangle(left + 2, rowY + 1, RowHeight - 2, RowHeight - 2), new Rectangle(0, 0, thumbnail.Width, thumbnail.Height), GraphicsUnit.Pixel);
+								left += RowHeight;
+							}
+							int headerIconCount = widget.GetHeaderIconCount(row);
+							int iconLeft = panelHeader.Width - IconPadding - IconSize;
 
-						g.DrawLine(_trackRowBorder, 0, rowY + RowHeight, width, rowY + RowHeight);
+							g.DrawString(label, _fontTimeline, _widgetTitleFore, new Rectangle(left, rowY, width - left - (panelHeader.Width - iconLeft), RowHeight), _rowHeaderFormat);
+
+							int iconTop = rowY + RowHeight / 2 - IconSize / 2;
+							for (int i = 0; i < headerIconCount; i++)
+							{
+								int index = -1;
+								if (widget == _headerHoverWidget && i == _headerHoverIconIndex && row == _headerHoverRow)
+								{
+									g.FillRectangle(_iconHoverFill, iconLeft, iconTop, IconSize, IconSize);
+									index = _headerHoverIconIndex;
+								}
+								widget.DrawHeaderIcon(g, row, i, iconLeft, iconTop, IconSize, index);
+								iconLeft -= IconSize + IconPadding;
+							}
+
+							g.DrawLine(_trackRowBorder, 0, rowY + RowHeight, width, rowY + RowHeight);
+						}
 
 						if (y > panelHeader.Height)
 						{
@@ -759,8 +770,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			Graphics g = e.Graphics;
 			g.FillRectangle(_trackFill, 0, 0, panel.Width, panel.Height);
-
+			int scrollOffset = -container.VerticalScroll.Value;
 			float duration = Duration;
+			int panelHeight = panel.Height;
 
 			float pps = PixelsPerSecond * _zoom;
 
@@ -776,22 +788,26 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					rowCount = widget.GetRowCount();
 					trackHeight = rowCount * RowHeight;
 				}
-				if (_selectedObject == widget)
-				{
-					g.FillRectangle(_trackFillSelected, 0, y + 1, panel.Width, trackHeight - 1);
-				}
-				else if (i % 2 == 1)
-				{
-					g.FillRectangle(_trackFillAlternate, 0, y + 1, panel.Width, trackHeight - 1);
-				}
 
-				for (int r = 0; r < rowCount; r++)
+				if (y + scrollOffset + trackHeight >= 0 && y + scrollOffset < panelHeight)
 				{
-					//grid line
-					int rowY = y + r * RowHeight + RowHeight;
-					g.DrawLine(r < rowCount - 1 ? _trackRowBorder : _trackBorder, 0, rowY, panel.Width, rowY);
+					if (_selectedObject == widget)
+					{
+						g.FillRectangle(_trackFillSelected, 0, y + 1, panel.Width, trackHeight - 1);
+					}
+					else if (i % 2 == 1)
+					{
+						g.FillRectangle(_trackFillAlternate, 0, y + 1, panel.Width, trackHeight - 1);
+					}
+
+					for (int r = 0; r < rowCount; r++)
+					{
+						//grid line
+						int rowY = y + r * RowHeight + RowHeight;
+						g.DrawLine(r < rowCount - 1 ? _trackRowBorder : _trackBorder, 0, rowY, panel.Width, rowY);
+					}
+					DrawTickMarks(g, y, trackHeight);
 				}
-				DrawTickMarks(g, y, trackHeight);
 
 				if (widget != null)
 				{
@@ -832,7 +848,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					for (int row = 0; row < count; row++)
 					{
 						int rowY = trackY + row * RowHeight;
-						widget.DrawContents(g, row, x + 1, rowY + 1, pps, RowHeight - 2, duration);
+						if (rowY + RowHeight + scrollOffset >= 0 && rowY + scrollOffset < panelHeight)
+						{
+							widget.DrawContents(g, row, x + 1, rowY + 1, pps, RowHeight - 2, duration);
+						}
 					}
 
 					y += rowCount * RowHeight;
@@ -1073,7 +1092,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				int track;
 				YToRow(e.Y, out track);
-				ITimelineObject widget = GetBreakUnderCursor(e.X);
+				ITimelineObject widget = null; // GetBreakUnderCursor(e.X);
 				ITimelineWidget overWidget = GetWidgetUnderCursor(e.Y);
 				if (widget == null || _pendingObject is ITimelineWidget)
 				{

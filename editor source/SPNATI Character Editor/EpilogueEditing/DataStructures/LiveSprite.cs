@@ -75,8 +75,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				PivotY = 0.5f;
 			}
-			LiveKeyframe temp;
-			AddKeyframe(sprite, 0, false, out temp);
+			AddKeyframe(sprite, 0, false, 0);
 			Update(time, 0, false);
 		}
 		#endregion
@@ -132,13 +131,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				PivotY = 0.5f;
 			}
-			LiveKeyframe temp;
+			
 			string oldSrc = directive.Src;
 			if (!string.IsNullOrEmpty(directive.Src))
 			{
 				directive.Src = LiveScene.FixPath(directive.Src, character);
 			}
-			AddKeyframe(directive, 0, false, out temp);
+			AddKeyframe(directive, 0, false, 0);
 			directive.Src = oldSrc;
 			Update(time, 0, false);
 		}
@@ -159,51 +158,87 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return typeof(LiveSpriteKeyframe);
 		}
 
-		protected override void ParseKeyframe(Keyframe kf, bool addBreak, HashSet<string> properties, float time)
+		protected override void ParseKeyframe(Keyframe kf, bool addBreak, HashSet<string> properties, float time, float origin)
 		{
 			if (!string.IsNullOrEmpty(kf.X))
 			{
+				if (time > origin && !AnimatedProperties.Contains("X"))
+				{
+					AddValue<float>(origin, "X", "0", true);
+				}
 				AddValue<float>(time, "X", kf.X, addBreak);
 				properties.Add("X");
 			}
 			if (!string.IsNullOrEmpty(kf.Y))
 			{
+				if (time > origin && !AnimatedProperties.Contains("Y"))
+				{
+					AddValue<float>(origin, "Y", "0", true);
+				}
 				AddValue<float>(time, "Y", kf.Y, addBreak);
 				properties.Add("Y");
 			}
 			if (!string.IsNullOrEmpty(kf.Src))
 			{
+				if (time > origin && !AnimatedProperties.Contains("Src"))
+				{
+					AddValue<string>(origin, "Src", "", true);
+				}
 				AddValue<string>(time, "Src", kf.Src, addBreak);
 				properties.Add("Src");
 			}
 			if (!string.IsNullOrEmpty(kf.ScaleX))
 			{
+				if (time > origin && !AnimatedProperties.Contains("ScaleX"))
+				{
+					AddValue<float>(origin, "ScaleX", "1", true);
+				}
 				AddValue<float>(time, "ScaleX", kf.ScaleX, addBreak);
 				properties.Add("ScaleX");
 			}
 			if (!string.IsNullOrEmpty(kf.ScaleY))
 			{
+				if (time > origin && !AnimatedProperties.Contains("ScaleY"))
+				{
+					AddValue<float>(origin, "ScaleY", "1", true);
+				}
 				AddValue<float>(time, "ScaleY", kf.ScaleY, addBreak);
 				properties.Add("ScaleY");
 			}
 			if (!string.IsNullOrEmpty(kf.Opacity))
 			{
+				if (time > origin && !AnimatedProperties.Contains("Opacity"))
+				{
+					AddValue<float>(origin, "Opacity", "100", true);
+				}
 				AddValue<float>(time, "Opacity", kf.Opacity, addBreak);
 				properties.Add("Opacity");
 			}
 			if (!string.IsNullOrEmpty(kf.Rotation))
 			{
+				if (time > origin && !AnimatedProperties.Contains("Rotation"))
+				{
+					AddValue<float>(origin, "Rotation", "0", true);
+				}
 				AddValue<float>(time, "Rotation", kf.Rotation, addBreak);
 				properties.Add("Rotation");
 			}
 			if (!string.IsNullOrEmpty(kf.SkewX))
 			{
+				if (time > origin && !AnimatedProperties.Contains("SkewX"))
+				{
+					AddValue<float>(origin, "SkewX", "0", true);
+				}
 				AddValue<float>(time, "SkewX", kf.SkewX, addBreak);
 				properties.Add("SkewX");
 			}
 			if (!string.IsNullOrEmpty(kf.SkewY))
 			{
-				AddValue<float>(time, "SkewX", kf.SkewY, addBreak);
+				if (time > origin && !AnimatedProperties.Contains("SkewY"))
+				{
+					AddValue<float>(origin, "SkewY", "0", true);
+				}
+				AddValue<float>(time, "SkewY", kf.SkewY, addBreak);
 				properties.Add("SkewY");
 			}
 		}
@@ -283,7 +318,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Directive sprite = new Directive()
 			{
 				Id = Id,
-				DirectiveType = "sprite"
+				DirectiveType = "sprite",
+				Delay = Start.ToString(CultureInfo.InvariantCulture),
 			};
 
 			sprite.PivotX = Math.Round(PivotX * 100, 0).ToString(CultureInfo.InvariantCulture) + "%";

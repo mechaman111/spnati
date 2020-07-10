@@ -31,6 +31,10 @@ namespace SPNATI_Character_Editor.Controls
 
 		protected override void OnInitialize()
 		{
+			if (!Config.DevMode)
+			{
+				tabs.TabPages.Remove(pageEditor);
+			}
 			SetCharacter(Record as Character);
 		}
 
@@ -107,8 +111,15 @@ namespace SPNATI_Character_Editor.Controls
 			cboEnding.SelectedItem = context.Epilogue;
 			if (context.Scene != null)
 			{
-				tabs.SelectedTab = pageScenes;
-				canvas.JumpToNode(context.Scene, context.Directive, null);
+				if (Config.DevMode)
+				{
+					tabs.SelectedTab = pageEditor;
+				}
+				else
+				{
+					tabs.SelectedTab = pageScenes;
+					canvas.JumpToNode(context.Scene, context.Directive, null);
+				}
 			}
 			else
 			{
@@ -173,9 +184,15 @@ namespace SPNATI_Character_Editor.Controls
 			tableGeneral.Context = new EpilogueContext(_character, _ending, null);
 			tableGeneral.Data = _ending;
 			canvas.SetEpilogue(_ending, _character);
+
+			if (Config.DevMode)
+			{
+				liveEditor.SetEpilogue(_character, _ending);
+			}
+
 			if (ending != null)
 			{
-				tabs.SelectedTab = (string.IsNullOrEmpty(ending.Title) || ending.Title == "New Ending" ? pageGeneral : pageScenes);
+				tabs.SelectedTab = (string.IsNullOrEmpty(ending.Title) || ending.Title == "New Ending" ? pageGeneral : Config.DevMode ? pageEditor : pageScenes);
 			}
 			else
 			{
@@ -189,39 +206,23 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				selAllMarkers.Clear();
 				selNotMarkers.Clear();
-				selAllMarkers.Clear();
+				selAnyMarkers.Clear();
 				selAlsoPlayingAllMarkers.Clear();
 				selAlsoPlayingAnyMarkers.Clear();
 				selAlsoPlayingNotMarkers.Clear();
 				return;
 			}
 
-			selAllMarkers.SelectableItems
-				= selNotMarkers.SelectableItems
-				= selAnyMarkers.SelectableItems
-				= _character.Markers.Value.Values.ToList().ConvertAll(m => m.Name).ToArray();
+			selAllMarkers.RecordType = selNotMarkers.RecordType = selAnyMarkers.RecordType = typeof(Marker);
+			selAllMarkers.RecordContext = selNotMarkers.RecordContext = selAnyMarkers.RecordContext = _character;
+
 			selAllMarkers.SelectedItems = _ending.AllMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 			selNotMarkers.SelectedItems = _ending.NotMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 			selAnyMarkers.SelectedItems = _ending.AnyMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 
-			HashSet<string> otherMarkers = new HashSet<string>();
-			foreach (Character c in CharacterDatabase.Characters)
-			{
-				if (c != _character)
-				{
-					foreach (Marker m in c.Markers.Value.Values)
-					{
-						if (m.Scope == MarkerScope.Public)
-						{
-							otherMarkers.Add(m.Name);
-						}
-					}
-				}
-			}
-			selAlsoPlayingAllMarkers.SelectableItems
-				= selAlsoPlayingNotMarkers.SelectableItems
-				= selAlsoPlayingAnyMarkers.SelectableItems
-				= otherMarkers.ToArray();
+			selAlsoPlayingAllMarkers.RecordType = selAlsoPlayingNotMarkers.RecordType = selAlsoPlayingAnyMarkers.RecordType = typeof(Marker);
+			selAlsoPlayingAllMarkers.RecordContext = selAlsoPlayingNotMarkers.RecordContext = selAlsoPlayingAnyMarkers.RecordContext = new Tuple<Character, bool>(_character, true);
+
 			selAlsoPlayingAllMarkers.SelectedItems = _ending.AlsoPlayingAllMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 			selAlsoPlayingNotMarkers.SelectedItems = _ending.AlsoPlayingNotMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 			selAlsoPlayingAnyMarkers.SelectedItems = _ending.AlsoPlayingAnyMarkers?.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
@@ -246,6 +247,11 @@ namespace SPNATI_Character_Editor.Controls
 			_ending.AlsoPlayingNotMarkers = selAlsoPlayingNotMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAlsoPlayingNotMarkers.SelectedItems) : null;
 			_ending.AlsoPlayingAnyMarkers = selAlsoPlayingAnyMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAlsoPlayingAnyMarkers.SelectedItems) : null;
 			_ending.Markers = gridMarkers.GetMarkers();
+
+			if (Config.DevMode)
+			{
+				liveEditor.Save();
+			}
 		}
 
 		private void RemoveEnding()

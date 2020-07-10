@@ -295,7 +295,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			tsCreateSequence.Enabled = true;
 			tsAddKeyframe.Enabled = false;
 			tsRemoveKeyframe.Enabled = false;
-			tsFrameType.Enabled = false;
+			tsTypeBegin.Enabled = tsTypeNormal.Enabled = tsTypeSplit.Enabled = false;
 			if (selectedWidget != null)
 			{
 				tsRemoveSprite.Enabled = true;
@@ -311,7 +311,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				if (selectedWidget.SelectedFrame != null && selectedWidget.SelectedFrame.Time != 0)
 				{
 					tsRemoveKeyframe.Enabled = true;
-					tsFrameType.Enabled = true;
+					tsTypeBegin.Enabled = tsTypeNormal.Enabled = tsTypeSplit.Enabled = true;
 				}
 			}
 		}
@@ -598,10 +598,25 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			exporter.ShowDialog();
 		}
 
-		private void tsFrameType_Click(object sender, EventArgs e)
+		private void tsTypeNormal_Click(object sender, EventArgs e)
+		{
+			ToggleKeyframeType(KeyframeType.Normal);
+		}
+
+		private void tsTypeSplit_Click(object sender, EventArgs e)
+		{
+			ToggleKeyframeType(KeyframeType.Split);
+		}
+
+		private void tsTypeBegin_Click(object sender, EventArgs e)
+		{
+			ToggleKeyframeType(KeyframeType.Begin);
+		}
+
+		private void ToggleKeyframeType(KeyframeType type)
 		{
 			if (timeline.SelectedObject == null) { return; }
-			SpriteWidget widget = timeline.SelectedObject as SpriteWidget;
+			KeyframedWidget widget = timeline.SelectedObject as KeyframedWidget;
 			LiveKeyframe frame = widget.SelectedFrame;
 			if (frame != null)
 			{
@@ -610,7 +625,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					props.Add(p);
 				}
-				ToggleKeyframeTypeCommand command = new ToggleKeyframeTypeCommand(widget.Sprite, frame, props);
+				ToggleKeyframeTypeCommand command = new ToggleKeyframeTypeCommand(widget.Data, frame, props, type);
 				_history.Commit(command);
 			}
 			UpdateToolbar();

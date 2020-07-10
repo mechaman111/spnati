@@ -221,7 +221,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			LiveEmitterKeyframe startFrame = CreateKeyframe(0) as LiveEmitterKeyframe;
 			AddKeyframe(startFrame);
 			Update(time, 0, false);
-			UpdateLocalTransform();
+			InvalidateTransform();
 		}
 
 		#region Epilogue import
@@ -266,13 +266,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			InitializeParameters(directive);
 
-			LiveKeyframe temp;
 			string oldSrc = directive.Src;
 			if (!string.IsNullOrEmpty(directive.Src))
 			{
 				directive.Src = LiveScene.FixPath(directive.Src, character);
 			}
-			AddKeyframe(directive, 0, false, out temp);
+			AddKeyframe(directive, 0, false, 0);
 			directive.Src = oldSrc;
 			Update(time, 0, false);
 		}
@@ -374,38 +373,62 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return typeof(LiveBurst);
 		}
 
-		protected override void ParseKeyframe(Keyframe kf, bool addBreak, HashSet<string> properties, float time)
+		protected override void ParseKeyframe(Keyframe kf, bool addBreak, HashSet<string> properties, float time, float origin)
 		{
 			if (!string.IsNullOrEmpty(kf.X))
 			{
+				if (time > origin && !AnimatedProperties.Contains("X"))
+				{
+					AddValue<float>(origin, "X", "0", true);
+				}
 				AddValue<float>(time, "X", kf.X, addBreak);
 				properties.Add("X");
 			}
 			if (!string.IsNullOrEmpty(kf.Y))
 			{
+				if (time > origin && !AnimatedProperties.Contains("Y"))
+				{
+					AddValue<float>(origin, "Y", "0", true);
+				}
 				AddValue<float>(time, "Y", kf.Y, addBreak);
 				properties.Add("Y");
 			}
 			if (!string.IsNullOrEmpty(kf.Src))
 			{
+				if (time > origin && !AnimatedProperties.Contains("Opacity"))
+				{
+					AddValue<string>(origin, "Src", "", true);
+				}
 				AddValue<string>(time, "Src", kf.Src, addBreak);
 				properties.Add("Src");
 			}
 			if (!string.IsNullOrEmpty(kf.Rotation))
 			{
+				if (time > origin && !AnimatedProperties.Contains("Rotation"))
+				{
+					AddValue<float>(origin, "Rotation", "0", true);
+				}
 				AddValue<float>(time, "Rotation", kf.Rotation, addBreak);
 				properties.Add("Rotation");
 			}
 			if (!string.IsNullOrEmpty(kf.Rate))
 			{
+				if (time > origin && !AnimatedProperties.Contains("Rate"))
+				{
+					AddValue<float>(origin, "Rate", "0", true);
+				}
 				AddValue<float>(time, "Rate", kf.Rate, addBreak);
 				properties.Add("Rate");
 			}
 		}
 
-		public override void UpdateRealTime(float elapsed, bool inPlayback)
+		public override bool UpdateRealTime(float elapsed, bool inPlayback)
 		{
-			if (inPlayback || LinkedPreview != null)
+			if (Hidden)
+			{
+				return false;
+			}
+			if ((inPlayback || LinkedPreview != null) && IsVisible)
 			{
 				_emissionTimer += elapsed;
 				float cooldown = 1000 / Rate;
@@ -431,7 +454,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					}
 				}
 				Invalidated?.Invoke(this, EventArgs.Empty);
+				return true;
 			}
+			return false;
 		}
 
 		protected override void OnUpdate(float time, float offset, string easeOverride, string interpolationOverride, bool? looped, bool inPlayback)
@@ -491,7 +516,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			//emitter
 			if (IsVisible && !Hidden && !inPlayback)
 			{
-				g.MultiplyTransform(WorldTransform);
+				g.MultiplyTransform(UnscaledWorldTransform);
 				g.MultiplyTransform(sceneTransform, MatrixOrder.Append);
 
 				Image img = Resources.emitter;
@@ -513,9 +538,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 
 			//particles
-			foreach (LiveParticle particle in _particles)
+			if (!Hidden)
 			{
-				particle.Draw(g, sceneTransform, markers, inPlayback);
+				foreach (LiveParticle particle in _particles)
+				{
+					particle.Draw(g, sceneTransform, markers, inPlayback);
+				}
 			}
 		}
 
@@ -528,16 +556,17 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Directive emitter = new Directive()
 			{
 				Id = Id,
-				DirectiveType = "emitter"
+				DirectiveType = "emitter",
+				Delay = Start.ToString(CultureInfo.InvariantCulture),
+				Z = Z,
+				ParentId = ParentId,
+				Marker = Marker,
+				Width = ParticleWidth.ToString(CultureInfo.InvariantCulture),
+				Height = ParticleHeight.ToString(CultureInfo.InvariantCulture),
+				EasingMethod = ParticleEase,
+				IgnoreRotation = IgnoreRotation,
 			};
 
-			emitter.Z = Z;
-			emitter.ParentId = ParentId;
-			emitter.Marker = Marker;
-			emitter.Width = ParticleWidth.ToString(CultureInfo.InvariantCulture);
-			emitter.Height = ParticleHeight.ToString(CultureInfo.InvariantCulture);
-			emitter.EasingMethod = ParticleEase;
-			emitter.IgnoreRotation = IgnoreRotation;
 			if (Angle != 0)
 			{
 				emitter.Angle = Angle.ToString(CultureInfo.InvariantCulture);

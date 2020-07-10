@@ -114,10 +114,10 @@ namespace SPNATI_Character_Editor
 				{
 					character = Context as Character;
 				}
-				else if (SecondaryContext is Character)
-				{
-					character = SecondaryContext as Character;
-				}
+				//else if (SecondaryContext is Character)
+				//{
+				//	character = SecondaryContext as Character;
+				//}
 			}
 			
 			string tag = selectedCase?.Tag;

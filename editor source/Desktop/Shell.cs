@@ -39,6 +39,8 @@ namespace Desktop
 		private Dictionary<IWorkspace, TabPage> _tabs = new Dictionary<IWorkspace, TabPage>();
 		private Toaster _toaster = new Toaster();
 		private Messenger _messenger = new Messenger();
+		private HashSet<Action> _batchedActions = new HashSet<Action>();
+
 		public IWorkspace ActiveWorkspace;
 		public IActivity ActiveActivity;
 		public IActivity ActiveSidebarActivity;
@@ -880,6 +882,24 @@ namespace Desktop
 		public int DelayAction(Action action, int delayMs)
 		{
 			return _messenger.Send(action, delayMs);
+		}
+
+		/// <summary>
+		/// Delays an action and groups all calls within that amount of time so that only one fires
+		/// </summary>
+		/// <param name="action"></param>
+		public void BatchAction(Action action, int delayMs)
+		{
+			if (_batchedActions.Contains(action))
+			{
+				return;
+			}
+			_batchedActions.Add(action);
+			DelayAction(() =>
+			{
+				_batchedActions.Remove(action);
+				action();
+			}, delayMs);
 		}
 
 		public void CancelAction(int id)

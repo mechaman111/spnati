@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Desktop.Skinning;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Desktop.Skinning;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
@@ -11,6 +11,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private Dictionary<LiveKeyframe, KeyframeDrawStyle> _keyframesType = new Dictionary<LiveKeyframe, KeyframeDrawStyle>();
 
 		private SolidBrush _repeatFill;
+		private SolidBrush _fillExtra = new SolidBrush(Color.White);
+		private SolidBrush _accentFill = new SolidBrush(Color.Blue);
 
 		public WidgetDrawInfo(LiveAnimatedObject Data, string property)
 		{
@@ -23,21 +25,162 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			if (property == "")
 			{
-				WidgetBlock block = new WidgetBlock();
-				Blocks.Add(block);
-				float length = Data.Keyframes[Data.Keyframes.Count - 1].Time;
-				if (Data.Keyframes.Count == 1)
+				//merge the blocks of each property
+				HashSet<Interval> intervals = new HashSet<Interval>();
+
+				foreach (string prop in Data.Properties)
 				{
-					length = Data.Length;
+					LiveKeyframe blockStart = null;
+					LiveKeyframe blockEnd = null;
+					bool inLoop = false;
+					foreach (LiveKeyframe kf in Data.Keyframes)
+					{
+						if (kf.HasProperty(prop))
+						{
+							LiveKeyframeMetadata md = kf.GetMetadata(prop, false);
+							if (blockStart == null)
+							{
+								if (md.Iterations > 0 || md.Looped)
+								{
+									inLoop = true;
+								}
+								blockStart = kf;
+								blockEnd = blockStart;
+							}
+							else
+							{
+								switch (md.FrameType)
+								{
+									case KeyframeType.Normal:
+										blockEnd = kf;
+										break;
+									case KeyframeType.Begin:
+									case KeyframeType.Split:
+										if (md.FrameType == KeyframeType.Split)
+										{
+											//this is the end of a block and the start of the next
+											blockEnd = kf;
+										}
+										if (!inLoop)
+										{
+											intervals.Add(new Interval(blockStart.Time, blockEnd.Time));
+										}
+
+										inLoop = false;
+										blockEnd = kf;
+										blockStart = kf;
+										break;
+								}
+							}
+						}
+					}
+					if (blockStart != null && !inLoop)
+					{
+						if (blockEnd == null)
+						{
+							blockEnd = blockStart;
+						}
+						intervals.Add(new Interval(blockStart.Time, blockEnd.Time));
+					}
 				}
 
-				block.Start = Data.Start;
-				block.Length = length;
+				List<Interval> finalIntervals = new List<Interval>();
+				foreach (Interval interval in intervals)
+				{
+					float start = interval.Start;
+					float end = interval.End;
+					if (start == end)
+					{
+						continue;
+					}
+
+					//find the intervals containing start and end
+					Interval startInterval = finalIntervals.Find(t => t.Start < start && t.End > start);
+					Interval endInterval = finalIntervals.Find(t => t.Start < end && t.End > end);
+
+					if (startInterval == null && endInterval == null)
+					{
+						//block is not in any interval, so add it to the final list
+						finalIntervals.Add(interval);
+					}
+					else if (startInterval == endInterval)
+					{
+						//both are contained within the same interval; we can ignore this one
+					}
+					else if (startInterval == null && endInterval != null)
+					{
+						//start is outside; expand the interval to include the start
+						endInterval.Start = start;
+						//may need to merge other intervals into this one now
+						for (int j = finalIntervals.Count - 1; j >= 0; j--)
+						{
+							Interval other = finalIntervals[j];
+							if (other == endInterval)
+							{
+								continue;
+							}
+							if (other.Start >= endInterval.Start && other.End <= endInterval.End)
+							{
+								finalIntervals.RemoveAt(j);
+							}
+						}
+					}
+					else if (startInterval != null && endInterval == null)
+					{
+						//end is outside; expand the interval to include it
+						startInterval.End = end;
+						//may need to merge other intervals into this one now
+						for (int j = finalIntervals.Count - 1; j >= 0; j--)
+						{
+							Interval other = finalIntervals[j];
+							if (other == startInterval)
+							{
+								continue;
+							}
+							if (other.Start >= startInterval.Start && other.End <= startInterval.End)
+							{
+								finalIntervals.RemoveAt(j);
+							}
+						}
+					}
+					else
+					{
+						//these are in different intervals. Combine them
+						finalIntervals.Remove(endInterval);
+						startInterval.End = endInterval.End;
+					}
+				}
+
+				//create blocks for each remaining interval
+				HashSet<float> starts = new HashSet<float>();
+				HashSet<float> ends = new HashSet<float>();
+				foreach (Interval i in finalIntervals)
+				{
+					if (i.Start == i.End)
+					{
+						continue;
+					}
+					WidgetBlock block = new WidgetBlock();
+					Blocks.Add(block);
+					block.Start = i.Start + Data.Start;
+					starts.Add(i.Start);
+					ends.Add(i.End);
+					block.Length = i.End - i.Start;
+				}
+				if (Blocks.Count == 0)
+				{
+					WidgetBlock block = new WidgetBlock();
+					block.Start = Data.Start;
+					block.Length = Data.Length;
+					Blocks.Add(block);
+				}
 
 				//global keyframes
 				foreach (LiveKeyframe kf in Data.Keyframes)
 				{
-					_keyframesType[kf] = KeyframeDrawStyle.Normal;
+					bool onEnd = ends.Contains(kf.Time);
+					bool onStart = starts.Contains(kf.Time);
+					_keyframesType[kf] = onEnd && onStart ? KeyframeDrawStyle.Split : onStart ? KeyframeDrawStyle.Begin : KeyframeDrawStyle.Normal;
 				}
 			}
 			else
@@ -119,19 +262,29 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return type;
 		}
 
-		public void Draw(Graphics g, Brush brush, Pen outline, int y, float pps, int rowHeight, float dataEndTime)
+		public void Draw(Graphics g, SolidBrush brush, Pen outline, int y, float pps, int rowHeight, Color? accentColor, float dataEndTime)
 		{
-			foreach (WidgetBlock block in Blocks)
+			for (int i = 0; i < Blocks.Count; i++)
 			{
+				WidgetBlock block = Blocks[i];
 				float length = block.Length * pps;
 				float startX = block.Start * pps;
-				if (dataEndTime > 0)
-				{
-					length = (dataEndTime - block.Start) * pps;
-				}
 				g.FillRectangle(brush, startX, y, length, rowHeight + 1);
+				if (accentColor.HasValue)
+				{
+					_accentFill.Color = accentColor.Value;
+					g.FillRectangle(_accentFill, startX, y, length, 2);
+				}
 				g.DrawLine(outline, startX, y, startX, y + rowHeight);
 				g.DrawLine(outline, startX + length, y, startX + length, y + rowHeight);
+				if (dataEndTime > 0 && i == Blocks.Count - 1)
+				{
+					_fillExtra.Color = Color.FromArgb(100, brush.Color.R, brush.Color.G, brush.Color.B);
+					startX = startX + length + 1;
+					length = dataEndTime * pps - startX;
+					g.FillRectangle(_fillExtra, startX, y + 6, length, rowHeight - 11);
+					g.DrawRectangle(outline, startX - 1, y + 6, length + 1, rowHeight - 12);
+				}
 
 				if (block.Repeat)
 				{
@@ -143,6 +296,33 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 			}
 		}
+
+		private class Interval
+		{
+			public float Start;
+			public float End;
+			public Interval(float s, float e)
+			{
+				Start = s;
+				End = e;
+			}
+
+			public override int GetHashCode()
+			{
+				return (Start.GetHashCode() * 397) ^ End.GetHashCode();
+			}
+
+			public override bool Equals(object obj)
+			{
+				Interval i = obj as Interval;
+				return i != null && i.Start == Start && i.End == End;
+			}
+
+			public override string ToString()
+			{
+				return $"({Start}-{End})";
+			}
+		}
 	}
 
 	public class WidgetBlock
@@ -150,6 +330,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public float Start { get; set; }
 		public float Length { get; set; }
 		public bool Repeat { get; set; }
+
+		public override string ToString()
+		{
+			return $"{Start} - {Length}s";
+		}
 	}
 
 	public enum KeyframeDrawStyle

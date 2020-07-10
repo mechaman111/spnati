@@ -63,8 +63,18 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public float SnapTime()
 		{
+			return Snap(Time);
+		}
+
+		/// <summary>
+		/// Snaps a time to the grid
+		/// </summary>
+		/// <param name="time"></param>
+		/// <returns></returns>
+		public float Snap(float time)
+		{
 			float inverse = 1 / SnapIncrement;
-			return (float)Math.Round(Math.Round(Time * inverse) / inverse, 2);
+			return (float)Math.Round(Math.Round(time * inverse) / inverse, 2);
 		}
 	}
 

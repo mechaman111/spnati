@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Desktop;
+using SPNATI_Character_Editor.EpilogueEditing.Widgets;
 using SPNATI_Character_Editor.EpilogueEditor;
 
 namespace SPNATI_Character_Editor.Actions.TimelineActions
@@ -10,8 +12,10 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 	/// </summary>
 	public class MoveBreakTimelineAction : ITimelineAction, ICommand
 	{
-		private ITimelineObject _widget;
+		private PauseWidget _widget;
 
+		private int _index;
+		private float _startTime;
 		private bool _moved;
 		private float _oldStart;
 		private float _startOffset;
@@ -19,12 +23,15 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		public float Time;
 		private int _oldTrack;
 		public int Track;
-		private ITimelineData _data;
+		private LiveScene _data;
 		private UndoManager _history;
+		private bool _finished;
 
-		public MoveBreakTimelineAction()
+		private HashSet<float> _validBreaks = new HashSet<float>();
+
+		public MoveBreakTimelineAction(int breakIndex)
 		{
-
+			_index = breakIndex;
 		}
 
 		public Cursor GetHoverCursor()
@@ -41,12 +48,16 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		{
 			_history = args.History;
 			_oldTrack = args.Track;
-			_data = args.Data;
-			_widget = args.Widget;
+			_data = args.Data as LiveScene;
+			_widget = args.Widget as PauseWidget;
+			_widget.ShowAllBreaks = true;
+			_validBreaks = _widget.ValidBreaks;
+			_startTime = _data.BreakSet.Pauses[_index].Time;
 			Track = args.Track;
-			_oldStart = _widget.GetStart();
+			_oldStart = _startTime;
 			_startOffset = args.SnapTime() - _oldStart;
 			_widget.OnStartMove(args);
+			_widget.SelectBreak(_data.BreakSet.Pauses[_index]);
 		}
 
 		public void Update(WidgetActionArgs args)
@@ -54,10 +65,23 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 			float time = args.Modifiers.HasFlag(Keys.Shift) ? args.Time : args.SnapTime();
 			float start = Math.Max(0, time - _startOffset);
 
-			LiveScene scene = _data as LiveScene;
-			start = scene.GetBreakTime(start - 0.25f);
+			float closest = -1;
+			float closestDist = float.MaxValue;
+			float max = 0;
+			foreach (float potential in _validBreaks)
+			{
+				float dist = Math.Abs(potential - start);
+				if (dist < closestDist)
+				{
+					closest = potential;
+					closestDist = dist;
+				}
+				max = Math.Max(max, potential);
+			}
 
-			if (start != _widget.GetStart())
+			start = closest;
+
+			if (start != _widget.GetStart() && start >= 0)
 			{
 				if (_moved)
 				{
@@ -73,20 +97,18 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		{
 			if (_moved)
 			{
+				_finished = true;
 				Undo();
 				_history?.Commit(this);
 			}
+			_widget.ShowAllBreaks = false;
 		}
 
 		public void Do()
 		{
 			if (_moved)
 			{
-				_widget.SetStart(Time);
-				if (_oldTrack != Track)
-				{
-					_data.MoveWidget(_widget, Track);
-				}
+				_data.BreakSet.MoveBreak(_index, Time, _finished);
 			}
 		}
 
@@ -94,11 +116,7 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		{
 			if (_moved)
 			{
-				if (_oldTrack != Track)
-				{
-					_data.MoveWidget(_widget, _oldTrack);
-				}
-				_widget.SetStart(_oldStart);
+				_data.BreakSet.MoveBreak(_index, _oldStart, _finished);
 			}
 		}
 	}
