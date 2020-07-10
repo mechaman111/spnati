@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited July 4 2020
+README edited July 7 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -181,7 +181,7 @@ Chara has one Epilogue, Power, available with the only prerequisite being to win
 markers, depending on the following conditions:
 
 Case 1 - The player is seeing the epilogue for the first time.
-Case 2 - The player is seeing the epilogue in the epilogue viewer.
+Case 2 - The player is seeing the epilogue in the epilogue viewer, with additional sub-cases if the player does this multiple times.
 Case 3 - The player is seeing the epilogue normally, for the 2+ time.
 
 After the epilogue, the player is forcibly booted to the start screen. This is intentional.
