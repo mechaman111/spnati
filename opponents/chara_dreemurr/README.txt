@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited July 4 2020
+README edited July 10 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -181,7 +181,7 @@ Chara has one Epilogue, Power, available with the only prerequisite being to win
 markers, depending on the following conditions:
 
 Case 1 - The player is seeing the epilogue for the first time.
-Case 2 - The player is seeing the epilogue in the epilogue viewer.
+Case 2 - The player is seeing the epilogue in the epilogue viewer, with additional sub-cases if the player does this multiple times.
 Case 3 - The player is seeing the epilogue normally, for the 2+ time.
 
 After the epilogue, the player is forcibly booted to the start screen. This is intentional.
@@ -434,6 +434,9 @@ YUKARI
 -Responds to 'Yukari' leaving.
 -Generic responses to handle the, ah, unique masturbation sequence of 'Yukari'.
 
+YUNYUN
+-Responds to Yunyun attempting to befriend Chara.
+
 ZENOBIA
 -Generic responses to handle the, ah, unique masturbation sequence of Zenobia.
 
@@ -456,6 +459,9 @@ Planned interactions not yet implemented for any number of reasons.
 -Narrator Chara indicates Chara used to like gardening. Something with this?
 -Chara embodies the feeling you get when a number grows, among them 'gold' ie currency. Something with Anna, maybe?
 -A 'spider donut, don't worry, spider didn't' joke with Amy.
+-I would like to have an interaction that spans games with the use of persistent markers. It would be easy for me to make Chara respond to targets differently successive times, but that
+would put an unfair onnus on other writers to handle my 'Yes, I know, you've called me a zombie three times before, Saki' cases so I elected not to do this. However, given Neptune is also
+a 4th-wall-interacting character and in active development, maybe something there?
 
 -------------------------------------------------------------------------------------------
 MISC
