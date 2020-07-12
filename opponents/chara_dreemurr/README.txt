@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited July 7 2020
+README edited July 10 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -383,6 +383,7 @@ NAYRU
 
 NEPTUNE
 -Back and forth between Chara and Neptune as either one loses and must strip.
+-Response to Neptune's prompt about finding the inventory.
 
 REMILIA
 -Responds the first time Remilia's maid uses her time-stop powers to strip her.
@@ -434,6 +435,9 @@ YUKARI
 -Responds to 'Yukari' leaving.
 -Generic responses to handle the, ah, unique masturbation sequence of 'Yukari'.
 
+YUNYUN
+-Responds to Yunyun attempting to befriend Chara.
+
 ZENOBIA
 -Generic responses to handle the, ah, unique masturbation sequence of Zenobia.
 
@@ -456,6 +460,7 @@ Planned interactions not yet implemented for any number of reasons.
 -Narrator Chara indicates Chara used to like gardening. Something with this?
 -Chara embodies the feeling you get when a number grows, among them 'gold' ie currency. Something with Anna, maybe?
 -A 'spider donut, don't worry, spider didn't' joke with Amy.
+-A persistent-marker dependent interaction with Neptune.
 
 -------------------------------------------------------------------------------------------
 MISC
