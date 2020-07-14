@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited July 10 2020
+README edited July 14 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -254,6 +254,9 @@ ARASH
 -Responds to Arash's question about flowers.
 -Responds to Arash starting to throw.
 
+ASTOLFO
+-Generic responses to handle its, ah, unique stripping and masturbation sequence.
+
 ATSUKO
 -Responds to Atsuko using the Necronomicon.
 -Responds to Atsuko using a transformation to strip. She will only do this once per game.
@@ -394,6 +397,9 @@ REVY
 RIN
 -Responds to Rin showing her lack of arms.
 
+RYUKO
+-Responses to Ryuko transforming.
+
 SAKI (ZLS)
 -Responds to Saki's question about bad luck.
 -Responds to Saki revealing she's a zombie.
@@ -422,7 +428,7 @@ TWILIGHT
 
 VRISKA
 -Responds to Vriska's comment about Megalovania.
--Generic responses to handle Vriska's unique stripping sequence. Will not fire on the final few layers Vriska has.
+-Generic responses to handle Vriska's unique stripping sequence.
 
 YUELIA
 -Responds to Yuelia's question about fetishes - since Chara is tagged MEAN she gets the question about Edging.
@@ -460,7 +466,6 @@ Planned interactions not yet implemented for any number of reasons.
 -Narrator Chara indicates Chara used to like gardening. Something with this?
 -Chara embodies the feeling you get when a number grows, among them 'gold' ie currency. Something with Anna, maybe?
 -A 'spider donut, don't worry, spider didn't' joke with Amy.
--A persistent-marker dependent interaction with Neptune.
 
 -------------------------------------------------------------------------------------------
 MISC
