@@ -106,6 +106,12 @@ function compileBaseErrorReport(userDesc, bugType) {
                     if (players[i].chosenState.image) {
                         playerData.currentImage   = players[i].folder + players[i].chosenState.image.replace('#', players[i].stage);
                     }
+                    if (players[i].chosenState.parentCase && players[i].chosenState.parentCase.variableBindings) {
+                        playerData.variableBindings = {};
+                        for (let v in players[i].chosenState.parentCase.variableBindings) {
+                            playerData.variableBindings[v] = players[i].chosenState.parentCase.variableBindings[v].slot;
+                        }
+                    }
                 }
 
                 tableReports[i] = playerData;
