@@ -89,7 +89,7 @@ function compileBaseErrorReport(userDesc, bugType) {
         }
 
         var tableReports = [];
-        for (let i=1;i<players.length;i++) {
+        for (let i = 0; i < players.length; i++) {
             if (players[i]) {
                 playerData = {
                     'id': players[i].id,
@@ -108,9 +108,9 @@ function compileBaseErrorReport(userDesc, bugType) {
                     }
                 }
 
-                tableReports[i-1] = playerData;
+                tableReports[i] = playerData;
             } else {
-                tableReports[i-1] = null;
+                tableReports[i] = null;
             }
         }
         data.table = tableReports;
