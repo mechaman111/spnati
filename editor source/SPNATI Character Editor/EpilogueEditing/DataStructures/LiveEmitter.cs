@@ -225,12 +225,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		#region Epilogue import
-		public LiveEmitter(LiveScene scene, Directive directive, Character character, float time) : this()
+		public LiveEmitter(LiveSceneSegment scene, Directive directive, Character character, float time) : this()
 		{
 			DisplayPastEnd = false;
 			Data = scene;
 			ParentId = directive.ParentId;
-			Length = 0.5f;
+			Length = 1;
 			Id = directive.Id;
 			Z = directive.Layer;
 			LinkedToEnd = true;
@@ -252,7 +252,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			if (!string.IsNullOrEmpty(directive.Src))
 			{
-				Image = LiveImageCache.Get(LiveScene.FixPath(directive.Src, character));
+				Image = LiveImageCache.Get(LiveSceneSegment.FixPath(directive.Src, character));
 				if (Image != null)
 				{
 					ParticleWidth = Image.Width;
@@ -266,13 +266,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			InitializeParameters(directive);
 
-			string oldSrc = directive.Src;
-			if (!string.IsNullOrEmpty(directive.Src))
-			{
-				directive.Src = LiveScene.FixPath(directive.Src, character);
-			}
 			AddKeyframe(directive, 0, false, 0);
-			directive.Src = oldSrc;
 			Update(time, 0, false);
 		}
 
@@ -463,7 +457,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			X = GetPropertyValue("X", time, offset, 0.0f, easeOverride, interpolationOverride, looped);
 			Y = GetPropertyValue("Y", time, offset, 0.0f, easeOverride, interpolationOverride, looped);
-			Rate = GetPropertyValue("Rate", time, offset, 0.0f, easeOverride, interpolationOverride, looped);
+			Rate = GetPropertyValue("Rate", time, offset, 1.0f, easeOverride, interpolationOverride, looped);
 			string src = GetPropertyValue<string>("Src", time, offset, null, easeOverride, interpolationOverride, looped);
 			Src = src;
 			Image = LiveImageCache.Get(src);
@@ -516,7 +510,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			//emitter
 			if (IsVisible && !Hidden && !inPlayback)
 			{
-				g.MultiplyTransform(UnscaledWorldTransform);
+				g.MultiplyTransform(WorldTransform);
 				g.MultiplyTransform(sceneTransform, MatrixOrder.Append);
 
 				Image img = Resources.emitter;
@@ -653,7 +647,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				LiveEmitterKeyframe initialFrame = Keyframes[0] as LiveEmitterKeyframe;
 				if (!string.IsNullOrEmpty(initialFrame.Src))
 				{
-					emitter.Src = Scene.FixPath(initialFrame.Src, (Data as LiveScene).Character);
+					emitter.Src = Scene.FixPath(initialFrame.Src, (Data as LiveSceneSegment).Character);
 				}
 				if (initialFrame.X.HasValue)
 				{

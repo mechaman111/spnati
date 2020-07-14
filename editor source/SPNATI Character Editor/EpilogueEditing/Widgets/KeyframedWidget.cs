@@ -226,7 +226,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			else
 			{
 				float time = args.Timeline.CurrentTime;
-				if (Data == null || Data.Data is LiveScene)
+				if (Data == null || Data.Data is LiveSceneSegment)
 				{
 					SelectFrameDataWithPreview(time);
 				}
@@ -270,6 +270,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				case "AnimatedProperties":
 				case "Start":
 				case "Length":
+				case "LinkedToEnd":
 					_drawInfo = null;
 					break;
 			}
@@ -534,10 +535,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private void CacheDrawData()
 		{
 			_drawInfo = new Dictionary<string, WidgetDrawInfo>();
-			_drawInfo.Add("", new WidgetDrawInfo(Data, ""));
+			float duration = Data.Data.GetDuration();
+			_drawInfo.Add("", new WidgetDrawInfo(Data, "", duration));
 			foreach (string property in Data.AnimatedProperties)
 			{
-				_drawInfo.Add(property, new WidgetDrawInfo(Data, property));
+				_drawInfo.Add(property, new WidgetDrawInfo(Data, property, duration));
 			}
 		}
 
@@ -564,7 +566,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					}
 				}
 				drawInfo.Draw(g, GetTitleBrush(), Timeline.WidgetOutline, y, pps, rowHeight, GetAccentColor(), Data.LinkedToEnd ? endTime : 0);
-				
+
 				//global keyframes
 				foreach (LiveKeyframe kf in Data.Keyframes)
 				{
@@ -639,7 +641,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		protected int TimeToX(float time, float pps)
 		{
-			return (int)(time * pps);
+			return (int)(time * pps) + Timeline.StartBuffer;
 		}
 
 		public virtual string GetLabel(int row)
@@ -862,7 +864,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				for (int i = Data.Events.Count - 1; i >= 0; i--)
 				{
 					LiveEvent evt = Data.Events[i];
-					int evX = TimeToX(evt.Time, pps);
+					int evX = TimeToX(Data.Start + evt.Time, pps);
 					if (Math.Abs(x - evX) <= 5)
 					{
 						_hoverEvent = evt;
@@ -876,7 +878,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			for (int i = Data.Keyframes.Count - 1; i >= 0; i--)
 			{
 				LiveKeyframe kf = Data.Keyframes[i];
-				int kfX = TimeToX(kf.Time, pps);
+				int kfX = TimeToX(Data.Start + kf.Time, pps);
 				if (Math.Abs(x - kfX) <= 5)
 				{
 					_hoverFrame = kf;
@@ -889,12 +891,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 			}
 
-			float end = Data.Length * pps;
+			float end = TimeToX(Data.Start + Data.Length, pps);
 			if ((Data.Keyframes.Count <= 1 || (Data.AllowLinkToEnd && !Data.LinkedToEnd)) && x > end - 5 && x <= end + 5)
 			{
 				return new ModifyWidgetLengthTimelineAction();
 			}
-			else if (x >= 5 && x <= end - 5)
+			else if (x >= 5 && x <= end - 5 && !Data.LinkedFromPrevious)
 			{
 				return new MoveWidgetTimelineAction(true);
 			}
@@ -968,6 +970,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			get { return _collapsed; }
 			set { _collapsed = value; }
+		}
+
+		public bool LinkedToPrevious(int row)
+		{
+			return Data.Previous != null;
 		}
 
 		public bool IsRowHighlighted(int row)

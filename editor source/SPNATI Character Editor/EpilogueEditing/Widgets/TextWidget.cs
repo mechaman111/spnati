@@ -22,6 +22,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public bool IsCollapsed { get; set; }
 
+		public bool LinkedToPrevious(int row)
+		{
+			return Data.Previous != null;
+		}
+
 		public event EventHandler Invalidated;
 
 		static TextWidget()
@@ -78,20 +83,20 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public void DrawContents(Graphics g, int rowIndex, int x, int y, float pps, int rowHeight, float dataEndTime)
 		{
-			float startX = Data.Start * pps;
-			float length = Data.Length * pps;
+			float startX = Data.Start * pps + Timeline.StartBuffer;
+			float length = Data.LinkedToEnd ? (dataEndTime - Data.Start) * pps : Data.Length * pps;
 
 			g.FillRectangle(_fillBrush, startX, y, length, rowHeight + 1);
 			g.FillRectangle(_accentBrush, startX, y, length, 2);
 			g.DrawLine(Timeline.WidgetOutline, startX, y, startX, y + rowHeight);
 			g.DrawLine(Timeline.WidgetOutline, startX + length, y, startX + length, y + rowHeight);
-			if (Data.LinkedToEnd && dataEndTime > 0)
-			{
-				startX = startX + length + 1;
-				length = dataEndTime * pps - startX;
-				g.FillRectangle(_fillBrushExtra, startX, y + 6, length, rowHeight - 11);
-				g.DrawRectangle(Timeline.WidgetOutline, startX - 1, y + 6, length + 1, rowHeight - 12);
-			}
+			//if (Data.LinkedToEnd && dataEndTime > 0)
+			//{
+			//	startX = startX + length + 1;
+			//	length = dataEndTime * pps - startX + Timeline.StartBuffer;
+			//	g.FillRectangle(_fillBrushExtra, startX, y + 6, length, rowHeight - 11);
+			//	g.DrawRectangle(Timeline.WidgetOutline, startX - 1, y + 6, length + 1, rowHeight - 12);
+			//}
 		}
 
 		public string GetLabel(int row)
@@ -231,12 +236,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public ITimelineAction GetAction(int x, float start, int row, int timelineWidth, float pps)
 		{
-			float end = start + Data.Length * pps;
-			if (x > end - 5 && x <= end + 5)
+			float end = (Data.Start + Data.Length) * pps + Timeline.StartBuffer;
+			if (x > end - 5 && x <= end + 5 && !Data.LinkedToEnd)
 			{
 				return new ModifyWidgetLengthTimelineAction();
 			}
-			else if (x >= 5 && x <= end - 5)
+			else if (x >= 5 && x <= end - 5 && !LinkedToPrevious(row))
 			{
 				return new MoveWidgetTimelineAction(true);
 			}

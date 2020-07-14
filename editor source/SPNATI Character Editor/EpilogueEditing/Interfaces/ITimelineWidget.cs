@@ -18,6 +18,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <param name="duration">Duration of the entire animation</param>
 		/// <returns></returns>
 		float GetLength(float duration);
+		/// <summary>
+		/// Whether this is linked to a previous object
+		/// </summary>
+		bool LinkedToPrevious(int row);
 		bool IsCollapsible { get; }
 		bool IsCollapsed { get; set; }
 		/// <summary>

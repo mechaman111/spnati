@@ -44,7 +44,7 @@ namespace KisekaeImporter.RemoteClient
 					return true;
 				}
 			}
-			catch (SocketException e) { }
+			catch (SocketException) { }
 			return false;
 		}
 

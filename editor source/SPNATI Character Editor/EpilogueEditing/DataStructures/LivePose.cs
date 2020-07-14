@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Linq;
 using Desktop;
 using Desktop.CommonControls.PropertyControls;
 
@@ -475,6 +476,26 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return list;
 		}
 		public override ITimelineBreak AddBreak(float time) { throw new NotImplementedException(); }
+
+		/// <summary>
+		/// Gets the time of the latest keyframe in this scene
+		/// </summary>
+		/// <returns></returns>
+		public override float GetDuration()
+		{
+			return Sprites.Select(t =>
+			{
+				IFixedLength l = t as IFixedLength;
+				if (l != null)
+				{
+					return t.Start + l.Length;
+				}
+				else
+				{
+					return t.Start;
+				}
+			}).Max();
+		}
 
 		#region debugging
 		public void PrintPlainText()

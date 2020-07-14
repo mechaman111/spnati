@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.Reflection;
-using Desktop;
-using Desktop.CommonControls;
+﻿using Desktop;
 using Desktop.CommonControls.PropertyControls;
 using Desktop.DataStructures;
+using System;
+using System.Collections.Generic;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {

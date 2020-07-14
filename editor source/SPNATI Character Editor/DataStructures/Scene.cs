@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Xml.Serialization;
 
@@ -52,6 +53,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("height")]
 		public string Height;
 
+		[DefaultValue("1")]
 		[Float(DisplayName = "Zoom", GroupOrder = 12, Description = "Zoom scaling factor for the camera", DecimalPlaces = 2, Minimum = 0.01f, Maximum = 100, Increment = 0.1f)]
 		[XmlAttribute("zoom")]
 		public string Zoom;
@@ -245,7 +247,6 @@ namespace SPNATI_Character_Editor
 					fade.EasingMethod = d.EasingMethod;
 					fade.ClampingMethod = d.ClampingMethod;
 					fade.Opacity = d.Opacity;
-					fade.AnimationId = d.AnimationId;
 					d.Opacity = null;
 					fade.Color = d.Color;
 					d.Color = null;
@@ -285,29 +286,120 @@ namespace SPNATI_Character_Editor
 			UniqueId = 1;
 			Directives.Clear();
 			Name = scene.Name;
-
 			Background = FixPath(scene.BackgroundImage, scene.Character);
 			BackgroundColor = scene.BackColor.A == 0 ? null : scene.BackColor.ToHexValue();
 			Width = scene.Width.ToString(CultureInfo.InvariantCulture);
 			Height = scene.Height.ToString(CultureInfo.InvariantCulture);
 
-			//Create directives for all animation blocks. We'll put them into the right places later
-			Dictionary<string, WorkingDirective> createdObjects = new Dictionary<string, WorkingDirective>();
-			List<WorkingDirective> directives = new List<WorkingDirective>();
-
-			for(int i = 0; i < scene.Tracks.Count; i++)
+			if (scene.Segments.Count > 0)
 			{
-				LiveObject obj = scene.Tracks[i];
-				ParseObject(obj, i, createdObjects, directives);
+				LiveSceneSegment initialSetting = scene.Segments[0];
+				initialSetting.Camera.AddToScene(this);
+
+				foreach (LiveSceneSegment segment in scene.Segments)
+				{
+					List<Directive> directives = CreateFrom(segment);
+					Directives.AddRange(directives);
+				}
+
+				//alter the last pause to use the scene's desired wait type
+				for (int i = Directives.Count - 1; i >= 0; i--)
+				{
+					Directive d = Directives[i];
+					if (d.DirectiveType == "pause")
+					{
+						//throw out everything after this directive
+						if (i < Directives.Count - 1)
+						{
+							Directives.RemoveRange(i + 1, Directives.Count - 1 - i);
+						}
+
+						if (scene.WaitMethod == PauseType.AdvanceImmediately)
+						{
+							Directives.RemoveAt(i); //remove the wait too
+						}
+						else if (scene.WaitMethod == PauseType.WaitForAnimations)
+						{
+							d.DirectiveType = "wait";
+						}
+						break;
+					}
+				}
 			}
+		}
 
-			//insert breaks
-			foreach (LiveBreak brk in scene.BreakSet.Pauses)
+		/// <summary>
+		/// Creates a directive to clear a bubble
+		/// </summary>
+		/// <param name="bubble"></param>
+		/// <returns></returns>
+		private WorkingDirective CreateClearDirective(IFixedLength l, int trackIndex, float delay)
+		{
+			LiveObject obj = l as LiveObject;
+			Directive end = new Directive();
+			end.DirectiveType = l is LiveBubble ? "clear" : "remove";
+			end.Id = obj.Id;
+			if (end.Id == null && end.DirectiveType == "clear")
 			{
-				Directive pause = new Directive("pause");
-				pause.Delay = brk.Time.ToString(CultureInfo.InvariantCulture);
-				WorkingDirective d = new WorkingDirective(pause, brk.Time);
-				directives.Add(d);
+				//can't clear an individual ID-less text box
+				end.DirectiveType = "clear-all";
+			}
+			if (delay > 0)
+			{
+				end.Delay = delay.ToString(CultureInfo.InvariantCulture);
+			}
+			WorkingDirective wd = new WorkingDirective(end, obj.Start + l.Length);
+			wd.Track = trackIndex;
+			return wd;
+		}
+
+		/// <summary>
+		/// Creates the directives belonging to a single segment
+		/// </summary>
+		/// <param name="segment"></param>
+		/// <returns></returns>
+		private List<Directive> CreateFrom(LiveSceneSegment segment)
+		{
+			List<Directive> finalDirectives = new List<Directive>();
+
+			//Create directives for all animation blocks. We'll put them into the right places later
+			List<WorkingDirective> directives = new List<WorkingDirective>();
+			//Objects that need to be cleared at the end of the segment
+			List<LiveObject> pendingRemovals = new List<LiveObject>();
+			int pendingBubbles = 0;
+			int persistentBubbles = 0;
+
+			float duration = segment.GetDuration();
+
+			for (int i = 0; i < segment.Tracks.Count; i++)
+			{
+				LiveObject obj = segment.Tracks[i];
+				ParseObject(obj, i, directives, segment.Character);
+
+				if (obj is IFixedLength && !(obj is LiveCamera))
+				{
+					IFixedLength l = obj as IFixedLength;
+					if (!obj.LinkedToEnd)
+					{
+						if (obj.Start + l.Length < duration)
+						{
+							WorkingDirective wd = CreateClearDirective(l, i, obj.Start + l.Length);
+							directives.Add(wd);
+						}
+						else
+						{
+							if (obj is LiveBubble)
+							{
+								pendingBubbles++;
+							}
+							pendingRemovals.Add(obj);
+						}
+					}
+					else if (obj is LiveBubble)
+					{
+						persistentBubbles++;
+					}
+				}
 			}
 
 			directives.Sort((d1, d2) =>
@@ -328,49 +420,48 @@ namespace SPNATI_Character_Editor
 				return compare;
 			});
 
-			float offset = 0;
-			bool onlyClears = true;
-			int lastPauseIndex = -1;
-			for (int i = 0; i < directives.Count; i++)
+			if (!string.IsNullOrEmpty(segment.Name))
 			{
-				WorkingDirective wd = directives[i];
-				Directive d = wd.Directive;
-
-				if (d.DirectiveType != "pause")
+				finalDirectives.Add(new Directive("metadata")
 				{
-					if (d.DirectiveType != "remove" && d.DirectiveType != "clear" && d.DirectiveType != "stop")
+					Name = segment.Name
+				});
+			}
+			finalDirectives.AddRange(directives.Select(wd => wd.Directive));
+
+			Directive wait = new Directive("pause");
+			finalDirectives.Add(wait);
+
+			//if there are any objects still open, clear them
+			if (pendingRemovals.Count > 0)
+			{
+				bool removedText = false;
+				if (pendingBubbles > 0 && persistentBubbles == 0)
+				{
+					//can just use a clear-all for the text boxes
+					Directive clear = new Directive("clear-all");
+					finalDirectives.Add(clear);
+					removedText = true;
+				}
+
+				//others need to be cleared individually
+				foreach (LiveObject obj in pendingRemovals)
+				{
+					if (removedText && obj is LiveBubble)
 					{
-						onlyClears = false;
+						continue;
 					}
-				}
-
-				wd.StartTime -= offset;
-				if (wd.StartTime <= 0)
-				{
-					d.Delay = null;
-				}
-				else
-				{
-					d.Delay = wd.StartTime.ToString(CultureInfo.InvariantCulture);
-				}
-
-				Directives.Add(d);
-				if (d.DirectiveType == "pause")
-				{
-					d.Delay = null; //Pauses don't make sense to have a delay since the user can click through them anyway
-					onlyClears = true;
-					lastPauseIndex = i;
-					offset += wd.StartTime;
+					IFixedLength l = obj as IFixedLength;
+					float delay = obj.Start + l.Length;
+					if (delay >= duration)
+					{
+						delay = 0;
+					}
+					finalDirectives.Add(CreateClearDirective(l, 0, delay).Directive);
 				}
 			}
-			if (lastPauseIndex >= 0 && onlyClears)
-			{
-				//if there's nothing changing the scene after the last pause, throw it all out
-				for (int i = directives.Count - 1; i > lastPauseIndex; i--)
-				{
-					Directives.RemoveAt(i);
-				}
-			}
+
+			return finalDirectives;
 		}
 
 		/// <summary>
@@ -400,66 +491,162 @@ namespace SPNATI_Character_Editor
 			return $"{time}-{metadata}";
 		}
 
-		private void ParseObject(LiveObject obj, int trackIndex, Dictionary<string, WorkingDirective> createdObjects, List<WorkingDirective> directives)
+		private WorkingDirective CreateStopDirective(string id, float delay, int trackIndex)
 		{
-			Dictionary<string, WorkingDirective> activeDirectives = new Dictionary<string, WorkingDirective>();
+			Directive stopDirective = new Directive("stop");
+			stopDirective.Id = id;
+			if (id == "Camera")
+			{
+				stopDirective.Id = "camera";
+			}
+			if (delay > 0)
+			{
+				stopDirective.Delay = delay.ToString(CultureInfo.InvariantCulture);
+			}
+			WorkingDirective stop = new WorkingDirective(stopDirective, delay);
+			stop.Track = trackIndex;
+			return stop;
+		}
+
+		private void ParseObject(LiveObject obj, int trackIndex, List<WorkingDirective> directives, Character character)
+		{
 			Dictionary<string, float> startPoints = new Dictionary<string, float>();
 			List<WorkingDirective> objDirectives = new List<WorkingDirective>();
 
 			if (obj is LiveBubble)
 			{
-				LiveBubble bubble = obj as LiveBubble;
-				Directive dir = bubble.CreateCreationDirective(this);
-				WorkingDirective d = new WorkingDirective(dir, obj.Start);
-				d.Track = trackIndex;
-				createdObjects[obj.Id] = d;
-				objDirectives.Add(d);
-				directives.Add(d);
-
-				if (!bubble.LinkedToEnd)
+				if (!obj.LinkedFromPrevious)
 				{
-					Directive end = new Directive();
-					end.DirectiveType = "clear";
-					end.Id = obj.Id;
-					end.Delay = (obj.Start + bubble.Length).ToString(CultureInfo.InvariantCulture);
-					WorkingDirective wd = new WorkingDirective(end, bubble.Start + bubble.Length);
-					wd.Track = trackIndex;
-					objDirectives.Add(wd);
-					directives.Add(wd);					
+					LiveBubble bubble = obj as LiveBubble;
+					Directive dir = bubble.CreateCreationDirective(this);
+					WorkingDirective d = new WorkingDirective(dir, obj.Start);
+					d.Track = trackIndex;
+					if (d.StartTime == 0)
+					{
+						d.Directive.Delay = null;
+					}
+					directives.Add(d);
 				}
 			}
 			else if (obj is LiveAnimatedObject)
 			{
 				LiveAnimatedObject anim = obj as LiveAnimatedObject;
+				Dictionary<string, WorkingDirective> lastDirectivePerProperty = new Dictionary<string, WorkingDirective>();
 
-				if (!string.IsNullOrEmpty(obj.Id) && !createdObjects.ContainsKey(obj.Id))
+				if (!string.IsNullOrEmpty(obj.Id))
 				{
-					//creation directive
-					Directive dir = anim.CreateCreationDirective(this);
-					if (dir != null)
+					if (!obj.LinkedFromPrevious)
 					{
-						WorkingDirective d = new WorkingDirective(dir, obj.Start);
-						d.Track = trackIndex;
-						createdObjects[obj.Id] = d;
-						objDirectives.Add(d);
+						//creation directive
+						Directive dir = anim.CreateCreationDirective(this);
+						if (dir != null)
+						{
+							WorkingDirective d = new WorkingDirective(dir, obj.Start);
+							d.Track = trackIndex;
+							if (d.StartTime == 0)
+							{
+								d.Directive.Delay = null;
+							}
+							directives.Add(d);
+						}
+					}
+					else
+					{
+						LiveAnimatedObject previous = obj.Previous as LiveAnimatedObject;
+						if (anim.Keyframes.Count > 0)
+						{
+							//any time 0 frames that changed from the previous should get time 0 movement
+							LiveKeyframe first = anim.Keyframes[0];
+							if (first.Time == 0)
+							{
+								foreach (string property in first.TrackedProperties)
+								{
+									if (first.HasProperty(property))
+									{
+										LiveKeyframe lastFrame = previous.GetLastFrame(property);
+										if (lastFrame != null)
+										{
+											if (!lastFrame.Get<object>(property).Equals(first.Get<object>(property)))
+											{
+												Directive currentDirective = new Directive("move");
+												currentDirective.Id = anim.Id;
+												currentDirective.Marker = anim.Marker;
+												currentDirective.Layer = anim.Z;
+												LiveKeyframeMetadata blockMetadata = first.GetMetadata(property, false);
+
+												WorkingDirective directive = new WorkingDirective(currentDirective, 0, GetKey(0, blockMetadata.ToKey()));
+												directive.Track = trackIndex;
+												objDirectives.Add(directive);
+
+												if (anim is LiveCamera)
+												{
+													if (property == "Opacity" || property == "Color")
+													{
+														currentDirective.DirectiveType = "fade";
+													}
+													else
+													{
+														currentDirective.DirectiveType = "camera";
+													}
+													currentDirective.Id = null;
+												}
+
+												directive.AddKeyframe(first, property, "0", character);
+												lastDirectivePerProperty[property] = directive;
+											}
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 
-				if (!anim.LinkedToEnd && !(anim is LiveCamera))
+				//stop looped animations from previous segments if there's a new keyframe for that property
+				if (obj.Previous != null && anim.Keyframes.Count > 0)
 				{
-					Directive end = new Directive();
-					end.DirectiveType = "remove";
-					end.Delay = (obj.Start + anim.Length).ToString(CultureInfo.InvariantCulture);
+					Dictionary<string, WorkingDirective> stoppages = new Dictionary<string, WorkingDirective>();
+					WorkingDirective initialStoppage = null;
+					LiveAnimatedObject previous = obj.Previous as LiveAnimatedObject;
+					foreach (string property in anim.Properties)
+					{
+						LiveKeyframe first = anim.GetFirstFrame(property);
+						if (first != null)
+						{
+							LiveAnimatedObject prev = previous;
+							LiveKeyframeMetadata prevMetadata = null;
+							while (prev != null && prevMetadata == null)
+							{
+								prevMetadata = prev.GetLastBlockMetadata(property);
+								prev = prev.Previous as LiveAnimatedObject;
+							}
+							if (prevMetadata != null && prevMetadata.Looped)
+							{
+								string id = anim.Id;
+								if (id == "Camera" && (property == "Color" || property == "Opacity"))
+								{
+									id = "fade";
+								}
 
-					end.Id = anim.Id;
-					WorkingDirective d = new WorkingDirective(end, obj.Start + anim.Length);
-					d.Track = trackIndex;
-					objDirectives.Add(d);
+								stoppages.TryGetValue(id, out initialStoppage);
+								if (initialStoppage == null)
+								{
+									float delay = anim.Start + first.Time;
+
+									initialStoppage = CreateStopDirective(id, delay, trackIndex);
+									initialStoppage.LoopedProperties = anim.GetLoopedProperties(first, property);
+									directives.Add(initialStoppage);
+									stoppages[id] = initialStoppage;
+								}
+								initialStoppage.AddStopProperty(property);
+							}
+						}
+					}
 				}
 
 				//Copy keyframes into directives
-				Dictionary<string, WorkingDirective> lastDirectivePerProperty = new Dictionary<string, WorkingDirective>();
-				Dictionary<string, WorkingDirective> stopDirectives = new Dictionary<string, WorkingDirective>();
+
+				DualKeyDictionary<float, string, WorkingDirective> stopDirectives = new DualKeyDictionary<float, string, WorkingDirective>();
 				for (int i = 1; i < anim.Keyframes.Count; i++)
 				{
 					LiveKeyframe kf = anim.Keyframes[i];
@@ -482,31 +669,45 @@ namespace SPNATI_Character_Editor
 									case KeyframeType.Begin:
 										if (previousDirective.Directive.Looped)
 										{
-											//if the previous frame is part of a loop, create or add a stop directive
+											//if the previous frame is part of a loop, create or add to a stop directive
 											float stopTime = startTime + kf.Time;
 
-											WorkingDirective stop = null;
-											Directive stopDirective = new Directive("stop");
-											stopDirective.Id = obj.Id;
-											stopDirective.Delay = stopTime.ToString(CultureInfo.InvariantCulture);
-											stop = new WorkingDirective(stopDirective, stopTime);
-											stop.Track = trackIndex;
-											objDirectives.Add(stop);
+											string id = obj.Id;
+											if (id == "Camera" && (property == "Color" || property == "Opacity"))
+											{
+												id = "fade";
+											}
 
-											stop.StopKey = previousDirective.MetaKey;
-											previousDirective.HasStop = true;
+											WorkingDirective stop = stopDirectives.Get(stopTime, id);
+											if (stop == null)
+											{
+												stop = CreateStopDirective(id, stopTime, trackIndex);
+												stop.LoopedProperties = anim.GetLoopedProperties(kf, property);
+												stopDirectives.Set(stopTime, id, stop);
+												directives.Add(stop);
+											}
+											stop.AddStopProperty(property);
 										}
 
-										//this frame doesn't get retained at all.
-										//just force a new directive at the time
-										startTime += kf.Time;
-										previousDirective = null;
+										object previousValue = anim.GetPreviousValue(property, kf.Time);
+										object value = kf.Get<object>(property);
+										if (previousValue != null && !previousValue.Equals(value))
+										{
+											//need a time 0 frame in the directive since this is not the same value as the previous animation touching it
+										}
+										else
+										{
+											//this frame doesn't get retained at all.
+											//just force a new directive at the time
+											startTime += kf.Time;
+											previousDirective = null;
+										}
 										break;
 									case KeyframeType.Split:
 										//need to put the keyframe into the last directive. No need to add the frame to the new one too since
 										//the engine assumes that it uses the previous values
 										float time = kf.Time - previousDirective.StartTime + obj.Start;
-										previousDirective.AddKeyframe(kf, property, time.ToString(CultureInfo.InvariantCulture));
+										previousDirective.AddKeyframe(kf, property, time.ToString(CultureInfo.InvariantCulture), character);
 										previousDirective = null;
 										startTime += kf.Time;
 										break;
@@ -514,17 +715,40 @@ namespace SPNATI_Character_Editor
 							}
 							else if (metadata.FrameType != KeyframeType.Normal)
 							{
+								if (metadata.FrameType == KeyframeType.Split)
+								{
+									//there was no previous directive, but if this was split, clearly we were supposed to be moving, so make a movement directive
+									Directive move = new Directive("move");
+
+									move.Id = anim.Id;
+									move.Marker = anim.Marker;
+									move.Layer = anim.Z;
+
+									if (anim is LiveCamera)
+									{
+										if (property == "Opacity" || property == "Color")
+										{
+											move.DirectiveType = "fade";
+										}
+										else
+										{
+											move.DirectiveType = "camera";
+										}
+										move.Id = null;
+									}
+
+									LiveKeyframeMetadata md = anim.GetBlockMetadata(property, 0);
+									move.PopulateMetadata(md);
+
+									WorkingDirective moveDir = new WorkingDirective(move, 0, GetKey(0, md.ToKey()));
+									moveDir.Track = trackIndex;
+									moveDir.AddKeyframe(kf, property, (obj.Start + kf.Time).ToString(CultureInfo.InvariantCulture), character);
+									objDirectives.Add(moveDir);
+								}
 								startTime += kf.Time;
 							}
 							string directiveKey = GetKey(startTime, metakey);
-							if (previousDirective == null)
-							{
-								//see if there's already a directive that fits this start
-								//activeDirectives.TryGetValue(directiveKey, out directive);
-
-								//commented out - use a new directive for every property. They'll be merged later.
-							}
-							else
+							if (previousDirective != null)
 							{
 								directive = previousDirective;
 							}
@@ -532,32 +756,23 @@ namespace SPNATI_Character_Editor
 							if (directive == null)
 							{
 								//time for a new directive
-								Directive currentDirective = new Directive();
+								Directive currentDirective = new Directive("move");
 								currentDirective.Id = anim.Id;
 								currentDirective.Marker = anim.Marker;
-								currentDirective.Z = anim.Z;
+								currentDirective.Layer = anim.Z;
 								float delay = startTime;
 								if (delay > 0)
 								{
 									currentDirective.Delay = startTime.ToString(CultureInfo.InvariantCulture);
 								}
 
-								currentDirective.EasingMethod = blockMetadata.Ease;
-								currentDirective.ClampingMethod = blockMetadata.ClampMethod;
-								currentDirective.Iterations = blockMetadata.Iterations;
-								currentDirective.Looped = blockMetadata.Looped;
-								currentDirective.InterpolationMethod = blockMetadata.Interpolation;
+								currentDirective.PopulateMetadata(blockMetadata);
 
 								directive = new WorkingDirective(currentDirective, startTime, GetKey(startTime, blockMetadata.ToKey()));
 								directive.Track = trackIndex;
 								objDirectives.Add(directive);
-								activeDirectives[directiveKey] = directive;
 
-								if (anim is LiveSprite || anim is LiveEmitter)
-								{
-									currentDirective.DirectiveType = "move";
-								}
-								else if (anim is LiveCamera)
+								if (anim is LiveCamera)
 								{
 									if (property == "Opacity" || property == "Color")
 									{
@@ -575,7 +790,7 @@ namespace SPNATI_Character_Editor
 							if (metadata.FrameType == KeyframeType.Normal)
 							{
 								float time = kf.Time - directive.StartTime + obj.Start;
-								directive.AddKeyframe(kf, property, time.ToString(CultureInfo.InvariantCulture));
+								directive.AddKeyframe(kf, property, time.ToString(CultureInfo.InvariantCulture), character);
 							}
 						}
 					}
@@ -593,19 +808,6 @@ namespace SPNATI_Character_Editor
 						{
 							d2.Directive.CopyInto(d1.Directive);
 							objDirectives.RemoveAt(j--);
-						}
-					}
-;
-					if (d1.HasStop)
-					{
-						animIds[d1.MetaKey] = d1.Directive.AnimationId = d1.Directive.Id + "-" + UniqueId++;
-					}
-					else if (!string.IsNullOrEmpty(d1.StopKey))
-					{
-						string animId;
-						if (animIds.TryGetValue(d1.StopKey, out animId))
-						{
-							d1.Directive.AnimationId = animId;
 						}
 					}
 				}
@@ -640,9 +842,9 @@ namespace SPNATI_Character_Editor
 			public Directive Directive;
 			public float StartTime;
 			public string MetaKey;
-			public bool HasStop;
-			public string StopKey;
 			public int Track;
+
+			public HashSet<string> LoopedProperties = new HashSet<string>();
 
 			public WorkingDirective(Directive directive, float startTime, string metakey = "")
 			{
@@ -686,10 +888,6 @@ namespace SPNATI_Character_Editor
 				{
 					return false;
 				}
-				if (HasStop != other.HasStop)
-				{
-					return false;
-				}
 
 				return true;
 			}
@@ -699,7 +897,7 @@ namespace SPNATI_Character_Editor
 			/// </summary>
 			/// <param name="liveFrame">Source LiveKeyframe</param>
 			/// <param name="property">Property on the keyframe to add</param>
-			public void AddKeyframe(LiveKeyframe liveFrame, string property, string time)
+			public void AddKeyframe(LiveKeyframe liveFrame, string property, string time, Character character)
 			{
 				MemberInfo mi = PropertyTypeInfo.GetMemberInfo(typeof(Keyframe), property);
 				if (mi == null)
@@ -739,9 +937,16 @@ namespace SPNATI_Character_Editor
 					else
 					{
 						stringValue = Convert.ToString(rawValue, CultureInfo.InvariantCulture);
+
+						if (property == "Src")
+						{
+							stringValue = FixPath(stringValue, character);
+						}
 					}
+
 					value = stringValue;
 				}
+
 				mi.SetValue(kf, value);
 				kf.Properties[property] = value;
 			}
@@ -780,6 +985,26 @@ namespace SPNATI_Character_Editor
 				Keyframe kf = Directive.Keyframes[0];
 				Directive.TransferPropertiesFrom(kf);
 				Directive.Keyframes.Clear();
+			}
+
+			public void AddStopProperty(string property)
+			{
+				property = property.ToLowerInvariant();
+				if (property == "opacity")
+				{
+					property = "alpha";
+				}
+				if (Directive.Id == "camera" && (property == "color" || property == "alpha"))
+				{
+					Directive.Id = "fade";
+				}
+				Directive.AffectedProperties.Add(property);
+				LoopedProperties.Remove(property);
+				if (LoopedProperties.Count == 0)
+				{
+					//this is stopping every looped property, so no need to list them individually
+					Directive.AffectedProperties.Clear();
+				}
 			}
 		}
 	}

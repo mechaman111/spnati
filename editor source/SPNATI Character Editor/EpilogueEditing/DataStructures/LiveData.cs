@@ -21,6 +21,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public abstract Matrix GetSceneTransform(int width, int height, Point offset, float zoom);
 		public abstract int BaseHeight { get; set; }
 		public abstract List<LiveObject> GetAvailableParents(LiveObject child);
+		public abstract float GetDuration();
 
 		public abstract bool Paste(WidgetOperationArgs args, LiveObject after);
 

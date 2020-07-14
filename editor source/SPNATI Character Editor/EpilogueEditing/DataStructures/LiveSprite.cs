@@ -32,7 +32,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Data = pose;
 			ParentId = sprite.ParentId;
 			Marker = sprite.Marker;
-			Length = 0.5f;
+			Length = 1;
 			Id = sprite.Id;
 			Z = sprite.Z;
 			Start = time;
@@ -81,16 +81,18 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		#endregion
 
 		#region Epilogue
-		public LiveSprite(LiveScene scene, Directive directive, Character character, float time) : this()
+		public LiveSprite(LiveSceneSegment scene, Directive directive, Character character, float time) : this()
 		{
 			CenterX = false;
 			DisplayPastEnd = false;
 			Data = scene;
 			ParentId = directive.ParentId;
 			LinkedToEnd = true;
-			Length = 0.5f;
+			Length = 1;
+			Character = character;
 			Id = directive.Id;
 			Z = directive.Layer;
+			Marker = directive.Marker;
 			Start = time;
 			if (!string.IsNullOrEmpty(directive.Delay))
 			{
@@ -132,13 +134,21 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				PivotY = 0.5f;
 			}
 			
-			string oldSrc = directive.Src;
-			if (!string.IsNullOrEmpty(directive.Src))
-			{
-				directive.Src = LiveScene.FixPath(directive.Src, character);
-			}
 			AddKeyframe(directive, 0, false, 0);
-			directive.Src = oldSrc;
+
+			if (!string.IsNullOrEmpty(directive.Width))
+			{
+				int width;
+				int.TryParse(directive.Width, NumberStyles.Number, CultureInfo.InvariantCulture, out width);
+				WidthOverride = width;
+			}
+			if (!string.IsNullOrEmpty(directive.Height))
+			{
+				int height;
+				int.TryParse(directive.Height, NumberStyles.Number, CultureInfo.InvariantCulture, out height);
+				HeightOverride = height;
+			}
+
 			Update(time, 0, false);
 		}
 		#endregion
@@ -184,8 +194,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					AddValue<string>(origin, "Src", "", true);
 				}
-				AddValue<string>(time, "Src", kf.Src, addBreak);
+				string src = LiveSceneSegment.FixPath(kf.Src, Character);
+				AddValue<string>(time, "Src", src, addBreak);
 				properties.Add("Src");
+			}
+			if (!string.IsNullOrEmpty(kf.Scale))
+			{
+				kf.ScaleX = kf.Scale;
+				kf.ScaleY = kf.Scale;
 			}
 			if (!string.IsNullOrEmpty(kf.ScaleX))
 			{
@@ -321,11 +337,19 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				DirectiveType = "sprite",
 				Delay = Start.ToString(CultureInfo.InvariantCulture),
 			};
+			if (WidthOverride.HasValue)
+			{
+				sprite.Width = WidthOverride.Value.ToString(CultureInfo.InvariantCulture);
+			}
+			if (HeightOverride.HasValue)
+			{
+				sprite.Height = HeightOverride.Value.ToString(CultureInfo.InvariantCulture);
+			}
 
 			sprite.PivotX = Math.Round(PivotX * 100, 0).ToString(CultureInfo.InvariantCulture) + "%";
 			sprite.PivotY = Math.Round(PivotY * 100, 0).ToString(CultureInfo.InvariantCulture) + "%";
 
-			sprite.Z = Z;
+			sprite.Layer = Z;
 			sprite.ParentId = ParentId;
 			sprite.Marker = Marker;
 
@@ -334,7 +358,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				LiveSpriteKeyframe initialFrame = Keyframes[0] as LiveSpriteKeyframe;
 				if (!string.IsNullOrEmpty(initialFrame.Src))
 				{
-					sprite.Src = Scene.FixPath(initialFrame.Src, (Data as LiveScene).Character);
+					sprite.Src = Scene.FixPath(initialFrame.Src, (Data as LiveSceneSegment).Character);
 				}
 				if (initialFrame.X.HasValue)
 				{

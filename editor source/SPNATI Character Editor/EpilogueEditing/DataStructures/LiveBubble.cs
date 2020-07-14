@@ -125,7 +125,19 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public override bool IsVisible
 		{
-			get { return Time >= Start && (IsPreview || LinkedToEnd || Time <= Start + Length); }
+			get
+			{
+				if (Time < Start)
+				{
+					return false;
+				}
+				if (IsPreview || LinkedToEnd)
+				{
+					return true;
+				}
+				float duration = Data.GetDuration();
+				return Start + Length >= duration || Time <= Start + Length;
+			}
 		}
 
 		public override ITimelineWidget CreateWidget(Timeline timeline)
@@ -142,15 +154,15 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private RectangleF GetRectangle()
 		{
 			int Padding = (int)(_font.Size * 0.9f);
-			LiveScene scene = Data as LiveScene;
-			float width = EpilogueEditing.SceneObject.Parse(TextWidth, scene.Width);
-			float x = (int)EpilogueEditing.SceneObject.Parse(TextX, scene.Width);
+			LiveSceneSegment segment = Data as LiveSceneSegment;
+			float width = EpilogueEditing.SceneObject.Parse(TextWidth, segment.Scene.Width);
+			float x = (int)EpilogueEditing.SceneObject.Parse(TextX, segment.Scene.Width);
 			if (TextX == "centered")
 			{
-				x = scene.Width / 2 - width / 2;
+				x = segment.Scene.Width / 2 - width / 2;
 			}
 			//weirdest bug ever: using floats here can cause the UI thread to stop processing events. probably something GDI+ doesn't like
-			float y = (int)EpilogueEditing.SceneObject.Parse(TextY, scene.Height);
+			float y = (int)EpilogueEditing.SceneObject.Parse(TextY, segment.Scene.Height);
 	
 			SizeF size = _graphics.MeasureString(Text, _font, (int)(width - Padding * 2), _stringFormat);
 			float height = size.Height + Padding * 2;
@@ -195,7 +207,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				return;
 			}
 			
-			LiveCamera camera = (Data as LiveScene)?.Camera;
+			LiveCamera camera = (Data as LiveSceneSegment)?.Camera;
 			if (camera != null)
 			{
 				//size to the camera
@@ -303,10 +315,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public override void DrawSelection(Graphics g, Matrix sceneTransform, CanvasState editState, HoverContext hoverContext)
 		{
-			LiveScene scene = Data as LiveScene;
-			if (scene != null)
+			LiveSceneSegment segment = Data as LiveSceneSegment;
+			if (segment != null)
 			{
-				g.MultiplyTransform(scene.Camera.WorldTransform);
+				g.MultiplyTransform(segment.Camera.WorldTransform);
 				g.MultiplyTransform(sceneTransform, MatrixOrder.Append);
 				RectangleF rect = GetRectangle();
 				DrawSelectionBox(g,
@@ -348,9 +360,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public override PointF[] ToLocalPt(Matrix sceneTransform, params PointF[] pts)
 		{
-			LiveScene scene = Data as LiveScene;
+			LiveSceneSegment segment = Data as LiveSceneSegment;
 			Matrix transform = new Matrix();
-			transform.Multiply(scene.Camera.WorldTransform);
+			transform.Multiply(segment.Camera.WorldTransform);
 			transform.Multiply(sceneTransform, MatrixOrder.Append);
 			transform.Invert();
 			RectangleF rect = GetRectangle(); //bubble in camera space
@@ -368,9 +380,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public override PointF[] ToScreenPt(Matrix sceneTransform, params PointF[] pts)
 		{
-			LiveScene scene = Data as LiveScene;
+			LiveSceneSegment segment = Data as LiveSceneSegment;
 			Matrix transform = new Matrix();
-			transform.Multiply(scene.Camera.WorldTransform);
+			transform.Multiply(segment.Camera.WorldTransform);
 			transform.Multiply(sceneTransform, MatrixOrder.Append);
 			RectangleF rect = GetRectangle();
 
@@ -386,19 +398,19 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public override PointF[] ToWorldPt(params PointF[] pts)
 		{
-			LiveScene scene = Data as LiveScene;
+			LiveSceneSegment segment = Data as LiveSceneSegment;
 			for (int i = 0; i < pts.Length; i++)
 			{
-				pts[i] = new PointF(pts[i].X / scene.Width * 100, pts[i].Y / scene.Height * 100);
+				pts[i] = new PointF(pts[i].X / segment.Scene.Width * 100, pts[i].Y / segment.Scene.Height * 100);
 			}
 			return pts;
 		}
 
 		public override PointF[] ScreenToWorldPt(Matrix sceneTransform, params PointF[] pts)
 		{
-			LiveScene scene = Data as LiveScene;
+			LiveSceneSegment segment = Data as LiveSceneSegment;
 			Matrix transform = new Matrix();
-			transform.Multiply(scene.Camera.WorldTransform);
+			transform.Multiply(segment.Camera.WorldTransform);
 			transform.Multiply(sceneTransform, MatrixOrder.Append);
 			transform.Invert();
 
@@ -408,7 +420,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			//but as a percentage of the scene
 			for (int i = 0; i < pts.Length; i++)
 			{
-				pts[i] = new PointF(pts[i].X / scene.Width * 100, pts[i].Y / scene.Height * 100);
+				pts[i] = new PointF(pts[i].X / segment.Scene.Width * 100, pts[i].Y / segment.Scene.Height * 100);
 			}
 
 			return pts;
@@ -421,23 +433,23 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public override void Scale(Point screenPoint, Matrix sceneTransform, HoverContext context)
 		{
-			LiveScene scene = Data as LiveScene;
+			LiveSceneSegment segment = Data as LiveSceneSegment;
 			RectangleF rect = GetRectangle();
 			switch (context)
 			{
 				case HoverContext.ScaleRight:
 					PointF localPt = ToLocalPt(screenPoint.X, screenPoint.Y, sceneTransform);
-					int width = (int)Math.Round(localPt.X / scene.Width * 100);
+					int width = (int)Math.Round(localPt.X / segment.Scene.Width * 100);
 					string newWidth = Math.Max(0, width) + "%";
 					TextWidth = newWidth;
 					break;
 				case HoverContext.ScaleLeft:
 					localPt = ToLocalPt(screenPoint.X, screenPoint.Y, sceneTransform);
-					width = (int)Math.Round((rect.Width - localPt.X) / scene.Width * 100);
-					int oldW = (int)Math.Max(0, rect.Width / scene.Width * 100);
+					width = (int)Math.Round((rect.Width - localPt.X) / segment.Scene.Width * 100);
+					int oldW = (int)Math.Max(0, rect.Width / segment.Scene.Width * 100);
 					//update left position as well so the right doesn't move
-					int left = (int)(Math.Round(localPt.X + rect.X) / scene.Width * 100);
-					int oldLeft = (int)(Math.Round(rect.X / scene.Width * 100));
+					int left = (int)(Math.Round(localPt.X + rect.X) / segment.Scene.Width * 100);
+					int oldLeft = (int)(Math.Round(rect.X / segment.Scene.Width * 100));
 					int diff = oldLeft - left;
 					newWidth = (oldW + diff) + "%";
 					TextX = left + "%";
@@ -494,7 +506,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				Id = Id,
 				DirectiveType = "text",
-				Delay = Start.ToString(CultureInfo.InvariantCulture),
 				Marker = Marker,
 				X = TextX,
 				Y = TextY,
@@ -504,6 +515,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				Arrow = Arrow,
 				Text = Text
 			};
+			if (Start > 0)
+			{
+				text.Delay = Start.ToString(CultureInfo.InvariantCulture);
+			}
 
 			return text;
 		}
@@ -511,33 +526,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public override LiveObject CreateLivePreview(float time)
 		{
 			return this;
-			//LiveBubble preview = Copy() as LiveBubble;
-			//LinkedPreview = preview;
-			//preview.IsPreview = true;
-			//preview.Data = Data;
-			//preview.Hidden = false;
-			//preview.PropertyChanged += Preview_PropertyChanged;
-			//preview.Update(time, 0, false);
-			//AttachSourceListener();
-			//return preview;
 		}
 
 		public override void DestroyLivePreview()
 		{
-			//if (LinkedPreview == null) { return; }
-			//LinkedPreview.PropertyChanged -= Preview_PropertyChanged;
-			//DetachSourceListener();
-			//LinkedPreview = null;
 		}
 
 		private void Preview_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			//DetachSourceListener();
-			//if (e.PropertyName == "Text")
-			//{
-			//	Text = LinkedPreview.Text;
-			//}
-			//AttachSourceListener();
 		}
 
 		public override bool UpdateRealTime(float deltaTime, bool inPlayback)

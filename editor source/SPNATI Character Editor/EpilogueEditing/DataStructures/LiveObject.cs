@@ -51,8 +51,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			get { return Get<string>(); }
 			set
 			{
-				Set(value);
-				LabelChanged?.Invoke(this, EventArgs.Empty);
+				if (!string.IsNullOrEmpty(value))
+				{
+					Set(value);
+					LabelChanged?.Invoke(this, EventArgs.Empty);
+				}
 			}
 		}
 
@@ -195,6 +198,17 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			set { Set(value); }
 		}
 
+		public int? WidthOverride
+		{
+			get { return Get<int?>(); }
+			set { Set(value); }
+		}
+		public int? HeightOverride
+		{
+			get { return Get<int?>(); }
+			set { Set(value); }
+		}
+
 		private float _x;
 		public float X
 		{
@@ -315,7 +329,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			transform.Translate(pivotX, pivotY, MatrixOrder.Append);
 
 			transform.Translate(X - (Parent == null && CenterX ? Width / 2 : 0), Y - (Parent == null && CenterY ? Height / 2 : 0), MatrixOrder.Append); //local position
-			return transform;	
+			return transform;
 		}
 
 		public Matrix WorldTransform
@@ -550,8 +564,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			copy.CenterX = CenterX;
 			copy.CenterY = CenterY;
 			CopyPropertiesInto(copy);
-			OnCopyTo(copy);
 			copy.Parent = Parent;
+			OnCopyTo(copy);
 			copy.InvalidateTransform();
 			return copy;
 		}
@@ -871,6 +885,23 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public virtual Directive AddToScene(Scene scene)
 		{
 			return null;
+		}
+
+		/// <summary>
+		/// Sets the previous object that this one is linked to
+		/// </summary>
+		/// <param name="obj"></param>
+		public void SetPrevious(LiveObject obj)
+		{
+			Previous = obj;
+			if (obj != null)
+			{
+				Id = obj.Id;
+			}
+			OnSetPrevious();
+		}
+		protected virtual void OnSetPrevious()
+		{
 		}
 	}
 }

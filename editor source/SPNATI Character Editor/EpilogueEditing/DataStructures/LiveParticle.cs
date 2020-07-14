@@ -123,8 +123,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				g.MultiplyTransform(WorldTransform);
 				g.MultiplyTransform(sceneTransform, MatrixOrder.Append);
 
-				if (Image != null)
+				if (Image != null && (SkewX == 0 || SkewX % 90 != 0) && (SkewY == 0 || SkewY % 90 != 0))
 				{
+					float skewedWidth = Height * (float)Math.Tan(Math.PI / 180.0f * SkewX);
+					float skewDistanceX = skewedWidth / 2;
+					float skewedHeight = Width * (float)Math.Tan(Math.PI / 180.0f * SkewY);
+					float skewDistanceY = skewedHeight / 2;
+					PointF[] destPts = new PointF[] { new PointF(-skewDistanceX, -skewDistanceY), new PointF(Width - skewDistanceX, skewDistanceY), new PointF(skewDistanceX, Height - skewDistanceY) };
+
 					if (Alpha < 100)
 					{
 						float[][] matrixItems = new float[][] {
@@ -138,11 +144,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						ImageAttributes ia = new ImageAttributes();
 						ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
-						g.DrawImage(Image, new Rectangle(0, 0, Width, Height), 0, 0, Image.Width, Image.Height, GraphicsUnit.Pixel, ia);
+						g.DrawImage(Image, destPts, new Rectangle(0, 0, Image.Width, Image.Height), GraphicsUnit.Pixel, ia);
 					}
 					else
 					{
-						g.DrawImage(Image, 0, 0, Width, Height);
+						g.DrawImage(Image, destPts, new Rectangle(0, 0, Width, Height), GraphicsUnit.Pixel);
 					}
 				}
 				else

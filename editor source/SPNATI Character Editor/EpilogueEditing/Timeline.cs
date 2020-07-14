@@ -9,6 +9,7 @@ using Desktop;
 using SPNATI_Character_Editor.Actions;
 using Desktop.Skinning;
 using SPNATI_Character_Editor.Actions.TimelineActions;
+using System.Drawing.Drawing2D;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
@@ -21,6 +22,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private const int RowHeight = 20;
 		private const int IconSize = 16;
 		private const int IconPadding = 2;
+		public const int StartBuffer = 10;
 
 		private const float MinZoom = 0.25f;
 		private const float MaxZoom = 2.5f;
@@ -37,6 +39,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private SolidBrush _timelineBack;
 		private SolidBrush _widgetHeaderFill;
 		private SolidBrush _accentFill;
+		private Brush _linkBrush;
 		private Pen _penTickMajor;
 		private Pen _penTick;
 		private Pen _penTickMinor;
@@ -72,7 +75,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private ITimelineObject _selectedObject;
 		private List<ITimelineBreak> _breaks = new List<ITimelineBreak>();
 
-		private PlaybackMode _playbackMode = PlaybackMode.Once;
+		public PlaybackMode PlaybackMode = PlaybackMode.Once;
 		public bool PlaybackAwaitingInput { get; set; }
 		public bool PauseOnBreaks { get; set; }
 
@@ -170,6 +173,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_timelineBack = new SolidBrush(Color.FromArgb(230, 230, 230));
 			_widgetHeaderFill = new SolidBrush(Color.FromArgb(185, 185, 185));
 			_accentFill = new SolidBrush(Color.Black);
+			_linkBrush = new HatchBrush(HatchStyle.DarkUpwardDiagonal, Color.Black, Color.Transparent);
 			_fontTimeline = new Font("Arial", 8);
 			_timelineFore = new SolidBrush(Color.Black);
 			_penTickMajor = new Pen(Color.FromArgb(0, 0, 0));
@@ -189,6 +193,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_iconHoverFill = new SolidBrush(Color.FromArgb(50, 0, 0, 0));
 
 			container.MouseWheel += Panel_MouseWheel;
+			panelHeader.MouseWheel += PanelHeader_MouseWheel;
 
 			UpdateMarker(0);
 			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
@@ -242,6 +247,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				_penTickMinor.Color = ColorSet.BlendColor(_timelineBack.Color, _timelineFore.Color, 0.3f);
 				_trackBorder.Color = skin.GetAppColor("TimelineRowBorder");
 				_trackRowBorder.Color = skin.GetAppColor("TimelineSubRowBorder");
+				_linkBrush?.Dispose();
+				_linkBrush = new HatchBrush(HatchStyle.DarkUpwardDiagonal, _trackBorder.Color, Color.Transparent);
 			}
 
 			foreach (ITimelineWidget widget in _widgets)
@@ -460,7 +467,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				float time = _playbackTime + elapsedSec;
 				if (time > duration)
 				{
-					switch (_playbackMode)
+					switch (PlaybackMode)
 					{
 						case PlaybackMode.Once:
 							EnablePlayback(false);
@@ -542,7 +549,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <returns></returns>
 		public int TimeToX(float time)
 		{
-			return (int)Math.Round(time * PixelsPerSecond * _zoom);
+			return (int)Math.Round(time * PixelsPerSecond * _zoom) + StartBuffer;
 		}
 
 		/// <summary>
@@ -552,7 +559,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <returns></returns>
 		public float XToTime(float x)
 		{
-			return x / (PixelsPerSecond * _zoom);
+			return (x - StartBuffer) / (PixelsPerSecond * _zoom);
 		}
 
 		private void Timeline_Resize(object sender, EventArgs e)
@@ -618,6 +625,23 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 			}
 			panelHeader.Invalidate();
+		}
+
+		private void PanelHeader_MouseWheel(object sender, MouseEventArgs e)
+		{
+			if (_currentAction == null)
+			{
+				VScrollProperties props = container.VerticalScroll;
+				if (e.Delta > 0)
+				{
+					container.ScrollBy(-props.LargeChange);
+				}
+				else if (e.Delta < 0)
+				{
+					container.ScrollBy(props.LargeChange);
+				}
+				Redraw();
+			}
 		}
 
 		private void panelAxis_Paint(object sender, PaintEventArgs e)
@@ -850,7 +874,20 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						int rowY = trackY + row * RowHeight;
 						if (rowY + RowHeight + scrollOffset >= 0 && rowY + scrollOffset < panelHeight)
 						{
-							widget.DrawContents(g, row, x + 1, rowY + 1, pps, RowHeight - 2, duration);
+							if (widget.LinkedToPrevious(row))
+							{
+								g.FillRectangle(_linkBrush, 0, rowY + 1, StartBuffer, RowHeight - 1);
+							}
+							widget.DrawContents(g, row, x + 1 + StartBuffer, rowY + 1, pps, RowHeight - 2, duration);
+							LiveObject obj = widget.GetData() as LiveObject;
+							if (obj.LinkedToEnd)
+							{
+								int endX = TimeToX(Duration);
+								if (endX < panel.Width)
+								{
+									g.FillRectangle(_linkBrush, endX, rowY + 1, panel.Width - endX, RowHeight - 1);
+								}
+							}
 						}
 					}
 
@@ -888,6 +925,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			float end = Duration;
 			float step = 0;
+			g.DrawLine(_penTick, StartBuffer - 1, y, StartBuffer - 1, y + height);
 			while (true)
 			{
 				float time = step * _tickResolution;
@@ -1371,7 +1409,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				float start = widget.GetStart();
 				int track;
 				int row = YToRow(y, out track);
-				return widget.GetAction(x - TimeToX(start), XToTime(x), row, TimeToX(Duration), pps);
+				return widget.GetAction(x, XToTime(x), row, TimeToX(Duration), pps);
 			}
 			return _selectedObject != null ? null : new SelectAction();
 		}
@@ -1438,7 +1476,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			else
 			{
 				tsPlay.ToolTipText = "Play";
-				switch (_playbackMode)
+				switch (PlaybackMode)
 				{
 					case PlaybackMode.Once:
 						tsPlay.Image = Properties.Resources.TimelinePlayOnce;
@@ -1712,27 +1750,20 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void playOnceToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			_playbackMode = PlaybackMode.Once;
+			PlaybackMode = PlaybackMode.Once;
 			EnablePlayback(true);
 		}
 
 		private void playLoopingToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			_playbackMode = PlaybackMode.Looping;
+			PlaybackMode = PlaybackMode.Looping;
 			EnablePlayback(true);
 		}
 
 		private void playOnceWithRepeatsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			_playbackMode = PlaybackMode.OnceLooping;
+			PlaybackMode = PlaybackMode.OnceLooping;
 			EnablePlayback(true);
-		}
-
-		private enum PlaybackMode
-		{
-			Once,
-			Looping,
-			OnceLooping,
 		}
 
 		public void RequestUI(object data)
@@ -1847,5 +1878,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			_timeline.FinalizeTimeMovement();
 		}
+	}
+
+	public enum PlaybackMode
+	{
+		Once,
+		Looping,
+		OnceLooping,
 	}
 }

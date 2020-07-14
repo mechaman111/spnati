@@ -40,10 +40,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public LiveCamera()
 		{
+			Id = "Camera";
 			Zoom = 1;
 			Color = Color.Black;
 			Alpha = 0;
 			Length = 1;
+			LinkedToEnd = true;
 
 			_penLens = new Pen(Brushes.LightGray, 5);
 			_penLens.Color = Color.FromArgb(127, _penLens.Color);
@@ -72,12 +74,34 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 			}
 			Id = "Camera";
+			PopulateSceneAttributes(scene);
+			Update(0, 0, false);
+		}
+
+		protected override HashSet<string> GetLoopableProperties(string sourceProperty)
+		{
+			HashSet<string> props = new HashSet<string>();
+			if (sourceProperty == "Opacity" || sourceProperty == "Color")
+			{
+				props.Add("Color");
+				props.Add("Opacity");
+			}
+			else
+			{
+				props.Add("X");
+				props.Add("Y");
+				props.Add("Zoom");
+			}
+			return props;
+		}
+
+		public void PopulateSceneAttributes(Scene scene)
+		{
 			AddValue<float>(0, "X", scene.X);
 			AddValue<float>(0, "Y", scene.Y);
 			AddValue<float>(0, "Zoom", scene.Zoom);
 			AddValue<float>(0, "Opacity", scene.FadeOpacity);
 			AddValue<Color>(0, "Color", scene.FadeColor);
-			Update(0, 0, false);
 		}
 
 		protected override void OnCopyTo(LiveObject copy)
@@ -144,7 +168,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public override Directive AddToScene(Scene scene)
 		{
-			if (Keyframes.Count == 0) {
+			if (Keyframes.Count == 0)
+			{
 				return null;
 			}
 			//the camera has no creation directive - they go directly on the scene
@@ -326,31 +351,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public override Directive CreateCreationDirective(Scene scene)
 		{
-			//camera doesn't actually create a directive, it sets properties on the scene
-			if (Keyframes.Count > 0)
-			{
-				LiveCameraKeyframe firstFrame = Keyframes[0] as LiveCameraKeyframe;
-				if (firstFrame.X.HasValue)
-				{
-					scene.X = firstFrame.X.Value.ToString(CultureInfo.InvariantCulture);
-				}
-				if (firstFrame.Y.HasValue)
-				{
-					scene.Y = firstFrame.Y.Value.ToString(CultureInfo.InvariantCulture);
-				}
-				if (firstFrame.Zoom.HasValue)
-				{
-					scene.Zoom = firstFrame.Zoom.Value.ToString(CultureInfo.InvariantCulture);
-				}
-				if (firstFrame.Color != Color.Empty)
-				{
-					scene.FadeColor = firstFrame.Color.ToHexValue();
-				}
-				if (firstFrame.Opacity.HasValue)
-				{
-					scene.FadeOpacity = firstFrame.Opacity.Value.ToString(CultureInfo.InvariantCulture);
-				}
-			}
 			return null;
 		}
 	}

@@ -14,7 +14,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private SolidBrush _fillExtra = new SolidBrush(Color.White);
 		private SolidBrush _accentFill = new SolidBrush(Color.Blue);
 
-		public WidgetDrawInfo(LiveAnimatedObject Data, string property)
+		public WidgetDrawInfo(LiveAnimatedObject Data, string property, float duration)
 		{
 			Skin skin = SkinManager.Instance.CurrentSkin;
 			_repeatFill = new SolidBrush(Color.FromArgb(103, 106, 116));
@@ -22,6 +22,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				_repeatFill.Color = skin.GetAppColor("WidgetRepeat");
 			}
+
+			int kfCount = 0;
 
 			if (property == "")
 			{
@@ -191,6 +193,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					block.Start = Data.Start;
 					block.Length = Data.Length;
 					Blocks.Add(block);
+					kfCount++;
 				}
 				else
 				{
@@ -203,6 +206,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						LiveKeyframe kf = Data.Keyframes[i];
 						if (kf.HasProperty(property))
 						{
+							kfCount++;
 							LiveKeyframe startFrame = null;
 							LiveKeyframe endFrame = null;
 
@@ -237,6 +241,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					}
 				}
 			}
+
+			if (Data.LinkedToEnd && Blocks.Count > 0 && (property == "" || kfCount <= 1))
+			{
+				//if linking to the end, extend the last block to the end
+				WidgetBlock block = Blocks[Blocks.Count - 1];
+				block.Length = duration - block.Start;
+			}
 		}
 
 		private KeyframeDrawStyle ToDrawStyle(KeyframeType type)
@@ -268,7 +279,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				WidgetBlock block = Blocks[i];
 				float length = block.Length * pps;
-				float startX = block.Start * pps;
+				float startX = block.Start * pps + Timeline.StartBuffer;
 				g.FillRectangle(brush, startX, y, length, rowHeight + 1);
 				if (accentColor.HasValue)
 				{
@@ -277,18 +288,18 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 				g.DrawLine(outline, startX, y, startX, y + rowHeight);
 				g.DrawLine(outline, startX + length, y, startX + length, y + rowHeight);
-				if (dataEndTime > 0 && i == Blocks.Count - 1)
-				{
-					_fillExtra.Color = Color.FromArgb(100, brush.Color.R, brush.Color.G, brush.Color.B);
-					startX = startX + length + 1;
-					length = dataEndTime * pps - startX;
-					g.FillRectangle(_fillExtra, startX, y + 6, length, rowHeight - 11);
-					g.DrawRectangle(outline, startX - 1, y + 6, length + 1, rowHeight - 12);
-				}
+				//if (dataEndTime > 0 && i == Blocks.Count - 1)
+				//{
+				//	_fillExtra.Color = Color.FromArgb(100, brush.Color.R, brush.Color.G, brush.Color.B);
+				//	startX = startX + length + 1;
+				//	length = dataEndTime * pps - startX + Timeline.StartBuffer;
+				//	g.FillRectangle(_fillExtra, startX, y + 6, length, rowHeight - 11);
+				//	g.DrawRectangle(outline, startX - 1, y + 6, length + 1, rowHeight - 12);
+				//}
 
 				if (block.Repeat)
 				{
-					int repeatX = (int)((block.Start + block.Length) * pps);
+					int repeatX = (int)((block.Start + block.Length) * pps) + Timeline.StartBuffer;
 					g.FillEllipse(_repeatFill, repeatX + 6, y + rowHeight / 3 - 2, 4, 4);
 					g.FillEllipse(_repeatFill, repeatX + 6, y + 2 * rowHeight / 3 - 2, 4, 4);
 					g.FillRectangle(_repeatFill, repeatX + 11, y, 1, rowHeight + 1);

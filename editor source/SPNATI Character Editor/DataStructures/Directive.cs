@@ -3,6 +3,7 @@ using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Controls;
 using SPNATI_Character_Editor.Controls.EditControls;
 using SPNATI_Character_Editor.EditControls;
+using SPNATI_Character_Editor.EpilogueEditor;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +17,9 @@ namespace SPNATI_Character_Editor
 	{
 		[XmlAttribute("type")]
 		public string DirectiveType;
+
+		[XmlAttribute("name")]
+		public string Name;
 
 		[Text(DisplayName = "ID", GroupOrder = 0, Key = "id", Description = "Unique identifier", Validator = "ValidateId")]
 		[XmlAttribute("id")]
@@ -58,9 +62,6 @@ namespace SPNATI_Character_Editor
 		[Float(DisplayName = "Delay (s)", Key = "delay", GroupOrder = 39, Description = "Time in seconds before the animation begins", Minimum = 0, Maximum = 100, Increment = 0.5f)]
 		[XmlAttribute("delay")]
 		public string Delay;
-
-		[XmlAttribute("animid")]
-		public string AnimationId;
 
 		[Boolean(DisplayName = "Looped", Key = "loop", GroupOrder = 42, Description = "If true, the animation will repeat indefinitely until stopped")]
 		[DefaultValue(false)]
@@ -190,6 +191,30 @@ namespace SPNATI_Character_Editor
 		public bool IgnoreRotation;
 		#endregion
 
+		[DefaultValue("")]
+		[XmlAttribute("properties")]
+		public string RawProperties
+		{
+			get
+			{
+				List<string> props = new List<string>();
+				foreach (string prop in AffectedProperties)
+				{
+					props.Add(prop.ToLowerInvariant());
+				}
+				props.Sort();
+				return string.Join(",", props);
+			}
+			set
+			{
+				AffectedProperties.Clear();
+				string[] props = value.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries );
+				AffectedProperties.AddRange(props);
+			}
+		}
+		[XmlIgnore]
+		public HashSet<string> AffectedProperties = new HashSet<string>();
+
 		[Text(DisplayName = "Title", Key = "title", GroupOrder = -1, Description = "User prompt title text", RowHeight = 52, Multiline = true)]
 		[XmlElement("title")]
 		public string Title;
@@ -200,6 +225,9 @@ namespace SPNATI_Character_Editor
 		[XmlElement("choice")]
 		public List<Choice> Choices = new List<Choice>();
 
+		[XmlIgnore]
+		public string MetaKey;
+
 		public Directive() { }
 
 		public Directive(string type)
@@ -209,6 +237,7 @@ namespace SPNATI_Character_Editor
 
 		public override string ToString()
 		{
+			string delay = Delay != null ? Delay + "s - " : "";
 			string prefix = (Locked ? "🔒 " : "");
 			string text = DirectiveType;
 			switch (DirectiveType)
@@ -218,10 +247,9 @@ namespace SPNATI_Character_Editor
 					break;
 				case "move":
 					string time = string.IsNullOrEmpty(Time) ? "" : $"{Time}s";
-					string delay = string.IsNullOrEmpty(Delay) ? "" : $" delay {Delay}s";
 					string loop = Looped ? " (loop)" : "";
 					string props = GetProperties();
-					text = $"Animate ({Id}) {time}{loop}{delay}{(props.Length > 0 ? "-" + props : "")}";
+					text = $"Animate ({Id}) {time}{loop}{(props.Length > 0 ? "-" + props : "")}";
 					break;
 				case "wait":
 					text = "Wait for Animations";
@@ -230,7 +258,7 @@ namespace SPNATI_Character_Editor
 					text = "Pause";
 					break;
 				case "text":
-					text = $"{Id}: {(Text ?? "Speech Bubble")}";
+					text = $"{Id ?? "Text"}: {(Text ?? "Speech Bubble")}";
 					break;
 				case "clear":
 					text = $"Clear bubble {Id}";
@@ -257,7 +285,7 @@ namespace SPNATI_Character_Editor
 					text = $"Camera {time}{loop}{(props.Length > 0 ? "-" + props : "")}";
 					break;
 				case "stop":
-					text = $"Stop {Id} {(!string.IsNullOrEmpty(AnimationId) ? "- " + AnimationId : "")}";
+					text = $"Stop {Id}";
 					break;
 				case "remove":
 					text = $"Remove {Id}";
@@ -276,7 +304,7 @@ namespace SPNATI_Character_Editor
 					break;
 			}
 
-			return $"{prefix}{text}";
+			return $"{prefix}{delay}{text}";
 		}
 
 		[XmlIgnore]
@@ -409,6 +437,15 @@ namespace SPNATI_Character_Editor
 					destination.Keyframes.Add(kf);
 				}
 			}
+		}
+
+		public void PopulateMetadata(LiveKeyframeMetadata data)
+		{
+			EasingMethod = data.Ease;
+			Looped = data.Looped;
+			InterpolationMethod = data.Interpolation;
+			ClampingMethod = data.ClampMethod;
+			Iterations = data.Iterations;
 		}
 	}
 

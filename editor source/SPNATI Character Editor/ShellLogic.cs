@@ -77,7 +77,7 @@ namespace SPNATI_Character_Editor
 			BuildDataSlicers();
 		}
 
-		private static void BuildDirectiveTypes()
+		public static void BuildDirectiveTypes()
 		{
 			//TODO: should these go in an XML file like practically every other definition? Maybe, but the epilogue editor needs code updates to handle new directives either way
 
@@ -100,7 +100,7 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("clear") as DirectiveDefinition;
 			def.Description = "Removes a speech bubble.";
-			def.SortOrder = 40;
+			def.SortOrder = 4;
 			foreach (string key in new string[] { "id", "marker", "delay" })
 			{
 				def.AllowedProperties.Add(key);
@@ -111,7 +111,7 @@ namespace SPNATI_Character_Editor
 			{
 				def.AllowedProperties.Add(key);
 			}
-			def.SortOrder = 50;
+			def.SortOrder = 5;
 			def.Description = "Removes all speech bubbles.";
 
 			def = provider.Create("move") as DirectiveDefinition;
@@ -156,7 +156,7 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("stop") as DirectiveDefinition;
 			def.Description = "Stops an animation.";
-			def.SortOrder = 40;
+			def.SortOrder = 4;
 			foreach (string key in new string[] { "id", "marker", "delay" })
 			{
 				def.AllowedProperties.Add(key);
@@ -180,7 +180,7 @@ namespace SPNATI_Character_Editor
 
 			def = provider.Create("remove") as DirectiveDefinition;
 			def.Description = "Removes a sprite or emitter from the scene.";
-			def.SortOrder = 50;
+			def.SortOrder = 5;
 			foreach (string key in new string[] { "id", "marker", "delay" })
 			{
 				def.AllowedProperties.Add(key);
