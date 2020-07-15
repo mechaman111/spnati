@@ -154,7 +154,7 @@ function initialSetup () {
         updateTitleGender();
 
         if (USAGE_TRACKING && !SENTRY_INITIALIZED) sentryInit();
-        if (RESORT_ACTIVE && save.getPlayedCharacterSet().length >= 65) {
+        if (RESORT_ACTIVE && save.getPlayedCharacterSet().length >= 50) {
             $(".title-resort-button").show();
         } else {
             $(".title-resort-button").hide();
