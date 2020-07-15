@@ -272,7 +272,7 @@ namespace SPNATI_Character_Editor
 					{
 						time = string.IsNullOrEmpty(Time) ? "" : $"{Time}s";
 						loop = Looped ? " (loop)" : "";
-						text = $"Fade to {Color} (opacity: {Opacity}) {time}{loop}";
+						text = $"Fade to {Color} (opacity: {Alpha}) {time}{loop}";
 					}
 					break;
 				case "clear-all":
@@ -511,9 +511,9 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("color")]
 		public string Color;
 
-		[Slider(DisplayName = "Opacity (0-100)", Key = "alpha", GroupOrder = 21, Description = "Opacity/transparency level")]
+		[Slider(DisplayName = "(0-100)", Key = "alpha", GroupOrder = 21, Description = "Opacity/transparency level")]
 		[XmlAttribute("alpha")]
-		public string Opacity;
+		public string Alpha;
 
 		[Float(DisplayName = "Rotation (deg)", Key = "rotation", GroupOrder = 18, Description = "Sprite rotation", DecimalPlaces = 0, Minimum = -7020, Maximum = 7020)]
 		[XmlAttribute("rotation")]
@@ -536,7 +536,7 @@ namespace SPNATI_Character_Editor
 		public bool HasAnimatableProperties()
 		{
 			return !string.IsNullOrEmpty(X) || !string.IsNullOrEmpty(Y) || !string.IsNullOrEmpty(Scale) || !string.IsNullOrEmpty(ScaleX) || !string.IsNullOrEmpty(ScaleY)
-				 || !string.IsNullOrEmpty(Color) || !string.IsNullOrEmpty(Opacity) || !string.IsNullOrEmpty(Rotation) || !string.IsNullOrEmpty(Zoom) || !string.IsNullOrEmpty(Src)
+				 || !string.IsNullOrEmpty(Color) || !string.IsNullOrEmpty(Alpha) || !string.IsNullOrEmpty(Rotation) || !string.IsNullOrEmpty(Zoom) || !string.IsNullOrEmpty(Src)
 				 || !string.IsNullOrEmpty(SkewX) || !string.IsNullOrEmpty(SkewY);
 		}
 
@@ -559,7 +559,7 @@ namespace SPNATI_Character_Editor
 			PivotX = src.PivotX;
 			PivotY = src.PivotY;
 			Color = src.Color;
-			Opacity = src.Opacity;
+			Alpha = src.Alpha;
 			Rotation = src.Rotation;
 			Zoom = src.Zoom;
 			Src = src.Src;
@@ -569,7 +569,7 @@ namespace SPNATI_Character_Editor
 			src.Y = null;
 			src.Scale = null;
 			src.Color = null;
-			src.Opacity = null;
+			src.Alpha = null;
 			src.Rotation = null;
 			src.Zoom = null;
 			src.ScaleX = null;
@@ -595,6 +595,35 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
+		/// Copies propreties into the Properties dictionary for easy string access
+		/// </summary>
+		public void CacheProperties()
+		{
+			Properties.Clear();
+			Type type = typeof(Keyframe);
+			foreach (FieldInfo fi in type.GetFields())
+			{
+				string name = fi.Name;
+				if (name == "Time")
+				{
+					continue;
+				}
+
+				XmlIgnoreAttribute ignore = fi.GetCustomAttribute<XmlIgnoreAttribute>();
+				if (ignore != null)
+				{
+					continue;
+				}
+
+				object value = fi.GetValue(this);
+				if (value != null)
+				{
+					Properties[name] = value;
+				}
+			}
+		}
+
+		/// <summary>
 		/// "Bakes" the properties dictionary into the actual property fields
 		/// </summary>
 		public void BakeProperties()
@@ -606,6 +635,10 @@ namespace SPNATI_Character_Editor
 				object value = kvp.Value;
 				FieldInfo fi = PropertyTypeInfo.GetFieldInfo(type, property);
 				fi.SetValue(this, value);
+			}
+			if (Time == "0")
+			{
+				Time = null;
 			}
 		}
 
@@ -632,9 +665,9 @@ namespace SPNATI_Character_Editor
 			{
 				sb.Append($" Color:{Color}");
 			}
-			if (!string.IsNullOrEmpty(Opacity))
+			if (!string.IsNullOrEmpty(Alpha))
 			{
-				sb.Append($" Opacity:{Opacity}");
+				sb.Append($" Opacity:{Alpha}");
 			}
 			if (!string.IsNullOrEmpty(Rotation))
 			{

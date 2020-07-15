@@ -48,9 +48,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public event EventHandler ViewportUpdated;
 		public event EventHandler LabelChanged;
 
-		//Scene creation state
-		private List<LiveBubble> _newBubbles = new List<LiveBubble>();
-
 		/// <summary>
 		/// The segment preceding this one, if any
 		/// </summary>
@@ -180,8 +177,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			Tracks.CollectionChanged += Objects_CollectionChanged;
 
-			_newBubbles = new List<LiveBubble>();
-
 			HashSet<LiveObject> currentBatch = new HashSet<LiveObject>();
 
 			foreach (Directive directive in scene.Directives)
@@ -288,7 +283,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				Scene.IdRemap[directiveId] = newId;
 			}
 			Tracks.Add(bubble);
-			_newBubbles.Add(bubble);
 
 			_nextTime = Math.Max(_nextTime, bubble.Start);
 
@@ -331,7 +325,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				if (obj.Previous != null && PreviousSegment != null)
 				{
 					obj.Previous.LinkedToEnd = false;
-					(obj.Previous as IFixedLength).Length = PreviousSegment.GetDuration() - obj.Previous.Start;
+					LiveAnimatedObject anim = obj.Previous as LiveAnimatedObject;
+					float length = PreviousSegment.GetDuration() - obj.Previous.Start;
+					if (anim.Keyframes.Count > 0 && anim.Keyframes[anim.Keyframes.Count - 1].Time < length)
+					{
+						//make sure there's a keyframe at the desired length, or it won't be able to stretch out long enough
+						anim.AddKeyframe(length);
+					}
+					(obj.Previous as IFixedLength).Length = length;
 				}
 			}
 			else
@@ -461,31 +462,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public void AddPauseDirective(Directive directive, HashSet<LiveObject> batch)
 		{
 			//update the current start basis to match the end time of the last non-looping animation
-
-			//add some buffer space to text boxes so they don't all happen at the same moment as the pauses
-			//if (directive.DirectiveType == "pause")
-			//{
-			//	float length = _nextTime - _time;
-			//	foreach (LiveBubble bubble in _newBubbles)
-			//	{
-			//		if (bubble.LinkedToEnd)
-			//		{
-			//			float l = length - (bubble.Start - _time);
-			//			if (l <= 0)
-			//			{
-			//				l = 1;
-			//			}
-			//			bubble.Length = l; //fill the bubble up to the pause
-			//		}
-			//	}
-			//	if (_nextTime == _time && _newBubbles.Count > 0)
-			//	{
-			//		_nextTime = _time + 1;
-			//	}
-			//}
 			_time = _nextTime;
-
-			_newBubbles.Clear();
 		}
 
 		private static float GetEnd(LiveAnimatedObject obj)

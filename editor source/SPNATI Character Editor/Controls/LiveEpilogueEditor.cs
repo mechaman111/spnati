@@ -457,7 +457,7 @@ namespace SPNATI_Character_Editor.Controls
 						{
 							color = previous.FadeColor;
 						}
-						if (!string.IsNullOrEmpty(d.Opacity))
+						if (!string.IsNullOrEmpty(d.Alpha))
 						{
 							opacity = previous.FadeOpacity;
 						}
@@ -467,7 +467,7 @@ namespace SPNATI_Character_Editor.Controls
 							{
 								color = previous.FadeColor;
 							}
-							if (!string.IsNullOrEmpty(kf.Opacity))
+							if (!string.IsNullOrEmpty(kf.Alpha))
 							{
 								opacity = previous.FadeOpacity;
 							}
@@ -586,7 +586,7 @@ namespace SPNATI_Character_Editor.Controls
 						tsAddKeyframe.Enabled = true;
 					}
 				}
-				if (selectedWidget.SelectedFrame != null && selectedWidget.SelectedFrame.Time != 0)
+				if (selectedWidget.SelectedFrame != null)
 				{
 					tsRemoveKeyframe.Enabled = true;
 					tsTypeNormal.Enabled = tsTypeSplit.Enabled = tsTypeBegin.Enabled = true;

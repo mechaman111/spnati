@@ -81,10 +81,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		protected override HashSet<string> GetLoopableProperties(string sourceProperty)
 		{
 			HashSet<string> props = new HashSet<string>();
-			if (sourceProperty == "Opacity" || sourceProperty == "Color")
+			if (sourceProperty == "Alpha" || sourceProperty == "Color")
 			{
 				props.Add("Color");
-				props.Add("Opacity");
+				props.Add("Alpha");
 			}
 			else
 			{
@@ -100,7 +100,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			AddValue<float>(0, "X", scene.X);
 			AddValue<float>(0, "Y", scene.Y);
 			AddValue<float>(0, "Zoom", scene.Zoom);
-			AddValue<float>(0, "Opacity", scene.FadeOpacity);
+			AddValue<float>(0, "Alpha", scene.FadeOpacity);
 			AddValue<Color>(0, "Color", scene.FadeColor);
 		}
 
@@ -146,14 +146,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				AddValue<float>(time, "Zoom", kf.Zoom, addBreak);
 				properties.Add("Zoom");
 			}
-			if (!string.IsNullOrEmpty(kf.Opacity))
+			if (!string.IsNullOrEmpty(kf.Alpha))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Opacity"))
+				if (time > origin && !AnimatedProperties.Contains("Alpha"))
 				{
-					AddValue<float>(origin, "Opacity", "0", true);
+					AddValue<float>(origin, "Alpha", "0", true);
 				}
-				AddValue<float>(time, "Opacity", kf.Opacity, addBreak);
-				properties.Add("Opacity");
+				AddValue<float>(time, "Alpha", kf.Alpha, addBreak);
+				properties.Add("Alpha");
 			}
 			if (!string.IsNullOrEmpty(kf.Color))
 			{
@@ -177,7 +177,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			scene.X = firstFrame.X?.ToString(CultureInfo.InvariantCulture);
 			scene.Y = firstFrame.Y?.ToString(CultureInfo.InvariantCulture);
 			scene.Zoom = firstFrame.Zoom?.ToString(CultureInfo.InvariantCulture);
-			scene.FadeOpacity = firstFrame.Opacity?.ToString(CultureInfo.InvariantCulture);
+			scene.FadeOpacity = firstFrame.Alpha?.ToString(CultureInfo.InvariantCulture);
 			scene.FadeColor = firstFrame.Color.A > 0 ? firstFrame.Color.ToHexValue() : null;
 			return null;
 		}
@@ -194,7 +194,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			X = GetPropertyValue("X", time, offset, 0.0f, ease, interpolation, looped);
 			Y = GetPropertyValue("Y", time, offset, 0.0f, ease, interpolation, looped);
 			Zoom = GetPropertyValue("Zoom", time, offset, 1.0f, ease, interpolation, looped);
-			Alpha = GetPropertyValue("Opacity", time, offset, 0.0f, ease, interpolation, looped);
+			Alpha = GetPropertyValue("Alpha", time, offset, 0.0f, ease, interpolation, looped);
 			Color = GetPropertyValue("Color", time, offset, Color.Black, ease, interpolation, looped);
 		}
 

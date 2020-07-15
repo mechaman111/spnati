@@ -10,7 +10,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			TrackedProperties.Add("Src");
 			TrackedProperties.Add("Rotation");
 			TrackedProperties.Add("Rate");
-			Rate = 1;
 		}
 
 		[FileSelect(DisplayName = "Source", GroupOrder = 10, Key = "src", Description = "Particle source image")]

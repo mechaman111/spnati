@@ -1147,6 +1147,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			if (linkToPrevious)
 			{
+				Keyframe firstDirFrame = directive.Keyframes.Count > 0 ? directive.Keyframes[0] : directive;
+				bool instantChange = firstDirFrame.Time == "0" || string.IsNullOrEmpty(firstDirFrame.Time);
+
 				//may need to update the previous keyframe or copy it
 				foreach (string prop in affectedProperties)
 				{
@@ -1173,7 +1176,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						if (mostRecent == startFrame && startFrame.HasProperty(prop))
 						{
 							//this was a split
-							frameTypes[prop] = count > 1 ? KeyframeType.Split : KeyframeType.Begin;
+							frameTypes[prop] = count > 1 && (!instantChange || !firstDirFrame.Properties.ContainsKey(prop) ) ? KeyframeType.Split : KeyframeType.Begin;
 						}
 						else
 						{
@@ -1239,18 +1242,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			else if (directive.Id == "camera")
 			{
 				trackedProperties.Remove("Color");
-				trackedProperties.Remove("Opacity");
+				trackedProperties.Remove("Alpha");
 			}
 
 			//Add a new begin frame with the same values as the last keyframe of every looping property
 			foreach (string property in trackedProperties)
 			{
-				string realName = property.ToLowerInvariant();
-				if (realName == "opacity")
-				{
-					realName = "alpha";
-				}
-				if (directive.AffectedProperties.Count > 0 && !directive.AffectedProperties.Contains(realName) && !directive.AffectedProperties.Contains(property))
+				string propName = property.ToLowerInvariant();
+				if (directive.AffectedProperties.Count > 0 && !directive.AffectedProperties.Contains(propName))
 				{
 					continue;
 				}
@@ -1262,7 +1261,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					if (kf.HasProperty(property))
 					{
 						LiveKeyframeMetadata metadata = GetBlockMetadata(property, kf.Time);
-						if (metadata.Looped)
+						if (metadata.Indefinite)
 						{
 							HashSet<string> properties = new HashSet<string>();
 							properties.Add(property);
@@ -1287,7 +1286,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 							if (kf.HasProperty(property))
 							{
 								LiveKeyframeMetadata metadata = prev.GetBlockMetadata(property, kf.Time);
-								if (metadata.Looped)
+								if (metadata.Indefinite)
 								{
 									HashSet<string> properties = new HashSet<string>();
 									properties.Add(property);
@@ -1519,7 +1518,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 							//Only add if this property isn't looping
 							LiveKeyframeMetadata blockData = anim.GetBlockMetadata(property, kf.Time);
-							if (!blockData.Looped)
+							if (!blockData.Indefinite)
 							{
 								AddValue(0, property, kf.Get<object>(property), false);
 							}
@@ -1593,9 +1592,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					if (frame.HasProperty(property))
 					{
 						LiveKeyframeMetadata md = GetBlockMetadata(property, frame.Time);
-						if (md.Looped)
+						if (md.Indefinite)
 						{
-							props.Add(property);
+							props.Add(property.ToLowerInvariant());
 							found = true;
 							break;
 						}
@@ -1610,9 +1609,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						metadata = prev.GetLastBlockMetadata(property);
 						prev = prev.Previous as LiveAnimatedObject;
 					}
-					if (metadata != null && metadata.Looped)
+					if (metadata != null && metadata.Indefinite)
 					{
-						props.Add(property);
+						props.Add(property.ToLowerInvariant());
 					}
 				}
 			}

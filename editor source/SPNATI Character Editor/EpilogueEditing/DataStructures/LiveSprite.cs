@@ -221,14 +221,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				AddValue<float>(time, "ScaleY", kf.ScaleY, addBreak);
 				properties.Add("ScaleY");
 			}
-			if (!string.IsNullOrEmpty(kf.Opacity))
+			if (!string.IsNullOrEmpty(kf.Alpha))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Opacity"))
+				if (time > origin && !AnimatedProperties.Contains("Alpha"))
 				{
-					AddValue<float>(origin, "Opacity", "100", true);
+					AddValue<float>(origin, "Alpha", "100", true);
 				}
-				AddValue<float>(time, "Opacity", kf.Opacity, addBreak);
-				properties.Add("Opacity");
+				AddValue<float>(time, "Alpha", kf.Alpha, addBreak);
+				properties.Add("Alpha");
 			}
 			if (!string.IsNullOrEmpty(kf.Rotation))
 			{
@@ -268,7 +268,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Image = LiveImageCache.Get(src);
 			ScaleX = GetPropertyValue("ScaleX", time, offset, 1.0f, easeOverride, interpolationOverride, looped);
 			ScaleY = GetPropertyValue("ScaleY", time, offset, 1.0f, easeOverride, interpolationOverride, looped);
-			Alpha = GetPropertyValue("Opacity", time, offset, 100.0f, easeOverride, interpolationOverride, looped);
+			Alpha = GetPropertyValue("Alpha", time, offset, 100.0f, easeOverride, interpolationOverride, looped);
 			Rotation = GetPropertyValue("Rotation", time, offset, 0.0f, easeOverride, interpolationOverride, looped);
 			SkewX = GetPropertyValue("SkewX", time, offset, 0f, easeOverride, interpolationOverride, looped);
 			SkewY = GetPropertyValue("SkewY", time, offset, 0f, easeOverride, interpolationOverride, looped);
@@ -388,9 +388,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					sprite.Rotation = initialFrame.Rotation.Value.ToString(CultureInfo.InvariantCulture);
 				}
-				if (initialFrame.Opacity.HasValue)
+				if (initialFrame.Alpha.HasValue)
 				{
-					sprite.Opacity = initialFrame.Opacity.Value.ToString(CultureInfo.InvariantCulture);
+					sprite.Alpha = initialFrame.Alpha.Value.ToString(CultureInfo.InvariantCulture);
 				}
 			}
 

@@ -165,6 +165,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			foreach (Directive directive in scene.Directives)
 			{
+				directive.CacheProperties();
 				newlyAdded = false;
 				switch (directive.DirectiveType)
 				{

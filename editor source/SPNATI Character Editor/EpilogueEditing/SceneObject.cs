@@ -352,10 +352,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			{
 				float.TryParse(frame.Rotation, NumberStyles.Float, CultureInfo.InvariantCulture, out Rotation);
 			}
-			if (!string.IsNullOrEmpty(frame.Opacity))
+			if (!string.IsNullOrEmpty(frame.Alpha))
 			{
 				float a;
-				if (float.TryParse(frame.Opacity, NumberStyles.Float, CultureInfo.InvariantCulture, out a))
+				if (float.TryParse(frame.Alpha, NumberStyles.Float, CultureInfo.InvariantCulture, out a))
 				{
 					Alpha = a;
 				}
@@ -449,7 +449,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 			{
 				Rotation = Interpolate(last.Rotation, frame.Rotation, frame.Tween, time, lastLast.Rotation, nextNext.Rotation);
 			}
-			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.Opacity)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.Opacity)))
+			if ((last.LinkedFrame == null || !string.IsNullOrEmpty(last.LinkedFrame.Alpha)) && (frame.LinkedFrame == null || !string.IsNullOrEmpty(frame.LinkedFrame.Alpha)))
 			{
 				Alpha = Interpolate(last.Alpha, frame.Alpha, frame.Tween, time, lastLast.Alpha, nextNext.Alpha);
 			}
@@ -528,10 +528,10 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public void SetColor(Keyframe frame)
 		{
-			if (!string.IsNullOrEmpty(frame.Opacity))
+			if (!string.IsNullOrEmpty(frame.Alpha))
 			{
 				float a;
-				if (float.TryParse(frame.Opacity, NumberStyles.Float, CultureInfo.InvariantCulture, out a))
+				if (float.TryParse(frame.Alpha, NumberStyles.Float, CultureInfo.InvariantCulture, out a))
 				{
 					Alpha = a;
 				}
@@ -594,11 +594,11 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 								for (int f = directive.Keyframes.Count - 1; f >= 0; f--)
 								{
 									Keyframe frame = directive.Keyframes[f];
-									if (!foundAlpha && !string.IsNullOrEmpty(frame.Opacity))
+									if (!foundAlpha && !string.IsNullOrEmpty(frame.Alpha))
 									{
 										foundAlpha = true;
 										float a;
-										if (float.TryParse(frame.Opacity, NumberStyles.Float, CultureInfo.InvariantCulture, out a))
+										if (float.TryParse(frame.Alpha, NumberStyles.Float, CultureInfo.InvariantCulture, out a))
 										{
 											Alpha = a;
 										}
@@ -620,11 +620,11 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 							}
 							else
 							{
-								if (!foundAlpha && !string.IsNullOrEmpty(directive.Opacity))
+								if (!foundAlpha && !string.IsNullOrEmpty(directive.Alpha))
 								{
 									foundAlpha = true;
 									float a;
-									if (float.TryParse(directive.Opacity, NumberStyles.Float, CultureInfo.InvariantCulture, out a))
+									if (float.TryParse(directive.Alpha, NumberStyles.Float, CultureInfo.InvariantCulture, out a))
 									{
 										Alpha = a;
 									}

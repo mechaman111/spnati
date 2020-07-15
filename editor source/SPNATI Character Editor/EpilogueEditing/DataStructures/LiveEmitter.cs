@@ -219,6 +219,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Start = time;
 
 			LiveEmitterKeyframe startFrame = CreateKeyframe(0) as LiveEmitterKeyframe;
+			startFrame.Rate = 1;
 			AddKeyframe(startFrame);
 			Update(time, 0, false);
 			InvalidateTransform();
@@ -231,6 +232,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Data = scene;
 			ParentId = directive.ParentId;
 			Length = 1;
+			Character = character;
 			Id = directive.Id;
 			Z = directive.Layer;
 			LinkedToEnd = true;
@@ -246,13 +248,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (!string.IsNullOrEmpty(directive.Angle))
 			{
 				float angle;
-				float.TryParse(directive.Delay, NumberStyles.Number, CultureInfo.InvariantCulture, out angle);
+				float.TryParse(directive.Angle, NumberStyles.Number, CultureInfo.InvariantCulture, out angle);
 				Angle = angle;
 			}
 
 			if (!string.IsNullOrEmpty(directive.Src))
 			{
-				Image = LiveImageCache.Get(LiveSceneSegment.FixPath(directive.Src, character));
+				string path = LiveSceneSegment.FixPath(directive.Src, character);
+				Image = LiveImageCache.Get(path);
 				if (Image != null)
 				{
 					ParticleWidth = Image.Width;
@@ -389,11 +392,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			if (!string.IsNullOrEmpty(kf.Src))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Opacity"))
+				if (time > origin && !AnimatedProperties.Contains("Src"))
 				{
 					AddValue<string>(origin, "Src", "", true);
 				}
-				AddValue<string>(time, "Src", kf.Src, addBreak);
+				string path = LiveSceneSegment.FixPath(kf.Src, Character);
+				AddValue<string>(time, "Src", path, addBreak);
 				properties.Add("Src");
 			}
 			if (!string.IsNullOrEmpty(kf.Rotation))
@@ -552,13 +556,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				Id = Id,
 				DirectiveType = "emitter",
 				Delay = Start.ToString(CultureInfo.InvariantCulture),
-				Z = Z,
+				Layer = Z,
 				ParentId = ParentId,
 				Marker = Marker,
 				Width = ParticleWidth.ToString(CultureInfo.InvariantCulture),
 				Height = ParticleHeight.ToString(CultureInfo.InvariantCulture),
 				EasingMethod = ParticleEase,
 				IgnoreRotation = IgnoreRotation,
+				Angle = Angle.ToString(CultureInfo.InvariantCulture),
 			};
 
 			if (Angle != 0)

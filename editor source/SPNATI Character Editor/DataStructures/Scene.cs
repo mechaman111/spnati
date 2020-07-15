@@ -215,7 +215,7 @@ namespace SPNATI_Character_Editor
 			bool hasCamera = false;
 			foreach (Keyframe kf in frames)
 			{
-				if (!string.IsNullOrEmpty(kf.Opacity) || !string.IsNullOrEmpty(kf.Color))
+				if (!string.IsNullOrEmpty(kf.Alpha) || !string.IsNullOrEmpty(kf.Color))
 				{
 					hasFade = true;
 				}
@@ -246,21 +246,22 @@ namespace SPNATI_Character_Editor
 					fade.Looped = d.Looped;
 					fade.EasingMethod = d.EasingMethod;
 					fade.ClampingMethod = d.ClampingMethod;
-					fade.Opacity = d.Opacity;
-					d.Opacity = null;
+					fade.Iterations = d.Iterations;
+					fade.Alpha = d.Alpha;
+					d.Alpha = null;
 					fade.Color = d.Color;
 					d.Color = null;
 
 					for (int i = 0; i < d.Keyframes.Count; i++)
 					{
 						Keyframe kf = d.Keyframes[i];
-						if (!string.IsNullOrEmpty(kf.Opacity) || !string.IsNullOrEmpty(kf.Color))
+						if (!string.IsNullOrEmpty(kf.Alpha) || !string.IsNullOrEmpty(kf.Color))
 						{
 							Keyframe fadeFrame = new Keyframe();
 							fadeFrame.Time = kf.Time;
-							fadeFrame.Opacity = kf.Opacity;
+							fadeFrame.Alpha = kf.Alpha;
 							fadeFrame.Color = kf.Color;
-							kf.Opacity = null;
+							kf.Alpha = null;
 							kf.Color = null;
 							fade.Keyframes.Add(fadeFrame);
 
@@ -508,6 +509,33 @@ namespace SPNATI_Character_Editor
 			return stop;
 		}
 
+		private object GetDefaultValue(LiveObject obj, string property)
+		{
+			switch (property)
+			{
+				case "Src":
+					return "";
+				case "ScaleX":
+				case "ScaleY":
+				case "Zoom":
+					return 1.0f;
+				case "Alpha":
+					return obj is LiveCamera ? 0 : 100;
+				default:
+					return 0;
+			}
+		}
+
+		private bool ValuesMatch(object val1, object val2)
+		{
+			try
+			{
+				return (float)val1 == (float)val2;
+			}
+			catch { }
+			return val1.Equals(val2);
+		}
+
 		private void ParseObject(LiveObject obj, int trackIndex, List<WorkingDirective> directives, Character character)
 		{
 			Dictionary<string, float> startPoints = new Dictionary<string, float>();
@@ -563,24 +591,27 @@ namespace SPNATI_Character_Editor
 								{
 									if (first.HasProperty(property))
 									{
-										LiveKeyframe lastFrame = previous.GetLastFrame(property);
-										if (lastFrame != null)
+										LiveKeyframeMetadata blockMetadata = first.GetMetadata(property, false);
+										if (blockMetadata.FrameType == KeyframeType.Begin)
 										{
-											if (!lastFrame.Get<object>(property).Equals(first.Get<object>(property)))
+											LiveKeyframe lastFrame = previous.GetLastFrame(property);
+											object prevValue = lastFrame?.Get<object>(property) ?? GetDefaultValue(anim, property);
+											object curValue = first.Get<object>(property);
+											if (!ValuesMatch(curValue, prevValue))
 											{
 												Directive currentDirective = new Directive("move");
 												currentDirective.Id = anim.Id;
 												currentDirective.Marker = anim.Marker;
-												currentDirective.Layer = anim.Z;
-												LiveKeyframeMetadata blockMetadata = first.GetMetadata(property, false);
 
 												WorkingDirective directive = new WorkingDirective(currentDirective, 0, GetKey(0, blockMetadata.ToKey()));
+												directive.Directive.PopulateMetadata(blockMetadata);
 												directive.Track = trackIndex;
 												objDirectives.Add(directive);
 
 												if (anim is LiveCamera)
 												{
-													if (property == "Opacity" || property == "Color")
+													string propName = property.ToLowerInvariant();
+													if (propName == "alpha" || propName == "color")
 													{
 														currentDirective.DirectiveType = "fade";
 													}
@@ -620,10 +651,10 @@ namespace SPNATI_Character_Editor
 								prevMetadata = prev.GetLastBlockMetadata(property);
 								prev = prev.Previous as LiveAnimatedObject;
 							}
-							if (prevMetadata != null && prevMetadata.Looped)
+							if (prevMetadata != null && prevMetadata.Indefinite)
 							{
 								string id = anim.Id;
-								if (id == "Camera" && (property == "Color" || property == "Opacity"))
+								if (id == "Camera" && (property == "Color" || property == "Alpha"))
 								{
 									id = "fade";
 								}
@@ -645,7 +676,6 @@ namespace SPNATI_Character_Editor
 				}
 
 				//Copy keyframes into directives
-
 				DualKeyDictionary<float, string, WorkingDirective> stopDirectives = new DualKeyDictionary<float, string, WorkingDirective>();
 				for (int i = 1; i < anim.Keyframes.Count; i++)
 				{
@@ -667,13 +697,13 @@ namespace SPNATI_Character_Editor
 								switch (metadata.FrameType)
 								{
 									case KeyframeType.Begin:
-										if (previousDirective.Directive.Looped)
+										if (previousDirective.IsLooped)
 										{
 											//if the previous frame is part of a loop, create or add to a stop directive
 											float stopTime = startTime + kf.Time;
 
 											string id = obj.Id;
-											if (id == "Camera" && (property == "Color" || property == "Opacity"))
+											if (id == "Camera" && (property == "Color" || property == "Alpha"))
 											{
 												id = "fade";
 											}
@@ -689,19 +719,10 @@ namespace SPNATI_Character_Editor
 											stop.AddStopProperty(property);
 										}
 
-										object previousValue = anim.GetPreviousValue(property, kf.Time);
-										object value = kf.Get<object>(property);
-										if (previousValue != null && !previousValue.Equals(value))
-										{
-											//need a time 0 frame in the directive since this is not the same value as the previous animation touching it
-										}
-										else
-										{
-											//this frame doesn't get retained at all.
-											//just force a new directive at the time
-											startTime += kf.Time;
-											previousDirective = null;
-										}
+										//this frame doesn't get retained at all.
+										//just force a new directive at the time
+										startTime += kf.Time;
+										previousDirective = null;
 										break;
 									case KeyframeType.Split:
 										//need to put the keyframe into the last directive. No need to add the frame to the new one too since
@@ -722,11 +743,10 @@ namespace SPNATI_Character_Editor
 
 									move.Id = anim.Id;
 									move.Marker = anim.Marker;
-									move.Layer = anim.Z;
 
 									if (anim is LiveCamera)
 									{
-										if (property == "Opacity" || property == "Color")
+										if (property == "Alpha" || property == "Color")
 										{
 											move.DirectiveType = "fade";
 										}
@@ -759,7 +779,6 @@ namespace SPNATI_Character_Editor
 								Directive currentDirective = new Directive("move");
 								currentDirective.Id = anim.Id;
 								currentDirective.Marker = anim.Marker;
-								currentDirective.Layer = anim.Z;
 								float delay = startTime;
 								if (delay > 0)
 								{
@@ -774,7 +793,7 @@ namespace SPNATI_Character_Editor
 
 								if (anim is LiveCamera)
 								{
-									if (property == "Opacity" || property == "Color")
+									if (property == "Alpha" || property == "Color")
 									{
 										currentDirective.DirectiveType = "fade";
 									}
@@ -787,7 +806,20 @@ namespace SPNATI_Character_Editor
 							}
 							lastDirectivePerProperty[property] = directive;
 
-							if (metadata.FrameType == KeyframeType.Normal)
+							//since the editor uses a property's previous value as time 0, we don't need to explicitly create a time 0 frame.
+							//The exception is if this is a Begin frame and the previous values don't match, in which case this needs to be time 0
+							bool force = false;
+							if (metadata.FrameType == KeyframeType.Begin)
+							{
+								object previousValue = anim.GetPreviousValue(property, kf.Time) ?? GetDefaultValue(anim, property);
+								object value = kf.Get<object>(property);
+								if (!ValuesMatch(previousValue, value))
+								{
+									force = true;
+								}
+							}
+
+							if (metadata.FrameType == KeyframeType.Normal || force)
 							{
 								float time = kf.Time - directive.StartTime + obj.Start;
 								directive.AddKeyframe(kf, property, time.ToString(CultureInfo.InvariantCulture), character);
@@ -955,6 +987,11 @@ namespace SPNATI_Character_Editor
 			{
 				MergeFrames();
 				Directive.BakeProperties();
+				if (Directive.Properties.Count == 1 && Directive.Properties.ContainsKey("Src"))
+				{
+					Directive.EasingMethod = null;
+					Directive.InterpolationMethod = null;
+				}
 				if (Directive.Delay == "0")
 				{
 					Directive.Delay = null;
@@ -990,10 +1027,6 @@ namespace SPNATI_Character_Editor
 			public void AddStopProperty(string property)
 			{
 				property = property.ToLowerInvariant();
-				if (property == "opacity")
-				{
-					property = "alpha";
-				}
 				if (Directive.Id == "camera" && (property == "color" || property == "alpha"))
 				{
 					Directive.Id = "fade";
@@ -1005,6 +1038,14 @@ namespace SPNATI_Character_Editor
 					//this is stopping every looped property, so no need to list them individually
 					Directive.AffectedProperties.Clear();
 				}
+			}
+
+			/// <summary>
+			/// Gets whether the directive is an indefinitely looping animation
+			/// </summary>
+			public bool IsLooped
+			{
+				get { return Directive.Looped && Directive.Iterations < 1; }
 			}
 		}
 	}

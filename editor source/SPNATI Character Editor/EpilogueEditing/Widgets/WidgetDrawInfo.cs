@@ -42,7 +42,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 							LiveKeyframeMetadata md = kf.GetMetadata(prop, false);
 							if (blockStart == null)
 							{
-								if (md.Iterations > 0 || md.Looped)
+								if (md.Indefinite)
 								{
 									inLoop = true;
 								}
