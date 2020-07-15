@@ -948,7 +948,7 @@ function showImportModal() {
 function showResortModal() {
     var playedCharacters = save.getPlayedCharacterSet();
 
-    if (RESORT_ACTIVE && playedCharacters.length >= 65) {
+    if (RESORT_ACTIVE && playedCharacters.length >= 50) {
         if (!save.hasShownResortModal()) {
             $resortModal.modal('show');
         }
