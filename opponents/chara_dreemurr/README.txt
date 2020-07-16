@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited July 14 2020
+README edited July 16 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -306,6 +306,9 @@ PRINCESS JASMINE
 JASON
 -Back and forth as Jason is losing.
 
+JIM
+-Back and forth as Raynor is losing.
+
 JOETTA
 -Responds to the first time Joetta does a 'sleight of hand' strip.
 -Responds to Joetta's Hand=Any Stage jokes that contain puns.
@@ -463,9 +466,10 @@ PLANNED CHARACTER INTERACTIONS
 
 Planned interactions not yet implemented for any number of reasons.
 
--Narrator Chara indicates Chara used to like gardening. Something with this?
 -Chara embodies the feeling you get when a number grows, among them 'gold' ie currency. Something with Anna, maybe?
 -A 'spider donut, don't worry, spider didn't' joke with Amy.
+-Interactions with Monika, particularly her glitches. However, as Chara and Monika both use 'different types' of 4th wall screwiness, and given my limited knowledge of JS, I might
+have to resign myself to simply ignoring her.
 
 -------------------------------------------------------------------------------------------
 MISC
