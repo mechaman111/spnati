@@ -562,7 +562,11 @@ function OpponentDisplay(slot, bubbleElem, dialogueElem, simpleImageElem, imageA
 
     this.resizeObserver = new ResizeObserver(function (entries) {
         if (entries[0].contentBoxSize) {
-            this.imageAreaHeight = entries[0].contentBoxSize.blockSize;
+            if (Array.isArray(entries[0].contentBoxSize)) { // Chrome 84
+                this.imageAreaHeight = entries[0].contentBoxSize[0].blockSize;
+            } else {
+                this.imageAreaHeight = entries[0].contentBoxSize.blockSize;
+            }
         } else {
             this.imageAreaHeight = entries[0].contentRect.height;
         }
