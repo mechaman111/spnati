@@ -570,11 +570,10 @@ function OpponentDisplay(slot, bubbleElem, dialogueElem, simpleImageElem, imageA
         } else {
             this.imageAreaHeight = entries[0].contentRect.height;
         }
+        this.onResize();
     }.bind(this));
 
     this.resizeObserver.observe(this.imageArea[0]);
-    
-    window.addEventListener('resize', this.onResize.bind(this));
 }
 
 OpponentDisplay.prototype.rescaleSimplePose = function (base_scale) {
