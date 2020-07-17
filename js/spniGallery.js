@@ -561,7 +561,7 @@ function doEpilogueFromGallery(){
 			epilogue = parseEpilogue(player, endingElem);
 
 			/* Load forward-declarations for persistent markers. */
-			$xml.find('>persistent-markers>marker').each(function (i, elem) {
+			$xml.find('persistent-markers>marker').each(function (i, elem) {
 				var markerName = $(elem).text();
 				player.persistentMarkers[markerName] = true;
 			});
