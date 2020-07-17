@@ -123,7 +123,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("X"))
 				{
-					AddValue<float>(origin, "X", "0", true);
+					//AddValue<float>(origin, "X", "0", true);
 				}
 				AddValue<float>(time, "X", kf.X, addBreak);
 				properties.Add("X");
@@ -132,7 +132,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("Y"))
 				{
-					AddValue<float>(origin, "Y", "0", true);
+					//AddValue<float>(origin, "Y", "0", true);
 				}
 				AddValue<float>(time, "Y", kf.Y, addBreak);
 				properties.Add("Y");
@@ -141,7 +141,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("Zoom"))
 				{
-					AddValue<float>(origin, "Zoom", "1", true);
+					//AddValue<float>(origin, "Zoom", "1", true);
 				}
 				AddValue<float>(time, "Zoom", kf.Zoom, addBreak);
 				properties.Add("Zoom");
@@ -150,7 +150,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("Alpha"))
 				{
-					AddValue<float>(origin, "Alpha", "0", true);
+					//AddValue<float>(origin, "Alpha", "0", true);
 				}
 				AddValue<float>(time, "Alpha", kf.Alpha, addBreak);
 				properties.Add("Alpha");
@@ -159,7 +159,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("Color"))
 				{
-					AddValue<Color>(origin, "Color", "FFFFFF", true);
+					//AddValue<Color>(origin, "Color", "#000000", true);
 				}
 				AddValue<Color>(time, "Color", kf.Color, addBreak);
 				properties.Add("Color");
@@ -351,6 +351,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public override Directive CreateCreationDirective(Scene scene)
 		{
+			if (Keyframes.Count > 0)
+			{
+				UpdateHistory(this, Keyframes[0]);
+			}
 			return null;
 		}
 	}

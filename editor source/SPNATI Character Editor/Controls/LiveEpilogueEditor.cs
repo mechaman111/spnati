@@ -566,7 +566,8 @@ namespace SPNATI_Character_Editor.Controls
 			if (_playing) { return; }
 			KeyframedWidget selectedWidget = timeline.SelectedObject as KeyframedWidget;
 
-			tsRemoveSprite.Enabled = tsAddEndFrame.Enabled = (selectedWidget != null);
+			tsRemoveScene.Enabled = _scene != null;
+			tsAddEndFrame.Enabled = (selectedWidget != null);
 			tsAddKeyframe.Enabled = false;
 			tsRemoveKeyframe.Enabled = false;
 			tsAddEmission.Enabled = false;
@@ -575,7 +576,6 @@ namespace SPNATI_Character_Editor.Controls
 			tsRemove.Enabled = !(selectedWidget is CameraWidget);
 			if (selectedWidget != null)
 			{
-				tsRemoveSprite.Enabled = true;
 				tsAddEmission.Enabled = (selectedWidget is EmitterWidget);
 				LiveKeyframe kf = selectedWidget.Data.Keyframes.Find(k => k.Time == _time);
 				if (kf == null)

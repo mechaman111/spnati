@@ -174,7 +174,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("X"))
 				{
-					AddValue<float>(origin, "X", "0", true);
+					//AddValue<float>(origin, "X", "0", true);
 				}
 				AddValue<float>(time, "X", kf.X, addBreak);
 				properties.Add("X");
@@ -183,7 +183,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("Y"))
 				{
-					AddValue<float>(origin, "Y", "0", true);
+					//AddValue<float>(origin, "Y", "0", true);
 				}
 				AddValue<float>(time, "Y", kf.Y, addBreak);
 				properties.Add("Y");
@@ -192,7 +192,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("Src"))
 				{
-					AddValue<string>(origin, "Src", "", true);
+					//AddValue<string>(origin, "Src", "", true);
 				}
 				string src = LiveSceneSegment.FixPath(kf.Src, Character);
 				AddValue<string>(time, "Src", src, addBreak);
@@ -207,7 +207,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("ScaleX"))
 				{
-					AddValue<float>(origin, "ScaleX", "1", true);
+					//AddValue<float>(origin, "ScaleX", "1", true);
 				}
 				AddValue<float>(time, "ScaleX", kf.ScaleX, addBreak);
 				properties.Add("ScaleX");
@@ -216,7 +216,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("ScaleY"))
 				{
-					AddValue<float>(origin, "ScaleY", "1", true);
+					//AddValue<float>(origin, "ScaleY", "1", true);
 				}
 				AddValue<float>(time, "ScaleY", kf.ScaleY, addBreak);
 				properties.Add("ScaleY");
@@ -225,7 +225,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("Alpha"))
 				{
-					AddValue<float>(origin, "Alpha", "100", true);
+					//AddValue<float>(origin, "Alpha", "100", true);
 				}
 				AddValue<float>(time, "Alpha", kf.Alpha, addBreak);
 				properties.Add("Alpha");
@@ -234,7 +234,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("Rotation"))
 				{
-					AddValue<float>(origin, "Rotation", "0", true);
+					//AddValue<float>(origin, "Rotation", "0", true);
 				}
 				AddValue<float>(time, "Rotation", kf.Rotation, addBreak);
 				properties.Add("Rotation");
@@ -243,7 +243,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("SkewX"))
 				{
-					AddValue<float>(origin, "SkewX", "0", true);
+					//AddValue<float>(origin, "SkewX", "0", true);
 				}
 				AddValue<float>(time, "SkewX", kf.SkewX, addBreak);
 				properties.Add("SkewX");
@@ -252,7 +252,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("SkewY"))
 				{
-					AddValue<float>(origin, "SkewY", "0", true);
+					//AddValue<float>(origin, "SkewY", "0", true);
 				}
 				AddValue<float>(time, "SkewY", kf.SkewY, addBreak);
 				properties.Add("SkewY");
@@ -356,41 +356,46 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (Keyframes.Count > 0)
 			{
 				LiveSpriteKeyframe initialFrame = Keyframes[0] as LiveSpriteKeyframe;
-				if (!string.IsNullOrEmpty(initialFrame.Src))
+				if (initialFrame.Time == 0)
 				{
-					sprite.Src = Scene.FixPath(initialFrame.Src, (Data as LiveSceneSegment).Character);
-				}
-				if (initialFrame.X.HasValue)
-				{
-					sprite.X = initialFrame.X.Value.ToString(CultureInfo.InvariantCulture);
-				}
-				if (initialFrame.Y.HasValue)
-				{
-					sprite.Y = initialFrame.Y.Value.ToString(CultureInfo.InvariantCulture);
-				}
-				if (initialFrame.ScaleX.HasValue)
-				{
-					sprite.ScaleX = initialFrame.ScaleX.Value.ToString(CultureInfo.InvariantCulture);
-				}
-				if (initialFrame.ScaleY.HasValue)
-				{
-					sprite.ScaleY = initialFrame.ScaleY.Value.ToString(CultureInfo.InvariantCulture);
-				}
-				if (initialFrame.SkewX.HasValue)
-				{
-					sprite.SkewX = initialFrame.SkewX.Value.ToString(CultureInfo.InvariantCulture);
-				}
-				if (initialFrame.SkewY.HasValue)
-				{
-					sprite.SkewY = initialFrame.SkewY.Value.ToString(CultureInfo.InvariantCulture);
-				}
-				if (initialFrame.Rotation.HasValue)
-				{
-					sprite.Rotation = initialFrame.Rotation.Value.ToString(CultureInfo.InvariantCulture);
-				}
-				if (initialFrame.Alpha.HasValue)
-				{
-					sprite.Alpha = initialFrame.Alpha.Value.ToString(CultureInfo.InvariantCulture);
+					if (!string.IsNullOrEmpty(initialFrame.Src))
+					{
+						sprite.Src = Scene.FixPath(initialFrame.Src, (Data as LiveSceneSegment).Character);
+					}
+					if (initialFrame.X.HasValue)
+					{
+						sprite.X = initialFrame.X.Value.ToString(CultureInfo.InvariantCulture);
+					}
+					if (initialFrame.Y.HasValue)
+					{
+						sprite.Y = initialFrame.Y.Value.ToString(CultureInfo.InvariantCulture);
+					}
+					if (initialFrame.ScaleX.HasValue)
+					{
+						sprite.ScaleX = initialFrame.ScaleX.Value.ToString(CultureInfo.InvariantCulture);
+					}
+					if (initialFrame.ScaleY.HasValue)
+					{
+						sprite.ScaleY = initialFrame.ScaleY.Value.ToString(CultureInfo.InvariantCulture);
+					}
+					if (initialFrame.SkewX.HasValue)
+					{
+						sprite.SkewX = initialFrame.SkewX.Value.ToString(CultureInfo.InvariantCulture);
+					}
+					if (initialFrame.SkewY.HasValue)
+					{
+						sprite.SkewY = initialFrame.SkewY.Value.ToString(CultureInfo.InvariantCulture);
+					}
+					if (initialFrame.Rotation.HasValue)
+					{
+						sprite.Rotation = initialFrame.Rotation.Value.ToString(CultureInfo.InvariantCulture);
+					}
+					if (initialFrame.Alpha.HasValue)
+					{
+						sprite.Alpha = initialFrame.Alpha.Value.ToString(CultureInfo.InvariantCulture);
+					}
+
+					UpdateHistory(this, initialFrame);
 				}
 			}
 

@@ -34,7 +34,7 @@
 			this.tsMainMenu = new System.Windows.Forms.ToolStrip();
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.tsAddScene = new System.Windows.Forms.ToolStripButton();
-			this.tsRemoveSprite = new System.Windows.Forms.ToolStripButton();
+			this.tsRemoveScene = new System.Windows.Forms.ToolStripButton();
 			this.tsAddTransition = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsMoveUp = new System.Windows.Forms.ToolStripButton();
@@ -147,7 +147,7 @@
 			this.tsMainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
             this.tsAddScene,
-            this.tsRemoveSprite,
+            this.tsRemoveScene,
             this.tsAddTransition,
             this.toolStripSeparator3,
             this.tsMoveUp,
@@ -177,13 +177,13 @@
 			// 
 			// tsRemoveSprite
 			// 
-			this.tsRemoveSprite.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsRemoveSprite.Image = global::SPNATI_Character_Editor.Properties.Resources.Remove;
-			this.tsRemoveSprite.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsRemoveSprite.Name = "tsRemoveSprite";
-			this.tsRemoveSprite.Size = new System.Drawing.Size(23, 22);
-			this.tsRemoveSprite.Text = "Remove Scene";
-			this.tsRemoveSprite.Click += new System.EventHandler(this.tsRemoveSprite_Click);
+			this.tsRemoveScene.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsRemoveScene.Image = global::SPNATI_Character_Editor.Properties.Resources.Remove;
+			this.tsRemoveScene.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsRemoveScene.Name = "tsRemoveSprite";
+			this.tsRemoveScene.Size = new System.Drawing.Size(23, 22);
+			this.tsRemoveScene.Text = "Remove Scene";
+			this.tsRemoveScene.Click += new System.EventHandler(this.tsRemoveSprite_Click);
 			// 
 			// tsAddTransition
 			// 
@@ -752,7 +752,7 @@
 		private System.Windows.Forms.ToolStrip tsMainMenu;
 		private System.Windows.Forms.ToolStripLabel toolStripLabel1;
 		private System.Windows.Forms.ToolStripButton tsAddScene;
-		private System.Windows.Forms.ToolStripButton tsRemoveSprite;
+		private System.Windows.Forms.ToolStripButton tsRemoveScene;
 		private System.Windows.Forms.SplitContainer splitContainer3;
 		private Desktop.CommonControls.PropertyTable table;
 		private SPNATI_Character_Editor.EpilogueEditor.Timeline timeline;

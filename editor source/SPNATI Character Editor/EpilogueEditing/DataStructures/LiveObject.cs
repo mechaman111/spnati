@@ -903,5 +903,25 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		protected virtual void OnSetPrevious()
 		{
 		}
+
+		public object GetDefaultValue(string property)
+		{
+			switch (property)
+			{
+				case "Src":
+					return "";
+				case "ScaleX":
+				case "ScaleY":
+				case "Zoom":
+					return 1.0f;
+				case "Alpha":
+					return this is LiveCamera ? 0f : 100f;
+				case "Color":
+					return Color.Black;
+				default:
+					return 0f;
+			}
+		}
+
 	}
 }

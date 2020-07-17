@@ -32,5 +32,17 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			TrackedProperties.Add("Color");
 			TrackedProperties.Add("Alpha");
 		}
+
+		protected override object GetDefaultValue(string property)
+		{
+			switch (property)
+			{
+				case "Zoom":
+					return 1.0f;
+				case "Alpha":
+					return 0f;
+				default: return base.GetDefaultValue(property);
+			}
+		}
 	}
 }

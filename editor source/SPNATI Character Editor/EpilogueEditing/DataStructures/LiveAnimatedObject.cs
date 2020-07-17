@@ -62,6 +62,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			set { Set(value); }
 		}
 
+		/// <summary>
+		/// The last frame containing a property, which might be in another object. Only used during scene creation
+		/// </summary>
+		public Dictionary<string, KeyframeHistory> PropertyHistory = new Dictionary<string, KeyframeHistory>();
+
 		public override bool IsVisible
 		{
 			get { return Time >= Start && (IsPreview || DisplayPastEnd || LinkedToEnd || Time <= Start + Length); }
@@ -181,7 +186,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <param name="propName"></param>
 		/// <param name="value"></param>
 		/// <param name="addNnimBreak"></param>
-		public void AddValue(float time, string propName, object value, bool addAnimBreak)
+		/// <returns>The keyframe the value was added to</returns>
+		public LiveKeyframe AddValue(float time, string propName, object value, bool addAnimBreak)
 		{
 			if (!AnimatedProperties.Contains(propName))
 			{
@@ -193,6 +199,22 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				keyframe = AddKeyframe(time);
 			}
 
+			//if (Previous != null)
+			//{
+			//	//if this is the first frame, then make this a break
+			//	for (int i = 0; i < Keyframes.Count; i++)
+			//	{
+			//		LiveKeyframe kf = Keyframes[i];
+			//		if (kf == keyframe)
+			//		{
+			//			addAnimBreak = true;
+			//		}
+			//		else if (kf.HasProperty(propName))
+			//		{
+			//		}
+			//	}
+			//}
+
 			if (addAnimBreak)
 			{
 				bool isSplit = keyframe.HasProperty(propName);
@@ -200,6 +222,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 
 			keyframe.Set(value, propName);
+			return keyframe;
 		}
 
 		public LiveKeyframe AddKeyframe(float time)
@@ -548,7 +571,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 									foundPreviousProp = true;
 									if (prevStart.GetMetadata(property, false).Looped)
 									{
-										return prev.GetPropertyValue<T>(property, prevStart.Time + time, offset, defaultValue, null, null, null);
+										return prev.GetPropertyValue<T>(property, prev.Start + prevStart.Time + time, offset, defaultValue, null, null, null);
 									}
 									break;
 								}
@@ -1154,12 +1177,17 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				foreach (string prop in affectedProperties)
 				{
 					LiveKeyframe mostRecent = null;
+					LiveKeyframe first = null;
 					int count = 0;
 					for (int i = 0; i < Keyframes.Count; i++)
 					{
 						LiveKeyframe k = Keyframes[i];
 						if (k.HasProperty(prop))
 						{
+							if (first == null)
+							{
+								first = k;
+							}
 							if (k.Time > startTime)
 							{
 								break;
@@ -1175,8 +1203,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					{
 						if (mostRecent == startFrame && startFrame.HasProperty(prop))
 						{
-							//this was a split
-							frameTypes[prop] = count > 1 && (!instantChange || !firstDirFrame.Properties.ContainsKey(prop) ) ? KeyframeType.Split : KeyframeType.Begin;
+							//there was already a frame at this time, and there's a frame before it, so this has to be a split
+
+							frameTypes[prop] = count > 1 && first != null && first.GetMetadata(prop, false).FrameType != KeyframeType.Normal &&
+								(!instantChange || !firstDirFrame.Properties.ContainsKey(prop)) ? KeyframeType.Split : KeyframeType.Begin;
 						}
 						else
 						{
@@ -1190,6 +1220,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 							frameTypes[prop] = KeyframeType.Begin;
 						}
 					}
+					else if (first != null)
+					{
+						//there were no frames modifying this property prior to this frame's time, so add a default at time 0
+						object defaultVal = GetDefaultValue(prop);
+						startFrame = AddValue(startTime, prop, defaultVal, true);
+					}
 				}
 			}
 			else if (startFrame == null)
@@ -1201,6 +1237,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				foreach (string prop in affectedProperties)
 				{
+					if (!startFrame.HasProperty(prop))
+					{
+						continue;
+					}
 					LiveKeyframeMetadata metadata = startFrame.GetMetadata(prop, true);
 					if (linkToPrevious)
 					{
@@ -1498,6 +1538,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			List<string> remainingProps = null;
 			LiveAnimatedObject anim = Previous as LiveAnimatedObject;
+
+			PropertyHistory = anim.PropertyHistory; //transfer the history over
+
 			//copy last frame of previous into time 0
 			if (anim.Keyframes.Count > 0)
 			{
@@ -1616,6 +1659,107 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 			}
 			return props;
+		}
+
+		/// <summary>
+		/// Updates the previous values to use those from the given frame
+		/// </summary>
+		/// <param name="sourceObject">The object the frame belongs to</param>
+		/// <param name="frame">The frame to add</param>
+		public void UpdateHistory(LiveAnimatedObject sourceObject, LiveKeyframe frame)
+		{
+			foreach (string property in frame.TrackedProperties)
+			{
+				if (frame.HasProperty(property))
+				{
+					UpdateHistory(sourceObject, frame, property);
+				}
+			}
+		}
+		/// <summary>
+		/// Updates the previous values to use those from the given frame
+		/// </summary>
+		/// <param name="sourceObject">The object the frame belongs to</param>
+		/// <param name="frame">The frame to add</param>
+		/// <param name="property">Target property to update</param>
+		public void UpdateHistory(LiveAnimatedObject sourceObject, LiveKeyframe frame, string property)
+		{
+			if (frame.HasProperty(property))
+			{
+				LiveKeyframeMetadata block = GetBlockMetadata(property, frame.Time - 0.001f);
+				LiveKeyframeMetadata frameData = frame.GetMetadata(property, false);
+				object value = frame.Get<object>(property);
+
+				KeyframeHistory history;
+				if (!PropertyHistory.TryGetValue(property, out history))
+				{
+					history = new KeyframeHistory(PropertyTypeInfo.GetType(frame.GetType(), property));
+					PropertyHistory[property] = history;
+				}
+
+				history.BlockMetadata = block;
+				history.FrameMetadata = frameData;
+				history.Value = value;
+			}
+		}
+	}
+
+	public class KeyframeHistory
+	{
+		/// <summary>
+		/// The metadata for the block the keyframe is part of
+		/// </summary>
+		public LiveKeyframeMetadata BlockMetadata = null;
+
+		/// <summary>
+		/// The metadata for the frame itself
+		/// </summary>
+		public LiveKeyframeMetadata FrameMetadata = null;
+
+		/// <summary>
+		/// The value in for the property
+		/// </summary>
+		public object Value;
+
+		/// <summary>
+		/// Property type
+		/// </summary>
+		public Type Type;
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="type">Value type of the property</param>
+		public KeyframeHistory(Type type)
+		{
+			Type = type;
+		}
+
+		/// <summary>
+		/// Gets whether a value matches the one in this history
+		/// </summary>
+		/// <param name="value">Value to compare. Assumed to not be null.</param>
+		/// <returns></returns>
+		public bool MatchesValue(object value)
+		{
+			if (Value == null)
+			{
+				return false;
+			}
+			if (Type == typeof(string) || Type == typeof(Color))
+			{
+				return Value.Equals(value);
+			}
+			else
+			{
+				//assumed to be a number
+				return (float)Value == (float)value;
+			}
+		}
+
+		public override string ToString()
+		{
+			return Value.ToString() + (BlockMetadata.Indefinite ? " (Looping)" : "");
 		}
 	}
 }

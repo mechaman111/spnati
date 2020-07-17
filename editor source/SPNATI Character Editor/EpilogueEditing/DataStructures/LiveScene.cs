@@ -1,5 +1,4 @@
 ﻿using Desktop.CommonControls.PropertyControls;
-using Desktop.DataStructures;
 using SPNATI_Character_Editor.Controls;
 using System;
 using System.Collections.Generic;

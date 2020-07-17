@@ -376,7 +376,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("X"))
 				{
-					AddValue<float>(origin, "X", "0", true);
+					//AddValue<float>(origin, "X", "0", true);
 				}
 				AddValue<float>(time, "X", kf.X, addBreak);
 				properties.Add("X");
@@ -385,7 +385,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("Y"))
 				{
-					AddValue<float>(origin, "Y", "0", true);
+					//AddValue<float>(origin, "Y", "0", true);
 				}
 				AddValue<float>(time, "Y", kf.Y, addBreak);
 				properties.Add("Y");
@@ -394,7 +394,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("Src"))
 				{
-					AddValue<string>(origin, "Src", "", true);
+					//AddValue<string>(origin, "Src", "", true);
 				}
 				string path = LiveSceneSegment.FixPath(kf.Src, Character);
 				AddValue<string>(time, "Src", path, addBreak);
@@ -404,7 +404,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("Rotation"))
 				{
-					AddValue<float>(origin, "Rotation", "0", true);
+					//AddValue<float>(origin, "Rotation", "0", true);
 				}
 				AddValue<float>(time, "Rotation", kf.Rotation, addBreak);
 				properties.Add("Rotation");
@@ -413,7 +413,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				if (time > origin && !AnimatedProperties.Contains("Rate"))
 				{
-					AddValue<float>(origin, "Rate", "0", true);
+					//AddValue<float>(origin, "Rate", "0", true);
 				}
 				AddValue<float>(time, "Rate", kf.Rate, addBreak);
 				properties.Add("Rate");
@@ -670,6 +670,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					emitter.Rate = initialFrame.Rate.Value.ToString(CultureInfo.InvariantCulture);
 				}
+
+				UpdateHistory(this, initialFrame);
 			}
 
 			return emitter;

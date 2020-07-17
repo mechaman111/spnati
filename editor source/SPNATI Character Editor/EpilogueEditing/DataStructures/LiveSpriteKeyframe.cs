@@ -65,5 +65,18 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			set { Set(value); }
 		}
 
+		protected override object GetDefaultValue(string property)
+		{
+			switch (property)
+			{
+				case "ScaleX":
+				case "ScaleY":
+					return 1.0f;
+				case "Alpha":
+					return 100f;
+				default: return base.GetDefaultValue(property);
+			}
+		}
+
 	}
 }

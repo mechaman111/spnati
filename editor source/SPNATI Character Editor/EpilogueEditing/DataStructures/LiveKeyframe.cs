@@ -3,6 +3,7 @@ using Desktop.CommonControls.PropertyControls;
 using Desktop.DataStructures;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
@@ -140,6 +141,52 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 			}
 			return PropertyMetadata[property];
+		}
+
+		public bool IsDefault(string property)
+		{
+			object value = Get<object>(property);
+			object defaultValue = GetDefaultValue(property);
+
+			Type propertyType = Nullable.GetUnderlyingType(PropertyTypeInfo.GetType(this.GetType(), property));
+			if (propertyType == typeof(float))
+			{
+				return (float)value == (float)defaultValue;
+			}
+			else if (propertyType == typeof(int))
+			{
+				return (int)value == (int)defaultValue;
+			}
+			else
+			{
+				return value.Equals(defaultValue);
+			}
+		}
+
+		protected virtual object GetDefaultValue(string property)
+		{
+			Type mainType = PropertyTypeInfo.GetType(GetType(), property);
+			Type propertyType = Nullable.GetUnderlyingType(mainType) ?? mainType;
+			if (propertyType == typeof(int))
+			{
+				return 0;
+			}
+			else if (propertyType == typeof(float))
+			{
+				return 0.0f;
+			}
+			else if (propertyType == typeof(string))
+			{
+				return null;
+			}
+			else if (propertyType == typeof(Color))
+			{
+				return Color.Black;
+			}
+			else
+			{
+				throw new NotSupportedException($"Unsupported frame property type for property {property}: {propertyType.Name}");
+			}
 		}
 	}
 }
