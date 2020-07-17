@@ -1683,6 +1683,9 @@ SceneView.prototype.updateOverlay = function (id, last, next, t, properties) {
   }
   if (!properties || properties.has("alpha")) {
     alpha = lerp(last.alpha, next.alpha, t);
+    if (isNaN(alpha)) {
+      alpha = this.overlay.a;
+    }
   }
   this.setOverlay(rgb, alpha);
 }
