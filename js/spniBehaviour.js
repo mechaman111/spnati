@@ -353,6 +353,7 @@ function parseMarkerXML(xml, parentCase) {
     var name = $elem.attr("name");
     var op = $elem.attr("op") || "=";
     var rhs = $elem.attr("value");
+    if (rhs === undefined) rhs = '1';
 
     return new MarkerOperation(name, op[0], rhs, parentCase);
 }
