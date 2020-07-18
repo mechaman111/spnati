@@ -97,7 +97,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			set { Set(value); }
 		}
 
-		[ParticleFloat(DisplayName = "Speed", Key = "speed", GroupOrder = 26, Description = "Initial speed range (px/sec)", Minimum = -1000, Maximum = 1000, DecimalPlaces = 0)]
+		[ParticleFloat(DisplayName = "Speed", Key = "speed", GroupOrder = 26, Description = "Initial speed range (px/sec)", Minimum = -10000, Maximum = 10000, DecimalPlaces = 0)]
 		public RandomParameter Speed
 		{
 			get { return Get<RandomParameter>(); }
@@ -260,6 +260,25 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					ParticleWidth = Image.Width;
 					ParticleHeight = Image.Height;
+				}
+			}
+			else
+			{
+				if (!string.IsNullOrEmpty(directive.Width))
+				{
+					int width;
+					if (int.TryParse(directive.Width, out width))
+					{
+						ParticleWidth = width;
+					}
+				}
+				if (!string.IsNullOrEmpty(directive.Height))
+				{
+					int height;
+					if (int.TryParse(directive.Height, out height))
+					{
+						ParticleHeight = height;
+					}
 				}
 			}
 			if (!string.IsNullOrEmpty(directive.EasingMethod))
@@ -465,6 +484,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			string src = GetPropertyValue<string>("Src", time, offset, null, easeOverride, interpolationOverride, looped);
 			Src = src;
 			Image = LiveImageCache.Get(src);
+			if (Image != null)
+			{
+				ParticleWidth = Image.Width;
+				ParticleHeight = Image.Height;
+			}
 			Rotation = GetPropertyValue("Rotation", time, offset, 0.0f, easeOverride, interpolationOverride, looped);
 		}
 

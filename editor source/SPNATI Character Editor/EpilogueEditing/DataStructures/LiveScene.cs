@@ -51,12 +51,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					Width = _background.Width;
 					Height = _background.Height;
-
-					foreach (LiveSceneSegment segment in Segments)
-					{
-						segment.Camera.Width = _background.Width;
-						segment.Camera.Height = _background.Height;
-					}
 				}
 				Set(value);
 			}
@@ -82,14 +76,30 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public int Width
 		{
 			get { return Get<int>(); }
-			set { Set(value); }
+			set
+			{
+				Set(value);
+
+				foreach (LiveSceneSegment segment in Segments)
+				{
+					segment.Camera.Width = value;
+				}
+			}
 		}
 
 		[Numeric(DisplayName = "Height", GroupOrder = 16, Description = "Scene height in pixels when at full scale", Minimum = 100, Maximum = 2000)]
 		public int Height
 		{
 			get { return Get<int>(); }
-			set { Set(value); }
+			set
+			{
+				Set(value);
+
+				foreach (LiveSceneSegment segment in Segments)
+				{
+					segment.Camera.Height = value;
+				}
+			}
 		}
 
 		[EnumControl(DisplayName = "When Ending Scene", GroupOrder = 1, ValueType = typeof(PauseType))]
@@ -165,6 +175,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			foreach (Directive directive in scene.Directives)
 			{
 				directive.CacheProperties();
+				foreach (Keyframe kf in directive.Keyframes)
+				{
+					kf.CacheProperties();
+				}
 				newlyAdded = false;
 				switch (directive.DirectiveType)
 				{

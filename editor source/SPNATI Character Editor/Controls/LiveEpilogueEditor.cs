@@ -117,7 +117,10 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void ToggleCamera(bool locked)
 		{
-			_segment.LockToCamera = locked;
+			if (_segment != null)
+			{
+				_segment.LockToCamera = locked;
+			}
 			canvas.AllowZoom = !locked;
 			canvas.FitScreen();
 			canvas.InvalidateCanvas();

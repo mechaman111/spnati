@@ -1,6 +1,7 @@
 ﻿using Desktop.CommonControls.PropertyControls;
 using Desktop.DataStructures;
 using KisekaeImporter.ImageImport;
+using SPNATI_Character_Editor.Controls;
 using SPNATI_Character_Editor.Controls.EditControls;
 using System;
 using System.Collections.Generic;
@@ -241,7 +242,7 @@ namespace SPNATI_Character_Editor.DataStructures
 			set { if (!string.IsNullOrEmpty(value)) { Set(value); } }
 		}
 
-		[Text(DisplayName = "Base Appearance Code", RowHeight = 130, Multiline = true)]
+		[Text(DisplayName = "Base Appearance Code", RowHeight = 110, Multiline = true)]
 		[XmlElement("model")]
 		public string BaseCode
 		{
@@ -254,6 +255,15 @@ namespace SPNATI_Character_Editor.DataStructures
 		public bool IsGlobal
 		{
 			get { return Get<bool>(); }
+			set { Set(value); }
+		}
+
+		[Text(DisplayName = "Subfolder")]
+		[DefaultValue("")]
+		[XmlAttribute("folder")]
+		public string SubFolder
+		{
+			get { return Get<string>(); }
 			set { Set(value); }
 		}
 

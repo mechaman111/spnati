@@ -682,7 +682,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public override LiveObject GetObjectAtPoint(int x, int y, Matrix sceneTransform, bool ignoreMarkers, List<string> markers)
 		{
 			LiveObject previewSource = Tracks.Find(t => t.LinkedPreview != null);
-			if (previewSource != null && !(previewSource is LiveBubble) && !(previewSource is LiveCamera))
+			if (previewSource != null)
 			{
 				PointF localPt = previewSource.ToLocalPt(x, y, sceneTransform);
 				if (localPt.X >= 0 && localPt.X <= previewSource.Width &&

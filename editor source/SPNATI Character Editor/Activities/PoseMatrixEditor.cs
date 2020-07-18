@@ -35,6 +35,7 @@ namespace SPNATI_Character_Editor.Activities
 		private Column _currentColumn;
 		private bool _building;
 		private bool _pendingWardrobeChange = false;
+		private Bitmap _thumbnail = null;
 
 		private Dictionary<string, DataGridViewColumn> _columns = new Dictionary<string, DataGridViewColumn>();
 		private Dictionary<PoseEntry, DataGridViewCell> _cells = new Dictionary<PoseEntry, DataGridViewCell>();
@@ -286,7 +287,8 @@ namespace SPNATI_Character_Editor.Activities
 			int stage = cell.RowIndex;
 			string stageKey = _sheet.IsGlobal ? "" : stage.ToString();
 			string key = GetKey(stageKey, pose.Key);
-			string filePath = Path.Combine(_skin.GetDirectory(), key + ".png");
+			string folder = (_sheet.SubFolder ?? "").Replace("/", "\\");
+			string filePath = Path.Combine(_skin.GetDirectory(), folder, key + ".png");
 
 			if (!string.IsNullOrEmpty(pose.Code))
 			{
@@ -429,6 +431,7 @@ namespace SPNATI_Character_Editor.Activities
 			_currentPose = null;
 			_currentColumn = null;
 			lblHeader.Text = "Sheet: " + _sheet.Name;
+			table.Context = _skin;
 			table.SetDataAsync(_sheet, null);
 			return;
 		}
@@ -467,6 +470,7 @@ namespace SPNATI_Character_Editor.Activities
 					panelStage.Visible = true;
 					sptMode.Panel2Collapsed = false;
 					picHelp.Image = new Bitmap("Resources/Images/StageCode.png");
+					table.Context = null;
 					table.SetDataAsync(_sheet.Stages[rowIndex], null);
 				}
 			}
@@ -491,6 +495,7 @@ namespace SPNATI_Character_Editor.Activities
 					panelPose.Visible = true;
 					panelStage.Visible = false;
 					lblHeader.Text = "Pose: " + _currentColumn.Key;
+					table.Context = null;
 					table.SetDataAsync(_currentColumn, null);
 				}
 			}
@@ -529,6 +534,7 @@ namespace SPNATI_Character_Editor.Activities
 					picHelp.Image = new Bitmap("Resources/Images/PoseCode.png");
 				}
 
+				table.Context = null;
 				table.SetDataAsync(cell, null);
 				ShowPreview(cell);
 			}
@@ -691,7 +697,8 @@ namespace SPNATI_Character_Editor.Activities
 		private string SaveImage(string imageKey, Image image)
 		{
 			string filename = imageKey + ".png";
-			string fullPath = Path.Combine(_skin.GetDirectory(), filename);
+			string subfolder = (_sheet.SubFolder ?? "").Replace("/", "\\");
+			string fullPath = Path.Combine(_skin.GetDirectory(), subfolder, filename);
 
 			try
 			{
@@ -720,14 +727,32 @@ namespace SPNATI_Character_Editor.Activities
 		private void ShowPreview(PoseEntry cell)
 		{
 			string key = cell.Key + ".png";
-			if (!_sheet.IsGlobal)
+			string folder = (_sheet?.SubFolder ?? "").Replace("/", "\\");
+			if (!string.IsNullOrEmpty(folder))
 			{
-				key = "#-" + key;
+				string path = Path.Combine(_skin.GetDirectory(), folder, key);
+				if (File.Exists(path))
+				{
+					using (Bitmap file = new Bitmap(path))
+					{
+						Bitmap copy = new Bitmap(file);
+						Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(copy));
+						_thumbnail?.Dispose();
+						_thumbnail = copy;
+					}
+				}
 			}
-			PoseMapping img = _character.PoseLibrary.GetPose(key);
-			if (img != null)
+			else
 			{
-				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_skin, img, _currentStage));
+				if (!_sheet.IsGlobal)
+				{
+					key = "#-" + key;
+				}
+				PoseMapping img = _character.PoseLibrary.GetPose(key);
+				if (img != null)
+				{
+					Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_skin, img, _currentStage));
+				}
 			}
 		}
 
@@ -991,7 +1016,8 @@ namespace SPNATI_Character_Editor.Activities
 					string stageKey = _sheet.IsGlobal ? "" : stage.Stage.ToString();
 					string key = GetKey(stageKey, pose.Key);
 					string filename = key + ".png";
-					string fullPath = Path.Combine(_skin.GetDirectory(), filename);
+					string folder = (_sheet.SubFolder ?? "").Replace("/", "\\");
+					string fullPath = Path.Combine(_skin.GetDirectory(), folder, filename);
 					if (File.Exists(fullPath))
 					{
 						continue;
@@ -1682,11 +1708,12 @@ namespace SPNATI_Character_Editor.Activities
 		private void cmdFolder_Click(object sender, EventArgs e)
 		{
 			string directory = _skin.GetDirectory();
+			string folder = (_sheet?.SubFolder ?? "").Replace("/", "\\");
 			try
 			{
 				ProcessStartInfo startInfo = new ProcessStartInfo()
 				{
-					Arguments = directory,
+					Arguments = Path.Combine(directory, folder),
 					FileName = "explorer.exe"
 				};
 

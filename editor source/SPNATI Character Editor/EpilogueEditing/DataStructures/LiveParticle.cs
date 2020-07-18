@@ -80,8 +80,25 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			PivotX = 0.5f;
 			PivotY = 0.5f;
 
-			ScaleXTween = new TweenableParameter((emitter.StartScaleX ?? new RandomParameter(1, 1)).Get(), (emitter.EndScaleX ?? emitter.StartScaleX ?? new RandomParameter(1, 1)).Get());
-			ScaleYTween = new TweenableParameter((emitter.StartScaleY ?? new RandomParameter(1, 1)).Get(), (emitter.EndScaleY ?? emitter.StartScaleY ?? new RandomParameter(1, 1)).Get());
+			float startX = (emitter.StartScaleX ?? new RandomParameter(1, 1)).Get();
+			float endX = startX;
+			if (emitter.EndScaleX != null)
+			{
+				endX = emitter.EndScaleX.Get();
+			}
+			float startY = startX;
+			if (emitter.StartScaleY != null)
+			{
+				startY = emitter.StartScaleY.Get();
+			}
+			float endY = startY;
+			if (emitter.EndScaleY != null)
+			{
+				endY = emitter.EndScaleY.Get();
+			}
+
+			ScaleXTween = new TweenableParameter(startX, endX);
+			ScaleYTween = new TweenableParameter(startY, endY);
 			AlphaTween = new TweenableParameter((emitter.StartAlpha ?? new RandomParameter(100, 100)).Get(), (emitter.EndAlpha ?? emitter.StartAlpha ?? new RandomParameter(0, 0)).Get());
 			ColorTween = new TweenableColor((emitter.StartColor ?? new RandomColor(Color.White, Color.White)).Get(), (emitter.EndColor ?? emitter.StartColor ?? new RandomColor(Color.White, Color.White)).Get());
 			SpinTween = new TweenableParameter((emitter.StartRotation ?? new RandomParameter(0, 0)).Get(), (emitter.EndRotation ?? emitter.StartRotation ?? new RandomParameter(0, 0)).Get());
@@ -191,7 +208,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			ScaleY = ScaleYTween.Tween(t);
 			SkewX = SkewXTween.Tween(t);
 			SkewY = SkewYTween.Tween(t);
-			_brush.Color = System.Drawing.Color.FromArgb((int)(AlphaTween.Tween(t) / 100.0 * 255.0f), ColorTween.Tween(t));
+			int alpha = Math.Max(0, (int)(AlphaTween.Tween(t) / 100.0 * 255.0f));
+			_brush.Color = System.Drawing.Color.FromArgb(alpha, ColorTween.Tween(t));
 			Alpha = AlphaTween.Value;
 			Spin = SpinTween.Tween(t);
 

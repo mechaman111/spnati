@@ -675,7 +675,14 @@ namespace SPNATI_Character_Editor
 									KeyframeType frameType = frameMetadata.FrameType;
 									if (kf.Time == 0)
 									{
-										frameType = KeyframeType.Begin;
+										if (frameType == KeyframeType.Normal)
+										{
+											addProperty = false;
+										}
+										else
+										{
+											frameType = KeyframeType.Begin;
+										}
 									}
 
 									if (frameType != KeyframeType.Normal)

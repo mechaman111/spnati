@@ -234,7 +234,7 @@
 			this.grpConditions.Size = new System.Drawing.Size(585, 397);
 			this.grpConditions.TabIndex = 2;
 			this.grpConditions.TabStop = false;
-			this.grpConditions.Text = "Unlock Conditions";
+			this.grpConditions.Text = "Advanced Unlock Conditions";
 			// 
 			// tableLayoutPanel1
 			// 
@@ -464,7 +464,7 @@
 			this.grpInfo.Size = new System.Drawing.Size(362, 551);
 			this.grpInfo.TabIndex = 1;
 			this.grpInfo.TabStop = false;
-			this.grpInfo.Text = "Information";
+			this.grpInfo.Text = "Information & Basic Conditions";
 			// 
 			// tableGeneral
 			// 

@@ -1171,13 +1171,15 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (linkToPrevious)
 			{
 				Keyframe firstDirFrame = directive.Keyframes.Count > 0 ? directive.Keyframes[0] : directive;
-				bool instantChange = firstDirFrame.Time == "0" || string.IsNullOrEmpty(firstDirFrame.Time);
 
 				//may need to update the previous keyframe or copy it
 				foreach (string prop in affectedProperties)
 				{
+					bool instantChange = (firstDirFrame.Time == "0" || string.IsNullOrEmpty(firstDirFrame.Time)) && firstDirFrame.Properties.ContainsKey(prop);
+
 					LiveKeyframe mostRecent = null;
 					LiveKeyframe first = null;
+					LiveKeyframe last = null;
 					int count = 0;
 					for (int i = 0; i < Keyframes.Count; i++)
 					{
@@ -1195,6 +1197,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 							else
 							{
 								count++;
+								last = mostRecent;
 								mostRecent = k;
 							}
 						}
@@ -1203,10 +1206,40 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					{
 						if (mostRecent == startFrame && startFrame.HasProperty(prop))
 						{
-							//there was already a frame at this time, and there's a frame before it, so this has to be a split
+							if (startFrame.Time == 0)
+							{
+								//any directive that changes a property at time 0 should be a begin
+								if (instantChange)
+								{
+									frameTypes[prop] = KeyframeType.Begin;
+								}
+							}
+							else
+							{
+								//directive whose first frame is after time 0
 
-							frameTypes[prop] = count > 1 && first != null && first.GetMetadata(prop, false).FrameType != KeyframeType.Normal &&
-								(!instantChange || !firstDirFrame.Properties.ContainsKey(prop)) ? KeyframeType.Split : KeyframeType.Begin;
+								if (instantChange)
+								{
+									//if this was changing immediately, always use begin
+									frameTypes[prop] = KeyframeType.Begin;
+								}
+								else if (mostRecent == first)
+								{
+									//this is the first frame touching this property, so use a begin
+									frameTypes[prop] = KeyframeType.Begin;
+								}
+								else
+								{
+									//if the value changed from the previous, this is a split. Otherwise it's a new begin
+									object value = mostRecent.Get<object>(prop);
+									object lastValue = last.Get<object>(prop);
+									frameTypes[prop] = value.Equals(lastValue) ? KeyframeType.Begin : KeyframeType.Split;
+								}
+								////there was already a frame at this time, and there's a frame before it, so this has to be a split
+
+								//frameTypes[prop] = count > 1 && first.GetMetadata(prop, false).FrameType != KeyframeType.Normal &&
+								//	(!instantChange || !firstDirFrame.Properties.ContainsKey(prop)) ? KeyframeType.Split : KeyframeType.Begin;
+							}
 						}
 						else
 						{
@@ -1581,7 +1614,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <param name="property"></param>
 		/// <param name="time"></param>
 		/// <returns></returns>
-		public object GetPreviousValue(string property, float time)
+		public object GetPreviousValue(string property, float time, bool disallowLoops)
 		{
 			for (int i = Keyframes.Count - 1; i >= 0; i--)
 			{
@@ -1592,6 +1625,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 				if (kf.HasProperty(property))
 				{
+					if (disallowLoops)
+					{
+						LiveKeyframeMetadata blockData = GetBlockMetadata(property, kf.Time);
+						if (blockData.Indefinite)
+						{
+							return null;
+						}
+					}
 					return kf.Get<object>(property);
 				}
 			}
@@ -1600,8 +1641,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				LiveAnimatedObject prev = Previous as LiveAnimatedObject;
 				if (prev.Keyframes.Count > 0)
 				{
-					time = prev.Keyframes[prev.Keyframes.Count - 1].Time;
-					return prev.GetPreviousValue(property, time);
+					time = prev.Keyframes[prev.Keyframes.Count - 1].Time + 0.001f;
+					return prev.GetPreviousValue(property, time, disallowLoops);
 				}
 			}
 			return null;
