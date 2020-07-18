@@ -76,14 +76,10 @@ var endingTips = [
 function Animation(id, frames, updateFunc, loop, easingFunction, clampFunction, iterations) {
   this.id = id;
   this.looped = loop === "1" || loop === "true";
-  this.keyframes = frames;
+  this.keyframes = Animation.prototype.cloneFrames(frames);
   this.iterations = iterations;
   this.easingFunction = easingFunction || "smooth";
   this.clampFunction = clampFunction || "wrap";
-  for (var i = 0; i < frames.length; i++) {
-    frames[i].index = i;
-    frames[i].keyframes = frames;
-  }
   this.duration = frames[frames.length - 1].end;
   this.elapsed = 0;
   this.updateFunc = updateFunc;
@@ -118,6 +114,19 @@ Animation.prototype.easingFunctions = {
       return 7.5625 * t * t + 0.984375;
     }
   },
+};
+/**
+ * Clones a frame
+ */
+Animation.prototype.cloneFrames = function (frames) {
+  var copy = [];
+  for (var i = 0; i < frames.length; i++) {
+    var keyframe = jQuery.extend({}, frames[i]);
+    keyframe.index = i;
+    keyframe.keyframes = copy;
+    copy.push(keyframe);
+  }
+  return copy;
 };
 Animation.prototype.isComplete = function () {
   var life = this.elapsed;
@@ -173,9 +182,9 @@ Animation.prototype.update = function (elapsedMs) {
     }
   }
 }
-Animation.prototype.halt = function () {
+Animation.prototype.halt = function (properties) {
   var frame = this.keyframes[this.keyframes.length - 1];
-  this.updateFunc && this.updateFunc(this.id, frame, frame, 1);
+  this.updateFunc && this.updateFunc(this.id, frame, frame, 1, properties);
 }
 
 /************************************************************
@@ -400,74 +409,61 @@ function addDirectiveToScene(scene, directive) {
     case "move":
     case "camera":
     case "fade":
-      if (directive.keyframes.length > 1) {
-        //split the directive into multiple directives so that all the keyframes affect the same properties
-        //for instance, an animation with [frame1: {x:5, y:2}, frame2: {y:4}, frame3: {x:8, y:10}] would be split into two: [frame1: {x:5}, frame3: {x:8}] and [frame1: {y:2}, frame2: {y:4}, frame3: {y:10}]
-        //this makes the tweening simple for properties that don't change in intermediate frames, because those intermediate frames are removed
+      //split the directive into multiple directives so that all the keyframes affect the same properties
+      //for instance, an animation with [frame1: {x:5, y:2}, frame2: {y:4}, frame3: {x:8, y:10}] would be split into two: [frame1: {x:5}, frame3: {x:8}] and [frame1: {y:2}, frame2: {y:4}, frame3: {y:10}]
+      //this makes the tweening simple for properties that don't change in intermediate frames, because those intermediate frames are removed
 
-        //first split the properties into buckets of frame indices where they appear
-        var propertyMap = {};
-        for (var i = 0; i < directive.keyframes.length; i++) {
-          var frame = directive.keyframes[i];
-          for (var j = 0; j < animatedProperties.length; j++) {
-            var property = animatedProperties[j];
-            if (frame.hasOwnProperty(property) && !Number.isNaN(frame[property])) {
-              if (!propertyMap[property]) {
-                propertyMap[property] = [];
-              }
-              propertyMap[property].push(i);
+      //first split the properties into buckets of frame indices where they appear
+      var propertyMap = {};
+      for (var i = 0; i < directive.keyframes.length; i++) {
+        var frame = directive.keyframes[i];
+        for (var j = 0; j < animatedProperties.length; j++) {
+          var property = animatedProperties[j];
+          if (frame.hasOwnProperty(property) && (property === "color" || !Number.isNaN(frame[property]))) {
+            if (!propertyMap[property]) {
+              propertyMap[property] = [];
             }
-          }
-        }
-
-        //next create directives for each combination of frames
-        var directives = {};
-        for (var prop in propertyMap) {
-          var key = propertyMap[prop].join(',');
-          var workingDirective = directives[key];
-          if (!workingDirective) {
-            //shallow copy the directive
-            workingDirective = {};
-            for (var srcProp in directive) {
-              if (directive.hasOwnProperty(srcProp)) {
-                workingDirective[srcProp] = directive[srcProp];
-              }
-            }
-            workingDirective.keyframes = [];
-            directives[key] = workingDirective;
-            scene.directives.push(workingDirective);
-          }
-          var lastStart = 0;
-          for (var i = 0; i < propertyMap[prop].length; i++) {
-            var srcFrame = directive.keyframes[propertyMap[prop][i]];
-            var targetFrame;
-            if (workingDirective.keyframes.length <= i) {
-              //shallow copy the frame minus the animatable properties
-              targetFrame = {};
-              for (var srcProp in srcFrame) {
-                if (srcFrame.hasOwnProperty(srcProp)) {
-                  targetFrame[srcProp] = srcFrame[srcProp];
-                }
-              }
-              for (var j = 0; j < animatedProperties.length; j++) {
-                var property = animatedProperties[j];
-                delete targetFrame[property];
-              }
-
-              targetFrame.start = lastStart;
-              workingDirective.keyframes.push(targetFrame);
-              workingDirective.time = srcFrame.end;
-              lastStart = srcFrame.end;
-            }
-            else {
-              targetFrame = workingDirective.keyframes[i];
-            }
-            targetFrame[prop] = srcFrame[prop];
+            propertyMap[property].push(i);
           }
         }
       }
-      else {
-        scene.directives.push(directive);
+
+      //next create directives for each combination of frames
+      var directives = {};
+      for (var prop in propertyMap) {
+        var key = propertyMap[prop].join(',');
+        var workingDirective = directives[key];
+        if (!workingDirective) {
+          //shallow copy the directive
+          workingDirective = {};
+          for (var srcProp in directive) {
+            if (directive.hasOwnProperty(srcProp)) {
+              workingDirective[srcProp] = directive[srcProp];
+            }
+          }
+          workingDirective.keyframes = [];
+          directives[key] = workingDirective;
+          scene.directives.push(workingDirective);
+        }
+        var lastStart = 0;
+        for (var i = 0; i < propertyMap[prop].length; i++) {
+          var srcFrame = directive.keyframes[propertyMap[prop][i]];
+          var targetFrame;
+          if (workingDirective.keyframes.length <= i) {
+            targetFrame = {
+              start: lastStart,
+              end: srcFrame.end
+            };
+
+            workingDirective.keyframes.push(targetFrame);
+            workingDirective.time = srcFrame.end;
+            lastStart = srcFrame.end;
+          }
+          else {
+            targetFrame = workingDirective.keyframes[i];
+          }
+          targetFrame[prop] = srcFrame[prop];
+        }
       }
       break;
     default:
@@ -593,7 +589,7 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
           if (directive.marker && !checkMarker(directive.marker, player)) {
             directive.type = "skip";
           }
-          directives.push(directive);
+          addDirectiveToScene(scene, directive);
         });
       }
     });
@@ -1630,21 +1626,26 @@ SceneView.prototype.runPendedDirective = function (info, remove) {
   }
 }
 
-SceneView.prototype.updateOverlay = function (id, last, next, t) {
-  if (typeof next.color !== "undefined") {
-    var rgb1 = fromHex(last.color);
-    var rgb2 = fromHex(next.color);
+SceneView.prototype.updateOverlay = function (id, last, next, t, properties) {
+  var rgb = this.overlay.rgb;
+  var alpha = this.overlay.a;
+  if (!properties || properties.has("color")) {
+    if (typeof next.color !== "undefined") {
+      var rgb1 = fromHex(last.color);
+      var rgb2 = fromHex(next.color);
 
-    var rgb = [0, 0, 0];
-    for (var i = 0; i < rgb.length; i++) {
-      rgb[i] = lerp(rgb1[i], rgb2[i], t);
+      rgb = [0, 0, 0];
+      for (var i = 0; i < rgb.length; i++) {
+        rgb[i] = lerp(rgb1[i], rgb2[i], t);
+      }
     }
   }
-  else {
-    rgb = this.overlay.rgb;
+  if (!properties || properties.has("alpha")) {
+    alpha = lerp(last.alpha, next.alpha, t);
+    if (isNaN(alpha)) {
+      alpha = this.overlay.a;
+    }
   }
-  var alpha = lerp(last.alpha, next.alpha, t);
-
   this.setOverlay(rgb, alpha);
 }
 
@@ -1702,10 +1703,14 @@ SceneView.prototype.draw = function () {
 
 SceneView.prototype.drawObject = function (obj) {
   if (!obj.element) { return; }
-  var properties = [
-    "scale(" + this.viewportWidth / this.scene.width * this.camera.zoom + ")",
-    "translate(" + this.toViewX(obj.x) + ", " + this.toViewY(obj.y) + ")"
-  ];
+  var properties = [];
+  if (obj.parent) {
+    properties.push("translate(" + obj.x + "px, " + obj.y + "px)");
+  }
+  else {
+    properties.push("scale(" + this.viewportWidth / this.scene.width * this.camera.zoom + ")");
+    properties.push("translate(" + this.toViewX(obj.x) + ", " + this.toViewY(obj.y) + ")");
+  }
   var transform = properties.join(" ");
 
   $(obj.element).css({
@@ -1883,7 +1888,15 @@ SceneView.prototype.addSceneObject = function (obj) {
     
   this.sceneObjects[obj.id] = obj;
   if (obj.element) {
-    this.$canvas.append(obj.element);
+    if (obj.parentid) {
+      obj.parent = this.sceneObjects[obj.parentid];
+      if (obj.parent) {
+        obj.parent.rotElement.appendChild(obj.element);
+      }
+    }
+    else {
+      this.$canvas.append(obj.element);
+    }
   }
   this.draw();
 }
@@ -2046,9 +2059,9 @@ SceneView.prototype.interpolate = function (obj, prop, last, next, t, mode) {
   obj[prop] = interpolationModes[mode](prop, start, end, t, last.keyframes, last.index);
 }
 
-SceneView.prototype.updateObject = function (id, last, next, t) {
+SceneView.prototype.updateObject = function (id, last, next, t, properties) {
   var obj = this.sceneObjects[id];
-  obj.interpolateProperties(last, next, t);
+  obj.interpolateProperties(last, next, t, properties);
 }
 
 SceneView.prototype.addAnimation = function (anim) {
@@ -2118,11 +2131,17 @@ SceneView.prototype.removeAnimation = function (anim) {
   }
 }
 
-SceneView.prototype.updateCamera = function (id, last, next, t) {
-  this.interpolate(this.camera, "x", last, next, t);
-  this.interpolate(this.camera, "y", last, next, t);
-  if (last.zoom && next.zoom) {
-    this.camera.zoom = lerp(last.zoom, next.zoom, t);
+SceneView.prototype.updateCamera = function (id, last, next, t, properties) {
+  if (!properties || properties.has("x")) {
+    this.interpolate(this.camera, "x", last, next, t);
+  }
+  if (!properties || properties.has("y")) {
+    this.interpolate(this.camera, "y", last, next, t);
+  }
+  if (!properties || properties.has("zoom")) {
+    if (last.zoom && next.zoom) {
+      this.camera.zoom = lerp(last.zoom, next.zoom, t);
+    }
   }
 }
 
@@ -2178,12 +2197,47 @@ SceneView.prototype.isAnimRunning = function () {
 SceneView.prototype.stopAnimation = function (directive, context) {
   var anim;
   var id = directive.id;
+  var properties = directive.properties ? directive.properties.split(',') : [];
+  var propertySet = null;
+  if (properties.length > 0) {
+    propertySet = new Set();
+    properties.forEach(function (prop) { propertySet.add(prop); });
+  }
+
   context.haltedAnims = [];
+  context.oldFrames = new Map();
   for (var i = this.anims.length - 1; i >= 0; i--) {
     anim = this.anims[i];
     if (anim.id === id) {
-      anim.halt();
-      this.anims.splice(i, 1);
+      if (propertySet) {
+        context.oldFrames.set(anim, anim.keyframes);
+        anim.halt(propertySet);
+        anim.keyframes = Animation.prototype.cloneFrames(anim.keyframes);
+        var stillHasProperties = false;
+        anim.keyframes.forEach(function(frame) {
+          //remove the halted properties
+          propertySet.forEach(function (prop) { delete frame[prop]; });
+          //see if there are any other animatable properties remaining
+          for (var prop in frame) {
+            if (frame.hasOwnProperty(prop) && animatedProperties.indexOf(prop) >= 0) {
+              stillHasProperties = true;
+              break;
+            }
+          }
+        });
+
+        if (!stillHasProperties) {
+          //just halt the whole thing instead
+          anim.keyframes = context.oldFrames.get(anim);
+          context.oldFrames.delete(anim);
+          anim.halt();
+          this.anims.splice(i, 1);
+        }
+      }
+      else {
+        anim.halt();
+        this.anims.splice(i, 1);
+      }
       context.haltedAnims.push(anim);
       this.draw();
     }
@@ -2194,8 +2248,14 @@ SceneView.prototype.restoreAnimation = function (directive, context) {
   var haltedAnims = context.haltedAnims;
   for (var i = 0; i < haltedAnims.length; i++) {
     var anim = haltedAnims[i];
-    anim.elapsed = 0;
-    this.addAnimation(anim);
+    var oldFrames = context.oldFrames.get(anim);
+    if (oldFrames) {
+      anim.keyframes = oldFrames;
+    }
+    else {
+      anim.elapsed = 0;
+      this.addAnimation(anim);
+    }
   }
 }
 
@@ -2304,26 +2364,31 @@ function SceneObject(id, element, view, args) {
   this.alpha = alpha;
   this.view = view;
   this.layer = args.layer;
+  this.parentid = args.parent;
 
   var scene = this.view.scene;
 
   if (element) {
     var vehicle = document.createElement("div");
-    vehicle.appendChild(element);
+    vehicle.id = id;
+    var pivot = document.createElement("div");
+    vehicle.appendChild(pivot);
+    pivot.appendChild(element);
 
     var pivotX = args.pivotx;
     var pivotY = args.pivoty;
     if (pivotX || pivotY) {
       pivotX = pivotX || "center";
       pivotY = pivotY || "center";
-      $(element).css("transform-origin", pivotX + " " + pivotY);
+      $(pivot).css("transform-origin", pivotX + " " + pivotY);
     }
     if (this.layer) {
       $(vehicle).css("z-index", args.layer);
     }
 
     this.element = vehicle;
-    this.rotElement = element;
+    this.rotElement = pivot;
+    this.objElement = element;
 
     var width = args.width;
     var height = args.height;
@@ -2393,16 +2458,21 @@ SceneObject.prototype = {
     this.view.drawObject(this);
   },
 
-  interpolateProperties: function (last, next, t) {
+  interpolateProperties: function (last, next, t, properties) {
     for (var i = 0; i < this.tweenableProperties.length; i++) {
-      this.view.interpolate(this, this.tweenableProperties[i], last, next, t);
+      var prop = this.tweenableProperties[i];
+      if (!properties || properties.has(prop)) {
+        this.view.interpolate(this, this.tweenableProperties[i], last, next, t);
+      }
     }
 
-    if (next.src) {
-      var oldSrc = this.src;
-      this.view.interpolate(this, "src", last, next, t, "none");
-      if (oldSrc !== this.src) {
-        this.setImage(this.src);
+    if (!properties || properties.has("src")) {
+      if (next.src) {
+        var oldSrc = this.src;
+        this.view.interpolate(this, "src", last, next, t, "none");
+        if (oldSrc !== this.src) {
+          this.setImage(this.src);
+        }
       }
     }
   },
@@ -2410,7 +2480,7 @@ SceneObject.prototype = {
   setImage: function (src) {
     if (!src) return;
 
-    this.rotElement.src = this.view.assetMap[src].src;
+    this.objElement.src = this.view.assetMap[src].src;
     this.src = src;
   },
 };
@@ -2587,7 +2657,7 @@ Particle.prototype.constructor = Particle;
 Particle.prototype.spawn = function (x, y, rotation, args) {
   var tweens = this.tweens;
 
-  var particleElem = this.rotElement;
+  var particleElem = this.objElement;
   if (args.src) {
     particleElem.src = args.src;
     particleElem.className = "";
@@ -2692,9 +2762,9 @@ Particle.prototype.update = function (elapsedMs) {
 };
 
 Particle.prototype.draw = function (view) {
-  if (!this.rotElement.src) {
+  if (!this.objElement.src) {
     var color = toHex(this.color);
-    $(this.rotElement).css({
+    $(this.objElement).css({
       "background-color": color,
     });
   }
