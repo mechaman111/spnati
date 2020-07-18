@@ -2539,9 +2539,15 @@ function Emitter(id, element, view, args, pool) {
   this.activeParticles = [];
   this.src = args.src;
   this.startScaleX = this.createRandomParameter(args.startscalex, 1, 1);
-  this.endScaleX = this.createRandomParameter(args.endscalex, this.startScaleX);
-  this.startScaleY = this.createRandomParameter(args.startscaley, 1, 1);
-  this.endScaleY = this.createRandomParameter(args.endscaley, this.startScaleY);
+  if (args.endscalex) {
+    this.endScaleX = this.createRandomParameter(args.endscalex, this.startScaleX);
+  }
+  if (args.startscaley) {
+    this.startScaleY = this.createRandomParameter(args.startscaley, 1, 1);
+    if (args.endscaley) {
+      this.endScaleY = this.createRandomParameter(args.endscaley, this.startScaleY);
+    }
+  }
   this.startSkewX = this.createRandomParameter(args.startskewx, 1, 1);
   this.endSkewX = this.createRandomParameter(args.endskewx, this.startSkewX);
   this.startSkewY = this.createRandomParameter(args.startskewy, 1, 1);
@@ -2634,15 +2640,21 @@ Emitter.prototype.emit = function () {
   var angle = Math.floor(Math.random() * (this.angle * 2 + 1)) - this.angle;
   rotation += angle;
 
+  //preserve aspect ratios if X and Y aren't specified individually
+  var scaleStartX = this.startScaleX.get();
+  var scaleEndX = (this.endScaleX ? this.endScaleX.get() : scaleStartX);
+  var scaleStartY = (this.startScaleY ? this.startScaleY.get() : scaleStartX);
+  var scaleEndY = (this.endScaleY ? this.endScaleY.get() : this.startScaleY ? scaleStartY : scaleEndX);
+
   particle.spawn(this.x - this.width / 2, this.y - this.height / 2, rotation, {
     src: this.src,
     width: this.width,
     height: this.height,
     duration: this.lifetime.get() * 1000,
-    startScaleX: this.startScaleX.get(),
-    endScaleX: this.endScaleX.get(),
-    startScaleY: this.startScaleY.get(),
-    endScaleY: this.endScaleY.get(),
+    startScaleX: scaleStartX,
+    endScaleX: scaleEndX,
+    startScaleY: scaleStartY,
+    endScaleY: scaleEndY,
     startSkewX: this.startSkewX.get(),
     endSkewX: this.endSkewX.get(),
     startSkewY: this.startSkewY.get(),
