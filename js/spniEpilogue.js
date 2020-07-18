@@ -320,7 +320,10 @@ function loadEpilogueData(player) {
         }
 
         var alsoPlaying = $(this).attr('alsoPlaying');
-        if (alsoPlaying !== undefined && !(players.some(function (p) { return p.id == alsoPlaying; }))) {
+        if (alsoPlaying
+            && !alsoPlaying.trim().split(/\s+/).every(function(ap) {
+                return players.some(function (p) { return p.id == ap; })
+            })) {
             return false;
         }
 

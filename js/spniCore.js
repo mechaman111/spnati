@@ -1043,6 +1043,24 @@ Object.defineProperty(Array.prototype, 'countTrue', {
     }
 });
 
+/***********************************************************
+ * Given an array of strings, return a string that represents the list
+ * as correct English (with Oxford comma, if applicable).
+ ***********************************************************/
+function englishJoin(list) {
+    if (list.length == 0) {
+        return '';
+    } else {
+        /* Given one element, reduce without a starting value returns
+           that element */
+        return list.reduce(function(str, cur, idx) {
+            return str + (list.length > 2 ? ', ' : ' ')
+                + (idx == list.length - 1 ? 'and ' : '')
+                + cur;
+        });
+    }
+}
+
 /************************************************************
  * Generate a random alphanumeric ID.
  ************************************************************/
