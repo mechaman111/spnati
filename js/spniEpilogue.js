@@ -402,7 +402,7 @@ function loadEpilogueData(player) {
   return epilogues;
 }
 
-var animatedProperties = ["x", "y", "rotation", "scalex", "scaley", "skewx", "skewy", "alpha", "src", "zoom", "color"];
+var animatedProperties = ["x", "y", "rotation", "scalex", "scaley", "skewx", "skewy", "alpha", "src", "zoom", "color", "rate"];
 
 function addDirectiveToScene(scene, directive) {
   switch (directive.type) {
