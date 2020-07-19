@@ -1180,6 +1180,9 @@ function EpiloguePlayer(epilogue, fromGallery) {
   this.hotReloadScene = null;
   this.startingDirectiveIndex = 1;
   this.gallery = !!fromGallery;
+  this.rewindStack = [];
+  this.currentUnwindScene = null;
+  this.currentUnwindFrame = { startDirectiveIndex: 0, actions: [], stop: false };
 }
 
 EpiloguePlayer.prototype.load = function () {
@@ -1236,7 +1239,7 @@ EpiloguePlayer.prototype.onLoadComplete = function () {
       this.hotReloadScene < this.epilogue.scenes.length
     ) {
       this.sceneIndex = this.hotReloadScene;
-      this.setupScene(this.sceneIndex, true);
+      this.startScene(true);
       this.hotReloadScene = null;
 
       /* We won't be able to set startingDirectiveIndex here.
@@ -1332,23 +1335,29 @@ EpiloguePlayer.prototype.draw = function () {
 EpiloguePlayer.prototype.advanceScene = function () {
   this.sceneIndex++;
   if (this.sceneIndex < this.epilogue.scenes.length) {
-    this.setupScene(this.sceneIndex);
+    this.startScene(false);
   }
 }
 
 EpiloguePlayer.prototype.layer = 0;
 
-EpiloguePlayer.prototype.setupScene = function (index, skipTransition) {
+EpiloguePlayer.prototype.startScene = function (skipTransition) {
+  this.pushUnwindScene();
+  this.setupScene(skipTransition);
+  this.performDirective();
+}
+
+EpiloguePlayer.prototype.setupScene = function (skipTransition) {
   var lastScene = this.activeScene;
 
   this.lastUpdate = performance.now();
-  this.activeScene = this.epilogue.scenes[index];
+  this.activeScene = this.epilogue.scenes[this.sceneIndex];
 
   var view = this.activeScene.view = this.views[this.viewIndex];
   this.viewIndex = (this.viewIndex + 1) % this.views.length;
   this.directiveIndex = -1;
 
-  view.setup(this.activeScene, index, this.epilogue, skipTransition ? null : lastScene);
+  view.setup(this.activeScene, this.sceneIndex, this.epilogue, skipTransition ? null : lastScene);
 
   //fit the viewport based on the scene's aspect ratio and the window size
   this.resizeViewport();
@@ -1362,8 +1371,45 @@ EpiloguePlayer.prototype.setupScene = function (index, skipTransition) {
       lastScene.view.cleanup();
     }
   }
+}
 
-  this.performDirective();
+/**
+ * Pushes unwind data for the current scene onto the stack (if applicable), then
+ * resets the current scene unwind data to a fresh state.
+ */
+EpiloguePlayer.prototype.pushUnwindScene = function () {
+  if (this.currentUnwindScene) {
+    this.pushPauseUnwindFrame(false);
+    if (this.currentUnwindScene.frames.length > 0) {
+      this.rewindStack.push(this.currentUnwindScene);
+    }
+  }
+  this.currentUnwindScene = { sceneIndex: this.sceneIndex, frames: [] };
+}
+
+/**
+ * Pushes the current unwind "frame" onto the stack for the current scene.
+ * 
+ * @param {boolean} stopFrame If true, directive reversion (aka "unwinding") will
+ * stop after unwinding the next frame.
+ */
+EpiloguePlayer.prototype.pushPauseUnwindFrame = function (stopFrame) {
+  this.currentUnwindScene.frames.push(this.currentUnwindFrame);
+  this.currentUnwindFrame = { startDirectiveIndex: this.directiveIndex, actions: [], stop: stopFrame };
+}
+
+/**
+ * Adds an undoable action to the history
+ * @param {any} context Context to pass to do and undo functions
+ * @param {Function} doFunc Function to perform the directive
+ * @param {Function} undoFunc Function to undo the directive
+ */
+EpiloguePlayer.prototype.addAction = function (directive, doFunc, undoFunc) {
+  var context = {}; //contextual information for the do action to store off that the revert action can refer to
+  var action = { directive: directive, context: context, perform: doFunc, revert: undoFunc };
+
+  this.currentUnwindFrame.actions.push(action);
+  action.perform(directive, context);
 }
 
 EpiloguePlayer.prototype.resizeViewport = function () {
@@ -1398,7 +1444,27 @@ EpiloguePlayer.prototype.performDirective = function () {
   if (this.directiveIndex < this.activeScene.directives.length) {
     var view = this.activeScene.view;
     var directive = this.activeScene.directives[this.directiveIndex];
-    directive.action = null;
+
+    // If condition groups exist on this directive, then look for at least one
+    // group with conditions that all test true
+    if (directive.conditions.length > 0 && !directive.conditions.some(function (conditionGroup) {
+      return conditionGroup.every(function (condition) {
+        if (condition.type === "marker") {
+          return checkMarker(condition.test, this.epilogue.player);
+        } else if (condition.type === "if-gallery") {
+          return this.gallery === (condition.test.toLowerCase() === "true");
+        }
+        return false;
+      }, this); 
+    }, this)) {
+      // go to next directive
+      return this.performDirective();
+    }
+
+    if (directive.type === "pause") {
+      this.pushPauseUnwindFrame(true);
+    }
+
     if (directive.delay && directive.type !== "pause" && directive.type !== "wait") {
       view.pendDirective(this, directive, directive.delay);
     }
@@ -1415,64 +1481,99 @@ EpiloguePlayer.prototype.performDirective = function () {
 }
 
 /**
- * Reverts all changes up until the last "pause" directive
+ * Unwind to the previous scene on the stack with pause frames that can be
+ * unwound to, if any.
+ */
+EpiloguePlayer.prototype.unwindScene = function () {
+  if (this.rewindStack.length === 0) return;
+  this.currentUnwindScene = this.rewindStack.pop();
+
+  // Set up new scene:
+  this.sceneIndex = this.currentUnwindScene.sceneIndex;
+  this.setupScene(true);
+
+  // First, unwind up to the last stop frame in this scene (if any):
+  this.currentUnwindFrame = { startDirectiveIndex: 0, actions: [], stop: false };
+  while (this.currentUnwindScene.frames.length > 0) {
+    this.currentUnwindFrame = this.currentUnwindScene.frames.pop();
+
+    // We only need to revert marker directives here.
+    // For all other directives, simply not running them produces the same
+    // result as explicitly reverting them.
+    for (var i = this.currentUnwindFrame.actions.length - 1; i >= 0; i--) {
+      var action = this.currentUnwindFrame.actions[i];
+      if (action.directive.type === "marker") {
+        action.revert(action.directive, action.context);
+      }
+    }
+    this.currentUnwindFrame.actions = [];
+    
+    if (this.currentUnwindFrame.stop) {
+      break;
+    }
+  }
+
+  if (!this.currentUnwindFrame.stop) {
+    // No stop frames in this scene, keep unwinding
+    return this.unwindScene();
+  }
+
+  // Now, re-execute everything up to that stop frame:
+  this.currentUnwindScene.frames.forEach(function (frame) {
+    frame.actions.forEach(function (action) {
+      action.perform(action.directive, action.context);
+    }, this);
+  }, this);
+
+  this.directiveIndex = this.currentUnwindFrame.startDirectiveIndex;
+}
+
+/**
+ * Unwind the scene/action stack, reverting all actions up to the last-executed pause
+ * directive.
+ * 
+ * An unwind "frame" contains the actions performed between either:
+ *  - Two "pause" directives.
+ *  - A "pause" directive and a scene change.
+ * 
+ * Conceptually speaking, these frames form a stack, and as the player moves
+ * forwards in an epilogue, new frames are pushed onto the stack whenever a
+ * pause directive is encountered or the scene changes.
+ * 
+ * When the player moves backwards in an epilogue, these frames are popped off
+ * the stack ("unwound"), and as each frame is unwound, its associated actions
+ * are also reverted.
+ * 
+ * This process continues until specially-marked "stop" frames are encountered,
+ * or until the bottom of the stack is reached (i.e. the end of the epilogue is reached).
+ * 
+ * For now, stop frames are only generated after "pause" directives, so unwinding
+ * stops either at the previous pause directive or the beginning of the epilogue.
  */
 EpiloguePlayer.prototype.revertDirective = function () {
   if (this.activeTransition) { return; }
   this.activeScene.view.haltAnimations(false);
+  if (this.currentUnwindScene === null) return;
 
-  var canRevert = (this.sceneIndex > 0);
-  if (!canRevert) {
-    //on the initial scene, make sure there is a pause directive to revert to. Otherwise we can't rewind any further
-    for (var i = this.directiveIndex - 1; i >= 0; i--) {
-      if (this.activeScene.directives[i].type === "pause") {
-        canRevert = true;
-        break;
-      }
-    }
+  // Pop an unwind frame off the stack and revert all of its actions:
+  this.currentUnwindFrame = this.currentUnwindScene.frames.pop();
+  if (this.currentUnwindFrame === undefined) {
+    // No more unwind frames for this scene.
+    return this.unwindScene();
   }
 
-  if (!canRevert) { return; }
-
-  var currentIndex = this.directiveIndex;
-  for (var i = currentIndex - 1; i >= 0; i--) {
-    this.directiveIndex = i;
-    var directive = this.activeScene.directives[i];
-    if (directive.action) {
-      directive.action.revert(directive, directive.action.context);
-    }
-    if (i < currentIndex - 1 && directive.type === "pause") {
-
-      if (this.sceneIndex >= this.epilogue.scenes.length
-          && this.activeScene === this.epilogue.scenes[this.epilogue.scenes.length-1]
-      ) {
-        /* Reverting to a directive on the last scene, so reset sceneIndex */
-        this.sceneIndex = this.epilogue.scenes.length-1;
-      }
-      return;
-    }
+  // Revert actions for the frame we popped:
+  while (this.currentUnwindFrame.actions.length > 0) {
+    var action = this.currentUnwindFrame.actions.pop();
+    action.revert(action.directive, action.context);
   }
 
-  //reached the start of the scene, so time to back up an entire scene
-  if (this.sceneIndex >= this.epilogue.scenes.length) {
-    this.sceneIndex--; //the last scene had finished, so back up an extra time to move past that scene
+  if (!this.currentUnwindFrame.stop) {
+    // Not a stop frame-- continue unwinding.
+    return this.revertDirective();
   }
 
-  //it would be better to make scene setup/teardown an undoable action, but for a quick and dirty method for now, just fast forward the whole scene to its last pause
-  this.sceneIndex--;
-  this.setupScene(this.sceneIndex, true);
-
-  if (!this.activeTransition) {
-    var pauseIndex;
-    for (pauseIndex = this.activeScene.directives.length - 1; pauseIndex >= 0; pauseIndex--) {
-      if (this.activeScene.directives[pauseIndex].type === "pause") {
-        break;
-      }
-    }
-    while (this.directiveIndex < pauseIndex) {
-      this.advanceDirective();
-    }
-  }
+  this.directiveIndex = this.currentUnwindFrame.startDirectiveIndex;
 }
 
 /**
@@ -1490,7 +1591,7 @@ EpiloguePlayer.prototype.skipToScene = function (scene) {
   this.activeScene.view.haltAnimations(false);
   this.sceneIndex = scene;
   
-  this.setupScene(this.sceneIndex, true);
+  this.startScene(true);
 }
 
 fromHex = function (hex) {
@@ -1573,84 +1674,53 @@ SceneView.prototype.destroy = function () {
 }
 
 SceneView.prototype.runDirective = function (epiloguePlayer, directive) {
-  var directiveType = directive.type;
-  
-  // If condition groups exist on this directive, then look for at least one
-  // group with conditions that all test true
-  if (directive.conditions.length > 0 && !directive.conditions.some(function (conditionGroup) {
-    return conditionGroup.every(function (condition) {
-      if (condition.type === "marker") {
-        return checkMarker(condition.test, epiloguePlayer.epilogue.player);
-      } else if (condition.type === "if-gallery") {
-        return epiloguePlayer.gallery === (condition.test.toLowerCase() === "true");
-      }
-
-      return false;
-    }); 
-  })) {
-    directiveType = 'skip';
-  }
-
-  switch (directiveType) {
+  switch (directive.type) {
     case "sprite":
-      this.addAction(directive, this.addSprite.bind(this), this.removeSceneObject.bind(this));
+      epiloguePlayer.addAction(directive, this.addSprite.bind(this), this.removeSceneObject.bind(this));
       break;
     case "text":
-      this.addAction(directive, this.addText.bind(this), this.removeText.bind(this));
+      epiloguePlayer.addAction(directive, this.addText.bind(this), this.removeText.bind(this));
       break;
     case "clear":
-      this.addAction(directive, this.clearText.bind(this), this.restoreText.bind(this));
+      epiloguePlayer.addAction(directive, this.clearText.bind(this), this.restoreText.bind(this));
       break;
     case "clear-all":
-      this.addAction(directive, this.clearAllText.bind(this), this.restoreText.bind(this));
+      epiloguePlayer.addAction(directive, this.clearAllText.bind(this), this.restoreText.bind(this));
       break;
     case "move":
-      this.addAction(directive, this.moveSprite.bind(this), this.returnSprite.bind(this));
+      epiloguePlayer.addAction(directive, this.moveSprite.bind(this), this.returnSprite.bind(this));
       break;
     case "camera":
-      this.addAction(directive, this.moveCamera.bind(this), this.returnCamera.bind(this));
+      epiloguePlayer.addAction(directive, this.moveCamera.bind(this), this.returnCamera.bind(this));
       break;
     case "fade":
-      this.addAction(directive, this.fade.bind(this), this.restoreOverlay.bind(this));
+      epiloguePlayer.addAction(directive, this.fade.bind(this), this.restoreOverlay.bind(this));
       break;
     case "stop":
-      this.addAction(directive, this.stopAnimation.bind(this), this.restoreAnimation.bind(this));
+      epiloguePlayer.addAction(directive, this.stopAnimation.bind(this), this.restoreAnimation.bind(this));
       break;
     case "wait":
-      this.addAction(directive, epiloguePlayer.awaitAnims.bind(epiloguePlayer), function () { });
+      epiloguePlayer.addAction(directive, epiloguePlayer.awaitAnims.bind(epiloguePlayer), function () { });
       return true;
     case "pause":
       return true;
     case "remove":
-      this.addAction(directive, this.hideSceneObject.bind(this), this.showSceneObject.bind(this));
+      epiloguePlayer.addAction(directive, this.hideSceneObject.bind(this), this.showSceneObject.bind(this));
       break;
     case "emitter":
-      this.addAction(directive, this.addEmitter.bind(this), this.removeSceneObject.bind(this));
+      epiloguePlayer.addAction(directive, this.addEmitter.bind(this), this.removeSceneObject.bind(this));
       break;
     case "emit":
-      this.addAction(directive, this.burstParticles.bind(this), this.clearParticles.bind(this));
+      epiloguePlayer.addAction(directive, this.burstParticles.bind(this), this.clearParticles.bind(this));
       break;
     case "marker":
-      this.addAction(directive, this.applyMarker.bind(this), this.revertMarker.bind(this));
+      epiloguePlayer.addAction(directive, this.applyMarker.bind(this), this.revertMarker.bind(this));
       break;
     case "skip":
-      this.addAction(directive, function () { }, function () { });
+      epiloguePlayer.addAction(directive, function () { }, function () { });
       break;
   }
   return false;
-}
-
-/**
- * Adds an undoable action to the history
- * @param {any} context Context to pass to do and undo functions
- * @param {Function} doFunc Function to perform the directive
- * @param {Function} undoFunc Function to undo the directive
- */
-SceneView.prototype.addAction = function (directive, doFunc, undoFunc) {
-  var context = {}; //contextual information for the do action to store off that the revert action can refer to
-  var action = { directive: directive, context: context, perform: doFunc, revert: undoFunc };
-  directive.action = action;
-  action.perform(directive, context);
 }
 
 SceneView.prototype.pendDirective = function (epiloguePlayer, directive, delay) {
@@ -2336,9 +2406,16 @@ SceneView.prototype.clearParticles = function (directive, context) {
 SceneView.prototype.applyMarker = function (directive, context) {
   var player = epiloguePlayer.epilogue.player;
 
-  context.player = player;
-  context.oldValue = directive.markerOp.currentValue(player, null, false);
-  directive.markerOp.apply(player, null);
+  // This effect might be applied twice in a row while unwinding across scenes,
+  // but the context will remain the same.
+  // Make sure the evaluation of the marker value only happens once.
+  if (context.player === undefined) {
+    context.player = player;
+    context.oldValue = directive.markerOp.currentValue(player, null, false);
+    context.newValue = directive.markerOp.evaluate(player, null);
+  }
+
+  context.player.setMarker(directive.markerOp.name, null, context.newValue);
 }
 
 SceneView.prototype.revertMarker = function (directive, context) {
