@@ -586,9 +586,28 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
             directive.time = totalTime;
           }
 
-          if (directive.marker && !checkMarker(directive.marker, player)) {
-            directive.type = "skip";
+          directive.conditions = [];
+          $(item).children("conditions").each(function (i2, groupElem) {
+            var condGroup = [];
+            $(groupElem).children("marker").each(function (i3, markerElem) {
+              condGroup.push({
+                "type": "marker",
+                "marker": $(markerElem).text()
+              });
+            });
+
+            directive.conditions.push(condGroup);
+          });
+
+          if (directive.marker) {
+            directive.conditions.push([{
+              "type": "marker",
+              "marker": directive.marker
+            }]);
+
+            delete directive.marker;
           }
+
           addDirectiveToScene(scene, directive);
         });
       }
@@ -1552,7 +1571,22 @@ SceneView.prototype.destroy = function () {
 }
 
 SceneView.prototype.runDirective = function (epiloguePlayer, directive) {
-  switch (directive.type) {
+  var directiveType = directive.type;
+  
+  // If condition groups exist on this directive, then look for at least one
+  // group with conditions that all test true
+  if (directive.conditions.length > 0 && !directive.conditions.some(function (conditionGroup) {
+    return conditionGroup.every(function (condition) {
+      if (condition.type === "marker") {
+        return checkMarker(condition.marker, epiloguePlayer.epilogue.player);
+      }
+      return false;
+    }); 
+  })) {
+    directiveType = 'skip';
+  }
+
+  switch (directiveType) {
     case "sprite":
       this.addAction(directive, this.addSprite.bind(this), this.removeSceneObject.bind(this));
       break;
