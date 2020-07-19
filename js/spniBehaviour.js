@@ -258,7 +258,7 @@ function MarkerOperation(base_name, op, rhs, parentCase) {
      * One of '=', '+', '-', '*', '/', '%'.
      * @type {string}
      */
-    this.op = op;
+    this.op = (op || "=")[0];
 
     if (typeof(rhs) === 'number') {
         /**
@@ -274,7 +274,7 @@ function MarkerOperation(base_name, op, rhs, parentCase) {
             this.rhs = rhs;
         }
     } else {
-        this.rhs = !!rhs ? 1 : 0;
+        this.rhs = 1;
     }
 
     /**
@@ -351,11 +351,10 @@ function parseMarkerOp(operationSpec, parentCase) {
 function parseMarkerXML(xml, parentCase) {
     var $elem = $(xml);
     var name = $elem.attr("name");
-    var op = $elem.attr("op") || "=";
+    var op = $elem.attr("op");
     var rhs = $elem.attr("value");
-    if (rhs === undefined) rhs = '1';
 
-    return new MarkerOperation(name, op[0], rhs, parentCase);
+    return new MarkerOperation(name, op, rhs, parentCase);
 }
 
 /**
