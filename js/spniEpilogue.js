@@ -547,6 +547,7 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
         var height = parseInt($scene.attr("height"), 10);
         scene = {
           name: $scene.attr("name") || null,
+          id: $scene.attr("id") || null,
           background: $scene.attr("background"),
           width: width,
           height: height,
@@ -1089,7 +1090,8 @@ function skipToEpilogueScene () {
   var scene = parseInt($epilogueSkipSelector.val(), 10);
 
   if (isNaN(scene) || !epiloguePlayer || !epiloguePlayer.loaded) return;
-  epiloguePlayer.skipToScene(scene);
+  epiloguePlayer.skipToScene(scene, true);
+  epiloguePlayer.performDirective();
   updateEpilogueButtons();
 }
 
@@ -1350,6 +1352,9 @@ EpiloguePlayer.prototype.startScene = function (skipTransition) {
 EpiloguePlayer.prototype.setupScene = function (skipTransition) {
   var lastScene = this.activeScene;
 
+  // store in a separate variable in case the scene we're setting up is also the previous scene
+  var lastView = lastScene && lastScene.view;
+
   this.lastUpdate = performance.now();
   this.activeScene = this.epilogue.scenes[this.sceneIndex];
 
@@ -1365,10 +1370,10 @@ EpiloguePlayer.prototype.setupScene = function (skipTransition) {
   //scene transition effect
   if (lastScene) {
     if (lastScene.transition && this.activeScene && !skipTransition) {
-      this.activeTransition = new SceneTransition(lastScene.view, this.activeScene.view, lastScene.transition, $("#scene-fade"));
+      this.activeTransition = new SceneTransition(lastView, view, lastScene.transition, $("#scene-fade"));
     }
     if (!this.activeTransition) {
-      lastScene.view.cleanup();
+      lastView.cleanup();
     }
   }
 }
@@ -1577,21 +1582,46 @@ EpiloguePlayer.prototype.revertDirective = function () {
 }
 
 /**
- * Skips to the start of a specific scene in an epilogue.
+ * Jumps to the start of a specific scene in an epilogue.
+ * This is used to implement both the debug mode skip and jump directives.
  * 
- * Intended only for use with Debug Mode.
+ * @param {string | number} targetScene The string ID or numeric index of the
+ * scene to jump to.
+ * @param {boolean} checkTransition If true, this will not perform a skip if a
+ * scene transition is in progress.
  */
-EpiloguePlayer.prototype.skipToScene = function (scene) {
-  if (this.activeTransition) { return; }
+EpiloguePlayer.prototype.skipToScene = function (targetScene, checkTransition) {
+  if (checkTransition && this.activeTransition) { return; }
 
-  if (scene < 0) scene = 0;
-  if (scene >= this.epilogue.scenes.length) scene = this.epilogue.scenes.length-1;
+  var scene = null;
+  if (typeof(targetScene) === 'number') {
+    if (targetScene < 0) {
+      scene = 0;
+    } else if (targetScene >= this.epilogue.scenes.length) {
+      scene = this.epilogue.scenes.length-1;
+    } else {
+      scene = targetScene;
+    }
+  } else if (typeof(targetScene) === 'string') {
+    for (var i = 0; i < this.epilogue.scenes.length; i++) {
+      if (this.epilogue.scenes[i].id === targetScene) {
+        scene = i;
+        break;
+      }
+    }
+  }
+
+  if (typeof(scene) !== 'number') {
+    return;
+  }
 
   this.waitingForAnims = false;
   this.activeScene.view.haltAnimations(false);
   this.sceneIndex = scene;
-  
-  this.startScene(true);
+
+  this.pushUnwindScene();
+  this.setupScene(true);
+  // don't autostart progression again from here (jumps handle that themselves)
 }
 
 fromHex = function (hex) {
@@ -1715,6 +1745,12 @@ SceneView.prototype.runDirective = function (epiloguePlayer, directive) {
       break;
     case "marker":
       epiloguePlayer.addAction(directive, this.applyMarker.bind(this), this.revertMarker.bind(this));
+      break;
+    case "jump":
+      // NOTE: We don't want to push the jump onto the unwind stack as an action.
+      // The frames pushed onto the stack already provide the necessary context
+      // for reverting a jump.
+      epiloguePlayer.skipToScene(directive.id, false);
       break;
     case "skip":
       epiloguePlayer.addAction(directive, function () { }, function () { });
