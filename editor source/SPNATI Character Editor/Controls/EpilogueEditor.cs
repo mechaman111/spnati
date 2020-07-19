@@ -31,10 +31,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		protected override void OnInitialize()
 		{
-			if (!Config.DevMode)
-			{
-				tabs.TabPages.Remove(pageEditor);
-			}
+			tabs.TabPages.Remove(pageScenes);
 			SetCharacter(Record as Character);
 		}
 
@@ -111,15 +108,7 @@ namespace SPNATI_Character_Editor.Controls
 			cboEnding.SelectedItem = context.Epilogue;
 			if (context.Scene != null)
 			{
-				if (Config.DevMode)
-				{
-					tabs.SelectedTab = pageEditor;
-				}
-				else
-				{
-					tabs.SelectedTab = pageScenes;
-					canvas.JumpToNode(context.Scene, context.Directive, null);
-				}
+				tabs.SelectedTab = pageEditor;
 			}
 			else
 			{
@@ -185,14 +174,11 @@ namespace SPNATI_Character_Editor.Controls
 			tableGeneral.Data = _ending;
 			canvas.SetEpilogue(_ending, _character);
 
-			if (Config.DevMode)
-			{
-				liveEditor.SetEpilogue(_character, _ending);
-			}
+			liveEditor.SetEpilogue(_character, _ending);
 
 			if (ending != null)
 			{
-				tabs.SelectedTab = (string.IsNullOrEmpty(ending.Title) || ending.Title == "New Ending" ? pageGeneral : Config.DevMode ? pageEditor : pageScenes);
+				tabs.SelectedTab = (string.IsNullOrEmpty(ending.Title) || ending.Title == "New Ending" ? pageGeneral : pageEditor);
 			}
 			else
 			{
@@ -248,10 +234,7 @@ namespace SPNATI_Character_Editor.Controls
 			_ending.AlsoPlayingAnyMarkers = selAlsoPlayingAnyMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAlsoPlayingAnyMarkers.SelectedItems) : null;
 			_ending.Markers = gridMarkers.GetMarkers();
 
-			if (Config.DevMode)
-			{
-				liveEditor.Save();
-			}
+			liveEditor.Save();
 		}
 
 		private void RemoveEnding()

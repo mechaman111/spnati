@@ -572,6 +572,7 @@ namespace SPNATI_Character_Editor.Controls
 			tsRemoveScene.Enabled = _scene != null;
 			tsAddEndFrame.Enabled = (selectedWidget != null);
 			tsAddKeyframe.Enabled = false;
+			tsTransferFrame.Enabled = false;
 			tsRemoveKeyframe.Enabled = false;
 			tsAddEmission.Enabled = false;
 			tsTypeNormal.Enabled = tsTypeSplit.Enabled = tsTypeBegin.Enabled = false;
@@ -594,6 +595,7 @@ namespace SPNATI_Character_Editor.Controls
 					tsRemoveKeyframe.Enabled = true;
 					tsTypeNormal.Enabled = tsTypeSplit.Enabled = tsTypeBegin.Enabled = true;
 				}
+				tsTransferFrame.Enabled = (selectedWidget != null && selectedWidget.Data.LinkedFromPrevious);
 			}
 		}
 
@@ -739,6 +741,20 @@ namespace SPNATI_Character_Editor.Controls
 				timeline.CurrentTime = command.NewKeyframe.Time;
 			}
 			UpdateToolbar();
+		}
+
+		private void tsTransferFrame_Click(object sender, EventArgs e)
+		{
+			KeyframedWidget widget = timeline.SelectedObject as KeyframedWidget;
+
+			LiveKeyframe frame = widget.Data.CreateKeyframe(0);
+
+			MultiCommand cmd = new MultiCommand();
+			foreach (string property in frame.TrackedProperties)
+			{
+				cmd.Record(new TransferPreviousPropertyCommand(widget.Data, property));
+			}
+			_history.Commit(cmd);
 		}
 
 		private void tsRemove_Click(object sender, EventArgs e)
@@ -973,5 +989,6 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			selectedWidget.Data.AddEvent(timeline.CurrentTime);
 		}
+
 	}
 }

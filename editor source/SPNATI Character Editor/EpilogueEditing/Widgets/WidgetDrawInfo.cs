@@ -288,14 +288,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 				g.DrawLine(outline, startX, y, startX, y + rowHeight);
 				g.DrawLine(outline, startX + length, y, startX + length, y + rowHeight);
-				//if (dataEndTime > 0 && i == Blocks.Count - 1)
-				//{
-				//	_fillExtra.Color = Color.FromArgb(100, brush.Color.R, brush.Color.G, brush.Color.B);
-				//	startX = startX + length + 1;
-				//	length = dataEndTime * pps - startX + Timeline.StartBuffer;
-				//	g.FillRectangle(_fillExtra, startX, y + 6, length, rowHeight - 11);
-				//	g.DrawRectangle(outline, startX - 1, y + 6, length + 1, rowHeight - 12);
-				//}
 
 				if (block.Repeat)
 				{

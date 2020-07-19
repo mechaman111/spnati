@@ -199,25 +199,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				keyframe = AddKeyframe(time);
 			}
 
-			//if (Previous != null)
-			//{
-			//	//if this is the first frame, then make this a break
-			//	for (int i = 0; i < Keyframes.Count; i++)
-			//	{
-			//		LiveKeyframe kf = Keyframes[i];
-			//		if (kf == keyframe)
-			//		{
-			//			addAnimBreak = true;
-			//		}
-			//		else if (kf.HasProperty(propName))
-			//		{
-			//		}
-			//	}
-			//}
-
 			if (addAnimBreak)
 			{
-				bool isSplit = keyframe.HasProperty(propName);
+				bool isSplit = keyframe.HasProperty(propName) && time > 0;
 				keyframe.GetMetadata(propName, true).FrameType = isSplit ? KeyframeType.Split : KeyframeType.Begin;
 			}
 
@@ -1625,13 +1609,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 				if (kf.HasProperty(property))
 				{
-					if (disallowLoops)
+					LiveKeyframeMetadata blockData = GetBlockMetadata(property, kf.Time);
+					if (disallowLoops && blockData.Indefinite || !disallowLoops && !blockData.Indefinite)
 					{
-						LiveKeyframeMetadata blockData = GetBlockMetadata(property, kf.Time);
-						if (blockData.Indefinite)
-						{
-							return null;
-						}
+						return null;
 					}
 					return kf.Get<object>(property);
 				}

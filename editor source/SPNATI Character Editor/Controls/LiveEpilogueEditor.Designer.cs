@@ -41,6 +41,7 @@
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.lstScenes = new Desktop.CommonControls.RefreshableListBox();
 			this.tsToolbar = new System.Windows.Forms.ToolStrip();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsAdd = new System.Windows.Forms.ToolStripDropDownButton();
 			this.addSpriteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addSpeechBubbleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,7 +62,6 @@
 			this.tsTypeNormal = new System.Windows.Forms.ToolStripButton();
 			this.tsTypeSplit = new System.Windows.Forms.ToolStripButton();
 			this.tsTypeBegin = new System.Windows.Forms.ToolStripButton();
-			this.timeline = new SPNATI_Character_Editor.EpilogueEditor.Timeline();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer5 = new System.Windows.Forms.SplitContainer();
 			this.stripSegment = new System.Windows.Forms.ToolStrip();
@@ -74,10 +74,11 @@
 			this.lblDataCaption = new Desktop.Skinning.SkinnedLabel();
 			this.subTable = new Desktop.CommonControls.PropertyTable();
 			this.lblSubTable = new Desktop.Skinning.SkinnedLabel();
-			this.canvas = new SPNATI_Character_Editor.EpilogueEditor.LiveCanvas();
 			this.tmrRealtime = new System.Windows.Forms.Timer(this.components);
+			this.tsTransferFrame = new System.Windows.Forms.ToolStripButton();
+			this.timeline = new SPNATI_Character_Editor.EpilogueEditor.Timeline();
+			this.canvas = new SPNATI_Character_Editor.EpilogueEditor.LiveCanvas();
 			this.openFileDialog1 = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
-			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -175,12 +176,12 @@
 			this.tsAddScene.Text = "Add Scene";
 			this.tsAddScene.Click += new System.EventHandler(this.tsAddScene_Click);
 			// 
-			// tsRemoveSprite
+			// tsRemoveScene
 			// 
 			this.tsRemoveScene.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.tsRemoveScene.Image = global::SPNATI_Character_Editor.Properties.Resources.Remove;
 			this.tsRemoveScene.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsRemoveScene.Name = "tsRemoveSprite";
+			this.tsRemoveScene.Name = "tsRemoveScene";
 			this.tsRemoveScene.Size = new System.Drawing.Size(23, 22);
 			this.tsRemoveScene.Text = "Remove Scene";
 			this.tsRemoveScene.Click += new System.EventHandler(this.tsRemoveSprite_Click);
@@ -254,6 +255,7 @@
             this.tsAddKeyframe,
             this.tsRemoveKeyframe,
             this.tsAddEndFrame,
+            this.tsTransferFrame,
             this.toolStripSeparator4,
             this.tsTypeNormal,
             this.tsTypeSplit,
@@ -264,6 +266,11 @@
 			this.tsToolbar.TabIndex = 8;
 			this.tsToolbar.Tag = "Background";
 			this.tsToolbar.Text = "toolStrip1";
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
 			// 
 			// tsAdd
 			// 
@@ -447,23 +454,6 @@
 			this.tsTypeBegin.Size = new System.Drawing.Size(23, 22);
 			this.tsTypeBegin.Text = "Begin keyframe";
 			this.tsTypeBegin.Click += new System.EventHandler(this.tsTypeBegin_Click);
-			// 
-			// timeline
-			// 
-			this.timeline.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.timeline.CommandHistory = null;
-			this.timeline.CurrentTime = 0F;
-			this.timeline.ElapsedTime = 0F;
-			this.timeline.Enabled = false;
-			this.timeline.Location = new System.Drawing.Point(0, 25);
-			this.timeline.Name = "timeline";
-			this.timeline.PauseOnBreaks = false;
-			this.timeline.PlaybackAwaitingInput = false;
-			this.timeline.PlaybackTime = 0F;
-			this.timeline.Size = new System.Drawing.Size(962, 150);
-			this.timeline.TabIndex = 1;
 			// 
 			// splitContainer2
 			// 
@@ -675,6 +665,38 @@
 			this.lblSubTable.Text = "Data";
 			this.lblSubTable.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
+			// tmrRealtime
+			// 
+			this.tmrRealtime.Interval = 30;
+			this.tmrRealtime.Tick += new System.EventHandler(this.tmrRealtime_Tick);
+			// 
+			// tsTransferFrame
+			// 
+			this.tsTransferFrame.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsTransferFrame.Image = global::SPNATI_Character_Editor.Properties.Resources.TransferKeyframe;
+			this.tsTransferFrame.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsTransferFrame.Name = "tsTransferFrame";
+			this.tsTransferFrame.Size = new System.Drawing.Size(23, 22);
+			this.tsTransferFrame.Text = "Transfer looping properties into the action";
+			this.tsTransferFrame.Click += new System.EventHandler(this.tsTransferFrame_Click);
+			// 
+			// timeline
+			// 
+			this.timeline.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.timeline.CommandHistory = null;
+			this.timeline.CurrentTime = 0F;
+			this.timeline.ElapsedTime = 0F;
+			this.timeline.Enabled = false;
+			this.timeline.Location = new System.Drawing.Point(0, 25);
+			this.timeline.Name = "timeline";
+			this.timeline.PauseOnBreaks = false;
+			this.timeline.PlaybackAwaitingInput = false;
+			this.timeline.PlaybackTime = 0F;
+			this.timeline.Size = new System.Drawing.Size(962, 150);
+			this.timeline.TabIndex = 1;
+			// 
 			// canvas
 			// 
 			this.canvas.AllowZoom = true;
@@ -687,21 +709,11 @@
 			this.canvas.Size = new System.Drawing.Size(715, 496);
 			this.canvas.TabIndex = 0;
 			// 
-			// tmrRealtime
-			// 
-			this.tmrRealtime.Interval = 30;
-			this.tmrRealtime.Tick += new System.EventHandler(this.tmrRealtime_Tick);
-			// 
 			// openFileDialog1
 			// 
 			this.openFileDialog1.Filter = "";
 			this.openFileDialog1.IncludeOpponents = false;
 			this.openFileDialog1.UseAbsolutePaths = false;
-			// 
-			// toolStripSeparator5
-			// 
-			this.toolStripSeparator5.Name = "toolStripSeparator5";
-			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
 			// 
 			// LiveEpilogueEditor
 			// 
@@ -794,5 +806,6 @@
 		private System.Windows.Forms.ToolStripButton tsAddEmission;
 		private System.Windows.Forms.ToolStripMenuItem emitParticleToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+		private System.Windows.Forms.ToolStripButton tsTransferFrame;
 	}
 }

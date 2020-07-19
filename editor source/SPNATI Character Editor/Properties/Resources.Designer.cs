@@ -1193,6 +1193,16 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap TransferKeyframe {
+            get {
+                object obj = ResourceManager.GetObject("TransferKeyframe", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap TrophyFilled {
             get {
                 object obj = ResourceManager.GetObject("TrophyFilled", resourceCulture);
