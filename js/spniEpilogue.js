@@ -589,20 +589,19 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
           directive.conditions = [];
           $(item).children("conditions").each(function (i2, groupElem) {
             var condGroup = [];
-            $(groupElem).children("marker").each(function (i3, markerElem) {
+            $(groupElem).children().each(function (i3, condElem) {
               condGroup.push({
-                "type": "marker",
-                "marker": $(markerElem).text()
+                "type": condElem.nodeName.toLowerCase(),
+                "test": $(condElem).text()
               });
             });
-
             directive.conditions.push(condGroup);
           });
 
           if (directive.marker) {
             directive.conditions.push([{
               "type": "marker",
-              "marker": directive.marker
+              "test": directive.marker
             }]);
 
             delete directive.marker;
@@ -1017,7 +1016,7 @@ function doEpilogue() {
     recordEpilogueEvent(false, chosenEpilogue);
   }
 
-  loadEpilogue(chosenEpilogue);
+  loadEpilogue(chosenEpilogue, false);
 
   screenTransition($gameScreen, $epilogueScreen);
   $epilogueSelectionModal.modal("hide");
@@ -1026,9 +1025,9 @@ function doEpilogue() {
 /************************************************************
 * Starts up an epilogue, pre-fetching all its images before displaying anything in order to handle certain computations that rely on the image sizes
 ************************************************************/
-function loadEpilogue(epilogue, loadToScene) {
+function loadEpilogue(epilogue, gallery, loadToScene) {
   $("#epilogue-spinner").show();
-  epiloguePlayer = new EpiloguePlayer(epilogue);
+  epiloguePlayer = new EpiloguePlayer(epilogue, gallery);
   if (typeof loadToScene === "number") epiloguePlayer.hotReloadScene = loadToScene;
 
   epiloguePlayer.load();
@@ -1125,7 +1124,7 @@ function hotReloadEpilogue () {
       /* Clean up the old EpiloguePlayer. */
       clearEpilogue();
 
-      loadEpilogue(epilogue, curScene);
+      loadEpilogue(epilogue, epiloguePlayer.gallery, curScene);
       $epilogueHotReloadBtn.attr('disabled', false);
     });
 }
@@ -1160,7 +1159,7 @@ function updateEpilogueButtons() {
 /************************************************************
 * Class for playing through an epilogue
 ************************************************************/
-function EpiloguePlayer(epilogue) {
+function EpiloguePlayer(epilogue, fromGallery) {
   this.resizeHandler = this.resizeViewport.bind(this);
   $(window).resize(this.resizeHandler);
   this.epilogue = epilogue;
@@ -1178,6 +1177,7 @@ function EpiloguePlayer(epilogue) {
   this.activeTransition = null;
   this.hotReloadScene = null;
   this.startingDirectiveIndex = 1;
+  this.gallery = !!fromGallery;
 }
 
 EpiloguePlayer.prototype.load = function () {
@@ -1578,8 +1578,11 @@ SceneView.prototype.runDirective = function (epiloguePlayer, directive) {
   if (directive.conditions.length > 0 && !directive.conditions.some(function (conditionGroup) {
     return conditionGroup.every(function (condition) {
       if (condition.type === "marker") {
-        return checkMarker(condition.marker, epiloguePlayer.epilogue.player);
+        return checkMarker(condition.test, epiloguePlayer.epilogue.player);
+      } else if (condition.type === "if-gallery") {
+        return epiloguePlayer.gallery === (condition.test.toLowerCase() === "true");
       }
+
       return false;
     }); 
   })) {
