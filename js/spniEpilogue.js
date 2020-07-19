@@ -746,7 +746,9 @@ function readProperties(sourceObj, scene) {
   //properties needing special handling
   targetObj.delay = parseFloat(targetObj.delay, 10) * 1000 || 0;
 
-  if (targetObj.type !== "text") {
+  if (targetObj.type === "marker") {
+    targetObj.markerOp = new MarkerOperation(targetObj.name, targetObj.op, targetObj.rhs, null);
+  } else if (targetObj.type !== "text") {
     // scene directives
     targetObj.time = parseFloat(targetObj.time, 10) * 1000 || 0;
     if (targetObj.alpha) { targetObj.alpha = parseFloat(targetObj.alpha, 10); }
@@ -1628,6 +1630,9 @@ SceneView.prototype.runDirective = function (epiloguePlayer, directive) {
     case "emit":
       this.addAction(directive, this.burstParticles.bind(this), this.clearParticles.bind(this));
       break;
+    case "marker":
+      this.addAction(directive, this.applyMarker.bind(this), this.revertMarker.bind(this));
+      break;
     case "skip":
       this.addAction(directive, function () { }, function () { });
       break;
@@ -2326,6 +2331,18 @@ SceneView.prototype.clearParticles = function (directive, context) {
       emitter.killParticles();
     }
   }
+}
+
+SceneView.prototype.applyMarker = function (directive, context) {
+  var player = epiloguePlayer.epilogue.player;
+
+  context.player = player;
+  context.oldValue = directive.markerOp.currentValue(player, null, false);
+  directive.markerOp.apply(player, null);
+}
+
+SceneView.prototype.revertMarker = function (directive, context) {
+  context.player.setMarker(directive.markerOp.name, null, context.oldValue);
 }
 
 function RandomParameter(startValue, endValue) {

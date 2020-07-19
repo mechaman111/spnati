@@ -434,6 +434,22 @@ MarkerOperation.prototype.apply = function (self, opp) {
 }
 
 /**
+ * Get the current value of the marker affected by this operation, prior to
+ * evaluation.
+ * @param {Player} self 
+ * @param {Player} opp 
+ * @param {boolean} numeric See Player.getMarker.
+ * @returns {number | string}
+ */
+MarkerOperation.prototype.currentValue = function(self, opp, numeric) {
+    return self.getMarker(
+        this.name,
+        this.perTarget ? opp : null,
+        numeric
+    );
+}
+
+/**
  * Make a snapshot of this marker operation that can be serialized as
  * JSON.
  * 
