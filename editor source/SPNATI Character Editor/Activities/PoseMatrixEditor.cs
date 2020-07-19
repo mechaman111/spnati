@@ -698,10 +698,15 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			string filename = imageKey + ".png";
 			string subfolder = (_sheet.SubFolder ?? "").Replace("/", "\\");
-			string fullPath = Path.Combine(_skin.GetDirectory(), subfolder, filename);
+			string baseDir = Path.Combine(_skin.GetDirectory(), subfolder);
+			string fullPath = Path.Combine(baseDir, filename);
 
 			try
 			{
+				if (!Directory.Exists(baseDir))
+				{
+					Directory.CreateDirectory(baseDir);
+				}
 				image.Save(fullPath);
 
 				_character.PoseLibrary.Add(fullPath);

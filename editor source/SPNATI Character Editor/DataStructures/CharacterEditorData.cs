@@ -395,6 +395,21 @@ namespace SPNATI_Character_Editor
 			Responses.Add(situationResponse);
 		}
 
+		/// <summary>
+		/// Marks as having responded to a case without a specific source to link it to
+		/// </summary>
+		/// <param name="opponent"></param>
+		/// <param name="caseId"></param>
+		public void MarkResponse(Character opponent, int caseId)
+		{
+			SituationResponse response = new SituationResponse()
+			{
+				Opponent = opponent.FolderName,
+				OpponentId = caseId
+			};
+			Responses.Add(response);
+		}
+
 		public void SetNote(Case workingCase, string text)
 		{
 			if (string.IsNullOrEmpty(text))

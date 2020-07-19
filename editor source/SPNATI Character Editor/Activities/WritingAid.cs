@@ -297,6 +297,7 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			_activeCharacter = character;
 			_activeSituation = situation;
+			cmdMarkResponded.Enabled = situation.Id > 0 && !_editorData.HasResponse(_activeCharacter, _activeSituation.Id);
 			Stage stage = new Stage(situation.MinStage);
 			gridActiveSituation.SetData(character, stage, situation.LinkedCase, new HashSet<int>());
 			Cursor.Current = Cursors.Default;
@@ -483,6 +484,17 @@ namespace SPNATI_Character_Editor.Activities
 				count = editorData.Responses.Count;
 			}
 			lblResponseCount.Text = count.ToString();
+		}
+
+		private void cmdMarkResponded_Click(object sender, EventArgs e)
+		{
+			if (_activeSituation == null || _activeSituation.Id == 0) { return; }
+
+			if (_editorData.HasResponse(_activeCharacter, _activeSituation.Id))
+			{
+				_editorData.MarkResponse(_activeCharacter, _activeSituation.Id);
+				UpdateResponseCount();
+			}
 		}
 	}
 }

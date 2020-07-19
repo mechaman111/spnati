@@ -938,7 +938,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		protected LiveKeyframe SelectFrameDataWithPreview(float time)
 		{
-			LiveKeyframe previewFrame = Data.GetInterpolatedFrame(time - Data.Start);
+			LiveKeyframe previewFrame = Data.GetInterpolatedFrame(time);
 
 			//show whatever keyframe is under the current time, or an interpolated placeholder if there is none
 			LiveKeyframe frame = Data.Keyframes.Find(kf => kf.Time + Data.Start == time);
