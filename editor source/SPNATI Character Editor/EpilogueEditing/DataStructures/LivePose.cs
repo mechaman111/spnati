@@ -15,6 +15,19 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public ISkin Character;
 		public Pose Pose;
 
+		private bool _crossStage;
+
+		private int _stage;
+		public int CurrentStage
+		{
+			get { return _stage; }
+			set
+			{
+				_stage = value;
+				UpdateSpriteStages();
+			}
+		}
+
 		public event EventHandler LabelChanged;
 
 		public ObservableCollection<LiveSprite> Sprites
@@ -30,12 +43,17 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			get { return Get<string>(); }
 			set
 			{
-				if (value == null)
+				if (value == null || Id == value)
 				{
 					return; //prevent null IDs
 				}
+				_crossStage = value.StartsWith("#-");
 				Set(value);
 				LabelChanged?.Invoke(this, EventArgs.Empty);
+				if (value.StartsWith("#-"))
+				{
+					UpdateSpriteStages();
+				}
 			}
 		}
 
@@ -52,9 +70,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			Sprites = new ObservableCollection<LiveSprite>();
 		}
-		public LivePose(ISkin character, Pose pose)
+		public LivePose(ISkin character, Pose pose, int stage)
 		{
 			Character = character;
+			CurrentStage = stage;
 
 			ConvertPose(pose);
 		}
@@ -86,6 +105,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private void ConvertPose(Pose pose)
 		{
 			Pose = pose;
+			Sprites = new ObservableCollection<LiveSprite>();
 
 			//1. Pose-level data
 			Id = pose.Id;
@@ -100,13 +120,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 
 			//2. convert all the Sprites into LiveSprites with their properties as Keyframe 0.
-			Sprites = new ObservableCollection<LiveSprite>();
 			Sprites.CollectionChanged += Sprites_CollectionChanged;
 
 			Dictionary<string, LiveSprite> sprites = new Dictionary<string, LiveSprite>();
 			foreach (Sprite sprite in pose.Sprites)
 			{
 				LiveSprite preview = new LiveSprite(this, sprite, _time);
+				preview.Stage = CurrentStage;
 				preview.PropertyChanged += Sprite_PropertyChanged;
 				Sprites.Add(preview);
 				if (!string.IsNullOrEmpty(sprite.Id))
@@ -181,6 +201,21 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (e.PropertyName == "Z")
 			{
 				ReorderSprites();
+			}
+			else if (e.PropertyName == "Id")
+			{
+				string newId = (sender as LiveObject)?.Id;
+				if (!string.IsNullOrEmpty(newId))
+				{
+					//relink children
+					foreach (LiveSprite track in Sprites)
+					{
+						if (track.Parent == sender)
+						{
+							track.ParentId = newId;
+						}
+					}
+				}
 			}
 		}
 
@@ -497,6 +532,17 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}).Max();
 		}
 
+		private void UpdateSpriteStages()
+		{
+			if (Sprites != null)
+			{
+				foreach (LiveSprite obj in Sprites)
+				{
+					obj.Stage = _stage;
+				}
+			}
+		}
+
 		#region debugging
 		public void PrintPlainText()
 		{
@@ -619,5 +665,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return count.ToString();
 		}
 		#endregion
+
+		public override bool AllowsCrossStageImages
+		{
+			get
+			{
+				return _crossStage;
+			}
+		}
 	}
 }

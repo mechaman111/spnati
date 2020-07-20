@@ -1,5 +1,6 @@
 ﻿using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Controls;
+using System.IO;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
@@ -20,7 +21,25 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public string Src
 		{
 			get { return Get<string>(); }
-			set { Set(value); }
+			set
+			{
+				if (value == Src)
+				{
+					return;
+				}
+				if (Data.AllowsCrossStageImages)
+				{
+					string filename = Path.GetFileName(value);
+					int stage;
+					string id;
+					PoseMap.ParseImage(filename, out stage, out id);
+					if (stage >= 0)
+					{
+						value = value.Replace($"{stage}-", "#-");
+					}
+				}
+				Set(value);
+			}
 		}
 
 		[Float(DisplayName = "Scale X", GroupOrder = 40, Key = "scalex", Increment = 0.1f, Minimum = -1000, Maximum = 1000)]

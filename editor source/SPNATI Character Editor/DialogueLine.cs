@@ -126,7 +126,6 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _intelligence;
-		[DefaultValue("")]
 		[XmlAttribute("set-intelligence")]
 		public string Intelligence
 		{
@@ -144,7 +143,6 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _label;
-		[DefaultValue("")]
 		[XmlAttribute("set-label")]
 		public string Label
 		{
@@ -329,8 +327,8 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				return !string.IsNullOrEmpty(Gender) || !string.IsNullOrEmpty(Size) || !string.IsNullOrEmpty(Intelligence) || (!string.IsNullOrEmpty(Direction) && Direction != "down") ||
-					!string.IsNullOrEmpty(Location) || OneShotId > 0 || Weight != 1;
+				return !string.IsNullOrEmpty(Gender) || !string.IsNullOrEmpty(Size) || Intelligence != null || (!string.IsNullOrEmpty(Direction) && Direction != "down") ||
+					Label != null || !string.IsNullOrEmpty(Location) || OneShotId > 0 || Weight != 1;
 			}
 		}
 

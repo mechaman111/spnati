@@ -109,6 +109,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				string src = Data.GetPropertyValue<string>("Src", 0, 0, null);
 				if (!string.IsNullOrEmpty(src))
 				{
+					src = ((LiveSprite)Data).GetImagePath(src);
 					try
 					{
 						Image bmp = LiveImageCache.Get(src);

@@ -21,6 +21,18 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
+		public bool AlwaysPersistent
+		{
+			get
+			{
+				return !ColPersistent.Visible;
+			}
+			set
+			{
+				ColPersistent.Visible = !value;
+			}
+		}
+
 		public List<MarkerOperation> GetMarkers()
 		{
 
@@ -36,7 +48,7 @@ namespace SPNATI_Character_Editor.Controls
 				string op = row.Cells[nameof(ColOperator)].Value?.ToString();
 				string value = row.Cells[nameof(ColValue)].Value?.ToString();
 				bool perTarget = row.Cells[nameof(ColPerTarget)].Value != null ? (bool)row.Cells[nameof(ColPerTarget)].Value : false;
-				bool persistent = row.Cells[nameof(ColPersistent)].Value != null ? (bool)row.Cells[nameof(ColPersistent)].Value : false;
+				bool persistent = AlwaysPersistent || (row.Cells[nameof(ColPersistent)].Value != null ? (bool)row.Cells[nameof(ColPersistent)].Value : false);
 				string when = row.Cells[nameof(ColWhen)].Value?.ToString();
 
 				if (persistent)
@@ -46,6 +58,10 @@ namespace SPNATI_Character_Editor.Controls
 				else
 				{
 					_character.Behavior.PersistentMarkers.Remove(name);
+				}
+				if (!_character.Markers.Value.Contains(name))
+				{
+					_character.Markers.Value.Add(new Marker(name));
 				}
 
 				if (perTarget)

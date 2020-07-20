@@ -36,5 +36,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public abstract void UpdateSelection(WidgetSelectionArgs args);
 		public abstract List<ITimelineBreak> CreateBreaks(Timeline timeline);
 		public abstract ITimelineBreak AddBreak(float time);
+
+		public virtual bool AllowsCrossStageImages { get { return false; } }
 	}
 }

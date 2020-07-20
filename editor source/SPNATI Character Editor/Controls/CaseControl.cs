@@ -378,6 +378,7 @@ namespace SPNATI_Character_Editor.Controls
 
 
 			GUIHelper.SetNumericBox(valPriority, _selectedCase.CustomPriority);
+			chkBackground.Checked = _selectedCase.Hidden == "1";
 
 			var stages = GetSelectedStages();
 			gridDialogue.SetData(_character, _selectedStage, _selectedCase, stages);
@@ -627,6 +628,7 @@ namespace SPNATI_Character_Editor.Controls
 				tableConditions.Save();
 
 				c.CustomPriority = GUIHelper.ReadNumericBox(valPriority);
+				c.Hidden = (chkBackground.Checked ? "1" : null);
 			}
 
 			//Lines

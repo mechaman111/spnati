@@ -922,6 +922,5 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					return 0f;
 			}
 		}
-
 	}
 }

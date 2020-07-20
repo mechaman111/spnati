@@ -4,11 +4,35 @@
 	<li>Use the left and right arrows to switch between graphs.</li>
 </ul>
 
+<h3>Dialogue</h3>
+<ul>
+	<li>The Self > Hidden case condition has been moved to a more prominent, permanent "Background" checkbox next to the custom priority field. The purpose for this change is twofold: to eliminate conflicting terminology with cases that are simply hidden from view in the editor (which has no impact on gameplay), and to make it easier to find this functionality.</li>
+	<li>Add Reset checkboxes to a line's advanced dialogue settings for resetting the character's label and intelligence back to their initial values when played.</li>
+</ul>
+
 <h3>Epilogues</h3>
 <ul>
 	<li>The epilogue editor has received a complete overhaul to make it more similar sequencers found in other software (including the Pose Maker in this software).</li>
 	<li>A tutorial has been added to the spnati_edit YouTube channel.</li>
 	<li>If an emitter's Y scale is left blank, it will now use the same value as the X scale, preserving aspect ratio.</li>
+	<li>Removed the "Persistent" column from the "Markers to Set" table. Markers set by an epilogue are always persistent.</li>
+</ul>
+<h4>Common Upgrade Issues With Epilogues</h4>
+Upon opening a scene in an existing ending, it will convert to the new format, which saves slightly differently from the old format. You should play through your entire epilogue to identify any inadvertent changes.
+Some common issues you may encounter include, but are not necessarily limited to,
+<ul>
+	<li>Duplicate keyframes: You might have had two keyframes in a Move directive with time "0.5s" thinking one would play at 0.5s and the next 0.5s later, but they would actually play at the same time (as evident by jerky motion when viewed in the game). Only one of these frames will be retained.</li>
+	<li>Move directives conflicting with loops: For example, a looping Move directive that moves to Y: 50 at time 1.0s, followed by a non-looping Move directive  moving to Y: 25 at time 0.5s. In game, these would play 
+	  simultaneously and conflict with each other up to 0.5s, at which point the loop would take over, but the editor does not allow this and will end the loop prior to the non-looping movement.
+	</li>
+	<li>Changing a value without stopping a loop: For eample, a looping Move directive that moves to Y: 50 at time 1.0s, followed by a non-looping Move directive with a 2.0s delay that changes Y to 25. In game, this would keep looping the Y: 50 animation, making the jump to 25 unnoticeable, but the editor 
+	assumes the loop is supposed to stop at the start of the Move directive.</li>
+	<li>There is a bug in the game engine where an initial fade opacity with no color specified will display a transparent color at 100% opacity instead of defaulting to black.
+	Some epilogues have worked around this by doing an immediate fade directive to set the color. The editor will see that the fade is going from 100% default (i.e. black) to 100% black, so it will discard it as redundant.</li>
+	<li>Aside from text boxes, positions can no longer be specified in percentages. These will be lost upon opening the scene.</li>
+	<li>All "wait for animations" directives are now replaced with delays of an equivalent amount. If a user clicks before animations have finished, the epilogue will skip to the end of the "wait for animations" directive. Since all "wait for animations" directives
+	are now grouped into a single block using delays, clicking early will skip past them all at once instead of one at a time.</li>
+	<li>The game engine does not support scaling sprites to 0, but in certain circumstances it would look like it still worked. With the new save format, it's more likely to encounter the problem, which would result in sprites scaling to 1 instead of 0.</li>
 </ul>
 
 <h3>Pose Maker</h3>
@@ -18,6 +42,7 @@
 	<li>These features also apply to the Epilogue Editor.</li>
 	<li>Added buttons for changing a keyframe type instead of cycling through them.</li>
 	<li>Adjusted the colors across various themes.</li>
+	<li>Naming a pose with the # prefix (ex. #-happy) enables it for use across all stages with stage-specific assets. See YOUTUBE LINK HERE for a brief tutorial on how this works.</li>
 </ul>
 
 <h3>Pose Matrix</h3>
@@ -68,4 +93,5 @@
 	<li>Performance optimizations to the pose maker when there are lots of objects in the timeline.</li>
 	<li>The timeline can now be scrolled using the mousewheel while hovering over a sprite header.</li>
 	<li>Fixed emitter particles not previewing skew values.</li>
+	<li>Fixed isuse where renaming a sprite that has children linked to it would break that link.</li>
 </ul>

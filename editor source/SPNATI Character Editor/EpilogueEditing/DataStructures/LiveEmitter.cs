@@ -441,6 +441,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public override bool UpdateRealTime(float elapsed, bool inPlayback)
 		{
+			Console.WriteLine(Id + " Real time update" + elapsed);
 			if (Hidden)
 			{
 				return false;

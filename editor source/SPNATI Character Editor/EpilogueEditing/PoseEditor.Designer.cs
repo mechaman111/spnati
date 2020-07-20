@@ -62,6 +62,7 @@
 			this.table = new Desktop.CommonControls.PropertyTable();
 			this.canvas = new SPNATI_Character_Editor.EpilogueEditor.LiveCanvas();
 			this.openFileDialog1 = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
+			this.tsStageSelect = new System.Windows.Forms.ToolStripButton();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -324,6 +325,7 @@
             this.tsCopy,
             this.tsPaste,
             this.tsDuplicate,
+            this.tsStageSelect,
             this.tsExport});
 			this.tsPoses.Location = new System.Drawing.Point(0, 0);
 			this.tsPoses.Name = "tsPoses";
@@ -471,6 +473,16 @@
 			this.openFileDialog1.IncludeOpponents = false;
 			this.openFileDialog1.UseAbsolutePaths = false;
 			// 
+			// tsStageSelect
+			// 
+			this.tsStageSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsStageSelect.Image = global::SPNATI_Character_Editor.Properties.Resources.RangeChooser;
+			this.tsStageSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsStageSelect.Name = "tsStageSelect";
+			this.tsStageSelect.Size = new System.Drawing.Size(23, 20);
+			this.tsStageSelect.Text = "Select Stage";
+			this.tsStageSelect.Click += new System.EventHandler(this.tsStageSelect_Click);
+			// 
 			// PoseEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -535,5 +547,6 @@
 		private System.Windows.Forms.ToolStripButton tsTypeNormal;
 		private System.Windows.Forms.ToolStripButton tsTypeSplit;
 		private System.Windows.Forms.ToolStripButton tsTypeBegin;
+		private System.Windows.Forms.ToolStripButton tsStageSelect;
 	}
 }

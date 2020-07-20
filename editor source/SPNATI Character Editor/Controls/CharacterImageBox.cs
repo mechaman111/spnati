@@ -233,7 +233,7 @@ namespace SPNATI_Character_Editor.Controls
 						{
 							p = poseRef.Pose;
 						}
-						Pose = new LivePose(_character, p);
+						Pose = new LivePose(_character, p, _currentStage);
 						if (AutoPlayback)
 						{
 							_time = 0;

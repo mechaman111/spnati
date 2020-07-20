@@ -107,6 +107,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return null;
 		}
 
+		public bool AllowsCrossStageImages
+		{
+			get
+			{
+				return Data.AllowsCrossStageImages;
+			}
+		}
+
 		public LiveKeyframe CreateKeyframe(float time)
 		{
 			LiveKeyframe kf = Activator.CreateInstance(GetKeyframeType()) as LiveKeyframe;

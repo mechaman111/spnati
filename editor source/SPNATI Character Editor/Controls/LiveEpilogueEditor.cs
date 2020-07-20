@@ -399,28 +399,6 @@ namespace SPNATI_Character_Editor.Controls
 				}
 			}
 
-			bool enabled = _scene != null;
-
-			EpilogueContext context = new EpilogueContext(_character, _epilogue, _sourceScene);
-			context.Context = CharacterContext.Pose;
-			table.Context = context;
-			subTable.Context = context;
-			canvas.SetData(_character, _scene);
-			timeline.SetData(null);
-			object data = _scene;
-			if (_sceneTransition != null)
-			{
-				data = _sourceScene;
-			}
-			SetActive(true);
-			SetTableData(data, null);
-			canvas.Enabled = enabled;
-			table.Enabled = data != null;
-			subTable.Enabled = data != null;
-			timeline.Enabled = false;
-			SetSubTableData(null, null);
-			canvas.FitScreen();
-
 			if (_sceneTransition == null)
 			{
 				BuildSegmentList();
@@ -428,6 +406,12 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					lstSegments.SelectedIndex = 0;
 				}
+			}
+			else
+			{
+				SetTableData(_sourceScene, null);
+				SetSubTableData(null, null);
+				SetActive(true);
 			}
 		}
 
@@ -540,13 +524,13 @@ namespace SPNATI_Character_Editor.Controls
 			object data = _segment;
 			_segment?.ActivateForEdit();
 			SetActive(true);
-			SetTableData(data, null);
+			SetTableData(_scene, null);
 			tsToolbar.Enabled = enabled;
 			canvas.Enabled = enabled;
 			table.Enabled = data != null;
 			subTable.Enabled = data != null;
 			timeline.Enabled = enabled;
-			SetSubTableData(null, null);
+			SetSubTableData(data, null);
 			ToggleCamera(_cameraLocked);
 			_changingSegment = false;
 		}

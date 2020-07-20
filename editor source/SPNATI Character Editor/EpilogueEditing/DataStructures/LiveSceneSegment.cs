@@ -519,6 +519,21 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				ReorderObjects();
 			}
+			else if (e.PropertyName == "Id")
+			{
+				string newId = (sender as LiveObject)?.Id;
+				if (!string.IsNullOrEmpty(newId))
+				{
+					//relink children
+					foreach (LiveObject track in Tracks)
+					{
+						if (track.Parent == sender)
+						{
+							track.ParentId = newId;
+						}
+					}
+				}
+			}
 		}
 
 		private void Objects_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -752,7 +767,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			bool invalidated = false;
 			foreach (LiveObject sprite in Tracks)
 			{
-				invalidated = invalidated || sprite.UpdateRealTime(deltaTime, inPlayback);
+				invalidated = sprite.UpdateRealTime(deltaTime, inPlayback) || invalidated;
 			}
 			return invalidated;
 		}

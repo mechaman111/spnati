@@ -11,6 +11,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 	{
 		public SpriteWidget Widget;
 
+		private int _stage;
+
 		#region Pose
 		public LiveSprite(LiveData data, float time) : this()
 		{
@@ -158,6 +160,26 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		}
 
+		public int Stage
+		{
+			get { return _stage; }
+			set
+			{
+				_stage = value;
+				UpdateImage();
+				if (LinkedPreview != null)
+				{
+					(LinkedPreview as LiveSprite).Stage = value;
+				}
+			}
+		}
+
+		protected override void OnCopyTo(LiveObject copy)
+		{
+			base.OnCopyTo(copy);
+			Stage = ((LiveSprite)copy).Stage;
+		}
+
 		public override string GetLabel()
 		{
 			return $"Sprite Settings: {Id}";
@@ -265,13 +287,28 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Y = GetPropertyValue("Y", time, offset, 0.0f, easeOverride, interpolationOverride, looped);
 			string src = GetPropertyValue<string>("Src", time, 0, null, easeOverride, interpolationOverride, looped);
 			Src = src;
-			Image = LiveImageCache.Get(src);
+			UpdateImage();
 			ScaleX = GetPropertyValue("ScaleX", time, offset, 1.0f, easeOverride, interpolationOverride, looped);
 			ScaleY = GetPropertyValue("ScaleY", time, offset, 1.0f, easeOverride, interpolationOverride, looped);
 			Alpha = GetPropertyValue("Alpha", time, offset, 100.0f, easeOverride, interpolationOverride, looped);
 			Rotation = GetPropertyValue("Rotation", time, offset, 0.0f, easeOverride, interpolationOverride, looped);
 			SkewX = GetPropertyValue("SkewX", time, offset, 0f, easeOverride, interpolationOverride, looped);
 			SkewY = GetPropertyValue("SkewY", time, offset, 0f, easeOverride, interpolationOverride, looped);
+		}
+
+		private void UpdateImage()
+		{
+			string src = GetImagePath(Src);
+			Image = LiveImageCache.Get(src);
+		}
+
+		public string GetImagePath(string src)
+		{
+			if (Data.AllowsCrossStageImages && !string.IsNullOrEmpty(src) && src.Contains("#-"))
+			{
+				src = src.Replace("#-", $"{_stage}-");
+			}
+			return src;
 		}
 
 		public override ITimelineWidget CreateWidget(Timeline timeline)

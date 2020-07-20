@@ -51,6 +51,8 @@ namespace SPNATI_Character_Editor.Controls
 			cboAI.Text = line.Intelligence ?? "";
 			cboGender.Text = line.Gender ?? "";
 			txtLabel.Text = line.Label;
+			chkResetAI.Checked = line.Intelligence == "";
+			chkResetLabel.Checked = line.Label == "";
 			chkOneShot.Checked = line.OneShotId > 0;
 
 			valWeight.Value = Math.Max(valWeight.Minimum, Math.Min(valWeight.Maximum, (decimal)line.Weight));
@@ -95,12 +97,19 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			_line.Size = size;
 
-			string ai = cboAI.Text;
-			if (string.IsNullOrEmpty(ai))
+			if (chkResetAI.Checked)
 			{
-				ai = null;
+				_line.Intelligence = "";
 			}
-			_line.Intelligence = ai;
+			else
+			{
+				string ai = cboAI.Text;
+				if (string.IsNullOrEmpty(ai))
+				{
+					ai = null;
+				}
+				_line.Intelligence = ai;
+			}
 
 			string gender = cboGender.Text;
 			if (string.IsNullOrEmpty(gender))
@@ -109,12 +118,19 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			_line.Gender = gender;
 
-			string label = txtLabel.Text;
-			if (label == "")
+			if (chkResetLabel.Checked)
 			{
-				label = null;
+				_line.Label = "";
 			}
-			_line.Label = label;
+			else
+			{
+				string label = txtLabel.Text;
+				if (label == "")
+				{
+					label = null;
+				}
+				_line.Label = label;
+			}
 
 			if (chkOneShot.Checked)
 			{
@@ -134,6 +150,16 @@ namespace SPNATI_Character_Editor.Controls
 		private void valLocation_ValueChanged(object sender, EventArgs e)
 		{
 			DataUpdated?.Invoke(this, e);
+		}
+
+		private void chkResetAI_CheckedChanged(object sender, EventArgs e)
+		{
+			cboAI.Enabled = !chkResetAI.Checked;
+		}
+
+		private void chkResetLabel_CheckedChanged(object sender, EventArgs e)
+		{
+			txtLabel.Enabled = !chkResetLabel.Checked;
 		}
 	}
 

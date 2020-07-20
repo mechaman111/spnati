@@ -17,6 +17,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private ISkin _character;
 		private LivePose _pose;
 		private Pose _sourcePose;
+		private int _stage;
 		private UndoManager _history = new UndoManager();
 		private float _time;
 		private float _elapsedTime;
@@ -196,7 +197,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_sourcePose = pose;
 			if (pose != null)
 			{
-				_pose = new LivePose(_character, pose);
+				_pose = new LivePose(_character, pose, _stage);
+				_pose.CurrentStage = _stage;
 			}
 			else
 			{
@@ -629,6 +631,18 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				_history.Commit(command);
 			}
 			UpdateToolbar();
+		}
+
+		private void tsStageSelect_Click(object sender, EventArgs e)
+		{
+			StageSelect form = new StageSelect();
+			form.SetData(_character.Character, null, "Choose a Stage", "Assets prefixed with # will be retrieved from this stage."); 
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				_stage = form.Stage;
+				_pose.CurrentStage = _stage;
+				canvas.Refresh();
+			}
 		}
 	}
 
