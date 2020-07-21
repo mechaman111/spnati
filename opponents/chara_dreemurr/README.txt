@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited July 16 2020
+README edited July 18 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -299,6 +299,7 @@ FLORINA
 
 GALATEA
 -Responds to Galatea having to strip with rock puns.
+-Responds to Galatea complaining that Chara should stop joking about her.
 
 PRINCESS JASMINE
 -Responds to Princess Jasmine revealing her identity.
@@ -349,6 +350,7 @@ MEGUMIN
 
 MEIA
 -Responds to Meia's remark on Chara having to strip.
+-Responds to Meia post-Revy fight.
 
 MEIA/REVY
 -Responds to Meia and Revy fighting.
@@ -396,6 +398,7 @@ REMILIA
 
 REVY
 -Responds to Revy's question about killing people.
+-Responds to Revy post-Meia fight.
 
 RIN
 -Responds to Rin showing her lack of arms.
