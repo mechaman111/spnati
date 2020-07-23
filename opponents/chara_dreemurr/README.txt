@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited July 18 2020
+README edited July 22 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -419,6 +419,9 @@ SAKURA
 
 SHANTAE
 -Responds to Shantae transforming into a monkey.
+
+SHEENA
+-Responds to Sheena summoning spirits. Specific responses for Celsius and Undine.
 
 SPOOKY
 -Responds to Spooky stripping her knife.
