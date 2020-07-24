@@ -26,12 +26,16 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			get
 			{
+				float max = Get<float>();
 				if (Keyframes.Count > 1)
 				{
-					float time = Keyframes[Keyframes.Count - 1].Time;
-					return time;
+					max = Keyframes[Keyframes.Count - 1].Time;
 				}
-				return Get<float>();
+				if (Events.Count > 0)
+				{
+					max = Math.Max(max, Events[Events.Count - 1].Time);
+				}
+				return max;
 			}
 			set { Set(value); }
 		}

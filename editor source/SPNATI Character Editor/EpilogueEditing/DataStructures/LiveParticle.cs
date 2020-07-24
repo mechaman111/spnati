@@ -96,6 +96,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				endY = emitter.EndScaleY.Get();
 			}
+			else if (emitter.EndScaleX != null)
+			{
+				endY = endX;
+			}
 
 			ScaleXTween = new TweenableParameter(startX, endX);
 			ScaleYTween = new TweenableParameter(startY, endY);
