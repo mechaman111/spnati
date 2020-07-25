@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited July 22 2020
+README edited July 24 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -308,7 +308,7 @@ JASON
 -Back and forth as Jason is losing.
 
 JIM
--Back and forth as Raynor is losing.
+-Back and forth as either Raynor or Chara are losing.
 
 JOETTA
 -Responds to the first time Joetta does a 'sleight of hand' strip.
@@ -393,6 +393,9 @@ NEPTUNE
 -Back and forth between Chara and Neptune as either one loses and must strip.
 -Response to Neptune's prompt about finding the inventory.
 
+PINKIE
+-Response to Pinkie turning to Pinkamena.
+
 REMILIA
 -Responds the first time Remilia's maid uses her time-stop powers to strip her.
 
@@ -431,6 +434,7 @@ THARJA
 -Responds to Tharja cursing Jessie.
 -Ditto for Jura.
 -Ditto if she's cursed the other one before, too.
+-Dialogue with Tharja as she is losing.
 
 TWILIGHT
 -Responds to Twilight removing her panties as her first item.
