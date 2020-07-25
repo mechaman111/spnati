@@ -154,7 +154,7 @@ function initialSetup () {
         updateTitleGender();
 
         if (USAGE_TRACKING && !SENTRY_INITIALIZED) sentryInit();
-        if (RESORT_ACTIVE && save.getPlayedCharacterSet().length >= 50) {
+        if (RESORT_ACTIVE && save.getPlayedCharacterSet().length >= 30) {
             $(".title-resort-button").show();
         } else {
             $(".title-resort-button").hide();
@@ -948,7 +948,7 @@ function showImportModal() {
 function showResortModal() {
     var playedCharacters = save.getPlayedCharacterSet();
 
-    if (RESORT_ACTIVE && playedCharacters.length >= 50) {
+    if (RESORT_ACTIVE && playedCharacters.length >= 30) {
         if (!save.hasShownResortModal()) {
             $resortModal.modal('show');
         }
