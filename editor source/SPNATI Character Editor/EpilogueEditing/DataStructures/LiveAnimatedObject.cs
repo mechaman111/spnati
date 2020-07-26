@@ -197,7 +197,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <param name="time"></param>
 		/// <param name="propName"></param>
 		/// <param name="value"></param>
-		/// <param name="addNnimBreak"></param>
+		/// <param name="addAnimBreak"></param>
 		/// <returns>The keyframe the value was added to</returns>
 		public LiveKeyframe AddValue(float time, string propName, object value, bool addAnimBreak)
 		{
@@ -209,6 +209,21 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (keyframe == null)
 			{
 				keyframe = AddKeyframe(time);
+			}
+			else if (keyframe.Time == 0)
+			{
+				KeyframeType type = keyframe.GetMetadata(propName, false).FrameType;
+				if (LinkedFromPrevious && type == KeyframeType.Normal)
+				{
+					//when changing the first frame, it it's breaking a link from a previous object, then make it a break
+					string prevValue = GetPreviousValue(propName, time, true)?.ToString() ?? "0";
+					string curValue = keyframe.Get<object>(propName)?.ToString() ?? "0";
+					string newValue = value?.ToString() ?? "0";
+					if (prevValue.Equals(curValue) && !prevValue.Equals(newValue))
+					{
+						addAnimBreak = true;
+					}					
+				}
 			}
 
 			if (addAnimBreak)

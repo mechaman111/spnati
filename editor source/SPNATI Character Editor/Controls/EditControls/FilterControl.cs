@@ -294,7 +294,6 @@ namespace SPNATI_Character_Editor
 				pnlNot.Visible = !_countAvailable;
 			}
 			string key = type?.Key ?? "";
-			string propertyChanged = "Role";
 			switch (key)
 			{
 				case "self":
@@ -312,12 +311,9 @@ namespace SPNATI_Character_Editor
 					break;
 				default:
 					grpContainer.PanelType = SkinnedBackgroundType.Group1;
-					propertyChanged = "Character";
 					break;
 			}
 			tableAdvanced.HeaderType = grpContainer.PanelType;
-			Save();
-			tableAdvanced.UpdateProperty(propertyChanged);
 		}
 
 		private void DataValueChanged(object sender, EventArgs e)
@@ -340,6 +336,7 @@ namespace SPNATI_Character_Editor
 		private void RecordDataChanged(object sender, RecordEventArgs e)
 		{
 			Save();
+			tableAdvanced.UpdateProperty("Role");
 		}
 
 		protected override void OnSave()

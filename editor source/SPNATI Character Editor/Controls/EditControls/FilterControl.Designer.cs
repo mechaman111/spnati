@@ -34,7 +34,7 @@
 			this.tableAdvanced = new Desktop.CommonControls.PropertyTable();
 			this.pnlRange = new System.Windows.Forms.Panel();
 			this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
-			this.valTo = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.valTo = new Desktop.CommonControls.NumericField();
 			this.valFrom = new Desktop.Skinning.SkinnedNumericUpDown();
 			this.label3 = new Desktop.Skinning.SkinnedLabel();
 			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
@@ -132,8 +132,14 @@
 			// valTo
 			// 
 			this.valTo.BackColor = System.Drawing.Color.White;
+			this.valTo.DecimalPlaces = 0;
 			this.valTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.valTo.ForeColor = System.Drawing.Color.Black;
+			this.valTo.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			this.valTo.Location = new System.Drawing.Point(99, 1);
 			this.valTo.Margin = new System.Windows.Forms.Padding(0);
 			this.valTo.Maximum = new decimal(new int[] {
@@ -141,9 +147,20 @@
             0,
             0,
             0});
+			this.valTo.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
 			this.valTo.Name = "valTo";
+			this.valTo.PlaceholderText = "+";
 			this.valTo.Size = new System.Drawing.Size(36, 20);
 			this.valTo.TabIndex = 11;
+			this.valTo.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
 			// 
 			// valFrom
 			// 
@@ -353,7 +370,7 @@
 		private Desktop.CommonControls.PropertyTable tableAdvanced;
 		private System.Windows.Forms.Panel pnlRange;
 		private Desktop.Skinning.SkinnedLabel skinnedLabel2;
-		private Desktop.Skinning.SkinnedNumericUpDown valTo;
+		private Desktop.CommonControls.NumericField valTo;
 		private Desktop.Skinning.SkinnedNumericUpDown valFrom;
 		private Desktop.Skinning.SkinnedLabel label3;
 		private Desktop.Skinning.SkinnedLabel skinnedLabel1;
