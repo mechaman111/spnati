@@ -304,7 +304,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public string GetImagePath(string src)
 		{
-			if (Data.AllowsCrossStageImages && !string.IsNullOrEmpty(src) && src.Contains("#-"))
+			if (Data != null && Data.AllowsCrossStageImages && !string.IsNullOrEmpty(src) && src.Contains("#-"))
 			{
 				src = src.Replace("#-", $"{_stage}-");
 			}

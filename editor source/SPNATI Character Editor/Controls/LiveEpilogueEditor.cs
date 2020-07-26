@@ -927,6 +927,9 @@ namespace SPNATI_Character_Editor.Controls
 			LiveSceneSegment segment = _scene.AddSegment(_segment, new HashSet<LiveObject>(), index + 1);
 			lstSegments.Items.Insert(index + 1, segment);
 			lstSegments.SelectedItem = segment;
+
+			SetTableData(segment, null);
+			SetSubTableData(null, null);
 		}
 
 		private void tsRemoveSegment_Click(object sender, EventArgs e)

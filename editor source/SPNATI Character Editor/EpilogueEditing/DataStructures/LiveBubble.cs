@@ -59,6 +59,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Id = directive.Id;
 			Arrow = directive.Arrow;
 			Text = directive.Text;
+			AlignmentX = directive.AlignmentX;
+			AlignmentY = directive.AlignmentY;
 
 			Update(time, 0, false);
 		}

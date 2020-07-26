@@ -15,8 +15,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public ISkin Character;
 		public Pose Pose;
 
-		private bool _crossStage;
-
 		private int _stage;
 		public int CurrentStage
 		{
@@ -47,10 +45,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					return; //prevent null IDs
 				}
-				_crossStage = value.StartsWith("#-");
 				Set(value);
 				LabelChanged?.Invoke(this, EventArgs.Empty);
-				if (value.StartsWith("#-"))
+				if (AllowsCrossStageImages)
 				{
 					UpdateSpriteStages();
 				}
@@ -61,6 +58,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public override int BaseHeight
 		{
 			get { return Get<int>(); }
+			set { Set(value); }
+		}
+
+		[Boolean(DisplayName = "Cross Stage", Key = "crossStage", GroupOrder = 15, Description = "When checked, sprite images will dynamically change to the current stage for their prefix (ex. 1-happy.png, 2-happy.png).")]
+		public bool CrossStage
+		{
+			get { return Get<bool>(); }
 			set { Set(value); }
 		}
 
@@ -126,6 +130,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			foreach (Sprite sprite in pose.Sprites)
 			{
 				LiveSprite preview = new LiveSprite(this, sprite, _time);
+				if (sprite.Src.Contains("#-"))
+				{
+					CrossStage = true;
+				}
 				preview.Stage = CurrentStage;
 				preview.PropertyChanged += Sprite_PropertyChanged;
 				Sprites.Add(preview);
@@ -292,6 +300,19 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (context != null)
 			{
 				string src = context.ToString();
+
+				if (AllowsCrossStageImages)
+				{
+					string filename = Path.GetFileName(src);
+					int stage;
+					string outId;
+					PoseMap.ParseImage(filename, out stage, out outId);
+					if (stage >= 0)
+					{
+						src = src.Replace($"{stage}-", "#-");
+					}
+				}
+
 				sprite.AddValue<string>(0, "Src", src);
 
 				string id = Path.GetFileNameWithoutExtension(src);
@@ -670,7 +691,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			get
 			{
-				return _crossStage;
+				return CrossStage;
 			}
 		}
 	}

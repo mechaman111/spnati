@@ -76,7 +76,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		[DefaultValue("")]
-		[StageSelect(DisplayName = "Stage", GroupName = "Status", GroupOrder = 40, Description = "Character is within a range of stages", BoundProperties = new string[] { "Character" })]
+		[StageSelect(DisplayName = "Stage", GroupName = "Status", GroupOrder = 40, Description = "Character is within a range of stages", BoundProperties = new string[] { "Character", "Role" })]
 		[XmlAttribute("stage")]
 		[JsonProperty("stage")]
 		public string Stage

@@ -4,6 +4,12 @@
 	<li>Use the left and right arrows to switch between graphs.</li>
 </ul>
 
+<h3>Metadata</h3>
+<ul>
+	<li>A separate gender can now be specified for the title/character selection screen. This is useful for characters like Chihiro so he can be listed as male during character selection (to avoid surprising the player with a trap), while still being initially considered female in game for the sake of the other characters.</li>
+	<li>Alternate costumes can also have their own gender specified.</li>
+</ul>
+
 <h3>Dialogue</h3>
 <ul>
 	<li>The Self > Hidden case condition has been moved to a more prominent, permanent "Background" checkbox next to the custom priority field. The purpose for this change is twofold: to eliminate conflicting terminology with cases that are simply hidden from view in the editor (which has no impact on gameplay), and to make it easier to find this functionality.</li>
@@ -16,6 +22,7 @@
 	<li>A tutorial has been added to the spnati_edit YouTube channel.</li>
 	<li>If an emitter's Y scale is left blank, it will now use the same value as the X scale, preserving aspect ratio.</li>
 	<li>Removed the "Persistent" column from the "Markers to Set" table. Markers set by an epilogue are always persistent.</li>
+	<li>More than one character can now be specified in the "Also Playing" condition.</li>
 </ul>
 <h4>Common Upgrade Issues With Epilogues</h4>
 Upon opening a scene in an existing ending, it will convert to the new format, which saves slightly differently from the old format. You should play through your entire epilogue to identify any inadvertent changes.
@@ -33,6 +40,7 @@ Some common issues you may encounter include, but are not necessarily limited to
 	<li>All "wait for animations" directives are now replaced with delays of an equivalent amount. If a user clicks before animations have finished, the epilogue will skip to the end of the "wait for animations" directive. Since all "wait for animations" directives
 	are now grouped into a single block using delays, clicking early will skip past them all at once instead of one at a time.</li>
 	<li>The game engine does not support scaling sprites to 0, but in certain circumstances it would look like it still worked. With the new save format, it's more likely to encounter the problem, which would result in sprites scaling to 1 instead of 0.</li>
+	<li>There is much less flexibility in conditional directives now. Previously you could make individual animations conditional, but now an entire sprite is either conditional or not.</li>
 </ul>
 
 <h3>Pose Maker</h3>
@@ -42,7 +50,7 @@ Some common issues you may encounter include, but are not necessarily limited to
 	<li>These features also apply to the Epilogue Editor.</li>
 	<li>Added buttons for changing a keyframe type instead of cycling through them.</li>
 	<li>Adjusted the colors across various themes.</li>
-	<li>Naming a pose with the # prefix (ex. #-happy) enables it for use across all stages with stage-specific assets. See YOUTUBE LINK HERE for a brief tutorial on how this works.</li>
+	<li>Poses can now work across stages using stage-specific assets. See this brief tutorial <a href="https://www.youtube.com/watch?v=T7nIUgpGEZo" target="_blank">Cross Stage Poses</a> for how this works.</li>
 </ul>
 
 <h3>Pose Matrix</h3>
@@ -94,4 +102,5 @@ Some common issues you may encounter include, but are not necessarily limited to
 	<li>The timeline can now be scrolled using the mousewheel while hovering over a sprite header.</li>
 	<li>Fixed emitter particles not previewing skew values.</li>
 	<li>Fixed isuse where renaming a sprite that has children linked to it would break that link.</li>
+	<li>Fixed issue with the stage dropdowns not providing numbers when a filter's role is self or a blank target/opponent.</li>
 </ul>

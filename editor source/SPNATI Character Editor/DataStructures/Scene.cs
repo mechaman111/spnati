@@ -287,6 +287,10 @@ namespace SPNATI_Character_Editor
 			UniqueId = 1;
 			Directives.Clear();
 			Name = scene.Name;
+			if (Name == "New scene")
+			{
+				Name = "";
+			}
 			Background = FixPath(scene.BackgroundImage, scene.Character);
 			BackgroundColor = scene.BackColor.A == 0 ? null : scene.BackColor.ToHexValue();
 			Width = scene.Width.ToString(CultureInfo.InvariantCulture);
@@ -492,7 +496,7 @@ namespace SPNATI_Character_Editor
 			return $"{time}-{metadata}";
 		}
 
-		private WorkingDirective CreateStopDirective(string id, float delay, int trackIndex)
+		private WorkingDirective CreateStopDirective(string id, float delay, int trackIndex, LiveObject source)
 		{
 			Directive stopDirective = new Directive("stop");
 			stopDirective.Id = id;
@@ -504,6 +508,7 @@ namespace SPNATI_Character_Editor
 			{
 				stopDirective.Delay = delay.ToString(CultureInfo.InvariantCulture);
 			}
+			stopDirective.Marker = source.Marker;
 			WorkingDirective stop = new WorkingDirective(stopDirective, delay);
 			stop.Track = trackIndex;
 			return stop;
@@ -675,7 +680,7 @@ namespace SPNATI_Character_Editor
 									KeyframeType frameType = frameMetadata.FrameType;
 									if (kf.Time == 0)
 									{
-										if (frameType == KeyframeType.Normal)
+										if (frameType == KeyframeType.Normal && history.MatchesValue(value))
 										{
 											addProperty = false;
 										}
@@ -700,7 +705,7 @@ namespace SPNATI_Character_Editor
 												WorkingDirective stop = stopDirectives.Get(stopTime, id);
 												if (stop == null)
 												{
-													stop = CreateStopDirective(id, stopTime, trackIndex);
+													stop = CreateStopDirective(id, stopTime, trackIndex, anim);
 													stop.LoopedProperties = GetLoopingProperties(anim, property);
 													stopDirectives.Set(stopTime, id, stop);
 													directives.Add(stop);
@@ -736,7 +741,7 @@ namespace SPNATI_Character_Editor
 												{
 													float delay = anim.Start + kf.Time;
 
-													initialStoppage = CreateStopDirective(id, delay, trackIndex);
+													initialStoppage = CreateStopDirective(id, delay, trackIndex, anim);
 													initialStoppage.LoopedProperties = GetLoopingProperties(anim, property);
 													directives.Add(initialStoppage);
 													stoppages[id] = initialStoppage;

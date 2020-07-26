@@ -52,6 +52,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			_outsideBrush = new SolidBrush(Color.FromArgb(80, 0, 10, 30));
 
+			AddValue<float>(0, "X", "0");
+			AddValue<float>(0, "Y", "0");
 			AddValue<float>(0, "Zoom", "1");
 		}
 
@@ -343,6 +345,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				case "pivoty":
 				case "z":
 				case "id":
+				case "marker":
 					return false;
 				default:
 					return true;
