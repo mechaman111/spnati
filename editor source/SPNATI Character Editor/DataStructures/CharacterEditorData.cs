@@ -75,6 +75,13 @@ namespace SPNATI_Character_Editor
 		public List<CaseRecipe> UsedRecipes = new List<CaseRecipe>();
 		private Dictionary<string, CaseRecipe> _recipes = new Dictionary<string, CaseRecipe>();
 
+		/// <summary>
+		/// Lines that were typed in freely and need to be imported
+		/// </summary>
+		[XmlArray("pendingLines")]
+		[XmlArrayItem("line")]
+		public List<string> FreeLines = new List<string>();
+
 		private HashSet<string> _usedFolders = new HashSet<string>();
 		[XmlIgnore]
 		public AutoCompleteStringCollection Folders

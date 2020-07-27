@@ -1,20 +1,16 @@
 ﻿using Desktop;
 using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Character), 315)]
 	public partial class LineImporter : Activity
 	{
-		private int _collapsedHeight;
 		private Character _character;
 
 		public LineImporter()
 		{
 			InitializeComponent();
-			_collapsedHeight = txtCode.Height;
 		}
 
 		public override string Caption
@@ -25,114 +21,40 @@ namespace SPNATI_Character_Editor.Activities
 		protected override void OnInitialize()
 		{
 			_character = Record as Character;
-			ExpandCode(true);
+		}
+
+		protected override void OnFirstActivate()
+		{
+			lineImportControl1.SetCharacter(_character);
+			scratchPadControl1.SetCharacter(_character);
+			int startIndex = Config.GetInt("importtab");
+			tabs.SelectedIndex = Math.Min(startIndex, tabs.TabPages.Count - 1);
 		}
 
 		public override void Save()
 		{
-			caseEditor.Save();
-		}
-
-		private void ExpandCode(bool expanded)
-		{
-			if (expanded)
+			if (tabs.SelectedTab == tabGameImport)
 			{
-				txtCode.Height = Height - (Padding.Bottom + txtCode.Top);
-				grpImports.Visible = false;
+				lineImportControl1.Save();
 			}
-			else
+			else if (tabs.SelectedTab == tabScratchPad)
 			{
-				txtCode.Height = _collapsedHeight;
-				grpImports.Visible = true;
-				grpImports.Top = txtCode.Bottom + txtCode.Margin.Bottom;
-				grpImports.Height = Height - (Padding.Bottom + grpImports.Top);
+				scratchPadControl1.Save();
 			}
 		}
 
-		private void Import()
+		private void tabs_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			string code = txtCode.Text;
-			ExpandCode(false);
-			if (_character == null || string.IsNullOrEmpty(code)) { return; }
-			lstCases.Items.Clear();
-
-			List<ImportEdit> edits = new List<ImportEdit>();
-			string json = code;
-			try
+			if (tabs.SelectedIndex == -1)
 			{
-				edits = Json.Deserialize<List<ImportEdit>>(json);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message, "Failed to Import", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-
-			List<Case> imports = new List<Case>();
-			List<string> errors = new List<string>();
-			for (int i = 0; i < edits.Count; i++)
+			int current = Config.GetInt("importtab");
+			if (current != tabs.SelectedIndex)
 			{
-				ImportEdit edit = edits[i];
-				try
-				{
-					Case importedCase = edit.CreateCase(_character);
-					if (importedCase != null)
-					{
-						lstCases.Items.Add(importedCase);
-						imports.Add(importedCase);
-					}
-				}
-				catch (ImportLinesException ex)
-				{
-					errors.Add($"Error importing edit {i + 1}: {ex.Message}.");
-				}
+				Config.Set("importtab", tabs.SelectedIndex);
+				Config.Save();
 			}
-			Shell.Instance.SetStatus($"Imported {imports.Count} case(s) with {errors.Count} error(s).");
-			if (errors.Count > 0)
-			{
-				MessageBox.Show(string.Join("\r\n", errors), "Import Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-
-			if (lstCases.Items.Count > 0)
-			{
-				lstCases.SelectedIndex = 0;
-			}
-		}
-
-		private void lstCases_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			Case selectedCase = lstCases.SelectedItem as Case;
-			caseEditor.SetCharacter(_character);
-			if (selectedCase == null)
-			{
-				caseEditor.SetCase(null, null);
-				caseEditor.Enabled = false;
-				caseEditor.Visible = false;
-				return;
-			}
-			else
-			{
-				caseEditor.Enabled = true;
-				caseEditor.Visible = true;
-				caseEditor.SetCase(new Stage(selectedCase.Stages[0]), selectedCase);
-			}
-		}
-
-		private void caseEditor_HighlightRow(object sender, int index)
-		{
-			if (_character == null) { return; }
-			PoseMapping image = caseEditor.GetImage(index);
-			if (image != null)
-			{
-				Case workingCase = caseEditor.GetCase();
-				int stage = workingCase.Stages[0];
-				Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, image, stage));
-			}
-		}
-
-		private void cmdImport_Click(object sender, System.EventArgs e)
-		{
-			Import();
 		}
 	}
 }
