@@ -403,10 +403,10 @@ namespace Desktop
 				}
 			}
 
-			if (lstItems.Groups.Count == 0 && lstItems.Columns.Count == 1)
-			{
-				lstItems.View = View.List;
-			}
+			//if (lstItems.Groups.Count == 0 && lstItems.Columns.Count == 1)
+			//{
+			//	lstItems.View = View.List;
+			//}
 
 			if (!foundMatch)
 			{

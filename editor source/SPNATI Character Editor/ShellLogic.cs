@@ -434,6 +434,7 @@ namespace SPNATI_Character_Editor
 			shell.AddToolbarItem("Manage Macros...", ManageCaseMacros, menu, Keys.None);
 			shell.AddToolbarItem("Manage Dictionary...", typeof(DictionaryRecord), menu);
 			shell.AddToolbarItem("Manage Recipes...", typeof(Recipe), GetRecipe, menu);
+			shell.AddToolbarItem("Manage Case Templates...", typeof(CaseTemplateRecord), menu);
 			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Data Recovery", OpenDataRecovery, menu, Keys.None);
 			shell.AddToolbarItem("Fix Kisekae", ResetKisekae, menu, Keys.None);

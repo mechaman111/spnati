@@ -403,37 +403,56 @@ namespace SPNATI_Character_Editor
 			int count = list.Layers;
 			if (layer < 0 || layer >= count + Clothing.ExtraStages)
 				return null;
+
 			string label = layer.ToString();
-			if (advancingStage)
+			if (Config.SafeMode)
 			{
-				if (layer < count)
+				if (layer == count)
 				{
-					Clothing clothes = list.GetClothing(Layers - 1 - layer);
-					label = "Losing " + clothes.ToString();
+					label = "Final";
+				}
+				else if (layer == count + 1)
+				{
+					label = "Forfeiting";
+				}
+				else if (layer == count + 2)
+				{
+					label = "Finished";
 				}
 			}
 			else
 			{
-				if (layer == 0)
-					label = "Fully Clothed";
-				else if (layer < count)
+				if (advancingStage)
 				{
-					int index = layer - 1;
-					Clothing lastClothes = list.GetClothing(Layers - 1 - index);
-					label = "Lost " + lastClothes.ToString();
+					if (layer < count)
+					{
+						Clothing clothes = list.GetClothing(Layers - 1 - layer);
+						label = "Losing " + clothes.ToString();
+					}
 				}
-			}
-			if (layer == count)
-			{
-				label = "Naked";
-			}
-			else if (layer == count + 1)
-			{
-				label = "Masturbating";
-			}
-			else if (layer == count + 2)
-			{
-				label = "Finished";
+				else
+				{
+					if (layer == 0)
+						label = "Fully Clothed";
+					else if (layer < count)
+					{
+						int index = layer - 1;
+						Clothing lastClothes = list.GetClothing(Layers - 1 - index);
+						label = "Lost " + lastClothes.ToString();
+					}
+				}
+				if (layer == count)
+				{
+					label = "Naked";
+				}
+				else if (layer == count + 1)
+				{
+					label = "Masturbating";
+				}
+				else if (layer == count + 2)
+				{
+					label = "Finished";
+				}
 			}
 			return new StageName(layer.ToString(), label);
 		}

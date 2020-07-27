@@ -375,6 +375,10 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 
 		private IEnumerable<int> CheckMustTargets()
 		{
+			if (Config.SafeMode)
+			{
+				yield break;
+			}
 			const int Threshold = 20;
 			int count = 0;
 			List<Character> characters = CharacterDatabase.FilteredCharacters.ToList();
@@ -409,6 +413,10 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 
 		private IEnumerable<int> CheckUntargeted()
 		{
+			if (Config.SafeMode)
+			{
+				yield break;
+			}
 			const int Threshold = 20;
 			CharacterHistory history = CharacterHistory.Get(_character, false);
 			LineWork current = history.Current;

@@ -84,7 +84,7 @@ namespace SPNATI_Character_Editor
 		{
 			ExpressionTest other = obj as ExpressionTest;
 			if (other == null) { return false; }
-			return Expression.Equals(other.Expression) && (Value ?? "").Equals(other.Value ?? "") && (Operator ?? "").Equals(other.Operator ?? "");
+			return Expression.Equals(other.Expression) && (Value ?? "").Equals(other.Value ?? "") && (Operator ?? "==").Equals(other.Operator ?? "==");
 		}
 
 		public override int GetHashCode()

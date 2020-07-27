@@ -1,6 +1,7 @@
 ﻿using Desktop;
 using Desktop.CommonControls;
 using Desktop.Skinning;
+using SPNATI_Character_Editor.DataStructures;
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,8 @@ namespace SPNATI_Character_Editor.Controls
 			InitializeComponent();
 
 			cboView.Items.AddRange(new string[] { "Stage", "Case", "Target", "Folder" });
+
+			Shell.Instance.PostOffice.Subscribe(DesktopMessages.SettingsUpdated, OnSettingsChanged);
 		}
 
 		private void DialogueTree_Load(object sender, EventArgs e)
@@ -55,6 +58,11 @@ namespace SPNATI_Character_Editor.Controls
 				lstDialogue.RightClick += LstDialogue_RightClick;
 				lstDialogue.MoveItem += LstDialogue_MoveItem;
 			}
+		}
+
+		private void OnSettingsChanged()
+		{
+			lstDialogue.Refresh();
 		}
 
 		public void SetData(Character character)
@@ -110,26 +118,35 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void PopulateTriggerMenu()
 		{
-			List<TriggerDefinition> triggers = TriggerDatabase.Triggers;
-			triggers.Sort((a, b) => a.Group == b.Group ? a.GroupOrder - b.GroupOrder : a.Group - b.Group);
-			int curGroup = -1;
-			ContextMenuStrip curGroupMenu = null;
-
-			foreach (TriggerDefinition t in triggers)
+			List<CaseDefinition> definitions = CaseDefinitionDatabase.Definitions;
+			definitions.Sort((a, b) =>
 			{
+				return CaseDefinitionDatabase.Compare(a.Key, b.Key);
+			});
+			Dictionary<int, ContextMenuStrip> groupItems = new Dictionary<int, ContextMenuStrip>();
+
+			foreach (CaseDefinition def in definitions)
+			{
+				TriggerDefinition t = def.GetTrigger();
 				if (t.StartStage < 0) continue;
-				if (t.Group != curGroup)
+
+
+				ContextMenuStrip curGroupMenu;
+				if (!groupItems.TryGetValue(def.Group, out curGroupMenu))
 				{
-					curGroup = t.Group;
 					ToolStripMenuItem groupMenuItem = new ToolStripMenuItem();
-					groupMenuItem.Text = TriggerDatabase.GetGroupName(curGroup);
+					CaseGroup group = CaseDefinitionDatabase.GetGroup(def.Group);
+					groupMenuItem.Text = group.DisplayName;
 					curGroupMenu = new ContextMenuStrip();
 					curGroupMenu.ShowImageMargin = false;
 					groupMenuItem.DropDown = curGroupMenu;
 					triggerMenu.Items.Add(groupMenuItem);
+					groupItems[def.Group] = curGroupMenu;
 				}
-				ToolStripMenuItem item = new ToolStripMenuItem(t.Label, null, triggerAddItem_Click, t.Tag);
-				item.Tag = t;
+				
+				string label = def.DisplayName;
+				ToolStripMenuItem item = new ToolStripMenuItem(label, null, triggerAddItem_Click, def.Key);
+				item.Tag = def;
 				curGroupMenu.Items.Add(item);
 			}
 		}
@@ -156,9 +173,15 @@ namespace SPNATI_Character_Editor.Controls
 			int currentStage = _selectedNode?.Stage?.Id ?? startStage;
 
 			//Add a default line
-			Tuple<string, string> template = DialogueDatabase.GetTemplate(tag);
-			DialogueLine line = new DialogueLine(template.Item1, template.Item2);
-			newCase.Lines.Add(line);
+			if (newCase.Lines.Count == 0)
+			{
+				Tuple<string, string> template = DialogueDatabase.GetTemplate(tag);
+				if (template != null)
+				{
+					DialogueLine line = new DialogueLine(template.Item1, template.Item2);
+					newCase.Lines.Add(line);
+				}
+			}
 
 			if (singleStage)
 			{
@@ -411,8 +434,8 @@ namespace SPNATI_Character_Editor.Controls
 			if (_character == null)
 				return;
 
-			string tag = ((ToolStripMenuItem)sender).Name;
-			Case newCase = new Case(tag);
+			CaseDefinition def = ((ToolStripMenuItem)sender).Tag as CaseDefinition;
+			Case newCase = def.CreateCase();
 			_view.BuildCase(newCase);
 			AddAndSelectNewCase(newCase, "", false);
 		}
@@ -475,8 +498,8 @@ namespace SPNATI_Character_Editor.Controls
 				int visibleCount = 0;
 				foreach (ToolStripMenuItem item in group.DropDownItems)
 				{
-					TriggerDefinition t = item.Tag as TriggerDefinition;
-					if (_view.IsTriggerValid(node, t))
+					CaseDefinition t = item.Tag as CaseDefinition;
+					if (_view.IsTriggerValid(node, t.GetTrigger()))
 					{
 						visibleCount++;
 						item.Visible = true;

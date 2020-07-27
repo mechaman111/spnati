@@ -1,5 +1,6 @@
 ﻿using Desktop.CommonControls;
 using Desktop.Skinning;
+using SPNATI_Character_Editor.DataStructures;
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
@@ -106,14 +107,29 @@ namespace SPNATI_Character_Editor.Controls
 			_model.GroupComparer = SortGroups;
 			_model.ItemComparer = DialogueNode.CompareCases;
 
+			bool hideEmpty = Config.HideEmptyCases;
+
 			//Make nodes for each case tag
-			foreach (string tag in TriggerDatabase.GetTags())
+			foreach (CaseDefinition def in CaseDefinitionDatabase.Definitions)
 			{
-				if (tag == "-") { continue; }
-				TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag);
-				if (!Config.HideEmptyCases || !trigger.Optional)
+				string key = def.Key;
+				if (def.IsCore)
 				{
-					_model.AddGroup(trigger.Tag);
+					string tag = def.Case.Tag;
+					if (tag == "-") { continue; }
+
+					TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag);
+					if (!hideEmpty || !trigger.Optional)
+					{
+						_model.AddGroup(key);
+					}
+				}
+				else
+				{
+					if (!hideEmpty)
+					{
+						_model.AddGroup(key);
+					}
 				}
 			}
 
@@ -208,6 +224,9 @@ namespace SPNATI_Character_Editor.Controls
 						folder = label.Folder;
 					}
 				}
+
+				CaseDefinition def = node.Definition;
+				return def.CreateCase();
 			}
 
 			if (string.IsNullOrEmpty(newTag))
@@ -216,6 +235,11 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			if (!string.IsNullOrEmpty(newTag))
 			{
+				CaseDefinition def = CaseDefinitionDatabase.GetDefinition(newTag);
+				if (def != null)
+				{
+					return def.CreateCase();
+				}
 				return new Case(newTag);
 			}
 			return null;
@@ -365,7 +389,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		public int SortGroups(string key1, string key2)
 		{
-			return TriggerDatabase.Compare(key1, key2);
+			return CaseDefinitionDatabase.Compare(key1, key2);
 		}
 
 		public void FormatRow(FormatRowEventArgs args)
@@ -422,7 +446,13 @@ namespace SPNATI_Character_Editor.Controls
 
 		private Color GetGroupColor(string key, int index)
 		{
-			TriggerDefinition trigger = TriggerDatabase.GetTrigger(key);
+			CaseDefinition definition = CaseDefinitionDatabase.GetDefinition(key);
+			if (definition == null)
+			{
+				return index % 2 == 0 ? SkinManager.Instance.CurrentSkin.PrimaryForeColor : SkinManager.Instance.CurrentSkin.SecondaryForeColor;
+			}
+			string tag = definition.Case.Tag;
+			TriggerDefinition trigger = TriggerDatabase.GetTrigger(tag);
 			if (string.IsNullOrEmpty(trigger.Label))
 			{
 				return index % 2 == 0 ? SkinManager.Instance.CurrentSkin.PrimaryForeColor : SkinManager.Instance.CurrentSkin.SecondaryForeColor;
@@ -432,12 +462,16 @@ namespace SPNATI_Character_Editor.Controls
 
 		public void FormatGroup(FormatGroupEventArgs args)
 		{
+			CaseDefinition definition = CaseDefinitionDatabase.GetDefinition(args.Group.Key);
+			string tag = definition?.Case.Tag;
+
 			args.Font = _font;
-			args.ForeColor = GetGroupColor(args.Group.Key, args.Group.Index);
-			TriggerDefinition trigger = TriggerDatabase.GetTrigger(args.Group.Key);
-			if (!string.IsNullOrEmpty(trigger.Label))
+			args.ForeColor = GetGroupColor(tag, args.Group.Index);
+			
+			string label = definition?.DisplayName;
+			if (!string.IsNullOrEmpty(label))
 			{
-				args.Label = trigger.Label;
+				args.Label = label;
 			}
 		}
 

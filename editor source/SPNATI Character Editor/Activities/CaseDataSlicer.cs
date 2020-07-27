@@ -13,6 +13,11 @@ namespace SPNATI_Character_Editor.Activities
 			InitializeComponent();
 		}
 
+		public override bool CanRun()
+		{
+			return !Config.SafeMode;
+		}
+
 		public override string Caption
 		{
 			get { return "Line Slicer"; }

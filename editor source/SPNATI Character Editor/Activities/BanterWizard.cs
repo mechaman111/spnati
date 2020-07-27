@@ -1,7 +1,6 @@
 ﻿using Desktop;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -33,6 +32,11 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				return "Banter Wizard";
 			}
+		}
+
+		public override bool CanRun()
+		{
+			return !Config.SafeMode;
 		}
 
 		protected override void OnInitialize()

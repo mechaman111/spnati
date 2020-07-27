@@ -55,6 +55,7 @@
 			this.txtFilter = new Desktop.Skinning.SkinnedTextBox();
 			this.tabsSections = new Desktop.Skinning.SkinnedTabControl();
 			this.tabGeneral = new System.Windows.Forms.TabPage();
+			this.chkSafeMode = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkWarnIncomplete = new Desktop.Skinning.SkinnedCheckBox();
 			this.label7 = new Desktop.Skinning.SkinnedLabel();
 			this.chkStatuses = new Desktop.Skinning.SkinnedCheckedListBox();
@@ -453,6 +454,7 @@
 			// tabGeneral
 			// 
 			this.tabGeneral.BackColor = System.Drawing.Color.White;
+			this.tabGeneral.Controls.Add(this.chkSafeMode);
 			this.tabGeneral.Controls.Add(this.chkWarnIncomplete);
 			this.tabGeneral.Controls.Add(this.label7);
 			this.tabGeneral.Controls.Add(this.chkStatuses);
@@ -473,6 +475,18 @@
 			this.tabGeneral.Size = new System.Drawing.Size(447, 242);
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
+			// 
+			// chkSafeMode
+			// 
+			this.chkSafeMode.AutoSize = true;
+			this.chkSafeMode.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkSafeMode.Location = new System.Drawing.Point(9, 219);
+			this.chkSafeMode.Name = "chkSafeMode";
+			this.chkSafeMode.Size = new System.Drawing.Size(269, 17);
+			this.chkSafeMode.TabIndex = 15;
+			this.chkSafeMode.Text = "Safe for work mode (requires restart when disabling)";
+			this.chkSafeMode.UseVisualStyleBackColor = true;
+			this.chkSafeMode.CheckedChanged += new System.EventHandler(this.chkSafeMode_CheckedChanged);
 			// 
 			// chkWarnIncomplete
 			// 
@@ -1215,5 +1229,6 @@
 		private Desktop.Skinning.SkinnedLabel skinnedLabel6;
 		private Desktop.Skinning.SkinnedCheckBox chkAutoFill;
 		private Desktop.Skinning.SkinnedCheckBox chkWarnIncomplete;
+		private Desktop.Skinning.SkinnedCheckBox chkSafeMode;
 	}
 }

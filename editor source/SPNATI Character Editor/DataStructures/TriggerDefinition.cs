@@ -29,6 +29,9 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("label")]
 		public string Label;
 
+		[XmlAttribute("safeLabel")]
+		public string SafeLabel;
+
 		[XmlAttribute("description")]
 		public string HelpText;
 
@@ -152,12 +155,12 @@ namespace SPNATI_Character_Editor
 
 		public override string ToString()
 		{
-			return Label;
+			return Config.SafeMode ? SafeLabel ?? Label : Label;
 		}
 
 		public string ToLookupString()
 		{
-			return Label;
+			return ToString();
 		}
 
 		public int CompareTo(IRecord other)
@@ -184,6 +187,8 @@ namespace SPNATI_Character_Editor
 		public int Id;
 		[XmlAttribute("name")]
 		public string Name;
+		[XmlAttribute("safeName")]
+		public string SafeName;
 		[XmlElement("description")]
 		public string Description;
 		[XmlAttribute("future")]
@@ -212,6 +217,14 @@ namespace SPNATI_Character_Editor
 			_triggers.Clear();
 			_tagOrder.Clear();
 			_groups.Clear();
+		}
+
+		public static IEnumerable<TextGroup> Groups
+		{
+			get
+			{
+				return _groups.Values;
+			}
 		}
 
 		public static List<TriggerDefinition> Triggers
@@ -427,7 +440,13 @@ namespace SPNATI_Character_Editor
 		{
 			TextGroup group;
 			if (_groups.TryGetValue(id, out group))
+			{
+				if (Config.SafeMode)
+				{
+					return group.SafeName ?? group.Name;
+				}
 				return group.Name;
+			}
 			return "";
 		}
 

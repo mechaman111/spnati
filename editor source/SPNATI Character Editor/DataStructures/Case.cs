@@ -711,7 +711,7 @@ namespace SPNATI_Character_Editor
 			}
 			if (!string.IsNullOrEmpty(TotalNaked))
 			{
-				result.Add(string.Format("({0} naked)", GUIHelper.RangeToString(TotalNaked)));
+				result.Add(string.Format("({0} ({1}))", GUIHelper.RangeToString(TotalNaked), Config.SafeMode ? "no layers" : "naked"));
 			}
 			if (!string.IsNullOrEmpty(TotalMasturbating))
 			{

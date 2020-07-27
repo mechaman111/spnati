@@ -21,6 +21,21 @@ namespace Desktop
 			InitializeComponent();
 		}
 
+		public IEnumerable<IActivity> Activities
+		{
+			get
+			{
+				foreach (IActivity activity in _tabs.Keys)
+				{
+					yield return activity;
+				}
+				foreach (IActivity activity in _sideTabs.Keys)
+				{
+					yield return activity;
+				}
+			}
+		}
+
 		internal void AddActivity(IActivity activity)
 		{
 			activity.Activated += Activity_Activated;
