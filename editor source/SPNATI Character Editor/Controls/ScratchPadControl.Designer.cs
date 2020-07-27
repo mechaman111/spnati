@@ -56,9 +56,9 @@
 			this.lblInstructions.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.lblInstructions.Location = new System.Drawing.Point(0, 2);
 			this.lblInstructions.Name = "lblInstructions";
-			this.lblInstructions.Size = new System.Drawing.Size(427, 13);
+			this.lblInstructions.Size = new System.Drawing.Size(430, 13);
 			this.lblInstructions.TabIndex = 1;
-			this.lblInstructions.Text = "Type free text lines here, one for row. Use the Import button to add them to the " +
+			this.lblInstructions.Text = "Type free text lines here, one per row. Use the Import button to add them to the " +
     "character.";
 			// 
 			// cmdImport

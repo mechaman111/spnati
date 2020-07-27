@@ -31,6 +31,11 @@ namespace SPNATI_Character_Editor.Activities
 			tabs.SelectedIndex = Math.Min(startIndex, tabs.TabPages.Count - 1);
 		}
 
+		protected override void OnDeactivate()
+		{
+			scratchPadControl1.Abort();
+		}
+
 		public override void Save()
 		{
 			if (tabs.SelectedTab == tabGameImport)

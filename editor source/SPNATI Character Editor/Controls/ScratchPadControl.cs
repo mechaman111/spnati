@@ -39,6 +39,15 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
+		public void Abort()
+		{
+			if (importCtl.Visible)
+			{
+				importCtl.AbortImport();
+				importCtl.Visible = false;
+			}
+		}
+
 		public void Save()
 		{
 			List<string> lines = GetLines();

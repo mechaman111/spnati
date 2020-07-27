@@ -26,6 +26,14 @@ namespace SPNATI_Character_Editor.Controls
 			caseCtl.SetCharacter(character);
 		}
 
+		public void AbortImport()
+		{
+			if (split.Panel1Collapsed)
+			{
+				split.Panel2Collapsed = true;
+			}
+		}
+
 		private void cmdCancel_Click(object sender, EventArgs e)
 		{
 			Cancel?.Invoke(this, EventArgs.Empty);
