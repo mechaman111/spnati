@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited July 24 2020
+README edited July 26 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -103,8 +103,9 @@ high/pair/three-of-kind/four-of-a-kind of 9s, etc, stemming from the theme of th
 SITUATIONS
 -------------------------------------------------------------------------------------------
 
-THROW - MUST TARGET - When it's just Chara and the Player, she begins to throw the game. She'll react differently to swapping cards, to hands, and to stripping. NOTE: This has a case
+THROW - NOTEWORTHY - When it's just Chara and the Player, she begins to throw the game. She'll react differently to swapping cards, to hands, and to stripping. NOTE: This has a case
 where the player has seen Chara throw before. The situation itself points to the 'generic case' and should work for the non-generic, but still. Double-check the functionality.
+	-UPDATE JULY 25: Reduced priority from Must Target to Noteworthy.
 
 DEMON EYES - NOTEWORTHY - Two of Chara's poses, DemonHappy and DemonAngry, feature her hollow-eyed look from Undertale. NOTE: This specific callout only references one time she uses these
 poses, to properly target them instead use Filter -> Dialogue -> Pose.
@@ -112,8 +113,6 @@ poses, to properly target them instead use Filter -> Dialogue -> Pose.
 HIDDEN BELT - FYI - The second item Chara removes is her belt, which is hidden beneath her shirt. As such, removing it does not actually change her appearance. Some opponents may find
 that unfair. NOTE: This specific callout only references one possible case for Chara stripping her belt. Make sure to target the general 'stripping, in stage 1' case instead. Though this
 points to the Generic Case already, but still. Double-check the functionality.
-
-FOCUS UP - FYI - After removing her pants, and if the player is still in the game, Chara will tell them to focus on the game.
 
 REFUSE TO REMOVE - NOTEWORTHY - After removing her last layer of clothing, Chara will say she refuses to strip either her knife or locket, saying she would rather forfeit than do so.
 
