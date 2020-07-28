@@ -777,6 +777,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			LiveSprite sprite = new LiveSprite(this, time);
 			sprite.LinkedToEnd = true;
 			sprite.CenterX = false;
+			sprite.PreserveOriginalDimensions = true;
 			sprite.DisplayPastEnd = false;
 			sprite.PropertyChanged += Sprite_PropertyChanged;
 			Tracks.Add(sprite);

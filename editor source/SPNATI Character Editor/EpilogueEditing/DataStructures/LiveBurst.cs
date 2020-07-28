@@ -33,7 +33,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Directive directive = new Directive();
 			directive.DirectiveType = "emit";
 			directive.Count = Count;
-			directive.Delay = Time.ToString(CultureInfo.InvariantCulture);
+			directive.Delay = (Data.Start + Time).ToString(CultureInfo.InvariantCulture);
 			if (Data != null)
 			{
 				directive.Marker = Data.Marker;

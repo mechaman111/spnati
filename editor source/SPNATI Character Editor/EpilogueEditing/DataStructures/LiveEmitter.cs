@@ -393,47 +393,27 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			if (!string.IsNullOrEmpty(kf.X))
 			{
-				if (time > origin && !AnimatedProperties.Contains("X"))
-				{
-					//AddValue<float>(origin, "X", "0", true);
-				}
 				AddValue<float>(time, "X", kf.X, addBreak);
 				properties.Add("X");
 			}
 			if (!string.IsNullOrEmpty(kf.Y))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Y"))
-				{
-					//AddValue<float>(origin, "Y", "0", true);
-				}
 				AddValue<float>(time, "Y", kf.Y, addBreak);
 				properties.Add("Y");
 			}
 			if (!string.IsNullOrEmpty(kf.Src))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Src"))
-				{
-					//AddValue<string>(origin, "Src", "", true);
-				}
 				string path = LiveSceneSegment.FixPath(kf.Src, Character);
 				AddValue<string>(time, "Src", path, addBreak);
 				properties.Add("Src");
 			}
 			if (!string.IsNullOrEmpty(kf.Rotation))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Rotation"))
-				{
-					//AddValue<float>(origin, "Rotation", "0", true);
-				}
 				AddValue<float>(time, "Rotation", kf.Rotation, addBreak);
 				properties.Add("Rotation");
 			}
 			if (!string.IsNullOrEmpty(kf.Rate))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Rate"))
-				{
-					//AddValue<float>(origin, "Rate", "0", true);
-				}
 				AddValue<float>(time, "Rate", kf.Rate, addBreak);
 				properties.Add("Rate");
 			}

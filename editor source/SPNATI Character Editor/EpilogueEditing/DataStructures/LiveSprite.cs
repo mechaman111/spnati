@@ -86,6 +86,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public LiveSprite(LiveSceneSegment scene, Directive directive, Character character, float time) : this()
 		{
 			CenterX = false;
+			PreserveOriginalDimensions = true;
 			DisplayPastEnd = false;
 			Data = scene;
 			ParentId = directive.ParentId;
@@ -157,7 +158,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public LiveSprite() : base()
 		{
+			
+		}
 
+		public bool PreserveOriginalDimensions
+		{
+			get { return Get<bool>(); }
+			set { Set(value); }
 		}
 
 		public int Stage
@@ -194,28 +201,16 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			if (!string.IsNullOrEmpty(kf.X))
 			{
-				if (time > origin && !AnimatedProperties.Contains("X"))
-				{
-					//AddValue<float>(origin, "X", "0", true);
-				}
 				AddValue<float>(time, "X", kf.X, addBreak);
 				properties.Add("X");
 			}
 			if (!string.IsNullOrEmpty(kf.Y))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Y"))
-				{
-					//AddValue<float>(origin, "Y", "0", true);
-				}
 				AddValue<float>(time, "Y", kf.Y, addBreak);
 				properties.Add("Y");
 			}
 			if (!string.IsNullOrEmpty(kf.Src))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Src"))
-				{
-					//AddValue<string>(origin, "Src", "", true);
-				}
 				string src = LiveSceneSegment.FixPath(kf.Src, Character);
 				AddValue<string>(time, "Src", src, addBreak);
 				properties.Add("Src");
@@ -227,55 +222,31 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 			if (!string.IsNullOrEmpty(kf.ScaleX))
 			{
-				if (time > origin && !AnimatedProperties.Contains("ScaleX"))
-				{
-					//AddValue<float>(origin, "ScaleX", "1", true);
-				}
 				AddValue<float>(time, "ScaleX", kf.ScaleX, addBreak);
 				properties.Add("ScaleX");
 			}
 			if (!string.IsNullOrEmpty(kf.ScaleY))
 			{
-				if (time > origin && !AnimatedProperties.Contains("ScaleY"))
-				{
-					//AddValue<float>(origin, "ScaleY", "1", true);
-				}
 				AddValue<float>(time, "ScaleY", kf.ScaleY, addBreak);
 				properties.Add("ScaleY");
 			}
 			if (!string.IsNullOrEmpty(kf.Alpha))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Alpha"))
-				{
-					//AddValue<float>(origin, "Alpha", "100", true);
-				}
 				AddValue<float>(time, "Alpha", kf.Alpha, addBreak);
 				properties.Add("Alpha");
 			}
 			if (!string.IsNullOrEmpty(kf.Rotation))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Rotation"))
-				{
-					//AddValue<float>(origin, "Rotation", "0", true);
-				}
 				AddValue<float>(time, "Rotation", kf.Rotation, addBreak);
 				properties.Add("Rotation");
 			}
 			if (!string.IsNullOrEmpty(kf.SkewX))
 			{
-				if (time > origin && !AnimatedProperties.Contains("SkewX"))
-				{
-					//AddValue<float>(origin, "SkewX", "0", true);
-				}
 				AddValue<float>(time, "SkewX", kf.SkewX, addBreak);
 				properties.Add("SkewX");
 			}
 			if (!string.IsNullOrEmpty(kf.SkewY))
 			{
-				if (time > origin && !AnimatedProperties.Contains("SkewY"))
-				{
-					//AddValue<float>(origin, "SkewY", "0", true);
-				}
 				AddValue<float>(time, "SkewY", kf.SkewY, addBreak);
 				properties.Add("SkewY");
 			}
@@ -437,6 +408,39 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 
 			return sprite;
+		}
+
+		protected override void OnPropertyChanged(string propName)
+		{
+			if (PreserveOriginalDimensions && propName == "Src")
+			{
+				string src = null;
+
+				//find the original src
+				LiveSprite sprite = this;
+				while (sprite != null)
+				{
+					for (int i = 0; i < Keyframes.Count; i++)
+					{
+						LiveSpriteKeyframe kf = Keyframes[i] as LiveSpriteKeyframe;
+						if (kf.HasProperty("Src"))
+						{
+							src = kf.Src;
+							break;
+						}
+					}
+					sprite = sprite.Previous as LiveSprite;
+				}
+
+				if (!string.IsNullOrEmpty(src))
+				{
+					string path = GetImagePath(src);
+					Bitmap img = LiveImageCache.Get(path);
+					WidthOverride = img.Width;
+					HeightOverride = img.Height;
+					InvalidateTransform();
+				}
+			}
 		}
 	}
 }

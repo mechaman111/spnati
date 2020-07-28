@@ -27,15 +27,16 @@
         </section>
         <section class="card">
             <h1>First Scene And Background</h1>
-            So far we've set up when an ending appears, but the bulk of the work in making an epilogue is on the Scenes tab. Scenes are like scenes in a movie containing a camera and actors (sprites) that follow the director's directions (directives).
+            So far we've set up when an ending appears, but the bulk of the work in making an epilogue is on the Scenes tab. Scenes are like scenes in a movie containing a camera and actors (sprites) that follow the director's directions (actions).
             <ol>
-                <li>Go to the Scenes tab. You are greeted with an empty screen split into three parts. The upper left is the Scene view containing all scenes and their directives. The lower left is the Property Table where you can edit whatever scene or directive is currently selected. The right side is the canvas which contains a preview of the current scene and lets you directly interact with sprites on the screen.</li>
+                <li>Go to the Scenes tab. You are greeted with an empty screen split into three parts. The upper left is the Scene view containing all scenes. Immediately below the scenes list is the Actions list showing all actions in the currently selected scene. Next to that is the Property Table where you can edit whatever scene or object is currently selected. The right side is the canvas which contains a preview of the current scene and lets you directly interact with sprites on the screen.</li>
                 <li>Click the + in the upper left to add a new scene. Epilogues are split into self-contained scenes. Anything created in one scene will be cleared before moving to the next scene when viewing the ending.</li>
-                <li>Scene: (: 100,100) appears in the Scene view, and the canvas turns black with a gray square inside it. This is black because we haven't specified a background image yet.</li>
+                <li>Scene: (: 100,100) appears in the Scene view, and the canvas turns gray with a lighter gray square inside it. This is gray because we haven't specified a background image yet.</li>
+				<li>In the Property Table, change the Name from "New Scene" to "Scene 1".</li>
                 <li>In the Property Table, click ... next to Background, and choose ep_bg_summon.png from Florina's folder.</li>
-                <li>The background appears in the canvas. Click the "Fit to Screen" button in the canvas toolbar <img src="images/ending_fit.png" />to bring it all into view if it isn't already. This adjusts the zoom to fit the background the best it can.</li>
+                <li>The background appears in the canvas and the preview zooms out to display it all.</li>
                 <li>
-                    The gray box with the L corners disappeared as soon as you added the background. Right-click and drag on the canvas to pan it around and you'll see that the L corners are now around the background image.
+                    Hold the right mouse button and drag around the preview to pan it. You'll see some L corners surrounding the background image.
                 </li>
                 <li>
                     The gray box with the L corners is known as the camera viewport. In other words, the "camera" when playing the ending will only see what's inside that box. We'll cover this more in the next tutorial.
@@ -50,20 +51,20 @@
             <h1>Sprites</h1>
             It's not a very exciting ending without some characters. To add these, we need to add a sprite to the scene.
             <ol>
-                <li>In the Scene View's toolbar, click the Add Directive button.<img src="images/ending_directive.png" /> This brings up a menu of all available directives. Directives are like instructions for what to do in the scene: add a sprite here, animate it to this point, move the camera, fade to black, etc.</li>
-                <li>Choose "Add Sprite." A file selection popup appears to pick the image for that sprite. Go to Florina's folder and choose 0-calm.png.</li>
-                <li>Compared to the background, she's huge, but that's okay for now. Florina's epilogue assets are very small in size because she was already bumping up against character file size limits before her ending was made.</li>
+                <li>In the timeline's toolbar, click the Add Sprite button.<img src="images/ending_directive.png" /></li>
+                <li>A file selection popup appears to pick the image for that sprite. Go to Florina's folder and choose 0-calm.png.</li>
+                <li>Compared to the background, she's huge, but that's okay for now. Florina's epilogue assets are very small in size because she was already bumping up against character file size limits before her ending was made. Nowadays, epilogue assets do not count against a character's file size limits, so don't feel the need to restrict yourself like this.</li>
             </ol>
         </section>
         <section class="card">
             <h1>Speech Bubbles</h1>
             We now have an actor in the scene, so let's make her talk.
             <ol>
-                <li>Click the Add Directive button again and choose "Add Speech Bubble."</li>
+                <li>Click the Add Speech Bubble button directly next to the Add Sprite button.</li>
                 <li>A bubble saying "New Text" appears in the top left corner. Pan the canvas (right-click and drag) if it's not visible.</li>
                 <li>Click the bubble and drag it somewhere to the right of Florina.</li>
                 <li>Position the mouse to the left of the speech bubble just outside of its border. A transparent arrow appears. Click this to make the bubble arrow face left towards Florina to make it look like she's talking. Alternatively, in the Property Table you can set the arrow position manually.</li>
-                <li>Drag the right end of the bubble to make it wider, or in the Property Table, set the bubble's width to around 35%.</li>
+                <li>Drag the right end of the bubble to make it wider, or in the Property Table, set the bubble's width to around 25%.</li>
                 <li>In the Property Table, change the "Text" field to say, "Congratulations! You've unlocked my ending."</li>
                 <li>
                     At this point, the screen should look like this:
@@ -73,39 +74,25 @@
             </ol>
         </section>
         <section class="card">
-            <h1>Speech Bubble Sizing</h1>
-            
-            <ol>
-                <li>Using the canva's zoom slider (or ctrl+mouse wheel), zoom in or out and notice that the speech bubble changes size, even moving outside the viewport entirely.
-                <br/>
-                    <img src="images/ending_clip.png" />
-                </li>
-                <li>This is because regardless of screen size, speech bubbles always have a fixed font size. On smaller displays, they'll take up more space. You made need to play around to get speech bubbles to fit how you want at different screen sizes, but at extremes like this screenshot at 0.25x, it might not be possible.</li>
-                <li>For this tutorial, the positioning is good enough so we'll just leave it alone.</li>
-                <li>Reset the Zoom by clicking the "Fit to Screen" button again.</li>
-            </ol>
-        </section>
-        <section class="card">
-            <h1>Pauses</h1>
-            The epilogue system will play each directive in succession automatically unless you pause it. This means currently the scene will add the sprite, add the text, and then immediately end the scene. We need to introduce a pause to give the player time to read.
-            <ol>
-                <li>Click Add Directive and choose "Wait for Input." This adds a Pause after the speech bubble gets added, which in game will wait for the user to click before advancing to the next directive.</li>
-                <li>Click Add Directive and choose "Add Speech Bubble." 
-                <li>Position this bubble beneath the previous one.</li>
-                <li>Resize it to match the other's width.</li>
-                <li>Give it a left arrow.</li>
-                <li>Set the text to "Now play again at a harder difficulty!"</li>
-                <li>Finally, add another "Wait for Input" directive so it will wait for the user to click before ending the scene.</li>
-            </ol>
+            <h1>Actions</h1>
+            The epilogue system will play to the end of the current action's timeline and then pause. To display a new speech bubble when the user clicks to advance in the game, we need to make a new action.
+			<ol>
+				<li>Click the + besides "Actions" in the middle of the left side of the screen to add a new action.</li>
+				<li>The old speech bubble disappears, and in the actions list, the first action has become "Congratulations! You've..."</li>
+				<li>Add a new speech bubble using the same button as described in the last section.</li>
+				<li>Position and size this bubble like before.</li>
+				<li>Give it a left arrow.</li>
+				<li>Set the text to "Now play again at a harder difficulty!"</li>
+			</ol>
         </section>
         <section class="card">
             <h1>Scene Playback</h1>
-            You can preview a single scene from the editor. This lets you get a quick idea of how the scene will look, but you should always test your endings in the game before submitting.
+            You can preview a single action from the editor. This lets you get a quick idea of how the scene will look, but you should always test your endings in the game before submitting.
             <ol>
-                <li>Click the "Play Scene" button in the canvas toolbar.</li>
+                <li>Click the "Play Scene" button above the preview canvas.</li>
                 <li>The Scene View and Property Table disappear and the canvas takes up the entire screen.</li>
                 <li>This will be more obvious in later tutorials, but playback mode zooms to fit the viewport on screen and blacks out everything outside the camera viewport. This simulates what it will actually look like in the game.</li>
-                <li>Only one of the speech bubbles is visible. This is because of the Wait for Input directive. Click anywhere in the canvas to advance, which will display the next textbox.</li>
+                <li>Nothing interesting happens because this action has no animation.</li>
                 <li>Click the Stop button to leave playback mode.</li>
             </ol>
         </section>
@@ -114,31 +101,32 @@
             Endings normally consist of more than one scene, which gives the opportunity to switch backgrounds and sprites.
             <ol>
                 <li>Click the + to add a new scene. The canvas goes black again because the scene is empty.</li>
-                <li>Name the scene "Blue" down in the Property Table. This doesn't do anything but make it easier to differentiate scenes in the Scene View. Notice that the second scene now says Scene: Blue (: 100,100)</li>
-                <li>This time, instead of a background image, we'll use a background color. Click the solid white button next to Back Color in the Property Table to bring up a color picker. Choose Blue. The whole canvas turns blue.</li>
+                <li>Name the scene "Blue" down in the Property Table. This doesn't do anything but make it easier to differentiate scenes in the Scene View. Notice that the second scene now says "Blue"</li>
+                <li>This time, instead of a background image, we'll use a background color. Click the large blank button next to "Background Color" in the Property Table to bring up a color picker. Choose Blue. The whole canvas turns blue.</li>
                 <li>In the Property Table, set the Width to 800 and the Height to 600. This resizes the viewport so it's consistent with the previous scene.</li>
-                <li>Add a sprite to the scene. To save time, we'll just copy the one from the previous scene. In the Scene View, select the Add sprite (sprite1) directive and press the Copy button (or Ctrl+C).</li>
-                <li>Select Scene: Blue in the Scene View and press the Paste button (or Ctrl+V). Florina gets pasted back into this scene positioned just like she was in the previous one.</li>
+				<li>Click the Recenter button to get the camera viewport fully into view. <img src="images/ending_fit.png" /></li>
+                <li>Time to add a sprite. We'll copy the one from the previous scene. In the Scene list, select the original scene, then select "calm" in the timeline and press the Copy button (or Ctrl+C).<br/>
+				<img src="images/ending_copy.png" /></li>
+                <li>Select the Blue in the Scene list, then click the empty space beneath Camera in the timeline and press the Paste button (or Ctrl+V). Florina gets pasted back into this scene positioned just like she was in the previous one.</li>
                 <li>It's boring to use the same image though, so change her image to 0-embarrassed.png. Click the ... next to Source in the Property Table.</li>
                 <li>Add a new speech bubble with the text, "But you won't really make me go through that all again, will you?" and position it like before.</li>
-                <li>Remember to add a "Wait for Input" directive after the speech bubble.</li>
             </ol>
         </section>
         <section class="card">
             <h1>Scene Transitions</h1>
             By default, moving one from scene to another will be an immediate cut. We can make it more interesting using scene transitions.
             <ol>
-                <li>Click the first scene in the Scene View and press the Add Transition button next to the Add Directive button.</li>
-                <li>This inserts a transition between the two scenes. The canvas previews is replaced with a big gray box saying "Next."</li>
+                <li>Click the first scene in the Scene list and press the Add Transition button near the Add and Remove Scene buttons.</li>
+                <li>This inserts a transition between the two scenes. The canvas previews is replaced with a big gray box fading between the words "Previous" and "Next."</li>
                 <li>The editor is not capable of displaying actual scenes in its transitions, so it uses "Previous" and "Next" placeholders.</li>
                 <li>The Property Table contains the various properties for the transition. Choose "wipe-right" from the Effect dropdown.</li>
-                <li>Press the "Play Scene" button in the canvas toolbar to see the transition preview.</li>
-                <li>With "Scene: Blue" selected, add another transition. It's possible to transition from a black screen at the beginning and end of the epilogue.</li>
+                <li>The preview updates immediately with the new transition.</li>
+                <li>With the Blue scene selected, add another transition. It's possible to transition from a black screen at the beginning and end of the epilogue.</li>
                 <li>Change this transition's effect to fade.</li>
                 <li>Set the Back Color of the transition to black. This controls the fade color.</li>
                 <li>Change the time to 3 seconds.</li>
-                <li>If you preview the transition, you'll see that it fades out and back in on the next scene, but since there is no next scene, in game it'll just be black.</li>
-                <li>Stop playback and save the character. Our epilogue is complete and ready to test in game.</li>
+                <li>In the preview, you'll see that it fades out and back in on the next scene, but since there is no next scene, in game it'll just be black.</li>
+                <li>Save the character. Our epilogue is complete and ready to test in game.</li>
             </ol>
         </section>
         <section class="card">

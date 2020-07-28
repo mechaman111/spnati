@@ -123,46 +123,26 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			if (!string.IsNullOrEmpty(kf.X))
 			{
-				if (time > origin && !AnimatedProperties.Contains("X"))
-				{
-					//AddValue<float>(origin, "X", "0", true);
-				}
 				AddValue<float>(time, "X", kf.X, addBreak);
 				properties.Add("X");
 			}
 			if (!string.IsNullOrEmpty(kf.Y))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Y"))
-				{
-					//AddValue<float>(origin, "Y", "0", true);
-				}
 				AddValue<float>(time, "Y", kf.Y, addBreak);
 				properties.Add("Y");
 			}
 			if (!string.IsNullOrEmpty(kf.Zoom))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Zoom"))
-				{
-					//AddValue<float>(origin, "Zoom", "1", true);
-				}
 				AddValue<float>(time, "Zoom", kf.Zoom, addBreak);
 				properties.Add("Zoom");
 			}
 			if (!string.IsNullOrEmpty(kf.Alpha))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Alpha"))
-				{
-					//AddValue<float>(origin, "Alpha", "0", true);
-				}
 				AddValue<float>(time, "Alpha", kf.Alpha, addBreak);
 				properties.Add("Alpha");
 			}
 			if (!string.IsNullOrEmpty(kf.Color))
 			{
-				if (time > origin && !AnimatedProperties.Contains("Color"))
-				{
-					//AddValue<Color>(origin, "Color", "#000000", true);
-				}
 				AddValue<Color>(time, "Color", kf.Color, addBreak);
 				properties.Add("Color");
 			}

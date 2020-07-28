@@ -209,7 +209,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (_data == null || _inUpdate) { return; }
 			_inUpdate = true;
 			_data.UpdateTime(Playing ? _playbackTime : _time, _elapsedTime, true);
-			_selectedPreview?.Update(_time, _elapsedTime, false);
+			if (_selectedPreview != _selectionSource)
+			{
+				_selectedPreview?.Update(_time, _elapsedTime, false);
+			}
 			canvas.Invalidate();
 			if (Playing)
 			{

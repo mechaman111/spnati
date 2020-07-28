@@ -183,7 +183,19 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public abstract ITimelineWidget CreateWidget(Timeline timeline);
 
 		#region Interpolated values based on the current time
-		public string Src;
+		private string _src;
+		public string Src
+		{
+			get { return _src; }
+			set
+			{
+				if (_src != value)
+				{
+					_src = value;
+					OnPropertyChanged("Src");
+				}
+			}
+		}
 		public Bitmap Image;
 
 		public int Height
