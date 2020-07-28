@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited June 22 2020
+README edited July 26 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -103,8 +103,9 @@ high/pair/three-of-kind/four-of-a-kind of 9s, etc, stemming from the theme of th
 SITUATIONS
 -------------------------------------------------------------------------------------------
 
-THROW - MUST TARGET - When it's just Chara and the Player, she begins to throw the game. She'll react differently to swapping cards, to hands, and to stripping. NOTE: This has a case
+THROW - NOTEWORTHY - When it's just Chara and the Player, she begins to throw the game. She'll react differently to swapping cards, to hands, and to stripping. NOTE: This has a case
 where the player has seen Chara throw before. The situation itself points to the 'generic case' and should work for the non-generic, but still. Double-check the functionality.
+	-UPDATE JULY 25: Reduced priority from Must Target to Noteworthy.
 
 DEMON EYES - NOTEWORTHY - Two of Chara's poses, DemonHappy and DemonAngry, feature her hollow-eyed look from Undertale. NOTE: This specific callout only references one time she uses these
 poses, to properly target them instead use Filter -> Dialogue -> Pose.
@@ -112,8 +113,6 @@ poses, to properly target them instead use Filter -> Dialogue -> Pose.
 HIDDEN BELT - FYI - The second item Chara removes is her belt, which is hidden beneath her shirt. As such, removing it does not actually change her appearance. Some opponents may find
 that unfair. NOTE: This specific callout only references one possible case for Chara stripping her belt. Make sure to target the general 'stripping, in stage 1' case instead. Though this
 points to the Generic Case already, but still. Double-check the functionality.
-
-FOCUS UP - FYI - After removing her pants, and if the player is still in the game, Chara will tell them to focus on the game.
 
 REFUSE TO REMOVE - NOTEWORTHY - After removing her last layer of clothing, Chara will say she refuses to strip either her knife or locket, saying she would rather forfeit than do so.
 
@@ -181,7 +180,7 @@ Chara has one Epilogue, Power, available with the only prerequisite being to win
 markers, depending on the following conditions:
 
 Case 1 - The player is seeing the epilogue for the first time.
-Case 2 - The player is seeing the epilogue in the epilogue viewer.
+Case 2 - The player is seeing the epilogue in the epilogue viewer, with additional sub-cases if the player does this multiple times.
 Case 3 - The player is seeing the epilogue normally, for the 2+ time.
 
 After the epilogue, the player is forcibly booted to the start screen. This is intentional.
@@ -254,6 +253,9 @@ ARASH
 -Responds to Arash's question about flowers.
 -Responds to Arash starting to throw.
 
+ASTOLFO
+-Generic responses to handle its, ah, unique stripping and masturbation sequence.
+
 ATSUKO
 -Responds to Atsuko using the Necronomicon.
 -Responds to Atsuko using a transformation to strip. She will only do this once per game.
@@ -286,6 +288,7 @@ ELIZABETH
 
 EMI
 -Responds to Emi stripping her prosthetic legs.
+-Back and forth between Emi and Chara as the latter loses.
 
 ERUFUDA
 -Responds to Erufuda's question about favorite foods.
@@ -293,8 +296,18 @@ ERUFUDA
 FLORINA
 -Responds to Florina fleeing the game.
 
+GALATEA
+-Responds to Galatea having to strip with rock puns.
+-Responds to Galatea complaining that Chara should stop joking about her.
+
 PRINCESS JASMINE
 -Responds to Princess Jasmine revealing her identity.
+
+JASON
+-Back and forth as Jason is losing.
+
+JIM
+-Back and forth as either Raynor or Chara are losing.
 
 JOETTA
 -Responds to the first time Joetta does a 'sleight of hand' strip.
@@ -334,6 +347,10 @@ MEGUMIN
 -Responds to Megumin must-strip on Fully Clothed with a comment about Explosion's ability to 1-shot things.
 -Responds to Megumin's comment about Chara being a troublesome demon or not.
 
+MEIA
+-Responds to Meia's remark on Chara having to strip.
+-Responds to Meia post-Revy fight.
+
 MEIA/REVY
 -Responds to Meia and Revy fighting.
 
@@ -348,9 +365,15 @@ METTATON
 -Responds to Mettaton showing he has breasts.
 -Responds to Mettaton being forced to forfeit.
 
+MIKO
+-Back and forth when Miko or Chara are losing.
+
 MULAN
 -Responds to Mulan's 'Fapping' joke.
 -Responds to Mulan revealing her identity.
+
+MYRIAM
+-Responds to Myriam talking to her.
 
 NAMI (ZSZ)
 -Responds to Nami leaving the game.
@@ -366,17 +389,24 @@ NAYRU
 -Responds to Nayru getting possessed.
 
 NEPTUNE
--Responds to Neptune having to stripping layer 1.
--Responds to Neptune stipping layer 1.
+-Back and forth between Chara and Neptune as either one loses and must strip.
+-Response to Neptune's prompt about finding the inventory.
+
+PINKIE
+-Response to Pinkie turning to Pinkamena.
 
 REMILIA
 -Responds the first time Remilia's maid uses her time-stop powers to strip her.
 
 REVY
 -Responds to Revy's question about killing people.
+-Responds to Revy post-Meia fight.
 
 RIN
 -Responds to Rin showing her lack of arms.
+
+RYUKO
+-Responses to Ryuko transforming.
 
 SAKI (ZLS)
 -Responds to Saki's question about bad luck.
@@ -392,6 +422,9 @@ SAKURA
 SHANTAE
 -Responds to Shantae transforming into a monkey.
 
+SHEENA
+-Responds to Sheena summoning spirits. Specific responses for Celsius and Undine.
+
 SPOOKY
 -Responds to Spooky stripping her knife.
 -Responds to Spooky forming more clothes for herself.
@@ -400,13 +433,14 @@ THARJA
 -Responds to Tharja cursing Jessie.
 -Ditto for Jura.
 -Ditto if she's cursed the other one before, too.
+-Dialogue with Tharja as she is losing.
 
 TWILIGHT
 -Responds to Twilight removing her panties as her first item.
 
 VRISKA
 -Responds to Vriska's comment about Megalovania.
--Generic responses to handle Vriska's unique stripping sequence. Will not fire on the final few layers Vriska has.
+-Generic responses to handle Vriska's unique stripping sequence.
 
 YUELIA
 -Responds to Yuelia's question about fetishes - since Chara is tagged MEAN she gets the question about Edging.
@@ -418,6 +452,9 @@ YUKARI
 -Responds to Yukari revealing her disguise.
 -Responds to 'Yukari' leaving.
 -Generic responses to handle the, ah, unique masturbation sequence of 'Yukari'.
+
+YUNYUN
+-Responds to Yunyun attempting to befriend Chara.
 
 ZENOBIA
 -Generic responses to handle the, ah, unique masturbation sequence of Zenobia.
@@ -438,9 +475,10 @@ PLANNED CHARACTER INTERACTIONS
 
 Planned interactions not yet implemented for any number of reasons.
 
--Narrator Chara indicates Chara used to like gardening. Something with this?
 -Chara embodies the feeling you get when a number grows, among them 'gold' ie currency. Something with Anna, maybe?
 -A 'spider donut, don't worry, spider didn't' joke with Amy.
+-Interactions with Monika, particularly her glitches. However, as Chara and Monika both use 'different types' of 4th wall screwiness, and given my limited knowledge of JS, I might
+have to resign myself to simply ignoring her.
 
 -------------------------------------------------------------------------------------------
 MISC

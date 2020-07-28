@@ -212,10 +212,10 @@ function Group(title, background) {
  ************************************************************/
 
 function loadSelectScreen () {
-    var deferred = loadListingFile();
+    var p = loadListingFile();
     updateSelectionVisuals();
     
-    return deferred;
+    return p;
 }
 
 function splitCreatorField (field) {
@@ -242,7 +242,7 @@ function loadListingFile () {
     var sourceSet = {};
     var creatorSet = {};
 
-	var onComplete = function(opp, index) {
+	var onComplete = function(opp) {
 		if (opp) {
 			if (opp.id in opponentMap) {
 				loadedOpponents[opponentMap[opp.id]] = opp;
@@ -293,94 +293,81 @@ function loadListingFile () {
         }
 	}
 
-	/* grab and parse the opponent listing file */
-	return $.ajax({
-        type: "GET",
-		url: listingFile,
-		dataType: "text",
-		success: function(xml) {
-            var $xml = $(xml);
-			var available = {};
+    /* grab and parse the opponent listing file */
+    return fetchXML(listingFile).then(function($xml) {
+        var available = {};
 
-            /* start by checking which characters will be loaded and available */
-            $xml.find('>individuals>opponent').each(function () {
-                var oppStatus = $(this).attr('status');
-                var id = $(this).text();
-                if (oppStatus === undefined || oppStatus === 'testing' || includedOpponentStatuses[oppStatus]) {
-                    available[id] = true;
+        /* start by checking which characters will be loaded and available */
+        $xml.find('>individuals>opponent').each(function () {
+            var oppStatus = $(this).attr('status');
+            var id = $(this).text();
+            if (oppStatus === undefined || oppStatus === 'testing' || includedOpponentStatuses[oppStatus]) {
+                available[id] = true;
+            }
+        });
+
+        $xml.find('>groups>group').each(function () {
+            var title = $(this).attr('title');
+            var background = $(this).attr('background') || undefined;
+            var opp1 = $(this).attr('opp1');
+            var opp2 = $(this).attr('opp2');
+            var opp3 = $(this).attr('opp3');
+            var opp4 = $(this).attr('opp4');
+            var costume1 = $(this).attr('costume1');
+            var costume2 = $(this).attr('costume2');
+            var costume3 = $(this).attr('costume3');
+            var costume4 = $(this).attr('costume4');
+
+            var ids = [opp1, opp2, opp3, opp4];
+            var costumes = [costume1, costume2, costume3, costume4];
+            if (!ids.every(function(id) { return available[id]; })) return;
+
+            var newGroup = new Group(title, background);
+            ids.forEach(function(id, idx) {
+                if (!(id in opponentGroupMap)) {
+                    opponentGroupMap[id] = [];
                 }
+                opponentGroupMap[id].push({ group: newGroup, idx: idx, costume: costumes[idx] });
             });
+            loadedGroups.push(newGroup);
+        });
 
-			$xml.find('>groups>group').each(function () {
-                var title = $(this).attr('title');
-                var background = $(this).attr('background') || undefined;
-				var opp1 = $(this).attr('opp1');
-				var opp2 = $(this).attr('opp2');
-				var opp3 = $(this).attr('opp3');
-				var opp4 = $(this).attr('opp4');
-                var costume1 = $(this).attr('costume1');
-				var costume2 = $(this).attr('costume2');
-				var costume3 = $(this).attr('costume3');
-				var costume4 = $(this).attr('costume4');
+        /* now actually load the characters */
+        var oppDefaultIndex = 0; // keep track of an opponent's default placement
 
-                var ids = [opp1, opp2, opp3, opp4];
-                var costumes = [costume1, costume2, costume3, costume4];
-                if (!ids.every(function(id) { return available[id]; })) return;
+        $xml.find('>individuals>opponent').each(function () {
+            var oppStatus = $(this).attr('status');
+            var id = $(this).text();
+            var releaseNumber = $(this).attr('release');
+            var highlightStatus = $(this).attr('highlight');
 
-				var newGroup = new Group(title, background);
-				ids.forEach(function(id, idx) {
-					if (!(id in opponentGroupMap)) {
-						opponentGroupMap[id] = [];
-					}
-					opponentGroupMap[id].push({ group: newGroup, idx: idx, costume: costumes[idx] });
-				});
-				loadedGroups.push(newGroup);
-			});
-
-            /* now actually load the characters */
-            var oppDefaultIndex = 0; // keep track of an opponent's default placement
-
-            $xml.find('>individuals>opponent').each(function () {
-                var oppStatus = $(this).attr('status');
-                var id = $(this).text();
-                var releaseNumber = $(this).attr('release');
-                var highlightStatus = $(this).attr('highlight');
-
-                if (available[id]) {
-                    outstandingLoads++;
-                    totalLoads++;
-                    opponentMap[id] = oppDefaultIndex++;
-                    loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus, onComplete);
-                }
-            });
-
-		}
-	});
+            if (available[id]) {
+                outstandingLoads++;
+                totalLoads++;
+                opponentMap[id] = oppDefaultIndex++;
+                loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus).then(onComplete).catch(function (err) {
+                    console.error("Could not load metadata for " + id + ":");
+                    captureError(err);
+                });
+            }
+        });
+    });
 }
 
 /************************************************************
  * Loads and parses the meta XML file of an opponent.
  ************************************************************/
-function loadOpponentMeta (id, status, releaseNumber, highlightStatus, onComplete) {
+function loadOpponentMeta (id, status, releaseNumber, highlightStatus) {
 	/* grab and parse the opponent meta file */
     console.log("Loading metadata for \""+id+"\"");
-	$.ajax({
-        type: "GET",
-		url: 'opponents/' + id + '/' + metaFile,
-		dataType: "text",
-		success: function(xml) {
-            var $xml = $(xml);
 
-			var opponent = new Opponent(id, $xml, status, releaseNumber, highlightStatus);
-
-			/* add the opponent to the list */
-            onComplete(opponent);
-		},
-		error: function(err) {
-			console.log("Failed reading \""+id+"\"");
-			onComplete();
-		}
-	});
+    return fetchXML('opponents/' + id + '/' + metaFile).then(function($xml) {
+        return new Opponent(id, $xml, status, releaseNumber, highlightStatus);
+    }).catch(function(err) {
+        console.error("Failed reading \""+id+"\":");
+        captureError(err);
+        return null;
+    });
 }
 
 function updateStatusIcon(elem, opp) {
@@ -1141,44 +1128,7 @@ function advanceSelectScreen () {
     gameID = generateRandomID();
 
     if (USAGE_TRACKING) {
-        if (SENTRY_INITIALIZED) {
-            Sentry.setTag("in_game", true);
-            Sentry.setTag("screen", "game");
-
-            Sentry.addBreadcrumb({
-                category: 'game',
-                message: 'Starting game.',
-                level: 'info'
-            });
-        }
-
-        var usage_tracking_report = {
-            'date': (new Date()).toISOString(),
-			'commit': VERSION_COMMIT,
-            'type': 'start_game',
-            'session': sessionID,
-            'game': gameID,
-            'userAgent': navigator.userAgent,
-            'origin': getReportedOrigin(),
-            'table': {},
-			'tags': humanPlayer.tags
-        };
-
-        for (let i=1;i<5;i++) {
-            if (players[i]) {
-                usage_tracking_report.table[i] = players[i].id;
-            }
-        }
-
-        $.ajax({
-            url: USAGE_TRACKING_ENDPOINT,
-            method: 'POST',
-            data: JSON.stringify(usage_tracking_report),
-            contentType: 'application/json',
-            error: function (jqXHR, status, err) {
-                console.error("Could not send usage tracking report - error "+status+": "+err);
-            },
-        });
+        recordStartGameEvent();
     }
 
     var playedCharacters = save.getPlayedCharacterSet();
@@ -1540,6 +1490,11 @@ function updateOpponentCountStats(opponentArr, uiElements) {
                 }
                 uiElements.lineLabels[idx].html(opp.uniqueLineCount);
                 uiElements.poseLabels[idx].html(opp.posesImageCount);
+            }).catch(function (err) {
+                console.error("Could not fetch counts for " + opp.id);
+                captureError(err);
+                uiElements.lineLabels[idx].html("???");
+                uiElements.poseLabels[idx].html("???");
             });
         }
         else {
@@ -1580,64 +1535,64 @@ function updateGroupCountStats() {
  * given a character's behaviour XML. Returns the counts as an object with
  * properties numTotalLines, numUniqueLines, and numPoses.
  */
-function countLinesImages(xml) {
-    // parse all lines of dialogue and all images
-	var numTotalLines = 0;
-    var lines = new Set();
-    var poses = new Set();
+function countLinesImages($xml) {
+    return new Promise(function (resolve) {
+        // parse all lines of dialogue and all images
+        var numTotalLines = 0;
+        var lines = new Set();
+        var poses = new Set();
+        
+        var matched = $xml.find('state').get();
+        var layers = $xml.find('>wardrobe>clothing').length;
     
-    var matched = $(xml).find('state').get();
-    var layers = $(xml).find('>wardrobe>clothing').length;
-    var deferred = $.Deferred();
-    
-    /* Avoid blocking the UI by breaking the work into smaller chunks. */
-    function process () {
-        var startTs = Date.now();
-            
-        if (DEBUG) console.log("Processing: "+matched.length+" states to go");
-        do {
-            data = matched.shift();
-            
-            numTotalLines++;
-            
-        	// count only unique lines of dialogue
-            if (data.textContent.trim() != "") lines.add(data.textContent.trim());
-            if ($(data).children('text').length) lines.add($(data).children('text').html().trim());
-            
-        	// count unique number of poses used in dialogue
-        	// note that this number may differ from actual image count if some images
-        	// are never used, or if images that don't exist are used in the dialogue
-            
-            var $case = $(data).parent();
-            var $trigger = $case.parent('trigger');
-            var $stage = $case.parent('stage');
-            var stageInterval = $trigger.length ? getRelevantStagesForTrigger($trigger.attr('id'), layers)
-                : $stage.length ? { min: $case.parent('stage').attr('id'), max: $case.parent('stage').attr('id') }
-                : { min: 0, max: 0 };
+        /* Avoid blocking the UI by breaking the work into smaller chunks. */
+        function process () {
+            var startTs = performance.now();
 
-            for (var stage = stageInterval.min; stage <= stageInterval.max; stage++) {
-                var images = $(data).children('alt-img').filter(function() {
-                    return checkStage(stage, $(this).attr('stage'));
-                }).map(function() { return $(this).text(); }).get();
-                if (images.length == 0) images = [ $(data).attr('img') ];
-                images.forEach(function(poseName) {
-                    if (!poseName) return;
-                    poses.add(poseName.replace('#', stage));
+            while (matched.length > 0 && performance.now() - startTs < 50) {
+                data = matched.pop();
+                numTotalLines++;
+                
+                // count only unique lines of dialogue
+                if (data.textContent.trim() != "") lines.add(data.textContent.trim());
+                if ($(data).children('text').length) lines.add($(data).children('text').html().trim());
+                
+                // count unique number of poses used in dialogue
+                // note that this number may differ from actual image count if some images
+                // are never used, or if images that don't exist are used in the dialogue
+                
+                var $case = $(data).parent();
+                var $trigger = $case.parent('trigger');
+                var $stage = $case.parent('stage');
+                var stageInterval = $trigger.length ? getRelevantStagesForTrigger($trigger.attr('id'), layers)
+                    : $stage.length ? { min: $case.parent('stage').attr('id'), max: $case.parent('stage').attr('id') }
+                    : { min: 0, max: 0 };
+    
+                for (var stage = stageInterval.min; stage <= stageInterval.max; stage++) {
+                    var images = $(data).children('alt-img').filter(function() {
+                        return checkStage(stage, $(this).attr('stage'));
+                    }).map(function() { return $(this).text(); }).get();
+                    if (images.length == 0) images = [ $(data).attr('img') ];
+                    images.forEach(function(poseName) {
+                        if (!poseName) return;
+                        poses.add(poseName.replace('#', stage));
+                    });
+                }
+            }
+
+            if (DEBUG) console.log("Processing: "+matched.length+" states to go");
+            
+            if (matched.length > 0) {
+                setTimeout(process.bind(null), 10);
+            } else {
+                return resolve({
+                    numTotalLines : numTotalLines,
+                    numUniqueLines : lines.size,
+                    numPoses : poses.size
                 });
             }
-        } while (Date.now() - startTs < 50 && matched.length > 0);
-        
-        if (matched.length > 0) {
-            setTimeout(process.bind(null), 50);
-        } else {
-            return deferred.resolve({
-                numTotalLines : numTotalLines,
-                numUniqueLines : lines.size,
-                numPoses : poses.size
-            });
         }
-    }
-    
-    process();
-    return deferred.promise();
+
+        setTimeout(process.bind(null), 0);
+    });
 }

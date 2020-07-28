@@ -353,6 +353,7 @@ function parseMarkerXML(xml, parentCase) {
     var name = $elem.attr("name");
     var op = $elem.attr("op") || "=";
     var rhs = $elem.attr("value");
+    if (rhs === undefined) rhs = '1';
 
     return new MarkerOperation(name, op[0], rhs, parentCase);
 }
@@ -591,14 +592,14 @@ State.prototype.expandDialogue = function(self, target) {
  */
 State.prototype.getPossibleImages = function (stage) {
     if (this.alt_images) {
-        return this.alt_images.filter(function () {
+        var images = this.alt_images.filter(function () {
             return checkStage(stage, $(this).attr('stage'));
         }).map(function () {
             return $(this).text().replace('#', stage);
         }).get();
-    } else {
-        return this.image ? [ this.image.replace('#', stage) ] : [];
+        if (images.length) return images;
     }
+    return this.image ? [ this.image.replace('#', stage) ] : [];
 }
 
 State.prototype.selectImage = function (stage) {
@@ -2122,27 +2123,28 @@ Opponent.prototype.commitBehaviourUpdate = function () {
     
     this.chosenState.expandDialogue(this, this.currentTarget);
 
-    if (this.chosenState.markers.length > 0) {
-        this.chosenState.applyMarkers(this, this.currentTarget);
-    }
+    this.applyState(this.chosenState, this.currentTarget);
     
-    if (this.chosenState.setLabel !== undefined) {
-        this.setLabel(this.chosenState.setLabel);
-    }
+    this.stateCommitted = true;
+    updateGameVisual(this.slot);
+}
 
-    if (this.chosenState.setIntelligence !== undefined) {
-        this.setIntelligence(this.chosenState.setIntelligence);
+/************************************************************
+ * Applies markers and other operations from a state
+ ************************************************************/
+Opponent.prototype.applyState = function(state, opp) {
+    state.applyMarkers(this, opp);
+    state.applyCollectible(this);
+    state.applyOneShot(this);
+    this.setLabel(state.setLabel);
+    this.setIntelligence(state.setIntelligence);
+    if (state.setGender) {
+        this.gender = state.setGender;
     }
-    
-    if (this.chosenState.setGender) {
-        this.gender = this.chosenState.setGender;
+    if (state.setSize) {
+        this.size = state.setSize;
     }
-    
-    if (this.chosenState.setSize) {
-        this.size = this.chosenState.setSize;
-    }
-    
-    var parentCase = this.chosenState.parentCase;
+    var parentCase = state.parentCase;
     if (parentCase) {
         if (parentCase.removeTags.length > 0 || parentCase.addTags.length > 0) {
             parentCase.removeTags.forEach(this.removeTag.bind(this));
@@ -2151,28 +2153,17 @@ Opponent.prototype.commitBehaviourUpdate = function () {
         }
         parentCase.applyOneShot(this);
     }
-    
-    this.chosenState.applyOneShot(this);
-    
-    if (this.chosenState.collectible) {
-        this.chosenState.applyCollectible(this);
-    }
-
-    this.stateCommitted = true;
-    updateGameVisual(this.slot);
 }
 
 /************************************************************
- * Applies markers from all lines in a case
+ * Applies markers and operations from all lines in a case
  ************************************************************/
 Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
-    var self = this;
-    chosenCase.applyOneShot(self);
     chosenCase.states.forEach(function (c) {
-        c.applyMarkers(self, opp);
-        c.applyCollectible(self);
-        c.applyOneShot(self);
-    });
+        this.applyState(c, opp);
+        /* Yes, this may apply the case-level oneShot multiple times,
+         * but that's no real problem. */
+    }, this);
 }
 
 /************************************************************
@@ -2229,9 +2220,8 @@ function updateAllVolatileBehaviours () {
 function commitAllBehaviourUpdates () {
     /* Apply setLabel first so that ~name~ is the same for all players */
     players.opponents.forEach(function (p) {
-        if (p.chosenState && p.chosenState.setLabel) {
-            p.label = p.chosenState.setLabel;
-            p.labelOverridden = true;
+        if (p.chosenState) {
+            p.setLabel(p.chosenState.setLabel);
         }
     });
 

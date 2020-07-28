@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.7 at 1:05:52  on juni 23, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.7 at 10:03:58  on juli 06, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.7</version>
     <first>Weiss</first>
@@ -61,8 +61,8 @@
         <clothing name="hairpin" generic="hairpin" position="head" type="extra" />
         <clothing name="dress" generic="dress" position="both" type="major" />
         <clothing name="jacket" position="upper" type="minor" />
-        <clothing name="boots" position="other" type="extra" plural="true" />
-        <clothing name="jewelry" generic="jewelry" position="other" type="extra" />
+        <clothing name="boots" position="feet" type="extra" plural="true" />
+        <clothing name="jewelry" generic="jewelry" position="neck" type="extra" />
     </wardrobe>
 
     <poses>
@@ -282,6 +282,10 @@
                 <state img="#-grinning.png">&lt;i&gt;We all float down here...&lt;/i&gt;</state>
             </case>
             <case stage="0">
+                <test expr="~self.costume~" value="weiss_schnee_swimsuit" />
+                <state img="#-happy.png">Do you like my swimsuit? Atlas is almost always cold, so I rarely have a chance to wear it.</state>
+            </case>
+            <case stage="0">
                 <condition count="4" filter="rwby" />
                 <condition count="5" gender="female" />
                 <state img="#-calm.png">So it's the four of us playing. And... ~player~? Do any of you know her?</state>
@@ -483,7 +487,7 @@
                 <state img="#-interested.png">I am not beaten yet.</state>
                 <state img="#-interested.png">I won't give up. I will win.</state>
                 <state img="#-calm.png">This is no big deal. My chances are still good.</state>
-                <state img="#-interested.png">You should get too comfortable, ~player~.</state>
+                <state img="#-interested.png">You shouldn't get too comfortable, ~player~.</state>
             </case>
             <case stage="6">
                 <state img="#-thinking.png">I hope this is serviceable...</state>
@@ -710,9 +714,6 @@
                 <condition character="starfire" />
                 <state img="#-thinking.png">I never seen anyone with a semblance that allow them to fly. Where are you from Starfire?</state>
             </case>
-            <case stage="0-7" id="11" alsoPlaying="jessie">
-                <state img="#-angry.png">What you want feedback? My surgestion would be to never do that again.</state>
-            </case>
             <case stage="0" totalRounds="0">
                 <condition count="4" filter="rwby" />
                 <state img="#-interested.png">I think I understand why you brought me here Ruby. You where planning a team bonding exercise for us right?</state>
@@ -774,9 +775,12 @@
                 <test expr="~self.costume~" value="ghost_bride_weiss_schnee" />
                 <state img="custom:Cash_money">Well, it's not like I can take it with me anyway.</state>
             </case>
-            <case stage="0" totalRounds="6">
+            <case stage="4">
                 <test expr="~self.costume~" value="weiss_schnee_swimsuit" />
-                <state img="#-sarcastic.png">What? You want my necklace?</state>
+                <state img="#-loss.png">Sorry, perverts, but I won't take off my bikini top just yet.</state>
+            </case>
+            <case stage="0" totalRounds="6">
+                <state img="custom:Cash_money">What? You want my necklace?</state>
             </case>
             <case stage="0">
                 <condition count="4" filter="rwby" />
@@ -1241,7 +1245,7 @@
             </case>
             <case stage="5">
                 <condition character="syrenne" />
-                <state img="#-strip.png">You are the only reason we can't have a proper conversation Syrenne.</state>
+                <state img="#-strip.png">You are the only reason we can't have a proper conversation, Syrenne.</state>
             </case>
             <case stage="0">
                 <condition character="misato" />
@@ -1283,19 +1287,19 @@
                 <state img="#-strip_1.png">S-so, before I take my dress off, I should explain that I had an October wedding...</state>
             </case>
             <case stage="3">
-                <test expr="~self.costume~" value="Weiss (Volume 4)" />
+                <test expr="~self.costume~" value="weiss_schnee_v4" />
                 <state img="#-strip_1.png">I am already in bad standing with my father. If he hears about this...</state>
                 <state img="#-strip_1.png">My new combat skirt...</state>
                 <state img="#-strip_2.png">I knew I should have worn a scarf today...</state>
             </case>
             <case stage="1">
-                <test expr="~self.costume~" value="Weiss (Volume 4)" />
+                <test expr="~self.costume~" value="weiss_schnee_v4" />
                 <state img="#-strip.png">Why do I need to take off my shoes? I don't like being barefoot in front of strangers.</state>
                 <state img="#-strip.png">Could I get a chair or something while I take off my shoes?</state>
                 <state img="#-strip_2.png">Don't expect me to fall. I am great at balancing.</state>
             </case>
             <case stage="2">
-                <test expr="~self.costume~" value="Weiss (Volume 4)" />
+                <test expr="~self.costume~" value="weiss_schnee_v4" />
                 <state img="#-strip.png">Just make sure nothing happens to my jacket. It's very expensive.</state>
                 <state img="#-strip.png">You guys think I should take my jacket off now? ...That was a joke. You don't expect me to take off my dress right?</state>
                 <state img="#-strip.png">Are you going to keep staring, ~player~? It's just my shoulders.</state>
@@ -1304,7 +1308,7 @@
                 <test expr="~self.costume~" value="weiss_schnee_swimsuit" />
                 <state img="#-strip.png">Why do I need to take off my sandals? Is it like proper courtesy here or something? That's dumb.</state>
                 <state img="#-strip.png" marker="sandal_chair">Can't I get a chair or something while I take off my sandals?</state>
-                <state img="#-strip_2.png">Not to worry I should be able to keep my balance just fine.</state>
+                <state img="#-strip_2.png">Not to worry, I should be able to keep my balance just fine.</state>
             </case>
             <case stage="2">
                 <test expr="~self.costume~" value="weiss_schnee_swimsuit" />
@@ -1315,7 +1319,8 @@
             <case stage="3">
                 <test expr="~self.costume~" value="weiss_schnee_swimsuit" />
                 <state img="#-strip_1.png">My new beach skirt...</state>
-                <state img="#-strip_2.png">Well, I suppose this was unavodiable.</state>
+                <state img="#-strip_2.png">Well, I suppose this was unavoidable.</state>
+                <state img="#-strip_1.png">I suppose I can't take a swim with my beach towel.</state>
             </case>
             <case stage="4" id="9">
                 <test expr="~self.costume~" value="weiss_schnee_swimsuit" />
@@ -1328,6 +1333,37 @@
                 <state img="#-strip.png" marker="weiss_attempts_bribery">Please don't make me do this! My family is very wealthy, and I could give all of you some money! I mean, I don't have access to the bank account but...</state>
                 <state img="#-strip.png" marker="weiss_attempts_bribery">I would gladly give you every lien I have on me if you'll let me leave. I should clarify, WITH my swimsuit.</state>
                 <state img="#-strip.png">Come on, guys, this is not funny. There must be something else I can do!</state>
+            </case>
+            <case stage="0">
+                <test expr="~self.costume~" value="weiss_schnee_v7" />
+                <state img="#-strip.png">Yang says I wear too many belts anyway.</state>
+                <state img="#-strip_2.png">Don't lose these belts. I carry a lot of dust in them.</state>
+                <state img="#-strip_2.png">Do you have any idea how long it took me to put all these belts on?</state>
+            </case>
+            <case stage="2">
+                <test expr="~self.costume~" value="weiss_schnee_v7" />
+                <state img="#-strip.png" marker="weiss_trouble.">Come on, stupid button.</state>
+                <state img="#-strip.png">You guys think I should take my jacket off now? ...That was a joke. What else would I take off now?</state>
+                <state img="#-strip.png">I'm only exposing my shoulders so don't get any perverted ideas okay?</state>
+            </case>
+            <case stage="3">
+                <test expr="~self.costume~" value="weiss_schnee_v7" />
+                <state img="#-strip_1.png">I can't strip down like this. What if my mother finds out?</state>
+                <state>I can't strip down like this. If my brother finds out he would never let me forget it.</state>
+            </case>
+            <case stage="5">
+                <test expr="~self.costume~" value="weiss_schnee_v7" />
+                <state img="#-strip.png">Jaune asked me to go to the movies with him tonight. I am starting to regret not going with him.</state>
+            </case>
+            <case stage="4" id="14">
+                <test expr="~self.costume~" value="weiss_schnee_v7" />
+                <state img="#-strip.png">I am starting to regret making my hair a braid now.</state>
+                <state img="#-strip.png">This really makes me miss my old ponytail.</state>
+            </case>
+            <case stage="6">
+                <test expr="~self.costume~" value="weiss_schnee_v7" />
+                <state img="#-strip.png">I can't get naked in a crowd like this. I still have a reputation to uphold.</state>
+                <state>Please don't let this leave the room. I still have a reputation to uphold.</state>
             </case>
             <case stage="0">
                 <condition count="4" filter="rwby" />
@@ -1684,7 +1720,7 @@
             </case>
             <case stage="1">
                 <condition role="other" character="jessie" />
-                <state img="#-stripped_2.png">I am an heiress to the Schnee dust company. But that dosen't make me diffrent from anyone else.</state>
+                <state img="#-stripped_2.png">I am an heiress to the Schnee dust company. But that doesn't make me different from anyone else.</state>
             </case>
             <case stage="6" priority="55">
                 <condition count="2" status="exposed" />
@@ -1725,7 +1761,7 @@
                 <state img="#-stripped_1.png">I can't believe this. You just wanted to bully me because I used to be rich, right?</state>
             </case>
             <case stage="7">
-                <test expr="~self.costume~" value="Weiss (Volume 4)" />
+                <test expr="~self.costume~" value="weiss_schnee_v4" />
                 <state img="#-stripped.png">I can't believe I'm standing here naked...  this was your plan all along, wasn't it?!</state>
                 <state img="#-stripped.png">Stop! Don't look! This shouldn't be happening! I want my clothes back now!</state>
                 <state img="#-stripped.png" marker="weiss_is_an_heiress">I know I'm not a heiress anymore. But I still deserve better treatment! This isn't fair!</state>
@@ -1756,6 +1792,36 @@
             <case stage="2">
                 <test expr="~self.costume~" value="weiss_schnee_swimsuit" />
                 <state img="#-stripped.png">You better give me back my sandals afterwards. Got it?</state>
+            </case>
+            <case stage="4">
+                <test expr="~self.costume~" value="weiss_schnee_swimsuit" />
+                <state img="#-stripped.png">But it's very expensive so I want it back once the game is over.</state>
+            </case>
+            <case stage="1">
+                <test expr="~self.costume~" value="weiss_schnee_v7" />
+                <state img="#-stripped_2.png">It's going to take forever to put them all back on again.</state>
+                <state img="#-stripped.png" marker="Weiss_hiding_cards">At least now you can't accuse me of hiding cards anywhere.</state>
+                <state img="#-stripped_2.png">I can assure you this won't happen again.</state>
+            </case>
+            <case stage="3">
+                <test expr="~self.costume~" value="weiss_schnee_v7" />
+                <state img="#-stripped.png">The gloves were part of my jacket. So I guess they have to go as well.</state>
+                <state img="#-stripped.png">It's always cold in Atlas. So I'm not used to exposing myself like this.</state>
+                <state img="#-stripped.png">Ruby's got a lot of explaning to do when I get home.</state>
+            </case>
+            <case stage="4">
+                <test expr="~self.costume~" value="weiss_schnee_v7" />
+                <state img="#-sad.png">I have more than one scar now. I'm sorry you had to see it.</state>
+                <state img="#-stripped_2.png">I got this scar recently. Please don't stare at it to much.</state>
+            </case>
+            <case stage="6">
+                <test expr="~self.costume~" value="weiss_schnee_v7" />
+                <state img="#-stripped.png">Though if he knew this would happen. He would probably have come here as well.</state>
+            </case>
+            <case stage="7">
+                <test expr="~self.costume~" value="weiss_schnee_v7" />
+                <state img="#-stripped.png">I'm a huntress, I'm not suppose to expose myself like this.</state>
+                <state>I am a huntress you know... I can't believe im reduced to this.</state>
             </case>
             <case stage="4" priority="20">
                 <condition count="0" status="exposed" />
@@ -2751,7 +2817,7 @@
             <case stage="2">
                 <state img="#-disappointed.png">Clearly I should have brought more accessories.</state>
                 <state img="#-disappointed.png">Why didn't I bring more small stuff?</state>
-                <state img="#-disappointed.png">I shouldn't have underestimated you ~name~.</state>
+                <state img="#-disappointed.png">I shouldn't have underestimated you, ~name~.</state>
             </case>
             <case stage="3">
                 <state img="#-disappointed.png">Woo, it's sooo getting warm in here with you taking that off. My eyes are rolling, in case you couldn't tell.</state>
@@ -3381,7 +3447,7 @@
             </case>
             <case stage="0-9">
                 <condition role="target" character="sakura" stage="4" />
-                <state img="#-shocked.png">She still alive... how is this...</state>
+                <state img="#-shocked.png">She's still alive... how is this...</state>
             </case>
             <case stage="0">
                 <condition count="1" gender="male" />
@@ -3689,7 +3755,7 @@
             <case stage="0-9">
                 <condition character="nugi-chan" stage="3" />
                 <test expr="~nugichan.costume~" value="nugi-chan_bikini" />
-                <state img="#-embarrassed.png">I hope your surperious won't be mad at you walking around with only half your uniform.</state>
+                <state img="#-embarrassed.png">I hope your superiors won't be mad at you walking around with only half your uniform.</state>
             </case>
             <case stage="0-9">
                 <condition character="nugi-chan" stage="4" />
@@ -3944,6 +4010,12 @@
                 <condition character="elesa" stage="4" />
                 <state img="#-interested.png">Maybe it's about time I by myself some more belts.</state>
             </case>
+            <case stage="0-2">
+                <test expr="~self.costume~" value="weiss_schnee_swimsuit" />
+                <state img="#-sad.png">It's pretty hot today. But I don't want to take off any more than I have to. </state>
+                <state img="#-sad.png">Well I suppose it is summer.</state>
+                <state img="#-tsundere.png">Are you sweating, ~name~? Not like I want to watch you strip. I want to make sure you don't overheat. </state>
+            </case>
             <case stage="0">
                 <state img="#-thinking.png">I'm not sure what to think of this...</state>
                 <state img="#-thinking.png">Well this sure is... something.</state>
@@ -3993,6 +4065,10 @@
                 <state img="#-embarrassed.png">I want to go hide in a closet for a year.</state>
                 <state img="#-sarcastic.png">Just another step towards standing here sticky and naked, like me! Um... yeah...</state>
                 <state img="#-embarrassed.png">I just want to disappear.</state>
+            </case>
+            <case stage="4">
+                <state img="#-shocked.png">Did it just get warmer? Maybe I need to get my sunglasses back.</state>
+                <state img="#-shocked.png">(I wonder how she would look in a swimsuit.)</state>
             </case>
         </trigger>
 
@@ -4092,7 +4168,7 @@
             </case>
             <case stage="4">
                 <state img="#-tsundere.png">I'm in my underwear. You've got no right to complain.</state>
-                <state img="#-tsundere.png">Don't get a cold ,~name~.</state>
+                <state img="#-tsundere.png">Don't get a cold, ~name~.</state>
             </case>
             <case stage="5">
                 <state img="#-tsundere.png">No...! I wasn't staring. Urgh you're worse than Sun.</state>
@@ -5787,7 +5863,7 @@
             <case stage="0-9">
                 <condition role="target" character="nugi-chan" />
                 <test expr="~nugichan.costume~" value="nugi-chan_bikini" />
-                <state img="#-shocked.png">Surely your surperious wouldn't approve of you doing this in front of strangers.</state>
+                <state img="#-shocked.png">Surely your superiors wouldn't approve of you doing this in front of strangers.</state>
             </case>
             <case stage="0-7">
                 <condition count="4" filter="rwby" />
@@ -6562,7 +6638,7 @@
                 <state img="#-loss.png">Are you seriously expecting me too do that? I-I can't there must be something else I can do.</state>
             </case>
             <case stage="7">
-                <test expr="~self.costume~" value="Weiss (Volume 4)" />
+                <test expr="~self.costume~" value="weiss_schnee_v4" />
                 <state img="#-loss.png">That's it, I'm doomed. My father is going to hunt me down for this...</state>
                 <state img="#-loss.png">I know, I haven't always been the nicest girl... But do I really have to?</state>
                 <state img="#-loss.png">After all I've been through you want me to...?</state>
@@ -6690,7 +6766,7 @@
             </case>
             <case stage="9">
                 <condition role="other" character="jessie" />
-                <state img="#-finished.png">I don't care anymore Jessie. I just want this to be over so I can go home</state>
+                <state img="#-finished.png">I don't care anymore Jessie. I just want this to be over so I can go home.</state>
             </case>
             <case stage="9" oneShotId="27">
                 <test expr="~self.costume~" value="ghost_bride_weiss_schnee" />
