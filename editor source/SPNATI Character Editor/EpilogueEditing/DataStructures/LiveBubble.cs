@@ -213,7 +213,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (camera != null)
 			{
 				//size to the camera
-				float size = Math.Max(6, camera.Height / 75.0f);
+				float size = Math.Max(1, camera.Height / 75.0f);
 				if (size != _font.Size)
 				{
 					_font?.Dispose();

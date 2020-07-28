@@ -107,7 +107,7 @@ namespace SPNATI_Character_Editor
 
 		public string SceneName
 		{
-			get { return Name ?? ToString(); }
+			get { return !string.IsNullOrEmpty(Name) ? Name : ToString(); }
 		}
 
 		public override string ToString()

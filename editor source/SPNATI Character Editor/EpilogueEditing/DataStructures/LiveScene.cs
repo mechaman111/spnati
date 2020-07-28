@@ -52,6 +52,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					Width = _background.Width;
 					Height = _background.Height;
 				}
+				else if (Width == 0)
+				{
+					Width = 100;
+					Height = 100;
+				}
 				Set(value);
 			}
 		}
