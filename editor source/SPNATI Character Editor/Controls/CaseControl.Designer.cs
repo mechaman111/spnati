@@ -51,6 +51,7 @@
 			this.lblHelpText = new Desktop.Skinning.SkinnedLabel();
 			this.groupBox3 = new Desktop.Skinning.SkinnedGroupBox();
 			this.gridStages = new SPNATI_Character_Editor.Controls.StageGrid();
+			this.chkBackground = new Desktop.Skinning.SkinnedCheckBox();
 			this.tabTags = new System.Windows.Forms.TabPage();
 			this.lstRemoveTags = new SPNATI_Character_Editor.Controls.RecordSelectBox();
 			this.lstAddTags = new SPNATI_Character_Editor.Controls.RecordSelectBox();
@@ -145,6 +146,7 @@
 			this.tabConditions.Controls.Add(this.label73);
 			this.tabConditions.Controls.Add(this.skinnedGroupBox1);
 			this.tabConditions.Controls.Add(this.groupBox3);
+			this.tabConditions.Controls.Add(this.chkBackground);
 			this.tabConditions.ForeColor = System.Drawing.Color.Black;
 			this.tabConditions.Location = new System.Drawing.Point(4, 22);
 			this.tabConditions.Name = "tabConditions";
@@ -165,7 +167,7 @@
 			this.stripConditions.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
 			this.stripConditions.ShowAddButton = true;
 			this.stripConditions.ShowCloseButton = false;
-			this.stripConditions.Size = new System.Drawing.Size(541, 28);
+			this.stripConditions.Size = new System.Drawing.Size(459, 28);
 			this.stripConditions.StartMargin = 5;
 			this.stripConditions.TabControl = this.tabsConditions;
 			this.stripConditions.TabIndex = 61;
@@ -293,8 +295,12 @@
 			this.skinnedGroupBox1.Controls.Add(this.label34);
 			this.skinnedGroupBox1.Controls.Add(this.cboCaseTags);
 			this.skinnedGroupBox1.Controls.Add(this.lblHelpText);
+			this.skinnedGroupBox1.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox1.Image = null;
 			this.skinnedGroupBox1.Location = new System.Drawing.Point(478, 6);
 			this.skinnedGroupBox1.Name = "skinnedGroupBox1";
+			this.skinnedGroupBox1.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.skinnedGroupBox1.ShowIndicatorBar = false;
 			this.skinnedGroupBox1.Size = new System.Drawing.Size(175, 113);
 			this.skinnedGroupBox1.TabIndex = 39;
 			this.skinnedGroupBox1.TabStop = false;
@@ -388,6 +394,7 @@
 			this.cboCaseTags.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
 			this.cboCaseTags.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboCaseTags.FormattingEnabled = true;
+			this.cboCaseTags.KeyMember = null;
 			this.cboCaseTags.Location = new System.Drawing.Point(46, 21);
 			this.cboCaseTags.Name = "cboCaseTags";
 			this.cboCaseTags.SelectedIndex = -1;
@@ -416,8 +423,12 @@
 			// 
 			this.groupBox3.BackColor = System.Drawing.Color.White;
 			this.groupBox3.Controls.Add(this.gridStages);
+			this.groupBox3.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.groupBox3.Image = null;
 			this.groupBox3.Location = new System.Drawing.Point(6, 6);
 			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.groupBox3.ShowIndicatorBar = false;
 			this.groupBox3.Size = new System.Drawing.Size(467, 113);
 			this.groupBox3.TabIndex = 37;
 			this.groupBox3.TabStop = false;
@@ -431,6 +442,20 @@
 			this.gridStages.ShowSelectAll = true;
 			this.gridStages.Size = new System.Drawing.Size(72, 102);
 			this.gridStages.TabIndex = 37;
+			// 
+			// chkBackground
+			// 
+			this.chkBackground.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.chkBackground.AutoSize = true;
+			this.chkBackground.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkBackground.Location = new System.Drawing.Point(468, 128);
+			this.chkBackground.Name = "chkBackground";
+			this.chkBackground.Size = new System.Drawing.Size(84, 17);
+			this.chkBackground.TabIndex = 62;
+			this.chkBackground.Text = "Background";
+			this.toolTip1.SetToolTip(this.chkBackground, "When conditions are met, runs this case in the background (setting markers, state" +
+        ", etc.) without displaying to the player.");
+			this.chkBackground.UseVisualStyleBackColor = true;
 			// 
 			// tabTags
 			// 
@@ -454,6 +479,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstRemoveTags.Location = new System.Drawing.Point(348, 19);
 			this.lstRemoveTags.Name = "lstRemoveTags";
+			this.lstRemoveTags.RecordContext = null;
+			this.lstRemoveTags.RecordFilter = null;
 			this.lstRemoveTags.RecordType = null;
 			this.lstRemoveTags.SelectedItems = new string[0];
 			this.lstRemoveTags.Size = new System.Drawing.Size(303, 305);
@@ -465,6 +492,8 @@
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.lstAddTags.Location = new System.Drawing.Point(6, 19);
 			this.lstAddTags.Name = "lstAddTags";
+			this.lstAddTags.RecordContext = null;
+			this.lstAddTags.RecordFilter = null;
 			this.lstAddTags.RecordType = null;
 			this.lstAddTags.SelectedItems = new string[0];
 			this.lstAddTags.Size = new System.Drawing.Size(336, 305);
@@ -755,5 +784,6 @@
 		private Desktop.Skinning.SkinnedTabControl tabsConditions;
 		private System.Windows.Forms.TabPage tabPage1;
 		private Desktop.Skinning.SkinnedPanel skinnedPanel2;
+		private Desktop.Skinning.SkinnedCheckBox chkBackground;
 	}
 }

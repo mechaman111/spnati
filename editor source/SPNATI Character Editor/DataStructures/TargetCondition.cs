@@ -76,7 +76,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		[DefaultValue("")]
-		[StageSelect(DisplayName = "Stage", GroupName = "Status", GroupOrder = 40, Description = "Character is within a range of stages", BoundProperties = new string[] { "Character" })]
+		[StageSelect(DisplayName = "Stage", GroupName = "Status", GroupOrder = 40, Description = "Character is within a range of stages", BoundProperties = new string[] { "Character", "Role" })]
 		[XmlAttribute("stage")]
 		[JsonProperty("stage")]
 		public string Stage
@@ -210,6 +210,23 @@ namespace SPNATI_Character_Editor
 			new KeyValuePair<string, string>("alive", "Still in the game"),
 			new KeyValuePair<string, string>("masturbating", "Masturbating"),
 			new KeyValuePair<string, string>("finished", "Finished masturbating")
+		};
+
+		public static readonly KeyValuePair<string, string>[] SafeStatusTypes = {
+			new KeyValuePair<string, string>(null, ""),
+			new KeyValuePair<string, string>("lost_some", "Lost something"),
+			new KeyValuePair<string, string>("mostly_clothed", "Lost only accessories"),
+			new KeyValuePair<string, string>("decent", "Still covered by major articles"),
+			new KeyValuePair<string, string>("exposed", "Bottom and/or top visible"),
+			new KeyValuePair<string, string>("chest_visible", "Top visible"),
+			new KeyValuePair<string, string>("crotch_visible", "Bottom visible"),
+			new KeyValuePair<string, string>("topless", "No top"),
+			new KeyValuePair<string, string>("bottomless", "No bottom"),
+			new KeyValuePair<string, string>("naked", "No top or bottom"),
+			new KeyValuePair<string, string>("lost_all", "Lost all layers"),
+			new KeyValuePair<string, string>("alive", "Still in the game"),
+			new KeyValuePair<string, string>("masturbating", "Forfeiting"),
+			new KeyValuePair<string, string>("finished", "Finished forfeit")
 		};
 
 		public TargetCondition()
@@ -515,7 +532,27 @@ namespace SPNATI_Character_Editor
 				}
 				if (Status != null)
 				{
-					str += " " + Status.Replace("_", " ");
+					string status = Status.Replace("_", " ");
+					if (Config.SafeMode)
+					{
+						if (status == "naked")
+						{
+							status = "final layer";
+						}
+						else if (status == "topless")
+						{
+							status = "no top";
+						}
+						else if (status == "bottomless")
+						{
+							status = "no bottom";
+						}
+						else if (status == "masturbating")
+						{
+							status = "forfeiting";
+						}
+					}
+					str += " " + status;
 				}
 				if (!string.IsNullOrEmpty(Gender))
 				{

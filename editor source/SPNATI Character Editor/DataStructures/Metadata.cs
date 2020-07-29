@@ -191,7 +191,10 @@ namespace SPNATI_Character_Editor
 			FirstName = c.FirstName;
 			LastName = c.LastName;
 			Label = c.Label;
-			Gender = c.Gender;
+			if (string.IsNullOrEmpty(Gender))
+			{
+				Gender = c.Gender;
+			}
 			Layers = c.Layers;
 			Endings = c.Endings.ConvertAll(e => new EpilogueMeta
 			{
@@ -231,7 +234,7 @@ namespace SPNATI_Character_Editor
 
 	public class EpilogueMeta
 	{
-		[DefaultValue("")]
+		[DefaultValue("online")]
 		[XmlAttribute("status")]
 		public string Status;
 

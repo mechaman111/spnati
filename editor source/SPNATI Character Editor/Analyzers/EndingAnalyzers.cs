@@ -361,6 +361,47 @@ namespace SPNATI_Character_Editor.Analyzers
 		}
 	}
 
+	public class EndingBurstAnalyzer : BooleanAnalyzer
+	{
+		public override string Key
+		{
+			get { return "BurstParticles"; }
+		}
+
+		public override string Name
+		{
+			get { return "Burst Effects"; }
+		}
+
+		public override string FullName
+		{
+			get { return "Epilogue - Uses Burst Emitters"; }
+		}
+
+		public override string ParentKey
+		{
+			get { return "Particles"; }
+		}
+
+		public override bool GetValue(Character character)
+		{
+			foreach (Epilogue ending in character.Endings)
+			{
+				foreach (Scene scene in ending.Scenes)
+				{
+					foreach (Directive dir in scene.Directives)
+					{
+						if (dir.DirectiveType == "emit")
+						{
+							return true;
+						}
+					}
+				}
+			}
+			return false;
+		}
+	}
+
 	public class EndingConditionalAnalyzer : NumericAnalyzer
 	{
 		public override string Key

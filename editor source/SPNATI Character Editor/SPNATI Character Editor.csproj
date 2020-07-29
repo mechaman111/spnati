@@ -90,12 +90,13 @@
     <Compile Include="Actions\MoveSpriteStartCommand.cs" />
     <Compile Include="Actions\PasteEventCommand.cs" />
     <Compile Include="Actions\PasteKeyframeCommand.cs" />
+    <Compile Include="Actions\SplitKeyframeCommand.cs" />
     <Compile Include="Actions\TimelineActions\ModifyWidgetLengthTimelineAction.cs" />
-    <Compile Include="Actions\TimelineActions\MoveBreakTimelineAction.cs" />
     <Compile Include="Actions\TimelineActions\MoveWidgetTimelineAction.cs" />
     <Compile Include="Actions\TimelineActions\SelectEventTimelineAction.cs" />
     <Compile Include="Actions\TimelineActions\SelectKeyframeTimelineAction.cs" />
     <Compile Include="Actions\ToggleKeyframeTypeCommand.cs" />
+    <Compile Include="Actions\TransferPreviousPropertyCommand.cs" />
     <Compile Include="Activities\AdvancedMetadataEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -113,6 +114,12 @@
     </Compile>
     <Compile Include="Activities\CaseDataSlicer.Designer.cs">
       <DependentUpon>CaseDataSlicer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\CaseTemplateEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\CaseTemplateEditor.Designer.cs">
+      <DependentUpon>CaseTemplateEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Activities\CharacterConfiguration.cs">
       <SubType>UserControl</SubType>
@@ -269,6 +276,9 @@
     <Compile Include="Controls\CaseControl.Designer.cs">
       <DependentUpon>CaseControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CharacterFolderDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\CodeReplaceBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -329,6 +339,12 @@
     </Compile>
     <Compile Include="Controls\EditControls\AnimDurationControl.Designer.cs">
       <DependentUpon>AnimDurationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditControls\FolderSelectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\FolderSelectControl.Designer.cs">
+      <DependentUpon>FolderSelectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\EditControls\LayerDifferenceControl.cs">
       <SubType>UserControl</SubType>
@@ -492,6 +508,12 @@
     <Compile Include="Controls\IntervalSlider.Designer.cs">
       <DependentUpon>IntervalSlider.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LineImportControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LineImportControl.Designer.cs">
+      <DependentUpon>LineImportControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LiveEpilogueEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -545,6 +567,18 @@
     </Compile>
     <Compile Include="Controls\RecordSelectBox.Designer.cs">
       <DependentUpon>RecordSelectBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ScratchPadControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ScratchPadControl.Designer.cs">
+      <DependentUpon>ScratchPadControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ScratchPadImportControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ScratchPadImportControl.Designer.cs">
+      <DependentUpon>ScratchPadImportControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\SlicerControls\IntervalSlicerControl.cs">
       <SubType>UserControl</SubType>
@@ -677,6 +711,7 @@
     <Compile Include="DataStructures\BackgroundDatabase.cs" />
     <Compile Include="DataStructures\BindableTag.cs" />
     <Compile Include="DataStructures\BindableTagList.cs" />
+    <Compile Include="DataStructures\CaseDefinition.cs" />
     <Compile Include="DataStructures\CaseLabel.cs" />
     <Compile Include="DataStructures\CaseNote.cs" />
     <Compile Include="DataStructures\CharacterHistory.cs" />
@@ -939,6 +974,8 @@
     <Compile Include="DataStructures\VariableDatabase.cs" />
     <Compile Include="DesktopMessages.cs" />
     <Compile Include="DialogueDatabase.cs" />
+    <Compile Include="EpilogueEditing\DataStructures\LiveSceneSegment.cs" />
+    <Compile Include="EpilogueEditing\Interfaces\IFixedLength.cs" />
     <Compile Include="Forms\AddPoseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -967,7 +1004,6 @@
     <Compile Include="DialogueLine.cs" />
     <Compile Include="EpilogueEditing\AnimationHelpers.cs" />
     <Compile Include="EpilogueEditing\DataStructures\LiveAnimatedObject.cs" />
-    <Compile Include="EpilogueEditing\DataStructures\LiveBreak.cs" />
     <Compile Include="EpilogueEditing\DataStructures\LiveBubble.cs" />
     <Compile Include="EpilogueEditing\DataStructures\LiveBubbleKeyframe.cs" />
     <Compile Include="EpilogueEditing\DataStructures\LiveBurst.cs" />
@@ -1213,6 +1249,7 @@
     <Compile Include="IO\SpnatiXmlSerializer.cs" />
     <Compile Include="DataStructures\Listing.cs" />
     <Compile Include="IO\CharacterStyleSheetSerializer.cs" />
+    <Compile Include="Providers\CaseGroupProvider.cs" />
     <Compile Include="Providers\FilterTypeProvider.cs" />
     <Compile Include="Services\IImageCompressor.cs" />
     <Compile Include="Services\KisekaeOnlineConverter.cs" />
@@ -1282,6 +1319,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\CaseDataSlicer.resx">
       <DependentUpon>CaseDataSlicer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\CaseTemplateEditor.resx">
+      <DependentUpon>CaseTemplateEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\CharacterConfiguration.resx">
       <DependentUpon>CharacterConfiguration.cs</DependentUpon>
@@ -1391,6 +1431,9 @@
     <EmbeddedResource Include="Controls\CharacterImageBox.resx">
       <DependentUpon>CharacterImageBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CharacterFolderDialog.resx">
+      <DependentUpon>CharacterFolderDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\CodeReplaceBar.resx">
       <DependentUpon>CodeReplaceBar.cs</DependentUpon>
     </EmbeddedResource>
@@ -1423,6 +1466,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DialogueTree.resx">
       <DependentUpon>DialogueTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditControls\FolderSelectControl.resx">
+      <DependentUpon>FolderSelectControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\EditControls\LayerDifferenceControl.resx">
       <DependentUpon>LayerDifferenceControl.cs</DependentUpon>
@@ -1533,6 +1579,12 @@
     <EmbeddedResource Include="Controls\KeyboardDataGridView.resx">
       <DependentUpon>KeyboardDataGridView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LineImportControl.resx">
+      <DependentUpon>LineImportControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LiveEpilogueEditor.resx">
+      <DependentUpon>LiveEpilogueEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\MarkerConditionField.resx">
       <DependentUpon>MarkerConditionField.cs</DependentUpon>
     </EmbeddedResource>
@@ -1563,6 +1615,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\RecordSelectBox.resx">
       <DependentUpon>RecordSelectBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ScratchPadControl.resx">
+      <DependentUpon>ScratchPadControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ScratchPadImportControl.resx">
+      <DependentUpon>ScratchPadImportControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SlicerControls\IntervalSlicerControl.resx">
       <DependentUpon>IntervalSlicerControl.cs</DependentUpon>
@@ -1813,6 +1871,22 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Icons\FileMissing.png" />
+    <Content Include="Help\images\casetemplates_editor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_copy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_fixed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_screen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\ending_timeline.png" />
+    <Content Include="Help\images\ending_timeline_toolbar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Help\images\matrix1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1828,6 +1902,21 @@
     <None Include="Icons\PoseList.png" />
     <None Include="Icons\Search.png" />
     <None Include="Icons\Replace.png" />
+    <None Include="Icons\LinkToEnd.png" />
+    <None Include="Icons\LinkToEndFill.png" />
+    <None Include="Icons\KeyframeSplit.png" />
+    <None Include="Icons\AddEmitter.png" />
+    <None Include="Icons\AddSprite.png" />
+    <None Include="Icons\AddTextBox.png" />
+    <None Include="Icons\KeyTypeBegin.png" />
+    <None Include="Icons\KeyTypeNormal.png" />
+    <None Include="Icons\KeyTypeSplit.png" />
+    <None Include="Icons\AddEvent.png" />
+    <None Include="Icons\TransferKeyframe.png" />
+    <None Include="Icons\RangeChooser.png" />
+    <Content Include="Help\casetemplates.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Images\BaseCode.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1844,6 +1933,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Images\StageCode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v6.0.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="VersionHistory\v5.9.html">
@@ -1974,9 +2066,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\ending_animation_tree.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Help\images\ending_clip.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Help\images\ending_directive.png">

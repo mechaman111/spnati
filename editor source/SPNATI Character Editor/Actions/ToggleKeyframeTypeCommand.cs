@@ -14,7 +14,10 @@ namespace SPNATI_Character_Editor.Actions
 		private Dictionary<string, KeyframeType> _newSettings = new Dictionary<string, KeyframeType>();
 		private LiveKeyframe _keyframe;
 
-		public ToggleKeyframeTypeCommand(LiveAnimatedObject data, LiveKeyframe frame, HashSet<string> properties)
+		public ToggleKeyframeTypeCommand(LiveAnimatedObject data, LiveKeyframe frame, HashSet<string> properties) : this(data, frame, properties, null)
+		{
+		}
+		public ToggleKeyframeTypeCommand(LiveAnimatedObject data, LiveKeyframe frame, HashSet<string> properties, KeyframeType? newType)
 		{
 			_keyframe = frame;
 			if (properties.Count == 0)
@@ -34,21 +37,28 @@ namespace SPNATI_Character_Editor.Actions
 
 			foreach (string property in _properties)
 			{
-				KeyframeType type = _keyframe.GetFrameType(property);
-				_oldSettings[property] = type;
-				switch (type)
+				if (newType.HasValue)
 				{
-					case KeyframeType.Begin:
-						type = KeyframeType.Split;
-						break;
-					case KeyframeType.Split:
-						type = KeyframeType.Normal;
-						break;
-					default:
-						type = KeyframeType.Begin;
-						break;
+					_newSettings[property] = newType.Value;
 				}
-				_newSettings[property] = type;
+				else
+				{
+					KeyframeType type = _keyframe.GetFrameType(property);
+					_oldSettings[property] = type;
+					switch (type)
+					{
+						case KeyframeType.Begin:
+							type = KeyframeType.Split;
+							break;
+						case KeyframeType.Split:
+							type = KeyframeType.Normal;
+							break;
+						default:
+							type = KeyframeType.Begin;
+							break;
+					}
+					_newSettings[property] = type;
+				}
 			}
 			_properties = properties;
 		}

@@ -17,6 +17,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private ISkin _character;
 		private LivePose _pose;
 		private Pose _sourcePose;
+		private int _stage;
 		private UndoManager _history = new UndoManager();
 		private float _time;
 		private float _elapsedTime;
@@ -196,7 +197,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_sourcePose = pose;
 			if (pose != null)
 			{
-				_pose = new LivePose(_character, pose);
+				_pose = new LivePose(_character, pose, _stage);
+				_pose.CurrentStage = _stage;
 			}
 			else
 			{
@@ -295,7 +297,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			tsCreateSequence.Enabled = true;
 			tsAddKeyframe.Enabled = false;
 			tsRemoveKeyframe.Enabled = false;
-			tsFrameType.Enabled = false;
+			tsTypeBegin.Enabled = tsTypeNormal.Enabled = tsTypeSplit.Enabled = false;
 			if (selectedWidget != null)
 			{
 				tsRemoveSprite.Enabled = true;
@@ -311,7 +313,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				if (selectedWidget.SelectedFrame != null && selectedWidget.SelectedFrame.Time != 0)
 				{
 					tsRemoveKeyframe.Enabled = true;
-					tsFrameType.Enabled = true;
+					tsTypeBegin.Enabled = tsTypeNormal.Enabled = tsTypeSplit.Enabled = true;
 				}
 			}
 		}
@@ -598,10 +600,25 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			exporter.ShowDialog();
 		}
 
-		private void tsFrameType_Click(object sender, EventArgs e)
+		private void tsTypeNormal_Click(object sender, EventArgs e)
+		{
+			ToggleKeyframeType(KeyframeType.Normal);
+		}
+
+		private void tsTypeSplit_Click(object sender, EventArgs e)
+		{
+			ToggleKeyframeType(KeyframeType.Split);
+		}
+
+		private void tsTypeBegin_Click(object sender, EventArgs e)
+		{
+			ToggleKeyframeType(KeyframeType.Begin);
+		}
+
+		private void ToggleKeyframeType(KeyframeType type)
 		{
 			if (timeline.SelectedObject == null) { return; }
-			SpriteWidget widget = timeline.SelectedObject as SpriteWidget;
+			KeyframedWidget widget = timeline.SelectedObject as KeyframedWidget;
 			LiveKeyframe frame = widget.SelectedFrame;
 			if (frame != null)
 			{
@@ -610,10 +627,22 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					props.Add(p);
 				}
-				ToggleKeyframeTypeCommand command = new ToggleKeyframeTypeCommand(widget.Sprite, frame, props);
+				ToggleKeyframeTypeCommand command = new ToggleKeyframeTypeCommand(widget.Data, frame, props, type);
 				_history.Commit(command);
 			}
 			UpdateToolbar();
+		}
+
+		private void tsStageSelect_Click(object sender, EventArgs e)
+		{
+			StageSelect form = new StageSelect();
+			form.SetData(_character.Character, null, "Choose a Stage", "Assets prefixed with # will be retrieved from this stage."); 
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				_stage = form.Stage;
+				_pose.CurrentStage = _stage;
+				canvas.Refresh();
+			}
 		}
 	}
 

@@ -24,6 +24,16 @@ namespace SPNATI_Character_Editor.Actions
 		public void Do()
 		{
 			_keyframe.Delete(_property);
+
+			if (_keyframe.Time == 0 && _object.LinkedFromPrevious)
+			{
+				//when deleting time 0, if this was linked to a previous object, pull that one's last value back (provided it's not a loop)
+				object value = _object.GetPreviousValue(_property, 0, true);
+				if (value != null)
+				{
+					_object.AddValue(0, _property, value, false);
+				}
+			}
 		}
 
 		public void Undo()

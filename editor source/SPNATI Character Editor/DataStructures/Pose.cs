@@ -138,9 +138,9 @@ namespace SPNATI_Character_Editor
 					{
 						sprite.Rotation = initialFrame.Rotation.Value.ToString(CultureInfo.InvariantCulture);
 					}
-					if (initialFrame.Opacity.HasValue)
+					if (initialFrame.Alpha.HasValue)
 					{
-						sprite.Opacity = initialFrame.Opacity.Value.ToString(CultureInfo.InvariantCulture);
+						sprite.Alpha = initialFrame.Alpha.Value.ToString(CultureInfo.InvariantCulture);
 					}
 
 					//2. split remainder of keyframes into animation directives of similar settings
@@ -260,8 +260,8 @@ namespace SPNATI_Character_Editor
 				case "Y":
 					frame.Y = kf.Y.Value.ToString(CultureInfo.InvariantCulture);
 					break;
-				case "Opacity":
-					frame.Opacity = kf.Opacity.Value.ToString(CultureInfo.InvariantCulture);
+				case "Alpha":
+					frame.Alpha = kf.Alpha.Value.ToString(CultureInfo.InvariantCulture);
 					break;
 				case "Rotation":
 					frame.Rotation = kf.Rotation.Value.ToString(CultureInfo.InvariantCulture);

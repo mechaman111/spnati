@@ -1,4 +1,6 @@
-﻿namespace SPNATI_Character_Editor.EpilogueEditor
+﻿using System.Globalization;
+
+namespace SPNATI_Character_Editor.EpilogueEditor
 {
 	public class LiveBurst : LiveEvent
 	{
@@ -31,6 +33,11 @@
 			Directive directive = new Directive();
 			directive.DirectiveType = "emit";
 			directive.Count = Count;
+			directive.Delay = (Data.Start + Time).ToString(CultureInfo.InvariantCulture);
+			if (Data != null)
+			{
+				directive.Marker = Data.Marker;
+			}
 			return directive;
 		}
 	}

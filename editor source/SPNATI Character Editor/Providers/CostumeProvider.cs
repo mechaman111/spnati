@@ -19,10 +19,24 @@ namespace SPNATI_Character_Editor.Providers
 
 		public IRecord Create(string key)
 		{
+			key = key.ToLower();
 			Costume skin = new Costume();
 			skin.Id = key;
 
-			Character owner = RecordLookup.DoLookup(typeof(Character), "", false, CharacterDatabase.FilterHuman, skin) as Character;
+			Character owner = null;
+			//try to identify the owner automatically
+			string[] pieces = key.Split('_');
+			foreach (string piece in pieces)
+			{
+				owner = CharacterDatabase.Get(piece);
+				if (owner != null)
+				{
+					break;
+				}
+			}
+
+			string searchText = owner?.FolderName ?? "";
+			owner = RecordLookup.DoLookup(typeof(Character), searchText, false, CharacterDatabase.FilterHuman, true, skin) as Character;
 			if (owner == null)
 			{
 				return null;
@@ -30,6 +44,15 @@ namespace SPNATI_Character_Editor.Providers
 			if (!owner.IsFullyLoaded)
 			{
 				owner = CharacterDatabase.Load(owner.FolderName);
+			}
+
+			//force the key to fit a certain pattern
+			if (!key.StartsWith(owner.FolderName + "_"))
+			{
+				key = key.Replace(owner.FolderName, "").Trim('_');
+				key = owner.FolderName + "_" + key;
+				skin.Id = key;
+				MessageBox.Show($"This outfit has been renamed to {key}.");
 			}
 
 			string folder = $"opponents/reskins/{key}/";

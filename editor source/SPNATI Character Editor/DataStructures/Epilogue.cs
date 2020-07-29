@@ -40,7 +40,7 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("alsoplaying-any-markers")]
 		public string AlsoPlayingAnyMarkers;
 
-		[RecordSelect(DisplayName = "Also Playing", GroupOrder = 8, Description = "Character that must also have been playing in order to unlock this ending", RecordType = typeof(Character), RecordFilter = "FilterRecords")]
+		[RecordList(DisplayName = "Also Playing", GroupOrder = 8, Description = "Character that must also have been playing in order to unlock this ending", RecordType = typeof(Character), RecordFilter = "FilterRecords", RowHeight = 70)]
 		[XmlAttribute("alsoPlaying")]
 		public string AlsoPlaying;
 
@@ -52,8 +52,9 @@ namespace SPNATI_Character_Editor
 		[XmlElement("title")]
 		public string Title = "New Ending";
 
-		[DefaultValue("")]
+		[DefaultValue("online")]
 		[ComboBox(DisplayName = "Status", Description = "Where the epilogue is available", GroupOrder = 1, Options = new string[] {
+			"online",
 			"offline",
 			"testing",
 		})]
@@ -93,7 +94,7 @@ namespace SPNATI_Character_Editor
 
 		public void OnBeforeSerialize()
 		{
-			
+
 		}
 
 		public void OnAfterDeserialize()
@@ -106,7 +107,7 @@ namespace SPNATI_Character_Editor
 					directive.PivotX = ConvertPivot(directive.PivotX);
 					directive.PivotY = ConvertPivot(directive.PivotY);
 				}
-			}			
+			}
 		}
 
 		private static string ConvertPivot(string pivot)

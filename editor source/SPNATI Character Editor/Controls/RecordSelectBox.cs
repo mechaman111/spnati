@@ -1,4 +1,5 @@
-﻿using Desktop.CommonControls;
+﻿using Desktop;
+using Desktop.CommonControls;
 using System;
 using System.Linq;
 using System.Windows.Forms;
@@ -14,6 +15,18 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			get { return recField.RecordType; }
 			set { recField.RecordType = value; }
+		}
+
+		public object RecordContext
+		{
+			get { return recField.RecordContext; }
+			set { recField.RecordContext = value; }
+		}
+
+		public Func<IRecord, bool> RecordFilter
+		{
+			get { return recField.RecordFilter; }
+			set { recField.RecordFilter = value; }
 		}
 
 		public RecordSelectBox()
@@ -37,6 +50,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			set
 			{
+				lstSelectedItems.Items.Clear();
 				if (value == null) return;
 				foreach (string item in value)
 				{

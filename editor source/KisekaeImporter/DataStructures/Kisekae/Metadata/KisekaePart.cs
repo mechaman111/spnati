@@ -38,7 +38,9 @@
 		LeftLowerLeg,
 		RightLowerLeg,
 		LeftFoot,
-		RightFoot
+		RightFoot,
+		LeftItem,
+		RightItem,
 	}
 
 	public static class KisekaeExtensions
@@ -111,6 +113,10 @@
 					return "Left foot";
 				case KisekaePart.RightFoot:
 					return "Right foot";
+				case KisekaePart.LeftItem:
+					return "Left item";
+				case KisekaePart.RightItem:
+					return "Right item";
 				case KisekaePart.None:
 					return "None";
 				default:
@@ -194,6 +200,10 @@
 					return "ashi1.foot.foot";
 				case KisekaePart.RightFoot:
 					return "ashi0.foot.foot";
+				case KisekaePart.LeftItem:
+					return "handm1_1.hand.item";
+				case KisekaePart.RightItem:
+					return "handm1_0.hand.item";
 				default:
 					return "";
 			}
@@ -275,6 +285,10 @@
 					return KisekaePart.LeftFoot;
 				case "ashi0.foot.foot":
 					return KisekaePart.RightFoot;
+				case "handm1_1.hand.item":
+					return KisekaePart.LeftItem;
+				case "handm1_0.hand.item":
+					return KisekaePart.RightItem;
 				default:
 					return KisekaePart.None;
 			}

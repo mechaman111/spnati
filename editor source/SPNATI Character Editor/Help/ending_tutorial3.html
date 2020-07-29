@@ -17,42 +17,41 @@
             <h1>Flash Effect</h1>
             First we'll add a flash effect to the orb's explosion.
             <ol>
-                <li>Open up your epilogue and select the last directive in the Scene: Blue scene. This should be a "Pause".</li>
-                <li>Add a "Clear Speech Bubbles" directive.</li>
-                <li>Add a new sprite (Add Directive > Add Sprite). Use ep_flash.png from Florina's folder.</li>
+                <li>Open up your epilogue and select the Blue scene.</li>
+				<li>Select the "Oh no!" action in the Actions list.</li>
+				<li>Toggle the "Oh no!" speech bubble to have a fixed length so it doesn't persist into the next action, if necessary.</li>
+				<li>Add a new Action.</li>
+                <li>Add a new sprite. Use ep_flash.png from Florina's folder.</li>
                 <li>Give this sprite an ID of "flash".</li>
                 <li>Drag the flash to the center of the orb, around (X: -335, Y: 1176).</li>
                 <li>Find the Opacity (0-100) in the Property Table and set it to 0 so the flash starts off invisible.</li>
                 <li>Set <span class="label">Scale X</span>: 1 and <span class="label">Scale Y</span>: 1. These are the default values, but we're going to animate them so we need to set them explicitly.</li>
-                <li>Add an "Animate Sprite/Emitter" directive.</li>
-                <li>Set the ID to "flash" to associate with the flash sprite.</li>
-                <li>Set the animation's time to 0.2.</li>
+                <li>Drag the time marker to 0.25s.</li>
                 <li>Put the mouse over the corner of the flash's box in the preview canvas and drag it to scale the flash. Alternatively, manually set <span class="label">Scale X</span>: 5 and <span class="label">Scale Y</span>: 5.</li>
                 <li>Drag the opacity slider to full, or type in 100.</li>
-                <li>Add a key frame.</li>
-                <li>Set <span class="label">Time</span>: 0.4, <span class="label">Scale X</span>: 1, <span class="label">Scale Y</span>: 1, and <span class="label">Opacity</span>: 0.</li>
-                <li>Preview the animation. The flash should grow quickly and disappear. This is easiest to see if you have the @0.4s key frame selected.</li>
+				<li>Move the time marker to 0.5s.</li>
+                <li>Set <span class="label">Scale X</span>: 1, <span class="label">Scale Y</span>: 1, and <span class="label">Opacity</span>: 0.</li>
+                <li>Preview the animation. The flash should grow quickly and disappear.</li>
             </ol>
         </section>
         <section class="card">
             <h1>Vanishing orb</h1>
-            The orb exploded, so it should go away. This section isn't doing anything we haven't already covered, so it'll be brief.
+            The orb exploded, so it should go away.
             <ol>
-                <li>Add an animation directive for ID: orb.</li>
-                <li>Set <span class="label">Time</span>: 0.2, <span class="label">Delay</span>: 0.2, and <span class="label">Opacity</span>: 0.</li>
-                <li>These settings will cause the animation to play 0.2s in, coinciding with when the flash is at its largest point, and finish after 0.2s, coinciding with the end of the flash.</li>
-                <li>Play through the scene and verify everything looks correct. By the end, only Florina should be left.</li>
+                <li>Toggle the orb to have a fixed length. The orb's bar in the timeline will shrink to its final keyframe, and the diagonal lines extending to the right will disappear.</li>
+                <li>Play the action and verify it looks correct. By the end, only Florina should be left.</li>
             </ol>
         </section>
         <section class="card">
             <h1>Screen Fade</h1>
             To add to the flash's intensity, we'll make the whole screen go bright yellow.
             <ol>
-                <li>Add a "Fade Effect" directive.</li>
-                <li>Set the opacity to 100. The whole screen goes black.</li>
-                <li>Set <span class="label">Time</span>: 0.3.</li>
-                <li>In the color field, type FFFFC6. This method lets you type exact RGB hex codes rather than using the color picker.</li>
-                <li>Add a key frame to the fade effect.</li>
+                <li>Select the camera's first keyframe in the timeline.</li>
+				<li>Type 0 into the opacity to force a keyframe.</li>
+				<li>In the color field, type FFFFC6. This method lets you type exact RGB hex codes rather than using the color picker.</li>
+				<li>Move the time marker to 0.25s.</li>
+                <li>Set the opacity to 100. The whole screen goes yellow.</li>
+				<li>Move the time marker to 0.5s.</li>
                 <li>Set <span class="label">Opacity</span>: 0.</li>
                 <li>Play through the scene. The whole screen should flash now.</li>
             </ol>
@@ -61,15 +60,19 @@
             <h1>Clothing Damage</h1>
             As required when using summoning orbs in the world of SPNATI, its explosion must destroy clothing. We'll do this by swapping out Florina's image with another one.
             <ol>
-                <li>Select the Add sprite (sprite1) directive at the start of Scene: Blue. Change the ID to "florina" so that it's easier to tell at a glance what we're animating.</li>
-                <li>Select Scene: Blue and add an "Animate Sprite/Emitter" directive. This will add it to the bottom of the scene.</li>
-                <li>Set the ID of the animation directive to "florina"</li>
+                <li>Select Florina's sprite (named "calm"). We should name this "florina" so that it's easier to tell at a glance what we're animating.</li>
+				<li>However, the fields are disabled. You can only edit an object's attributes in the action where it was created.</li>
+				<li>Select the first action ("But you won't really...")</li>
+				<li>Select the calm sprite again. Now you can rename it to "florina".</li>
+				<li>Go back to the last action. It's probably named "Move Camera". Let's give it a better name by typing "Clothing Damage" into the Name field.</li>
+				<li>Select Florina's sprite.</li>
+				<li>Move the time marker to 0.25s.</li>
                 <li>Under the Source field, click the ... and choose 6-embarrassed.png from Florina's folder.</li>
                 <li>Florina is a bit stretched out. This is because the old image and new one aren't the same width.</li>
                 <li>It's generally better to make your source images the same dimensions for situations like this, but since Florina's assets weren't designed with epilogue tutorials in mind, we'll just work around it.</li>
+				<li>Make sure the time marker is still at 0.25s.</li>
                 <li>Grab the left or right edge of Florina's box and pull it in until she looks good. Alternatively, manually set <span class="label">Scale X</span>: 0.70. </li>
-                <li>Finally, so that her clothes don't disappear until the flash, set the Delay to 0.3 seconds.</li>
-                <li>Select the Animate (florina) line again in the Scene view and press Ctrl+Space. This will add a "Wait for Input" pause after it. Every directive type has a keyboard shortcut so you don't have to go through the Add Directive menu.</li>
+				<li>Since we have never set the scale before, it will apply even before this point. To remedy that, select the Scale X key frame and change its type to "Begin keyframe" using the button in the timeline toolbar.</li>
             </ol>
         </section>
         <section class="card">

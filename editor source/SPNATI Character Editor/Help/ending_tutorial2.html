@@ -30,28 +30,26 @@
         <section class="card">
             <h1>Moving the Camera</h1>
             We're now going to animate the camera.
-            <ol>
-                <li>With the scene selected, in the Property Table set Camera X to 130. You could also drag the viewport in the canvas, but because Florina's sprite is so large, you would likely end up dragging her instead.</li>
-                <li>
-                    The viewport is now lined up with the right side of the background.
-                    <br/>
-                    <img src="images/ending_viewport.png"/>
-                </li>
-                <li>Click the Add sprite (sprite1) directive in the first scene to select it. Then click "Add Directive" and add a "Move/Zoom Camera" directive.</li>
-                <li>This will insert a Camera directive right below the Add Sprite directive because the Add Sprite directive was selected previously.</li>
-                <li>With the Camera directive selected, set X in the Property Table to 0. This means "move the camera to X: 0."</li>
-                <li>Currently this movement is done immediately. Set the Time field to 1 second so that the camera moves in one second instead of instantly.</li>
-                <li>In the canvas toolbar, click the "Play selected animation" button to the left of the "Play Scene" button. This will play the currently selected animation directive in a loop. You'll see the viewport moving from position 130 to 0 in 1 second.</li>
-                <li>Click the button again to stop the preview.</li>
-                <li>Click the Play Scene button. When playing a scene, you see the scene from the viewpoint of the camera, so it looks like a pan across the landscape as the camera moves.</li>
-                <li>Stop playback.</li>
-            </ol>
+			<ol>
+				<li>With the camera still selected (you can click the diamond next to "camera" in the timeline if it's not), set X to 130. You could also drag the viewport in the canvas, but for the sake of following this tutorial it's easier to type exact numbers.</li>
+				<li>
+					The viewport is now lined up with the right side of the background.
+					<br />
+					<img src="images/ending_viewport.png" />
+				</li>
+				<li>Drag the red time marker in the timeline to 1:00.</li>
+				<li>Set the camera's X value to 0. A diamond appears at the 1:00s mark in the timeline.</li>
+				<li>Put the time marker back to 0:00.</li>
+				<li>In the timeline, click the Play button. You'll see the viewport moving from position 130 to 0 in 1 second.</li>
+				<li>Click the Play Scene button. When playing a scene, you see the scene from the viewpoint of the camera, so it looks like a pan across the landscape as the camera moves.</li>
+				<li>Stop playback.</li>
+			</ol>
         </section>
         <section class="card">
             <h1>Waiting for Animations</h1>
             You may have noticed during playback that the speech bubble is stuck in place while the camera moves. This is because, unlike sprites, speech bubbles are not physical objects in the scene. Instead, they are like stickers overlaid atop the camera lens. We don't want to display the bubble until Florina moves into view, so we'll wait for the camera to stop before we display it.
             <ol>
-                <li>With the Camera directive selected, add a new directive of type "Wait for Animations". This type of directive will cause the scene to wait until all non-looping animations have completed before advancing to the next directive (the speech bubble in this case).</li>
+                <li>In the timeline, grab the box with the green bar to the right of "Congratulations! You've unlocked..." and drag it so it starts at 1:00.</li>
                 <li>Play the scene again. This time the bubble doesn't appear until the camera has stopped.</li>
             </ol>
         </section>
@@ -59,97 +57,85 @@
             <h1>Moving Sprites</h1>
             Let's give Florina some animation by moving her into the scene too.
             <ol>
-                <li>Select the Add sprite (sprite1) directive. Change its ID in the Property Table from "sprite1" to "florina". IDs are used to link animations to sprites.</li>
-                <li>Notice in the Scene View that Add sprite (sprite1) now displays as Add sprite (florina).</li>
-                <li>Move Florina out of the viewport by dragging her left. Alternatively, set X manually to -200 by typing in the Property Table.</li>
-                <li>Add a directive of type "Animate Sprite/Emitter" to insert an Animate directive immediately after the Add Sprite directive.</li>
-                <li>Initially the property table only displays one field: ID. Type florina into the ID, because we want to animate the sprite named florina.</li>
-                <li>Drag Florina to the right back to where she was a few moments ago. Alternatively, type 0 into the X field of the Animate (florina) directive.</li>
-                <li>Set the time to 0.5 seconds so the animation takes half a second to run.</li>
+				<li>Select "calm" in the timeline. In the Property Table, change the ID to "florina". The timeline updates to use this new ID.</li>
+				<li>Giving your objects names helps identify them in a complicated timeline.</li>
+				<li>Click the diamond next to "florina" in the timeline to select the first keyframe.</li>
+                <li>Move Florina out of the viewport by dragging her left. Alternatively, you can manually type -200 into the X field of the Property Table.</li>
+                <li>In the timeline, drag the time marker to halfway between 0:00 and 1:00.</li>
+                <li>Drag Florina to the right back to where she was a few moments ago. Alternatively, type 0 into the X field of the Keyframe: florina (0.5s).</li>
                 <li>Play the scene and you'll see Florina slide in from the right.</li>
-                <li>Let's delay her movement a bit. With the Animate directive still selected, set the Delay (s) field to 0.5. This will cause the animation to wait 0.5 seconds before it runs. Note that the wait is 0.5 seconds from the time the directive was executed, which is not necessarily 0.5 seconds from the start of the scene.</li>
+                <li>Let's delay her movement a bit. Drag the diamond at 0.5s and move it to 1:00.</li>
+				<li>Put the time marker back to 0.5s and type -200 into the X field to create a new keyframe.</li>
+				<li>Click this diamond at 0.5 and then select the "Begin keyframe" button in the timeline toolbar. It looks like triangle pointing right.</li>
                 <li>Play the scene again. This time she waits a bit before popping into view. Stop playback.</li>
             </ol>
         </section>
         <section class="card">
             <h1>Key Frames</h1>
             The animation system uses key frames and tweening. Values for properties (X, Y, transparency, etc.) are defined at certain points in time, and the animation system fills the "in between" frames automatically.
-            At its core, the tweening system used by the epilogue system is virtually identical to the system used by custom poses, but working with them in the editor is a bit different.
+            At its core, the tweening system used by the epilogue system is virtually identical to the system used by custom poses, and so is working with them in the editor. This section will give a brief overview, but the Pose Maker tutorials go into more depth.
             <br/>
             It wouldn't be a Florina tutorial without summoning orbs being involved somehow. We'll use one to practice with animation key frames. 
             <ol>
                 <li>Select Scene: Blue in the Scene View.</li>
-                <li>Add a "Clear Speech Bubbles" directive. Since the scene was selected, the directive will go at the end of the scene, right after the "Wait For Input" Pause from the previous tutorial.</li>
-                <li>This directive removes all speech bubbles from the scene. It's also possible to remove individual IDed bubbles with the "Remove Speech Bubble" directive, but clearing them all is often preferable.</li>
-                <li>Add a "Move/Zoom Camera" directive and give it the following values:
-                <ul>
-                    <li><span class="label">Time: </span>1</li>
-                    <li><span class="label">X: </span>-600</li>
-                    <li><span class="label">Y: </span>384</li>
-                    <li><span class="label">Zoom: </span>0.40</li>
-                </ul>
+				<li>Click the "Toggle fixed length" button for the speech bubble. <img src="images/ending_fixed.png" />. This will cause the bubble to disappear when moving to the next action.</li>
+				<li>Add a new action in the Actions list.</li>
+				<li>Drag the time marker to 1:00.</li>
+				<li>Select the camera in the timeline. For a keyframe at 1s, give it the following values:
+					<ul>
+						<li><span class="label">Time: </span>1</li>
+						<li><span class="label">X: </span>-600</li>
+						<li><span class="label">Y: </span>384</li>
+						<li><span class="label">Zoom: </span>0.40</li>
+					</ul>
                 </li>
                 <li>This will pull back the camera and move Florina to the right side of the viewport as seen below:<br/>
-                You will likely need to zoom out the canvas to see this all.
+                You will likely need to recenter the canvas to see this all.
                 <br/>
                 <img src="images/ending_zoom.png" />
                 </li>
-                <li>Worth noting here is the arrow leading out from a smaller box. This is a visual overview of the key frames involved with the current animation. The smaller box is the viewport's original location, and the arrow represents the direction of travel. This will be more important when we start using more than a single key frame.</li>
-                <li>Add a sprite (Add Directive > Add Sprite). Use ep_orb.png from Florina's directory.</li>
-                <li>Give the sprite and ID of "orb."</li>
+				<li>Make sure the time marker is at 1:00..</li>
+                <li>Add a sprite (Add Sprite button in the toolbar). Use ep_orb.png from Florina's directory.</li>
+                <li>Give the sprite an ID of "orb."</li>
                 <li>Drag the orb to the lower left of the viewport, just outside of the rectangle. This should be somewhere around (X: -1500, Y: 1130).</li>
-                <li>Add an "Animate Sprite/Emitter" directive. Type orb into the ID field to link the animation to the sprite.</li>
-                <li>Set Time to 1 so it takes 1 second to move.</li>
-                <li>Drag the orb to Florina's feet, around (X: -100, Y: 1130). <strong>Make sure Y is filled out even if it's the same as the starting value.</strong> We're going to move Y in a bit and without putting it in the key frame, this frame would be skipped when animating Y and it would not animate as expected.</li>
-                <li>Click the "Add Keyframe" button to the right of the "Add Directive" button.</li>
-                <li>
-                    Looking at the scene view, you'll see that the (1s - X: -100 Y: 1130) information was moved into a separate line beneath Animate (orb) and a new line "@1s - new frame" was added. When an animation has more than one key frame, they appear beneath the directive like this.
-                    <br/>
-                    <img src="images/ending_keyframe.png" />
-                </li>
-                <li>Change the time of this new frame to 1.2. This indicates the key frame is at 1.2 seconds from the start of the animation, or 0.2 seconds after the previous frame (1.2 - 1.0 = 0.2)</li>
+                <li>Move the time marker to 2:00.</li>
+                <li>Drag the orb to Florina's feet, around (X: -100, Y: 1130). <strong>Fill out Y even though it's the same as the starting value.</strong> We're going to move Y in a bit and without putting it in the key frame, this frame would be skipped when animating Y and it would not animate as expected.</li>
+				<li>Move the time marker to the tick mark after 2:00 (at the default timeline zoom, this will be 2.12 and display as 1.12 for the orb's prospective keyframe.</li>
                 <li>Drag the orb up and to the left a bit, around (X: -230, Y: 990).</li>
-                <li>Click "Add Keyframe" to add another key frame to this animation.</li>
-                <li>Set the time to 1.4, meaning 0.2 seconds after the previous frame (1.4 - 1.2 = 0.2).</li>
+				<li>Move the time marker to the next tick mark.</li>
                 <li>Drag the orb back to the floor, around (X: -385, Y: 1130).</li>
-                <li>Click the "Play selected animation" button to preview the animation. It will slide across the floor, bump against Florina's foot, and bounce back.</li>
-                <li>As mentioned earlier, all of the key frames in this animation appear in the preview as boxes with arrows connecting them. <br/>
-                <img src="images/ending_frames.png" />
-                </li>
-                <li>You can click on one of these boxes to automatically select that frame. (You may need to zoom in to make it easier to select one without initiating a scale or rotation on the current frame).</li>
-                <li>Play the scene. After clicking through the speech bubble, the camera will zoom out. By the time the camera has pulled back, the orb has already almost bumped into Florina.</li>
-                <li>Stop playback. Let's delay the animation to give the camera a head start. We could use a "Wait For Animations" directive between the Camera and Animate (orb) directives, but that would cause it to wait for the camera to come to a halt before the orb starts moving. We don't want to wait that long.</li>
-                <li>Select Animate (orb) in the scene view.</li>
-                <li>In the Property Table, give it <span class="label">Delay (s)</span>: 0.5.</li>
-                <li>Play the scene again. This time we can see more of the orb's movement.</li>
+                <li>Play the scene. The camera will zoom out, and then the orb will roll up.</li>
+                <li>Stop playback. Let's give the orb a head start while the camera is still moving.</li>
+				<li>Grab the orb's in the timeline (rectangle with a blue line) and drag it so it starts at 0.5s.</li>
+                <li>Play the scene again. This time the orb is already moving by the time the camera stops.</li>
             </ol>
         </section>
         <section class="card">
-            <h1>Simultaneous and Looping Animations</h1>
-            It's possible to apply multiple animations to the same sprite at once, provided they are animating different parameters. Let's add a rolling effect to the orb. We could build the roll into the previous animation, but that would require some complicated tweaking with key frames to make it look nice. Instead it's simpler to animate it separately.
+            <h1>Looping Animations</h1>
+            It's possible to loop different properties on a sprite at the same time. Let's add a rolling effect to the orb.
             <ol>
-                <li>Add a new "Animate Sprite/Emitter" directive.</li>
-                <li>Set the ID to "orb" since we're animating the orb sprite again.</li>
-                <li>Check "Looped" in the property table to indicate that we want to loop this animation indefinitely.</li>
-                <li>Set the Rotation to 0 since we want to start at 0 rotation.</li>
-                <li>Add a key frame with <span class="label">Time (s)</span>: 0.5 and <span class="label">Rotation</span>: 360.</li>
-                <li>Preview the animation with "Play selected animation." The ball will be rolling place, but stopping and starting.</li>
+                <li>Make sure the orb is selected.</li>
+				<li>Click the initial keyframe for the orb (it should be at 0.5s).</li>
+				<li>Type 0 into the blank Rotation field to force an initial keyframe for rotation.</li>
+                <li>Drag the time marker to 1:00. Type 360 into the Rotation field.</li>
+				<li>Expand the orb's properties in the timeline by clicking the expand arrow to the left of the name.</li>
+				<li>On the Rotation row, hover over the empty space on the right and click it to enable looping.<br/> <img src="images/ending_keyframe.png" /></li>
+				<li>A repeat size appears next to Rotation's last keyframe.</li>
+                <li>Play the scene. The ball will be rolling in place, but stopping and starting.</li>
                 <li>This is because of the easing method, which defaults to "smooth": start slow, build up speed, and slow down.</li>
-                <li>Select the Animate (orb) (loop) directive in the Scene view.</li>
+                <li>Click the curve button two icons to the left of the looping button you just used to bring up a dropdown menu for easing functions.</li>
                 <li>Change the Easing to linear.</li>
                 <li>Preview the animation again. This time it rolls at a constant (linear) rate.</li>
-                <li>It's not possible to preview multiple animations at once in the editor, so to combine the roll with the movement, you'll need to play the whole scene.</li>
-                <li>Play the scene. It looks decent enough, except it keeps rolling forever. Stop playback.</li>
-                <li>Add a "Wait for Animations" directive. Waiting for animations does <strong>not</strong> wait for looping animations, because it would wait forever. Instead, this will wait for the movement to end and then advance while the rolling loop continues to play.</li>
-                <li>Add a "Stop Animation" directive so we can stop the roll.</li>
-                <li>Give it "orb" for the ID, which will stop all looping animations on "orb".</li>
-                <li>Play through the scene again. This time the orb stops rolling once it comes to a rest. Stop playback.</li>
-                <li>This looks good enough for tutorial purposes, but there are a number of ways we could accomplish this in a way that looks nicer. One idea would be to split the movement animation into before and after hitting Florina's leg and stop the loop between them, and then integrating a separate roll into the bounce.</li>
-                <li>One last finishing touch. Add a new speech bubble with the text, "Oh no!" and position it somewhere around Florina with the bubble arrow pointing at her.<br/>
-                <img src="images/ending_orb_speech.png" /></li>
-                <li>Add a "Wait for Input" directive after the speech bubble.</li>
+                <li>It looks decent enough, except it keeps rolling forever. Stop playback.</li>
+				<li>Select the last keyframe on the orb. This should be at time 1.75s (1.25 relative to the start of the orb).</li>
+				<li>Type 360 into the Rotation.</li>
+				<li>A new keyframe appears on the Rotation row and becomes part of the loop. We don't actually want this, so select the keyframe (only for the Rotation row) and click the "Begin keyframe" button in the timeline toolbar. This will make it part of a new animation block, ending the previous loop.</li>
+				<li>Play the action. The orb now stops rolling, but its rotation jumps to its new resting point. Change the rotation on this new frame to 190 and play it again to confirm that it looks better.</li>
+				<li>This looks good enough for tutorial purposes, but there are a number of ways we could accomplish this in a way that looks nicer. One idea would be to split the movement animation into before and after hitting Florina's leg and stop the loop between them, and then integrating a separate roll into the bounce. This will be left as an exercise to the reader.</li>
+                <li>One last finishing touch. Add a new speech bubble with the text, "Oh no!" and position it somewhere around Florina with the bubble arrow pointing at her.<br/></li>
+				<li>Drag this bubble in the timeline so that it starts at the point the orb hits Florina (around 1.5s).</li>
                 <li>
-                    Assuming you followed along exactly, your Scene View should look like this:<br/>
+                    Assuming you followed along exactly, your actions for the blue scene should look like this:<br/>
                     <img src="images/ending_animation_tree.png" />
                 </li>
             </ol>

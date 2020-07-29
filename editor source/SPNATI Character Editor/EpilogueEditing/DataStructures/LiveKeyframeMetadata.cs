@@ -19,13 +19,27 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public string Ease
 		{
 			get { return Get<string>(); }
-			set { Set(value); }
+			set
+			{
+				if (_property == "Src" && value != "linear")
+				{
+					value = "linear";
+				}
+				Set(value);
+			}
 		}
 
 		public string Interpolation
 		{
 			get { return Get<string>(); }
-			set { Set(value); }
+			set
+			{
+				if (_property == "Src")
+				{
+					value = "none";
+				}
+				Set(value);
+			}
 		}
 
 		/// <summary>
@@ -75,6 +89,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public override string ToString()
 		{
 			return $"{_property} - Keyframe Animation Settings";
+		}
+
+		public bool Indefinite
+		{
+			get { return Looped && Iterations == 0; }
 		}
 	}
 

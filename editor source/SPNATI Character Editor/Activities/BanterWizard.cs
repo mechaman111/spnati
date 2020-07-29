@@ -1,7 +1,6 @@
 ﻿using Desktop;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -33,6 +32,11 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				return "Banter Wizard";
 			}
+		}
+
+		public override bool CanRun()
+		{
+			return !Config.SafeMode;
 		}
 
 		protected override void OnInitialize()
@@ -451,7 +455,7 @@ namespace SPNATI_Character_Editor.Activities
 		private void LoadTags()
 		{
 			CharacterDatabase.LoadAll();
-			foreach (Character other in CharacterDatabase.Characters)
+			foreach (Character other in CharacterDatabase.FilteredCharacters)
 			{
 				Lazy<List<TargetData>> lines = new Lazy<List<TargetData>>(() => LoadLines(other, TargetType.Filter));
 				_filterLines[other] = lines;
@@ -481,7 +485,7 @@ namespace SPNATI_Character_Editor.Activities
 			lstCharacters.Items.Clear();
 			int count = 0;
 			progress.Maximum = characters;
-			foreach (Character other in CharacterDatabase.Characters)
+			foreach (Character other in CharacterDatabase.FilteredCharacters)
 			{
 				progress.Value = count++;
 				if (other == _character || other.FolderName == "human")

@@ -21,10 +21,21 @@ namespace SPNATI_Character_Editor.Forms
 			Text = caption;
 			lblInstructions.Text = instructions;
 
-			foreach (int stage in selectedCase.Stages)
+			if (selectedCase == null)
 			{
-				lstStages.Items.Add(character.LayerToStageName(stage));
-				_stages.Add(stage);
+				for (int stage = 0; stage < character.Layers + Clothing.ExtraStages; stage++)
+				{
+					lstStages.Items.Add(character.LayerToStageName(stage));
+					_stages.Add(stage);
+				}
+			}
+			else
+			{
+				foreach (int stage in selectedCase.Stages)
+				{
+					lstStages.Items.Add(character.LayerToStageName(stage));
+					_stages.Add(stage);
+				}
 			}
 			lstStages.SelectedIndex = -1;
 		}

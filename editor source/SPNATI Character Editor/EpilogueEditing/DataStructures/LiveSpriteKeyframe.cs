@@ -1,5 +1,6 @@
 ﻿using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Controls;
+using System.IO;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
@@ -10,7 +11,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			TrackedProperties.Add("Src");
 			TrackedProperties.Add("ScaleX");
 			TrackedProperties.Add("ScaleY");
-			TrackedProperties.Add("Opacity");
+			TrackedProperties.Add("Alpha");
 			TrackedProperties.Add("Rotation");
 			TrackedProperties.Add("SkewX");
 			TrackedProperties.Add("SkewY");
@@ -20,7 +21,25 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public string Src
 		{
 			get { return Get<string>(); }
-			set { Set(value); }
+			set
+			{
+				if (value == Src)
+				{
+					return;
+				}
+				if (Data.AllowsCrossStageImages)
+				{
+					string filename = Path.GetFileName(value);
+					int stage;
+					string id;
+					PoseMap.ParseImage(filename, out stage, out id);
+					if (stage >= 0)
+					{
+						value = value.Replace($"{stage}-", "#-");
+					}
+				}
+				Set(value);
+			}
 		}
 
 		[Float(DisplayName = "Scale X", GroupOrder = 40, Key = "scalex", Increment = 0.1f, Minimum = -1000, Maximum = 1000)]
@@ -38,7 +57,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		[Slider(DisplayName = "Opacity (0-100)", GroupOrder = 30, Key = "alpha", Description = "Opacity/transparency level")]
-		public float? Opacity
+		public float? Alpha
 		{
 			get { return Get<float?>(); }
 			set { Set(value); }
@@ -63,6 +82,19 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			get { return Get<float?>(); }
 			set { Set(value); }
+		}
+
+		protected override object GetDefaultValue(string property)
+		{
+			switch (property)
+			{
+				case "ScaleX":
+				case "ScaleY":
+					return 1.0f;
+				case "Alpha":
+					return 100f;
+				default: return base.GetDefaultValue(property);
+			}
 		}
 
 	}

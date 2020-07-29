@@ -73,6 +73,7 @@ namespace Desktop.Skinning
 				IEnumerable list = value as IEnumerable;
 				Items.AddRange(list);
 				_changingDataSource = false;
+				index = Math.Min(index, Items.Count - 1);
 				SelectedIndex = index;
 				UpdateIndex(index);
 			}

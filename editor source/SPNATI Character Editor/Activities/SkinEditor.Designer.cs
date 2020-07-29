@@ -38,6 +38,8 @@
 			this.cboDefaultPic = new Desktop.Skinning.SkinnedComboBox();
 			this.lblStatus = new Desktop.Skinning.SkinnedLabel();
 			this.cboStatus = new Desktop.Skinning.SkinnedComboBox();
+			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
+			this.cboGender = new Desktop.Skinning.SkinnedComboBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -92,7 +94,7 @@
 			this.cboBaseStage.SelectedItem = null;
 			this.cboBaseStage.Size = new System.Drawing.Size(129, 21);
 			this.cboBaseStage.Sorted = false;
-			this.cboBaseStage.TabIndex = 3;
+			this.cboBaseStage.TabIndex = 5;
 			// 
 			// label3
 			// 
@@ -113,7 +115,7 @@
 			this.gridLabels.Location = new System.Drawing.Point(6, 113);
 			this.gridLabels.Name = "gridLabels";
 			this.gridLabels.Size = new System.Drawing.Size(195, 151);
-			this.gridLabels.TabIndex = 5;
+			this.gridLabels.TabIndex = 6;
 			// 
 			// label22
 			// 
@@ -144,7 +146,7 @@
 			this.cboDefaultPic.SelectedItem = null;
 			this.cboDefaultPic.Size = new System.Drawing.Size(156, 21);
 			this.cboDefaultPic.Sorted = false;
-			this.cboDefaultPic.TabIndex = 2;
+			this.cboDefaultPic.TabIndex = 3;
 			this.cboDefaultPic.SelectedIndexChanged += new System.EventHandler(this.cboDefaultPic_SelectedIndexChanged);
 			// 
 			// lblStatus
@@ -176,12 +178,45 @@
 			this.cboStatus.SelectedItem = null;
 			this.cboStatus.Size = new System.Drawing.Size(156, 21);
 			this.cboStatus.Sorted = false;
-			this.cboStatus.TabIndex = 97;
+			this.cboStatus.TabIndex = 2;
+			// 
+			// skinnedLabel1
+			// 
+			this.skinnedLabel1.AutoSize = true;
+			this.skinnedLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.skinnedLabel1.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.skinnedLabel1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel1.Location = new System.Drawing.Point(224, 32);
+			this.skinnedLabel1.Name = "skinnedLabel1";
+			this.skinnedLabel1.Size = new System.Drawing.Size(45, 13);
+			this.skinnedLabel1.TabIndex = 99;
+			this.skinnedLabel1.Text = "Gender:";
+			// 
+			// cboGender
+			// 
+			this.cboGender.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+			this.cboGender.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+			this.cboGender.BackColor = System.Drawing.Color.White;
+			this.cboGender.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboGender.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+			this.cboGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.cboGender.FormattingEnabled = true;
+			this.cboGender.KeyMember = null;
+			this.cboGender.Location = new System.Drawing.Point(273, 29);
+			this.cboGender.Name = "cboGender";
+			this.cboGender.SelectedIndex = -1;
+			this.cboGender.SelectedItem = null;
+			this.cboGender.Size = new System.Drawing.Size(156, 21);
+			this.cboGender.Sorted = false;
+			this.cboGender.TabIndex = 4;
 			// 
 			// SkinEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.cboGender);
+			this.Controls.Add(this.skinnedLabel1);
 			this.Controls.Add(this.lblStatus);
 			this.Controls.Add(this.cboStatus);
 			this.Controls.Add(this.label22);
@@ -211,5 +246,7 @@
 		private Desktop.Skinning.SkinnedComboBox cboDefaultPic;
 		private Desktop.Skinning.SkinnedLabel lblStatus;
 		private Desktop.Skinning.SkinnedComboBox cboStatus;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel1;
+		private Desktop.Skinning.SkinnedComboBox cboGender;
 	}
 }

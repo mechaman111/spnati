@@ -45,6 +45,8 @@
 			this.label5 = new Desktop.Skinning.SkinnedLabel();
 			this.valWeight = new Desktop.Skinning.SkinnedNumericUpDown();
 			this.chkOneShot = new Desktop.Skinning.SkinnedCheckBox();
+			this.chkResetAI = new Desktop.Skinning.SkinnedCheckBox();
+			this.chkResetLabel = new Desktop.Skinning.SkinnedCheckBox();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.valLocation)).BeginInit();
 			this.groupBox2.SuspendLayout();
@@ -53,12 +55,17 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.BackColor = System.Drawing.Color.White;
 			this.groupBox1.Controls.Add(this.valLocation);
 			this.groupBox1.Controls.Add(this.label2);
 			this.groupBox1.Controls.Add(this.cboDirection);
 			this.groupBox1.Controls.Add(this.label1);
+			this.groupBox1.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.groupBox1.Image = null;
 			this.groupBox1.Location = new System.Drawing.Point(3, 90);
 			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.groupBox1.ShowIndicatorBar = false;
 			this.groupBox1.Size = new System.Drawing.Size(200, 79);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
@@ -82,7 +89,7 @@
             -2147483648});
 			this.valLocation.Name = "valLocation";
 			this.valLocation.Size = new System.Drawing.Size(114, 20);
-			this.valLocation.TabIndex = 3;
+			this.valLocation.TabIndex = 11;
 			this.valLocation.ValueChanged += new System.EventHandler(this.valLocation_ValueChanged);
 			// 
 			// label2
@@ -107,13 +114,14 @@
 			this.cboDirection.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
 			this.cboDirection.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboDirection.FormattingEnabled = true;
+			this.cboDirection.KeyMember = null;
 			this.cboDirection.Location = new System.Drawing.Point(80, 24);
 			this.cboDirection.Name = "cboDirection";
 			this.cboDirection.SelectedIndex = -1;
 			this.cboDirection.SelectedItem = null;
 			this.cboDirection.Size = new System.Drawing.Size(114, 21);
 			this.cboDirection.Sorted = false;
-			this.cboDirection.TabIndex = 1;
+			this.cboDirection.TabIndex = 10;
 			// 
 			// label1
 			// 
@@ -130,6 +138,8 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.BackColor = System.Drawing.Color.White;
+			this.groupBox2.Controls.Add(this.chkResetLabel);
 			this.groupBox2.Controls.Add(this.txtLabel);
 			this.groupBox2.Controls.Add(this.cboAI);
 			this.groupBox2.Controls.Add(this.label7);
@@ -138,8 +148,13 @@
 			this.groupBox2.Controls.Add(this.label3);
 			this.groupBox2.Controls.Add(this.cboGender);
 			this.groupBox2.Controls.Add(this.label4);
+			this.groupBox2.Controls.Add(this.chkResetAI);
+			this.groupBox2.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.groupBox2.Image = null;
 			this.groupBox2.Location = new System.Drawing.Point(3, 6);
 			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.groupBox2.ShowIndicatorBar = false;
 			this.groupBox2.Size = new System.Drawing.Size(389, 78);
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
@@ -150,10 +165,10 @@
 			this.txtLabel.BackColor = System.Drawing.Color.White;
 			this.txtLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.txtLabel.ForeColor = System.Drawing.Color.Black;
-			this.txtLabel.Location = new System.Drawing.Point(270, 51);
+			this.txtLabel.Location = new System.Drawing.Point(240, 51);
 			this.txtLabel.Name = "txtLabel";
-			this.txtLabel.Size = new System.Drawing.Size(113, 20);
-			this.txtLabel.TabIndex = 7;
+			this.txtLabel.Size = new System.Drawing.Size(84, 20);
+			this.txtLabel.TabIndex = 8;
 			// 
 			// cboAI
 			// 
@@ -164,13 +179,14 @@
 			this.cboAI.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
 			this.cboAI.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboAI.FormattingEnabled = true;
-			this.cboAI.Location = new System.Drawing.Point(270, 24);
+			this.cboAI.KeyMember = null;
+			this.cboAI.Location = new System.Drawing.Point(241, 24);
 			this.cboAI.Name = "cboAI";
 			this.cboAI.SelectedIndex = -1;
 			this.cboAI.SelectedItem = null;
-			this.cboAI.Size = new System.Drawing.Size(113, 21);
+			this.cboAI.Size = new System.Drawing.Size(83, 21);
 			this.cboAI.Sorted = false;
-			this.cboAI.TabIndex = 6;
+			this.cboAI.TabIndex = 3;
 			// 
 			// label7
 			// 
@@ -179,10 +195,10 @@
 			this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
 			this.label7.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.label7.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
-			this.label7.Location = new System.Drawing.Point(200, 54);
+			this.label7.Location = new System.Drawing.Point(172, 54);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(36, 13);
-			this.label7.TabIndex = 5;
+			this.label7.TabIndex = 7;
 			this.label7.Text = "Label:";
 			// 
 			// label6
@@ -192,10 +208,10 @@
 			this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
 			this.label6.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.label6.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
-			this.label6.Location = new System.Drawing.Point(200, 27);
+			this.label6.Location = new System.Drawing.Point(172, 27);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(64, 13);
-			this.label6.TabIndex = 4;
+			this.label6.TabIndex = 2;
 			this.label6.Text = "Intelligence:";
 			// 
 			// cboSize
@@ -207,13 +223,14 @@
 			this.cboSize.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
 			this.cboSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboSize.FormattingEnabled = true;
+			this.cboSize.KeyMember = null;
 			this.cboSize.Location = new System.Drawing.Point(80, 51);
 			this.cboSize.Name = "cboSize";
 			this.cboSize.SelectedIndex = -1;
 			this.cboSize.SelectedItem = null;
-			this.cboSize.Size = new System.Drawing.Size(114, 21);
+			this.cboSize.Size = new System.Drawing.Size(80, 21);
 			this.cboSize.Sorted = false;
-			this.cboSize.TabIndex = 3;
+			this.cboSize.TabIndex = 6;
 			// 
 			// label3
 			// 
@@ -225,7 +242,7 @@
 			this.label3.Location = new System.Drawing.Point(6, 54);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(30, 13);
-			this.label3.TabIndex = 2;
+			this.label3.TabIndex = 5;
 			this.label3.Text = "Size:";
 			// 
 			// cboGender
@@ -237,11 +254,12 @@
 			this.cboGender.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
 			this.cboGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboGender.FormattingEnabled = true;
+			this.cboGender.KeyMember = null;
 			this.cboGender.Location = new System.Drawing.Point(80, 24);
 			this.cboGender.Name = "cboGender";
 			this.cboGender.SelectedIndex = -1;
 			this.cboGender.SelectedItem = null;
-			this.cboGender.Size = new System.Drawing.Size(114, 21);
+			this.cboGender.Size = new System.Drawing.Size(80, 21);
 			this.cboGender.Sorted = false;
 			this.cboGender.TabIndex = 1;
 			// 
@@ -295,12 +313,37 @@
 			// chkOneShot
 			// 
 			this.chkOneShot.AutoSize = true;
+			this.chkOneShot.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.chkOneShot.Location = new System.Drawing.Point(121, 175);
 			this.chkOneShot.Name = "chkOneShot";
 			this.chkOneShot.Size = new System.Drawing.Size(75, 17);
 			this.chkOneShot.TabIndex = 5;
 			this.chkOneShot.Text = "Play Once";
 			this.chkOneShot.UseVisualStyleBackColor = true;
+			// 
+			// chkResetAI
+			// 
+			this.chkResetAI.AutoSize = true;
+			this.chkResetAI.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkResetAI.Location = new System.Drawing.Point(329, 26);
+			this.chkResetAI.Name = "chkResetAI";
+			this.chkResetAI.Size = new System.Drawing.Size(54, 17);
+			this.chkResetAI.TabIndex = 4;
+			this.chkResetAI.Text = "Reset";
+			this.chkResetAI.UseVisualStyleBackColor = true;
+			this.chkResetAI.CheckedChanged += new System.EventHandler(this.chkResetAI_CheckedChanged);
+			// 
+			// chkResetLabel
+			// 
+			this.chkResetLabel.AutoSize = true;
+			this.chkResetLabel.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkResetLabel.Location = new System.Drawing.Point(329, 53);
+			this.chkResetLabel.Name = "chkResetLabel";
+			this.chkResetLabel.Size = new System.Drawing.Size(54, 17);
+			this.chkResetLabel.TabIndex = 9;
+			this.chkResetLabel.Text = "Reset";
+			this.chkResetLabel.UseVisualStyleBackColor = true;
+			this.chkResetLabel.CheckedChanged += new System.EventHandler(this.chkResetLabel_CheckedChanged);
 			// 
 			// DialogueAdvancedControl
 			// 
@@ -343,5 +386,7 @@
 		private Desktop.Skinning.SkinnedComboBox cboAI;
 		private Desktop.Skinning.SkinnedLabel label7;
 		private Desktop.Skinning.SkinnedCheckBox chkOneShot;
+		private Desktop.Skinning.SkinnedCheckBox chkResetLabel;
+		private Desktop.Skinning.SkinnedCheckBox chkResetAI;
 	}
 }

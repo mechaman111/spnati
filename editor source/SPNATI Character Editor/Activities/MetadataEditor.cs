@@ -15,6 +15,7 @@ namespace SPNATI_Character_Editor.Activities
 			InitializeComponent();
 
 			cboGender.Items.AddRange(new string[] { "female", "male" });
+			cboTitleGender.Items.AddRange(new string[] { "", "female", "male" });
 			cboSize.Items.AddRange(new string[] { "small", "medium", "large" });
 			ColDifficulty.Items.AddRange(DialogueLine.AILevels);
 		}
@@ -35,6 +36,11 @@ namespace SPNATI_Character_Editor.Activities
 			txtLastName.Text = _character.LastName;
 			cboSize.SelectedItem = _character.Size;
 			cboGender.SelectedItem = _character.Gender;
+			if (_character.Metadata.Gender != _character.Gender && !string.IsNullOrEmpty(_character.Metadata.Gender))
+			{
+				cboTitleGender.SelectedItem = _character.Metadata.Gender;
+				ExpandGender();
+			}
 			valRounds.Value = _character.Stamina;
 			txtDescription.Text = _character.Metadata.Description;
 			txtHeight.Text = _character.Metadata.Height;
@@ -81,6 +87,11 @@ namespace SPNATI_Character_Editor.Activities
 			_character.LastName = txtLastName.Text;
 			_character.Stamina = (int)valRounds.Value;
 			_character.Gender = cboGender.SelectedItem.ToString();
+			string titleGender = cboTitleGender.SelectedItem?.ToString();
+			if (!string.IsNullOrEmpty(titleGender))
+			{
+				_character.Metadata.Gender = titleGender;
+			}
 			_character.Size = cboSize.SelectedItem.ToString();
 			_character.Metadata.Description = txtDescription.Text;
 			_character.Metadata.Height = txtHeight.Text;
@@ -112,6 +123,18 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				lblSize.Text = "Chest:";
 			}
+		}
+
+		private void cmdExpandGender_Click(object sender, EventArgs e)
+		{
+			ExpandGender();
+		}
+
+		private void ExpandGender()
+		{
+			cmdExpandGender.Visible = false;
+			lblTitleGender.Visible = true;
+			cboTitleGender.Visible = true;
 		}
 	}
 }

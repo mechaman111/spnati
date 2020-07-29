@@ -20,7 +20,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					value = 0.01f;
 				}
 				Set(value);
-				UpdateLocalTransform();
+				InvalidateTransform();
 			}
 		}
 
@@ -40,16 +40,20 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public LiveCamera()
 		{
+			Id = "Camera";
 			Zoom = 1;
 			Color = Color.Black;
 			Alpha = 0;
 			Length = 1;
+			LinkedToEnd = true;
 
 			_penLens = new Pen(Brushes.LightGray, 5);
 			_penLens.Color = Color.FromArgb(127, _penLens.Color);
 
 			_outsideBrush = new SolidBrush(Color.FromArgb(80, 0, 10, 30));
 
+			AddValue<float>(0, "X", "0");
+			AddValue<float>(0, "Y", "0");
 			AddValue<float>(0, "Zoom", "1");
 		}
 
@@ -72,12 +76,34 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 			}
 			Id = "Camera";
+			PopulateSceneAttributes(scene);
+			Update(0, 0, false);
+		}
+
+		protected override HashSet<string> GetLoopableProperties(string sourceProperty)
+		{
+			HashSet<string> props = new HashSet<string>();
+			if (sourceProperty == "Alpha" || sourceProperty == "Color")
+			{
+				props.Add("Color");
+				props.Add("Alpha");
+			}
+			else
+			{
+				props.Add("X");
+				props.Add("Y");
+				props.Add("Zoom");
+			}
+			return props;
+		}
+
+		public void PopulateSceneAttributes(Scene scene)
+		{
 			AddValue<float>(0, "X", scene.X);
 			AddValue<float>(0, "Y", scene.Y);
 			AddValue<float>(0, "Zoom", scene.Zoom);
-			AddValue<float>(0, "Opacity", scene.FadeOpacity);
+			AddValue<float>(0, "Alpha", scene.FadeOpacity);
 			AddValue<Color>(0, "Color", scene.FadeColor);
-			Update(0, 0, false);
 		}
 
 		protected override void OnCopyTo(LiveObject copy)
@@ -93,7 +119,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return typeof(LiveCameraKeyframe);
 		}
 
-		protected override void ParseKeyframe(Keyframe kf, bool addBreak, HashSet<string> properties, float time)
+		protected override void ParseKeyframe(Keyframe kf, bool addBreak, HashSet<string> properties, float time, float origin)
 		{
 			if (!string.IsNullOrEmpty(kf.X))
 			{
@@ -110,16 +136,32 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				AddValue<float>(time, "Zoom", kf.Zoom, addBreak);
 				properties.Add("Zoom");
 			}
-			if (!string.IsNullOrEmpty(kf.Opacity))
+			if (!string.IsNullOrEmpty(kf.Alpha))
 			{
-				AddValue<float>(time, "Opacity", kf.Opacity, addBreak);
-				properties.Add("Opacity");
+				AddValue<float>(time, "Alpha", kf.Alpha, addBreak);
+				properties.Add("Alpha");
 			}
 			if (!string.IsNullOrEmpty(kf.Color))
 			{
 				AddValue<Color>(time, "Color", kf.Color, addBreak);
 				properties.Add("Color");
 			}
+		}
+
+		public override Directive AddToScene(Scene scene)
+		{
+			if (Keyframes.Count == 0)
+			{
+				return null;
+			}
+			//the camera has no creation directive - they go directly on the scene
+			LiveCameraKeyframe firstFrame = Keyframes[0] as LiveCameraKeyframe;
+			scene.X = firstFrame.X?.ToString(CultureInfo.InvariantCulture);
+			scene.Y = firstFrame.Y?.ToString(CultureInfo.InvariantCulture);
+			scene.Zoom = firstFrame.Zoom?.ToString(CultureInfo.InvariantCulture);
+			scene.FadeOpacity = firstFrame.Alpha?.ToString(CultureInfo.InvariantCulture);
+			scene.FadeColor = firstFrame.Color.A > 0 ? firstFrame.Color.ToHexValue() : null;
+			return null;
 		}
 
 		protected override void OnUpdateDimensions() { }
@@ -134,11 +176,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			X = GetPropertyValue("X", time, offset, 0.0f, ease, interpolation, looped);
 			Y = GetPropertyValue("Y", time, offset, 0.0f, ease, interpolation, looped);
 			Zoom = GetPropertyValue("Zoom", time, offset, 1.0f, ease, interpolation, looped);
-			Alpha = GetPropertyValue("Opacity", time, offset, 0.0f, ease, interpolation, looped);
+			Alpha = GetPropertyValue("Alpha", time, offset, 0.0f, ease, interpolation, looped);
 			Color = GetPropertyValue("Color", time, offset, Color.Black, ease, interpolation, looped);
 		}
 
-		protected override void UpdateLocalTransform()
+		protected override Matrix UpdateLocalTransform()
 		{
 			Matrix transform = new Matrix();
 			float pivotX = 0.5f * Width;
@@ -148,7 +190,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			transform.Translate(pivotX, pivotY, MatrixOrder.Append);
 
 			transform.Translate(X, Y, MatrixOrder.Append); //local position
-			LocalTransform = transform;
+			return transform;
 		}
 
 		public override void Draw(Graphics g, Matrix sceneTransform, List<string> markers, bool inPlayback)
@@ -282,6 +324,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				case "pivotx":
 				case "pivoty":
 				case "z":
+				case "id":
+				case "marker":
 					return false;
 				default:
 					return true;
@@ -290,30 +334,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public override Directive CreateCreationDirective(Scene scene)
 		{
-			//camera doesn't actually create a directive, it sets properties on the scene
 			if (Keyframes.Count > 0)
 			{
-				LiveCameraKeyframe firstFrame = Keyframes[0] as LiveCameraKeyframe;
-				if (firstFrame.X.HasValue)
-				{
-					scene.X = firstFrame.X.Value.ToString(CultureInfo.InvariantCulture);
-				}
-				if (firstFrame.Y.HasValue)
-				{
-					scene.Y = firstFrame.Y.Value.ToString(CultureInfo.InvariantCulture);
-				}
-				if (firstFrame.Zoom.HasValue)
-				{
-					scene.Zoom = firstFrame.Zoom.Value.ToString(CultureInfo.InvariantCulture);
-				}
-				if (firstFrame.Color != Color.Empty)
-				{
-					scene.FadeColor = firstFrame.Color.ToHexValue();
-				}
-				if (firstFrame.Opacity.HasValue)
-				{
-					scene.FadeOpacity = firstFrame.Opacity.Value.ToString(CultureInfo.InvariantCulture);
-				}
+				UpdateHistory(this, Keyframes[0]);
 			}
 			return null;
 		}

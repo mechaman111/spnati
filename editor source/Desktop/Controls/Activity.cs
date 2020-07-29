@@ -37,6 +37,11 @@ namespace Desktop
 
 		}
 
+		public virtual bool CanRun()
+		{
+			return true;
+		}
+
 		public virtual bool CanDeactivate(DeactivateArgs args)
 		{
 			return true;

@@ -134,6 +134,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		public override void Quit()
 		{
+			_findForm?.Hide();
 			if (_exportOnQuit)
 			{
 				Export(false);
