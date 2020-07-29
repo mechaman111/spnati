@@ -594,6 +594,10 @@ namespace SPNATI_Character_Editor.DataStructures
 		{
 			CaseDefinition def1 = GetDefinition(key1);
 			CaseDefinition def2 = GetDefinition(key2);
+			if (def1 == null || def2 == null)
+			{
+				return key1.CompareTo(key2);
+			}
 			string tag1 = def1.Case.Tag;
 			string tag2 = def2.Case.Tag;
 			int compare = TriggerDatabase.Compare(tag1, tag2);
