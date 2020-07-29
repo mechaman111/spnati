@@ -29,20 +29,43 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.grid = new Desktop.Skinning.SkinnedDataGridView();
 			this.gridMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.cutCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.copyCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pasteCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.deleteCellsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.insertColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.addColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.cutColumnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.copyColumnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pasteColumnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.deleteColumnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.copyRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pasteRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.skinnedSplitContainer1 = new Desktop.Skinning.SkinnedSplitContainer();
 			this.searchBar = new SPNATI_Character_Editor.Controls.CodeReplaceBar();
 			this.cmdFolder = new Desktop.Skinning.SkinnedButton();
 			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
 			this.tsSheet = new System.Windows.Forms.ToolStrip();
+			this.tsAddPose = new System.Windows.Forms.ToolStripButton();
+			this.tsRemovePose = new System.Windows.Forms.ToolStripButton();
+			this.tsSort = new System.Windows.Forms.ToolStripButton();
+			this.tsApplyCrop = new System.Windows.Forms.ToolStripButton();
+			this.tsApplyCode = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsCut = new System.Windows.Forms.ToolStripButton();
+			this.tsCopy = new System.Windows.Forms.ToolStripButton();
+			this.tsPaste = new System.Windows.Forms.ToolStripButton();
+			this.tsReplace = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsPoseList = new System.Windows.Forms.ToolStripButton();
 			this.sepSkin = new System.Windows.Forms.ToolStripSeparator();
+			this.tsAddMain = new System.Windows.Forms.ToolStripButton();
 			this.sptMode = new System.Windows.Forms.SplitContainer();
 			this.panelSingle = new System.Windows.Forms.Panel();
 			this.cmdImport = new Desktop.Skinning.SkinnedButton();
@@ -54,6 +77,7 @@
 			this.cmdImportLineup = new Desktop.Skinning.SkinnedButton();
 			this.cmdLineup = new Desktop.Skinning.SkinnedButton();
 			this.skinnedLabel4 = new Desktop.Skinning.SkinnedLabel();
+			this.picHelp = new System.Windows.Forms.PictureBox();
 			this.tabStrip = new Desktop.Skinning.SkinnedTabStrip();
 			this.tabControl = new Desktop.Skinning.SkinnedTabControl();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -61,30 +85,6 @@
 			this.cmdImportNew = new Desktop.Skinning.SkinnedButton();
 			this.cmdImportSelected = new Desktop.Skinning.SkinnedButton();
 			this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
-			this.tsAddPose = new System.Windows.Forms.ToolStripButton();
-			this.tsRemovePose = new System.Windows.Forms.ToolStripButton();
-			this.tsSort = new System.Windows.Forms.ToolStripButton();
-			this.tsApplyCrop = new System.Windows.Forms.ToolStripButton();
-			this.tsApplyCode = new System.Windows.Forms.ToolStripButton();
-			this.tsCut = new System.Windows.Forms.ToolStripButton();
-			this.tsCopy = new System.Windows.Forms.ToolStripButton();
-			this.tsPaste = new System.Windows.Forms.ToolStripButton();
-			this.tsPoseList = new System.Windows.Forms.ToolStripButton();
-			this.tsAddMain = new System.Windows.Forms.ToolStripButton();
-			this.tsReplace = new System.Windows.Forms.ToolStripButton();
-			this.cutCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.copyCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.pasteCellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.deleteCellsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.insertColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.addColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.cutColumnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.copyColumnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.pasteColumnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.deleteColumnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.copyRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.pasteRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.picHelp = new System.Windows.Forms.PictureBox();
 			((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
 			this.gridMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.skinnedSplitContainer1)).BeginInit();
@@ -116,26 +116,26 @@
 			this.grid.BackgroundColor = System.Drawing.Color.White;
 			this.grid.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.grid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.grid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.grid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.grid.ContextMenuStrip = this.gridMenu;
 			this.grid.Data = null;
-			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.grid.DefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.grid.DefaultCellStyle = dataGridViewCellStyle2;
 			this.grid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.grid.EnableHeadersVisualStyles = false;
 			this.grid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -144,14 +144,14 @@
 			this.grid.Margin = new System.Windows.Forms.Padding(0);
 			this.grid.Name = "grid";
 			this.grid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.grid.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.grid.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
 			this.grid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
 			this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
 			this.grid.ShowEditingIcon = false;
@@ -182,11 +182,131 @@
 			this.gridMenu.Size = new System.Drawing.Size(204, 274);
 			this.gridMenu.Opening += new System.ComponentModel.CancelEventHandler(this.gridMenu_Opening);
 			// 
+			// cutCellToolStripMenuItem
+			// 
+			this.cutCellToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Cut;
+			this.cutCellToolStripMenuItem.Name = "cutCellToolStripMenuItem";
+			this.cutCellToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+			this.cutCellToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+			this.cutCellToolStripMenuItem.Tag = "Cell";
+			this.cutCellToolStripMenuItem.Text = "Cut Cell(s)";
+			this.cutCellToolStripMenuItem.Click += new System.EventHandler(this.cutCellToolStripMenuItem_Click);
+			// 
+			// copyCellToolStripMenuItem
+			// 
+			this.copyCellToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Copy;
+			this.copyCellToolStripMenuItem.Name = "copyCellToolStripMenuItem";
+			this.copyCellToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+			this.copyCellToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+			this.copyCellToolStripMenuItem.Tag = "Cell";
+			this.copyCellToolStripMenuItem.Text = "Copy Cell(s)";
+			this.copyCellToolStripMenuItem.Click += new System.EventHandler(this.copyCellToolStripMenuItem_Click);
+			// 
+			// pasteCellToolStripMenuItem
+			// 
+			this.pasteCellToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Paste;
+			this.pasteCellToolStripMenuItem.Name = "pasteCellToolStripMenuItem";
+			this.pasteCellToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Up)));
+			this.pasteCellToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+			this.pasteCellToolStripMenuItem.Tag = "Cell";
+			this.pasteCellToolStripMenuItem.Text = "Paste Cell(s)";
+			this.pasteCellToolStripMenuItem.Click += new System.EventHandler(this.pasteCellToolStripMenuItem_Click);
+			// 
+			// deleteCellsToolStripMenuItem
+			// 
+			this.deleteCellsToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Delete;
+			this.deleteCellsToolStripMenuItem.Name = "deleteCellsToolStripMenuItem";
+			this.deleteCellsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+			this.deleteCellsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+			this.deleteCellsToolStripMenuItem.Tag = "Cell";
+			this.deleteCellsToolStripMenuItem.Text = "Delete Cell(s)";
+			this.deleteCellsToolStripMenuItem.Click += new System.EventHandler(this.deleteCellsToolStripMenuItem_Click);
+			// 
+			// insertColumnToolStripMenuItem
+			// 
+			this.insertColumnToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.InsertColumn;
+			this.insertColumnToolStripMenuItem.Name = "insertColumnToolStripMenuItem";
+			this.insertColumnToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
+			this.insertColumnToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+			this.insertColumnToolStripMenuItem.Tag = "Column";
+			this.insertColumnToolStripMenuItem.Text = "Insert Column";
+			this.insertColumnToolStripMenuItem.Click += new System.EventHandler(this.insertColumnToolStripMenuItem_Click);
+			// 
+			// addColumnToolStripMenuItem
+			// 
+			this.addColumnToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Add;
+			this.addColumnToolStripMenuItem.Name = "addColumnToolStripMenuItem";
+			this.addColumnToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+			this.addColumnToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+			this.addColumnToolStripMenuItem.Tag = "Column";
+			this.addColumnToolStripMenuItem.Text = "Add Column";
+			this.addColumnToolStripMenuItem.Click += new System.EventHandler(this.addColumnToolStripMenuItem_Click);
+			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(200, 6);
 			this.toolStripSeparator1.Tag = "Column";
+			// 
+			// cutColumnsToolStripMenuItem
+			// 
+			this.cutColumnsToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Cut;
+			this.cutColumnsToolStripMenuItem.Name = "cutColumnsToolStripMenuItem";
+			this.cutColumnsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+			this.cutColumnsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+			this.cutColumnsToolStripMenuItem.Tag = "Column";
+			this.cutColumnsToolStripMenuItem.Text = "Cut Column(s)";
+			this.cutColumnsToolStripMenuItem.Click += new System.EventHandler(this.cutCellToolStripMenuItem_Click);
+			// 
+			// copyColumnsToolStripMenuItem
+			// 
+			this.copyColumnsToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Copy;
+			this.copyColumnsToolStripMenuItem.Name = "copyColumnsToolStripMenuItem";
+			this.copyColumnsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+			this.copyColumnsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+			this.copyColumnsToolStripMenuItem.Tag = "Column";
+			this.copyColumnsToolStripMenuItem.Text = "Copy Column(s)";
+			this.copyColumnsToolStripMenuItem.Click += new System.EventHandler(this.copyCellToolStripMenuItem_Click);
+			// 
+			// pasteColumnsToolStripMenuItem
+			// 
+			this.pasteColumnsToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Paste;
+			this.pasteColumnsToolStripMenuItem.Name = "pasteColumnsToolStripMenuItem";
+			this.pasteColumnsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+			this.pasteColumnsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+			this.pasteColumnsToolStripMenuItem.Tag = "Column";
+			this.pasteColumnsToolStripMenuItem.Text = "Paste Column(s)";
+			this.pasteColumnsToolStripMenuItem.Click += new System.EventHandler(this.pasteCellToolStripMenuItem_Click);
+			// 
+			// deleteColumnsToolStripMenuItem
+			// 
+			this.deleteColumnsToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Delete;
+			this.deleteColumnsToolStripMenuItem.Name = "deleteColumnsToolStripMenuItem";
+			this.deleteColumnsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+			this.deleteColumnsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+			this.deleteColumnsToolStripMenuItem.Tag = "Column";
+			this.deleteColumnsToolStripMenuItem.Text = "Delete Column(s)";
+			this.deleteColumnsToolStripMenuItem.Click += new System.EventHandler(this.deleteCellsToolStripMenuItem_Click);
+			// 
+			// copyRowsToolStripMenuItem
+			// 
+			this.copyRowsToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Copy;
+			this.copyRowsToolStripMenuItem.Name = "copyRowsToolStripMenuItem";
+			this.copyRowsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+			this.copyRowsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+			this.copyRowsToolStripMenuItem.Tag = "Row";
+			this.copyRowsToolStripMenuItem.Text = "Copy Row(s)";
+			this.copyRowsToolStripMenuItem.Click += new System.EventHandler(this.copyCellToolStripMenuItem_Click);
+			// 
+			// pasteRowsToolStripMenuItem
+			// 
+			this.pasteRowsToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Paste;
+			this.pasteRowsToolStripMenuItem.Name = "pasteRowsToolStripMenuItem";
+			this.pasteRowsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+			this.pasteRowsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+			this.pasteRowsToolStripMenuItem.Tag = "Row";
+			this.pasteRowsToolStripMenuItem.Text = "Paste Row(s)";
+			this.pasteRowsToolStripMenuItem.Click += new System.EventHandler(this.pasteCellToolStripMenuItem_Click);
 			// 
 			// skinnedSplitContainer1
 			// 
@@ -252,9 +372,9 @@
 			this.skinnedLabel1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
 			this.skinnedLabel1.Location = new System.Drawing.Point(604, 6);
 			this.skinnedLabel1.Name = "skinnedLabel1";
-			this.skinnedLabel1.Size = new System.Drawing.Size(174, 13);
+			this.skinnedLabel1.Size = new System.Drawing.Size(172, 13);
 			this.skinnedLabel1.TabIndex = 2;
-			this.skinnedLabel1.Text = "Alt+Drag to reorder column headers";
+			this.skinnedLabel1.Text = "Alt+drag to reorder column headers";
 			// 
 			// tsSheet
 			// 
@@ -281,21 +401,135 @@
 			this.tsSheet.Tag = "Background";
 			this.tsSheet.Text = "toolStrip1";
 			// 
+			// tsAddPose
+			// 
+			this.tsAddPose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAddPose.Image = global::SPNATI_Character_Editor.Properties.Resources.Add;
+			this.tsAddPose.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAddPose.Name = "tsAddPose";
+			this.tsAddPose.Size = new System.Drawing.Size(23, 22);
+			this.tsAddPose.Text = "Add Pose Column";
+			this.tsAddPose.Click += new System.EventHandler(this.tsAddPose_Click);
+			// 
+			// tsRemovePose
+			// 
+			this.tsRemovePose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsRemovePose.Image = global::SPNATI_Character_Editor.Properties.Resources.Remove;
+			this.tsRemovePose.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsRemovePose.Name = "tsRemovePose";
+			this.tsRemovePose.Size = new System.Drawing.Size(23, 22);
+			this.tsRemovePose.Text = "Remove Pose Column";
+			this.tsRemovePose.Click += new System.EventHandler(this.tsRemovePose_Click);
+			// 
+			// tsSort
+			// 
+			this.tsSort.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsSort.Image = global::SPNATI_Character_Editor.Properties.Resources.SortHorizontal;
+			this.tsSort.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsSort.Name = "tsSort";
+			this.tsSort.Size = new System.Drawing.Size(23, 22);
+			this.tsSort.Text = "Sort Columns";
+			this.tsSort.Click += new System.EventHandler(this.tsSort_Click);
+			// 
+			// tsApplyCrop
+			// 
+			this.tsApplyCrop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsApplyCrop.Image = global::SPNATI_Character_Editor.Properties.Resources.CopyRect;
+			this.tsApplyCrop.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsApplyCrop.Name = "tsApplyCrop";
+			this.tsApplyCrop.Size = new System.Drawing.Size(23, 22);
+			this.tsApplyCrop.Text = "Applying Cropping Across Column";
+			this.tsApplyCrop.ToolTipText = "Apply current cell\'s cropping to all rows";
+			this.tsApplyCrop.Click += new System.EventHandler(this.tsApplyCrop_Click);
+			// 
+			// tsApplyCode
+			// 
+			this.tsApplyCode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsApplyCode.Image = global::SPNATI_Character_Editor.Properties.Resources.CopyCode;
+			this.tsApplyCode.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsApplyCode.Name = "tsApplyCode";
+			this.tsApplyCode.Size = new System.Drawing.Size(23, 22);
+			this.tsApplyCode.Text = "Apply current cell to rows below it";
+			this.tsApplyCode.ToolTipText = "Copy the current cell\'s value into the whole column";
+			this.tsApplyCode.Click += new System.EventHandler(this.tsApplyCode_Click);
+			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// tsCut
+			// 
+			this.tsCut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsCut.Image = global::SPNATI_Character_Editor.Properties.Resources.Cut;
+			this.tsCut.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsCut.Name = "tsCut";
+			this.tsCut.Size = new System.Drawing.Size(23, 22);
+			this.tsCut.Text = "Cut";
+			this.tsCut.Click += new System.EventHandler(this.tsCut_Click);
+			// 
+			// tsCopy
+			// 
+			this.tsCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsCopy.Image = global::SPNATI_Character_Editor.Properties.Resources.Copy;
+			this.tsCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsCopy.Name = "tsCopy";
+			this.tsCopy.Size = new System.Drawing.Size(23, 22);
+			this.tsCopy.Text = "Copy";
+			this.tsCopy.Click += new System.EventHandler(this.tsCopy_Click);
+			// 
+			// tsPaste
+			// 
+			this.tsPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsPaste.Image = global::SPNATI_Character_Editor.Properties.Resources.Paste;
+			this.tsPaste.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsPaste.Name = "tsPaste";
+			this.tsPaste.Size = new System.Drawing.Size(23, 22);
+			this.tsPaste.Text = "Paste";
+			this.tsPaste.Click += new System.EventHandler(this.tsPaste_Click);
+			// 
+			// tsReplace
+			// 
+			this.tsReplace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsReplace.Image = global::SPNATI_Character_Editor.Properties.Resources.Replace;
+			this.tsReplace.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsReplace.Name = "tsReplace";
+			this.tsReplace.Size = new System.Drawing.Size(23, 22);
+			this.tsReplace.Text = "Replace text";
+			this.tsReplace.Click += new System.EventHandler(this.tsReplace_Click);
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
 			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
 			// 
+			// tsPoseList
+			// 
+			this.tsPoseList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsPoseList.Image = global::SPNATI_Character_Editor.Properties.Resources.PoseList;
+			this.tsPoseList.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsPoseList.Name = "tsPoseList";
+			this.tsPoseList.Size = new System.Drawing.Size(23, 22);
+			this.tsPoseList.Text = "Create Pose List";
+			this.tsPoseList.ToolTipText = "Turn this sheet into a pose list";
+			this.tsPoseList.Click += new System.EventHandler(this.tsPoseList_Click);
+			// 
 			// sepSkin
 			// 
 			this.sepSkin.Name = "sepSkin";
 			this.sepSkin.Size = new System.Drawing.Size(6, 25);
 			this.sepSkin.Visible = false;
+			// 
+			// tsAddMain
+			// 
+			this.tsAddMain.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAddMain.Image = global::SPNATI_Character_Editor.Properties.Resources.AddLink;
+			this.tsAddMain.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAddMain.Name = "tsAddMain";
+			this.tsAddMain.Size = new System.Drawing.Size(23, 22);
+			this.tsAddMain.Text = "Add Poses from Main Character";
+			this.tsAddMain.Visible = false;
+			this.tsAddMain.Click += new System.EventHandler(this.tsAddMain_Click);
 			// 
 			// sptMode
 			// 
@@ -464,6 +698,19 @@
 			this.skinnedLabel4.TabIndex = 15;
 			this.skinnedLabel4.Text = "Set Export Filters To:";
 			// 
+			// picHelp
+			// 
+			this.picHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.picHelp.InitialImage = null;
+			this.picHelp.Location = new System.Drawing.Point(5, 31);
+			this.picHelp.Name = "picHelp";
+			this.picHelp.Size = new System.Drawing.Size(773, 111);
+			this.picHelp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.picHelp.TabIndex = 14;
+			this.picHelp.TabStop = false;
+			// 
 			// tabStrip
 			// 
 			this.tabStrip.AddCaption = "";
@@ -557,253 +804,6 @@
 			this.skinnedLabel2.Size = new System.Drawing.Size(39, 13);
 			this.skinnedLabel2.TabIndex = 29;
 			this.skinnedLabel2.Text = "Import:";
-			// 
-			// tsAddPose
-			// 
-			this.tsAddPose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsAddPose.Image = global::SPNATI_Character_Editor.Properties.Resources.Add;
-			this.tsAddPose.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsAddPose.Name = "tsAddPose";
-			this.tsAddPose.Size = new System.Drawing.Size(23, 22);
-			this.tsAddPose.Text = "Add Pose Column";
-			this.tsAddPose.Click += new System.EventHandler(this.tsAddPose_Click);
-			// 
-			// tsRemovePose
-			// 
-			this.tsRemovePose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsRemovePose.Image = global::SPNATI_Character_Editor.Properties.Resources.Remove;
-			this.tsRemovePose.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsRemovePose.Name = "tsRemovePose";
-			this.tsRemovePose.Size = new System.Drawing.Size(23, 22);
-			this.tsRemovePose.Text = "Remove Pose Column";
-			this.tsRemovePose.Click += new System.EventHandler(this.tsRemovePose_Click);
-			// 
-			// tsSort
-			// 
-			this.tsSort.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsSort.Image = global::SPNATI_Character_Editor.Properties.Resources.SortHorizontal;
-			this.tsSort.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsSort.Name = "tsSort";
-			this.tsSort.Size = new System.Drawing.Size(23, 22);
-			this.tsSort.Text = "Sort Columns";
-			this.tsSort.Click += new System.EventHandler(this.tsSort_Click);
-			// 
-			// tsApplyCrop
-			// 
-			this.tsApplyCrop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsApplyCrop.Image = global::SPNATI_Character_Editor.Properties.Resources.CopyRect;
-			this.tsApplyCrop.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsApplyCrop.Name = "tsApplyCrop";
-			this.tsApplyCrop.Size = new System.Drawing.Size(23, 22);
-			this.tsApplyCrop.Text = "Applying Cropping Across Column";
-			this.tsApplyCrop.ToolTipText = "Apply current cell\'s cropping to all rows";
-			this.tsApplyCrop.Click += new System.EventHandler(this.tsApplyCrop_Click);
-			// 
-			// tsApplyCode
-			// 
-			this.tsApplyCode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsApplyCode.Image = global::SPNATI_Character_Editor.Properties.Resources.CopyCode;
-			this.tsApplyCode.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsApplyCode.Name = "tsApplyCode";
-			this.tsApplyCode.Size = new System.Drawing.Size(23, 22);
-			this.tsApplyCode.Text = "Apply current cell to rows below it";
-			this.tsApplyCode.ToolTipText = "Copy the current cell\'s value into the whole column";
-			this.tsApplyCode.Click += new System.EventHandler(this.tsApplyCode_Click);
-			// 
-			// tsCut
-			// 
-			this.tsCut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsCut.Image = global::SPNATI_Character_Editor.Properties.Resources.Cut;
-			this.tsCut.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsCut.Name = "tsCut";
-			this.tsCut.Size = new System.Drawing.Size(23, 22);
-			this.tsCut.Text = "Cut";
-			this.tsCut.Click += new System.EventHandler(this.tsCut_Click);
-			// 
-			// tsCopy
-			// 
-			this.tsCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsCopy.Image = global::SPNATI_Character_Editor.Properties.Resources.Copy;
-			this.tsCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsCopy.Name = "tsCopy";
-			this.tsCopy.Size = new System.Drawing.Size(23, 22);
-			this.tsCopy.Text = "Copy";
-			this.tsCopy.Click += new System.EventHandler(this.tsCopy_Click);
-			// 
-			// tsPaste
-			// 
-			this.tsPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsPaste.Image = global::SPNATI_Character_Editor.Properties.Resources.Paste;
-			this.tsPaste.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsPaste.Name = "tsPaste";
-			this.tsPaste.Size = new System.Drawing.Size(23, 22);
-			this.tsPaste.Text = "Paste";
-			this.tsPaste.Click += new System.EventHandler(this.tsPaste_Click);
-			// 
-			// tsPoseList
-			// 
-			this.tsPoseList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsPoseList.Image = global::SPNATI_Character_Editor.Properties.Resources.PoseList;
-			this.tsPoseList.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsPoseList.Name = "tsPoseList";
-			this.tsPoseList.Size = new System.Drawing.Size(23, 22);
-			this.tsPoseList.Text = "Create Pose List";
-			this.tsPoseList.ToolTipText = "Turn this sheet into a pose list";
-			this.tsPoseList.Click += new System.EventHandler(this.tsPoseList_Click);
-			// 
-			// tsAddMain
-			// 
-			this.tsAddMain.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsAddMain.Image = global::SPNATI_Character_Editor.Properties.Resources.AddLink;
-			this.tsAddMain.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsAddMain.Name = "tsAddMain";
-			this.tsAddMain.Size = new System.Drawing.Size(23, 22);
-			this.tsAddMain.Text = "Add Poses from Main Character";
-			this.tsAddMain.Visible = false;
-			this.tsAddMain.Click += new System.EventHandler(this.tsAddMain_Click);
-			// 
-			// tsReplace
-			// 
-			this.tsReplace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsReplace.Image = global::SPNATI_Character_Editor.Properties.Resources.Replace;
-			this.tsReplace.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsReplace.Name = "tsReplace";
-			this.tsReplace.Size = new System.Drawing.Size(23, 22);
-			this.tsReplace.Text = "Replace text";
-			this.tsReplace.Click += new System.EventHandler(this.tsReplace_Click);
-			// 
-			// cutCellToolStripMenuItem
-			// 
-			this.cutCellToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Cut;
-			this.cutCellToolStripMenuItem.Name = "cutCellToolStripMenuItem";
-			this.cutCellToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-			this.cutCellToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.cutCellToolStripMenuItem.Tag = "Cell";
-			this.cutCellToolStripMenuItem.Text = "Cut Cell(s)";
-			this.cutCellToolStripMenuItem.Click += new System.EventHandler(this.cutCellToolStripMenuItem_Click);
-			// 
-			// copyCellToolStripMenuItem
-			// 
-			this.copyCellToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Copy;
-			this.copyCellToolStripMenuItem.Name = "copyCellToolStripMenuItem";
-			this.copyCellToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-			this.copyCellToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.copyCellToolStripMenuItem.Tag = "Cell";
-			this.copyCellToolStripMenuItem.Text = "Copy Cell(s)";
-			this.copyCellToolStripMenuItem.Click += new System.EventHandler(this.copyCellToolStripMenuItem_Click);
-			// 
-			// pasteCellToolStripMenuItem
-			// 
-			this.pasteCellToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Paste;
-			this.pasteCellToolStripMenuItem.Name = "pasteCellToolStripMenuItem";
-			this.pasteCellToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Up)));
-			this.pasteCellToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.pasteCellToolStripMenuItem.Tag = "Cell";
-			this.pasteCellToolStripMenuItem.Text = "Paste Cell(s)";
-			this.pasteCellToolStripMenuItem.Click += new System.EventHandler(this.pasteCellToolStripMenuItem_Click);
-			// 
-			// deleteCellsToolStripMenuItem
-			// 
-			this.deleteCellsToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Delete;
-			this.deleteCellsToolStripMenuItem.Name = "deleteCellsToolStripMenuItem";
-			this.deleteCellsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-			this.deleteCellsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.deleteCellsToolStripMenuItem.Tag = "Cell";
-			this.deleteCellsToolStripMenuItem.Text = "Delete Cell(s)";
-			this.deleteCellsToolStripMenuItem.Click += new System.EventHandler(this.deleteCellsToolStripMenuItem_Click);
-			// 
-			// insertColumnToolStripMenuItem
-			// 
-			this.insertColumnToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.InsertColumn;
-			this.insertColumnToolStripMenuItem.Name = "insertColumnToolStripMenuItem";
-			this.insertColumnToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-			this.insertColumnToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.insertColumnToolStripMenuItem.Tag = "Column";
-			this.insertColumnToolStripMenuItem.Text = "Insert Column";
-			this.insertColumnToolStripMenuItem.Click += new System.EventHandler(this.insertColumnToolStripMenuItem_Click);
-			// 
-			// addColumnToolStripMenuItem
-			// 
-			this.addColumnToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Add;
-			this.addColumnToolStripMenuItem.Name = "addColumnToolStripMenuItem";
-			this.addColumnToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-			this.addColumnToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.addColumnToolStripMenuItem.Tag = "Column";
-			this.addColumnToolStripMenuItem.Text = "Add Column";
-			this.addColumnToolStripMenuItem.Click += new System.EventHandler(this.addColumnToolStripMenuItem_Click);
-			// 
-			// cutColumnsToolStripMenuItem
-			// 
-			this.cutColumnsToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Cut;
-			this.cutColumnsToolStripMenuItem.Name = "cutColumnsToolStripMenuItem";
-			this.cutColumnsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-			this.cutColumnsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.cutColumnsToolStripMenuItem.Tag = "Column";
-			this.cutColumnsToolStripMenuItem.Text = "Cut Column(s)";
-			this.cutColumnsToolStripMenuItem.Click += new System.EventHandler(this.cutCellToolStripMenuItem_Click);
-			// 
-			// copyColumnsToolStripMenuItem
-			// 
-			this.copyColumnsToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Copy;
-			this.copyColumnsToolStripMenuItem.Name = "copyColumnsToolStripMenuItem";
-			this.copyColumnsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-			this.copyColumnsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.copyColumnsToolStripMenuItem.Tag = "Column";
-			this.copyColumnsToolStripMenuItem.Text = "Copy Column(s)";
-			this.copyColumnsToolStripMenuItem.Click += new System.EventHandler(this.copyCellToolStripMenuItem_Click);
-			// 
-			// pasteColumnsToolStripMenuItem
-			// 
-			this.pasteColumnsToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Paste;
-			this.pasteColumnsToolStripMenuItem.Name = "pasteColumnsToolStripMenuItem";
-			this.pasteColumnsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-			this.pasteColumnsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.pasteColumnsToolStripMenuItem.Tag = "Column";
-			this.pasteColumnsToolStripMenuItem.Text = "Paste Column(s)";
-			this.pasteColumnsToolStripMenuItem.Click += new System.EventHandler(this.pasteCellToolStripMenuItem_Click);
-			// 
-			// deleteColumnsToolStripMenuItem
-			// 
-			this.deleteColumnsToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Delete;
-			this.deleteColumnsToolStripMenuItem.Name = "deleteColumnsToolStripMenuItem";
-			this.deleteColumnsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-			this.deleteColumnsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.deleteColumnsToolStripMenuItem.Tag = "Column";
-			this.deleteColumnsToolStripMenuItem.Text = "Delete Column(s)";
-			this.deleteColumnsToolStripMenuItem.Click += new System.EventHandler(this.deleteCellsToolStripMenuItem_Click);
-			// 
-			// copyRowsToolStripMenuItem
-			// 
-			this.copyRowsToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Copy;
-			this.copyRowsToolStripMenuItem.Name = "copyRowsToolStripMenuItem";
-			this.copyRowsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-			this.copyRowsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.copyRowsToolStripMenuItem.Tag = "Row";
-			this.copyRowsToolStripMenuItem.Text = "Copy Row(s)";
-			this.copyRowsToolStripMenuItem.Click += new System.EventHandler(this.copyCellToolStripMenuItem_Click);
-			// 
-			// pasteRowsToolStripMenuItem
-			// 
-			this.pasteRowsToolStripMenuItem.Image = global::SPNATI_Character_Editor.Properties.Resources.Paste;
-			this.pasteRowsToolStripMenuItem.Name = "pasteRowsToolStripMenuItem";
-			this.pasteRowsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-			this.pasteRowsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.pasteRowsToolStripMenuItem.Tag = "Row";
-			this.pasteRowsToolStripMenuItem.Text = "Paste Row(s)";
-			this.pasteRowsToolStripMenuItem.Click += new System.EventHandler(this.pasteCellToolStripMenuItem_Click);
-			// 
-			// picHelp
-			// 
-			this.picHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.picHelp.InitialImage = null;
-			this.picHelp.Location = new System.Drawing.Point(5, 31);
-			this.picHelp.Name = "picHelp";
-			this.picHelp.Size = new System.Drawing.Size(773, 111);
-			this.picHelp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picHelp.TabIndex = 14;
-			this.picHelp.TabStop = false;
 			// 
 			// PoseMatrixEditor
 			// 

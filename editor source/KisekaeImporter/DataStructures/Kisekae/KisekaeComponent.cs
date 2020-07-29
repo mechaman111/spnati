@@ -160,7 +160,12 @@ namespace KisekaeImporter
 
 		public bool HasSubCode(string id, int index)
 		{
-			string prefix = id + index.ToString("00");
+			string prefix = id;
+			if (index >= 0)
+			{
+				prefix = id + index.ToString("00");
+			}
+			
 			KisekaeSubCode subcode;
 			if (!_subcodes.TryGetValue(prefix, out subcode))
 				return false;

@@ -20,6 +20,7 @@ namespace Desktop.CommonControls.PropertyControls
 				Color value = (Color)GetValue();
 				if (value == Color.Empty)
 				{
+					cmdColor.BackColor = Color.Empty;
 					_cleared = true;
 				}
 				else

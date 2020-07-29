@@ -39,6 +39,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			set
 			{
+				lstSelectedItems.Items.Clear();
 				if (value == null) return;
 				foreach (string item in value)
 				{

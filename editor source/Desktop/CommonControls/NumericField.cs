@@ -50,6 +50,7 @@ namespace Desktop.CommonControls
 			{
 				lblPlaceholder.Text = value;
 				lblPlaceholder.Visible = IsPlaceholderVisible;
+				OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 			}
 		}
 

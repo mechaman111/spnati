@@ -455,7 +455,8 @@ function addDirectiveToScene(scene, directive) {
                 if (workingDirective.keyframes.length <= i) {
                     targetFrame = {
                         start: lastStart,
-                        end: srcFrame.end
+              end: srcFrame.end,
+              interpolation: srcFrame.interpolation,              
                     };
 
                     workingDirective.keyframes.push(targetFrame);
@@ -2085,6 +2086,7 @@ SceneView.prototype.moveSprite = function (directive, context) {
         context.skewy = sprite.skewy;
         context.alpha = sprite.alpha;
         context.src = sprite.src;
+    context.rate = sprite.rate;
         frames.unshift(context);
         context.anim = this.addAnimation(new Animation(directive.id, frames, this.updateObject.bind(this), directive.loop, directive.ease, directive.clamp, directive.iterations));
     }
@@ -2606,7 +2608,8 @@ Emitter.prototype.emit = function () {
   var scaleStartX = this.startScaleX.get();
   var scaleEndX = (this.endScaleX ? this.endScaleX.get() : scaleStartX);
   var scaleStartY = (this.startScaleY ? this.startScaleY.get() : scaleStartX);
-  var scaleEndY = (this.endScaleY ? this.endScaleY.get() : this.startScaleY ? scaleStartY : scaleEndX);
+  var scaleEndY = (this.endScaleY ? this.endScaleY.get() : 
+                   this.endScaleX ? scaleEndX : scaleStartY);
 
     particle.spawn(this.x - this.width / 2, this.y - this.height / 2, rotation, {
         src: this.src,

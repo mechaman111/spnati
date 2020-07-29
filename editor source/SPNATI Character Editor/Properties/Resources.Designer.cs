@@ -93,6 +93,26 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AddEmitter {
+            get {
+                object obj = ResourceManager.GetObject("AddEmitter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AddEvent {
+            get {
+                object obj = ResourceManager.GetObject("AddEvent", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap AddKeyframe {
             get {
                 object obj = ResourceManager.GetObject("AddKeyframe", resourceCulture);
@@ -116,6 +136,26 @@ namespace SPNATI_Character_Editor.Properties {
         internal static System.Drawing.Bitmap AddPause {
             get {
                 object obj = ResourceManager.GetObject("AddPause", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AddSprite {
+            get {
+                object obj = ResourceManager.GetObject("AddSprite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AddTextBox {
+            get {
+                object obj = ResourceManager.GetObject("AddTextBox", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -723,6 +763,46 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap KeyframeSplit {
+            get {
+                object obj = ResourceManager.GetObject("KeyframeSplit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap KeyTypeBegin {
+            get {
+                object obj = ResourceManager.GetObject("KeyTypeBegin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap KeyTypeNormal {
+            get {
+                object obj = ResourceManager.GetObject("KeyTypeNormal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap KeyTypeSplit {
+            get {
+                object obj = ResourceManager.GetObject("KeyTypeSplit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LastFrame {
             get {
                 object obj = ResourceManager.GetObject("LastFrame", resourceCulture);
@@ -746,6 +826,26 @@ namespace SPNATI_Character_Editor.Properties {
         internal static System.Drawing.Bitmap Link {
             get {
                 object obj = ResourceManager.GetObject("Link", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LinkToEnd {
+            get {
+                object obj = ResourceManager.GetObject("LinkToEnd", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LinkToEndFill {
+            get {
+                object obj = ResourceManager.GetObject("LinkToEndFill", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -866,6 +966,16 @@ namespace SPNATI_Character_Editor.Properties {
         internal static System.Drawing.Bitmap PreviousFrame {
             get {
                 object obj = ResourceManager.GetObject("PreviousFrame", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RangeChooser {
+            get {
+                object obj = ResourceManager.GetObject("RangeChooser", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1086,6 +1196,16 @@ namespace SPNATI_Character_Editor.Properties {
         internal static System.Drawing.Bitmap TimelinePlayOnce {
             get {
                 object obj = ResourceManager.GetObject("TimelinePlayOnce", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TransferKeyframe {
+            get {
+                object obj = ResourceManager.GetObject("TransferKeyframe", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

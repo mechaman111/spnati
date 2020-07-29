@@ -279,6 +279,17 @@ namespace Desktop.DataStructures
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
 		}
 
+		/// <summary>
+		/// Enumerates bindable values
+		/// </summary>
+		public IEnumerable<KeyValuePair<string, object>> DataStore
+		{
+			get
+			{
+				return _values;
+			}
+		}
+
 		public bool HasProperty(string propName)
 		{
 			object val;

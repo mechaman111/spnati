@@ -46,7 +46,7 @@
 			this.panelHead.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panelHead.AutoScroll = true;
-			this.panelHead.Location = new System.Drawing.Point(12, 71);
+			this.panelHead.Location = new System.Drawing.Point(12, 60);
 			this.panelHead.Name = "panelHead";
 			this.panelHead.Size = new System.Drawing.Size(634, 154);
 			this.panelHead.TabIndex = 0;
@@ -89,7 +89,7 @@
 			this.label1.ForeColor = System.Drawing.Color.Blue;
 			this.label1.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.label1.Level = Desktop.Skinning.SkinnedLabelLevel.Heading;
-			this.label1.Location = new System.Drawing.Point(9, 55);
+			this.label1.Location = new System.Drawing.Point(9, 44);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(46, 21);
 			this.label1.TabIndex = 3;
@@ -102,7 +102,7 @@
 			this.label2.ForeColor = System.Drawing.Color.Blue;
 			this.label2.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.label2.Level = Desktop.Skinning.SkinnedLabelLevel.Heading;
-			this.label2.Location = new System.Drawing.Point(9, 228);
+			this.label2.Location = new System.Drawing.Point(9, 210);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(45, 21);
 			this.label2.TabIndex = 5;
@@ -113,7 +113,7 @@
 			this.panelBody.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panelBody.AutoScroll = true;
-			this.panelBody.Location = new System.Drawing.Point(12, 244);
+			this.panelBody.Location = new System.Drawing.Point(12, 226);
 			this.panelBody.Name = "panelBody";
 			this.panelBody.Size = new System.Drawing.Size(634, 255);
 			this.panelBody.TabIndex = 4;
@@ -125,7 +125,7 @@
 			this.label3.ForeColor = System.Drawing.Color.Blue;
 			this.label3.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.label3.Level = Desktop.Skinning.SkinnedLabelLevel.Heading;
-			this.label3.Location = new System.Drawing.Point(9, 502);
+			this.label3.Location = new System.Drawing.Point(9, 479);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(69, 21);
 			this.label3.TabIndex = 7;
@@ -136,9 +136,9 @@
 			this.panelClothing.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panelClothing.AutoScroll = true;
-			this.panelClothing.Location = new System.Drawing.Point(12, 518);
+			this.panelClothing.Location = new System.Drawing.Point(12, 495);
 			this.panelClothing.Name = "panelClothing";
-			this.panelClothing.Size = new System.Drawing.Size(634, 224);
+			this.panelClothing.Size = new System.Drawing.Size(634, 267);
 			this.panelClothing.TabIndex = 6;
 			// 
 			// chkManual
@@ -158,7 +158,7 @@
 			this.skinnedPanel1.Controls.Add(this.cmdCancel);
 			this.skinnedPanel1.Controls.Add(this.cmdOK);
 			this.skinnedPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.skinnedPanel1.Location = new System.Drawing.Point(0, 751);
+			this.skinnedPanel1.Location = new System.Drawing.Point(0, 768);
 			this.skinnedPanel1.Name = "skinnedPanel1";
 			this.skinnedPanel1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryDark;
 			this.skinnedPanel1.Size = new System.Drawing.Size(658, 30);
@@ -171,16 +171,16 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cmdCancel;
-			this.ClientSize = new System.Drawing.Size(658, 781);
+			this.ClientSize = new System.Drawing.Size(658, 798);
 			this.ControlBox = false;
 			this.Controls.Add(this.skinnedPanel1);
 			this.Controls.Add(this.chkManual);
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.panelClothing);
-			this.Controls.Add(this.label2);
-			this.Controls.Add(this.panelBody);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.panelHead);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.panelBody);
+			this.Controls.Add(this.label3);
+			this.Controls.Add(this.panelClothing);
 			this.Name = "PoseSettingsForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Pose Settings";

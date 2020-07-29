@@ -43,12 +43,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			CenterY = true;
 
 			//randomize the rotation by the emission angle range
-			float rotation = emitter.Rotation;
+			float rotation = emitter.ToWorldRotation(emitter.Rotation);
 			float angle = emitter.Random.Next(-(int)emitter.Angle, (int)emitter.Angle + 1);
 			rotation += angle;
 
-			X = emitter.X;
-			Y = emitter.Y;
+			PointF worldPoint = emitter.ToWorldPt(emitter.X, emitter.Y);
+			X = worldPoint.X;
+			Y = worldPoint.Y;
 
 			Image = emitter.Image;
 			Width = emitter.ParticleWidth;
@@ -79,8 +80,29 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			PivotX = 0.5f;
 			PivotY = 0.5f;
 
-			ScaleXTween = new TweenableParameter((emitter.StartScaleX ?? new RandomParameter(1, 1)).Get(), (emitter.EndScaleX ?? emitter.StartScaleX ?? new RandomParameter(1, 1)).Get());
-			ScaleYTween = new TweenableParameter((emitter.StartScaleY ?? new RandomParameter(1, 1)).Get(), (emitter.EndScaleY ?? emitter.StartScaleY ?? new RandomParameter(1, 1)).Get());
+			float startX = (emitter.StartScaleX ?? new RandomParameter(1, 1)).Get();
+			float endX = startX;
+			if (emitter.EndScaleX != null)
+			{
+				endX = emitter.EndScaleX.Get();
+			}
+			float startY = startX;
+			if (emitter.StartScaleY != null)
+			{
+				startY = emitter.StartScaleY.Get();
+			}
+			float endY = startY;
+			if (emitter.EndScaleY != null)
+			{
+				endY = emitter.EndScaleY.Get();
+			}
+			else if (emitter.EndScaleX != null)
+			{
+				endY = endX;
+			}
+
+			ScaleXTween = new TweenableParameter(startX, endX);
+			ScaleYTween = new TweenableParameter(startY, endY);
 			AlphaTween = new TweenableParameter((emitter.StartAlpha ?? new RandomParameter(100, 100)).Get(), (emitter.EndAlpha ?? emitter.StartAlpha ?? new RandomParameter(0, 0)).Get());
 			ColorTween = new TweenableColor((emitter.StartColor ?? new RandomColor(Color.White, Color.White)).Get(), (emitter.EndColor ?? emitter.StartColor ?? new RandomColor(Color.White, Color.White)).Get());
 			SpinTween = new TweenableParameter((emitter.StartRotation ?? new RandomParameter(0, 0)).Get(), (emitter.EndRotation ?? emitter.StartRotation ?? new RandomParameter(0, 0)).Get());
@@ -91,6 +113,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			Elapsed = 0;
 			Duration = (emitter.Lifetime ?? new RandomParameter(1, 1)).Get() * 1000;
+
 			UpdateRealTime(0, false);
 		}
 
@@ -121,8 +144,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				g.MultiplyTransform(WorldTransform);
 				g.MultiplyTransform(sceneTransform, MatrixOrder.Append);
 
-				if (Image != null)
+				if (Image != null && (SkewX == 0 || SkewX % 90 != 0) && (SkewY == 0 || SkewY % 90 != 0))
 				{
+					float skewedWidth = Height * (float)Math.Tan(Math.PI / 180.0f * SkewX);
+					float skewDistanceX = skewedWidth / 2;
+					float skewedHeight = Width * (float)Math.Tan(Math.PI / 180.0f * SkewY);
+					float skewDistanceY = skewedHeight / 2;
+					PointF[] destPts = new PointF[] { new PointF(-skewDistanceX, -skewDistanceY), new PointF(Width - skewDistanceX, skewDistanceY), new PointF(skewDistanceX, Height - skewDistanceY) };
+
 					if (Alpha < 100)
 					{
 						float[][] matrixItems = new float[][] {
@@ -136,11 +165,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						ImageAttributes ia = new ImageAttributes();
 						ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
-						g.DrawImage(Image, new Rectangle(0, 0, Width, Height), 0, 0, Image.Width, Image.Height, GraphicsUnit.Pixel, ia);
+						g.DrawImage(Image, destPts, new Rectangle(0, 0, Image.Width, Image.Height), GraphicsUnit.Pixel, ia);
 					}
 					else
 					{
-						g.DrawImage(Image, 0, 0, Width, Height);
+						g.DrawImage(Image, destPts, new Rectangle(0, 0, Width, Height), GraphicsUnit.Pixel);
 					}
 				}
 				else
@@ -165,13 +194,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		public override void UpdateRealTime(float deltaTime, bool inPlayback)
+		public override bool UpdateRealTime(float deltaTime, bool inPlayback)
 		{
 			Elapsed += deltaTime;
 
 			if (IsDead)
 			{
-				return;
+				return false;
 			}
 
 			float elapsedSec = deltaTime / 1000.0f;
@@ -183,7 +212,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			ScaleY = ScaleYTween.Tween(t);
 			SkewX = SkewXTween.Tween(t);
 			SkewY = SkewYTween.Tween(t);
-			_brush.Color = System.Drawing.Color.FromArgb((int)(AlphaTween.Tween(t) / 100.0 * 255.0f), ColorTween.Tween(t));
+			int alpha = Math.Max(0, (int)(AlphaTween.Tween(t) / 100.0 * 255.0f));
+			_brush.Color = System.Drawing.Color.FromArgb(alpha, ColorTween.Tween(t));
 			Alpha = AlphaTween.Value;
 			Spin = SpinTween.Tween(t);
 
@@ -202,6 +232,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			X += dt * SpeedX;
 			Y += dt * SpeedY;
+			return true;
 		}
 	}
 }

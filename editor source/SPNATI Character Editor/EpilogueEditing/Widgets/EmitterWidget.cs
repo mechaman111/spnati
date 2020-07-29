@@ -11,6 +11,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private static SolidBrush _titleFill;
 		private static SolidBrush _subrowFill;
 		private static SolidBrush _selectedSubrowFill;
+		private static Color _accentColor;
 
 		public LiveEmitter Emitter { get; private set; }
 
@@ -34,6 +35,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_titleFill.Color = Color.FromArgb(153, 197, 255);
 			_subrowFill.Color = Color.FromArgb(203, 206, 216);
 			_selectedSubrowFill.Color = Color.FromArgb(223, 226, 236);
+			_accentColor = Color.Pink;
 		}
 
 		protected override void OnUpdateSkin(Skin skin)
@@ -41,11 +43,17 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			SetEmitterSkin(skin);
 		}
 
+		protected override Color GetAccentColor()
+		{
+			return _accentColor;
+		}
+
 		private static void SetEmitterSkin(Skin skin)
 		{
 			_titleFill.Color = skin.GetAppColor("WidgetHeaderRow");
 			_subrowFill.Color = skin.GetAppColor("WidgetRow");
 			_selectedSubrowFill.Color = skin.GetAppColor("WidgetRowSelected");
+			_accentColor = skin.GetAppColor("EmitterAccent");
 		}
 
 		public EmitterWidget(LiveEmitter emitter, Timeline timeline) : base(emitter, timeline)
@@ -70,12 +78,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		protected override Brush GetFillBrush(bool selected)
+		protected override SolidBrush GetFillBrush(bool selected)
 		{
 			return selected ? _selectedSubrowFill : _subrowFill;
 		}
 
-		protected override Brush GetTitleBrush()
+		protected override SolidBrush GetTitleBrush()
 		{
 			return _titleFill;
 		}

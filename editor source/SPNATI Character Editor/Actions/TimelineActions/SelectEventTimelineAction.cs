@@ -120,6 +120,7 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		/// <param name="time"></param>
 		public void Update(float time)
 		{
+			time = _data.LinkedToEnd ? time : Math.Min(_data.Length, time);
 			Time = time - _data.Start;
 			Time = (float)Math.Round(time, 2);
 			_event.Time = Time;

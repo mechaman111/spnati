@@ -19,6 +19,7 @@ namespace SPNATI_Character_Editor.Activities
 			cboStatus.Items.Add("");
 			cboStatus.Items.Add("online");
 			cboStatus.Items.Add("offline");
+			cboGender.Items.AddRange(new string[] { "female", "male" });
 		}
 
 		public override string Caption
@@ -69,6 +70,8 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				txtName.Text = link.Name;
 				cboStatus.Text = link.Status;
+				string gender = link.Gender ?? _costume.Character.Gender;
+				cboGender.SelectedItem = gender;
 			}
 
 			cboBaseStage.Items.Add("- None -");
@@ -114,6 +117,8 @@ namespace SPNATI_Character_Editor.Activities
 
 		public override void Save()
 		{
+			_costume.Labels = gridLabels.Values;
+
 			if (_costume.Link != null)
 			{
 				string status = cboStatus.Text;
@@ -121,7 +126,12 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					status = null;
 				}
-				if (txtName.Text != _costume.Link.Name || status != _costume.Link.Status || _costume.Link.IsDirty)
+				string gender = cboGender.SelectedItem?.ToString();
+
+				string label = _costume.Labels.Count > 0 ? _costume.Labels[0].Value : null;
+
+				if (txtName.Text != _costume.Link.Name || status != _costume.Link.Status || _costume.Link.IsDirty || gender != _costume.Link.Gender
+					|| label != _costume.Link.Label)
 				{
 					_linkDataChanged = true;
 				}
@@ -131,11 +141,20 @@ namespace SPNATI_Character_Editor.Activities
 					_costume.Link.IsDirty = false;
 					_costume.Link.Name = txtName.Text;
 					_costume.Link.Status = status;
+					_costume.Link.Label = label;
+
+					if (gender != _costume.Character.Gender)
+					{
+						_costume.Link.Gender = gender;
+					}
+					else
+					{
+						_costume.Link.Gender = null;
+					}
+
 					Serialization.ExportCharacter(_costume.Character);
 				}
 			}
-
-			_costume.Labels = gridLabels.Values;
 
 			//Here's where any unexpected folders are thrown out
 			string folder = _costume.Folder;

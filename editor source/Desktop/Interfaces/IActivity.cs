@@ -10,6 +10,7 @@ namespace Desktop
 		int SidebarWidth { get; set; }
 		void Initialize(IWorkspace ws, IRecord record);
 		string Caption { get; }
+		bool CanRun();
 		bool CanDeactivate(DeactivateArgs args);
 		bool CanQuit(CloseArgs args);
 		void Activate();

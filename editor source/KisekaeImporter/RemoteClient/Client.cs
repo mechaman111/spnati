@@ -44,7 +44,7 @@ namespace KisekaeImporter.RemoteClient
 					return true;
 				}
 			}
-			catch (SocketException e) { }
+			catch (SocketException) { }
 			return false;
 		}
 
@@ -99,8 +99,7 @@ namespace KisekaeImporter.RemoteClient
 				}
 				
 				int id = response.RequestId;
-				PendingRequest request;
-				if (_pendingRequests.TryGetValue(id, out request))
+				if (_pendingRequests.TryGetValue(id, out PendingRequest request))
 				{
 					if (response.IsComplete)
 					{

@@ -84,6 +84,9 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 					lblLines.Text = $"Banter with {_character}";
 					UpdatePartnerBanter(_franchises);
 					break;
+				case PartnerGraphs.CrossFranchise:
+					UpdateCrossFranchiseBanter(_franchises);
+					break;
 			}
 		
 			grpPartners.Unshield();
@@ -187,11 +190,111 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			}
 		}
 
+		private int GetTargetedLineCount(Character from, Character to)
+		{
+			int count = 0;
+			if (from is CachedCharacter)
+			{
+				CachedCharacter cache = from as CachedCharacter;
+				count = cache.GetTargetedCountTowards(to.FolderName);
+			}
+			else
+			{
+				HashSet<string> usedLines = new HashSet<string>();
+				foreach (Case c in from.GetCasesTargetedAtCharacter(to, TargetType.DirectTarget))
+				{
+					foreach (DialogueLine line in c.Lines)
+					{
+						if (!usedLines.Contains(line.Text))
+						{
+							usedLines.Add(line.Text);
+							count++;
+						}
+					}
+				}
+			}
+			return count;
+		}
+
+		private void UpdateCrossFranchiseBanter(Tuple<string, List<Character>> franchise)
+		{
+			lblLines.Text = $"Banter between all {grpPartners.Text}";
+
+			DataSeries outgoing = graphPartners.AddSeries($"Spoken");
+			DataSeries incoming = graphPartners.AddSeries($"Received");
+
+			Dictionary<Character, int> incomingCounts = new Dictionary<Character, int>();
+			Dictionary<Character, int> outgoingCounts = new Dictionary<Character, int>();
+
+			for (int i = 0; i < franchise.Item2.Count; i++)
+			{
+				Character c1 = franchise.Item2[i];
+				for (int j = i + 1; j < franchise.Item2.Count; j++)
+				{
+					Character c2 = franchise.Item2[j];
+					int c1ToC2 = GetTargetedLineCount(c1, c2);
+					int c2ToC1 = GetTargetedLineCount(c2, c1);
+
+					int c1Incoming, c1Outgoing, c2Incoming, c2Outgoing;
+					incomingCounts.TryGetValue(c1, out c1Incoming);
+					incomingCounts.TryGetValue(c2, out c2Incoming);
+					outgoingCounts.TryGetValue(c1, out c1Outgoing);
+					outgoingCounts.TryGetValue(c2, out c2Outgoing);
+					incomingCounts[c1] = c1Incoming + c1ToC2;
+					incomingCounts[c2] = c2Incoming + c2ToC1;
+					outgoingCounts[c1] = c1Outgoing + c2ToC1;
+					outgoingCounts[c2] = c2Outgoing + c1ToC2;
+				}
+			}
+			foreach (Character character in franchise.Item2)
+			{
+				if (character == _character)
+				{
+					continue;
+				}
+				int count = 0;
+
+				if (character is CachedCharacter)
+				{
+					CachedCharacter cache = character as CachedCharacter;
+					count = cache.GetTargetedCountTowards(_character.FolderName);
+				}
+				else
+				{
+					HashSet<string> usedLines = new HashSet<string>();
+					foreach (Case c in character.GetCasesTargetedAtCharacter(_character, TargetType.DirectTarget))
+					{
+						foreach (DialogueLine line in c.Lines)
+						{
+							if (!usedLines.Contains(line.Text))
+							{
+								usedLines.Add(line.Text);
+								count++;
+							}
+						}
+					}
+				}
+			}
+
+			int n = 0;
+			foreach (Character character in franchise.Item2)
+			{
+				int incomingCount;
+				int outgoingCount;
+				incomingCounts.TryGetValue(character, out incomingCount);
+				outgoingCounts.TryGetValue(character, out outgoingCount);
+				incoming.AddPoint(n, incomingCount, character.Label);
+				outgoing.AddPoint(n, outgoingCount, character.Label);
+				n++;
+			}
+		}
+
 		private enum PartnerGraphs
 		{
 			Lines = 0,
 			Targets = 1,
-			MAX = 2,
+			CrossFranchise = 2,
+			MAX = 3,
 		}
 
 		private void cmdPreviousGraph_Click(object sender, EventArgs e)

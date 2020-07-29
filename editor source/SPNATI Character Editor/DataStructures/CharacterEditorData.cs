@@ -75,6 +75,13 @@ namespace SPNATI_Character_Editor
 		public List<CaseRecipe> UsedRecipes = new List<CaseRecipe>();
 		private Dictionary<string, CaseRecipe> _recipes = new Dictionary<string, CaseRecipe>();
 
+		/// <summary>
+		/// Lines that were typed in freely and need to be imported
+		/// </summary>
+		[XmlArray("pendingLines")]
+		[XmlArrayItem("line")]
+		public List<string> FreeLines = new List<string>();
+
 		private HashSet<string> _usedFolders = new HashSet<string>();
 		[XmlIgnore]
 		public AutoCompleteStringCollection Folders
@@ -393,6 +400,21 @@ namespace SPNATI_Character_Editor
 			AssignId(response);
 			SituationResponse situationResponse = new SituationResponse(response, opponent, opponentCase);
 			Responses.Add(situationResponse);
+		}
+
+		/// <summary>
+		/// Marks as having responded to a case without a specific source to link it to
+		/// </summary>
+		/// <param name="opponent"></param>
+		/// <param name="caseId"></param>
+		public void MarkResponse(Character opponent, int caseId)
+		{
+			SituationResponse response = new SituationResponse()
+			{
+				Opponent = opponent.FolderName,
+				OpponentId = caseId
+			};
+			Responses.Add(response);
 		}
 
 		public void SetNote(Case workingCase, string text)

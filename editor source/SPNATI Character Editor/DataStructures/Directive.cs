@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
+﻿using Desktop;
 using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Controls;
-using SPNATI_Character_Editor.EditControls;
-using System.ComponentModel;
-using System;
 using SPNATI_Character_Editor.Controls.EditControls;
+using SPNATI_Character_Editor.EditControls;
+using SPNATI_Character_Editor.EpilogueEditor;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
+using System.Text;
+using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
 {
@@ -14,6 +17,9 @@ namespace SPNATI_Character_Editor
 	{
 		[XmlAttribute("type")]
 		public string DirectiveType;
+
+		[XmlAttribute("name")]
+		public string Name;
 
 		[Text(DisplayName = "ID", GroupOrder = 0, Key = "id", Description = "Unique identifier", Validator = "ValidateId")]
 		[XmlAttribute("id")]
@@ -185,6 +191,30 @@ namespace SPNATI_Character_Editor
 		public bool IgnoreRotation;
 		#endregion
 
+		[DefaultValue("")]
+		[XmlAttribute("properties")]
+		public string RawProperties
+		{
+			get
+			{
+				List<string> props = new List<string>();
+				foreach (string prop in AffectedProperties)
+				{
+					props.Add(prop.ToLowerInvariant());
+				}
+				props.Sort();
+				return string.Join(",", props);
+			}
+			set
+			{
+				AffectedProperties.Clear();
+				string[] props = value.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries );
+				AffectedProperties.AddRange(props);
+			}
+		}
+		[XmlIgnore]
+		public HashSet<string> AffectedProperties = new HashSet<string>();
+
 		[Text(DisplayName = "Title", Key = "title", GroupOrder = -1, Description = "User prompt title text", RowHeight = 52, Multiline = true)]
 		[XmlElement("title")]
 		public string Title;
@@ -195,6 +225,9 @@ namespace SPNATI_Character_Editor
 		[XmlElement("choice")]
 		public List<Choice> Choices = new List<Choice>();
 
+		[XmlIgnore]
+		public string MetaKey;
+
 		public Directive() { }
 
 		public Directive(string type)
@@ -204,6 +237,7 @@ namespace SPNATI_Character_Editor
 
 		public override string ToString()
 		{
+			string delay = Delay != null ? Delay + "s - " : "";
 			string prefix = (Locked ? "🔒 " : "");
 			string text = DirectiveType;
 			switch (DirectiveType)
@@ -213,10 +247,9 @@ namespace SPNATI_Character_Editor
 					break;
 				case "move":
 					string time = string.IsNullOrEmpty(Time) ? "" : $"{Time}s";
-					string delay = string.IsNullOrEmpty(Delay) ? "" : $" delay {Delay}s";
 					string loop = Looped ? " (loop)" : "";
 					string props = GetProperties();
-					text = $"Animate ({Id}) {time}{loop}{delay}{(props.Length > 0 ? "-" + props : "")}";
+					text = $"Animate ({Id}) {time}{loop}{(props.Length > 0 ? "-" + props : "")}";
 					break;
 				case "wait":
 					text = "Wait for Animations";
@@ -225,7 +258,7 @@ namespace SPNATI_Character_Editor
 					text = "Pause";
 					break;
 				case "text":
-					text = $"{Id}: {(Text ?? "Speech Bubble")}";
+					text = $"{Id ?? "Text"}: {(Text ?? "Speech Bubble")}";
 					break;
 				case "clear":
 					text = $"Clear bubble {Id}";
@@ -239,7 +272,7 @@ namespace SPNATI_Character_Editor
 					{
 						time = string.IsNullOrEmpty(Time) ? "" : $"{Time}s";
 						loop = Looped ? " (loop)" : "";
-						text = $"Fade to {Color} (opacity: {Opacity}) {time}{loop}";
+						text = $"Fade to {Color} (opacity: {Alpha}) {time}{loop}";
 					}
 					break;
 				case "clear-all":
@@ -271,7 +304,7 @@ namespace SPNATI_Character_Editor
 					break;
 			}
 
-			return $"{prefix}{text}";
+			return $"{prefix}{delay}{text}";
 		}
 
 		[XmlIgnore]
@@ -364,6 +397,56 @@ namespace SPNATI_Character_Editor
 			}
 			return null;
 		}
+
+		/// <summary>
+		/// Copies all keyframes into another directive
+		/// </summary>
+		/// <param name="destination"></param>
+		public void CopyInto(Directive destination)
+		{
+			MergeInto(destination);
+			foreach (Keyframe kf in Keyframes)
+			{
+				float srcTime;
+				float.TryParse(kf.Time, out srcTime);
+
+				bool found = false;
+				for (int i = 0; i < destination.Keyframes.Count; i++)
+				{
+					Keyframe destFrame = destination.Keyframes[i];
+					float destTime;
+					float.TryParse(destFrame.Time, out destTime);
+					if (srcTime == destTime)
+					{
+						//found a matching frame
+						kf.MergeInto(destFrame);
+						found = true;
+						break;
+					}
+					else if (destTime > srcTime)
+					{
+						//passed where the frame would go, so insert it
+						destination.Keyframes.Insert(i, kf);
+						found = true;
+						break;
+					}
+				}
+				if (!found)
+				{
+					//can copy the whole frame over directly
+					destination.Keyframes.Add(kf);
+				}
+			}
+		}
+
+		public void PopulateMetadata(LiveKeyframeMetadata data)
+		{
+			EasingMethod = data.Ease;
+			Looped = data.Looped;
+			InterpolationMethod = data.Interpolation;
+			ClampingMethod = data.ClampMethod;
+			Iterations = data.Iterations;
+		}
 	}
 
 	/// <summary>
@@ -428,9 +511,9 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("color")]
 		public string Color;
 
-		[Slider(DisplayName = "Opacity (0-100)", Key = "alpha", GroupOrder = 21, Description = "Opacity/transparency level")]
+		[Slider(DisplayName = "(0-100)", Key = "alpha", GroupOrder = 21, Description = "Opacity/transparency level")]
 		[XmlAttribute("alpha")]
-		public string Opacity;
+		public string Alpha;
 
 		[Float(DisplayName = "Rotation (deg)", Key = "rotation", GroupOrder = 18, Description = "Sprite rotation", DecimalPlaces = 0, Minimum = -7020, Maximum = 7020)]
 		[XmlAttribute("rotation")]
@@ -439,6 +522,9 @@ namespace SPNATI_Character_Editor
 		[Float(DisplayName = "Zoom", Key = "zoom", GroupOrder = 17, Description = "Zoom scaling factor for the camera", DecimalPlaces = 2, Minimum = 0.01f, Maximum = 100, Increment = 0.1f)]
 		[XmlAttribute("zoom")]
 		public string Zoom;
+
+		[XmlIgnore]
+		public Dictionary<string, object> Properties = new Dictionary<string, object>();
 
 		[XmlIgnore]
 		public bool Locked;
@@ -450,7 +536,7 @@ namespace SPNATI_Character_Editor
 		public bool HasAnimatableProperties()
 		{
 			return !string.IsNullOrEmpty(X) || !string.IsNullOrEmpty(Y) || !string.IsNullOrEmpty(Scale) || !string.IsNullOrEmpty(ScaleX) || !string.IsNullOrEmpty(ScaleY)
-				 || !string.IsNullOrEmpty(Color) || !string.IsNullOrEmpty(Opacity) || !string.IsNullOrEmpty(Rotation) || !string.IsNullOrEmpty(Zoom) || !string.IsNullOrEmpty(Src)
+				 || !string.IsNullOrEmpty(Color) || !string.IsNullOrEmpty(Alpha) || !string.IsNullOrEmpty(Rotation) || !string.IsNullOrEmpty(Zoom) || !string.IsNullOrEmpty(Src)
 				 || !string.IsNullOrEmpty(SkewX) || !string.IsNullOrEmpty(SkewY);
 		}
 
@@ -473,7 +559,7 @@ namespace SPNATI_Character_Editor
 			PivotX = src.PivotX;
 			PivotY = src.PivotY;
 			Color = src.Color;
-			Opacity = src.Opacity;
+			Alpha = src.Alpha;
 			Rotation = src.Rotation;
 			Zoom = src.Zoom;
 			Src = src.Src;
@@ -483,7 +569,7 @@ namespace SPNATI_Character_Editor
 			src.Y = null;
 			src.Scale = null;
 			src.Color = null;
-			src.Opacity = null;
+			src.Alpha = null;
 			src.Rotation = null;
 			src.Zoom = null;
 			src.ScaleX = null;
@@ -491,6 +577,69 @@ namespace SPNATI_Character_Editor
 			src.SkewX = null;
 			src.SkewY = null;
 			src.Src = null;
+
+			Properties = src.Properties;
+			src.Properties = new Dictionary<string, object>();
+		}
+
+		/// <summary>
+		/// Moves all non-null properties from this frame into another one
+		/// </summary>
+		/// <param name="dest"></param>
+		public void MergeInto(Keyframe dest)
+		{
+			foreach (KeyValuePair<string, object> kvp in Properties)
+			{
+				dest.Properties[kvp.Key] = kvp.Value;
+			}
+		}
+
+		/// <summary>
+		/// Copies propreties into the Properties dictionary for easy string access
+		/// </summary>
+		public void CacheProperties()
+		{
+			Properties.Clear();
+			Type type = typeof(Keyframe);
+			foreach (FieldInfo fi in type.GetFields())
+			{
+				string name = fi.Name;
+				if (name == "Time")
+				{
+					continue;
+				}
+
+				XmlIgnoreAttribute ignore = fi.GetCustomAttribute<XmlIgnoreAttribute>();
+				if (ignore != null)
+				{
+					continue;
+				}
+
+				object value = fi.GetValue(this);
+				if (value != null)
+				{
+					Properties[name] = value;
+				}
+			}
+		}
+
+		/// <summary>
+		/// "Bakes" the properties dictionary into the actual property fields
+		/// </summary>
+		public void BakeProperties()
+		{
+			Type type = GetType();
+			foreach (KeyValuePair<string, object> kvp in Properties)
+			{
+				string property = kvp.Key;
+				object value = kvp.Value;
+				FieldInfo fi = PropertyTypeInfo.GetFieldInfo(type, property);
+				fi.SetValue(this, value);
+			}
+			if (Time == "0")
+			{
+				Time = null;
+			}
 		}
 
 		public string GetProperties()
@@ -516,9 +665,9 @@ namespace SPNATI_Character_Editor
 			{
 				sb.Append($" Color:{Color}");
 			}
-			if (!string.IsNullOrEmpty(Opacity))
+			if (!string.IsNullOrEmpty(Alpha))
 			{
-				sb.Append($" Opacity:{Opacity}");
+				sb.Append($" Opacity:{Alpha}");
 			}
 			if (!string.IsNullOrEmpty(Rotation))
 			{

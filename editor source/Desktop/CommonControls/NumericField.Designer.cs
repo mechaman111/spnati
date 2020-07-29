@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.valField = new Desktop.Skinning.SkinnedNumericUpDown();
-			this.lblPlaceholder = new System.Windows.Forms.Label();
+			this.lblPlaceholder = new Skinning.SkinnedLabel();
 			((System.ComponentModel.ISupportInitialize)(this.valField)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -74,6 +74,6 @@
 		#endregion
 
 		private Desktop.Skinning.SkinnedNumericUpDown valField;
-		private System.Windows.Forms.Label lblPlaceholder;
+		private Desktop.Skinning.SkinnedLabel lblPlaceholder;
 	}
 }

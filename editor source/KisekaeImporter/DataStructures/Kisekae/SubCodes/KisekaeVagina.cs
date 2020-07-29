@@ -1,8 +1,19 @@
 ﻿namespace KisekaeImporter.SubCodes
 {
-	public class KisekaeVagina : KisekaeSubCode
+	public class KisekaeVagina : KisekaeSubCode, IPoseable
 	{
 		public KisekaeVagina() : base("dc") { }
+
+		public void Pose(IPoseable pose)
+		{
+			KisekaeVagina other = pose as KisekaeVagina;
+			if (other == null)
+			{
+				return;
+			}
+			Juice = other.Juice;
+			Openness = other.Openness;
+		}
 
 		public int Juice
 		{
@@ -34,5 +45,10 @@
 			set { Set(4, value.ToString()); }
 		}
 
+		public int Openness
+		{
+			get { return GetInt(5); }
+			set { Set(5, value.ToString()); }
+		}
 	}
 }

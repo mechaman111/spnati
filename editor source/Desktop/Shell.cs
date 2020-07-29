@@ -39,6 +39,8 @@ namespace Desktop
 		private Dictionary<IWorkspace, TabPage> _tabs = new Dictionary<IWorkspace, TabPage>();
 		private Toaster _toaster = new Toaster();
 		private Messenger _messenger = new Messenger();
+		private HashSet<Action> _batchedActions = new HashSet<Action>();
+
 		public IWorkspace ActiveWorkspace;
 		public IActivity ActiveActivity;
 		public IActivity ActiveSidebarActivity;
@@ -422,6 +424,28 @@ namespace Desktop
 			Launch(record, typeof(TActivity), parameters);
 		}
 
+		/// <summary>
+		/// Executs the CanRun method for every open activity and closes any that fail
+		/// </summary>
+		public void RunChecks()
+		{
+			foreach (WorkspaceControl ws in _workspaces.Values)
+			{
+				HashSet<IActivity> toClose = new HashSet<IActivity>();
+				foreach (IActivity activity in ws.Activities)
+				{
+					if (!activity.CanRun())
+					{
+						toClose.Add(activity);
+					}
+				}
+				foreach (IActivity activity in toClose)
+				{
+					CloseActivity(activity);
+				}
+			}
+		}
+
 		public void LaunchWorkspace<T>(T record, params object[] parameters) where T : IRecord
 		{
 			LaunchWorkspace(typeof(T), record, false, parameters);
@@ -593,6 +617,10 @@ namespace Desktop
 				throw new ArgumentException($"Activity type {activityType.Name} does not derive from Activity.");
 
 			IActivity a = Activator.CreateInstance(activityType) as IActivity;
+			if (!a.CanRun())
+			{
+				return null;
+			}
 			int width = _activityWidthMap[activityType];
 			WorkspacePane pane = _activityToPaneMap[activityType];
 			a.SidebarWidth = width;
@@ -617,6 +645,26 @@ namespace Desktop
 				return false;
 			QuitWorkspace(ws, false);
 			return true;
+		}
+
+		/// <summary>
+		/// Attempts to close an activity
+		/// </summary>
+		/// <param name="activity"></param>
+		/// <returns></returns>
+		public bool CloseActivity(IActivity activity)
+		{
+			CloseArgs args = new CloseArgs(CloseReason.None);
+			if (activity.CanQuit(args))
+			{
+				IWorkspace ws = activity.Workspace;
+				activity.Quit();
+				WorkspaceControl ctl = _workspaces[ws];
+				ctl.RemoveActivity(activity);
+				ws.RemoveActivity(activity);
+				return true;
+			}
+			return false;
 		}
 
 		/// <summary>
@@ -880,6 +928,24 @@ namespace Desktop
 		public int DelayAction(Action action, int delayMs)
 		{
 			return _messenger.Send(action, delayMs);
+		}
+
+		/// <summary>
+		/// Delays an action and groups all calls within that amount of time so that only one fires
+		/// </summary>
+		/// <param name="action"></param>
+		public void BatchAction(Action action, int delayMs)
+		{
+			if (_batchedActions.Contains(action))
+			{
+				return;
+			}
+			_batchedActions.Add(action);
+			DelayAction(() =>
+			{
+				_batchedActions.Remove(action);
+				action();
+			}, delayMs);
 		}
 
 		public void CancelAction(int id)

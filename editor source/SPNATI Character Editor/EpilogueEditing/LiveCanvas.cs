@@ -57,6 +57,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private float _playbackTime;
 		private float _elapsedTime;
 		private bool _inChange;
+		private bool _inUpdate;
 
 		public UndoManager UndoManager;
 
@@ -205,10 +206,20 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void UpdateData()
 		{
-			if (_data == null) { return; }
+			if (_data == null || _inUpdate) { return; }
+			_inUpdate = true;
 			_data.UpdateTime(Playing ? _playbackTime : _time, _elapsedTime, true);
-			_selectedPreview?.Update(_time, _elapsedTime, false);
+			if (_selectedPreview != _selectionSource)
+			{
+				_selectedPreview?.Update(_time, _elapsedTime, false);
+			}
 			canvas.Invalidate();
+			if (Playing)
+			{
+				//force it to draw immediately
+				canvas.Update();
+			}
+			_inUpdate = false;
 		}
 
 		public void SelectData(object data)
@@ -278,7 +289,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 			_selectionSource.PreviewInvalidated += _selectionSource_PreviewInvalidated;
 			_selectedPreview = _selectionSource.CreateLivePreview(_time);
-			if (!string.IsNullOrEmpty(_selectedPreview.Marker))
+			if (_selectedPreview != null && !string.IsNullOrEmpty(_selectedPreview.Marker))
 			{
 				MarkerOperator op;
 				string value;

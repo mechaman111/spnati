@@ -1,5 +1,6 @@
 ﻿using Desktop;
 using Desktop.CommonControls;
+using SPNATI_Character_Editor.EpilogueEditing;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -20,13 +21,25 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 
 		protected override void OnBoundData()
 		{
-			string value = GetValue()?.ToString();
+			object val = GetValue();
+			string value = val?.ToString();
 			if (string.IsNullOrEmpty(value))
 			{
 				txtValue.Text = "";
 				txtValue2.Text = "";
 				cmdColor.BackColor = Color.Empty;
 				cmdColor2.BackColor = Color.Empty;
+			}
+			else if (val is RandomColor)
+			{
+				RandomColor rc = val as RandomColor;
+				Color c1 = rc.Min;
+				txtValue.Text = ToHexValue(c1);
+				cmdColor.BackColor = c1;
+
+				Color c2 = rc.Max;
+				txtValue2.Text = ToHexValue(c2);
+				cmdColor2.BackColor = c2;
 			}
 			else
 			{
@@ -129,13 +142,22 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			}
 			else
 			{
-				string value = "#" + ToHexValue(cmdColor.BackColor);
-				if (!string.IsNullOrEmpty(color2))
+				if (PropertyType == typeof(RandomColor))
 				{
-					string value2 = "#" + ToHexValue(cmdColor2.BackColor);
-					value += ":" + value2;
+					Color c1 = cmdColor.BackColor;
+					Color c2 = string.IsNullOrEmpty(color2) ? c1 : cmdColor2.BackColor;
+					SetValue(new RandomColor(c1, c2));
 				}
-				SetValue(value);
+				else
+				{
+					string value = "#" + ToHexValue(cmdColor.BackColor);
+					if (!string.IsNullOrEmpty(color2))
+					{
+						string value2 = "#" + ToHexValue(cmdColor2.BackColor);
+						value += ":" + value2;
+					}
+					SetValue(value);
+				}
 			}
 		}
 

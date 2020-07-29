@@ -1,5 +1,6 @@
 ﻿using Desktop.CommonControls;
 using Desktop.DataStructures;
+using SPNATI_Character_Editor.DataStructures;
 using System;
 using System.Text;
 
@@ -21,6 +22,19 @@ namespace SPNATI_Character_Editor
 
 		public Character Character;
 		private CharacterEditorData _editorData;
+
+		private CaseDefinition _definition;
+		public CaseDefinition Definition
+		{
+			get
+			{
+				if (_definition == null)
+				{
+					_definition = CaseDefinitionDatabase.GetDefinition(Case);
+				}
+				return _definition;	
+			}
+		}
 
 		public Character TargetCharacter { get; set; }
 		public string TargetLabel
@@ -199,6 +213,14 @@ namespace SPNATI_Character_Editor
 			Case = stageCase;
 		}
 
+		protected override void OnPropertyChanged(string propName)
+		{
+			if (propName == "Case")
+			{
+				_definition = null;
+			}
+		}
+
 		public override string ToString()
 		{
 			return string.Format("{0}", Case.ToString());
@@ -227,7 +249,8 @@ namespace SPNATI_Character_Editor
 					}
 					break;
 				default:
-					key = Case.Tag;
+					CaseDefinition def = Definition;
+					key = def?.Key ?? Case.Tag;
 					break;
 			}
 			if (Mode != NodeMode.Folder && _editorData != null && Case.Id > 0)

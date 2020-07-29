@@ -113,7 +113,6 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _hidden;
-		[Boolean(DisplayName = "Hidden", GroupName = "Self", GroupOrder = 99, Description = "This case will evaluate and set markers when conditions are met, but the lines will not actually be displayed on screen", AutoCheck = true)]
 		[XmlOrder(40)]
 		[XmlAttribute("hidden")]
 		[JsonProperty("hidden")]
@@ -712,7 +711,7 @@ namespace SPNATI_Character_Editor
 			}
 			if (!string.IsNullOrEmpty(TotalNaked))
 			{
-				result.Add(string.Format("({0} naked)", GUIHelper.RangeToString(TotalNaked)));
+				result.Add(string.Format("({0} ({1}))", GUIHelper.RangeToString(TotalNaked), Config.SafeMode ? "no layers" : "naked"));
 			}
 			if (!string.IsNullOrEmpty(TotalMasturbating))
 			{
@@ -2310,7 +2309,7 @@ namespace SPNATI_Character_Editor
 			{
 				tag = tag.Substring(5);
 			}
-			else if (tag != null && tag.StartsWith("opponent_"))
+			else if (tag != null && tag.StartsWith("opponent_") && tag != "opponent_selected")
 			{
 				tag = tag.Substring(9);
 			}
@@ -2362,6 +2361,10 @@ namespace SPNATI_Character_Editor
 				else if (tag == "game_over_defeat")
 				{
 					return "game_over_victory";
+				}
+				else if (tag == "opponent_selected")
+				{
+					return "selected";
 				}
 			}
 

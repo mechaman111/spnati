@@ -18,42 +18,43 @@
             <h1>Fog Effect</h1>
             To add some mystique to the scene, we'll be adding some smoke particles.
             <ol>
-                <li>Open up your ending to Scene: Blue. Select the first directive (Add sprite (florina)).</li>
-                <li>Add an "Add Emitter" directive. Emitters are invisible objects that create particles.</li>
+                <li>Open up your ending to the Blue scene.</li>
+				<li>Make sure the "Oh no!" action is selected.</li>
+				<li>Add an emitter using the button next to the "Add Speech Bubble" button. Emitters are invisible objects that create particles.</li>
                 <li>Set the ID to "smoke machine".</li>
                 <li>Emitters have no graphical representation in the game, but in the editor are represented by a circle with an arrow pointing in the direction of the emitter.<br/>
                 <img src="images/ending_emitter.png" /></li>
                 <li>Drag the emitter to somewhere around Florina's foot level, around (X: 1250, Y: 1350).</li>
                 <li>With the cursor on the outside of one of the emitter's corners so that a curved arrow appears, drag to rotate the emitter. Rotate it to point left. Alternatively, manually set the rotation to -90.</li>
                 <li>We need to assign a sprite to the emitter. Click ... in the Source field and choose ep_fog.png from Florina's folder.</li>
-                <li>Press "Play selected animation" to preview the emitter. Every second, a fog sprite appears and fades away.</li>
+                <li>As long as the emitter is selected, you'll see it emit particles. Every second, a fog sprite appears and fades away.</li>
                 <li>The fog is sideways because the emitter is rotated sideways. Check "Ignore rotation" in the Property Table. Now the fog is facing the right direction.</li>
                 <li>We want the fog to move across the scene.</li>
                 <li>Emitters have dozens of properties compared to other directives. Find Speed and set the fields to 200 and 250, meaning each particle will move between 200-250 pixels per second.</li>
-                <li>Assuming you still have "Play selected animation" enabled, the fog begins moving left but fades away too quickly.</li>
+                <li>The fog begins moving left but fades away too quickly.</li>
                 <li>Set <span class="label">Particle Life (s)</span>: 15.00</li>
                 <li>Set <span class="label">Start Scale X</span>: 2.00 to 3.00. When both fields are provided, every fog particle will use a random scale between 2 and 3.</li>
                 <li>The fog just looks like one long line, so let's add some variance to the direction it moves. Set <span class="label">Angle</span> to 5, meaning each particle will be spit out between -5 and 5 degress from the direction the emitter is facing.</li>
                 <li>It's still too thick, so set <span class="label">Start Alpha</span>: 50 to 60.</li>
-                <li>This is looking pretty decent now, so let's do it again on the other side. Select Add emitter (smoke machine) in the Scene View and press the Duplicate button (Ctrl+D).</li>
+                <li>This is looking pretty decent now, so let's do it again on the other side. Select the "smoke machine" object in the timeline and press Ctrl+D to duplicate it.</li>
                 <li>Name the duplicate "smoke machine 2".</li>
-                <li>Change the following properties, keeping the old values in all others:
+                <li>Change the following properties, keeping the old values in all others. If these are not available, click the initial keyframe for "smoke machine 2."
                     <ul>
                         <li><span class="label">X</span>: -1680</li>
                         <li><span class="label">Rotation</span>: 90</li>
                     </ul>
                 </li>
                 <li>Play through the scene and admire the foggy ground. So mysterious!</li>
+				<li>The editor is really not a fan of big, translucent images, so this may really bog down the preview. It should be much smoother in game.</li>
             </ol>
         </section>
         <section class="card">
             <h1>Sparks</h1>
             Particles don't need images. We'll add a spark effect to the orb explosion to demonstrate another use for particles.
             <ol>
-                <li>Select the Add sprite (flash) directive in the Scene View and press Ctrl+3 to add an "Add Emitter" directive after it. Remember, it's worth learning the keyboard shortcut for common directives.</li>
+                <li>Use the Add Emitter button to add another emitter.</li>
                 <li>Name the emitter's ID: "sparks".</li>
                 <li>Drag this emitter to the middle of the orb, (X: -240, Y: 1280).</li>
-                <li>Click "Preview selected animation" so you can tweak the emitter parameters and get live feedback.</li>
                 <li>Set <span class="label">Width</span> and <span class="label">Height</span> to 10.</li>
                 <li>Set <span class="label">Speed</span>: 800 to 900</li>
                 <li>Go down to the Start Color and End Color properties and fill them out with yellow and orange colors so that the particles take a random color between yellow and orange. The particles will start flying into the sky.
@@ -66,7 +67,6 @@
                 <li>Set <span class="label">Angle</span>: 90.</li>
                 <li>These settings give a good enough effect for particles flying out of the orb in random directions and falling to the ground, but we don't want to emit particles constantly.</li>
                 <li>Set the Rate to 0 to stop creating particles completely.</li>
-                <li>Stop previewing the animation.</li>
             </ol>
             <div class="warning">
                 <i class="fa fa-warning"></i>
@@ -76,27 +76,35 @@
         <section class="card">
             <h1>Burst Particles</h1>
             As mentioned in the previous section, we don't want an endless stream of sparks, so we'll use a burst emission.
-            <ol>
-                <li>Add a new directive of type "Emit Particle".</li>
-                <li>Assign it the ID of the emitter: "sparks."</li>
-                <li>Set <span class="label">Count</span>: to 100 to generate 100 particles at once.</li>
-                <li>Preview the animation to see this effect. You should see a semi-circle of sparks flying out of the orb.</li>
-                <li>This isn't exactly realistic, so let's lower the number and add more bursts.</li>
-                <li>Set <span class="label">Count</span>: to 20.</li>
-                <li>Duplicate the "Emit Particle" directive. (Ctrl+D or the Duplicate button in the Scene View toolbar).</li>
-                <li>On the duplicate, set the delay to 0.10.</li>
-                <li>Duplicate it again and set the delay to 0.20.</li>
-                <li>Play through the scene. Good enough!</li>
-            </ol>
+			<ol>
+				<li>Make sure "sparks" is selected in the timeline.</li>
+				<li>Move the time marker to 0:00s.</li>
+				<li>Click the "Add Particle Emission" button next to the "Add Emitter" button.</li>
+				<li>A rectangle appears in the timeline. You can drag this around to change where the burst occurs.</li>
+				<li>Click on the rectangle to open it in the Property Table.</li>
+				<li>Set <span class="label">Count</span>: to 100 to generate 100 particles at once.</li>
+				<li>Preview the animation to see this effect. You should see a semi-circle of sparks flying out of the orb.</li>
+				<li>This isn't exactly realistic, so let's lower the number and add more bursts.</li>
+				<li>Set <span class="label">Count</span>: to 20.</li>
+				<li>Copy the "Emit Particle" directive. (Ctrl+C while selected).</li>
+				<li>Move the time marker to 0.06s and paste (Ctrl+V).</li>
+				<li>Move the time marker to 0.12s and paste (Ctrl+V).</li>
+				<li>You should now have 3 bursts.</li>
+				<li>Play through the scene. Good enough!</li>
+			</ol>
         </section>
         <section class="card">
             <h1>Animating Emitters</h1>
             Emitters can be animated just like sprites. We'll use this knowledge to make a trail of sparks behind the orb as it rolls.
             <ol>
-                <li>Click the sparks emitter directive in the scene view and copy it (Copy button or Ctrl+C).</li>
+                <li>Click the sparks emitter directive in the scene view and copy it (Ctrl+C).</li>
                 <li>Click the Camera directive in the scene view and paste (Ctrl+V) to insert the new emitter directly after the camera animation directive.</li>
+				<li>Click the "Oh no!" action in the Action list to go back to the action where the orb rolls into place.</li>
+				<li>Click in the timeline and paste (Ctrl+V) to paste a new "sparks" emitter.</li>
                 <li>Name this emitter "trail".</li>
-                <li>Move it behind the orb's starting point (X: -1450, Y: 1375).</li>
+				<li>We don't need the burst effects anymore, so click each rectangle and delete them (Delete button)</li>
+				<li>Drag the emitter object in the timeline so it starts at 0.5s (same as where the orb starts).</li>
+                <li>Move the emitter behind the orb's starting point (X: -1450, Y: 1375).</li>
                 <li>Set the following properties, clearing out all others (use the eraser button next to the field).
                     <ul>
                         <li><span class="label">Rotation</span>: -33</li>
@@ -110,13 +118,9 @@
                         <li><span class="label">End Alpha</span>: 0</li>
                     </ul>
                 </li>
-                <li>Add an "Animate Sprite/Emitter" directive and link it to ID "trail."</li>
-                <li>Set <span class="label">Time</span>: 1.</li>
+				<li>Drag the time marker to 1.5s.</li>
                 <li>Move the emitter to X: -80.</li>
-                <li>Set <span class="label">Delay</span>: 0.5. We want this to move along with the orb, and the orb's animation has a delay of 0.5.</li>
-                <li>We don't want to keep creating a trail after it stops moving, so add a "Remove Sprite/Emitter" directive.</li>
-                <li>Set the ID of the Remove directive to trail so that it removes the trail emitter.</li>
-                <li>Set <span class="label">Delay</span>: 1.50. We want to remove the emitter once the orb bounces into the air, which is 1 second into the animation, which has a delayed start of 0.50 seconds, so (1 + 0.50 = 1.50).</li>
+                <li>We don't want to keep creating a trail after it stops moving, so toggle the emitter to have a fixed length.</li>
             </ol>
         </section>
         <section class="card">

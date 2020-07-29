@@ -13,7 +13,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		[Slider(DisplayName = "Opacity (0-100)", GroupOrder = 90, Key = "alpha", Description = "Opacity/transparency level")]
-		public float? Opacity
+		public float? Alpha
 		{
 			get { return Get<float?>(); }
 			set { Set(value); }
@@ -30,7 +30,19 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			TrackedProperties.Add("Zoom");
 			TrackedProperties.Add("Color");
-			TrackedProperties.Add("Opacity");
+			TrackedProperties.Add("Alpha");
+		}
+
+		protected override object GetDefaultValue(string property)
+		{
+			switch (property)
+			{
+				case "Zoom":
+					return 1.0f;
+				case "Alpha":
+					return 0f;
+				default: return base.GetDefaultValue(property);
+			}
 		}
 	}
 }

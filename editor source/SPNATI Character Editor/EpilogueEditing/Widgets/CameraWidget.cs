@@ -1,28 +1,53 @@
-﻿using System.Drawing;
+﻿using Desktop.Skinning;
+using System.Drawing;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
 	public class CameraWidget : KeyframedWidget
 	{
-		protected override Brush GetFillBrush(bool selected)
+		private SolidBrush _titleBrush = new SolidBrush(Color.Gray);
+		private SolidBrush _rowBrush = new SolidBrush(Color.LightGray);
+		private static Color _accentColor;
+
+		protected override SolidBrush GetFillBrush(bool selected)
 		{
-			return selected ? Brushes.LightGray : Brushes.Gray;
+			return _rowBrush;
 		}
 
-		protected override Brush GetTitleBrush()
+		protected override void OnUpdateSkin(Skin skin)
 		{
-			return Brushes.DarkGray;
+			base.OnUpdateSkin(skin);
+			_titleBrush.Color = skin.GetAppColor("WidgetHeaderRow");
+			_rowBrush.Color = skin.GetAppColor("WidgetRow");
+			_accentColor = skin.GetAppColor("CameraAccent");
+		}
+
+		protected override SolidBrush GetTitleBrush()
+		{
+			return _titleBrush;
 		}
 
 		public CameraWidget(LiveAnimatedObject data, Timeline timeline) : base(data, timeline)
 		{
 			AllowDelete = false;
 			IsCollapsed = true;
+			AllowParenting = false;
+			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 		}
 
 		public override Image GetThumbnail()
 		{
 			return Properties.Resources.VideoCamera;
+		}
+
+		public override string ToString()
+		{
+			return "Camera";
+		}
+
+		protected override Color GetAccentColor()
+		{
+			return _accentColor;
 		}
 	}
 }

@@ -11,11 +11,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private static SolidBrush _titleFill;
 		private static SolidBrush _subrowFill;
 		private static SolidBrush _selectedSubrowFill;
+		private static Color _accentColor;
 
 		public LiveSprite Sprite { get; private set; }
 
 		private Image _thumbnail;
-
 
 		protected override void OnSetData(LiveAnimatedObject data)
 		{
@@ -47,6 +47,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_titleFill.Color = skin.GetAppColor("WidgetHeaderRow");
 			_subrowFill.Color = skin.GetAppColor("WidgetRow");
 			_selectedSubrowFill.Color = skin.GetAppColor("WidgetRowSelected");
+			_accentColor = skin.GetAppColor("SpriteAccent");
 		}
 
 		public SpriteWidget(LiveSprite sprite, Timeline timeline) : base(sprite, timeline)
@@ -54,7 +55,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_timeline = timeline;
 			Sprite = sprite;
 			Sprite.Widget = this;
-			AllowParenting = sprite.Data is LivePose;
+			AllowParenting = true; // sprite.Data is LivePose;
 		}
 
 		public override string ToString()
@@ -71,12 +72,12 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		protected override Brush GetFillBrush(bool selected)
+		protected override SolidBrush GetFillBrush(bool selected)
 		{
 			return selected ? _selectedSubrowFill : _subrowFill;
 		}
 
-		protected override Brush GetTitleBrush()
+		protected override SolidBrush GetTitleBrush()
 		{
 			return _titleFill;
 		}
@@ -84,6 +85,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		protected override int GetExtraHeaderIconCount()
 		{
 			return 1;
+		}
+
+		protected override Color GetAccentColor()
+		{
+			return _accentColor;
 		}
 
 		protected override Image GetExtraHeaderIcon(int iconIndex)
@@ -103,6 +109,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				string src = Data.GetPropertyValue<string>("Src", 0, 0, null);
 				if (!string.IsNullOrEmpty(src))
 				{
+					src = ((LiveSprite)Data).GetImagePath(src);
 					try
 					{
 						Image bmp = LiveImageCache.Get(src);

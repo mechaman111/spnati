@@ -3,6 +3,7 @@ using SPNATI_Character_Editor.DataStructures;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace SPNATI_Character_Editor
@@ -15,6 +16,21 @@ namespace SPNATI_Character_Editor
 		public static IEnumerable<Character> Characters
 		{
 			get { return _characters; }
+		}
+
+		/// <summary>
+		/// Returns only characters that aren't being filtered out
+		/// </summary>
+		public static IEnumerable<Character> FilteredCharacters
+		{
+			get
+			{
+				return Characters.Where(record =>
+				{
+					string status = Listing.Instance.GetCharacterStatus(record.Key);
+					return !Config.StatusFilters.Contains(status);
+				});
+			}
 		}
 
 		public static IEnumerable<Costume> Skins

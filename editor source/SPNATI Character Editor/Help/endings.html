@@ -2,312 +2,168 @@
 
 <html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
 <head>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-    <meta charset='utf-8' />
-    <link rel="stylesheet" type="text/css" href="topic.css" />
-    <title>Endings</title>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta charset='utf-8' />
+	<link rel="stylesheet" type="text/css" href="topic.css" />
+	<title>Endings</title>
 </head>
 <body>
-    <header id="header">Endings</header>
-    <ul id="nav">
-        <li><a href="#basics">Overview</a></li>
-        <li><a href="#edit">Creation</a></li>
-        <li><a href="#components">Components</a></li>
-        <li><a href="#legacy">Legacy Endings</a></li>
-        <li><a href="#general">General Tab</a></li>
-        <li><a href="#screens">Scene</a></li>
-        <li><a href="#directives">Directives</a></li>
-        <li><a href="#emitters">Emitters</a></li>
-    </ul>
-    <article id="main">
-        <section class="card" id="basics">
-            <h1>Overview</h1>
-            Characters can optionally have one or more epilogues, which will be available to view if the player wins a game against this character (and optionally meets certain unlock requirements).
-            Endings are like game cutscenes, ranging from a simple visual novel style of pictures overlaid with text to a series of real-time animations and effects.
-            <div class="info">
-                <i class="fa fa-info"></i>
-                The Character Editor is not an image editing program. You will need to generate your image assets elsewhere ahead of time, such as by using Kisekae's screenshot functionality and/or Photoshop.
-            </div>
-            Epilogues consist of one or more scenes. Each scene contains one or more directives (think of these as directions from a movie director - move this actor here, pan the camera, fade, etc.). Some directives can additionally be animated by defining a set of keyframes which the engine will smoothly move between over time using tweening.
-            <br />
-            The game will go through each scene in order, executing each directive automatically until hitting a directive that forces it to wait (either for animations to complete or for the user to click next). For example, you might have a scene that places two sprites on screen, moves them together, displays a textbox, and then finally waits for the user's input before advancing further. Upon reaching the end of a scene, it will immediately begin the next scene. <strong>Nothing is preserved across scenes.</strong>
-            <div class="info">
-                <i class="fa fa-info"></i>
-                Check out the <a href="ending_tutorial1.html">tutorials</a> for creating an epilogue!
-            </div>
-        </section>
-        <section class="card" id="components">
-            <h1>Scene Components</h1>
-            The primary components of a scene consist of the following parts:
-            <ul>
-                <li><span class="label">Scene:</span> The "room" for the scene with a width and height that determines (in conjunction with the camera) how scaling is performed when viewing in the browser.</li>
-                <li><span class="label">Camera:</span> The camera consists of two pieces: (1) its (X,Y) position in the scene and its zoom level. At zoom level 1, the room's entire area will be visible on screen at once. At zoom level 2, only a portion of the scene will be on screen at a time.</li>
-                <li><span class="label">Background:</span> Either a static background image or a color which appears behind everything else.</li>
-                <li><span class="label">Sprites</span> The "actors" in the scene. A sprite contains an image which can be moved around the scene, rotated, scaled, or made transparent.</li>
-                <li><span class="label">Fade Overlay</span>A solid color that fills the entire screen to be used for fade effects.</li>
-                <li><span class="label">Speech Bubbles</span>Textboxes appear above the scene and are positioned relative to the screen size rather than within the scene.</li>
-            </ul>
-        </section>
-        <section class="card" id="legacy">
-            <h1>Legacy Conversion</h1>
-            Epilogues built under the old system will be auto-converted to the new cutscene system upon opening the character. The conversion will create a scene from each screen and add the textboxes with pause directives in between them. You do not need to do anything special.
-        </section>
-        <section class="card" id="edit">
-            <h1>Creation</h1>
-            If your character has no endings yet, the Epilogue tab will be mostly blank. Otherwise it will auto-load the first epilogue and jump to the Scene editor.
-            Use the dropdown in the upper left to switch between existing endings, or to create a new ending, click <strong>Add New</strong>.
-            <img src="images/ending_toolbar.png" />
-            <ul>
-                <li><span class="label">Available to gender:</span> This controls which gender the player must be to be able to access the ending in game.</li>
-                <li><span class="label">Title:</span> This is the title that will display in the game when the player is given a choice of endings to view.</li>
-            </ul>
-        </section>
-        <section class="card" id="general">
-            <h1>General Tab</h1>
-            This tab contains general information about the ending as well as any optional requirements for the player to be able to unlock it.
-            <ul>
-                <li><span class="label">Title:</span> The name of the ending as it appears in game when choosing an ending and in the epilogue gallery.</li>
-                <li><span class="label">Player Gender:</span> Which gender the player must be to be able to view the ending (or any if either works).</li>
-                <li><span class="label">Gallery Image:</span> Defines the image that appears as a thumbnail for this ending in the Epilogue Gallery.</li>
-                <li><span class="label">Unlock Hint:</span> Free text of your choice to give the player a clue as to how to unlock the ending if there are special requirements.</li>
-                <li><span class="label">Also Playing:</span> Another character who had to be in the game in order to unlock this ending. This is useful for joint epilogues.</li>
-                <li><span class="label">Player Starting Layers:</span> A range of the number of items of clothing the player had to start with in order to unlock the ending.</li>
-                <li><span class="label">Own markers:</span> Lists of markers that the character had to have said in game (or not said, or said at least one)</li>
-                <li><span class="label">Other markers:</span> Lists of markers that <i>any other</i> character (not just the one in Also Playing) had to have said in game (or not said, or said at least one)</li>
-            </ul>
-        </section>
-        <section class="card" id="screens">
-            <h1>Scenes Tab</h1>
-            This is where the bulk of epilogue creation is performed and is divided into a few main areas.
-            <br />
-            <h3>Timeline</h3>
-            The timeline is in the upper left with the + and - buttons. This lists out all the scenes and their directives in order. Selecting an item in the timeline will select the relevant object in the canvas. When you select a directive or keyframe in the timeline, the preview canvas will update its state to reflect how the scene looks at that point in time.
-            <br />
-            The following actions can be performed from the timeline's toolbar:
-            <ul>
-                <li><span class="label">Add Scene:</span> Adds a new scene to the timeline after the current scene.</li>
-                <li><span class="label">Remove Selected Node:</span> Permanently deletes the currently selected scene, directive or keyframe.</li>
-                <li><span class="label">Add Scene Transition:</span> Adds a transition effect between scenes, inserting it immediately after whatever scene is currently selected.</li>
-                <li><span class="label">Add Directive:</span> Adds a directive to the current scene, inserting it immediately after whatever is currently selected.</li>
-                <li>
-                    <span class="label">Add Keyframe:</span> Only available when an animatable directive is selected. Adds a keyframe to that directive.
-                    <ul>
-                        <li>If a directive only needs one keyframe, you can set the properties to animate directly on the directive and do not need to create a keyframe.</li>
-                        <li>Keyframes have a Time (s) value, which indicates how many seconds <i>from the start of the animation</i> that it takes to reach this keyframe. If you have two keyframes (A: 1 second, B: 3 seconds), it will take <strong>2</strong> seconds to move from keyframe A to keyframe B, not 3.</li>
-                        <li>Frames in between keyframes will be computed automatically using tweening based on the time between keyframes.</li>
-                    </ul>
-                </li>
-                <li><span class="label">Move Up:</span> Moves the selected item up in the timeline. You can also drag and drop items.</li>
-                <li><span class="label">Move Down:</span> Moves the selected item down in the timeline. You can also drag and drop items.</li>
-                <li><span class="label">Cut:</span> Removes the selected item from the timeline, but stores it in a clipboard so you can paste it elsewhere. Only one item can be stored in the clipboard at a time.</li>
-                <li><span class="label">Copy:</span> Copies an item to the clipboard without removing it from the timeline.</li>
-                <li><span class="label">Paste:</span> Places an item at the selected position that was previously put into the clipboard.</li>
-                <li><span class="label">Duplicate:</span> Copy and paste combined into a single click. Duplicating an item will not touch the clipboard's contents.</li>
-            </ul>
-            <br />
-            <h3>Property Table</h3>
-            Directly beneath the timeline is the Property Table, which updates to show available properties for whatever scene, directive or keyframe is currently selected. You can either modify values directly here, or use the canvas for a more interactive approach.
-            <h3>Canvas</h3>
-            This displays a realtime preview of the scene based on the point in time at which the selected item appears in the timeline. For instance, if you select the second of 3 textboxes, it will run through the scene up to the point of the 2nd textbox, and select that textbox in the canvas.
-            <h4>Canvas Controls</h4>
-            <ul>
-                <li><span class="label">Pan</span> Right click and drag anywhere to pan around the workable area. The canvas can display more than just what's visible to the camera. The camera's viewport is represented by a box with L's on the corners.</li>
-                <li><span class="label">Zoom</span> Hold Ctrl and scroll the mousewheel to zoom in or out. This zooms the canvas workspace, not the scene camera.</li>
-                <li><span class="label">Arrow keys</span> When an object is selected, the arrow keys will perform fine adjustments to the object's position.</li>
-            </ul>
-            <br />
-            You can directly manipulate the camera, sprites and textboxes in the canvas using a point and click system.
-            <br />
-            <h4>Camera</h4>
-            With the Scene selected in the timeline, you can do the following to the camera viewport (represented by a box with L's outside the corners):
-            <ul>
-                <li><span class="label">Move</span> Click and drag somewhere inside the viewport to position it on screen.</li>
-                <li><span class="label">Scale</span> Grab the edge of the viewport and drag to adjust the scene's width or height.</li>
-                <li><span class="label">Zoom</span> Grab a corner of the viewport to adjust the camera's zoom level.</li>
-            </ul>
-            <br />
-            <h4>Sprites</h4>
-            <ul>
-                <li><span class="label">Move</span> Click and drag somewhere inside the sprite's box to position it on screen.</li>
-                <li><span class="label">Scale</span> Grab the edge of a sprite to scale it horizontally, vertically, or in both directions.</li>
-                <li><span class="label">Rotate</span> With the cursor outside of one of the sprite's selection box's corners, click and drag to rotate the sprite.</li>
-                <li><span class="label">Pivot</span> The sprite's pivot point is represented by a square, which is by default in the center of the sprite. You can drag this around to change the sprite's pivot (the point around which the sprite rotates and scales)</li>
-                <li><span class="label">Keyframes</span> If an animatable directive is selected, you will see boxes representing the sprite's position at each keyframe. You can click these boxes to jump to the relevant keyframe, and then manipulate the sprite to modify that keyframe.</li>
-            </ul>
-            <h4>Speech Bubbles</h4>
-            <ul>
-                <li><span class="label">Move</span> Click and drag somewhere inside the speech bubble to position it on screen.</li>
-                <li><span class="label">Scale</span> Grab the left or right side of the bubble to adjust its width. You cannot directly modify a bubble's height.</li>>
-                <li><span class="label">Arrow</span> Position the mouse outside the bubble near the middle of the left, top, right, or bottom side and click to move the speech bubble arrow there. To remove an arrow completely, you will need to do so from the Property Table.</li>>
-            </ul>
-            <br />
-            <h4>Toolbar</h4>
-            The canvas toolbar provides some playback options for testing out the scene.
-            <ul>
-                <li><span class="label">Zoom</span> Drag the slider to adjust the canvas' zoom level. Alternatively, hold Ctrl+mouse wheel inside the canvas to zoom it.</li>
-                <li><span class="label">Lock to Scene Camera</span> Toggling this on will lock the canvas to the camera's viewport and give you a preview of exactly what would actually be seen in-game. Everything outside the camera's viewport will be blacked out. You cannot pan the canvas or zoom while locked to the camera.</li>
-                <li><span class="label">Fit to screen</span> This will auto-zoom to try to give a best fit of the camera viewport to the canvas window, and recenter things to the center of the viewport.</li>
-                <li><span class="label">Play/stop selected animation</span> With an animatable directive selected, this toggle will loop the animation through its keyframes to give you an idea how the animation looks. Note that only the selected animation will play. If multiple sprites are being animated at once, you will need to play the whole scene to see them animate together. If an emitter is selected, this will also preview its emissions, allowing you to tweak the properties in realtime.</li>
-                <li><span class="label">Play/stop scene</span> This will play the scene from beginning to end, locking it to the camera's view and simulating how it would look in game. <strong>You should still test your epilogue in the actual game before submitting.</strong></li>
-            </ul>
-        </section>
-        <section class="card" id="directives">
-            <h1>Directives</h1>
-            This section summarizes the directives available to a scene and what properties each one can have. If you leave properties blank, they will use their defaults. For animations, if you don't wish to animate a particular property, leave it blank.
-            <ul>
-                <li>
-                    <span class="label">Add Sprite</span> Adds a new sprite to the scene.
-                    <ul>
-                        <li><span class="label">ID</span> Sprite's unique identifier. This is used to match "Move" directives with a particular sprite. All sprites need a unique ID.</li>
-                        <li><span class="label">Source</span> Image to use with the sprite. You can use any image from your character's folder, but also from other characters as well.</li>
-                        <li><span class="label">Layer</span> Layering order. Higher values appear on top of lower values. By default, objects are layered in the order they are added to the scene. Anything with a specific layer defined will appear above all objects that do not.</li>
-                        <li><span class="label">X/Y</span> Position in scene coordinates for where the sprite should initially appear. The coordinates represent the sprite's upper left corner's offset from the upper left of the scene. Note that if your sprite has scaling applied, it won't necessarily line up with the upper left point.</li>
-                        <li><span class="label">Pivot X/Y</span> The pivot point is a point expressed as a percentage of the sprite's bounds which represents the point of origin for rotations and scaling. 50% means to use the center of the sprite, 0% means the left/top, 100% means the right/bottom, etc.</li>
-                        <li><span class="label">Scale X/Y</span> Custom scaling to apply along the X and Y axes. Values from 0-1 will shrink the sprite along that axis. Values over 1 will stretch the sprite. Values below 0 will flip the sprite.</li>
-                        <li><span class="label">Rotation</span> Number of degrees to initially rotate the sprite.</li>
-                        <li><span class="label">Opacity</span> The sprite's initial transparency level. 0 is fully transparent. 100 is fully opaque.</li>
-                        <li><span class="label">Width/Height</span> By default, a sprite's size is based on its source image's size. If you want to use custom dimensions as the basis, you can do so here. For instance, if you want a sprite to be 100x200 pixels regardless of whether the source image was 400x800 or 50x100, you can set it here.</li>
-                    </ul>
-                </li>
-                <li>
-                    <span class="label">Add Emitter</span> Adds an emitter to the scene.
-                    <ul>
-                        <li><span class="label">ID</span> Emitter's unique identifier. This is used to match "Move" directives with a particular emitter. All emitters need a unique ID.</li>
-                        <li><span class="label">Source</span> Image to use for objects emitted from this emitter. If no source is defined, colored particles will be emitted instead.</li>
-                        <li><span class="label">Layer</span> Layering order. Higher values appear on top of lower values. By default, objects are layered in the order they are added to the scene. Anything with a specific layer defined will appear above all objects that do not.</li>
-                        <li><span class="label">X/Y</span> Position in scene coordinates for where the emitter should initially appear. The coordinates represent the emitter's center relative to the upper left of the scene.</li>
-                        <li><span class="label">Rotation</span> Number of degrees to initially rotate the emitter. Objects emitted move in the direction of the emitter is rotated, indicated by the arrow on the emitter object.</li>
-                        <li><span class="label">Rate</span> Number of objects emitted per second. Keep in mind the epilogue engine is not designed with large numbers of objects in mind, so emitting too many objects can cause a severe performance drain.</li>
-                        <li><span class="label">Particle Life</span> The number of a seconds an emitted object will persist before disappearing. If a range is defined, the object's life will be somewhere within that range.</li>
-                        <li><span class="label">Angle</span> Number of degrees away from the emitter's orientation that objects can be emitted. For example, 30 will allow particles to be emitted in a direction anywhere from 30 degrees counterclockwise to 30 degrees clockwise from the emitter's facing.</li>
-                        <li><span class="label">Start/End Scale X/Y</span> The starting and ending scaling factors applied to emitted objects. If a range is defined, then the scale will start/end at a random point within that range.</li>
-                        <li><span class="label">Speed</span> The speed that emitted objects move in scene units per second. If a range is defined, objects will start with a random speed within that range. Objects move in the direction the emitter is facing at the time the object is emitted.</li>
-                        <li><span class="label">Acceleration</span> The acceleration applied to emitted objects in scene units per second squared. If a range is defined, objects will be given a random acceleration within that range. Acceleration is applied in the direction the object was first emitted.</li>
-                        <li><span class="label">Force X/Y</span> Global forces applied per frame to emitted objects, such as wind or gravity. +X is in the right direction, +Y is down.</li>
-                        <li><span class="label">Start/End Color</span> The starting or ending color of an emitted object. This only applies to particles, not images. If a range is defined, the color will be a random value within the provided range.</li>
-                        <li><span class="label">Start/End Alpha</span> The starting or ending transparency of an emitted object from 0 (transparent) to 100 (opaque). If a range is defined, the transparency will be a random value within the provided range.</li>
-                        <li><span class="label">Start/End Spin</span> The starting or ending spinning speed of an emitted object. If a range is defined, the spin will be a random value within the provided range.</li>
-                        <li><span class="label">Easing</span> The determines the "easing" of the interpolation between an emitted object's starting and ending values. See <a href="#easings">Easings</a> for more information.</li>
-                        <li><span class="label">Width/Height</span> Controls the size of emitted objects. By default, images use the source image's resolution. Particles use 10px.</li>
-                    </ul>
-                </li>
-                <li>
-                    <span class="label">Emit Particle</span> Emits one or more particles from an emitter.
-                    <ul>
-                        <li><span class="label">ID</span> ID of the emitter to use.</li>
-                        <li><span class="label">Count</span>  Number of particles to emit in th burst.</li>
-                    </ul>
-                </li>
-                <li>
-                    <span class="label">Remove Sprite/Emitter</span> Removes a sprite or emitter from the scene.
-                    <ul>
-                        <li><span class="label">ID</span> ID of the sprite or emitter to remove.</li>
-                    </ul>
-                </li>
-                <li>
-                    <span class="label">Add Speech Bubble</span> Adds a new speech bubble to the scene.
-                    <ul>
-                        <li><span class="label">ID</span> Speech bubble's unique identifier. If a bubble has the same ID as one already on screen, it will replace that bubble. Bubbles with unique IDs will display simultaneously.</li>
-                        <li><span class="label">Text</span> Text to display in the bubble.</li>
-                        <li><span class="label">X/Y</span> Position as a percentage from the left/top of the viewport for where to position the bubble. Bubbles are not part of the scene, so based on screen size they can move around relative to sprites. You should test out various window sizes to ensure they look okay at any size.</li>
-                        <li><span class="label">Arrow</span> The direction the speech bubble arrow should be pointed, if there is one.</li>
-                        <li><span class="label">Width</span> Percentage of the viewport's width to use for the bubble's width. The height is not configurable; it will be auto-computed based on text wrapping. Speech bubbles have a fixed font size that is independent of the window size, so at small sizes the text box will appear relatively large.</li>
-                    </ul>
-                </li>
-                <li>
-                    <span class="label">Remove Speech Bubble</span> Removes a displayed speech bubble.
-                    <ul>
-                        <li><span class="label">ID</span> The ID of the speech bubble to remove. Bubbles are removed automatically when changing scenes, or when a bubble of the same ID is displayed.</li>
-                    </ul>
-                </li>
-                <li>
-                    <span class="label">Clear Speech Bubbles</span> Removes all speech bubbles currently being displayed.
-                </li>
-                <li>
-                    <span class="label">Move/Rotate/Scale Sprite</span> Moves a sprite to a new position, scales it, rotates it, etc. or any combination of these. Keyframes can be added to this directive.
-                    <ul>
-                        <li><span class="label">ID</span> The ID of the sprite to reposition. This is the ID you supplied in the Add Sprite directive.</li>
-                        <li><span class="label">Time</span> The total time in seconds it takes to move the sprite from its previous orientation to the new one.</li>
-                        <li><span class="label">Animatable Properties</span> With the exception of the ID, source, and width/height, anything in the Add Sprite directive can be given a new value here. Blank values will retain their previous settings.</li>
-                        <li><span class="label">Delay</span> The total time in seconds before the animation begins. This could be used to sequence multiple animations that shouldn't all begin at once.</li>
-                        <li><span class="label">Easing</span> The determines the "easing" of the animation's movement. See <a href="#easings">Easings</a> for more information.</li>
-                        <li><span class="label">Tweening</span> The method in which keyframes are "tweened". Linear means it will move directly from one point to the next in straight lines. Spline means it will smoothly curve around the points. The default is <strong>linear</strong>.</li>
-                        <li><span class="label">Looped</span> If checked, the animation will repeat more than once. See <a href="#loops">Looping Animations</a> for more information.</li>
-                        <li><span class="label">Repeat Method</span> Controls how animations are looped.  See <a href="#loops">Looping Animations</a> for more information.</li>
-                        <li><span class="label">Iterations</span> Number of times to repeat a looped animation, or 0 to repeat infinitely. "Wait for Animations" directives do <strong>not</strong> wait for looped animations regardless of this setting.</li>
-                    </ul>
-                </li>
-                <li>
-                    <span class="label">Move/Zoom Camera</span> Moves the camera to a new position, or updates its zoom level. Keyframes can be added to this directive.
-                    <ul>
-                        <li><span class="label">Time</span> The total time in seconds it takes to move the camera from its previous position to the new one.</li>
-                        <li><span class="label">X/Y/Zoom</span> New values from what was initially set in the Scene.</li>
-                        <li><span class="label">Delay</span> The total time in seconds before the camera begins moving.</li>
-                        <li><span class="label">Easing</span> The determines the "easing" of the animation's movement. See <a href="#easings">Easings</a> for more information.</li>
-                        <li><span class="label">Tweening</span> The method in which keyframes are "tweened". Linear means it will move directly from one point to the next in straight lines. Spline means it will smoothly curve around the points. The default is <strong>linear</strong>.</li>
-                        <li><span class="label">Looped</span> If checked, the animation will repeat more than once. See <a href="#loops">Looping Animations</a> for more information.</li>
-                        <li><span class="label">Repeat Method</span> Controls how animations are looped.  See <a href="#loops">Looping Animations</a> for more information.</li>
-                        <li><span class="label">Iterations</span> Number of times to repeat a looped animation, or 0 to repeat infinitely. "Wait for Animations" directives do <strong>not</strong> wait for looped animations regardless of this setting.</li>
-                    </ul>
-                </li>
-                <li>
-                    <span class="label">Stop Animation</span> Stops a looping animation. Non-looping animations are always immediately stopped whenever the user advances through the scene, but looping animations will only stop using this directive (or when moving to a new scene).
-                    <ul>
-                        <li><span class="label">ID</span> ID of the sprite whose animation to stop. To stop a looping camera animation, use "camera". To stop a looping fade effect, use "fade".
-                    </ul>
-                </li>
-                <li>
-                    <span class="label">Fade Effect</span> Fades the scene overlay to a new color or transparency level.
-                    <ul>
-                        <li><span class="label">Time</span> The total time in seconds it takes to fade to the new color.</li>
-                        <li><span class="label">Color</span> The color to fade to. The starting color is determined by the Scene settings, or a previous Fade in the scene.</li>
-                        <li><span class="label">Opacity</span> 0 to fade the overlay out completely. 100 to fade it in completely.</li>
-                        <li><span class="label">Delay</span> The total time in seconds before the fade begins.</li>
-                        <li><span class="label">Easing</span> The determines the "easing" of the animation's movement. See <a href="#easings">Easings</a> for more information.</li>
-                        <li><span class="label">Tweening</span> The method in which keyframes are "tweened". Linear means it will move directly from one point to the next in straight lines. Spline means it will smoothly curve around the points. The default is <strong>linear</strong>.</li>
-                        <li><span class="label">Looped</span> If checked, the animation will repeat more than once. See <a href="#loops">Looping Animations</a> for more information.</li>
-                        <li><span class="label">Repeat Method</span> Controls how animations are looped. See <a href="#loops">Looping Animations</a> for more information.</li>
-                        <li><span class="label">Iterations</span> Number of times to repeat a looped animation, or 0 to repeat infinitely. "Wait for Animations" directives do <strong>not</strong> wait for looped animations regardless of this setting.</li>
-                    </ul>
-                </li>
-                <li>
-                    <span class="label">Wait for Animations</span> The cutscene system will pause until all non-looping animations have reached their end, at which point it will continue to execute directives. If the user clicks Next while animations are still underway, they are stopped immediately and directive execution resumes.
-                </li>
-                <li>
-                    <span class="label">Wait for Input</span> The cutscene system will pause until the user presses Next (or clicks somewhere in the scene). Animations will continue to play while paused.
-                </li>
-            </ul>
-        </section>
-        <section class="card" id="easings">
-            <h1>Easing</h1>
-            In technical terms, an easing function describes the value of an animated property as a function of its completion through the animation. In layman's terms, moving a car starts and stops gradually rather than instantly. Dropping an object onto the floor will bounce back up a few times before coming to a rest. Easing functions describe what behavior an animation should follow. This is not limited to movement; it could describe fading, scaling, or anything else that can be animated.
-            Supported functions include:
-            <ul>
-                <li><span class="label">Linear</span> The animation proceeds at a constant rate, starting and stopping instantly.</li>
-                <li><span class="label">Smooth</span> The animation starts slowly, gains speed, and then slows down before stopping.</li>
-                <li><span class="label">Ease-In</span> The animation starts slowly and picks up momentum. Variants (ex. sin, cubic) control the momentum curve.</li>
-                <li><span class="label">Ease-Out</span> The animation starts at full speed and slows down as it reaches the end. Variants (ex. sin, cubic) control the momentum curve.</li>
-                <li><span class="label">Ease-In-Out</span> The same as <strong>smooth></strong> but the variants (ex. cubic) affect the curve at which it happens.</li>
-                <li><span class="label">Elastic</span> The animations eases in, passes the target and bounces back like a rubber band or spring.</li>
-                <li><span class="label">Bounce</span> The animation starts slowly, gains speed, hits the target, and bounces back a few times (without passing the target).</li>
-            </ul>
-        </section>
-        <section class="card" id="loops">
-            <h1>Looping Animations</h1>
-            Animations marked as "Looped?" will repeat one or more times until either stopped by a "stop animation" directive, or when reaching a new scene. What happens when reaching the end of the animation can be controlled by setting the "Repeat" behavior. The default is to <strong>wrap</strong>.
-            <ul>
-                <li><span class="label">Clamp</span> Upon reaching the end of the animation, it won't move any further. Since looping animations do not stop when the user advances through a "Wait for Input" directive, you could use a clamped looping function to make a one-time animation persist through multiple text boxes.</li>
-                <li><span class="label">Wrap</span> Upon reaching the end of the animation, it starts over, jumping back immediately to its initial value.</li>
-                <li><span class="label">Mirror</span> Upon reaching the end of the animation, it repeats in the reverse direction until reaching the start, continuing back and forth.</li>
-            </ul>
-        </section>
-        <section class="card" id="emitters">
-            <h1>Emitters</h1>
-            Emitters are invisible objects in a scene that spit out sprites or particles over time which are moved using physics rather than animations. Each emitted object has starting and ending values for scale, color, speed, etc. which can be randomized to create neat effects. Like sprites, emitters can be moved around and rotated using animations. See the Add Emitter directive above for more details about what properties can be tweaked. You can preview an emitter the same way you preview an animation in the scene preview canvas.
-        </section>
-        <section class="card navCard" id="next">
-            <a href="dialogue.html">« 6. Dialogue</a> | <a href="listing.html">8. Adding to the Game »</a>
-        </section>
-    </article>
+	<header id="header">Endings</header>
+	<ul id="nav">
+		<li><a href="#basics">Overview</a></li>
+		<li><a href="#edit">Creation</a></li>
+		<li><a href="#components">Components</a></li>
+		<li><a href="#legacy">Legacy Endings</a></li>
+		<li><a href="#general">General Tab</a></li>
+		<li><a href="#screens">Scene</a></li>
+		<li><a href="#directives">Directives</a></li>
+		<li><a href="#emitters">Emitters</a></li>
+	</ul>
+	<article id="main">
+		<section class="card" id="basics">
+			<h1>Overview</h1>
+			Characters can optionally have one or more epilogues, which will be available to view if the player wins a game against this character (and optionally meets certain unlock requirements).
+			Endings are like game cutscenes, ranging from a simple visual novel style of pictures overlaid with text to a series of real-time animations and effects.
+			<div class="info">
+				<i class="fa fa-info"></i>
+				The Character Editor is not an image editing program. You will need to generate your image assets elsewhere ahead of time, such as by using Kisekae's screenshot functionality and/or Photoshop.
+			</div>
+			Epilogues consist of one or more scenes. Each scene contains one or more actions (think of these as directions from a movie director - move this actor here, pan the camera, fade, etc.).
+			<br />
+			The game will pause between each actions and wait for the user to click a button to advance. For example, you might have an action that places two sprites on screen, moves them together, and displays a textbox, followed by a second action that displays another textbox. Upon completely all actions in a scene, it will immediately begin the next scene. <strong>Nothing is preserved across scenes.</strong>
+			<div class="info">
+				<i class="fa fa-info"></i>
+				Check out the <a href="ending_tutorial1.html">tutorials</a> for creating an epilogue!
+			</div>
+		</section>
+		<section class="card" id="components">
+			<h1>Scene Components</h1>
+			The primary components of a scene consist of the following parts:
+			<ul>
+				<li><span class="label">Scene:</span> The "room" for the scene with a width and height that determines (in conjunction with the camera) how scaling is performed when viewing in the browser.</li>
+				<li><span class="label">Camera:</span> The camera consists of two pieces: (1) its (X,Y) position in the scene and its zoom level. At zoom level 1, the room's entire area will be visible on screen at once. At zoom level 2, only a portion of the scene will be on screen at a time.</li>
+				<li><span class="label">Background:</span> Either a static background image or a color which appears behind everything else.</li>
+				<li><span class="label">Sprites</span> The "actors" in the scene. A sprite contains an image which can be moved around the scene, rotated, scaled, or made transparent.</li>
+				<li><span class="label">Fade Overlay:</span> A solid color + transparency level that fills the entire screen to be used for fade effects.</li>
+				<li><span class="label">Speech Bubbles:</span> Textboxes appear above the scene and are positioned relative to the camera viewport rather than within the scene.</li>
+			</ul>
+		</section>
+		<section class="card" id="legacy">
+			<h1>Legacy Conversion</h1>
+			Epilogues built under the old system will be auto-converted to the new cutscene system upon opening the character. The conversion will create a scene from each screen and add the speech bubbles as individual actions. You do not need to do anything special.
+		</section>
+		<section class="card" id="edit">
+			<h1>Creation</h1>
+			If your character has no endings yet, the Epilogue tab will be mostly blank. Otherwise it will auto-load the first epilogue and jump to the Scene editor.
+			Use the dropdown in the upper left to switch between existing endings, or to create a new ending, click <strong>Add New</strong>.
+		</section>
+		<section class="card" id="general">
+			<h1>General Tab</h1>
+			This tab contains general information about the ending as well as any optional requirements for the player to be able to unlock it.
+			<ul>
+				<li><span class="label">Title:</span> The name of the ending as it appears in game when choosing an ending and in the epilogue gallery.</li>
+				<li><span class="label">Player Gender:</span> Which gender the player must be to be able to view the ending (or any if either works).</li>
+				<li><span class="label">Gallery Image:</span> Defines the image that appears as a thumbnail for this ending in the Epilogue Gallery.</li>
+				<li><span class="label">Unlock Hint:</span> Free text of your choice to give the player a clue as to how to unlock the ending if there are special requirements.</li>
+				<li><span class="label">Also Playing:</span> Other characters who had to be in the game in order to unlock this ending. This is useful for joint epilogues.</li>
+				<li><span class="label">Player Starting Layers:</span> A range of the number of items of clothing the player had to start with in order to unlock the ending.</li>
+				<li><span class="label">Own markers:</span> Lists of markers that the character had to have said in game (or not said, or said at least one)</li>
+				<li><span class="label">Other markers:</span> Lists of markers that <i>any other</i> character (not just the one in Also Playing) had to have said in game (or not said, or said at least one)</li>
+			</ul>
+		</section>
+		<section class="card" id="screens">
+			<h1>Scenes Tab</h1>
+			<img src="images/ending_screen.png" title="Scene Editor Layout" />
+			Endings are composed very similarly to poses. The <a href="posemaker.html">Pose Maker documentation</a> explains how to compose animations, so this information will not be repeated here.
+			<ol>
+				<li><span class="label">Scene List:</span> This is where scenes and transitions are managed. Scenes are played in order from top to bottom. Clicking a scene will open it for editing in the rest of the screen.</li>
+				<li><span class="label">Timeline:</span> The animation timeline. Refer to the <a href="posemaker.html">Pose Maker documentation</a> for more information.</li>
+				<li><span class="label">Action List:</span> Scenes contain one or more actions, which are distinct blocks of animation that are separate by pauses for user input. Use this list to add or remove actions. Anything performed in an action will affect all actions following it in the scene.</li>
+				<li><span class="label">Object Proprerty Table:</span> Displays properties of the selected object (scene, action, sprite, speech bubble, etc.)</li>
+				<li><span class="label">Animation Property Table:</span> Displays the properties that can be animated on selected keyframe.</li>
+				<li><span class="label">Preview Panel:</span> Displays a preview of an action at a certain point in time. Objects can be moved and transformed on this screen using a point and click interface. Refer to the <a href="posemaker.html">Pose Maker documentation</a> for more information.</li>
+			</ol>
+		</section>
+		<section class="card" id="timeline">
+			<h3>Timeline</h3>
+			<img src="images/ending_timeline.png" title="Timeline" /><br/>
+			The currently selected action appears in the timeline.	For the most part, the timeline functions the same as the Pose Maker, so only things unique to the Epilogue Editor will be documented here.
+			<ol>
+				<li><span class="label">Toggle Fixed Length (indefinite): </span>Click this to convert an indefinite object into one with a fixed ending point.</li>
+				<li><span class="label">Indefinite Length indicator: </span>These diagonal lines at the end of the animation indicate that the object will persist into the next action in the same state that it ends this one. Any running animations will continue to run.</li>
+				<li><span class="label">Toggle Fixed Length (fixed): </span>Click this to convert a fixed-length object into an indefinite one that will persist into the next action.</li>
+				<li>This block shows a speech bubble that appears at 2s into the action and disappears at 4s.</li>
+				<li>This block shows a speech bubble that appears 4s into the action. Since the ending point is right up against the end of the animation, but the object is not toggled to have an indefinite length, it will disappear once the user clicks to advance to the next action (not right at 5.5s like the timeline shows).</li>
+			</ol>
+			<h4>Timeline Toolbar</h4>
+			<img src="images/ending_timeline_toolbar.png" title="Timeline Toolbar" />
+			<ol>
+				<li><span class="label">Add Sprite: </span>Adds a new sprite to the scene.</li>
+				<li><span class="label">Add Speech Bubble: </span>Adds a speech bubble to the scene.</li>
+				<li><span class="label">Add Emitter: </span>Adds an emitter to the scene.</li>
+				<li><span class="label">Add Particle Emission: </span>The selected emitter will emit one or more particles at the current time.</li>
+				<li><span class="label">Remove Object: </span>Deletes the selected sprite, bubble, or emitter.</li>
+				<li><span class="label">Reload Assets: </span>Reloads all images from disk to pull in any changes made in an external editor.</li>
+				<li><span class="label">Add Keyframe: </span>Adds an empty keyframe to the current time.</li>
+				<li><span class="label">Remove Keyframe: </span>Removes the selected keyframe.</li>
+				<li><span class="label">Copy First Keyframe: </span>Copies the first keyframe to the end of the animation.</li>
+				<li><span class="label">Transfer Looped Properties: </span>Copies all properties that are currently looping into the keyframe at time 0. This is used to stop a looping animation.</li>
+				<li><span class="label">Normal Keyframe: </span>Switches a keyframe into "normal" mode. Animated properties will interpolate between values set at keyframes.</li>
+				<li><span class="label">Split Keyframe: </span>Switches a keyframe into "split" mode. Keyframes preceeding this and those following it will be animated using separate easing, interpolation, looping, etc.</li>
+				<li><span class="label">Begin Keyframe: </span>Switches a keyframe into "begin" mode. No tweening will be performed between the previous keyframe and this one.</li>
+			</ol>
+		</section>
+		<section class="card" id="easings">
+			<h1>Easing</h1>
+			In technical terms, an easing function describes the value of an animated property as a function of its completion through the animation. In layman's terms, moving a car starts and stops gradually rather than instantly. Dropping an object onto the floor will bounce back up a few times before coming to a rest. Easing functions describe what behavior an animation should follow. This is not limited to movement; it could describe fading, scaling, or anything else that can be animated.
+			Supported functions include:
+			<ul>
+				<li><span class="label">Linear</span> The animation proceeds at a constant rate, starting and stopping instantly.</li>
+				<li><span class="label">Smooth</span> The animation starts slowly, gains speed, and then slows down before stopping.</li>
+				<li><span class="label">Ease-In</span> The animation starts slowly and picks up momentum. Variants (ex. sin, cubic) control the momentum curve.</li>
+				<li><span class="label">Ease-Out</span> The animation starts at full speed and slows down as it reaches the end. Variants (ex. sin, cubic) control the momentum curve.</li>
+				<li><span class="label">Ease-In-Out</span> The same as <strong>smooth></strong> but the variants (ex. cubic) affect the curve at which it happens.</li>
+				<li><span class="label">Elastic</span> The animations eases in, passes the target and bounces back like a rubber band or spring.</li>
+				<li><span class="label">Bounce</span> The animation starts slowly, gains speed, hits the target, and bounces back a few times (without passing the target).</li>
+			</ul>
+		</section>
+		<section class="card" id="loops">
+			<h1>Looping Animations</h1>
+			Animations marked as "Looped?" will repeat one or more times until either stopped by a "stop animation" directive, or when reaching a new scene. What happens when reaching the end of the animation can be controlled by setting the "Repeat" behavior. The default is to <strong>wrap</strong>.
+			<ul>
+				<li><span class="label">Clamp</span> Upon reaching the end of the animation, it won't move any further. Since looping animations do not stop when the user advances through a "Wait for Input" directive, you could use a clamped looping function to make a one-time animation persist through multiple text boxes.</li>
+				<li><span class="label">Wrap</span> Upon reaching the end of the animation, it starts over, jumping back immediately to its initial value.</li>
+				<li><span class="label">Mirror</span> Upon reaching the end of the animation, it repeats in the reverse direction until reaching the start, continuing back and forth.</li>
+			</ul>
+		</section>
+		<section class="card" id="emitters">
+			<h1>Emitters</h1>
+			Emitters are invisible objects in a scene that spit out sprites or particles over time which are moved using physics rather than animations. Each emitted object has starting and ending values for scale, color, speed, etc. which can be randomized to create neat effects. Like sprites, emitters can be moved around and rotated using animations.
+			Emitters are only active while selected or in playback mode.
+			<ul>
+				<li><span class="label">ID</span> Emitter's unique identifier.</li>
+				<li><span class="label">Source</span> Image to use for objects emitted from this emitter. If no source is defined, colored particles will be emitted instead.</li>
+				<li><span class="label">Layer</span> Layering order. Higher values appear on top of lower values. By default, objects are layered in the order they are added to the scene. Anything with a specific layer defined will appear above all objects that do not.</li>
+				<li><span class="label">X/Y</span> Position in scene coordinates for where the emitter should initially appear. The coordinates represent the emitter's center relative to the upper left of the scene.</li>
+				<li><span class="label">Rotation</span> Number of degrees to initially rotate the emitter. Objects emitted move in the direction of the emitter is rotated, indicated by the arrow on the emitter object.</li>
+				<li><span class="label">Rate</span> Number of objects emitted per second. Keep in mind the epilogue engine is not designed with large numbers of objects in mind, so emitting too many objects can cause a severe performance drain.</li>
+				<li><span class="label">Particle Life</span> The number of a seconds an emitted object will persist before disappearing. If a range is defined, the object's life will be somewhere within that range.</li>
+				<li><span class="label">Angle</span> Number of degrees away from the emitter's orientation that objects can be emitted. For example, 30 will allow particles to be emitted in a direction anywhere from 30 degrees counterclockwise to 30 degrees clockwise from the emitter's facing.</li>
+				<li><span class="label">Start/End Scale X/Y</span> The starting and ending scaling factors applied to emitted objects. If a range is defined, then the scale will start/end at a random point within that range.</li>
+				<li><span class="label">Start/End Skew X/Y</span> The starting and ending shearing factors applied to emitted objects. If a range is defined, then the skew will start/end at a random point within that range.</li>
+				<li><span class="label">Speed</span> The speed that emitted objects move in scene units per second. If a range is defined, objects will start with a random speed within that range. Objects move in the direction the emitter is facing at the time the object is emitted.</li>
+				<li><span class="label">Acceleration</span> The acceleration applied to emitted objects in scene units per second squared. If a range is defined, objects will be given a random acceleration within that range. Acceleration is applied in the direction the object was first emitted.</li>
+				<li><span class="label">Force X/Y</span> Global forces applied per frame to emitted objects, such as wind or gravity. +X is in the right direction, +Y is down.</li>
+				<li><span class="label">Start/End Color</span> The starting or ending color of an emitted object. This only applies to particles, not images. If a range is defined, the color will be a random value within the provided range.</li>
+				<li><span class="label">Start/End Alpha</span> The starting or ending transparency of an emitted object from 0 (transparent) to 100 (opaque). If a range is defined, the transparency will be a random value within the provided range.</li>
+				<li><span class="label">Start/End Spin</span> The starting or ending spinning speed of an emitted object. If a range is defined, the spin will be a random value within the provided range.</li>
+				<li><span class="label">Easing</span> The determines the "easing" of the interpolation between an emitted object's starting and ending values. See <a href="#easings">Easings</a> for more information.</li>
+				<li><span class="label">Width/Height</span> Controls the size of emitted objects. By default, images use the source image's resolution. Particles use 10px.</li>
+			</ul>
+		</section>
+		<section class="card navCard" id="next">
+			<a href="dialogue.html">« 6. Dialogue</a> | <a href="listing.html">8. Adding to the Game »</a>
+		</section>
+	</article>
 </body>
 </html>

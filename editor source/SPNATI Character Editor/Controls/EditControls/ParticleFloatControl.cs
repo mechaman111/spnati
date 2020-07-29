@@ -1,5 +1,6 @@
 ﻿using Desktop;
 using Desktop.CommonControls;
+using SPNATI_Character_Editor.EpilogueEditing;
 using System;
 using System.Globalization;
 using System.Windows.Forms;
@@ -40,8 +41,8 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 
 		protected override void OnBoundData()
 		{
-			string value = GetValue()?.ToString();
-			if (string.IsNullOrEmpty(value))
+			object val = GetValue();
+			if (val == null)
 			{
 				valFrom.Value = Math.Max(valFrom.Minimum, Math.Min(valFrom.Maximum, 0));
 				valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, 0));
@@ -50,36 +51,46 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			}
 			else
 			{
-				string[] pieces = value.Split(':');
-				float min;
-				if (float.TryParse(pieces[0], NumberStyles.Float, CultureInfo.InvariantCulture, out min))
+				if (val is RandomParameter)
 				{
-					min = (float)Math.Round(min, valFrom.DecimalPlaces);
-					valFrom.Value = (decimal)min;
+					RandomParameter rp = val as RandomParameter;
+					valFrom.Value = (decimal)Math.Max((float)valFrom.Minimum, Math.Min((float)valFrom.Maximum, rp.Min));
+					valTo.Value = (decimal)Math.Max((float)valTo.Minimum, Math.Min((float)valTo.Maximum, rp.Max));
 				}
 				else
 				{
-					valFrom.Value = Math.Max(valFrom.Minimum, Math.Min(valFrom.Maximum, 0));
-					valFrom.Text = "";
-				}
-				if (pieces.Length > 1)
-				{
-					float max;
-					if (float.TryParse(pieces[1], NumberStyles.Float, CultureInfo.InvariantCulture, out max))
+					string value = GetValue()?.ToString();
+					string[] pieces = value.Split(':');
+					float min;
+					if (float.TryParse(pieces[0], NumberStyles.Float, CultureInfo.InvariantCulture, out min))
 					{
-						max = (float)Math.Round(max, valFrom.DecimalPlaces);
-						valTo.Value = (decimal)max;
+						min = (float)Math.Round(min, valFrom.DecimalPlaces);
+						valFrom.Value = (decimal)min;
+					}
+					else
+					{
+						valFrom.Value = Math.Max(valFrom.Minimum, Math.Min(valFrom.Maximum, 0));
+						valFrom.Text = "";
+					}
+					if (pieces.Length > 1)
+					{
+						float max;
+						if (float.TryParse(pieces[1], NumberStyles.Float, CultureInfo.InvariantCulture, out max))
+						{
+							max = (float)Math.Round(max, valFrom.DecimalPlaces);
+							valTo.Value = (decimal)max;
+						}
+						else
+						{
+							valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, 0));
+							valTo.Text = "";
+						}
 					}
 					else
 					{
 						valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, 0));
 						valTo.Text = "";
 					}
-				}
-				else
-				{
-					valTo.Value = Math.Max(valTo.Minimum, Math.Min(valTo.Maximum, 0));
-					valTo.Text = "";
 				}
 			}
 		}
@@ -127,13 +138,24 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 				{
 					max = (float)valTo.Value;
 				}
-				if (min >= max)
+				if (PropertyType == typeof(RandomParameter))
 				{
-					SetValue(min.ToString(CultureInfo.InvariantCulture));
+					if (min >= max)
+					{
+						min = max;
+					}
+					SetValue(new RandomParameter(min, max));
 				}
 				else
 				{
-					SetValue($"{min.ToString(CultureInfo.InvariantCulture)}:{max.ToString(CultureInfo.InvariantCulture)}");
+					if (min >= max)
+					{
+						SetValue(min.ToString(CultureInfo.InvariantCulture));
+					}
+					else
+					{
+						SetValue($"{min.ToString(CultureInfo.InvariantCulture)}:{max.ToString(CultureInfo.InvariantCulture)}");
+					}
 				}
 			}
 		}

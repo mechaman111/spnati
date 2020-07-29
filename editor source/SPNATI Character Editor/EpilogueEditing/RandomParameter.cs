@@ -43,7 +43,7 @@ namespace SPNATI_Character_Editor.EpilogueEditing
 
 		public static RandomParameter Create(string value, RandomParameter defaultParameter)
 		{
-			return Create(value, defaultParameter.Min, defaultParameter.Max);
+			return Create(value, defaultParameter?.Min ?? 0, defaultParameter?.Max ?? 0);
 		}
 
 		public string Serialize()

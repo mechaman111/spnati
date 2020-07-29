@@ -11,7 +11,7 @@ namespace SPNATI_Character_Editor
 		{
 			InitializeComponent();
 
-			cboStatus.DataSource = TargetCondition.StatusTypes;
+			cboStatus.DataSource = Config.SafeMode ? TargetCondition.SafeStatusTypes : TargetCondition.StatusTypes;
 			cboStatus.ValueMember = "Key";
 			cboStatus.DisplayMember = "Value";
 		}

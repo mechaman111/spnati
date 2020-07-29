@@ -336,6 +336,7 @@ namespace SPNATI_Character_Editor
 		private void RecordDataChanged(object sender, RecordEventArgs e)
 		{
 			Save();
+			tableAdvanced.UpdateProperty("Role");
 		}
 
 		protected override void OnSave()

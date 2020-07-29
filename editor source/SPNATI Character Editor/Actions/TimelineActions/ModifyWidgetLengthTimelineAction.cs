@@ -10,8 +10,9 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 	/// </summary>
 	public class ModifyWidgetLengthTimelineAction : ITimelineAction, ICommand
 	{
-		private KeyframedWidget _widget;
-		private LiveAnimatedObject _object;
+		private ITimelineWidget _widget;
+		private LiveObject _object;
+		private IFixedLength _lengthObj;
 
 		private float _oldLength;
 		private bool _moved;
@@ -32,13 +33,14 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		public void Start(WidgetActionArgs args)
 		{
 			_history = args.History;
-			_widget = args.Widget as KeyframedWidget;
+			_widget = args.Widget as ITimelineWidget;
 			if (_widget == null)
 			{
 				throw new NotSupportedException();
 			}
-			_object = _widget.Data;
-			_oldLength = _object.Start + _object.Length;
+			_object = _widget.GetData() as LiveObject;
+			_lengthObj = _object as IFixedLength;
+			_oldLength = _object.Start + _lengthObj.Length;
 			_widget.OnStartMove(args);
 		}
 
@@ -47,7 +49,7 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 			bool snap = !args.Modifiers.HasFlag(Keys.Shift);
 			float time = !snap ? args.Time : args.SnapTime();
 			float length = Math.Max(snap ? args.SnapIncrement : 0.01f, time - _object.Start);
-			if (length != _object.Length)
+			if (length != _lengthObj.Length)
 			{
 				if (_moved)
 				{
@@ -72,7 +74,7 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		{
 			if (_moved)
 			{
-				_object.Length = Length;
+				_lengthObj.Length = Length;
 			}
 		}
 
@@ -80,7 +82,7 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		{
 			if (_moved)
 			{
-				_object.Length = _oldLength;
+				_lengthObj.Length = _oldLength;
 			}
 		}
 	}

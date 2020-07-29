@@ -16,7 +16,11 @@ namespace SPNATI_Character_Editor.Controls
 
 		private DialogueLine _line;
 
-		public event EventHandler DataUpdated;
+		public event EventHandler DataUpdated
+		{
+			add { }
+			remove { }
+		}
 
 		public MarkerOptions()
 		{

@@ -47,6 +47,7 @@ namespace Desktop.Providers
 		public void SetFormatInfo(LookupFormat info)
 		{
 			info.Columns = new string[] { "Name" };
+			info.ColumnWidths = new int[] { -2 };
 			info.Caption = "Select a Macro";
 		}
 

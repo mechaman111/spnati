@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace SPNATI_Character_Editor.Services
 {
@@ -149,11 +150,15 @@ namespace SPNATI_Character_Editor.Services
 
 		private void ProcessCase(Case workingCase)
 		{
+			Regex regex = new Regex(@"(?<!<[^>]*)([\w'-]+)");
 			foreach (DialogueLine line in workingCase.Lines)
 			{
 				Dictionary<string, int> visitedWords = new Dictionary<string, int>();
 				string text = line.Text;
-				string[] words = text.Split(new string[] { " ", ",", ".", "?", "!", ";", ":", "=", "<i>", "</i>", "*", "\"", "(", ")", "[", "]", "~", "/", "|" }, StringSplitOptions.RemoveEmptyEntries);
+				//string[] words = text.Split(new string[] { " ", ",", ".", "?", "!", ";", ":", "=", "<i>", "</i>", "*", "\"", "(", ")", "[", "]", "~", "/", "|" }, StringSplitOptions.RemoveEmptyEntries);
+				MatchCollection col = regex.Matches(text);
+				string[] words = col.Cast<Match>().Select(m => m.Value).ToArray();
+				
 				for (int wordIndex = 0; wordIndex < words.Length; wordIndex++)
 				{
 					string word = words[wordIndex];

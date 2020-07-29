@@ -47,6 +47,7 @@ namespace SPNATI_Character_Editor
 			valFranchise.Value = Config.MaxFranchisePartners;
 			chkAutoFill.Checked = Config.AutoPopulateStageImages;
 			chkWarnIncomplete.Checked = Config.WarnAboutIncompleteStatus;
+			chkSafeMode.Checked = Config.SafeMode;
 
 			recAutoOpen.RecordType = typeof(Character);
 			recAutoOpen.RecordFilter = CharacterDatabase.FilterHuman;
@@ -159,6 +160,9 @@ namespace SPNATI_Character_Editor
 			Config.AutoPopulateStageImages = chkAutoFill.Checked;
 			Config.WarnAboutIncompleteStatus = chkWarnIncomplete.Checked;
 
+			bool oldSafeMode = Config.SafeMode;
+			Config.SafeMode = chkSafeMode.Checked;
+
 			HashSet<string> pauses = new HashSet<string>();
 			foreach (string item in lstPauses.CheckedItems)
 			{
@@ -176,6 +180,12 @@ namespace SPNATI_Character_Editor
 			DialogResult = DialogResult.OK;
 			Config.Save();
 			Shell.Instance.PostOffice.SendMessage(DesktopMessages.SettingsUpdated);
+
+			if (!oldSafeMode && Config.SafeMode)
+			{
+				Shell.Instance.RunChecks();
+			}
+
 			Close();
 		}
 
@@ -290,6 +300,11 @@ namespace SPNATI_Character_Editor
 		{
 			Config.Set(Settings.DisablePreviewFormatting, !chkPreviewFormatting.Checked);
 			Shell.Instance.PostOffice.SendMessage(DesktopMessages.ToggleImages);
+		}
+
+		private void chkSafeMode_CheckedChanged(object sender, EventArgs e)
+		{
+			chkHideImages.Checked = !chkSafeMode.Checked;
 		}
 	}
 }

@@ -64,6 +64,8 @@ namespace SPNATI_Character_Editor.Forms
 			AddSlider(KisekaePart.Necktie, panelClothing);
 			AddSlider(KisekaePart.Bra, panelClothing);
 			AddSlider(KisekaePart.Panties, panelClothing);
+			AddSlider(KisekaePart.LeftItem, panelClothing);
+			AddSlider(KisekaePart.RightItem, panelClothing);
 		}
 
 		private void AddSlider(KisekaePart part, FlowLayoutPanel panel)

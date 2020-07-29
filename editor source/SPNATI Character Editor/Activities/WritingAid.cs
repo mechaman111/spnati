@@ -43,6 +43,11 @@ namespace SPNATI_Character_Editor.Activities
 			cboPriority.SelectedIndex = 0;
 		}
 
+		public override bool CanRun()
+		{
+			return !Config.SafeMode;
+		}
+
 		private bool FilterRecords(IRecord record)
 		{
 			if (record == _character || record.Key == "human")
@@ -94,7 +99,7 @@ namespace SPNATI_Character_Editor.Activities
 			_activated = true;
 			splitContainer1.Panel2Collapsed = true;
 			_maxSuggestions = 0;
-			foreach (Character c in CharacterDatabase.Characters)
+			foreach (Character c in CharacterDatabase.FilteredCharacters)
 			{
 				if (c.FolderName == "human" || c == _character)
 				{
@@ -170,7 +175,7 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			else
 			{
-				possibleCharacters.AddRange(CharacterDatabase.Characters);
+				possibleCharacters.AddRange(CharacterDatabase.FilteredCharacters);
 			}
 
 			List<Tuple<Character, Situation>> suggestions = new List<Tuple<Character, Situation>>();
@@ -297,6 +302,7 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			_activeCharacter = character;
 			_activeSituation = situation;
+			cmdMarkResponded.Enabled = situation.Id > 0 && !_editorData.HasResponse(_activeCharacter, _activeSituation.Id);
 			Stage stage = new Stage(situation.MinStage);
 			gridActiveSituation.SetData(character, stage, situation.LinkedCase, new HashSet<int>());
 			Cursor.Current = Cursors.Default;
@@ -483,6 +489,17 @@ namespace SPNATI_Character_Editor.Activities
 				count = editorData.Responses.Count;
 			}
 			lblResponseCount.Text = count.ToString();
+		}
+
+		private void cmdMarkResponded_Click(object sender, EventArgs e)
+		{
+			if (_activeSituation == null || _activeSituation.Id == 0) { return; }
+
+			if (_editorData.HasResponse(_activeCharacter, _activeSituation.Id))
+			{
+				_editorData.MarkResponse(_activeCharacter, _activeSituation.Id);
+				UpdateResponseCount();
+			}
 		}
 	}
 }

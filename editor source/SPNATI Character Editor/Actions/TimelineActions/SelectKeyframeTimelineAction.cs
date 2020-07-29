@@ -18,6 +18,7 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 		private bool _movingStart;
 		private float _startTime;
 		private bool _dragging;
+		private bool _splitOnMove;
 		private bool _copyOnMove;
 		private LiveKeyframe _originalFrame;
 
@@ -44,6 +45,7 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 			_timeline = args.Timeline;
 			_data = args.Widget.GetData() as LiveAnimatedObject;
 			_copyOnMove = args.Modifiers.HasFlag(Keys.Control) && _data.Keyframes.IndexOf(_keyframe) == _data.Keyframes.Count - 1;
+			_splitOnMove = args.Modifiers.HasFlag(Keys.Control) && !_copyOnMove;
 			_widget.SelectKeyframe(_keyframe, _property, args.Modifiers.HasFlag(Keys.Control));
 			_timeline.CurrentTime = _data.Start + _keyframe.Time;
 			_startTime = args.Time;
@@ -94,7 +96,27 @@ namespace SPNATI_Character_Editor.Actions.TimelineActions
 						}
 						else
 						{
-							if (_copyOnMove && snappedTime > _keyframe.Time)
+							if (_splitOnMove)
+							{
+								HashSet<string> props = new HashSet<string>();
+								foreach (string prop in _widget.SelectedProperties)
+								{
+									props.Add(prop);
+								}
+								_originalFrame = _keyframe;
+								LiveKeyframe copy = _data.CopyKeyframe(_keyframe, props);
+								_data.AddKeyframe(copy);
+								_keyframe = copy;
+								foreach (string prop in _data.Properties)
+								{
+									if (copy.HasProperty(prop) && (props.Contains(prop) || props.Count == 0))
+									{
+										LiveKeyframeMetadata metadata = copy.GetMetadata(prop, true);
+										metadata.FrameType = KeyframeType.Begin;
+									}
+								}
+							}
+							else if (_copyOnMove && snappedTime > _keyframe.Time)
 							{
 								HashSet<string> props = new HashSet<string>();
 								foreach (string prop in _widget.SelectedProperties)

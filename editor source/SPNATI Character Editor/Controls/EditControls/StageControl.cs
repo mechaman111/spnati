@@ -13,6 +13,8 @@ namespace SPNATI_Character_Editor
 		private bool _filterStagesToTarget;
 		private string _sourceProperty;
 		private MemberInfo _sourceMember;
+		private string _alternateProperty;
+		private MemberInfo _alternateMember;
 		private string _skinVariable;
 
 		public StageControl()
@@ -29,6 +31,10 @@ namespace SPNATI_Character_Editor
 			if (parameters.BoundProperties != null)
 			{
 				_sourceProperty = parameters.BoundProperties[0];
+				if (parameters.BoundProperties.Length > 1)
+				{
+					_alternateProperty = parameters.BoundProperties[1];
+				}
 			}
 			_skinVariable = attr.SkinVariable;
 		}
@@ -52,6 +58,10 @@ namespace SPNATI_Character_Editor
 			if (_sourceProperty != null)
 			{
 				_sourceMember = Data.GetType().GetMember(_sourceProperty)[0];
+			}
+			if (_alternateProperty != null)
+			{
+				_alternateMember = Data.GetType().GetMember(_alternateProperty)[0];
 			}
 
 			FillItems();
@@ -114,12 +124,21 @@ namespace SPNATI_Character_Editor
 				{
 					character = Context as Character;
 				}
-				else if (SecondaryContext is Character)
+				//else if (SecondaryContext is Character)
+				//{
+				//	character = SecondaryContext as Character;
+				//}
+
+				if (character == null && _alternateMember != null)
 				{
-					character = SecondaryContext as Character;
+					string role = _alternateMember.GetValue(Data)?.ToString();
+					if (role == "self")
+					{
+						character = SecondaryContext as Character;
+					}
 				}
 			}
-			
+
 			string tag = selectedCase?.Tag;
 			string filterType = null;
 			string filterPosition = null;

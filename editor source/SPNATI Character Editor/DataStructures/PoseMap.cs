@@ -180,7 +180,7 @@ namespace SPNATI_Character_Editor
 			mapping.SetPose(stage, Path.GetFileName(filename));
 		}
 
-		private void ParseImage(string name, out int stage, out string id)
+		public static void ParseImage(string name, out int stage, out string id)
 		{
 			Match m = _regex.Match(name);
 			if (m.Success)

@@ -15,12 +15,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public abstract LiveObject Find(string id);
 		public abstract LiveObject GetObjectAtPoint(int x, int y, Matrix sceneTransform, bool ignoreMarkers, List<string> markers);
 		public abstract void UpdateTime(float time, float elapsedTime, bool inPlayback);
-		public abstract void UpdateRealTime(float deltaTime, bool inPlayback);
+		public abstract bool UpdateRealTime(float deltaTime, bool inPlayback);
 		public abstract void Draw(Graphics g, Matrix sceneTransform, List<string> markers, LiveObject selectedObject, LiveObject selectedPreview, bool inPlayback);
 		public abstract void FitScene(int windowWidth, int windowHeight, ref Point offset, ref float zoom);
 		public abstract Matrix GetSceneTransform(int width, int height, Point offset, float zoom);
 		public abstract int BaseHeight { get; set; }
 		public abstract List<LiveObject> GetAvailableParents(LiveObject child);
+		public abstract float GetDuration();
 
 		public abstract bool Paste(WidgetOperationArgs args, LiveObject after);
 
@@ -35,5 +36,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public abstract void UpdateSelection(WidgetSelectionArgs args);
 		public abstract List<ITimelineBreak> CreateBreaks(Timeline timeline);
 		public abstract ITimelineBreak AddBreak(float time);
+
+		public virtual bool AllowsCrossStageImages { get { return false; } }
 	}
 }

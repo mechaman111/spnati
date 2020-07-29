@@ -33,19 +33,24 @@
 			this.splitContainer3 = new System.Windows.Forms.SplitContainer();
 			this.tsMainMenu = new System.Windows.Forms.ToolStrip();
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-			this.tsAddSprite = new System.Windows.Forms.ToolStripButton();
-			this.tsRemoveSprite = new System.Windows.Forms.ToolStripButton();
+			this.tsAddScene = new System.Windows.Forms.ToolStripButton();
+			this.tsRemoveScene = new System.Windows.Forms.ToolStripButton();
 			this.tsAddTransition = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsMoveUp = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.lstScenes = new Desktop.CommonControls.RefreshableListBox();
 			this.tsToolbar = new System.Windows.Forms.ToolStrip();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsAdd = new System.Windows.Forms.ToolStripDropDownButton();
 			this.addSpriteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addSpeechBubbleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.addEmitterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.addWaitForInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.emitParticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsAddSprite = new System.Windows.Forms.ToolStripButton();
+			this.tsAddText = new System.Windows.Forms.ToolStripButton();
+			this.tsAddEmitter = new System.Windows.Forms.ToolStripButton();
+			this.tsAddEmission = new System.Windows.Forms.ToolStripButton();
 			this.tsRemove = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsRefresh = new System.Windows.Forms.ToolStripButton();
@@ -53,17 +58,27 @@
 			this.tsAddKeyframe = new System.Windows.Forms.ToolStripButton();
 			this.tsRemoveKeyframe = new System.Windows.Forms.ToolStripButton();
 			this.tsAddEndFrame = new System.Windows.Forms.ToolStripButton();
-			this.tsFrameType = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsTypeNormal = new System.Windows.Forms.ToolStripButton();
+			this.tsTypeSplit = new System.Windows.Forms.ToolStripButton();
+			this.tsTypeBegin = new System.Windows.Forms.ToolStripButton();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+			this.splitContainer5 = new System.Windows.Forms.SplitContainer();
+			this.stripSegment = new System.Windows.Forms.ToolStrip();
+			this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+			this.tsAddSegment = new System.Windows.Forms.ToolStripButton();
+			this.tsRemoveSegment = new System.Windows.Forms.ToolStripButton();
+			this.lstSegments = new Desktop.CommonControls.RefreshableListBox();
 			this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-			this.lblDataCaption = new Desktop.Skinning.SkinnedLabel();
 			this.table = new Desktop.CommonControls.PropertyTable();
+			this.lblDataCaption = new Desktop.Skinning.SkinnedLabel();
+			this.subTable = new Desktop.CommonControls.PropertyTable();
+			this.lblSubTable = new Desktop.Skinning.SkinnedLabel();
 			this.tmrRealtime = new System.Windows.Forms.Timer(this.components);
+			this.tsTransferFrame = new System.Windows.Forms.ToolStripButton();
 			this.timeline = new SPNATI_Character_Editor.EpilogueEditor.Timeline();
 			this.canvas = new SPNATI_Character_Editor.EpilogueEditor.LiveCanvas();
 			this.openFileDialog1 = new SPNATI_Character_Editor.Controls.CharacterImageDialog();
-			this.subTable = new Desktop.CommonControls.PropertyTable();
-			this.lblSubTable = new Desktop.Skinning.SkinnedLabel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -78,6 +93,11 @@
 			this.splitContainer2.Panel1.SuspendLayout();
 			this.splitContainer2.Panel2.SuspendLayout();
 			this.splitContainer2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
+			this.splitContainer5.Panel1.SuspendLayout();
+			this.splitContainer5.Panel2.SuspendLayout();
+			this.splitContainer5.SuspendLayout();
+			this.stripSegment.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
 			this.splitContainer4.Panel1.SuspendLayout();
 			this.splitContainer4.Panel2.SuspendLayout();
@@ -126,17 +146,18 @@
 			// 
 			this.tsMainMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.tsMainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolStripLabel1,
-			this.tsAddSprite,
-			this.tsRemoveSprite,
-			this.tsAddTransition,
-			this.toolStripSeparator3,
-			this.tsMoveUp,
-			this.toolStripButton1});
+            this.toolStripLabel1,
+            this.tsAddScene,
+            this.tsRemoveScene,
+            this.tsAddTransition,
+            this.toolStripSeparator3,
+            this.tsMoveUp,
+            this.toolStripButton1});
 			this.tsMainMenu.Location = new System.Drawing.Point(0, 0);
 			this.tsMainMenu.Name = "tsMainMenu";
 			this.tsMainMenu.Size = new System.Drawing.Size(165, 25);
 			this.tsMainMenu.TabIndex = 7;
+			this.tsMainMenu.Tag = "Background";
 			this.tsMainMenu.Text = "toolStrip1";
 			// 
 			// toolStripLabel1
@@ -145,25 +166,25 @@
 			this.toolStripLabel1.Size = new System.Drawing.Size(43, 22);
 			this.toolStripLabel1.Text = "Scenes";
 			// 
-			// tsAddSprite
+			// tsAddScene
 			// 
-			this.tsAddSprite.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsAddSprite.Image = global::SPNATI_Character_Editor.Properties.Resources.Add;
-			this.tsAddSprite.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsAddSprite.Name = "tsAddSprite";
-			this.tsAddSprite.Size = new System.Drawing.Size(23, 22);
-			this.tsAddSprite.Text = "Add Scene";
-			this.tsAddSprite.Click += new System.EventHandler(this.tsAddSprite_Click);
+			this.tsAddScene.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAddScene.Image = global::SPNATI_Character_Editor.Properties.Resources.Add;
+			this.tsAddScene.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAddScene.Name = "tsAddScene";
+			this.tsAddScene.Size = new System.Drawing.Size(23, 22);
+			this.tsAddScene.Text = "Add Scene";
+			this.tsAddScene.Click += new System.EventHandler(this.tsAddScene_Click);
 			// 
-			// tsRemoveSprite
+			// tsRemoveScene
 			// 
-			this.tsRemoveSprite.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsRemoveSprite.Image = global::SPNATI_Character_Editor.Properties.Resources.Remove;
-			this.tsRemoveSprite.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsRemoveSprite.Name = "tsRemoveSprite";
-			this.tsRemoveSprite.Size = new System.Drawing.Size(23, 22);
-			this.tsRemoveSprite.Text = "Remove Scene";
-			this.tsRemoveSprite.Click += new System.EventHandler(this.tsRemoveSprite_Click);
+			this.tsRemoveScene.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsRemoveScene.Image = global::SPNATI_Character_Editor.Properties.Resources.Remove;
+			this.tsRemoveScene.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsRemoveScene.Name = "tsRemoveScene";
+			this.tsRemoveScene.Size = new System.Drawing.Size(23, 22);
+			this.tsRemoveScene.Text = "Remove Scene";
+			this.tsRemoveScene.Click += new System.EventHandler(this.tsRemoveSprite_Click);
 			// 
 			// tsAddTransition
 			// 
@@ -202,9 +223,9 @@
 			// 
 			// lstScenes
 			// 
-			this.lstScenes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.lstScenes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstScenes.BackColor = System.Drawing.Color.White;
 			this.lstScenes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.lstScenes.ForeColor = System.Drawing.Color.Black;
@@ -214,47 +235,63 @@
 			this.lstScenes.Margin = new System.Windows.Forms.Padding(0);
 			this.lstScenes.Name = "lstScenes";
 			this.lstScenes.Size = new System.Drawing.Size(165, 150);
-			this.lstScenes.TabIndex = 8;
+			this.lstScenes.TabIndex = 9;
 			this.lstScenes.SelectedIndexChanged += new System.EventHandler(this.lstScenes_SelectedIndexChanged);
 			// 
 			// tsToolbar
 			// 
 			this.tsToolbar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.tsToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsAdd,
-			this.tsRemove,
-			this.toolStripSeparator1,
-			this.tsRefresh,
-			this.toolStripSeparator2,
-			this.tsAddKeyframe,
-			this.tsRemoveKeyframe,
-			this.tsAddEndFrame,
-			this.tsFrameType});
+            this.toolStripSeparator5,
+            this.tsAdd,
+            this.tsAddSprite,
+            this.tsAddText,
+            this.tsAddEmitter,
+            this.tsAddEmission,
+            this.tsRemove,
+            this.toolStripSeparator1,
+            this.tsRefresh,
+            this.toolStripSeparator2,
+            this.tsAddKeyframe,
+            this.tsRemoveKeyframe,
+            this.tsAddEndFrame,
+            this.tsTransferFrame,
+            this.toolStripSeparator4,
+            this.tsTypeNormal,
+            this.tsTypeSplit,
+            this.tsTypeBegin});
 			this.tsToolbar.Location = new System.Drawing.Point(0, 0);
 			this.tsToolbar.Name = "tsToolbar";
 			this.tsToolbar.Size = new System.Drawing.Size(962, 25);
 			this.tsToolbar.TabIndex = 8;
+			this.tsToolbar.Tag = "Background";
 			this.tsToolbar.Text = "toolStrip1";
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
 			// 
 			// tsAdd
 			// 
 			this.tsAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.tsAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.addSpriteToolStripMenuItem,
-			this.addSpeechBubbleToolStripMenuItem,
-			this.addEmitterToolStripMenuItem,
-			this.addWaitForInputToolStripMenuItem});
+            this.addSpriteToolStripMenuItem,
+            this.addSpeechBubbleToolStripMenuItem,
+            this.addEmitterToolStripMenuItem,
+            this.emitParticleToolStripMenuItem});
 			this.tsAdd.Image = global::SPNATI_Character_Editor.Properties.Resources.Add;
 			this.tsAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsAdd.Name = "tsAdd";
 			this.tsAdd.Size = new System.Drawing.Size(29, 22);
 			this.tsAdd.Text = "Add Object";
+			this.tsAdd.Visible = false;
 			// 
 			// addSpriteToolStripMenuItem
 			// 
 			this.addSpriteToolStripMenuItem.Name = "addSpriteToolStripMenuItem";
 			this.addSpriteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
-			this.addSpriteToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
+			this.addSpriteToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
 			this.addSpriteToolStripMenuItem.Text = "Add Sprite";
 			this.addSpriteToolStripMenuItem.Click += new System.EventHandler(this.addSpriteToolStripMenuItem_Click);
 			// 
@@ -262,7 +299,7 @@
 			// 
 			this.addSpeechBubbleToolStripMenuItem.Name = "addSpeechBubbleToolStripMenuItem";
 			this.addSpeechBubbleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
-			this.addSpeechBubbleToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
+			this.addSpeechBubbleToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
 			this.addSpeechBubbleToolStripMenuItem.Text = "Add Speech Bubble";
 			this.addSpeechBubbleToolStripMenuItem.Click += new System.EventHandler(this.addSpeechBubbleToolStripMenuItem_Click);
 			// 
@@ -270,17 +307,57 @@
 			// 
 			this.addEmitterToolStripMenuItem.Name = "addEmitterToolStripMenuItem";
 			this.addEmitterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D3)));
-			this.addEmitterToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
+			this.addEmitterToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
 			this.addEmitterToolStripMenuItem.Text = "Add Emitter";
 			this.addEmitterToolStripMenuItem.Click += new System.EventHandler(this.addEmitterToolStripMenuItem_Click);
 			// 
-			// addWaitForInputToolStripMenuItem
+			// emitParticleToolStripMenuItem
 			// 
-			this.addWaitForInputToolStripMenuItem.Name = "addWaitForInputToolStripMenuItem";
-			this.addWaitForInputToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Space)));
-			this.addWaitForInputToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
-			this.addWaitForInputToolStripMenuItem.Text = "Add Wait for Input";
-			this.addWaitForInputToolStripMenuItem.Click += new System.EventHandler(this.addWaitForInputToolStripMenuItem_Click);
+			this.emitParticleToolStripMenuItem.Name = "emitParticleToolStripMenuItem";
+			this.emitParticleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D4)));
+			this.emitParticleToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+			this.emitParticleToolStripMenuItem.Text = "Emit Particle";
+			this.emitParticleToolStripMenuItem.Click += new System.EventHandler(this.emitParticleToolStripMenuItem_Click);
+			// 
+			// tsAddSprite
+			// 
+			this.tsAddSprite.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAddSprite.Image = global::SPNATI_Character_Editor.Properties.Resources.AddSprite;
+			this.tsAddSprite.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAddSprite.Name = "tsAddSprite";
+			this.tsAddSprite.Size = new System.Drawing.Size(23, 22);
+			this.tsAddSprite.Text = "Add Sprite (Ctrl+1)";
+			this.tsAddSprite.Click += new System.EventHandler(this.tsAddSprite_Click);
+			// 
+			// tsAddText
+			// 
+			this.tsAddText.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAddText.Image = global::SPNATI_Character_Editor.Properties.Resources.AddTextBox;
+			this.tsAddText.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAddText.Name = "tsAddText";
+			this.tsAddText.Size = new System.Drawing.Size(23, 22);
+			this.tsAddText.Text = "Add Speech Bubble (Ctrl+2)";
+			this.tsAddText.Click += new System.EventHandler(this.tsAddText_Click);
+			// 
+			// tsAddEmitter
+			// 
+			this.tsAddEmitter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAddEmitter.Image = global::SPNATI_Character_Editor.Properties.Resources.AddEmitter;
+			this.tsAddEmitter.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAddEmitter.Name = "tsAddEmitter";
+			this.tsAddEmitter.Size = new System.Drawing.Size(23, 22);
+			this.tsAddEmitter.Text = "Add Emitter (Ctrl+3)";
+			this.tsAddEmitter.Click += new System.EventHandler(this.tsAddEmitter_Click);
+			// 
+			// tsAddEmission
+			// 
+			this.tsAddEmission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAddEmission.Image = global::SPNATI_Character_Editor.Properties.Resources.AddEvent;
+			this.tsAddEmission.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAddEmission.Name = "tsAddEmission";
+			this.tsAddEmission.Size = new System.Drawing.Size(23, 22);
+			this.tsAddEmission.Text = "Add Particle Emission (Ctrl+4)";
+			this.tsAddEmission.Click += new System.EventHandler(this.tsAddEmission_Click);
 			// 
 			// tsRemove
 			// 
@@ -289,7 +366,7 @@
 			this.tsRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsRemove.Name = "tsRemove";
 			this.tsRemove.Size = new System.Drawing.Size(23, 22);
-			this.tsRemove.Text = "Remove Scene";
+			this.tsRemove.Text = "Remove Object";
 			this.tsRemove.Click += new System.EventHandler(this.tsRemove_Click);
 			// 
 			// toolStripSeparator1
@@ -343,15 +420,40 @@
 			this.tsAddEndFrame.Text = "Copy first keyframe to end";
 			this.tsAddEndFrame.Click += new System.EventHandler(this.tsAddEndFrame_Click);
 			// 
-			// tsFrameType
+			// toolStripSeparator4
 			// 
-			this.tsFrameType.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.tsFrameType.Image = global::SPNATI_Character_Editor.Properties.Resources.SplitKeyframe;
-			this.tsFrameType.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsFrameType.Name = "tsFrameType";
-			this.tsFrameType.Size = new System.Drawing.Size(23, 22);
-			this.tsFrameType.Text = "Toggle keyframe type";
-			this.tsFrameType.Click += new System.EventHandler(this.tsFrameType_Click);
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+			// 
+			// tsTypeNormal
+			// 
+			this.tsTypeNormal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsTypeNormal.Image = global::SPNATI_Character_Editor.Properties.Resources.KeyTypeNormal;
+			this.tsTypeNormal.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsTypeNormal.Name = "tsTypeNormal";
+			this.tsTypeNormal.Size = new System.Drawing.Size(23, 22);
+			this.tsTypeNormal.Text = "Normal keyframe";
+			this.tsTypeNormal.Click += new System.EventHandler(this.tsTypeNormal_Click);
+			// 
+			// tsTypeSplit
+			// 
+			this.tsTypeSplit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsTypeSplit.Image = global::SPNATI_Character_Editor.Properties.Resources.KeyTypeSplit;
+			this.tsTypeSplit.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsTypeSplit.Name = "tsTypeSplit";
+			this.tsTypeSplit.Size = new System.Drawing.Size(23, 22);
+			this.tsTypeSplit.Text = "Split keyframe";
+			this.tsTypeSplit.Click += new System.EventHandler(this.tsTypeSplit_Click);
+			// 
+			// tsTypeBegin
+			// 
+			this.tsTypeBegin.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsTypeBegin.Image = global::SPNATI_Character_Editor.Properties.Resources.KeyTypeBegin;
+			this.tsTypeBegin.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsTypeBegin.Name = "tsTypeBegin";
+			this.tsTypeBegin.Size = new System.Drawing.Size(23, 22);
+			this.tsTypeBegin.Text = "Begin keyframe";
+			this.tsTypeBegin.Click += new System.EventHandler(this.tsTypeBegin_Click);
 			// 
 			// splitContainer2
 			// 
@@ -362,14 +464,90 @@
 			// 
 			// splitContainer2.Panel1
 			// 
-			this.splitContainer2.Panel1.Controls.Add(this.splitContainer4);
+			this.splitContainer2.Panel1.Controls.Add(this.splitContainer5);
 			// 
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.canvas);
 			this.splitContainer2.Size = new System.Drawing.Size(1131, 496);
-			this.splitContainer2.SplitterDistance = 376;
+			this.splitContainer2.SplitterDistance = 412;
 			this.splitContainer2.TabIndex = 0;
+			// 
+			// splitContainer5
+			// 
+			this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer5.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+			this.splitContainer5.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer5.Name = "splitContainer5";
+			// 
+			// splitContainer5.Panel1
+			// 
+			this.splitContainer5.Panel1.Controls.Add(this.stripSegment);
+			this.splitContainer5.Panel1.Controls.Add(this.lstSegments);
+			// 
+			// splitContainer5.Panel2
+			// 
+			this.splitContainer5.Panel2.Controls.Add(this.splitContainer4);
+			this.splitContainer5.Size = new System.Drawing.Size(412, 496);
+			this.splitContainer5.SplitterDistance = 115;
+			this.splitContainer5.TabIndex = 9;
+			// 
+			// stripSegment
+			// 
+			this.stripSegment.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.stripSegment.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel2,
+            this.tsAddSegment,
+            this.tsRemoveSegment});
+			this.stripSegment.Location = new System.Drawing.Point(0, 0);
+			this.stripSegment.Name = "stripSegment";
+			this.stripSegment.Size = new System.Drawing.Size(115, 25);
+			this.stripSegment.TabIndex = 9;
+			this.stripSegment.Tag = "Background";
+			this.stripSegment.Text = "toolStrip1";
+			// 
+			// toolStripLabel2
+			// 
+			this.toolStripLabel2.Name = "toolStripLabel2";
+			this.toolStripLabel2.Size = new System.Drawing.Size(47, 22);
+			this.toolStripLabel2.Text = "Actions";
+			// 
+			// tsAddSegment
+			// 
+			this.tsAddSegment.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAddSegment.Image = global::SPNATI_Character_Editor.Properties.Resources.Add;
+			this.tsAddSegment.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAddSegment.Name = "tsAddSegment";
+			this.tsAddSegment.Size = new System.Drawing.Size(23, 22);
+			this.tsAddSegment.Text = "Add Action";
+			this.tsAddSegment.Click += new System.EventHandler(this.tsAddSegment_Click);
+			// 
+			// tsRemoveSegment
+			// 
+			this.tsRemoveSegment.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsRemoveSegment.Image = global::SPNATI_Character_Editor.Properties.Resources.Remove;
+			this.tsRemoveSegment.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsRemoveSegment.Name = "tsRemoveSegment";
+			this.tsRemoveSegment.Size = new System.Drawing.Size(23, 22);
+			this.tsRemoveSegment.Text = "Remove Action";
+			this.tsRemoveSegment.Click += new System.EventHandler(this.tsRemoveSegment_Click);
+			// 
+			// lstSegments
+			// 
+			this.lstSegments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstSegments.BackColor = System.Drawing.Color.White;
+			this.lstSegments.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.lstSegments.ForeColor = System.Drawing.Color.Black;
+			this.lstSegments.FormattingEnabled = true;
+			this.lstSegments.IntegralHeight = false;
+			this.lstSegments.Location = new System.Drawing.Point(0, 25);
+			this.lstSegments.Margin = new System.Windows.Forms.Padding(0);
+			this.lstSegments.Name = "lstSegments";
+			this.lstSegments.Size = new System.Drawing.Size(115, 471);
+			this.lstSegments.TabIndex = 8;
+			this.lstSegments.SelectedIndexChanged += new System.EventHandler(this.lstSegments_SelectedIndexChanged);
 			// 
 			// splitContainer4
 			// 
@@ -387,25 +565,9 @@
 			// 
 			this.splitContainer4.Panel2.Controls.Add(this.subTable);
 			this.splitContainer4.Panel2.Controls.Add(this.lblSubTable);
-			this.splitContainer4.Size = new System.Drawing.Size(376, 496);
+			this.splitContainer4.Size = new System.Drawing.Size(293, 496);
 			this.splitContainer4.SplitterDistance = 248;
 			this.splitContainer4.TabIndex = 8;
-			// 
-			// lblDataCaption
-			// 
-			this.lblDataCaption.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.lblDataCaption.Font = new System.Drawing.Font("Segoe UI", 12F);
-			this.lblDataCaption.ForeColor = System.Drawing.Color.Blue;
-			this.lblDataCaption.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
-			this.lblDataCaption.Level = Desktop.Skinning.SkinnedLabelLevel.Heading;
-			this.lblDataCaption.Location = new System.Drawing.Point(3, 0);
-			this.lblDataCaption.Name = "lblDataCaption";
-			this.lblDataCaption.Size = new System.Drawing.Size(370, 25);
-			this.lblDataCaption.TabIndex = 7;
-			this.lblDataCaption.Text = "Data";
-			this.lblDataCaption.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// table
 			// 
@@ -413,9 +575,9 @@
 			this.table.AllowFavorites = false;
 			this.table.AllowHelp = true;
 			this.table.AllowMacros = false;
-			this.table.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.table.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.table.BackColor = System.Drawing.Color.White;
 			this.table.Data = null;
 			this.table.Enabled = false;
@@ -431,24 +593,98 @@
 			this.table.PreserveControls = true;
 			this.table.PreviewData = null;
 			this.table.RemoveCaption = "Remove";
-			this.table.RowHeaderWidth = 0F;
+			this.table.RowHeaderWidth = 100F;
 			this.table.RunInitialAddEvents = false;
-			this.table.Size = new System.Drawing.Size(370, 223);
+			this.table.Size = new System.Drawing.Size(287, 223);
 			this.table.Sorted = true;
 			this.table.TabIndex = 6;
 			this.table.UndoManager = null;
 			this.table.UseAutoComplete = true;
+			// 
+			// lblDataCaption
+			// 
+			this.lblDataCaption.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblDataCaption.Font = new System.Drawing.Font("Segoe UI", 12F);
+			this.lblDataCaption.ForeColor = System.Drawing.Color.Blue;
+			this.lblDataCaption.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.lblDataCaption.Level = Desktop.Skinning.SkinnedLabelLevel.Heading;
+			this.lblDataCaption.Location = new System.Drawing.Point(3, 0);
+			this.lblDataCaption.Name = "lblDataCaption";
+			this.lblDataCaption.Size = new System.Drawing.Size(287, 25);
+			this.lblDataCaption.TabIndex = 7;
+			this.lblDataCaption.Text = "Data";
+			this.lblDataCaption.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			// 
+			// subTable
+			// 
+			this.subTable.AllowDelete = false;
+			this.subTable.AllowFavorites = false;
+			this.subTable.AllowHelp = true;
+			this.subTable.AllowMacros = false;
+			this.subTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.subTable.BackColor = System.Drawing.Color.White;
+			this.subTable.Data = null;
+			this.subTable.Enabled = false;
+			this.subTable.HeaderType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.subTable.HideAddField = true;
+			this.subTable.HideSpeedButtons = true;
+			this.subTable.Location = new System.Drawing.Point(0, 21);
+			this.subTable.Margin = new System.Windows.Forms.Padding(0);
+			this.subTable.ModifyingProperty = null;
+			this.subTable.Name = "subTable";
+			this.subTable.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
+			this.subTable.PlaceholderText = null;
+			this.subTable.PreserveControls = true;
+			this.subTable.PreviewData = null;
+			this.subTable.RemoveCaption = "Remove";
+			this.subTable.RowHeaderWidth = 100F;
+			this.subTable.RunInitialAddEvents = false;
+			this.subTable.Size = new System.Drawing.Size(287, 223);
+			this.subTable.Sorted = true;
+			this.subTable.TabIndex = 8;
+			this.subTable.UndoManager = null;
+			this.subTable.UseAutoComplete = true;
+			// 
+			// lblSubTable
+			// 
+			this.lblSubTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblSubTable.Font = new System.Drawing.Font("Segoe UI", 12F);
+			this.lblSubTable.ForeColor = System.Drawing.Color.Blue;
+			this.lblSubTable.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.lblSubTable.Level = Desktop.Skinning.SkinnedLabelLevel.Heading;
+			this.lblSubTable.Location = new System.Drawing.Point(3, -2);
+			this.lblSubTable.Name = "lblSubTable";
+			this.lblSubTable.Size = new System.Drawing.Size(287, 25);
+			this.lblSubTable.TabIndex = 9;
+			this.lblSubTable.Text = "Data";
+			this.lblSubTable.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// tmrRealtime
 			// 
 			this.tmrRealtime.Interval = 30;
 			this.tmrRealtime.Tick += new System.EventHandler(this.tmrRealtime_Tick);
 			// 
+			// tsTransferFrame
+			// 
+			this.tsTransferFrame.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsTransferFrame.Image = global::SPNATI_Character_Editor.Properties.Resources.TransferKeyframe;
+			this.tsTransferFrame.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsTransferFrame.Name = "tsTransferFrame";
+			this.tsTransferFrame.Size = new System.Drawing.Size(23, 22);
+			this.tsTransferFrame.Text = "Transfer looping properties into the action";
+			this.tsTransferFrame.Click += new System.EventHandler(this.tsTransferFrame_Click);
+			// 
 			// timeline
 			// 
-			this.timeline.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.timeline.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.timeline.CommandHistory = null;
 			this.timeline.CurrentTime = 0F;
 			this.timeline.ElapsedTime = 0F;
@@ -470,7 +706,7 @@
 			this.canvas.Enabled = false;
 			this.canvas.Location = new System.Drawing.Point(0, 0);
 			this.canvas.Name = "canvas";
-			this.canvas.Size = new System.Drawing.Size(751, 496);
+			this.canvas.Size = new System.Drawing.Size(715, 496);
 			this.canvas.TabIndex = 0;
 			// 
 			// openFileDialog1
@@ -478,54 +714,6 @@
 			this.openFileDialog1.Filter = "";
 			this.openFileDialog1.IncludeOpponents = false;
 			this.openFileDialog1.UseAbsolutePaths = false;
-			// 
-			// subTable
-			// 
-			this.subTable.AllowDelete = false;
-			this.subTable.AllowFavorites = false;
-			this.subTable.AllowHelp = true;
-			this.subTable.AllowMacros = false;
-			this.subTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.subTable.BackColor = System.Drawing.Color.White;
-			this.subTable.Data = null;
-			this.subTable.Enabled = false;
-			this.subTable.HeaderType = Desktop.Skinning.SkinnedBackgroundType.Surface;
-			this.subTable.HideAddField = true;
-			this.subTable.HideSpeedButtons = true;
-			this.subTable.Location = new System.Drawing.Point(3, 23);
-			this.subTable.Margin = new System.Windows.Forms.Padding(0);
-			this.subTable.ModifyingProperty = null;
-			this.subTable.Name = "subTable";
-			this.subTable.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
-			this.subTable.PlaceholderText = null;
-			this.subTable.PreserveControls = true;
-			this.subTable.PreviewData = null;
-			this.subTable.RemoveCaption = "Remove";
-			this.subTable.RowHeaderWidth = 0F;
-			this.subTable.RunInitialAddEvents = false;
-			this.subTable.Size = new System.Drawing.Size(370, 223);
-			this.subTable.Sorted = true;
-			this.subTable.TabIndex = 8;
-			this.subTable.UndoManager = null;
-			this.subTable.UseAutoComplete = true;
-			// 
-			// lblSubTable
-			// 
-			this.lblSubTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.lblSubTable.Font = new System.Drawing.Font("Segoe UI", 12F);
-			this.lblSubTable.ForeColor = System.Drawing.Color.Blue;
-			this.lblSubTable.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
-			this.lblSubTable.Level = Desktop.Skinning.SkinnedLabelLevel.Heading;
-			this.lblSubTable.Location = new System.Drawing.Point(3, -2);
-			this.lblSubTable.Name = "lblSubTable";
-			this.lblSubTable.Size = new System.Drawing.Size(370, 25);
-			this.lblSubTable.TabIndex = 9;
-			this.lblSubTable.Text = "Data";
-			this.lblSubTable.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// LiveEpilogueEditor
 			// 
@@ -552,6 +740,13 @@
 			this.splitContainer2.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
 			this.splitContainer2.ResumeLayout(false);
+			this.splitContainer5.Panel1.ResumeLayout(false);
+			this.splitContainer5.Panel1.PerformLayout();
+			this.splitContainer5.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
+			this.splitContainer5.ResumeLayout(false);
+			this.stripSegment.ResumeLayout(false);
+			this.stripSegment.PerformLayout();
 			this.splitContainer4.Panel1.ResumeLayout(false);
 			this.splitContainer4.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
@@ -565,11 +760,11 @@
 		private SPNATI_Character_Editor.EpilogueEditor.LiveCanvas canvas;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.SplitContainer splitContainer2;
-		private Desktop.CommonControls.RefreshableListBox lstScenes;
+		private Desktop.CommonControls.RefreshableListBox lstSegments;
 		private System.Windows.Forms.ToolStrip tsMainMenu;
 		private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-		private System.Windows.Forms.ToolStripButton tsAddSprite;
-		private System.Windows.Forms.ToolStripButton tsRemoveSprite;
+		private System.Windows.Forms.ToolStripButton tsAddScene;
+		private System.Windows.Forms.ToolStripButton tsRemoveScene;
 		private System.Windows.Forms.SplitContainer splitContainer3;
 		private Desktop.CommonControls.PropertyTable table;
 		private SPNATI_Character_Editor.EpilogueEditor.Timeline timeline;
@@ -582,14 +777,12 @@
 		private CharacterImageDialog openFileDialog1;
 		private System.Windows.Forms.Timer tmrRealtime;
 		private Desktop.Skinning.SkinnedLabel lblDataCaption;
-		private System.Windows.Forms.ToolStripMenuItem addWaitForInputToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton tsRefresh;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton tsAddKeyframe;
 		private System.Windows.Forms.ToolStripButton tsRemoveKeyframe;
 		private System.Windows.Forms.ToolStripButton tsAddEndFrame;
-		private System.Windows.Forms.ToolStripButton tsFrameType;
 		private System.Windows.Forms.ToolStripButton tsAddTransition;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton tsMoveUp;
@@ -597,5 +790,22 @@
 		private System.Windows.Forms.SplitContainer splitContainer4;
 		private Desktop.CommonControls.PropertyTable subTable;
 		private Desktop.Skinning.SkinnedLabel lblSubTable;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+		private System.Windows.Forms.ToolStripButton tsTypeNormal;
+		private System.Windows.Forms.ToolStripButton tsTypeSplit;
+		private System.Windows.Forms.ToolStripButton tsTypeBegin;
+		private Desktop.CommonControls.RefreshableListBox lstScenes;
+		private System.Windows.Forms.ToolStrip stripSegment;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+		private System.Windows.Forms.ToolStripButton tsAddSegment;
+		private System.Windows.Forms.ToolStripButton tsRemoveSegment;
+		private System.Windows.Forms.SplitContainer splitContainer5;
+		private System.Windows.Forms.ToolStripButton tsAddSprite;
+		private System.Windows.Forms.ToolStripButton tsAddText;
+		private System.Windows.Forms.ToolStripButton tsAddEmitter;
+		private System.Windows.Forms.ToolStripButton tsAddEmission;
+		private System.Windows.Forms.ToolStripMenuItem emitParticleToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+		private System.Windows.Forms.ToolStripButton tsTransferFrame;
 	}
 }

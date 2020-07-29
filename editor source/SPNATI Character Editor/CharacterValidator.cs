@@ -450,6 +450,11 @@ namespace SPNATI_Character_Editor
 			return false;
 		}
 
+		private static bool IsUncountable(string name)
+		{
+			return name == "armor" || name == "jewelry" || name == "jewellery";
+		}
+
 		private static void ValidateWardrobe(Character character, List<ValidationError> warnings)
 		{
 			bool foundPlural = false;
@@ -480,6 +485,11 @@ namespace SPNATI_Character_Editor
 					importantLower = c.Name;
 				if (c.Position == "other" && c.Type == "major")
 					otherMajor = c.Name;
+
+				if (IsUncountable(c.Name))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{c.Name}\" uses an uncountable noun with no plural form, which makes incoming generic dialogue awkward (ex. \"I've seen many {c.Name} in my day\"). Consider renaming this layer (ex. \"armor\" to \"breastplate\")."));
+				}
 			}
 			if (!foundBoth)
 			{
@@ -891,6 +901,10 @@ namespace SPNATI_Character_Editor
 
 		private static string GetRelativeImagePath(Character character, string path)
 		{
+			if (string.IsNullOrEmpty(path))
+			{
+				return null;
+			}
 			string characterRoot = character.GetDirectory();
 			string fullPath = Path.Combine(Config.SpnatiDirectory, path.StartsWith("opponents") ? path : Path.Combine("opponents", path));
 			fullPath = fullPath.Replace("/", "\\");

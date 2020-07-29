@@ -72,9 +72,12 @@ namespace SPNATI_Character_Editor.Providers
 			info.Columns = new string[] { "Name", "Folder", "Last Update", "Writer", "Status" };
 			if (_skinContext != null)
 			{
-				info.Caption = "Choose a character for which the reskin belongs";
+				info.Caption = "Who Is This Alternate Outfit For?";
 			}
-			info.Caption = "Character Select";
+			else
+			{
+				info.Caption = "Character Select";
+			}
 			info.ExtraFields.Add("Writer:");
 		}
 

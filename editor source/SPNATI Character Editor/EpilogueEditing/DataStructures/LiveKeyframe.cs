@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Reflection;
-using Desktop;
-using Desktop.CommonControls;
+﻿using Desktop;
 using Desktop.CommonControls.PropertyControls;
 using Desktop.DataStructures;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace SPNATI_Character_Editor.EpilogueEditor
 {
@@ -145,42 +143,50 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return PropertyMetadata[property];
 		}
 
-		public virtual Keyframe CreateKeyframeDefinition(Directive directive)
+		public bool IsDefault(string property)
 		{
-			Type keyframeType = typeof(Keyframe);
-			string time = Time.ToString(CultureInfo.InvariantCulture);
-			Keyframe kf = directive.Keyframes.Find(k => k.Time == time) ?? new Keyframe();
-			kf.Time = time;
-			foreach (string property in TrackedProperties)
+			object value = Get<object>(property);
+			object defaultValue = GetDefaultValue(property);
+
+			Type propertyType = Nullable.GetUnderlyingType(PropertyTypeInfo.GetType(this.GetType(), property));
+			if (propertyType == typeof(float))
 			{
-				if (HasProperty(property))
-				{
-					MemberInfo mi = PropertyTypeInfo.GetMemberInfo(keyframeType, property);
-					if (mi == null)
-					{
-						throw new InvalidOperationException($"No property on Keyframe called {property} found.");
-					}
-					Type dataType = mi.GetDataType();
-					if (dataType == typeof(int))
-					{
-						mi.SetValue(kf, Get<int>(property));
-					}
-					else if (dataType == typeof(float))
-					{
-						mi.SetValue(kf, Get<float>(property));
-					}
-					else if (dataType == typeof(bool))
-					{
-						mi.SetValue(kf, Get<bool>(property));
-					}
-					else
-					{
-						string value = Convert.ToString(Get<object>(property), CultureInfo.InvariantCulture);
-						mi.SetValue(kf, value);
-					}
-				}
+				return (float)value == (float)defaultValue;
 			}
-			return kf;
+			else if (propertyType == typeof(int))
+			{
+				return (int)value == (int)defaultValue;
+			}
+			else
+			{
+				return value.Equals(defaultValue);
+			}
+		}
+
+		protected virtual object GetDefaultValue(string property)
+		{
+			Type mainType = PropertyTypeInfo.GetType(GetType(), property);
+			Type propertyType = Nullable.GetUnderlyingType(mainType) ?? mainType;
+			if (propertyType == typeof(int))
+			{
+				return 0;
+			}
+			else if (propertyType == typeof(float))
+			{
+				return 0.0f;
+			}
+			else if (propertyType == typeof(string))
+			{
+				return null;
+			}
+			else if (propertyType == typeof(Color))
+			{
+				return Color.Black;
+			}
+			else
+			{
+				throw new NotSupportedException($"Unsupported frame property type for property {property}: {propertyType.Name}");
+			}
 		}
 	}
 }

@@ -31,5 +31,15 @@ namespace Desktop.CommonControls
 			}
 			base.OnMouseDown(e);
 		}
+
+		/// <summary>
+		/// Scrolls by a number of pixels in a direction
+		/// </summary>
+		/// <param name="amount"></param>
+		public void ScrollBy(int amount)
+		{
+			SetDisplayRectLocation(0, AutoScrollPosition.Y - amount);
+			AdjustFormScrollbars(true);
+		}
 	}
 }
