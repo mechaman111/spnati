@@ -235,6 +235,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Character = character;
 			Id = directive.Id;
 			Z = directive.Layer;
+			Marker = directive.Marker;
 			LinkedToEnd = true;
 			Start = time;
 			if (!string.IsNullOrEmpty(directive.Delay))

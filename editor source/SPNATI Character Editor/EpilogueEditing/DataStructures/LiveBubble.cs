@@ -61,6 +61,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			Text = directive.Text;
 			AlignmentX = directive.AlignmentX;
 			AlignmentY = directive.AlignmentY;
+			Marker = directive.Marker;
 
 			Update(time, 0, false);
 		}
