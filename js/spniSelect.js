@@ -154,7 +154,7 @@ var sortingOptionsMap = {
     "Fewest Layers" : sortOpponentsByMultipleFields("layers"),
     "Name (A-Z)" : sortOpponentsByMultipleFields("first", "last"),
     "Name (Z-A)" : sortOpponentsByMultipleFields("-first", "-last"),
-    "Talks to selected" : sortOpponentsByMostTargeted(),
+    "Talked to by selected" : sortOpponentsByMostTargeted(),
 };
 var groupCreditsShown = false;
 
@@ -726,7 +726,7 @@ function showIndividualSelectionScreen() {
 
     /* Make sure the user doesn't have target-count sorting set if
      * the amount of loaded opponents drops to 0. */
-    if (sortingMode === "Talks to selected") {
+    if (sortingMode === "Talked to by selected") {
         if (players.countTrue() <= 1) {
             setSortingMode("Featured");
         }
