@@ -326,7 +326,7 @@ var playerTagOptions = {
         values: [
             { value: 'skinny' },
             { value: 'chubby' },
-            { value: 'curvy' },
+            { value: 'curvy', gender: 'female' },
             { value: 'athletic' },
             { value: 'muscular' },
         ],
