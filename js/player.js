@@ -207,6 +207,12 @@ Player.prototype.updateTags = function () {
     });
 
     this.tags = expandTagsList(tags);
+	
+    /* "chubby" implies "curvy" on female characters only,
+       so this has to be done separately */
+    if (tags.includes("chubby") && this.gender == "female") {
+        tags.push("curvy");
+    }
 }
 
 Player.prototype.stageChangeUpdate = function () {
@@ -454,6 +460,12 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.removeTag(this.id);
     this.updateTags();
     this.searchTags = expandTagsList(this.baseTags);
+    
+    /* "chubby" implies "curvy" on female characters only,
+       so this has to be done separately */
+    if (this.searchTags.includes("chubby") && this.gender == "female") {
+        this.searchTags.push("curvy");
+    }
 
     this.cases = new Map();
 

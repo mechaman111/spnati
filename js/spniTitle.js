@@ -324,7 +324,9 @@ var playerTagOptions = {
     },
     'physical_build': {
         values: [
+            { value: 'skinny' },
             { value: 'chubby' },
+            { value: 'curvy', gender: 'female' },
             { value: 'athletic' },
             { value: 'muscular' },
         ],
