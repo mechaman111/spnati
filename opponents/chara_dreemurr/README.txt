@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited July 26 2020
+README edited August 5 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -265,6 +265,9 @@ AZAMI
 
 TOYOTA SPRINTER
 -Generic responses to handle the car's, uh, unique stripping and masturbation sequence.
+
+BERNADETTA
+-Response to Bernadetta if Chara loses.
 
 BROCK
 -Responds to Brock launching a missile.
