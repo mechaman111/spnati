@@ -436,8 +436,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					string path = GetImagePath(src);
 					Bitmap img = LiveImageCache.Get(path);
-					WidthOverride = img.Width;
-					HeightOverride = img.Height;
+					if (img != null)
+					{
+						WidthOverride = img.Width;
+						HeightOverride = img.Height;
+					}
 					InvalidateTransform();
 				}
 			}
