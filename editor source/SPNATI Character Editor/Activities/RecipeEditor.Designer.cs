@@ -124,7 +124,7 @@
 			this.tableConditions.BackColor = System.Drawing.Color.White;
 			this.tableConditions.Data = null;
 			this.tableConditions.HeaderType = Desktop.Skinning.SkinnedBackgroundType.Surface;
-			this.tableConditions.HideAddField = false;
+			this.tableConditions.HideAddField = true;
 			this.tableConditions.HideSpeedButtons = false;
 			this.tableConditions.Location = new System.Drawing.Point(6, 23);
 			this.tableConditions.ModifyingProperty = null;

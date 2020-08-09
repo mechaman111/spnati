@@ -420,9 +420,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				LiveSprite sprite = this;
 				while (sprite != null)
 				{
-					for (int i = 0; i < Keyframes.Count; i++)
+					for (int i = 0; i < sprite.Keyframes.Count; i++)
 					{
-						LiveSpriteKeyframe kf = Keyframes[i] as LiveSpriteKeyframe;
+						LiveSpriteKeyframe kf = sprite.Keyframes[i] as LiveSpriteKeyframe;
 						if (kf.HasProperty("Src"))
 						{
 							src = kf.Src;

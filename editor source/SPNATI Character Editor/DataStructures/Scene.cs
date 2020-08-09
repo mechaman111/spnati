@@ -524,7 +524,7 @@ namespace SPNATI_Character_Editor
 			return val1.Equals(val2);
 		}
 
-		private WorkingDirective CreateAnimationDirective(string id, float startTime, LiveAnimatedObject source, LiveKeyframeMetadata metadata , int trackIndex)
+		private WorkingDirective CreateAnimationDirective(string id, float startTime, LiveAnimatedObject source, LiveKeyframeMetadata metadata, int trackIndex)
 		{
 			string type = id == "camera" ? "camera" : id == "fade" ? "fade" : "move";
 			Directive currentDirective = new Directive(type);
@@ -680,7 +680,11 @@ namespace SPNATI_Character_Editor
 									KeyframeType frameType = frameMetadata.FrameType;
 									if (kf.Time == 0)
 									{
-										if (frameType == KeyframeType.Normal)
+										if (!history.MatchesValue(value))
+										{
+											frameType = KeyframeType.Begin;
+										}
+										else if (frameType == KeyframeType.Normal)
 										{
 											addProperty = false;
 										}
@@ -783,7 +787,7 @@ namespace SPNATI_Character_Editor
 							}
 						}
 					}
-					
+
 					//merge directives
 					for (int i = 0; i < objDirectives.Count; i++)
 					{

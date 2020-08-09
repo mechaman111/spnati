@@ -868,6 +868,17 @@ namespace SPNATI_Character_Editor
 				{
 					targetedByTag = true;
 				}
+				foreach (TargetCondition cond in stageCase.Conditions)
+				{
+					if (!string.IsNullOrEmpty(cond.FilterTag))
+					{
+						if (character.Tags.Find(t => t.Tag == cond.FilterTag) != null)
+						{
+							targetedByTag = true;
+							break;
+						}
+					}
+				}
 			}
 			if ((targeted && (allowedTargetTypes & TargetType.DirectTarget) > 0) || targetedByTag)
 			{

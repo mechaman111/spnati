@@ -12,6 +12,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 	/// </summary>
 	public class LiveScene : LiveData, ILabel
 	{
+		public int DefaultSize = 500;
 		public event EventHandler LabelChanged;
 
 		public override event EventHandler<WidgetCreationArgs> WidgetMoved
@@ -54,8 +55,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 				else if (Width == 0)
 				{
-					Width = 100;
-					Height = 100;
+					Width = DefaultSize;
+					Height = DefaultSize;
 				}
 				Set(value);
 			}
@@ -129,8 +130,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public LiveScene(Character character)
 		{
-			Width = 100;
-			Height = 100;
+			Width = DefaultSize;
+			Height = DefaultSize;
 		}
 
 		/// <summary>

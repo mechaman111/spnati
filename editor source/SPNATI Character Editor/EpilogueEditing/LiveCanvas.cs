@@ -15,7 +15,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 	{
 		public const int SelectionLeeway = 5;
 		public const int RotationLeeway = 30;
-
+		
 		private bool _recording;
 		public bool Playing { get; private set; }
 		private ISkin _character;
@@ -123,13 +123,14 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		public void AddToolBarButton(Image icon, string tooltip, bool checkOnClick, Action<ToolStripButton> clickHandler)
+		public ToolStripButton AddToolBarButton(Image icon, string tooltip, bool checkOnClick, Action<ToolStripButton> clickHandler)
 		{
 			ToolStripButton item = new ToolStripButton("", icon, CustomToolbarButton_Click);
 			item.ToolTipText = tooltip;
 			item.CheckOnClick = checkOnClick;
 			item.Tag = clickHandler;
 			canvasStrip.Items.Add(item);
+			return item;
 		}
 		private void CustomToolbarButton_Click(object sender, EventArgs e)
 		{
@@ -425,7 +426,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_downPoint = new Point(e.X, e.Y);
 			if (e.Button == MouseButtons.Left)
 			{
-				CanvasClicked?.Invoke(this, EventArgs.Empty);
 				if (DisallowEdit || (Playing && !_recording)) { return; }
 				//object selection
 				LiveObject obj = null;
@@ -1084,6 +1084,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					_backColor.Color = Color.LightGray;
 				}
 			}
+		}
+
+		private void canvas_Click(object sender, EventArgs e)
+		{
+			CanvasClicked?.Invoke(this, e);
 		}
 	}
 

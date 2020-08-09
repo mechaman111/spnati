@@ -18,6 +18,7 @@ namespace SPNATI_Character_Editor.Controls
 		private Epilogue _epilogue;
 		private LiveScene _scene;
 		private Scene _sourceScene;
+		private int _savedSegment;
 		private LiveSceneSegment _segment;
 		private SceneTransition _sceneTransition;
 		private UndoManager _history = new UndoManager();
@@ -32,6 +33,8 @@ namespace SPNATI_Character_Editor.Controls
 		private bool _cameraLocked;
 		private float _savedTime;
 		private bool _changingSegment;
+		private bool _inScenePlayback;
+		private ToolStripButton _playButton;
 
 		public LiveEpilogueEditor()
 		{
@@ -49,7 +52,7 @@ namespace SPNATI_Character_Editor.Controls
 			canvas.UndoManager = _history;
 			canvas.ObjectSelected += Canvas_ObjectSelected;
 			canvas.AddToolBarButton(Properties.Resources.VideoCamera, "Toggle scene preview", true, ToggleCamera);
-			canvas.AddToolBarButton(Properties.Resources.Play, "Play scene", true, TogglePlay);
+			_playButton = canvas.AddToolBarButton(Properties.Resources.Play, "Play scene", true, TogglePlay);
 			canvas.CanvasClicked += Canvas_CanvasClicked;
 			canvas.CustomPaint += Canvas_CustomPaint;
 
@@ -131,21 +134,27 @@ namespace SPNATI_Character_Editor.Controls
 			bool enabled = button.Checked;
 			if (enabled)
 			{
-				_savedTime = _time;
+				if (!_inScenePlayback)
+				{
+					_inScenePlayback = true;
+					_savedSegment = lstSegments.SelectedIndex;
+					_savedTime = _time;
+					_playbackMode = timeline.PlaybackMode;
+					button.Image = Properties.Resources.Stop;
+					splitContainer1.Panel1Collapsed = true;
+					splitContainer2.Panel1Collapsed = true;
+				}
 				canvas.DisallowEdit = true;
 				canvas.LockToolbar(true, button);
-				button.Image = Properties.Resources.Stop;
-				splitContainer1.Panel1Collapsed = true;
-				splitContainer2.Panel1Collapsed = true;
 				ToggleCamera(true);
 				timeline.PauseOnBreaks = true;
 				timeline.CurrentTime = 0;
-				_playbackMode = timeline.PlaybackMode;
 				timeline.PlaybackMode = PlaybackMode.OnceLooping;
 				timeline.EnablePlayback(true);
 			}
 			else
 			{
+				_inScenePlayback = false;
 				button.Image = Properties.Resources.Play;
 				canvas.DisallowEdit = false;
 				canvas.LockToolbar(false, button);
@@ -156,6 +165,11 @@ namespace SPNATI_Character_Editor.Controls
 				timeline.EnablePlayback(false);
 				timeline.PlaybackMode = _playbackMode;
 				timeline.CurrentTime = _savedTime;
+
+				if (_savedSegment >= 0)
+				{
+					SetSegment(_savedSegment);
+				}
 			}
 		}
 
@@ -316,15 +330,16 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void _labelData_LabelChanged(object sender, System.EventArgs e)
 		{
-			if (_labelData != null)
+			ILabel labelData = sender as ILabel;
+			if (labelData != null)
 			{
-				lblDataCaption.Text = _labelData.GetLabel();
-				if (_labelData == _scene)
+				lblDataCaption.Text = labelData.GetLabel();
+				if (labelData == _scene)
 				{
 					_sourceScene.Name = _scene.Name;
 					lstScenes.RefreshListItems();
 				}
-				else if (_labelData == _segment)
+				else if (labelData == _segment)
 				{
 					lstSegments.RefreshListItems();
 				}
@@ -383,6 +398,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			_sourceScene = scene;
 			_scene = null;
+
 			if (_sourceScene != null)
 			{
 				if (_sourceScene.Transition)
@@ -398,6 +414,8 @@ namespace SPNATI_Character_Editor.Controls
 					_scene.PropertyChanged += _scene_PropertyChanged;
 				}
 			}
+
+			tsToolbar.Enabled = (_sourceScene != null && !_sourceScene.Transition);
 
 			if (_sceneTransition == null)
 			{
@@ -491,8 +509,8 @@ namespace SPNATI_Character_Editor.Controls
 				newSegment = lstSegments.Items[segmentIndex] as LiveSceneSegment;
 				if (_segment == newSegment)
 				{
-					SetTableData(_segment, null);
-					SetSubTableData(null, null);
+					SetTableData(_scene, null);
+					SetSubTableData(_segment, null);
 					_changingSegment = false;
 					return;
 				}
@@ -585,6 +603,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void addSpriteToolStripMenuItem_Click(object sender, System.EventArgs e)
 		{
+			if (_segment == null) { return; }
 			openFileDialog1.UseAbsolutePaths = true;
 			if (openFileDialog1.ShowDialog(_character, "") == DialogResult.OK)
 			{
@@ -605,23 +624,14 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void addSpeechBubbleToolStripMenuItem_Click(object sender, System.EventArgs e)
 		{
+			if (_segment == null) { return; }
 			LiveBubble bubble = _segment.AddBubble(_time);
 			timeline.SelectObject(timeline.CreateWidget(bubble));
 		}
 
-		private void addWaitForInputToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (_time == 0) { return; }
-			ITimelineBreak brk = _segment.AddBreak(_time);
-			if (brk != null)
-			{
-				timeline.AddBreak(brk);
-				timeline.CurrentTime = brk.Time;
-			}
-		}
-
 		private void addEmitterToolStripMenuItem_Click(object sender, System.EventArgs e)
 		{
+			if (_segment == null) { return; }
 			LiveEmitter emitter = _segment.AddEmitter(_time);
 			timeline.SelectObject(timeline.CreateWidget(emitter));
 		}
@@ -781,7 +791,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			Scene scene = _sourceScene;
 
-			Scene newScene = new Scene(100, 100);
+			Scene newScene = new Scene(500, 500);
 			if (scene != null)
 			{
 				int index = _epilogue.Scenes.IndexOf(scene);
@@ -969,6 +979,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void emitParticleToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			if (_segment == null) { return; }
 			EmitterWidget selectedWidget = timeline.SelectedObject as EmitterWidget;
 			if (selectedWidget == null)
 			{
@@ -977,5 +988,19 @@ namespace SPNATI_Character_Editor.Controls
 			selectedWidget.Data.AddEvent(timeline.CurrentTime);
 		}
 
+		private void canvas_CanvasClicked_1(object sender, EventArgs e)
+		{
+			if (_inScenePlayback)
+			{
+				//Advance the action
+				int index = _scene.Segments.IndexOf(_segment);
+				if (index < _scene.Segments.Count - 1)
+				{
+					index++;
+					SetSegment(index);
+					TogglePlay(_playButton);
+				}
+			}
+		}
 	}
 }
