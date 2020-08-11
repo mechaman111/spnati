@@ -670,7 +670,7 @@ function updateIndividualSelectSort() {
             
             $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
         // Separate Testing from other types if they come before others in Testing view
-        } else if (!cutoff && testingFirst && opp.status !== "testing") {
+        } else if (!cutoff && testingFirst && opp.status !== "testing" && players.countTrue() > 1) {
             
             $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
             cutoff = true;
