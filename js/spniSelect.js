@@ -751,10 +751,16 @@ function showIndividualSelectionScreen() {
      * 
      * We also don't need to update sorting, since any change to the sort mode
      * (anywhere) automatically updates the display order.
+	 * The exception is the targeted sort mode, which requires sorting
+	 * after the selected characters change.
      * 
      * The visibility of characters might change, however, depending on the
      * view type and what characters have already been selected.
      */
+    if (sortingMode === "Talked to by selected") {
+        updateIndividualSelectSort();
+    }
+     
     updateIndividualSelectVisibility();
 
     /* Make sure the user doesn't have target-count sorting set if
