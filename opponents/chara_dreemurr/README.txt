@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited August 5 2020
+README edited August 11 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -402,7 +402,7 @@ REMILIA
 -Responds the first time Remilia's maid uses her time-stop powers to strip her.
 
 REVY
--Responds to Revy's question about killing people.
+-Responds to Revy's question about killing people, and subsequent dialogue.
 -Responds to Revy post-Meia fight.
 
 RIN
