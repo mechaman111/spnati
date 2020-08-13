@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited August 11 2020
+README edited August 12 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -78,6 +78,13 @@ UNDERTALE - Chara is from the video game Undertale.
 CREEPY - Chara's more demonic faces are meant to be this, and her devotion to conquest, power, and victory might come off as uncanny to other enemies.
 
 VILLAIN - While Narrator Chara posits that the player themselves, not Chara, is the driving force behind genocide, post-genocide Chara is nevertheless merciless and cruel.
+
+DEMON - UPDATE AUGUST 12 - The new tag 'demon' has been applied 0-10. If you do Genocide 2+ times, Chara refers to herself as a demon. Given the jumpscare face she has, I am inclined
+to believe her.
+
+HIGH HEELS - UPDATE AUGUST 12 - The new tag 'high heels' has been applied 0-2. The model for Chara's shoes, when viewed from the side, has heels.
+
+THROWS THE GAME - UPDATE AUGUST 12 - The new tag 'throw the game' has been applied via a case when Chara starts to throw, for obvious reasons.
 
 -------------------------------------------------------------------------------------------
 GENERAL BEHAVIOR
