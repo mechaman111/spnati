@@ -254,7 +254,7 @@ Chara has played at least once.</note>
         <note id="69">After responding to 4 of Joey's jokes, Chara will make a pun. She will only call this once.</note>
         <note id="445">Chara has a lone opponent left, that opponent has absolutely nothing left, and she is still well-clothed. This can target the player if it's Hard Mode.</note>
         <note id="447">If the background has the Sun out, Chara can remark on it. She will only call this once, but this is the case for seeing the sun often.</note>
-        <note id="448">If Chara has a one-pair of 9s, she will remark on that.</note>
+        <note id="448">If Chara has a one-pair or two pair of 9s, she will remark on that.</note>
         <note id="449">If Chara has a Flush, she will remark on it. She cannot do it more than once, in the unlikely event she gets more than one.</note>
         <note id="450">If Chara has a Royal Flush, she will remark on it. She cannot do it more than once, in the unlikely event she gets more than one.</note>
         <note id="451">If Chara has a Straight Flush, she will remark on it. She cannot do it more than once, in the unlikely event she gets more than one.</note>
@@ -1277,7 +1277,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1133">Chara responds to an AI losing something while they have lost at least one layer. She also has a lot of clothes left.</note>
         <note id="1135">Chara removes her 2nd layer. Despite having stripped this layer before, she is losing, so she uses the Unhappy Stripping poses.</note>
         <note id="1136">This fires when Chara is selected, and the player selects Azami.</note>
-        <note id="1137">If Chara has a three of a kind of 9s, she will remark on that.</note>
+        <note id="1137">If Chara has a three of a kind or full house of 9s, she will remark on that.</note>
         <note id="1138">If Chara has a four of a kind of 9s, she will remark on that.</note>
         <note id="1139">A Male AI must strip, Chara is relatively well clothed. The player is not out of the game.</note>
         <note id="1140">A Male AI must strip, Chara is indecent. The player is not out of the game.</note>
@@ -1386,7 +1386,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1236">Generic - Chara has a good hand and is still well-dressed. Handles a dialogue where the player is/isn;t still in.</note>
         <note id="1237">Chara reaches orgasm. This is the first time she ever has.</note>
         <note id="1238">Chara recovers from orgasm. This is the first time she's recovered.</note>
-        <note id="1239">Chara responds to an AI tagged Aggressive, Mean, or Kind losing. They do not need to masturbate. She only does this once. This one has a bit of delay on it.</note>
+        <note id="1239">Chara responds to an AI tagged Mean or Kind losing. They do not need to masturbate. She only does this once. This one has a bit of delay on it.</note>
         <note id="1240">The player has lost and must strip, despite Chara throwing the game. Male case.</note>
         <note id="1241">The player has lost and must strip, despite Chara throwing the game. Female case.</note>
         <note id="1242">Chara has dialogue for being repeatedly selected/deselected.</note>
@@ -1547,8 +1547,6 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1418">Handles which epilogue the player gets.</note>
         <note id="1419">Handles which epilogue the player gets.</note>
         <note id="1420">Chara responds to Moon losing.</note>
-        <note id="1421">If Chara has a two-pair with 9s, she will remark on that.</note>
-        <note id="1422">If Chara has a full house with three 9s, she will remark on that.</note>
         <note id="1423">Chara briefly explains her 'partnership' with you. This is the first time she does.</note>
         <note id="1424">Chara briefly explains her 'partnership' with you. This is not the first time she does.</note>
         <note id="1425">Chara briefly explains why she is in SPNATI. This is the first time she does.</note>
@@ -1924,6 +1922,8 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1898">Chara talks to Raynor while Raynor is losing. Case 3.</note>
         <note id="1899">Chara responds to Revy responds to her responding to her killing prompt.</note>
         <note id="1900">Chara responds to Revy responds to her responding to her killing prompt. Alt case.</note>
+        <note id="1901">Chara responds to an AI tagged Demon losing. They do not need to masturbate.</note>
+        <note id="1902">Chara responds to an AI tagged Throws_game losing. They do not need to masturbate. Only if she or the player are in.</note>
     </notes>
     <labels>
         <label id="133" label="" folder="HardModePrep" sort="5" />
@@ -3261,8 +3261,10 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <label id="1898" label="" folder="CharacterInteractions" sort="0" />
         <label id="1899" label="" folder="CharacterInteractions" sort="0" />
         <label id="1900" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1901" label="" folder="FilterInteractions" sort="0" />
+        <label id="1902" label="" folder="FilterInteractions" sort="0" />
     </labels>
-    <nextId>1900</nextId>
+    <nextId>1902</nextId>
     <markers>
         <marker scope="Public" name="9">Chara has a high-card, and it's a 9.</marker>
         <marker scope="Public" name="99">Chara has a one pair of 9s. Or a two-pair, with leading 9s.</marker>
@@ -3836,11 +3838,13 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="SwiftForfeit">Chara responds to an AI being forced to masturbate very early in the game.</marker>
         <marker scope="Public" name="TagTargetAdventurer">Chara responds to an Adventurer-tagged character losing. She ONLY does this once per game.</marker>
         <marker scope="Public" name="TagTargetArmor">Chara responds to an Armor-tagged character losing. She ONLY does this once per game.</marker>
+        <marker scope="Public" name="TagTargetDemon" />
         <marker scope="Public" name="TagTargetHero">Chara responds to a Hero-tagged character losing. She ONLY does this once per game.</marker>
         <marker scope="Public" name="TagTargetItDoesntMatter">Chara responds to an Aggressive, Mean, or Kind character losing, and she responds dismissively. She ONLY does this once per game.</marker>
         <marker scope="Public" name="TagTargetMonster">Chara responds to a Monster-tagged character losing. She ONLY does this once per game.</marker>
         <marker scope="Public" name="TagTargetPrince">Chara responds to a Prince-tagged character losing. She ONLY does this once per game.</marker>
         <marker scope="Public" name="TagTargetPrincess">Chara responds to a Princess-tagged character losing. She ONLY does this once per game.</marker>
+        <marker scope="Public" name="TagTargetThrow" />
         <marker scope="Public" name="TagTargetTsundere">Chara responds to a Tsundere-tagged character losing. She ONLY does this once per game.</marker>
         <marker scope="Public" name="Throwing">When it's just Chara and the Player, Chara begins to deliberately throw the game. This is because Chara considers herself and the player to be on the same team.</marker>
         <marker scope="Public" name="ThrowingAlmostWin">While throwing, Chara and the Player are both naked.</marker>
