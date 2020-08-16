@@ -150,9 +150,9 @@ function logError(err, message, fileName, lineNum) {
 
     if (USAGE_TRACKING) {
         var report = compileBaseErrorReport('Automatically generated after Javascript error.', 'auto');
-        return postJSON(BUG_REPORTING_ENDPOINT, report).catch(function (err) {
-            captureError(err);
-        });
+        
+        // swallow errors here so we don't call this function recursively
+        return postJSON(BUG_REPORTING_ENDPOINT, report).catch(function() {});
     }
 }
 
