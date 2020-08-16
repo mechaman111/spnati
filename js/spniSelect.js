@@ -663,27 +663,16 @@ function updateIndividualSelectSort() {
     var cutoff = false;
 
     ordered.forEach(function (opp, index) {
-        // Separate opponent types if using Featured sort in Main view
-        if (sortingMode === "Featured" && !individualSelectTesting && (index > 0)
-            && opp.selectionCard.isVisible(individualSelectTesting, false)
-            && opp.status !== ordered[index - 1].status) {
-            
-            $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
-        // Separate Testing from other types if they come before others in Testing view
-        } else if (!cutoff && testingFirst && opp.status !== "testing" && players.countTrue() > 1) {
-            
-            $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
-            cutoff = true;
-        // Separate out characters with no targets if using Targeted sort
-        } else if (!cutoff && sortingMode === "Talked to by selected" && players.countTrue() > 1
-            && opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined) === 0) {
-            
-            $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
-            cutoff = true;
-        // Separate out characters with no data if using Recently Updated sort
-        // Don't do this for Testing view as the bar has another meaning
-        } else if (!cutoff && sortingMode === "Recently Updated"
-            && !individualSelectTesting && opp.lastUpdated === 0) {
+        if (!cutoff && 
+		    /* Separate Testing from other types if they come before others in Testing view */
+		    ((testingFirst && opp.status !== "testing" && players.countTrue() > 1)
+            /* Separate out characters with no targets if using Targeted sort */
+            || (sortingMode === "Talked to by selected" && players.countTrue() > 1
+            && opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined) === 0)
+            /* Separate out characters with no data if using Recently Updated sort
+               Don't do this for Testing view as the bar has another meaning */
+            || (sortingMode === "Recently Updated"
+            && !individualSelectTesting && opp.lastUpdated === 0))) {
             
             $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
             cutoff = true;
