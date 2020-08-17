@@ -664,8 +664,8 @@ function updateIndividualSelectSort() {
 
     ordered.forEach(function (opp, index) {
         if (!cutoff && 
-		    /* Separate Testing from other types if they come before others in Testing view */
-		    ((testingFirst && opp.status !== "testing" && players.countTrue() > 1)
+            /* Separate Testing from other types if they come before others in Testing view */
+            ((testingFirst && opp.status !== "testing" && players.countTrue() > 1)
             /* Separate out characters with no targets if using Targeted sort */
             || (sortingMode === "Talked to by selected" && players.countTrue() > 1
             && opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined) === 0)
