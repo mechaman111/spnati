@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited August 15 2020
+README edited August 18 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -231,6 +231,9 @@ Most, if not all, of these come with a documented Marker. If you find one withou
 9S
 -Responds to 9S having to strip.
 
+ADRIEN
+-REsponds to Adrien as he has to strip.
+
 AELLA
 -Responds to Aella's question about adventures. For some reason, this is also a Pinkie Pie case?!?!
 -Responds to Aella asking Chara if she's a demon.
@@ -350,7 +353,7 @@ MAKI
 -Responds to Maki's question about favorite foods.
 
 MARINETTE
--Responds to Marinette when she loses.
+-Responds to Marinette losing her transformation.
 
 MEGUMIN
 -Responds to Megumin's question about all-seeing demons.
