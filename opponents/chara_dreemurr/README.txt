@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited August 18 2020
+README edited August 19 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -353,7 +353,7 @@ MAKI
 -Responds to Maki's question about favorite foods.
 
 MARINETTE
--Responds to Marinette losing her transformation.
+-Responds to Marinette as she loses.
 
 MEGUMIN
 -Responds to Megumin's question about all-seeing demons.
