@@ -36,6 +36,11 @@ namespace KisekaeImporter.ImageImport
 			KisekaeCode stageCode = new KisekaeCode(stage.Code);
 			KisekaeCode poseCode = new KisekaeCode(emotion.Code);
 
+			if (baseCode == null)
+			{
+				baseCode = new KisekaeCode();
+			}
+
 			KisekaeCode output = new KisekaeCode("", true);
 			output.MergeIn(baseCode, false, false);
 			output.MergeIn(new KisekaeCode(stage.Code), false, false);
@@ -45,9 +50,13 @@ namespace KisekaeImporter.ImageImport
 			{
 				int assetIndex = 0;
 				KisekaeModel poseModel = poseCode.Models[i];
-				KisekaeModel baseModel = (baseCode.Models.Length > i ? baseCode.Models[i] : null);
 				KisekaeExternalParts poseParts = poseModel?.GetComponent<KisekaeExternalParts>();
 				KisekaeModel stageModel = (stageCode.Models.Length > i ? stageCode.Models[i] : null);
+				KisekaeModel baseModel = null;
+				if (baseCode != null)
+				{
+					baseModel = (baseCode.Models.Length > i ? baseCode.Models[i] : null);
+				}
 				KisekaeExternalParts baseParts = baseModel?.GetComponent<KisekaeExternalParts>();
 				KisekaeExternalParts stageParts = stageModel?.GetComponent<KisekaeExternalParts>();
 				if (poseParts != null)
