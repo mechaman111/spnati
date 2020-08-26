@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited August 19 2020
+README edited August 26 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -292,6 +292,9 @@ CHIHIRO
 -Responds to Chihiro running away.
 -Responds to Chihiro revealing he's actually male.
 
+CYNTHIA
+-Responds to Cynthia as Chara loses.
+
 DUST
 -Responds to Dust's question about doubts.
 -Responds to Dust's question about snacks.
@@ -439,8 +442,8 @@ SHEENA
 -Responds to Sheena summoning spirits. Specific responses for Celsius and Undine.
 
 SPOOKY
--Responds to Spooky stripping her knife.
--Responds to Spooky forming more clothes for herself.
+-Responds to Spooky or Chara losing.
+-Responds to Spooky talking about not being able to be hit.
 
 THARJA
 -Responds to Tharja cursing Jessie.
