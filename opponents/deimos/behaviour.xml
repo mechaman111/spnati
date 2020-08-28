@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 11:39:39 PM on August 27, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 9:59:17 PM on August 28, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Deimos</first>
@@ -49,10 +49,10 @@
     <wardrobe>
         <clothing name="underwear" position="lower" type="important" />
         <clothing name="pants" position="lower" type="major" plural="true" />
-        <clothing name="shirt" position="upper" type="important" />
+        <clothing name="shirt" position="upper" type="major" />
         <clothing name="visor" position="head" type="extra" />
         <clothing name="boots" position="feet" type="minor" plural="true" />
-        <clothing name="coat" position="upper" type="major" />
+        <clothing name="coat" position="upper" type="minor" />
         <clothing name="gloves" position="hands" type="extra" plural="true" />
         <clothing name="satchel" position="upper" type="extra" />
     </wardrobe>
@@ -96,11 +96,13 @@
                 <state img="#-this_is_called_beta_bait.png">Checkmate.</state>
                 <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" marker="Sanford">And Sanford says I suck at poker. Psh.</state>
                 <state img="#-rock_out_with_your_doc_out.png">Hell yeah! Now we're cooking with propane!</state>
+                <state img="#-pffhah.png">About freakin' time!</state>
             </case>
             <case stage="6-8">
                 <state img="#-rebuilt.png">Would ya look at that? Didn't even have to cheat for this.</state>
                 <state img="#-smuggy_wuggy_uwu_uwu_uwu.png">This is totally where my luck does a 180. Just you watch.</state>
                 <state img="#-this_is_called_beta_bait.png">Straight 10's from the judges! No, wait, there's a 9.8, but that's very respectable!</state>
+                <state img="#-pffhah.png">Another win coming my way!</state>
             </case>
         </trigger>
 
@@ -130,6 +132,7 @@
                 <state img="#-rebuilt.png">Ha, ha, very funny. Deimos's shitty luck strikes again.</state>
                 <state img="#-visible_confusion.png">Aw, really? I thought I did a good move there.</state>
                 <state img="#-whatever.png">...Oh yeah. That's not what a flush is at all. Oops.</state>
+                <state img="#-he_died_again_didnt_he.png">No matter what, keep a cool head, or you'll lose it. Someone said that, at some point, probably.</state>
             </case>
             <case stage="3-5">
                 <state img="#-he_died_again_didnt_he.png" marker="smoking_kills">If I didn't know it'd get me killed, I'd go for a smoke right now.</state>
@@ -146,13 +149,42 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0-8" id="8" alsoPlaying="pyrrha" alsoPlayingStage="3" totalRounds="3-" alsoPlayingSayingMarker="too_serious_joke">
+                <condition count="0" role="other" character="pyrrha" saidMarker="too_serious_joke" sayingMarker="too_serious_joke" />
+                <state img="#-pffhah.png" marker="Pyrrha_jokes">The world's a dark place, Pyrrha. If we can't get some humor out of that darkness, what's the point?</state>
+            </case>
+            <case stage="0-8" id="9" totalRounds="3-" priority="152">
+                <condition count="0" role="other" character="pyrrha" stage="2" saidMarker="define_friendship" sayingMarker="define_friendship" />
+                <state img="#-he_died_again_didnt_he.png" marker="Pyrrha_friendship">I guess friendship is... Comradery? Being there when you need to be, through thick and thin. Something like that.</state>
+            </case>
+            <case stage="0-8" id="11" totalRounds="0-2" priority="152">
+                <condition count="0" role="other" character="pyrrha" stage="0" saidMarker="why_playing" sayingMarker="why_playing" />
+                <state img="#-he_died_again_didnt_he.png">I have... no clue. I kind of just appeared here. I figure I should just roll with it.</state>
+            </case>
+            <case stage="0-8" id="10" totalRounds="3-" priority="152">
+                <condition count="0" role="other" character="pyrrha" stage="1" saidMarker="wanttobefamous" sayingMarker="wanttobefamous" />
+                <state img="#-rock_out_with_your_doc_out.png" marker="Pyrrha_famous">Hell yeah I do! And I'm gonna be, once we save Nevada!</state>
+            </case>
+            <case stage="0-8" id="12" totalRounds="4-" priority="121">
+                <condition role="other" character="revy" sayingMarker="music" />
+                <state img="#-rock_out_with_your_doc_out.png" marker="Revy_music_techno">Techno, baby! Nothing like some sick, electronic beats to get your blood pumping.</state>
+            </case>
             <case stage="0-8" id="6" alsoPlaying="mary_calvin" totalRounds="7-">
                 <condition count="4-5" status="alive" />
                 <state img="#-visible_confusion.png" marker="MFK">Well, no offense, but I'd probably kill you, marry ~player~ and fuck the rest.</state>
             </case>
             <case stage="0-8" id="7" totalRounds="4-" priority="111">
                 <condition role="other" character="revy" sayingMarker="killing" />
-                <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" marker="RevyKills">Yeah, guess you could say I've killed about a few... hundred. Six hundred or so, last I checked.</state>
+                <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" marker="RevyKills">Yeah, guess you could say I've killed about a few... hundred. Two hundred or so, last I checked.</state>
+            </case>
+            <case stage="0" oneShotId="1">
+                <condition count="0" gender="female" />
+                <state img="#-whatever.png">Just us guys, huh? Guess it's just like back in Nevada, then.</state>
+            </case>
+            <case stage="0" oneShotId="2">
+                <condition count="1" gender="male" />
+                <state img="#-rock_out_with_your_doc_out.png">Yo, hold up, I'm the only guy here!? Hell yeah!</state>
+                <state img="#-this_is_called_beta_bait.png">Ooooh, nice! Only guy in the club, but don't worry - there's plenty of Deimos to go around, ladies!</state>
             </case>
             <case stage="1-5">
                 <state img="#-he_died_again_didnt_he.png" oneShotId="2" marker="one_fight_to_the_next">I don't remember the last time I got to relax like this, honestly. Sometimes it just feels like I'm going from one fight to the next.</state>
@@ -213,7 +245,7 @@
             </case>
             <case stage="4">
                 <state img="#-he_died_again_didnt_he.png">Shit. Guess it can't be helped---I gotta ditch the visor.</state>
-                <state img="#-visible_confusion.png">Aw, for real? We can't pretend I too something off, just this once?</state>
+                <state img="#-visible_confusion.png">Aw, for real? We can't pretend I took something off, just this once?</state>
             </case>
             <case stage="5">
                 <state img="#-this_is_called_beta_bait.png">I can tell I've got &lt;i&gt;someone&lt;/i&gt; excited.</state>
@@ -235,7 +267,7 @@
                 <state img="#-strip.png" marker="JuraSun">And it ain't like going out would do me much good. Not since that time Hank killed the sun.</state>
             </case>
             <case stage="0">
-                <condition role="other" character="meia" stage="0-5" sayingMarker="deimos0" />
+                <condition role="other" character="meia" stage="0-5" saidMarker="deimos0" />
                 <state img="#-strip.png" marker="MeiaDisorient">Though, I still don't really know how I got here. But, hey. Not the worst thing to suddenly find myself doing for no apparent reason.</state>
             </case>
             <case stage="0">
@@ -255,7 +287,7 @@
                 <state img="#-strip.png" marker="boots_useful">The boots are pretty useful - they have a good grip on them for running and climbing and whatever else.</state>
             </case>
             <case stage="4">
-                <state img="#-strip.png">This visor is probably the most iconic part of my look, y'know. The story of how i wound up with it is pretty wild.</state>
+                <state img="#-strip.png">This visor is probably the most iconic part of my look, y'know. The story of how I wound up with it is pretty wild.</state>
                 <state img="#-strip.png">I remember when I got this visor like it was yesterday... maybe it was, actually.</state>
             </case>
             <case stage="5">
@@ -340,6 +372,14 @@
         </trigger>
 
         <trigger id="female_must_strip">
+            <case stage="0-8 10">
+                <condition role="target" character="jura" stage="0" />
+                <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" marker="JuraBlonde">Well, hot damn, we don't get girls like you in Nevada. Or girls in general. Or blondes.</state>
+            </case>
+            <case stage="0-8 10">
+                <condition role="target" character="meia" stage="0" />
+                <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" marker="Meia0">You don't see a lot of men where you' re from? Well, ain't that convenient---I don't get any chicks back in Nevada. Ever. </state>
+            </case>
             <case stage="0-5">
                 <state img="#-smuggy_wuggy_uwu_uwu_uwu.png">Time to take your clothes off, lady. God, I love this game.</state>
                 <state img="#-rock_out_with_your_doc_out.png" oneShotId="7">Another win for the D-Man! Remind me never to call myself `the D-Man' again!</state>
@@ -450,14 +490,16 @@
             <case stage="0-5">
                 <state img="#-pffhah.png">Not like we're in a hurry. Take it nice and easy, babe!</state>
                 <state img="#-pffhah.png">Keep it small, I don't mind.</state>
-                <state img="#-pffhah.png">Was i hoping for more? Sure, but it's cool. we got all the time in... Well, we got time.</state>
+                <state img="#-pffhah.png">Was I hoping for more? Sure, but it's cool. We got all the time in... Well, we got time.</state>
                 <state img="#-he_died_again_didnt_he.png">Uh, yeah. That's cool, if that's what you wanna go for.</state>
+                <state img="#-he_died_again_didnt_he.png">A little something is still something.</state>
             </case>
             <case stage="6-7">
                 <state img="#-he_died_again_didnt_he.png">A bit disappointed here, babe. Y'know. Just a bit.</state>
                 <state img="#-visible_confusion.png">...Still going for that, huh? Hm.</state>
                 <state img="#-whatever.png">Aw, man. I was kind of hoping my tits would make you more daring, y'know.</state>
                 <state img="#-visible_confusion.png">And that's it? That's all you're going to ditch?</state>
+                <state img="#-whatever.png">Well, that's a little bit shit.</state>
             </case>
             <case stage="9">
                 <state img="#-visible_confusion.png">Is this a joke or a test?</state>
@@ -609,6 +651,7 @@
                 <state img="#-smuggy_wuggy_uwu_uwu_uwu.png">Keep it up and you might just keep my interest.</state>
                 <state img="#-rock_out_with_your_doc_out.png">Let's keep moving! I wanna see some tiddies!</state>
                 <state img="#-rock_out_with_your_doc_out.png">Better think of what you're tossing next, babe!</state>
+                <state img="#-pffhah.png">Move along, y'all, we need to get ~name~ naked!</state>
             </case>
             <case stage="6-7">
                 <state img="#-this_is_called_beta_bait.png">How about this - you take off something fun next time, and I'll make sure to do the same. Deal?</state>
@@ -625,6 +668,7 @@
                 <state img="#-visible_confusion.png">Does modesty &lt;i&gt;really&lt;/i&gt; matter anymore?</state>
                 <state img="#-he_died_again_didnt_he.png">I guess you're playing to win, too. Can't be mad at that.</state>
                 <state img="#-he_died_again_didnt_he.png">A bit discouraging, but I guess we can keep going.</state>
+                <state img="#-visible_confusion.png">I was counting on you being, y'know, more into this by now.</state>
             </case>
             <case stage="10">
                 <state img="#-visible_confusion.png">Could I get a chair? They gotta have some chairs around here.</state>
@@ -701,6 +745,7 @@
                 <state img="#-shut_up_youre_horny.png">Mh... Take it slow. &lt;i&gt;Real&lt;/i&gt; slow.</state>
                 <state img="#-smuggy_wuggy_uwu_uwu_uwu.png">And here I thought you'd... tease me... some more...</state>
                 <state img="#-smuggy_wuggy_uwu_uwu_uwu.png">I'm watching &lt;i&gt;intently&lt;/i&gt;, babe.</state>
+                <state img="#-smuggy_wuggy_uwu_uwu_uwu.png">L-let' s see what you're rocking under there!</state>
             </case>
             <case stage="8">
                 <state img="#-shut_up_youre_horny.png">What can I say? I'm glad to see you're ditching something good, too.</state>
@@ -1018,7 +1063,7 @@
                 <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" marker="dexterity">Y'know as a merc, my dexterity stat is kind of nuts. These fingers can do a lot of good work.</state>
                 <state img="#-shut_up_youre_horny.png" marker="nwgh">...Nwgh.</state>
                 <state img="#-shut_up_youre_horny.png">It's been so long since I last saw something that nice.</state>
-                <state img="#-shut_up_youre_horny.png">...anyone else feeling hungry? I know I am, now.</state>
+                <state img="#-shut_up_youre_horny.png">...Anyone else feeling hungry? I know I am, now.</state>
             </case>
             <case stage="9">
                 <state img="#-h2.png">O-oh dear fucking god, that's good!</state>
@@ -1076,6 +1121,10 @@
                 <test expr="~clothing~" value="belt" />
                 <state img="#-whatever.png">You see a lot of belts on people in Nevada. Like, a lot. More than anything else.</state>
                 <state img="#-whatever.png">For some reason, belts are just really, really popular where I'm from. Usually not around the waist, though.</state>
+            </case>
+            <case stage="0-7">
+                <test expr="~clothing~" value="sunglasses" />
+                <state img="#-whatever.png" oneShotId="21">Sunglasses, huh? I guess you look alright with them. Most guys I know that wear them? Total dicks.</state>
             </case>
         </trigger>
 
@@ -1274,6 +1323,7 @@
         <trigger id="start_masturbating">
             <case stage="8">
                 <state img="#-start.png">Here I go, then. I'll try and make it good for you guys.</state>
+                <state img="#-start.png">Not like I've never done this. Long as I don't get stage fright.</state>
             </case>
         </trigger>
 
@@ -1313,6 +1363,8 @@
             <case stage="10">
                 <state img="#-stripped.png">Sssoooo. Still going, huh?</state>
                 <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" marker="ColdNevada">It's actually pretty warm around here. Maybe I'm just used to how cold Nevada gets.</state>
+                <state img="#-whatever.png">Is this when I should start worrying about how I got here?</state>
+                <state img="#-comms_are_down.png" marker="CommsAreDown">Hello? Hellloooo? &lt;br&gt;Crap, I think my comms went down.</state>
             </case>
         </trigger>
 
