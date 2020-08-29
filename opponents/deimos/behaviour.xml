@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 7:59:14 AM on August 29, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 7:35:49 PM on August 29, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Deimos</first>
@@ -28,7 +28,7 @@
         <tag>pubic_hair</tag>
         <tag>medium_penis</tag>
         <tag>circumcised</tag>
-        <tag from="0" to="5">hat</tag>
+        <tag from="0" to="4">hat</tag>
         <tag>confident</tag>
         <tag>sarcastic</tag>
         <tag>witty</tag>
@@ -36,9 +36,9 @@
         <tag>single</tag>
         <tag>american</tag>
         <tag>cartoon</tag>
-        <tag>internet_meme</tag>
-        <tag>video_game</tag>
+        <tag>bounty_hunter</tag>
         <tag>criminal</tag>
+        <tag>fighter</tag>
         <tag>madness_combat</tag>
     </tags>
     <nicknames />
@@ -193,6 +193,16 @@
                 <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" oneShotId="5" marker="Nevada_get_togethers">So, you guys come here often? And &lt;i&gt;live&lt;/i&gt;? Get-togethers in Nevada usually end pretty violently.</state>
                 <state img="#-dont_bring_hell_back_with_you.png" oneShotId="6" marker="weird_moment">Hngh... Sh-shit, my bad, had a weird moment there. I'm good.</state>
             </case>
+            <case stage="0-8" priority="0">
+                <test expr="~background~" value="alley" />
+                <state img="#-whatever.png" oneShotId="22">This alleyway seems kind of familiar, but not. More colorful than any of the ones in Nevada.</state>
+                <state img="#-he_died_again_didnt_he.png" oneShotId="23">This seems like a bad place to relax, honestly. So many places where grunts could jump us from...</state>
+            </case>
+            <case stage="0-8" priority="0">
+                <test expr="~background~" value="beach" />
+                <state img="#-pffhah.png" oneShotId="24">I'll be honest, I've never been to the beach before. Kinda dig it.</state>
+                <state img="#-pffhah.png" oneShotId="25">Man, I had almost totally forgotten what the sun feels like. Turns out it's warm!</state>
+            </case>
         </trigger>
 
         <trigger id="must_strip">
@@ -269,6 +279,12 @@
             <case stage="0">
                 <condition role="other" character="meia" stage="0-5" saidMarker="deimos0" />
                 <state img="#-strip.png" marker="MeiaDisorient">Though, I still don't really know how I got here. But, hey. Not the worst thing to suddenly find myself doing for no apparent reason.</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="CynthiaTraveler" />
+                <condition role="other" character="cynthia" sayingMarker="DeimosIntro2" />
+                <state img="#-strip.png" marker="CynthiaDrive">I think it's pretty much always been like that, actually. It got a lot worse when that whole Improbability Drive shit went down, though.</state>
+                <state img="#-strip.png" marker="CynthiaAAHW">It's always been kind of bad. The A.A.H.W. has been going at for years.</state>
             </case>
             <case stage="0">
                 <state img="#-strip.png">Y'know, I feel like this satchel &lt;i&gt;could&lt;/i&gt; be useful, but all I ever put in it is like... one tablet.</state>
@@ -379,6 +395,11 @@
             <case stage="0-8 10">
                 <condition role="target" character="meia" stage="0" />
                 <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" marker="Meia0">You don't see a lot of men where you' re from? Well, ain't that convenient---I don't get any chicks back in Nevada. Ever. </state>
+            </case>
+            <case stage="0-8 10">
+                <condition filter="tall" role="target" stage="0" />
+                <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" oneShotId="26">Damn. You're tall. I kind of have a thing for tall chicks.</state>
+                <state img="#-shut_up_youre_horny.png" oneShotId="27">Y'know, being on the shorter side has its perks, sometimes.</state>
             </case>
             <case stage="0-5">
                 <state img="#-smuggy_wuggy_uwu_uwu_uwu.png">Time to take your clothes off, lady. God, I love this game.</state>
@@ -1027,6 +1048,14 @@
             </case>
         </trigger>
 
+        <trigger id="female_chest_is_visible">
+            <case stage="0-8 10">
+                <condition filter="muscular" role="target" />
+                <state img="#-shut_up_youre_horny.png" oneShotId="28">Did I mention I have a major muscle girl fetish? because I have a major muscle girl fetish.</state>
+                <state img="#-shut_up_youre_horny.png">Weird question, but can I touch your abs? Y'know, just to... get a sense for how strong you are?</state>
+            </case>
+        </trigger>
+
         <trigger id="female_crotch_will_be_visible">
             <case stage="0-7">
                 <state img="#-shut_up_youre_horny.png">The most delicate part of a woman... and the sexiest.</state>
@@ -1113,6 +1142,10 @@
             <case stage="0-6">
                 <condition filter="bald" role="target" />
                 <state img="#-visible_confusion.png" oneShotId="19" marker="hank_hairless">Yo, quick question---are you just bald, or... totally hairless? I know a guy with a condition like that.</state>
+            </case>
+            <case stage="0-4" oneShotId="3">
+                <condition filter="weapon" role="target" />
+                <state img="#-whatever.png">Oh. You brought a weapon along, huh? &lt;br&gt;...Shouldn't I have done that, too?</state>
             </case>
         </trigger>
 
