@@ -1659,8 +1659,8 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1595">This fires when Chara is selected, and the player selects 9S and has done so repeatedly.</note>
         <note id="1596">Chara responds to Yuelia's question about Laura.</note>
         <note id="1597">Chara responds to Yuelia's question about Ophelia.</note>
-        <note id="1598">Chara's first masturbation, unhappy side.</note>
-        <note id="1599">Chara's first masturbation, happy side.</note>
+        <note id="1598">Chara's first masturbation, unhappy side. Global to override other things.</note>
+        <note id="1599">Chara's first masturbation, happy side. Global to override other things.</note>
         <note id="1600">Counts how long Chara has masturbated.</note>
         <note id="1606">Chara masturbates, verbal.</note>
         <note id="1605">Chara masturbates, nonverbal.</note>
@@ -1949,13 +1949,20 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <note id="1931">Chara talks to Neptune while Neptune is losing.</note>
         <note id="1932">Ongoing chat between Spooky and Chara; Chara losing version.</note>
         <note id="1933">Ongoing chat between Spooky and Chara; Chara losing version.</note>
-        <note id="1934">Chara responds to one of Spooky talking about 'healing'.</note>
+        <note id="1934">Chara responds to Spooky talking about 'healing'.</note>
         <note id="1935">This fires when Chara is selected, and the player selects Bi.</note>
         <note id="1936">Global response when Bi is ever the target.</note>
         <note id="1938">Ongoing chat between Cynthia and Chara; Chara losing version.</note>
         <note id="1939">Ongoing chat between Jim and Chara; Chara losing version. Case A.</note>
         <note id="1940">Ongoing chat between Jim and Chara; Chara losing version. Case B.</note>
         <note id="1941">Ongoing chat between Jim and Chara; Chara losing version. Case C.</note>
+        <note id="1942">Chara talks to Spooky while Spooky is losing.</note>
+        <note id="1943">Ongoing chat between Spooky and Chara; Chara losing version.</note>
+        <note id="1944">Chara responds to Spooky talking about 'healing'.</note>
+        <note id="1945">Ongoing chat between Raynor and Chara; Chara losing version. Case A.</note>
+        <note id="1946">Ongoing chat between Raynor and Chara; Chara losing version. Case B.</note>
+        <note id="1947">Ongoing chat between Raynor and Chara; Chara losing version. Case C.</note>
+        <note id="1948">Ongoing chat between Cynthia and Chara; Chara losing version.</note>
     </notes>
     <labels>
         <label id="133" label="" folder="HardModePrep" sort="5" />
@@ -3327,9 +3334,17 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <label id="1939" label="" folder="CharacterInteractions" sort="0" />
         <label id="1940" label="" folder="CharacterInteractions" sort="0" />
         <label id="1941" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1942" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1943" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1944" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1945" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1946" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1947" label="" folder="CharacterInteractions" sort="0" />
+        <label id="1948" label="" folder="CharacterInteractions" sort="0" />
     </labels>
-    <nextId>1941</nextId>
+    <nextId>1948</nextId>
     <markers>
+        <marker scope="Public" name="" />
         <marker scope="Public" name="9">Chara has a high-card, and it's a 9.</marker>
         <marker scope="Public" name="99">Chara has a one pair of 9s. Or a two-pair, with leading 9s.</marker>
         <marker scope="Public" name="999">Chara has a 3-of-a-kind of 9s. Or a full house, with leading 9s.</marker>
@@ -3456,6 +3471,7 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Private" name="MidgameChatCooldown">Makes sure Chara doesn't spam midgame chat lines.</marker>
         <marker scope="Public" name="MidgameChatPlayerLosing">Midgame chat when the Player is losing.</marker>
         <marker scope="Public" name="MidgameChatWinning">Midgame chat when the player and Chara are both winning, ie everyone else is indecent.</marker>
+        <marker scope="Public" name="MustStripAngry" />
         <marker scope="Public" name="PersistAmyFriendship">PERSISTENT: Controls some of Chara's dialogue towards Amy.</marker>
         <marker scope="Private" name="PersistCharacterChosen">PERSISTENT: A character was chosen. Chara uses this to keep track of the player's favorites.</marker>
         <marker scope="Private" name="PersistCharaMasturbating">PERSISTENT: Chara is actively masturbating.</marker>
@@ -3688,12 +3704,14 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ResponseCharaRaynorStripped1C">Chara has dialogue where Raynor is losing. This is the Stripped Case. Case 3.</marker>
         <marker scope="Public" name="ResponseCharaRaynorStripping1">Chara has dialogue where Raynor is losing. This is the Stripping case.</marker>
         <marker scope="Public" name="ResponseCharaSpookyMustStrip1">Chara has dialogue where Spooky is losing. This is the Must Strip case.</marker>
+        <marker scope="Public" name="ResponseCharaSpookyStripping1" />
         <marker scope="Public" name="ResponseCharaTharjaMustStrip1">Chara has dialogue where Tharja is losing. This is the Must Strip case.</marker>
         <marker scope="Public" name="ResponseChazzBlame">Chara responds to Chazz accusing the player.</marker>
         <marker scope="Public" name="ResponseChazzRun">Chara responds to Chazz attempting, and failing, to run.</marker>
         <marker scope="Public" name="ResponseChihiroFlee">Chara responds to Chihiro attempting to run.</marker>
         <marker scope="Public" name="ResponseChihiroMaleReveal">Chara responds to Chihiro revealing he's actually male.</marker>
         <marker scope="Public" name="ResponseCynthiaCharaMustStrip1">Cynthia has a series of dialogue where Chara is losing. This is the Must Strip case.</marker>
+        <marker scope="Public" name="ResponseCynthiaCharaStripping1" />
         <marker scope="Public" name="ResponseDustDoubts">Chara responds to Dust's comment about doubts.</marker>
         <marker scope="Public" name="ResponseDustSnacks">Chara responds to Dust's comment about snacks.</marker>
         <marker scope="Public" name="ResponseElizabethSelfMast">Chara responds to Elizabeth using her alternate self to strip.</marker>
@@ -3846,6 +3864,9 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ResponseRaynorCharaMustStrip2C">Raynor has a series of dialogue where Chara is losing. This is the Must Strip case C.</marker>
         <marker scope="Public" name="ResponseRaynorCharaStripped1A">Raynor has a series of dialogue where Chara is losing. This is the Stripped case. Case 1.</marker>
         <marker scope="Public" name="ResponseRaynorCharaStripped1B">Raynor has a series of dialogue where Chara is losing. This is the Stripped case. Case 2.</marker>
+        <marker scope="Public" name="ResponseRaynorCharaStripped2A" />
+        <marker scope="Public" name="ResponseRaynorCharaStripped2B" />
+        <marker scope="Public" name="ResponseRaynorCharaStripped2C" />
         <marker scope="Public" name="ResponseRaynorCharaStripping1">Raynor has a series of dialogue where Chara is losing. This is the Stripping case.</marker>
         <marker scope="Public" name="ResponseRaynorCharaStripping2A">Raynor has a series of dialogue where Chara is losing. This is the Stripping case. Case A.</marker>
         <marker scope="Public" name="ResponseRaynorCharaStripping2B">Raynor has a series of dialogue where Chara is losing. This is the Stripping case. Case B.</marker>
@@ -3878,9 +3899,13 @@ This one clears a bunch of 'reset' markers so Chara doesn't keep acting like you
         <marker scope="Public" name="ResponseSheenaSpiritCelsius">Chara reacts to Sheena's spirit: Celsius case.</marker>
         <marker scope="Public" name="ResponseSheenaSpiritGeneric">Chara reacts to Sheena's spirit: Generic case.</marker>
         <marker scope="Public" name="ResponseSheenaSpiritUndine">Chara reacts to Sheena's spirit: Undine case.</marker>
+        <marker scope="Public" name="ResponseSpookyChara" />
         <marker scope="Public" name="ResponseSpookyCharaMustStrip1">Spooky has a series of dialogue where Chara is losing. This is the Must Strip case.</marker>
+        <marker scope="Public" name="ResponseSpookyCharaStripped1" />
         <marker scope="Public" name="ResponseSpookyCharaStripping1">Spooky has a series of dialogue where Chara is losing. This is the Stripping case.</marker>
         <marker scope="Public" name="ResponseSpookyHit">Chara responds to Spooky saying she wouldn't be able to hit her.</marker>
+        <marker scope="Public" name="ResponseSpookyHit2" />
+        <marker scope="Public" name="ResponseSpookyKnifeless" />
         <marker scope="Public" name="ResponseSpookyMakeClothes">Chara responds to Spooky forming underwear.</marker>
         <marker scope="Public" name="ResponseTharjaCursesJessie">Chara responds to Tharja cursing Jessie.</marker>
         <marker scope="Public" name="ResponseTharjaCursesJessieAfterJura">Chara responds to Tharja cursing Jessie, after having already cursed Jura.</marker>

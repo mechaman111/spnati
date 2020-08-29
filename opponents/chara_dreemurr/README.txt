@@ -444,6 +444,7 @@ SHEENA
 SPOOKY
 -Responds to Spooky or Chara losing.
 -Responds to Spooky talking about not being able to be hit.
+-Responds to Spooky makingu underwear.
 
 THARJA
 -Responds to Tharja cursing Jessie.
