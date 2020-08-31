@@ -632,8 +632,9 @@ function updateIndividualSelectFilters(autoclear) {
     // another opponent can be found more quickly.
     if (autoclear && (name != null || source != null) && selectableOpponents.length == 0) {
         clearSearch();
-        return;
     }
+    
+    updateIndividualSelectSort();
 }
 
 /** Updates the sort order of opponents on the individual select screen. */
@@ -660,10 +661,14 @@ function updateIndividualSelectSort() {
         ordered.sort(sortTestingOpponents);
     }
     
-    var cutoff = false;
-
+    /* Only show the separator if both halves have at least one card visible */
+    var tophalf = false;
+    var bottomhalf = false;
+    
     ordered.forEach(function (opp, index) {
-        if (!cutoff && 
+        if (!tophalf && opp.selectionCard.isVisible(individualSelectTesting, false)) {
+            tophalf = true;
+        } else if (tophalf && !bottomhalf && opp.selectionCard.isVisible(individualSelectTesting, false) && 
             /* Separate Testing from other types if they come before others in Testing view */
             ((testingFirst && opp.status !== "testing" && players.countTrue() > 1)
             /* Separate out characters with no targets if using Targeted sort */
@@ -675,7 +680,7 @@ function updateIndividualSelectSort() {
             && !individualSelectTesting && opp.lastUpdated === 0))) {
             
             $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
-            cutoff = true;
+            bottomhalf = true;
         }
         
         $(opp.selectionCard.mainElem).appendTo($indivSelectionCardContainer);
