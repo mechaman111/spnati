@@ -287,6 +287,7 @@ function loadListingFile () {
             }));
             loadedOpponents.forEach(function(p) { p.selectionCard.updateEpilogueBadge() });
             updateIndividualSelectSort();
+            updateIndividualSelectFilters();
         } else {
             var progress = Math.floor(100 * (totalLoads - outstandingLoads) / totalLoads);
             $(".game-load-progress").text(progress.toString(10));
