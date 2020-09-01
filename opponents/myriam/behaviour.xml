@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.6 at 1:53:39 AM on August 31, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.6 at 1:32:39 AM on September 01, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.6</version>
     <first>Myriam</first>
@@ -160,7 +160,7 @@
                 <keyframe time="0.88" x="0" y="98" />
             </directive>
         </pose>
-        <pose id="5-strip">
+        <pose id="5-muststrip">
             <sprite id="surprised2" src="myriam/5-strip.png" x="0" y="0" alpha="100" />
             <sprite id="box_noeyes" src="myriam/box_noeyes.png" x="0" y="320" scalex="1.46" scaley="1.46" />
             <directive type="animation" id="surprised2" ease="smooth" interpolation="linear">
@@ -194,7 +194,7 @@
                 <keyframe time="1" x="0" y="176" />
             </directive>
         </pose>
-        <pose id="6-afterstrip">
+        <pose id="5-stripping">
             <sprite id="surprised2" src="myriam/6-surprised.png" x="0" y="0" alpha="100" />
             <sprite id="box_noeyes" src="myriam/box_noeyes.png" x="0" y="98" scalex="1.46" scaley="1.46" alpha="100" rotation="360" />
             <directive type="animation" id="surprised2" ease="smooth" interpolation="linear">
@@ -246,12 +246,6 @@
                 <state img="#-normal.png">What's the prize anyways? Does the winner confess their love?</state>
                 <state img="#-confident.png">This game is filled with beans to spill.</state>
                 <state img="#-normal.png">As an aspiring judge, I am always prepared.</state>
-            </case>
-        </trigger>
-
-        <trigger id="dealing_cards">
-            <case stage="6" oneShotId="1" priority="9999">
-                <state img="#-normal.png">AAAAAAHK!</state>
             </case>
         </trigger>
 
@@ -565,7 +559,7 @@
                 <state img="#-normal.png">Not a problem, I have some other things under here.</state>
             </case>
             <case stage="5">
-                <state img="#-strip.png">Kahk-kahk-kahk-kahk-kahk! There must be something else I'm wearing...</state>
+                <state img="custom:#-muststrip">Kahk-kahk-kahk-kahk-kahk! There must be something else I'm wearing...</state>
             </case>
             <case stage="6">
                 <state img="#-nervous.png">Kahk-kahk-kahk! I still hope no one saw my face.</state>
@@ -597,7 +591,7 @@
                 <state img="#-nervous.png">Kahk-kahk. This game went a lot better in my head.</state>
             </case>
             <case stage="5">
-                <state img="#-strip.png">Kahk-kahk-kahk-kahk! One moment. I know I brought some extra things...</state>
+                <state img="custom:#-muststrip">Kahk-kahk-kahk-kahk! One moment. I know I brought some extra things...</state>
             </case>
         </trigger>
 
@@ -619,8 +613,11 @@
             <case stage="3">
                 <state img="custom:#-surprised">Kahk-kahk-kahk! Give me time to look at what I have.</state>
             </case>
-            <case stage="4-5">
-                <state img="#-strip.png">Kahk-kahk-kahk-kahk! I keep losing. I know I have something left, like...</state>
+            <case stage="5">
+                <state img="custom:#-muststrip">Kahk-kahk-kahk-kahk! I keep losing. I know I have something left, like...</state>
+            </case>
+            <case stage="4">
+                <state img="custom:#-surprised">Kahk-kahk-kahk-kahk! This is going too fast, Give me a second to choose.</state>
             </case>
         </trigger>
 
@@ -644,7 +641,7 @@
                 <state img="#-strip.png">I'll take my skirt off... Ahk! I guess my whole dress.</state>
             </case>
             <case stage="5">
-                <state img="#-strip2.png">KAAAAHK!</state>
+                <state img="custom:#-stripping">...!</state>
             </case>
             <case stage="6">
                 <state img="#-strip.png">Kahk-kahk. My panties are all I have left.</state>
@@ -677,7 +674,7 @@
                 <state img="#-confident.png">When you are in the nude, it's better to cover your face. Sss, sss, sss.</state>
             </case>
             <case stage="6" id="34">
-                <state img="custom:#-afterstrip">...!</state>
+                <state img="#-normal.png">AAAAAAHK!</state>
             </case>
             <case stage="7">
                 <state img="#-normal.png">I know I have knee pads, but I keep them on for my own comfort.</state>
@@ -687,13 +684,13 @@
         </trigger>
 
         <trigger id="male_must_strip">
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="53">
                 <condition role="target" character="pit" stage="0-3" />
                 <state img="#-normal.png">Pit, more like, you play like shit.</state>
                 <state img="#-normal.png">I've always imagined my guardian angel was a perverted idiot. Are you my angel?</state>
                 <state img="#-camera.png">Be an angel, and show something devilish. Sss, sss, sss.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="52">
                 <condition role="target" character="kokichi" />
                 <state img="#-normal.png">You wear such an interesting outfit, ~name~. What sort of organization were you part of?</state>
                 <state img="#-confident.png">If you really have evil intentions, you shouldn't be so obvious about it, ~name~.</state>
@@ -733,33 +730,33 @@
         </trigger>
 
         <trigger id="female_must_strip">
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="36">
                 <condition role="target" character="natsuki" stage="0-4" />
                 <state img="#-confident.png">Sss, sss, sss. You probably are the "innocent" type of girl.</state>
                 <state img="#-normal.png">Throwing tantrums will only last until you take something off.</state>
                 <state img="#-confident.png">Don't you want to get ~player~'s attention? Sss, sss, sss.</state>
                 <state img="#-camera.png">There should be a manga about this. Stubborn schoolgirl exposed as a stripper.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="40">
                 <condition role="target" character="meia" stage="0-3" />
                 <state img="#-confident.png">Why would you want to be here anyways, ~name~. So Earth can be doomed as soon as you lose?</state>
                 <state img="#-normal.png">You're a space commander or whatever. Your choice of what to pick.</state>
                 <state img="#-box.png">Sometimes I pretend I'm in outerspace under here. It's smarter to use a cheap solution than, say, getting some space degree.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="37">
                 <condition role="target" character="nami" stage="0-3" />
                 <state img="#-camera.png">Everyone loves exposed cleavage. Press your arms together for me.</state>
                 <state img="#-confident.png">Take something off, and I shall claim it as my own treasure.</state>
                 <state img="#-camera.png">You're like half dressed already. I'm taking pics of whatever I see.</state>
                 <state img="#-normal.png">Sss, sss, sss. A good pirate never gets called out for such acts of failure.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="41">
                 <condition role="target" character="megumin" stage="0-3" />
                 <state img="#-camera.png">Take something off, but use some cool magic. Something big and explosive.</state>
                 <state img="#-confident.png">Isn't bad luck a common hex? Actually, I don't think anyone casted it on you.</state>
                 <state img="#-normal.png">You have so much power, and don't want to use it for cheating? Such a moron.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="51">
                 <condition role="target" character="akko" stage="0-3" />
                 <state img="#-camera.png">Can you try that spell which disintegrates all of your clothes?</state>
                 <state img="#-camera.png">A witch student in training? This should be a good to watch.</state>
@@ -767,111 +764,111 @@
                 <state img="#-confident.png">Sss, sss, sss. Who are the drama queens at your academy who would love to know about  this?</state>
                 <state img="#-camera.png">If I were a witch, being a journalist would be a lot more interesting, you know.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="44">
                 <condition role="target" character="jura" stage="0-3" />
                 <state img="#-confident.png">I guess deep down and to the surface, you're a blond bimbo.</state>
                 <state img="#-box.png">Don't threaten me with the massive alien jugs. Just take something off.</state>
                 <state img="#-camera.png">You really write all my articles yourself, ~name~.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="47">
                 <condition role="target" character="futaba" stage="0-3" />
                 <state img="#-normal.png">You look like a NEET. Are you sure you can strip?</state>
                 <state img="#-box.png">If you want to hide and be pervy, use a box like me.</state>
                 <state img="#-confident.png">Sss, sss, sss. Not so powerful without a computer.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="35">
                 <condition role="target" character="ryuko" stage="0-3" />
                 <state img="#-camera.png">I love to see a transformation. I know how this goes down.</state>
                 <state img="#-confident.png">A lot of people have seen you in ecchi scenarios. This should be no problem.</state>
                 <state img="#-normal.png">Stripping is basically your superpower. Go ahead and get stronger.</state>
                 <state img="#-camera.png">Hmm, what rumors should I spread at your school, ~name~?</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="31">
                 <condition role="target" character="zone-tan" stage="0-1" />
                 <state img="#-normal.png">You must've done it on purpose, though not because you wanted to get lewd.</state>
                 <state img="#-normal.png">According to exhibitionism laws, you are free to take off anything.</state>
                 <state img="#-flattered.png">Sss, sss, sss. Can I be your senpai who tells you what to do?</state>
                 <state img="#-confident.png">With your knowledge of mostly hentai, this will be a pretty easy game.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="48">
                 <condition role="target" character="emi" stage="0-2" />
                 <state img="#-confident.png">Sss, sss, sss. Did that school ever test for brain damage?</state>
                 <state img="#-camera.png">Going to disability school is hard enough. Why come here?</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="29">
                 <condition role="target" character="tharja" stage="0-1" />
                 <state img="#-confident.png">Do you plan taking off some of the darkness?</state>
                 <state img="#-box.png">If you wanted to be covered in gloominess, I'd buy a box, and never go mobile.</state>
                 <state img="#-normal.png">Is ~player~ into goth girls? You better give ~player~ what he wants, ~name~.</state>
                 <state img="#-camera.png">Will your dark magic constitute of deep embarrassment?</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="38">
                 <condition role="target" character="monika" stage="0-3" />
                 <state img="#-confident.png">What more do we expect from ~name~? She's a slut for ~player~.</state>
                 <state img="#-camera.png">I shall title this article ~name~'s failure of seducing ~player~.</state>
                 <state img="#-normal.png">Maybe you should've joined a more practical club. For instance, card games, and journalism.</state>
                 <state img="#-normal.png">If you don't remove something interesting, I will have you removed from the game, er, court.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="49">
                 <condition role="target" character="chun-li" stage="0-4" />
                 <state img="#-normal.png">If you want to blow off steam, take something off.</state>
                 <state img="#-confident.png">Sss, sss, sss. People fight better undressed, ~name~.</state>
                 <state img="#-normal.png">If you want justice, you must play dirty, ~name~.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="50">
                 <condition role="target" character="cammy" stage="0-3" />
                 <state img="#-camera.png">As a fighter in such revealing clothes, I'm ready to catch a wardrobe malfunction.</state>
                 <state img="#-confident.png">Sss, sss, sss. I knew people in the military were idiots.</state>
                 <state img="#-box.png">I swear, I'm not responsible for your loss.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="43">
                 <condition role="target" character="juri" stage="0-2" />
                 <state img="#-confident.png">Does your sadistic nature match your masochistic side?</state>
                 <state img="#-normal.png">Sss, sss, sss. So eager to lose. Are you like this when fighting too?</state>
                 <state img="#-box.png">Be turned on by my winning hand, not myself.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="45">
                 <condition role="target" character="jessie" stage="0-1" />
                 <state img="#-confident.png">I'll pay you with something big if you lose more. Sss, sss, sss.</state>
                 <state img="#-normal.png">Sss, sss, sss. I could see why you stuck with the "actress" profession.</state>
                 <state img="#-confident.png">What's the big deal of you stripping here? I can find pornstars stripping for free online.</state>
                 <state img="#-flattered.png">Can I join in this shooting? I will be the dominant one.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="39">
                 <condition role="target" character="misato" stage="0-3" />
                 <state img="#-confident.png">Captain, you have an issue. It can only be solved by stripping though.</state>
                 <state img="#-normal.png">Sss, sss, sss. I bet you weren't even drunk.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="32">
                 <condition role="target" character="starfire" stage="0-1" />
                 <state img="#-confident.png">Of course, someone unfamiliar with our planet would lose so easily.</state>
                 <state img="#-normal.png">Sss, sss, sss. I wouldn't trust you saving this planet, ~name~.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="34">
                 <condition role="target" character="sakura" stage="0-2" />
                 <state img="#-confident.png">Are you actually part of a band, or is it an act for a stripping career, ~name~?</state>
                 <state img="#-normal.png">You look as if someone is trying to kill you, ~name~. Relax, we're only ganging up on you through playing the game.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="33">
                 <condition role="target" character="sakura" stage="3-9" />
                 <state img="#-nervous.png">I hope you won't count your limbs as your clothes.</state>
                 <state img="#-normal.png">I wonder who was the person person that killed you, ~name~. I can be the judge for that case.</state>
                 <state img="#-nervous.png">If you wearing something like a flapper dress from the 1920s, I would've guessed you were a zombie in the first place.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="46">
                 <condition role="target" character="haru" stage="0-4" />
-                <state img="#-normal.png">There has been rumors about you, ~name~. Are you hiding some specific outfit under those clothes?</state>
+                <state img="#-normal.png">There have been rumors about you, ~name~. Are you hiding some specific outfit under those clothes?</state>
                 <state img="#-confident.png">Some people said they know a girl who looks like you, except wearing a mask. I'm just saying I should've worn one.</state>
                 <state img="#-normal.png">Do you have something heinous to show off? I know the gossip. You've been hanging out with bad boys.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="42">
                 <condition role="target" character="mahiru" stage="0-3" />
                 <state img="#-normal.png">Geez, it's your turn to strip, ~name~</state>
                 <state img="#-camera.png">I would steal your camera, but it's probably not as high quality as mine. &lt;i&gt;I hope what I said is true.&lt;/i&gt;</state>
                 <state img="#-camera.png">You could take some strip shots of me, ~name~. You just have to wait for me to lose.</state>
                 <state img="#-confident.png">I've got a word that you gave your panties to a boy at school. It would be funny to see you do it again.</state>
             </case>
-            <case stage="0-5">
+            <case stage="0-5" oneShotId="30">
                 <condition role="target" character="moon" />
                 <state img="#-nervous.png">Did I hear you right? You came here just to lose?</state>
                 <state img="#-nervous.png">Now that I know losing is your intention, this doesn't make me winning as fun.</state>
@@ -1060,6 +1057,12 @@
                 <condition role="target" character="moon" stage="1" />
                 <state img="#-shrug.png" marker="moonmanagement1">You have management? Someone's paying you to be here?</state>
                 <state img="#-normal.png" marker="moonmanagement2">It's scary to think that one could be so sex obsessed that they need actual workers to suppress someone.</state>
+            </case>
+            <case stage="0-5" oneShotId="27">
+                <condition role="target" character="panty" stage="1-3" />
+                <state img="#-shrug.png">I don't know what else I was expecting Panty to do in a place like this.</state>
+                <state img="#-nervous.png">Don't you have like ghosts to bust or something? We've seen enough of you already.</state>
+                <state img="#-camera.png">I'll take a pic for your supervisor. Either it will piss him off, or cause some very weird results back at your headquarters.</state>
             </case>
             <case stage="0-1">
                 <state img="#-angry.png">Hey, this will not make a good article!</state>
@@ -1844,7 +1847,7 @@
             <case stage="2-3">
                 <state img="#-flattered.png">For me? But I am barely undressed.</state>
                 <state img="#-camera.png">I will be labelling this under your name, ~name~.</state>
-                <state img="#-camera.png">No other options? Boo-hoo, how sad. Now smile to me.</state>
+                <state img="#-camera.png">No other options? Boo-hoo, how sad. Now smile for me.</state>
             </case>
             <case stage="6-7">
                 <state img="#-camera.png">Kahk-kahk. I just want my camera for one second.</state>
@@ -1980,7 +1983,7 @@
                 <state img="#-confident.png">I'm glad I have this box. I could do my own flash, and no one would ever know.</state>
             </case>
             <case stage="2-4">
-                <state img="#-surprised.png">Someone is getting lewd here? I need to see this for my own experiences.</state>
+                <state img="custom:#-surprised">Someone is getting lewd here? I need to see this for my own experiences.</state>
                 <state img="#-camera.png">I'm usually stealthy with the setup, but...</state>
             </case>
             <case stage="9">
@@ -2043,7 +2046,7 @@
                 <state img="#-confident.png">I will be the judge for a moment. I'm not making a judgement about what I see though.</state>
             </case>
             <case stage="2-4">
-                <state img="#-camera.png">I've taken panty shots before. This is literally in my face.</state>
+                <state img="#-camera.png">I've taken panty shots before, but this is literally in my face.</state>
                 <state img="#-camera.png">I always save a copy for myself to keep.</state>
             </case>
             <case stage="7">
