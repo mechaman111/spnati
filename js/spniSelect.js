@@ -135,6 +135,7 @@ var selectableGroups = loadedGroups;
 
 /** Should the individual selection view be in "Testing" mode? */
 var individualSelectTesting = false;
+var individualSelectSeparatorIndex = null;
 
 /** Are the default fill suggestions using Testing opponents? */
 var suggestedTestingOpponents = undefined;
@@ -272,6 +273,7 @@ function loadListingFile () {
 		}
         
         if (--outstandingLoads == 0) {
+            loadedOpponents = loadedOpponents.filter(Boolean); // Remove any empty slots should an opponent fail to load
             $(".title-menu-buttons-container>div").removeAttr("hidden");
             $("#title-load-container").hide();
             
@@ -629,13 +631,11 @@ function updateIndividualSelectSort() {
     // first remove all separators
     $(".card-separator").remove();
     
-    var ordered = loadedOpponents.slice();
-
     /* sort opponents */
     // Since ordered is always initialized here with featured order,
     // check if a different sorting mode is selected, and if yes, sort it.
     if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
-        ordered.sort(sortingOptionsMap[sortingMode]);
+        loadedOpponents.sort(sortingOptionsMap[sortingMode]);
     }
     
     var testingFirst = individualSelectTesting && (sortingMode === "Featured" || sortingMode === "Recently Updated");
@@ -645,13 +645,12 @@ function updateIndividualSelectSort() {
          * As special cases, when using these sort modes in the Testing view,
          * additionally sort all Testing opponents before main-roster opponents.
          */
-        ordered.sort(sortTestingOpponents);
+        loadedOpponents.sort(sortTestingOpponents);
     }
-    
-    var cutoff = false;
 
-    ordered.forEach(function (opp, index) {
-        if (!cutoff && 
+    individualSelectSeparatorIndex = null;
+    loadedOpponents.forEach(function (opp, index) {
+        if (individualSelectSeparatorIndex === null &&
             /* Separate Testing from other types if they come before others in Testing view */
             ((testingFirst && opp.status !== "testing" && players.countTrue() > 1)
             /* Separate out characters with no targets if using Targeted sort */
@@ -663,11 +662,14 @@ function updateIndividualSelectSort() {
             && !individualSelectTesting && opp.lastUpdated === 0))) {
             
             $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
-            cutoff = true;
+            individualSelectSeparatorIndex = index;
         }
         
         $(opp.selectionCard.mainElem).appendTo($indivSelectionCardContainer);
     });
+    if (individualSelectSeparatorIndex !== null) {
+        updateIndividualSelectVisibility();
+    }
 }
 
 $('#individual-select-screen .sort-filter-field').on('input', function () {
@@ -675,11 +677,18 @@ $('#individual-select-screen .sort-filter-field').on('input', function () {
 });
 
 function updateIndividualSelectVisibility (autoclear) {
-    var anyVisible = false;
-    loadedOpponents.forEach(function (opp) {
+    var anyVisible = false, visibleAboveSep = false, visibleBelowSep = false;
+    loadedOpponents.forEach(function (opp, index) {
         if (opp.selectionCard.isVisible(individualSelectTesting, false)) {
             $(opp.selectionCard.mainElem).show();
             anyVisible = true;
+            if (individualSelectSeparatorIndex !== null) {
+                if (index < individualSelectSeparatorIndex) {
+                    visibleAboveSep = true;
+                } else {
+                    visibleBelowSep = true;
+                }
+            }
         } else {
             $(opp.selectionCard.mainElem).hide();
         }
@@ -691,6 +700,8 @@ function updateIndividualSelectVisibility (autoclear) {
         clearSearch();
         return;
     }
+
+    $(".card-separator").toggle(visibleAboveSep && visibleBelowSep);
 }
 
 /** Is the individual select screen locked to Testing or Main Roster mode? */
