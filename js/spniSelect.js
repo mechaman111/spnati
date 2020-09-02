@@ -659,7 +659,12 @@ function updateIndividualSelectSort() {
             /* Separate out characters with no data if using Recently Updated sort
                Don't do this for Testing view as the bar has another meaning */
             || (sortingMode === "Recently Updated"
-            && !individualSelectTesting && opp.lastUpdated === 0))) {
+                && !individualSelectTesting && opp.lastUpdated === 0)
+            /* Separate characters with a release number from characters without one */
+            || (sortingMode === "Newest"
+                && opp.release < Infinity)
+            || (sortingMode === "Oldest"
+                && opp.release == Infinity))) {
             
             $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
             individualSelectSeparatorIndex = index;
