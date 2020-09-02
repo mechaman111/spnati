@@ -127,7 +127,6 @@ var metaFile = "meta.xml";
 
 /* opponent information storage */
 var loadedOpponents = [];
-var selectableOpponents = loadedOpponents;
 var hiddenOpponents = [];
 var loadedGroups = [];
 var selectableGroups = loadedGroups;
@@ -612,7 +611,7 @@ function filterOpponent(opp, name, source, creator, tag) {
  * Filters the list of selectable opponents based on those
  * already selected and performs search logic.
  ************************************************************/
-function updateIndividualSelectFilters(autoclear) {
+function updateIndividualSelectFilters() {
     var name = $searchName.val().toLowerCase();
     var source = $searchSource.val().toLowerCase();
     var creator = $searchCreator.val().toLowerCase();
@@ -621,20 +620,8 @@ function updateIndividualSelectFilters(autoclear) {
     // Array.prototype.filter automatically skips empty slots
     loadedOpponents.forEach(function (opp) {
         opp.selectionCard.setFiltered(!filterOpponent(opp, name, source, creator, tag));
-
-        if (opp.selectionCard.isVisible(individualSelectTesting, false)) {
-            $(opp.selectionCard.mainElem).show();
-        } else {
-            $(opp.selectionCard.mainElem).hide();
-        }
     });
-
-    // If a unique match was made, automatically clear the search so
-    // another opponent can be found more quickly.
-    if (autoclear && (name != null || source != null) && selectableOpponents.length == 0) {
-        clearSearch();
-        return;
-    }
+    updateIndividualSelectVisibility(false);
 }
 
 /** Updates the sort order of opponents on the individual select screen. */
@@ -687,14 +674,23 @@ $('#individual-select-screen .sort-filter-field').on('input', function () {
     updateIndividualSelectFilters();
 });
 
-function updateIndividualSelectVisibility() {
+function updateIndividualSelectVisibility (autoclear) {
+    var anyVisible = false;
     loadedOpponents.forEach(function (opp) {
         if (opp.selectionCard.isVisible(individualSelectTesting, false)) {
             $(opp.selectionCard.mainElem).show();
+            anyVisible = true;
         } else {
             $(opp.selectionCard.mainElem).hide();
         }
     });
+
+    // If a unique match was made, automatically clear the search so
+    // another opponent can be found more quickly.
+    if (autoclear && !anyVisible) {
+        clearSearch();
+        return;
+    }
 }
 
 /** Is the individual select screen locked to Testing or Main Roster mode? */
@@ -706,7 +702,7 @@ function isIndividualSelectViewTypeLocked() {
  * Update displayed epilogue badges for opponents on the individual
  * selection screen.
  */
-function updateIndividualEpilogueBadges (autoclear) {
+function updateIndividualEpilogueBadges () {
     loadedOpponents.forEach(function(opp) {
         if (opp.endings) {
             opp.selectionCard.updateEpilogueBadge();
@@ -750,8 +746,8 @@ function showIndividualSelectionScreen() {
     if (sortingMode === "Talked to by selected" || individualSelectTesting) {
         updateIndividualSelectSort();
     }
-     
-    updateIndividualSelectVisibility();
+
+    updateIndividualSelectVisibility(true);
 
     /* Make sure the user doesn't have target-count sorting set if
      * the amount of loaded opponents drops to 0. */
