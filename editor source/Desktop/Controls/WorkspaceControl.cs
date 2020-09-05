@@ -119,7 +119,7 @@ namespace Desktop
 				if (!_activated)
 				{
 					tabSidebarActivities.SelectedTab = tab;
-					splitContainer1.SplitterDistance = Math.Min(splitContainer1.Width - 10, splitContainer1.Width - Math.Max(100, activity.SidebarWidth));
+					splitContainer1.SplitterDistance = Math.Max(100, Math.Min(splitContainer1.Width - 10, splitContainer1.Width - Math.Max(100, activity.SidebarWidth)));
 					_activated = true;
 				}
 			}
