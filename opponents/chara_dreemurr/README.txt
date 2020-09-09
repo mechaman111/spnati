@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited August 26 2020
+README edited September 8 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -236,10 +236,8 @@ ADRIEN
 
 AELLA
 -Responds to Aella's question about adventures. For some reason, this is also a Pinkie Pie case?!?!
--Responds to Aella asking Chara if she's a demon.
--Responds to Aella warning Chara to behave.
--Responds to Aella mentioning she has sewing magic.
--Responds to Aella saying Chara looks good for an animate corpse.
+-Responds to Aella asking Chara if she's a demon and subsequent dialogue.
+-Responds to Aella mentioning she has sewing magic and subsequent dialogue.
 
 AIMEE
 -Responds to Aimee shooting her clothes off.
@@ -279,6 +277,9 @@ TOYOTA SPRINTER
 BERNADETTA
 -Response to Bernadetta if Chara loses.
 
+BI
+-Response to Bi doing anything.
+
 BROCK
 -Responds to Brock launching a missile.
 -Responds to Brock getting hit by a missile.
@@ -316,6 +317,9 @@ GALATEA
 -Responds to Galatea having to strip with rock puns.
 -Responds to Galatea complaining that Chara should stop joking about her.
 
+JURA
+-Responses as Chara loses.
+
 PRINCESS JASMINE
 -Responds to Princess Jasmine revealing her identity.
 
@@ -329,6 +333,7 @@ JOETTA
 -Responds to the first time Joetta does a 'sleight of hand' strip.
 -Responds to Joetta's Hand=Any Stage jokes that contain puns.
 -Responds with her own pun to Joetta, if Chara has responded to enough of Joetta's puns.
+-Responds to Joetta noting Chara likes her jokes.
 
 JOTARO
 -Responds the first time Jotaro uses his Stand powers to strip.
@@ -383,6 +388,7 @@ METTATON
 
 MIKO
 -Back and forth when Miko or Chara are losing.
+-Case to handle Miko having gone bi-bye.
 
 MULAN
 -Responds to Mulan's 'Fapping' joke.
@@ -417,6 +423,7 @@ REMILIA
 REVY
 -Responds to Revy's question about killing people, and subsequent dialogue.
 -Responds to Revy post-Meia fight.
+-Responses as Chara loses.
 
 RIN
 -Responds to Rin showing her lack of arms.
