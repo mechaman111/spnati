@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited September 8 2020
+README edited September 12 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -324,7 +324,7 @@ PRINCESS JASMINE
 -Responds to Princess Jasmine revealing her identity.
 
 JASON
--Back and forth as Jason is losing.
+-Back and forth as Jason or Chara are losing.
 
 JIM
 -Back and forth as either Raynor or Chara are losing.
@@ -452,6 +452,9 @@ SPOOKY
 -Responds to Spooky or Chara losing.
 -Responds to Spooky talking about not being able to be hit.
 -Responds to Spooky makingu underwear.
+
+STREAMING-CHAN
+-Responds to Streaming-chan's interview.
 
 THARJA
 -Responds to Tharja cursing Jessie.
