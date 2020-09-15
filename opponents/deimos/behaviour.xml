@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 3:46:40 PM on September 11, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 8:43:32 AM on September 15, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Deimos</first>
@@ -41,7 +41,9 @@
         <tag>fighter</tag>
         <tag>madness_combat</tag>
     </tags>
-    <nicknames />
+    <nicknames>
+        <nickname for="laevatein">Laev</nickname>
+    </nicknames>
     <stylesheet>styles.css</stylesheet>
 
     <start />
@@ -178,6 +180,10 @@
             <case stage="0-8" priority="155">
                 <condition role="other" character="meia" stage="3" timeInStage="0" />
                 <state img="#-visible_confusion.png" marker="MeiaRing">...What's up with that ring, anyway? You married?</state>
+            </case>
+            <case stage="0-8" priority="155">
+                <condition role="other" character="meia" saidMarker="deimos_ring" />
+                <state img="#-visible_confusion.png" marker="MeiaRingFollowup">That ring's... a gun, or something? Seems kinda small.</state>
             </case>
             <case stage="0-8" id="8" totalRounds="3-" priority="152">
                 <condition role="other" character="pyrrha" stage="3" sayingMarker="too_serious_joke" />
@@ -393,6 +399,21 @@
         </trigger>
 
         <trigger id="must_strip">
+            <case stage="0-7">
+                <condition role="self" saidMarker="Pyrrha_famous" />
+                <condition role="other" character="pyrrha" stage="0-6" sayingMarker="deimos_nevada" />
+                <state img="#-he_died_again_didnt_he.png" marker="PyrrhaNevada">It's in the middle of the US, and the threat is... kind of reality itself. It's pretty wild.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="self" saidMarker="Pyrrha_friendship" />
+                <condition role="other" character="pyrrha" stage="0-6" sayingMarker="deimos_comrade" />
+                <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" marker="Pyrrha_Sanford">Yep. My mate Sanford's always got my back, no matter what. And I've got his, in every mission.</state>
+            </case>
+            <case stage="0-7">
+                <condition role="self" saidMarker="Pyrrha_jokes" />
+                <condition role="other" character="pyrrha" stage="0-6" sayingMarker="deimos_darkjoke" />
+                <state img="#-pffhah.png" marker="Pyrrha_engineer_mask">All the time! Last mission I went on with Sanford, I took an ATP engineer's mask and pretended to be one. He smacked me over the head for it, but it sure lightened the mood.</state>
+            </case>
             <case stage="0">
                 <condition role="other" character="jura" stage="0-6" sayingMarker="deimos0" />
                 <state img="#-whatever.png" marker="Jura0">Okay, now, for starters---I have &lt;i&gt;no&lt;/i&gt; clue how or why I'm here.</state>
@@ -433,6 +454,14 @@
             <case stage="0-7">
                 <condition role="other" character="jason" sayingMarker="Deimos0" />
                 <state img="#-this_is_called_beta_bait.png" marker="JasonMerc">Damn straight I do, babe! It's... it's kind of in the job description.</state>
+            </case>
+            <case stage="2">
+                <condition role="other" character="jim" sayingMarker="Deimos_strip2a" />
+                <state img="#-he_died_again_didnt_he.png" marker="JimNevada">Yeah, Nevada's been a shithole as long as I remember. Hell, I was `born' &lt;i&gt;because&lt;/i&gt; it's a shithole.</state>
+            </case>
+            <case stage="3">
+                <condition role="other" character="jim" sayingMarker="Deimos_strip3a" />
+                <state img="#-comms_are_down.png" marker="JimMercWork">I would be, Jimmy, but I'm still tied to my current employers. If I crossed them, I'd be toast.</state>
             </case>
             <case stage="0">
                 <condition role="other" character="saki_zls" />
@@ -524,6 +553,10 @@
                 <state img="#-strip.png" marker="SakiHank">It's cool. Come to think of it, I do know a guy who died a couple of times--and got a new set of bandages each time.</state>
             </case>
             <case stage="0">
+                <condition role="other" character="jason" />
+                <state img="#-strip.png" marker="JasonWeapons">I stick to guns, mostly. Assault rifles, machine guns, SMGs... On missions, I usually just grab whatever's available.</state>
+            </case>
+            <case stage="0">
                 <state img="#-strip.png">Y'know, I feel like this satchel &lt;i&gt;could&lt;/i&gt; be useful, but all I ever put in it is like... one tablet.</state>
                 <state img="#-strip.png">It's not like I use this satchel much. There are so many weapons just lying around in Nevada, I never have to bring my own.</state>
             </case>
@@ -591,6 +624,10 @@
                 <state img="#-stripped.png">My employers keep track of my kills and give me a live report. Don't ask how they know---they just kind of do. </state>
             </case>
             <case stage="1">
+                <condition role="other" character="saki_zls" />
+                <state img="#-stripped.png" marker="Saki_Hankdeaths">Pretty sure he's done it so much, he's used to it. He's died on more missions than he hasn't.</state>
+            </case>
+            <case stage="1">
                 <state img="#-stripped.png">So, ain't like it's a big loss. Feels kind of good to have it off my shoulders.</state>
                 <state img="#-stripped.png" marker="Hank_belts">Just be thankful you're facing me, and not Hank or something. He'd be stripping belts for the next nine rounds.</state>
             </case>
@@ -650,6 +687,10 @@
             <case stage="0-8 10">
                 <condition role="target" character="yusuke" stage="0" />
                 <state img="#-whatever.png" marker="YusukeArt1">You're one of those artsy types, right? Can't say I'm big on art.</state>
+            </case>
+            <case stage="0-8 10">
+                <condition role="target" character="dust" stage="0" />
+                <state img="#-visible_confusion.png" marker="DustHat">You... fight with that hat on? And you haven't died yet?</state>
             </case>
             <case stage="0-5">
                 <state img="#-smuggy_wuggy_uwu_uwu_uwu.png">Lose a round, take something off. Solid set of rules, there.</state>
@@ -738,6 +779,22 @@
             <case stage="0-8 10">
                 <condition role="target" character="meia" stage="1" />
                 <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" marker="MeiaFun">So, for a start... what do chicks like you do for fun?</state>
+            </case>
+            <case stage="0-8 10">
+                <condition role="target" character="pyrrha" stage="0" />
+                <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" marker="Pyrrha_Armor">Man, that armor looks expensive. You must be loaded, huh?</state>
+            </case>
+            <case stage="0-8 10">
+                <condition role="target" character="jason" stage="1" />
+                <state img="#-visible_confusion.png" marker="Jason_reason">Ya don't really strike me as the type to go out and play card games with strangers, Jason. There a reason you're here? </state>
+            </case>
+            <case stage="0-8 10">
+                <condition role="target" character="jason" stage="2" />
+                <state img="#-pffhah.png" marker="Jason_Hank">Y'know, you'd probably get along really well with Hank. The guy likes killing and fighting more than he likes living.</state>
+            </case>
+            <case stage="0-8 10">
+                <condition role="target" character="laevatein" stage="1" />
+                <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" marker="LaevHair">Yo, Laev, is your hair that color naturally? Ain't ever seen hair like that before.</state>
             </case>
             <case stage="0-8 10">
                 <condition filter="tall" role="target" stage="0" />
@@ -970,6 +1027,7 @@
                 <state img="#-pffhah.png">Doing great, champ. Now keep losing!</state>
                 <state img="#-this_is_called_beta_bait.png">Better start thinking what you're gonna toss next, 'cause I'm gunning for ya!</state>
                 <state img="#-rock_out_with_your_doc_out.png">Eyes on the fucking prize, champ!</state>
+                <state img="#-pffhah.png">Hey, being a loser ain't that bad. 's long as I m the winner.</state>
             </case>
             <case stage="9">
                 <state img="#-whatever.png">That's alright. Not like I was gonna jerk it to you, anyway.</state>
@@ -1598,6 +1656,15 @@
                 <condition role="target" character="amy" stage="0" />
                 <state img="#-rock_out_with_your_doc_out.png" marker="AmySinger2">But you've got an awesome voice for it, girl! I could totally get used to hearing that.</state>
             </case>
+            <case stage="0-8 10">
+                <condition role="target" character="jim" stage="0" />
+                <state img="#-smuggy_wuggy_uwu_uwu_uwu.png" marker="JimMAG">To be fair, a lot of muscle ain't always good. Can make you a bigger target. It's why MAGs die as much as they do. </state>
+            </case>
+            <case stage="0-8 10">
+                <condition role="target" character="meia" stage="1" />
+                <state img="#-pffhah.png" marker="MeiaPirates">I'll tell ya right now, that exercise is paying off! Y'know, that stuff actually sounds pretty tame for `pirates'.</state>
+                <state img="#-pffhah.png" marker="MeiaPirates">I could tell you work out just lookin' at that bod! But, honestly, I almost expected something way crazier from pirates.</state>
+            </case>
             <case stage="0-7">
                 <test expr="~clothing~" value="belt" />
                 <state img="#-whatever.png">You see a lot of belts on people in Nevada. Like, a lot. More than anything else.</state>
@@ -1629,6 +1696,10 @@
             <case stage="0-8 10">
                 <condition role="target" character="jason" stage="1" />
                 <state img="#-pffhah.png" marker="JasonMachete">Uh, nevermind! Looking good there, girl! And boy, am I glad that machete's gone!</state>
+            </case>
+            <case stage="0-8 10">
+                <condition role="target" character="laevatein" stage="1" />
+                <state img="#-rock_out_with_your_doc_out.png" marker="LaevBadassSword">Yo, that's badass! Lighting fools on fire as you re cutting them up! Where'd you get shit like that?</state>
             </case>
             <case stage="0-8 10" oneShotId="6">
                 <condition role="target" character="human" />
