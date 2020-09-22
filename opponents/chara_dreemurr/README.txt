@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited September 12 2020
+README edited September 22 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -284,6 +284,7 @@ BROCK
 -Responds to Brock launching a missile.
 -Responds to Brock getting hit by a missile.
 -Responds to Brock explaining how he survived getting hit by a missile.
+-Responds to Brock as she is losing.
 
 CHAZZ
 -Responds to Chazz attempting to leave the game.
@@ -337,6 +338,9 @@ JOETTA
 
 JOTARO
 -Responds the first time Jotaro uses his Stand powers to strip.
+
+JURA
+-Responses as Chara is losing.
 
 KIZUNA
 -Responds when Kizuna is in her masturbation stage, but using her 'downloading' poses.
@@ -441,6 +445,7 @@ SAKI (ZLS)
 SAKURA
 -Responds to Sakura's head falling off.
 -Responds to Sakura removing her makeup.
+-Responses as either of them are losing.
 
 SHANTAE
 -Responds to Shantae transforming into a monkey.
