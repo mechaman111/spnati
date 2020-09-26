@@ -135,7 +135,7 @@ var selectableGroups = loadedGroups;
 
 /** Should the individual selection view be in "Testing" mode? */
 var individualSelectTesting = false;
-var individualSelectSeparatorIndex = null;
+var individualSelectSeparatorIndices = [];
 
 /** Are the default fill suggestions using Testing opponents? */
 var suggestedTestingOpponents = undefined;
@@ -650,31 +650,31 @@ function updateIndividualSelectSort() {
         loadedOpponents.sort(sortTestingOpponents);
     }
 
-    individualSelectSeparatorIndex = null;
+    individualSelectSeparatorIndices = [];
+    var cutFn
+    /* Separate Testing from other types if they come before others in Testing view */
+        = testingFirst                  ? function(opp) { return opp.status !== "testing"; }
+    /* Separate out characters with no data if using Recently Updated sort */
+        : sortingMode == "-lastUpdated" ? function(opp) { return opp.lastUpdated === 0; }
+    /* Separate out characters with no targets if using Targeted sort */
+        : sortingMode == "target"       ? function(opp) { return opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined) === 0; }
+    /* Separate characters with a release number from characters without one */
+        : sortingMode == "newest" || sortingMode == "oldest" ? function(opp) { return opp.release <= 0 ? -1 : opp.release == Infinity ? 1 : 0; }
+        : null;
+
+    var currentPartition = undefined;
     loadedOpponents.forEach(function (opp, index) {
-        if (individualSelectSeparatorIndex === null &&
-            /* Separate Testing from other types if they come before others in Testing view */
-            ((testingFirst && opp.status !== "testing" && players.countTrue() > 1)
-            /* Separate out characters with no targets if using Targeted sort */
-            || (sortingMode === "target" && players.countTrue() > 1
-            && opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined) === 0)
-            /* Separate out characters with no data if using Recently Updated sort
-               Don't do this for Testing view as the bar has another meaning */
-            || (sortingMode === "-lastUpdated"
-                && !individualSelectTesting && opp.lastUpdated === 0)
-            /* Separate characters with a release number from characters without one */
-             || (sortingMode == "newest"
-                 && opp.release < Infinity)
-             || (sortingMode == "oldest"
-                 && opp.release == Infinity))) {
-            
-            $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
-            individualSelectSeparatorIndex = index;
+        if (cutFn !== null) {
+            var newPartition = cutFn(opp);
+            if (currentPartition !== undefined && newPartition != currentPartition) {
+                $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
+                individualSelectSeparatorIndices.push(index);
+            }
+            currentPartition = newPartition;
         }
-        
         $(opp.selectionCard.mainElem).appendTo($indivSelectionCardContainer);
     });
-    if (individualSelectSeparatorIndex !== null) {
+    if (individualSelectSeparatorIndices.length > 0) {
         updateIndividualSelectVisibility();
     }
 }
@@ -684,18 +684,15 @@ $('#individual-select-screen .sort-filter-field').on('input', function () {
 });
 
 function updateIndividualSelectVisibility (autoclear) {
-    var anyVisible = false, visibleAboveSep = false, visibleBelowSep = false;
+    var anyVisible = false, visibleAboveSep = Array(individualSelectSeparatorIndices.length + 1), sepIdx = 0;
     loadedOpponents.forEach(function (opp, index) {
         if (opp.selectionCard.isVisible(individualSelectTesting, false)) {
             $(opp.selectionCard.mainElem).show();
             anyVisible = true;
-            if (individualSelectSeparatorIndex !== null) {
-                if (index < individualSelectSeparatorIndex) {
-                    visibleAboveSep = true;
-                } else {
-                    visibleBelowSep = true;
-                }
+            while (sepIdx < individualSelectSeparatorIndices.length && index > individualSelectSeparatorIndices[sepIdx]) {
+                sepIdx++;
             }
+            visibleAboveSep[sepIdx] = true;
         } else {
             $(opp.selectionCard.mainElem).hide();
         }
@@ -708,7 +705,10 @@ function updateIndividualSelectVisibility (autoclear) {
         return;
     }
 
-    $(".card-separator").toggle(visibleAboveSep && visibleBelowSep);
+    individualSelectSeparatorIndices.forEach(function(pos, i) {
+        // Important to send a boolean to toggle().
+        $(".card-separator").eq(i).toggle(!!visibleAboveSep[i] && !!visibleAboveSep[i+1]);
+    });
 }
 
 /** Is the individual select screen locked to Testing or Main Roster mode? */
