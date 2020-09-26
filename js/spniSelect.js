@@ -97,7 +97,7 @@ $searchModal.on('shown.bs.modal', function() {
 	$searchName.focus();
 });
 
-$sortingOptionsItems = $(".sort-dropdown-options li");
+$sortingOptionsItems = $(".sort-dropdown-options li a");
 
 $groupSearchModal = $('#group-search-modal');
 $groupSearchGroupName = $("#group-search-group-name");
@@ -145,16 +145,9 @@ var individualPage = 0;
 var groupPage = 0;
 var chosenGender = -1;
 var chosenGroupGender = -1;
-var sortingMode = "Featured";
+var sortingMode = "listingIndex";
 var sortingOptionsMap = {
-    "Recently Updated": sortOpponentsByMultipleFields("-lastUpdated"),
-    "Newest" : sortOpponentsByMultipleFields("-release"),
-    "Oldest" : sortOpponentsByMultipleFields("release"),
-    "Most Layers" : sortOpponentsByMultipleFields("-layers"),
-    "Fewest Layers" : sortOpponentsByMultipleFields("layers"),
-    "Name (A-Z)" : sortOpponentsByMultipleFields("first", "last"),
-    "Name (Z-A)" : sortOpponentsByMultipleFields("-first", "-last"),
-    "Talked to by selected" : sortOpponentsByMostTargeted(),
+    target: sortOpponentsByMostTargeted(),
 };
 var groupCreditsShown = false;
 
@@ -245,7 +238,7 @@ function loadListingFile () {
 	var onComplete = function(opp) {
 		if (opp) {
 			if (opp.id in opponentMap) {
-				loadedOpponents[opponentMap[opp.id]] = opp;
+				loadedOpponents[opp.listingIndex = opponentMap[opp.id]] = opp;
                 opp.searchTags.forEach(function(tag) {
                     tagSet[tag] = true;
                 });
@@ -636,9 +629,11 @@ function updateIndividualSelectSort() {
     // check if a different sorting mode is selected, and if yes, sort it.
     if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
         loadedOpponents.sort(sortingOptionsMap[sortingMode]);
+    } else {
+        loadedOpponents.sort(sortOpponentsByMultipleFields(sortingMode.split(/\s+/)));
     }
     
-    var testingFirst = individualSelectTesting && (sortingMode === "Featured" || sortingMode === "Recently Updated");
+    var testingFirst = individualSelectTesting && (sortingMode === "listingIndex" || sortingMode === "-lastUpdated");
     
     if (testingFirst) {
         /*
@@ -654,16 +649,16 @@ function updateIndividualSelectSort() {
             /* Separate Testing from other types if they come before others in Testing view */
             ((testingFirst && opp.status !== "testing" && players.countTrue() > 1)
             /* Separate out characters with no targets if using Targeted sort */
-            || (sortingMode === "Talked to by selected" && players.countTrue() > 1
+            || (sortingMode === "target" && players.countTrue() > 1
             && opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined) === 0)
             /* Separate out characters with no data if using Recently Updated sort
                Don't do this for Testing view as the bar has another meaning */
-            || (sortingMode === "Recently Updated"
+            || (sortingMode === "-lastUpdated"
                 && !individualSelectTesting && opp.lastUpdated === 0)
             /* Separate characters with a release number from characters without one */
-            || (sortingMode === "Newest"
+            || (sortingMode === "-release"
                 && opp.release < Infinity)
-            || (sortingMode === "Oldest"
+            || (sortingMode === "release"
                 && opp.release == Infinity))) {
             
             $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
@@ -759,7 +754,7 @@ function showIndividualSelectionScreen() {
      * The visibility of characters might change, however, depending on the
      * view type and what characters have already been selected.
      */
-    if (sortingMode === "Talked to by selected" || individualSelectTesting) {
+    if (sortingMode === "target" || individualSelectTesting) {
         updateIndividualSelectSort();
     }
 
@@ -767,10 +762,14 @@ function showIndividualSelectionScreen() {
 
     /* Make sure the user doesn't have target-count sorting set if
      * the amount of loaded opponents drops to 0. */
-    if (sortingMode === "Talked to by selected") {
-        if (players.countTrue() <= 1) {
-            setSortingMode("Featured");
+    var $talkedToOption = $('.sort-dropdown-options>li:has(a[data-value=target])');
+    if (players.countTrue() <= 1) {
+        $talkedToOption.hide();
+        if (sortingMode === "target") {
+            setSortingMode("listingIndex");
         }
+    } else {
+        $talkedToOption.show();
     }
 
     updateIndividualEpilogueBadges();
@@ -785,9 +784,9 @@ function toggleIndividualSelectView() {
 
     /* Switch to the default sort mode for the selected view. */
     if (individualSelectTesting) {
-        setSortingMode("Recently Updated");
+        setSortingMode("-lastUpdated");
     } else {
-        setSortingMode("Featured");
+        setSortingMode("listingIndex");
     }
 
     updateSelectionVisuals();
@@ -1002,7 +1001,7 @@ function loadDefaultFillSuggestions () {
          * of the list.
          */
         if (individualSelectTesting) {
-            possiblePicks.sort(sortOpponentsByMultipleFields("lastUpdated"));
+            possiblePicks.sort(sortOpponentsByField("lastUpdated"));
         }
 
         fillPlayers.push(possiblePicks.pop());
@@ -1431,10 +1430,9 @@ function sortOpponentsByField(field) {
  * Example:
  *   // sorts myArr by each element's number of layers (low to high),
  *   // and for elements whose layers are equivalent, sort them by first name (Z-A)
- *   myArr.sort(sortOpponentsByMultipleFields("layers", "-first"));
+ *   myArr.sort(sortOpponentsByMultipleFields(["layers", "-first"]));
  */
-function sortOpponentsByMultipleFields() {
-    var fields = arguments; // retrieve the args passed in
+function sortOpponentsByMultipleFields(fields) {
     return function(opp1, opp2) {
         var i = 0;
         var compare = 0;
@@ -1486,13 +1484,14 @@ function sortTestingOpponents(opp1, opp2) {
 
 function setSortingMode(mode) {
     sortingMode = mode;
-    $("#sort-dropdown-selection").html(sortingMode); // change the dropdown text to the selected option
+    // change the dropdown text to the selected option
+    $("#sort-dropdown-selection").html($sortingOptionsItems.filter(function() { return $(this).data('value') == mode; }).html()); 
     updateIndividualSelectSort();
 }
 
 /** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */
 $sortingOptionsItems.on("click", function(e) {
-    setSortingMode($(this).find('a').html());
+    setSortingMode($(this).data('value'));
 });
 
 /************************************************************
