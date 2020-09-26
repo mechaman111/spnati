@@ -334,13 +334,18 @@ function loadListingFile () {
             var oppStatus = $(this).attr('status');
             var id = $(this).text();
             var releaseNumber = $(this).attr('release');
+            if (releaseNumber === undefined) {
+                releaseNumber = (oppStatus == "testing" ? Infinity
+                                 : oppStatus == "incomplete" ? -1
+                                 : 0);
+            }
             var highlightStatus = $(this).attr('highlight');
 
             if (available[id]) {
                 outstandingLoads++;
                 totalLoads++;
                 opponentMap[id] = oppDefaultIndex++;
-                loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus).then(onComplete).catch(function (err) {
+                loadOpponentMeta(id, oppStatus, Number(releaseNumber), highlightStatus).then(onComplete).catch(function (err) {
                     console.error("Could not load metadata for " + id + ":");
                     captureError(err);
                 });
