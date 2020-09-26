@@ -689,7 +689,7 @@ function updateIndividualSelectVisibility (autoclear) {
         if (opp.selectionCard.isVisible(individualSelectTesting, false)) {
             $(opp.selectionCard.mainElem).show();
             anyVisible = true;
-            while (sepIdx < individualSelectSeparatorIndices.length && index > individualSelectSeparatorIndices[sepIdx]) {
+            while (sepIdx < individualSelectSeparatorIndices.length && index >= individualSelectSeparatorIndices[sepIdx]) {
                 sepIdx++;
             }
             visibleAboveSep[sepIdx] = true;
