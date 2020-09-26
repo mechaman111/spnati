@@ -148,6 +148,8 @@ var chosenGroupGender = -1;
 var sortingMode = "listingIndex";
 var sortingOptionsMap = {
     target: sortOpponentsByMostTargeted(),
+    oldest: sortOpponentsByMultipleFields(["release", "-listingIndex"]),
+    newest: sortOpponentsByMultipleFields(["-release", "listingIndex"]),
 };
 var groupCreditsShown = false;
 
@@ -661,10 +663,10 @@ function updateIndividualSelectSort() {
             || (sortingMode === "-lastUpdated"
                 && !individualSelectTesting && opp.lastUpdated === 0)
             /* Separate characters with a release number from characters without one */
-            || (sortingMode === "-release"
-                && opp.release < Infinity)
-            || (sortingMode === "release"
-                && opp.release == Infinity))) {
+             || (sortingMode == "newest"
+                 && opp.release < Infinity)
+             || (sortingMode == "oldest"
+                 && opp.release == Infinity))) {
             
             $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
             individualSelectSeparatorIndex = index;
