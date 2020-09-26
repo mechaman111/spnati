@@ -337,9 +337,11 @@ function loadListingFile () {
             var id = $(this).text();
             var releaseNumber = $(this).attr('release');
             if (releaseNumber === undefined) {
-                releaseNumber = (oppStatus == "testing" ? Infinity
-                                 : oppStatus == "incomplete" ? -1
-                                 : 0);
+                if (oppStatus == "testing") {
+                    releaseNumber = Infinity;
+                }
+            } else {
+                releaseNumber = Number(releaseNumber);
             }
             var highlightStatus = $(this).attr('highlight');
 
@@ -347,7 +349,7 @@ function loadListingFile () {
                 outstandingLoads++;
                 totalLoads++;
                 opponentMap[id] = oppDefaultIndex++;
-                loadOpponentMeta(id, oppStatus, Number(releaseNumber), highlightStatus).then(onComplete).catch(function (err) {
+                loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus).then(onComplete).catch(function (err) {
                     console.error("Could not load metadata for " + id + ":");
                     captureError(err);
                 });
@@ -659,7 +661,7 @@ function updateIndividualSelectSort() {
     /* Separate out characters with no targets if using Targeted sort */
         : sortingMode == "target"       ? function(opp) { return opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined) === 0; }
     /* Separate characters with a release number from characters without one */
-        : sortingMode == "newest" || sortingMode == "oldest" ? function(opp) { return opp.release <= 0 ? -1 : opp.release == Infinity ? 1 : 0; }
+        : sortingMode == "newest" || sortingMode == "oldest" ? function(opp) { return opp.release === undefined ? -1 : opp.release == Infinity ? 1 : 0; }
         : null;
 
     var currentPartition = undefined;
@@ -1419,14 +1421,16 @@ function sortOpponentsByField(field) {
     }
 
     return function(opp1, opp2) {
-        var compare = 0;
-        if (opp1[field] < opp2[field]) {
-            compare = -1;
+        if (opp1[field] === undefined && opp2[field] !== undefined) {
+            return 1;
+        } else if (opp1[field] !== undefined && opp2[field] === undefined) {
+            return -1;
+        } else if (opp1[field] < opp2[field]) {
+            return -order;
+        } else if (opp1[field] > opp2[field]) {
+            return order;
         }
-        else if (opp1[field] > opp2[field]) {
-            compare = 1;
-        }
-        return order * compare;
+        return 0;
     }
 }
 
