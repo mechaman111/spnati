@@ -1440,12 +1440,13 @@ function sortOpponentsByField(field) {
  *   myArr.sort(sortOpponentsByMultipleFields(["layers", "-first"]));
  */
 function sortOpponentsByMultipleFields(fields) {
+    var comparers = fields.map(sortOpponentsByField);
     return function(opp1, opp2) {
         var i = 0;
         var compare = 0;
         // if both elements have the same field, check the next ones
-        while (compare === 0 && i < fields.length) {
-            compare = sortOpponentsByField(fields[i])(opp1, opp2);
+        while (compare === 0 && i < comparers.length) {
+            compare = comparers[i](opp1, opp2);
             i++;
         }
         return compare;
