@@ -26,8 +26,6 @@ namespace Desktop.Skinning
 		private SolidBrush _activeBrush = new SolidBrush(Color.Black);
 		private SolidBrush _textBrush = new SolidBrush(Color.Black);
 		private SolidBrush _decorBrush = new SolidBrush(Color.Black);
-		private SolidBrush _scrollBrush = new SolidBrush(Color.Black);
-		private SolidBrush _scrollArrowBrush = new SolidBrush(Color.White);
 		private SolidBrush _highlightBrush = new SolidBrush(Color.Black);
 
 		private ScrollBar _upArrow = new ScrollBar();
@@ -147,11 +145,6 @@ namespace Desktop.Skinning
 
 				_highlights.Clear();
 
-				_previousSelectedTabIndex = _tabControl.SelectedIndex;
-				_tabControl.Deselected += (sender, args) =>
-				{
-					_previousSelectedTabIndex = _tabControl.SelectedIndex;
-				};
 				_tabControl.SelectedIndexChanged += (sender, args) =>
 				{
 					Invalidate();
@@ -184,7 +177,6 @@ namespace Desktop.Skinning
 			}
 		}
 
-		private int _previousSelectedTabIndex;
 		private int _hoveredTabIndex = -1;
 		private List<Rectangle> _tabRects = null;
 

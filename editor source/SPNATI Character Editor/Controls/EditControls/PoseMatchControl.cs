@@ -29,7 +29,6 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			}
 			string current = cboPose.Text;
 			cboPose.SelectedIndex = -1;
-			TargetCondition condition = Data as TargetCondition;
 			Character target = GetCharacter();
 			cboPose.Items.Clear();
 			if (target != null)

@@ -25,13 +25,12 @@ namespace Desktop.Skinning
 		{
 			base.OnPaint(e);
 
-			Skin skin = SkinManager.Instance.CurrentSkin;
 			Graphics g = e.Graphics;
 
-			DrawSplitter(g, skin);
+			DrawSplitter(g);
 		}
 
-		private void DrawSplitter(Graphics g, Skin skin)
+		private void DrawSplitter(Graphics g)
 		{
 			g.FillRectangle(_splitterBrush, SplitterRectangle);
 		}

@@ -145,10 +145,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public override ITimelineWidget CreateWidget(Timeline timeline)
 		{
-			return new TextWidget(this, timeline);
+			return new TextWidget(this);
 		}
 
-		public bool Contains(Point pt, Matrix sceneTransform)
+		public bool Contains(Point pt)
 		{
 			RectangleF rect = GetRectangle();
 			return rect.Contains(pt);
@@ -503,7 +503,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}
 		}
 
-		public Directive CreateCreationDirective(Scene scene)
+		public Directive CreateCreationDirective()
 		{
 			Directive text = new Directive()
 			{
@@ -532,10 +532,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 
 		public override void DestroyLivePreview()
-		{
-		}
-
-		private void Preview_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 		}
 

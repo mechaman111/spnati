@@ -140,7 +140,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			}).Max();
 		}
 
-		public void AddMetadataDirective(Directive directive, HashSet<LiveObject> currentBatch)
+		public void AddMetadataDirective(Directive directive)
 		{
 			Name = directive.Name;
 		}
@@ -202,7 +202,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						break;
 					case "wait":
 					case "pause":
-						AddPauseDirective(directive, currentBatch);
+						AddPauseDirective();
 						break;
 					case "remove":
 						AddRemoveDirective(directive, currentBatch);
@@ -459,47 +459,10 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return _time;
 		}
 
-		public void AddPauseDirective(Directive directive, HashSet<LiveObject> batch)
+		public void AddPauseDirective()
 		{
 			//update the current start basis to match the end time of the last non-looping animation
 			_time = _nextTime;
-		}
-
-		private static float GetEnd(LiveAnimatedObject obj)
-		{
-			float end = obj.Start;
-			if (obj.Keyframes.Count == 0)
-			{
-				end += obj.Time;
-			}
-			else
-			{
-				foreach (string prop in obj.AnimatedProperties)
-				{
-					for (int i = obj.Keyframes.Count - 1; i >= 0; i--)
-					{
-						LiveKeyframe kf = obj.Keyframes[i];
-						if (kf.HasProperty(prop))
-						{
-							LiveKeyframeMetadata metadata = obj.GetBlockMetadata(prop, kf.Time);
-							if (!metadata.Looped)
-							{
-								if (!obj.LinkedToEnd)
-								{
-									end = Math.Max(end, obj.Start);
-								}
-								else
-								{
-									end = Math.Max(end, obj.Start + kf.Time);
-								}
-								break;
-							}
-						}
-					}
-				}
-			}
-
-			return end;
 		}
 
 		public override int BaseHeight
@@ -719,7 +682,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				boxTransform.Invert();
 				boxTransform.TransformPoints(mousePt);
 
-				if (bubble.Contains(mousePt[0], sceneTransform))
+				if (bubble.Contains(mousePt[0]))
 				{
 					return bubble;
 				}
@@ -772,7 +735,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return invalidated;
 		}
 
-		public LiveSprite AddSprite(float time, string src)
+		public LiveSprite AddSprite(float time)
 		{
 			LiveSprite sprite = new LiveSprite(this, time);
 			sprite.LinkedToEnd = true;

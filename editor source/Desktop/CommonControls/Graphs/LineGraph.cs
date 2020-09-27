@@ -116,7 +116,6 @@ namespace Desktop.CommonControls
 			int legendLeft = _legendRect.Left;
 
 			//data points
-			int graphHeight = _graphRect.Height;
 			int py = PointSize / 2;
 			foreach (DataSeries series in _series)
 			{
@@ -306,7 +305,6 @@ namespace Desktop.CommonControls
 			for (int i = 0; i < _series.Count; i++)
 			{
 				DataSeries series = _series[i];
-				string label = series.Label;
 				series.LegendBounds = new Rectangle(_legendRect.Left + AxesPadding + LegendWidth, _legendRect.Bottom - (_series.Count - i) * _lineHeight - _lineHeight, _legendRect.Width - AxesPadding - LegendWidth, _lineHeight);
 			}
 

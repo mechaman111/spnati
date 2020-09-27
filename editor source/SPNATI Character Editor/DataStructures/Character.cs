@@ -606,7 +606,7 @@ namespace SPNATI_Character_Editor
 		{
 			Behavior.Serializing = true;
 			Gender = Gender.ToLower();
-			Behavior.OnBeforeSerialize(this);
+			Behavior.OnBeforeSerialize();
 			Metadata.PopulateFromCharacter(this);
 			Version = Config.Version;
 			Metadata.LastUpdate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();

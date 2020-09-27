@@ -608,7 +608,7 @@ namespace SPNATI_Character_Editor.Controls
 			if (openFileDialog1.ShowDialog(_character, "") == DialogResult.OK)
 			{
 				string src = openFileDialog1.FileName;
-				LiveSprite sprite = _segment.AddSprite(_time, src);
+				LiveSprite sprite = _segment.AddSprite(_time);
 				sprite.AddValue<string>(0, "Src", src);
 
 				string id = Path.GetFileNameWithoutExtension(src);
@@ -915,7 +915,7 @@ namespace SPNATI_Character_Editor.Controls
 				{
 					props.Add(p);
 				}
-				ToggleKeyframeTypeCommand command = new ToggleKeyframeTypeCommand(widget.Data, frame, props, type);
+				ToggleKeyframeTypeCommand command = new ToggleKeyframeTypeCommand(frame, props, type);
 				_history.Commit(command);
 			}
 			UpdateToolbar();

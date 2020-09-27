@@ -129,12 +129,11 @@ namespace SPNATI_Character_Editor.Activities
 									TagDatabase.CacheGroup(def, character);
 								}
 
-								if (!string.IsNullOrEmpty(tag.Tag))
+								if (!string.IsNullOrEmpty(tag.Tag) && tag.Tag != character.DisplayName)
 								{
 									TagDatabase.AddTag(tag.Tag);
 								}								
 							}
-							TagDatabase.AddTag(character.DisplayName, false);
 							for (int l = 0; l < character.Layers; l++)
 							{
 								Clothing layer = character.GetClothing(l);

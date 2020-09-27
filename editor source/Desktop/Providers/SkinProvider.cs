@@ -47,7 +47,7 @@ namespace Desktop.Providers
 			SkinManager skinManager = SkinManager.Instance;
 			text = text.ToLower();
 			var list = new List<IRecord>();
-			foreach (Skin record in SkinManager.Instance.AvailableSkins)
+			foreach (Skin record in skinManager.AvailableSkins)
 			{
 				if (record.Key.ToLower().Contains(text) || record.Name.ToLower().Contains(text))
 				{

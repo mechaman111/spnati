@@ -146,7 +146,7 @@ namespace UnitTests
 		{
 			AnalyzerReportCriteria report = new AnalyzerReportCriteria();
 			TestAnalyzer test1 = AddTestCriterion(report, true);
-			TestAnalyzer test2 = AddTestCriterion(report, true);
+			AddTestCriterion(report, true);
 			TestAnalyzer test3 = AddTestCriterion(report, false);
 
 			report.Expression = "1 AND 2 OR 3"; //TRUE AND TRUE OR FALSE
@@ -164,7 +164,7 @@ namespace UnitTests
 		{
 			AnalyzerReportCriteria report = new AnalyzerReportCriteria();
 			TestAnalyzer test1 = AddTestCriterion(report, true);
-			TestAnalyzer test2 = AddTestCriterion(report, true);
+			AddTestCriterion(report, true);
 			TestAnalyzer test3 = AddTestCriterion(report, false);
 
 			report.Expression = "1 OR 2 AND 3"; //TRUE OR TRUE AND FALSE
@@ -180,7 +180,7 @@ namespace UnitTests
 		{
 			AnalyzerReportCriteria report = new AnalyzerReportCriteria();
 			TestAnalyzer test1 = AddTestCriterion(report, true);
-			TestAnalyzer test2 = AddTestCriterion(report, true);
+			AddTestCriterion(report, true);
 			TestAnalyzer test3 = AddTestCriterion(report, true);
 
 			report.Expression = "1 OR 2 AND NOT 3"; //T OR (T AND ~T)
@@ -200,7 +200,7 @@ namespace UnitTests
 			report.Expression = "1 AND NOT 2 AND 3";
 			TestAnalyzer test1 = AddTestCriterion(report, true);
 			TestAnalyzer test2 = AddTestCriterion(report, true);
-			TestAnalyzer test3 = AddTestCriterion(report, true);
+			AddTestCriterion(report, true);
 
 			//(T AND ~T) AND T
 			Assert.IsFalse(report.MeetsCriteria(_character));
@@ -222,7 +222,7 @@ namespace UnitTests
 			TestAnalyzer test1 = AddTestCriterion(report, true);
 			TestAnalyzer test2 = AddTestCriterion(report, true);
 			TestAnalyzer test3 = AddTestCriterion(report, true);
-			TestAnalyzer test4 = AddTestCriterion(report, true);
+			AddTestCriterion(report, true);
 
 			//1 AND ~(2 OR (3 AND 1)) AND ~~1
 			//T AND ~(T OR (T AND T)) AND ~~T

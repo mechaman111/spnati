@@ -13,7 +13,6 @@ namespace Desktop
 
 		public string Caption
 		{
-			get { return grpBubble.Text; }
 			set { grpBubble.Text = value; }
 		}
 
@@ -25,13 +24,11 @@ namespace Desktop
 
 		public Image Icon
 		{
-			get { return grpBubble.Image; }
 			set { grpBubble.Image = value; }
 		}
 
 		public SkinnedHighlight Highlight
 		{
-			get { return grpBubble.Highlight; }
 			set { grpBubble.Highlight = value; }
 		}
 

@@ -55,7 +55,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			_accentColor = Color.Orange;
 		}
 
-		public TextWidget(LiveBubble data, Timeline timeline)
+		public TextWidget(LiveBubble data)
 		{
 			Data = data;
 			data.PropertyChanged += Bubble_PropertyChanged;

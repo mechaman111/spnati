@@ -46,9 +46,9 @@ namespace Desktop.Skinning
 			accordionListView1.RebuildColumns();
 
 			GroupedList<TestObject> accordionGroup = new GroupedList<TestObject>();
-			accordionGroup.AddItem(new TestObject("Apple", 5));
-			accordionGroup.AddItem(new TestObject("Ants", 23));
-			accordionGroup.AddItem(new TestObject("Banana", 2));
+			accordionGroup.AddItem(new TestObject("Apple"));
+			accordionGroup.AddItem(new TestObject("Ants"));
+			accordionGroup.AddItem(new TestObject("Banana"));
 			accordionListView1.DataSource = accordionGroup;
 		}
 
@@ -60,12 +60,10 @@ namespace Desktop.Skinning
 		private class TestObject : IGroupedItem, INotifyPropertyChanged
 		{
 			public string Name { get; set; }
-			public int Number { get; set; }
 
-			public TestObject(string name, int number)
+			public TestObject(string name)
 			{
 				Name = name;
-				Number = number;
 			}
 
 			public event PropertyChangedEventHandler PropertyChanged

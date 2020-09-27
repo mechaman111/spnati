@@ -21,7 +21,7 @@ namespace Desktop.Skinning
 			}
 		}
 
-		public List<Skin> AvailableSkins { get; private set; } = new List<Skin>();
+		public List<Skin> AvailableSkins { get; } = new List<Skin>();
 		public Skin CurrentSkin { get; private set; } = new Skin();
 
 		public Pen FocusRectangle = new Pen(Color.Black) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dot };

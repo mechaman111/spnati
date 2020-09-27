@@ -130,8 +130,6 @@ namespace Desktop
 		{
 			if (_tabs.Count == 0)
 				return;
-			TabPage page = tabActivities.TabPages[0];
-			Control ctl = page.Tag as Control;
 
 			DockTabPage(_tabs, tabActivities, splitContainer1.Panel1, stripActivities, splitContainer2);
 

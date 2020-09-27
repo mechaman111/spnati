@@ -34,7 +34,6 @@
 			this.colLeftBottom = new System.Windows.Forms.SplitContainer();
 			this.colRight = new System.Windows.Forms.SplitContainer();
 			this.colRightTop = new System.Windows.Forms.SplitContainer();
-			this.tooltipPartners = new System.Windows.Forms.ToolTip(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -170,7 +169,6 @@
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.SplitContainer colLeft;
 		private System.Windows.Forms.SplitContainer colRight;
-		private System.Windows.Forms.ToolTip tooltipPartners;
 		private System.Windows.Forms.SplitContainer colLeftBottom;
 		private System.Windows.Forms.SplitContainer colRightTop;
 	}

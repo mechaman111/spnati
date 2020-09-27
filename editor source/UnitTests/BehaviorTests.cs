@@ -56,98 +56,6 @@ namespace UnitTests
 			return stageCase;
 		}
 
-		/// <summary>
-		/// Case shared between stages
-		/// </summary>
-		[TestMethod]
-		public void StageTreeSharedCase()
-		{
-			Behaviour behavior = _character.Behavior;
-			behavior.PrepareForEdit(_character);
-			CreateWorkingCase(behavior, "a", new int[] { 1, 2, 3 }, "a1");
-			behavior.BuildStageTree(_character);
-			Assert.AreEqual(8, behavior.Stages.Count);
-			Assert.AreEqual(1, behavior.Stages[1].Cases.Count);
-			Assert.AreEqual(1, behavior.Stages[2].Cases.Count);
-			Assert.AreEqual(1, behavior.Stages[3].Cases.Count);
-			for (int i = 1; i < 4; i++)
-			{
-				Assert.AreEqual("a", behavior.Stages[i].Cases[0].Tag);
-				Assert.AreEqual("a1", behavior.Stages[i].Cases[0].Lines[0].Text);
-			}
-		}
-
-		/// <summary>
-		/// Multiple cases going to the same stages
-		/// </summary>
-		[TestMethod]
-		public void StageTreeCrossStages()
-		{
-			Behaviour behavior = _character.Behavior;
-			behavior.PrepareForEdit(_character);
-			CreateWorkingCase(behavior, "a", new int[] { 1, 2, 3 }, "a1");
-			CreateWorkingCase(behavior, "b", new int[] { 1, 3 }, "b1");
-			behavior.BuildStageTree(_character);
-			Assert.AreEqual(8, behavior.Stages.Count);
-			Assert.AreEqual(2, behavior.Stages[1].Cases.Count);
-			Assert.AreEqual(1, behavior.Stages[2].Cases.Count);
-			Assert.AreEqual(2, behavior.Stages[3].Cases.Count);
-		}
-
-		[TestMethod]
-		public void StageTreeMergeDialogue()
-		{
-			Behaviour behavior = _character.Behavior;
-			behavior.PrepareForEdit(_character);
-			CreateWorkingCase(behavior, "a", new int[] { 0 }, "a1");
-			CreateWorkingCase(behavior, "a", new int[] { 0 }, "a2");
-			behavior.BuildStageTree(_character);
-			Assert.AreEqual(2, behavior.Stages[0].Cases[0].Lines.Count);
-		}
-
-
-		[TestMethod]
-		public void DoesNotCombineAlsoPlayingWithAlsoPlayingStage()
-		{
-			Behaviour behavior = _character.Behavior;
-			behavior.PrepareForEdit(_character);
-			Case c = CreateWorkingCase(behavior, "a", new int[] { 0 }, "a1");
-			c.AlsoPlaying = "bob";
-			Case c2 = CreateWorkingCase(behavior, "a", new int[] { 0 }, "b1");
-			c.AlsoPlaying = "bob";
-			c.AlsoPlayingStage = "2";
-			behavior.BuildStageTree(_character);
-			Assert.AreEqual(2, behavior.Stages[0].Cases.Count);
-			behavior.PrepareForEdit(_character);
-			Assert.AreEqual(2, behavior.GetWorkingCases().Count());
-		}
-
-		[TestMethod]
-		public void StageTreeIntegration()
-		{
-			Behaviour behavior = _character.Behavior;
-			behavior.PrepareForEdit(_character);
-			CreateWorkingCase(behavior, "a", new int[] { 1, 2, 3 }, "z");
-			CreateWorkingCase(behavior, "b", new int[] { 1, 3 }, "y");
-			CreateWorkingCase(behavior, "b", new int[] { 4 }, "x");
-			CreateWorkingCase(behavior, "b", new int[] { 3 }, "x");
-			CreateWorkingCase(behavior, "c", new int[] { 1, 2 }, "w");
-			behavior.BuildStageTree(_character);
-			Assert.AreEqual(3, behavior.Stages[1].Cases.Count);
-			Assert.AreEqual("a", behavior.Stages[1].Cases[0].Tag);
-			Assert.AreEqual("b", behavior.Stages[1].Cases[1].Tag);
-			Assert.AreEqual("c", behavior.Stages[1].Cases[2].Tag);
-			Assert.AreEqual(2, behavior.Stages[2].Cases.Count);
-			Assert.AreEqual("a", behavior.Stages[2].Cases[0].Tag);
-			Assert.AreEqual("c", behavior.Stages[2].Cases[1].Tag);
-			Assert.AreEqual(2, behavior.Stages[3].Cases.Count);
-			Assert.AreEqual("a", behavior.Stages[3].Cases[0].Tag);
-			Assert.AreEqual("b", behavior.Stages[3].Cases[1].Tag);
-			Assert.AreEqual(2, behavior.Stages[3].Cases[1].Lines.Count);
-			Assert.AreEqual(1, behavior.Stages[4].Cases.Count);
-			Assert.AreEqual("b", behavior.Stages[4].Cases[0].Tag);
-		}
-
 		[TestMethod]
 		public void SplitSharedCase()
 		{
@@ -208,31 +116,6 @@ namespace UnitTests
 			CreateCase(behavior, 3, "b", "b1", "b2");
 			behavior.PrepareForEdit(_character);
 			Assert.AreEqual(6, behavior.GetWorkingCases().Count());
-		}
-
-		[TestMethod]
-		public void BackAndForth()
-		{
-			Behaviour behavior = _character.Behavior;
-			CreateCase(behavior, 1, "a", "a1", "a2");
-			CreateCase(behavior, 1, "b", "b1");
-			CreateCase(behavior, 1, "c", "b1");
-			CreateCase(behavior, 2, "a", "a1", "a2", "a3");
-			CreateCase(behavior, 2, "b", "b2", "b3");
-			CreateCase(behavior, 3, "a", "a1", "a2");
-			CreateCase(behavior, 3, "b", "b1", "b2");
-			behavior.PrepareForEdit(_character);
-			behavior.BuildStageTree(_character);
-			Assert.AreEqual(3, behavior.Stages[1].Cases.Count);
-			Assert.AreEqual(2, behavior.Stages[1].Cases[0].Lines.Count);
-			Assert.AreEqual(1, behavior.Stages[1].Cases[1].Lines.Count);
-			Assert.AreEqual(1, behavior.Stages[1].Cases[2].Lines.Count);
-			Assert.AreEqual(2, behavior.Stages[2].Cases.Count);
-			Assert.AreEqual(3, behavior.Stages[2].Cases[0].Lines.Count);
-			Assert.AreEqual(2, behavior.Stages[2].Cases[1].Lines.Count);
-			Assert.AreEqual(2, behavior.Stages[3].Cases.Count);
-			Assert.AreEqual(2, behavior.Stages[3].Cases[0].Lines.Count);
-			Assert.AreEqual(2, behavior.Stages[3].Cases[1].Lines.Count);
 		}
 
 		[TestMethod]

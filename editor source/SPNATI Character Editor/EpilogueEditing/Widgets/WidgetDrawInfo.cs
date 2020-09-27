@@ -11,7 +11,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		private Dictionary<LiveKeyframe, KeyframeDrawStyle> _keyframesType = new Dictionary<LiveKeyframe, KeyframeDrawStyle>();
 
 		private SolidBrush _repeatFill;
-		private SolidBrush _fillExtra = new SolidBrush(Color.White);
 		private SolidBrush _accentFill = new SolidBrush(Color.Blue);
 
 		public WidgetDrawInfo(LiveAnimatedObject Data, string property, float duration)
@@ -273,7 +272,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			return type;
 		}
 
-		public void Draw(Graphics g, SolidBrush brush, Pen outline, int y, float pps, int rowHeight, Color? accentColor, float dataEndTime)
+		public void Draw(Graphics g, SolidBrush brush, Pen outline, int y, float pps, int rowHeight, Color? accentColor)
 		{
 			for (int i = 0; i < Blocks.Count; i++)
 			{

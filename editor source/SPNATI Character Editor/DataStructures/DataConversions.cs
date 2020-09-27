@@ -42,6 +42,10 @@ namespace SPNATI_Character_Editor
 			{
 				Convert5_8(character);
 			}
+			if (Config.VersionPredates(version, "v6.1"))
+			{
+				Convert6_1(character);
+			}
 		}
 
 		private static void Convert3_2(Character character)
@@ -579,6 +583,44 @@ namespace SPNATI_Character_Editor
 					character.Behavior.PersistentMarkers.Add(name);
 					line.IsMarkerPersistent = false;
 				}
+			}
+		}
+
+		/// <summary>
+		/// 6.1 conversion: convert conditions using tag checks for a character into checking the character directly
+		/// </summary>
+		/// <param name="character"></param>
+		private static void Convert6_1(Character character)
+		{
+			foreach (Case wc in character.Behavior.GetWorkingCases())
+			{
+				ConvertCase6_1(wc, character);
+			}
+		}
+
+		private static void ConvertCase6_1(Case workingCase, Character character)
+		{
+			for (int i = 0; i < workingCase.Conditions.Count; i++)
+			{
+				TargetCondition condition = workingCase.Conditions[i];
+				if (!string.IsNullOrEmpty(condition.FilterTag))
+				{
+					if (CharacterDatabase.Get(condition.FilterTag) != null && string.IsNullOrEmpty(condition.Role) && string.IsNullOrEmpty(condition.Character))
+					{
+						condition.Role = "opp";
+						condition.Character = condition.FilterTag;
+						condition.FilterTag = null;
+						if (condition.Count == "1")
+						{
+							condition.Count = null;
+						}
+					}
+				}
+			}
+
+			foreach (Case alternate in workingCase.AlternativeConditions)
+			{
+				ConvertCase6_1(alternate, character);
 			}
 		}
 	}

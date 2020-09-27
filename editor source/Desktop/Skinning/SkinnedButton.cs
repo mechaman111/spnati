@@ -117,7 +117,6 @@ namespace Desktop.Skinning
 
 		private void DrawFlat(PaintEventArgs pevent)
 		{
-			Skin skin = SkinManager.Instance.CurrentSkin;
 			if (_colorSet == null)
 			{
 				GetColorSet();
@@ -139,7 +138,6 @@ namespace Desktop.Skinning
 
 		private void DrawButton(PaintEventArgs pevent)
 		{
-			Skin skin = SkinManager.Instance.CurrentSkin;
 			if (_colorSet == null)
 			{
 				GetColorSet();
@@ -166,7 +164,6 @@ namespace Desktop.Skinning
 		public static void DrawContent(Graphics g, Rectangle bounds, Color color, Image image, ContentAlignment imageAlign, string text, ContentAlignment textAlign)
 		{
 			SkinManager manager = SkinManager.Instance;
-			Skin skin = manager.CurrentSkin;
 			Brush foreColor = manager.GetBrush(color);
 
 			const int InnerPadding = 5;

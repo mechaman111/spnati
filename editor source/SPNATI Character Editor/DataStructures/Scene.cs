@@ -586,7 +586,7 @@ namespace SPNATI_Character_Editor
 				if (!obj.LinkedFromPrevious)
 				{
 					LiveBubble bubble = obj as LiveBubble;
-					Directive dir = bubble.CreateCreationDirective(this);
+					Directive dir = bubble.CreateCreationDirective();
 					WorkingDirective d = new WorkingDirective(dir, obj.Start);
 					d.Track = trackIndex;
 					d.Bake();
@@ -596,7 +596,6 @@ namespace SPNATI_Character_Editor
 			else if (obj is LiveAnimatedObject)
 			{
 				LiveAnimatedObject anim = obj as LiveAnimatedObject;
-				Dictionary<string, WorkingDirective> lastDirectivePerProperty = new Dictionary<string, WorkingDirective>();
 
 				Dictionary<string, WorkingDirective> stoppages = new Dictionary<string, WorkingDirective>();
 				WorkingDirective initialStoppage = null;
@@ -670,7 +669,7 @@ namespace SPNATI_Character_Editor
 									{
 										currentAnimation.AddKeyframe(kf, property, "0", character);
 									}
-									anim.UpdateHistory(anim, kf, property);
+									anim.UpdateHistory(kf, property);
 								}
 								else
 								{
@@ -722,7 +721,7 @@ namespace SPNATI_Character_Editor
 												//if a split, need to close off the previous animation with this as the final keyframe
 												addProperty = false;
 												currentAnimation.AddKeyframe(kf, property, time.ToString(CultureInfo.InvariantCulture), character);
-												anim.UpdateHistory(anim, kf, property);
+												anim.UpdateHistory(kf, property);
 											}
 											else
 											{
@@ -760,7 +759,7 @@ namespace SPNATI_Character_Editor
 												currentAnimation.AddKeyframe(kf, property, kf.Time.ToString(CultureInfo.InvariantCulture), character);
 												objDirectives.Add(currentAnimation);
 												currentAnimation = null;
-												anim.UpdateHistory(anim, kf);
+												anim.UpdateHistory(kf);
 											}
 
 											addProperty = !history.MatchesValue(value);
@@ -781,7 +780,7 @@ namespace SPNATI_Character_Editor
 									{
 										float time = kf.Time - currentAnimation.StartTime + obj.Start;
 										currentAnimation.AddKeyframe(kf, property, time.ToString(CultureInfo.InvariantCulture), character);
-										anim.UpdateHistory(anim, kf, property);
+										anim.UpdateHistory(kf, property);
 									}
 								}
 							}

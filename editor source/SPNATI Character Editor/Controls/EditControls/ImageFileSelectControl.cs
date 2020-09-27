@@ -67,6 +67,11 @@ namespace SPNATI_Character_Editor.Controls
 			else
 			{
 				SetValue(txtValue.Text);
+				string newValue = GetValue() as string;
+				if (newValue != txtValue.Text)
+				{
+					txtValue.Text = newValue;
+				}
 			}
 		}
 	}

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KisekaeImporter.RemoteClient
 {
-	public class Client : IDisposable
+	public sealed class Client : IDisposable
 	{
 		private struct MessageHeader
 		{

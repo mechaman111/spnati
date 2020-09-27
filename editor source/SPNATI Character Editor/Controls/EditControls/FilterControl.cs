@@ -12,7 +12,6 @@ namespace SPNATI_Character_Editor
 	{
 		private TargetCondition _filter;
 		private bool _collapsed;
-		private SolidBrush _indicatorBrush = new SolidBrush(Color.Black);
 		private bool _countAvailable = false;
 
 		public FilterControl()

@@ -7,7 +7,6 @@ namespace Desktop.Skinning
 	public class SkinnedCheckBox : CheckBox, ISkinControl
 	{
 		public VisualState MouseState { get; private set; }
-		private static StringFormat _sf = new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Near, FormatFlags = StringFormatFlags.NoWrap };
 
 		private SkinnedFieldType _fieldType = SkinnedFieldType.Primary;
 		public SkinnedFieldType FieldType

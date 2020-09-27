@@ -194,7 +194,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			else
 			{
-				c.Behavior.BuildTriggers(c);
+				c.Behavior.BuildTriggers();
 				ValidationFilterLevel filterLevel = GetFilterLevel();
 				List<ValidationError> warnings;
 				if (_warnings.TryGetValue(c, out warnings))

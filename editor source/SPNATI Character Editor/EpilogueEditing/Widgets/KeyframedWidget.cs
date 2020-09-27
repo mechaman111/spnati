@@ -553,19 +553,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (rowIndex == 0)
 			{
 				WidgetDrawInfo drawInfo = _drawInfo[""];
-				float endTime = 0;
-				if (Data.AllowLinkToEnd)
-				{
-					if (Data.LinkedToEnd)
-					{
-						endTime = dataEndTime;
-					}
-					else
-					{
-						endTime = Data.Start + Data.Length;
-					}
-				}
-				drawInfo.Draw(g, GetTitleBrush(), Timeline.WidgetOutline, y, pps, rowHeight, GetAccentColor(), Data.LinkedToEnd ? endTime : 0);
+				drawInfo.Draw(g, GetTitleBrush(), Timeline.WidgetOutline, y, pps, rowHeight, GetAccentColor());
 
 				//global keyframes
 				foreach (LiveKeyframe kf in Data.Keyframes)
@@ -585,7 +573,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				WidgetDrawInfo drawInfo;
 				if (_drawInfo.TryGetValue(property, out drawInfo))
 				{
-					drawInfo.Draw(g, GetFillBrush(), GetOutline(), y, pps, rowHeight, null, 0);
+					drawInfo.Draw(g, GetFillBrush(), GetOutline(), y, pps, rowHeight, null);
 
 					if (_playing)
 					{
@@ -749,7 +737,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				switch (iconIndex)
 				{
 					case 0:
-						ToggleLooping(property, metadata, !metadata.Looped);
+						ToggleLooping(property, !metadata.Looped);
 						Invalidate();
 						break;
 					case 1:
@@ -783,7 +771,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		}
 		protected virtual void OnClickExtraHeaderIcon(WidgetActionArgs args, int iconIndex) { }
 
-		private void ToggleLooping(string property, LiveKeyframeMetadata metadata, bool looped)
+		private void ToggleLooping(string property, bool looped)
 		{
 			//TODO: make this an ICommand
 			LiveKeyframe kf = Data.GetBlockKeyframe(property, _timeline.CurrentTime);
@@ -1283,7 +1271,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			{
 				return;
 			}
-			ToggleKeyframeTypeCommand command = new ToggleKeyframeTypeCommand(Data, _selectedFrame, _selectedProperties);
+			ToggleKeyframeTypeCommand command = new ToggleKeyframeTypeCommand(_selectedFrame, _selectedProperties);
 			_timeline.CommandHistory.Commit(command);
 		}
 

@@ -1406,7 +1406,6 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			float pps = PixelsPerSecond * _zoom;
 			if (widget != null)
 			{
-				float start = widget.GetStart();
 				int track;
 				int row = YToRow(y, out track);
 				return widget.GetAction(x, XToTime(x), row, TimeToX(Duration), pps);

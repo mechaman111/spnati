@@ -30,14 +30,6 @@ namespace SPNATI_Character_Editor.DataStructures
 			Sheets = new ObservableCollection<PoseSheet>();
 		}
 
-		/// <summary>
-		/// Creates a default matrix
-		/// </summary>
-		/// <param name="skin"></param>
-		public PoseMatrix(ISkin skin) : this()
-		{
-		}
-
 		public bool IsEmpty()
 		{
 			if (Sheets.Count > 1)

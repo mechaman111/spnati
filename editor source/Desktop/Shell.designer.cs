@@ -42,8 +42,6 @@
 			this.components = new System.ComponentModel.Container();
 			this.toolbar = new System.Windows.Forms.MenuStrip();
 			this.tabWorkspaces = new Desktop.Skinning.SkinnedTabControl();
-			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -203,8 +201,6 @@
 
 		private System.Windows.Forms.MenuStrip toolbar;
 		private Desktop.Skinning.SkinnedTabControl tabWorkspaces;
-		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 		private System.Windows.Forms.Timer timer1;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.StatusStrip statusStrip1;

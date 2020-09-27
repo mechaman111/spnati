@@ -130,6 +130,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public LiveScene(Character character)
 		{
+			Character = character;
 			Width = DefaultSize;
 			Height = DefaultSize;
 		}
@@ -189,7 +190,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				switch (directive.DirectiveType)
 				{
 					case "metadata":
-						segment.AddMetadataDirective(directive, currentBatch);
+						segment.AddMetadataDirective(directive);
 						break;
 					case "sprite":
 						segment.AddSpriteDirective(directive, currentBatch);
@@ -207,7 +208,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						break;
 					case "wait":
 					case "pause":
-						segment.AddPauseDirective(directive, currentBatch);
+						segment.AddPauseDirective();
 						if (directive.DirectiveType == "pause")
 						{
 							//Pauses lead to a new segment

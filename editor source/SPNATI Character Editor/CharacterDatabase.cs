@@ -421,7 +421,7 @@ namespace SPNATI_Character_Editor
 				if (matrix == null)
 				{
 					//create a new one
-					matrix = new PoseMatrix(skin);
+					matrix = new PoseMatrix();
 				}
 
 				//cache it

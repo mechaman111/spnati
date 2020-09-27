@@ -17,7 +17,6 @@ namespace Desktop.CommonControls
 		private bool _suspendFormatting;
 
 		private List<AccordionColumn> _columns = new List<AccordionColumn>();
-		private HashSet<ListViewItem> _refreshedItems = new HashSet<ListViewItem>();
 		private IGroupedList _source;
 
 		public event EventHandler<EventArgs> SelectedIndexChanged;

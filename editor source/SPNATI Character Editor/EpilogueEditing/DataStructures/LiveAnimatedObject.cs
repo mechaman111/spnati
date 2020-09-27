@@ -1715,13 +1715,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// </summary>
 		/// <param name="sourceObject">The object the frame belongs to</param>
 		/// <param name="frame">The frame to add</param>
-		public void UpdateHistory(LiveAnimatedObject sourceObject, LiveKeyframe frame)
+		public void UpdateHistory(LiveKeyframe frame)
 		{
 			foreach (string property in frame.TrackedProperties)
 			{
 				if (frame.HasProperty(property))
 				{
-					UpdateHistory(sourceObject, frame, property);
+					UpdateHistory(frame, property);
 				}
 			}
 		}
@@ -1731,7 +1731,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		/// <param name="sourceObject">The object the frame belongs to</param>
 		/// <param name="frame">The frame to add</param>
 		/// <param name="property">Target property to update</param>
-		public void UpdateHistory(LiveAnimatedObject sourceObject, LiveKeyframe frame, string property)
+		public void UpdateHistory(LiveKeyframe frame, string property)
 		{
 			if (frame.HasProperty(property))
 			{

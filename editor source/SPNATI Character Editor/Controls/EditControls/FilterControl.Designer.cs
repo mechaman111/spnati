@@ -30,7 +30,6 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			this.recWho = new Desktop.CommonControls.RecordField();
-			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.tableAdvanced = new Desktop.CommonControls.PropertyTable();
 			this.pnlRange = new System.Windows.Forms.Panel();
 			this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
@@ -366,7 +365,6 @@
 		#endregion
 
 		private Desktop.CommonControls.RecordField recWho;
-		private System.Windows.Forms.ToolTip toolTip1;
 		private Desktop.CommonControls.PropertyTable tableAdvanced;
 		private System.Windows.Forms.Panel pnlRange;
 		private Desktop.Skinning.SkinnedLabel skinnedLabel2;

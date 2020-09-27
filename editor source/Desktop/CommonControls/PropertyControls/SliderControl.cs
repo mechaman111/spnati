@@ -88,7 +88,6 @@ namespace Desktop.CommonControls.PropertyControls
 		{
 			if (DataType == typeof(int))
 			{
-				int v = (int)valValue.Value;
 				SetValue(slider.Value);
 			}
 			else if (DataType == typeof(float?))
@@ -99,7 +98,6 @@ namespace Desktop.CommonControls.PropertyControls
 				}
 				else
 				{
-					float v = (float)valValue.Value;
 					SetValue((float?)slider.Value);
 				}
 			}

@@ -22,7 +22,6 @@ namespace SPNATI_Character_Editor.Controls
 
 		public DialogResult ShowDialog(ISkin character, string subfolder)
 		{
-			string root = Config.SpnatiDirectory;
 			string characterRoot = character.GetDirectory();
 			string localPath = characterRoot;
 

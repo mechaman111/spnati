@@ -257,8 +257,6 @@ namespace SPNATI_Character_Editor
 				return null;
 			}
 
-			DateTime timestamp = File.GetLastWriteTime(filename);
-
 			if (string.IsNullOrEmpty(character.Version))
 			{
 				string contents = File.ReadAllText(filename);

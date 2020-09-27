@@ -42,7 +42,6 @@ namespace Desktop.Skinning
 			set { _fieldType = value; OnUpdateSkin(SkinManager.Instance.CurrentSkin); Invalidate(); }
 		}
 
-		private AutoCompleteSource _autoCompleteSource;
 		public AutoCompleteSource AutoCompleteSource
 		{
 			get { return _textBox.AutoCompleteSource; }
@@ -50,13 +49,8 @@ namespace Desktop.Skinning
 			{
 				if (value == AutoCompleteSource.ListItems)
 				{
-					_autoCompleteSource = value;
 					value = AutoCompleteSource.CustomSource;
 					PopulateAutoCompleteFromList();
-				}
-				else
-				{
-					_autoCompleteSource = value;
 				}
 				_textBox.AutoCompleteSource = value;
 			}

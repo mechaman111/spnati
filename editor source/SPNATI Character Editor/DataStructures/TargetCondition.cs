@@ -478,7 +478,6 @@ namespace SPNATI_Character_Editor
 				}
 				if (!excludeTarget)
 				{
-					string roleStr = null;
 					if (!string.IsNullOrEmpty(Role))
 					{
 						switch (Role)
@@ -496,7 +495,6 @@ namespace SPNATI_Character_Editor
 								str += " winner";
 								break;
 						}
-						roleStr = Role;
 					}
 					if (!string.IsNullOrEmpty(Character) && !excludeTarget)
 					{

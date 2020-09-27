@@ -409,16 +409,6 @@ namespace SPNATI_Character_Editor.Controls
 			}
 		}
 
-		private Color GetGroupColor(string key, int index)
-		{
-			TriggerDefinition trigger = TriggerDatabase.GetTrigger(key);
-			if (string.IsNullOrEmpty(trigger.Label))
-			{
-				return index % 2 == 0 ? SkinManager.Instance.CurrentSkin.PrimaryForeColor : SkinManager.Instance.CurrentSkin.SecondaryForeColor;
-			}
-			return SkinManager.Instance.CurrentSkin.GetGrouper(trigger.ColorScheme);
-		}
-
 		public void FormatRow(FormatRowEventArgs args)
 		{
 			Skin skin = SkinManager.Instance.CurrentSkin;

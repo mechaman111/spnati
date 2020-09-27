@@ -172,7 +172,6 @@ namespace Desktop.CommonControls.Graphs
 
 		private void PaintHorizontal(Graphics g)
 		{
-			int axesY = AxesPadding * 2 + _labelWidth;
 			int lineLeft = AxesPadding * 2 + _labelWidth - 1;
 			g.DrawLine(_axesPen, lineLeft, _graphRect.Top, lineLeft, _graphRect.Bottom);
 
@@ -209,12 +208,7 @@ namespace Desktop.CommonControls.Graphs
 					int y = yStart + (pt.X + 1) * ySpacing;
 
 					int current = (int)MathUtils.Lerp(0, x, _animator.Value);
-					int previous = currentY;
 					bars[pt.X] = current + currentY;
-
-					float previousAmount = previous / (float)_maxValueY;
-					int previousWidth = (int)(_graphRect.Width * previousAmount);
-					int previousRight = _graphRect.Left + previousWidth;
 
 					float amount = current / (float)_maxValueY;
 					int width = (int)(_graphRect.Width * amount);

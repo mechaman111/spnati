@@ -403,7 +403,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						sprite.Alpha = initialFrame.Alpha.Value.ToString(CultureInfo.InvariantCulture);
 					}
 
-					UpdateHistory(this, initialFrame);
+					UpdateHistory(initialFrame);
 				}
 			}
 
