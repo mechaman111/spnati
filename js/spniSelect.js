@@ -97,7 +97,7 @@ $searchModal.on('shown.bs.modal', function() {
 	$searchName.focus();
 });
 
-$sortingOptionsItems = $(".sort-dropdown-options li");
+$sortingOptionsItems = $(".sort-dropdown-options li a");
 
 $groupSearchModal = $('#group-search-modal');
 $groupSearchGroupName = $("#group-search-group-name");
@@ -127,7 +127,6 @@ var metaFile = "meta.xml";
 
 /* opponent information storage */
 var loadedOpponents = [];
-var selectableOpponents = loadedOpponents;
 var hiddenOpponents = [];
 var loadedGroups = [];
 var selectableGroups = loadedGroups;
@@ -136,6 +135,7 @@ var selectableGroups = loadedGroups;
 
 /** Should the individual selection view be in "Testing" mode? */
 var individualSelectTesting = false;
+var individualSelectSeparatorIndices = [];
 
 /** Are the default fill suggestions using Testing opponents? */
 var suggestedTestingOpponents = undefined;
@@ -145,16 +145,11 @@ var individualPage = 0;
 var groupPage = 0;
 var chosenGender = -1;
 var chosenGroupGender = -1;
-var sortingMode = "Featured";
+var sortingMode = "listingIndex";
 var sortingOptionsMap = {
-    "Recently Updated": sortOpponentsByMultipleFields("-lastUpdated"),
-    "Newest" : sortOpponentsByMultipleFields("-release"),
-    "Oldest" : sortOpponentsByMultipleFields("release"),
-    "Most Layers" : sortOpponentsByMultipleFields("-layers"),
-    "Fewest Layers" : sortOpponentsByMultipleFields("layers"),
-    "Name (A-Z)" : sortOpponentsByMultipleFields("first", "last"),
-    "Name (Z-A)" : sortOpponentsByMultipleFields("-first", "-last"),
-    "Talked to by selected" : sortOpponentsByMostTargeted(),
+    target: sortOpponentsByMostTargeted(),
+    oldest: sortOpponentsByMultipleFields(["release", "-listingIndex"]),
+    newest: sortOpponentsByMultipleFields(["-release", "listingIndex"]),
 };
 var groupCreditsShown = false;
 
@@ -245,7 +240,7 @@ function loadListingFile () {
 	var onComplete = function(opp) {
 		if (opp) {
 			if (opp.id in opponentMap) {
-				loadedOpponents[opponentMap[opp.id]] = opp;
+				loadedOpponents[opp.listingIndex = opponentMap[opp.id]] = opp;
                 opp.searchTags.forEach(function(tag) {
                     tagSet[tag] = true;
                 });
@@ -273,6 +268,7 @@ function loadListingFile () {
 		}
         
         if (--outstandingLoads == 0) {
+            loadedOpponents = loadedOpponents.filter(Boolean); // Remove any empty slots should an opponent fail to load
             $(".title-menu-buttons-container>div").removeAttr("hidden");
             $("#title-load-container").hide();
             
@@ -287,6 +283,7 @@ function loadListingFile () {
             }));
             loadedOpponents.forEach(function(p) { p.selectionCard.updateEpilogueBadge() });
             updateIndividualSelectSort();
+            updateIndividualSelectFilters();
         } else {
             var progress = Math.floor(100 * (totalLoads - outstandingLoads) / totalLoads);
             $(".game-load-progress").text(progress.toString(10));
@@ -339,6 +336,13 @@ function loadListingFile () {
             var oppStatus = $(this).attr('status');
             var id = $(this).text();
             var releaseNumber = $(this).attr('release');
+            if (releaseNumber === undefined) {
+                if (oppStatus == "testing") {
+                    releaseNumber = Infinity;
+                }
+            } else {
+                releaseNumber = Number(releaseNumber);
+            }
             var highlightStatus = $(this).attr('highlight');
 
             if (available[id]) {
@@ -611,7 +615,7 @@ function filterOpponent(opp, name, source, creator, tag) {
  * Filters the list of selectable opponents based on those
  * already selected and performs search logic.
  ************************************************************/
-function updateIndividualSelectFilters(autoclear) {
+function updateIndividualSelectFilters() {
     var name = $searchName.val().toLowerCase();
     var source = $searchSource.val().toLowerCase();
     var creator = $searchCreator.val().toLowerCase();
@@ -620,9 +624,77 @@ function updateIndividualSelectFilters(autoclear) {
     // Array.prototype.filter automatically skips empty slots
     loadedOpponents.forEach(function (opp) {
         opp.selectionCard.setFiltered(!filterOpponent(opp, name, source, creator, tag));
+    });
+    updateIndividualSelectVisibility(false);
+}
 
+/** Updates the sort order of opponents on the individual select screen. */
+function updateIndividualSelectSort() {
+    // first remove all separators
+    $(".card-separator").remove();
+    
+    /* sort opponents */
+    // Since ordered is always initialized here with featured order,
+    // check if a different sorting mode is selected, and if yes, sort it.
+    if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
+        loadedOpponents.sort(sortingOptionsMap[sortingMode]);
+    } else {
+        loadedOpponents.sort(sortOpponentsByMultipleFields(sortingMode.split(/\s+/)));
+    }
+    
+    var testingFirst = individualSelectTesting && (sortingMode === "listingIndex" || sortingMode === "-lastUpdated");
+    
+    if (testingFirst) {
+        /*
+         * As special cases, when using these sort modes in the Testing view,
+         * additionally sort all Testing opponents before main-roster opponents.
+         */
+        loadedOpponents.sort(sortTestingOpponents);
+    }
+
+    individualSelectSeparatorIndices = [];
+    var cutFn
+    /* Separate Testing from other types if they come before others in Testing view */
+        = testingFirst                  ? function(opp) { return opp.status !== "testing"; }
+    /* Separate out characters with no data if using Recently Updated sort */
+        : sortingMode == "-lastUpdated" ? function(opp) { return opp.lastUpdated === 0; }
+    /* Separate out characters with no targets if using Targeted sort */
+        : sortingMode == "target"       ? function(opp) { return opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined) === 0; }
+    /* Separate characters with a release number from characters without one */
+        : sortingMode == "newest" || sortingMode == "oldest" ? function(opp) { return opp.release === undefined ? -1 : opp.release == Infinity ? 1 : 0; }
+        : null;
+
+    var currentPartition = undefined;
+    loadedOpponents.forEach(function (opp, index) {
+        if (cutFn !== null) {
+            var newPartition = cutFn(opp);
+            if (currentPartition !== undefined && newPartition != currentPartition) {
+                $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
+                individualSelectSeparatorIndices.push(index);
+            }
+            currentPartition = newPartition;
+        }
+        $(opp.selectionCard.mainElem).appendTo($indivSelectionCardContainer);
+    });
+    if (individualSelectSeparatorIndices.length > 0) {
+        updateIndividualSelectVisibility();
+    }
+}
+
+$('#individual-select-screen .sort-filter-field').on('input', function () {
+    updateIndividualSelectFilters();
+});
+
+function updateIndividualSelectVisibility (autoclear) {
+    var anyVisible = false, visibleAboveSep = Array(individualSelectSeparatorIndices.length + 1), sepIdx = 0;
+    loadedOpponents.forEach(function (opp, index) {
         if (opp.selectionCard.isVisible(individualSelectTesting, false)) {
             $(opp.selectionCard.mainElem).show();
+            anyVisible = true;
+            while (sepIdx < individualSelectSeparatorIndices.length && index >= individualSelectSeparatorIndices[sepIdx]) {
+                sepIdx++;
+            }
+            visibleAboveSep[sepIdx] = true;
         } else {
             $(opp.selectionCard.mainElem).hide();
         }
@@ -630,47 +702,14 @@ function updateIndividualSelectFilters(autoclear) {
 
     // If a unique match was made, automatically clear the search so
     // another opponent can be found more quickly.
-    if (autoclear && (name != null || source != null) && selectableOpponents.length == 0) {
+    if (autoclear && !anyVisible) {
         clearSearch();
         return;
     }
-}
 
-/** Updates the sort order of opponents on the individual select screen. */
-function updateIndividualSelectSort() {
-    var ordered = loadedOpponents.slice();
-
-    /* sort opponents */
-    // Since ordered is always initialized here with featured order,
-    // check if a different sorting mode is selected, and if yes, sort it.
-    if (sortingOptionsMap.hasOwnProperty(sortingMode)) {
-        ordered.sort(sortingOptionsMap[sortingMode]);
-    }
-    
-    if (individualSelectTesting && (sortingMode === "Featured" || sortingMode === "Recently Updated")) {
-        /*
-         * As special cases, when using these sort modes in the Testing view,
-         * additionally sort all Testing opponents before main-roster opponents.
-         */
-        ordered.sort(sortTestingOpponents);
-    }
-
-    ordered.forEach(function (opp) {
-        $(opp.selectionCard.mainElem).appendTo($indivSelectionCardContainer);
-    });
-}
-
-$('#individual-select-screen .sort-filter-field').on('input', function () {
-    updateIndividualSelectFilters();
-});
-
-function updateIndividualSelectVisibility() {
-    loadedOpponents.forEach(function (opp) {
-        if (opp.selectionCard.isVisible(individualSelectTesting, false)) {
-            $(opp.selectionCard.mainElem).show();
-        } else {
-            $(opp.selectionCard.mainElem).hide();
-        }
+    individualSelectSeparatorIndices.forEach(function(pos, i) {
+        // Important to send a boolean to toggle().
+        $(".card-separator").eq(i).toggle(!!visibleAboveSep[i] && !!visibleAboveSep[i+1]);
     });
 }
 
@@ -683,7 +722,7 @@ function isIndividualSelectViewTypeLocked() {
  * Update displayed epilogue badges for opponents on the individual
  * selection screen.
  */
-function updateIndividualEpilogueBadges (autoclear) {
+function updateIndividualEpilogueBadges () {
     loadedOpponents.forEach(function(opp) {
         if (opp.endings) {
             opp.selectionCard.updateEpilogueBadge();
@@ -718,18 +757,28 @@ function showIndividualSelectionScreen() {
      * 
      * We also don't need to update sorting, since any change to the sort mode
      * (anywhere) automatically updates the display order.
+     * The exceptions are the targeted sort mode and the testing roster,
+     * which require sorting after the selected characters change.
      * 
      * The visibility of characters might change, however, depending on the
      * view type and what characters have already been selected.
      */
-    updateIndividualSelectVisibility();
+    if (sortingMode === "target" || individualSelectTesting) {
+        updateIndividualSelectSort();
+    }
+
+    updateIndividualSelectVisibility(true);
 
     /* Make sure the user doesn't have target-count sorting set if
      * the amount of loaded opponents drops to 0. */
-    if (sortingMode === "Talked to by selected") {
-        if (players.countTrue() <= 1) {
-            setSortingMode("Featured");
+    var $talkedToOption = $('.sort-dropdown-options>li:has(a[data-value=target])');
+    if (players.countTrue() <= 1) {
+        $talkedToOption.hide();
+        if (sortingMode === "target") {
+            setSortingMode("listingIndex");
         }
+    } else {
+        $talkedToOption.show();
     }
 
     updateIndividualEpilogueBadges();
@@ -744,9 +793,9 @@ function toggleIndividualSelectView() {
 
     /* Switch to the default sort mode for the selected view. */
     if (individualSelectTesting) {
-        setSortingMode("Recently Updated");
+        setSortingMode("-lastUpdated");
     } else {
-        setSortingMode("Featured");
+        setSortingMode("listingIndex");
     }
 
     updateSelectionVisuals();
@@ -961,7 +1010,7 @@ function loadDefaultFillSuggestions () {
          * of the list.
          */
         if (individualSelectTesting) {
-            possiblePicks.sort(sortOpponentsByMultipleFields("lastUpdated"));
+            possiblePicks.sort(sortOpponentsByField("lastUpdated"));
         }
 
         fillPlayers.push(possiblePicks.pop());
@@ -1372,14 +1421,16 @@ function sortOpponentsByField(field) {
     }
 
     return function(opp1, opp2) {
-        var compare = 0;
-        if (opp1[field] < opp2[field]) {
-            compare = -1;
+        if (opp1[field] === undefined && opp2[field] !== undefined) {
+            return 1;
+        } else if (opp1[field] !== undefined && opp2[field] === undefined) {
+            return -1;
+        } else if (opp1[field] < opp2[field]) {
+            return -order;
+        } else if (opp1[field] > opp2[field]) {
+            return order;
         }
-        else if (opp1[field] > opp2[field]) {
-            compare = 1;
-        }
-        return order * compare;
+        return 0;
     }
 }
 
@@ -1390,16 +1441,16 @@ function sortOpponentsByField(field) {
  * Example:
  *   // sorts myArr by each element's number of layers (low to high),
  *   // and for elements whose layers are equivalent, sort them by first name (Z-A)
- *   myArr.sort(sortOpponentsByMultipleFields("layers", "-first"));
+ *   myArr.sort(sortOpponentsByMultipleFields(["layers", "-first"]));
  */
-function sortOpponentsByMultipleFields() {
-    var fields = arguments; // retrieve the args passed in
+function sortOpponentsByMultipleFields(fields) {
+    var comparers = fields.map(sortOpponentsByField);
     return function(opp1, opp2) {
         var i = 0;
         var compare = 0;
         // if both elements have the same field, check the next ones
-        while (compare === 0 && i < fields.length) {
-            compare = sortOpponentsByField(fields[i])(opp1, opp2);
+        while (compare === 0 && i < comparers.length) {
+            compare = comparers[i](opp1, opp2);
             i++;
         }
         return compare;
@@ -1445,13 +1496,14 @@ function sortTestingOpponents(opp1, opp2) {
 
 function setSortingMode(mode) {
     sortingMode = mode;
-    $("#sort-dropdown-selection").html(sortingMode); // change the dropdown text to the selected option
+    // change the dropdown text to the selected option
+    $("#sort-dropdown-selection").html($sortingOptionsItems.filter(function() { return $(this).data('value') == mode; }).html()); 
     updateIndividualSelectSort();
 }
 
 /** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */
 $sortingOptionsItems.on("click", function(e) {
-    setSortingMode($(this).find('a').html());
+    setSortingMode($(this).data('value'));
 });
 
 /************************************************************

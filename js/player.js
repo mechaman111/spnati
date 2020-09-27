@@ -418,7 +418,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.collectibles = null;
     this.layers = parseInt($metaXml.children('layers').text(), 10);
     this.scale = Number($metaXml.children('scale').text()) || 100.0;
-    this.release = parseInt(releaseNumber, 10) || Number.POSITIVE_INFINITY;
+    this.release = releaseNumber;
     this.uniqueLineCount = parseInt($metaXml.children('lines').text(), 10) || undefined;
     this.posesImageCount = parseInt($metaXml.children('poses').text(), 10) || undefined;
     this.z_index = parseInt($metaXml.children('z-index').text(), 10) || 0;

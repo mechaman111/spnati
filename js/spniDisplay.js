@@ -1127,8 +1127,6 @@ function OpponentSelectionCard (opponent) {
     this.update();
 
     this.mainElem.addEventListener('click', this.handleClick.bind(this));
-
-    $(this.mainElem).appendTo($indivSelectionCardContainer);
 }
 
 OpponentSelectionCard.prototype = Object.create(OpponentDisplay.prototype);
