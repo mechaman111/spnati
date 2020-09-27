@@ -20,6 +20,8 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
+		public string GroupKey;
+
 		public Character Character;
 		private CharacterEditorData _editorData;
 
@@ -234,6 +236,9 @@ namespace SPNATI_Character_Editor
 				case NodeMode.Stage:
 					key = Stage.Id.ToString();
 					break;
+				case NodeMode.Pose:
+					key = GroupKey;
+					break;
 				case NodeMode.Target:
 					key = TargetCharacter?.FolderName ?? "-";
 					break;
@@ -315,6 +320,7 @@ namespace SPNATI_Character_Editor
 		Stage,
 		Target,
 		Folder,
+		Pose,
 	}
 
 	public enum NodeType
