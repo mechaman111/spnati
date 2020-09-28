@@ -106,8 +106,6 @@ namespace Desktop.CommonControls
 
 		private void DrawBucket(Graphics g, DataBucket bucket, int x, int y, int width, int height, int maxCount, List<DataBucket> siblings)
 		{
-			Skin skin = SkinManager.Instance.CurrentSkin;
-
 			//label
 			StringFormat sf = new StringFormat() { LineAlignment = StringAlignment.Far, Alignment = StringAlignment.Center, FormatFlags = StringFormatFlags.NoWrap, Trimming = StringTrimming.EllipsisCharacter };
 			Rectangle rect = new Rectangle(x, y, width, height);

@@ -57,6 +57,7 @@ namespace SPNATI_Character_Editor
 			"online",
 			"offline",
 			"testing",
+			"unlisted",
 		})]
 		[XmlAttribute("status")]
 		public string Status;

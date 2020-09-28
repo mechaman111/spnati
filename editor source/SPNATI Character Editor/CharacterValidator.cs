@@ -317,7 +317,7 @@ namespace SPNATI_Character_Editor
 					#endregion
 
 					#region Variable tests
-					ValidateExpressions(warnings, character, caseLabel, stageCase, context); 
+					ValidateExpressions(warnings, stageCase, context); 
 					#endregion
 
 					Tuple<string, string> template = DialogueDatabase.GetTemplate(stageCase.Tag);
@@ -581,7 +581,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private static void ValidateExpressions(List<ValidationError> warnings, Character character, string caseLabel, Case stageCase, ValidationContext context)
+		private static void ValidateExpressions(List<ValidationError> warnings, Case stageCase, ValidationContext context)
 		{
 			foreach (ExpressionTest test in stageCase.Expressions)
 			{

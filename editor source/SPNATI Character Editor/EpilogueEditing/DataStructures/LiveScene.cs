@@ -12,6 +12,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 	/// </summary>
 	public class LiveScene : LiveData, ILabel
 	{
+		public int DefaultSize = 500;
 		public event EventHandler LabelChanged;
 
 		public override event EventHandler<WidgetCreationArgs> WidgetMoved
@@ -54,8 +55,8 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				}
 				else if (Width == 0)
 				{
-					Width = 100;
-					Height = 100;
+					Width = DefaultSize;
+					Height = DefaultSize;
 				}
 				Set(value);
 			}
@@ -129,8 +130,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		public LiveScene(Character character)
 		{
-			Width = 100;
-			Height = 100;
+			Character = character;
+			Width = DefaultSize;
+			Height = DefaultSize;
 		}
 
 		/// <summary>
@@ -188,7 +190,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				switch (directive.DirectiveType)
 				{
 					case "metadata":
-						segment.AddMetadataDirective(directive, currentBatch);
+						segment.AddMetadataDirective(directive);
 						break;
 					case "sprite":
 						segment.AddSpriteDirective(directive, currentBatch);
@@ -206,7 +208,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						break;
 					case "wait":
 					case "pause":
-						segment.AddPauseDirective(directive, currentBatch);
+						segment.AddPauseDirective();
 						if (directive.DirectiveType == "pause")
 						{
 							//Pauses lead to a new segment

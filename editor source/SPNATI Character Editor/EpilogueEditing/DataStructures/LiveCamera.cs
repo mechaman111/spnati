@@ -336,7 +336,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		{
 			if (Keyframes.Count > 0)
 			{
-				UpdateHistory(this, Keyframes[0]);
+				UpdateHistory(Keyframes[0]);
 			}
 			return null;
 		}

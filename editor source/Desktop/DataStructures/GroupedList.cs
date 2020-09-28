@@ -304,7 +304,6 @@ namespace Desktop.CommonControls
 
 		public void RemoveItem(T item)
 		{
-			string groupKey = item.GetGroupKey();
 			Group group;
 			if (_groupIndex.TryGetValue(item, out group))
 			{

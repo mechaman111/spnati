@@ -677,7 +677,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 					emitter.Rate = initialFrame.Rate.Value.ToString(CultureInfo.InvariantCulture);
 				}
 
-				UpdateHistory(this, initialFrame);
+				UpdateHistory(initialFrame);
 			}
 
 			return emitter;

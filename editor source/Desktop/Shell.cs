@@ -19,8 +19,6 @@ namespace Desktop
 		private int _nextId;
 		private bool _forceSwitch = false;
 
-		private int _workspaceTop;
-
 		public static Shell Instance { get; private set; }
 
 		public PostOffice PostOffice = new PostOffice();
@@ -93,7 +91,6 @@ namespace Desktop
 			Text = caption;
 			Icon = icon;
 
-			_workspaceTop = tabWorkspaces.Top;
 			SetStatus("");
 		}
 
@@ -117,12 +114,6 @@ namespace Desktop
 			DialogResult result = MessageBox.Show(message, title, buttons);
 			_busy = false;
 			return result;
-		}
-
-		public static void ShowMessageWithCallback(int number, string message, Action callback)
-		{
-			ShowMessage(message);
-			callback();
 		}
 
 		public static void ShowForm(Form form)
@@ -172,11 +163,6 @@ namespace Desktop
 					}
 				}
 			}
-		}
-
-		private void CreateToolbar()
-		{
-			AddToolbarSeparator();
 		}
 
 		#region Action bar

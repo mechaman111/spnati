@@ -403,7 +403,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 						sprite.Alpha = initialFrame.Alpha.Value.ToString(CultureInfo.InvariantCulture);
 					}
 
-					UpdateHistory(this, initialFrame);
+					UpdateHistory(initialFrame);
 				}
 			}
 
@@ -420,9 +420,9 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				LiveSprite sprite = this;
 				while (sprite != null)
 				{
-					for (int i = 0; i < Keyframes.Count; i++)
+					for (int i = 0; i < sprite.Keyframes.Count; i++)
 					{
-						LiveSpriteKeyframe kf = Keyframes[i] as LiveSpriteKeyframe;
+						LiveSpriteKeyframe kf = sprite.Keyframes[i] as LiveSpriteKeyframe;
 						if (kf.HasProperty("Src"))
 						{
 							src = kf.Src;
@@ -436,8 +436,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					string path = GetImagePath(src);
 					Bitmap img = LiveImageCache.Get(path);
-					WidthOverride = img.Width;
-					HeightOverride = img.Height;
+					if (img != null)
+					{
+						WidthOverride = img.Width;
+						HeightOverride = img.Height;
+					}
 					InvalidateTransform();
 				}
 			}

@@ -353,6 +353,7 @@ namespace Desktop.CommonControls
 			SetBindableData(data, ref _bindableData);
 			SetBindableData(previewData, ref _bindablePreviewData);
 			Context = context;
+			SecondaryContext = secondaryContext;
 			Rebind();
 		}
 

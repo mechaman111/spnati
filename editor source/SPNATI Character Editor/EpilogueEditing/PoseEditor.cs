@@ -596,7 +596,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (_pose == null) { return; }
 			SavePose();
 			PoseExporter exporter = new PoseExporter();
-			exporter.SetPose(_character, _sourcePose);
+			exporter.SetPose(_character, _sourcePose, _stage);
 			exporter.ShowDialog();
 		}
 
@@ -627,7 +627,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				{
 					props.Add(p);
 				}
-				ToggleKeyframeTypeCommand command = new ToggleKeyframeTypeCommand(widget.Data, frame, props, type);
+				ToggleKeyframeTypeCommand command = new ToggleKeyframeTypeCommand(frame, props, type);
 				_history.Commit(command);
 			}
 			UpdateToolbar();

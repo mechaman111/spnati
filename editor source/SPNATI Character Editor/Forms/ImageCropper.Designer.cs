@@ -55,6 +55,7 @@
 			this.previewPanel = new Desktop.CommonControls.DBPanel();
 			this.lblWait = new Desktop.Skinning.SkinnedLabel();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
+			this.cmdCopy = new Desktop.Skinning.SkinnedButton();
 			this.panelManual.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.valLeft)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valTop)).BeginInit();
@@ -395,6 +396,7 @@
 			// 
 			// skinnedPanel1
 			// 
+			this.skinnedPanel1.Controls.Add(this.cmdCopy);
 			this.skinnedPanel1.Controls.Add(this.cmdCancel);
 			this.skinnedPanel1.Controls.Add(this.cmdOK);
 			this.skinnedPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -404,6 +406,21 @@
 			this.skinnedPanel1.Size = new System.Drawing.Size(909, 30);
 			this.skinnedPanel1.TabIndex = 37;
 			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
+			// 
+			// cmdCopy
+			// 
+			this.cmdCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.cmdCopy.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdCopy.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdCopy.Flat = true;
+			this.cmdCopy.ForeColor = System.Drawing.Color.White;
+			this.cmdCopy.Location = new System.Drawing.Point(3, 3);
+			this.cmdCopy.Name = "cmdCopy";
+			this.cmdCopy.Size = new System.Drawing.Size(187, 23);
+			this.cmdCopy.TabIndex = 6;
+			this.cmdCopy.Text = "Copy Generated Code";
+			this.cmdCopy.UseVisualStyleBackColor = true;
+			this.cmdCopy.Click += new System.EventHandler(this.cmdCopy_Click);
 			// 
 			// ImageCropper
 			// 
@@ -474,5 +491,6 @@
 		private Desktop.Skinning.SkinnedButton cmdAdvanced;
 		private Desktop.Skinning.SkinnedPanel skinnedPanel1;
 		private Desktop.CommonControls.DBPanel previewPanel;
+		private Desktop.Skinning.SkinnedButton cmdCopy;
 	}
 }

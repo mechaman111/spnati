@@ -70,10 +70,10 @@ namespace SPNATI_Character_Editor
 		/// Called prior to serializing to XML
 		/// </summary>
 		/// <param name="character"></param>
-		public void OnBeforeSerialize(Character character)
+		public void OnBeforeSerialize()
 		{
 			Stages.Clear();
-			BuildTriggers(character);
+			BuildTriggers();
 		}
 
 		/// <summary>
@@ -323,7 +323,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		public void BuildTriggers(Character character)
+		public void BuildTriggers()
 		{
 			Dictionary<string, Trigger> triggers = new Dictionary<string, Trigger>();
 			Triggers.Clear();
@@ -371,78 +371,6 @@ namespace SPNATI_Character_Editor
 			}
 
 			Triggers.Sort();
-		}
-
-		/// <summary>
-		/// Rebuilds the stage tree from the WorkingCases list
-		/// </summary>
-		public void BuildStageTree(Character character)
-		{
-			foreach (var stageCase in _workingCases)
-			{
-				stageCase.ClearEmptyValues();
-			}
-			Stages.Clear();
-
-			//Always build 1 stage per layer
-			for (int s = 0; s < character.Layers + Clothing.ExtraStages; s++)
-			{
-				Stages.Add(new Stage(s));
-			}
-
-			character.Metadata.CrossGender = false;
-
-			//Put each case into the appropriate stage(s)
-			foreach (Case workingCase in _workingCases)
-			{
-				List<Case> alternativeCases = new List<Case>();
-				alternativeCases.Add(workingCase);
-				foreach (Case alternate in workingCase.AlternativeConditions)
-				{
-					//copy lines and stages into the alternate cases
-					alternativeCases.Add(alternate);
-				}
-
-				foreach (int s in workingCase.Stages)
-				{
-					if (s >= Stages.Count) { continue; }
-
-					string id = null;
-					if (workingCase.Id > 0)
-					{
-						id = $"{s}-{workingCase.Id}";
-					}
-
-					Stage stage = Stages[s];
-
-					//Find a case to merge into
-					foreach (Case sourceCase in alternativeCases)
-					{
-						Case existingCase = stage.Cases.Find(c => c.MatchesConditions(sourceCase) && (c.StageId == id || (string.IsNullOrEmpty(id) && string.IsNullOrEmpty(c.StageId))));
-						if (existingCase == null)
-						{
-							//No case exists yet, so create one
-							existingCase = sourceCase.CopyConditions();
-							existingCase.StageId = id;
-							existingCase.Stages.Add(s); //Not really necessary for serialization, since each case will have a single stage, and will be a child of that stage
-							stage.Cases.Add(existingCase);
-						}
-
-						//Move the lines over, and make them stage-specific
-						foreach (var line in workingCase.Lines)
-						{
-							DialogueLine stageLine = line.Copy();
-							stageLine.Image = stageLine.Pose?.Key;
-							existingCase.Lines.Add(stageLine);
-
-							if (!string.IsNullOrEmpty(line.Gender))
-							{
-								character.Metadata.CrossGender = true;
-							}
-						}
-					}
-				}
-			}
 		}
 
 		/// <summary>

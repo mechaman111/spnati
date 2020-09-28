@@ -68,7 +68,7 @@ namespace Desktop.Reporting.Controls
 
 		private void AddEntry(IRecord record)
 		{
-			ISlicerGroup group = _slicer.AddGroup(record);
+			_slicer.AddGroup(record);
 		}
 
 		private void AddEntry(ISlicerGroup group)

@@ -7,7 +7,6 @@ namespace Desktop.Skinning
 	public class SkinnedRadioButton : RadioButton, ISkinControl
 	{
 		public VisualState MouseState { get; private set; }
-		private static StringFormat _sf = new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Near, FormatFlags = StringFormatFlags.NoWrap };
 
 		private SkinnedFieldType _fieldType = SkinnedFieldType.Primary;
 		public SkinnedFieldType FieldType
@@ -25,11 +24,6 @@ namespace Desktop.Skinning
 			MouseLeave += MouseLeaveEvent;
 			MouseDown += MouseDownEvent;
 			MouseUp += MouseUpEvent;
-		}
-
-		private void _animator_OnUpdate(object sender, float e)
-		{
-			Invalidate();
 		}
 
 		private void MouseEnterEvent(object sender, EventArgs e)

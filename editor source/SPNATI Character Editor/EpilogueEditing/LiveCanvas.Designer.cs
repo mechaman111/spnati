@@ -63,6 +63,7 @@
 			this.canvas.TabIndex = 0;
 			this.canvas.TabSide = Desktop.Skinning.TabSide.None;
 			this.canvas.TabStop = true;
+			this.canvas.Click += new System.EventHandler(this.canvas_Click);
 			this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
 			this.canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseDown);
 			this.canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseMove);
@@ -178,11 +179,11 @@
 			this.tsRight.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsBackColor,
             this.tsHelp});
-			this.tsRight.Location = new System.Drawing.Point(771, 0);
+			this.tsRight.Location = new System.Drawing.Point(802, 0);
 			this.tsRight.Name = "tsRight";
 			this.tsRight.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.tsRight.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.tsRight.Size = new System.Drawing.Size(80, 25);
+			this.tsRight.Size = new System.Drawing.Size(49, 25);
 			this.tsRight.TabIndex = 20;
 			this.tsRight.Tag = "PrimaryLight";
 			// 

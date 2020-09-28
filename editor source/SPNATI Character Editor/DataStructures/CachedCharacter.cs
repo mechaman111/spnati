@@ -61,8 +61,6 @@ namespace SPNATI_Character_Editor
 		{
 			character.PrepareForEdit();
 
-			string behaviourPath = Path.Combine(character.GetDirectory(), "behaviour.xml");
-
 			//Basic info to copy over
 			CacheVersion = CurrentVersion;
 			Label = character.Label;

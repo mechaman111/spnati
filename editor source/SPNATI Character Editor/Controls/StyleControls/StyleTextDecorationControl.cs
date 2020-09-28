@@ -52,7 +52,6 @@ namespace SPNATI_Character_Editor.Controls.StyleControls
 			if (pieceCount > 1)
 			{
 				//color|style
-				string piece = pieces[pieces.Length - 1];
 				if (cboStyle.Items.Contains(pieces))
 				{
 					cboStyle.SelectedItem = pieces;

@@ -41,7 +41,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			InitializeComponent();
 
-			cboView.Items.AddRange(new string[] { "Stage", "Case", "Target", "Folder" });
+			cboView.Items.AddRange(new string[] { "Stage", "Case", "Target", "Folder", "Pose" });
 
 			Shell.Instance.PostOffice.Subscribe(DesktopMessages.SettingsUpdated, OnSettingsChanged);
 		}
@@ -78,21 +78,7 @@ namespace SPNATI_Character_Editor.Controls
 			cboView.SelectedIndexChanged += cboView_SelectedIndexChanged;
 			if (_view == null)
 			{
-				switch (view)
-				{
-					case 1:
-						_view = new CaseView();
-						break;
-					case 2:
-						_view = new TargetView();
-						break;
-					case 3:
-						_view = new FolderView();
-						break;
-					default:
-						_view = new StageView();
-						break;
-				}
+				_view = GetView(view);
 				InitializeView();
 			}
 			tsbtnSplit.DropDown = _view.GetCopyMenu();
@@ -458,6 +444,23 @@ namespace SPNATI_Character_Editor.Controls
 			LeaveNode();
 		}
 
+		private IDialogueTreeView GetView(int index)
+		{
+			switch (index)
+			{
+				case 1:
+					return new CaseView();
+				case 2:
+					return new TargetView();
+				case 3:
+					return new FolderView();
+				case 4:
+					return new PoseView();
+				default:
+					return new StageView();
+			}
+		}
+
 		private void cboView_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (_character == null) { return; }
@@ -466,21 +469,7 @@ namespace SPNATI_Character_Editor.Controls
 			int index = cboView.SelectedIndex;
 			Config.Set(LastViewSetting, index);
 			CleanupView();
-			switch (index)
-			{
-				case 1:
-					_view = new CaseView();
-					break;
-				case 2:
-					_view = new TargetView();
-					break;
-				case 3:
-					_view = new FolderView();
-					break;
-				default:
-					_view = new StageView();
-					break;
-			}
+			_view = GetView(index);
 			InitializeView();
 			tsbtnSplit.DropDown = _view.GetCopyMenu();
 			_view.SetFilter(null);

@@ -606,7 +606,7 @@ namespace SPNATI_Character_Editor
 		{
 			Behavior.Serializing = true;
 			Gender = Gender.ToLower();
-			Behavior.OnBeforeSerialize(this);
+			Behavior.OnBeforeSerialize();
 			Metadata.PopulateFromCharacter(this);
 			Version = Config.Version;
 			Metadata.LastUpdate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
@@ -867,6 +867,17 @@ namespace SPNATI_Character_Editor
 				if (stageCase.Filter != null && character.Tags.Find(t => t.Tag == stageCase.Filter) != null)
 				{
 					targetedByTag = true;
+				}
+				foreach (TargetCondition cond in stageCase.Conditions)
+				{
+					if (!string.IsNullOrEmpty(cond.FilterTag))
+					{
+						if (character.Tags.Find(t => t.Tag == cond.FilterTag) != null)
+						{
+							targetedByTag = true;
+							break;
+						}
+					}
 				}
 			}
 			if ((targeted && (allowedTargetTypes & TargetType.DirectTarget) > 0) || targetedByTag)

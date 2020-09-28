@@ -14,10 +14,10 @@ namespace SPNATI_Character_Editor.Actions
 		private Dictionary<string, KeyframeType> _newSettings = new Dictionary<string, KeyframeType>();
 		private LiveKeyframe _keyframe;
 
-		public ToggleKeyframeTypeCommand(LiveAnimatedObject data, LiveKeyframe frame, HashSet<string> properties) : this(data, frame, properties, null)
+		public ToggleKeyframeTypeCommand(LiveKeyframe frame, HashSet<string> properties) : this(frame, properties, null)
 		{
 		}
-		public ToggleKeyframeTypeCommand(LiveAnimatedObject data, LiveKeyframe frame, HashSet<string> properties, KeyframeType? newType)
+		public ToggleKeyframeTypeCommand(LiveKeyframe frame, HashSet<string> properties, KeyframeType? newType)
 		{
 			_keyframe = frame;
 			if (properties.Count == 0)

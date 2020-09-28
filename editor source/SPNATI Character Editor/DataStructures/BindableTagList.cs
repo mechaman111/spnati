@@ -83,19 +83,23 @@ namespace SPNATI_Character_Editor
 			if (e.Action == NotifyCollectionChangedAction.Add)
 			{
 				Tag tagDefinition = TagDatabase.GetTag(tag.Tag);
-				if (tagDefinition != null)
+				if (tagDefinition != null && (string.IsNullOrEmpty(tagDefinition.Gender) || tagDefinition.Gender == _character.Gender))
 				{
 					if (tagDefinition.PairedTags.Count > 0)
 					{
 						//add any paired tags
 						foreach (string parentTag in tagDefinition.PairedTags)
 						{
-							BindableTag parent = _bindings.Get(parentTag);
-							if (parent != null)
+							Tag parentDefinition = TagDatabase.GetTag(parentTag);
+							if (parentDefinition != null && (string.IsNullOrEmpty(parentDefinition.Gender) || parentDefinition.Gender == _character.Gender))
 							{
-								foreach (int stage in e.NewItems)
+								BindableTag parent = _bindings.Get(parentTag);
+								if (parent != null)
 								{
-									parent.AddStage(stage);
+									foreach (int stage in e.NewItems)
+									{
+										parent.AddStage(stage);
+									}
 								}
 							}
 						}

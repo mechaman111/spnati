@@ -78,6 +78,10 @@ namespace KisekaeImporter
 		/// <param name="code">Code to merge into this one</param>
 		public void MergeIn(KisekaeCode code, bool applyEmpties, bool poseOnly)
 		{
+			if (code == null)
+			{
+				return;
+			}
 			int mergingVersion;
 			int version;
 			if (int.TryParse(code.Version, out mergingVersion) && int.TryParse(Version, out version))

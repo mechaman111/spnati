@@ -38,7 +38,6 @@ namespace Desktop.Skinning
 		public bool ShowTitleBar { get; set; } = true;
 
 		private Mailbox _mailbox;
-		private int _threadId;
 
 		#region Custom menu bar
 
@@ -501,7 +500,6 @@ namespace Desktop.Skinning
 
 		public SkinnedForm()
 		{
-			_threadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
 			FormBorderStyle = FormBorderStyle.None;
 			Sizable = true;
 			DoubleBuffered = true;

@@ -178,7 +178,6 @@ namespace Desktop.Skinning
 		private void DrawButton(Graphics g, VisualState state, Rectangle bounds, string text)
 		{
 			//back
-			Skin skin = SkinManager.Instance.CurrentSkin;
 			SolidBrush backColor = _colorSet.GetBrush(state, false, true);
 			g.FillRectangle(backColor, bounds);
 

@@ -133,7 +133,7 @@ namespace Desktop.DataStructures
 				//attach CollectionChanged for collections
 				NotifyCollectionChangedEventHandler handler = new NotifyCollectionChangedEventHandler((sender, e) =>
 				{
-					Collection_CollectionChanged(propName, sender, e);
+					Collection_CollectionChanged(propName, e);
 				});
 				collection.CollectionChanged += handler;
 				_collectionHandlers[propName] = handler;
@@ -154,7 +154,7 @@ namespace Desktop.DataStructures
 			}
 		}
 
-		private void Collection_CollectionChanged(string propName, object sender, NotifyCollectionChangedEventArgs e)
+		private void Collection_CollectionChanged(string propName, NotifyCollectionChangedEventArgs e)
 		{
 			switch (e.Action)
 			{

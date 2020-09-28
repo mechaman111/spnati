@@ -916,7 +916,7 @@ namespace SPNATI_Character_Editor
 						}
 						break;
 					case "start":
-						Case temp = MakeLine(key, value, character, true);
+						Case temp = MakeLine(key, value, character);
 						if (temp != null)
 							character.StartingLines.Add(temp.Lines[0]);
 						break;
@@ -1081,7 +1081,7 @@ namespace SPNATI_Character_Editor
 						break;
 					default:
 						//Dialogue
-						Case newCase = MakeLine(key, value, character, false);
+						Case newCase = MakeLine(key, value, character);
 						if (newCase != null && newCase.Lines.Count > 0)
 						{
 							int stage = newCase.Stages[0];
@@ -1225,7 +1225,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private static Case MakeLine(string key, string value, Character character, bool startingLine)
+		private static Case MakeLine(string key, string value, Character character)
 		{
 			Case lineCase = new Case();
 			DialogueLine line = new DialogueLine();

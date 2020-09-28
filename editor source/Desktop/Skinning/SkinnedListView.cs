@@ -72,7 +72,7 @@ namespace Desktop.Skinning
 
 			base.OnDrawSubItem(e);
 			string text = e.SubItem.Text;
-			DrawListItem(e.Graphics, e.Item, e.Bounds, skin, e.SubItem.Text);
+			DrawListItem(e.Graphics, e.Item, e.Bounds, skin, text);
 		}
 
 		private void DrawListItem(Graphics g, ListViewItem item, Rectangle bounds, Skin skin, string text)

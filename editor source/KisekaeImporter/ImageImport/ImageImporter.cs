@@ -11,7 +11,7 @@ namespace KisekaeImporter.ImageImport
 	/// <summary>
 	/// Interfaces with Kisekae to produce images
 	/// </summary>
-	public class ImageImporter
+	public sealed class ImageImporter: IDisposable
 	{
 		public const int ImageXOffset = 700;
 
@@ -176,8 +176,7 @@ namespace KisekaeImporter.ImageImport
 						string[] subpieces = kvp.Key.Split('/');
 						foreach (string subpiece in subpieces)
 						{
-							float v;
-							if (float.TryParse(kvp.Value, out v))
+							if (float.TryParse(kvp.Value, out float v))
 							{
 								lines.Add($"{subpiece}={Math.Floor(v / 100.0f * 255)}");
 							}
@@ -200,8 +199,7 @@ namespace KisekaeImporter.ImageImport
 						string[] subpieces = kvp.Key.Split('/');
 						foreach (string subpiece in subpieces)
 						{
-							float v;
-							if (float.TryParse(kvp.Value, out v))
+							if (float.TryParse(kvp.Value, out float v))
 							{
 								int amount = (int)Math.Floor(v / 100.0f * 255);
 								ServerRequest partRequest = new ServerRequest("alpha_direct", "op", "set", "character", "0", "path", subpiece, "alpha", amount.ToString());
@@ -333,6 +331,11 @@ namespace KisekaeImporter.ImageImport
 			g.DrawImage(srcImage, new Rectangle(0, 0, img.Width, img.Height), cropRegion, GraphicsUnit.Pixel);
 			g.Dispose();
 			return img;
+		}
+
+		public void Dispose()
+		{
+			_client.Dispose();
 		}
 	}
 }

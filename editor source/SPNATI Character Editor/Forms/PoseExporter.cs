@@ -10,6 +10,7 @@ namespace SPNATI_Character_Editor.Forms
 	public partial class PoseExporter : SkinnedForm
 	{
 		private Pose _pose;
+		private int _stage;
 
 		public PoseExporter()
 		{
@@ -17,10 +18,11 @@ namespace SPNATI_Character_Editor.Forms
 			preview.AutoPlayback = false;
 		}
 
-		public void SetPose(ISkin character, Pose pose)
+		public void SetPose(ISkin character, Pose pose, int stage)
 		{
 			preview.SetCharacter(character);
 			_pose = pose;
+			_stage = stage;
 			lblName.Text = pose.Id;
 			txtFile.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), pose.Id + ".gif");
 		}
@@ -53,7 +55,7 @@ namespace SPNATI_Character_Editor.Forms
 			preview.Height = (int)valHeight.Value;
 			PoseMapping pose = new PoseMapping(_pose.Id);
 			pose.SetPose(-1, _pose);
-			preview.SetImage(pose, -1);
+			preview.SetImage(pose, _stage);
 
 			float duration = preview.Pose.Sprites.Max(s =>
 			{

@@ -1,4 +1,5 @@
-﻿using Desktop.Skinning;
+﻿using Desktop;
+using Desktop.Skinning;
 using KisekaeImporter;
 using KisekaeImporter.ImageImport;
 using System;
@@ -18,6 +19,7 @@ namespace SPNATI_Character_Editor.Forms
 		private PointF _downPoint;
 		private bool _lockRect;
 		private Dictionary<string, string> _extraData = new Dictionary<string, string>();
+		private string _lastCode;
 
 		public ImageCropper()
 		{
@@ -64,6 +66,7 @@ namespace SPNATI_Character_Editor.Forms
 			cmdCancel.Enabled = false;
 			cmdReimport.Enabled = false;
 			cmdAdvanced.Enabled = false;
+			cmdCopy.Enabled = false;
 			lblWait.Visible = true;
 			tmrWait.Enabled = true;
 			_lockRect = lockRectSize;
@@ -75,11 +78,13 @@ namespace SPNATI_Character_Editor.Forms
 			UpdateRectBoxes();
 			_previewImage = null;
 			KisekaeCode code = new KisekaeCode(metadata.Data);
+			_lastCode = code.Serialize();
 			Image image = await CharacterGenerator.GetRawImage(code, character, metadata.ExtraData, metadata.SkipPreprocessing);
 			cmdOK.Enabled = true;
 			cmdCancel.Enabled = true;
 			cmdReimport.Enabled = true;
 			cmdAdvanced.Enabled = true;
+			cmdCopy.Enabled = true;
 			tmrWait.Enabled = false;
 			lblWait.Visible = false;
 			_previewImage = image;
@@ -407,6 +412,13 @@ namespace SPNATI_Character_Editor.Forms
 			{
 				_extraData = form.GetData();
 			}
+		}
+
+		private void cmdCopy_Click(object sender, EventArgs e)
+		{
+			Clipboard.Clear();
+			Clipboard.SetText(_lastCode);
+			Shell.Instance.SetStatus("Code copied to clipboard.");
 		}
 	}
 }
