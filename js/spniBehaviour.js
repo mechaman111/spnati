@@ -1002,7 +1002,9 @@ function expandDialogue (dialogue, self, target, bindings) {
                 }
                 break;
             }
-            if (variable[0] == variable[0].toUpperCase()) {
+            if (variable == variable.toUpperCase()) {
+                substitution = substitution.toUpperCase();
+            } else if (variable[0] == variable[0].toUpperCase()) {
                 substitution = substitution.initCap();
             }
         } catch (ex) {
