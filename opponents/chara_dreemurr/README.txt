@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited September 22 2020
+README edited October 5 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -256,6 +256,9 @@ AMY
 -Responds to Chara herself losing while Amy is still in.
 -Has a PersistAmyFriendship marker that can make some of Chara's dialogue towards Amy less antagonistic if it's high enough.
 
+ANNA
+-Responds to Anna as she loses.
+
 ARASH
 -Responds to Arash's question about cooking.
 -Responds to Arash's question about flowers.
@@ -467,6 +470,9 @@ THARJA
 -Ditto if she's cursed the other one before, too.
 -Dialogue with Tharja as she is losing.
 
+TOMOKO
+-Responds to Tomoko asking Chara to protect her.
+
 TWILIGHT
 -Responds to Twilight removing her panties as her first item.
 
@@ -507,7 +513,6 @@ PLANNED CHARACTER INTERACTIONS
 
 Planned interactions not yet implemented for any number of reasons.
 
--Chara embodies the feeling you get when a number grows, among them 'gold' ie currency. Something with Anna, maybe?
 -A 'spider donut, don't worry, spider didn't' joke with Amy.
 -Interactions with Monika, particularly her glitches. However, as Chara and Monika both use 'different types' of 4th wall screwiness, and given my limited knowledge of JS, I might
 have to resign myself to simply ignoring her.
