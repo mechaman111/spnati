@@ -118,7 +118,7 @@ var CANDY_LIST = [
 */
 
 /* HALLOWEEN EVENT */
-
+/*
     "reskins/shadow_emi/0-annoyed.png",
     "reskins/shadow_emi/1-shrug.png",
     "reskins/shadow_emi/2-calm.png",
@@ -151,8 +151,8 @@ var CANDY_LIST = [
     "reskins/yunyun_trick_or_friends/1-Excited.png",
     "reskins/yunyun_trick_or_friends/2-Posing2.png",
     "reskins/yunyun_trick_or_friends/3-Posing.png",
+*/
 
-/*
     "9s/0-happy.png",
     "9s/1-excited.png",
     "9s/2-clever.png",
@@ -225,7 +225,6 @@ var CANDY_LIST = [
     "kyu/1-mischievous.png",
     "kyu/2-excited.png",
     "kyu/3-cheerful.png",
-  // Marinette temporarily offline
     "marinette/0-wink.png",
     "marinette/2-confident.png",
     "marinette/3-bored.png",
@@ -314,7 +313,6 @@ var CANDY_LIST = [
     "zone-tan/1-explain.png",
     "zone-tan/1-smirk.png",
     "zone-tan/2-stroking.png",
-*/
 ];
 
 var clothingChoices = [];
@@ -575,7 +573,7 @@ function validateTitleScreen () {
 	} else if (humanPlayer.gender == "male") {
         playerName = "Mister";
 	} else if (humanPlayer.gender == "female") {
-        playerName = 'Miss';
+        playerName = 'Missy';
 	}
 
     // Nuke all angle-brackets
