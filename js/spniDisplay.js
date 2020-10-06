@@ -857,6 +857,7 @@ function MainSelectScreenDisplay (slot) {
     this.prefillBadgeRow = $('#selection-badge-row-' + slot);
     this.prefillSuggestionBadges = {
         'new': this.prefillBadgeRow.children('.badge-icon[data-badge="new"]'),
+        'updated': this.prefillBadgeRow.children('.badge-icon[data-badge="updated"]'),
         'epilogue': this.prefillBadgeRow.children('.badge-icon[data-badge="epilogue"]'),
         'costume': this.prefillBadgeRow.children('.badge-icon[data-badge="costume"]'),
     }
@@ -930,6 +931,7 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
     this.altCostumeSelector.hide();
 
     this.prefillSuggestionBadges.new.toggle(player.highlightStatus === 'new');
+    this.prefillSuggestionBadges.updated.toggle(player.highlightStatus === 'updated');
     this.badges.epilogue.toggle(!!player.endings);
     var epilogueStatus = player.getEpilogueStatus();
     if (epilogueStatus) {
