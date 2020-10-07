@@ -540,7 +540,7 @@ function validateTitleScreen () {
 	} else if (humanPlayer.gender == "male") {
         playerName = "Mister";
 	} else if (humanPlayer.gender == "female") {
-        playerName = 'Missy';
+        playerName = 'Miss';
 	}
 
     // Nuke all angle-brackets
