@@ -1054,6 +1054,17 @@ function loadDefaultFillSuggestions () {
 
             fillPlayers.push(randomOpponent);
         }
+        
+        /* Sort in order of New -> Updated -> Other, it just looks better */
+        fillPlayers.sort(function(a, b) {
+            var status1 = a.highlightStatus;
+            var status2 = b.highlightStatus;
+            
+            if (!status1) status1 = "zzzzz";
+            if (!status2) status2 = "zzzzz";
+            
+            return status1.localeCompare(status2);
+        });
     } else {
         /* get a copy of the loaded opponents list, same as above */
         var possiblePicks = loadedOpponents.filter(function (opp) {
@@ -1069,7 +1080,7 @@ function loadDefaultFillSuggestions () {
         });
         
         var fillPlayers = [];
-        if (DEFAULT_FILL === 'new') {
+        if (DEFAULT_FILL === 'new' || DEFAULT_FILL === 'default') {
             /* Special case: for the 'new' fill mode, always suggest the most
              * recently-added or recently-updated character.
              *
