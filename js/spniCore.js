@@ -26,6 +26,7 @@ var VERSION_COMMIT = undefined;
 var VERSION_TAG = undefined;
 
 var DEFAULT_FILL = undefined;
+var FILL_DISABLED = false;
 
 /* Game Wide Constants */
 var HUMAN_PLAYER = 0;
@@ -140,6 +141,8 @@ function initialSetup () {
      * which requires the commit SHA.
      */
     loadConfigFile().then(loadBackgrounds).then(function () {
+        FILL_DISABLED = false;
+        
         loadVersionInfo();
         loadGeneralCollectibles();
         loadSelectScreen();

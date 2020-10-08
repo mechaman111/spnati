@@ -872,7 +872,7 @@ function updateSelectableGroups() {
 function loadGroup (chosenGroup) {
     if (!chosenGroup) return;
 
-	clickedRemoveAllButton();
+	clickedRemoveAllButton(false);
     console.log(chosenGroup.title);
     
     if (SENTRY_INITIALIZED) {
@@ -987,6 +987,8 @@ function clickedRandomFillButton (predicate) {
 }
 
 function loadDefaultFillSuggestions () {
+    if (FILL_DISABLED) return;
+    
     if (DEFAULT_FILL === 'default' && !individualSelectTesting) {
         /* get a copy of the loaded opponents list, same as above */
         var possiblePicks = loadedOpponents.filter(function (opp) {
@@ -1038,8 +1040,8 @@ function loadDefaultFillSuggestions () {
             fillPlayers.push(randomOpponent);
         }
         
-        /* Remove bottom 20% from consideration - TODO: finalize the percentage; awaiting official answer */
-        var cutoff = possiblePicks.length / 5;
+        /* Remove bottom 33% from consideration - TODO: finalize the percentage; awaiting official answer */
+        var cutoff = possiblePicks.length / 3;
         
         for (var i = 0; i < cutoff; i++) {
             possiblePicks.pop();
@@ -1124,15 +1126,27 @@ function updateDefaultFillView() {
 /************************************************************
  * The player clicked on the remove all button.
  ************************************************************/
-function clickedRemoveAllButton ()
+function clickedRemoveAllButton (alsoRemoveSuggestions)
 {
+    var anyLoaded = false;
+    
     for (var i = 1; i < 5; i++) {
         if (players[i]) {
+            anyLoaded = true;
             players[i].unloadOpponent();
             delete players[i];
             $selectImages[i-1].off('load');
         }
     }
+    
+    if (alsoRemoveSuggestions && !FILL_DISABLED && !anyLoaded) {
+        FILL_DISABLED = true;
+        
+        for (var i = 0; i < mainSelectDisplays.length; i++) {
+            mainSelectDisplays[i].setPrefillSuggestion(null);
+        }
+    }
+    
     updateSelectionVisuals();
 }
 
@@ -1380,9 +1394,6 @@ function updateSelectionVisuals () {
 
     /* if all slots are taken, disable fill buttons */
     $selectRandomButtons.attr('disabled', filled >= 4 || loadedOpponents.length == 0);
-
-    /* if no opponents are loaded, disable remove all button */
-    $selectRemoveAllButton.attr('disabled', filled <= 0 || loaded < filled);
 
     /* Disable buttons while loading is going on */
     $selectRandomTableButton.attr('disabled', loaded < filled || loadedOpponents.length == 0);
