@@ -117,6 +117,42 @@ var CANDY_LIST = [
     "reskins/summertime_sayaka/3-awkward.png",
 */
 
+/* HALLOWEEN EVENT */
+
+    "reskins/shadow_emi/0-annoyed.png",
+    "reskins/shadow_emi/1-shrug.png",
+    "reskins/shadow_emi/2-calm.png",
+    "reskins/shadow_emi/3-stripped.png",
+    "reskins/misato_catrina/0-Calm.png",
+    "reskins/misato_catrina/1-Confident.png",
+    "reskins/misato_catrina/2-Happy.png",
+    "reskins/misato_catrina/3-Drink.png",
+    "reskins/ghost_bride_weiss_schnee/0-angry.png",
+    "reskins/ghost_bride_weiss_schnee/1-grinning.png",
+    "reskins/ghost_bride_weiss_schnee/2-happy.png",
+    "reskins/ghost_bride_weiss_schnee/3-confused.png",
+    "reskins/d.va_black_cat/0-winking.png",
+    "reskins/d.va_black_cat/1-excited.png",
+    "reskins/d.va_black_cat/2-peace.png",
+    "reskins/d.va_black_cat/3-shocked.png",
+    "reskins/larachel_harvest_princess/0-calm.png",
+    "reskins/larachel_harvest_princess/1-smug.png",
+    "reskins/larachel_harvest_princess/2-dismissive.png",
+    "reskins/larachel_harvest_princess/3-confident.png",
+    "reskins/white_raven/0-selected.png",
+    "reskins/white_raven/1-loss.png",
+    "reskins/white_raven/2-happy.png",
+    "reskins/white_raven/3-thinking.png",
+    "reskins/witchs_costume/0-calm.png",
+    "reskins/witchs_costume/1-pushing.png",
+    "reskins/witchs_costume/2-interested.png",
+    "reskins/witchs_costume/3-happy.png",
+    "reskins/yunyun_trick_or_friends/0-Happy.png",
+    "reskins/yunyun_trick_or_friends/1-Excited.png",
+    "reskins/yunyun_trick_or_friends/2-Posing2.png",
+    "reskins/yunyun_trick_or_friends/3-Posing.png",
+
+/*
     "9s/0-happy.png",
     "9s/1-excited.png",
     "9s/2-clever.png",
@@ -189,12 +225,11 @@ var CANDY_LIST = [
     "kyu/1-mischievous.png",
     "kyu/2-excited.png",
     "kyu/3-cheerful.png",
-/*  // Marinette temporarily offline
+  // Marinette temporarily offline
     "marinette/0-wink.png",
     "marinette/2-confident.png",
     "marinette/3-bored.png",
     "marinette/4-excited.png",
-*/
     "meia/0-disappointed.png",
     "meia/1-busy.png",
     "meia/2-addressing.png",
@@ -279,7 +314,7 @@ var CANDY_LIST = [
     "zone-tan/1-explain.png",
     "zone-tan/1-smirk.png",
     "zone-tan/2-stroking.png",
-
+*/
 ];
 
 var clothingChoices = [];
