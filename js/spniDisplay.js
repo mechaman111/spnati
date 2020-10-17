@@ -34,6 +34,7 @@ function PoseSprite(id, src, onload, pose, args) {
     this.vehicle.appendChild(this.pivot);
     
     this.img = document.createElement('img');
+    this.img.className = "sprite";
     this.img.onload = this.img.onerror = function() {
         if (!this.height) this.height = this.img.naturalHeight;
         if (!this.width) this.width = this.img.naturalWidth;

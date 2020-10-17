@@ -1871,6 +1871,7 @@ SceneView.prototype.addBackground = function (background) {
 
 SceneView.prototype.addImage = function (id, src, args) {
     var img = document.createElement("img");
+    img.className = "sprite";
     if (src) {
         img.src = this.assetMap[src].src;
         args.naturalWidth = args.naturalWidth || this.assetMap[src].naturalWidth;
@@ -2664,6 +2665,7 @@ Emitter.prototype.draw = function () {
 
 function Particle(id, view, args) {
     var element = document.createElement("img");
+    element.className = "sprite";
     SceneObject.call(this, id, element, view, args);
     this.$element = $(this.element);
     this.tweens = {};
