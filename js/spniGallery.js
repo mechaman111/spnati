@@ -552,8 +552,8 @@ function doEpilogueFromGallery(){
 			} else {
 				switch(epilogue.gender){
 					case "male": humanPlayer.label = "Mister"; break;
-					case "female" : humanPlayer.label = "Missy"; break;
-					default: humanPlayer.label = (humanPlayer.gender=="male")?"Mister":"Missy";
+					case "female" : humanPlayer.label = "Miss"; break;
+					default: humanPlayer.label = (humanPlayer.gender=="male")?"Mister":"Miss";
 				}
 			}
 			
