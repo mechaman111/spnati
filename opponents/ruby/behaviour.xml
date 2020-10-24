@@ -82,7 +82,12 @@
                 <state img="0-excited.png">Weiss! You really came!</state>
             </case>
             <case tag="good_hand" totalRounds="0">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="0-strip.png">Oh, Yang, you're here too... That's not awkward at all.</state>
             </case>
             <case tag="okay_hand">
@@ -106,7 +111,12 @@
                 <state img="0-excited.png">Weiss! You really came!</state>
             </case>
             <case tag="okay_hand" totalRounds="0">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="0-strip.png">Oh, Yang, you're here too... That's not awkward at all.</state>
             </case>
             <case tag="bad_hand">
@@ -132,7 +142,12 @@
                 <state img="0-excited.png">Weiss! You really came!</state>
             </case>
             <case tag="bad_hand" totalRounds="0">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="0-strip.png">Oh, Yang, you're here too... That's not awkward at all.</state>
             </case>
             <case tag="must_strip_winning">
@@ -498,13 +513,19 @@
                 <state img="0-interested.png">Yikes, am I glad I'm not you!</state>
                 <state img="0-shocked.png">Ha! You're already taking off your ~clothing~?</state>
             </case>
-            <case tag="female_removing_major" filter="blake">
+            <case tag="female_removing_major" target="blake">
                 <state img="0-shocked.png">Oh, my gosh! I didn't think you'd lose so bad...</state>
             </case>
-            <case tag="female_removing_major" filter="weiss">
+            <case tag="female_removing_major" target="weiss">
                 <state img="0-shocked.png">Oh, my gosh! It's time for THAT!?</state>
             </case>
-            <case tag="female_removing_major" filter="yang">
+            <case tag="female_removing_major">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="0-shocked.png">I'm telling dad!</state>
             </case>
             <case tag="female_removing_major" target="moon" targetStage="0">
@@ -547,13 +568,19 @@
                 <state img="0-happy.png">Yeah, get 'em out here!</state>
                 <state img="0-happy.png">Hehe, boobies...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="blake">
+            <case tag="female_chest_will_be_visible" target="blake">
                 <state img="0-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="weiss">
+            <case tag="female_chest_will_be_visible" target="weiss">
                 <state img="0-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="yang">
+            <case tag="female_chest_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="0-shocked.png">But I thought you wouldn't go that far...</state>
                 <state img="0-shocked.png">I'm not sure how I feel about this.</state>
             </case>
@@ -570,14 +597,14 @@
                 <state img="0-happy.png">Ahhhh... THEY'RE ADORABLE!</state>
                 <state img="0-happy.png">Oh, cute!</state>
             </case>
-            <case tag="female_small_chest_is_visible" filter="weiss">
+            <case tag="female_small_chest_is_visible" target="weiss">
                 <state img="0-shocked.png">Huh. This is a strange feeling.</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="0-happy.png">Those look pretty nice.  Not that I've seen a lot to judge, but I'm sure they are!</state>
                 <state img="0-happy.png">You're really making this fun.</state>
             </case>
-            <case tag="female_medium_chest_is_visible" filter="blake">
+            <case tag="female_medium_chest_is_visible" target="blake">
                 <state img="0-shocked.png">Huh. This is a strange feeling.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="neo">
@@ -591,7 +618,13 @@
                 <state img="0-shocked.png">Whoa! You could give Yang a run for her money!</state>
                 <state img="0-shocked.png">Top heavy...</state>
             </case>
-            <case tag="female_large_chest_is_visible" filter="yang">
+            <case tag="female_large_chest_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="0-shocked.png">I'm not sure how I feel about this.</state>
             </case>
             <case tag="female_crotch_will_be_visible">
@@ -600,20 +633,26 @@
                 <state img="0-happy.png">Oh, this early?</state>
                 <state img="0-horny.png">Huh...  This is weird...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="blake">
+            <case tag="female_crotch_will_be_visible" target="blake">
                 <state img="0-shocked.png">Think of it as team building! Please!</state>
                 <state img="0-shocked.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
                 <state img="0-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="0-shocked.png">You'll be angry if I look, won't you?</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="weiss">
+            <case tag="female_crotch_will_be_visible" target="weiss">
                 <state img="0-shocked.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
                 <state img="0-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
                 <state img="0-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="0-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="0-shocked.png">Think of it as team building! Please!</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="yang">
+            <case tag="female_crotch_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="0-shocked.png">But I thought you wouldn't go that far...</state>
                 <state img="0-shocked.png">Not since we took baths together...</state>
                 <state img="0-shocked.png">I won't tell dad, I promise...</state>
@@ -631,16 +670,22 @@
                 <state img="0-happy.png">Wow...</state>
                 <state img="0-shocked.png">I'll just look over here...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="blake">
+            <case tag="female_crotch_is_visible" target="blake">
                 <state img="0-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="0-shocked.png">You'll be angry if I look, won't you?</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="weiss">
+            <case tag="female_crotch_is_visible" target="weiss">
                 <state img="0-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="0-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="0-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="yang">
+            <case tag="female_crotch_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="0-shocked.png">Oh, this is awkward...</state>
                 <state img="0-shocked.png">I won't tell dad, I promise!</state>
                 <state img="0-shocked.png">You'll be angry if I look, won't you?</state>
@@ -665,45 +710,63 @@
             <case tag="female_must_masturbate">
                 <state img="0-happy.png">I'm pretty good at this huh!</state>
             </case>
-            <case tag="female_must_masturbate" filter="blake">
+            <case tag="female_must_masturbate" target="blake">
                 <state img="0-shocked.png">So does that mean...?</state>
                 <state img="0-shocked.png">Oh, my gosh! You're going to have to...!</state>
             </case>
-            <case tag="female_must_masturbate" filter="weiss">
+            <case tag="female_must_masturbate" target="weiss">
                 <state img="0-shocked.png">So does that mean...?</state>
                 <state img="0-shocked.png">Oh, my gosh! You're going to have to...!</state>
             </case>
-            <case tag="female_must_masturbate" filter="yang">
+            <case tag="female_must_masturbate">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="0-shocked.png">So does that mean...?</state>
                 <state img="0-shocked.png">Oh, my gosh! You're going to have to...!</state>
             </case>
             <case tag="female_start_masturbating">
                 <state img="0-shocked.png">I didn't expect you to actually do it!</state>
             </case>
-            <case tag="female_start_masturbating" filter="blake">
+            <case tag="female_start_masturbating" target="blake">
                 <state img="0-shocked.png">This is a really awkward moment for me, I promise...</state>
                 <state img="0-shocked.png">So squeaky...</state>
             </case>
-            <case tag="female_start_masturbating" filter="weiss">
+            <case tag="female_start_masturbating" target="weiss">
                 <state img="0-shocked.png">This is a really awkward moment for me, I promise...</state>
                 <state img="0-shocked.png">So squeaky...</state>
             </case>
-            <case tag="female_start_masturbating" filter="yang">
+            <case tag="female_start_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="0-excited.png">Oh, that's what that noise was...</state>
                 <state img="0-shocked.png">So squeaky...</state>
             </case>
             <case tag="female_masturbating">
                 <state img="0-appreciative.png">That's just like how I do it, not that I do it often...</state>
             </case>
-            <case tag="female_masturbating" filter="blake">
+            <case tag="female_masturbating" target="blake">
                 <state img="0-shocked.png">I don't know where to look...</state>
                 <state img="0-excited.png">Yang never mentioned it was like this... Sure, she never mentioned anything about it, but...</state>
             </case>
-            <case tag="female_masturbating" filter="weiss">
+            <case tag="female_masturbating" target="weiss">
                 <state img="0-excited.png">Yang never mentioned it was like this... Sure, she never mentioned anything about it, but...</state>
                 <state img="0-shocked.png">I don't know where to look...</state>
             </case>
-            <case tag="female_masturbating" filter="yang">
+            <case tag="female_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="0-shocked.png">Is it weird that that sounds like Zwei to me?</state>
                 <state img="0-shocked.png">I don't know where to look...</state>
                 <state img="0-excited.png">I'm beginning to think I've heard you before...</state>
@@ -712,15 +775,21 @@
                 <state img="0-happy.png">Did you have fun doing that?</state>
                 <state img="0-happy.png">That was quite an explosive finish!</state>
             </case>
-            <case tag="female_finished_masturbating" filter="blake">
+            <case tag="female_finished_masturbating" target="blake">
                 <state img="0-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="0-excited.png">I've never heard anything like that before... At least you don't do it frequently!</state>
             </case>
-            <case tag="female_finished_masturbating" filter="weiss">
+            <case tag="female_finished_masturbating" target="weiss">
                 <state img="0-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="0-excited.png">I can't think of an heiress related joke and I feel like I've failed as a friend.</state>
             </case>
-            <case tag="female_finished_masturbating" filter="yang">
+            <case tag="female_finished_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="0-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="0-excited.png">I've never heard anything like that before... At least you don't do it frequently!</state>
             </case>
@@ -1099,13 +1168,19 @@
                 <state img="1-shocked.png">You're already ditching your ~clothing~?</state>
                 <state img="1-horny.png">I'd feel bad if I wasn't so happy I'm not that far gone.</state>
             </case>
-            <case tag="female_removing_major" filter="blake">
+            <case tag="female_removing_major" target="blake">
                 <state img="1-loss.png">Time for the show! That was supposed to make you feel better...</state>
             </case>
-            <case tag="female_removing_major" filter="weiss">
+            <case tag="female_removing_major" target="weiss">
                 <state img="1-loss.png">I find it hard to believe I'm seeing this...</state>
             </case>
-            <case tag="female_removing_major" filter="yang">
+            <case tag="female_removing_major">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="1-loss.png">Time for the show! That was supposed to make you feel better...</state>
             </case>
             <case tag="female_removing_major" target="moon" targetStage="0">
@@ -1150,13 +1225,19 @@
                 <state img="1-happy.png">Yeah, get 'em out here!</state>
                 <state img="1-happy.png">Party!  I'm not helping...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="blake">
+            <case tag="female_chest_will_be_visible" target="blake">
                 <state img="1-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="weiss">
+            <case tag="female_chest_will_be_visible" target="weiss">
                 <state img="1-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="yang">
+            <case tag="female_chest_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="1-shocked.png">But I thought you wouldn't go that far...</state>
                 <state img="1-shocked.png">I'm not sure how I feel about this.</state>
             </case>
@@ -1170,14 +1251,14 @@
                 <state img="1-happy.png">Ahhhh... THEY'RE ADORABLE!</state>
                 <state img="1-happy.png">At least those look really nice!</state>
             </case>
-            <case tag="female_small_chest_is_visible" filter="weiss">
+            <case tag="female_small_chest_is_visible" target="weiss">
                 <state img="1-shocked.png">Huh. This is a strange feeling.</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="1-happy.png">You're really making this fun.</state>
                 <state img="1-happy.png">This is getting really exciting.</state>
             </case>
-            <case tag="female_medium_chest_is_visible" filter="blake">
+            <case tag="female_medium_chest_is_visible" target="blake">
                 <state img="1-shocked.png">Huh. This is a strange feeling.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="neo">
@@ -1188,7 +1269,13 @@
                 <state img="1-shocked.png">Whoa! You could give Yang a run for her money!</state>
                 <state img="1-shocked.png">Those are heavy duty!</state>
             </case>
-            <case tag="female_large_chest_is_visible" filter="yang">
+            <case tag="female_large_chest_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="1-shocked.png">I'm not sure how I feel about this.</state>
             </case>
             <case tag="female_crotch_will_be_visible">
@@ -1197,20 +1284,26 @@
                 <state img="1-happy.png">Oh, my gosh!  Are you really...?</state>
                 <state img="1-horny.png">Oh, my...  This soon?</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="blake">
+            <case tag="female_crotch_will_be_visible" target="blake">
                 <state img="1-shocked.png">Think of it as team building! Please!</state>
                 <state img="1-shocked.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
                 <state img="1-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="1-shocked.png">You'll be angry if I look, won't you?</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="weiss">
+            <case tag="female_crotch_will_be_visible" target="weiss">
                 <state img="1-shocked.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
                 <state img="1-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
                 <state img="1-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="1-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="1-shocked.png">Think of it as team building! Please!</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="yang">
+            <case tag="female_crotch_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="1-shocked.png">But I thought you wouldn't go that far...</state>
                 <state img="1-shocked.png">I won't tell dad, I promise...</state>
                 <state img="1-shocked.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
@@ -1227,17 +1320,23 @@
                 <state img="1-shocked.png">It sure looks nice over there.</state>
                 <state img="1-happy.png">Is it warm in here, or...?</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="blake">
+            <case tag="female_crotch_is_visible" target="blake">
                 <state img="1-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="1-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="1-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="weiss">
+            <case tag="female_crotch_is_visible" target="weiss">
                 <state img="1-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="1-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="1-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="yang">
+            <case tag="female_crotch_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="1-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="1-shocked.png">But I thought you wouldn't go that far...</state>
             </case>
@@ -1260,45 +1359,63 @@
             <case tag="female_must_masturbate">
                 <state img="1-happy.png">I'm pretty good at this huh!</state>
             </case>
-            <case tag="female_must_masturbate" filter="blake">
+            <case tag="female_must_masturbate" target="blake">
                 <state img="1-shocked.png">So does that mean...?</state>
                 <state img="1-shocked.png">Oh, my gosh! You're going to have to...!</state>
             </case>
-            <case tag="female_must_masturbate" filter="weiss">
+            <case tag="female_must_masturbate" target="weiss">
                 <state img="1-shocked.png">So does that mean...?</state>
                 <state img="1-shocked.png">Oh, my gosh! You're going to have to...!</state>
             </case>
-            <case tag="female_must_masturbate" filter="yang">
+            <case tag="female_must_masturbate">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="1-shocked.png">So does that mean...?</state>
                 <state img="1-shocked.png">Oh, my gosh! You're going to have to...!</state>
             </case>
             <case tag="female_start_masturbating">
                 <state img="1-shocked.png">I didn't expect you to actually do it!</state>
             </case>
-            <case tag="female_start_masturbating" filter="blake">
+            <case tag="female_start_masturbating" target="blake">
                 <state img="1-shocked.png">This is a really awkward moment for me, I promise...</state>
                 <state img="1-shocked.png">So squeaky...</state>
             </case>
-            <case tag="female_start_masturbating" filter="weiss">
+            <case tag="female_start_masturbating" target="weiss">
                 <state img="1-shocked.png">This is a really awkward moment for me, I promise...</state>
                 <state img="1-shocked.png">So squeaky...</state>
             </case>
-            <case tag="female_start_masturbating" filter="yang">
+            <case tag="female_start_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="1-shocked.png">So squeaky...</state>
                 <state img="1-shocked.png">This is a really awkward moment for me, I promise...</state>
             </case>
             <case tag="female_masturbating">
                 <state img="1-horny.png">That's just like how I do it, not that I do it often...</state>
             </case>
-            <case tag="female_masturbating" filter="blake">
+            <case tag="female_masturbating" target="blake">
                 <state img="1-shocked.png">I don't know where to look...</state>
                 <state img="1-excited.png">Yang never mentioned it was like this... Sure, she never mentioned anything about it, but...</state>
             </case>
-            <case tag="female_masturbating" filter="weiss">
+            <case tag="female_masturbating" target="weiss">
                 <state img="1-excited.png">Yang never mentioned it was like this... Sure, she never mentioned anything about it, but...</state>
                 <state img="1-shocked.png">I don't know where to look...</state>
             </case>
-            <case tag="female_masturbating" filter="yang">
+            <case tag="female_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="1-shocked.png">Is it weird that that sounds like Zwei to me?</state>
                 <state img="1-shocked.png">I don't know where to look...</state>
                 <state img="1-excited.png">I'm beginning to think I've heard you before...</state>
@@ -1306,15 +1423,21 @@
             <case tag="female_finished_masturbating">
                 <state img="1-happy.png">Did you have fun doing that?</state>
             </case>
-            <case tag="female_finished_masturbating" filter="blake">
+            <case tag="female_finished_masturbating" target="blake">
                 <state img="1-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="1-excited.png">I've never heard anything like that before... At least you don't do it frequently!</state>
             </case>
-            <case tag="female_finished_masturbating" filter="weiss">
+            <case tag="female_finished_masturbating" target="weiss">
                 <state img="1-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="1-excited.png">I can't think of an heiress related joke and I feel like I've failed as a friend.</state>
             </case>
-            <case tag="female_finished_masturbating" filter="yang">
+            <case tag="female_finished_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="1-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="1-excited.png">I've never heard anything like that before... At least you don't do it frequently!</state>
             </case>
@@ -1379,7 +1502,12 @@
                 <state img="2-angry.png">Are you calling me short!?  Just because I'm barely five feet tall doesn't mean I can't kick butt!</state>
             </case>
             <case tag="stripped">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="2-shocked.png">Well, now I better play it safe...</state>
                 <state img="2-shocked.png">Time to turn this around!</state>
                 <state img="2-shocked.png">Well, that's that!</state>
@@ -1685,13 +1813,19 @@
                 <state img="2-shocked.png">Losing that already?</state>
                 <state img="2-horny.png">Wow, and I only just lost my boots...</state>
             </case>
-            <case tag="female_removing_major" filter="blake">
+            <case tag="female_removing_major" target="blake">
                 <state img="2-shocked.png">Am I gonna see more of my teammate than I thought?</state>
             </case>
-            <case tag="female_removing_major" filter="weiss">
+            <case tag="female_removing_major" target="weiss">
                 <state img="2-shocked.png">Well... Oh ho... Weiss...</state>
             </case>
-            <case tag="female_removing_major" filter="yang">
+            <case tag="female_removing_major">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="2-shocked.png">But she's my sister...</state>
             </case>
             <case tag="female_removing_major" target="moon" targetStage="0">
@@ -1735,13 +1869,19 @@
                 <state img="2-happy.png">Yeah, get 'em out here!</state>
                 <state img="2-happy.png">I'll try not to look!</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="blake">
+            <case tag="female_chest_will_be_visible" target="blake">
                 <state img="2-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="weiss">
+            <case tag="female_chest_will_be_visible" target="weiss">
                 <state img="2-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="yang">
+            <case tag="female_chest_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="2-shocked.png">But I thought you wouldn't go that far...</state>
                 <state img="2-shocked.png">I'm not sure how I feel about this.</state>
             </case>
@@ -1755,14 +1895,14 @@
                 <state img="2-happy.png">Ahhhh... THEY'RE ADORABLE!</state>
                 <state img="2-happy.png">Oh, those are just like Weiss'!  Not... that I've looked at her...</state>
             </case>
-            <case tag="female_small_chest_is_visible" filter="weiss">
+            <case tag="female_small_chest_is_visible" target="weiss">
                 <state img="2-shocked.png">Huh. This is a strange feeling.</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="2-happy.png">You're really making this fun.</state>
                 <state img="2-happy.png">Those look pretty nice.  I bet boys love them!</state>
             </case>
-            <case tag="female_medium_chest_is_visible" filter="blake">
+            <case tag="female_medium_chest_is_visible" target="blake">
                 <state img="2-shocked.png">Huh. This is a strange feeling.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="neo">
@@ -1773,27 +1913,39 @@
                 <state img="2-shocked.png">Whoa! You could give Yang a run for her money!</state>
                 <state img="2-shocked.png">Wow!  I always wonder how girls like you and Yang handle being that... top heavy.</state>
             </case>
-            <case tag="female_large_chest_is_visible" filter="yang">
+            <case tag="female_large_chest_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="2-shocked.png">I'm not sure how I feel about this.</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="2-happy.png">Yeah ~name~, strut your stuff!</state>
                 <state img="2-happy.png">At least there's only a few of us.</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="blake">
+            <case tag="female_crotch_will_be_visible" target="blake">
                 <state img="2-shocked.png">Think of it as team building! Please!</state>
                 <state img="2-shocked.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
                 <state img="2-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="2-shocked.png">You'll be angry if I look, won't you?</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="weiss">
+            <case tag="female_crotch_will_be_visible" target="weiss">
                 <state img="2-shocked.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
                 <state img="2-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
                 <state img="2-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="2-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="2-shocked.png">Think of it as team building! Please!</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="yang">
+            <case tag="female_crotch_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="2-shocked.png">But I thought you wouldn't go that far...</state>
                 <state img="2-shocked.png">I won't tell dad, I promise...</state>
                 <state img="2-shocked.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
@@ -1808,17 +1960,23 @@
                 <state img="2-happy.png">Aww... so cute!</state>
                 <state img="2-happy.png">What I said there, doesn't really help.  I'm bad at making people feel better.</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="blake">
+            <case tag="female_crotch_is_visible" target="blake">
                 <state img="2-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="2-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="2-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="weiss">
+            <case tag="female_crotch_is_visible" target="weiss">
                 <state img="2-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="2-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="2-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="yang">
+            <case tag="female_crotch_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="2-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="2-shocked.png">It's just like when we used to take baths together... Wait, no, that was weird!</state>
                 <state img="2-shocked.png">I won't tell dad, I promise...</state>
@@ -1842,45 +2000,63 @@
             <case tag="female_must_masturbate">
                 <state img="2-happy.png">Not to bad at this am I?</state>
             </case>
-            <case tag="female_must_masturbate" filter="blake">
+            <case tag="female_must_masturbate" target="blake">
                 <state img="2-shocked.png">So does that mean...?</state>
                 <state img="2-shocked.png">Oh, my gosh! You're going to have to...!</state>
             </case>
-            <case tag="female_must_masturbate" filter="weiss">
+            <case tag="female_must_masturbate" target="weiss">
                 <state img="2-shocked.png">So does that mean...?</state>
                 <state img="2-shocked.png">Oh, my gosh! You're going to have to...!</state>
             </case>
-            <case tag="female_must_masturbate" filter="yang">
+            <case tag="female_must_masturbate">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="2-shocked.png">So does that mean...?</state>
                 <state img="2-shocked.png">Oh, my gosh! You're going to have to...!</state>
             </case>
             <case tag="female_start_masturbating">
                 <state img="2-shocked.png">I didn't expect you to actually do it!</state>
             </case>
-            <case tag="female_start_masturbating" filter="blake">
+            <case tag="female_start_masturbating" target="blake">
                 <state img="2-shocked.png">This is a really awkward moment for me, I promise...</state>
                 <state img="2-shocked.png">So squeaky...</state>
             </case>
-            <case tag="female_start_masturbating" filter="weiss">
+            <case tag="female_start_masturbating" target="weiss">
                 <state img="2-shocked.png">This is a really awkward moment for me, I promise...</state>
                 <state img="2-shocked.png">So squeaky...</state>
             </case>
-            <case tag="female_start_masturbating" filter="yang">
+            <case tag="female_start_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="2-shocked.png">So squeaky...</state>
                 <state img="2-shocked.png">This is a really awkward moment for me, I promise...</state>
             </case>
             <case tag="female_masturbating">
                 <state img="2-horny.png">That's just like how I do it, not that I do it often...</state>
             </case>
-            <case tag="female_masturbating" filter="blake">
+            <case tag="female_masturbating" target="blake">
                 <state img="2-shocked.png">I don't know where to look...</state>
                 <state img="2-excited.png">Yang never mentioned it was like this... Sure, she never mentioned anything about it, but...</state>
             </case>
-            <case tag="female_masturbating" filter="weiss">
+            <case tag="female_masturbating" target="weiss">
                 <state img="2-excited.png">Yang never mentioned it was like this... Sure, she never mentioned anything about it, but...</state>
                 <state img="2-shocked.png">I don't know where to look...</state>
             </case>
-            <case tag="female_masturbating" filter="yang">
+            <case tag="female_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="2-shocked.png">Is it weird that that sounds like Zwei to me?</state>
                 <state img="2-shocked.png">I don't know where to look...</state>
                 <state img="2-excited.png">I'm beginning to think I've heard you before...</state>
@@ -1888,15 +2064,21 @@
             <case tag="female_finished_masturbating">
                 <state img="2-happy.png">Did you have fun doing that?</state>
             </case>
-            <case tag="female_finished_masturbating" filter="blake">
+            <case tag="female_finished_masturbating" target="blake">
                 <state img="2-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="2-excited.png">I've never heard anything like that before... At least you don't do it frequently!</state>
             </case>
-            <case tag="female_finished_masturbating" filter="weiss">
+            <case tag="female_finished_masturbating" target="weiss">
                 <state img="2-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="2-excited.png">I can't think of an heiress related joke and I feel like I've failed as a friend.</state>
             </case>
-            <case tag="female_finished_masturbating" filter="yang">
+            <case tag="female_finished_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="2-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="2-horny.png">This may just be one of the most awkward moments in my life.</state>
             </case>
@@ -1931,7 +2113,12 @@
                 <state img="3-loss.png">Y-you better hope you lose now, 'cause when Yang hears about this...!</state>
             </case>
             <case tag="must_strip_winning">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="3-loss.png">Ah! But Yang's here!</state>
             </case>
             <case tag="must_strip_normal">
@@ -1939,14 +2126,24 @@
                 <state img="3-loss.png">At least it's not as bad as some others have it, yet...</state>
             </case>
             <case tag="must_strip_normal">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="3-loss.png">Ah! But Yang's here!</state>
             </case>
             <case tag="must_strip_losing">
                 <state img="3-loss.png">Great, there goes the dress... No one tell Dad about this please?</state>
             </case>
             <case tag="must_strip_losing">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="3-loss.png">Ah! But Yang's here!</state>
             </case>
             <case tag="stripping">
@@ -1970,7 +2167,12 @@
                 <state img="3-strip.png">I guess we're not combat skirt buddies right now, Weiss.</state>
             </case>
             <case tag="stripping">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="3-strip.png">The fact that my sister is here isn't super embarrassing or anything!</state>
             </case>
             <case tag="stripped">
@@ -2304,14 +2506,20 @@
                 <state img="3-horny.png">Am I gonna see something good?</state>
                 <state img="3-shocked.png">I feel like some of my friends would enjoy this a bit more...</state>
             </case>
-            <case tag="female_removing_major" filter="blake">
+            <case tag="female_removing_major" target="blake">
                 <state img="3-loss.png">I won't tell Sun, promise!</state>
             </case>
-            <case tag="female_removing_major" filter="weiss">
+            <case tag="female_removing_major" target="weiss">
                 <state img="3-loss.png">It's not my fault that you agreed to play!</state>
                 <state img="3-shocked.png">I won't tell Jaune, promise!</state>
             </case>
-            <case tag="female_removing_major" filter="yang">
+            <case tag="female_removing_major">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="3-loss.png">Please slow down a bit...</state>
             </case>
             <case tag="female_removing_major" target="moon" targetStage="0">
@@ -2355,13 +2563,19 @@
                 <state img="3-happy.png">Yeah, get 'em out here!</state>
                 <state img="3-interested.png">I bet you look amazing!</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="blake">
+            <case tag="female_chest_will_be_visible" target="blake">
                 <state img="3-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="weiss">
+            <case tag="female_chest_will_be_visible" target="weiss">
                 <state img="3-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="yang">
+            <case tag="female_chest_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="3-shocked.png">But I thought you wouldn't go that far...</state>
                 <state img="3-shocked.png">I'm not sure how I feel about this.</state>
             </case>
@@ -2378,14 +2592,14 @@
                 <state img="3-excited.png">Ahhhh... THEY'RE ADORABLE!</state>
                 <state img="3-horny.png">Wow, those look really soft.</state>
             </case>
-            <case tag="female_small_chest_is_visible" filter="weiss">
+            <case tag="female_small_chest_is_visible" target="weiss">
                 <state img="3-shocked.png">Huh. This is a strange feeling.</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="3-interested.png">You're really making this fun.</state>
                 <state img="3-horny.png">I'm glad I'm doing this well...</state>
             </case>
-            <case tag="female_medium_chest_is_visible" filter="blake">
+            <case tag="female_medium_chest_is_visible" target="blake">
                 <state img="3-shocked.png">Huh. This is a strange feeling.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="neo">
@@ -2399,25 +2613,37 @@
                 <state img="3-shocked.png">Whoa! You could give Yang a run for her money!</state>
                 <state img="3-shocked.png">I can't believe you haul those around all day!</state>
             </case>
-            <case tag="female_large_chest_is_visible" filter="yang">
+            <case tag="female_large_chest_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="3-shocked.png">I'm not sure how I feel about this.</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="3-happy.png">Yeah ~name~, strut your stuff!</state>
                 <state img="3-interested.png">Man, this is something I never thought I'd see.</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="blake">
+            <case tag="female_crotch_will_be_visible" target="blake">
                 <state img="3-shocked.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
                 <state img="3-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="3-shocked.png">You'll be angry if I look, won't you?</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="weiss">
+            <case tag="female_crotch_will_be_visible" target="weiss">
                 <state img="3-shocked.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
                 <state img="3-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
                 <state img="3-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="3-shocked.png">You'll be angry if I look, won't you?</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="yang">
+            <case tag="female_crotch_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="3-shocked.png">But I thought you wouldn't go that far...</state>
                 <state img="3-shocked.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
             </case>
@@ -2431,17 +2657,23 @@
                 <state img="3-interested.png">Aww... so cute!</state>
                 <state img="3-horny.png">I can't believe I'm watching this sort of thing happen...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="blake">
+            <case tag="female_crotch_is_visible" target="blake">
                 <state img="3-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="3-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="3-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="weiss">
+            <case tag="female_crotch_is_visible" target="weiss">
                 <state img="3-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="3-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="3-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="yang">
+            <case tag="female_crotch_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="3-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="3-shocked.png">But I thought you wouldn't go that far...</state>
             </case>
@@ -2464,45 +2696,63 @@
             <case tag="female_must_masturbate">
                 <state img="3-happy.png">Not to bad at this am I?</state>
             </case>
-            <case tag="female_must_masturbate" filter="blake">
+            <case tag="female_must_masturbate" target="blake">
                 <state img="3-shocked.png">So does that mean...?</state>
                 <state img="3-shocked.png">Does that mean?</state>
             </case>
-            <case tag="female_must_masturbate" filter="weiss">
+            <case tag="female_must_masturbate" target="weiss">
                 <state img="3-shocked.png">So does that mean...?</state>
                 <state img="3-shocked.png">Does that mean?</state>
             </case>
-            <case tag="female_must_masturbate" filter="yang">
+            <case tag="female_must_masturbate">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="3-shocked.png">So does that mean...?</state>
                 <state img="3-shocked.png">Does that mean?</state>
             </case>
             <case tag="female_start_masturbating">
                 <state img="3-shocked.png">I didn't expect you to actually do it!</state>
             </case>
-            <case tag="female_start_masturbating" filter="blake">
+            <case tag="female_start_masturbating" target="blake">
                 <state img="3-shocked.png">This is a really awkward moment for me, I promise...</state>
                 <state img="3-shocked.png">So squeaky...</state>
             </case>
-            <case tag="female_start_masturbating" filter="weiss">
+            <case tag="female_start_masturbating" target="weiss">
                 <state img="3-shocked.png">This is a really awkward moment for me, I promise...</state>
                 <state img="3-shocked.png">So squeaky...</state>
             </case>
-            <case tag="female_start_masturbating" filter="yang">
+            <case tag="female_start_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="3-shocked.png">So squeaky...</state>
                 <state img="3-shocked.png">This is a really awkward moment for me, I promise...</state>
             </case>
             <case tag="female_masturbating">
                 <state img="3-horny.png">That's just like how I do it, not that I do it often...</state>
             </case>
-            <case tag="female_masturbating" filter="blake">
+            <case tag="female_masturbating" target="blake">
                 <state img="3-shocked.png">I don't know where to look...</state>
                 <state img="3-excited.png">Yang never mentioned it was like this... Sure, she never mentioned anything about it, but...</state>
             </case>
-            <case tag="female_masturbating" filter="weiss">
+            <case tag="female_masturbating" target="weiss">
                 <state img="3-excited.png">Yang never mentioned it was like this... Sure, she never mentioned anything about it, but...</state>
                 <state img="3-shocked.png">I don't know where to look...</state>
             </case>
-            <case tag="female_masturbating" filter="yang">
+            <case tag="female_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="3-shocked.png">Is it weird that that sounds like Zwei to me?</state>
                 <state img="3-shocked.png">I don't know where to look...</state>
                 <state img="3-excited.png">I'm beginning to think I've heard you before...</state>
@@ -2510,15 +2760,21 @@
             <case tag="female_finished_masturbating">
                 <state img="3-happy.png">Did you have fun doing that?</state>
             </case>
-            <case tag="female_finished_masturbating" filter="blake">
+            <case tag="female_finished_masturbating" target="blake">
                 <state img="3-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="3-excited.png">I've never heard anything like that before... At least you don't do it frequently!</state>
             </case>
-            <case tag="female_finished_masturbating" filter="weiss">
+            <case tag="female_finished_masturbating" target="weiss">
                 <state img="3-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="3-excited.png">I can't think of an heiress related joke and I feel like I've failed as a friend.</state>
             </case>
-            <case tag="female_finished_masturbating" filter="yang">
+            <case tag="female_finished_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="3-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="3-horny.png">This may just be one of the most awkward moments in my life.</state>
             </case>
@@ -2556,7 +2812,12 @@
                 <state img="4-shocked.png">But she's here!</state>
             </case>
             <case tag="bad_hand">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="4-shocked.png">But my sister's here!</state>
             </case>
             <case tag="must_strip_winning">
@@ -2571,7 +2832,12 @@
                 <state img="4-loss.png">Wah!? With her here!? She's going to see my boobs!</state>
             </case>
             <case tag="must_strip_winning">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="4-loss.png">Wah!? But my sister's going to see my boobs! I'm already winning! WHYYYYY!?</state>
             </case>
             <case tag="must_strip_normal">
@@ -2586,7 +2852,12 @@
                 <state img="4-loss.png">Wah!? With her here!? She's going to see my boobs!</state>
             </case>
             <case tag="must_strip_normal">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="4-loss.png">Wah!? But my sister's going to see my boobs!</state>
             </case>
             <case tag="must_strip_losing">
@@ -2604,7 +2875,12 @@
                 <state img="4-loss.png">But nobody's ever seen the Ruboobies! Not even Weiss when I'm changing and forget to lock the door and I forget I live with her and and and...</state>
             </case>
             <case tag="must_strip_losing">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="4-loss.png">Wah!? But my sister's going to see my boobs! How am I losing this bad!?</state>
             </case>
             <case tag="stripping">
@@ -2623,7 +2899,12 @@
                 <state img="4-strip.png">This is super awkward, isn't it?</state>
             </case>
             <case tag="stripping">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="4-strip.png">This is super weird with you here, Yang...</state>
             </case>
             <case tag="stripped">
@@ -2645,7 +2926,12 @@
                 <state img="4-stripped.png">Well, usually...</state>
             </case>
             <case tag="stripped">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="4-stripped.png">Nope! Not at all!</state>
             </case>
             <case tag="male_must_strip">
@@ -2752,13 +3038,19 @@
                 <state img="4-interested.png">You're ditching your ~clothing~?</state>
                 <state img="4-shocked.png">I'd feel bad if I wasn't showing off so much...</state>
             </case>
-            <case tag="female_removing_major" filter="blake">
+            <case tag="female_removing_major" target="blake">
                 <state img="4-loss.png">Ladybug powers, activate! This isn't helping, is it?</state>
             </case>
-            <case tag="female_removing_major" filter="weiss">
+            <case tag="female_removing_major" target="weiss">
                 <state img="4-loss.png">White Rose powers, activate! This isn't helping, is it?</state>
             </case>
-            <case tag="female_removing_major" filter="yang">
+            <case tag="female_removing_major">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="4-loss.png">Sister powers, activate! This isn't helping, is it?</state>
             </case>
             <case tag="female_removed_major">
@@ -2801,13 +3093,19 @@
                 <state img="4-appreciative.png">I'm glad you're before me!</state>
                 <state img="4-horny.png">That was mean...  I'm just nervous...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="blake">
+            <case tag="female_chest_will_be_visible" target="blake">
                 <state img="4-loss.png">It's just like we're changing! Right? Don't be angry at me...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="weiss">
+            <case tag="female_chest_will_be_visible" target="weiss">
                 <state img="4-loss.png">It's not different than when we're changing! Wait, you don't look?</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="yang">
+            <case tag="female_chest_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="4-loss.png">But I thought you wouldn't go that far...</state>
                 <state img="4-loss.png">I'm not sure how I feel about this.</state>
             </case>
@@ -2824,7 +3122,7 @@
                 <state img="4-interested.png">Ahhhh... THEY'RE ADORABLE!</state>
                 <state img="4-horny.png">Those look really nice...  This isn't helping, is it?</state>
             </case>
-            <case tag="female_small_chest_is_visible" filter="weiss">
+            <case tag="female_small_chest_is_visible" target="weiss">
                 <state img="4-loss.png">Huh. This is a strange feeling.</state>
             </case>
             <case tag="female_medium_chest_is_visible">
@@ -2833,7 +3131,7 @@
                 <state img="4-sad.png">I'm so glad I'm winning...</state>
                 <state img="4-stripped.png">I wonder what Jaune or Sun would think if they were here.</state>
             </case>
-            <case tag="female_medium_chest_is_visible" filter="blake">
+            <case tag="female_medium_chest_is_visible" target="blake">
                 <state img="4-loss.png">Huh. This is a strange feeling.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="neo">
@@ -2848,25 +3146,37 @@
                 <state img="4-interested.png">How do you and Yang do it?</state>
                 <state img="4-shocked.png">Those are... Big...</state>
             </case>
-            <case tag="female_large_chest_is_visible" filter="yang">
+            <case tag="female_large_chest_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="4-loss.png">I'm not sure how I feel about this.</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="4-happy.png">HA! You have to show it before me!</state>
                 <state img="4-loss.png">Oh, my gosh!  I'm glad I still have a bra...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="blake">
+            <case tag="female_crotch_will_be_visible" target="blake">
                 <state img="4-loss.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="4-loss.png">You'll be angry if I look, won't you?</state>
                 <state img="4-loss.png">Think of it as team building! Please!</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="weiss">
+            <case tag="female_crotch_will_be_visible" target="weiss">
                 <state img="4-loss.png">I don't know what I expected inviting you... Don't kill me...</state>
                 <state img="4-loss.png">Think of it as team building! Please!</state>
                 <state img="4-loss.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="4-loss.png">You'll be angry if I look, won't you?</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="yang">
+            <case tag="female_crotch_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="4-loss.png">But I thought you wouldn't go that far...</state>
             </case>
             <case tag="female_crotch_will_be_visible" target="neo">
@@ -2879,17 +3189,23 @@
                 <state img="4-interested.png">Sorry to say, I don't plan on joining you anytime soon!</state>
                 <state img="4-loss.png">I hope I don't lose again...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="blake">
+            <case tag="female_crotch_is_visible" target="blake">
                 <state img="4-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="4-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="4-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="weiss">
+            <case tag="female_crotch_is_visible" target="weiss">
                 <state img="4-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="4-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="4-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="yang">
+            <case tag="female_crotch_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="4-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="4-shocked.png">But I thought you wouldn't go that far...</state>
             </case>
@@ -2917,15 +3233,21 @@
                 <state img="4-horny.png">I'm glad I'm not there yet...  Even if I am like this...</state>
                 <state img="4-happy.png">Must be rough to be you right now.</state>
             </case>
-            <case tag="female_must_masturbate" filter="blake">
+            <case tag="female_must_masturbate" target="blake">
                 <state img="4-shocked.png">So does that mean...?</state>
                 <state img="4-shocked.png">Does that mean?</state>
             </case>
-            <case tag="female_must_masturbate" filter="weiss">
+            <case tag="female_must_masturbate" target="weiss">
                 <state img="4-shocked.png">So does that mean...?</state>
                 <state img="4-shocked.png">Does that mean?</state>
             </case>
-            <case tag="female_must_masturbate" filter="yang">
+            <case tag="female_must_masturbate">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="4-shocked.png">So does that mean...?</state>
                 <state img="4-shocked.png">Does that mean?</state>
             </case>
@@ -2933,15 +3255,21 @@
                 <state img="4-horny.png">I've only ever thought I've heard things coming from the other side of the room...</state>
                 <state img="4-horny.png">I've never gotten to watch anyone else before...</state>
             </case>
-            <case tag="female_start_masturbating" filter="blake">
+            <case tag="female_start_masturbating" target="blake">
                 <state img="4-shocked.png">This is a really awkward moment for me, I promise...</state>
                 <state img="4-shocked.png">So squeaky...</state>
             </case>
-            <case tag="female_start_masturbating" filter="weiss">
+            <case tag="female_start_masturbating" target="weiss">
                 <state img="4-shocked.png">This is a really awkward moment for me, I promise...</state>
                 <state img="4-shocked.png">So squeaky...</state>
             </case>
-            <case tag="female_start_masturbating" filter="yang">
+            <case tag="female_start_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="4-shocked.png">So squeaky...</state>
                 <state img="4-shocked.png">This is a really awkward moment for me, I promise...</state>
             </case>
@@ -2949,15 +3277,21 @@
                 <state img="4-happy.png">At least I can use this as a learning experience!  I mean, what?</state>
                 <state img="4-happy.png">Lemme watch maybe I can learn a thing or two from you!</state>
             </case>
-            <case tag="female_masturbating" filter="blake">
+            <case tag="female_masturbating" target="blake">
                 <state img="4-shocked.png">I don't know where to look...</state>
                 <state img="4-excited.png">Yang never mentioned it was like this... Sure, she never mentioned anything about it, but...</state>
             </case>
-            <case tag="female_masturbating" filter="weiss">
+            <case tag="female_masturbating" target="weiss">
                 <state img="4-excited.png">Yang never mentioned it was like this... Sure, she never mentioned anything about it, but...</state>
                 <state img="4-shocked.png">I don't know where to look...</state>
             </case>
-            <case tag="female_masturbating" filter="yang">
+            <case tag="female_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="4-shocked.png">I don't know where to look...</state>
                 <state img="4-excited.png">I'm beginning to think I've heard you before...</state>
             </case>
@@ -2965,15 +3299,21 @@
                 <state img="4-appreciative.png">You had fun with that huh?</state>
                 <state img="4-horny.png">That looked... enjoyable at least...</state>
             </case>
-            <case tag="female_finished_masturbating" filter="blake">
+            <case tag="female_finished_masturbating" target="blake">
                 <state img="4-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="4-excited.png">I've never heard anything like that before... At least you don't do it frequently!</state>
             </case>
-            <case tag="female_finished_masturbating" filter="weiss">
+            <case tag="female_finished_masturbating" target="weiss">
                 <state img="4-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="4-excited.png">I can't think of an heiress related joke and I feel like I've failed as a friend.</state>
             </case>
-            <case tag="female_finished_masturbating" filter="yang">
+            <case tag="female_finished_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="4-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="4-stripped.png">This may just be one of the most awkward moments in my life.</state>
             </case>
@@ -3034,7 +3374,12 @@
                 <state img="5-strip.png">At least you're here and not some creep like Cardin...</state>
             </case>
             <case tag="stripping">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="5-strip.png">So, Yang... uh... this is weird.</state>
             </case>
             <case tag="stripped">
@@ -3065,7 +3410,12 @@
                 <state img="5-stripped.png">Team bonding! Sure! Let's go with that!</state>
             </case>
             <case tag="stripped">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="5-stripped.png">Team bonding! Sure! Let's go with that!</state>
             </case>
             <case tag="male_must_strip">
@@ -3174,13 +3524,19 @@
                 <state img="5-horny.png">Wow, this is farther than I've ever been...</state>
                 <state img="5-loss.png">At least I'm not alone in my humiliation!</state>
             </case>
-            <case tag="female_removing_major" filter="blake">
+            <case tag="female_removing_major" target="blake">
                 <state img="5-loss.png">I don't like this very much...</state>
             </case>
-            <case tag="female_removing_major" filter="weiss">
+            <case tag="female_removing_major" target="weiss">
                 <state img="5-loss.png">Hi, Weiss. You're still there.</state>
             </case>
-            <case tag="female_removing_major" filter="yang">
+            <case tag="female_removing_major">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="5-loss.png">Stop looking at me, Yang! That isn't okay!</state>
             </case>
             <case tag="female_removed_major">
@@ -3220,13 +3576,19 @@
                 <state img="5-excited.png">Yeah! Join me on the titty committee!</state>
                 <state img="5-stripped.png">Add to the Ruboobies!  Please!  It's REALLY embarrassing...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="blake">
+            <case tag="female_chest_will_be_visible" target="blake">
                 <state img="5-loss.png">It's just like we're changing! Right? Don't be angry at me...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="weiss">
+            <case tag="female_chest_will_be_visible" target="weiss">
                 <state img="5-loss.png">It's not different than when we're changing! Wait, you don't look?</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="yang">
+            <case tag="female_chest_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="5-loss.png">But I thought you wouldn't go that far...</state>
                 <state img="5-loss.png">I'm not sure how I feel about this.</state>
             </case>
@@ -3243,14 +3605,14 @@
                 <state img="5-happy.png">The itty bitty titty committee!</state>
                 <state img="5-happy.png">I say we make a great pair with our pairs.</state>
             </case>
-            <case tag="female_small_chest_is_visible" filter="weiss">
+            <case tag="female_small_chest_is_visible" target="weiss">
                 <state img="5-loss.png">Huh. This is a strange feeling.</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="5-appreciative.png">All shapes and sizes!</state>
                 <state img="5-sad.png">I'd feel bad, but... everyone can already see mine.</state>
             </case>
-            <case tag="female_medium_chest_is_visible" filter="blake">
+            <case tag="female_medium_chest_is_visible" target="blake">
                 <state img="5-loss.png">Huh. This is a strange feeling.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="neo">
@@ -3265,27 +3627,39 @@
                 <state img="5-shocked.png">Wow, high calibur!</state>
                 <state img="5-shocked.png">Whoa! Those are heavy duty!</state>
             </case>
-            <case tag="female_large_chest_is_visible" filter="yang">
+            <case tag="female_large_chest_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="5-loss.png">I'm not sure how I feel about this.</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="5-interested.png">Lemme see the cutie kitty!</state>
                 <state img="5-happy.png">I'm so glad you're going before me!</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="blake">
+            <case tag="female_crotch_will_be_visible" target="blake">
                 <state img="5-loss.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="5-loss.png">You'll be angry if I look, won't you?</state>
                 <state img="5-loss.png">Think of it as team building! Please!</state>
                 <state img="5-loss.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="weiss">
+            <case tag="female_crotch_will_be_visible" target="weiss">
                 <state img="5-loss.png">I don't know what I expected inviting you... Don't kill me...</state>
                 <state img="5-loss.png">Think of it as team building! Please!</state>
                 <state img="5-loss.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="5-loss.png">You'll be angry if I look, won't you?</state>
                 <state img="5-loss.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="yang">
+            <case tag="female_crotch_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="5-loss.png">But I thought you wouldn't go that far...</state>
                 <state img="5-loss.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
             </case>
@@ -3299,17 +3673,23 @@
                 <state img="5-stripped.png">Not that you'll be seeing mine!</state>
                 <state img="5-happy.png">Well styled down there, sista!</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="blake">
+            <case tag="female_crotch_is_visible" target="blake">
                 <state img="5-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="5-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="5-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="weiss">
+            <case tag="female_crotch_is_visible" target="weiss">
                 <state img="5-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="5-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="5-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="yang">
+            <case tag="female_crotch_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="5-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="5-shocked.png">But I thought you wouldn't go that far...</state>
             </case>
@@ -3337,15 +3717,21 @@
                 <state img="5-happy.png">Must be rough to be you right now.</state>
                 <state img="5-happy.png">Best to get it over with...</state>
             </case>
-            <case tag="female_must_masturbate" filter="blake">
+            <case tag="female_must_masturbate" target="blake">
                 <state img="5-shocked.png">So does that mean...?</state>
                 <state img="5-shocked.png">Does that mean?</state>
             </case>
-            <case tag="female_must_masturbate" filter="weiss">
+            <case tag="female_must_masturbate" target="weiss">
                 <state img="5-shocked.png">So does that mean...?</state>
                 <state img="5-shocked.png">Does that mean?</state>
             </case>
-            <case tag="female_must_masturbate" filter="yang">
+            <case tag="female_must_masturbate">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="5-shocked.png">So does that mean...?</state>
                 <state img="5-shocked.png">Does that mean?</state>
             </case>
@@ -3353,15 +3739,21 @@
                 <state img="5-horny.png">I've never gotten to watch anyone else before...</state>
                 <state img="5-horny.png">Looks like you're... doing it well.</state>
             </case>
-            <case tag="female_start_masturbating" filter="blake">
+            <case tag="female_start_masturbating" target="blake">
                 <state img="5-shocked.png">I feel really weird watching this...</state>
                 <state img="5-shocked.png">Why do I feel like people are staring?</state>
             </case>
-            <case tag="female_start_masturbating" filter="weiss">
+            <case tag="female_start_masturbating" target="weiss">
                 <state img="5-shocked.png">I feel really weird watching this...</state>
                 <state img="5-shocked.png">Why do I feel like people are staring?</state>
             </case>
-            <case tag="female_start_masturbating" filter="yang">
+            <case tag="female_start_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="5-shocked.png">Why do I feel like people are staring?</state>
                 <state img="5-shocked.png">I feel really weird watching this...</state>
             </case>
@@ -3371,16 +3763,22 @@
                 <state img="5-happy.png">It's almost like you've done this before!</state>
                 <state img="5-happy.png">This is fun!</state>
             </case>
-            <case tag="female_masturbating" filter="blake">
+            <case tag="female_masturbating" target="blake">
                 <state img="5-shocked.png">I don't know where to look...</state>
                 <state img="5-shocked.png">Doo pi doo, still standing here naked...</state>
             </case>
-            <case tag="female_masturbating" filter="weiss">
+            <case tag="female_masturbating" target="weiss">
                 <state img="5-shocked.png">I don't know where to look...</state>
                 <state img="5-shocked.png">Are you happy now!?</state>
                 <state img="5-shocked.png">Doo pi doo, still standing here naked...</state>
             </case>
-            <case tag="female_masturbating" filter="yang">
+            <case tag="female_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="5-shocked.png">I don't know where to look...</state>
                 <state img="5-shocked.png">Doo pi doo, still standing here naked...</state>
                 <state img="5-shocked.png">I don't think I wanted this...</state>
@@ -3389,15 +3787,21 @@
                 <state img="5-horny.png">You had fun with that huh?</state>
                 <state img="5-horny.png">D-did you like having people watch?</state>
             </case>
-            <case tag="female_finished_masturbating" filter="blake">
+            <case tag="female_finished_masturbating" target="blake">
                 <state img="5-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="5-excited.png">I've never heard anything like that before... At least you don't do it frequently!</state>
             </case>
-            <case tag="female_finished_masturbating" filter="weiss">
+            <case tag="female_finished_masturbating" target="weiss">
                 <state img="5-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="5-excited.png">I can't think of an heiress related joke and I feel like I've failed as a friend.</state>
             </case>
-            <case tag="female_finished_masturbating" filter="yang">
+            <case tag="female_finished_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="5-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="5-stripped.png">This may just be one of the most awkward moments in my life.</state>
             </case>
@@ -3442,7 +3846,12 @@
                 <state img="6-horny.png">AHH! Not when they're right there!</state>
             </case>
             <case tag="bad_hand">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="6-horny.png">B-but my sister is right there!</state>
             </case>
             <case tag="stripped">
@@ -3458,7 +3867,12 @@
                 <state img="6-stripped.png">Go Team RWBY! Haha... yeah...</state>
             </case>
             <case tag="stripped">
-                <condition count="1" filter="yang" />
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="6-stripped.png">Hi Yang...</state>
                 <state img="6-stripped.png">Go Team RWBY! Haha... yeah...</state>
             </case>
@@ -3480,7 +3894,13 @@
             <case tag="female_must_strip" filter="rwby" priority="0">
                 <state img="6-loss.png">So... This is kinda weird...</state>
             </case>
-            <case tag="female_must_strip" filter="yang">
+            <case tag="female_must_strip">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="6-loss.png">Hey, sis...</state>
             </case>
             <case tag="female_must_strip" target="neo" targetStage="6" alsoPlaying="marinette">
@@ -3575,13 +3995,19 @@
                 <state img="6-stripped.png">I'd feel bad if I wasn't showing off so much...</state>
                 <state img="6-stripped.png">Am I gonna see something good?  Something to distract from my nudity?</state>
             </case>
-            <case tag="female_removing_major" filter="blake">
+            <case tag="female_removing_major" target="blake">
                 <state img="6-loss.png">So we're naked in a room together.</state>
             </case>
-            <case tag="female_removing_major" filter="weiss">
+            <case tag="female_removing_major" target="weiss">
                 <state img="6-loss.png">So we're naked in a room together.</state>
             </case>
-            <case tag="female_removing_major" filter="yang">
+            <case tag="female_removing_major">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="6-loss.png">So, we're naked in a room together.</state>
             </case>
             <case tag="female_removed_major">
@@ -3623,15 +4049,21 @@
             <case tag="female_chest_will_be_visible">
                 <state img="6-happy.png">Yeah! Join me on the titty committee!</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="blake">
+            <case tag="female_chest_will_be_visible" target="blake">
                 <state img="6-loss.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="6-loss.png">At least we're in this together...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="weiss">
+            <case tag="female_chest_will_be_visible" target="weiss">
                 <state img="6-loss.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="6-loss.png">At least we're in this together...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="yang">
+            <case tag="female_chest_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="6-loss.png">But I thought you wouldn't go that far...</state>
                 <state img="6-loss.png">I'm not sure how I feel about this.</state>
                 <state img="6-loss.png">At least we're in this together...</state>
@@ -3649,14 +4081,14 @@
                 <state img="6-excited.png">The itty bitty titty committee!</state>
                 <state img="6-stripped.png">At least someone somewhere is dreaming of this sort of moment.</state>
             </case>
-            <case tag="female_small_chest_is_visible" filter="weiss">
+            <case tag="female_small_chest_is_visible" target="weiss">
                 <state img="6-loss.png">Well, the Ruboobies aren't the only thing out on me, so that's a plus for you.</state>
             </case>
             <case tag="female_medium_chest_is_visible">
                 <state img="6-appreciative.png">That looks like fun...</state>
                 <state img="6-loss.png">I really hope my guy friends don't find out about this...</state>
             </case>
-            <case tag="female_medium_chest_is_visible" filter="blake">
+            <case tag="female_medium_chest_is_visible" target="blake">
                 <state img="6-loss.png">Well, the Ruboobies aren't the only thing out on me, so that's a plus for you.</state>
             </case>
             <case tag="female_medium_chest_is_visible" target="neo">
@@ -3670,21 +4102,27 @@
                 <state img="6-shocked.png">Whoa! Those are heavy duty!</state>
                 <state img="6-appreciative.png">That's some heavy artillery!</state>
             </case>
-            <case tag="female_large_chest_is_visible" filter="yang">
+            <case tag="female_large_chest_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="6-loss.png">Well, the Ruboobies aren't the only thing out on me, so that's a plus for you.</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="6-interested.png">Lemme see the cutie kitty!</state>
                 <state img="6-stripped.png">C'mon!  I've already gone and it's cold without pants!</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="blake">
+            <case tag="female_crotch_will_be_visible" target="blake">
                 <state img="6-loss.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="6-loss.png">You'll be angry if I look, won't you?</state>
                 <state img="6-loss.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
                 <state img="6-loss.png">I guess this is teamwork...</state>
                 <state img="6-loss.png">Think of it as team building! Please! At least we're together...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="weiss">
+            <case tag="female_crotch_will_be_visible" target="weiss">
                 <state img="6-loss.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="6-loss.png">You'll be angry if I look, won't you?</state>
                 <state img="6-loss.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
@@ -3692,7 +4130,13 @@
                 <state img="6-loss.png">I guess this is teamwork...</state>
                 <state img="6-loss.png">Think of it as team building! Please! At least we're together...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="yang">
+            <case tag="female_crotch_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="6-loss.png">But I thought you wouldn't go that far...</state>
                 <state img="6-loss.png">Maybe if you played better? Oh, that was the wrong thing to say...</state>
                 <state img="6-loss.png">So we're naked in a room together.</state>
@@ -3710,16 +4154,22 @@
                 <state img="6-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="6-shocked.png">I guess this is teamwork...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="blake">
+            <case tag="female_crotch_is_visible" target="blake">
                 <state img="6-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="weiss">
+            <case tag="female_crotch_is_visible" target="weiss">
                 <state img="6-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="6-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="6-shocked.png">So we're naked in a room together.</state>
                 <state img="6-shocked.png">I guess this is teamwork...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="yang">
+            <case tag="female_crotch_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="6-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="6-shocked.png">But I thought you wouldn't go that far...</state>
                 <state img="6-shocked.png">So we're naked in a room together.</state>
@@ -3767,15 +4217,21 @@
                 <state img="6-happy.png">Looks like you lost!</state>
                 <state img="6-interested.png">Oh, I guess it's that time huh?</state>
             </case>
-            <case tag="female_must_masturbate" filter="blake">
+            <case tag="female_must_masturbate" target="blake">
                 <state img="6-shocked.png">So does that mean...?</state>
                 <state img="6-shocked.png">I can't help but think of what Sun would think of this situation.</state>
             </case>
-            <case tag="female_must_masturbate" filter="weiss">
+            <case tag="female_must_masturbate" target="weiss">
                 <state img="6-shocked.png">So does that mean...?</state>
                 <state img="6-shocked.png">I can't help but think of what Jaune would think of this situation.</state>
             </case>
-            <case tag="female_must_masturbate" filter="yang">
+            <case tag="female_must_masturbate">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="6-shocked.png">So does that mean...?</state>
                 <state img="6-shocked.png">I can't help but think of what Neptune would think of this situation.</state>
             </case>
@@ -3784,15 +4240,21 @@
                 <state img="6-horny.png">Haha, need a hand there?</state>
                 <state img="6-happy.png">I've never watched anyone else before so I'm looking forward to this.</state>
             </case>
-            <case tag="female_start_masturbating" filter="blake">
+            <case tag="female_start_masturbating" target="blake">
                 <state img="6-shocked.png">I feel really weird watching this...</state>
                 <state img="6-shocked.png">Why do I feel like people are staring?</state>
             </case>
-            <case tag="female_start_masturbating" filter="weiss">
+            <case tag="female_start_masturbating" target="weiss">
                 <state img="6-shocked.png">I feel really weird watching this...</state>
                 <state img="6-shocked.png">Why do I feel like people are staring?</state>
             </case>
-            <case tag="female_start_masturbating" filter="yang">
+            <case tag="female_start_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="6-shocked.png">Why do I feel like people are staring?</state>
                 <state img="6-shocked.png">I feel really weird watching this...</state>
             </case>
@@ -3802,17 +4264,23 @@
                 <state img="6-horny.png">That's pretty good stuff you got going there...</state>
                 <state img="6-horny.png">I, uh... like your technique...</state>
             </case>
-            <case tag="female_masturbating" filter="blake">
+            <case tag="female_masturbating" target="blake">
                 <state img="6-shocked.png">I don't know where to look...</state>
                 <state img="6-shocked.png">Doo pi doo, still standing here naked...</state>
                 <state img="6-shocked.png">At least we're together! Or is that worse?</state>
             </case>
-            <case tag="female_masturbating" filter="weiss">
+            <case tag="female_masturbating" target="weiss">
                 <state img="6-shocked.png">I don't know where to look...</state>
                 <state img="6-shocked.png">Doo pi doo, still standing here naked...</state>
                 <state img="6-shocked.png">White Rose, here for everyone to see...</state>
             </case>
-            <case tag="female_masturbating" filter="yang">
+            <case tag="female_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="6-shocked.png">I don't know where to look...</state>
                 <state img="6-shocked.png">Doo pi doo, still standing here naked...</state>
                 <state img="6-shocked.png">Woo. Teamwork...</state>
@@ -3820,15 +4288,21 @@
             <case tag="female_finished_masturbating">
                 <state img="6-happy.png">You had fun with that huh?</state>
             </case>
-            <case tag="female_finished_masturbating" filter="blake">
+            <case tag="female_finished_masturbating" target="blake">
                 <state img="6-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="6-excited.png">I've never heard anything like that before... At least you don't do it frequently!</state>
             </case>
-            <case tag="female_finished_masturbating" filter="weiss">
+            <case tag="female_finished_masturbating" target="weiss">
                 <state img="6-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="6-excited.png">I can't think of an heiress related joke and I feel like I've failed as a friend.</state>
             </case>
-            <case tag="female_finished_masturbating" filter="yang">
+            <case tag="female_finished_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="6-excited.png">Ahem. It SOUNDED like you enjoyed yourself...</state>
                 <state img="6-stripped.png">This may just be one of the most awkward moments in my life.</state>
             </case>
@@ -3859,7 +4333,13 @@
             <case tag="female_must_strip" filter="rwby" priority="0">
                 <state img="7-sad.png">Don't look... I can't control myself...</state>
             </case>
-            <case tag="female_must_strip" filter="yang">
+            <case tag="female_must_strip">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="7-heavy.png">When I'm doing... this...</state>
             </case>
             <case tag="female_must_strip" target="neo" targetStage="6" alsoPlaying="marinette">
@@ -3944,13 +4424,19 @@
                 <state img="7-happy.png">Keep it up...</state>
                 <state img="7-shocked.png">C'mon...  Hurry up and lose!</state>
             </case>
-            <case tag="female_removing_major" filter="blake">
+            <case tag="female_removing_major" target="blake">
                 <state img="7-shocked.png">This isn't what I though being on a team would be like!</state>
             </case>
-            <case tag="female_removing_major" filter="weiss">
+            <case tag="female_removing_major" target="weiss">
                 <state img="7-shocked.png">Don't you dare look at me! OH!</state>
             </case>
-            <case tag="female_removing_major" filter="yang">
+            <case tag="female_removing_major">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="7-shocked.png">This isn't what I though being on a team would be like!</state>
             </case>
             <case tag="female_removed_major">
@@ -3986,18 +4472,24 @@
                 <state img="7-happy.png">It's a little awkward to admit, but I've been looking forward to this</state>
                 <state img="7-horny.png">I don't even like girls that much...  This isn't fair...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="blake">
+            <case tag="female_chest_will_be_visible" target="blake">
                 <state img="7-sad.png">At least we're in this together...</state>
                 <state img="7-heavy.png">Don't look at me!</state>
                 <state img="7-shocked.png">Please don't tell anyone...</state>
                 <state img="7-shocked.png">I'm still your team leader!</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="weiss">
+            <case tag="female_chest_will_be_visible" target="weiss">
                 <state img="7-sad.png">At least we're in this together...</state>
                 <state img="7-shocked.png">Don't look at me!</state>
                 <state img="7-shocked.png">Please don't tell anyone...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="yang">
+            <case tag="female_chest_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="7-shocked.png">At least we're in this together...</state>
                 <state img="7-shocked.png">Don't look at me!</state>
                 <state img="7-shocked.png">Please don't tell anyone...</state>
@@ -4013,11 +4505,16 @@
                 <state img="7-sad.png">You at least have it better than I do.</state>
                 <state img="7-sad.png">At least you're not where I am.</state>
             </case>
-            <case tag="female_small_chest_is_visible" filter="weiss">
-                <condition count="1" filter="yang" />
+            <case tag="female_small_chest_is_visible" target="weiss">
+				<alternative>
+					<condition count="1" filter="yang" />
+				</alternative>
+				<alternative>
+					<condition count="1" filter="yang_xiao_long" />
+				</alternative>
                 <state img="7-shocked.png">Yang, over there! Weiss says she wants you to look at her instead of me!</state>
             </case>
-            <case tag="female_small_chest_is_visible" filter="weiss">
+            <case tag="female_small_chest_is_visible" target="weiss">
                 <state img="7-shocked.png">It feels so...!</state>
                 <state img="7-shocked.png">Don't you DARE tell my sister that this happened!</state>
             </case>
@@ -4025,7 +4522,7 @@
                 <state img="7-happy.png">Exactly what I was hoping for.</state>
                 <state img="7-happy.png">That's something to see...</state>
             </case>
-            <case tag="female_medium_chest_is_visible" filter="blake">
+            <case tag="female_medium_chest_is_visible" target="blake">
                 <state img="7-shocked.png">Let's keep this between us...</state>
                 <state img="7-shocked.png">It feels so...!</state>
             </case>
@@ -4037,7 +4534,13 @@
                 <state img="7-shocked.png">Wow, that's quite something!</state>
                 <state img="7-shocked.png">B-big...</state>
             </case>
-            <case tag="female_large_chest_is_visible" filter="yang">
+            <case tag="female_large_chest_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="7-shocked.png">Let's keep this between us...</state>
                 <state img="7-shocked.png">It feels so...!</state>
             </case>
@@ -4047,20 +4550,26 @@
                 <state img="7-appreciative.png">This is really weird, especially when I'm...</state>
                 <state img="7-happy.png">I'm glad to see some fairness.</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="blake">
+            <case tag="female_crotch_will_be_visible" target="blake">
                 <state img="7-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="7-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="7-shocked.png">Welcome to the party!</state>
                 <state img="7-shocked.png">Can you not look!?</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="weiss">
+            <case tag="female_crotch_will_be_visible" target="weiss">
                 <state img="7-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
                 <state img="7-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="7-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="7-shocked.png">Welcome to the party!</state>
                 <state img="7-shocked.png">Can you not look!?</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="yang">
+            <case tag="female_crotch_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="7-shocked.png">But I thought you wouldn't go that far...</state>
                 <state img="7-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="7-shocked.png">Welcome to the party!</state>
@@ -4076,17 +4585,23 @@
                 <state img="7-happy.png">And it is good.</state>
                 <state img="7-happy.png">And there it is...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="blake">
+            <case tag="female_crotch_is_visible" target="blake">
                 <state img="7-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="7-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="7-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="weiss">
+            <case tag="female_crotch_is_visible" target="weiss">
                 <state img="7-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="7-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="7-shocked.png">I don't know what I expected inviting you... Don't kill me...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="yang">
+            <case tag="female_crotch_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="7-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="7-shocked.png">But I thought you wouldn't go that far...</state>
             </case>
@@ -4114,15 +4629,21 @@
                 <state img="7-appreciative.png">Same boat as me h-huh?</state>
                 <state img="7-appreciative.png">J-just like m-me...</state>
             </case>
-            <case tag="female_must_masturbate" filter="blake">
+            <case tag="female_must_masturbate" target="blake">
                 <state img="7-horny.png">It might not be so bad now...</state>
                 <state img="7-shocked.png">At least you can't say I was the only one!</state>
             </case>
-            <case tag="female_must_masturbate" filter="weiss">
+            <case tag="female_must_masturbate" target="weiss">
                 <state img="7-horny.png">It might not be so bad now...</state>
                 <state img="7-shocked.png">At least you can't say I was the only one!</state>
             </case>
-            <case tag="female_must_masturbate" filter="yang">
+            <case tag="female_must_masturbate">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="7-horny.png">It might not be so bad now...</state>
                 <state img="7-shocked.png">At least you can't say I was the only one!</state>
             </case>
@@ -4130,30 +4651,42 @@
                 <state img="7-appreciative.png">I-I hope I can learn a thing or two from this!</state>
                 <state img="7-appreciative.png">J-just try to c-copy her hands...</state>
             </case>
-            <case tag="female_start_masturbating" filter="blake">
+            <case tag="female_start_masturbating" target="blake">
                 <state img="7-shocked.png">Why do I feel like people are staring?</state>
             </case>
-            <case tag="female_start_masturbating" filter="weiss">
+            <case tag="female_start_masturbating" target="weiss">
                 <state img="7-shocked.png">Why do I feel like people are staring?</state>
             </case>
-            <case tag="female_start_masturbating" filter="yang">
+            <case tag="female_start_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="7-shocked.png">Why do I feel like people are staring?</state>
             </case>
             <case tag="female_masturbating">
                 <state img="7-horny.png">I think I'm enjoying this...</state>
                 <state img="7-horny.png">Gotta keep going...</state>
             </case>
-            <case tag="female_masturbating" filter="blake">
+            <case tag="female_masturbating" target="blake">
                 <state img="7-shocked.png">Doo pi doo, still standing here naked...</state>
                 <state img="7-shocked.png">At least we're together! Or is that worse?</state>
                 <state img="7-shocked.png">I'm still team leader!</state>
             </case>
-            <case tag="female_masturbating" filter="weiss">
+            <case tag="female_masturbating" target="weiss">
                 <state img="7-shocked.png">Doo pi doo, still standing here naked...</state>
                 <state img="7-shocked.png">White Rose, here for everyone to see...</state>
                 <state img="7-shocked.png">I'm still team leader!</state>
             </case>
-            <case tag="female_masturbating" filter="yang">
+            <case tag="female_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="7-shocked.png">Doo pi doo, still standing here naked...</state>
                 <state img="7-shocked.png">Woo. Teamwork...</state>
             </case>
@@ -4161,15 +4694,21 @@
                 <state img="7-horny.png">T-that was a great s-show.</state>
                 <state img="7-horny.png">Wow, that's what we sound like...</state>
             </case>
-            <case tag="female_finished_masturbating" filter="blake">
+            <case tag="female_finished_masturbating" target="blake">
                 <state img="7-excited.png">No fair...</state>
                 <state img="7-excited.png">So easily!</state>
             </case>
-            <case tag="female_finished_masturbating" filter="weiss">
+            <case tag="female_finished_masturbating" target="weiss">
                 <state img="7-excited.png">No fair...</state>
                 <state img="7-excited.png">So easily!</state>
             </case>
-            <case tag="female_finished_masturbating" filter="yang">
+            <case tag="female_finished_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="7-calm.png">Well, I just saw that...</state>
                 <state img="7-happy.png">You looked like you knew what you were doing...</state>
             </case>
@@ -4212,7 +4751,13 @@
             <case tag="female_must_strip" filter="rwby" priority="0">
                 <state img="8-horny.png">Don't lose, team!</state>
             </case>
-            <case tag="female_must_strip" filter="yang">
+            <case tag="female_must_strip">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="8-horny.png">Don't lose, sis! It's really awkward and everyone looks at you!</state>
             </case>
             <case tag="female_must_strip" target="neo" targetStage="6" alsoPlaying="marinette">
@@ -4311,13 +4856,19 @@
                 <state img="8-horny.png">I'd feel bad if I wasn't showing off so much...</state>
                 <state img="8-shocked.png">Are we gonna see something good?  Something to distract from my nudity?</state>
             </case>
-            <case tag="female_removing_major" filter="blake">
+            <case tag="female_removing_major" target="blake">
                 <state img="8-shocked.png">So this happened.</state>
             </case>
-            <case tag="female_removing_major" filter="weiss">
+            <case tag="female_removing_major" target="weiss">
                 <state img="8-shocked.png">So, let's never speak of this again.</state>
             </case>
-            <case tag="female_removing_major" filter="yang">
+            <case tag="female_removing_major">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="8-shocked.png">So this happened.</state>
             </case>
             <case tag="female_removed_major">
@@ -4355,15 +4906,21 @@
                 <state img="8-sad.png">I'd be happier if this happened sooner.</state>
                 <state img="8-shocked.png">If only you were me.  I mean, I'd still be taking off my bra, but at least I'd have panties...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="blake">
+            <case tag="female_chest_will_be_visible" target="blake">
                 <state img="8-shocked.png">I'm still your team leader!</state>
                 <state img="8-shocked.png">I don't know where to look...</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="weiss">
+            <case tag="female_chest_will_be_visible" target="weiss">
                 <state img="8-shocked.png">I don't know where to look...</state>
                 <state img="8-shocked.png">Don't forget I'm team captain!</state>
             </case>
-            <case tag="female_chest_will_be_visible" filter="yang">
+            <case tag="female_chest_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="8-shocked.png">I don't know where to look...</state>
                 <state img="8-shocked.png">I'm still your team leader!</state>
             </case>
@@ -4380,7 +4937,7 @@
                 <state img="8-excited.png">Better late than never though huh?</state>
                 <state img="8-horny.png">I wish I had clothes...</state>
             </case>
-            <case tag="female_small_chest_is_visible" filter="weiss">
+            <case tag="female_small_chest_is_visible" target="weiss">
                 <state img="8-shocked.png">It feels so...!</state>
                 <state img="8-shocked.png">This is a really odd moment, and we've had a lot...</state>
             </case>
@@ -4388,7 +4945,7 @@
                 <state img="8-happy.png">Aw, those look nice!</state>
                 <state img="8-happy.png">At least we're not alone!</state>
             </case>
-            <case tag="female_medium_chest_is_visible" filter="blake">
+            <case tag="female_medium_chest_is_visible" target="blake">
                 <state img="8-shocked.png">It feels so...!</state>
                 <state img="8-shocked.png">This is a really odd moment, and we've had a lot...</state>
             </case>
@@ -4407,27 +4964,39 @@
                 <state img="8-appreciative.png">Still glad to see those though.</state>
                 <state img="8-horny.png">Please hurry this up a bit...  I want to get dressed...</state>
             </case>
-            <case tag="female_large_chest_is_visible" filter="yang">
+            <case tag="female_large_chest_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="8-shocked.png">I didn't think I'd ever be in a situation like this...</state>
             </case>
             <case tag="female_crotch_will_be_visible">
                 <state img="8-horny.png">At least we're even!  Aside from... well...</state>
                 <state img="8-shocked.png">Almost where I'm at...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="blake">
+            <case tag="female_crotch_will_be_visible" target="blake">
                 <state img="8-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="8-shocked.png">Please don't look at me, and I won't look at you...</state>
                 <state img="8-shocked.png">At least you're with me now.</state>
                 <state img="8-shocked.png">I feel sticky... I should not have said that...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="weiss">
+            <case tag="female_crotch_will_be_visible" target="weiss">
                 <state img="8-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="8-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="8-shocked.png">Please don't look at me, and I won't look at you...</state>
                 <state img="8-shocked.png">At least you're with me now.</state>
                 <state img="8-shocked.png">I feel sticky... I should not have said that...</state>
             </case>
-            <case tag="female_crotch_will_be_visible" filter="yang">
+            <case tag="female_crotch_will_be_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="8-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="8-shocked.png">At least you're with me now.</state>
                 <state img="8-shocked.png">I feel sticky... I should not have said that...</state>
@@ -4441,17 +5010,23 @@
             <case tag="female_crotch_is_visible">
                 <state img="8-happy.png">Still happy to see yours, though!</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="blake">
+            <case tag="female_crotch_is_visible" target="blake">
                 <state img="8-shocked.png">It's just like we're changing! Right? Don't be angry at me...</state>
                 <state img="8-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="8-shocked.png">Please don't look at me, and I won't look at you...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="weiss">
+            <case tag="female_crotch_is_visible" target="weiss">
                 <state img="8-shocked.png">It's not different than when we're changing! Wait, you don't look?</state>
                 <state img="8-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="8-shocked.png">Please don't look at me, and I won't look at you...</state>
             </case>
-            <case tag="female_crotch_is_visible" filter="yang">
+            <case tag="female_crotch_is_visible">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="8-shocked.png">You'll be angry if I look, won't you?</state>
                 <state img="8-shocked.png">But I thought you wouldn't go that far...</state>
                 <state img="8-shocked.png">Please don't look at me...</state>
@@ -4480,15 +5055,21 @@
                 <state img="8-happy.png">Your turn!</state>
                 <state img="8-happy.png">Haha!  You're not out of the woods yet!</state>
             </case>
-            <case tag="female_must_masturbate" filter="blake">
+            <case tag="female_must_masturbate" target="blake">
                 <state img="8-shocked.png">Just like me...</state>
                 <state img="8-shocked.png">I'll try to block it out... THIS WILL BE THE DAY WE WAITED FOR!</state>
             </case>
-            <case tag="female_must_masturbate" filter="weiss">
+            <case tag="female_must_masturbate" target="weiss">
                 <state img="8-shocked.png">Just like me...</state>
                 <state img="8-shocked.png">I'll try to block it out... THIS WILL BE THE DAY WE WAITED FOR!</state>
             </case>
-            <case tag="female_must_masturbate" filter="yang">
+            <case tag="female_must_masturbate">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="8-shocked.png">Just like me...</state>
                 <state img="8-shocked.png">I'll try to block it out... THIS WILL BE THE DAY WE WAITED FOR!</state>
             </case>
@@ -4496,14 +5077,20 @@
                 <state img="8-happy.png">Just like Blake does it.  I think.  She's loud at night, but I can't exactly ask...</state>
                 <state img="8-happy.png">So that's where you start...</state>
             </case>
-            <case tag="female_start_masturbating" filter="blake">
+            <case tag="female_start_masturbating" target="blake">
                 <state img="8-shocked.png">At least I'm not alone...</state>
             </case>
-            <case tag="female_start_masturbating" filter="weiss">
+            <case tag="female_start_masturbating" target="weiss">
                 <state img="8-shocked.png">At least I'm not alone...</state>
                 <state img="8-shocked.png">Is this what you wanted? Are you happy now?</state>
             </case>
-            <case tag="female_start_masturbating" filter="yang">
+            <case tag="female_start_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="8-shocked.png">Try to ignore the fact that that's my sister...</state>
             </case>
             <case tag="female_masturbating">
@@ -4514,16 +5101,22 @@
                 <state img="8-finished.png">I-is THIS what I've been missing out on!? That was great!</state>
                 <state img="8-finished.png">WOW! That felt great! I almost want some more...</state>
             </case>
-            <case tag="female_masturbating" filter="blake">
+            <case tag="female_masturbating" target="blake">
                 <state img="8-shocked.png">Let's try to forget about this...</state>
                 <state img="8-shocked.png">So. Who's on your mind?</state>
             </case>
-            <case tag="female_masturbating" filter="weiss">
+            <case tag="female_masturbating" target="weiss">
                 <state img="8-shocked.png">Let's try to forget about this...</state>
                 <state img="8-shocked.png">So. Who's on your mind?</state>
                 <state img="8-shocked.png">This isn't anything like our usual combo attacks... Wait, what did I just say?</state>
             </case>
-            <case tag="female_masturbating" filter="yang">
+            <case tag="female_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="8-horny.png">Let's try to forget about this...</state>
                 <state img="8-shocked.png">Try to ignore it...</state>
                 <state img="8-shocked.png">My sister...</state>
@@ -4533,15 +5126,21 @@
                 <state img="8-shocked.png">Ooh, a strong finish! Glad you're done now, right?</state>
                 <state img="8-happy.png">Oh, wow...  I see the appeal...</state>
             </case>
-            <case tag="female_finished_masturbating" filter="blake">
+            <case tag="female_finished_masturbating" target="blake">
                 <state img="8-calm.png">But was this the day we waited for?</state>
                 <state img="8-shocked.png">At least we can start working on our team attacks for next time...</state>
             </case>
-            <case tag="female_finished_masturbating" filter="weiss">
+            <case tag="female_finished_masturbating" target="weiss">
                 <state img="8-calm.png">So, we have to live with this having happened...</state>
                 <state img="8-calm.png">Well, that was exciting.</state>
             </case>
-            <case tag="female_finished_masturbating" filter="yang">
+            <case tag="female_finished_masturbating">
+				<alternative>
+					<condition role="target" character="yang" />
+				</alternative>
+				<alternative>
+					<condition role="target" character="yang_xiao_long" />
+				</alternative>
                 <state img="8-calm.png">I don't know where we're supposed to go after this...</state>
                 <state img="8-happy.png">At least we can start working on our team attacks for next time...</state>
             </case>
