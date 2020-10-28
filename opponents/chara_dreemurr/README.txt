@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited October 5 2020
+README edited October 27 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -165,9 +165,9 @@ NAME REACTIONS
 -------------------------------------------------------------------------------------------
 Chara will react to specific Player Names upon being selected:
 
--Missy, the default female name.
+-Miss, the default female name.
 -Mister, the default male name.
--Missy, but the player is actually male.
+-Miss, but the player is actually male.
 -Mister, but the player is actually female.
 -Papyrus
 -Sans
@@ -420,6 +420,9 @@ NAYRU
 NEPTUNE
 -Back and forth between Chara and Neptune as either one loses and must strip.
 -Response to Neptune's prompt about finding the inventory.
+
+PERONA
+-Response to Perona trying to recruit the player as a servant/maid.
 
 PINKIE
 -Response to Pinkie turning to Pinkamena.
