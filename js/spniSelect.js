@@ -65,6 +65,7 @@ $groupPoseCountLabels = [$("#group-pose-count-label-1"), $("#group-pose-count-la
 $groupDescriptionLabels = [$("#group-description-label-1"), $("#group-description-label-2"), $("#group-description-label-3"), $("#group-description-label-4")];
 $groupBadges = [$("#group-badge-1"), $("#group-badge-2"), $("#group-badge-3"), $("#group-badge-4")];
 $groupNewBadges = [$("#group-new-badge-1"), $("#group-new-badge-2"), $("#group-new-badge-3"), $("#group-new-badge-4")];
+$groupUpdatedBadges = [$("#group-updated-badge-1"), $("#group-updated-badge-2"), $("#group-updated-badge-3"), $("#group-updated-badge-4")];
 $groupCostumeBadges = [$("#group-costume-badge-1"), $("#group-costume-badge-2"), $("#group-costume-badge-3"), $("#group-costume-badge-4")];
 $groupStatuses = [$("#group-status-1"), $("#group-status-2"), $("#group-status-3"), $("#group-status-4")];
 $groupLayers = [$("#group-layer-1"), $("#group-layer-2"), $("#group-layer-3"), $("#group-layer-4")];
@@ -560,6 +561,7 @@ function updateGroupSelectScreen (ignore_bg) {
             $groupDescriptionLabels[i].html("");
             $groupBadges[i].hide();
             $groupNewBadges[i].hide();
+            $groupUpdatedBadges[i].hide();
             $groupCostumeBadges[i].hide();
             $groupStatuses[i].hide();
             $groupLayers[i].hide();
@@ -870,7 +872,7 @@ function updateSelectableGroups() {
 function loadGroup (chosenGroup) {
     if (!chosenGroup) return;
 
-	clickedRemoveAllButton();
+	clickedRemoveAllButton(false);
     console.log(chosenGroup.title);
     
     if (SENTRY_INITIALIZED) {
@@ -985,45 +987,127 @@ function clickedRandomFillButton (predicate) {
 }
 
 function loadDefaultFillSuggestions () {
-    /* get a copy of the loaded opponents list, same as above */
-    var possiblePicks = loadedOpponents.filter(function (opp) {
-        if (players.some(function (p) { return p && p.id === opp.id; })) {
-            return false;
-        }
-
-        if (!individualSelectTesting) {
-            return opp.highlightStatus === DEFAULT_FILL;
-        } else {
-            return opp.status === "testing";
-        }
-    });
+    if (FILL_DISABLED) return;
     
-    var fillPlayers = [];
-    if (DEFAULT_FILL === 'new') {
-        /* Special case: for the 'new' fill mode, always suggest the most
-         * recently-added or recently-updated character.
-         *
-         * For the testing view, this requires sorting the list of prefills by
-         * increasing chronological order.
-         *
-         * In both cases, the character to suggest first is always at the back
-         * of the list.
-         */
-        if (individualSelectTesting) {
-            possiblePicks.sort(sortOpponentsByField("lastUpdated"));
+    if (DEFAULT_FILL === 'default' && !individualSelectTesting) {
+        /* get a copy of the loaded opponents list, same as above */
+        var possiblePicks = loadedOpponents.filter(function (opp) {
+            if (players.some(function (p) { return p && p.id === opp.id; })) {
+                return false;
+            }
+            
+            /* Don't suggest anything but online characters, even in offline */
+            return !opp.status;
+        });
+        
+        var possibleNewPicks = possiblePicks.filter(function (opp) {
+            return opp.highlightStatus === "new";
+        });
+        
+        /* This doesn't work right immediately after a re-sort, but we can't
+           use highest release number either, because of re-releases */
+        var newestChar = possibleNewPicks[possibleNewPicks.length - 1];
+        
+        var fillPlayers = [];
+        
+        if (possibleNewPicks.length !== 0) {
+            /* select random new opponent - TODO: weight toward newest; awaiting official answer */
+            var idx = getRandomNumber(0, possibleNewPicks.length);
+            var randomOpponent = possibleNewPicks[idx];
+            
+            possiblePicks = possiblePicks.filter(function (opp) {
+                return opp.id !== randomOpponent.id;
+            });
+
+            fillPlayers.push(randomOpponent);
+        }
+        
+        var possibleNewAndUpdatedPicks = possiblePicks.filter(function (opp) {
+            return opp.highlightStatus === "new" || opp.highlightStatus === "updated";
+        });
+        
+        for (var i = 0; i < 2; i++) {
+            if (possibleNewAndUpdatedPicks.length === 0) break;
+            /* select random new or updated opponent */
+            var idx = getRandomNumber(0, possibleNewAndUpdatedPicks.length);
+            var randomOpponent = possibleNewAndUpdatedPicks[idx];
+            possibleNewAndUpdatedPicks.splice(idx, 1);
+            
+            possiblePicks = possiblePicks.filter(function (opp) {
+                return opp.id !== randomOpponent.id;
+            });
+
+            fillPlayers.push(randomOpponent);
+        }
+        
+        /* Remove bottom 33% from consideration - TODO: finalize the percentage; awaiting official answer */
+        var cutoff = possiblePicks.length / 3;
+        
+        for (var i = 0; i < cutoff; i++) {
+            possiblePicks.pop();
+        }
+        
+        for (var i = fillPlayers.length; i < players.length-1; i++) {
+            if (possiblePicks.length === 0) break;
+            /* select random opponent */
+            var idx = getRandomNumber(0, possiblePicks.length);
+            var randomOpponent = possiblePicks[idx];
+            possiblePicks.splice(idx, 1);
+
+            fillPlayers.push(randomOpponent);
+        }
+        
+        /* Sort in order of New -> Updated -> Other, it just looks better */
+        fillPlayers.sort(function(a, b) {
+            var status1 = a.highlightStatus;
+            var status2 = b.highlightStatus;
+            
+            if (!status1) status1 = "zzzzz";
+            if (!status2) status2 = "zzzzz";
+            
+            return status1.localeCompare(status2);
+        });
+    } else {
+        /* get a copy of the loaded opponents list, same as above */
+        var possiblePicks = loadedOpponents.filter(function (opp) {
+            if (players.some(function (p) { return p && p.id === opp.id; })) {
+                return false;
+            }
+
+            if (!individualSelectTesting) {
+                return opp.highlightStatus === DEFAULT_FILL;
+            } else {
+                return opp.status === "testing";
+            }
+        });
+        
+        var fillPlayers = [];
+        if (DEFAULT_FILL === 'new' || DEFAULT_FILL === 'default') {
+            /* Special case: for the 'new' fill mode, always suggest the most
+             * recently-added or recently-updated character.
+             *
+             * For the testing view, this requires sorting the list of prefills by
+             * increasing chronological order.
+             *
+             * In both cases, the character to suggest first is always at the back
+             * of the list.
+             */
+            if (individualSelectTesting) {
+                possiblePicks.sort(sortOpponentsByField("lastUpdated"));
+            }
+
+            fillPlayers.push(possiblePicks.pop());
         }
 
-        fillPlayers.push(possiblePicks.pop());
-    }
+        for (var i = fillPlayers.length; i < players.length-1; i++) {
+            if (possiblePicks.length === 0) break;
+            /* select random opponent */
+            var idx = getRandomNumber(0, possiblePicks.length);
+            var randomOpponent = possiblePicks[idx];
+            possiblePicks.splice(idx, 1);
 
-    for (var i = fillPlayers.length; i < players.length-1; i++) {
-        if (possiblePicks.length === 0) break;
-        /* select random opponent */
-        var idx = getRandomNumber(0, possiblePicks.length);
-        var randomOpponent = possiblePicks[idx];
-        possiblePicks.splice(idx, 1);
-
-        fillPlayers.push(randomOpponent);
+            fillPlayers.push(randomOpponent);
+        }
     }
 
     for (var i = 0; i < mainSelectDisplays.length; i++) {
@@ -1042,15 +1126,27 @@ function updateDefaultFillView() {
 /************************************************************
  * The player clicked on the remove all button.
  ************************************************************/
-function clickedRemoveAllButton ()
+function clickedRemoveAllButton (alsoRemoveSuggestions)
 {
+    var anyLoaded = false;
+    
     for (var i = 1; i < 5; i++) {
         if (players[i]) {
+            anyLoaded = true;
             players[i].unloadOpponent();
             delete players[i];
             $selectImages[i-1].off('load');
         }
     }
+    
+    if (alsoRemoveSuggestions && !FILL_DISABLED && !anyLoaded) {
+        FILL_DISABLED = true;
+        
+        for (var i = 0; i < mainSelectDisplays.length; i++) {
+            mainSelectDisplays[i].setPrefillSuggestion(null);
+        }
+    }
+    
     updateSelectionVisuals();
 }
 
@@ -1298,9 +1394,6 @@ function updateSelectionVisuals () {
 
     /* if all slots are taken, disable fill buttons */
     $selectRandomButtons.attr('disabled', filled >= 4 || loadedOpponents.length == 0);
-
-    /* if no opponents are loaded, disable remove all button */
-    $selectRemoveAllButton.attr('disabled', filled <= 0 || loaded < filled);
 
     /* Disable buttons while loading is going on */
     $selectRandomTableButton.attr('disabled', loaded < filled || loadedOpponents.length == 0);
