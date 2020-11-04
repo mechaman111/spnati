@@ -19,7 +19,7 @@ function capitalize(str) {
 function create_bundle_entry (manifest) {
     var tr = document.createElement('tr');
 
-    if (MAIN_CATEGORIES.indexOf(manifest.category) >= 0 || manifest.category === 'incomplete') {
+    if (MAIN_CATEGORIES.indexOf(manifest.category) >= 0 || manifest.category === 'incomplete' || manifest.category === 'event' || manifest.category === 'duplicate') {
         var title = capitalize(manifest.category) + ' Opponents #' + manifest.index;
 
         var includes_opponents = manifest.folders.reduce(function (acc, val) {
@@ -33,6 +33,10 @@ function create_bundle_entry (manifest) {
 
         if (manifest.category === 'incomplete') {
             var desc = 'Includes the following extra opponents: '+includes_opponents;
+        } else if (manifest.category === 'event') {
+            var desc = 'Includes the following event-only opponents: '+includes_opponents;
+        } else if (manifest.category === 'duplicate') {
+            var desc = 'Includes outdated versions of the following opponents: '+includes_opponents;
         } else {
             var desc = includes_opponents;
         }
