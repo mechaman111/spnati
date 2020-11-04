@@ -1,6 +1,39 @@
 
 var MAIN_CATEGORIES = ['online', 'testing', 'offline']
 
+var SPECIAL_CASE_NAMES = {
+    // formatting
+    "9s": "9S",
+    "ae86": "AE86",
+    "alice_mgq": "Alice (MGQ)",
+    "d.va": "D.Va",
+    "hk416": "HK416",
+    "kool-aid": "Kool-Aid Man",
+    "larachel": "L'Arachel",
+    "pa-15": "PA-15",
+    "pauling": "Miss Pauling",
+    "nami_szs": "Nami (SZS)",
+    "saki_zls": "Saki (ZLS)",
+    "scm": "Suction Cup Man",
+    "uravity": "Ochako", // nmasp, wtf?
+    "wiifitfemale": "Wii Fit Trainer",
+        
+    // classic opponents
+    "penny_classic": "Penny",
+    "ryuko_classic": "Ryuko",
+    "shantae_classic": "Shantae",
+    "sheena_classic": "Sheena",
+    "velma_classic": "Velma",
+    
+    // newer opponents
+    "cammy_white": "Cammy",
+    "chara_dreemurr": "Chara",
+    "misty_hgss": "Misty",
+    "rarity_eg": "Rarity",
+    "weiss_schnee": "Weiss",
+    "yang_xiao_long": "Yang"
+}
+
 function cell_with_text(text, classes) {
     var cell = document.createElement('td');
     cell.innerText = text;
@@ -16,6 +49,21 @@ function capitalize(str) {
     return str[0].toUpperCase() + str.substring(1);
 }
 
+function format_name(name) {
+    if (SPECIAL_CASE_NAMES.has(name)) {
+        return SPECIAL_CASE_NAMES[name];
+    }
+    
+    var nameParts = name.split("_");
+    var newName = "";
+    
+    for (var i = 0; i < nameParts.length; i++) {
+        newName += " " + capitalize(nameParts[i]);
+    }
+    
+    return newName.substring(1); // remove initial space
+}
+
 function create_bundle_entry (manifest) {
     var tr = document.createElement('tr');
 
@@ -26,7 +74,7 @@ function create_bundle_entry (manifest) {
             var opp = val.replace(/opponents[\\\/]/gi, '');
 
             if (acc.length > 0) acc += ', ';
-            acc += capitalize(opp);
+            acc += format_name(opp);
 
             return acc;
         }, '');
