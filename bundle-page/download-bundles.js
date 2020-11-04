@@ -50,7 +50,7 @@ function capitalize(str) {
 }
 
 function format_name(name) {
-    if (SPECIAL_CASE_NAMES.has(name)) {
+    if (SPECIAL_CASE_NAMES[name] !== null) {
         return SPECIAL_CASE_NAMES[name];
     }
     
