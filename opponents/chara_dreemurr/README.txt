@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited October 27 2020
+README edited November 10 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -411,6 +411,9 @@ NAMI
 -Responds to Nami preparing her rain stick.
 -Responds to Nami beginning to actually use her rain stick.
 
+NATSUKI
+-Responds to Natsuki as Chara is losing.
+
 NAVI
 -Responds to Navi transforming from a ball of light into a fairy.
 
@@ -482,6 +485,9 @@ TWILIGHT
 VRISKA
 -Responds to Vriska's comment about Megalovania.
 -Generic responses to handle Vriska's unique stripping sequence.
+
+YANG-XIAO-LONG
+-Responds to Yang losing.
 
 YUELIA
 -Responds to Yuelia's question about fetishes - since Chara is tagged MEAN she gets the question about Edging.
