@@ -64,9 +64,9 @@ var CANDY_LIST = [
     "reskins/zizou_valentine/2-appreciative.png",
     "reskins/zizou_valentine/2-puzzled.png",
     "reskins/nagisa_maid_cafe/0-happy.png",
-    "reskins/nagisa_maid_cafe/1-xstripping.png",
+    "reskins/nagisa_maid_cafe/1-z_stripping.png",
     "reskins/nagisa_maid_cafe/2-wink.png",
-    "reskins/nagisa_maid_cafe/3-veryembarrassed.png",
+    "reskins/nagisa_maid_cafe/3-embarrassed_2.png",
 */
 
 /* SUMMER EVENT */
@@ -243,8 +243,8 @@ var CANDY_LIST = [
     "monika/3-shy-happy.png",
     "nagisa/0-dango.png",
     "nagisa/1-calm.png",
-    "nagisa/2-interested.png",
-    "nagisa/3-veryembarrassed.png",
+    "nagisa/2-z_stripping.png",
+    "nagisa/3-embarrassed.png",
     "natsuki/0-tsun.png",
     "natsuki/1-laugh.png",
     "natsuki/2-happy.png",
