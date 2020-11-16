@@ -4,7 +4,7 @@ For admittance on to testing, a new character file must meet the following requi
 
 -No broken images (checked by validation in the character editor)
 
--A minimum of **300** lines, *Including:* **10** targeted lines, directed at **5** different haracters and **10** filtered lines.
+-A minimum of **300** lines, *Including:* **10** targeted lines, directed at **5** different characters and **10** filtered lines.
 
 -Recommended, but not essential is the use of the "Writing Aid" button so your character reacts appropriately!
 
@@ -54,6 +54,6 @@ The Mod QA will be as follows:
  - Confirmation that each sponsorship flaw has been corrected
  - At least two playtests of the character
    - Admittance to the live roster *OR*
-   - return to the Testing Tables for further development
+   - Return to the Testing Tables for further development
 
 If a character is found not to meet any of the standards in Mod QA, they will be required to address those before the character can be added to the main roster.
