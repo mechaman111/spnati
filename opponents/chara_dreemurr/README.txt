@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited November 10 2020
+README edited November 19 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -303,6 +303,7 @@ CYNTHIA
 DUST
 -Responds to Dust's question about doubts.
 -Responds to Dust's question about snacks.
+-Responds to Dust as he loses.
 
 ELIZABETH
 -Responds to Elizabeth using an alternate version of herself to masturbate.
@@ -426,6 +427,7 @@ NEPTUNE
 
 PERONA
 -Response to Perona trying to recruit the player as a servant/maid.
+-Responses as Chara is losing.
 
 PINKIE
 -Response to Pinkie turning to Pinkamena.
