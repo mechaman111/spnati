@@ -2,18 +2,26 @@
 <metadata>
     <owner>nagisa</owner>
     <noteworthy>
-        <case name="Masturbation play" id="11" priority="Noteworthy" min="7" max="7">
+        <case name="No butt scar" id="54" priority="Prompt" min="9" max="9">
+            <description>Nagisa doesn't know if she has a scar on her butt. (She doesn't.)</description>
+        </case>
+        <case name="Playing with boys" id="55" priority="FYI" min="0" max="0">
+            <description>Nagisa has a few variations on a line where she expresses surprise that boys are playing too.</description>
+        </case>
+        <case name="Can customers walk in?" id="56" priority="Prompt" min="0" max="7">
+            <description>Nagisa asks if customers can walk into the Inventory at embarrassing times</description>
+        </case>
+        <case name="Sticky floorboards" id="57" priority="Prompt" min="0" max="3">
+            <description>Nagisa asks if the Inventory's floorboards are sticky because people spill their drinks</description>
+        </case>
+        <case name="Masturbation play" id="58" priority="Noteworthy" min="7" max="7">
             <description>Nagisa starts reciting a play while masturbating. In a future update, she will only do this if she loses first.</description>
         </case>
-        <case name="End masturbation play" priority="Noteworthy" min="9" max="9">
+        <case name="Masturbation play over" id="4" priority="Noteworthy" min="9" max="9">
             <description>Nagisa has finished masturbating, which consisted of reciting lines to a play</description>
-            <trigger tag="finished_masturbating" stage="9" notSaidMarker="nagisa_finished_1">
-                <condition count="0" filter="nagisa_valentine" />
-                <state img="embarrassed.png" marker="nagisa_finished_1">Oh! Forget you saw anything today, please? Please, please?</state>
-            </trigger>
         </case>
-        <case name="Random food word" id="12" priority="FYI" min="5" max="5">
-            <description>Nagisa motivates herself to do difficult things by calling out the name of a food that she's promising herself for later. If she does this, she'll set the nagisa_food_motivation marker.</description>
+        <case name="Food motivation" id="60" priority="Prompt" min="0" max="2">
+            <description>Nagisa asks if anyone else incentivizes themselves with food</description>
         </case>
     </noteworthy>
     <reviewed>true</reviewed>
@@ -29,6 +37,7 @@
         <response id="51" opponent="amy" opponentId="223" />
         <response id="52" opponent="amy" opponentId="258" />
         <response id="53" opponent="amy" opponentId="259" />
+        <response id="59" opponent="perona" opponentId="57" />
     </responses>
     <labels>
         <label id="1" label="" folder="Maid Cafe" sort="0" />
@@ -69,13 +78,16 @@
         <label id="46" label="" folder="Maid Cafe" sort="0" />
         <label id="47" label="" folder="Maid Cafe" sort="0" />
         <label id="48" label="" folder="Maid Cafe" sort="0" />
+        <label id="56" label="inventory" folder="" sort="0" />
+        <label id="57" label="inventory" folder="" sort="0" />
     </labels>
     <prefixes>
         <prefix>epilogue</prefix>
         <prefix>collectible</prefix>
     </prefixes>
-    <nextId>53</nextId>
+    <nextId>60</nextId>
     <markers>
+        <marker scope="Public" name="amy_nagisa_butt_solidarity" />
         <marker scope="Public" name="nagi" />
         <marker scope="Public" name="nagisa_" />
         <marker scope="Public" name="nagisa_9s_are_you_lost" />
@@ -127,6 +139,7 @@
         <marker scope="Public" name="nagisa_ami_what_school" />
         <marker scope="Public" name="nagisa_amy_dont_go_apeshit" />
         <marker scope="Public" name="nagisa_amy_planar_form" />
+        <marker scope="Public" name="nagisa_amy_shirt" />
         <marker scope="Public" name="nagisa_amy_sought" />
         <marker scope="Public" name="nagisa_amy_too_lewd" />
         <marker scope="Public" name="nagisa_angie_careful_with_ribbon" />
@@ -182,6 +195,7 @@
         <marker scope="Public" name="nagisa_florina_whats_wrong" />
         <marker scope="Public" name="nagisa_florina_you_can_do_it" />
         <marker scope="Public" name="nagisa_food_motivation">Nagisa canonically promises herself food to motivate her to do difficult things.</marker>
+        <marker scope="Public" name="nagisa_food_prompt" />
         <marker scope="Public" name="nagisa_fred_dont_solve_mystery" />
         <marker scope="Public" name="nagisa_futaba_dont_pick_on_her" />
         <marker scope="Public" name="nagisa_futaba_i_believe_in_you" />
@@ -323,6 +337,7 @@
         <marker scope="Public" name="nagisa_moon_stripping_on_purpose" />
         <marker scope="Public" name="nagisa_mysterious_scar">Nagisa's father claims that she has a mysterious scar on her butt.</marker>
         <marker scope="Public" name="nagisa_natsuki_poem" />
+        <marker scope="Public" name="nagisa_neptune_uniform" />
         <marker scope="Public" name="nagisa_not_21_yet" />
         <marker scope="Public" name="nagisa_nugi-chan_be_careful" />
         <marker scope="Public" name="nagisa_nugi-chan_dont_understand" />
@@ -339,7 +354,12 @@
         <marker scope="Public" name="nagisa_pauling_sorry" />
         <marker scope="Public" name="nagisa_peach_princess" />
         <marker scope="Public" name="nagisa_penny_alike" />
+        <marker scope="Public" name="nagisa_perona_cheeks_on_my_face" />
         <marker scope="Public" name="nagisa_perona_cuteness_denial" />
+        <marker scope="Public" name="nagisa_perona_dango_family" />
+        <marker scope="Public" name="nagisa_perona_floofy_dress" />
+        <marker scope="Public" name="nagisa_perona_not_a_good_servant" />
+        <marker scope="Public" name="nagisa_perona_pretty_hair" />
         <marker scope="Public" name="nagisa_perona_protection_from_player" />
         <marker scope="Public" name="nagisa_persona_evil_game" />
         <marker scope="Public" name="nagisa_piper_freckles" />
@@ -357,6 +377,7 @@
         <marker scope="Public" name="nagisa_play">Nagisa sets this marker when she announces that she's going to recite a play for her forfeit.</marker>
         <marker scope="Public" name="nagisa_played_tomoyo_after">Nagisa claims to have played the Tomoyo After game.</marker>
         <marker scope="Public" name="nagisa_playing_with_boys">In the first round, Nagisa can announce that she didn't realize that boys would be playing too.</marker>
+        <marker scope="Public" name="nagisa_rear" />
         <marker scope="Public" name="nagisa_revy_beat_fair_and_square" />
         <marker scope="Public" name="nagisa_revy_belt" />
         <marker scope="Public" name="nagisa_revy_cigarette" />
