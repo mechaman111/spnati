@@ -187,7 +187,6 @@ function loadGameScreen () {
 
     updateAllBehaviours(null, null, GAME_START);
     updateBiggestLead();
-    setLocalDayOrNight();
 
     /* set up the poker library */
     setupPoker();

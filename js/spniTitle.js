@@ -614,6 +614,7 @@ function validateTitleScreen () {
     save.savePlayer();
     console.log(players[0]);
 
+    setLocalDayOrNight();
     updateAllBehaviours(null, null, SELECTED);
     updateSelectionVisuals();
 
