@@ -5,6 +5,12 @@ using System.Xml;
 
 namespace SPNATI_Character_Editor
 {
+	public static class Listings
+	{
+		public static Listing Core;
+		public static Listing Test;
+	}
+
 	/// <summary>
 	/// Data representation of listing.xml
 	/// </summary>
@@ -20,7 +26,15 @@ namespace SPNATI_Character_Editor
 			{
 				if (_instance == null)
 				{
-					_instance = Serialization.ImportListing();
+					Listing combined = new Listing();
+					Listings.Core = Serialization.ImportListing("listing.xml");
+					Listings.Test = Serialization.ImportListing("listing-test.xml");
+					foreach (Listing listing in new Listing[] { Listings.Core, Listings.Test })
+					{
+						combined.Characters.AddRange(listing.Characters);
+						combined.Groups.AddRange(listing.Groups);
+					}
+					_instance = combined;
 				}
 				return _instance;
 			}

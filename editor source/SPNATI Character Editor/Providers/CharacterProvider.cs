@@ -45,8 +45,10 @@ namespace SPNATI_Character_Editor.Providers
 				CharacterDatabase.Add(c);
 
 				//Add to the listing under testing status
-				Listing.Instance.Characters.Add(new Opponent(c.FolderName, OpponentStatus.Testing));
-				Serialization.ExportListing(Listing.Instance);
+				Opponent opp = new Opponent(c.FolderName, OpponentStatus.Testing);
+				Listings.Test.Characters.Add(opp);
+				Listing.Instance.Characters.Add(opp);
+				Serialization.ExportListing(Listings.Test, "listing-test.xml");
 			}
 			else
 			{

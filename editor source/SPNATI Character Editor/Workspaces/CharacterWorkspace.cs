@@ -78,6 +78,14 @@ namespace SPNATI_Character_Editor.Workspaces
 					ShowBanner("This character is incomplete, meaning they have likely been abandoned.", Desktop.Skinning.SkinnedHighlight.Bad);
 				}
 			}
+			else if (status == OpponentStatus.Unlisted)
+			{
+				//auto-add to the listing
+				Opponent opp = new Opponent(_character.FolderName, OpponentStatus.Testing);
+				Listings.Test.Characters.Add(opp);
+				Listing.Instance.Characters.Add(opp);
+				Serialization.ExportListing(Listings.Test, "listing-test.xml");
+			}
 		}
 
 		public override bool AllowAutoStart(Type activityType)
