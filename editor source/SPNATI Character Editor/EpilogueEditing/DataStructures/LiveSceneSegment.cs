@@ -60,6 +60,13 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			set { Set(value); LabelChanged?.Invoke(this, EventArgs.Empty); }
 		}
 
+		[Text(DisplayName = "Marker", GroupOrder = 10, Description = "Conditional marker")]
+		public string Marker
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
+
 		/// <summary>
 		/// Current absolute time from the last pause. Delays are relative to this
 		/// </summary>
@@ -143,6 +150,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 		public void AddMetadataDirective(Directive directive)
 		{
 			Name = directive.Name;
+			Marker = directive.Marker;
 		}
 
 		public void AddSpriteDirective(Directive directive, HashSet<LiveObject> currentBatch)

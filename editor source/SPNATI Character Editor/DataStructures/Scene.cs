@@ -425,7 +425,7 @@ namespace SPNATI_Character_Editor
 				return compare;
 			});
 
-			if (!string.IsNullOrEmpty(segment.Name))
+			if (!string.IsNullOrEmpty(segment.Name) || !string.IsNullOrEmpty(segment.Marker))
 			{
 				finalDirectives.Add(new Directive("metadata")
 				{
@@ -466,546 +466,557 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
+			if (!string.IsNullOrEmpty(segment.Marker))
+			{
+				finalDirectives.ForEach(d =>
+				{
+					if (string.IsNullOrEmpty(d.Marker))
+					{
+						d.Marker = segment.Marker;
+					}
+				});
+			}
+
 			return finalDirectives;
 		}
 
-		/// <summary>
-		/// Corrects a path used by live objects (rooted at opponents) to the path used by scenes, which is relative to character's folder, or / if not in the character's folder
-		/// </summary>
-		/// <param name="scene"></param>
-		/// <param name="character"></param>
-		/// <returns></returns>
-		public static string FixPath(string path, Character character)
+	/// <summary>
+	/// Corrects a path used by live objects (rooted at opponents) to the path used by scenes, which is relative to character's folder, or / if not in the character's folder
+	/// </summary>
+	/// <param name="scene"></param>
+	/// <param name="character"></param>
+	/// <returns></returns>
+	public static string FixPath(string path, Character character)
+	{
+		if (string.IsNullOrEmpty(path))
 		{
-			if (string.IsNullOrEmpty(path))
+			return null;
+		}
+		if (path.StartsWith(character.FolderName))
+		{
+			return path.Substring(character.FolderName.Length + 1);
+		}
+		else
+		{
+			return "/opponents/" + path;
+		}
+	}
+
+	private string GetKey(float time, string metadata)
+	{
+		return $"{time}-{metadata}";
+	}
+
+	private WorkingDirective CreateStopDirective(string id, float delay, int trackIndex, LiveObject source)
+	{
+		Directive stopDirective = new Directive("stop");
+		stopDirective.Id = id;
+		if (id == "Camera")
+		{
+			stopDirective.Id = "camera";
+		}
+		if (delay > 0)
+		{
+			stopDirective.Delay = delay.ToString(CultureInfo.InvariantCulture);
+		}
+		stopDirective.Marker = source.Marker;
+		WorkingDirective stop = new WorkingDirective(stopDirective, delay);
+		stop.Track = trackIndex;
+		return stop;
+	}
+
+	private bool ValuesMatch(object val1, object val2)
+	{
+		try
+		{
+			return (float)val1 == (float)val2;
+		}
+		catch { }
+		return val1.Equals(val2);
+	}
+
+	private WorkingDirective CreateAnimationDirective(string id, float startTime, LiveAnimatedObject source, LiveKeyframeMetadata metadata, int trackIndex)
+	{
+		string type = id == "camera" ? "camera" : id == "fade" ? "fade" : "move";
+		Directive currentDirective = new Directive(type);
+		currentDirective.Id = id;
+		currentDirective.Marker = source.Marker;
+		float delay = startTime;
+		if (delay > 0)
+		{
+			currentDirective.Delay = startTime.ToString(CultureInfo.InvariantCulture);
+		}
+
+		currentDirective.PopulateMetadata(metadata);
+
+		WorkingDirective wd = new WorkingDirective(currentDirective, startTime, GetKey(startTime, metadata.ToKey()));
+		wd.Track = trackIndex;
+		return wd;
+	}
+
+	/// <summary>
+	/// Gets all properties that are currently looping
+	/// </summary>
+	/// <returns></returns>
+	public HashSet<string> GetLoopingProperties(LiveAnimatedObject obj, string srcProperty)
+	{
+		HashSet<string> props = new HashSet<string>();
+		foreach (KeyValuePair<string, KeyframeHistory> kvp in obj.PropertyHistory)
+		{
+			if (kvp.Value.BlockMetadata.Indefinite)
 			{
-				return null;
+				string property = kvp.Key.ToLowerInvariant();
+				props.Add(property);
 			}
-			if (path.StartsWith(character.FolderName))
+		}
+
+		if (obj is LiveCamera)
+		{
+			if (srcProperty == "Color" || srcProperty == "Alpha")
 			{
-				return path.Substring(character.FolderName.Length + 1);
+				props.Remove("x");
+				props.Remove("y");
+				props.Remove("zoom");
 			}
 			else
 			{
-				return "/opponents/" + path;
+				props.Remove("color");
+				props.Remove("alpha");
 			}
 		}
 
-		private string GetKey(float time, string metadata)
+		return props;
+	}
+
+	private void ParseObject(LiveObject obj, int trackIndex, List<WorkingDirective> directives, Character character)
+	{
+		List<WorkingDirective> objDirectives = new List<WorkingDirective>();
+
+		if (obj is LiveBubble)
 		{
-			return $"{time}-{metadata}";
+			if (!obj.LinkedFromPrevious)
+			{
+				LiveBubble bubble = obj as LiveBubble;
+				Directive dir = bubble.CreateCreationDirective();
+				WorkingDirective d = new WorkingDirective(dir, obj.Start);
+				d.Track = trackIndex;
+				d.Bake();
+				directives.Add(d);
+			}
 		}
-
-		private WorkingDirective CreateStopDirective(string id, float delay, int trackIndex, LiveObject source)
+		else if (obj is LiveAnimatedObject)
 		{
-			Directive stopDirective = new Directive("stop");
-			stopDirective.Id = id;
-			if (id == "Camera")
+			LiveAnimatedObject anim = obj as LiveAnimatedObject;
+
+			Dictionary<string, WorkingDirective> stoppages = new Dictionary<string, WorkingDirective>();
+			WorkingDirective initialStoppage = null;
+
+			if (!string.IsNullOrEmpty(obj.Id))
 			{
-				stopDirective.Id = "camera";
-			}
-			if (delay > 0)
-			{
-				stopDirective.Delay = delay.ToString(CultureInfo.InvariantCulture);
-			}
-			stopDirective.Marker = source.Marker;
-			WorkingDirective stop = new WorkingDirective(stopDirective, delay);
-			stop.Track = trackIndex;
-			return stop;
-		}
+				//loop through all frames and add them to directives
 
-		private bool ValuesMatch(object val1, object val2)
-		{
-			try
-			{
-				return (float)val1 == (float)val2;
-			}
-			catch { }
-			return val1.Equals(val2);
-		}
-
-		private WorkingDirective CreateAnimationDirective(string id, float startTime, LiveAnimatedObject source, LiveKeyframeMetadata metadata, int trackIndex)
-		{
-			string type = id == "camera" ? "camera" : id == "fade" ? "fade" : "move";
-			Directive currentDirective = new Directive(type);
-			currentDirective.Id = id;
-			currentDirective.Marker = source.Marker;
-			float delay = startTime;
-			if (delay > 0)
-			{
-				currentDirective.Delay = startTime.ToString(CultureInfo.InvariantCulture);
-			}
-
-			currentDirective.PopulateMetadata(metadata);
-
-			WorkingDirective wd = new WorkingDirective(currentDirective, startTime, GetKey(startTime, metadata.ToKey()));
-			wd.Track = trackIndex;
-			return wd;
-		}
-
-		/// <summary>
-		/// Gets all properties that are currently looping
-		/// </summary>
-		/// <returns></returns>
-		public HashSet<string> GetLoopingProperties(LiveAnimatedObject obj, string srcProperty)
-		{
-			HashSet<string> props = new HashSet<string>();
-			foreach (KeyValuePair<string, KeyframeHistory> kvp in obj.PropertyHistory)
-			{
-				if (kvp.Value.BlockMetadata.Indefinite)
-				{
-					string property = kvp.Key.ToLowerInvariant();
-					props.Add(property);
-				}
-			}
-
-			if (obj is LiveCamera)
-			{
-				if (srcProperty == "Color" || srcProperty == "Alpha")
-				{
-					props.Remove("x");
-					props.Remove("y");
-					props.Remove("zoom");
-				}
-				else
-				{
-					props.Remove("color");
-					props.Remove("alpha");
-				}
-			}
-
-			return props;
-		}
-
-		private void ParseObject(LiveObject obj, int trackIndex, List<WorkingDirective> directives, Character character)
-		{
-			List<WorkingDirective> objDirectives = new List<WorkingDirective>();
-
-			if (obj is LiveBubble)
-			{
 				if (!obj.LinkedFromPrevious)
 				{
-					LiveBubble bubble = obj as LiveBubble;
-					Directive dir = bubble.CreateCreationDirective();
-					WorkingDirective d = new WorkingDirective(dir, obj.Start);
-					d.Track = trackIndex;
-					d.Bake();
-					directives.Add(d);
-				}
-			}
-			else if (obj is LiveAnimatedObject)
-			{
-				LiveAnimatedObject anim = obj as LiveAnimatedObject;
-
-				Dictionary<string, WorkingDirective> stoppages = new Dictionary<string, WorkingDirective>();
-				WorkingDirective initialStoppage = null;
-
-				if (!string.IsNullOrEmpty(obj.Id))
-				{
-					//loop through all frames and add them to directives
-
-					if (!obj.LinkedFromPrevious)
+					//this is the first this object appears, so create a creation directive
+					Directive dir = anim.CreateCreationDirective(this);
+					if (dir != null)
 					{
-						//this is the first this object appears, so create a creation directive
-						Directive dir = anim.CreateCreationDirective(this);
-						if (dir != null)
-						{
-							WorkingDirective d = new WorkingDirective(dir, obj.Start);
-							d.Track = trackIndex;
-							d.Bake();
-							directives.Add(d);
-						}
-					}
-
-					DualKeyDictionary<float, string, WorkingDirective> stopDirectives = new DualKeyDictionary<float, string, WorkingDirective>();
-					DualKeyDictionary<string, string, WorkingDirective> activeAnimations = new DualKeyDictionary<string, string, WorkingDirective>();
-					for (int i = 0; i < anim.Keyframes.Count; i++)
-					{
-						LiveKeyframe kf = anim.Keyframes[i];
-						if (kf.Time == 0 && !obj.LinkedFromPrevious)
-						{
-							//we already created a directive for this frame
-							continue;
-						}
-
-						foreach (string property in anim.Properties)
-						{
-							if (kf.HasProperty(property))
-							{
-								string id = anim.Id;
-								if (anim is LiveCamera)
-								{
-									if (property == "Color" || property == "Alpha")
-									{
-										id = "fade";
-									}
-									else
-									{
-										id = "camera";
-									}
-								}
-
-								KeyframeHistory history;
-								anim.PropertyHistory.TryGetValue(property, out history);
-
-								LiveKeyframeMetadata blockMetadata = anim.GetBlockMetadata(property, kf.Time);
-								LiveKeyframeMetadata frameMetadata = kf.GetMetadata(property, false);
-								object value = kf.Get<object>(property);
-
-								WorkingDirective currentAnimation = activeAnimations.Get(id, property);
-
-								float startTime = obj.Start;
-
-								if (history == null)
-								{
-									float time = kf.Time + obj.Start;
-									//This property has never appeared before, which means it's going to animate from the default value
-									currentAnimation = CreateAnimationDirective(id, time, anim, blockMetadata, trackIndex);
-									activeAnimations.Set(id, property, currentAnimation);
-									objDirectives.Add(currentAnimation);
-
-									//if not a default value, we need to add a specific frame for it. Otherwise we can ignore this one.
-									if (!kf.IsDefault(property))
-									{
-										currentAnimation.AddKeyframe(kf, property, "0", character);
-									}
-									anim.UpdateHistory(kf, property);
-								}
-								else
-								{
-									//property has been animated at least once, though not necessarily in this segment
-									bool addProperty = true;
-
-									KeyframeType frameType = frameMetadata.FrameType;
-									if (kf.Time == 0)
-									{
-										if (!history.MatchesValue(value))
-										{
-											frameType = KeyframeType.Begin;
-										}
-										else if (frameType == KeyframeType.Normal)
-										{
-											addProperty = false;
-										}
-										else
-										{
-											frameType = KeyframeType.Begin;
-										}
-									}
-
-									if (frameType != KeyframeType.Normal)
-									{
-										//ending the last animation
-										if (currentAnimation != null)
-										{
-											float time = kf.Time - currentAnimation.StartTime + obj.Start;
-
-											if (currentAnimation.IsLooped)
-											{
-												//if this property was looping previously, need to stop it at this point
-												float stopTime = startTime + kf.Time;
-
-												WorkingDirective stop = stopDirectives.Get(stopTime, id);
-												if (stop == null)
-												{
-													stop = CreateStopDirective(id, stopTime, trackIndex, anim);
-													stop.LoopedProperties = GetLoopingProperties(anim, property);
-													stopDirectives.Set(stopTime, id, stop);
-													directives.Add(stop);
-												}
-												stop.AddStopProperty(property);
-											}
-
-											if (frameType == KeyframeType.Split)
-											{
-												//if a split, need to close off the previous animation with this as the final keyframe
-												addProperty = false;
-												currentAnimation.AddKeyframe(kf, property, time.ToString(CultureInfo.InvariantCulture), character);
-												anim.UpdateHistory(kf, property);
-											}
-											else
-											{
-												//for begins, nothing should go into the old animation.
-												//if the value is different from the previous one though, then we'll need to add this frame to the new animation
-												addProperty = !history.MatchesValue(value);
-											}
-											currentAnimation = null; //force a new animation to be created
-											activeAnimations.Remove(id, property);
-										}
-										else
-										{
-											//no animation is underway. If the property has changed from its previous state, we'll need to add it to the new animation
-
-											//something from a previous though, so stop that
-											if (history.BlockMetadata.Indefinite)
-											{
-												stoppages.TryGetValue(id, out initialStoppage);
-												if (initialStoppage == null)
-												{
-													float delay = anim.Start + kf.Time;
-
-													initialStoppage = CreateStopDirective(id, delay, trackIndex, anim);
-													initialStoppage.LoopedProperties = GetLoopingProperties(anim, property);
-													directives.Add(initialStoppage);
-													stoppages[id] = initialStoppage;
-												}
-												initialStoppage.AddStopProperty(property);
-											}
-
-											if (frameType == KeyframeType.Split)
-											{
-												//and if this is a split, then there actually is an animation with this as the only frame, so better create it
-												currentAnimation = CreateAnimationDirective(id, startTime, anim, history.BlockMetadata, trackIndex);
-												currentAnimation.AddKeyframe(kf, property, kf.Time.ToString(CultureInfo.InvariantCulture), character);
-												objDirectives.Add(currentAnimation);
-												currentAnimation = null;
-												anim.UpdateHistory(kf);
-											}
-
-											addProperty = !history.MatchesValue(value);
-										}
-
-										startTime += kf.Time;
-									}
-
-									if (currentAnimation == null)
-									{
-										//need a new directive
-										currentAnimation = CreateAnimationDirective(id, startTime, anim, blockMetadata, trackIndex);
-										activeAnimations.Set(id, property, currentAnimation);
-										objDirectives.Add(currentAnimation);
-									}
-
-									if (addProperty)
-									{
-										float time = kf.Time - currentAnimation.StartTime + obj.Start;
-										currentAnimation.AddKeyframe(kf, property, time.ToString(CultureInfo.InvariantCulture), character);
-										anim.UpdateHistory(kf, property);
-									}
-								}
-							}
-						}
-					}
-
-					//merge directives
-					for (int i = 0; i < objDirectives.Count; i++)
-					{
-						WorkingDirective d1 = objDirectives[i];
-						for (int j = i + 1; j < objDirectives.Count; j++)
-						{
-							WorkingDirective d2 = objDirectives[j];
-							if (d1.MatchesType(d2))
-							{
-								d2.Directive.CopyInto(d1.Directive);
-								objDirectives.RemoveAt(j--);
-							}
-						}
-					}
-
-					//finalize them
-					for (int i = 0; i < objDirectives.Count; i++)
-					{
-						WorkingDirective d = objDirectives[i];
-						if (d.IsEmpty())
-						{
-							objDirectives.RemoveAt(i--);
-							continue;
-						}
+						WorkingDirective d = new WorkingDirective(dir, obj.Start);
+						d.Track = trackIndex;
 						d.Bake();
 						directives.Add(d);
 					}
+				}
 
-					//events
-					for (int i = 0; i < anim.Events.Count; i++)
+				DualKeyDictionary<float, string, WorkingDirective> stopDirectives = new DualKeyDictionary<float, string, WorkingDirective>();
+				DualKeyDictionary<string, string, WorkingDirective> activeAnimations = new DualKeyDictionary<string, string, WorkingDirective>();
+				for (int i = 0; i < anim.Keyframes.Count; i++)
+				{
+					LiveKeyframe kf = anim.Keyframes[i];
+					if (kf.Time == 0 && !obj.LinkedFromPrevious)
 					{
-						LiveEvent evt = anim.Events[i];
-						WorkingDirective d = new WorkingDirective(evt.CreateDirectiveDefinition(), obj.Start + evt.Time);
-						d.Directive.Id = obj.Id;
-						d.Track = trackIndex;
-						directives.Add(d);
+						//we already created a directive for this frame
+						continue;
 					}
-				}
-			}
-		}
 
-		private class WorkingDirective
-		{
-			public Directive Directive;
-			public float StartTime;
-			public string MetaKey;
-			public int Track;
-
-			public HashSet<string> LoopedProperties = new HashSet<string>();
-
-			public WorkingDirective(Directive directive, float startTime, string metakey = "")
-			{
-				Directive = directive;
-				StartTime = startTime;
-				MetaKey = metakey;
-			}
-
-			public override string ToString()
-			{
-				return $"{StartTime}s - {Directive.ToString()}";
-			}
-
-			public bool IsEmpty()
-			{
-				string type = Directive.DirectiveType;
-				if (type != "move" && type != "camera" && type != "fade")
-				{
-					return false;
-				}
-				return Directive.Properties.Count == 0 && Directive.Keyframes.Count == 0;
-			}
-
-			/// <summary>
-			/// Gets whether two working directives can be merged
-			/// </summary>
-			/// <param name="other"></param>
-			/// <returns></returns>
-			public bool MatchesType(WorkingDirective other)
-			{
-				Directive d = other.Directive;
-				if (Directive.DirectiveType != d.DirectiveType)
-				{
-					return false;
-				}
-				if (StartTime != other.StartTime)
-				{
-					return false;
-				}
-				if (MetaKey != other.MetaKey)
-				{
-					return false;
-				}
-
-				return true;
-			}
-
-			/// <summary>
-			/// Adds a keyframe
-			/// </summary>
-			/// <param name="liveFrame">Source LiveKeyframe</param>
-			/// <param name="property">Property on the keyframe to add</param>
-			public void AddKeyframe(LiveKeyframe liveFrame, string property, string time, Character character)
-			{
-				MemberInfo mi = PropertyTypeInfo.GetMemberInfo(typeof(Keyframe), property);
-				if (mi == null)
-				{
-					throw new InvalidOperationException($"No property on Keyframe called {property} found.");
-				}
-				Keyframe kf = Directive.Keyframes.Find(k => k.Time == time);
-				if (kf == null)
-				{
-					kf = new Keyframe();
-					kf.Time = time;
-					Directive.Keyframes.Add(kf);
-				}
-
-				Type dataType = mi.GetDataType();
-				object value = null;
-				if (dataType == typeof(int))
-				{
-					value = liveFrame.Get<int>(property);
-				}
-				else if (dataType == typeof(float))
-				{
-					value = liveFrame.Get<float>(property);
-				}
-				else if (dataType == typeof(bool))
-				{
-					value = liveFrame.Get<bool>(property);
-				}
-				else
-				{
-					object rawValue = liveFrame.Get<object>(property);
-					string stringValue;
-					if (rawValue.GetType() == typeof(Color))
+					foreach (string property in anim.Properties)
 					{
-						stringValue = ((Color)rawValue).ToHexValue();
-					}
-					else
-					{
-						stringValue = Convert.ToString(rawValue, CultureInfo.InvariantCulture);
-
-						if (property == "Src")
+						if (kf.HasProperty(property))
 						{
-							stringValue = FixPath(stringValue, character);
+							string id = anim.Id;
+							if (anim is LiveCamera)
+							{
+								if (property == "Color" || property == "Alpha")
+								{
+									id = "fade";
+								}
+								else
+								{
+									id = "camera";
+								}
+							}
+
+							KeyframeHistory history;
+							anim.PropertyHistory.TryGetValue(property, out history);
+
+							LiveKeyframeMetadata blockMetadata = anim.GetBlockMetadata(property, kf.Time);
+							LiveKeyframeMetadata frameMetadata = kf.GetMetadata(property, false);
+							object value = kf.Get<object>(property);
+
+							WorkingDirective currentAnimation = activeAnimations.Get(id, property);
+
+							float startTime = obj.Start;
+
+							if (history == null)
+							{
+								float time = kf.Time + obj.Start;
+								//This property has never appeared before, which means it's going to animate from the default value
+								currentAnimation = CreateAnimationDirective(id, time, anim, blockMetadata, trackIndex);
+								activeAnimations.Set(id, property, currentAnimation);
+								objDirectives.Add(currentAnimation);
+
+								//if not a default value, we need to add a specific frame for it. Otherwise we can ignore this one.
+								if (!kf.IsDefault(property))
+								{
+									currentAnimation.AddKeyframe(kf, property, "0", character);
+								}
+								anim.UpdateHistory(kf, property);
+							}
+							else
+							{
+								//property has been animated at least once, though not necessarily in this segment
+								bool addProperty = true;
+
+								KeyframeType frameType = frameMetadata.FrameType;
+								if (kf.Time == 0)
+								{
+									if (!history.MatchesValue(value))
+									{
+										frameType = KeyframeType.Begin;
+									}
+									else if (frameType == KeyframeType.Normal)
+									{
+										addProperty = false;
+									}
+									else
+									{
+										frameType = KeyframeType.Begin;
+									}
+								}
+
+								if (frameType != KeyframeType.Normal)
+								{
+									//ending the last animation
+									if (currentAnimation != null)
+									{
+										float time = kf.Time - currentAnimation.StartTime + obj.Start;
+
+										if (currentAnimation.IsLooped)
+										{
+											//if this property was looping previously, need to stop it at this point
+											float stopTime = startTime + kf.Time;
+
+											WorkingDirective stop = stopDirectives.Get(stopTime, id);
+											if (stop == null)
+											{
+												stop = CreateStopDirective(id, stopTime, trackIndex, anim);
+												stop.LoopedProperties = GetLoopingProperties(anim, property);
+												stopDirectives.Set(stopTime, id, stop);
+												directives.Add(stop);
+											}
+											stop.AddStopProperty(property);
+										}
+
+										if (frameType == KeyframeType.Split)
+										{
+											//if a split, need to close off the previous animation with this as the final keyframe
+											addProperty = false;
+											currentAnimation.AddKeyframe(kf, property, time.ToString(CultureInfo.InvariantCulture), character);
+											anim.UpdateHistory(kf, property);
+										}
+										else
+										{
+											//for begins, nothing should go into the old animation.
+											//if the value is different from the previous one though, then we'll need to add this frame to the new animation
+											addProperty = !history.MatchesValue(value);
+										}
+										currentAnimation = null; //force a new animation to be created
+										activeAnimations.Remove(id, property);
+									}
+									else
+									{
+										//no animation is underway. If the property has changed from its previous state, we'll need to add it to the new animation
+
+										//something from a previous though, so stop that
+										if (history.BlockMetadata.Indefinite)
+										{
+											stoppages.TryGetValue(id, out initialStoppage);
+											if (initialStoppage == null)
+											{
+												float delay = anim.Start + kf.Time;
+
+												initialStoppage = CreateStopDirective(id, delay, trackIndex, anim);
+												initialStoppage.LoopedProperties = GetLoopingProperties(anim, property);
+												directives.Add(initialStoppage);
+												stoppages[id] = initialStoppage;
+											}
+											initialStoppage.AddStopProperty(property);
+										}
+
+										if (frameType == KeyframeType.Split)
+										{
+											//and if this is a split, then there actually is an animation with this as the only frame, so better create it
+											currentAnimation = CreateAnimationDirective(id, startTime, anim, history.BlockMetadata, trackIndex);
+											currentAnimation.AddKeyframe(kf, property, kf.Time.ToString(CultureInfo.InvariantCulture), character);
+											objDirectives.Add(currentAnimation);
+											currentAnimation = null;
+											anim.UpdateHistory(kf);
+										}
+
+										addProperty = !history.MatchesValue(value);
+									}
+
+									startTime += kf.Time;
+								}
+
+								if (currentAnimation == null)
+								{
+									//need a new directive
+									currentAnimation = CreateAnimationDirective(id, startTime, anim, blockMetadata, trackIndex);
+									activeAnimations.Set(id, property, currentAnimation);
+									objDirectives.Add(currentAnimation);
+								}
+
+								if (addProperty)
+								{
+									float time = kf.Time - currentAnimation.StartTime + obj.Start;
+									currentAnimation.AddKeyframe(kf, property, time.ToString(CultureInfo.InvariantCulture), character);
+									anim.UpdateHistory(kf, property);
+								}
+							}
 						}
 					}
-
-					value = stringValue;
 				}
 
-				mi.SetValue(kf, value);
-				kf.Properties[property] = value;
-			}
+				//merge directives
+				for (int i = 0; i < objDirectives.Count; i++)
+				{
+					WorkingDirective d1 = objDirectives[i];
+					for (int j = i + 1; j < objDirectives.Count; j++)
+					{
+						WorkingDirective d2 = objDirectives[j];
+						if (d1.MatchesType(d2))
+						{
+							d2.Directive.CopyInto(d1.Directive);
+							objDirectives.RemoveAt(j--);
+						}
+					}
+				}
 
-			public void Bake()
-			{
-				MergeFrames();
-				Directive.BakeProperties();
-				if (Directive.Properties.Count == 1 && Directive.Properties.ContainsKey("Src"))
+				//finalize them
+				for (int i = 0; i < objDirectives.Count; i++)
 				{
-					Directive.EasingMethod = null;
-					Directive.InterpolationMethod = null;
+					WorkingDirective d = objDirectives[i];
+					if (d.IsEmpty())
+					{
+						objDirectives.RemoveAt(i--);
+						continue;
+					}
+					d.Bake();
+					directives.Add(d);
 				}
-				if (Directive.Delay == "0")
-				{
-					Directive.Delay = null;
-				}
-				if (Directive.InterpolationMethod == "linear")
-				{
-					Directive.InterpolationMethod = null;
-				}
-				if (Directive.EasingMethod == "smooth")
-				{
-					Directive.EasingMethod = null;
-				}
-				foreach (Keyframe kf in Directive.Keyframes)
-				{
-					kf.BakeProperties();
-				}
-			}
 
-			/// <summary>
-			/// Moves information from a lone keyframe into the base directive
-			/// </summary>
-			public void MergeFrames()
-			{
-				if (Directive.Keyframes.Count != 1)
+				//events
+				for (int i = 0; i < anim.Events.Count; i++)
 				{
-					return;
+					LiveEvent evt = anim.Events[i];
+					WorkingDirective d = new WorkingDirective(evt.CreateDirectiveDefinition(), obj.Start + evt.Time);
+					d.Directive.Id = obj.Id;
+					d.Track = trackIndex;
+					directives.Add(d);
 				}
-				Keyframe kf = Directive.Keyframes[0];
-				Directive.TransferPropertiesFrom(kf);
-				Directive.Keyframes.Clear();
-			}
-
-			public void AddStopProperty(string property)
-			{
-				property = property.ToLowerInvariant();
-				if (Directive.Id == "camera" && (property == "color" || property == "alpha"))
-				{
-					Directive.Id = "fade";
-				}
-				Directive.AffectedProperties.Add(property);
-				LoopedProperties.Remove(property);
-				if (LoopedProperties.Count == 0)
-				{
-					//this is stopping every looped property, so no need to list them individually
-					Directive.AffectedProperties.Clear();
-				}
-			}
-
-			/// <summary>
-			/// Gets whether the directive is an indefinitely looping animation
-			/// </summary>
-			public bool IsLooped
-			{
-				get { return Directive.Looped && Directive.Iterations < 1; }
 			}
 		}
 	}
+
+	private class WorkingDirective
+	{
+		public Directive Directive;
+		public float StartTime;
+		public string MetaKey;
+		public int Track;
+
+		public HashSet<string> LoopedProperties = new HashSet<string>();
+
+		public WorkingDirective(Directive directive, float startTime, string metakey = "")
+		{
+			Directive = directive;
+			StartTime = startTime;
+			MetaKey = metakey;
+		}
+
+		public override string ToString()
+		{
+			return $"{StartTime}s - {Directive.ToString()}";
+		}
+
+		public bool IsEmpty()
+		{
+			string type = Directive.DirectiveType;
+			if (type != "move" && type != "camera" && type != "fade")
+			{
+				return false;
+			}
+			return Directive.Properties.Count == 0 && Directive.Keyframes.Count == 0;
+		}
+
+		/// <summary>
+		/// Gets whether two working directives can be merged
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public bool MatchesType(WorkingDirective other)
+		{
+			Directive d = other.Directive;
+			if (Directive.DirectiveType != d.DirectiveType)
+			{
+				return false;
+			}
+			if (StartTime != other.StartTime)
+			{
+				return false;
+			}
+			if (MetaKey != other.MetaKey)
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		/// <summary>
+		/// Adds a keyframe
+		/// </summary>
+		/// <param name="liveFrame">Source LiveKeyframe</param>
+		/// <param name="property">Property on the keyframe to add</param>
+		public void AddKeyframe(LiveKeyframe liveFrame, string property, string time, Character character)
+		{
+			MemberInfo mi = PropertyTypeInfo.GetMemberInfo(typeof(Keyframe), property);
+			if (mi == null)
+			{
+				throw new InvalidOperationException($"No property on Keyframe called {property} found.");
+			}
+			Keyframe kf = Directive.Keyframes.Find(k => k.Time == time);
+			if (kf == null)
+			{
+				kf = new Keyframe();
+				kf.Time = time;
+				Directive.Keyframes.Add(kf);
+			}
+
+			Type dataType = mi.GetDataType();
+			object value = null;
+			if (dataType == typeof(int))
+			{
+				value = liveFrame.Get<int>(property);
+			}
+			else if (dataType == typeof(float))
+			{
+				value = liveFrame.Get<float>(property);
+			}
+			else if (dataType == typeof(bool))
+			{
+				value = liveFrame.Get<bool>(property);
+			}
+			else
+			{
+				object rawValue = liveFrame.Get<object>(property);
+				string stringValue;
+				if (rawValue.GetType() == typeof(Color))
+				{
+					stringValue = ((Color)rawValue).ToHexValue();
+				}
+				else
+				{
+					stringValue = Convert.ToString(rawValue, CultureInfo.InvariantCulture);
+
+					if (property == "Src")
+					{
+						stringValue = FixPath(stringValue, character);
+					}
+				}
+
+				value = stringValue;
+			}
+
+			mi.SetValue(kf, value);
+			kf.Properties[property] = value;
+		}
+
+		public void Bake()
+		{
+			MergeFrames();
+			Directive.BakeProperties();
+			if (Directive.Properties.Count == 1 && Directive.Properties.ContainsKey("Src"))
+			{
+				Directive.EasingMethod = null;
+				Directive.InterpolationMethod = null;
+			}
+			if (Directive.Delay == "0")
+			{
+				Directive.Delay = null;
+			}
+			if (Directive.InterpolationMethod == "linear")
+			{
+				Directive.InterpolationMethod = null;
+			}
+			if (Directive.EasingMethod == "smooth")
+			{
+				Directive.EasingMethod = null;
+			}
+			foreach (Keyframe kf in Directive.Keyframes)
+			{
+				kf.BakeProperties();
+			}
+		}
+
+		/// <summary>
+		/// Moves information from a lone keyframe into the base directive
+		/// </summary>
+		public void MergeFrames()
+		{
+			if (Directive.Keyframes.Count != 1)
+			{
+				return;
+			}
+			Keyframe kf = Directive.Keyframes[0];
+			Directive.TransferPropertiesFrom(kf);
+			Directive.Keyframes.Clear();
+		}
+
+		public void AddStopProperty(string property)
+		{
+			property = property.ToLowerInvariant();
+			if (Directive.Id == "camera" && (property == "color" || property == "alpha"))
+			{
+				Directive.Id = "fade";
+			}
+			Directive.AffectedProperties.Add(property);
+			LoopedProperties.Remove(property);
+			if (LoopedProperties.Count == 0)
+			{
+				//this is stopping every looped property, so no need to list them individually
+				Directive.AffectedProperties.Clear();
+			}
+		}
+
+		/// <summary>
+		/// Gets whether the directive is an indefinitely looping animation
+		/// </summary>
+		public bool IsLooped
+		{
+			get { return Directive.Looped && Directive.Iterations < 1; }
+		}
+	}
+}
 }
