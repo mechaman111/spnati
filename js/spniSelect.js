@@ -123,7 +123,7 @@ var singleSelectHidden = false;
 var groupSelectHidden = false;
 
 /* opponent listing file */
-var listingFiles = ["opponents/listing.xml", "opponents/listing-test.xml"];
+var listingFiles = [];
 var metaFile = "meta.xml";
 
 /* opponent information storage */
@@ -229,6 +229,13 @@ function splitCreatorField (field) {
  * Loads and parses the main opponent listing file.
  ************************************************************/
 function loadListingFile () {
+    if (listingFiles.length === 0) {
+        listingFiles.push("opponents/listing.xml");
+        if (includedOpponentStatuses["offline"]) {
+            listingFiles.push("opponents/listing-test.xml");
+        }
+    }
+
 	/* clear the previous meta information */
 	var outstandingLoads = 0;
     var totalLoads = 0;
