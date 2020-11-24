@@ -1018,7 +1018,7 @@ function loadDefaultFillSuggestions () {
         });
         
         var possibleNewPicks = possiblePicks.filter(function (opp) {
-            return opp.highlightStatus === "new" || opp.highlightStatus === "unsorted";
+            return opp.highlightStatus === "new";
         });
         
         var fillPlayers = [];
