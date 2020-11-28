@@ -475,7 +475,7 @@ function addDirectiveToScene(scene, directive) {
     }
 }
 
-function parseEpilogue(player, rawEpilogue, galleryEnding) {
+function parseEpilogue(player, rawEpilogue) {
     //use parseXML() so that <image> tags come through properly
     //not using parseXML() because internet explorer doesn't like it
 
@@ -488,6 +488,7 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
     var $epilogue = $(rawEpilogue);
     var title = $epilogue.children("title").html().trim();
     var gender = $epilogue.attr("gender") || 'any';
+    var allowSceneSkip = $epilogue.attr("allowSceneSkip") == 'true';
 
     var markers = [];
     $epilogue.children("markers").children("marker").each(function() {
@@ -522,6 +523,7 @@ function parseEpilogue(player, rawEpilogue, galleryEnding) {
         gender: gender,
         scenes: [],
         markers: markers,
+        allowSceneSkip: allowSceneSkip,
     };
     var scenes = epilogue.scenes;
 
@@ -1011,14 +1013,15 @@ function doEpilogue() {
 /************************************************************
  * Starts up an epilogue, pre-fetching all its images before displaying anything in order to handle certain computations that rely on the image sizes
  ************************************************************/
-function loadEpilogue(epilogue, loadToScene) {
+function loadEpilogue(epilogue, loadToScene, fromGallery) {
     $("#epilogue-spinner").show();
-    epiloguePlayer = new EpiloguePlayer(epilogue);
+    epiloguePlayer = new EpiloguePlayer(epilogue, fromGallery);
     if (typeof loadToScene === "number") epiloguePlayer.hotReloadScene = loadToScene;
 
     epiloguePlayer.load();
+    $epilogueButtons.toggleClass('nav-active', !!(fromGallery && epilogue.allowSceneSkip));
 
-    if (DEBUG) {
+    if (DEBUG || fromGallery) {
         $epilogueSkipSelector.empty();
         for (var i = 0; i < epiloguePlayer.epilogue.scenes.length; i++) {
             var label = (i+1).toString();
@@ -1091,6 +1094,7 @@ function hotReloadEpilogue () {
     var epilogueTitle = epiloguePlayer.epilogue.title;
     var epilogueGender = epiloguePlayer.epilogue.gender;
     var player = epiloguePlayer.epilogue.player;
+    var fromGallery = epiloguePlayer.fromGallery;
 
     player.fetchBehavior()
     /* Success callback.
@@ -1110,7 +1114,7 @@ function hotReloadEpilogue () {
             /* Clean up the old EpiloguePlayer. */
             clearEpilogue();
 
-            loadEpilogue(epilogue, curScene);
+            loadEpilogue(epilogue, curScene, fromGallery);
             $epilogueHotReloadBtn.attr('disabled', false);
         });
 }
@@ -1145,7 +1149,7 @@ function updateEpilogueButtons() {
 /************************************************************
  * Class for playing through an epilogue
  ************************************************************/
-function EpiloguePlayer(epilogue) {
+function EpiloguePlayer(epilogue, fromGallery) {
     this.resizeHandler = this.resizeViewport.bind(this);
     $(window).resize(this.resizeHandler);
     this.epilogue = epilogue;
@@ -1163,6 +1167,10 @@ function EpiloguePlayer(epilogue) {
     this.activeTransition = null;
     this.hotReloadScene = null;
     this.startingDirectiveIndex = 1;
+    this.fromGallery = fromGallery; /* This is just to remember whether the epilogue was
+                                       started from the gallery when hot-reloading.
+                                       Sure, you'd have to have DEBUG on to do that, but
+                                       pressing Q should only hide the reload button. */
 }
 
 EpiloguePlayer.prototype.load = function () {

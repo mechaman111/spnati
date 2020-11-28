@@ -577,7 +577,7 @@ function doEpilogueFromGallery(){
 				recordEpilogueEvent(true, epilogue);
 			}
 		
-			loadEpilogue(epilogue); //initialise buttons and text boxes
+			loadEpilogue(epilogue, null, true); //initialise buttons and text boxes
 			screenTransition($galleryScreen, $epilogueScreen);
             $galleryStartButton.attr('disabled', false);
         });
