@@ -782,12 +782,12 @@
 			this.cmdImportSelected.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdImportSelected.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
 			this.cmdImportSelected.Flat = false;
-			this.cmdImportSelected.Location = new System.Drawing.Point(531, 4);
+			this.cmdImportSelected.Location = new System.Drawing.Point(531, 3);
 			this.cmdImportSelected.Name = "cmdImportSelected";
 			this.cmdImportSelected.Size = new System.Drawing.Size(79, 23);
 			this.cmdImportSelected.TabIndex = 28;
 			this.cmdImportSelected.Text = "Selected";
-			this.toolTip1.SetToolTip(this.cmdImportSelected, "Creates images that don\'t exist yet");
+			this.toolTip1.SetToolTip(this.cmdImportSelected, "Creates images for selected cells");
 			this.cmdImportSelected.UseVisualStyleBackColor = true;
 			this.cmdImportSelected.Click += new System.EventHandler(this.cmdImportSelected_Click);
 			// 

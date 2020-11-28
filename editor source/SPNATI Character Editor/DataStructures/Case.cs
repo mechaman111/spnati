@@ -2051,7 +2051,7 @@ namespace SPNATI_Character_Editor
 								break;
 							}
 						}
-						if (!string.IsNullOrEmpty(marker))
+						if (!string.IsNullOrEmpty(marker) && string.IsNullOrEmpty(cond.Count))
 						{
 							if (marker.StartsWith("+") || marker.StartsWith("-"))
 							{

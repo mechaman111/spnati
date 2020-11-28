@@ -243,9 +243,12 @@ namespace SPNATI_Character_Editor
 			{
 				using (Character realCharacter = Serialization.ImportCharacter(folderName))
 				{
-					CachedCharacter cached = CacheCharacter(realCharacter);
-					GlobalCache.CreateDiff(oldCache, cached);
-					return cached;
+					if (realCharacter != null)
+					{
+						CachedCharacter cached = CacheCharacter(realCharacter);
+						GlobalCache.CreateDiff(oldCache, cached);
+						return cached;
+					}
 				}
 			}
 			return null;

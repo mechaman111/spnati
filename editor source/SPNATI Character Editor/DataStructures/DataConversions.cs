@@ -555,7 +555,7 @@ namespace SPNATI_Character_Editor
 
 		private static TargetCondition GetCondition(Case workingCase, string role, string character)
 		{
-			TargetCondition cond = workingCase.Conditions.Find(c => c.Role == role && (c.Character == character || string.IsNullOrEmpty(character)));
+			TargetCondition cond = workingCase.Conditions.Find(c => c.Role == role && (c.Character == character || string.IsNullOrEmpty(character)) && string.IsNullOrEmpty(c.Count));
 			if (cond == null)
 			{
 				cond = new TargetCondition();
