@@ -397,6 +397,7 @@ namespace SPNATI_Character_Editor
 
 		public static void AddPoseMatrix(ISkin skin, PoseMatrix matrix)
 		{
+			matrix.Character = skin;
 			_poseMatrices[skin] = matrix;
 		}
 
@@ -428,7 +429,7 @@ namespace SPNATI_Character_Editor
 				}
 
 				//cache it
-				_poseMatrices[skin] = matrix;
+				AddPoseMatrix(skin, matrix);
 			}
 
 			return matrix;

@@ -2,6 +2,7 @@
 using Desktop.CommonControls.PropertyControls;
 using Desktop.DataStructures;
 using Desktop.Skinning;
+using ImagePipeline;
 using KisekaeImporter;
 using KisekaeImporter.DataStructures.Kisekae;
 using KisekaeImporter.ImageImport;
@@ -21,8 +22,9 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Activity(typeof(Character), 220)]
-	[Activity(typeof(Costume), 220)]
+	[Spacer]
+	[Activity(typeof(Character), 199, DelayRun = true, Caption = "Pose Matrix")]
+	[Activity(typeof(Costume), 199, DelayRun = true, Caption = "Pose Matrix")]
 	public partial class PoseMatrixEditor : Activity
 	{
 		private ISkin _skin;
@@ -30,12 +32,12 @@ namespace SPNATI_Character_Editor.Activities
 		private PoseMatrix _matrix;
 		private PoseSheet _sheet;
 		private int _currentStage;
+		private PoseStage _currentPoseStage;
 		private PoseEntry _currentPose;
 		private bool _dirty;
 		private Column _currentColumn;
 		private bool _building;
 		private bool _pendingWardrobeChange = false;
-		private Bitmap _thumbnail = null;
 
 		private Dictionary<string, DataGridViewColumn> _columns = new Dictionary<string, DataGridViewColumn>();
 		private Dictionary<PoseEntry, DataGridViewCell> _cells = new Dictionary<PoseEntry, DataGridViewCell>();
@@ -69,6 +71,8 @@ namespace SPNATI_Character_Editor.Activities
 
 			tsAddMain.Visible = _skin is Costume;
 			sepSkin.Visible = _skin is Costume;
+			tsPoseList.Visible = Config.ShowLegacyPoseTabs;
+			tsAddRow.Visible = tsRemoveRow.Visible = toolStripSeparator4.Visible = false;
 		}
 
 		protected override void OnFirstActivate()
@@ -103,6 +107,7 @@ namespace SPNATI_Character_Editor.Activities
 			if (_sheet != null)
 			{
 				_sheet.PropertyChanged -= _sheet_PropertyChanged;
+				_sheet.Stages.CollectionChanged -= _sheet_StagesChanged;
 			}
 			if (_currentColumn != null)
 			{
@@ -177,7 +182,6 @@ namespace SPNATI_Character_Editor.Activities
 
 			grid.TopLeftHeaderCell.Value = "Sheet";
 
-
 			if (_sheet.IsEmpty)
 			{
 				_sheet.ReconcileStages(_character);
@@ -190,7 +194,7 @@ namespace SPNATI_Character_Editor.Activities
 					{
 						Key = "calm"
 					};
-					row.Poses.Add(calm);
+					row.AddCell(calm);
 				}
 			}
 
@@ -214,29 +218,59 @@ namespace SPNATI_Character_Editor.Activities
 					cell.Value = EmptyImage;
 				}
 
-				if (_sheet.IsGlobal)
-				{
-					row.HeaderCell.Value = "Global";
-				}
-				else
-				{
-					StageName stageName = _character.LayerToStageName(stage.Stage);
-					row.HeaderCell.Value = $"{stageName.Id} - {stageName.DisplayName}";
-				}
+				row.HeaderCell.Value = GetStageName(stage);
 
-				foreach (PoseEntry pose in stage.Poses)
-				{
-					DataGridViewCell cell = row.Cells[pose.Key];
-					cell.Tag = pose;
-					_cells[pose] = cell;
-					UpdateCell(cell, pose);
-					pose.PropertyChanged += Pose_PropertyChanged;
-				}
+				CreateCells(row, stage);
 			}
 			_building = false;
 
 			//manually trigger selection
 			grid_SelectionChanged(grid, EventArgs.Empty);
+		}
+
+		private string GetStageName(PoseStage stage)
+		{
+			if (_sheet.IsGlobal)
+			{
+				if (!string.IsNullOrEmpty(stage.Name))
+				{
+					return stage.Name;
+				}
+				else if (_sheet.Stages.Count == 1)
+				{
+					return "Global";
+				}
+				else
+				{
+					return $"{stage.Stage}";
+				}
+			}
+			else
+			{
+				StageName stageName = _character.LayerToStageName(stage.Stage);
+				return $"{stageName.Id} - {stageName.DisplayName}";
+			}
+		}
+
+		/// <summary>
+		/// Creates the cells for all poses in a stage
+		/// </summary>
+		/// <param name="row"></param>
+		/// <param name="stage"></param>
+		private void CreateCells(DataGridViewRow row, PoseStage stage)
+		{
+			foreach (PoseEntry pose in stage.Poses)
+			{
+				if (string.IsNullOrEmpty(pose.Key))
+				{
+					continue;
+				}
+				DataGridViewCell cell = row.Cells[pose.Key];
+				cell.Tag = pose;
+				_cells[pose] = cell;
+				UpdateCell(cell, pose);
+				pose.PropertyChanged += Pose_PropertyChanged;
+			}
 		}
 
 		private void AddColumn(string key)
@@ -284,30 +318,30 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				return;
 			}
-			int stage = cell.RowIndex;
-			string stageKey = _sheet.IsGlobal ? "" : stage.ToString();
-			string key = GetKey(stageKey, pose.Key);
-			string folder = (_sheet.SubFolder ?? "").Replace("/", "\\");
-			string filePath = Path.Combine(_skin.GetDirectory(), folder, key + ".png");
 
 			if (!string.IsNullOrEmpty(pose.Code))
 			{
-				//see if physical file exists
-				if (File.Exists(filePath))
+				FileStatus status = _matrix.GetStatus(pose);
+				switch (status)
 				{
-					cell.Value = Properties.Resources.Checkmark;
-				}
-				else
-				{
-					cell.Value = Properties.Resources.FileMissing;
+					case FileStatus.Imported:
+						cell.Value = Properties.Resources.Checkmark;
+						break;
+					case FileStatus.Missing:
+						cell.Value = Properties.Resources.FileMissing;
+						break;
+					case FileStatus.OutOfDate:
+						cell.Value = Properties.Resources.FileOutdated;
+						break;
 				}
 			}
 			else
 			{
-				if (_skin is Costume)
+				Character character = _skin.Character;
+				if (character != _skin)
 				{
-					string mainPath = Path.Combine(_skin.Character.GetDirectory(), key + ".png");
-					if (File.Exists(mainPath) && !File.Exists(filePath))
+					string mainPath = character.GetPosePath(_sheet.SubFolder, pose.GetFullKey(), _sheet.PipelineAsset || pose.Stage.PipelineAsset);
+					if (File.Exists(mainPath) && _matrix.GetStatus(pose) == FileStatus.Missing)
 					{
 						cell.Value = Properties.Resources.Missing;
 					}
@@ -331,6 +365,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				if (_cells.TryGetValue(pose, out cell))
 				{
+					pose.UpdateTimeStamp();
 					UpdateCell(cell, pose);
 				}
 			}
@@ -341,14 +376,23 @@ namespace SPNATI_Character_Editor.Activities
 			if (_sheet != null)
 			{
 				_sheet.PropertyChanged -= _sheet_PropertyChanged;
+				_sheet.Stages.CollectionChanged -= _sheet_StagesChanged;
 			}
 			if (tabControl.SelectedIndex < 0)
 			{
 				return;
 			}
 			_sheet = tabControl.SelectedTab.Tag as PoseSheet;
-			_sheet.PropertyChanged += _sheet_PropertyChanged;
+			cmdFolder.Enabled = !_sheet.PipelineAsset;
+			tsAddRow.Visible = tsRemoveRow.Visible = toolStripSeparator4.Visible = _sheet.IsGlobal;
 			BuildGrid();
+			_sheet.PropertyChanged += _sheet_PropertyChanged;
+			_sheet.Stages.CollectionChanged += _sheet_StagesChanged;
+		}
+
+		private void _sheet_StagesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+		{
+			ReconcileRows();
 		}
 
 		private void _sheet_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -366,15 +410,42 @@ namespace SPNATI_Character_Editor.Activities
 			}
 		}
 
+		private void Stage_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			PoseStage stage = sender as PoseStage;
+			if (e.PropertyName == "Name")
+			{
+				for (int i = 0; i < grid.Rows.Count; i++)
+				{
+					DataGridViewRow row = grid.Rows[i];
+					if (row.Tag == stage)
+					{
+						row.HeaderCell.Value = GetStageName(stage);
+						break;
+					}
+				}
+			}
+			else if (e.PropertyName == "Code")
+			{
+				foreach (PoseEntry pose in stage.Poses)
+				{
+					pose.UpdateTimeStamp();
+					UpdateCell(null, pose);
+				}
+			}
+		}
+
 		private void tabStrip_AddButtonClicked(object sender, System.EventArgs e)
 		{
 			AddSheetForm form = new AddSheetForm("New Sheet");
 			form.SetMatrix(_matrix);
 			if (form.ShowDialog() == DialogResult.OK)
 			{
+				_sheet.PropertyChanged -= _sheet_PropertyChanged;
 				PoseSheet sheet = _matrix.AddSheet(form.SheetName, _character, form.SelectedSheet, form.Global);
 				AddTab(sheet);
 				tabControl.SelectedIndex = tabControl.TabPages.Count - 1;
+				_sheet.PropertyChanged += _sheet_PropertyChanged;
 			}
 		}
 
@@ -432,6 +503,7 @@ namespace SPNATI_Character_Editor.Activities
 			_currentColumn = null;
 			lblHeader.Text = "Sheet: " + _sheet.Name;
 			table.Context = _skin;
+			table.RecordFilter = FilterSheetRecords;
 			table.SetDataAsync(_sheet, null);
 			return;
 		}
@@ -446,6 +518,11 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				_currentColumn.PropertyChanged -= ColumnChanged;
 				_currentColumn = null;
+			}
+			if (_currentPoseStage != null)
+			{
+				_currentPoseStage.PropertyChanged -= Stage_PropertyChanged;
+				_currentPoseStage = null;
 			}
 
 			tsRemovePose.Enabled = false;
@@ -471,7 +548,11 @@ namespace SPNATI_Character_Editor.Activities
 					sptMode.Panel2Collapsed = false;
 					picHelp.Image = new Bitmap("Resources/Images/StageCode.png");
 					table.Context = null;
-					table.SetDataAsync(_sheet.Stages[rowIndex], null);
+					table.RecordFilter = FilterStageRecords;
+					PoseStage stage = _sheet.Stages[rowIndex];
+					_currentPoseStage = stage;
+					_currentPoseStage.PropertyChanged += Stage_PropertyChanged;
+					table.SetDataAsync(stage, null);
 				}
 			}
 			else if (grid.SelectedColumns.Count > 0)
@@ -496,6 +577,7 @@ namespace SPNATI_Character_Editor.Activities
 					panelStage.Visible = false;
 					lblHeader.Text = "Pose: " + _currentColumn.Key;
 					table.Context = null;
+					table.RecordFilter = null;
 					table.SetDataAsync(_currentColumn, null);
 				}
 			}
@@ -535,9 +617,50 @@ namespace SPNATI_Character_Editor.Activities
 				}
 
 				table.Context = null;
+				table.RecordFilter = FilterPoseRecords;
 				table.SetDataAsync(cell, null);
 				ShowPreview(cell);
 			}
+		}
+
+		private bool FilterSheetRecords(PropertyRecord rec)
+		{
+			PoseSheet sheet = table.Data as PoseSheet;
+			if (sheet != null)
+			{
+				if (rec.Key == "Name" && sheet.Name == "Main")
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
+		private bool FilterStageRecords(PropertyRecord rec)
+		{
+			PoseStage stage = table.Data as PoseStage;
+			if (stage != null)
+			{
+				if (rec.Key == "Name" && !_sheet.IsGlobal)
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
+		private bool FilterPoseRecords(PropertyRecord rec)
+		{
+			//PoseEntry cell = table.Data as PoseEntry;
+			//if (cell != null)
+			//{
+			//	if (rec.Key == "Pipeline")
+			//	{
+			//		//pipelines on cells only allowed for non-templated sheets
+			//		return string.IsNullOrEmpty(cell.Stage.Code) && !string.IsNullOrEmpty(cell.Stage.Sheet.BaseCode);
+			//	}
+			//}
+			return true;
 		}
 
 		private List<string> GetColumnOrder()
@@ -618,22 +741,35 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void cmdImport_Click(object sender, System.EventArgs e)
 		{
-			ImportAndCropPose();
+			ReimportImage(false);
 		}
 
-		/// <summary>
-		/// Builds a filename from a stage and pose/emotion
-		/// </summary>
-		/// <param name="stage"></param>
-		/// <param name="pose"></param>
-		/// <returns></returns>
-		private static string GetKey(string stage, string pose)
+		private void cmdImportFull_Click(object sender, EventArgs e)
 		{
-			if (string.IsNullOrEmpty(stage))
+			ReimportImage(true);
+		}
+
+		private async void ReimportImage(bool rebuild)
+		{
+			if (_currentPose == null)
 			{
-				return pose;
+				return;
 			}
-			return string.Format("{0}-{1}", stage, pose);
+			Enabled = false;
+			Image result = await PipelineImporter.Import(_currentPose, true, rebuild);
+			if (result == null)
+			{
+				FailedImport failed = new FailedImport();
+				failed.ShowDialog();
+			}
+			Enabled = true;
+			ShowPreview(_currentPose);
+			UpdateCell(null, _currentPose);
+		}
+
+		private void cmdCrop_Click(object sender, EventArgs e)
+		{
+			ImportAndCropPose();
 		}
 
 		private void ImportAndCropPose()
@@ -643,7 +779,6 @@ namespace SPNATI_Character_Editor.Activities
 				return;
 			}
 
-			string stage = _sheet.IsGlobal ? "" : _currentStage.ToString();
 			string name = _currentPose.Key;
 			string code = _currentPose.Code;
 			if (string.IsNullOrEmpty(code))
@@ -651,7 +786,7 @@ namespace SPNATI_Character_Editor.Activities
 				MessageBox.Show("Code must be filled out.", "Import Pose", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
-			string key = GetKey(stage, name);
+			string key = _currentPose.GetFullKey();
 
 			string baseCode = _sheet.BaseCode;
 			string stageCode = _sheet.Stages[_currentStage].Code;
@@ -681,39 +816,12 @@ namespace SPNATI_Character_Editor.Activities
 				Image importedImage = cropper.CroppedImage;
 				if (importedImage != null)
 				{
-					SaveImage(key, importedImage);
+					PipelineImporter.SaveImage(_matrix, _currentPose, importedImage);
 					_currentPose.Crop = cropper.CroppingRegion;
 					ShowPreview(_currentPose);
 					UpdateCell(null, _currentPose);
 				}
 			}
-		}
-
-		/// <summary>
-		/// Saves an image to disk
-		/// </summary>
-		/// <param name="imageKey">Name of image (stage+pose)</param>
-		/// <param name="image">Image to save</param>
-		private string SaveImage(string imageKey, Image image)
-		{
-			string filename = imageKey + ".png";
-			string subfolder = (_sheet.SubFolder ?? "").Replace("/", "\\");
-			string baseDir = Path.Combine(_skin.GetDirectory(), subfolder);
-			string fullPath = Path.Combine(baseDir, filename);
-
-			try
-			{
-				if (!Directory.Exists(baseDir))
-				{
-					Directory.CreateDirectory(baseDir);
-				}
-				image.Save(fullPath);
-
-				_character.PoseLibrary.Add(fullPath);
-			}
-			catch { }
-
-			return fullPath;
 		}
 
 		private void tabStrip_CloseButtonClicked(object sender, System.EventArgs e)
@@ -731,32 +839,16 @@ namespace SPNATI_Character_Editor.Activities
 		/// <param name="cell"></param>
 		private void ShowPreview(PoseEntry cell)
 		{
-			string key = cell.Key + ".png";
-			string folder = (_sheet?.SubFolder ?? "").Replace("/", "\\");
-			if (!string.IsNullOrEmpty(folder))
+			string filename = _matrix.GetFilePath(cell);
+
+			if (File.Exists(filename))
 			{
-				string path = Path.Combine(_skin.GetDirectory(), folder, key);
-				if (File.Exists(path))
-				{
-					using (Bitmap file = new Bitmap(path))
-					{
-						Bitmap copy = new Bitmap(file);
-						Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(copy));
-						_thumbnail?.Dispose();
-						_thumbnail = copy;
-					}
-				}
-			}
-			else
-			{
-				if (!_sheet.IsGlobal)
-				{
-					key = "#-" + key;
-				}
-				PoseMapping img = _character.PoseLibrary.GetPose(key);
+				Image img = new Bitmap(filename);
+				Image copy = new Bitmap(img);
+				img.Dispose();
 				if (img != null)
 				{
-					Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_skin, img, _currentStage));
+					Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(copy));
 				}
 			}
 		}
@@ -1003,7 +1095,7 @@ namespace SPNATI_Character_Editor.Activities
 		private void ImportUnloadedPoses()
 		{
 			//Figure out which images need importing
-			List<ImageMetadata> toImport = new List<ImageMetadata>();
+			List<PoseEntry> toImport = new List<PoseEntry>();
 			bool usingWardrobe = false;
 			foreach (PoseStage stage in _sheet.Stages)
 			{
@@ -1018,17 +1110,12 @@ namespace SPNATI_Character_Editor.Activities
 					{
 						continue;
 					}
-					string stageKey = _sheet.IsGlobal ? "" : stage.Stage.ToString();
-					string key = GetKey(stageKey, pose.Key);
-					string filename = key + ".png";
-					string folder = (_sheet.SubFolder ?? "").Replace("/", "\\");
-					string fullPath = Path.Combine(_skin.GetDirectory(), folder, filename);
+					string fullPath = _matrix.GetFilePath(pose);
 					if (File.Exists(fullPath))
 					{
 						continue;
 					}
-					ImageMetadata metadata = CreateMetadata(stage, pose);
-					toImport.Add(metadata);
+					toImport.Add(pose);
 				}
 			}
 
@@ -1040,7 +1127,7 @@ namespace SPNATI_Character_Editor.Activities
 		/// </summary>
 		private void ImportAllPoses()
 		{
-			List<ImageMetadata> toImport = new List<ImageMetadata>();
+			List<PoseEntry> toImport = new List<PoseEntry>();
 			bool usingWardrobe = false;
 			foreach (PoseStage stage in _sheet.Stages)
 			{
@@ -1055,8 +1142,7 @@ namespace SPNATI_Character_Editor.Activities
 					{
 						continue;
 					}
-					ImageMetadata metadata = CreateMetadata(stage, pose);
-					toImport.Add(metadata);
+					toImport.Add(pose);
 				}
 			}
 
@@ -1068,7 +1154,7 @@ namespace SPNATI_Character_Editor.Activities
 		/// </summary>
 		private void ImportSelectedPoses()
 		{
-			List<ImageMetadata> toImport = new List<ImageMetadata>();
+			List<PoseEntry> toImport = new List<PoseEntry>();
 			bool usingWardrobe = false;
 			foreach (DataGridViewCell cell in grid.SelectedCells)
 			{
@@ -1083,8 +1169,7 @@ namespace SPNATI_Character_Editor.Activities
 					PoseEntry pose = cell.Tag as PoseEntry;
 					if (pose != null)
 					{
-						ImageMetadata metadata = CreateMetadata(stage, pose);
-						toImport.Add(metadata);
+						toImport.Add(pose);
 					}
 				}
 			}
@@ -1092,45 +1177,17 @@ namespace SPNATI_Character_Editor.Activities
 			ImportPosesAsync(toImport);
 		}
 
-		private ImageMetadata CreateMetadata(PoseStage stage, PoseEntry pose)
-		{
-			string stageKey = _sheet.IsGlobal ? "" : stage.Stage.ToString();
-			string key = GetKey(stageKey, pose.Key);
-			ImageMetadata metadata = new ImageMetadata(key, "");
-			string appearance = _sheet.BaseCode;
-			KisekaeCode baseCode = null;
-			if (!string.IsNullOrEmpty(appearance))
-			{
-				baseCode = new KisekaeCode(appearance, true);
-			}
-
-			KisekaeCode modelCode = null;
-			if (baseCode != null || !string.IsNullOrEmpty(stage.Code))
-			{
-				Emotion emotion = new Emotion(pose.Key, pose.Code, "", "", "", "");
-				modelCode = PoseTemplate.CreatePose(baseCode, new StageTemplate(stage.Code ?? ""), emotion);
-			}
-			else
-			{
-				modelCode = new KisekaeCode(pose.Code, false);
-			}
-			metadata.SkipPreprocessing = pose.SkipPreProcessing;
-			metadata.CropInfo = pose.Crop;
-			metadata.Data = modelCode.ToString();
-			metadata.ExtraData = pose.ExtraMetadata;
-			return metadata;
-		}
-
 		/// <summary>
 		/// Imports images asynchronously with a progress form
 		/// </summary>
 		/// <param name="list"></param>
-		private void ImportPosesAsync(List<ImageMetadata> list)
+		private void ImportPosesAsync(List<PoseEntry> list)
 		{
 			//find all unrecognized props and assign them all up front
 			List<KisekaeCode> codes = new List<KisekaeCode>();
-			foreach (ImageMetadata metadata in list)
+			foreach (PoseEntry pose in list)
 			{
+				ImageMetadata metadata = pose.CreateMetadata();
 				KisekaeCode code = new KisekaeCode(metadata.Data, true);
 				if (code.TotalAssets > 0)
 				{
@@ -1147,7 +1204,7 @@ namespace SPNATI_Character_Editor.Activities
 			progressForm.Show(this);
 
 			int count = list.Count;
-			var progressUpdate = new Progress<int>(value => progressForm.SetProgress(string.Format("Importing {0}...", list[value].ImageKey), value, count));
+			var progressUpdate = new Progress<int>(value => progressForm.SetProgress(string.Format("Importing {0}...", list[value].GetFullKey()), value, count));
 
 			progressForm.Shown += async (s, args) =>
 			{
@@ -1175,7 +1232,7 @@ namespace SPNATI_Character_Editor.Activities
 		/// <param name="importList"></param>
 		/// <param name="ct"></param>
 		/// <returns></returns>
-		private Task<int> ImportPoses(IProgress<int> progress, List<ImageMetadata> importList, CancellationToken ct)
+		private Task<int> ImportPoses(IProgress<int> progress, List<PoseEntry> importList, CancellationToken ct)
 		{
 			return Task.Run(async () =>
 			{
@@ -1184,45 +1241,24 @@ namespace SPNATI_Character_Editor.Activities
 					int current = 0;
 					bool hasErrors = false;
 					List<string> filesToCompress = new List<string>();
-					foreach (ImageMetadata metadata in importList)
+					foreach (PoseEntry cell in importList)
 					{
 						progress.Report(current++);
 						try
 						{
-							Image img = await CharacterGenerator.GetCroppedImage(new KisekaeCode(metadata.Data), metadata.CropInfo, _skin, metadata.ExtraData, metadata.SkipPreprocessing);
-							if (img == null)
-							{
-								//Something went wrong. Stop here.
-								FailedImport import = new FailedImport();
-								import.ShowDialog();
-								//MessageBox.Show("Couldn't import " + metadata.ImageKey + ". Is Kisekae running?", "Import Pose", MessageBoxButtons.OK, MessageBoxIcon.Error);
-								return -1;
-							}
-
-							string savePath = SaveImage(metadata.ImageKey, img);
+							Image img = await PipelineImporter.Import(cell, true, true);
 
 							//Update the relevant grid row
 							MethodInvoker invoker = delegate ()
 							{
-								foreach (DataGridViewRow row in grid.Rows)
-								{
-									foreach (DataGridViewCell cell in row.Cells)
-									{
-										PoseEntry entry = cell.Tag as PoseEntry;
-										string stageKey = _sheet.IsGlobal ? "" : row.Index.ToString();
-										if (entry != null && GetKey(stageKey, entry.Key) == metadata.ImageKey)
-										{
-											UpdateCell(cell, entry);
-										}
-									}
-								}
+								UpdateCell(null, cell);
 							};
 							grid.Invoke(invoker);
 						}
 						catch (Exception e)
 						{
 							hasErrors = true;
-							ErrorLog.LogError(string.Format("Error importing from kisekae: {0}, {1}", metadata.ImageKey, e.Message));
+							ErrorLog.LogError(string.Format("Error importing from kisekae: {0}, {1}", cell.GetFullKey(), e.Message));
 						}
 
 						ct.ThrowIfCancellationRequested();
@@ -1543,6 +1579,7 @@ namespace SPNATI_Character_Editor.Activities
 										pose = CreatePoseEntry(gridCell, clipboardPose.Key);
 									}
 									clipboardPose.CopyPropertiesInto(pose);
+									pose.UpdateTimeStamp();
 								}
 							}
 							row.Selected = true;
@@ -1712,6 +1749,10 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void cmdFolder_Click(object sender, EventArgs e)
 		{
+			if (_sheet != null && _sheet.PipelineAsset)
+			{
+				return;
+			}
 			string directory = _skin.GetDirectory();
 			string folder = (_sheet?.SubFolder ?? "").Replace("/", "\\");
 			try
@@ -1751,7 +1792,7 @@ namespace SPNATI_Character_Editor.Activities
 					{
 						continue;
 					}
-					ImageMetadata metadata = CreateMetadata(stage, entry);
+					ImageMetadata metadata = entry.CreateMetadata();
 					list.Poses.Add(metadata);
 				}
 			}
@@ -1807,6 +1848,109 @@ namespace SPNATI_Character_Editor.Activities
 		private void tsReplace_Click(object sender, EventArgs e)
 		{
 			OnFind();
+		}
+
+		private void tsAddRow_Click(object sender, EventArgs e)
+		{
+			PoseStage stage = _sheet?.AddRow();
+		}
+
+		private void tsRemoveRow_Click(object sender, EventArgs e)
+		{
+			DataGridViewRow row = null;
+			if (grid.Rows.Count <= 1)
+			{
+				return;
+			}
+			if (grid.SelectedRows.Count > 0)
+			{
+				row = grid.SelectedRows[0];
+			}
+			else if (grid.SelectedCells.Count > 0)
+			{
+				row = grid.SelectedCells[0].OwningRow;
+			}
+			if (row != null)
+			{
+				PoseStage stage = row.Tag as PoseStage;
+				if (stage != null)
+				{
+					_sheet?.RemoveRow(stage);
+				}
+			}
+		}
+
+		private void ReconcileRows()
+		{
+			if (_sheet == null) { return; }
+
+			HashSet<PoseStage> currentRows = new HashSet<PoseStage>();
+			foreach (DataGridViewRow row in grid.Rows)
+			{
+				PoseStage stage = row.Tag as PoseStage;
+				row.HeaderCell.Value = GetStageName(stage);
+				currentRows.Add(stage);
+			}
+
+			HashSet<PoseStage> realRows = new HashSet<PoseStage>(_sheet.Stages);
+
+			//remove rows that aren't in the real collection
+			for (int i = grid.Rows.Count - 1; i >= 0; i--)
+			{
+				DataGridViewRow row = grid.Rows[i];
+				PoseStage stage = row.Tag as PoseStage;
+				if (!realRows.Contains(stage))
+				{
+					grid.Rows.RemoveAt(i);
+				}
+			}
+
+			//add rows that aren't in the grid
+			foreach (PoseStage stage in realRows)
+			{
+				if (!currentRows.Contains(stage))
+				{
+					DataGridViewRow row = grid.Rows[grid.Rows.Add()];
+					row.Tag = stage;
+
+					CreateCells(row, stage);
+
+					//give every cell a valid default
+					foreach (DataGridViewCell cell in row.Cells)
+					{
+						if (cell.Value == null)
+						{
+							cell.Value = EmptyImage;
+						}
+					}
+
+					row.HeaderCell.Value = GetStageName(stage);
+				}
+			}
+
+		}
+
+		private void cmdEditPipeline_Click(object sender, EventArgs e)
+		{
+			PipelineGraph pipeline = RecordLookup.DoLookup(typeof(PipelineGraph), "", true, null, true, _matrix) as PipelineGraph;
+			if (pipeline != null)
+			{
+				PoseEntry cell = _currentPose;
+				PoseStage stage = cell?.Stage;
+				if (stage == null)
+				{
+					stage = _sheet.Stages[0];
+				}
+				if (cell == null)
+				{
+					cell = stage.Poses[0];
+				}
+				PipelineEditor editor = new PipelineEditor(_skin, stage, cell, pipeline);
+				if (editor.ShowDialog() == DialogResult.OK)
+				{
+					BuildGrid(); //force everything to refresh
+				}
+			}
 		}
 	}
 
@@ -1954,7 +2098,7 @@ namespace SPNATI_Character_Editor.Activities
 					data.Poses = new ObservableCollection<PoseEntry>();
 					foreach (PoseEntry pose in stage.Poses)
 					{
-						data.Poses.Add(pose.Clone() as PoseEntry);
+						data.AddCell(pose.Clone() as PoseEntry);
 					}
 				}
 				_rows.Add(data);

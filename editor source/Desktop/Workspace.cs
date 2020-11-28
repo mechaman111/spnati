@@ -38,6 +38,7 @@ namespace Desktop
 		public IActivity ActiveActivity { get; set; }
 		public IActivity ActiveSidebarActivity { get; set; }
 		public Dictionary<WorkspacePane, List<IActivity>> Activities = new Dictionary<WorkspacePane, List<IActivity>>();
+		private HashSet<ActivityMetadata> _placeholders = new HashSet<ActivityMetadata>();
 
 		public virtual bool AllowAutoStart(Type activityType)
 		{
@@ -54,6 +55,11 @@ namespace Desktop
 		{
 			List<IActivity> list = Activities[WorkspacePane.Sidebar];
 			return list.Count > 0 ? list[0] : null;
+		}
+
+		public bool HasPlaceholder(ActivityMetadata md)
+		{
+			return _placeholders.Contains(md);
 		}
 
 		public IActivity Find<T>() where T : IActivity
@@ -131,9 +137,15 @@ namespace Desktop
 		{
 		}
 
-		public void AddActivity(IActivity activity)
+		public void AddActivity(IActivity activity, ActivityMetadata metadata)
 		{
+			_placeholders.Remove(metadata);
 			Activities[activity.Pane].Add(activity);
+		}
+
+		public void AddActivityPlaceholder(ActivityMetadata metadata)
+		{
+			_placeholders.Add(metadata);
 		}
 
 		public void RemoveActivity(IActivity activity)

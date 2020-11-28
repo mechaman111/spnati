@@ -11,8 +11,8 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Activity(typeof(Character), 215)]
-	[Activity(typeof(Costume), 215)]
+	[Activity(typeof(Character), 215, DelayRun = true, Caption = "Images")]
+	[Activity(typeof(Costume), 215, DelayRun = true, Caption = "Images")]
 	public partial class ScreenshotTaker : Activity
 	{
 		private ISkin _character;

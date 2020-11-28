@@ -1,4 +1,6 @@
 ﻿using Desktop;
+using SPNATI_Character_Editor.Activities;
+using System;
 
 namespace SPNATI_Character_Editor.Workspaces
 {
@@ -14,6 +16,15 @@ namespace SPNATI_Character_Editor.Workspaces
 				CharacterDatabase.Load(c.FolderName);
 			}
 			base.OnInitialize();
+		}
+
+		public override bool AllowAutoStart(Type activityType)
+		{
+			if ((activityType == typeof(PoseListEditor) || activityType == typeof(TemplateEditor)) && !Config.ShowLegacyPoseTabs)
+			{
+				return false;
+			}
+			return base.AllowAutoStart(activityType);
 		}
 	}
 }

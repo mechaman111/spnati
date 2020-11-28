@@ -3,7 +3,7 @@ using Desktop.Reporting;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Activity(typeof(Character), 750)]
+	[Activity(typeof(Character), 750, DelayRun = true, Caption = "Line Slicer")]
 	public partial class CaseDataSlicer : Activity
 	{
 		private Character _character;

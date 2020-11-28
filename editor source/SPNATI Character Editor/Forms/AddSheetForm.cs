@@ -66,8 +66,7 @@ namespace SPNATI_Character_Editor.Forms
 		private void cboSheet_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			PoseSheet sheet = cboSheet.SelectedItem as PoseSheet;
-			chkGlobal.Enabled = (sheet == null);
-			if (sheet != null)
+			if (sheet != null && sheet.IsGlobal)
 			{
 				chkGlobal.Checked = sheet.IsGlobal;
 			}

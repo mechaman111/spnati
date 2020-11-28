@@ -1,12 +1,14 @@
 ﻿using Desktop.CommonControls.PropertyControls;
 using Desktop.DataStructures;
+using ImagePipeline;
+using KisekaeImporter;
 using KisekaeImporter.ImageImport;
-using SPNATI_Character_Editor.Controls;
 using SPNATI_Character_Editor.Controls.EditControls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
@@ -15,8 +17,23 @@ namespace SPNATI_Character_Editor.DataStructures
 {
 	[Serializable]
 	[XmlRoot("posegrid", Namespace = "")]
-	public class PoseMatrix : BindableObject
+	public class PoseMatrix : BindableObject, IHookSerialization
 	{
+		private ISkin _character;
+		[XmlIgnore]
+		public ISkin Character
+		{
+			get { return _character; }
+			set
+			{
+				_character = value;
+				foreach (PipelineGraph pipeline in Pipelines)
+				{
+					pipeline.Character = value;
+				}
+			}
+		}
+
 		[XmlArray("sheets")]
 		[XmlArrayItem("sheet")]
 		public ObservableCollection<PoseSheet> Sheets
@@ -25,9 +42,18 @@ namespace SPNATI_Character_Editor.DataStructures
 			set { Set(value); }
 		}
 
+		[XmlArray("pipelines")]
+		[XmlArrayItem("pipeline")]
+		public ObservableCollection<PipelineGraph> Pipelines
+		{
+			get { return Get<ObservableCollection<PipelineGraph>>(); }
+			set { Set(value); }
+		}
+
 		public PoseMatrix()
 		{
 			Sheets = new ObservableCollection<PoseSheet>();
+			Pipelines = new ObservableCollection<PipelineGraph>();
 		}
 
 		public bool IsEmpty()
@@ -43,6 +69,15 @@ namespace SPNATI_Character_Editor.DataStructures
 			//empty means no codes are defined
 			PoseStage codedStage = Sheets[0].Stages.Find(s => s.Poses.Find(p => !string.IsNullOrEmpty(p.Code)) != null);
 			return codedStage == null;
+		}
+
+		public PipelineGraph GetPipeline(string key)
+		{
+			if (string.IsNullOrEmpty(key))
+			{
+				return null;
+			}
+			return Pipelines.Find(p => p.Key == key);
 		}
 
 		/// <summary>
@@ -67,7 +102,8 @@ namespace SPNATI_Character_Editor.DataStructures
 			PoseSheet sheet = new PoseSheet()
 			{
 				Name = name,
-				IsGlobal = global
+				IsGlobal = global,
+				Matrix = this
 			};
 			Sheets.Add(sheet);
 
@@ -77,17 +113,26 @@ namespace SPNATI_Character_Editor.DataStructures
 				foreach (PoseStage basisStage in basis.Stages)
 				{
 					PoseStage stage = basisStage.Clone() as PoseStage;
+					stage.Sheet = sheet;
 					sheet.Stages.Add(stage);
 					stage.Poses = new ObservableCollection<PoseEntry>();
 					foreach (PoseEntry pose in basisStage.Poses)
 					{
-						stage.Poses.Add(pose.Clone() as PoseEntry);
+						PoseEntry clone = pose.Clone() as PoseEntry;
+						clone.Stage = stage;
+						stage.Poses.Add(clone);
+					}
+
+					if (global)
+					{
+						break; //only do one stage for globals
 					}
 				}
 			}
 			else if (global)
 			{
 				PoseStage stage = new PoseStage(0);
+				stage.Sheet = sheet;
 				sheet.Stages.Add(stage);
 			}
 
@@ -110,6 +155,112 @@ namespace SPNATI_Character_Editor.DataStructures
 				sheetName = $"{name}{++suffix}";
 			}
 			return sheetName;
+		}
+
+		/// <summary>
+		/// Builds a filename from a stage and pose/emotion
+		/// </summary>
+		/// <param name="stage"></param>
+		/// <param name="pose"></param>
+		/// <returns></returns>
+		public static string GetKey(string stage, string pose)
+		{
+			if (string.IsNullOrEmpty(stage))
+			{
+				return pose;
+			}
+			if (stage.EndsWith("_"))
+			{
+				return string.Format("{0}{1}", stage, pose);
+			}
+			return string.Format("{0}-{1}", stage, pose);
+		}
+
+		/// <summary>
+		/// Gets the file path for a pose
+		/// </summary>
+		/// <param name="entry"></param>
+		/// <returns></returns>
+		public string GetFilePath(PoseEntry entry, string prefix = "")
+		{
+			PoseStage poseStage = entry.Stage;
+			PoseSheet sheet = poseStage.Sheet;
+			string stageKey = sheet.IsGlobal ? (!string.IsNullOrEmpty(poseStage.Name) ? poseStage.Name + "_" : "") : poseStage.Stage.ToString();
+			string key = prefix + GetKey(stageKey, entry.Key);
+			string filePath = GetPosePath(sheet, poseStage, key, !string.IsNullOrEmpty(prefix));
+			return filePath;
+		}
+
+		private string GetPosePath(PoseSheet sheet, PoseStage stage, string key, bool forceAsset)
+		{
+			bool asset = sheet.PipelineAsset || stage.PipelineAsset || forceAsset;
+			string path = Character.GetPosePath(sheet.SubFolder, key, asset);
+			return path;
+		}
+
+		/// <summary>
+		/// Gets whether a pose is out of date
+		/// </summary>
+		/// <param name="entry"></param>
+		/// <returns></returns>
+		public bool IsOutOfDate(PoseEntry entry, string prefix = "")
+		{
+			string path = GetFilePath(entry, prefix);
+			if (File.Exists(path))
+			{
+				if (entry.LastUpdate == 0)
+				{
+					//if this predates the LastUpdate field, consider it always up-to-date
+					return false;
+				}
+				DateTime updateTime = DateTimeOffset.FromUnixTimeMilliseconds(entry.LastUpdate).DateTime;
+				DateTime fileTime = File.GetLastWriteTimeUtc(path);
+				return fileTime < updateTime;
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Gets the status of a pose's import
+		/// </summary>
+		/// <param name="entry"></param>
+		/// <returns></returns>
+		public FileStatus GetStatus(PoseEntry entry, string prefix = "")
+		{
+			string path = GetFilePath(entry, prefix);
+			if (File.Exists(path))
+			{
+				return IsOutOfDate(entry, prefix) ? FileStatus.OutOfDate : FileStatus.Imported;
+			}
+			else
+			{
+				return FileStatus.Missing;
+			}
+		}
+
+		public void OnBeforeSerialize()
+		{
+			foreach (PoseSheet sheet in Sheets)
+			{
+				sheet.OnBeforeSerialize();
+			}
+			foreach (PipelineGraph pipeline in Pipelines)
+			{
+				pipeline.OnBeforeSerialize();
+			}
+		}
+
+		public void OnAfterDeserialize(string source)
+		{
+			foreach (PoseSheet sheet in Sheets)
+			{
+				sheet.Matrix = this;
+				sheet.OnAfterDeserialize(source);
+			}
+			foreach (PipelineGraph pipeline in Pipelines)
+			{
+				pipeline.OnAfterDeserialize(source);
+			}
 		}
 
 		/// <summary>
@@ -219,12 +370,15 @@ namespace SPNATI_Character_Editor.DataStructures
 	}
 
 	[Serializable]
-	public class PoseSheet : BindableObject, IPoseCode
+	public class PoseSheet : BindableObject, IPoseCode, IHookSerialization
 	{
 		public PoseSheet()
 		{
 			Stages = new ObservableCollection<PoseStage>();
 		}
+
+		[XmlIgnore]
+		public PoseMatrix Matrix;
 
 		[Text(DisplayName = "Sheet Name")]
 		[XmlElement("name")]
@@ -264,6 +418,15 @@ namespace SPNATI_Character_Editor.DataStructures
 		public ObservableCollection<PoseStage> Stages
 		{
 			get { return Get<ObservableCollection<PoseStage>>(); }
+			set { Set(value); }
+		}
+
+		[Boolean(DisplayName = "Pipeline Asset", Description = "If checked, poses in this sheet will not be saved to the character's folder and are only meant for pipelines")]
+		[XmlAttribute("asset")]
+		[DefaultValue(false)]
+		public bool PipelineAsset
+		{
+			get { return Get<bool>(); }
 			set { Set(value); }
 		}
 
@@ -325,7 +488,7 @@ namespace SPNATI_Character_Editor.DataStructures
 				stage.Sort();
 			}
 		}
-		
+
 		/// <summary>
 		/// Reorders columns to match the order
 		/// </summary>
@@ -349,11 +512,56 @@ namespace SPNATI_Character_Editor.DataStructures
 			{
 				while (expectedLayers > Stages.Count)
 				{
-					Stages.Add(new PoseStage(Stages.Count));
+					PoseStage stage = new PoseStage(Stages.Count);
+					stage.Sheet = this;
+					Stages.Add(stage);
 				}
 				while (expectedLayers < Stages.Count)
 				{
 					Stages.RemoveAt(Stages.Count - 1);
+				}
+			}
+		}
+
+		public PoseStage AddRow()
+		{
+			PoseStage stage = new PoseStage(Stages.Count);
+			stage.Sheet = this;
+
+			//copy the poses from the first stage
+			if (Stages.Count > 0)
+			{
+				PoseStage last = Stages[0];
+				foreach (PoseEntry pose in last.Poses)
+				{
+					PoseEntry clone = pose.Clone() as PoseEntry;
+					clone.Stage = stage;
+					stage.Poses.Add(clone);
+				}
+			}
+
+			Stages.Add(stage);
+
+			return stage;
+		}
+
+		public void RemoveRow(PoseStage stage)
+		{
+			Stages.Remove(stage);
+		}
+
+		public void OnBeforeSerialize()
+		{
+		}
+
+		public void OnAfterDeserialize(string source)
+		{
+			foreach (PoseStage stage in Stages)
+			{
+				stage.Sheet = this;
+				foreach (PoseEntry pose in stage.Poses)
+				{
+					pose.Stage = stage;
 				}
 			}
 		}
@@ -369,9 +577,25 @@ namespace SPNATI_Character_Editor.DataStructures
 			set { Set(value); }
 		}
 
+		[Text(DisplayName = "Name")]
+		[XmlAttribute("name")]
+		public string Name
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
+
 		[Text(DisplayName = "Wardrobe Code", RowHeight = 130, Multiline = true)]
 		[XmlElement("clothing")]
 		public string Code
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
+
+		[PipelineSelect(DisplayName = "Pipeline")]
+		[XmlAttribute("pipeline")]
+		public string Pipeline
 		{
 			get { return Get<string>(); }
 			set { Set(value); }
@@ -385,6 +609,15 @@ namespace SPNATI_Character_Editor.DataStructures
 			set { Set(value); }
 		}
 
+		[Boolean(DisplayName = "Pipeline Asset", Description = "If checked, poses in this row will not be saved to the character's folder and are only meant for pipelines")]
+		[XmlAttribute("asset")]
+		[DefaultValue(false)]
+		public bool PipelineAsset
+		{
+			get { return Get<bool>(); }
+			set { Set(value); }
+		}
+
 		public PoseStage()
 		{
 			Poses = new ObservableCollection<PoseEntry>();
@@ -393,6 +626,11 @@ namespace SPNATI_Character_Editor.DataStructures
 		{
 			Stage = stage;
 		}
+
+		/// <summary>
+		/// The sheet this stage belongs to
+		/// </summary>
+		public PoseSheet Sheet;
 
 		public string GetCode()
 		{
@@ -408,6 +646,12 @@ namespace SPNATI_Character_Editor.DataStructures
 			return Poses.Find(p => p.Key == key);
 		}
 
+		public void AddCell(PoseEntry pose)
+		{
+			pose.Stage = this;
+			Poses.Add(pose);
+		}
+
 		/// <summary>
 		/// Inserts a cell into the stage
 		/// </summary>
@@ -415,6 +659,8 @@ namespace SPNATI_Character_Editor.DataStructures
 		/// <param name="order">Expected order cells to help determine where to place it (otherwise order won't be preserved in the grid next time opening this)</param>
 		public void InsertCell(PoseEntry cell, List<string> order)
 		{
+			cell.Stage = this;
+
 			//try to figure out the best index
 			int index = order.IndexOf(cell.Key);
 			if (index == -1)
@@ -515,6 +761,12 @@ namespace SPNATI_Character_Editor.DataStructures
 			Code = value;
 		}
 
+		/// <summary>
+		/// The stage this entry belongs to
+		/// </summary>
+		[XmlIgnore]
+		public PoseStage Stage;
+
 		[XmlAttribute("key")]
 		public string Key
 		{
@@ -573,6 +825,18 @@ namespace SPNATI_Character_Editor.DataStructures
 			}
 		}
 
+		[PipelineSelect(DisplayName = "Pipeline")]
+		[XmlAttribute("pipeline")]
+		public string Pipeline
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
+
+		[XmlElement("lastupdate")]
+		[DefaultValue(0L)]
+		public long LastUpdate { get; set; }
+
 		private Dictionary<string, string> _data;
 		[XmlIgnore]
 		public Dictionary<string, string> ExtraMetadata
@@ -600,11 +864,68 @@ namespace SPNATI_Character_Editor.DataStructures
 		{
 			return Key;
 		}
+
+		public void UpdateTimeStamp()
+		{
+			LastUpdate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+		}
+
+		/// <summary>
+		/// Gets the full key for a pose + stage
+		/// </summary>
+		/// <returns></returns>
+		public string GetFullKey()
+		{
+			PoseSheet sheet = Stage.Sheet;
+			string stageKey = sheet.IsGlobal ? (!string.IsNullOrEmpty(Stage.Name) ? Stage.Name + "_" : "") : Stage.Stage.ToString();
+			string key = PoseMatrix.GetKey(stageKey, Key);
+			return key;
+		}
+
+		/// <summary>
+		/// Compiles metadata from the pose, stage, and base
+		/// </summary>
+		/// <returns></returns>
+		public ImageMetadata CreateMetadata()
+		{
+			PoseSheet sheet = Stage.Sheet;
+			string key = GetFullKey();
+			ImageMetadata metadata = new ImageMetadata(key, "");
+			string appearance = sheet.BaseCode;
+			KisekaeCode baseCode = null;
+			if (!string.IsNullOrEmpty(appearance))
+			{
+				baseCode = new KisekaeCode(appearance, true);
+			}
+
+			KisekaeCode modelCode = null;
+			if (baseCode != null || !string.IsNullOrEmpty(Stage.Code))
+			{
+				Emotion emotion = new Emotion(Key, Code, "", "", "", "");
+				modelCode = PoseTemplate.CreatePose(baseCode, new StageTemplate(Stage.Code ?? ""), emotion);
+			}
+			else
+			{
+				modelCode = new KisekaeCode(Code, false);
+			}
+			metadata.SkipPreprocessing = SkipPreProcessing;
+			metadata.CropInfo = Crop;
+			metadata.Data = modelCode.ToString();
+			metadata.ExtraData = ExtraMetadata;
+			return metadata;
+		}
 	}
 
 	public interface IPoseCode
 	{
 		string GetCode();
 		void SetCode(string value);
+	}
+
+	public enum FileStatus
+	{
+		Missing,
+		OutOfDate,
+		Imported
 	}
 }

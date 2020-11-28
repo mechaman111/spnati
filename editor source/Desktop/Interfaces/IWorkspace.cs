@@ -9,7 +9,9 @@ namespace Desktop
 		WorkspaceControl Control { get; set; }
 		bool IsDefault { get; set; }
 		IRecord Record { get; set; }
-		void AddActivity(IActivity activity);
+		void AddActivity(IActivity activity, ActivityMetadata metadata);
+		void AddActivityPlaceholder(ActivityMetadata metadata);
+		bool HasPlaceholder(ActivityMetadata metadata);
 		IActivity ActiveActivity { get; set; }
 		IActivity ActiveSidebarActivity { get; set; }
 		IActivity GetDefaultActivity();

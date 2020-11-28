@@ -2,7 +2,7 @@
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Activity(typeof(Character), 50)]
+	[Activity(typeof(Character), 50, DelayRun = true, Caption = "Markers")]
 	public partial class MarkerEditor : Activity
 	{
 		public MarkerEditor()

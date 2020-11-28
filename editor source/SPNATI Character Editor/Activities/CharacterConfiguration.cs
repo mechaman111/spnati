@@ -4,7 +4,7 @@ using System.Windows.Forms;
 namespace SPNATI_Character_Editor.Activities
 {
 	[Spacer]
-	[Activity(typeof(Character), 1000)]
+	[Activity(typeof(Character), 1000, DelayRun = true, Caption = "Configuration")]
 	public partial class CharacterConfiguration : Activity
 	{
 		private Character _character;

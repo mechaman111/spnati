@@ -28,7 +28,7 @@ namespace Desktop.Skinning
 			DoubleBuffered = true;
 		}
 
-		public void OnUpdateSkin(Skin skin)
+		public virtual void OnUpdateSkin(Skin skin)
 		{
 			BackColor = skin.GetBackColor(PanelType);
 		}

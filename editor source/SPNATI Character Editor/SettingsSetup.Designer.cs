@@ -101,6 +101,7 @@
 			this.chkWorkflowTracer = new Desktop.Skinning.SkinnedCheckBox();
 			this.stripSections = new Desktop.Skinning.SkinnedTabStrip();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
+			this.chkLegacyPoses = new Desktop.Skinning.SkinnedCheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valFrequency)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valLifetime)).BeginInit();
@@ -730,6 +731,7 @@
 			// tabImages
 			// 
 			this.tabImages.BackColor = System.Drawing.Color.White;
+			this.tabImages.Controls.Add(this.chkLegacyPoses);
 			this.tabImages.Controls.Add(this.cmdVerify);
 			this.tabImages.Controls.Add(this.txtTinify);
 			this.tabImages.Controls.Add(this.skinnedLabel4);
@@ -1106,6 +1108,17 @@
 			this.skinnedPanel1.TabIndex = 14;
 			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
 			// 
+			// chkLegacyPoses
+			// 
+			this.chkLegacyPoses.AutoSize = true;
+			this.chkLegacyPoses.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkLegacyPoses.Location = new System.Drawing.Point(6, 60);
+			this.chkLegacyPoses.Name = "chkLegacyPoses";
+			this.chkLegacyPoses.Size = new System.Drawing.Size(190, 17);
+			this.chkLegacyPoses.TabIndex = 16;
+			this.chkLegacyPoses.Text = "Show Pose List and Template tabs";
+			this.chkLegacyPoses.UseVisualStyleBackColor = true;
+			// 
 			// SettingsSetup
 			// 
 			this.AcceptButton = this.cmdOk;
@@ -1230,5 +1243,6 @@
 		private Desktop.Skinning.SkinnedCheckBox chkAutoFill;
 		private Desktop.Skinning.SkinnedCheckBox chkWarnIncomplete;
 		private Desktop.Skinning.SkinnedCheckBox chkSafeMode;
+		private Desktop.Skinning.SkinnedCheckBox chkLegacyPoses;
 	}
 }

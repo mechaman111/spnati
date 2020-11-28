@@ -31,8 +31,8 @@
 			this.skinnedTabStrip1 = new Desktop.Skinning.SkinnedTabStrip();
 			this.tabs = new Desktop.Skinning.SkinnedTabControl();
 			this.tabGameImport = new System.Windows.Forms.TabPage();
-			this.tabScratchPad = new System.Windows.Forms.TabPage();
 			this.lineImportControl1 = new SPNATI_Character_Editor.Controls.LineImportControl();
+			this.tabScratchPad = new System.Windows.Forms.TabPage();
 			this.scratchPadControl1 = new SPNATI_Character_Editor.Controls.ScratchPadControl();
 			this.tabs.SuspendLayout();
 			this.tabGameImport.SuspendLayout();
@@ -88,6 +88,14 @@
 			this.tabGameImport.TabIndex = 0;
 			this.tabGameImport.Text = "Dev Mode";
 			// 
+			// lineImportControl1
+			// 
+			this.lineImportControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lineImportControl1.Location = new System.Drawing.Point(3, 3);
+			this.lineImportControl1.Name = "lineImportControl1";
+			this.lineImportControl1.Size = new System.Drawing.Size(1143, 624);
+			this.lineImportControl1.TabIndex = 0;
+			// 
 			// tabScratchPad
 			// 
 			this.tabScratchPad.BackColor = System.Drawing.Color.White;
@@ -99,14 +107,6 @@
 			this.tabScratchPad.Size = new System.Drawing.Size(1149, 630);
 			this.tabScratchPad.TabIndex = 1;
 			this.tabScratchPad.Text = "Scratch Pad";
-			// 
-			// lineImportControl1
-			// 
-			this.lineImportControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lineImportControl1.Location = new System.Drawing.Point(3, 3);
-			this.lineImportControl1.Name = "lineImportControl1";
-			this.lineImportControl1.Size = new System.Drawing.Size(1143, 624);
-			this.lineImportControl1.TabIndex = 0;
 			// 
 			// scratchPadControl1
 			// 

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Activity(typeof(Character), 60)]
+	[Activity(typeof(Character), 60, DelayRun = true, Caption = "Advanced")]
 	public partial class AdvancedMetadataEditor : Activity
 	{
 		private Character _character;

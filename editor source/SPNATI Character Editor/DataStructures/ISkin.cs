@@ -27,6 +27,14 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		string GetAttachmentsDirectory();
 		/// <summary>
+		/// Gets the location of a pose
+		/// </summary>
+		/// <param name="subfolder"></param>
+		/// <param name="poseName"></param>
+		/// <param name="asset"></param>
+		/// <returns></returns>
+		string GetPosePath(string subfolder, string poseName, bool asset);
+		/// <summary>
 		/// Gets a list of pose names that the skin requires
 		/// </summary>
 		/// <returns></returns>

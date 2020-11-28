@@ -94,6 +94,10 @@ namespace SPNATI_Character_Editor.Workspaces
 			{
 				return false;
 			}
+			if ((activityType == typeof(PoseListEditor) || activityType == typeof(TemplateEditor)) && !Config.ShowLegacyPoseTabs)
+			{
+				return false;
+			}
 			return base.AllowAutoStart(activityType);
 		}
 

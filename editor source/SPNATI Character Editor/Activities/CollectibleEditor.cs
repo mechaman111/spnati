@@ -12,7 +12,7 @@ using System.Collections.ObjectModel;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Activity(typeof(Character), 70)]
+	[Activity(typeof(Character), 70, DelayRun = true, Caption = "Collectibles")]
 	public partial class CollectibleEditor : Activity
 	{
 		private Character _character;

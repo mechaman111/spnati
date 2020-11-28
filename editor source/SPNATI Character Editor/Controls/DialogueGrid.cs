@@ -105,7 +105,6 @@ namespace SPNATI_Character_Editor.Controls
 			host.Margin = new Padding(0);
 			dropdown.Padding = new Padding(0);
 			dropdown.Items.Add(host);
-			dropdown.AutoClose = false;
 			dropdown.Closing += DropDownClosing;
 			ctl.DataUpdated += Ctl_DataUpdated;
 		}
@@ -631,6 +630,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void ShowDropdown(int rowIndex, int colIndex, IDialogueDropDownControl ctl, ToolStripDropDown dropdown)
 		{
+			dropdown.AutoClose = false;
 			DataGridViewRow row = gridDialogue.Rows[rowIndex];
 			DialogueLine line = ReadLineFromDialogueGrid(rowIndex);
 			if (line == null) { return; }

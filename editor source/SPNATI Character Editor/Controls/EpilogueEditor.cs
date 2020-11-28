@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
-	[Activity(typeof(Character), 40)]
+	[Activity(typeof(Character), 40, DelayRun = true, Caption = "Epilogues")]
 	public partial class EpilogueEditor : Activity
 	{
 		private Character _character;

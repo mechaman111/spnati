@@ -1,5 +1,4 @@
 ﻿using Desktop;
-using Desktop.Messaging;
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ namespace SPNATI_Character_Editor.Activities
 	/// <summary>
 	/// Activity for finding noteworthy dialogue from other opponents and writing dialogue for it
 	/// </summary>
-	[Activity(typeof(Character), 310)]
+	[Activity(typeof(Character), 310, DelayRun = true, Caption = "Writing Aid")]
 	public partial class WritingAid : Activity
 	{
 		private const string SuggestionPreference = "WritingSuggestions";

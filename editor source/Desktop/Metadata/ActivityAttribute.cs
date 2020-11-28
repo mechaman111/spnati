@@ -19,6 +19,15 @@ namespace Desktop
 		/// </summary>
 		public int Width { get; set; }
 
+		/// <summary>
+		/// If true, the activity's tab will be added on auto-start, but the underlying activity won't be created until manually launched
+		/// </summary>
+		public bool DelayRun { get; set; }
+		/// <summary>
+		/// Activity's caption, used when delay running
+		/// </summary>
+		public string Caption { get; set; }
+
 		public ActivityAttribute(Type type, int order)
 		{
 			RecordType = type;

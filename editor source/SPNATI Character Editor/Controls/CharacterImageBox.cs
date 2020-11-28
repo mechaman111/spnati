@@ -183,13 +183,16 @@ namespace SPNATI_Character_Editor.Controls
 			_markers = markers;
 		}
 
-		public void SetImage(Image image)
+		public void SetImage(Image image, bool disposeImage = true)
 		{
 			Destroy();
 			tmrTick.Stop();
 			_currentPose = null;
 			_currentStage = -1;
-			_singleUseImage = image;
+			if (disposeImage)
+			{
+				_singleUseImage = image;
+			}
 			_imageReference = image;
 			canvas.Invalidate();
 		}

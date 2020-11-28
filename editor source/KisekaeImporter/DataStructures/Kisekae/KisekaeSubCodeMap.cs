@@ -122,6 +122,7 @@ namespace KisekaeImporter
 				case "bf":
 				case "bg":
 				case "bh":
+				case "bi":
 					return typeof(KisekaeShader);
 				case "f":
 					return typeof(KisekaeExternalParts);
