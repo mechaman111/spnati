@@ -968,6 +968,7 @@ ul.dropdown-menu>li {
     z-index: 0;
     font-size: 117%;
     background: #F5F5F5;
+    opacity: 95%;
     border-radius: 1rem;
     padding: 1.2rem;
 
@@ -1153,8 +1154,13 @@ ul.dropdown-menu>li {
     cursor: text;
 }
 
-#game-screen.dev-mode .dialogue-bubble {
-    z-index: 1000 !important;
+#game-screen .dialogue-bubble.under {
+    z-index: -1000;
+}
+
+#game-screen.dev-mode .dialogue-bubble,
+#game-screen .dialogue-bubble.over {
+    z-index: 1000;
 }
 
 .dialogue-bubble[data-editing="preview"] .dialogue-edit-status::after {

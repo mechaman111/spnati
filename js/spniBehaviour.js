@@ -474,6 +474,7 @@ function State($xml_or_state, parentCase) {
     this.image = $xml.attr('img');
     this.direction = $xml.attr('direction') || 'down';
     this.location = $xml.attr('location') || '';
+    this.dialogue_layering = $xml.attr('dialogue-layer');
     this.alt_images = null;
 
     /** @type {MarkerOperation[]} */

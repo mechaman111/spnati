@@ -723,12 +723,7 @@ OpponentDisplay.prototype.update = function(player) {
     
     /* Configure z-indices */
     this.imageArea.css('z-index', player.z_index);
-    
-    if (player.dialogue_layering === 'over') {
-        this.bubble.css('z-index', player.z_index + 1);
-    } else {
-        this.bubble.css('z-index', player.z_index);
-    }
+    this.bubble.removeClass('over under').addClass(chosenState.dialogue_layering || player.dialogue_layering);
     
     if (showDebug && !inRollback()) {
         appendRepeats(this.slot);
