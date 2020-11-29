@@ -231,7 +231,7 @@ function splitCreatorField (field) {
 function loadListingFile () {
     if (listingFiles.length === 0) {
         listingFiles.push("opponents/listing.xml");
-        if (includedOpponentStatuses["offline"]) {
+        if (includedOpponentStatuses["testing"]) {
             listingFiles.push("opponents/listing-test.xml");
         }
     }
