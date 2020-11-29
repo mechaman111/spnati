@@ -1103,7 +1103,7 @@ function fetchXML(url) {
         } else {
             return resp.text();
         }
-    }).then(function (xml) { return $(xml); });
+    }).catch(function() {}).then(function (xml) { return $(xml); });
 }
 
 /**
