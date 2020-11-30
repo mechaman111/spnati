@@ -74,6 +74,7 @@
 			this.chkChecklistSpell = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkDashboard = new Desktop.Skinning.SkinnedCheckBox();
 			this.tabImages = new System.Windows.Forms.TabPage();
+			this.chkLegacyPoses = new Desktop.Skinning.SkinnedCheckBox();
 			this.cmdVerify = new Desktop.Skinning.SkinnedButton();
 			this.skinnedLabel4 = new Desktop.Skinning.SkinnedLabel();
 			this.cboImportMethod = new Desktop.Skinning.SkinnedComboBox();
@@ -101,7 +102,6 @@
 			this.chkWorkflowTracer = new Desktop.Skinning.SkinnedCheckBox();
 			this.stripSections = new Desktop.Skinning.SkinnedTabStrip();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
-			this.chkLegacyPoses = new Desktop.Skinning.SkinnedCheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.valAutoSave)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valFrequency)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.valLifetime)).BeginInit();
@@ -279,8 +279,8 @@
 			this.chkDefaults.Size = new System.Drawing.Size(179, 17);
 			this.chkDefaults.TabIndex = 26;
 			this.chkDefaults.Text = "Ensure cases have generic lines";
-			this.toolTip1.SetToolTip(this.chkDefaults, "If unchecked, images with no prefix (ex. 0-*.png) will not appear for use in dial" +
-        "ogue lines.");
+			this.toolTip1.SetToolTip(this.chkDefaults, "If checked, generic cases will be added to ensure that there is never a point whe" +
+        "re no dialogue would play");
 			this.chkDefaults.UseVisualStyleBackColor = true;
 			// 
 			// helpAutoSave
@@ -744,6 +744,17 @@
 			this.tabImages.TabIndex = 6;
 			this.tabImages.Text = "Image Import";
 			// 
+			// chkLegacyPoses
+			// 
+			this.chkLegacyPoses.AutoSize = true;
+			this.chkLegacyPoses.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkLegacyPoses.Location = new System.Drawing.Point(6, 60);
+			this.chkLegacyPoses.Name = "chkLegacyPoses";
+			this.chkLegacyPoses.Size = new System.Drawing.Size(190, 17);
+			this.chkLegacyPoses.TabIndex = 16;
+			this.chkLegacyPoses.Text = "Show Pose List and Template tabs";
+			this.chkLegacyPoses.UseVisualStyleBackColor = true;
+			// 
 			// cmdVerify
 			// 
 			this.cmdVerify.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -1107,17 +1118,6 @@
 			this.skinnedPanel1.Size = new System.Drawing.Size(657, 30);
 			this.skinnedPanel1.TabIndex = 14;
 			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
-			// 
-			// chkLegacyPoses
-			// 
-			this.chkLegacyPoses.AutoSize = true;
-			this.chkLegacyPoses.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkLegacyPoses.Location = new System.Drawing.Point(6, 60);
-			this.chkLegacyPoses.Name = "chkLegacyPoses";
-			this.chkLegacyPoses.Size = new System.Drawing.Size(190, 17);
-			this.chkLegacyPoses.TabIndex = 16;
-			this.chkLegacyPoses.Text = "Show Pose List and Template tabs";
-			this.chkLegacyPoses.UseVisualStyleBackColor = true;
 			// 
 			// SettingsSetup
 			// 
