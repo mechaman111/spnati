@@ -1,4 +1,6 @@
-# How to Use Github Desktop to Merge Files the Old Fashioned Way
+# How to Use Github Desktop to Merge Files
+
+The Old Fashioned Way
 
 ---
 
@@ -10,7 +12,7 @@ As always, you can use Git via a command line interface to push changes and chec
 
 ---
 
-### Forking your project
+## Forking your project
 
 Only SPNatI game moderators have the necessary permissions to directly add new files to the main SPNatI repository, and thus the game. For everyone else, you'll need to **Fork** the project and submit a **Merge Request**. 
 
@@ -26,14 +28,14 @@ Go to **Repository > Repository Settings** in the menu bar. in the **Remote** ta
 
 ---
 
-### Keeping your fork up to date.
+## Keeping your fork up to date.
 
 Gitgud by itself does not automatically sync your fork with the main SPNatI repository. Fortunately, you can set up autosync anyway thanks to the SPNATI Utilities bot!
 
 Simply DM the bot on Discord `b!sync enable [your gitgud username]`. This will give you an access token, along with instructions on how to use it: 
 
 > To allow the bot to synchronize your fork with the official repository, add a new Deploy Key to your fork (at [Your fork settings link]) with the following settings:
-> 
+>
 > - **Title:** `Repository Mirroring`
 >
 > - **Write Access Allowed** (Very important!)
@@ -47,7 +49,7 @@ Follow the instructions given to you by the bot. From there on, your fork's `mas
     If for whatever reason your fork is out of sync and doesn't appear to be updating, use `b!sync update [username]` to force synchronization. If that still doesn't work, it's likely a bot-side error. Politely inform the SPNatI game moderators, and they'll fix it as soon as is convenient.
 ___
 
-### Committing your update and pushing a merge request
+## Committing your update and pushing a merge request
 
 To make life easier for yourself, you'll want to make sure your repo is fully up to date before anything else. 
 
