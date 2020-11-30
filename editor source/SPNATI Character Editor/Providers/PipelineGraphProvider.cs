@@ -15,6 +15,7 @@ namespace SPNATI_Character_Editor.Providers
 		{
 			get { return true; }
 		}
+		public bool AllowsDelete { get { return true; } }
 
 		public bool TrackRecent
 		{
@@ -41,7 +42,28 @@ namespace SPNATI_Character_Editor.Providers
 
 		public void Delete(IRecord record)
 		{
-			throw new NotImplementedException();
+			PipelineGraph graph = record as PipelineGraph;
+			foreach (PoseSheet sheet in _matrix.Sheets)
+			{
+				foreach (PoseStage stage in sheet.Stages)
+				{
+					if (stage.Pipeline == graph.Key)
+					{
+						MessageBox.Show($"Cannot delete pipeline {graph.Name} because it is in use by sheet {sheet.Name}.", "Delete Pipeline", MessageBoxButtons.OK);
+						return;
+					}
+					foreach (PoseEntry entry in stage.Poses)
+					{
+						if (entry.Pipeline == graph.Key)
+						{
+							MessageBox.Show($"Cannot delete pipeline {graph.Name} because it is in use by sheet {sheet.Name}.", "Delete Pipeline", MessageBoxButtons.OK);
+							return;
+						}
+					}
+				}
+			}
+
+			_matrix.Pipelines.Remove(graph);
 		}
 
 		public bool FilterFromUI(IRecord record)

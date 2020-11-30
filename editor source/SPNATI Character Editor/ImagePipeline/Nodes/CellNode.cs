@@ -1,16 +1,22 @@
 ﻿using ImagePipeline;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using SPNATI_Character_Editor.DataStructures;
 
-namespace SPNATI_Character_Editor.ImagePipeline.Nodes
+namespace ImagePipeline
 {
 	public class CellNode : NodeDefinition
 	{
+		public override string Group
+		{
+			get { return "Input"; }
+		}
+
+		public override string Description
+		{
+			get { return "Obtains an image from the current pose matrix cell"; }
+		}
+
 		public override string Name
 		{
 			get { return "Cell"; }

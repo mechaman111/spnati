@@ -6,13 +6,23 @@ namespace ImagePipeline
 {
 	public class FileNode : NodeDefinition
 	{
+		public override string Group
+		{
+			get { return "Input"; }
+		}
+
+		public override string Description
+		{
+			get { return "Obtains an image from a file"; }
+		}
+
 		public override PortDefinition[] GetInputs() { return null; }
 
 		public override PortDefinition[] GetOutputs()
 		{
 			return new PortDefinition[]
 			{
-				new PortDefinition(PortType.Bitmap, "out")
+				new PortDefinition(PortType.Bitmap, "image")
 			};
 		}
 

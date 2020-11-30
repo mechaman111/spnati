@@ -6,7 +6,7 @@ namespace SPNATI_Character_Editor
 	/// <summary>
 	/// interface for classes that store pose files somewhere
 	/// </summary>
-	public interface ISkin
+	public interface ISkin : IRecord
 	{
 		/// Gets the name of the folder containing the images
 		/// </summary>

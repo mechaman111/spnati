@@ -28,8 +28,11 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.recField = new Desktop.CommonControls.RecordField();
 			this.cmdEdit = new Desktop.Skinning.SkinnedButton();
+			this.cmdParams = new Desktop.Skinning.SkinnedIcon();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.SuspendLayout();
 			// 
 			// recField
@@ -59,17 +62,33 @@
 			this.cmdEdit.TabIndex = 2;
 			this.cmdEdit.Text = "Edit";
 			this.cmdEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolTip1.SetToolTip(this.cmdEdit, "Edit pipeline");
 			this.cmdEdit.UseVisualStyleBackColor = true;
 			this.cmdEdit.Click += new System.EventHandler(this.cmdEdit_Click);
+			// 
+			// cmdParams
+			// 
+			this.cmdParams.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdParams.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdParams.Flat = false;
+			this.cmdParams.Image = global::SPNATI_Character_Editor.Properties.Resources.PoseList;
+			this.cmdParams.Location = new System.Drawing.Point(156, 3);
+			this.cmdParams.Name = "cmdParams";
+			this.cmdParams.Size = new System.Drawing.Size(16, 16);
+			this.cmdParams.TabIndex = 3;
+			this.toolTip1.SetToolTip(this.cmdParams, "Edit parameters");
+			this.cmdParams.UseVisualStyleBackColor = true;
+			this.cmdParams.Click += new System.EventHandler(this.cmdParams_Click);
 			// 
 			// PipelineEditControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.cmdParams);
 			this.Controls.Add(this.recField);
 			this.Controls.Add(this.cmdEdit);
 			this.Name = "PipelineEditControl";
-			this.Size = new System.Drawing.Size(150, 21);
+			this.Size = new System.Drawing.Size(191, 21);
 			this.ResumeLayout(false);
 
 		}
@@ -78,5 +97,7 @@
 
 		private Desktop.CommonControls.RecordField recField;
 		private Desktop.Skinning.SkinnedButton cmdEdit;
+		private Desktop.Skinning.SkinnedIcon cmdParams;
+		private System.Windows.Forms.ToolTip toolTip1;
 	}
 }

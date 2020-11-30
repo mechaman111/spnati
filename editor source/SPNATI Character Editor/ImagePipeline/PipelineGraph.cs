@@ -138,11 +138,11 @@ namespace ImagePipeline
 
 		public void OnAfterDeserialize(string source)
 		{
-			;
 			NodeMap.Clear();
 			NodeMap[MasterNode.Id] = MasterNode;
 			int maxId = MasterNode.Id;
 			MasterNode.Graph = this;
+			MasterNode.OnAfterDeserialize(source);
 			foreach (PipelineNode node in Nodes)
 			{
 				maxId = Math.Max(node.Id, maxId);
@@ -308,7 +308,19 @@ namespace ImagePipeline
 		public void Disconnect(Connection connection)
 		{
 			_inputMap.Remove(connection.To, connection.ToIndex);
-			_outputMap.Remove(connection.From, connection.FromIndex);
+			List<PortConnection> outputs = _outputMap.Get(connection.From, connection.FromIndex);
+			if (outputs != null)
+			{
+				int connectionIndex = outputs.FindIndex(c => c.Node.Id == connection.To && c.Index == connection.ToIndex);
+				if (connectionIndex >= 0)
+				{
+					outputs.RemoveAt(connectionIndex);
+					if (outputs.Count == 0)
+					{
+						_outputMap.Remove(connection.From, connection.FromIndex);
+					}
+				}
+			}
 			Connections.Remove(connection);
 		}
 
@@ -319,20 +331,13 @@ namespace ImagePipeline
 		/// <param name="input"></param>
 		public void Disconnect(PipelineNode node, int input)
 		{
-			PortConnection connection = _inputMap.Get(node.Id, input);
-			if (connection == null) { return; }
-			_inputMap.Remove(node.Id, input);
-			if (connection != null)
-			{
-				_outputMap.Remove(connection.Node.Id, connection.Index);
-			}
 			for (int i = 0; i < Connections.Count; i++)
 			{
 				Connection c = Connections[i];
-				if (c.From == connection.Node.Id && c.ToIndex == input && c.To == node.Id && c.FromIndex == connection.Index)
+				if (c.To == node.Id && c.ToIndex == input)
 				{
-					Connections.RemoveAt(i);
-					break;
+					Disconnect(c);
+					return;
 				}
 			}
 		}
@@ -352,7 +357,7 @@ namespace ImagePipeline
 							{
 								((IDisposable)value).Dispose();
 							}
-						}						
+						}
 					}
 				}
 				_processedNodes.Clear();
@@ -520,9 +525,11 @@ namespace ImagePipeline
 			switch (type)
 			{
 				case PortType.Float:
-					return 0.0f;
+					return new ConstantFloat(0);
 				case PortType.Integer:
 					return 0;
+				case PortType.Color:
+					return Color.White;
 				default:
 					return null;
 			}
@@ -587,6 +594,8 @@ namespace ImagePipeline
 		public string StageName;
 		[XmlAttribute("key")]
 		public string Key;
+		[XmlAttribute("folder")]
+		public string CharacterFolder;
 
 		public override string ToString()
 		{
@@ -607,6 +616,7 @@ namespace ImagePipeline
 				StageName = cell.Stage.Name;
 			}
 			Key = cell.Key;
+			CharacterFolder = cell.Stage.Sheet.Matrix.Character.FolderName;
 		}
 
 		public PoseCellReference(string sheet, int stage, string key)
@@ -625,6 +635,14 @@ namespace ImagePipeline
 
 		public PoseEntry GetCell(PoseMatrix matrix)
 		{
+			if (!string.IsNullOrEmpty(CharacterFolder) && CharacterFolder != matrix.Character.FolderName)
+			{
+				Character character = CharacterDatabase.Get(CharacterFolder);
+				if (character != null)
+				{
+					matrix = CharacterDatabase.GetPoseMatrix(character);
+				}
+			}
 			PoseSheet sheet = matrix.Sheets.Find(s => s.Name == SheetName);
 			if (sheet == null)
 			{

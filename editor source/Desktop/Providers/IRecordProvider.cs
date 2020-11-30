@@ -15,6 +15,7 @@ namespace Desktop
 		void Delete(IRecord record);
 		void Sort(List<IRecord> list);
 		bool AllowsNew { get; }
+		bool AllowsDelete { get; }
 		bool TrackRecent { get; }
 		bool FilterFromUI(IRecord record);
 	}

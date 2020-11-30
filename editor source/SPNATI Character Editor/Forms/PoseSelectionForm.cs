@@ -10,6 +10,7 @@ namespace SPNATI_Character_Editor.Forms
 {
 	public partial class PoseSelectionForm : SkinnedForm
 	{
+		private ISkin _original;
 		private ISkin _character;
 		private PoseMatrix _matrix;
 		private PoseSheet _sheet;
@@ -24,15 +25,77 @@ namespace SPNATI_Character_Editor.Forms
 			InitializeComponent();
 		}
 
-		public void SetData(PoseMatrix matrix, PoseSheet initialSheet)
+		public void SetData(PoseMatrix matrix, PoseSheet initialSheet, PoseEntry pose)
 		{
-			_character = matrix.Character;
+			_original = _character = matrix.Character;
 			_matrix = matrix;
 			_sheet = initialSheet;
 
-			BuildTabStrip();
+			//recCharacter.RecordType = typeof(Character);
+			//recCharacter.Record = _character;
+			//recCharacter.RecordChanged += RecCharacter_RecordChanged;
 
+			BuildControls();
+
+			//Select the current sheet and cell
+			SelectSheetAndCell(_sheet, pose);
+		}
+
+		private void SelectSheetAndCell(PoseSheet sheet, PoseEntry pose)
+		{
+			for (int i = 0; i < tabControl.TabPages.Count; i++)
+			{
+				TabPage page = tabControl.TabPages[i];
+				if (page.Tag == _sheet)
+				{
+					tabControl.SelectedTab = page;
+					if (pose != null)
+					{
+						//select the cell too
+						foreach (DataGridViewRow row in grid.Rows)
+						{
+							foreach (DataGridViewCell cell in row.Cells)
+							{
+								if (cell.Tag == pose)
+								{
+									cell.Selected = true;
+									return;
+								}
+							}
+						}
+					}
+					return;
+				}
+			}
+		}
+
+		private void RecCharacter_RecordChanged(object sender, Desktop.CommonControls.RecordEventArgs e)
+		{
+			ISkin character = recCharacter.Record as ISkin ?? _original;
+			if (_original != character)
+			{
+				_matrix = CharacterDatabase.GetPoseMatrix(character);
+				if (_matrix.Sheets.Count > 0)
+				{
+					_sheet = _matrix.Sheets[0];
+				}
+				else
+				{
+					_sheet = null;
+				}
+				_character = character;
+
+				BuildControls();
+			}
+		}
+
+		private void BuildControls()
+		{
+			if (_building) { return; }
+			_building = true;
+			BuildTabStrip();
 			BuildGrid();
+			_building = false;
 		}
 
 		private void BuildTabStrip()
@@ -53,9 +116,18 @@ namespace SPNATI_Character_Editor.Forms
 
 		private void BuildGrid()
 		{
-			_building = true;
 			grid.Rows.Clear();
 			grid.Columns.Clear();
+
+			if (_sheet == null)
+			{
+				lblMissingMatrix.Visible = true;
+				grid.Visible = false;
+				return;
+			}
+			grid.Visible = true;
+			lblMissingMatrix.Visible = false;
+
 			grid.TopLeftHeaderCell.Value = "Sheet";
 			grid.RowHeadersWidth = 80;
 			grid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
@@ -102,7 +174,6 @@ namespace SPNATI_Character_Editor.Forms
 					UpdateCell(cell, pose);
 				}
 			}
-			_building = false;
 			grid_SelectionChanged(grid, EventArgs.Empty);
 		}
 
@@ -167,6 +238,7 @@ namespace SPNATI_Character_Editor.Forms
 
 		private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			if (_building) { return; }
 			_sheet = tabControl.SelectedTab.Tag as PoseSheet;
 			BuildGrid();
 		}

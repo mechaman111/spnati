@@ -5,15 +5,19 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using SPNATI_Character_Editor.DataStructures;
+using System;
 
 namespace SPNATI_Character_Editor.Controls.Pipelines
 {
 	public partial class GraphEditor : UserControl
 	{
+		public event EventHandler NameChanged;
+
+		public PipelineGraph Graph;
 		private ISkin _character;
+		private PoseMatrix _matrix;
 		private PoseStage _stage;
 		private PoseSheet _sheet;
-		private PipelineGraph _graph;
 		private PoseEntry _cell;
 
 		private Point _mousePosition;
@@ -35,8 +39,8 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 		public void Destroy()
 		{
 			_pendingPreviews.Clear();
-			_graph.Nodes.CollectionChanged -= Nodes_CollectionChanged;
-			_graph.PropertyChanged -= _graph_PropertyChanged;
+			Graph.Nodes.CollectionChanged -= Nodes_CollectionChanged;
+			Graph.PropertyChanged -= _graph_PropertyChanged;
 			foreach (PipelineNodeControl ctl in _nodeMap.Values)
 			{
 				CleanUpControl(ctl);
@@ -49,18 +53,22 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 			_character = character;
 			_cell = cell;
 			_stage = stage;
+			_matrix = CharacterDatabase.GetPoseMatrix(_character);
 			_sheet = stage.Sheet;
-			_graph = graph;
-			_graph.Nodes.CollectionChanged += Nodes_CollectionChanged;
+			Graph = graph;
+			Graph.Nodes.CollectionChanged += Nodes_CollectionChanged;
 
 			RenderControls();
-			_graph.PropertyChanged += _graph_PropertyChanged;
+			Graph.PropertyChanged += _graph_PropertyChanged;
 		}
 
 		private void _graph_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-			_stage.NotifyPropertyChanged("Pipeline");
-			_cell?.NotifyPropertyChanged("Pipeline");
+			if (_stage.Pipeline == Graph.Key || _cell.Pipeline == Graph.Key)
+			{
+				_stage.NotifyPropertyChanged("Pipeline");
+				_cell?.NotifyPropertyChanged("Pipeline");
+			}
 		}
 
 		private void Nodes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -97,14 +105,14 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 				CleanUpControl(ctl);
 			}
 			_nodeMap.Clear();
-			if (_graph == null)
+			if (Graph == null)
 			{
 				return;
 			}
-			foreach (PipelineNode node in _graph.NodeMap.Values)
+			foreach (PipelineNode node in Graph.NodeMap.Values)
 			{
 				PipelineNodeControl ctl = AddControl(node, false);
-				if (node == _graph.MasterNode)
+				if (node == Graph.MasterNode)
 				{
 					SetPreviewControl(ctl);
 				}
@@ -173,7 +181,7 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 			{
 				PipelineNodeControl ctl = sender as PipelineNodeControl;
 				PipelineNode node = ctl.Node;
-				e.IsValid = _graph.ValidateConnection(_connection.Source, _connection.OutputIndex, node, e.Index);
+				e.IsValid = Graph.ValidateConnection(_connection.Source, _connection.OutputIndex, node, e.Index);
 			}
 		}
 
@@ -252,7 +260,7 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 
 		private void panel_Paint(object sender, PaintEventArgs e)
 		{
-			if (_graph == null)
+			if (Graph == null)
 			{
 				return;
 			}
@@ -260,10 +268,10 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 			Pen pen = skin.PrimaryWidget.GetPen(VisualState.Normal, false, true);
 			Graphics g = e.Graphics;
 
-			foreach (Connection connection in _graph.Connections)
+			foreach (Connection connection in Graph.Connections)
 			{
-				PipelineNode from = _graph.GetNode(connection.From);
-				PipelineNode to = _graph.GetNode(connection.To);
+				PipelineNode from = Graph.GetNode(connection.From);
+				PipelineNode to = Graph.GetNode(connection.To);
 				DrawConnection(g, pen, from, connection.FromIndex, to, connection.ToIndex);
 			}
 
@@ -308,18 +316,18 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 
 			if (_pendingPreviews.Count > 0)
 			{
-				await _graph.Process(_cell, settings);
+				await Graph.Process(_cell, settings);
 				for (int i = 0; i < _pendingPreviews.Count; i++)
 				{
 					PipelineNode nextNode = _pendingPreviews[i];
 					PipelineNodeControl ctl;
 					if (_nodeMap.TryGetValue(nextNode, out ctl))
 					{
-						if (!_graph.HasNodeOutput(nextNode.Id))
+						if (!Graph.HasNodeOutput(nextNode.Id))
 						{
-							await _graph.Process(_cell, settings, nextNode);
+							await Graph.Process(_cell, settings, nextNode);
 						}
-						PipelineResult result = _graph.GetNodeOutput(nextNode.Id);
+						PipelineResult result = Graph.GetNodeOutput(nextNode.Id);
 						ctl.SetPreview(result);
 					}
 				}
@@ -360,7 +368,7 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 			PipelineNode node = ctl.Node;
 			int input = e.Index;
 
-			PortConnection from = _graph.GetInput(node, input);
+			PortConnection from = Graph.GetInput(node, input);
 			if (from != null)
 			{
 				_connection = new WorkingConnection()
@@ -377,7 +385,7 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 				ctl.MouseUp += Ctl_MouseUp;
 
 				//disconnect this input
-				_graph.Disconnect(ctl.Node, e.Index);
+				Graph.Disconnect(ctl.Node, e.Index);
 				panel.Invalidate();
 			}
 		}
@@ -392,15 +400,15 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 			PipelineNode target = (sender as PipelineNodeControl).Node;
 
 			//make the connection
-			if (_graph.Connect(_connection.Source, _connection.OutputIndex, target, e.Index))
+			if (Graph.Connect(_connection.Source, _connection.OutputIndex, target, e.Index))
 			{
 				InvalidatePreviews(target);
 			}
 			else
 			{
-				if (_connection.Source.Definition.Outputs[0].Type == target.Definition.Inputs[e.Index].Type)
+				if (_connection.Source.Definition.Outputs[_connection.OutputIndex].Type != target.Definition.Inputs[e.Index].Type)
 				{
-					MessageBox.Show("This is not the right type of input for the port.", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show($"Incompatible ports. Trying to connect an output of type \"{_connection.Source.Definition.Outputs[_connection.OutputIndex].Type}\" to an input of type \"{target.Definition.Inputs[e.Index].Type}\".", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 				else
 				{
@@ -444,7 +452,7 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 				int outputCount = node.Definition.Outputs.Length;
 				for (int i = 0; i < outputCount; i++)
 				{
-					foreach (PortConnection output in _graph.GetOutputs(node, i))
+					foreach (PortConnection output in Graph.GetOutputs(node, i))
 					{
 						InvalidatePreviews(output.Node);
 					}
@@ -489,7 +497,7 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 					MessageBox.Show("You cannot delete the Result node.");
 					return;
 				}
-				_graph.RemoveNode(ctl.Node);
+				Graph.RemoveNode(ctl.Node);
 				panel.Invalidate();
 			}
 		}
@@ -499,13 +507,39 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 			IPipelineNode record = RecordLookup.DoLookup(typeof(IPipelineNode), "", false, FilterNodes, null) as IPipelineNode;
 			if (record != null)
 			{
-				_graph.AddNode(record.Key);
+				Graph.AddNode(record.Key);
 			}
 		}
 
 		private bool FilterNodes(IRecord record)
 		{
 			return record.Key != "root";
+		}
+
+		private void tsSaveAs_Click(object sender, System.EventArgs e)
+		{
+			string name = InputBox.Show("Choose a new name for the pipeline:", "Save As");
+			if (name == null)
+			{
+				return;
+			}
+			PipelineGraph existing = _matrix.Pipelines.Find(p => p.Name == name);
+			if (existing != null)
+			{
+				MessageBox.Show("A pipeline with that name already exists.");
+				tsSaveAs_Click(sender, e);
+				return;
+			}
+
+			PipelineGraph copy = new PipelineGraph();
+			Graph.CopyPropertiesInto(copy);
+			copy.Key = copy.Name = name;
+			copy.Character = Graph.Character;
+			copy.OnAfterDeserialize("");
+			_matrix.Pipelines.Add(copy);
+			Destroy();
+			SetData(_character, _stage, _cell, copy);
+			NameChanged?.Invoke(this, EventArgs.Empty);
 		}
 	}
 }

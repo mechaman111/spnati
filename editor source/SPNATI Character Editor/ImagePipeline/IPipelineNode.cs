@@ -28,6 +28,10 @@ namespace ImagePipeline
 		/// <param name="inputs"></param>
 		/// <returns></returns>
 		Task<PipelineResult> Process(PipelineArgs args);
+		/// <summary>
+		/// Node description
+		/// </summary>
+		string Description { get; }
 	}
 
 	public class PipelineContext
@@ -110,6 +114,7 @@ namespace ImagePipeline
 		Boolean,
 		CellReference,
 		Point,
+		Color
 	}
 
 	public struct NodeProperty
@@ -118,6 +123,7 @@ namespace ImagePipeline
 		public NodePropertyType Type;
 		public Type DataType;
 		public object DefaultValue;
+		public float MaxValue;
 
 		public NodeProperty(NodePropertyType type, string name) : this(type, name, null, null) { }
 		public NodeProperty(NodePropertyType type, string name, object defaultValue) : this(type, name, defaultValue, null) { }
@@ -125,8 +131,9 @@ namespace ImagePipeline
 		{
 			Name = name;
 			Type = type;
-			DefaultValue = GetDefaultProperty(type);
+			DefaultValue = defaultValue ?? GetDefaultProperty(type);
 			DataType = dataType;
+			MaxValue = 0;
 		}
 
 		public override string ToString()
@@ -174,6 +181,21 @@ namespace ImagePipeline
 		/// <summary>
 		/// A string
 		/// </summary>
-		String
+		String,
+		/// <summary>
+		/// A color
+		/// </summary>
+		Color
+	}
+
+	public interface IFloatNodeInput
+	{
+		/// <summary>
+		/// Returns a value from 0 to 1 for a pixel
+		/// </summary>
+		/// <param name="x">X coordinate</param>
+		/// <param name="y">Y coordinate</param>
+		/// <returns></returns>
+		float Get(int x, int y);
 	}
 }

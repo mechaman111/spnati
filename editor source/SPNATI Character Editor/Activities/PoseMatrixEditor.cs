@@ -83,9 +83,45 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				//make a default sheet
 				_matrix.AddSheet("Main", _character);
+
+				if (_skin is Costume)
+				{
+					PoseMatrix source = CharacterDatabase.GetPoseMatrix(_skin.Character);
+					if (source.Sheets.Count > 0)
+					{
+						if (MessageBox.Show("Do you want to copy the Main sheet from the main character as a starting point?", "New Pose Matrix", MessageBoxButtons.YesNo) == DialogResult.Yes)
+						{
+							CopyMainSheet(source);
+						}
+					}
+				}
 			}
 
 			Rebuild();
+		}
+
+		private void CopyMainSheet(PoseMatrix source)
+		{
+			PoseSheet sourceSheet = source.Sheets[0];
+			PoseSheet sheet = _matrix.Sheets[0];
+			sourceSheet.CopyPropertiesInto(sheet);
+			sheet.OnAfterDeserialize(""); //fix the parent references
+
+			//kill any pipelines that were duplicated
+			_matrix.Pipelines.Clear();
+			foreach (PoseSheet s in _matrix.Sheets)
+			{
+				foreach (PoseStage stage in s.Stages)
+				{
+					stage.Pipeline = null;
+					stage.PipelineParameters = null;
+					foreach (PoseEntry entry in stage.Poses)
+					{
+						entry.Pipeline = null;
+						entry.PipelineParameters = null;
+					}
+				}
+			}
 		}
 
 		private void OnWardrobeChanged()
@@ -247,7 +283,7 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			else
 			{
-				StageName stageName = _character.LayerToStageName(stage.Stage);
+				StageName stageName = _character.LayerToStageName(stage.Stage, _skin as IWardrobe);
 				return $"{stageName.Id} - {stageName.DisplayName}";
 			}
 		}

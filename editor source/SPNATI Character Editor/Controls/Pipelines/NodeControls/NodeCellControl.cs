@@ -32,13 +32,28 @@ namespace SPNATI_Character_Editor.Controls.Pipelines.NodeControls
 		{
 			PoseSelectionForm form = new PoseSelectionForm();
 			PoseMatrix matrix = CharacterDatabase.GetPoseMatrix(_node.Graph.Character);
-			form.SetData(matrix, matrix.Sheets[0]);
+			PoseSheet sheet = matrix.Sheets[0];
+			PoseEntry currentCell = null;
+			if (_cellReference != null)
+			{
+				currentCell = _cellReference.GetCell(matrix);
+				if (currentCell != null)
+				{
+					sheet = currentCell.Stage.Sheet;
+					matrix = sheet.Matrix;
+				}
+			}
+			form.SetData(matrix, sheet, currentCell);
 			if (form.ShowDialog() == DialogResult.OK)
 			{
 				PoseEntry cell = form.Cell;
 				if (_cellReference == null || _cellReference.GetCell(_matrix) != cell)
 				{
 					_cellReference = new PoseCellReference(cell);
+					if (_cellReference.CharacterFolder == _node.Graph.Character.FolderName)
+					{
+						_cellReference.CharacterFolder = null;
+					}
 					_node.SetProperty(_index, _cellReference);
 					UpdateLabel();
 				}

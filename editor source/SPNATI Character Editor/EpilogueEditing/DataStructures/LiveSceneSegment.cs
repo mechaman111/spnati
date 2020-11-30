@@ -514,26 +514,27 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void ReorderObjects()
 		{
-			Dictionary<LiveObject, int> order = new Dictionary<LiveObject, int>();
+			//Dictionary<LiveObject, int> order = new Dictionary<LiveObject, int>();
 			DrawingOrder.Clear();
 			for (int i = 0; i < Tracks.Count; i++)
 			{
-				order[Tracks[i]] = i;
+				//order[Tracks[i]] = i;
 				LiveObject obj = Tracks[i];
 				if (obj is LiveSprite || obj is LiveEmitter)
 				{
 					DrawingOrder.Add(obj);
 				}
 			}
-			DrawingOrder.Sort((s1, s2) =>
-			{
-				int compare = s1.Z.CompareTo(s2.Z);
-				if (compare == 0)
-				{
-					compare = order[s1].CompareTo(order[s2]);
-				}
-				return compare;
-			});
+			DrawingOrder = LiveObject.SortLayers(DrawingOrder);
+			//DrawingOrder.Sort((s1, s2) =>
+			//{
+			//	int compare = s1.Z.CompareTo(s2.Z);
+			//	if (compare == 0)
+			//	{
+			//		compare = order[s1].CompareTo(order[s2]);
+			//	}
+			//	return compare;
+			//});
 		}
 
 		public override void Draw(Graphics g, Matrix sceneTransform, List<string> markers, LiveObject selectedObject, LiveObject selectedPreview, bool inPlayback)

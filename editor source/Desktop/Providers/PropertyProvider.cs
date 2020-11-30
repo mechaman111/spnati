@@ -11,6 +11,7 @@ namespace Desktop.Providers
 		private static DualKeyDictionary<Type, string, PropertyRecord> _editControls = new DualKeyDictionary<Type, string, PropertyRecord>();
 
 		public bool AllowsNew { get { return false; } }
+		public bool AllowsDelete { get { return false; } }
 
 		public IRecord Create(string key) { throw new NotImplementedException(); }
 		public void Delete(IRecord record) { }

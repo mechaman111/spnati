@@ -7,6 +7,16 @@ namespace ImagePipeline
 {
 	public class CellReferenceNode : NodeDefinition
 	{
+		public override string Group
+		{
+			get { return "Input"; }
+		}
+
+		public override string Description
+		{
+			get { return "Obtains an image from a pose matrix cell"; }
+		}
+
 		public override string Name { get { return "Cell Reference"; } }
 
 		public override string Key { get { return "ref"; } set { } }
@@ -14,7 +24,8 @@ namespace ImagePipeline
 		public override PortDefinition[] GetInputs()
 		{
 			return new PortDefinition[] {
-				new PortDefinition(PortType.String, "key")
+				new PortDefinition(PortType.String, "key"),
+				new PortDefinition(PortType.String, "row")
 			};
 		}
 
@@ -42,6 +53,32 @@ namespace ImagePipeline
 
 			PoseMatrix matrix = CharacterDatabase.GetPoseMatrix(args.Context.Character);
 			PoseEntry cell = cellRef.GetCell(matrix);
+			if (cell == null)
+			{
+				return new PipelineResult(null);
+			}
+			PoseSheet sheet = cell.Stage.Sheet;
+			matrix = sheet.Matrix;
+
+			string row = args.GetInput<string>(1);
+			if (!string.IsNullOrEmpty(row))
+			{
+				PoseStage stage = null;
+				//try to match up with a row if provided
+				int rowNumber;
+				if (int.TryParse(row, out rowNumber))
+				{
+					stage = sheet.Stages.Find(s => s.Stage == rowNumber);
+				}
+				if (stage == null)
+				{
+					stage = sheet.Stages.Find(s => s.Name == row);
+				}
+				if (stage != null)
+				{
+					cell = stage.GetCell(cell.Key);
+				}
+			}
 
 			string key = args.GetInput<string>(0);
 			if (!string.IsNullOrEmpty(key))
@@ -52,6 +89,10 @@ namespace ImagePipeline
 				if (match != null)
 				{
 					cell = match;
+				}
+				else
+				{
+					return new PipelineResult(null);
 				}
 			}
 

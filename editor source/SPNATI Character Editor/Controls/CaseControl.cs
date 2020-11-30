@@ -379,6 +379,7 @@ namespace SPNATI_Character_Editor.Controls
 
 			GUIHelper.SetNumericBox(valPriority, _selectedCase.CustomPriority);
 			chkBackground.Checked = _selectedCase.Hidden == "1";
+			chkPlayOnce.Checked = _selectedCase.OneShotId > 0;
 
 			var stages = GetSelectedStages();
 			gridDialogue.SetData(_character, _selectedStage, _selectedCase, stages);
@@ -629,6 +630,17 @@ namespace SPNATI_Character_Editor.Controls
 
 				c.CustomPriority = GUIHelper.ReadNumericBox(valPriority);
 				c.Hidden = (chkBackground.Checked ? "1" : null);
+				if (chkPlayOnce.Checked)
+				{
+					if (c.OneShotId == 0)
+					{
+						c.OneShotId = ++_character.Behavior.MaxCaseId;
+					}
+				}
+				else
+				{
+					c.OneShotId = 0;
+				}
 			}
 
 			//Lines

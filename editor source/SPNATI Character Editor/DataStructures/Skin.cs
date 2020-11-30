@@ -255,7 +255,7 @@ namespace SPNATI_Character_Editor
 						if (stage < endStage)
 						{
 							PoseMapping pose = line.Pose;
-							if (pose == null || pose.Key.StartsWith("custom:"))
+							if (pose == null || pose.Key.StartsWith("custom:") || (pose.IsGeneric && stageless))
 							{
 								continue;
 							}
@@ -263,8 +263,8 @@ namespace SPNATI_Character_Editor
 							if (!stageless)
 							{
 								name = pose.GetStageKey(stage, false);
-								images.Add(name);
 							}
+							images.Add(name);
 						}
 					}
 				}

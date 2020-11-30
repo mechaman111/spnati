@@ -66,6 +66,10 @@ namespace Desktop
 		{
 			get { return false; }
 		}
+		public bool AllowsDelete
+		{
+			get { return false; }
+		}
 
 		public bool TrackRecent
 		{

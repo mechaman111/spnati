@@ -1,7 +1,5 @@
 ﻿using Desktop;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using SPNATI_Character_Editor;
 
 namespace ImagePipeline
 {
@@ -51,7 +49,8 @@ namespace ImagePipeline
 		public abstract string Name { get; }
 		public abstract string Key { get; set; }
 
-		public string Group { get; }
+		public virtual string Group { get; }
+		public virtual string Description { get; }
 
 		public int CompareTo(IRecord other)
 		{

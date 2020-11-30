@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
-using SPNATI_Character_Editor;
 
 namespace ImagePipeline
 {
@@ -11,11 +9,24 @@ namespace ImagePipeline
 	/// </summary>
 	public class DesaturateNode : NodeDefinition
 	{
-		public override string Name => "Desaturate";
+		public override string Group
+		{
+			get { return "Artistic"; }
+		}
+
+		public override string Description
+		{
+			get { return "Desaturates an image"; }
+		}
+
+		public override string Name
+		{
+			get { return "Desaturate"; }
+		}
 
 		public override string Key
 		{
-			get { return "grayscale"; }
+			get { return "desaturate"; }
 			set { }
 		}
 
@@ -23,6 +34,7 @@ namespace ImagePipeline
 		{
 			return new PortDefinition[] {
 				new PortDefinition(PortType.Bitmap, "src"),
+				new PortDefinition(PortType.Float, "amount"),
 			};
 		}
 
@@ -35,9 +47,7 @@ namespace ImagePipeline
 
 		public override NodeProperty[] GetProperties()
 		{
-			return new NodeProperty[] {
-				new NodeProperty(NodePropertyType.Float, "amount")
-			};
+			return null;
 		}
 
 		public override Task<PipelineResult> Process(PipelineArgs args)
@@ -51,12 +61,8 @@ namespace ImagePipeline
 			{
 				return Task.FromResult(new PipelineResult(null));
 			}
-			float amount = args.GetProperty<float>(0);
-			if (amount == 0)
-			{
-				return Task.FromResult(new PipelineResult(new DirectBitmap(img)));
-			}
 			DirectBitmap output = new DirectBitmap(img.Width, img.Height);
+			IFloatNodeInput floatReader = args.GetInput<IFloatNodeInput>(1) ?? new ConstantFloat(0);
 
 			for (int x = 0; x < img.Width; x++)
 			{
@@ -69,6 +75,7 @@ namespace ImagePipeline
 					//float bw = (g * 0.59f + r * 0.3f + b * 0.11f);
 					float bw = (Math.Min(r, Math.Min(g, b)) + Math.Max(r, Math.Max(g, b))) * 0.5f;
 
+					float amount = floatReader.Get(x, y);
 					float fr = r * (1 - amount) + bw * amount;
 					float fg = g * (1 - amount) + bw * amount;
 					float fb = b * (1 - amount) + bw * amount;

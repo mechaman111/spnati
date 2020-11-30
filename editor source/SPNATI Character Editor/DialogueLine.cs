@@ -116,6 +116,15 @@ namespace SPNATI_Character_Editor
 			set { if (_location != value) { _location = value; NotifyPropertyChanged(); } }
 		}
 
+		private string _layer;
+		[DefaultValue("")]
+		[XmlAttribute("dialogue-layer")]
+		public string Layer
+		{
+			get { return _layer; }
+			set { if (_layer != value) { _layer = value; NotifyPropertyChanged(); } }
+		}
+
 		private string _gender;
 		[DefaultValue("")]
 		[XmlAttribute("set-gender")]
@@ -223,6 +232,7 @@ namespace SPNATI_Character_Editor
 			copy._location = this._location;
 			copy._gender = this._gender;
 			copy._intelligence = this._intelligence;
+			copy._layer = this._layer;
 			copy._size = this._size;
 			copy._label = this._label;
 			copy._weight = this._weight;
@@ -264,6 +274,7 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (CollectibleValue ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ IsMarkerPersistent.GetHashCode();
 			hash = (hash * 397) ^ (OneShotId > 0 ? OneShotId : -1);
+			hash = (hash * 397) ^ (Layer ?? string.Empty).GetHashCode();
 			foreach (MarkerOperation op in Markers)
 			{
 				hash = (hash * 397) ^ op.GetHashCode();
@@ -328,7 +339,7 @@ namespace SPNATI_Character_Editor
 			get
 			{
 				return !string.IsNullOrEmpty(Gender) || !string.IsNullOrEmpty(Size) || Intelligence != null || (!string.IsNullOrEmpty(Direction) && Direction != "down") ||
-					Label != null || !string.IsNullOrEmpty(Location) || OneShotId > 0 || Weight != 1;
+					Label != null || !string.IsNullOrEmpty(Location) || !string.IsNullOrEmpty(Layer) || Weight != 1;
 			}
 		}
 

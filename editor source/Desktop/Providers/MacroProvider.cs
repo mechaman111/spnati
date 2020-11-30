@@ -10,6 +10,7 @@ namespace Desktop.Providers
 
 		private Type _filterType;
 		public bool AllowsNew { get { return true; } }
+		public bool AllowsDelete { get { return false; } }
 
 		public IRecord Create(string key)
 		{

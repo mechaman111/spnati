@@ -53,7 +53,7 @@ namespace SPNATI_Character_Editor.Controls
 			txtLabel.Text = line.Label;
 			chkResetAI.Checked = line.Intelligence == "";
 			chkResetLabel.Checked = line.Label == "";
-			chkOneShot.Checked = line.OneShotId > 0;
+			chkLayer.Checked = line.Layer == "over";
 
 			valWeight.Value = Math.Max(valWeight.Minimum, Math.Min(valWeight.Maximum, (decimal)line.Weight));
 
@@ -132,17 +132,7 @@ namespace SPNATI_Character_Editor.Controls
 				_line.Label = label;
 			}
 
-			if (chkOneShot.Checked)
-			{
-				if (_line.OneShotId == 0)
-				{
-					_line.OneShotId = ++_character.Behavior.MaxStateId;
-				}
-			}
-			else
-			{
-				_line.OneShotId = 0;
-			}
+			_line.Layer = chkLayer.Checked ? "over" : "";
 
 			return _line;
 		}

@@ -106,12 +106,15 @@ namespace ImagePipeline
 		public void OnAfterDeserialize(string source)
 		{
 			ApplyDefinition();
-			for (int i = 0; i < SerializedProperties.Count; i++)
+			if (SerializedProperties != null)
 			{
-				object value = SerializedProperties[i].Deserialize(Definition.Properties[i]);
-				SetProperty(i, value);
+				for (int i = 0; i < SerializedProperties.Count; i++)
+				{
+					object value = SerializedProperties[i].Deserialize(Definition.Properties[i]);
+					SetProperty(i, value);
+				}
+				SerializedProperties = null;
 			}
-			SerializedProperties = null;
 		}
 
 		private void ApplyDefinition()
@@ -187,7 +190,8 @@ namespace ImagePipeline
 							cellRef.SheetName.Replace("/", "&sol;"),
 							cellRef.Stage.ToString(),
 							(cellRef.StageName ?? "").Replace("/", "&sol;"),
-							cellRef.Key.Replace("/", "&sol;")
+							cellRef.Key.Replace("/", "&sol;"),
+							(cellRef.CharacterFolder ?? "").Replace("/", "&sol;")
 						}));
 						break;
 					case NodePropertyType.Float:
@@ -198,6 +202,10 @@ namespace ImagePipeline
 						Point pt = (Point)value;
 						Values.Add(pt.X.ToString());
 						Values.Add(pt.Y.ToString());
+						break;
+					case NodePropertyType.Color:
+						int n = ((Color)value).ToArgb();
+						Values.Add(n.ToString());
 						break;
 				}
 			}
@@ -243,6 +251,10 @@ namespace ImagePipeline
 					{
 						cellRef.StageName = pieces[2].Replace("&sol;", "/");
 					}
+					if (pieces.Length > 4 && !string.IsNullOrEmpty(pieces[4]))
+					{
+						cellRef.CharacterFolder = pieces[4].Replace("&sol;", "/");
+					}
 					return cellRef;
 				case NodePropertyType.Point:
 					int x;
@@ -250,6 +262,10 @@ namespace ImagePipeline
 					int.TryParse(Values[0], out x);
 					int.TryParse(Values[1], out y);
 					return new Point(x, y);
+				case NodePropertyType.Color:
+					int c;
+					int.TryParse(Values[0], out c);
+					return Color.FromArgb(c);
 				default:
 					return property.DefaultValue;
 			}

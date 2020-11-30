@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Threading.Tasks;
-using SPNATI_Character_Editor;
 
 namespace ImagePipeline
 {
@@ -27,7 +25,10 @@ namespace ImagePipeline
 			return null;
 		}
 
-		public override string Name => "Result";
+		public override string Name
+		{
+			get { return "Result"; }
+		}
 		public override string Key
 		{
 			get { return "root"; }

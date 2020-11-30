@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GraphEditor));
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.tsAddNode = new System.Windows.Forms.ToolStripButton();
 			this.tsRemoveNode = new System.Windows.Forms.ToolStripButton();
@@ -37,6 +38,7 @@
 			this.skinnedSplitContainer1 = new Desktop.Skinning.SkinnedSplitContainer();
 			this.grpPreview = new Desktop.Skinning.SkinnedGroupBox();
 			this.picPreview = new SPNATI_Character_Editor.Controls.CharacterImageBox();
+			this.tsSaveAs = new System.Windows.Forms.ToolStripButton();
 			this.toolStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.skinnedSplitContainer1)).BeginInit();
 			this.skinnedSplitContainer1.Panel1.SuspendLayout();
@@ -50,7 +52,8 @@
 			this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsAddNode,
-            this.tsRemoveNode});
+            this.tsRemoveNode,
+            this.tsSaveAs});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(779, 25);
@@ -140,6 +143,18 @@
 			this.picPreview.Size = new System.Drawing.Size(231, 428);
 			this.picPreview.TabIndex = 0;
 			// 
+			// tsSaveAs
+			// 
+			this.tsSaveAs.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.tsSaveAs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsSaveAs.Image = ((System.Drawing.Image)(resources.GetObject("tsSaveAs.Image")));
+			this.tsSaveAs.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsSaveAs.Name = "tsSaveAs";
+			this.tsSaveAs.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.tsSaveAs.Size = new System.Drawing.Size(60, 22);
+			this.tsSaveAs.Text = "Save As...";
+			this.tsSaveAs.Click += new System.EventHandler(this.tsSaveAs_Click);
+			// 
 			// GraphEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -170,5 +185,6 @@
 		private Desktop.Skinning.SkinnedSplitContainer skinnedSplitContainer1;
 		private Desktop.Skinning.SkinnedGroupBox grpPreview;
 		private CharacterImageBox picPreview;
+		private System.Windows.Forms.ToolStripButton tsSaveAs;
 	}
 }

@@ -87,6 +87,7 @@ namespace SPNATI_Character_Editor.Controls.Reference
 	public class BackgroundReferenceProvider : IRecordProvider<BackgroundReferenceRecord>
 	{
 		public bool AllowsNew { get { return false; } }
+		public bool AllowsDelete { get { return false; } }
 
 		public bool TrackRecent { get { return false; } }
 

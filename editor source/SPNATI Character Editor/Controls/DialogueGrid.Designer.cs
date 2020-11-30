@@ -33,16 +33,17 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridDialogue = new Desktop.Skinning.SkinnedDataGridView();
+			this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.applyToColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ColImage = new Desktop.Skinning.SkinnedDataGridViewComboBoxColumn();
 			this.ColImageOptions = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
 			this.ColText = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColMarker = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColMarkerOptions = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
+			this.ColOnce = new Desktop.Skinning.SkinnedDataGridViewCheckBoxColumn();
 			this.ColTrophy = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
 			this.ColMore = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
 			this.ColDelete = new Desktop.Skinning.SkinnedDataGridViewButtonColumn();
-			this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.applyToColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.gridDialogue)).BeginInit();
 			this.mnuContext.SuspendLayout();
 			this.SuspendLayout();
@@ -69,6 +70,7 @@
             this.ColText,
             this.ColMarker,
             this.ColMarkerOptions,
+            this.ColOnce,
             this.ColTrophy,
             this.ColMore,
             this.ColDelete});
@@ -115,6 +117,21 @@
 			this.gridDialogue.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.gridDialogue_RowsAdded);
 			this.gridDialogue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridDialogue_KeyDown);
 			// 
+			// mnuContext
+			// 
+			this.mnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.applyToColumnToolStripMenuItem});
+			this.mnuContext.Name = "mnuContext";
+			this.mnuContext.Size = new System.Drawing.Size(166, 26);
+			this.mnuContext.Opening += new System.ComponentModel.CancelEventHandler(this.mnuContext_Opening);
+			// 
+			// applyToColumnToolStripMenuItem
+			// 
+			this.applyToColumnToolStripMenuItem.Name = "applyToColumnToolStripMenuItem";
+			this.applyToColumnToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+			this.applyToColumnToolStripMenuItem.Text = "Apply to Column";
+			this.applyToColumnToolStripMenuItem.Click += new System.EventHandler(this.applyToColumnToolStripMenuItem_Click);
+			// 
 			// ColImage
 			// 
 			this.ColImage.AutoComplete = false;
@@ -153,6 +170,13 @@
 			this.ColMarkerOptions.Name = "ColMarkerOptions";
 			this.ColMarkerOptions.Width = 21;
 			// 
+			// ColOnce
+			// 
+			this.ColOnce.HeaderText = "";
+			this.ColOnce.Name = "ColOnce";
+			this.ColOnce.ToolTipText = "Only play once per game";
+			this.ColOnce.Width = 21;
+			// 
 			// ColTrophy
 			// 
 			this.ColTrophy.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
@@ -177,21 +201,6 @@
 			this.ColDelete.Name = "ColDelete";
 			this.ColDelete.Width = 21;
 			// 
-			// mnuContext
-			// 
-			this.mnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.applyToColumnToolStripMenuItem});
-			this.mnuContext.Name = "mnuContext";
-			this.mnuContext.Size = new System.Drawing.Size(181, 48);
-			this.mnuContext.Opening += new System.ComponentModel.CancelEventHandler(this.mnuContext_Opening);
-			// 
-			// applyToColumnToolStripMenuItem
-			// 
-			this.applyToColumnToolStripMenuItem.Name = "applyToColumnToolStripMenuItem";
-			this.applyToColumnToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.applyToColumnToolStripMenuItem.Text = "Apply to Column";
-			this.applyToColumnToolStripMenuItem.Click += new System.EventHandler(this.applyToColumnToolStripMenuItem_Click);
-			// 
 			// DialogueGrid
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -209,15 +218,16 @@
 		#endregion
 
 		private Desktop.Skinning.SkinnedDataGridView gridDialogue;
+		private System.Windows.Forms.ContextMenuStrip mnuContext;
+		private System.Windows.Forms.ToolStripMenuItem applyToColumnToolStripMenuItem;
 		private Desktop.Skinning.SkinnedDataGridViewComboBoxColumn ColImage;
 		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColImageOptions;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColText;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColMarker;
 		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColMarkerOptions;
+		private Desktop.Skinning.SkinnedDataGridViewCheckBoxColumn ColOnce;
 		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColTrophy;
 		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColMore;
 		private Desktop.Skinning.SkinnedDataGridViewButtonColumn ColDelete;
-		private System.Windows.Forms.ContextMenuStrip mnuContext;
-		private System.Windows.Forms.ToolStripMenuItem applyToColumnToolStripMenuItem;
 	}
 }

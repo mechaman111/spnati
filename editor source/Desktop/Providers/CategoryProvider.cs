@@ -13,6 +13,7 @@ namespace Desktop.Providers
 		{
 			get { return false; }
 		}
+		public bool AllowsDelete { get { return false; } }
 
 		public bool TrackRecent
 		{

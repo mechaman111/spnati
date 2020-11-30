@@ -267,6 +267,17 @@ namespace SPNATI_Character_Editor.Controls
 
 			line.Pose = pose;
 			line.Text = text ?? "";
+			if (row.Cells[nameof(ColOnce)].Value != null && (bool)row.Cells[nameof(ColOnce)].Value == true)
+			{
+				if (line.OneShotId == 0)
+				{
+					line.OneShotId = ++_character.Behavior.MaxStateId;
+				}
+			}
+			else
+			{
+				line.OneShotId = 0;
+			}
 
 			Tuple<string, string> collectibleData = row.Cells[nameof(ColTrophy)].Tag as Tuple<string, string>;
 			if (collectibleData != null)
@@ -419,7 +430,7 @@ namespace SPNATI_Character_Editor.Controls
 		private void gridDialogue_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
 		{
 			if (e.ColumnIndex == ColDelete.Index || e.ColumnIndex == ColTrophy.Index || e.ColumnIndex == ColMarkerOptions.Index || e.ColumnIndex == ColMore.Index
-				|| e.ColumnIndex == ColImageOptions.Index)
+				|| e.ColumnIndex == ColImageOptions.Index || e.ColumnIndex == ColOnce.Index)
 			{
 				Image img = Properties.Resources.Delete;
 				if (e.ColumnIndex == ColTrophy.Index)
@@ -460,6 +471,17 @@ namespace SPNATI_Character_Editor.Controls
 						{
 							img = Properties.Resources.EllipsisFilled;
 						}
+					}
+				}
+				else if (e.ColumnIndex == ColOnce.Index)
+				{
+					if (e.RowIndex == -1)
+					{
+						img = Properties.Resources.PlayOnce;
+					}
+					else
+					{
+						return;
 					}
 				}
 				else if (e.ColumnIndex == ColImageOptions.Index)
@@ -772,6 +794,7 @@ namespace SPNATI_Character_Editor.Controls
 			
 			row.Cells[nameof(ColTrophy)].Tag = new Tuple<string, string>(line.CollectibleId, line.CollectibleValue);
 			row.Cells[nameof(ColMarkerOptions)].ToolTipText = GetMarkerTooltip(line);
+			row.Cells[nameof(ColOnce)].Value = (line.OneShotId > 0 ? true : false);
 			_modifyingLine = false;
 
 			gridDialogue.InvalidateRow(row.Index);
@@ -1149,6 +1172,7 @@ namespace SPNATI_Character_Editor.Controls
 						otherLine.Location = line.Location;
 						otherLine.Size = line.Size;
 						otherLine.Label = line.Label;
+						otherLine.Layer = line.Layer;
 						if (line.OneShotId > 0)
 						{
 							otherLine.OneShotId = ++_character.Behavior.MaxStateId;

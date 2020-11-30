@@ -476,6 +476,7 @@ namespace SPNATI_Character_Editor
 	public class TriggerProvider : IRecordProvider<TriggerDefinition>
 	{
 		public bool AllowsNew { get { return false; } }
+		public bool AllowsDelete { get { return false; } }
 
 		public bool TrackRecent { get { return false; } }
 

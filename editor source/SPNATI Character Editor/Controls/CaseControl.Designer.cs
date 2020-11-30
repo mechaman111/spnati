@@ -33,6 +33,7 @@
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
 			this.tabCase = new Desktop.Skinning.SkinnedTabControl();
 			this.tabConditions = new System.Windows.Forms.TabPage();
+			this.chkPlayOnce = new Desktop.Skinning.SkinnedCheckBox();
 			this.stripConditions = new Desktop.Skinning.SkinnedTabStrip();
 			this.tabsConditions = new Desktop.Skinning.SkinnedTabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -140,6 +141,7 @@
 			// tabConditions
 			// 
 			this.tabConditions.BackColor = System.Drawing.Color.White;
+			this.tabConditions.Controls.Add(this.chkPlayOnce);
 			this.tabConditions.Controls.Add(this.stripConditions);
 			this.tabConditions.Controls.Add(this.skinnedPanel2);
 			this.tabConditions.Controls.Add(this.valPriority);
@@ -155,6 +157,19 @@
 			this.tabConditions.TabIndex = 0;
 			this.tabConditions.Text = "General";
 			// 
+			// chkPlayOnce
+			// 
+			this.chkPlayOnce.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.chkPlayOnce.AutoSize = true;
+			this.chkPlayOnce.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkPlayOnce.Location = new System.Drawing.Point(392, 128);
+			this.chkPlayOnce.Name = "chkPlayOnce";
+			this.chkPlayOnce.Size = new System.Drawing.Size(75, 17);
+			this.chkPlayOnce.TabIndex = 63;
+			this.chkPlayOnce.Text = "Play Once";
+			this.toolTip1.SetToolTip(this.chkPlayOnce, "Only play a single line from this case once per game");
+			this.chkPlayOnce.UseVisualStyleBackColor = true;
+			// 
 			// stripConditions
 			// 
 			this.stripConditions.AddCaption = "AND";
@@ -167,7 +182,7 @@
 			this.stripConditions.PanelType = Desktop.Skinning.SkinnedBackgroundType.Background;
 			this.stripConditions.ShowAddButton = true;
 			this.stripConditions.ShowCloseButton = false;
-			this.stripConditions.Size = new System.Drawing.Size(459, 28);
+			this.stripConditions.Size = new System.Drawing.Size(383, 28);
 			this.stripConditions.StartMargin = 5;
 			this.stripConditions.TabControl = this.tabsConditions;
 			this.stripConditions.TabIndex = 61;
@@ -785,5 +800,6 @@
 		private System.Windows.Forms.TabPage tabPage1;
 		private Desktop.Skinning.SkinnedPanel skinnedPanel2;
 		private Desktop.Skinning.SkinnedCheckBox chkBackground;
+		private Desktop.Skinning.SkinnedCheckBox chkPlayOnce;
 	}
 }

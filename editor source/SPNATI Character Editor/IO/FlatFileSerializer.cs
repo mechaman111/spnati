@@ -335,6 +335,10 @@ namespace SPNATI_Character_Editor
 					{
 						lineCode += $",location:{defaultLine.Location}";
 					}
+					if (!string.IsNullOrEmpty(defaultLine.Layer))
+					{
+						lineCode += $",dialogue-layer:{defaultLine.Location}";
+					}
 					if (!string.IsNullOrEmpty(defaultLine.Gender))
 					{
 						lineCode += $",set-gender:{defaultLine.Gender}";
@@ -1439,6 +1443,9 @@ namespace SPNATI_Character_Editor
 						break;
 					case "location":
 						line.Location = value;
+						break;
+					case "dialogue-layer":
+						line.Layer = value;
 						break;
 					case "direction":
 						line.Direction = value;

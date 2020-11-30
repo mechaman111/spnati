@@ -109,6 +109,35 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 			form.ShowDialog();
 		}
 
+		private void cmdParams_Click(object sender, EventArgs e)
+		{
+			List<string> parameters = new List<string>();
+			PoseEntry cell = Data as PoseEntry;
+			PoseStage stage = Data as PoseStage;
+			if (cell != null)
+			{
+				parameters = cell.PipelineParameters;
+			}
+			else if (stage != null)
+			{
+				parameters = stage.PipelineParameters;
+			}
+
+			PipelineParametersForm form = new PipelineParametersForm();
+			form.SetData(parameters);
+			if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			{
+				parameters = form.Parameters;
+				if (cell != null)
+				{
+					cell.PipelineParameters = parameters;
+				}
+				else if (stage != null)
+				{
+					stage.PipelineParameters = parameters;
+				}
+			}
+		}
 	}
 
 	public class PipelineSelectAttribute : EditControlAttribute

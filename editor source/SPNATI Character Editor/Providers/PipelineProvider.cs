@@ -9,6 +9,7 @@ namespace SPNATI_Character_Editor.Providers
 	public class PipelineProvider : IRecordProvider<IPipelineNode>
 	{
 		public bool AllowsNew { get { return false; } }
+		public bool AllowsDelete { get { return false; } }
 		public bool TrackRecent { get { return false; } }
 
 		private static Dictionary<string, IPipelineNode> _nodes;

@@ -299,10 +299,18 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 					}
 					else
 					{
+						ctl = new NodeNumberControl();
 					}
 					break;
 				case NodePropertyType.Float:
-					ctl = new NodeSliderControl();
+					if (property.DataType == typeof(bool))
+					{
+						ctl = new NodeFloatControl();
+					}
+					else
+					{
+						ctl = new NodeSliderControl();
+					}
 					break;
 				case NodePropertyType.ImageFile:
 					ctl = new NodeFileControl();
@@ -313,14 +321,21 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 				case NodePropertyType.Point:
 					ctl = new NodePointControl();
 					break;
+				case NodePropertyType.Boolean:
+					ctl = new NodeBooleanControl();
+					break;
+				case NodePropertyType.Color:
+					ctl = new NodeColorControl();
+					break;
 			}
 
 			if (ctl != null)
 			{
-				Label label = new Label();
+				SkinnedLabel label = new SkinnedLabel();
 				label.Text = property.Name + ":";
 				label.Left = BoxPadding * 2;
-				label.Top = top + 4;
+				label.Top = top + 3;
+				label.Level = SkinnedLabelLevel.Label;
 				int width = labelWidth;
 				label.Width = width + 3;
 				Controls.Add(label);
@@ -329,6 +344,8 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 				ctl.Top = top;
 				Controls.Add(ctl);
 				INodeControl nodeCtl = ctl as INodeControl;
+				label.OnUpdateSkin(SkinManager.Instance.CurrentSkin);
+				label.BackColor = Color.Transparent;
 				nodeCtl.SetData(Node, index);
 				return top + BoxPadding + ctl.Height;
 			}
@@ -337,10 +354,7 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 
 		private void InvalidatePreview()
 		{
-			if (_previewIndex >= 0)
-			{
-				PreviewInvalidated?.Invoke(this, EventArgs.Empty);
-			}
+			PreviewInvalidated?.Invoke(this, EventArgs.Empty);
 		}
 
 		public void SetPreview(PipelineResult preview)
@@ -479,6 +493,7 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 			}
 			else
 			{
+				g.FillEllipse(skin.Background.GetBrush(VisualState.Normal, false, true), pt.X - BoxPadding, pt.Y - BoxPadding, size, size);
 				g.DrawEllipse(pen, pt.X - BoxPadding, pt.Y - BoxPadding, size, size);
 			}
 

@@ -601,6 +601,14 @@ namespace SPNATI_Character_Editor.DataStructures
 			set { Set(value); }
 		}
 
+		[XmlArray("pipe-params")]
+		[XmlArrayItem("parameter")]
+		public List<string> PipelineParameters
+		{
+			get { return Get<List<string>>(); }
+			set { Set(value); }
+		}
+
 		[XmlArray("poses")]
 		[XmlArrayItem("pose")]
 		public ObservableCollection<PoseEntry> Poses
@@ -830,6 +838,14 @@ namespace SPNATI_Character_Editor.DataStructures
 		public string Pipeline
 		{
 			get { return Get<string>(); }
+			set { Set(value); }
+		}
+
+		[XmlArray("pipe-params")]
+		[XmlArrayItem("parameter")]
+		public List<string> PipelineParameters
+		{
+			get { return Get<List<string>>(); }
 			set { Set(value); }
 		}
 
