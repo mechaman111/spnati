@@ -127,5 +127,47 @@ namespace SPNATI_Character_Editor.Forms
 			}
 			return data;
 		}
+
+		private void cmdHeadOff_Click(object sender, System.EventArgs e)
+		{
+			UpdateSliders(panelHead, 0);
+		}
+
+		private void cmdHeadOn_Click(object sender, System.EventArgs e)
+		{
+			UpdateSliders(panelHead, 100);
+		}
+
+		private void cmdBodyOff_Click(object sender, System.EventArgs e)
+		{
+			UpdateSliders(panelBody, 0);
+		}
+
+		private void cmdBodyOn_Click(object sender, System.EventArgs e)
+		{
+			UpdateSliders(panelBody, 100);
+		}
+
+		private void cmdClothesOff_Click(object sender, System.EventArgs e)
+		{
+			UpdateSliders(panelClothing, 0);
+		}
+
+		private void cmdClothesOn_Click(object sender, System.EventArgs e)
+		{
+			UpdateSliders(panelClothing, 100);
+		}
+
+		private void UpdateSliders(Panel panel, int value)
+		{
+			foreach (Control ctl in panel.Controls)
+			{
+				PartTransparencySlider slider = ctl as PartTransparencySlider;
+				if (slider != null)
+				{
+					slider.Value = value;
+				}
+			}
+		}
 	}
 }

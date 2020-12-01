@@ -185,7 +185,7 @@ namespace KisekaeImporter.ImageImport
 				}
 				lines.Add(data);
 
-				if (_client.Connected)
+				if (_client.Connected && lines.Count <= 1) //KKL104 seems really bad with transparencies, so use the old import method with them
 				{
 					//use remote protocol
 

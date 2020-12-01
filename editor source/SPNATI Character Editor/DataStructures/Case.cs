@@ -79,7 +79,7 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// Case will only play once
 		/// </summary>
-		[OneShot(OneShotMode.Case, DisplayName = "Play Once", GroupName = "Self", GroupOrder = 98, Description = "This call will only play once per game.")]
+		//[OneShot(OneShotMode.Case, DisplayName = "Play Once", GroupName = "Self", GroupOrder = 98, Description = "This call will only play once per game.")]
 		[DefaultValue(0)]
 		[XmlOrder(10)]
 		[JsonProperty("oneShotId")]
@@ -2051,7 +2051,7 @@ namespace SPNATI_Character_Editor
 								break;
 							}
 						}
-						if (!string.IsNullOrEmpty(marker))
+						if (!string.IsNullOrEmpty(marker) && string.IsNullOrEmpty(cond.Count))
 						{
 							if (marker.StartsWith("+") || marker.StartsWith("-"))
 							{

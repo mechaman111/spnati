@@ -15,9 +15,8 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Spacer]
-	[Activity(typeof(Character), 200)]
-	[Activity(typeof(Costume), 200)]
+	[Activity(typeof(Character), 200, DelayRun = true, Caption = "Pose Lists")]
+	[Activity(typeof(Costume), 200, DelayRun = true, Caption = "Pose Lists")]
 	public partial class PoseListEditor : Activity
 	{
 		private const int MiniHeight = 200;

@@ -278,6 +278,23 @@ namespace SPNATI_Character_Editor
 			return $"{Name} [{Key}]";
 		}
 
+		/// <summary>
+		/// Gets the path to a pose file on disk
+		/// </summary>
+		/// <param name="subfolder"></param>
+		/// <param name="poseName"></param>
+		/// <param name="asset"></param>
+		/// <returns></returns>
+		public string GetPosePath(string subfolder, string poseName, bool asset)
+		{
+			string root = asset ? Path.Combine(Config.AppDataDirectory, FolderName) : Path.Combine(GetDirectory());
+			if (!string.IsNullOrEmpty(subfolder))
+			{
+				root = Path.Combine(root, subfolder);
+			}
+			return Path.Combine(root, poseName + ".png");
+		}
+
 		public int CompareTo(IRecord other)
 		{
 			return Label.CompareTo((other as Character).Label);

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace SPNATI_Character_Editor.Activities
 {
 	[Spacer]
-	[Activity(typeof(Character), 300)]
+	[Activity(typeof(Character), 300, DelayRun = true, Caption = "Banter Wizard")]
 	public partial class BanterWizard : Activity
 	{
 		private Character _character;

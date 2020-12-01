@@ -358,6 +358,12 @@
     <Compile Include="Controls\EditControls\OneShotControl.Designer.cs">
       <DependentUpon>OneShotControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EditControls\PipelineEditControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EditControls\PipelineEditControl.Designer.cs">
+      <DependentUpon>PipelineEditControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\EditControls\PoseMatchControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -537,6 +543,65 @@
     </Compile>
     <Compile Include="Controls\PartTransparencySlider.Designer.cs">
       <DependentUpon>PartTransparencySlider.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pipelines\GraphEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Pipelines\GraphEditor.Designer.cs">
+      <DependentUpon>GraphEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\INodeControl.cs" />
+    <Compile Include="Controls\Pipelines\NodeControls\NodeBooleanControl.cs" />
+    <Compile Include="Controls\Pipelines\NodeControls\NodeBooleanControl.Designer.cs">
+      <DependentUpon>NodeBooleanControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeCellControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeCellControl.Designer.cs">
+      <DependentUpon>NodeCellControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeColorControl.cs" />
+    <Compile Include="Controls\Pipelines\NodeControls\NodeColorControl.Designer.cs">
+      <DependentUpon>NodeColorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeEnumControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeEnumControl.Designer.cs">
+      <DependentUpon>NodeEnumControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeFileControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeFileControl.Designer.cs">
+      <DependentUpon>NodeFileControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeFloatControl.cs" />
+    <Compile Include="Controls\Pipelines\NodeControls\NodeFloatControl.Designer.cs">
+      <DependentUpon>NodeFloatControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeNumberControl.cs" />
+    <Compile Include="Controls\Pipelines\NodeControls\NodeNumberControl.Designer.cs">
+      <DependentUpon>NodeNumberControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodePointControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodePointControl.Designer.cs">
+      <DependentUpon>NodePointControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeSliderControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeSliderControl.Designer.cs">
+      <DependentUpon>NodeSliderControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pipelines\PipelineNodeControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Pipelines\PipelineNodeControl.Designer.cs">
+      <DependentUpon>PipelineNodeControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Reference\BackgroundGuide.cs">
       <SubType>UserControl</SubType>
@@ -1001,6 +1066,49 @@
     <Compile Include="Forms\ImportLineupForm.Designer.cs">
       <DependentUpon>ImportLineupForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PipelineEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PipelineEditor.Designer.cs">
+      <DependentUpon>PipelineEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PipelineParameterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PipelineParameterForm.Designer.cs">
+      <DependentUpon>PipelineParameterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PoseSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PoseSelectionForm.Designer.cs">
+      <DependentUpon>PoseSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImagePipeline\ChannelReader.cs" />
+    <Compile Include="ImagePipeline\DirectBitmap.cs" />
+    <Compile Include="ImagePipeline\IPipelineNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\BlendNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\CellNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\CellReferenceNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\ChannelMixerNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\ColorMaskNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\ColorNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\DesaturateNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\FileNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\FloatNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\IntegerNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\InvertColorsNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\NodeDefinition.cs" />
+    <Compile Include="ImagePipeline\Nodes\ParameterNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\ReplaceColorNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\ResultNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\SliderNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\SplitterNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\SwizzleNode.cs" />
+    <Compile Include="ImagePipeline\PipelineGraph.cs" />
+    <Compile Include="ImagePipeline\PipelineImporter.cs" />
+    <Compile Include="ImagePipeline\PipelineNode.cs" />
+    <Compile Include="ImagePipeline\ShaderFunctions.cs" />
     <Compile Include="MarkerOperation.cs" />
     <Compile Include="DialogueLine.cs" />
     <Compile Include="EpilogueEditing\AnimationHelpers.cs" />
@@ -1252,6 +1360,8 @@
     <Compile Include="IO\CharacterStyleSheetSerializer.cs" />
     <Compile Include="Providers\CaseGroupProvider.cs" />
     <Compile Include="Providers\FilterTypeProvider.cs" />
+    <Compile Include="Providers\PipelineGraphProvider.cs" />
+    <Compile Include="Providers\PipelineProvider.cs" />
     <Compile Include="Services\IImageCompressor.cs" />
     <Compile Include="Services\KisekaeOnlineConverter.cs" />
     <Compile Include="Services\KisekaeConverter.cs" />
@@ -1605,6 +1715,39 @@
     <EmbeddedResource Include="Controls\PartTransparencySlider.resx">
       <DependentUpon>PartTransparencySlider.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pipelines\GraphEditor.resx">
+      <DependentUpon>GraphEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pipelines\NodeControls\NodeBooleanControl.resx">
+      <DependentUpon>NodeBooleanControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pipelines\NodeControls\NodeCellControl.resx">
+      <DependentUpon>NodeCellControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pipelines\NodeControls\NodeColorControl.resx">
+      <DependentUpon>NodeColorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pipelines\NodeControls\NodeEnumControl.resx">
+      <DependentUpon>NodeEnumControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pipelines\NodeControls\NodeFileControl.resx">
+      <DependentUpon>NodeFileControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pipelines\NodeControls\NodeFloatControl.resx">
+      <DependentUpon>NodeFloatControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pipelines\NodeControls\NodeNumberControl.resx">
+      <DependentUpon>NodeNumberControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pipelines\NodeControls\NodePointControl.resx">
+      <DependentUpon>NodePointControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pipelines\NodeControls\NodeSliderControl.resx">
+      <DependentUpon>NodeSliderControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pipelines\PipelineNodeControl.resx">
+      <DependentUpon>PipelineNodeControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Reference\BackgroundGuide.resx">
       <DependentUpon>BackgroundGuide.cs</DependentUpon>
     </EmbeddedResource>
@@ -1773,8 +1916,14 @@
     <EmbeddedResource Include="Forms\MarkerSetup.resx">
       <DependentUpon>MarkerSetup.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PipelineEditor.resx">
+      <DependentUpon>PipelineEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PoseExporter.resx">
       <DependentUpon>PoseExporter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PoseSelectionForm.resx">
+      <DependentUpon>PoseSelectionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PoseSettingsForm.resx">
       <DependentUpon>PoseSettingsForm.cs</DependentUpon>
@@ -1872,6 +2021,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Icons\FileMissing.png" />
+    <Content Include="Help\images\pipeline.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\pipeline_blend.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\pipeline_button.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\pipeline_code.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\pipelines.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Help\images\casetemplates_editor.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1901,7 +2065,6 @@
     <None Include="Icons\Missing.png" />
     <None Include="Icons\Edit.png" />
     <None Include="Icons\PoseList.png" />
-    <None Include="Icons\Search.png" />
     <None Include="Icons\Replace.png" />
     <None Include="Icons\LinkToEnd.png" />
     <None Include="Icons\LinkToEndFill.png" />
@@ -1918,7 +2081,11 @@
     <Content Include="Help\casetemplates.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Icons\PlayEnd.png" />
+    <None Include="Icons\FileOutdated.png" />
+    <None Include="Icons\AddRow.png" />
+    <None Include="Icons\RemoveRow.png" />
+    <None Include="Icons\Pipeline.png" />
+    <None Include="Icons\PlayOnce.png" />
     <Content Include="Resources\Images\BaseCode.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1935,6 +2102,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Images\StageCode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v6.2.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="VersionHistory\v6.1.html">

@@ -15,10 +15,10 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public static class Serialization
 	{
-		public static bool ExportListing(Listing listing)
+		public static bool ExportListing(Listing listing, string name)
 		{
 			string dir = Path.Combine(Config.GetString(Settings.GameDirectory), "opponents");
-			string filename = Path.Combine(dir, "listing.xml");
+			string filename = Path.Combine(dir, name);
 			XmlSerializer serializer = new XmlSerializer(typeof(Listing), "");
 			XmlWriter writer = null;
 			try
@@ -30,15 +30,6 @@ namespace SPNATI_Character_Editor
 				writer = XmlWriter.Create(filename, settings);
 				serializer.Serialize(writer, listing);
 				writer.Close();
-
-				//Manually clean up the file to put the comments back. Doing this instead of a custom serializer since I'm lazy
-				string contents = File.ReadAllText(filename);
-				contents = contents.Replace(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"", "");
-				int index = contents.IndexOf(">");
-				contents = contents.Substring(0, index + 1) + "\r\n<!--\r\n This file contains listings for all of the opponents in the game.\r\n It is used to compile the opponents on the select screen.\r\n -->\r\n" + contents.Substring(index + 1);
-				contents = contents.Replace("\t<individuals>", "\r\n\t<!-- Individual Listings -->\r\n\t<individuals>");
-				contents = contents.Replace("\t<groups>", "\r\n\t<!-- Group Listings -->\r\n\t<groups>");
-				File.WriteAllText(filename, contents);
 			}
 			catch (IOException e)
 			{
@@ -221,10 +212,14 @@ namespace SPNATI_Character_Editor
 			catch { }
 		}
 
-		public static Listing ImportListing()
+		public static Listing ImportListing(string name)
 		{
 			string dir = Path.Combine(Config.GetString(Settings.GameDirectory), "opponents");
-			string filename = Path.Combine(dir, "listing.xml");
+			string filename = Path.Combine(dir, name);
+			if (!File.Exists(filename))
+			{
+				return new Listing();
+			}
 			TextReader reader = null;
 			try
 			{

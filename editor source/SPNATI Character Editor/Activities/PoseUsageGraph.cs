@@ -7,7 +7,7 @@ using Desktop.Skinning;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Activity(typeof(Character), 800)]
+	[Activity(typeof(Character), 800, DelayRun = true, Caption = "Pose Usage")]
 	public partial class PoseUsageGraph : Activity
 	{
 		private Character _character;

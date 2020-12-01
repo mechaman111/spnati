@@ -234,22 +234,23 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		private void ReorderSprites()
 		{
-			Dictionary<LiveSprite, int> order = new Dictionary<LiveSprite, int>();
-			DrawingOrder.Clear();
-			for (int i = 0; i < Sprites.Count; i++)
-			{
-				order[Sprites[i]] = i;
-			}
-			DrawingOrder.AddRange(Sprites);
-			DrawingOrder.Sort((s1, s2) =>
-			{
-				int compare = s1.Z.CompareTo(s2.Z);
-				if (compare == 0)
-				{
-					compare = order[s1].CompareTo(order[s2]);
-				}
-				return compare;
-			});
+			DrawingOrder = LiveObject.SortLayers(Sprites);
+			//Dictionary<LiveSprite, int> order = new Dictionary<LiveSprite, int>();
+			//DrawingOrder.Clear();
+			//for (int i = 0; i < Sprites.Count; i++)
+			//{
+			//	order[Sprites[i]] = i;
+			//}
+			//DrawingOrder.AddRange(Sprites);
+			//DrawingOrder.Sort((s1, s2) =>
+			//{
+			//	int compare = s1.Z.CompareTo(s2.Z);
+			//	if (compare == 0)
+			//	{
+			//		compare = order[s1].CompareTo(order[s2]);
+			//	}
+			//	return compare;
+			//});
 		}
 
 		public override event EventHandler<WidgetCreationArgs> WidgetMoved;

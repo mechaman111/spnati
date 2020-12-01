@@ -8,6 +8,7 @@ namespace SPNATI_Character_Editor.Providers
 	public abstract class DefinitionProvider<T> : IRecordProvider<T> where T : Definition, new()
 	{
 		public bool AllowsNew { get { return false; } }
+		public bool AllowsDelete { get { return false; } }
 		protected bool SearchDescription { get; set; }
 		protected object Context { get; set; }
 

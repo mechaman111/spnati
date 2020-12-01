@@ -31,8 +31,7 @@ namespace Desktop
 
 		private Dictionary<Type, SortedList<int, Type>> _recordToActivityMap;
 		private Dictionary<Type, Type> _recordToWorkspaceMap;
-		private Dictionary<Type, WorkspacePane> _activityToPaneMap;
-		private Dictionary<Type, int> _activityWidthMap;
+		private Dictionary<Type, ActivityMetadata> _activityMetadataMap;
 		private Dictionary<IWorkspace, WorkspaceControl> _workspaces = new Dictionary<IWorkspace, WorkspaceControl>();
 		private Dictionary<IWorkspace, TabPage> _tabs = new Dictionary<IWorkspace, TabPage>();
 		private Toaster _toaster = new Toaster();
@@ -127,8 +126,7 @@ namespace Desktop
 		{
 			_recordToWorkspaceMap = new Dictionary<Type, Type>();
 			_recordToActivityMap = new Dictionary<Type, SortedList<int, Type>>();
-			_activityToPaneMap = new Dictionary<Type, WorkspacePane>();
-			_activityWidthMap = new Dictionary<Type, int>();
+			_activityMetadataMap = new Dictionary<Type, ActivityMetadata>();
 			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
 			{
 				string name = assembly.FullName;
@@ -157,8 +155,18 @@ namespace Desktop
 							}
 							activities.Add(attr2.Order, type);
 
-							_activityToPaneMap[type] = attr2.Pane;
-							_activityWidthMap[type] = attr2.Width;
+							SpacerAttribute attr3 = type.GetCustomAttribute<SpacerAttribute>();
+
+							ActivityMetadata md = new ActivityMetadata()
+							{
+								Width = attr2.Width,
+								Caption = attr2.Caption,
+								DelayRun = attr2.DelayRun,
+								Pane = attr2.Pane,
+								ActivityType = type,
+								HasSpacer = attr3 != null,
+							};
+							_activityMetadataMap[type] = md;
 						}
 					}
 				}
@@ -382,7 +390,18 @@ namespace Desktop
 			IActivity activity = workspace.Find(activityType);
 			if (activity == null)
 			{
-				throw new NotImplementedException("No support for launching activities into an open workspace yet.");
+				//see if there's a placeholder
+				ActivityMetadata md = _activityMetadataMap[activityType];
+				if (workspace.HasPlaceholder(md))
+				{
+					//need to initialize the activity
+					activity = CreateActivityInWorkspace(workspace, activityType, false);
+				}
+				else
+				{
+					//activity isn't in the workspace
+					throw new NotImplementedException("No support for launching activities into an open workspace yet.");
+				}
 			}
 			Activate(activity);
 			activity.UpdateParameters(parameters);
@@ -591,31 +610,38 @@ namespace Desktop
 				{
 					if (ws.AllowAutoStart(type))
 					{
-						CreateActivityInWorkspace(ws, type);
+						CreateActivityInWorkspace(ws, type, true);
 					}
 				}
 			}
 		}
 
-		private IActivity CreateActivityInWorkspace(IWorkspace workspace, Type activityType)
+		private IActivity CreateActivityInWorkspace(IWorkspace workspace, Type activityType, bool allowDelay)
 		{
 			if (!typeof(IActivity).IsAssignableFrom(activityType))
 				throw new ArgumentException($"Activity type {activityType.Name} does not derive from Activity.");
+
+			ActivityMetadata md = _activityMetadataMap[activityType];
+			WorkspaceControl ctl = _workspaces[workspace];
+			if (allowDelay && md.DelayRun)
+			{
+				ctl.AddActivityTab(md);
+				workspace.AddActivityPlaceholder(md);
+				return null;
+			}
 
 			IActivity a = Activator.CreateInstance(activityType) as IActivity;
 			if (!a.CanRun())
 			{
 				return null;
 			}
-			int width = _activityWidthMap[activityType];
-			WorkspacePane pane = _activityToPaneMap[activityType];
-			a.SidebarWidth = width;
-			a.Pane = pane;
+			
+			a.SidebarWidth = md.Width;
+			a.Pane = md.Pane;
 			a.Initialize(workspace, workspace.Record);
-
-			WorkspaceControl ctl = _workspaces[workspace];
-			ctl.AddActivity(a);
-			workspace.AddActivity(a);
+			
+			ctl.AddActivity(a, md);
+			workspace.AddActivity(a, md);
 			return a;
 		}
 
@@ -1010,5 +1036,15 @@ namespace Desktop
 			Activity = activityType;
 			Parameters = parameters;
 		}
+	}
+
+	public class ActivityMetadata
+	{
+		public bool HasSpacer;
+		public WorkspacePane Pane;
+		public int Width;
+		public bool DelayRun;
+		public string Caption;
+		public Type ActivityType;
 	}
 }

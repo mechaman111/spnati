@@ -34,6 +34,7 @@
 			this.cboDirection = new Desktop.Skinning.SkinnedComboBox();
 			this.label1 = new Desktop.Skinning.SkinnedLabel();
 			this.groupBox2 = new Desktop.Skinning.SkinnedGroupBox();
+			this.chkResetLabel = new Desktop.Skinning.SkinnedCheckBox();
 			this.txtLabel = new Desktop.Skinning.SkinnedTextBox();
 			this.cboAI = new Desktop.Skinning.SkinnedComboBox();
 			this.label7 = new Desktop.Skinning.SkinnedLabel();
@@ -42,15 +43,16 @@
 			this.label3 = new Desktop.Skinning.SkinnedLabel();
 			this.cboGender = new Desktop.Skinning.SkinnedComboBox();
 			this.label4 = new Desktop.Skinning.SkinnedLabel();
+			this.chkResetAI = new Desktop.Skinning.SkinnedCheckBox();
 			this.label5 = new Desktop.Skinning.SkinnedLabel();
 			this.valWeight = new Desktop.Skinning.SkinnedNumericUpDown();
-			this.chkOneShot = new Desktop.Skinning.SkinnedCheckBox();
-			this.chkResetAI = new Desktop.Skinning.SkinnedCheckBox();
-			this.chkResetLabel = new Desktop.Skinning.SkinnedCheckBox();
+			this.skinnedGroupBox1 = new Desktop.Skinning.SkinnedGroupBox();
+			this.chkLayer = new Desktop.Skinning.SkinnedCheckBox();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.valLocation)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.valWeight)).BeginInit();
+			this.skinnedGroupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -159,6 +161,18 @@
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Change state";
+			// 
+			// chkResetLabel
+			// 
+			this.chkResetLabel.AutoSize = true;
+			this.chkResetLabel.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkResetLabel.Location = new System.Drawing.Point(329, 53);
+			this.chkResetLabel.Name = "chkResetLabel";
+			this.chkResetLabel.Size = new System.Drawing.Size(54, 17);
+			this.chkResetLabel.TabIndex = 9;
+			this.chkResetLabel.Text = "Reset";
+			this.chkResetLabel.UseVisualStyleBackColor = true;
+			this.chkResetLabel.CheckedChanged += new System.EventHandler(this.chkResetLabel_CheckedChanged);
 			// 
 			// txtLabel
 			// 
@@ -276,6 +290,18 @@
 			this.label4.TabIndex = 0;
 			this.label4.Text = "Gender:";
 			// 
+			// chkResetAI
+			// 
+			this.chkResetAI.AutoSize = true;
+			this.chkResetAI.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkResetAI.Location = new System.Drawing.Point(329, 26);
+			this.chkResetAI.Name = "chkResetAI";
+			this.chkResetAI.Size = new System.Drawing.Size(54, 17);
+			this.chkResetAI.TabIndex = 4;
+			this.chkResetAI.Text = "Reset";
+			this.chkResetAI.UseVisualStyleBackColor = true;
+			this.chkResetAI.CheckedChanged += new System.EventHandler(this.chkResetAI_CheckedChanged);
+			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
@@ -310,46 +336,37 @@
             0,
             196608});
 			// 
-			// chkOneShot
+			// skinnedGroupBox1
 			// 
-			this.chkOneShot.AutoSize = true;
-			this.chkOneShot.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkOneShot.Location = new System.Drawing.Point(121, 175);
-			this.chkOneShot.Name = "chkOneShot";
-			this.chkOneShot.Size = new System.Drawing.Size(75, 17);
-			this.chkOneShot.TabIndex = 5;
-			this.chkOneShot.Text = "Play Once";
-			this.chkOneShot.UseVisualStyleBackColor = true;
+			this.skinnedGroupBox1.BackColor = System.Drawing.Color.White;
+			this.skinnedGroupBox1.Controls.Add(this.chkLayer);
+			this.skinnedGroupBox1.Highlight = Desktop.Skinning.SkinnedHighlight.Heading;
+			this.skinnedGroupBox1.Image = null;
+			this.skinnedGroupBox1.Location = new System.Drawing.Point(209, 90);
+			this.skinnedGroupBox1.Name = "skinnedGroupBox1";
+			this.skinnedGroupBox1.PanelType = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.skinnedGroupBox1.ShowIndicatorBar = false;
+			this.skinnedGroupBox1.Size = new System.Drawing.Size(183, 79);
+			this.skinnedGroupBox1.TabIndex = 12;
+			this.skinnedGroupBox1.TabStop = false;
+			this.skinnedGroupBox1.Text = "Speech Bubble";
 			// 
-			// chkResetAI
+			// chkLayer
 			// 
-			this.chkResetAI.AutoSize = true;
-			this.chkResetAI.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkResetAI.Location = new System.Drawing.Point(329, 26);
-			this.chkResetAI.Name = "chkResetAI";
-			this.chkResetAI.Size = new System.Drawing.Size(54, 17);
-			this.chkResetAI.TabIndex = 4;
-			this.chkResetAI.Text = "Reset";
-			this.chkResetAI.UseVisualStyleBackColor = true;
-			this.chkResetAI.CheckedChanged += new System.EventHandler(this.chkResetAI_CheckedChanged);
-			// 
-			// chkResetLabel
-			// 
-			this.chkResetLabel.AutoSize = true;
-			this.chkResetLabel.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkResetLabel.Location = new System.Drawing.Point(329, 53);
-			this.chkResetLabel.Name = "chkResetLabel";
-			this.chkResetLabel.Size = new System.Drawing.Size(54, 17);
-			this.chkResetLabel.TabIndex = 9;
-			this.chkResetLabel.Text = "Reset";
-			this.chkResetLabel.UseVisualStyleBackColor = true;
-			this.chkResetLabel.CheckedChanged += new System.EventHandler(this.chkResetLabel_CheckedChanged);
+			this.chkLayer.AutoSize = true;
+			this.chkLayer.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkLayer.Location = new System.Drawing.Point(6, 26);
+			this.chkLayer.Name = "chkLayer";
+			this.chkLayer.Size = new System.Drawing.Size(115, 17);
+			this.chkLayer.TabIndex = 0;
+			this.chkLayer.Text = "Display over image";
+			this.chkLayer.UseVisualStyleBackColor = true;
 			// 
 			// DialogueAdvancedControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.chkOneShot);
+			this.Controls.Add(this.skinnedGroupBox1);
 			this.Controls.Add(this.valWeight);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.groupBox2);
@@ -362,6 +379,8 @@
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.valWeight)).EndInit();
+			this.skinnedGroupBox1.ResumeLayout(false);
+			this.skinnedGroupBox1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -385,8 +404,9 @@
 		private Desktop.Skinning.SkinnedTextBox txtLabel;
 		private Desktop.Skinning.SkinnedComboBox cboAI;
 		private Desktop.Skinning.SkinnedLabel label7;
-		private Desktop.Skinning.SkinnedCheckBox chkOneShot;
 		private Desktop.Skinning.SkinnedCheckBox chkResetLabel;
 		private Desktop.Skinning.SkinnedCheckBox chkResetAI;
+		private Desktop.Skinning.SkinnedGroupBox skinnedGroupBox1;
+		private Desktop.Skinning.SkinnedCheckBox chkLayer;
 	}
 }

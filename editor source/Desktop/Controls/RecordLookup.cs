@@ -98,6 +98,7 @@ namespace Desktop
 			provider.SetFormatInfo(formatData);
 			RecordLookup form = new RecordLookup();
 			form.AllowCreate = allowCreate;
+			form.AllowDelete = allowCreate && provider.AllowsDelete;
 			form.Text = formatData.Caption;
 			form.SetFields(formatData.ExtraFields);
 			form.SetContext(type, text, filter, formatData);
@@ -231,8 +232,18 @@ namespace Desktop
 			set
 			{
 				_allowCreate = value;
-				//cmdDelete.Visible = _allowCreate;
 				cmdNew.Visible = _allowCreate;
+			}
+		}
+
+		private bool _allowDelete = true;
+		public bool AllowDelete
+		{
+			get { return _allowDelete; }
+			set
+			{
+				_allowDelete = value;
+				cmdDelete.Visible = _allowDelete;
 			}
 		}
 

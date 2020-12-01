@@ -3,7 +3,7 @@
 namespace SPNATI_Character_Editor.Activities
 {
 	[Spacer]
-	[Activity(typeof(Character), 500)]
+	[Activity(typeof(Character), 500, DelayRun = true, Caption = "Validate")]
 	public partial class ValidateActivity : Activity
 	{
 		private Character _character;

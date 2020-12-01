@@ -25,5 +25,12 @@ namespace KisekaeImporter
 			get { return GetSubCode<KisekaeBlurExpression>("bh"); }
 			set	{ SetSubCode("bh", value); }
 		}
+
+		[KisekaeSubCode("bi")]
+		public KisekaeShaderEffect Effect
+		{
+			get { return GetSubCode<KisekaeShaderEffect>("bi"); }
+			set { SetSubCode("bi", value); }
+		}
 	}
 }

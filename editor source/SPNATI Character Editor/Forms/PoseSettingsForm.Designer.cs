@@ -38,6 +38,15 @@
 			this.panelClothing = new System.Windows.Forms.FlowLayoutPanel();
 			this.chkManual = new Desktop.Skinning.SkinnedCheckBox();
 			this.skinnedPanel1 = new Desktop.Skinning.SkinnedPanel();
+			this.cmdHeadOff = new Desktop.Skinning.SkinnedButton();
+			this.cmdHeadOn = new Desktop.Skinning.SkinnedButton();
+			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
+			this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
+			this.cmdBodyOn = new Desktop.Skinning.SkinnedButton();
+			this.cmdBodyOff = new Desktop.Skinning.SkinnedButton();
+			this.skinnedLabel3 = new Desktop.Skinning.SkinnedLabel();
+			this.cmdClothesOn = new Desktop.Skinning.SkinnedButton();
+			this.cmdClothesOff = new Desktop.Skinning.SkinnedButton();
 			this.skinnedPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -165,6 +174,138 @@
 			this.skinnedPanel1.TabIndex = 9;
 			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
 			// 
+			// cmdHeadOff
+			// 
+			this.cmdHeadOff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdHeadOff.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdHeadOff.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdHeadOff.Flat = true;
+			this.cmdHeadOff.ForeColor = System.Drawing.Color.Blue;
+			this.cmdHeadOff.Location = new System.Drawing.Point(540, 45);
+			this.cmdHeadOff.Name = "cmdHeadOff";
+			this.cmdHeadOff.Size = new System.Drawing.Size(50, 23);
+			this.cmdHeadOff.TabIndex = 10;
+			this.cmdHeadOff.Text = "Off";
+			this.cmdHeadOff.UseVisualStyleBackColor = true;
+			this.cmdHeadOff.Click += new System.EventHandler(this.cmdHeadOff_Click);
+			// 
+			// cmdHeadOn
+			// 
+			this.cmdHeadOn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdHeadOn.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdHeadOn.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdHeadOn.Flat = true;
+			this.cmdHeadOn.ForeColor = System.Drawing.Color.Blue;
+			this.cmdHeadOn.Location = new System.Drawing.Point(596, 45);
+			this.cmdHeadOn.Name = "cmdHeadOn";
+			this.cmdHeadOn.Size = new System.Drawing.Size(50, 23);
+			this.cmdHeadOn.TabIndex = 11;
+			this.cmdHeadOn.Text = "On";
+			this.cmdHeadOn.UseVisualStyleBackColor = true;
+			this.cmdHeadOn.Click += new System.EventHandler(this.cmdHeadOn_Click);
+			// 
+			// skinnedLabel1
+			// 
+			this.skinnedLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedLabel1.AutoSize = true;
+			this.skinnedLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel1.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel1.Location = new System.Drawing.Point(513, 50);
+			this.skinnedLabel1.Name = "skinnedLabel1";
+			this.skinnedLabel1.Size = new System.Drawing.Size(21, 13);
+			this.skinnedLabel1.TabIndex = 12;
+			this.skinnedLabel1.Text = "All:";
+			// 
+			// skinnedLabel2
+			// 
+			this.skinnedLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedLabel2.AutoSize = true;
+			this.skinnedLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel2.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel2.Location = new System.Drawing.Point(513, 216);
+			this.skinnedLabel2.Name = "skinnedLabel2";
+			this.skinnedLabel2.Size = new System.Drawing.Size(21, 13);
+			this.skinnedLabel2.TabIndex = 15;
+			this.skinnedLabel2.Text = "All:";
+			// 
+			// cmdBodyOn
+			// 
+			this.cmdBodyOn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdBodyOn.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdBodyOn.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdBodyOn.Flat = true;
+			this.cmdBodyOn.ForeColor = System.Drawing.Color.Blue;
+			this.cmdBodyOn.Location = new System.Drawing.Point(596, 211);
+			this.cmdBodyOn.Name = "cmdBodyOn";
+			this.cmdBodyOn.Size = new System.Drawing.Size(50, 23);
+			this.cmdBodyOn.TabIndex = 14;
+			this.cmdBodyOn.Text = "On";
+			this.cmdBodyOn.UseVisualStyleBackColor = true;
+			this.cmdBodyOn.Click += new System.EventHandler(this.cmdBodyOn_Click);
+			// 
+			// cmdBodyOff
+			// 
+			this.cmdBodyOff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdBodyOff.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdBodyOff.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdBodyOff.Flat = true;
+			this.cmdBodyOff.ForeColor = System.Drawing.Color.Blue;
+			this.cmdBodyOff.Location = new System.Drawing.Point(540, 211);
+			this.cmdBodyOff.Name = "cmdBodyOff";
+			this.cmdBodyOff.Size = new System.Drawing.Size(50, 23);
+			this.cmdBodyOff.TabIndex = 13;
+			this.cmdBodyOff.Text = "Off";
+			this.cmdBodyOff.UseVisualStyleBackColor = true;
+			this.cmdBodyOff.Click += new System.EventHandler(this.cmdBodyOff_Click);
+			// 
+			// skinnedLabel3
+			// 
+			this.skinnedLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedLabel3.AutoSize = true;
+			this.skinnedLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.skinnedLabel3.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
+			this.skinnedLabel3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel3.Location = new System.Drawing.Point(513, 484);
+			this.skinnedLabel3.Name = "skinnedLabel3";
+			this.skinnedLabel3.Size = new System.Drawing.Size(21, 13);
+			this.skinnedLabel3.TabIndex = 18;
+			this.skinnedLabel3.Text = "All:";
+			// 
+			// cmdClothesOn
+			// 
+			this.cmdClothesOn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdClothesOn.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdClothesOn.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdClothesOn.Flat = true;
+			this.cmdClothesOn.ForeColor = System.Drawing.Color.Blue;
+			this.cmdClothesOn.Location = new System.Drawing.Point(596, 479);
+			this.cmdClothesOn.Name = "cmdClothesOn";
+			this.cmdClothesOn.Size = new System.Drawing.Size(50, 23);
+			this.cmdClothesOn.TabIndex = 17;
+			this.cmdClothesOn.Text = "On";
+			this.cmdClothesOn.UseVisualStyleBackColor = true;
+			this.cmdClothesOn.Click += new System.EventHandler(this.cmdClothesOn_Click);
+			// 
+			// cmdClothesOff
+			// 
+			this.cmdClothesOff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdClothesOff.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdClothesOff.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdClothesOff.Flat = true;
+			this.cmdClothesOff.ForeColor = System.Drawing.Color.Blue;
+			this.cmdClothesOff.Location = new System.Drawing.Point(540, 479);
+			this.cmdClothesOff.Name = "cmdClothesOff";
+			this.cmdClothesOff.Size = new System.Drawing.Size(50, 23);
+			this.cmdClothesOff.TabIndex = 16;
+			this.cmdClothesOff.Text = "Off";
+			this.cmdClothesOff.UseVisualStyleBackColor = true;
+			this.cmdClothesOff.Click += new System.EventHandler(this.cmdClothesOff_Click);
+			// 
 			// PoseSettingsForm
 			// 
 			this.AcceptButton = this.cmdOK;
@@ -173,6 +314,15 @@
 			this.CancelButton = this.cmdCancel;
 			this.ClientSize = new System.Drawing.Size(658, 798);
 			this.ControlBox = false;
+			this.Controls.Add(this.skinnedLabel3);
+			this.Controls.Add(this.cmdClothesOn);
+			this.Controls.Add(this.cmdClothesOff);
+			this.Controls.Add(this.skinnedLabel2);
+			this.Controls.Add(this.cmdBodyOn);
+			this.Controls.Add(this.cmdBodyOff);
+			this.Controls.Add(this.skinnedLabel1);
+			this.Controls.Add(this.cmdHeadOn);
+			this.Controls.Add(this.cmdHeadOff);
 			this.Controls.Add(this.skinnedPanel1);
 			this.Controls.Add(this.chkManual);
 			this.Controls.Add(this.label1);
@@ -202,5 +352,14 @@
 		private System.Windows.Forms.FlowLayoutPanel panelClothing;
 		private Desktop.Skinning.SkinnedCheckBox chkManual;
 		private Desktop.Skinning.SkinnedPanel skinnedPanel1;
+		private Desktop.Skinning.SkinnedButton cmdHeadOff;
+		private Desktop.Skinning.SkinnedButton cmdHeadOn;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel1;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel2;
+		private Desktop.Skinning.SkinnedButton cmdBodyOn;
+		private Desktop.Skinning.SkinnedButton cmdBodyOff;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel3;
+		private Desktop.Skinning.SkinnedButton cmdClothesOn;
+		private Desktop.Skinning.SkinnedButton cmdClothesOff;
 	}
 }

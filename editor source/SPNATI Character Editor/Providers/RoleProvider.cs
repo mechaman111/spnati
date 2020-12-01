@@ -28,6 +28,7 @@ namespace SPNATI_Character_Editor.Providers
 		{
 			get { return false; }
 		}
+		public bool AllowsDelete { get { return false; } }
 
 		public IRecord Create(string key)
 		{

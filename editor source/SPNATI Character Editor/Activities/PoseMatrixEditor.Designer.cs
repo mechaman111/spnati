@@ -48,6 +48,7 @@
 			this.copyRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.pasteRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.skinnedSplitContainer1 = new Desktop.Skinning.SkinnedSplitContainer();
+			this.cmdEditPipeline = new Desktop.Skinning.SkinnedIcon();
 			this.searchBar = new SPNATI_Character_Editor.Controls.CodeReplaceBar();
 			this.cmdFolder = new Desktop.Skinning.SkinnedButton();
 			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
@@ -66,8 +67,13 @@
 			this.tsPoseList = new System.Windows.Forms.ToolStripButton();
 			this.sepSkin = new System.Windows.Forms.ToolStripSeparator();
 			this.tsAddMain = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsAddRow = new System.Windows.Forms.ToolStripButton();
+			this.tsRemoveRow = new System.Windows.Forms.ToolStripButton();
 			this.sptMode = new System.Windows.Forms.SplitContainer();
 			this.panelSingle = new System.Windows.Forms.Panel();
+			this.cmdImportFull = new Desktop.Skinning.SkinnedIcon();
+			this.cmdCrop = new Desktop.Skinning.SkinnedButton();
 			this.cmdImport = new Desktop.Skinning.SkinnedButton();
 			this.lblHeader = new Desktop.Skinning.SkinnedLabel();
 			this.table = new Desktop.CommonControls.PropertyTable();
@@ -321,6 +327,7 @@
 			// 
 			// skinnedSplitContainer1.Panel1
 			// 
+			this.skinnedSplitContainer1.Panel1.Controls.Add(this.cmdEditPipeline);
 			this.skinnedSplitContainer1.Panel1.Controls.Add(this.searchBar);
 			this.skinnedSplitContainer1.Panel1.Controls.Add(this.cmdFolder);
 			this.skinnedSplitContainer1.Panel1.Controls.Add(this.skinnedLabel1);
@@ -334,6 +341,22 @@
 			this.skinnedSplitContainer1.SplitterColor = Desktop.Skinning.SkinnedBackgroundType.Primary;
 			this.skinnedSplitContainer1.SplitterDistance = 321;
 			this.skinnedSplitContainer1.TabIndex = 1;
+			// 
+			// cmdEditPipeline
+			// 
+			this.cmdEditPipeline.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdEditPipeline.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdEditPipeline.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdEditPipeline.Flat = false;
+			this.cmdEditPipeline.Image = global::SPNATI_Character_Editor.Properties.Resources.Pipeline;
+			this.cmdEditPipeline.Location = new System.Drawing.Point(466, 1);
+			this.cmdEditPipeline.Name = "cmdEditPipeline";
+			this.cmdEditPipeline.Size = new System.Drawing.Size(25, 23);
+			this.cmdEditPipeline.TabIndex = 41;
+			this.cmdEditPipeline.Text = "Edit Pipeline";
+			this.toolTip1.SetToolTip(this.cmdEditPipeline, "Edit a pipeline using the selected cell");
+			this.cmdEditPipeline.UseVisualStyleBackColor = true;
+			this.cmdEditPipeline.Click += new System.EventHandler(this.cmdEditPipeline_Click);
 			// 
 			// searchBar
 			// 
@@ -393,7 +416,10 @@
             this.toolStripSeparator3,
             this.tsPoseList,
             this.sepSkin,
-            this.tsAddMain});
+            this.tsAddMain,
+            this.toolStripSeparator4,
+            this.tsAddRow,
+            this.tsRemoveRow});
 			this.tsSheet.Location = new System.Drawing.Point(0, 0);
 			this.tsSheet.Name = "tsSheet";
 			this.tsSheet.Size = new System.Drawing.Size(783, 25);
@@ -531,6 +557,33 @@
 			this.tsAddMain.Visible = false;
 			this.tsAddMain.Click += new System.EventHandler(this.tsAddMain_Click);
 			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+			// 
+			// tsAddRow
+			// 
+			this.tsAddRow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAddRow.Image = global::SPNATI_Character_Editor.Properties.Resources.AddRow;
+			this.tsAddRow.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAddRow.Name = "tsAddRow";
+			this.tsAddRow.Size = new System.Drawing.Size(23, 22);
+			this.tsAddRow.Text = "Add Row";
+			this.tsAddRow.ToolTipText = "Add Row";
+			this.tsAddRow.Click += new System.EventHandler(this.tsAddRow_Click);
+			// 
+			// tsRemoveRow
+			// 
+			this.tsRemoveRow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsRemoveRow.Image = global::SPNATI_Character_Editor.Properties.Resources.RemoveRow;
+			this.tsRemoveRow.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsRemoveRow.Name = "tsRemoveRow";
+			this.tsRemoveRow.Size = new System.Drawing.Size(23, 22);
+			this.tsRemoveRow.Text = "Remove Row";
+			this.tsRemoveRow.ToolTipText = "Remove Row";
+			this.tsRemoveRow.Click += new System.EventHandler(this.tsRemoveRow_Click);
+			// 
 			// sptMode
 			// 
 			this.sptMode.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -558,12 +611,45 @@
 			// panelSingle
 			// 
 			this.panelSingle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.panelSingle.Controls.Add(this.cmdImportFull);
+			this.panelSingle.Controls.Add(this.cmdCrop);
 			this.panelSingle.Controls.Add(this.cmdImport);
-			this.panelSingle.Location = new System.Drawing.Point(583, 0);
+			this.panelSingle.Location = new System.Drawing.Point(497, 0);
 			this.panelSingle.Margin = new System.Windows.Forms.Padding(0);
 			this.panelSingle.Name = "panelSingle";
-			this.panelSingle.Size = new System.Drawing.Size(200, 29);
+			this.panelSingle.Size = new System.Drawing.Size(286, 29);
 			this.panelSingle.TabIndex = 3;
+			// 
+			// cmdImportFull
+			// 
+			this.cmdImportFull.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdImportFull.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdImportFull.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdImportFull.Flat = false;
+			this.cmdImportFull.Image = global::SPNATI_Character_Editor.Properties.Resources.Refresh;
+			this.cmdImportFull.Location = new System.Drawing.Point(265, 6);
+			this.cmdImportFull.Name = "cmdImportFull";
+			this.cmdImportFull.Size = new System.Drawing.Size(16, 16);
+			this.cmdImportFull.TabIndex = 42;
+			this.cmdImportFull.Text = "Force Refresh";
+			this.toolTip1.SetToolTip(this.cmdImportFull, "Import the image and rebuild all intermediate assets");
+			this.cmdImportFull.UseVisualStyleBackColor = true;
+			this.cmdImportFull.Click += new System.EventHandler(this.cmdImportFull_Click);
+			// 
+			// cmdCrop
+			// 
+			this.cmdCrop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdCrop.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdCrop.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.cmdCrop.Flat = false;
+			this.cmdCrop.Location = new System.Drawing.Point(106, 3);
+			this.cmdCrop.Name = "cmdCrop";
+			this.cmdCrop.Size = new System.Drawing.Size(75, 23);
+			this.cmdCrop.TabIndex = 3;
+			this.cmdCrop.Text = "Crop";
+			this.toolTip1.SetToolTip(this.cmdCrop, "Re-import the image and adjust the cropping");
+			this.cmdCrop.UseVisualStyleBackColor = true;
+			this.cmdCrop.Click += new System.EventHandler(this.cmdCrop_Click);
 			// 
 			// cmdImport
 			// 
@@ -571,11 +657,12 @@
 			this.cmdImport.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdImport.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.cmdImport.Flat = false;
-			this.cmdImport.Location = new System.Drawing.Point(122, 3);
+			this.cmdImport.Location = new System.Drawing.Point(187, 3);
 			this.cmdImport.Name = "cmdImport";
 			this.cmdImport.Size = new System.Drawing.Size(75, 23);
 			this.cmdImport.TabIndex = 2;
 			this.cmdImport.Text = "Import";
+			this.toolTip1.SetToolTip(this.cmdImport, "Re-import the image with the current cropping");
 			this.cmdImport.UseVisualStyleBackColor = true;
 			this.cmdImport.Click += new System.EventHandler(this.cmdImport_Click);
 			// 
@@ -782,12 +869,12 @@
 			this.cmdImportSelected.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdImportSelected.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
 			this.cmdImportSelected.Flat = false;
-			this.cmdImportSelected.Location = new System.Drawing.Point(531, 4);
+			this.cmdImportSelected.Location = new System.Drawing.Point(531, 3);
 			this.cmdImportSelected.Name = "cmdImportSelected";
 			this.cmdImportSelected.Size = new System.Drawing.Size(79, 23);
 			this.cmdImportSelected.TabIndex = 28;
 			this.cmdImportSelected.Text = "Selected";
-			this.toolTip1.SetToolTip(this.cmdImportSelected, "Creates images that don\'t exist yet");
+			this.toolTip1.SetToolTip(this.cmdImportSelected, "Creates images for the selected cells");
 			this.cmdImportSelected.UseVisualStyleBackColor = true;
 			this.cmdImportSelected.Click += new System.EventHandler(this.cmdImportSelected_Click);
 			// 
@@ -897,5 +984,11 @@
 		private Desktop.Skinning.SkinnedLabel skinnedLabel2;
 		private Controls.CodeReplaceBar searchBar;
 		private System.Windows.Forms.ToolStripButton tsReplace;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+		private System.Windows.Forms.ToolStripButton tsAddRow;
+		private System.Windows.Forms.ToolStripButton tsRemoveRow;
+		private Desktop.Skinning.SkinnedButton cmdCrop;
+		private Desktop.Skinning.SkinnedIcon cmdEditPipeline;
+		private Desktop.Skinning.SkinnedIcon cmdImportFull;
 	}
 }

@@ -74,6 +74,7 @@
 			this.chkChecklistSpell = new Desktop.Skinning.SkinnedCheckBox();
 			this.chkDashboard = new Desktop.Skinning.SkinnedCheckBox();
 			this.tabImages = new System.Windows.Forms.TabPage();
+			this.chkLegacyPoses = new Desktop.Skinning.SkinnedCheckBox();
 			this.cmdVerify = new Desktop.Skinning.SkinnedButton();
 			this.skinnedLabel4 = new Desktop.Skinning.SkinnedLabel();
 			this.cboImportMethod = new Desktop.Skinning.SkinnedComboBox();
@@ -278,8 +279,8 @@
 			this.chkDefaults.Size = new System.Drawing.Size(179, 17);
 			this.chkDefaults.TabIndex = 26;
 			this.chkDefaults.Text = "Ensure cases have generic lines";
-			this.toolTip1.SetToolTip(this.chkDefaults, "If unchecked, images with no prefix (ex. 0-*.png) will not appear for use in dial" +
-        "ogue lines.");
+			this.toolTip1.SetToolTip(this.chkDefaults, "If checked, generic cases will be added to ensure that there is never a point whe" +
+        "re no dialogue would play");
 			this.chkDefaults.UseVisualStyleBackColor = true;
 			// 
 			// helpAutoSave
@@ -730,6 +731,7 @@
 			// tabImages
 			// 
 			this.tabImages.BackColor = System.Drawing.Color.White;
+			this.tabImages.Controls.Add(this.chkLegacyPoses);
 			this.tabImages.Controls.Add(this.cmdVerify);
 			this.tabImages.Controls.Add(this.txtTinify);
 			this.tabImages.Controls.Add(this.skinnedLabel4);
@@ -741,6 +743,17 @@
 			this.tabImages.Size = new System.Drawing.Size(447, 242);
 			this.tabImages.TabIndex = 6;
 			this.tabImages.Text = "Image Import";
+			// 
+			// chkLegacyPoses
+			// 
+			this.chkLegacyPoses.AutoSize = true;
+			this.chkLegacyPoses.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.chkLegacyPoses.Location = new System.Drawing.Point(6, 60);
+			this.chkLegacyPoses.Name = "chkLegacyPoses";
+			this.chkLegacyPoses.Size = new System.Drawing.Size(190, 17);
+			this.chkLegacyPoses.TabIndex = 16;
+			this.chkLegacyPoses.Text = "Show Pose List and Template tabs";
+			this.chkLegacyPoses.UseVisualStyleBackColor = true;
 			// 
 			// cmdVerify
 			// 
@@ -1230,5 +1243,6 @@
 		private Desktop.Skinning.SkinnedCheckBox chkAutoFill;
 		private Desktop.Skinning.SkinnedCheckBox chkWarnIncomplete;
 		private Desktop.Skinning.SkinnedCheckBox chkSafeMode;
+		private Desktop.Skinning.SkinnedCheckBox chkLegacyPoses;
 	}
 }

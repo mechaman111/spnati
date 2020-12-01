@@ -11,6 +11,7 @@ namespace SPNATI_Character_Editor.Providers
 		private Character _character;
 
 		public bool AllowsNew { get { return true; } }
+		public bool AllowsDelete { get { return false; } }
 
 		private static ObservableCollection<Collectible> _genericCollectibles = new ObservableCollection<Collectible>();
 

@@ -48,6 +48,7 @@ namespace SPNATI_Character_Editor
 			chkAutoFill.Checked = Config.AutoPopulateStageImages;
 			chkWarnIncomplete.Checked = Config.WarnAboutIncompleteStatus;
 			chkSafeMode.Checked = Config.SafeMode;
+			chkLegacyPoses.Checked = Config.ShowLegacyPoseTabs;
 
 			recAutoOpen.RecordType = typeof(Character);
 			recAutoOpen.RecordFilter = CharacterDatabase.FilterHuman;
@@ -162,6 +163,7 @@ namespace SPNATI_Character_Editor
 
 			bool oldSafeMode = Config.SafeMode;
 			Config.SafeMode = chkSafeMode.Checked;
+			Config.ShowLegacyPoseTabs = chkLegacyPoses.Checked;
 
 			HashSet<string> pauses = new HashSet<string>();
 			foreach (string item in lstPauses.CheckedItems)

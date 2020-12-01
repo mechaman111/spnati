@@ -183,13 +183,16 @@ namespace SPNATI_Character_Editor.Controls
 			_markers = markers;
 		}
 
-		public void SetImage(Image image)
+		public void SetImage(Image image, bool disposeImage = true)
 		{
 			Destroy();
 			tmrTick.Stop();
 			_currentPose = null;
 			_currentStage = -1;
-			_singleUseImage = image;
+			if (disposeImage)
+			{
+				_singleUseImage = image;
+			}
 			_imageReference = image;
 			canvas.Invalidate();
 		}
@@ -265,10 +268,38 @@ namespace SPNATI_Character_Editor.Controls
 				return;
 
 			Graphics g = e.Graphics;
-			
-			//text box
-			int screenHeight = canvas.Height - ScreenMargin * 2;
 
+			int screenHeight = canvas.Height - ScreenMargin * 2;
+			if (_line == null || _line.Layer != "over")
+			{
+				DrawSpeechBubble(g, screenHeight);
+			}
+
+			if (Pose != null)
+			{
+				foreach (LiveSprite sprite in Pose.DrawingOrder)
+				{
+					sprite.Draw(g, SceneTransform, _markers, true);
+				}
+			}
+			else if (_imageReference != null)
+			{
+				ImageAnimator.UpdateFrames();
+
+				//scale to the height
+				float availableHeight = ShowTextBox ? screenHeight * (1 - TextPercent) : screenHeight * 0.9f;
+				int width = (int)(_imageReference.Width / (float)_imageReference.Height * availableHeight);
+				g.DrawImage(_imageReference, canvas.Width / 2 - width / 2, screenHeight - availableHeight + ScreenMargin, width, availableHeight);
+			}
+
+			if (_line != null && _line.Layer == "over")
+			{
+				DrawSpeechBubble(g, screenHeight);
+			}
+		}
+
+		private void DrawSpeechBubble(Graphics g, int screenHeight)
+		{
 			bool showText = Config.GetBoolean(Settings.ShowPreviewText);
 			if (showText && !string.IsNullOrEmpty(_text))
 			{
@@ -411,23 +442,6 @@ namespace SPNATI_Character_Editor.Controls
 						g.DrawLine(_textBorder, triangle[1], triangle[2]);
 					}
 				}
-			}
-
-			if (Pose != null)
-			{
-				foreach (LiveSprite sprite in Pose.DrawingOrder)
-				{
-					sprite.Draw(g, SceneTransform, _markers, true);
-				}
-			}
-			else if (_imageReference != null)
-			{
-				ImageAnimator.UpdateFrames();
-
-				//scale to the height
-				float availableHeight = ShowTextBox ? screenHeight * (1 - TextPercent) : screenHeight * 0.9f;
-				int width = (int)(_imageReference.Width / (float)_imageReference.Height * availableHeight);
-				g.DrawImage(_imageReference, canvas.Width / 2 - width / 2, screenHeight - availableHeight + ScreenMargin, width, availableHeight);
 			}
 		}
 

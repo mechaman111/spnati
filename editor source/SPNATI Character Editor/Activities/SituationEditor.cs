@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Activity(typeof(Character), 305)]
+	[Activity(typeof(Character), 305, DelayRun = true, Caption = "Situations")]
 	public partial class SituationEditor : Activity
 	{
 		private Character _character;

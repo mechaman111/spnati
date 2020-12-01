@@ -4,11 +4,10 @@ using SPNATI_Character_Editor.Services;
 using SPNATI_Character_Editor.Workspaces;
 using System;
 using System.Drawing;
-using System.Linq;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Activity(typeof(Character), 550)]
+	[Activity(typeof(Character), 550, DelayRun = true, Caption = "Spell Check")]
 	public partial class SpellCheck : Activity
 	{
 		private Misspelling _currentMisspelling;

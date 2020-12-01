@@ -36,37 +36,83 @@ namespace Desktop
 			}
 		}
 
-		internal void AddActivity(IActivity activity)
+		internal void AddActivity(IActivity activity, ActivityMetadata metadata)
 		{
 			activity.Activated += Activity_Activated;
 			Control ctl = activity as Control;
 			if (ctl == null)
 				throw new ArgumentException($"Expected activity {activity.GetType().Name} to be an instance of Control");
 
-			if (activity.GetType().GetCustomAttribute<SpacerAttribute>() != null)
-			{
-				AddSpacer(activity.Pane);
-			}
 
 			//Create the tab page
-			TabPage page = new TabPage();
-			page.Text = activity.Caption;
-			page.Tag = activity;
+			TabPage page = AddActivityTab(metadata, activity);
 			ctl.Dock = DockStyle.Fill;
 			page.Controls.Add(ctl);
-			switch (activity.Pane)
-			{
-				case WorkspacePane.Main:
-					tabActivities.TabPages.Add(page);
-					_tabs[activity] = page;
-					break;
-				case WorkspacePane.Sidebar:
-					tabSidebarActivities.TabPages.Add(page);
-					_sideTabs[activity] = page;
-					break;
-			}
 
 			UpdateTabVisibility();
+		}
+
+		internal TabPage AddActivityTab(ActivityMetadata metadata, IActivity activity = null)
+		{
+			TabPage page = null;
+			bool isNew = true;
+			if (activity != null)
+			{
+				//see if the tab already exists
+				SkinnedTabControl tabControl = metadata.Pane == WorkspacePane.Main ? tabActivities : tabSidebarActivities;
+				foreach (TabPage tab in tabControl.TabPages)
+				{
+					if (tab.Tag as Type == metadata.ActivityType)
+					{
+						page = tab;
+						isNew = false;
+						break;
+					}
+				}
+			}
+
+			if (isNew && metadata.HasSpacer)
+			{
+				AddSpacer(metadata.Pane);
+			}
+
+			if (page == null)
+			{
+				page = new TabPage();
+			}
+			page.Text = activity?.Caption ?? metadata.Caption;
+			if (activity == null)
+			{
+				page.Tag = metadata.ActivityType;
+			}
+			else
+			{
+				page.Tag = activity;
+			}
+			switch (metadata.Pane)
+			{
+				case WorkspacePane.Main:
+					if (isNew)
+					{
+						tabActivities.TabPages.Add(page);
+					}
+					if (activity != null)
+					{
+						_tabs[activity] = page;
+					}
+					break;
+				case WorkspacePane.Sidebar:
+					if (isNew)
+					{
+						tabSidebarActivities.TabPages.Add(page);
+					}
+					if (activity != null)
+					{
+						_sideTabs[activity] = page;
+					}
+					break;
+			}
+			return page;
 		}
 
 		private void AddSpacer(WorkspacePane pane)
@@ -177,8 +223,15 @@ namespace Desktop
 			if (_forceSwitch)
 				return;
 			IActivity activity = e.TabPage.Tag as IActivity;
-			if (!Shell.Instance.Activate(activity))
+			if (activity == null)
+			{
+				//go through the launcher to launch the placeholder
+				Shell.Instance.Launch(Workspace.Record, e.TabPage.Tag as Type);
+			}
+			else if (!Shell.Instance.Activate(activity))
+			{
 				e.Cancel = true;
+			}
 		}
 
 		public bool IsSidebarExpanded

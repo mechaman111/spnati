@@ -11,8 +11,8 @@ using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Activity(typeof(Character), 205)]
-	[Activity(typeof(Costume), 205)]
+	[Activity(typeof(Character), 205, DelayRun = true, Caption = "Template")]
+	[Activity(typeof(Costume), 205, DelayRun = true, Caption = "Template")]
 	public partial class TemplateEditor : Activity
 	{
 		private ISkin _character;

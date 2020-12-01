@@ -255,7 +255,7 @@ namespace SPNATI_Character_Editor
 						if (stage < endStage)
 						{
 							PoseMapping pose = line.Pose;
-							if (pose == null || pose.Key.StartsWith("custom:"))
+							if (pose == null || pose.Key.StartsWith("custom:") || (pose.IsGeneric && stageless))
 							{
 								continue;
 							}
@@ -270,6 +270,16 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			return images;
+		}
+
+		public string GetPosePath(string subfolder, string poseName, bool asset)
+		{
+			string root = asset ? Path.Combine(Config.AppDataDirectory, Folder) : Path.Combine(GetDirectory());
+			if (!string.IsNullOrEmpty(subfolder))
+			{
+				root = Path.Combine(root, subfolder);
+			}
+			return Path.Combine(root, poseName + ".png");
 		}
 
 		public List<Pose> CustomPoses

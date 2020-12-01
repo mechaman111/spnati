@@ -16,6 +16,7 @@ namespace SPNATI_Character_Editor.Providers
 				return true;
 			}
 		}
+		public bool AllowsDelete { get { return false; } }
 
 		public bool TrackRecent
 		{

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
+using System.Linq;
 using Desktop.CommonControls.PropertyControls;
 using Desktop.DataStructures;
 using SPNATI_Character_Editor.Controls;
@@ -933,6 +934,72 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 				default:
 					return 0f;
 			}
+		}
+
+		public static List<T> SortLayers<T>(ICollection<T> list) where T : LiveObject
+		{
+			//save off the original order
+			Dictionary<T, int> order = new Dictionary<T, int>();
+			Dictionary<string, List<T>> buckets = new Dictionary<string, List<T>>();
+			foreach (T o in list)
+			{
+				order[o] = order.Count;
+				if (!string.IsNullOrEmpty(o.ParentId))
+				{
+					List<T> bucket = new List<T>();
+					if (!buckets.TryGetValue(o.ParentId, out bucket))
+					{
+						bucket = new List<T>();
+						buckets[o.ParentId] = bucket;
+					}
+					bucket.Add(o);
+				}
+			}
+
+			//sort all parentless objects
+			List<T> rootObjects = list.Where(o => string.IsNullOrEmpty(o.ParentId)).ToList();
+			rootObjects.Sort((s1, s2) =>
+			{
+				int compare = s1.Z.CompareTo(s2.Z);
+				if (compare == 0)
+				{
+					compare = order[s1].CompareTo(order[s2]);
+				}
+				return compare;
+			});
+
+			//sort each bucket and insert it into the root list after
+			foreach (List<T> bucket in buckets.Values)
+			{
+				string parentId = bucket[0].ParentId;
+				for (int i = 0; i < rootObjects.Count; i++)
+				{
+					T parent = rootObjects[i];
+					if (parent.Id == parentId)
+					{
+						//put the parent into the bucket and sort it
+						rootObjects.RemoveAt(i);
+						bucket.Add(parent);
+						bucket.Sort((s1, s2) =>
+						{
+							int z1 = (s1 == parent ? 0 : s1.Z);
+							int z2 = (s2 == parent ? 0 : s2.Z);
+							int compare = z1.CompareTo(z2);
+							if (compare == 0)
+							{
+								compare = order[s1].CompareTo(order[s2]);
+							}
+							return compare;
+						});
+
+						//now insert the whole bucket into the main list where the parent was
+						rootObjects.InsertRange(i, bucket);
+						break;
+					}
+				}
+			}
+
+			return rootObjects;
 		}
 	}
 }

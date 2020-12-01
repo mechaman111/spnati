@@ -20,10 +20,14 @@ namespace SPNATI_Character_Editor.Forms
 		private bool _lockRect;
 		private Dictionary<string, string> _extraData = new Dictionary<string, string>();
 		private string _lastCode;
+		private Pen _centerPen;
 
 		public ImageCropper()
 		{
 			InitializeComponent();
+			_centerPen = new Pen(Color.DarkGray, 1);
+			_centerPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Custom;
+			_centerPen.DashPattern = new float[] { 10, 10 };
 		}
 
 		public Image CroppedImage { get; private set; }
@@ -117,6 +121,7 @@ namespace SPNATI_Character_Editor.Forms
 				if (!chkNoCrop.Checked)
 				{
 					g.DrawRectangle(_dragState == DragState.None ? Pens.Red : Pens.Blue, _cropBounds.X, _cropBounds.Y, _cropBounds.Width, _cropBounds.Height);
+					g.DrawLine(_centerPen, _cropBounds.X + _cropBounds.Width / 2, _cropBounds.Y - 5, _cropBounds.X + _cropBounds.Width / 2, _cropBounds.Y + _cropBounds.Height + 5);
 				}
 			}
 		}

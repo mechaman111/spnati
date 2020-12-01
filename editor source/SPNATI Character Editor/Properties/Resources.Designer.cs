@@ -143,6 +143,16 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AddRow {
+            get {
+                object obj = ResourceManager.GetObject("AddRow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap AddSprite {
             get {
                 object obj = ResourceManager.GetObject("AddSprite", resourceCulture);
@@ -663,6 +673,16 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FileOutdated {
+            get {
+                object obj = ResourceManager.GetObject("FileOutdated", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Filter {
             get {
                 object obj = ResourceManager.GetObject("Filter", resourceCulture);
@@ -923,6 +943,16 @@ namespace SPNATI_Character_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Pipeline {
+            get {
+                object obj = ResourceManager.GetObject("Pipeline", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Play {
             get {
                 object obj = ResourceManager.GetObject("Play", resourceCulture);
@@ -946,6 +976,16 @@ namespace SPNATI_Character_Editor.Properties {
         internal static System.Drawing.Bitmap PlaybackPause {
             get {
                 object obj = ResourceManager.GetObject("PlaybackPause", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PlayOnce {
+            get {
+                object obj = ResourceManager.GetObject("PlayOnce", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1036,6 +1076,16 @@ namespace SPNATI_Character_Editor.Properties {
         internal static System.Drawing.Bitmap RemoveKeyframe {
             get {
                 object obj = ResourceManager.GetObject("RemoveKeyframe", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RemoveRow {
+            get {
+                object obj = ResourceManager.GetObject("RemoveRow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

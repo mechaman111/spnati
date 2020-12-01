@@ -15,6 +15,7 @@ namespace SPNATI_Character_Editor.Providers
 		{
 			get { return true; }
 		}
+		public bool AllowsDelete { get { return false; } }
 
 		public bool TrackRecent
 		{
@@ -23,6 +24,13 @@ namespace SPNATI_Character_Editor.Providers
 
 		public IRecord Create(string key)
 		{
+			//if the character was just filtered out, use them instead of making a new one
+			Character existing = CharacterDatabase.Get(key);
+			if (existing != null)
+			{
+				return existing;
+			}
+
 			Character c = new Character();
 			c.FirstName = key;
 			c.Label = key;
@@ -45,17 +53,13 @@ namespace SPNATI_Character_Editor.Providers
 				CharacterDatabase.Add(c);
 
 				//Add to the listing under testing status
-				Listing.Instance.Characters.Add(new Opponent(c.FolderName, OpponentStatus.Testing));
-				Serialization.ExportListing(Listing.Instance);
+				Opponent opp = new Opponent(c.FolderName, OpponentStatus.Testing);
+				Listings.Test.Characters.Add(opp);
+				Listing.Instance.Characters.Add(opp);
+				Serialization.ExportListing(Listings.Test, "listing-test.xml");
 			}
 			else
 			{
-				//see if the character actually exists already and use that one instead
-				Character existing = CharacterDatabase.Get(key);
-				if (existing != null)
-				{
-					return existing;
-				}
 				//otherwise, make a placeholder for this session
 				CharacterDatabase.Add(c);
 			}

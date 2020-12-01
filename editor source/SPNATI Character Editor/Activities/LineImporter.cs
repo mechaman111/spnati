@@ -3,7 +3,7 @@ using System;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Activity(typeof(Character), 315)]
+	[Activity(typeof(Character), 315, DelayRun = true, Caption = "Line Importer")]
 	public partial class LineImporter : Activity
 	{
 		private Character _character;

@@ -11,6 +11,7 @@ namespace SPNATI_Character_Editor.Providers
 		private Case _context;
 
 		public bool AllowsNew { get { return false; } }
+		public bool AllowsDelete { get { return false; } }
 		public bool TrackRecent { get { return false; } }
 
 		static FilterTypeProvider()

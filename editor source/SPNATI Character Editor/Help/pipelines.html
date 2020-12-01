@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html>
+
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+	<meta charset='utf-8' />
+	<link rel="stylesheet" type="text/css" href="topic.css" />
+	<title>Image Pipelines</title>
+</head>
+<body>
+	<header id="header">Image Pipeline</header>
+	<article id="main">
+		<section class="card">
+			<h1>Overview</h1>
+			<img src="images/pipeline.png" title="Image Pipeline" /><br />
+			If you've ever used Unity's Shader Graph or Unreal's Material Graph, you're already familiar with the general idea of the Image Pipeline.
+			In essence, when importing an image from KKL, it will run through a pipeline or series of steps that manipulate it before finally being saved to disk as an image file.
+			By default, the pipeline is extremely simple (load an image from a KKL code -> save it to disk), but you can program your own custom pipelines using the Pipeline Editor.<br />
+		</section>
+		<section class="card">
+			<h1>Accessing Pipelines</h1>
+			Pipelines are a feature limited to the <a href="poses.html#matrix">Pose Matrix</a>. Pipelines can be linked to either an entire row (i.e. a clothing stage) or an individual cell (i.e. a pose in a stage).
+			Only one pipeline can be set for a pose. If one exists for both a cell and its row, the pipeline on the cell will be used. To create a pipeline, either click the dedicated "Edit Pipeline" button in the Pose Matrix screen, fill in a name and click create,
+			or select the row or cell you wish to assign the pipeline to and use the Edit button in the edit form.
+			<p>
+				<img src="images/pipeline_button.png" title="Edit Pipeline Button" /><br />
+				<i>The Edit Pipeline button</i>
+			</p>
+			<p>
+				<img src="images/pipeline_code.png" title="Pipeline Assigment Field" /><br />
+				<i>Pipeline Assigment Field for a pose or stage</i>
+			</p>
+		</section>
+		<section class="card">
+			<h1>Basics</h1>
+			A pipeline consists of a series of nodes connected to each other via their inputs and outputs. All pipelines contain a Result node, which is the node that produces the final image. Let's take an example pipeline and break it down:<br />
+			<img src="images/pipeline_blend.png" title="Wet T-Shirt Pipeline" /><br />
+			Here we have 4 nodes:
+			<ol>
+				<li>A Cell node pulls an image from KKL using the code of the current cell in the pose matrix. It feeds this image into the "base" input of a Blend node, and a "key" into a Cell Reference node.</li>
+				<li>A Cell Reference node is a reference to another cell in the Pose Matrix and imports that cell's KKL code. This node is pulling a version of the pose with no T-shirt. The imported image is fed into the "blend" input of the Blend node.</li>
+				<li>The blend node takes the two imported images, one with a shirt and one without, and blends them together. The strength is at 50%, so the resulting image is a 50-50 blend of the two input images to produce a transparent T-shirt. This is passed to the Result node.</li>
+				<li>The Result node is the end of the pipeline. Whatever is passed into this is what will be saved for the cell's pose.</li>
+			</ol>
+		</section>
+		<section class="card">
+			<h1>Working with the UI</h1>
+			<ul>
+				<li>
+					The toolbar at the top of the editor allows you to add or remove nodes from your graph.
+				</li>
+				<li>
+					To move nodes around, grab and drag them by their title. To connect nodes together, click on an output circle of one node and drag
+					a wire onto the input port of another node. You can connect a single output to multiple inputs.
+				</li>
+				<li>Double-click a node's title to display that node in the full-size preview pane on the right.</li>
+				<li>The Delete key will delete the currently selected node, just as the Delete button in the toolbar.</li>
+			</ul>
+			<br />
+			This UI is not robust as professional shader editors, so you may have to reposition nodes a lot to make it clear what is connected to what.
+		</section>
+		<section class="card">
+			<h1>Node Types</h1>
+			What follows is a description of each node type available and how it works.
+
+			<p>
+				<h1>Cell</h1>
+				A pipeline is run for each cell in the Pose Matrix. The Cell node is for obtaining a reference to the image produced by that cell's code.
+				If your pipeline is linked to an entire stage, it will run once for each pose in that stage, so if you have three columns: calm, happy, and sad, the pipeline will run 3 times. The Cell node will provide the calm pose for the first run, the happy pose for the second, and the sad pose for the third.
+				<h3>Inputs</h3>
+				<ul>
+					<li>None</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Image:</b> The image for the cell as it would be produced from the Import button in the Pose Matrix if no pipeline were attached. In other words, the unprocessed image from KKL.</li>
+					<li><b>Key:</b> The key (pose name) of the cell the pipeline is running on. For example, if the happy pose is being processed, this will output "happy." This output is used with Cell Reference nodes to link them to the correct pose in a stage.</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li>None</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Cell Reference</h1>
+				Whereas a Cell node refers to the Pose Matrix cell currently being processed, a Cell Reference node refers to a node elsewhere in the matrix (including another sheet).
+				<h3>Inputs</h3>
+				<ul>
+					<li>
+						<b>Key:</b> If this is not provided, the Cell Reference will always refer to the one that was selected in the Source. For pipelines that run on an entire range of poses, this is not typically ideal,
+						because if your stage has calm, happy, and sad poses, and you set the Cell Reference to stage 5's Calm pose, then when processing the Happy and Sad poses, this would still pull in the Calm pose. When the cell's key is provided,
+						however, the reference will update itself to the corresponding pose for its stage. So when processing the Happy pose, it would use stage 5's Happy pose.
+					</li>
+					<li><b>Row: </b> An override to which row in the sheet to read from. Useful for combining with pipeline parameters for altering which pose to draw from.</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Image:</b> The cell's image imported from KKL.</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Source:</b> Which cell to import. Clicking the ... will bring up the pose matrix where you can select the cell you wish to reference. As described in the Key input, when a Key is provided it will refer to the corresponding pose for the selected row, so it does not matter which pose in that row you select.</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Blend</h1>
+				Summary
+				<h3>Inputs</h3>
+				<ul>
+					<li><b>Base Image:</b> The image you wish to apply blending to</li>
+					<li><b>Blend Image:</b> The image you with to blend into the base image</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Image:</b> The blended image</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li>
+						<b>Mode:</b> What type of blending to perform:
+						<ul>
+							<li>Normal: Each pixel's RGBA values are averaged together. This is commonly used to produce transparency effects as it will not affect pixels that are identical between the two images.</li>
+							<li>Multiply: The base pixel's RGBA are multiplied by the corresponding values in the blend image. This can be useful for tinting by using a grayscale base image and a colored blend image.</li>
+							<li>Screen: Similar to the Screen blend found in most imaging applications.</li>
+							<li>Additive: Adds pixels from the images together, lightening the image.</li>
+							<li>Difference: Takes the absolute value of the difference between pixels, darkening the image.</li>
+							<li>Lighten: Keeps the lighter pixel among the base and blend images.</li>
+							<li>Darken: Keeps the darker pixel among the base and blend images.</li>
+							<li>Extract: Throws away (adds full transparency to) any pixels that are identical between the base and blend, keeping the pixels of the blend image where different. This is useful for creating an image mask. For instance, taking two identical poses where the base is nude and the blend has a shirt, this will produce an image containing only the shirt.</li>
+							<li>Overlay: Draws the blend image on top of the base image.</li>
+						</ul>
+					</li>
+					<li><b>Strength:</b> A value from 0-100% for how much to blend the images. 0% means to use the base image while 100% means to use the blend image.</li>
+					<li>
+						<b>Clamp:</b> When the blend image does not have the same dimensions as the base image, this determines what to do with pixels that are out of bounds on the blend image.
+						<ul>
+							<li>Clamp: Any pixels out of bounds will be treated as transparent.</li>
+							<li>Repeat: If the blend image is 10 pixels wide, then X: 11 will use the pixel 1 on the blend image. Creates a tiling effect.</li>
+							<li>Mirror: Similar to Repeat, except every other tile is flipped. For instance, X: 2 and X: 22 will use X: 2, but X: 12 and X: 32 will use X: 10 - 2 = 8.</li>
+						</ul>
+					</li>
+					<li>
+						<b>Offset:</b> When the blend image does not have the same dimensions as the base image, this determines how much to offset the blend image when applying it to the base.
+					</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Channel Mixer</h1>
+				Controls how much of the RGB channels to include in the output. For example, to extract only the blue from an image.
+				<h3>Inputs</h3>
+				<ul>
+					<li><b>Image: </b> The image to manipulate.</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Image: </b> The resulting image.</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>R: </b> How much of the red channel to include.</li>
+					<li><b>G: </b> How much of the green channel to include.</li>
+					<li><b>B: </b> How much of the blue channel to include.</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Color</h1>
+				Emits a color value
+				<h3>Inputs</h3>
+				<ul>
+					<li>None</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Color: </b> The chosen color</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Value: </b> The color to send to the output</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Color Mask</h1>
+				Creates a mask from values in input In enqual to input Mask Color.
+				<h3>Inputs</h3>
+				<ul>
+					<li><b>In: </b> An image</li>
+					<li><b>Mask Color: </b> A color to compare the pixels in the In image to for determining if they should be included in the mask</li>
+					<li><b>Range: </b> Select colors within this range from input Mask Color</li>
+					<li><b>Fuzziness: </b> Creates a softer selection mask</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Out: </b> The resulting mask</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b></b></li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Decimal</h1>
+				Emits a constant floating point value
+				<h3>Inputs</h3>
+				<ul>
+					<li>None</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Value: </b> The chosen number</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Value: </b> The number to send to the output</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Desaturate</h1>
+				Desaturates (removes the color) from an image.
+				<h3>Inputs</h3>
+				<ul>
+					<li><b>Source:</b>The image to desaturate</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Image:</b></li> The desaturated image
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Amount:</b></li> How much to desaturate the input by, where 0% is not at all and 100% is fully desaturated.
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Image</h1>
+				Obtains an image from a file path (as opposed to a KKL code).
+				<h3>Inputs</h3>
+				<ul>
+					<li>None</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Image:</b> The image</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Source:</b> The file path to the image.</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Integer</h1>
+				Emits a constant integer between 0-255
+				<h3>Inputs</h3>
+				<ul>
+					<li>None</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Value: </b> The chosen number</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Value: </b> The number from 0 to 255 to send to the output</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Invert Colors</h1>
+				Inverts the colors of the input on a per channel basis.
+				<h3>Inputs</h3>
+				<ul>
+					<li><b>Image: </b> The image to invert</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Image: </b> The resultant image.</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Red:</b> Whether to invert the red channel.</li>
+					<li><b>Green:</b> Whether to invert the green channel.</li>
+					<li><b>Blue:</b> Whether to invert the blue channel.</li>
+					<li><b>Alpha:</b> Whether to invert the alpha channel.</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Parameter</h1>
+				Outputs a parameter from the parameter list for the current cell or stage being processed.
+				<h3>Inputs</h3>
+				<ul>
+					<li>None</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Out: </b> The text at that parameter index</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>#: </b> The index of the parameter to output.</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Replace Color</h1>
+				Replaces colors that fall within a range with another color.
+				<h3>Inputs</h3>
+				<ul>
+					<li><b>In: </b> An image</li>
+					<li><b>From Color: </b> The color to check for replacement</li>
+					<li><b>To Color: </b> The color to replace</li>
+					<li><b>Range: </b> Select colors within this range from input From Color</li>
+					<li><b>Fuzziness: </b> Creates a softer selection mask</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Out: </b> The resulting mask</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b></b></li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Result</h1>
+				Node whose only purpose is to indicate the final result of the pipeline. You cannot delete this node nor add more than one.
+				<h3>Inputs</h3>
+				<ul>
+					<li><b>Image:</b> The image to generate.</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li>None. The passed in image is implied to be the pipeline's output.</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li>None</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Slider</h1>
+				Emits a constant value between 0-1
+				<h3>Inputs</h3>
+				<ul>
+					<li>None</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Value: </b> The chosen number</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Value: </b> The number from 0 to 1 to send to the output</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Splitter</h1>
+				Splits the RGBA channels of an image into their numeric values which can be provided to an numeric input such as the Amount input of a Blend node.
+				<h3>Inputs</h3>
+				<ul>
+					<li><b>Image: </b> The image to split.</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>R: </b>The red value from 0-1</li>
+					<li><b>G: </b>The green value from 0-1</li>
+					<li><b>B: </b>The blue value from 0-1</li>
+					<li><b>A: </b>The alpha value from 0-1</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b></b></li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Swizzle</h1>
+				Creates a color by flipping around channels of other colors
+				<h3>Inputs</h3>
+				<ul>
+					<li><b>Image: </b> The image to modify</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Image: </b> The resultant image.</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Red:</b> Whether to invert the red channel.</li>
+					<li><b>Green:</b> Whether to invert the green channel.</li>
+					<li><b>Blue:</b> Whether to invert the blue channel.</li>
+					<li><b>Alpha:</b> Whether to invert the alpha channel.</li>
+				</ul>
+			</p>
+		</section>
+		<section class="card">
+			<h1>Pipeline Assets</h1>
+			Since the power of pipelines comes from combining multiple cells, you may find yourself creating sheets in your matrix whose sole purpose is to create intermediate images to apply to other poses.
+			Such images have no reason to be retained on disk and waste your character's file space. To prevent such images from being saved to disk, you can mark them as a "Pipeline Asset." This can be done when selecting either an entire sheet or a row in the sheet.
+		</section>
+		<section class="card">
+			<h1>Parameters</h1>
+			Each cell or row that has a pipeline can also list zero or more free text parameters, which are made available in the pipeline via the Parameter Node. This allows customization of pipeline behavior between
+			different poses using the pipeline, most usefully as a way to redirect Cell Reference nodes to a different row.
+		</section>
+	</article>
+</body>
+</html>
+

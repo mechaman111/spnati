@@ -12,6 +12,7 @@ namespace SPNATI_Character_Editor.Providers
 		private bool _excludeCharacter = false;
 
 		public bool AllowsNew { get { return true; } }
+		public bool AllowsDelete { get { return false; } }
 
 		public bool TrackRecent
 		{
