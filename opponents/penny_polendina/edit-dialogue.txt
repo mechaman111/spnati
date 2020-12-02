@@ -1,0 +1,1086 @@
+#required for behaviour.xml
+first=Penny
+last=Polendena
+label=Penny
+gender=female
+size=medium
+intelligence=average
+
+#Number of phases to "finish" masturbating
+timer=15
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=ginger
+tag=long_hair
+tag=ahoge
+tag=drill_hair
+tag=green_eyes
+tag=pale-skinned
+tag=skinny
+tag=athletic
+tag=trimmed,from:7,to:9
+tag=pubic_hair,from:7,to:9
+tag=medium_breasts
+tag=freckles
+tag=no_bra,from:6,to:6
+tag=cheerful
+tag=confident,from:0,to:5
+tag=innocent
+tag=kind
+tag=lonely
+tag=enf,from:6,to:7
+tag=bisexual
+tag=single
+tag=fantasy
+tag=future
+tag=cartoon
+tag=rwby_franchise
+tag=military
+tag=hero
+
+#required for meta.xml
+#select screen image
+pic=0-slaute
+height=5'5
+from=rwby
+writer=stackyboi42
+artist=stackyboi42
+description=
+z-layer=0
+dialogue-layer=over
+
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=,socks and stockings,minor,upper,plural
+clothes=gloves,gloves,extra,hands,plural
+clothes=choker,neck tie,extra,neck
+clothes=bow,bow,extra,head
+clothes=pants,corset and skirt,major,lower
+clothes=shirt,shirt,important,upper
+clothes=underwear,panties,important,lower
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermione=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#INTRODUCTION
+#These lines are used to say different things depending on which other characters are present when the character
+#is selected and when the game starts.
+	
+
+#fully clothed
+0-selected=slaute.png,I'm pleased to meet you! I'm sure this will be a  fun experience!
+0-selected=slaute.png,Salutations!
+0-game_start=calm.png,My name is penny!, What are your names?
+
+
+
+
+#POKER PLAY
+#This is what a character says while they're exchanging cards and commenting on their hands afterwards.
+#When swapping cards, the game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#fully clothed
+0-dealing_cards=nuetral.png,This can be used in special situations, for example so that a character doesn't show up in two places after "visiting" another.
+0-swap_cards=calm.png,I'll have~cards.text~ ~cards.ifplural(cards|card)~.
+0-swap_cards=happy unsure.png,Uhh I'll have ~cards.text~ ~cards.ifplural(cards|card)~.
+0-swap_cards=unsure.png,~silent~
+0-swap_cards=nuetral.png,Uhh, ~cards.text~ ~cards.ifPlural(cards|card)~. please!
+0-good_hand=happy.png,i win!
+0-good_hand=slaute.png,thanks dealer!
+0-good_hand=calm.png,this should be good
+0-okay_hand=happy unsure.png,This hand is okay, right?
+0-okay_hand=happy.png,(hiccup) such a good hand! not worried
+0-bad_hand=calm.png,I'm happy to give up a win to make you all feel better
+0-bad_hand=nuetral.png,Yang told me this is a bad hand, i think
+0-hand=happy unsure.png,Ruby once lost with a hand like this, though yang won with it, hmm
+
+
+#lost socks and stockings
+1-swap_cards=calm.png,I'll have~cards.text~ ~cards.ifplural(cards|card)~.
+1-swap_cards=unsure.png,Think like yang, I'll take ~cards.text~ ~cards.ifplural(cards|card)~.!
+1-swap_cards=happy unsure.png,Uhh I'll have ~cards.text~ ~cards.ifplural(cards|card)~.
+1-swap_cards=unsure.png,~silent~
+1-swap_cards=nuetral.png,Uhh, ~cards.text~ ~cards.ifPlural(cards|card)~. please!
+1-good_hand=happy.png,i win!
+1-good_hand=slaute.png,thanks dealer!
+1-good_hand=calm.png,this should be good
+1-okay_hand=happy unsure.png,This hand is okay, right?
+1-okay_hand=happy.png,(hiccup) such a good hand! not worried
+1-bad_hand=happy unsure.png,How is everyone?
+1-bad_hand=calm.png,I'm happy to give up a win to make you all feel better
+1-bad_hand=nuetral.png,Yang told me this is a bad hand, i think
+
+
+#lost gloves
+2-swap_cards=calm.png,I'll have~cards.text~ ~cards.ifplural(cards|card)~.
+2-swap_cards=unsure.png,Think like yang, I'll take ~cards.text~ ~cards.ifplural(cards|card)~.!
+2-swap_cards=happy unsure.png,Uhh I'll have ~cards.text~ ~cards.ifplural(cards|card)~.
+2-swap_cards=unsure.png,~silent~
+2-swap_cards=nuetral.png,Uhh, ~cards.text~ ~cards.ifPlural(cards|card)~. please!
+2-good_hand=happy.png,i win!
+2-good_hand=slaute.png,thanks dealer!
+2-good_hand=calm.png,this should be good
+2-okay_hand=happy unsure.png,This hand is okay, right?
+2-okay_hand=happy.png,(hiccup) such a good hand! not worried
+2-bad_hand=happy unsure.png,How is everyone?
+2-bad_hand=calm.png,I'm happy to give up a win to make you all feel better
+2-bad_hand=nuetral.png,Yang told me this is a bad hand, i think
+
+
+#lost neck tie
+3-swap_cards=calm.png,I'll have~cards.text~ ~cards.ifplural(cards|card)~.
+3-swap_cards=unsure.png,Think like yang, I'll take ~cards.text~ ~cards.ifplural(cards|card)~.!
+3-swap_cards=happy unsure.png,Uhh I'll have ~cards.text~ ~cards.ifplural(cards|card)~.
+3-swap_cards=unsure.png,~silent~
+3-swap_cards=nuetral.png,Uhh, ~cards.text~ ~cards.ifPlural(cards|card)~. please!
+3-good_hand=happy.png,i win!
+3-good_hand=slaute.png,thanks dealer!
+3-good_hand=calm.png,this should be good
+3-okay_hand=happy unsure.png,This hand is okay, right?
+3-okay_hand=happy.png,(hiccup) such a good hand! not worried
+3-bad_hand=happy unsure.png,How is everyone?
+3-bad_hand=calm.png,I'm happy to give up a win to make you all feel better
+3-bad_hand=nuetral.png,Yang told me this is a bad hand, i think
+
+
+#lost bow
+4-swap_cards=embrassed .png,Can i have ~cards.text~ ~cards.ifplural(cards|card)~.?
+4-swap_cards=calm.png,I'll have~cards.text~ ~cards.ifplural(cards|card)~.
+4-swap_cards=unsure.png,Think like yang, I'll take ~cards.text~ ~cards.ifplural(cards|card)~.!
+4-swap_cards=happy unsure.png,Uhh I'll have ~cards.text~ ~cards.ifplural(cards|card)~.
+4-swap_cards=unsure.png,~silent~
+4-swap_cards=nuetral.png,Uhh, ~cards.text~ ~cards.ifPlural(cards|card)~. please!
+4-good_hand=calm.png,this should be good
+4-okay_hand=happy unsure.png,This hand is okay, right?
+4-okay_hand=happy.png,(hiccup) such a good hand! not worried
+4-bad_hand=happy unsure.png,How is everyone?
+4-bad_hand=calm.png,I'm happy to give up a win to make you all feel better
+4-bad_hand=nuetral.png,Yang told me this is a bad hand, i think
+
+
+#lost corset and skirt
+5-swap_cards=embrassed .png,Can i have ~cards.text~ ~cards.ifplural(cards|card)~.?
+5-swap_cards=calm.png,I'll have~cards.text~ ~cards.ifplural(cards|card)~.
+5-swap_cards=unsure.png,Think like yang, I'll take ~cards.text~ ~cards.ifplural(cards|card)~.!
+5-swap_cards=happy unsure.png,Uhh I'll have ~cards.text~ ~cards.ifplural(cards|card)~.
+5-swap_cards=unsure.png,~silent~
+5-swap_cards=nuetral.png,Uhh, ~cards.text~ ~cards.ifPlural(cards|card)~. please!
+5-good_hand=embrassed .png,this hand is good enough, i hope
+5-good_hand=calm.png,this should be good
+5-good_hand=happy unsure.png,This will be good
+5-good_hand=embrassed .png,not in danger for now
+5-okay_hand=unsure.png,it is a chance game i guess
+5-okay_hand=happy unsure.png,This hand is okay, right?
+5-okay_hand=happy.png,(hiccup) such a good hand! not worried
+5-okay_hand=embrassed .png,This hand should be fine
+5-bad_hand=happy unsure.png,How is everyone?
+5-bad_hand=embrassed .png,this is okay, I'm enjoying playing with you all
+
+
+#lost shirt
+6-swap_cards=embrassed .png,Can i have ~cards.text~ ~cards.ifplural(cards|card)~.?
+6-swap_cards=calm.png,I'll have~cards.text~ ~cards.ifplural(cards|card)~.
+6-swap_cards=unsure.png,Think like yang, I'll take ~cards.text~ ~cards.ifplural(cards|card)~.!
+6-swap_cards=happy unsure.png,Uhh I'll have ~cards.text~ ~cards.ifplural(cards|card)~.
+6-swap_cards=unsure.png,~silent~
+6-good_hand=embrassed .png,this hand is good enough, i hope
+6-good_hand=calm.png,this should be good
+6-good_hand=happy unsure.png,This will be good
+6-good_hand=embrassed .png,not in danger for now
+6-okay_hand=unsure.png,it is a chance game i guess
+6-okay_hand=embrassed .png,This hand should be fine
+6-bad_hand=happy unsure.png,How is everyone?
+6-bad_hand=embrassed .png,this is okay, I'm enjoying playing with you all
+
+
+#naked
+-3-swap_cards=embrassed .png,Can i have ~cards.text~ ~cards.ifplural(cards|card)~.?
+-3-swap_cards=unsure.png,Think like yang, I'll take ~cards.text~ ~cards.ifplural(cards|card)~.!
+-3-swap_cards=happy unsure.png,Uhh I'll have ~cards.text~ ~cards.ifplural(cards|card)~.
+-3-swap_cards=unsure.png,~silent~
+-3-good_hand=embrassed .png,this hand is good enough, i hope
+-3-good_hand=calm.png,this should be good
+-3-good_hand=happy unsure.png,This will be good
+-3-good_hand=embrassed .png,not in danger for now
+-3-okay_hand=unsure.png,it is a chance game i guess
+-3-okay_hand=embrassed .png,This hand should be fine
+-3-bad_hand=happy unsure.png,How is everyone?
+-3-bad_hand=embrassed .png,this is okay, I'm enjoying playing with you all
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+must_strip_winning=happy unsure.png,it's fair i guess
+must_strip_winning=embrassed .png,this game sure is, interesting
+
+
+#stage-specific lines that override the stage-generic ones
+
+#losing socks and stockings
+0-must_strip,priority:1000=calm.png,it's a shame i won't be able to fly now, wait, i'm already wearing the wrong legs haha
+0-must_strip_winning=slaute.png,happy to be playing!
+0-must_strip_winning=nuetral.png,this is fun
+0-must_strip_winning=nuetral.png,i guess this is okay
+0-must_strip_normal=slaute.png,looks like my turn
+0-must_strip_losing=slaute.png,Well done!
+0-stripping=good sock remove.png,it feels very strange having socks i can remove, my other legs are one solid piece, and they could fly!
+
+
+#losing gloves
+1-stripped=slaute.png,Enjoy!
+1-stripped=calm.png,let's go again!
+1-stripped=slaute.png,well done, but you won't get me again!
+1-must_strip_winning=slaute.png,happy to be playing!
+1-must_strip_winning=nuetral.png,this is fun
+1-must_strip_winning=nuetral.png,i guess this is okay
+1-must_strip_normal=nuetral.png,Are you all having fun!
+1-must_strip_normal=happy unsure.png,not sure how my dad would feel about this
+1-must_strip_normal=slaute.png,looks like my turn
+1-must_strip_losing=embrassed .png,the game isn't done yet!
+1-must_strip_losing=slaute.png,Well done!
+1-stripping,priority:1000=remove gloves good.png,My hands are quite sensitive without these, but that shouldn't be a worry today
+
+
+#losing neck tie
+2-stripped=slaute.png,Enjoy!
+2-stripped=calm.png,let's go again!
+2-stripped=slaute.png,well done, but you won't get me again!
+2-must_strip_winning=slaute.png,happy to be playing!
+2-must_strip_winning=nuetral.png,this is fun
+2-must_strip_winning=nuetral.png,i guess this is okay
+2-must_strip_normal=nuetral.png,Are you all having fun!
+2-must_strip_normal=happy unsure.png,not sure how my dad would feel about this
+2-must_strip_normal=slaute.png,looks like my turn
+2-must_strip_losing=embrassed .png,the game isn't done yet!
+2-must_strip_losing=slaute.png,Well done!
+2-stripping=remove nek.png,i like having it around my neck, but i don't need it
+
+
+#losing bow
+3-stripped=slaute.png,Enjoy!
+3-stripped=calm.png,let's go again!
+3-stripped=slaute.png,well done, but you won't get me again!
+3-must_strip_winning=nuetral.png,i guess this is okay
+3-must_strip_normal=nuetral.png,Are you all having fun!
+3-must_strip_normal=happy unsure.png,not sure how my dad would feel about this
+3-must_strip_losing=embrassed .png,the game isn't done yet!
+3-must_strip_losing=slaute.png,Well done!
+3-stripping,priority:780=remove bow talkng.png,Have to be careful with this one, it's sort of like a brain scanner, but i prefer it as a ribbon
+3-stripping,priority:780=,you'll be seeing the, good stuff, soon i guess
+3-stripping,priority:800=remove bow embrassed.png,you'll be seeing the, good stuff soon i guess
+3-stripping,count-naked:1-4=remove bow embrassed.png,you'll be seeing the, good stuff soon i guess
+3-stripping,count-exposed:2-4=remove bow embrassed.png,you'll be seeing the, good stuff soon i guess
+
+
+#losing corset and skirt
+4-stripped=calm.png,let's go again!
+4-stripped=slaute.png,well done, but you won't get me again!
+4-stripped=happy unsure.png,time to try again
+4-stripped=embrassed .png,I'm bound to get lucky now!
+4-must_strip_winning=nuetral.png,i guess this is okay
+4-must_strip_normal=nuetral.png,Are you all having fun!
+4-must_strip_normal=happy unsure.png,not sure how my dad would feel about this
+4-must_strip_losing=embrassed .png,the game isn't done yet!
+4-must_strip_losing=slaute.png,Well done!
+4-stripping,priority:1000=losng corset.png,i've never done this before, in front of anyone.
+
+
+#losing shirt
+5-stripped=happy unsure.png,time to try again
+5-stripped=embrassed .png,I'm bound to get lucky now!
+5-must_strip_normal=nuetral.png,Are you all having fun!
+5-must_strip_normal=happy unsure.png,not sure how my dad would feel about this
+5-must_strip_normal=unsure.png,We'll see who wins i guess
+5-must_strip_losing=embrassed .png,the game isn't done yet!
+5-must_strip_losing=embrassed .png,Well, it's been fun, and, hot?
+5-stripping=shrt loss.png,This is, exciting but, uhh, i hope you like them?
+
+
+#losing panties
+6-stripped=happy unsure.png,time to try again
+6-stripped=embrassed .png,I'm bound to get lucky now!
+6-must_strip_normal=unsure.png,We'll see who wins i guess
+6-must_strip_losing=embrassed .png,Well, it's been fun, and, hot?
+6-stripping=pantes loss.png,i've never been naked in front of anyone, i only undress to change so i've never been naked, at all
+
+
+#naked
+-3-stripped=happy unsure.png,time to try again
+-3-stripped=embrassed .png,I'm bound to get lucky now!
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_human_must_strip=nuetral.png,This is all new to me
+male_must_strip=,What they say to a male NPC who has lost a round
+female_must_strip=,What they say to a female NPC who has lost a round
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_must_strip=nuetral.png,i have wondered
+0-male_must_strip=curius .png,This is all new to me
+0-female_must_strip=unsure.png,Your like me, but i feel..
+
+
+#lost socks and stockings
+1-male_must_strip=nuetral.png,i have wondered
+1-male_must_strip=curius .png,This is all new to me
+1-female_must_strip=unsure.png,Your like me, but i feel..
+
+
+#lost gloves
+2-male_must_strip=nuetral.png,i have wondered
+2-male_must_strip=curius .png,This is all new to me
+2-female_must_strip=unsure.png,Your like me, but i feel..
+
+
+#lost neck tie
+3-male_must_strip=nuetral.png,i have wondered
+3-male_must_strip=curius .png,This is all new to me
+3-female_must_strip=happy unsure.png,this is interesting 
+3-female_must_strip=unsure.png,Your like me, but i feel..
+
+
+#lost bow
+4-male_must_strip=nuetral.png,i have wondered
+4-male_must_strip=curius .png,This is all new to me
+4-female_must_strip=happy unsure.png,this is interesting 
+4-female_must_strip=unsure.png,Your like me, but i feel..
+
+
+#lost corset and skirt
+5-male_must_strip=nuetral.png,i have wondered
+5-male_must_strip=curius .png,This is all new to me
+5-male_must_strip=curius .png,This is, strangely exciting
+5-female_must_strip=happy unsure.png,this is interesting 
+5-female_must_strip=unsure.png,Your like me, but i feel..
+5-female_must_strip=curius .png,Your, pretty
+
+
+#lost shirt
+6-male_must_strip=nuetral.png,i have wondered
+6-male_must_strip=curius .png,This is all new to me
+6-male_must_strip=curius .png,This is, strangely exciting
+6-female_must_strip=happy unsure.png,this is interesting 
+6-female_must_strip=unsure.png,Your like me, but i feel..
+6-female_must_strip=curius .png,Your, pretty
+
+
+#naked
+-3-male_must_strip=curius .png,This is all new to me
+-3-male_must_strip=curius .png,This is, strangely exciting
+-3-female_must_strip=happy unsure.png,this is interesting 
+-3-female_must_strip=unsure.png,Your like me, but i feel..
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_accessory=,A male character is about to remove a small item, with the type "extra".
+male_removed_accessory=embrassed .png,Come on be more exciting!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_accessory=slaute.png,Good luck!
+0-male_removing_accessory=nuetral.png,Yang told me about this, but it doesn't seem very exciting
+0-male_removing_accessory=calm.png,You have less layers to go!
+0-male_removed_accessory=calm.png,What does that mean to you?
+0-female_removing_accessory=slaute.png,Understandable, good luck
+0-female_removing_accessory=unsure.png,why do you wear  that?
+0-female_removing_accessory=calm.png,i wonder what the later hands will be like
+0-female_removed_accessory=calm.png,what will you remove next?
+0-female_removed_accessory=happy unsure.png,why that?
+
+
+#lost socks and stockings
+1-male_removing_accessory=slaute.png,Good luck!
+1-male_removing_accessory=nuetral.png,Yang told me about this, but it doesn't seem very exciting
+1-male_removing_accessory=calm.png,You have less layers to go!
+1-male_removed_accessory=calm.png,What does that mean to you?
+1-female_removing_accessory=slaute.png,Understandable, good luck
+1-female_removing_accessory=unsure.png,why do you wear  that?
+1-female_removing_accessory=calm.png,i wonder what the later hands will be like
+1-female_removed_accessory=calm.png,what will you remove next?
+1-female_removed_accessory=happy unsure.png,why that?
+
+
+#lost gloves
+2-male_removing_accessory=slaute.png,Good luck!
+2-male_removing_accessory=nuetral.png,Yang told me about this, but it doesn't seem very exciting
+2-male_removing_accessory=calm.png,You have less layers to go!
+2-male_removed_accessory=calm.png,What does that mean to you?
+2-female_removing_accessory=slaute.png,Understandable, good luck
+2-female_removing_accessory=unsure.png,why do you wear  that?
+2-female_removing_accessory=calm.png,i wonder what the later hands will be like
+2-female_removed_accessory=calm.png,what will you remove next?
+2-female_removed_accessory=happy unsure.png,why that?
+
+
+#lost neck tie
+3-male_removing_accessory=slaute.png,Good luck!
+3-male_removing_accessory=nuetral.png,Yang told me about this, but it doesn't seem very exciting
+3-male_removing_accessory=calm.png,You have less layers to go!
+3-male_removed_accessory=calm.png,What does that mean to you?
+3-male_removed_accessory=nuetral.png,Your nice looking?
+3-female_removing_accessory=slaute.png,Understandable, good luck
+3-female_removing_accessory=unsure.png,why do you wear  that?
+3-female_removing_accessory=calm.png,i wonder what the later hands will be like
+3-female_removed_accessory=calm.png,what will you remove next?
+3-female_removed_accessory=happy unsure.png,why that?
+
+
+#lost bow
+4-male_removing_accessory=slaute.png,Good luck!
+4-male_removing_accessory=nuetral.png,Yang told me about this, but it doesn't seem very exciting
+4-male_removing_accessory=calm.png,You have less layers to go!
+4-male_removed_accessory=calm.png,What does that mean to you?
+4-male_removed_accessory=nuetral.png,Your nice looking?
+4-female_removing_accessory=slaute.png,Understandable, good luck
+4-female_removing_accessory=unsure.png,why do you wear  that?
+4-female_removing_accessory=calm.png,i wonder what the later hands will be like
+4-female_removed_accessory=calm.png,what will you remove next?
+
+
+#lost corset and skirt
+5-male_removing_accessory=slaute.png,Good luck!
+5-male_removed_accessory=nuetral.png,Your nice looking?
+5-female_removing_accessory=happy unsure.png,something so small?
+5-female_removing_accessory=unsure.png,why do you wear  that?
+5-female_removing_accessory=calm.png,i wonder what the later hands will be like
+5-female_removed_accessory=nuetral.png,is that all?
+5-female_removed_accessory=embrassed .png,is that fair?
+
+
+#lost shirt
+6-male_removing_accessory=slaute.png,Good luck!
+6-male_removed_accessory=,A male character has just removed that small item.
+6-female_removing_accessory=happy unsure.png,something so small?
+6-female_removing_accessory=unsure.png,why do you wear  that?
+6-female_removing_accessory=calm.png,i wonder what the later hands will be like
+6-female_removed_accessory=nuetral.png,is that all?
+6-female_removed_accessory=embrassed .png,is that fair?
+
+
+#naked
+-3-male_removing_accessory=slaute.png,Good luck!
+-3-female_removing_accessory=happy unsure.png,something so small?
+-3-female_removing_accessory=unsure.png,why do you wear  that?
+-3-female_removing_accessory=calm.png,i wonder what the later hands will be like
+-3-female_removed_accessory=nuetral.png,is that all?
+-3-female_removed_accessory=embrassed .png,is that fair?
+
+
+#masturbating
+-2-female_removing_accessory=happy unsure.png,something so small?
+-2-female_removed_accessory=nuetral.png,is that all?
+
+
+#finished
+-1-female_removing_accessory=slaute.png,Understandable, good luck
+-1-female_removed_accessory=happy unsure.png,why that?
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+male_removed_minor=,The male character has just removed that minor item.
+female_removed_minor=,The female character has just removed that minor item.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_removing_minor=calm.png,did you pick that for yourself? dad helped with a lot of my clothes
+0-female_removing_minor=happy unsure.png,i understand, i think
+0-female_removed_minor=slaute.png,i'm glad you can keep playing with us!
+
+
+#lost socks and stockings
+1-male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+1-male_removed_minor=,The male character has just removed that minor item.
+1-female_removing_minor=calm.png,did you pick that for yourself? dad helped with a lot of my clothes
+1-female_removing_minor=happy unsure.png,i understand, i think
+1-female_removed_minor=slaute.png,i'm glad you can keep playing with us!
+
+
+#lost gloves
+2-female_removing_minor=calm.png,did you pick that for yourself? dad helped with a lot of my clothes
+2-female_removing_minor=happy unsure.png,i understand, i think
+2-female_removed_minor=slaute.png,i'm glad you can keep playing with us!
+
+
+#lost neck tie
+3-male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+3-male_removed_minor=,The male character has just removed that minor item.
+3-female_removing_minor=calm.png,did you pick that for yourself? dad helped with a lot of my clothes
+3-female_removing_minor=happy unsure.png,i understand, i think
+3-female_removed_minor=slaute.png,i'm glad you can keep playing with us!
+
+
+#lost bow
+4-male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+4-male_removed_minor=,The male character has just removed that minor item.
+4-female_removing_minor=calm.png,did you pick that for yourself? dad helped with a lot of my clothes
+4-female_removing_minor=embrassed .png,i guess you have to remove things in order afterall
+4-female_removed_minor=slaute.png,i'm glad you can keep playing with us!
+4-female_removed_minor=embrassed .png,so, we keep playing as normal?
+
+
+#lost corset and skirt
+5-male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+5-male_removed_minor=,The male character has just removed that minor item.
+5-female_removing_minor=embrassed .png,i guess you have to remove things in order afterall
+5-female_removed_minor=embrassed .png,so, we keep playing as normal?
+5-female_removed_minor=slaute.png,understandable choice, but a little embrassing for me
+
+
+#lost shirt
+6-male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+6-male_removed_minor=,The male character has just removed that minor item.
+6-female_removing_minor=embrassed .png,i guess you have to remove things in order afterall
+6-female_removed_minor=embrassed .png,so, we keep playing as normal?
+6-female_removed_minor=slaute.png,understandable choice, but a little embrassing for me
+
+
+#naked
+-3-male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+-3-male_removed_minor=,The male character has just removed that minor item.
+-3-female_removing_minor=embrassed .png,i guess you have to remove things in order afterall
+-3-female_removed_minor=embrassed .png,so, we keep playing as normal?
+-3-female_removed_minor=slaute.png,understandable choice, but a little embrassing for me
+
+
+#masturbating
+-2-female_removing_minor=,A female character is about to remove a clothing item with the type "minor".
+
+
+#finished
+-1-female_removing_minor=happy unsure.png,i understand, i think
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_major=,What the character says before a male loses an item with the "major" type.
+male_removed_major=,What the character says after the major item has been taken off.
+female_removing_major=,What the character says before a female loses an item with the "major" type.
+female_removed_major=,What the character says after the major item has been taken off.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_removing_major=curius .png,ohh, i do want to see this
+0-female_removed_major=slaute.png,thank you, for the veiw, (is that what yang would say)
+0-female_removed_major=embrassed .png,ruby, if she was here, i'm, not sure how i'd feel
+
+
+#lost socks and stockings
+1-male_removing_major=,What the character says before a male loses an item with the "major" type.
+1-male_removed_major=,What the character says after the major item has been taken off.
+1-female_removing_major=curius .png,ohh, i do want to see this
+1-female_removed_major=slaute.png,thank you, for the veiw, (is that what yang would say)
+1-female_removed_major=embrassed .png,ruby, if she was here, i'm, not sure how i'd feel
+
+
+#lost gloves
+2-female_removing_major=curius .png,ohh, i do want to see this
+2-female_removed_major=slaute.png,thank you, for the veiw, (is that what yang would say)
+2-female_removed_major=embrassed .png,ruby, if she was here, i'm, not sure how i'd feel
+
+
+#lost neck tie
+3-male_removing_major=,What the character says before a male loses an item with the "major" type.
+3-male_removed_major=,What the character says after the major item has been taken off.
+3-female_removing_major=curius .png,ohh, i do want to see this
+3-female_removed_major=slaute.png,thank you, for the veiw, (is that what yang would say)
+3-female_removed_major=embrassed .png,ruby, if she was here, i'm, not sure how i'd feel
+3-female_removed_major=calm.png,you look good?
+
+
+#lost bow
+4-male_removing_major=,What the character says before a male loses an item with the "major" type.
+4-male_removed_major=,What the character says after the major item has been taken off.
+4-female_removing_major=embrassed .png,it looks good, on you, and off you, i mean..
+4-female_removing_major=curius .png,ohh, i do want to see this
+4-female_removed_major=slaute.png,thank you, for the veiw, (is that what yang would say)
+4-female_removed_major=embrassed .png,ruby, if she was here, i'm, not sure how i'd feel
+4-female_removed_major=calm.png,you look good?
+4-female_removed_major=curius .png,your going to, keep going?
+
+
+#lost corset and skirt
+5-male_removing_major=,What the character says before a male loses an item with the "major" type.
+5-male_removed_major=,What the character says after the major item has been taken off.
+5-female_removing_major=embrassed .png,it looks good, on you, and off you, i mean..
+5-female_removing_major=curius .png,that's, exciting
+5-female_removed_major=calm.png,you look good?
+5-female_removed_major=curius .png,your going to, keep going?
+
+
+#lost shirt
+6-male_removing_major=,What the character says before a male loses an item with the "major" type.
+6-male_removed_major=,What the character says after the major item has been taken off.
+6-female_removing_major=embrassed .png,it looks good, on you, and off you, i mean..
+6-female_removing_major=curius .png,that's, exciting
+6-female_removed_major=curius .png,your going to, keep going?
+
+
+#naked
+-3-male_removing_major=,What the character says before a male loses an item with the "major" type.
+-3-male_removed_major=,What the character says after the major item has been taken off.
+-3-female_removing_major=embrassed .png,it looks good, on you, and off you, i mean..
+-3-female_removing_major=curius .png,that's, exciting
+-3-female_removed_major=curius .png,your going to, keep going?
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character to have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+male_chest_is_visible=,What the character says once the male character's chest is visible.
+male_crotch_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_crotch_will_be_visible=curius .png,ohhh
+0-male_crotch_will_be_visible=embrassed .png,that's, hot
+0-male_crotch_is_visible=happy unsure.png,that's, so, differnt 
+0-female_chest_will_be_visible=slaute.png,you are quite brave
+0-female_chest_is_visible=,What the character says after the female character's chest is visible.
+0-female_chest_is_visible=slaute.png,you are very brave
+0-female_chest_is_visible=calm.png,you look, good
+0-female_crotch_will_be_visible=curius .png,This is, what is yang meant, i think
+0-female_crotch_will_be_visible=curius .png,woah
+0-female_crotch_is_visible=embrassed .png,your, it's, very pretty
+0-female_crotch_is_visible=slaute.png,your very beauitful!
+0-female_crotch_is_visible=happy.png,wow!
+
+
+#lost socks and stockings
+1-male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+1-male_chest_is_visible=,What the character says once the male character's chest is visible.
+1-male_crotch_will_be_visible=curius .png,ohhh
+1-male_crotch_will_be_visible=embrassed .png,that's, hot
+1-male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+1-male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+1-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+1-male_crotch_is_visible=happy unsure.png,that's, so, differnt 
+1-female_chest_will_be_visible=slaute.png,you are quite brave
+1-female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+1-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+1-female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+1-female_chest_is_visible=slaute.png,you are very brave
+1-female_chest_is_visible=calm.png,you look, good
+1-female_crotch_will_be_visible=curius .png,This is, what is yang meant, i think
+1-female_crotch_will_be_visible=curius .png,woah
+1-female_crotch_is_visible=embrassed .png,your, it's, very pretty
+1-female_crotch_is_visible=slaute.png,your very beauitful!
+1-female_crotch_is_visible=happy.png,wow!
+
+
+#lost gloves
+2-male_chest_will_be_visible=curius .png,I've seen shirtless men before but, this is, different 
+2-male_crotch_will_be_visible=curius .png,ohhh
+2-male_crotch_is_visible=happy unsure.png,that's, so, differnt 
+2-female_chest_will_be_visible=slaute.png,you are quite brave
+2-female_chest_is_visible=slaute.png,you are very brave
+2-female_chest_is_visible=calm.png,you look, good
+2-female_crotch_will_be_visible=curius .png,This is, what is yang meant, i think
+2-female_crotch_will_be_visible=curius .png,woah
+2-female_crotch_is_visible=embrassed .png,your, it's, very pretty
+2-female_crotch_is_visible=slaute.png,your very beauitful!
+2-female_crotch_is_visible=happy.png,wow!
+
+
+#lost neck tie
+3-male_chest_will_be_visible=curius .png,I've seen shirtless men before but, this is, different 
+3-male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+3-male_chest_is_visible=,What the character says once the male character's chest is visible.
+3-male_crotch_will_be_visible=curius .png,ohhh
+3-male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+3-male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+3-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+3-male_crotch_is_visible=happy unsure.png,that's, so, differnt 
+3-female_chest_will_be_visible=curius .png,we're going to see your!
+3-female_chest_will_be_visible=slaute.png,you are quite brave
+3-female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+3-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+3-female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+3-female_chest_is_visible=slaute.png,you are very brave
+3-female_chest_is_visible=calm.png,you look, good
+3-female_crotch_will_be_visible=embrassed .png,i'm feeling so, warm
+3-female_crotch_will_be_visible=curius .png,This is, what is yang meant, i think
+3-female_crotch_will_be_visible=curius .png,woah
+3-female_crotch_is_visible=embrassed .png,your, it's, very pretty
+3-female_crotch_is_visible=slaute.png,your very beauitful!
+3-female_crotch_is_visible=happy.png,wow!
+
+
+#lost bow
+4-male_chest_will_be_visible=curius .png,I've seen shirtless men before but, this is, different 
+4-male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+4-male_chest_is_visible=,What the character says once the male character's chest is visible.
+4-male_crotch_will_be_visible=curius .png,ohhh
+4-male_crotch_will_be_visible=embrassed .png,that's, hot
+4-male_crotch_will_be_visible=happy.png,you have made me quite, excited
+4-male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+4-male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+4-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+4-male_crotch_is_visible=curius .png,that's, exciting, wow
+4-male_crotch_is_visible=happy unsure.png,that's, so, differnt 
+4-female_chest_will_be_visible=curius .png,we're going to see your!
+4-female_chest_will_be_visible=slaute.png,you are quite brave
+4-female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+4-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+4-female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+4-female_chest_is_visible=curius .png,you are quite, hot
+4-female_chest_is_visible=slaute.png,you are very brave
+4-female_chest_is_visible=calm.png,you look, good
+4-female_crotch_will_be_visible=embrassed .png,i'm feeling so, warm
+4-female_crotch_will_be_visible=curius .png,This is, what is yang meant, i think
+4-female_crotch_will_be_visible=curius .png,woah
+4-female_crotch_is_visible=curius .png,i feel so, i want to hug you, but, more then that
+4-female_crotch_is_visible=embrassed .png,your, it's, very pretty
+4-female_crotch_is_visible=slaute.png,your very beauitful!
+4-female_crotch_is_visible=happy.png,wow!
+
+
+#lost corset and skirt
+5-male_chest_will_be_visible=curius .png,I've seen shirtless men before but, this is, different 
+5-male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+5-male_chest_is_visible=,What the character says once the male character's chest is visible.
+5-male_crotch_will_be_visible=curius .png,ohhh
+5-male_crotch_will_be_visible=embrassed .png,that's, hot
+5-male_crotch_will_be_visible=happy.png,you have made me quite, excited
+5-male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+5-male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+5-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+5-male_crotch_is_visible=curius .png,that's, exciting, wow
+5-male_crotch_is_visible=happy unsure.png,that's, so, differnt 
+5-female_chest_will_be_visible=curius .png,that's, good to watch
+5-female_chest_will_be_visible=curius .png,we're going to see your!
+5-female_chest_will_be_visible=slaute.png,you are quite brave
+5-female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+5-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+5-female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+5-female_chest_is_visible=curius .png,you are quite, hot
+5-female_crotch_will_be_visible=embrassed .png,i'm feeling so, warm
+5-female_crotch_will_be_visible=curius .png,it's, so.. hot
+5-female_crotch_will_be_visible=embrassed .png,are my cericuts overheating?
+5-female_crotch_will_be_visible=curius .png,This is, what is yang meant, i think
+5-female_crotch_will_be_visible=curius .png,woah
+5-female_crotch_is_visible=curius .png,i feel so, i want to hug you, but, more then that
+5-female_crotch_is_visible=nuetral.png,would you, touch me?
+
+
+#lost shirt
+6-male_chest_will_be_visible=curius .png,I've seen shirtless men before but, this is, different 
+6-male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+6-male_chest_is_visible=,What the character says once the male character's chest is visible.
+6-male_crotch_will_be_visible=embrassed .png,that's, hot
+6-male_crotch_will_be_visible=happy.png,you have made me quite, excited
+6-male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+6-male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+6-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+6-male_crotch_is_visible=curius .png,that's, exciting, wow
+6-male_crotch_is_visible=happy unsure.png,that's, so, differnt 
+6-female_chest_will_be_visible=curius .png,that's, good to watch
+6-female_chest_will_be_visible=curius .png,we're going to see your!
+6-female_chest_will_be_visible=slaute.png,you are quite brave
+6-female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+6-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+6-female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+6-female_chest_is_visible=curius .png,you are quite, hot
+6-female_crotch_will_be_visible=embrassed .png,i'm feeling so, warm
+6-female_crotch_will_be_visible=curius .png,it's, so.. hot
+6-female_crotch_will_be_visible=embrassed .png,are my cericuts overheating?
+6-female_crotch_will_be_visible=curius .png,This is, what is yang meant, i think
+6-female_crotch_will_be_visible=curius .png,woah
+6-female_crotch_is_visible=curius .png,i feel so, i want to hug you, but, more then that
+6-female_crotch_is_visible=nuetral.png,would you, touch me?
+
+
+#naked
+-3-male_chest_will_be_visible=curius .png,I've seen shirtless men before but, this is, different 
+-3-male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+-3-male_chest_is_visible=,What the character says once the male character's chest is visible.
+-3-male_crotch_will_be_visible=embrassed .png,that's, hot
+-3-male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+-3-male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+-3-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+-3-male_crotch_is_visible=curius .png,that's, exciting, wow
+-3-male_crotch_is_visible=happy unsure.png,that's, so, differnt 
+-3-female_chest_will_be_visible=curius .png,that's, good to watch
+-3-female_chest_will_be_visible=curius .png,we're going to see your!
+-3-female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+-3-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+-3-female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+-3-female_chest_is_visible=curius .png,you are quite, hot
+-3-female_crotch_will_be_visible=embrassed .png,i'm feeling so, warm
+-3-female_crotch_will_be_visible=curius .png,it's, so.. hot
+-3-female_crotch_will_be_visible=embrassed .png,are my cericuts overheating?
+-3-female_crotch_will_be_visible=curius .png,This is, what is yang meant, i think
+-3-female_crotch_will_be_visible=curius .png,woah
+-3-female_crotch_is_visible=curius .png,i feel so, i want to hug you, but, more then that
+-3-female_crotch_is_visible=nuetral.png,would you, touch me?
+
+
+#masturbating
+-2-female_crotch_will_be_visible=curius .png,it's, so.. hot
+-2-female_crotch_will_be_visible=embrassed .png,are my cericuts overheating?
+-2-female_crotch_will_be_visible=curius .png,This is, what is yang meant, i think
+-2-female_crotch_will_be_visible=curius .png,woah
+-2-female_crotch_is_visible=nuetral.png,would you, touch me?
+
+
+#finished
+-1-female_crotch_will_be_visible=slaute.png,looking good!
+-1-female_crotch_is_visible=,What the character says after the female character's crotch has become visible.
+
+
+
+
+#OPPONENT STRIPPING IN GENERAL
+#Lines that trigger when a player is strips regardless of gender or what they are removing.
+#It's useful to put all lines targeting a specific character and stage here, so they won't be affected if the
+#type of clothing should have to be changed.
+    
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+opponent_lost=slaute.png,better luck next time!
+opponent_chest_will_be_visible=happy unsure.png,wow it's so, flat? but i like it
+opponent_start_masturbating=curius .png,how do you?
+opponent_masturbating=curius .png,that's very
+opponent_finished_masturbating=embrassed .png,wow, you really just
+opponent_finished_masturbating=slaute.png,you looked li
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-opponent_stripped=calm.png,you look good!
+0-opponent_heavy_masturbating=curius .png,your so hot like that
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+male_start_masturbating=,What the character says when a male character has started masturbating.
+male_masturbating=,What the character says while a male character is masturbating.
+male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+female_start_masturbating=,What the character says when a female character has started masturbating.
+female_masturbating=,What the character says while a female character is masturbating.
+female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#lost socks and stockings
+1-male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+1-male_start_masturbating=,What the character says when a male character has started masturbating.
+1-male_masturbating=,What the character says while a male character is masturbating.
+1-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+1-female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+1-female_start_masturbating=,What the character says when a female character has started masturbating.
+1-female_masturbating=,What the character says while a female character is masturbating.
+1-female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+#lost neck tie
+3-male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+3-male_start_masturbating=,What the character says when a male character has started masturbating.
+3-male_masturbating=,What the character says while a male character is masturbating.
+3-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+3-female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+3-female_start_masturbating=,What the character says when a female character has started masturbating.
+3-female_masturbating=,What the character says while a female character is masturbating.
+3-female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+#lost bow
+4-male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+4-male_start_masturbating=,What the character says when a male character has started masturbating.
+4-male_masturbating=,What the character says while a male character is masturbating.
+4-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+4-female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+4-female_start_masturbating=,What the character says when a female character has started masturbating.
+4-female_masturbating=,What the character says while a female character is masturbating.
+4-female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+#lost corset and skirt
+5-male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+5-male_start_masturbating=,What the character says when a male character has started masturbating.
+5-male_masturbating=,What the character says while a male character is masturbating.
+5-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+5-female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+5-female_start_masturbating=curius .png,What the character says when a female character has started masturbating.
+5-female_masturbating=,What the character says while a female character is masturbating.
+5-female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+#lost shirt
+6-male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+6-male_start_masturbating=,What the character says when a male character has started masturbating.
+6-male_masturbating=,What the character says while a male character is masturbating.
+6-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+6-female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+6-female_start_masturbating=curius .png,What the character says when a female character has started masturbating.
+6-female_masturbating=,What the character says while a female character is masturbating.
+6-female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+#naked
+-3-male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+-3-male_start_masturbating=,What the character says when a male character has started masturbating.
+-3-male_masturbating=,What the character says while a male character is masturbating.
+-3-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+-3-female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+-3-female_start_masturbating=,What the character says when a female character has started masturbating.
+-3-female_masturbating=,What the character says while a female character is masturbating.
+-3-female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+
+#lost gloves
+2-must_masturbate_first=,This is the character response when they lost their last hand and have to masturbate, and they're the first character who's required to masturbate.
+2-must_masturbate=,This is the character response when they lost their last hand and have to masturbate, and they're not the first character who's required to masturbate.
+2-start_masturbating=,What the character says as they start masturbating.
+
+
+#naked
+-3-must_masturbate_first=,This is the character response when they lost their last hand and have to masturbate, and they're the first character who's required to masturbate.
+-3-must_masturbate=,This is the character response when they lost their last hand and have to masturbate, and they're not the first character who's required to masturbate.
+-3-start_masturbating=,What the character says as they start masturbating.
+
+
+#masturbating
+-2-masturbating=,What the character says while they're masturbating.
+-2-heavy_masturbating=,What the character says while they're masturbating, and closer to "finishing".
+-2-finishing_masturbating=,What the masturbating character says as they "finish".
+
+
+#finished
+-1-finished_masturbating=,What the character says after they've finished masturbating.
+
+
+
+
+#GAME OVER
+#Lines spoken after the overall winner has been decided and all the losers have finished their forfeits.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+game_over_victory=,What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-game_over_victory=,What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.
+
+
+#lost gloves
+2-game_over_victory=,What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.
+
+
+#lost corset and skirt
+5-game_over_victory=,What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.
+
+
+#lost shirt
+6-game_over_victory=,What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.
+
+
+#finished
+game_over_defeat=,What the character says when someone else has won the game. This can only occur when a player is in the "finished" stage.
+
+#EPILOGUE/ENDING
+
+#CUSTOM POSES
