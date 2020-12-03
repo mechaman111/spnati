@@ -123,6 +123,7 @@ namespace ImagePipeline
 		public NodePropertyType Type;
 		public Type DataType;
 		public object DefaultValue;
+		public float MinValue;
 		public float MaxValue;
 
 		public NodeProperty(NodePropertyType type, string name) : this(type, name, null, null) { }
@@ -133,6 +134,7 @@ namespace ImagePipeline
 			Type = type;
 			DefaultValue = defaultValue ?? GetDefaultProperty(type);
 			DataType = dataType;
+			MinValue = 0;
 			MaxValue = 0;
 		}
 

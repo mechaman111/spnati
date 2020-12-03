@@ -13,6 +13,10 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 	{
 		public event EventHandler NameChanged;
 
+		private const int PortExtensionLength = 15;
+		private const int VertexThreshold = PipelineNodeControl.PortRadius * 2;
+		private const int EndPointThreshold = 20;
+
 		public PipelineGraph Graph;
 		private ISkin _character;
 		private PoseMatrix _matrix;
@@ -24,6 +28,10 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 		private WorkingConnection _connection;
 		private PipelineNodeControl _selectedControl;
 		private PipelineNodeControl _previewControl;
+		private Point2D _hoverVertex;
+		private Connection _hoverConnection;
+		private int _hoverVertexIndex = -1;
+		private int _hoverVertexInsertionPoint = -1;
 
 		private Dictionary<string, object> _processCache = new Dictionary<string, object>();
 
@@ -266,24 +274,31 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 			}
 			Skin skin = SkinManager.Instance.CurrentSkin;
 			Pen pen = skin.PrimaryWidget.GetPen(VisualState.Normal, false, true);
+			SolidBrush brush = skin.PrimaryWidget.GetBrush(VisualState.Normal, false, true);
 			Graphics g = e.Graphics;
 
 			foreach (Connection connection in Graph.Connections)
 			{
 				PipelineNode from = Graph.GetNode(connection.From);
 				PipelineNode to = Graph.GetNode(connection.To);
-				DrawConnection(g, pen, from, connection.FromIndex, to, connection.ToIndex);
+				DrawConnection(g, pen, brush, connection, from, connection.FromIndex, to, connection.ToIndex);
 			}
 
 			// connection being dragged
 			if (_connection != null)
 			{
 				Pen activePen = skin.SecondaryWidget.GetPen(VisualState.Normal, true, true);
-				DrawConnection(g, activePen, _connection.Source, _connection.OutputIndex, null, -1);
+				DrawConnection(g, activePen, brush, null, _connection.Source, _connection.OutputIndex, null, -1);
+			}
+			else if (_hoverConnection != null)
+			{
+				const int radius = PipelineNodeControl.PortRadius;
+				Rectangle rect = new Rectangle(_hoverVertex.X - radius, _hoverVertex.Y - radius, radius * 2, radius * 2);
+				g.FillEllipse(skin.SecondaryWidget.GetBrush(VisualState.Normal, true, true), rect);
 			}
 		}
 
-		private void DrawConnection(Graphics g, Pen pen, PipelineNode from, int fromIndex, PipelineNode to, int index)
+		private void DrawConnection(Graphics g, Pen pen, SolidBrush brush, Connection connection, PipelineNode from, int fromIndex, PipelineNode to, int index)
 		{
 			PipelineNodeControl fromCtl;
 			PipelineNodeControl toCtl = null;
@@ -295,15 +310,41 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 
 			if (fromCtl != null)
 			{
-				Point pt1 = fromCtl.GetPortPosition(fromIndex, false);
-				pt1 = new Point(fromCtl.Left + pt1.X, fromCtl.Top + pt1.Y);
-				Point pt2 = _mousePosition;
-				if (toCtl != null)
+				Point startPt = fromCtl.GetPortPosition(fromIndex, false);
+				startPt = new Point(fromCtl.Left + startPt.X, fromCtl.Top + startPt.Y);
+				Point endPt = _mousePosition;
+				if (connection != null)
 				{
-					pt2 = toCtl.GetPortPosition(index, true);
-					pt2 = new Point(toCtl.Left + pt2.X, toCtl.Top + pt2.Y);
+					if (toCtl != null)
+					{
+						startPt = new Point(startPt.X + PortExtensionLength, startPt.Y);
+						g.DrawLine(pen, new Point(startPt.X - PortExtensionLength, startPt.Y), startPt); //straight line extending from output
+						endPt = toCtl.GetPortPosition(index, true);
+						endPt = new Point(toCtl.Left + endPt.X - PortExtensionLength, toCtl.Top + endPt.Y);
+						g.DrawLine(pen, endPt, new Point(endPt.X + PortExtensionLength, endPt.Y)); //straight line extending from input
+					}
+
+					Point lastPt = startPt;
+					for (int i = 0; i <= connection.Vertices.Count; i++)
+					{
+						Point pt = i < connection.Vertices.Count ? (Point)connection.Vertices[i] : endPt;
+						if (i < connection.Vertices.Count)
+						{
+							pt.X -= panel.HorizontalScroll.Value;
+							pt.Y -= panel.VerticalScroll.Value;
+						}
+						g.DrawLine(pen, lastPt, pt); //connect previous vertex
+						if (pt != endPt)
+						{
+							g.FillEllipse(brush, new Rectangle(pt.X - 2, pt.Y - 2, 5, 5)); //draw the vertex
+						}
+						lastPt = pt;
+					}
 				}
-				g.DrawLine(pen, pt1, pt2);
+				else
+				{
+					g.DrawLine(pen, startPt, endPt);
+				}
 			}
 		}
 
@@ -540,6 +581,161 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 			Destroy();
 			SetData(_character, _stage, _cell, copy);
 			NameChanged?.Invoke(this, EventArgs.Empty);
+		}
+
+		private void panel_MouseMove(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.None)
+			{
+				//check for hovering over a connection
+				foreach (Connection connection in Graph.Connections)
+				{
+					Point start = GetConnectionPoint(connection.From, connection.FromIndex, false);
+					Point end = GetConnectionPoint(connection.To, connection.ToIndex, true);
+
+					//make sure it's not near an end point
+					float distStart = e.Location.Distance(start);
+					float distEnd = e.Location.Distance(end);
+					if (distStart < EndPointThreshold || distEnd < EndPointThreshold)
+					{
+						break; //if we're near an end point, don't allow vertex dragging for any connections
+					}
+
+					Point lastPt = start;
+					for (int i = 0; i <= connection.Vertices.Count; i++)
+					{
+						Point pt = i < connection.Vertices.Count ? (Point)connection.Vertices[i] : end;
+						if (i < connection.Vertices.Count)
+						{
+							pt.X -= panel.HorizontalScroll.Value;
+							pt.Y -= panel.VerticalScroll.Value;
+						}
+
+						Point intersection = e.Location.GetClosestPointOnLineSegment(lastPt, pt);
+						float dist = e.Location.Distance(intersection);
+
+						if (dist <= VertexThreshold)
+						{
+							//see if we're near the vertex
+							float vertDist = intersection.Distance(pt);
+							float startDist = intersection.Distance(lastPt);
+							if (vertDist <= VertexThreshold)
+							{
+								_hoverVertexIndex = i;
+								_hoverVertex = pt;
+							}
+							else if (startDist <= VertexThreshold && i > 0)
+							{
+								_hoverVertexIndex = i - 1;
+								_hoverVertex = lastPt;
+							}
+							else
+							{
+								_hoverVertexInsertionPoint = i;
+								_hoverVertexIndex = -1;
+								_hoverVertex = intersection;
+							}
+							_hoverConnection = connection;
+							_hoverConnection.VerticesChanged += _hoverConnection_VerticesChanged;
+							panel.Invalidate();
+							return;
+						}
+						lastPt = pt;
+					}
+				}
+
+				if (_hoverConnection != null)
+				{
+					ClearHoverConnection();
+				}
+			}
+			else if (e.Button == MouseButtons.Left)
+			{
+				if (_hoverVertexIndex >= 0)
+				{
+					_hoverVertex = e.Location;
+					_hoverConnection.ReplaceVertex(_hoverVertexIndex, new Point2D(e.Location.X + panel.HorizontalScroll.Value, e.Location.Y + panel.VerticalScroll.Value));
+				}
+			}
+		}
+
+		private void panel_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (_hoverConnection != null)
+			{
+				if (e.Button == MouseButtons.Right && _hoverVertexIndex >= 0)
+				{
+					//delete this vertex
+					_hoverConnection.RemoveVertex(_hoverVertexIndex);
+					ClearHoverConnection();
+				}
+				else if (e.Button == MouseButtons.Left && _hoverConnection != null)
+				{
+					if (_hoverVertexIndex == -1)
+					{
+						//add a new vertex
+						_hoverVertexIndex = _hoverConnection.InsertVertex(_hoverVertexInsertionPoint, new Point2D(_hoverVertex.X + panel.HorizontalScroll.Value, _hoverVertex.Y + panel.VerticalScroll.Value));
+					}
+				}
+			}
+		}
+
+		private void panel_MouseUp(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left && _hoverConnection != null)
+			{
+				ClearHoverConnection();
+			}
+		}
+
+		private void ClearHoverConnection()
+		{
+			_hoverConnection.VerticesChanged -= _hoverConnection_VerticesChanged;
+			_hoverConnection = null;
+			_hoverVertexIndex = -1;
+			_hoverVertexInsertionPoint = -1;
+			panel.Invalidate();
+		}
+
+		private void _hoverConnection_VerticesChanged(object sender, EventArgs e)
+		{
+			panel.Invalidate();
+		}
+
+		/// <summary>
+		/// Gets the point where a connection hooks into a port
+		/// </summary>
+		/// <param name="nodeId"></param>
+		/// <param name="input"></param>
+		/// <returns></returns>
+		private Point GetConnectionPoint(int nodeId, int index, bool input)
+		{
+			PipelineNodeControl ctl;
+			PipelineNode node = Graph.GetNode(nodeId);
+			if (node != null)
+			{
+				if (_nodeMap.TryGetValue(node, out ctl))
+				{
+					Point pt = ctl.GetPortPosition(index, input);
+					pt.X += ctl.Left;
+					pt.Y += ctl.Top;
+					if (input)
+					{
+						pt.X -= PortExtensionLength;
+					}
+					else
+					{
+						pt.X += PortExtensionLength;
+					}
+					return pt;
+				}
+			}
+			return new Point(0, 0);
+		}
+
+		private void panel_Scroll(object sender, ScrollEventArgs e)
+		{
+			panel.Invalidate();
 		}
 	}
 }

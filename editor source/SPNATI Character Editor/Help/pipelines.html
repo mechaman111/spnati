@@ -64,6 +64,48 @@
 			What follows is a description of each node type available and how it works.
 
 			<p>
+				<h1>Apply Mask</h1>
+				Draws only the pixels of the source image that are part of the mask.
+				<h3>Inputs</h3>
+				<ul>
+					<li><b>Source:</b> A source image</li>
+					<li><b>Mask:</b> Mask to apply</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Out: </b> The resulting image</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Use Alpha: </b> If true, uses alpha values for the mask. If false, uses the max of the RGB channels.</li>
+					<li>
+						<b>Clamp:</b> See the Clamp property for Blend nodes
+					</li>
+					<li>
+						<b>Offset:</b> See the Offset property for Blend nodes
+					</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Brightness/Contrast</h1>
+				Adjusts an image's brightness and/or contrast.
+				<h3>Inputs</h3>
+				<ul>
+					<li><b>In:</b> The image to adjust</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Out: </b> The resulting image</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Brightness: </b> Amount to change the brightness.</li>
+					<li><b>Contrast: </b> Amount to change the contrast.</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
 				<h1>Cell</h1>
 				A pipeline is run for each cell in the Pose Matrix. The Cell node is for obtaining a reference to the image produced by that cell's code.
 				If your pipeline is linked to an entire stage, it will run once for each pose in that stage, so if you have three columns: calm, happy, and sad, the pipeline will run 3 times. The Cell node will provide the calm pose for the first run, the happy pose for the second, and the sad pose for the third.
@@ -128,8 +170,9 @@
 							<li>Difference: Takes the absolute value of the difference between pixels, darkening the image.</li>
 							<li>Lighten: Keeps the lighter pixel among the base and blend images.</li>
 							<li>Darken: Keeps the darker pixel among the base and blend images.</li>
-							<li>Extract: Throws away (adds full transparency to) any pixels that are identical between the base and blend, keeping the pixels of the blend image where different. This is useful for creating an image mask. For instance, taking two identical poses where the base is nude and the blend has a shirt, this will produce an image containing only the shirt.</li>
+							<li>Extract: Throws away (adds full transparency to) any pixels that are identical between the base and blend, keeping the pixels of the blend image where different. This is useful for creating an image mask. For instance, taking two identical poses where the base is nude and the blend has a shirt, this will produce an image containing only the shirt. Functionally similar to an XOR operation.</li>
 							<li>Overlay: Draws the blend image on top of the base image.</li>
+							<li>EqualTo: Performs a pixel-wise AND of the images, discarding any pixels that do not match between the two images. The blend amount controls how close a pixel must be to be considered a match.</li>
 						</ul>
 					</li>
 					<li><b>Strength:</b> A value from 0-100% for how much to blend the images. 0% means to use the base image while 100% means to use the blend image.</li>
@@ -200,6 +243,31 @@
 				<h3>Properties</h3>
 				<ul>
 					<li><b></b></li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Cookie Cutter</h1>
+				Compares two images and either keep the similar pixels or discards them
+				<h3>Inputs</h3>
+				<ul>
+					<li><b>Source:</b> A source image</li>
+					<li><b>Compare:</b> Image to compare the source to</li>
+					<li><b>Range:</b> Controls how close pixels must be to be considered similar.</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Value: </b> The resulting image</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Keep: </b> Which pixels to keep: either same (similar) pixels or the inverse.</li>
+					<li>
+						<b>Clamp:</b> See the Clamp property for Blend nodes
+					</li>
+					<li>
+						<b>Offset:</b> See the Offset property for Blend nodes
+					</li>
 				</ul>
 			</p>
 			<hr />
@@ -309,6 +377,24 @@
 			</p>
 			<hr />
 			<p>
+				<h1>Pipeline</h1>
+				Runs an image through another pipeline
+				<h3>Inputs</h3>
+				<ul>
+					<li>In: </li> An input image which will be used as the image for the Cell node of the sub-pipeline.
+					<li>Key: </li> An override to what the Cell node of the sub-pipeline outputs for its "key" output.
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Out: </b> The result of the processing the sub-pipeline</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Pipeline: </b> The name of the pipeline to execute. This must be another pipeline on this character's pose matrix and cannot create a cycle between pipelines.</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
 				<h1>Replace Color</h1>
 				Replaces colors that fall within a range with another color.
 				<h3>Inputs</h3>
@@ -400,6 +486,41 @@
 					<li><b>Green:</b> Whether to invert the green channel.</li>
 					<li><b>Blue:</b> Whether to invert the blue channel.</li>
 					<li><b>Alpha:</b> Whether to invert the alpha channel.</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Text</h1>
+				Emits a constant text string.
+				<h3>Inputs</h3>
+				<ul>
+					<li>None</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Value: </b> The chosen string of text</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Value: </b> The text to send to the output</li>
+				</ul>
+			</p>
+			<hr />
+			<p>
+				<h1>Threshold</h1>
+				Converts pixels to grayscale, then compares them to a threshold value. If the value is beneath the threshold, the pixel is turned off. Otherwise it's turned on.
+				<h3>Inputs</h3>
+				<ul>
+					<li><b>Src: </b> The image to modify</li>
+					<li><b>Threshold: </b> A value from 0-1.</li>
+				</ul>
+				<h3>Outputs</h3>
+				<ul>
+					<li><b>Out: </b> The resultant image.</li>
+				</ul>
+				<h3>Properties</h3>
+				<ul>
+					<li><b>Use Alpha:</b> If enabled, then pixels above the threshold are turned transparent instead of white.</li>
 				</ul>
 			</p>
 		</section>

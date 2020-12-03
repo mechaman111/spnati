@@ -194,7 +194,7 @@ namespace SPNATI_Character_Editor.DataStructures
 		private string GetPosePath(PoseSheet sheet, PoseStage stage, string key, bool forceAsset)
 		{
 			bool asset = sheet.PipelineAsset || stage.PipelineAsset || forceAsset;
-			string path = Character.GetPosePath(sheet.SubFolder, key, asset);
+			string path = Character.GetPosePath(sheet.Name, sheet.SubFolder, key, asset);
 			return path;
 		}
 

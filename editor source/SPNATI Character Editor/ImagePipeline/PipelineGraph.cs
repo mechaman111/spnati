@@ -550,15 +550,31 @@ namespace ImagePipeline
 		/// Cache object for processors to cache things between runs
 		/// </summary>
 		public Dictionary<string, object> Cache { get; set; }
+		/// <summary>
+		/// An image to override the cell node's image
+		/// </summary>
+		public DirectBitmap CellOverride { get; set; }
+		/// <summary>
+		/// A key to use for the cell node's override
+		/// </summary>
+		public string CellOverrideKey { get; set; }
 
 		public PipelineSettings()
 		{
 			Cache = new Dictionary<string, object>();
 		}
+
+		public PipelineSettings(PipelineSettings original)
+		{
+			DisallowCache = original.DisallowCache;
+			PreviewMode = original.PreviewMode;
+			Cache = original.Cache;
+			CellOverride = original.CellOverride;
+		}
 	}
 
 	[Serializable]
-	public class Connection
+	public class Connection : ICloneable
 	{
 		[XmlAttribute("from")]
 		/// <summary>
@@ -580,6 +596,64 @@ namespace ImagePipeline
 		/// Index of the input in the To node
 		/// </summary>
 		public int ToIndex;
+
+		/// <summary>
+		/// User-vertices
+		/// </summary>
+		[XmlArray("vertices")]
+		[XmlArrayItem("pt")]
+		public List<Point2D> Vertices = new List<Point2D>();
+
+		public event EventHandler VerticesChanged;
+
+		public object Clone()
+		{
+			Connection copy = MemberwiseClone() as Connection;
+			copy.Vertices = new List<Point2D>();
+			for (int j = 0; j < Vertices.Count; j++)
+			{
+				Point2D pt = Vertices[j];
+				Point2D newPt = new Point2D(pt.X, pt.Y);
+				copy.Vertices.Add(newPt);
+			}
+			return copy;
+		}
+
+		/// <summary>
+		/// Adds a new vertex
+		/// </summary>
+		/// <param name="position">Position in workspace</param>
+		/// <returns>The index of the vertex</returns>
+		public int InsertVertex(int index, Point2D position)
+		{
+			if (index < 0)
+			{
+				Vertices.Add(position);
+			}
+			else
+			{
+				Vertices.Insert(index, position);
+			}
+			OnVerticesChanged();
+			return index >= 0 ? index : Vertices.Count - 1;
+		}
+
+		public void RemoveVertex(int index)
+		{
+			Vertices.RemoveAt(index);
+			OnVerticesChanged();
+		}
+
+		public void ReplaceVertex(int index, Point2D newVertex)
+		{
+			Vertices[index] = newVertex;
+			OnVerticesChanged();
+		}
+
+		private void OnVerticesChanged()
+		{
+			VerticesChanged?.Invoke(this, EventArgs.Empty);
+		}
 	}
 
 	[Serializable]

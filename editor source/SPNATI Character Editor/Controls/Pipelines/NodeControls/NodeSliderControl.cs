@@ -18,6 +18,14 @@ namespace SPNATI_Character_Editor.Controls.Pipelines.NodeControls
 			_node = node;
 			_propertyIndex = index;
 
+			NodeProperty propertyDef = node.Definition.Properties[index];
+			float minimum = propertyDef.MinValue;
+			if (minimum != 0)
+			{
+				slider.Minimum = (int)(minimum * 100);
+				valValue.Minimum = (decimal)minimum;
+			}
+
 			float maximum = node.Definition.Properties[index].MaxValue;
 			if (maximum > 0)
 			{

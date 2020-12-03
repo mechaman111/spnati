@@ -14,6 +14,22 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public static float DistanceFromLineSegment(this PointF pt, PointF p1, PointF p2)
 		{
+			PointF ptOnLine = GetClosestPointOnLineSegment(pt, p1, p2);
+
+			float dx = pt.X - ptOnLine.X;
+			float dy = pt.Y - ptOnLine.Y;
+			return (float)Math.Sqrt(dx * dx + dy * dy);
+		}
+
+		/// <summary>
+		/// Gets the closest point on a line segment to another point
+		/// </summary>
+		/// <param name="pt"></param>
+		/// <param name="p1"></param>
+		/// <param name="p2"></param>
+		/// <returns></returns>
+		public static PointF GetClosestPointOnLineSegment(this PointF pt, PointF p1, PointF p2)
+		{
 			float a = pt.X - p1.X;
 			float b = pt.Y - p1.Y;
 			float c = p2.X - p1.X;
@@ -43,10 +59,12 @@ namespace SPNATI_Character_Editor
 				xx = p1.X + side * c;
 				yy = p1.Y + side * d;
 			}
-
-			float dx = pt.X - xx;
-			float dy = pt.Y - yy;
-			return (float)Math.Sqrt(dx * dx + dy * dy);
+			return new PointF(xx, yy);
+		}
+		public static Point GetClosestPointOnLineSegment(this Point pt, Point p1, Point p2)
+		{
+			PointF ptOnLine = GetClosestPointOnLineSegment(new PointF(pt.X, pt.Y), new PointF(p1.X, p1.Y), new PointF(p2.X, p2.Y));
+			return new Point((int)Math.Round(ptOnLine.X), (int)Math.Round(ptOnLine.Y));
 		}
 
 		public static float DistanceFromLineSegment(this Point pt, Point p1, Point p2)
@@ -60,6 +78,11 @@ namespace SPNATI_Character_Editor
 		}
 
 		public static float Distance(this PointF p1, PointF p2)
+		{
+			return (float)Math.Sqrt((p2.X - p1.X) * (p2.X - p1.X) + (p2.Y - p1.Y) * (p2.Y - p1.Y));
+		}
+
+		public static float Distance(this Point p1, Point p2)
 		{
 			return (float)Math.Sqrt((p2.X - p1.X) * (p2.X - p1.X) + (p2.Y - p1.Y) * (p2.Y - p1.Y));
 		}

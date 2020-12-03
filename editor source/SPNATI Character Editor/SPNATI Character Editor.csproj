@@ -591,11 +591,23 @@
     <Compile Include="Controls\Pipelines\NodeControls\NodePointControl.Designer.cs">
       <DependentUpon>NodePointControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeRecordControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeRecordControl.Designer.cs">
+      <DependentUpon>NodeRecordControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Pipelines\NodeControls\NodeSliderControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\Pipelines\NodeControls\NodeSliderControl.Designer.cs">
       <DependentUpon>NodeSliderControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeTextControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Pipelines\NodeControls\NodeTextControl.Designer.cs">
+      <DependentUpon>NodeTextControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Pipelines\PipelineNodeControl.cs">
       <SubType>Component</SubType>
@@ -1018,6 +1030,7 @@
     <Compile Include="DataStructures\MarkerData.cs" />
     <Compile Include="DataStructures\CharacterEditorData.cs" />
     <Compile Include="DataStructures\Nickname.cs" />
+    <Compile Include="DataStructures\Point2D.cs" />
     <Compile Include="DataStructures\Pose.cs" />
     <Compile Include="DataStructures\PoseDirective.cs" />
     <Compile Include="DataStructures\PoseMap.cs" />
@@ -1087,13 +1100,16 @@
     <Compile Include="ImagePipeline\ChannelReader.cs" />
     <Compile Include="ImagePipeline\DirectBitmap.cs" />
     <Compile Include="ImagePipeline\IPipelineNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\ApplyMaskNode.cs" />
     <Compile Include="ImagePipeline\Nodes\BlendNode.cs" />
     <Compile Include="ImagePipeline\Nodes\CellNode.cs" />
     <Compile Include="ImagePipeline\Nodes\CellReferenceNode.cs" />
     <Compile Include="ImagePipeline\Nodes\ChannelMixerNode.cs" />
     <Compile Include="ImagePipeline\Nodes\ColorMaskNode.cs" />
     <Compile Include="ImagePipeline\Nodes\ColorNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\ContrastNode.cs" />
     <Compile Include="ImagePipeline\Nodes\DesaturateNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\ExtractNode.cs" />
     <Compile Include="ImagePipeline\Nodes\FileNode.cs" />
     <Compile Include="ImagePipeline\Nodes\FloatNode.cs" />
     <Compile Include="ImagePipeline\Nodes\IntegerNode.cs" />
@@ -1104,7 +1120,10 @@
     <Compile Include="ImagePipeline\Nodes\ResultNode.cs" />
     <Compile Include="ImagePipeline\Nodes\SliderNode.cs" />
     <Compile Include="ImagePipeline\Nodes\SplitterNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\StringNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\SubNode.cs" />
     <Compile Include="ImagePipeline\Nodes\SwizzleNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\ThresholdNode.cs" />
     <Compile Include="ImagePipeline\PipelineGraph.cs" />
     <Compile Include="ImagePipeline\PipelineImporter.cs" />
     <Compile Include="ImagePipeline\PipelineNode.cs" />
@@ -1745,6 +1764,9 @@
     <EmbeddedResource Include="Controls\Pipelines\NodeControls\NodeSliderControl.resx">
       <DependentUpon>NodeSliderControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pipelines\NodeControls\NodeTextControl.resx">
+      <DependentUpon>NodeTextControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Pipelines\PipelineNodeControl.resx">
       <DependentUpon>PipelineNodeControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -2102,6 +2124,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Images\StageCode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v6.2.1.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="VersionHistory\v6.2.html">

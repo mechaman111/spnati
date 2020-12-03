@@ -84,7 +84,7 @@ namespace ImagePipeline
 					Color inC = bmp.GetPixel(x, y);
 					float[] c = inC.ToFloatArray();
 
-					float distance = ShaderFunctions.Distance(fromColor, inC);
+					float distance = ShaderFunctions.Distance(fromColor, inC, false);
 					float t = ShaderFunctions.Saturate((distance - range) / fuzziness);
 					float[] outValues = ShaderFunctions.Lerp(to, c, t);
 					Color final = ShaderFunctions.ToColor(outValues);

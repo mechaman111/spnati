@@ -29,6 +29,7 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 		public const int BoxWidth = 175;
 		private const int HeaderHeight = 20;
 		private const int BoxPadding = 5;
+		public const int PortRadius = BoxPadding;
 		private const int PortPadding = 3;
 		private const int PreviewPadding = 1;
 		private const int PreviewSize = BoxWidth - BoxPadding * 2 - PreviewPadding * 2;
@@ -164,8 +165,9 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 				Point newOffset = new Point(e.Location.X - _mouseOffset.X, e.Location.Y - _mouseOffset.Y);
 				Left += newOffset.X;
 				Top += newOffset.Y;
-				Node.X = Left;
-				Node.Y = Top;
+				Panel parent = Parent as Panel;
+				Node.X = Left + parent.HorizontalScroll.Value;
+				Node.Y = Top + parent.VerticalScroll.Value;
 			}
 			else
 			{
@@ -326,6 +328,16 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 					break;
 				case NodePropertyType.Color:
 					ctl = new NodeColorControl();
+					break;
+				case NodePropertyType.String:
+					if (typeof(IRecord).IsAssignableFrom(property.DataType))
+					{
+						ctl = new NodeRecordControl();
+					}
+					else
+					{
+						ctl = new NodeTextControl();
+					}
 					break;
 			}
 

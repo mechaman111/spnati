@@ -4,10 +4,7 @@ using System.Threading.Tasks;
 
 namespace ImagePipeline
 {
-	/// <summary>
-	/// Desaturates an image
-	/// </summary>
-	public class DesaturateNode : NodeDefinition
+	public class ThresholdNode : NodeDefinition
 	{
 		public override string Group
 		{
@@ -16,17 +13,17 @@ namespace ImagePipeline
 
 		public override string Description
 		{
-			get { return "Desaturates an image"; }
+			get { return "Converts an image into a binary mask"; }
 		}
 
 		public override string Name
 		{
-			get { return "Desaturate"; }
+			get { return "Threshold"; }
 		}
 
 		public override string Key
 		{
-			get { return "desaturate"; }
+			get { return "threshold"; }
 			set { }
 		}
 
@@ -34,7 +31,7 @@ namespace ImagePipeline
 		{
 			return new PortDefinition[] {
 				new PortDefinition(PortType.Bitmap, "src"),
-				new PortDefinition(PortType.Float, "amount"),
+				new PortDefinition(PortType.Float, "threshold"),
 			};
 		}
 
@@ -47,7 +44,9 @@ namespace ImagePipeline
 
 		public override NodeProperty[] GetProperties()
 		{
-			return null;
+			return new NodeProperty[] {
+				new NodeProperty(NodePropertyType.Boolean, "Use Alpha", false)
+			};
 		}
 
 		public override Task<PipelineResult> Process(PipelineArgs args)
@@ -63,31 +62,43 @@ namespace ImagePipeline
 			}
 			DirectBitmap output = new DirectBitmap(img.Width, img.Height);
 			IFloatNodeInput floatReader = args.GetInput<IFloatNodeInput>(1) ?? new ConstantFloat(0);
+			bool useAlpha = args.GetProperty<bool>(0);
 
 			for (int x = 0; x < img.Width; x++)
 			{
 				for (int y = 0; y < img.Height; y++)
 				{
-					Color color = img.GetPixel(x, y);
-					float r = color.R / 255.0f;
-					float g = color.G / 255.0f;
-					float b = color.B / 255.0f;
-					//float bw = (g * 0.59f + r * 0.3f + b * 0.11f);
-					float bw = (Math.Min(r, Math.Min(g, b)) + Math.Max(r, Math.Max(g, b))) * 0.5f;
+					Color color = ShaderFunctions.Desaturate(img.GetPixel(x, y), 1.0f);
+					float threshold = ShaderFunctions.Saturate(floatReader.Get(x, y));
+					float gray = color.R / 255.0f;
+					if (useAlpha)
+					{
+						if (gray < threshold)
+						{
+							color = Color.FromArgb(color.A, 0, 0, 0);
+						}
+						else
+						{
+							color = Color.FromArgb(0, 0, 0, 0);
+						}
+					}
+					else
+					{
+						if (gray < threshold)
+						{
+							color = Color.FromArgb(color.A, 0, 0, 0);
+						}
+						else
+						{
+							color = Color.FromArgb(color.A, 255, 255, 255);
+						}
+					}
 
-					float amount = floatReader.Get(x, y);
-					float fr = r * (1 - amount) + bw * amount;
-					float fg = g * (1 - amount) + bw * amount;
-					float fb = b * (1 - amount) + bw * amount;
-
-					int vr = (int)(fr * 255);
-					int vg = (int)(fg * 255);
-					int vb = (int)(fb * 255);
-
-					output.SetPixel(x, y, Color.FromArgb(color.A, vr, vg, vb));
+					output.SetPixel(x, y, color);
 				}
 			}
 			return Task.FromResult(new PipelineResult(output));
 		}
+
 	}
 }
