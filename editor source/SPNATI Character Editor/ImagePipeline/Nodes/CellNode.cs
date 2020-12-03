@@ -53,6 +53,12 @@ namespace ImagePipeline
 			PoseMatrix matrix = cell.Stage.Sheet.Matrix;
 			FileStatus status = matrix.GetStatus(cell, "raw-");
 
+			if (args.Context.Settings.CellOverride != null)
+			{
+				string overrideKey = args.Context.Settings.CellOverrideKey ?? cell.Key;
+				return new PipelineResult(new DirectBitmap(args.Context.Settings.CellOverride.Bitmap), overrideKey);
+			}
+
 			bool cached = args.Context.Settings.Cache.ContainsKey("CellGenerated");
 
 			if ((status != FileStatus.Missing && args.Context.Settings.PreviewMode && cached) 

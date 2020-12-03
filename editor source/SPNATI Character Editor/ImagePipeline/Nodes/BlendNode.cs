@@ -82,29 +82,9 @@ namespace ImagePipeline
 				for (int y = 0; y < h1; y++)
 				{
 					Color c1 = img1.GetPixel(x, y);
-					int x2 = x - offset.X;
-					int y2 = y - offset.Y;
-					switch (wrapMode)
-					{
-						case ImageWrapMode.Repeat:
-							x2 = (x2 + w2) % w2;
-							y2 = (y2 + h2) % h2;
-							break;
-						case ImageWrapMode.Mirror:
-							int xPattern = ((x2 + w2) / w2) % 2;
-							int yPattern = ((y2 + h2) / h2) % 2;
-							x2 = (x2 + w2) % w2;
-							y2 = (y2 + h2) % h2;
-							if (xPattern == 0)
-							{
-								x2 = (w2 - 1 - x2);
-							}
-							if (yPattern == 0)
-							{
-								y2 = (h2 - 1 - y2);
-							}
-							break;
-					}
+					int x2 = ShaderFunctions.OffsetAndWrap(x, w2, wrapMode, offset.X);
+					int y2 = ShaderFunctions.OffsetAndWrap(y, h2, wrapMode, offset.Y);
+
 					Color c2 = Color.Empty;
 					if (x2 >= 0 && x2 < w2 && y2 >= 0 && y2 < h2)
 					{
@@ -179,7 +159,7 @@ namespace ImagePipeline
 		Lighten = 5,
 		Darken = 6,
 		Extract = 7,
-		Overlay = 8
+		Overlay = 8,
 	}
 
 	public enum ImageWrapMode

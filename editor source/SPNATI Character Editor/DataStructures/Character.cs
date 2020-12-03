@@ -285,9 +285,9 @@ namespace SPNATI_Character_Editor
 		/// <param name="poseName"></param>
 		/// <param name="asset"></param>
 		/// <returns></returns>
-		public string GetPosePath(string subfolder, string poseName, bool asset)
+		public string GetPosePath(string sheetName, string subfolder, string poseName, bool asset)
 		{
-			string root = asset ? Path.Combine(Config.AppDataDirectory, FolderName) : Path.Combine(GetDirectory());
+			string root = asset ? Path.Combine(Config.AppDataDirectory, FolderName, sheetName) : Path.Combine(GetDirectory());
 			if (!string.IsNullOrEmpty(subfolder))
 			{
 				root = Path.Combine(root, subfolder);

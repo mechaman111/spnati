@@ -33,12 +33,12 @@
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.tsAddNode = new System.Windows.Forms.ToolStripButton();
 			this.tsRemoveNode = new System.Windows.Forms.ToolStripButton();
+			this.tsSaveAs = new System.Windows.Forms.ToolStripButton();
 			this.panel = new Desktop.Skinning.SkinnedPanel();
 			this.tmrPreview = new System.Windows.Forms.Timer(this.components);
 			this.skinnedSplitContainer1 = new Desktop.Skinning.SkinnedSplitContainer();
 			this.grpPreview = new Desktop.Skinning.SkinnedGroupBox();
 			this.picPreview = new SPNATI_Character_Editor.Controls.CharacterImageBox();
-			this.tsSaveAs = new System.Windows.Forms.ToolStripButton();
 			this.toolStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.skinnedSplitContainer1)).BeginInit();
 			this.skinnedSplitContainer1.Panel1.SuspendLayout();
@@ -80,6 +80,18 @@
 			this.tsRemoveNode.Text = "Remove node";
 			this.tsRemoveNode.Click += new System.EventHandler(this.tsRemoveNode_Click);
 			// 
+			// tsSaveAs
+			// 
+			this.tsSaveAs.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.tsSaveAs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsSaveAs.Image = ((System.Drawing.Image)(resources.GetObject("tsSaveAs.Image")));
+			this.tsSaveAs.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsSaveAs.Name = "tsSaveAs";
+			this.tsSaveAs.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.tsSaveAs.Size = new System.Drawing.Size(60, 22);
+			this.tsSaveAs.Text = "Save As...";
+			this.tsSaveAs.Click += new System.EventHandler(this.tsSaveAs_Click);
+			// 
 			// panel
 			// 
 			this.panel.AutoScroll = true;
@@ -91,6 +103,9 @@
 			this.panel.TabIndex = 1;
 			this.panel.TabSide = Desktop.Skinning.TabSide.None;
 			this.panel.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Paint);
+			this.panel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel_MouseDown);
+			this.panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel_MouseMove);
+			this.panel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel_MouseUp);
 			// 
 			// tmrPreview
 			// 
@@ -142,18 +157,6 @@
 			this.picPreview.Name = "picPreview";
 			this.picPreview.Size = new System.Drawing.Size(231, 428);
 			this.picPreview.TabIndex = 0;
-			// 
-			// tsSaveAs
-			// 
-			this.tsSaveAs.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.tsSaveAs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.tsSaveAs.Image = ((System.Drawing.Image)(resources.GetObject("tsSaveAs.Image")));
-			this.tsSaveAs.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsSaveAs.Name = "tsSaveAs";
-			this.tsSaveAs.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.tsSaveAs.Size = new System.Drawing.Size(60, 22);
-			this.tsSaveAs.Text = "Save As...";
-			this.tsSaveAs.Click += new System.EventHandler(this.tsSaveAs_Click);
 			// 
 			// GraphEditor
 			// 

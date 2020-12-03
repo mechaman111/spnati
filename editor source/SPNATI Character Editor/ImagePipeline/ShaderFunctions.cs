@@ -43,11 +43,15 @@ namespace ImagePipeline
 			return result;
 		}
 
-		public static float Distance(Color c1, Color c2)
+		public static float Distance(Color c1, Color c2, bool includeAlpha)
 		{
 			float[] a1 = c1.ToFloatArray();
 			float[] a2 = c2.ToFloatArray();
-			return (float)Math.Sqrt((a2[0] - a1[0]) * (a2[0] - a1[0]) + (a2[1] - a1[1]) * (a2[1] - a1[1]) + (a2[2] - a1[2]) * (a2[2] - a1[2]));
+			float r = a2[0] - a1[0];
+			float g = a2[1] - a1[1];
+			float b = a2[2] - a1[2];
+			float a = includeAlpha ? a2[3] - a1[3] : 0;
+			return (float)Math.Sqrt(r * r + g * g + b * b + a * a);
 		}
 
 		/// <summary>
@@ -76,6 +80,58 @@ namespace ImagePipeline
 			int b = Saturate((int)(array[2] * 255));
 			int a = Saturate((int)(array[3] * 255));
 			return Color.FromArgb(a, r, g, b);
+		}
+
+		/// <summary>
+		/// Clamps a value using a certain mode
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="mode"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		public static int OffsetAndWrap(int value, int max, ImageWrapMode mode, int offset)
+		{
+			int v = value - offset;
+			switch (mode)
+			{
+				case ImageWrapMode.Repeat:
+					v = (v + max) % max;
+					break;
+				case ImageWrapMode.Mirror:
+					int pattern = ((v + max) / max) % 2;
+					v = (v + max) % max;
+					if (pattern == 0)
+					{
+						v = (max - 1 - v);
+					}
+					break;
+			}
+			return v;
+		}
+
+		/// <summary>
+		/// Desaturates a color
+		/// </summary>
+		/// <param name="color"></param>
+		/// <param name="amount"></param>
+		/// <returns></returns>
+		public static Color Desaturate(Color color, float amount)
+		{
+			amount = Saturate(amount);
+			float r = color.R / 255.0f;
+			float g = color.G / 255.0f;
+			float b = color.B / 255.0f;
+			//float bw = (g * 0.59f + r * 0.3f + b * 0.11f);
+			float bw = (Math.Min(r, Math.Min(g, b)) + Math.Max(r, Math.Max(g, b))) * 0.5f;
+
+			float fr = r * (1 - amount) + bw * amount;
+			float fg = g * (1 - amount) + bw * amount;
+			float fb = b * (1 - amount) + bw * amount;
+
+			int vr = (int)(fr * 255);
+			int vg = (int)(fg * 255);
+			int vb = (int)(fb * 255);
+			return Color.FromArgb(color.A, vr, vg, vb);
 		}
 	}
 }

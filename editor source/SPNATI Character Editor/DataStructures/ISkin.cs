@@ -33,7 +33,7 @@ namespace SPNATI_Character_Editor
 		/// <param name="poseName"></param>
 		/// <param name="asset"></param>
 		/// <returns></returns>
-		string GetPosePath(string subfolder, string poseName, bool asset);
+		string GetPosePath(string sheetName, string subfolder, string poseName, bool asset);
 		/// <summary>
 		/// Gets a list of pose names that the skin requires
 		/// </summary>

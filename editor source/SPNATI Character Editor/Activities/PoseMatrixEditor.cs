@@ -376,7 +376,7 @@ namespace SPNATI_Character_Editor.Activities
 				Character character = _skin.Character;
 				if (character != _skin)
 				{
-					string mainPath = character.GetPosePath(_sheet.SubFolder, pose.GetFullKey(), _sheet.PipelineAsset || pose.Stage.PipelineAsset);
+					string mainPath = character.GetPosePath(_sheet.Name, _sheet.SubFolder, pose.GetFullKey(), _sheet.PipelineAsset || pose.Stage.PipelineAsset);
 					if (File.Exists(mainPath) && _matrix.GetStatus(pose) == FileStatus.Missing)
 					{
 						cell.Value = Properties.Resources.Missing;

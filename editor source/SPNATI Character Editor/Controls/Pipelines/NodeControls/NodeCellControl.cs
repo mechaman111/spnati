@@ -68,13 +68,23 @@ namespace SPNATI_Character_Editor.Controls.Pipelines.NodeControls
 				lblPath.Text = "Unknown";
 				return;
 			}
-			string stage = "Stage " + cellRef.Stage;
-			if (!string.IsNullOrEmpty(cellRef.StageName))
-			{
-				stage = cellRef.StageName;
-			}
 
-			lblPath.Text = stage;
+			bool hasKey = _node.Graph.GetInput(_node, 0) != null;
+			if (hasKey)
+			{
+				lblPath.Text = cellRef.SheetName;
+			}
+			else
+			{
+				string stage = cellRef.Stage.ToString();
+				if (!string.IsNullOrEmpty(cellRef.StageName))
+				{
+					stage = cellRef.StageName;
+				}
+
+				string key = hasKey ? "key" : cellRef.Key;
+				lblPath.Text = $"{stage} > {key}";
+			}
 		}
 	}
 }
