@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited November 19 2020
+README edited December 3 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -431,6 +431,10 @@ PERONA
 
 PINKIE
 -Response to Pinkie turning to Pinkamena.
+
+POLLY
+-Response to Polly as Chara loses.
+-Response to Polly saying Chara is taking the game too seriously.
 
 REMILIA
 -Responds the first time Remilia's maid uses her time-stop powers to strip her.
