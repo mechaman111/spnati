@@ -81,10 +81,12 @@ Four special player IDs exist:
 | Subvariable  | Description                                    |
 | ------------ | ---------------------------------------------- |
 | (none)       | Using only `~character_id~`, `~target~`, or `~self~` returns the name of the referenced player, or a nickname if one has been specified for that character. |
+| `.id` | The internal ID (folder name) of the referenced player. This is useful in conjunction with `indirect` (see below). |
 | `.position`  | The position, `left` or `right` (from the perspective of the human player, not the characters) of the player relative to the subject character. The human player is considered to be to `across` from all characters. `~self.position~` resolves to simply `self`. |
 | `.distance` | How many slots away this character is from the subject character. `1` indicates the characters are adjacent. |
 | `.slot`      | The slot number of the player, from 0 (the human player) to 5. |
 | `.collectible`, `.marker`, `.targetmarker` | Lets you access collectible and marker data of a different character. See the corresponding general variable descriptions above for details. |
+| `.indirect`, `.targetindirect` | Lets you indirectly reference a player specified by a marker set on a different character. See the section below on indirection for more details. |
 | `.tag.tag_name` | `true` if the player has the tag `tag_name`, `false` otherwise. |
 | `.costume`      | The ID of the player's alternate costume/skin, or `default` if no alternate costume is worn. |
 | `.size`         | The player's breast or penis size depending on the gender (`small`, `medium`, or `large`). |
@@ -101,6 +103,28 @@ Four special player IDs exist:
 | `.hand`         | A not too formal or exact description of the current hand, for example "a pair of queens", "three sixes", "a straight". Use like `I had ~self.hand~!` |
 | `.hand.noart`   | Like above, but with no indeterminate article. Use like `My ~self.hand.noart~ was better than your ~target.hand.noart~!` |
 | `.hand.score`   | A numerical value of the hand. The hundreds digit specifies the type of hand (0 = High card, 1 = One pair, 2 = Two pair, 3 = Trips, 4 = Straight, 5 = Flush, 6 = Full house, 7 = Quads, 8 = Straight flush, and 9 = Royal Flush). The rest of the digits specify the rank of the (top) pair, triplet and so on. So 14 = ace high, 107 = a pair of sevens, 413 = King-high straight. It's not complete information about the hand, but better than just "a pair"; the difference between a pair of aces and a pair of deuces is *huge*.
+
+## Indirection ##
+
+These variables take the value of a marker and interpret it as a character ID.
+Then, they access the character with that ID as a player variable, as described in the section above.
+
+For example, if you have a marker `foo` with the value `chihiro`, then `~indirect.foo~`
+would evaluate to `Chihiro` (or any nickname that has been set for him).
+You could also access player sub-variables such as `~indirect.foo.slot~`.
+
+If the marker were set to one of the special player IDs above, such as `target`,
+then the indirect access would resolve to the specified player, based on the current context.
+
+Variables that indirectly reference a player that isn't present at the table will
+evaluate as empty strings.
+
+| Variable     | Description                                    |
+| ------------ | ---------------------------------------------- |
+| `~indirect.marker_name~` | Performs indirect access of a character whose ID is specified by a marker. |
+| `~targetindirect.marker_name~` | Like `indirect.marker_name`, but works with target-specific markers. |
+| `~player.indirect.marker~` | Performs indirect access of a character whose ID is specified by a marker set on another player. |
+| `~player.targetindirect.marker~` | Performs indirect access of a character whose ID is specified by a target-specific marker set on another player. |
 
 ## `.ifplural` ##
 
