@@ -108,6 +108,7 @@ The following is a quick overview of currently implemented Command types and the
 | Set Alpha           | `alpha_direct`                | `character`, `op`, `path`, `value`, `multiplier`
 | Set Alpha (testing) | `alpha`                       | `character`, `colorIndex`, `part`, `alpha`
 | Dump Character      | `dump_character`              | `character`
+| Fastload            | `fastload`                    | `character`, `data`, `attachments`, `version`, `read_from_cache`, `write_to_cache`
 
 #### Version Command
 
@@ -241,6 +242,60 @@ This command dumps the entire internal character data structure for the given `c
 and returns it as the response `data`.
 
 This command is relatively fast, but produces a _lot_ of output.
+
+#### Fast Load Character Data
+
+_Added in version 104.1._
+
+This command loads character data into the Kisekae workspace using an optimized procedure that attempts to minimize the
+amount of graphical updates and other processing performed, compared to a full import cycle.
+
+The only two required parameters for this command are `data` and `character`.
+
+The `character` parameter should be the zero-based index of the character to load data into.
+
+The request `data` should be a list containing three-element lists of `[subcode_prefix, subcode_index, value]`,
+with one list for each model parameter to change.
+
+For example, the Kisekae code fragment `aa26.290.0.0` could be represented this way as:
+```json
+[
+    ["aa", 0, "26"],
+    ["aa", 1, "290"],
+    ["aa", 2, "0"],
+    ["aa", 3, "0"]
+]
+```
+
+Data values may be either strings or other values of appropriate types, depending on the parameter.
+Sending values as they appear in save codes should always work, regardless of parameter type.
+
+The `attachments` parameter, if provided, should be a dictionary mapping updated image attachment slots to their image paths.
+For example:
+```json
+{
+    "0": "images/attachment.png"
+}
+```
+
+The `version` parameter should be the version of the Kisekae instance that generated the provided `data`.
+If you are sending data from a Kisekae code, this should be the version number attached to the code.
+This parameter is used to apply version-specific compatibility updates to the incoming data.
+If this is not provided, it is assumed to be the server's Kisekae version.
+
+`read_from_cache` and `write_to_cache` can be used to control server-side caching of data sent via this command.
+By default, data loaded via this command will be saved to a per-character cache, so that redundant parameter updates
+can be identified and skipped.
+
+This can potentially save a massive amount of time in cases where many data loads are performed in sequence.
+However, if there are unforeseen bugs resulting in false-positive cache matches, this could result in issues loading
+data (i.e. parameter updates being skipped that shouldn't be).
+In this case, `read_from_cache` can be set to `false` to force KKL to bypass the cache and always apply sent updates.
+
+If not provided, both `read_from_cache` and `write_to_cache` are assumed to be `true`.
+
+Note that the cache for a character is always invalidated when the user makes manual changes to them in the Kisekae workspace.
+
 
 ### Command Response Messages
 

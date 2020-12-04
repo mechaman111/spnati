@@ -3,7 +3,8 @@ from pathlib import Path
 import struct
 import json
 import time
-from typing import Optional, Dict, Any, Union
+import re
+from typing import Optional, Dict, Any, Union, List, Tuple, Iterable
 
 PROTOCOL_HEADER = b"KKL "
 
@@ -135,6 +136,45 @@ class KisekaeServerRequest(object):
         return cls("screenshot", {"bg": include_bg})
 
     @classmethod
+    def character_screenshot(
+        cls,
+        characters: Union[int, Iterable[int]],
+        matrices: Union[None, Iterable[float], Iterable[Iterable[float]]] = None,
+        base_scale: Optional[float] = None,
+    ):
+        opts = []
+
+        if isinstance(characters, int):
+            opt = {"index": characters}
+            if matrices is not None:
+                opt["matrix"] = list(map(float, matrices))
+            opts = [opt]
+        elif matrices is None:
+            for idx in characters:
+                opts.append({"index": idx})
+        else:
+            for idx, matx in zip(characters, matrices):
+                if len(matx) != 6:
+                    raise ValueError("matrix must have six elements")
+
+                opts.append({"index": int(idx), "matrix": list(map(float, matx))})
+
+        return cls("character-screenshot", {"characters": opts, "scale": base_scale,})
+
+    @classmethod
+    def direct_screenshot(
+        cls,
+        include_bg: bool,
+        size: Optional[Tuple[int, int]] = None,
+        shift: Optional[Tuple[int, int]] = None,
+        sf: Optional[float] = None,
+    ):
+        return cls(
+            "direct-screenshot",
+            {"bg": include_bg, "shift": shift, "size": size, "sf": sf,},
+        )
+
+    @classmethod
     def reset_full(cls):
         return cls("reset_full")
 
@@ -143,7 +183,13 @@ class KisekaeServerRequest(object):
         return cls("reset_partial")
 
     @classmethod
-    def get_character_data(cls, character: int, tab_name: str, tab_parameter: int):
+    def get_character_data(
+        cls,
+        character: int,
+        tab_name: str,
+        tab_parameter: int,
+        internal_names: bool = False,
+    ):
         if character < 0 or character > 8:
             raise ValueError(
                 "'character' must be between 0-8 (got {})".format(character)
@@ -156,6 +202,7 @@ class KisekaeServerRequest(object):
                 "character": character,
                 "tabName": tab_name,
                 "tabParameter": tab_parameter,
+                "internalNames": internal_names,
             },
         )
 
@@ -164,8 +211,9 @@ class KisekaeServerRequest(object):
         cls,
         character: int,
         tab_name: str,
-        tab_parameter: int,
+        tab_parameter: Union[int, str],
         value: Union[int, bool, str],
+        internalNames: bool = False,
     ):
         if character < 0 or character > 8:
             raise ValueError(
@@ -180,6 +228,34 @@ class KisekaeServerRequest(object):
                 "tabName": tab_name,
                 "tabParameter": tab_parameter,
                 "value": value,
+                "internalNames": internalNames,
+            },
+        )
+
+    @classmethod
+    def fastload(
+        cls,
+        character: int,
+        data: List[Tuple[str, int, Union[str, int, bool]]],
+        attachments: Optional[Dict[int, str]] = None,
+        version: Optional[int] = None,
+        write_to_cache: bool = True,
+        read_from_cache: bool = True,
+    ):
+        if character < 0 or character > 8:
+            raise ValueError(
+                "'character' must be between 0-8 (got {})".format(character)
+            )
+
+        return cls(
+            "fastload",
+            {
+                "data": data,
+                "attachments": attachments,
+                "character": character,
+                "version": version,
+                "write_to_cache": write_to_cache,
+                "read_from_cache": read_from_cache,
             },
         )
 
@@ -213,6 +289,26 @@ class KisekaeServerRequest(object):
             "alpha_direct",
             {
                 "op": "set",
+                "character": character,
+                "path": path,
+                "alpha": alpha_value,
+                "multiplier": alpha_multiplier,
+            },
+        )
+
+    @classmethod
+    def set_children_alpha_direct(
+        cls, character: int, path: str, alpha_value: int, alpha_multiplier: float = 0
+    ):
+        if character < 0 or character > 8:
+            raise ValueError(
+                "'character' must be between 0-8 (got {})".format(character)
+            )
+
+        return cls(
+            "alpha_direct",
+            {
+                "op": "set-children",
                 "character": character,
                 "path": path,
                 "alpha": alpha_value,
@@ -306,7 +402,10 @@ class KisekaeLocalClient(object):
                 if msg.is_complete():
                     fut.set_result(msg)
             except KeyError:
-                continue
+                sys.stderr.write(
+                    "Received response for unknown request {}".format(request_id)
+                )
+                sys.stderr.flush()
 
     async def send_command(
         self, command: KisekaeServerRequest
@@ -412,6 +511,48 @@ if __name__ == "__main__":
 
         return resp
 
+    async def do_direct_screenshot(
+        client: KisekaeLocalClient, args: argparse.Namespace
+    ):
+        resp = await client.send_command(
+            KisekaeServerRequest.direct_screenshot(
+                args.bg, size=args.size, shift=args.shift, sf=args.sf,
+            )
+        )
+
+        if resp.is_success():
+            outfile: Path = args.outfile
+            with outfile.open("wb") as f:
+                sys.stderr.write(
+                    "Received {} bytes of image data.\n".format(len(resp.get_data()))
+                )
+                sys.stderr.flush()
+
+                f.write(resp.get_data())
+
+        return resp
+
+    async def do_character_screenshot(
+        client: KisekaeLocalClient, args: argparse.Namespace
+    ):
+        resp = await client.send_command(
+            KisekaeServerRequest.character_screenshot(
+                args.characters, None, base_scale=args.sf
+            )
+        )
+
+        if resp.is_success():
+            outfile: Path = args.outfile
+            with outfile.open("wb") as f:
+                sys.stderr.write(
+                    "Received {} bytes of image data.\n".format(len(resp.get_data()))
+                )
+                sys.stderr.flush()
+
+                f.write(resp.get_data())
+
+        return resp
+
     async def do_full_import(client: KisekaeLocalClient, args: argparse.Namespace):
         codefile: Path = args.codefile
         with codefile.open("r", encoding="utf-8") as f:
@@ -442,12 +583,15 @@ if __name__ == "__main__":
         client: KisekaeLocalClient, args: argparse.Namespace
     ):
         request = KisekaeServerRequest.get_character_data(
-            args.character, args.tab_name, args.tab_parameter
+            args.character,
+            args.tab_name,
+            args.tab_parameter,
+            internal_names=args.internal_names,
         )
 
         resp = await client.send_command(request)
         if resp.is_success():
-            print(resp.get_data())
+            print(repr(resp.get_data()))
 
         return resp
 
@@ -468,8 +612,29 @@ if __name__ == "__main__":
             except ValueError:
                 value: str = raw_value.strip()
 
+        try:
+            param: int = int(args.tab_parameter)
+        except ValueError:
+            param: str = args.tab_parameter.strip()
+
         request = KisekaeServerRequest.set_character_data(
-            args.character, args.tab_name, args.tab_parameter, value
+            args.character, args.tab_name, param, value, args.internalNames
+        )
+
+        return await client.send_command(request)
+
+    async def do_fastload(
+        client: KisekaeLocalClient, args: argparse.Namespace
+    ):
+        data = []
+        for i in range(0, len(args.data), 3):
+            data.append((args.data[i], args.data[i + 1], args.data[i + 2]))
+
+        request = KisekaeServerRequest.fastload(
+            args.character,
+            data,
+            write_to_cache=args.write_to_cache,
+            read_from_cache=args.read_from_cache,
         )
 
         return await client.send_command(request)
@@ -533,6 +698,50 @@ if __name__ == "__main__":
     )
     parser_screenshot.set_defaults(func=do_screenshot)
 
+    def int_pair(arg: str) -> Tuple[int, int]:
+        if arg is None or len(arg) == 0:
+            return None
+        m = re.match(r"(\d+)\s*\D\s*(\d+)", arg)
+        if m is None:
+            raise ValueError("Not an integer pair (must be e.g. 1234x5678 or similar)")
+        return (int(m[1]), int(m[2]))
+
+    parser_direct_screenshot = subparsers.add_parser("direct-screenshot")
+    parser_direct_screenshot.add_argument(
+        "outfile", type=Path, help="Path for output screenshot image"
+    )
+    parser_direct_screenshot.add_argument(
+        "--bg", action="store_true", help="Include the background in the screenshot"
+    )
+    parser_direct_screenshot.add_argument(
+        "--size", type=int_pair, default=None, help="Size of screenshot"
+    )
+    parser_direct_screenshot.add_argument(
+        "--shift", type=int_pair, default=None, help="Shift for screenshot",
+    )
+    parser_direct_screenshot.add_argument(
+        "--sf",
+        type=float,
+        default=None,
+        help="Base scale factor for screenshot (establishes resolution)",
+    )
+    parser_direct_screenshot.set_defaults(func=do_direct_screenshot)
+
+    parser_character_screenshot = subparsers.add_parser("character-screenshot")
+    parser_character_screenshot.add_argument(
+        "outfile", type=Path, help="Path for output screenshot image"
+    )
+    parser_character_screenshot.add_argument(
+        "characters", type=int, nargs="+", help="Characters to capture"
+    )
+    parser_character_screenshot.add_argument(
+        "--sf",
+        type=float,
+        default=None,
+        help="Base scale factor for screenshot (establishes resolution)",
+    )
+    parser_character_screenshot.set_defaults(func=do_character_screenshot)
+
     parser_import_partial = subparsers.add_parser("import-partial")
     parser_import_partial.add_argument(
         "codefile", type=Path, help="Path to Kisekae code to import"
@@ -557,9 +766,9 @@ if __name__ == "__main__":
     )
     parser_get_character_data.add_argument(
         "tab_parameter",
-        type=int,
-        help="Zero-based index into save code for character data to inspect",
+        help="Zero-based index into save code or parameter name for character data to inspect",
     )
+    parser_get_character_data.add_argument("--internal-names", action="store_true")
     parser_get_character_data.set_defaults(func=do_get_character_data)
 
     parser_set_character_data = subparsers.add_parser("set-character-data")
@@ -571,11 +780,40 @@ if __name__ == "__main__":
     )
     parser_set_character_data.add_argument(
         "tab_parameter",
-        type=int,
         help="Zero-based index into save code for character data to modify",
     )
     parser_set_character_data.add_argument("value", help="Value to set")
+    parser_set_character_data.add_argument(
+        "--internal-names",
+        action="store_true",
+        help="Use internal Kisekae data path names",
+        dest="internalNames",
+    )
     parser_set_character_data.set_defaults(func=do_set_character_data)
+
+    parser_fastload = subparsers.add_parser("mod-character-data")
+    parser_fastload.add_argument(
+        "character", type=int, help="Index of character to modify (0-8)"
+    )
+    parser_fastload.add_argument(
+        "data",
+        help="Tab names, indices, and values to inject into character data",
+        nargs="+",
+    )
+    parser_fastload.add_argument(
+        "--read-from-cache",
+        "-r",
+        action="store_true",
+        help="Read from cache when loading (default: don't)",
+    )
+    parser_fastload.add_argument(
+        "--no-write-cache",
+        "-W",
+        action="store_false",
+        dest="write_to_cache",
+        help="Don't write to cache when loading (default: do)",
+    )
+    parser_fastload.set_defaults(func=do_fastload)
 
     parser_set_alpha = subparsers.add_parser("set-alpha")
     parser_set_alpha.add_argument(
