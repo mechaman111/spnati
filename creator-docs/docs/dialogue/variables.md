@@ -5,6 +5,8 @@ Variables are placeholders that you can use in your dialogue and let your charac
 Variable names are enclosed in tildes (`~`). Example: `~name~`. Several variables are structured in multiple levels; you only put tildes at the beginning and end, e.g. `~target.marker.some_marker~. However, there exist functions, which take arguments that can contain other variable references enclosed in tildes.
 
 Variable names are generally not case sensitive. However, if the first letter of a variable name is written in uppercase, the first letter of the resulting variable expansion will be converted to uppercase. Thus, if a sentence begins with a variable, the variable name should start with an uppercase letter, as in `~Player~ must be new to this!`.
+Additionally, if a variable is written in all caps (e.g. `~PLAYER~`), then the expansion will also be all-uppercase.
+
 
 ## General ##
 
