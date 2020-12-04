@@ -762,6 +762,16 @@ function expandNicknames (self, target) {
     return target.label;
 }
 
+function resolvePlayerReference(ref, fn_parts, args, self, target, bindings) {
+    var variablePlayer = findVariablePlayer(ref, self, target, bindings);
+    if (variablePlayer) {
+        return expandPlayerVariable(fn_parts, args, variablePlayer, self, target, bindings);
+    } else {
+        console.error("Unknown variable or player: ", ref);
+        return "";
+    }
+}
+
 /************************************************************
  * Expands ~target.*~ and ~[player].*~ variables.
  ************************************************************/
@@ -769,6 +779,8 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
     if (split_fn.length > 0) var fn = split_fn[0].toLowerCase();
     
     switch (fn) {
+    case 'id':
+        return player.id;
     case 'position':
         if (player.slot === self.slot) return 'self';
         if (player === humanPlayer) return 'across';
@@ -794,12 +806,20 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         } else {
             return "collectible"; // no collectible ID supplied
         }
+    case 'indirect':
+    case 'targetindirect':
     case 'marker':
     case 'persistent':
     case 'targetmarker':
         var markerName = split_fn[1];
         if (markerName) {
-            return player.getMarker(markerName, target, false, fn === 'targetmarker') || "";
+            var value = player.getMarker(markerName, target, false, (fn === 'targetmarker' || fn === 'targetindirect')) || "";
+            if (fn === 'indirect' || fn === 'targetindirect') {
+                split_fn.shift();
+                return resolvePlayerReference(value.toLowerCase(), split_fn, args, player, target, bindings);
+            } else {
+                return value;
+            }
         } else {
             return fn; //didn't supply a marker name
         }
@@ -877,6 +897,10 @@ function expandDialogue (dialogue, self, target, bindings) {
             fn = fn_parts[0].toLowerCase();
         }
         
+        // `variable` might change due to indirection, so determine this now
+        var allcaps = (variable == variable.toUpperCase());
+        var titlecased = (variable[0] == variable[0].toUpperCase());
+
         try {
             switch (variable.toLowerCase()) {
             case 'player':
@@ -936,13 +960,20 @@ function expandDialogue (dialogue, self, target, bindings) {
                     console.error("No collectible ID specified");
                 }
                 break;
+            case 'indirect':
+            case 'targetindirect':
             case 'marker':
             case 'persistent':
             case 'targetmarker':
+                var lowercased = variable.toLowerCase();
                 fn = fn_parts[0];  // make sure to keep the original string case intact 
                 if (fn) {
                     /* if variable is 'targetmarker', specifically only look for per-target markers */
-                    substitution = self.getMarker(fn, target, false, variable.toLowerCase() === 'targetmarker') || "";
+                    substitution = self.getMarker(fn, target, false, lowercased === 'targetmarker' || lowercased === 'targetindirect') || "";
+                    if (lowercased === 'indirect' || lowercased === 'targetindirect') {
+                        fn_parts.shift();
+                        substitution = resolvePlayerReference(substitution.toLowerCase(), fn_parts, args, self, target, bindings);
+                    }
                 } else {
                     console.error("No marker name specified");
                 }
@@ -995,17 +1026,12 @@ function expandDialogue (dialogue, self, target, bindings) {
             case 'self':
             case 'winner':
             default:
-                var variablePlayer = findVariablePlayer(variable.toLowerCase(), self, target, bindings);
-                if (variablePlayer) {
-                    substitution = expandPlayerVariable(fn_parts, args, variablePlayer, self, target, bindings);
-                } else {
-                    console.error("Unknown variable:", variable);
-                }
+                substitution = resolvePlayerReference(variable.toLowerCase(), fn_parts, args, self, target, bindings);
                 break;
             }
-            if (variable == variable.toUpperCase()) {
+            if (allcaps) {
                 substitution = substitution.toUpperCase();
-            } else if (variable[0] == variable[0].toUpperCase()) {
+            } else if (titlecased) {
                 substitution = substitution.initCap();
             }
         } catch (ex) {
