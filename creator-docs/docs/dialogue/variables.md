@@ -83,7 +83,7 @@ Four special player IDs exist:
 | Subvariable  | Description                                    |
 | ------------ | ---------------------------------------------- |
 | (none)       | Using only `~character_id~`, `~target~`, or `~self~` returns the name of the referenced player, or a nickname if one has been specified for that character. |
-| `.label`     | Alternately, you can use `.label` to explicitly get the name of the referenced player. This is useful if you're indirectly referencing a player using a variable (see below). |
+| `.name`     | Alternately, you can use `.name` to explicitly get the name of the referenced player. This is useful if you're indirectly referencing a player using a variable (see below). |
 | `.id` | The internal ID (folder name) of the referenced player. This is useful in conjunction with indirect referencing (see below). |
 | `.position`  | The position, `left` or `right` (from the perspective of the human player, not the characters) of the player relative to the subject character. The human player is considered to be to `across` from all characters. `~self.position~` resolves to simply `self`. |
 | `.distance` | How many slots away this character is from the subject character. `1` indicates the characters are adjacent. |
@@ -178,42 +178,42 @@ To summarize:
 #### Example 1 ####
 
 - **Character:** Chihiro
-- **Variable:** `~marker.refB.label~`
+- **Variable:** `~marker.refB.name~`
 - **Expansion:** "D.Va"
 - **Explanation:**
     - The value of marker `refB` for Chihiro is `d.va`.
     - This matches D.Va's character ID, and she is at the table, so we can reference her indirectly.
         - After cleaning up capitalization and non-alphanumeric characters in the marker value, we get `dva`.
-    - `dva.label` expands to "D.Va", and we're done.
+    - `dva.name` expands to "D.Va", and we're done.
 
 
 #### Example 2 ####
 
 - **Character:** Chihiro
-- **Variable:** `~dva.marker.refA.label~`
+- **Variable:** `~dva.marker.refA.name~`
 - **Expansion:** "Chihiro"
 - **Explanation:**
     - First, we access D.Va as a player variable directly as `dva`.
     - She has a marker `refA`, and it's set to `chihiro`.
         - Since it matches Chihiro's character ID, and he's of course at the table, we can reference him indirectly.
         - Cleaning up capitalization and non-alphanumeric characters doesn't do anything in this case.
-    - `chihiro.label` expands to "Chihiro", and we're done.
+    - `chihiro.name` expands to "Chihiro", and we're done.
 
 
 #### Example 3 ####
 
 - **Character:** Chihiro
-- **Variable:** `~marker.refB.marker.refA.label~`
+- **Variable:** `~marker.refB.marker.refA.name~`
 - **Expansion:** "Chihiro"
 - **Explanation:**
     - This proceeds like in Example 1 at first, where `marker.refB` indirectly references D.Va as a player variable.
     - However, after that, we then use her marker `refA` as _another_ indirect reference.
         - This resolves to Chihiro, as in Example 2.
-    - Then, `chihiro.label` expands to "Chihiro".
+    - Then, `chihiro.name` expands to "Chihiro".
     - To summarize:
         - `marker.refB` resolves to D.Va.
         - `dva.marker.refA` resolves back to Chihiro.
-        - `chihiro.label` expands to "Chihiro", and we're done.
+        - `chihiro.name` expands to "Chihiro", and we're done.
 - **Note:**
     - Indirect references can be nested like this to arbitrary levels.
     - However, be aware that each layer of indirection you use adds a point of failure to the variable expansion.
@@ -222,20 +222,20 @@ To summarize:
 #### Example 4 ####
 
 - **Character:** Chihiro
-- **Variable:** `~targetmarker.refC.label~`
+- **Variable:** `~targetmarker.refC.name~`
 - **Expansion:** "D.Va"
 - **Explanation:**
     - First, we get the value of target-specific marker `refC` on Chihiro.
         - Since Sayori is the current target, we get the value of `refC` that is specific to her, which in this case is `winner`.
     - `winner` doesn't directly name a character by ID, but it is one of the special character IDs.
     - In this case, `winner` resolves to D.Va, so we ultimately reference her, as with Example 1.
-    - Finally, `dva.label` expands to "D.Va", and we're done.
+    - Finally, `dva.name` expands to "D.Va", and we're done.
 
 
 #### Example 5 ####
 
 - **Character:** Chihiro
-- **Variable:** `~marker.nonexistent.label~`
+- **Variable:** `~marker.nonexistent.name~`
 - **Expansion:** "" (an empty string)
 - **Explanation:**
     - First, we try to get the value of marker `nonexistent` on Chihiro.
@@ -248,7 +248,7 @@ To summarize:
 #### Example 6 ####
 
 - **Character:** Chihiro
-- **Variable:** `~marker.refD.label~`
+- **Variable:** `~marker.refD.name~`
 - **Expansion:** "" (an empty string)
 - **Explanation:**
     - First, we get the value of marker `refD` on Chihiro, which is `monika`.
