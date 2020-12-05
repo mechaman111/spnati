@@ -806,16 +806,15 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         } else {
             return "collectible"; // no collectible ID supplied
         }
-    case 'indirect':
-    case 'targetindirect':
     case 'marker':
     case 'persistent':
     case 'targetmarker':
         var markerName = split_fn[1];
         if (markerName) {
-            var value = player.getMarker(markerName, target, false, (fn === 'targetmarker' || fn === 'targetindirect')) || "";
-            if (fn === 'indirect' || fn === 'targetindirect') {
-                split_fn.shift();
+            var value = player.getMarker(markerName, target, false, fn === 'targetmarker') || "";
+            if (split_fn.length > 2) {
+                // dereference this marker
+                split_fn.splice(0, 2);
                 return resolvePlayerReference(value.toLowerCase(), split_fn, args, player, target, bindings);
             } else {
                 return value;
@@ -868,6 +867,7 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         } else if (split_fn[1] == 'noart' || split_fn[1] === undefined) {
             return player.hand.describe(split_fn[1] == undefined);
         }
+    case 'label':
     default:
         return expandNicknames(self, player);
     }
@@ -897,10 +897,6 @@ function expandDialogue (dialogue, self, target, bindings) {
             fn = fn_parts[0].toLowerCase();
         }
         
-        // `variable` might change due to indirection, so determine this now
-        var allcaps = (variable == variable.toUpperCase());
-        var titlecased = (variable[0] == variable[0].toUpperCase());
-
         try {
             switch (variable.toLowerCase()) {
             case 'player':
@@ -960,17 +956,14 @@ function expandDialogue (dialogue, self, target, bindings) {
                     console.error("No collectible ID specified");
                 }
                 break;
-            case 'indirect':
-            case 'targetindirect':
             case 'marker':
             case 'persistent':
             case 'targetmarker':
-                var lowercased = variable.toLowerCase();
                 fn = fn_parts[0];  // make sure to keep the original string case intact 
                 if (fn) {
                     /* if variable is 'targetmarker', specifically only look for per-target markers */
-                    substitution = self.getMarker(fn, target, false, lowercased === 'targetmarker' || lowercased === 'targetindirect') || "";
-                    if (lowercased === 'indirect' || lowercased === 'targetindirect') {
+                    substitution = self.getMarker(fn, target, false, variable.toLowerCase() === 'targetmarker') || "";
+                    if (fn_parts.length > 1) {
                         fn_parts.shift();
                         substitution = resolvePlayerReference(substitution.toLowerCase(), fn_parts, args, self, target, bindings);
                     }
@@ -1029,9 +1022,9 @@ function expandDialogue (dialogue, self, target, bindings) {
                 substitution = resolvePlayerReference(variable.toLowerCase(), fn_parts, args, self, target, bindings);
                 break;
             }
-            if (allcaps) {
+            if (variable == variable.toUpperCase()) {
                 substitution = substitution.toUpperCase();
-            } else if (titlecased) {
+            } else if (variable[0] == variable[0].toUpperCase()) {
                 substitution = substitution.initCap();
             }
         } catch (ex) {
