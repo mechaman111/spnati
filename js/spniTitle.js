@@ -119,10 +119,10 @@ var CANDY_LIST = [
 
 /* HALLOWEEN EVENT */
 /*
-    "reskins/shadow_emi/0-annoyed.png",
-    "reskins/shadow_emi/1-shrug.png",
-    "reskins/shadow_emi/2-calm.png",
-    "reskins/shadow_emi/3-stripped.png",
+    "reskins/emi_shadow/0-annoyed.png",
+    "reskins/emi_shadow/1-shrug.png",
+    "reskins/emi_shadow/2-calm.png",
+    "reskins/emi_shadow/3-stripped.png",
     "reskins/misato_catrina/0-Calm.png",
     "reskins/misato_catrina/1-Confident.png",
     "reskins/misato_catrina/2-Happy.png",
