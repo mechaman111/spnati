@@ -97,18 +97,19 @@ The following fields are common to all Command types:
 
 The following is a quick overview of currently implemented Command types and their parameters:
 
-| Command             | `type` Field Values           | Parameters  |
-| ------------------- | ----------------------------- | ----------- |
-| Version             | `version`                     | None
-| Full Import         | `import`                      | `code`
-| Partial Import      | `import_partial`              | `code`
-| Screenshot          | `screenshot`                  | `bg`
-| Reset               | `reset_full`, `reset_partial` | None 
-| Peek/Poke           | `character_data`              | `character`, `op`, `tabName`, `tabParameter`, `value`, `internalNames`
-| Set Alpha           | `alpha_direct`                | `character`, `op`, `path`, `value`, `multiplier`
-| Set Alpha (testing) | `alpha`                       | `character`, `colorIndex`, `part`, `alpha`
-| Dump Character      | `dump_character`              | `character`
-| Fastload            | `fastload`                    | `character`, `data`, `attachments`, `version`, `read_from_cache`, `write_to_cache`
+| Command              | `type` Field Values           | Parameters  |
+| -------------------- | ----------------------------- | ----------- |
+| Version              | `version`                     | None
+| Full Import          | `import`                      | `code`
+| Partial Import       | `import_partial`              | `code`
+| Screenshot           | `screenshot`                  | `bg`
+| Reset                | `reset_full`, `reset_partial` | None 
+| Peek/Poke            | `character_data`              | `character`, `op`, `tabName`, `tabParameter`, `value`, `internalNames`
+| Set Alpha            | `alpha_direct`                | `character`, `op`, `path`, `value`, `multiplier`
+| Set Alpha (testing)  | `alpha`                       | `character`, `colorIndex`, `part`, `alpha`
+| Dump Character       | `dump_character`              | `character`
+| Fastload             | `fastload`                    | `character`, `data`, `attachments`, `version`, `read_from_cache`, `write_to_cache`
+| Optimized Screenshot | `direct-screenshot`           | `bg`, `size`, `shift`, `scale`, `fastEncode`
 
 #### Version Command
 
@@ -296,6 +297,41 @@ If not provided, both `read_from_cache` and `write_to_cache` are assumed to be `
 
 Note that the cache for a character is always invalidated when the user makes manual changes to them in the Kisekae workspace.
 
+#### Optimized Screenshot Command
+
+_Added in version 104.1._
+
+The `direct-screenshot` command works like the regular `screenshot` command, but 
+provides more options and is also better optimized.
+
+This command's default settings specifically emulate standard SPNATI screenshot
+settings, as set by the `reset-full` command.
+
+The `scale` parameter controls the resolution of output images, relative to the default
+internal stage size of 800x600 pixels; this parameter's default value of 2.5 corresponds
+to the maximum quality value provided by Kisekae.
+
+The `size` parameter, if set, must be a list of two numbers, and will override the
+default output image size computed with `scale`.
+The area captured by the screenshot will be automatically shifted so that the subject
+area remains centered (modulo the effect of any `shift` parameter, below).
+
+The `shift` parameter, if set, must also be a list of two numbers, which can be
+used to shift the subject area captured by the screenshot. Positive values for
+X and Y correspond to shifts to the right and down, respectively.
+
+The `bg` parameter can be used to control whether the scene background will be included in the returned image.
+
+Finally, the `fastEncode` parameter, if set to `true`, changes the PNG encoder
+settings for the image to be faster, but less space-efficient.
+
+On my machine, `"fastEncode": true` brings the time required to take a screenshot
+down from roughly 2.12 seconds to about 0.17 seconds.
+However, the resulting images are about 1.4x to 1.6x larger; this may not be a
+problem if you're performing processing that would require re-encoding anyways,
+or if you're going to re-compress the images with external tools.
+
+This command will always return its response as an Image Data message (type `0x03`).
 
 ### Command Response Messages
 

@@ -141,6 +141,7 @@ class KisekaeServerRequest(object):
         characters: Union[int, Iterable[int]],
         matrices: Union[None, Iterable[float], Iterable[Iterable[float]]] = None,
         base_scale: Optional[float] = None,
+        fast_encode: bool = True,
     ):
         opts = []
 
@@ -159,7 +160,10 @@ class KisekaeServerRequest(object):
 
                 opts.append({"index": int(idx), "matrix": list(map(float, matx))})
 
-        return cls("character-screenshot", {"characters": opts, "scale": base_scale,})
+        return cls(
+            "character-screenshot",
+            {"characters": opts, "scale": base_scale, "fastEncode": fast_encode},
+        )
 
     @classmethod
     def direct_screenshot(
@@ -168,10 +172,17 @@ class KisekaeServerRequest(object):
         size: Optional[Tuple[int, int]] = None,
         shift: Optional[Tuple[int, int]] = None,
         sf: Optional[float] = None,
+        fast_encode: bool = True,
     ):
         return cls(
             "direct-screenshot",
-            {"bg": include_bg, "shift": shift, "size": size, "sf": sf,},
+            {
+                "bg": include_bg,
+                "shift": shift,
+                "size": size,
+                "sf": sf,
+                "fastEncode": fast_encode,
+            },
         )
 
     @classmethod
@@ -516,7 +527,11 @@ if __name__ == "__main__":
     ):
         resp = await client.send_command(
             KisekaeServerRequest.direct_screenshot(
-                args.bg, size=args.size, shift=args.shift, sf=args.sf,
+                args.bg,
+                size=args.size,
+                shift=args.shift,
+                sf=args.sf,
+                fast_encode=args.fast_encode,
             )
         )
 
@@ -537,7 +552,7 @@ if __name__ == "__main__":
     ):
         resp = await client.send_command(
             KisekaeServerRequest.character_screenshot(
-                args.characters, None, base_scale=args.sf
+                args.characters, None, base_scale=args.sf, fast_encode=args.fast_encode
             )
         )
 
@@ -623,9 +638,7 @@ if __name__ == "__main__":
 
         return await client.send_command(request)
 
-    async def do_fastload(
-        client: KisekaeLocalClient, args: argparse.Namespace
-    ):
+    async def do_fastload(client: KisekaeLocalClient, args: argparse.Namespace):
         data = []
         for i in range(0, len(args.data), 3):
             data.append((args.data[i], args.data[i + 1], args.data[i + 2]))
@@ -725,6 +738,12 @@ if __name__ == "__main__":
         default=None,
         help="Base scale factor for screenshot (establishes resolution)",
     )
+    parser_direct_screenshot.add_argument(
+        "--slow-encode",
+        action="store_false",
+        help="Use slower compression (results in smaller images)",
+        dest="fast_encode",
+    )
     parser_direct_screenshot.set_defaults(func=do_direct_screenshot)
 
     parser_character_screenshot = subparsers.add_parser("character-screenshot")
@@ -739,6 +758,12 @@ if __name__ == "__main__":
         type=float,
         default=None,
         help="Base scale factor for screenshot (establishes resolution)",
+    )
+    parser_character_screenshot.add_argument(
+        "--slow-encode",
+        action="store_false",
+        help="Use slower compression (results in smaller images)",
+        dest="fast_encode",
     )
     parser_character_screenshot.set_defaults(func=do_character_screenshot)
 
