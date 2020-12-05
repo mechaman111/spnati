@@ -67,6 +67,8 @@ more detail on how those work.
 | ------------ | ---------------------------------------------- |
 | `~marker.marker_name~` | If there is a target, and your character has set a target-specific marker `marker_name` for that character, expands to its value. Otherwise it expands to the value of the regular marker `marker_name`. |
 | `~targetmarker.marker_name~` | If there is a target, and your character has set a target-specific marker `marker_name` for that character, expands to its value. |
+| `~marker.marker_name.subvariable~` | If your character has set a marker `marker_name` whose value corresponds to a character's ID, you can additionally use the marker to access information about that character as if it were a player variable. See the section below on Indirection for more details. |
+| `~targetmarker.marker_name.subvariable` | You can also indirect through target-specific markers in the same way as regular markers. |
 
 ## Player Variables ##
 
@@ -81,12 +83,12 @@ Four special player IDs exist:
 | Subvariable  | Description                                    |
 | ------------ | ---------------------------------------------- |
 | (none)       | Using only `~character_id~`, `~target~`, or `~self~` returns the name of the referenced player, or a nickname if one has been specified for that character. |
-| `.id` | The internal ID (folder name) of the referenced player. This is useful in conjunction with `indirect` (see below). |
+| `.label`     | Alternately, you can use `.label` to explicitly get the name of the referenced player. This is useful if you're indirectly referencing a player using a variable (see below). |
+| `.id` | The internal ID (folder name) of the referenced player. This is useful in conjunction with indirect referencing (see below). |
 | `.position`  | The position, `left` or `right` (from the perspective of the human player, not the characters) of the player relative to the subject character. The human player is considered to be to `across` from all characters. `~self.position~` resolves to simply `self`. |
 | `.distance` | How many slots away this character is from the subject character. `1` indicates the characters are adjacent. |
 | `.slot`      | The slot number of the player, from 0 (the human player) to 5. |
-| `.collectible`, `.marker`, `.targetmarker` | Lets you access collectible and marker data of a different character. See the corresponding general variable descriptions above for details. |
-| `.indirect`, `.targetindirect` | Lets you indirectly reference a player specified by a marker set on a different character. See the section below on indirection for more details. |
+| `.collectible`, `.marker`, `.targetmarker` | Lets you access collectible and marker data of a different character, as well as perform indirect references through another player's markers. See the sections above and below for details. |
 | `.tag.tag_name` | `true` if the player has the tag `tag_name`, `false` otherwise. |
 | `.costume`      | The ID of the player's alternate costume/skin, or `default` if no alternate costume is worn. |
 | `.size`         | The player's breast or penis size depending on the gender (`small`, `medium`, or `large`). |
@@ -104,27 +106,6 @@ Four special player IDs exist:
 | `.hand.noart`   | Like above, but with no indeterminate article. Use like `My ~self.hand.noart~ was better than your ~target.hand.noart~!` |
 | `.hand.score`   | A numerical value of the hand. The hundreds digit specifies the type of hand (0 = High card, 1 = One pair, 2 = Two pair, 3 = Trips, 4 = Straight, 5 = Flush, 6 = Full house, 7 = Quads, 8 = Straight flush, and 9 = Royal Flush). The rest of the digits specify the rank of the (top) pair, triplet and so on. So 14 = ace high, 107 = a pair of sevens, 413 = King-high straight. It's not complete information about the hand, but better than just "a pair"; the difference between a pair of aces and a pair of deuces is *huge*.
 
-## Indirection ##
-
-These variables take the value of a marker and interpret it as a character ID.
-Then, they access the character with that ID as a player variable, as described in the section above.
-
-For example, if you have a marker `foo` with the value `chihiro`, then `~indirect.foo~`
-would evaluate to `Chihiro` (or any nickname that has been set for him).
-You could also access player sub-variables such as `~indirect.foo.slot~`.
-
-If the marker were set to one of the special player IDs above, such as `target`,
-then the indirect access would resolve to the specified player, based on the current context.
-
-Variables that indirectly reference a player that isn't present at the table will
-evaluate as empty strings.
-
-| Variable     | Description                                    |
-| ------------ | ---------------------------------------------- |
-| `~indirect.marker_name~` | Performs indirect access of a character whose ID is specified by a marker. |
-| `~targetindirect.marker_name~` | Like `indirect.marker_name`, but works with target-specific markers. |
-| `~player.indirect.marker~` | Performs indirect access of a character whose ID is specified by a marker set on another player. |
-| `~player.targetindirect.marker~` | Performs indirect access of a character whose ID is specified by a target-specific marker set on another player. |
 
 ## `.ifplural` ##
 
@@ -141,9 +122,137 @@ For example, the dialogue `I have ~cards.ifplural(several cards|one card)~.` wil
 However, if you're trying to do something like `~clothing~` followed by `~clothing.ifplural(s|)~`,
 you should use `~clothing.toplural~` instead.
 
+
 ## `~player.ifmale~` ##
 
 `~player.ifmale(|)~` works similarly to `.ifplural` (described above), but works
 based on the referenced player's gender.
 
 The syntax for this variable is: `~player.ifmale(dialogue if male|dialogue if female)~`.
+
+
+## Indirection ##
+
+The `marker.` and `targetmarker.` variables (and their player subvariable counterparts) can
+be used to _indirectly_ reference a player at the table, using their ID.
+
+This lets you access information about a player whose ID has been stored in a marker,
+as if you were using a player variable.
+
+An indirect reference needs two components in order to work properly:
+ - A marker that has been set to a character's ID, for example using `~target.id~`, or to one of the special player IDs, such as `winner`.
+   - Indirect references using a marker that doesn't exist, or that references a character not at the table, will expand to an empty string.
+   - If a marker is set to one of the special player IDs such as `winner`, the indirect reference will access the appropriate character based on the current context.
+ - The actual full variable being accessed needs to have additional subvariables listed after the marker name.
+   - If you don't have an additional subvariable after the marker name, `~marker.[name]~` will of course just expand directly to the value of the marker.
+
+| Variable     | Description                                    |
+| ------------ | ---------------------------------------------- |
+| `~marker.name.subvariable~` | Performs indirect access of a character whose ID is specified by a marker. |
+| `~targetmarker.name.subvariable~` | Like the above, but works with target-specific markers. |
+| `~player.marker.name.subvariable~` | Performs indirect access of a character whose ID is specified by a marker set on another player. |
+| `~player.targetmarker.name.subvariable~` | Performs indirect access of a character whose ID is specified by a target-specific marker set on another player. |
+
+### Examples ###
+
+For clarity, here are some examples for how to use indirect references.
+
+Suppose we're playing a game with the following setup:
+- D.Va is at the table.
+    - She has marker `refA` set to `chihiro`.
+    - She just had the best hand in the current round.
+- Chihiro is also at the table:
+    - He has a marker, `refB` set to `d.va`.
+    - He also has a target-specific marker, `refC`, whose value for Sayori is set to `winner`.
+    - He also has a persistent marker, `refD`, whose value is set to `monika` (but she's not present in this game).
+- Sayori is also at the table, but has no markers of interest set.
+    - However, she has just lost a hand, and is stripping.
+
+To summarize:
+    - The current `winner` is D.Va.
+    - The current `target` is Sayori.
+    - For Chihiro:
+        - `marker.refB` would expand to `d.va`.
+        - `marker.refC` and `targetmarker.refC` would both expand to `winner`.
+
+#### Example 1 ####
+
+- **Character:** Chihiro
+- **Variable:** `~marker.refB.label~`
+- **Expansion:** "D.Va"
+- **Explanation:**
+    - The value of marker `refB` for Chihiro is `d.va`.
+    - This matches D.Va's character ID, and she is at the table, so we can reference her indirectly.
+        - After cleaning up capitalization and non-alphanumeric characters in the marker value, we get `dva`.
+    - `dva.label` expands to "D.Va", and we're done.
+
+
+#### Example 2 ####
+
+- **Character:** Chihiro
+- **Variable:** `~dva.marker.refA.label~`
+- **Expansion:** "Chihiro"
+- **Explanation:**
+    - First, we access D.Va as a player variable directly as `dva`.
+    - She has a marker `refA`, and it's set to `chihiro`.
+        - Since it matches Chihiro's character ID, and he's of course at the table, we can reference him indirectly.
+        - Cleaning up capitalization and non-alphanumeric characters doesn't do anything in this case.
+    - `chihiro.label` expands to "Chihiro", and we're done.
+
+
+#### Example 3 ####
+
+- **Character:** Chihiro
+- **Variable:** `~marker.refB.marker.refA.label~`
+- **Expansion:** "Chihiro"
+- **Explanation:**
+    - This proceeds like in Example 1 at first, where `marker.refB` indirectly references D.Va as a player variable.
+    - However, after that, we then use her marker `refA` as _another_ indirect reference.
+        - This resolves to Chihiro, as in Example 2.
+    - Then, `chihiro.label` expands to "Chihiro".
+    - To summarize:
+        - `marker.refB` resolves to D.Va.
+        - `dva.marker.refA` resolves back to Chihiro.
+        - `chihiro.label` expands to "Chihiro", and we're done.
+- **Note:**
+    - Indirect references can be nested like this to arbitrary levels.
+    - However, be aware that each layer of indirection you use adds a point of failure to the variable expansion.
+
+
+#### Example 4 ####
+
+- **Character:** Chihiro
+- **Variable:** `~targetmarker.refC.label~`
+- **Expansion:** "D.Va"
+- **Explanation:**
+    - First, we get the value of target-specific marker `refC` on Chihiro.
+        - Since Sayori is the current target, we get the value of `refC` that is specific to her, which in this case is `winner`.
+    - `winner` doesn't directly name a character by ID, but it is one of the special character IDs.
+    - In this case, `winner` resolves to D.Va, so we ultimately reference her, as with Example 1.
+    - Finally, `dva.label` expands to "D.Va", and we're done.
+
+
+#### Example 5 ####
+
+- **Character:** Chihiro
+- **Variable:** `~marker.nonexistent.label~`
+- **Expansion:** "" (an empty string)
+- **Explanation:**
+    - First, we try to get the value of marker `nonexistent` on Chihiro.
+        - Since it hasn't been set (presumably), its value defaults to an empty string.
+    - We then try to access a character by that ID:
+        - Since no character can have an ID equal to the empty string, this will always fail.
+    - Since we couldn't find the referenced character, we give up and expand the entire variable to an empty string.
+
+
+#### Example 6 ####
+
+- **Character:** Chihiro
+- **Variable:** `~marker.refD.label~`
+- **Expansion:** "" (an empty string)
+- **Explanation:**
+    - First, we get the value of marker `refD` on Chihiro, which is `monika`.
+    - We then try to access a character by that ID:
+        - `monika` is, of course, a valid character ID.
+        - _However_, since she's not at the table for this game, the reference to her fails to resolve.
+    - Since we couldn't find the referenced character, we give up and expand the entire variable to an empty string.
