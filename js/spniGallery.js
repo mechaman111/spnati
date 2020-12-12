@@ -712,6 +712,7 @@ CardFrontSelector.prototype.select = function () {
             } else {
                 ACTIVE_CARD_IMAGES.deactivateFrontImage(this.card);
             }
+            ACTIVE_CARD_IMAGES.save();
             this.update();
         }
     }.bind(this));
@@ -752,6 +753,7 @@ CardBackSelector.prototype.select = function () {
             } else {
                 ACTIVE_CARD_IMAGES.removeBackImage(this.img);
             }
+            ACTIVE_CARD_IMAGES.save();
             this.update();
         }
     }.bind(this));
