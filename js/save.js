@@ -327,13 +327,21 @@ Save.prototype.loadOptionsBackground = function (settings) {
     }
 
     optionsBackground = defaultBackground;
-
-    if ('background' in settings) {
+    var lastDefault = this.getItem('lastDefaultBackground') || 'inventory';
+    if (defaultBackground.id != lastDefault && defaultBackground.id != 'inventory') {
+        // Don't load the saved background the first time an event background is detected
+        this.saveSettings(); // This deletes the background setting
+    } else if ('background' in settings) {
         var bg_id = settings.background;
         if (backgrounds[bg_id]) {
             optionsBackground = backgrounds[bg_id];
         }
-    };
+    }
+    if (defaultBackground.id == 'inventory') {
+        this.removeItem('lastDefaultBackground'); // No need to remember the default default
+    } else {
+        this.setItem('lastDefaultBackground', defaultBackground.id);
+    }
 
     return optionsBackground.activateBackground();
 }
