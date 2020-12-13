@@ -961,20 +961,22 @@ MainSelectScreenDisplay.prototype.onSingleSuggestionSelected = function () {
 }
 
 MainSelectScreenDisplay.prototype.update = function (player) {
-    if (this.prefillSuggestion && this.prefillSuggestion != player
-        && players.some(function (p) { return p && p.id === this.prefillSuggestion.id; }, this)) {
-        this.prefillSuggestion = null;
-        loadDefaultFillSuggestions();
-        return updateSelectionVisuals();
-    }
+    if (!FILL_DISABLED) {
+        if (this.prefillSuggestion && this.prefillSuggestion != player
+            && players.some(function (p) { return p && p.id === this.prefillSuggestion.id; }, this)) {
+            this.prefillSuggestion = null;
+            loadDefaultFillSuggestions();
+            return updateSelectionVisuals();
+        }
 
-    if (!player && !this.targetSuggestionsShown) {
-        // attempt to load a prefill suggestion if missing
-        if (!this.prefillSuggestion) loadDefaultFillSuggestions();
+        if (!player && !this.targetSuggestionsShown) {
+            // attempt to load a prefill suggestion if missing
+            if (!this.prefillSuggestion) loadDefaultFillSuggestions();
 
-        // if we had one to begin with, or if we were able to load one, display
-        // it
-        if (this.prefillSuggestion) return this.displaySingleSuggestion();
+            // if we had one to begin with, or if we were able to load one, display
+            // it
+            if (this.prefillSuggestion) return this.displaySingleSuggestion();
+        }
     }
 
     this.prefillBadgeRow.children().hide();

@@ -1158,12 +1158,8 @@ function clickedRemoveAllButton (alsoRemoveSuggestions)
         }
     }
     
-    if (alsoRemoveSuggestions && !FILL_DISABLED && !anyLoaded) {
-        FILL_DISABLED = true;
-        
-        for (var i = 0; i < mainSelectDisplays.length; i++) {
-            mainSelectDisplays[i].setPrefillSuggestion(null);
-        }
+    if (alsoRemoveSuggestions && !anyLoaded) {
+        FILL_DISABLED = !FILL_DISABLED;
     }
     
     updateSelectionVisuals();
@@ -1414,8 +1410,12 @@ function updateSelectionVisuals () {
     /* if all slots are taken, disable fill buttons */
     $selectRandomButtons.attr('disabled', filled >= 4 || loadedOpponents.length == 0);
 
+    /* if no opponents are loaded, change caption of Remove All button */
+    $selectRemoveAllButton.text(filled <= 0 ? "Toggle Autofill" : "Remove All");
+
     /* Disable buttons while loading is going on */
     $selectRandomTableButton.attr('disabled', loaded < filled || loadedOpponents.length == 0);
+    $selectRemoveAllButton.attr('disabled', loaded < filled);
     $groupButton.attr('disabled', loaded < filled);
 }
 
