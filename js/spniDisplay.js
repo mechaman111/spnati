@@ -960,6 +960,7 @@ MainSelectScreenDisplay.prototype.onSingleSuggestionSelected = function () {
 MainSelectScreenDisplay.prototype.update = function (player) {
     if (this.prefillSuggestion && this.prefillSuggestion != player
         && players.some(function (p) { return p && p.id === this.prefillSuggestion.id; }, this)) {
+        this.prefillSuggestion = null;
         loadDefaultFillSuggestions();
         return updateSelectionVisuals();
     }
@@ -997,7 +998,8 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         this.statusIcon.hide();
         return;
     }
-    
+
+    this.prefillSuggestion = null;
     this.badges.epilogue.toggle(!!player.endings);
     var epilogueStatus = player.getEpilogueStatus(true);
     if (epilogueStatus) {

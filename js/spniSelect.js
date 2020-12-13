@@ -1007,6 +1007,9 @@ function loadDefaultFillSuggestions () {
             if (players.some(function (p) { return p && p.id === opp.id; })) {
                 return false;
             }
+            if (mainSelectDisplays.some(function (d) { return d.prefillSuggestion && d.prefillSuggestion.id === opp.id; })) {
+                return false;
+            }
             
             /* Don't suggest anything but online characters, even in offline */
             return !opp.status;
@@ -1085,6 +1088,9 @@ function loadDefaultFillSuggestions () {
             if (players.some(function (p) { return p && p.id === opp.id; })) {
                 return false;
             }
+            if (mainSelectDisplays.some(function (d) { return d.prefillSuggestion && d.prefillSuggestion.id === opp.id; })) {
+                return false;
+            }
 
             if (!individualSelectTesting) {
                 return opp.highlightStatus === DEFAULT_FILL;
@@ -1123,7 +1129,10 @@ function loadDefaultFillSuggestions () {
     }
 
     for (var i = 0; i < mainSelectDisplays.length; i++) {
-        mainSelectDisplays[i].setPrefillSuggestion(fillPlayers[i]);
+        // Skip over slots that already have a selected opponent or a prefill suggestion
+        if (!players[i + 1] && !mainSelectDisplays[i].prefillSuggestion && fillPlayers.length > 0) {
+            mainSelectDisplays[i].setPrefillSuggestion(fillPlayers.shift());
+        }
     }
 
     suggestedTestingOpponents = individualSelectTesting;
@@ -1131,7 +1140,9 @@ function loadDefaultFillSuggestions () {
 
 function updateDefaultFillView() {
     if (suggestedTestingOpponents !== individualSelectTesting) {
-        loadDefaultFillSuggestions();
+        // Clear prefills when switching between Main and Testing. New
+        // prefills will be picked automatically.
+        mainSelectDisplays.forEach(function(d) { d.setPrefillSuggestion(null); });
     }
 }
 
