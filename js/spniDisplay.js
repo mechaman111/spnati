@@ -919,6 +919,9 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
 
     this.hideBubble();
     this.drawPose(player.selection_image);
+    this.simpleImage.one('load', function() {
+        OpponentDisplay.prototype.rescaleSimplePose.call(this, player.scale);
+    }.bind(this));
     this.label.html(player.label.initCap()).addClass('suggestion-label');
     this.imageArea.addClass('prefill-suggestion');
     this.selectButton.html("Select Other Opponent").removeClass("red").addClass("green suggestion-shown").attr('disabled', false);
