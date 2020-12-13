@@ -1000,19 +1000,21 @@ function clickedRandomFillButton (predicate) {
 
 function loadDefaultFillSuggestions () {
     if (FILL_DISABLED) return;
-    
+
+    function isCharacterUsed(opp) {
+        if (players.some(function (p) { return p && p.id === opp.id; })) {
+            return true;
+        }
+        if (mainSelectDisplays.some(function (d) { return d.prefillSuggestion && d.prefillSuggestion.id === opp.id; })) {
+            return true;
+        }
+    }
+
     if (DEFAULT_FILL === 'default' && !individualSelectTesting) {
-        /* get a copy of the loaded opponents list, same as above */
+        /* get a copy of the loaded opponents list */
         var possiblePicks = loadedOpponents.filter(function (opp) {
-            if (players.some(function (p) { return p && p.id === opp.id; })) {
-                return false;
-            }
-            if (mainSelectDisplays.some(function (d) { return d.prefillSuggestion && d.prefillSuggestion.id === opp.id; })) {
-                return false;
-            }
-            
             /* Don't suggest anything but online characters, even in offline */
-            return !opp.status;
+            return !opp.status && !isCharacterUsed(opp);
         });
         
         var possibleNewPicks = possiblePicks.filter(function (opp) {
@@ -1085,18 +1087,12 @@ function loadDefaultFillSuggestions () {
     } else {
         /* get a copy of the loaded opponents list, same as above */
         var possiblePicks = loadedOpponents.filter(function (opp) {
-            if (players.some(function (p) { return p && p.id === opp.id; })) {
-                return false;
-            }
-            if (mainSelectDisplays.some(function (d) { return d.prefillSuggestion && d.prefillSuggestion.id === opp.id; })) {
-                return false;
-            }
-
             if (!individualSelectTesting) {
-                return opp.highlightStatus === DEFAULT_FILL;
+                if (opp.highlightStatus !== DEFAULT_FILL) return false;
             } else {
-                return opp.status === "testing";
+                if (opp.status !== "testing") return false;
             }
+            return !isCharacterUsed(opp);
         });
         
         var fillPlayers = [];
