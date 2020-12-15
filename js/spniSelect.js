@@ -1411,7 +1411,7 @@ function updateSelectionVisuals () {
     $selectRandomButtons.attr('disabled', filled >= 4 || loadedOpponents.length == 0);
 
     /* if no opponents are loaded, change caption of Remove All button */
-    $selectRemoveAllButton.text(filled <= 0 ? "Toggle Autofill" : "Remove All");
+    $selectRemoveAllButton.html(filled <= 0 ? (FILL_DISABLED ? "Do" : "Don\u2019t") + " Suggest" : "Remove All");
 
     /* Disable buttons while loading is going on */
     $selectRandomTableButton.attr('disabled', loaded < filled || loadedOpponents.length == 0);
