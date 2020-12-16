@@ -309,7 +309,7 @@ function goToCardsScreen() {
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-decks");
 
     if (!currentDeckDisplay) {
-        currentDeckDisplay = new CardDeckDisplay(CARD_IMAGE_SETS[0]);
+        currentDeckDisplay = new CardDeckDisplay(CARD_IMAGE_SETS.default);
     }
     currentDeckDisplay.render();
 
@@ -331,7 +331,7 @@ function loadGalleryScreen(){
     screenTransition($titleScreen, $galleryScreen);
 
     if (deckListElems.length == 0) {
-        deckListElems = CARD_IMAGE_SETS.filter(function (set) {
+        deckListElems = Object.values(CARD_IMAGE_SETS).filter(function (set) {
             return set.isAvailable();
         }).map(createDeckListElement);
         $deckListPane.append(deckListElems);
@@ -726,7 +726,7 @@ CardFrontSelector.prototype.select = function () {
  * @param {string} image
  */
 function CardBackSelector (imageSet, image) {
-    this.img = image;
+    this.imgID = image;
     CardSelector.call(this, imageSet);
 }
 
@@ -734,7 +734,7 @@ CardBackSelector.prototype = Object.create(CardSelector.prototype);
 CardBackSelector.prototype.constructor = CardBackSelector;
 
 CardBackSelector.prototype.image = function () {
-    return this.img;
+    return this.imageSet.backImages[this.imgID];
 }
 
 CardBackSelector.prototype.altText = function () {
@@ -742,16 +742,16 @@ CardBackSelector.prototype.altText = function () {
 }
 
 CardBackSelector.prototype.isSelected = function () {
-    return ACTIVE_CARD_IMAGES.isBackImageActive(this.img);
+    return ACTIVE_CARD_IMAGES.isBackImageActive(this.imageSet, this.imgID);
 }
 
 CardBackSelector.prototype.select = function () {
     this.isUnlocked().then(function (unlocked) {
         if (unlocked) {
             if (!this.isSelected()) {
-                ACTIVE_CARD_IMAGES.addBackImage(this.img);
+                ACTIVE_CARD_IMAGES.addBackImage(this.imageSet, this.imgID);
             } else {
-                ACTIVE_CARD_IMAGES.removeBackImage(this.img);
+                ACTIVE_CARD_IMAGES.removeBackImage(this.imageSet, this.imgID);
             }
             ACTIVE_CARD_IMAGES.save();
             this.update();
@@ -813,9 +813,10 @@ function CardDeckDisplay (imageSet) {
         ));
     }.bind(this));
 
-    if (imageSet.backImages.length > 0) {
+    var backKeys = Object.keys(imageSet.backImages);
+    if (backKeys.length > 0) {
         this.groups.push(new CardDeckGroup(
-            "Card Backs", imageSet, imageSet.backImages, true
+            "Card Backs", imageSet, backKeys, true
         ));
     }
 }

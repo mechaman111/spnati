@@ -187,9 +187,11 @@ function initialSetup () {
          * since the latter uses selectedClothing.
          */
         save.loadLocalStorage();
-    }).then(loadEventData).then(Promise.all([
-        loadBackgrounds(), loadCustomDecks()
-    ])).then(function () {
+    }).then(loadEventData).then(function () {
+        return Promise.all([
+            loadBackgrounds(), loadCustomDecks()
+        ]);
+    }).then(function () {
         save.load();
         loadVersionInfo();
         loadGeneralCollectibles();
