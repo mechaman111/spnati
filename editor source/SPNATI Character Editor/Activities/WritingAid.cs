@@ -12,6 +12,7 @@ namespace SPNATI_Character_Editor.Activities
 	/// Activity for finding noteworthy dialogue from other opponents and writing dialogue for it
 	/// </summary>
 	[Activity(typeof(Character), 310, DelayRun = true, Caption = "Writing Aid")]
+	[Tutorial("https://youtu.be/wyKiC3bMbeY?t=143")]
 	public partial class WritingAid : Activity
 	{
 		private const string SuggestionPreference = "WritingSuggestions";

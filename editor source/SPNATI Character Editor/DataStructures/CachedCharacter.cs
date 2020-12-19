@@ -18,7 +18,7 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public class CachedCharacter : Character
 	{
-		public static int CurrentVersion = 4;
+		public static int CurrentVersion = 5;
 
 		[XmlElement("cacheVersion")]
 		public int CacheVersion;
@@ -74,6 +74,7 @@ namespace SPNATI_Character_Editor
 			Wardrobe = character.Wardrobe;
 			Writer = character.Metadata.Writer;
 			LastUpdate = character.Metadata.LastUpdate;
+			Version = character.Version;
 
 			Metadata.AlternateSkins = character.Metadata.AlternateSkins;
 			Skins.AddRange(character.Metadata.AlternateSkins);

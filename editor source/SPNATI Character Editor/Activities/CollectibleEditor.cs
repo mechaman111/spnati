@@ -1,18 +1,18 @@
 ﻿using Desktop;
+using Desktop.Skinning;
 using SPNATI_Character_Editor.Controls;
 using SPNATI_Character_Editor.DataStructures;
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using Desktop.Skinning;
-using System.Collections.ObjectModel;
 
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Character), 70, DelayRun = true, Caption = "Collectibles")]
+	[Tutorial("https://www.youtube.com/watch?v=TQqijFL0Kko")]
 	public partial class CollectibleEditor : Activity
 	{
 		private Character _character;

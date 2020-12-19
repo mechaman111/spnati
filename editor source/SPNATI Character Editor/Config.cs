@@ -561,7 +561,7 @@ namespace SPNATI_Character_Editor
 						return set;
 					}
 					string items = GetString("statusfilter");
-					foreach (string item in items.Split(','))
+					foreach (string item in items.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries ))
 					{
 						int value;
 						if (int.TryParse(item, out value))

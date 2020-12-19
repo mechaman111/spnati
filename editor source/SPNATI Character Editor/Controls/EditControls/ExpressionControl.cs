@@ -21,7 +21,7 @@ namespace SPNATI_Character_Editor
 		public ExpressionControl()
 		{
 			InitializeComponent();
-			cboOperator.DataSource = ExpressionTest.Operators;
+			cboOperator.DataSource = ExpressionTest.OperatorsWithRange;
 			cboExpression.Items.AddRange(new string[] {
 				"~background~",
 				"~cards~",
@@ -252,6 +252,11 @@ namespace SPNATI_Character_Editor
 				if (bestMatch != null)
 				{
 					_subcontrol = Activator.CreateInstance(bestMatch) as SubVariableControl;
+				}
+
+				if (_expression.Operator == "@")
+				{
+					_subcontrol = null; //just kidding; leave intervals as a raw variable test
 				}
 
 				if (_subcontrol != null)

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Character), 30)]
+	[Tutorial("https://www.youtube.com/watch?v=LtoaFoN-RaQ&list=PL171KBpYNIxNEgFoI-eZSKC38HLP_YNJ8")]
 	public partial class DialogueEditor : Activity
 	{
 		private const string FavoriteConditionsSetting = "FavoritedConditions";

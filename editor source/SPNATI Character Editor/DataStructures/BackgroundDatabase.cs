@@ -10,7 +10,7 @@ namespace SPNATI_Character_Editor
 
 		public static void Load()
 		{
-			_list = Serialization.ImportBackgrounds();
+			_list = Serialization.ImportConfigFile<BackgroundList>("backgrounds.xml");
 			BackgroundTag nameTag = new BackgroundTag("name");
 			Definitions.Instance.Add(nameTag);
 			if (_list != null)

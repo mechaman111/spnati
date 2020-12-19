@@ -40,6 +40,7 @@
 			// chkDebug
 			// 
 			this.chkDebug.AutoSize = true;
+			this.chkDebug.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.chkDebug.Location = new System.Drawing.Point(12, 42);
 			this.chkDebug.Name = "chkDebug";
 			this.chkDebug.Size = new System.Drawing.Size(405, 17);
@@ -50,6 +51,7 @@
 			// chkEpilogues
 			// 
 			this.chkEpilogues.AutoSize = true;
+			this.chkEpilogues.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.chkEpilogues.Location = new System.Drawing.Point(12, 65);
 			this.chkEpilogues.Name = "chkEpilogues";
 			this.chkEpilogues.Size = new System.Drawing.Size(305, 17);
@@ -91,6 +93,7 @@
 			// chkCollectibles
 			// 
 			this.chkCollectibles.AutoSize = true;
+			this.chkCollectibles.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.chkCollectibles.Location = new System.Drawing.Point(12, 88);
 			this.chkCollectibles.Name = "chkCollectibles";
 			this.chkCollectibles.Size = new System.Drawing.Size(312, 17);
@@ -108,6 +111,7 @@
 			this.skinnedPanel1.PanelType = Desktop.Skinning.SkinnedBackgroundType.PrimaryDark;
 			this.skinnedPanel1.Size = new System.Drawing.Size(428, 30);
 			this.skinnedPanel1.TabIndex = 5;
+			this.skinnedPanel1.TabSide = Desktop.Skinning.TabSide.None;
 			// 
 			// GameConfig
 			// 

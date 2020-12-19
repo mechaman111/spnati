@@ -28,13 +28,12 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
 			this.recWho = new Desktop.CommonControls.RecordField();
 			this.tableAdvanced = new Desktop.CommonControls.PropertyTable();
 			this.pnlRange = new System.Windows.Forms.Panel();
 			this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
 			this.valTo = new Desktop.CommonControls.NumericField();
-			this.valFrom = new Desktop.Skinning.SkinnedNumericUpDown();
+			this.valFrom = new Desktop.CommonControls.NumericField();
 			this.label3 = new Desktop.Skinning.SkinnedLabel();
 			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
 			this.pnlCharacter = new System.Windows.Forms.Panel();
@@ -164,17 +163,34 @@
 			// valFrom
 			// 
 			this.valFrom.BackColor = System.Drawing.Color.White;
+			this.valFrom.DecimalPlaces = 0;
 			this.valFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.valFrom.ForeColor = System.Drawing.Color.Black;
+			this.valFrom.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			this.valFrom.Location = new System.Drawing.Point(40, 1);
 			this.valFrom.Maximum = new decimal(new int[] {
             5,
             0,
             0,
             0});
+			this.valFrom.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
 			this.valFrom.Name = "valFrom";
+			this.valFrom.PlaceholderText = "1";
 			this.valFrom.Size = new System.Drawing.Size(36, 20);
 			this.valFrom.TabIndex = 9;
+			this.valFrom.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
 			// 
 			// label3
 			// 
@@ -369,7 +385,7 @@
 		private System.Windows.Forms.Panel pnlRange;
 		private Desktop.Skinning.SkinnedLabel skinnedLabel2;
 		private Desktop.CommonControls.NumericField valTo;
-		private Desktop.Skinning.SkinnedNumericUpDown valFrom;
+		private Desktop.CommonControls.NumericField valFrom;
 		private Desktop.Skinning.SkinnedLabel label3;
 		private Desktop.Skinning.SkinnedLabel skinnedLabel1;
 		private System.Windows.Forms.Panel pnlCharacter;

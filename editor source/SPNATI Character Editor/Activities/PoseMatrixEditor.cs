@@ -25,6 +25,7 @@ namespace SPNATI_Character_Editor.Activities
 	[Spacer]
 	[Activity(typeof(Character), 199, DelayRun = true, Caption = "Pose Matrix")]
 	[Activity(typeof(Costume), 199, DelayRun = true, Caption = "Pose Matrix")]
+	[Tutorial("https://www.youtube.com/watch?v=tzETssGeaEQ")]
 	public partial class PoseMatrixEditor : Activity
 	{
 		private ISkin _skin;

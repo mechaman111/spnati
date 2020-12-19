@@ -486,27 +486,24 @@ namespace SPNATI_Character_Editor
 			return null;
 		}
 
-		public static BackgroundList ImportBackgrounds()
+		public static T ImportConfigFile<T>(string path) where T : class, new()
 		{
-			string filename = Path.Combine(Config.SpnatiDirectory, "backgrounds.xml");
+			string filename = Path.Combine(Config.SpnatiDirectory, path);
 			if (File.Exists(filename))
 			{
 				TextReader reader = null;
 				try
 				{
-					XmlSerializer serializer = new XmlSerializer(typeof(BackgroundList), "");
+					XmlSerializer serializer = new XmlSerializer(typeof(T), "");
 					reader = new StreamReader(filename);
-					return serializer.Deserialize(reader) as BackgroundList;
+					return serializer.Deserialize(reader) as T;
 				}
 				finally
 				{
-					if (reader != null)
-					{
-						reader.Close();
-					}
+					reader?.Close();
 				}
 			}
-			return null;
+			return new T();
 		}
 
 		public static MarkerData ImportMarkerData(string folderName)

@@ -4,6 +4,7 @@ using System;
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Character), 315, DelayRun = true, Caption = "Line Importer")]
+	[Tutorial("https://www.youtube.com/watch?v=CLRoebAM4zk")]
 	public partial class LineImporter : Activity
 	{
 		private Character _character;

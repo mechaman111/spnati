@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using SPNATI_Character_Editor.DataStructures;
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace SPNATI_Character_Editor.Activities
 			await LoadChunk("Variables", 1, () => VariableDatabase.Load());
 			await LoadChunk("Default Dialogue", 1, () => DialogueDatabase.Load());
 			await LoadChunk("Recipes", 1, () => RecipeProvider.Load());
+			await LoadChunk("Decks", 1, () => DeckDatabase.Load());
 
 			string lastCharacter = Config.GetString(Settings.AutoOpenCharacter);
 			if (string.IsNullOrEmpty(lastCharacter))

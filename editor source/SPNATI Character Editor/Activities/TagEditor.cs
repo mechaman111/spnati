@@ -3,6 +3,7 @@
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Character), 2)]
+	[Tutorial("https://www.youtube.com/watch?v=48ak4Ao6p5I")]
 	public partial class TagEditor : Activity
 	{
 		private Character _character;

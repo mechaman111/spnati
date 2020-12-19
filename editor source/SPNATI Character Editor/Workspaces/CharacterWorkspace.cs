@@ -48,7 +48,7 @@ namespace SPNATI_Character_Editor.Workspaces
 					break;
 				}
 			}
-			if (!knownVersion)
+			if (!knownVersion && version != null)
 			{
 				Match match = Regex.Match(version, @"v(\d+)");
 				if (match.Success)

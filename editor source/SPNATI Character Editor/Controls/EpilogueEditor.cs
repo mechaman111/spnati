@@ -1,12 +1,11 @@
 ﻿using Desktop;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
 	[Activity(typeof(Character), 40, DelayRun = true, Caption = "Epilogues")]
+	[Tutorial("https://www.youtube.com/watch?v=tQDt3P-jD8w&list=PL171KBpYNIxM8d-QPCMelUugKzy-izWzZ")]
 	public partial class EpilogueEditor : Activity
 	{
 		private Character _character;

@@ -4,17 +4,23 @@ using Desktop.Reporting;
 using Desktop.Skinning;
 using SPNATI_Character_Editor.Activities;
 using SPNATI_Character_Editor.DataSlicers;
+using SPNATI_Character_Editor.DataStructures;
 using SPNATI_Character_Editor.Forms;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
 {
 	public static class ShellLogic
 	{
+		private static ToolStripMenuItem _tutorialMenu;
+		private static string _tutorialUrl;
+
 		public static void Initialize()
 		{
 			if (!DoInitialSetup())
@@ -25,7 +31,7 @@ namespace SPNATI_Character_Editor
 			BuildDefinitions();
 			CreateActionBar();
 			CreateToolbar();
-
+			Shell.Instance.PostOffice.Subscribe<IActivity>(CoreDesktopMessages.ActivityChanged, OnActivityChanged);
 			Shell.Instance.LaunchWorkspace(new LoaderRecord());
 			Shell.Instance.Maximize(true);
 
@@ -40,6 +46,13 @@ namespace SPNATI_Character_Editor
 			Shell.Instance.Description = Config.UserName;
 
 			CharacterGenerator.SetConverter(Config.ImportMethod);
+		}
+
+		private static void OnActivityChanged(IActivity activity)
+		{
+			TutorialAttribute tutorial = activity.GetType().GetCustomAttribute<TutorialAttribute>();
+			_tutorialMenu.Visible = tutorial != null;
+			_tutorialUrl = tutorial?.Url;
 		}
 
 		private static void Instance_SubActionClick(object sender, EventArgs e)
@@ -364,6 +377,8 @@ namespace SPNATI_Character_Editor
 		{
 			Shell shell = Shell.Instance;
 
+			_tutorialMenu = shell.AddActionItem(Properties.Resources.VideoCamera, "Tutorial", "View Tutorial", ViewTutorial, null);
+			_tutorialMenu.Visible = false;
 			shell.AddActionItem(Properties.Resources.Settings, "Open Setup", "Open Setup", Setup, null);
 
 			ToolStripMenuItem themes = shell.AddActionMenu(Properties.Resources.Theme, "Change Theme");
@@ -419,6 +434,7 @@ namespace SPNATI_Character_Editor
 			//Characters
 			shell.AddToolbarItem("Characters...", OpenCharacterSelect, Keys.None);
 			shell.AddToolbarItem("Skins...", OpenCostumeSelect, Keys.None);
+			shell.AddToolbarItem("Decks...", OpenDeckSelect, Keys.None);
 
 			//Validate
 			menu = shell.AddToolbarSubmenu("Validate");
@@ -486,6 +502,15 @@ namespace SPNATI_Character_Editor
 			if (record != null)
 			{
 				Shell.Instance.LaunchWorkspace(record as Costume);
+			}
+		}
+
+		private static void OpenDeckSelect()
+		{
+			IRecord record = RecordLookup.DoLookup(typeof(Deck), "", true, null, true, null);
+			if (record != null)
+			{
+				Shell.Instance.LaunchWorkspace(record as Deck);
 			}
 		}
 
@@ -631,6 +656,27 @@ namespace SPNATI_Character_Editor
 			if (FlatFileSerializer.ExportFlatFile(current))
 			{
 				Shell.Instance.SetStatus("Generated edit-dialogue.txt");
+			}
+		}
+
+		private static void ViewTutorial()
+		{
+			if (_tutorialUrl != null)
+			{
+				try
+				{
+					ProcessStartInfo startInfo = new ProcessStartInfo()
+					{
+						Arguments = $"\"{_tutorialUrl}\"",
+						FileName = "explorer.exe"
+					};
+
+					Process.Start(startInfo);
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show(ex.Message);
+				}
 			}
 		}
 
