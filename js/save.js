@@ -40,6 +40,24 @@ function Save() {
      * @type {Object<string, string[]>}
      */
     this.endings = {};
+
+    /* Load data from LocalStorage. */
+    try {
+        for (var i = 0; i < localStorage.length; i++) {
+            var key = localStorage.key(i);
+            if (!key.startsWith(this.prefix)) {
+                continue;
+            }
+
+            var suffix = key.substring(this.prefix.length);
+            this.storageCache[suffix] = localStorage.getItem(key);
+        }
+    } catch (ex) {
+        console.error("Failed to load save data from localStorage: ", ex);
+        /* Don't send error data to Sentry, because SENTRY_INITIALIZED
+         * may not be defined when this is called
+         */
+    }
 }
 
 /**
@@ -221,23 +239,6 @@ Save.prototype.convertCookie = function() {
     }
 };
 
-Save.prototype.loadLocalStorage = function () {
-    for (var i = 0; i < localStorage.length; i++) {
-        try {
-            var key = localStorage.key(i);
-            if (!key.startsWith(this.prefix)) {
-                continue;
-            }
-
-            var suffix = key.substring(this.prefix.length);
-            this.storageCache[suffix] = localStorage.getItem(key);
-        } catch (ex) {
-            console.error("Failed to load save data from localStorage: ", ex);
-            if (SENTRY_INITIALIZED) Sentry.captureException(ex);
-        }
-    }
-}
-
 Save.prototype.load = function() {
     this.convertCookie();
     this.loadOptions();
@@ -312,15 +313,6 @@ Save.prototype.loadOptions = function(){
         this.setItem("usageTracking", USAGE_TRACKING); // Convert old value to a proper boolean.
     } else {
         USAGE_TRACKING = undefined;
-    }
-
-    /* If we couldn't find a usage tracking option, keep Sentry error logging
-     * enabled by default until we show the usage tracking modal.
-     */
-    if (USAGE_TRACKING === false) {
-        disableSentry();
-    } else {
-        enableSentry();
     }
 
     var gender = this.getItem("gender", true);
