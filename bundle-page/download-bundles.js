@@ -29,6 +29,7 @@ var SPECIAL_CASE_NAMES = {
     "cammy_white": "Cammy",
     "chara_dreemurr": "Chara",
     "chell_wheatley": "Chell",
+    "hermione_granger": "Hermione",
     "misty_hgss": "Misty",
     "rarity_eg": "Rarity",
     "weiss_schnee": "Weiss",
