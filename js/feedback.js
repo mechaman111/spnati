@@ -416,16 +416,17 @@ function showUsageTrackingModal() {
 function enableUsageTracking() {
     USAGE_TRACKING = true;
     save.saveUsageTracking();
-    sentryInit();
+    enableSentry();
 }
 
 function disableUsageTracking() {
     USAGE_TRACKING = false;
     save.saveUsageTracking();
+    disableSentry();
 }
 
 function sentryInit() {
-    if (USAGE_TRACKING && !SENTRY_INITIALIZED) {
+    if (!SENTRY_INITIALIZED) {
         console.log("Initializing Sentry...");
 
         var sentry_opts = {
@@ -498,6 +499,28 @@ function sentryInit() {
         Sentry.setTag("game_version", CURRENT_VERSION);
 
         SENTRY_INITIALIZED = true;
+    }
+}
+
+function enableSentry () {
+    if (SENTRY_INITIALIZED) {
+        var client = Sentry.getCurrentHub().getClient();
+        if (client) {
+            console.log("Enabling Sentry logging...");
+            client.getOptions().enabled = true;
+        }
+    }
+}
+
+/**
+ * @returns {Promise<boolean>}
+ */
+function disableSentry () {
+    if (SENTRY_INITIALIZED) {
+        console.log("Disabling Sentry logging...");
+        return Sentry.close();
+    } else {
+        return Promise.resolve(false);
     }
 }
 

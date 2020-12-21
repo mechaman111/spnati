@@ -140,7 +140,13 @@ function initialSetup () {
      * Also ensure that the config file is loaded before initializing Sentry,
      * which requires the commit SHA.
      */
-    loadConfigFile().then(loadBackgrounds).then(function () {
+    loadConfigFile().then(function () {
+        try {
+            sentryInit();
+        } catch (err) {
+            captureError(err);
+        }
+    }).then(loadBackgrounds).then(function () {
         FILL_DISABLED = false;
         
         loadVersionInfo();
@@ -153,10 +159,10 @@ function initialSetup () {
         /* Make sure that save data is loaded before updateTitleGender(),
          * since the latter uses selectedClothing.
          */
+        save.loadLocalStorage();
         save.load();
         updateTitleGender();
 
-        if (USAGE_TRACKING && !SENTRY_INITIALIZED) sentryInit();
         if (RESORT_ACTIVE && save.getPlayedCharacterSet().length >= 30) {
             $(".title-resort-button").show();
         } else {
