@@ -484,6 +484,7 @@ THARJA
 
 TOMOKO
 -Responds to Tomoko asking Chara to protect her.
+-Reponds to Tomoko as Chara is losing.
 
 TWILIGHT
 -Responds to Twilight removing her panties as her first item.
@@ -508,6 +509,10 @@ YUKARI
 
 YUNYUN
 -Responds to Yunyun attempting to befriend Chara.
+
+YURI
+-Responds to Yuri fleeing to console Natsuki from a Daddy player.
+-Responses as Yuri is losing.
 
 ZENOBIA
 -Generic responses to handle the, ah, unique masturbation sequence of Zenobia.
