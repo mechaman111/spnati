@@ -12,6 +12,7 @@ var SPECIAL_CASE_NAMES = {
     "larachel": "L'Arachel",
     "pa-15": "PA-15",
     "pauling": "Miss Pauling",
+    "penny_polendina": "Penny (RWBY)",
     "nami_szs": "Nami (SZS)",
     "saki_zls": "Saki (ZLS)",
     "scm": "Suction Cup Man",
