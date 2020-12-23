@@ -222,7 +222,16 @@ Save.prototype.convertCookie = function() {
 };
 
 Save.prototype.loadLocalStorage = function () {
-    for (var i = 0; i < localStorage.length; i++) {
+    var len = 0;
+    try {
+        len = localStorage.length;
+    } catch (ex) {
+        console.error("Failed to read localStorage length: ", ex);
+        if (SENTRY_INITIALIZED) Sentry.captureException(ex);
+        return;
+    }
+
+    for (var i = 0; i < len; i++) {
         try {
             var key = localStorage.key(i);
             if (!key.startsWith(this.prefix)) {
