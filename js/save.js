@@ -204,7 +204,7 @@ Save.prototype.convertCookie = function() {
 
                 this.setItem(gender, profile);
             }
-        });
+        }.bind(this));
 
         if (typeof data.endings == 'object') {
             for (var c in data.endings) {
