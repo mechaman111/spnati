@@ -107,6 +107,7 @@ namespace SPNATI_Character_Editor.Providers
 				}
 				if (NameMatches(c.Name, text) ||
 					NameMatches(c.FolderName, text) ||
+					NameMatches(c.FirstName, text) ||
 					c.Labels.Any(l => NameMatches(l.Value, text)))
 				{
 					//partial match

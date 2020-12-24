@@ -237,7 +237,7 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public string Name
 		{
-			get { return FirstName; }
+			get { return Label; }
 		}
 
 		[XmlIgnore]

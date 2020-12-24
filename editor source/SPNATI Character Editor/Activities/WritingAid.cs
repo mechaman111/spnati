@@ -495,7 +495,7 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_activeSituation == null || _activeSituation.Id == 0) { return; }
 
-			if (_editorData.HasResponse(_activeCharacter, _activeSituation.Id))
+			if (!_editorData.HasResponse(_activeCharacter, _activeSituation.Id))
 			{
 				_editorData.MarkResponse(_activeCharacter, _activeSituation.Id);
 				UpdateResponseCount();

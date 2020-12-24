@@ -325,7 +325,7 @@ namespace SPNATI_Character_Editor.DataStructures
 						key = metadata.ImageKey;
 						PoseEntry cell = new PoseEntry(metadata);
 						cell.Key = key;
-						globalSheet.Stages[0].Poses.Add(cell);
+						globalSheet.Stages[0].AddCell(cell);
 					}
 				}
 			}
@@ -362,7 +362,7 @@ namespace SPNATI_Character_Editor.DataStructures
 						entry.Key = emotion.Key;
 						entry.Code = emotion.Code;
 						entry.Crop = emotion.Crop;
-						poseStage.Poses.Add(entry);
+						poseStage.AddCell(entry);
 					}
 				}
 			}
