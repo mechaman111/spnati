@@ -141,6 +141,7 @@ Player.prototype.resetState = function () {
          * for the character.
          */
         this.gender = appearance.gender;
+        this.size = appearance.size;
 
         /* Load the player's wardrobe. */
 
@@ -684,6 +685,7 @@ Opponent.prototype.loadAlternateCostume = function () {
             folders: $xml.children('folder'),
             wardrobe: $xml.children('wardrobe'),
             gender: $xml.children('gender').text() || this.selectGender,
+            size: $xml.children('size').text() || this.default_costume.size,
         };
 
         var poses = $xml.children('poses');
@@ -973,7 +975,6 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             }
 
             this.xml = $xml;
-            this.size = $xml.children('size').text();
             this.stamina = Number($xml.children('timer').text());
             this.intelligences = $xml.children('intelligence');
 
@@ -1003,6 +1004,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
                 folders: this.folder,
                 wardrobe: $xml.children('wardrobe'),
                 gender: $xml.children('gender').text(),
+                size: $xml.children('size').text(),
             };
 
             var poses = $xml.children('poses');
