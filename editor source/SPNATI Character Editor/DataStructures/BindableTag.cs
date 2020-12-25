@@ -55,10 +55,10 @@ namespace SPNATI_Character_Editor
 		/// Creates one or more character tags based on the stages
 		/// </summary>
 		/// <returns></returns>
-		public List<CharacterTag> GetCharacterTags(Character character)
+		public List<CharacterTag> GetCharacterTags(ISkin character)
 		{
 			List<CharacterTag> list = new List<CharacterTag>();
-			int layers = character.Layers + Clothing.ExtraStages;
+			int layers = character.Character.Layers + Clothing.ExtraStages;
 			if (Stages.Count == layers)
 			{
 				list.Add(new CharacterTag(Tag));

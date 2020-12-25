@@ -14,6 +14,7 @@ namespace SPNATI_Character_Editor.Controls
 		private Pen _border = new Pen(Color.DarkGray);
 
 		private BindableTagList _bindings;
+		private ISkin _skin;
 		private Character _character;
 		private int _layerCount;
 		private List<Tag> _tags = new List<Tag>();
@@ -54,10 +55,11 @@ namespace SPNATI_Character_Editor.Controls
 			RecreateHandle();
 		}
 
-		public void SetCharacter(Character character, BindableTagList binding)
+		public void SetCharacter(ISkin skin, BindableTagList binding)
 		{
-			_character = character;
-			_layerCount = character.Layers + Clothing.ExtraStages;
+			_skin = skin;
+			_character = skin.Character;
+			_layerCount = _character.Layers + Clothing.ExtraStages;
 			if (_bindings != null)
 			{
 				_bindings.TagAdded -= _bindings_TagAdded;
@@ -169,7 +171,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private string GetLayerName(int layer)
 		{
-			StageName stage = _character.LayerToStageName(layer);
+			StageName stage = _character.LayerToStageName(layer, _skin);
 			return stage.DisplayName;
 		}
 

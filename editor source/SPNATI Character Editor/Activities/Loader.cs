@@ -91,10 +91,10 @@ namespace SPNATI_Character_Editor.Activities
 								CharacterDatabase.AddSkin(reskin);
 								reskin.Tags.ForEach(t =>
 								{
-									if (!string.IsNullOrEmpty(t.Name))
+									if (!string.IsNullOrEmpty(t.Tag))
 									{
-										t.Name = t.Name.ToLowerInvariant();
-										TagDatabase.AddTag(t.Name);
+										t.Tag = t.Tag.ToLowerInvariant();
+										TagDatabase.AddTag(t.Tag);
 									}
 								});
 								TagDatabase.AddTag(reskin.Id);

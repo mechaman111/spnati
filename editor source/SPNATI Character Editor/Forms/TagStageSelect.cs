@@ -12,9 +12,10 @@ namespace SPNATI_Character_Editor.Forms
 			InitializeComponent();
 		}
 
-		public void SetData(BindableTag tag, Character character)
+		public void SetData(BindableTag tag, ISkin skin)
 		{
 			_bindable = tag;
+			Character character = skin.Character;
 
 			Tag definition = TagDatabase.GetTag(tag.Tag);
 			if (definition != null)

@@ -6,11 +6,12 @@ namespace SPNATI_Character_Editor
 	/// <summary>
 	/// interface for classes that store pose files somewhere
 	/// </summary>
-	public interface ISkin : IRecord
+	public interface ISkin : IRecord, IWardrobe
 	{
 		/// Gets the name of the folder containing the images
 		/// </summary>
 		string FolderName { get; }
+		string Gender { get; }
 		/// <summary>
 		/// Gets the full path to the skin's directory
 		/// </summary>
@@ -49,6 +50,15 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		List<Pose> CustomPoses { get; set; }
 		ISkin Skin { get; }
-		bool IsDirty { get; set; }
+		List<CharacterTag> Tags { get; set; }
+		/// <summary>
+		/// Gets a working set of tags
+		/// </summary>
+		List<CharacterTag> GetTags();
+		/// <summary>
+		/// Adds a set of tags
+		/// </summary>
+		/// <param name="tags"></param>
+		void AddTags(List<CharacterTag> tags);
 	}
 }
