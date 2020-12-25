@@ -592,7 +592,8 @@ Opponent.prototype.updateIntelligence = function () {
     if (!this.intelligenceOverridden) {
         if (this.intelligences && this.intelligences.length) {
             this.intelligence = this.getByStage(this.intelligences);
-        } else {
+        }
+        if (!this.intelligence) {
             this.intelligence = eIntelligence.AVERAGE;
         }
     }
