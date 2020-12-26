@@ -1,0 +1,433 @@
+#required for behaviour.xml
+first=Mileena
+last=
+label=Mileena
+gender=female
+size=large
+intelligence=good
+
+#Number of phases to "finish" masturbating
+timer=20
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=black_hair
+tag=medium_hair
+tag=amber_eyes
+tag=fair-skinned
+tag=athletic
+tag=muscular
+tag=hairy
+tag=large_breasts
+tag=monster
+tag=non-human
+tag=scantily-clad
+tag=mean
+tag=slutty
+tag=video_game
+tag=mortal_kombat
+tag=fighter
+tag=creepy
+tag=masquerade_candidate
+
+#required for meta.xml
+#select screen image
+pic=0-happy
+height=5'9"
+from=Mortal Kombat
+writer=ANDRW
+artist=ANDRW & LastGallant
+description=Mileena is a mutant hybrid clone of Kitana, created in Shang Tsung's flesh pits. She is one of the adopted daughters of the Outworld Emperor Shao Kahn and one of his personal enforcers.
+z-layer=0
+dialogue-layer=over
+
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=Upper bandages,upper bandages,important,upper,plural
+clothes=Lower bandages,lower bandages,important,lower,plural
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermione=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#INTRODUCTION
+#These lines are used to say different things depending on which other characters are present when the character
+#is selected and when the game starts.
+	
+
+#fully clothed
+0-selected=calm.png,Let us dance!
+0-selected=calm.png,You want to play with me? How bold of you.
+0-game_start=calm.png,Let us dance!
+0-game_start=shocked.png,No backing out now!
+0-game_start=shocked.png,You're stick here with me now!
+
+
+
+
+#POKER PLAY
+#This is what a character says while they're exchanging cards and commenting on their hands afterwards.
+#When swapping cards, the game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+swap_cards=calm.png,Give me ~cards~ cards.
+swap_cards=calm.png,I demand ~cards~!
+swap_cards=calm.png,You owe me ~cards~ new cards.
+good_hand=happy.png,I will show you how I play...
+good_hand=happy.png,This is good. Let's see how good.
+good_hand=happy.png,Any final words?
+good_hand=happy.png,Soon you will be extinct.
+okay_hand=calm.png,The Empress deserves better.
+okay_hand=calm.png,I suppose I should not be surprised.
+okay_hand=calm.png,This is acceptable.
+bad_hand=sad.png,Is the dealer working with those who planned to betray me?
+bad_hand=calm.png,This is a problem...
+bad_hand=calm.png,I will never give up my fight!
+bad_hand=calm.png,I will not be silenced!
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#losing upper bandages
+0-must_strip_winning=loss.png,I don't know how I've been winning this long. I only wore this because I wanted to show off.
+0-must_strip_winning=loss.png,Oh! It's finally my turn to strip.
+0-must_strip_normal=loss.png,I lost that hand. It's almost my turn to put on a show.
+0-must_strip_losing=loss.png,Looks like I get to be the first to take it off.
+0-stripping=strip.png,I'm surprised these haven't fallen off already!
+
+
+#losing lower bandages
+1-stripped=stripped.png,Like my breasts? Stare all you want...
+1-must_strip_winning=loss.png,I don't know how I've been winning this long. I only wore this because I wanted to show off.
+1-must_strip_normal=loss.png,All eyes on me, it's my turn to strip.
+1-must_strip_losing=loss.png,I lost again, now you really get to see it all!
+1-must_strip_losing=loss.png,I will have my due...
+1-stripping=strip.png,Just going to pull these bandages off down there...
+
+
+#naked
+-3-stripped=stripped.png,Do you like what you see? It feels good to show it all off like this.
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_human_must_strip=happy.png,A male is stripping? It's about time!
+male_human_must_strip=happy.png,Let's see you!
+male_must_strip=happy.png,Yes! A guy is stripping!
+female_human_must_strip=interested.png,Your turn to strip, ~name~!
+female_must_strip=interested.png,Get ready to strip, ~name~.
+female_must_strip=interested.png,Perhaps you will share a bit more...
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_must_strip,count-role;target&character;harley&stage;2:=happy.png,Sharp tongue, dull mind.
+
+
+#lost upper bandages
+1-female_must_strip,count-role;target&character;harley&stage;2:=happy.png,Sharp tongue, dull mind.
+
+
+#naked
+-3-female_must_strip,count-role;target&character;harley&stage;2:=happy.png,Sharp tongue, dull mind.
+
+
+#masturbating
+-2-female_must_strip,count-role;target&character;harley&stage;2:=happy.png,Sharp tongue, dull mind.
+
+
+#finished
+-1-female_must_strip,count-role;target&character;harley&stage;2:=happy.png,Sharp tongue, dull mind.
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_accessory=sad.png,Only your ~clothing~? Come on, ~name~, look at how little I am wearing. This isn't fair.
+male_removed_accessory=calm.png,If that's all you are going to take off right now, then at least flash us or something.
+male_removed_accessory=sad.png,You've become quite the bore...
+female_removing_accessory=sad.png,Only your ~clothing~? Come on, ~name~, look at how little I am wearing. This isn't fair.
+female_removing_accessory=sad.png,Those not with me are against me!
+female_removed_accessory=calm.png,If that's all you are going to take off right now, then at least flash us or something.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_removed_accessory,count-role;target&character;spooky:=shocked.png,A toy? How adorable.
+0-female_removed_accessory,count-role;target&character;hermione:=shocked.png,Earthrealm witch!
+0-female_removed_accessory,count-role;target&character;lux:=happy.png,I wish to admire your ~clothing~.
+
+
+#lost upper bandages
+1-female_removed_accessory,count-role;target&character;spooky:=shocked.png,A toy? How adorable.
+1-female_removed_accessory,count-role;target&character;hermione:=shocked.png,Earthrealm witch!
+1-female_removed_accessory,count-role;target&character;lux:=happy.png,I wish to admire your ~clothing~.
+
+
+#naked
+-3-female_removed_accessory,count-role;target&character;spooky:=shocked.png,A toy? How adorable.
+-3-female_removed_accessory,count-role;target&character;hermione:=shocked.png,Earthrealm witch!
+-3-female_removed_accessory,count-role;target&character;lux:=happy.png,I wish to admire your ~clothing~.
+
+
+#masturbating
+-2-female_removed_accessory,count-role;target&character;spooky:=shocked.png,A toy? How adorable.
+-2-female_removed_accessory,count-role;target&character;hermione:=shocked.png,Earthrealm witch!
+-2-female_removed_accessory,count-role;target&character;lux:=happy.png,I wish to admire your ~clothing~.
+
+
+#finished
+-1-female_removed_accessory,count-role;target&character;spooky:=shocked.png,A toy? How adorable.
+-1-female_removed_accessory,count-role;target&character;hermione:=shocked.png,Earthrealm witch!
+-1-female_removed_accessory,count-role;target&character;lux:=happy.png,I wish to admire your ~clothing~.
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_minor=happy.png,You're getting closer and closer to being naked!
+male_removing_minor=happy.png,Your ~clothing~ is no longer required.
+male_removed_minor=horny.png,It is nice to see you more exposed, ~name~.
+female_removing_minor=happy.png,You're getting closer and closer to being naked!
+female_removed_minor=horny.png,It is nice to see you more exposed, ~name~.
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_major=happy.png,Slowly take off your ~clothing~ now, ~name~. Give us a show!
+male_removed_major=horny.png,Don't mind me staring...
+male_removed_major=horny.png,Without your ~clothing~ on you look pretty sexy, ~name~...
+female_removing_major=happy.png,Slowly take off your ~clothing~ now, ~name~. Give us a show!
+female_removing_major=happy.png,Do what you must.
+female_removed_major=horny.png,Don't mind me staring...
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_removing_major,count-american&role;target:=interested.png,Afraid, Earthrealmer?
+0-female_removing_major,count-shy&role;target:=shocked.png,Take off your ~clothing~ faster or I will rip it off you!
+
+
+#lost upper bandages
+1-female_removing_major,count-american&role;target:=interested.png,Afraid, Earthrealmer?
+1-female_removing_major,count-shy&role;target:=shocked.png,Take off your ~clothing~ faster or I will rip it off you!
+
+
+#naked
+-3-female_removing_major,count-american&role;target:=interested.png,Afraid, Earthrealmer?
+-3-female_removing_major,count-shy&role;target:=shocked.png,Take off your ~clothing~ faster or I will rip it off you!
+
+
+#masturbating
+-2-female_removing_major,count-american&role;target:=interested.png,Afraid, Earthrealmer?
+-2-female_removing_major,count-shy&role;target:=shocked.png,Take off your ~clothing~ faster or I will rip it off you!
+
+
+#finished
+-1-female_removing_major,count-american&role;target:=interested.png,Afraid, Earthrealmer?
+-1-female_removing_major,count-shy&role;target:=shocked.png,Take off your ~clothing~ faster or I will rip it off you!
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character to have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_chest_will_be_visible=interested.png,I've been looking forward to this, ~name~.
+male_chest_will_be_visible=interested.png,Fresh meat...
+male_chest_is_visible=horny.png,Wow! Nice chest, ~name~.
+male_chest_is_visible=horny.png,Come closer...
+male_chest_is_visible=horny.png,Come, let me warm you...
+male_crotch_will_be_visible=happy.png,YES! It's finally time for ~name~ to expose his penis! I can't wait to see it.
+male_crotch_will_be_visible=happy.png,The main course!
+male_small_crotch_is_visible=calm.png,Uh that's pretty small... Want me to rub it and see how big it really gets?
+male_medium_crotch_is_visible=horny.png,Nice! Look at how hard you are, ~name~. I can tell you have been staring at me...
+male_large_crotch_is_visible=shocked.png,WOAH! It's huge! I'm so turned on right now...
+female_chest_will_be_visible=interested.png,I'm looking forward to this I want to see if they are as big as mine.
+female_chest_will_be_visible=interested.png,The anticipation is killing me...
+female_small_chest_is_visible=calm.png,Those are pretty small. Are you envious of me, ~name~?
+female_medium_chest_is_visible=horny.png,Nice! But mine are still bigger.
+female_medium_chest_is_visible=horny.png,Delicious!
+female_large_chest_is_visible=shocked.png,WOAH! Those might just be bigger than mine. Impressive!
+female_crotch_will_be_visible=happy.png,Time to show us your pussy, ~name~. Slide those panties off.
+female_crotch_will_be_visible=happy.png,I see no reason to spare you.
+female_crotch_is_visible=horny.png,Very pretty! Look at how wet you are. I think you are enjoying this.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_crotch_will_be_visible,count-role;target&character;chara:=horny.png,Your face is too repulsive to eat. But maybe down there...
+
+
+#lost upper bandages
+1-female_crotch_will_be_visible,count-role;target&character;chara:=horny.png,Your face is too repulsive to eat. But maybe down there...
+
+
+#naked
+-3-female_crotch_will_be_visible,count-role;target&character;chara:=horny.png,Your face is too repulsive to eat. But maybe down there...
+
+
+#masturbating
+-2-female_crotch_will_be_visible,count-role;target&character;chara:=horny.png,Your face is too repulsive to eat. But maybe down there...
+
+
+#finished
+-1-female_crotch_will_be_visible,count-role;target&character;chara:=horny.png,Your face is too repulsive to eat. But maybe down there...
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_masturbate=happy.png,OH! It's ~name~'s turn to start jerking off! This is going to be good...
+male_start_masturbating=horny.png,Yes, ~name~! Just like that! Spread your legs wide so we can all see it.
+male_masturbating=horny.png,Keep stroking, ~name~, I want to see you climax in front of us.
+male_masturbating=horny.png,I see you staring at me while you do that, do I excite you?
+male_masturbating=horny.png,It's getting bigger the longer you do that! I can't keep my eyes off it!
+male_masturbating=horny.png,How does it feel? We are all staring at it.
+male_masturbating=horny.png,This is really turning me on...
+male_masturbating=horny.png,Just like that, ~name~... Up and down... Keep going...
+male_finished_masturbating=shocked.png,WOW! That's a lot of cum!
+male_finished_masturbating=shocked.png,NICE! You can use my bandages to clean off if you want.
+male_finished_masturbating=shocked.png,OH! It went everywhere!
+male_finished_masturbating=shocked.png,Damn ~name~ I bet that felt really good.
+female_must_masturbate=interested.png,It's time for ~name~ to start masturbating now! This is going to be fun.
+female_start_masturbating=horny.png,Yeah just like that, rub it good.
+female_masturbating=horny.png,Feels good doesn't it?
+female_finished_masturbating=shocked.png,Wow! You squirt like a waterfall, ~name~!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-female_must_masturbate,count-role;target&character;spooky:=horny.png,Lost, little girl?
+0-female_must_masturbate,count-kind&role;target:=horny.png,Your blood must taste so sweet...
+
+
+#lost upper bandages
+1-female_must_masturbate,count-role;target&character;spooky:=horny.png,Lost, little girl?
+1-female_must_masturbate,count-kind&role;target:=horny.png,Your blood must taste so sweet...
+
+
+#naked
+-3-female_must_masturbate,count-role;target&character;spooky:=horny.png,Lost, little girl?
+-3-female_must_masturbate,count-kind&role;target:=horny.png,Your blood must taste so sweet...
+
+
+#masturbating
+-2-female_must_masturbate,count-role;target&character;spooky:=horny.png,Lost, little girl?
+-2-female_must_masturbate,count-kind&role;target:=horny.png,Your blood must taste so sweet...
+
+
+#finished
+-1-female_must_masturbate,count-role;target&character;spooky:=horny.png,Lost, little girl?
+-1-female_must_masturbate,count-kind&role;target:=horny.png,Your blood must taste so sweet...
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+
+#naked
+-3-must_masturbate_first=loss.png,I have to masturbate first? This is embarrassing, but for some reason it's turning me on.
+-3-must_masturbate=loss.png,Finally! I've been extremely turned on for a while now. I'm ready for my release.
+-3-start_masturbating=starting.png,Stare at me all you want. I hope you enjoy me as much as I do.
+
+
+#masturbating
+-2-masturbating=horny.png,Ohhhh... This is feeling really good!
+-2-heavy_masturbating=heavy.png,Wow! I am really close to climaxing now...
+-2-finishing_masturbating=finishing.png,CUMALITY!
+
+
+#finished
+-1-finished_masturbating=finished.png,That felt so good... It's so much better with an audience!
+
+
+
+
+#GAME OVER
+#Lines spoken after the overall winner has been decided and all the losers have finished their forfeits.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+game_over_victory=calm.png,You reek of weakness!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-game_over_victory=calm.png,Flawless victory!
+
+
+#finished
+game_over_defeat=sad.png,You don't impress me for a minute.
+
+#EPILOGUE/ENDING
+
+#CUSTOM POSES
