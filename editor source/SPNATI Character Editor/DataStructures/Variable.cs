@@ -1,15 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using Desktop;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
 {
-	public class Variable
+	public class Variable : IRecord
 	{
 		[XmlAttribute("name")]
-		public string Name;
+		public string Name { get; set; }
 
 		[XmlAttribute("description")]
 		public string Description;
+
+		[XmlAttribute("example")]
+		public string Example;
 
 		/// <summary>
 		/// If true, this variable is available in all contextx
@@ -25,6 +30,20 @@ namespace SPNATI_Character_Editor
 
 		[XmlElement("function")]
 		public List<VariableFunction> Functions = new List<VariableFunction>();
+
+		[XmlElement("param")]
+		public List<VariableParameter> Parameters = new List<VariableParameter>();
+
+		public string Key
+		{
+			get { return Name; }
+			set { }
+		}
+
+		public string Group
+		{
+			get { return null; }
+		}
 
 		public bool HasFunctions()
 		{
@@ -75,12 +94,28 @@ namespace SPNATI_Character_Editor
 		{
 			return Name;
 		}
+
+		public string ToLookupString()
+		{
+			return Name;
+		}
+
+		public int CompareTo(IRecord other)
+		{
+			return Name.CompareTo(other.Name);
+		}
 	}
 
-	public class VariableFunction
+	public class VariableFunction : IRecord
 	{
 		[XmlAttribute("name")]
-		public string Name;
+		public string Name { get; set; }
+
+		[XmlAttribute("label")]
+		public string Label { get; set; }
+
+		[XmlAttribute("example")]
+		public string Example { get; set; }
 
 		[XmlElement("param")]
 		public List<VariableParameter> Parameters = new List<VariableParameter>();
@@ -88,9 +123,31 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("description")]
 		public string Description;
 
+		public string Key
+		{
+			get { return Name; }
+			set { }
+		}
+
+		public string Group { get { return null; } }
+
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		public string ToLookupString()
+		{
+			if (Label != null)
+			{
+				return $"${Label} [{Name}]";
+			}
+			return Name;
+		}
+
+		public int CompareTo(IRecord other)
+		{
+			return Name.CompareTo(other.Name);
 		}
 
 		public VariableFunction() { }
@@ -108,6 +165,12 @@ namespace SPNATI_Character_Editor
 
 		[XmlAttribute("description")]
 		public string Description;
+
+		[XmlAttribute("label")]
+		public string Label;
+
+		[XmlAttribute("example")]
+		public string Example;
 
 		public override string ToString()
 		{

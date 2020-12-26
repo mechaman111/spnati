@@ -859,5 +859,17 @@ namespace SPNATI_Character_Editor.Controls
 				_trackedCase.PropertyChanged += CasePropertyChanged;
 			}
 		}
+
+		private void tsAddVariable_Click(object sender, EventArgs e)
+		{
+			VariableWizard wizard = new VariableWizard();
+			Line line = gridDialogue.GetCurrentLine();
+			wizard.SetData(_selectedCase, line);
+			if (wizard.ShowDialog() == DialogResult.OK)
+			{
+				string text = wizard.LineText;
+				gridDialogue.SetCurrentLine(text);
+			}
+		}
 	}
 }

@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Desktop;
+using SPNATI_Character_Editor.Controls;
+using System.Collections.Generic;
 using System.IO;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace SPNATI_Character_Editor
@@ -67,10 +70,10 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		/// <param name="name"></param>
 		/// <returns></returns>
-		public static Variable Get(string name)
+		public static Variable Get(string name, bool allowTemporary = true)
 		{
 			Variable v = _variables.Get(name);
-			if (v == null)
+			if (v == null && allowTemporary)
 			{
 				v = _tempVariables.Get(name);
 				if (v == null)
@@ -82,6 +85,29 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			return v;
+		}
+
+		public static IEnumerable<Variable> GetVariablesForTag(string tag)
+		{
+			foreach (Variable v in GetVariablesForTag(tag, _variables.Values))
+			{
+				yield return v;
+			}
+			foreach (Variable v in GetVariablesForTag(tag, _tempVariables.Values))
+			{
+				yield return v;
+			}
+		}
+
+		private static IEnumerable<Variable> GetVariablesForTag(string tag, Dictionary<string, Variable>.ValueCollection values)
+		{
+			foreach (Variable v in values)
+			{
+				if (TriggerDatabase.IsVariableAvailable(tag, v.Name))
+				{
+					yield return v;
+				}
+			}
 		}
 	}
 
@@ -122,6 +148,139 @@ namespace SPNATI_Character_Editor
 				rule = character.Styles.Rules.Find(r => r.ClassName == className);
 			}
 			return rule;			
+		}
+	}
+
+	public class VariableContext
+	{
+		public Case Case;
+		public Line Line;
+
+		public VariableContext(Case c, Line line)
+		{
+			Case = c;
+			Line = line;
+		}
+	}
+
+	public class VariableProvider : IRecordProvider<Variable>
+	{
+		private VariableContext _context;
+
+		public bool AllowsNew { get { return false; } }
+		public bool AllowsDelete { get { return false; } }
+		public bool TrackRecent { get { return false; } }
+
+		public IRecord Create(string key)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public void Delete(IRecord record)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public bool FilterFromUI(IRecord record)
+		{
+			return false;
+		}
+
+		public void SetFormatInfo(LookupFormat info)
+		{
+			info.Columns = new string[] { "Name", "Description" };
+			info.Caption = "Choose a Variable";
+		}
+
+		public ListViewItem FormatItem(IRecord record)
+		{
+			Variable v = record as Variable;
+			return new ListViewItem(new string[] { v.Name, v.Description });
+		}
+
+		public List<IRecord> GetRecords(string text, LookupArgs args)
+		{
+			string tag = _context.Case.Tag ?? "";
+			text = text.ToLower();
+			List<IRecord> list = new List<IRecord>();
+			foreach (Variable v in VariableDatabase.GetVariablesForTag(tag))
+			{
+				if (v.Name.ToLower().Contains(text))
+				{
+					list.Add(v);
+				}
+			}
+			return list;
+		}
+
+		public void SetContext(object context)
+		{
+			_context = context as VariableContext;
+		}
+
+		public void Sort(List<IRecord> list)
+		{
+			list.Sort();
+		}
+	}
+
+	public class VariableFunctionProvider : IRecordProvider<VariableFunction>
+	{
+		private Variable _variable;
+
+		public bool AllowsNew { get { return false; } }
+		public bool AllowsDelete { get { return false; } }
+		public bool TrackRecent { get { return false; } }
+
+		public IRecord Create(string key)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public void Delete(IRecord record)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public bool FilterFromUI(IRecord record)
+		{
+			return false;
+		}
+
+		public void SetFormatInfo(LookupFormat info)
+		{
+			info.Columns = new string[] { "Name", "Description" };
+			info.Caption = "Choose a Function";
+		}
+
+		public ListViewItem FormatItem(IRecord record)
+		{
+			VariableFunction func = record as VariableFunction;
+			return new ListViewItem(new string[] { func.Name, func.Description });
+		}
+
+		public List<IRecord> GetRecords(string text, LookupArgs args)
+		{
+			text = text.ToLower();
+			List<IRecord> list = new List<IRecord>();
+			foreach (VariableFunction func in _variable.Functions)
+			{
+				if (func.Name.ToLower().Contains(text))
+				{
+					list.Add(func);
+				}
+			}
+			return list;
+		}
+
+		public void SetContext(object context)
+		{
+			_variable = context as Variable;
+		}
+
+		public void Sort(List<IRecord> list)
+		{
+			list.Sort();
 		}
 	}
 }

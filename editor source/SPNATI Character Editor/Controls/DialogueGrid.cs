@@ -726,6 +726,38 @@ namespace SPNATI_Character_Editor.Controls
 			return 0;
 		}
 
+		public Line GetCurrentLine()
+		{
+			string text = "";
+			if (gridDialogue.SelectedCells.Count > 0)
+			{
+				DataGridViewCell cell = gridDialogue.SelectedCells[0];
+				if (cell.OwningColumn == ColText)
+				{
+					text = cell.Value?.ToString() ?? "";
+				}
+			}
+			int start = GetSelectionStart(gridDialogue);
+			
+			return new Line(text, start);
+		}
+
+		public void SetCurrentLine(string text)
+		{
+			if (gridDialogue.SelectedCells.Count > 0)
+			{
+				DataGridViewCell cell = gridDialogue.SelectedCells[0];
+				if (cell.OwningColumn == ColText)
+				{
+					if (gridDialogue.EditingControl != null && gridDialogue.EditingControl is TextBox)
+					{
+						TextBox textBox = gridDialogue.EditingControl as TextBox;
+						textBox.Text = text;
+					}
+				}
+			}
+		}
+
 		public DialogueLine GetLine(int index)
 		{
 			DialogueLine line = ReadLineFromDialogueGrid(index);
@@ -1228,6 +1260,18 @@ namespace SPNATI_Character_Editor.Controls
 				e.Cancel = true;
 				return;
 			}
+		}
+	}
+
+	public struct Line
+	{
+		public string Text { get; set; }
+		public int Position { get; set; }
+
+		public Line(string text, int position)
+		{
+			Text = text;
+			Position = position;
 		}
 	}
 }

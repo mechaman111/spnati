@@ -551,7 +551,9 @@
       <DependentUpon>GraphEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Pipelines\NodeControls\INodeControl.cs" />
-    <Compile Include="Controls\Pipelines\NodeControls\NodeBooleanControl.cs" />
+    <Compile Include="Controls\Pipelines\NodeControls\NodeBooleanControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Pipelines\NodeControls\NodeBooleanControl.Designer.cs">
       <DependentUpon>NodeBooleanControl.cs</DependentUpon>
     </Compile>
@@ -561,7 +563,9 @@
     <Compile Include="Controls\Pipelines\NodeControls\NodeCellControl.Designer.cs">
       <DependentUpon>NodeCellControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Pipelines\NodeControls\NodeColorControl.cs" />
+    <Compile Include="Controls\Pipelines\NodeControls\NodeColorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Pipelines\NodeControls\NodeColorControl.Designer.cs">
       <DependentUpon>NodeColorControl.cs</DependentUpon>
     </Compile>
@@ -577,11 +581,15 @@
     <Compile Include="Controls\Pipelines\NodeControls\NodeFileControl.Designer.cs">
       <DependentUpon>NodeFileControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Pipelines\NodeControls\NodeFloatControl.cs" />
+    <Compile Include="Controls\Pipelines\NodeControls\NodeFloatControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Pipelines\NodeControls\NodeFloatControl.Designer.cs">
       <DependentUpon>NodeFloatControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Pipelines\NodeControls\NodeNumberControl.cs" />
+    <Compile Include="Controls\Pipelines\NodeControls\NodeNumberControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Pipelines\NodeControls\NodeNumberControl.Designer.cs">
       <DependentUpon>NodeNumberControl.cs</DependentUpon>
     </Compile>
@@ -783,6 +791,12 @@
     <Compile Include="Controls\TreeViews\PoseView.cs" />
     <Compile Include="Controls\TreeViews\StageView.cs" />
     <Compile Include="Controls\TreeViews\TargetView.cs" />
+    <Compile Include="Controls\VariableControls\ParameterField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\VariableControls\ParameterField.Designer.cs">
+      <DependentUpon>ParameterField.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataSlicers\IntervalSlicer.cs" />
     <Compile Include="DataSlicers\OneShotSlicer.cs" />
     <Compile Include="DataSlicers\StageSlicer.cs" />
@@ -1098,6 +1112,12 @@
     </Compile>
     <Compile Include="Forms\PoseSelectionForm.Designer.cs">
       <DependentUpon>PoseSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\VariableWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VariableWizard.Designer.cs">
+      <DependentUpon>VariableWizard.cs</DependentUpon>
     </Compile>
     <Compile Include="ImagePipeline\ChannelReader.cs" />
     <Compile Include="ImagePipeline\DirectBitmap.cs" />
@@ -1862,6 +1882,9 @@
     <EmbeddedResource Include="Controls\ValidationControl.resx">
       <DependentUpon>ValidationControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\VariableControls\ParameterField.resx">
+      <DependentUpon>ParameterField.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EpilogueEditing\EpilogueCanvas.resx">
       <DependentUpon>EpilogueCanvas.cs</DependentUpon>
     </EmbeddedResource>
@@ -1969,6 +1992,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TrophyForm.resx">
       <DependentUpon>TrophyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VariableWizard.resx">
+      <DependentUpon>VariableWizard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\WhatsNew.resx">
       <DependentUpon>WhatsNew.cs</DependentUpon>
@@ -2116,6 +2142,7 @@
     <None Include="Icons\RemoveRow.png" />
     <None Include="Icons\Pipeline.png" />
     <None Include="Icons\PlayOnce.png" />
+    <None Include="Icons\AddVariable.png" />
     <Content Include="Resources\Images\BaseCode.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2671,6 +2698,7 @@
     </Content>
     <Content Include="variables.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="VersionHistory\v3.4.1.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
