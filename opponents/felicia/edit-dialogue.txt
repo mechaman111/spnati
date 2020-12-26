@@ -1,0 +1,1637 @@
+#required for behaviour.xml
+first=Felicia
+last=
+label=Felicia
+gender=female
+size=large
+intelligence=good
+
+#Number of phases to "finish" masturbating
+timer=20
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=blue_hair
+tag=exotic_hair
+tag=long_hair
+tag=very_long_hair
+tag=blue_eyes
+tag=fair-skinned
+tag=athletic
+tag=big_butt
+tag=large_breasts
+tag=catfolk
+tag=monster
+tag=non-human
+tag=animal_ears
+tag=tail
+tag=scantily-clad
+tag=cheerful
+tag=confident
+tag=ditzy
+tag=kind
+tag=witty
+tag=bisexual
+tag=video_game
+tag=capcom
+tag=darkstalkers
+tag=fighter
+tag=uses_toy
+tag=hero
+tag=masquerade_candidate
+
+#required for meta.xml
+#select screen image
+pic=0-kitty
+height=5'6"
+from=Darkstalkers
+writer=ANDRW
+artist=sjrslev
+description=Felicia is a catwoman who was taken in and raised by nuns. She grew up to be a warrior of the night, a Darkstalker.
+z-layer=0
+dialogue-layer=over
+
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=fur,fur,major,upper
+clothes=fur,fur,major,lower
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermione=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#INTRODUCTION
+#These lines are used to say different things depending on which other characters are present when the character
+#is selected and when the game starts.
+	
+
+#fully clothed
+0-selected=selected.png,Strip poker? How fun! I might not have clothes to strip, but I <i>do</i> have fur to shed!
+0-game_start=selected.png,Strip poker? How fun! I might not have clothes to strip, but I <i>do</i> have fur to shed!
+
+
+
+
+#POKER PLAY
+#This is what a character says while they're exchanging cards and commenting on their hands afterwards.
+#When swapping cards, the game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+swap_cards=calm.png,I'll grab ~cards~.
+swap_cards=calm.png,Gonna have to swap these cards!
+swap_cards=calm.png,Let me grab some new cards!
+swap_cards=calm.png,Time for some new cards!
+swap_cards=calm.png,I'm gonna tag these cards out!
+swap_cards=calm.png,Card switching time!
+swap_cards=calm.png,These cards need to tag out.
+swap_cards=calm.png,I know I can get better cards than these! It's swapping time.
+swap_cards=calm.png,I'm gonna swap these cards out for some better ones.
+swap_cards=calm.png,It's time to get some new card.
+swap_cards=calm.png,I need better cards than these.
+swap_cards=calm.png,I'll try my luck and swap these cards.
+swap_cards=calm.png,I think I'll swap these cards. Curiosity can't kill me.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-swap_cards,priority:0,count-role;self&hashand;high card:=calm.png,May I have ~cards~ cards?
+0-swap_cards,priority:0,count-role;self&hashand;high card:=calm.png,~Cards~ new cards, please.
+0-swap_cards,priority:0,count-role;self&hashand;high card:=calm.png,I'm sooo tagging these cards out.
+0-good_hand=butt.png,I don't have a good poker face so I'll just turn around so you can't see my face. Is that against the rules?
+0-good_hand=happy.png,Wow! I really am a star!
+0-good_hand=happy.png,These cards will get me an encore for sure!
+0-good_hand=happy.png,These cards are as good as catnip!
+0-good_hand=happy.png,Yay! These cards are purrrfect!
+0-good_hand=happy.png,I hope I don't scratch up these cards. They are too good for that.
+0-good_hand=happy.png,I can't be beat with this hand!
+0-good_hand=happy.png,This hand is the cats meow!
+0-good_hand=happy.png,These cards are up to scratch!
+0-good_hand=happy.png,I'm on the prowl!
+0-good_hand=happy.png,With these cards I'll put an end to this cat-and-mouse game.
+0-good_hand=happy.png,What's this called again? 'An easy victory'? It feels so good!!
+0-good_hand=happy.png,With these cards, I can't be beat!
+0-good_hand=happy.png,These cards are meant for a star!
+0-good_hand=happy.png,Puzzle Fighter, Nightwarriors, Darkstalkers, Poker Star, I do it all!
+0-good_hand=happy.png,I'm so far ahead now! Catch me if you can!
+0-good_hand=happy.png,If I win this game, I want a new cat toy!
+0-good_hand=happy.png,Poker is like dancing, you just need a sense of rhythm. That makes sense, right?
+0-good_hand=happy.png,If I win, don't be a crybaby!
+0-good_hand=happy.png,Yay! These cards are a great start to this game.
+0-good_hand=happy.png,I got a great hand, and to think we are just getting started.
+0-good_hand=happy.png,I like how this is going so far.
+0-okay_hand=calm.png,I make it a rule to be cheerful all the time. I think I can win with this hand.
+0-okay_hand=calm.png,Never give up your dream! Don't be afraid to fail! I can do this!
+0-okay_hand=calm.png,My tail is the key to victory!
+0-okay_hand=calm.png,Trying is what makes the difference between winning and losing.
+0-okay_hand=calm.png,Even with these subpar cards, I know I still have a chance to win!
+0-okay_hand=calm.png,I think these should be fine... I think...
+0-bad_hand=sad.png,I can't be a star with cards like this!
+0-bad_hand=sad.png,Come on Dealer! Are you trying to make me cry?
+0-bad_hand=sad.png,I might lose already...
+0-bad_hand=sad.png,I hope I don't lose so soon...
+0-bad_hand=sad.png,I can't believe I got a bad hand so early on.
+0-bad_hand=sad.png,This game is off to a bad start.
+0-bad_hand=sad.png,This game isn't going well so far... Maybe I can make a comeback...
+0-bad_hand=sad.png,Uh oh... I think I'm off to a bad start.
+0-bad_hand=sad.png,I swear I'm better at this! I just got a bad hand.
+0-bad_hand=angry.png,My claws have been growing so quickly lately... Let me use these cards as a scratching post, okay?
+0-bad_hand=angry.png,These cards aren't even worth a hairball.
+0-bad_hand=sad.png,I hate these cards! Nyah nyah!!
+0-bad_hand=sad.png,Oh, now, stop messing with me! These cards aren't good!
+0-bad_hand=sad.png,These cards aren't even good enough to be my scratching post.
+0-bad_hand=sad.png,These cards are sooo cheap! I'm a star, I deserve better!
+
+
+#lost fur
+1-swap_cards,priority:0,count-role;self&hashand;high card:=calm.png,May I have ~cards~ cards?
+1-swap_cards,priority:0,count-role;self&hashand;high card:=calm.png,~Cards~ new cards, please.
+1-swap_cards,priority:0,count-role;self&hashand;high card:=calm.png,I'm sooo tagging these cards out.
+1-good_hand=butt.png,I don't have a good poker face so I'll just turn around so you can't see my face. Is that against the rules?
+1-good_hand=happy.png,Wow! I really am a star!
+1-good_hand=happy.png,These cards will get me an encore for sure!
+1-good_hand=happy.png,These cards are as good as catnip!
+1-good_hand=happy.png,Yay! These cards are purrrfect!
+1-good_hand=happy.png,I hope I don't scratch up these cards. They are too good for that.
+1-good_hand=happy.png,I can't be beat with this hand!
+1-good_hand=happy.png,This hand is the cats meow!
+1-good_hand=happy.png,These cards are up to scratch!
+1-good_hand=happy.png,I'm on the prowl!
+1-good_hand=happy.png,With these cards I'll put an end to this cat-and-mouse game.
+1-good_hand=happy.png,Looks like I won't have to shave again!
+1-good_hand=happy.png,What's this called again? 'An easy victory'? It feels so good!!
+1-okay_hand=calm.png,Hmmm... I guess these are okay.
+1-okay_hand=calm.png,Even cats need to know a little martial arts these days.
+1-okay_hand=calm.png,I make it a rule to be cheerful all the time. I think I can win with this hand.
+1-okay_hand=calm.png,Never give up your dream! Don't be afraid to fail! I can do this!
+1-okay_hand=calm.png,My tail is the key to victory!
+1-okay_hand=calm.png,Trying is what makes the difference between winning and losing.
+1-okay_hand=calm.png,Even with these subpar cards, I know I still have a chance to win!
+1-bad_hand=sad.png,Dealer do you want me to cry? I can't believe these cards!
+1-bad_hand=angry.png,My claws have been growing so quickly lately... Let me use these cards as a scratching post, okay?
+1-bad_hand=angry.png,These cards aren't even worth a hairball.
+1-bad_hand=sad.png,I hate these cards! Nyah nyah!!
+1-bad_hand=sad.png,Oh, now, stop messing with me! These cards aren't good!
+1-bad_hand=sad.png,These cards aren't even good enough to be my scratching post.
+1-bad_hand=sad.png,These cards are sooo cheap! I'm a star, I deserve better!
+
+
+#naked
+-3-swap_cards,priority:0,count-role;self&hashand;high card:=calm.png,May I have ~cards~ cards?
+-3-swap_cards,priority:0,count-role;self&hashand;high card:=calm.png,~Cards~ new cards, please.
+-3-swap_cards,priority:0,count-role;self&hashand;high card:=calm.png,I'm sooo tagging these cards out.
+-3-good_hand=butt.png,I don't have a good poker face so I'll just turn around so you can't see my face. Is that against the rules?
+-3-good_hand=happy.png,Wow! I really am a star!
+-3-good_hand=happy.png,These cards will get me an encore for sure!
+-3-good_hand=happy.png,These cards are as good as catnip!
+-3-good_hand=happy.png,Yay! These cards are purrrfect!
+-3-good_hand=happy.png,I hope I don't scratch up these cards. They are too good for that.
+-3-good_hand=happy.png,I can't be beat with this hand!
+-3-good_hand=happy.png,This hand is the cats meow!
+-3-good_hand=happy.png,These cards are up to scratch!
+-3-good_hand=happy.png,I'm on the prowl!
+-3-good_hand=happy.png,With these cards I'll put an end to this cat-and-mouse game.
+-3-good_hand=happy.png,With cards like this, I've already won!
+-3-good_hand=happy.png,I can still win the game! I just need to stay positive.
+-3-good_hand=happy.png,I know I can still win! I can feel it!
+-3-okay_hand=calm.png,I make it a rule to be cheerful all the time. I think I can win with this hand.
+-3-okay_hand=calm.png,Never give up your dream! Don't be afraid to fail! I can do this!
+-3-okay_hand=calm.png,My tail is the key to victory!
+-3-okay_hand=calm.png,Trying is what makes the difference between winning and losing.
+-3-okay_hand=calm.png,Even with these subpar cards, I know I still have a chance to win!
+-3-okay_hand=calm.png,The suspense is killing me! Who is going to win this round?
+-3-okay_hand=calm.png,This hand is my last hope!
+-3-okay_hand=calm.png,I hope I still have enough luck left to win this game...
+-3-bad_hand=sad.png,I can't be a star with cards like this!
+-3-bad_hand=sad.png,Come on Dealer! Are you trying to make me cry?
+-3-bad_hand=sad.png,Looks like I better get my claws ready...
+-3-bad_hand=sad.png,This doesn't look good...
+-3-bad_hand=sad.png,Uh oh... This might be it...
+-3-bad_hand=sad.png,This could be it!
+-3-bad_hand=sad.png,I might lose this game! Oh no!
+-3-bad_hand=sad.png,These cards could make me lose the whole game!
+-3-bad_hand=sad.png,Huh huh, enough with those old cards already!
+-3-bad_hand=sad.png,These cards belong in the litter pile! Gross!
+-3-bad_hand=sad.png,I hope these cards never get the spotlight...
+-3-bad_hand=sad.png,This might be the end...
+-3-bad_hand=sad.png,I know I have a bad hand but I hope I don't have the worst hand.
+-3-bad_hand=sad.png,I guess I'm starting to look like one of those catgirls now...
+-3-bad_hand=angry.png,My claws have been growing so quickly lately... Let me use these cards as a scratching post, okay?
+-3-bad_hand=angry.png,These cards aren't even worth a hairball.
+-3-bad_hand=sad.png,I hate these cards! Nyah nyah!!
+-3-bad_hand=sad.png,Oh, now, stop messing with me! These cards aren't good!
+-3-bad_hand=sad.png,These cards aren't even good enough to be my scratching post.
+-3-bad_hand=sad.png,These cards are sooo cheap! I'm a star, I deserve better!
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#losing fur
+0-must_strip_winning=loss.png,So it's my turn to expose myself? I don't wear clothes to strip but I can shave my fur instead!
+0-must_strip_normal=loss.png,So it's my turn to expose myself? I don't wear clothes to strip but I can shave my fur instead!
+0-must_strip_losing=loss.png,So it's my turn to expose myself? I don't wear clothes to strip but I can shave my fur instead!
+0-stripping=strip.png,I'll start by shaving the fur on my breasts.
+0-stripping=strip.png,As you can see, I don't usually wear clothes to cover myself up since my fur does that naturally. So instead of stripping, I'll be "shedding" today.
+0-stripping=strip.png,It's a good thing I'm not declawed! It's shaving time!
+0-stripping=strip.png,Just 'cause I don't wear clothes doesn't mean I can't "strip" something! I'll shave my fur to expose my body instead!
+
+
+#losing fur
+1-stripped=stripped.png,Yes I do have nipples! Do you like them?
+1-stripped=stripped.png,There! I think I did a pretty good job shaving. Now you can see my breasts! Do you like them?
+1-stripped=stripped.png,It's been a long time since I've shaved my chest. It sure does feel good to show off every now and then.
+1-stripped=stripped.png,Ta-da! The perfect shave! I didn't even nick myself once! I really am good with my claws... So don't try anything funny!
+1-stripped=stripped.png,I sure do have a lot of hair, but at least I don't have as much hair as Jon Talbain does.
+1-stripped=stripped.png,Lord Raptor calls these my "big fat cat tats".
+1-stripped,count-role;other&character;kyu:=stripped.png,I bet you wouldn't call these "itty bitty kitty tiddies". I think your humor is starting to rub off on me.
+1-stripped,count-role;other&character;morrigan:=stripped.png,You know, these are bigger than yours, Morrigan. Are you jealous?
+1-must_strip_winning=loss.png,It's finally my turn again! I've been winning for so long I forgot what losing feels like, tee-hee. I'll be shaving just like last time.
+1-must_strip_normal=loss.png,I can't believe I lost that hand, I really tried my best! Looks like I need to shave again...
+1-must_strip_losing=loss.png,I lost again?!? Already?!? This is hardly fair considering my "situation". But I guess rules are rules...
+1-stripping=strip.png,Since last time I shaved my chest... This time I'll be shaving "down there"...
+1-stripping=strip.png,All I have left to shave is my crotch, then I'll be naked... I really lost this game fast, maybe I should have brought some accessories... Oh well, too late now.
+1-stripping=strip.png,Last time I shaved my chest, so this time I have to shave my crotch. Yes, all the hair down there is technically pubic hair... How embarrassing...
+1-stripping=strip.png,I know I have a lot of hair down there... It might seem messy but it keeps me covered up... Until I shave it.
+1-stripping=strip.png,That sounds fun, Mahiru! I love taking pictures with friends.
+1-stripping,alsoPlaying:mahiru,alsoPlayingStage:7=strip.png,That sounds fun, Mahiru! I love taking pictures with friends.
+1-stripping,alsoPlaying:mahiru,alsoPlayingStage:9=strip.png,That sounds fun, Mahiru! I love taking pictures with friends.
+
+
+#naked
+-3-stripped=blank.png,~silent~
+-3-stripped=stripped.png,My claws might not be as sharp as Wolverine's but they are pretty sharp!
+-3-stripped=stripped.png,There I'm finally all shaved! But I'm out of things to expose, so I'll be out of the game if I lose again...
+-3-stripped=stripped.png,Not a single hair left! My claws really are better than any razor.
+-3-stripped=stripped.png,I feel so much colder now... Could you help warm me up, ~player~?
+-3-stripped=stripped.png,No more hair to cover me up. I'm all exposed... This is kind of thrilling! I'm glad I decided to play strip poker with you all!
+-3-stripped,alsoPlaying:captain_america=stripped.png,My claws might not be as sharp as Wolverine's but they are pretty sharp!
+-3-stripped,alsoPlaying:mahiru,alsoPlayingStage:7=blank.png,~silent~
+-3-stripped,alsoPlaying:mahiru,alsoPlayingStage:9=blank.png,~silent~
+-3-stripped,alsoPlaying:scarlet_witch=stripped.png,My claws might not be as sharp as Wolverine's but they are pretty sharp!
+-3-stripped,count-role;other&character;streaming-chan:=stripped.png,Please don't put this online. I don't want to see it later on MewTube.
+-3-stripped,count-role;other&character;morrigan:=stripped.png,This is the first time in a while you've seen me shaved, Morrigan. Don't get any funny ideas!
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#fully clothed
+0-male_human_must_strip=excited.png,Come on, ~name~, get naked! Let's have fun!
+0-male_human_must_strip=excited.png,Go on ~name~, take your clothes off!
+0-male_must_strip=happy.png,Take off something good! Please?
+0-male_must_strip=excited.png,Yay! Take it off!
+0-male_must_strip,count-role;target&character;captain_america&stage;0:=kitty.png,Hey Cap, who do you think has sharper claws? Me, Wolverine, Sabretooth, or Black Panther?
+0-male_must_strip,count-role;target&character;pit&stage;0:=kitty.png,I like your wings, Pit! They are kind of cute.
+0-male_must_strip,count-role;target&character;caleb&stage;0:=kitty.png,Oh you're a cat too! But wait... Aren't you a bit young to be playing this game?
+0-male_must_strip,priority:0,count-mostly_clothed&role;target:=excited.png,Oooh what's ~name~ gonna strip this time? I can't wait!
+0-female_human_must_strip=happy.png,Come on, ~name~, get naked! Let's have fun!
+0-female_human_must_strip=happy.png,Go on ~name~, take your clothes off!
+0-female_must_strip=kitty.png,Cat got your tongue?
+0-female_must_strip=happy.png,Oooh what's ~name~ gonna strip this time? I can't wait!
+0-female_must_strip=happy.png,Take off something good! Please?
+0-female_must_strip=happy.png,Yay! Take it off!
+0-female_must_strip,count-role;target&character;kyu&stage;0:=kitty.png,A fairy huh? You would make for a great Darkstalker, Kyu!
+0-female_must_strip,count-role;target&character;aimee&stage;0:=kitty.png,I don't think it's safe to shoot your clothes like that... Do you want me to use my claws instead? They are good at shredding clothes.
+0-female_must_strip,count-role;target&character;vriska&stage;0:=kitty.png,I like your powers, Vriska! You're really cool!
+0-female_must_strip,count-role;target&character;alpha&stage;0:=happy.png,I love your music, Alpha! I'd love to be a pop star sensation just like you one day!
+0-female_must_strip,count-role;target&character;moon&stage;0:=calm.png,I think you need some help Moon, you seem a bit troubled. Have you considered joining the church?
+0-female_must_strip,count-role;target&character;dark_magician_girl&stage;0:=kitty.png,I think you would make a great Darkstalker! Your magic powers would make you a great fighter in the tournaments!
+0-female_must_strip,count-role;target&character;raven&stage;0:=kitty.png,I think you would make a great Darkstalker, Raven! Your powers would make you a great fighter in the tournaments!
+0-female_must_strip,count-role;target&character;shantae_classic&stage;0:=kitty.png,I think you would make a great Darkstalker, Shantae! Your hair attacks would make you a great fighter in the tournaments!
+0-female_must_strip,count-role;target&character;spooky&stage;0:=kitty.png,I think you would make a great Darkstalker, Spooky! You're a ghost just like Hsien-Ko.
+0-female_must_strip,count-role;target&character;athena&stage;0:=distracted.png,I'd love to spar with you sometime, but I doubt we will ever see each other again.
+0-female_must_strip,count-role;target&character;wendy&stage;0:=distracted.png,I'm not interested in any of your food, Wendy. It's too greasy for my taste.
+0-female_must_strip,count-role;target&character;nagisa&stage;0:=kitty.png,It's okay, Nagisa. Don't be shy, stay pawsitive!
+0-female_must_strip,count-role;target&character;marceline&stage;0:=kitty.png,Oh wow, you're a vampire just like Demitri! You guys would make a great couple.
+0-female_must_strip,count-role;target&character;buffy&stage;0:=kitty.png,So you hunt vampires like Donovan? I'm not a vampire, so we can be friends right?
+0-female_must_strip,count-role;target&character;joey&stage;0:=kitty.png,So you're a clown? That's cool, but you're not scary enough to be a Darkstalker.
+0-female_must_strip,count-role;target&character;zone-tan&stage;0:=kitty.png,Wait, do you have tentacle powers?
+0-female_must_strip,count-role;target&character;aella&stage;0:=kitty.png,Wow, Aella, you look strong! You're so tall! I wouldn't want to pick a fight with you.
+0-female_must_strip,count-role;target&character;sonya&stage;0:=kitty.png,You might be a good fighter where you're from, but I think I could beat you.
+0-female_must_strip,count-princess&role;target:,count-role;self&notsaidmarker;felicia_purrincess:,marker:felicia_purrincess=kitty.png,If I was a princess would you call me purr-incess Felicia?
+0-female_must_strip,count-smash_bros&role;target:,count-role;self&notsaidmarker;felicia_smash_sister:,marker:felicia_smash_sister=kitty.png,I'm already a sister at my church. Do you think that one day I could be a Super Smash Sister?
+0-female_must_strip,target:chell,targetStage:0=kitty.png,Cat got your tongue?
+0-female_must_strip,target:neo,targetStage:0=kitty.png,Cat got your tongue?
+
+
+#lost fur
+1-male_human_must_strip=excited.png,Come on, ~name~, get naked! Let's have fun!
+1-male_must_strip=happy.png,Take off something good! Please?
+1-male_must_strip,count-role;target&character;captain_america&stage;0:=kitty.png,Hey Cap, who do you think has sharper claws? Me, Wolverine, Sabretooth, or Black Panther?
+1-male_must_strip,count-role;target&character;pit&stage;0:=kitty.png,I like your wings, Pit! They are kind of cute.
+1-male_must_strip,count-role;target&character;caleb&stage;0:=kitty.png,Oh you're a cat too! But wait... Aren't you a bit young to be playing this game?
+1-male_must_strip,priority:0,count-mostly_clothed&role;target:=excited.png,Oooh what's ~name~ gonna strip this time? I can't wait!
+1-female_human_must_strip=happy.png,Come on, ~name~, get naked! Let's have fun!
+1-female_must_strip=kitty.png,Cat got your tongue?
+1-female_must_strip=happy.png,Oooh what's ~name~ gonna strip this time? I can't wait!
+1-female_must_strip,count-role;target&character;kyu&stage;0:=kitty.png,A fairy huh? You would make for a great Darkstalker, Kyu!
+1-female_must_strip,count-role;target&character;aimee&stage;0:=kitty.png,I don't think it's safe to shoot your clothes like that... Do you want me to use my claws instead? They are good at shredding clothes.
+1-female_must_strip,count-role;target&character;vriska&stage;0:=kitty.png,I like your powers, Vriska! You're really cool!
+1-female_must_strip,count-role;target&character;alpha&stage;0:=happy.png,I love your music, Alpha! I'd love to be a pop star sensation just like you one day!
+1-female_must_strip,count-role;target&character;moon&stage;0:=calm.png,I think you need some help Moon, you seem a bit troubled. Have you considered joining the church?
+1-female_must_strip,count-role;target&character;dark_magician_girl&stage;0:=kitty.png,I think you would make a great Darkstalker! Your magic powers would make you a great fighter in the tournaments!
+1-female_must_strip,count-role;target&character;raven&stage;0:=kitty.png,I think you would make a great Darkstalker, Raven! Your powers would make you a great fighter in the tournaments!
+1-female_must_strip,count-role;target&character;shantae_classic&stage;0:=kitty.png,I think you would make a great Darkstalker, Shantae! Your hair attacks would make you a great fighter in the tournaments!
+1-female_must_strip,count-role;target&character;spooky&stage;0:=kitty.png,I think you would make a great Darkstalker, Spooky! You're a ghost just like Hsien-Ko.
+1-female_must_strip,count-role;target&character;athena&stage;0:=distracted.png,I'd love to spar with you sometime, but I doubt we will ever see each other again.
+1-female_must_strip,count-role;target&character;wendy&stage;0:=distracted.png,I'm not interested in any of your food, Wendy. It's too greasy for my taste.
+1-female_must_strip,count-role;target&character;nagisa&stage;0:=kitty.png,It's okay, Nagisa. Don't be shy, stay pawsitive!
+1-female_must_strip,count-role;target&character;marceline&stage;0:=kitty.png,Oh wow, you're a vampire just like Demitri! You guys would make a great couple.
+1-female_must_strip,count-role;target&character;buffy&stage;0:=kitty.png,So you hunt vampires like Donovan? I'm not a vampire, so we can be friends right?
+1-female_must_strip,count-role;target&character;joey&stage;0:=kitty.png,So you're a clown? That's cool, but you're not scary enough to be a Darkstalker.
+1-female_must_strip,count-role;target&character;zone-tan&stage;0:=kitty.png,Wait, do you have tentacle powers?
+1-female_must_strip,count-role;target&character;aella&stage;0:=kitty.png,Wow, Aella, you look strong! You're so tall! I wouldn't want to pick a fight with you.
+1-female_must_strip,count-role;target&character;sonya&stage;0:=kitty.png,You might be a good fighter where you're from, but I think I could beat you.
+1-female_must_strip,count-princess&role;target:,count-role;self&notsaidmarker;felicia_purrincess:,marker:felicia_purrincess=kitty.png,If I was a princess would you call me purr-incess Felicia?
+1-female_must_strip,count-smash_bros&role;target:,count-role;self&notsaidmarker;felicia_smash_sister:,marker:felicia_smash_sister=kitty.png,I'm already a sister at my church. Do you think that one day I could be a Super Smash Sister?
+1-female_must_strip,target:chell,targetStage:0=kitty.png,Cat got your tongue?
+1-female_must_strip,target:neo,targetStage:0=kitty.png,Cat got your tongue?
+
+
+#naked
+-3-male_human_must_strip=excited.png,Come on, ~name~, get naked! Let's have fun!
+-3-male_must_strip=excited.png,Yay! Take it off!
+-3-male_must_strip,count-role;target&character;captain_america&stage;0:=kitty.png,Hey Cap, who do you think has sharper claws? Me, Wolverine, Sabretooth, or Black Panther?
+-3-male_must_strip,count-role;target&character;pit&stage;0:=kitty.png,I like your wings, Pit! They are kind of cute.
+-3-male_must_strip,count-role;target&character;caleb&stage;0:=kitty.png,Oh you're a cat too! But wait... Aren't you a bit young to be playing this game?
+-3-male_must_strip,priority:0,count-mostly_clothed&role;target:=excited.png,Oooh what's ~name~ gonna strip this time? I can't wait!
+-3-female_human_must_strip=happy.png,Come on, ~name~, get naked! Let's have fun!
+-3-female_must_strip=kitty.png,Cat got your tongue?
+-3-female_must_strip=happy.png,Oooh what's ~name~ gonna strip this time? I can't wait!
+-3-female_must_strip,count-role;target&character;kyu&stage;0:=kitty.png,A fairy huh? You would make for a great Darkstalker, Kyu!
+-3-female_must_strip,count-role;target&character;aimee&stage;0:=kitty.png,I don't think it's safe to shoot your clothes like that... Do you want me to use my claws instead? They are good at shredding clothes.
+-3-female_must_strip,count-role;target&character;vriska&stage;0:=kitty.png,I like your powers, Vriska! You're really cool!
+-3-female_must_strip,count-role;target&character;alpha&stage;0:=happy.png,I love your music, Alpha! I'd love to be a pop star sensation just like you one day!
+-3-female_must_strip,count-role;target&character;moon&stage;0:=calm.png,I think you need some help Moon, you seem a bit troubled. Have you considered joining the church?
+-3-female_must_strip,count-role;target&character;dark_magician_girl&stage;0:=kitty.png,I think you would make a great Darkstalker! Your magic powers would make you a great fighter in the tournaments!
+-3-female_must_strip,count-role;target&character;raven&stage;0:=kitty.png,I think you would make a great Darkstalker, Raven! Your powers would make you a great fighter in the tournaments!
+-3-female_must_strip,count-role;target&character;shantae_classic&stage;0:=kitty.png,I think you would make a great Darkstalker, Shantae! Your hair attacks would make you a great fighter in the tournaments!
+-3-female_must_strip,count-role;target&character;spooky&stage;0:=kitty.png,I think you would make a great Darkstalker, Spooky! You're a ghost just like Hsien-Ko.
+-3-female_must_strip,count-role;target&character;athena&stage;0:=distracted.png,I'd love to spar with you sometime, but I doubt we will ever see each other again.
+-3-female_must_strip,count-role;target&character;wendy&stage;0:=distracted.png,I'm not interested in any of your food, Wendy. It's too greasy for my taste.
+-3-female_must_strip,count-role;target&character;nagisa&stage;0:=kitty.png,It's okay, Nagisa. Don't be shy, stay pawsitive!
+-3-female_must_strip,count-role;target&character;marceline&stage;0:=kitty.png,Oh wow, you're a vampire just like Demitri! You guys would make a great couple.
+-3-female_must_strip,count-role;target&character;buffy&stage;0:=kitty.png,So you hunt vampires like Donovan? I'm not a vampire, so we can be friends right?
+-3-female_must_strip,count-role;target&character;joey&stage;0:=kitty.png,So you're a clown? That's cool, but you're not scary enough to be a Darkstalker.
+-3-female_must_strip,count-role;target&character;zone-tan&stage;0:=kitty.png,Wait, do you have tentacle powers?
+-3-female_must_strip,count-role;target&character;aella&stage;0:=kitty.png,Wow, Aella, you look strong! You're so tall! I wouldn't want to pick a fight with you.
+-3-female_must_strip,count-role;target&character;sonya&stage;0:=kitty.png,You might be a good fighter where you're from, but I think I could beat you.
+-3-female_must_strip,count-princess&role;target:,count-role;self&notsaidmarker;felicia_purrincess:,marker:felicia_purrincess=kitty.png,If I was a princess would you call me purr-incess Felicia?
+-3-female_must_strip,count-smash_bros&role;target:,count-role;self&notsaidmarker;felicia_smash_sister:,marker:felicia_smash_sister=kitty.png,I'm already a sister at my church. Do you think that one day I could be a Super Smash Sister?
+-3-female_must_strip,target:chell,targetStage:0=kitty.png,Cat got your tongue?
+-3-female_must_strip,target:neo,targetStage:0=kitty.png,Cat got your tongue?
+
+
+#masturbating
+-2-male_human_must_strip=excited.png,Please strip for me! We can have fun!
+-2-male_must_strip=happy.png,Take off something good! Please?
+-2-male_must_strip,count-role;target&character;captain_america&stage;0:=kitty.png,Hey Cap, who do you think has sharper claws? Me, Wolverine, Sabretooth, or Black Panther?
+-2-male_must_strip,count-role;target&character;pit&stage;0:=kitty.png,I like your wings, Pit! They are kind of cute.
+-2-male_must_strip,count-role;target&character;caleb&stage;0:=kitty.png,Oh you're a cat too! But wait... Aren't you a bit young to be playing this game?
+-2-female_human_must_strip=happy.png,Please strip for me! We can have fun!
+-2-female_must_strip=kitty.png,Cat got your tongue?
+-2-female_must_strip=happy.png,Take off something good! Please?
+-2-female_must_strip,count-role;target&character;kyu&stage;0:=kitty.png,A fairy huh? You would make for a great Darkstalker, Kyu!
+-2-female_must_strip,count-role;target&character;aimee&stage;0:=kitty.png,I don't think it's safe to shoot your clothes like that... Do you want me to use my claws instead? They are good at shredding clothes.
+-2-female_must_strip,count-role;target&character;vriska&stage;0:=kitty.png,I like your powers, Vriska! You're really cool!
+-2-female_must_strip,count-role;target&character;alpha&stage;0:=happy.png,I love your music, Alpha! I'd love to be a pop star sensation just like you one day!
+-2-female_must_strip,count-role;target&character;moon&stage;0:=calm.png,I think you need some help Moon, you seem a bit troubled. Have you considered joining the church?
+-2-female_must_strip,count-role;target&character;dark_magician_girl&stage;0:=kitty.png,I think you would make a great Darkstalker! Your magic powers would make you a great fighter in the tournaments!
+-2-female_must_strip,count-role;target&character;raven&stage;0:=kitty.png,I think you would make a great Darkstalker, Raven! Your powers would make you a great fighter in the tournaments!
+-2-female_must_strip,count-role;target&character;shantae_classic&stage;0:=kitty.png,I think you would make a great Darkstalker, Shantae! Your hair attacks would make you a great fighter in the tournaments!
+-2-female_must_strip,count-role;target&character;spooky&stage;0:=kitty.png,I think you would make a great Darkstalker, Spooky! You're a ghost just like Hsien-Ko.
+-2-female_must_strip,count-role;target&character;athena&stage;0:=distracted.png,I'd love to spar with you sometime, but I doubt we will ever see each other again.
+-2-female_must_strip,count-role;target&character;wendy&stage;0:=distracted.png,I'm not interested in any of your food, Wendy. It's too greasy for my taste.
+-2-female_must_strip,count-role;target&character;nagisa&stage;0:=kitty.png,It's okay, Nagisa. Don't be shy, stay pawsitive!
+-2-female_must_strip,count-role;target&character;marceline&stage;0:=kitty.png,Oh wow, you're a vampire just like Demitri! You guys would make a great couple.
+-2-female_must_strip,count-role;target&character;buffy&stage;0:=kitty.png,So you hunt vampires like Donovan? I'm not a vampire, so we can be friends right?
+-2-female_must_strip,count-role;target&character;joey&stage;0:=kitty.png,So you're a clown? That's cool, but you're not scary enough to be a Darkstalker.
+-2-female_must_strip,count-role;target&character;zone-tan&stage;0:=kitty.png,Wait, do you have tentacle powers?
+-2-female_must_strip,count-role;target&character;aella&stage;0:=kitty.png,Wow, Aella, you look strong! You're so tall! I wouldn't want to pick a fight with you.
+-2-female_must_strip,count-role;target&character;sonya&stage;0:=kitty.png,You might be a good fighter where you're from, but I think I could beat you.
+-2-female_must_strip,count-princess&role;target:,count-role;self&notsaidmarker;felicia_purrincess:,marker:felicia_purrincess=kitty.png,If I was a princess would you call me purr-incess Felicia?
+-2-female_must_strip,count-smash_bros&role;target:,count-role;self&notsaidmarker;felicia_smash_sister:,marker:felicia_smash_sister=kitty.png,I'm already a sister at my church. Do you think that one day I could be a Super Smash Sister?
+-2-female_must_strip,target:chell,targetStage:0=kitty.png,Cat got your tongue?
+-2-female_must_strip,target:neo,targetStage:0=kitty.png,Cat got your tongue?
+
+
+#finished
+-1-male_human_must_strip=excited.png,Even though I lost I still want to see you strip!
+-1-male_must_strip=excited.png,Please get naked! It will be fun I promise!
+-1-male_must_strip,count-role;target&character;captain_america&stage;0:=kitty.png,Hey Cap, who do you think has sharper claws? Me, Wolverine, Sabretooth, or Black Panther?
+-1-male_must_strip,count-role;target&character;pit&stage;0:=kitty.png,I like your wings, Pit! They are kind of cute.
+-1-male_must_strip,count-role;target&character;caleb&stage;0:=kitty.png,Oh you're a cat too! But wait... Aren't you a bit young to be playing this game?
+-1-female_human_must_strip=happy.png,Even though I lost I still want to see you strip!
+-1-female_must_strip=kitty.png,Cat got your tongue?
+-1-female_must_strip=happy.png,Please get naked! It will be fun I promise!
+-1-female_must_strip,count-role;target&character;kyu&stage;0:=kitty.png,A fairy huh? You would make for a great Darkstalker, Kyu!
+-1-female_must_strip,count-role;target&character;aimee&stage;0:=kitty.png,I don't think it's safe to shoot your clothes like that... Do you want me to use my claws instead? They are good at shredding clothes.
+-1-female_must_strip,count-role;target&character;vriska&stage;0:=kitty.png,I like your powers, Vriska! You're really cool!
+-1-female_must_strip,count-role;target&character;alpha&stage;0:=happy.png,I love your music, Alpha! I'd love to be a pop star sensation just like you one day!
+-1-female_must_strip,count-role;target&character;moon&stage;0:=calm.png,I think you need some help Moon, you seem a bit troubled. Have you considered joining the church?
+-1-female_must_strip,count-role;target&character;dark_magician_girl&stage;0:=kitty.png,I think you would make a great Darkstalker! Your magic powers would make you a great fighter in the tournaments!
+-1-female_must_strip,count-role;target&character;raven&stage;0:=kitty.png,I think you would make a great Darkstalker, Raven! Your powers would make you a great fighter in the tournaments!
+-1-female_must_strip,count-role;target&character;shantae_classic&stage;0:=kitty.png,I think you would make a great Darkstalker, Shantae! Your hair attacks would make you a great fighter in the tournaments!
+-1-female_must_strip,count-role;target&character;spooky&stage;0:=kitty.png,I think you would make a great Darkstalker, Spooky! You're a ghost just like Hsien-Ko.
+-1-female_must_strip,count-role;target&character;athena&stage;0:=distracted.png,I'd love to spar with you sometime, but I doubt we will ever see each other again.
+-1-female_must_strip,count-role;target&character;wendy&stage;0:=distracted.png,I'm not interested in any of your food, Wendy. It's too greasy for my taste.
+-1-female_must_strip,count-role;target&character;nagisa&stage;0:=kitty.png,It's okay, Nagisa. Don't be shy, stay pawsitive!
+-1-female_must_strip,count-role;target&character;marceline&stage;0:=kitty.png,Oh wow, you're a vampire just like Demitri! You guys would make a great couple.
+-1-female_must_strip,count-role;target&character;buffy&stage;0:=kitty.png,So you hunt vampires like Donovan? I'm not a vampire, so we can be friends right?
+-1-female_must_strip,count-role;target&character;joey&stage;0:=kitty.png,So you're a clown? That's cool, but you're not scary enough to be a Darkstalker.
+-1-female_must_strip,count-role;target&character;zone-tan&stage;0:=kitty.png,Wait, do you have tentacle powers?
+-1-female_must_strip,count-role;target&character;aella&stage;0:=kitty.png,Wow, Aella, you look strong! You're so tall! I wouldn't want to pick a fight with you.
+-1-female_must_strip,count-role;target&character;sonya&stage;0:=kitty.png,You might be a good fighter where you're from, but I think I could beat you.
+-1-female_must_strip,count-princess&role;target:,count-role;self&notsaidmarker;felicia_purrincess:,marker:felicia_purrincess=kitty.png,If I was a princess would you call me purr-incess Felicia?
+-1-female_must_strip,count-smash_bros&role;target:,count-role;self&notsaidmarker;felicia_smash_sister:,marker:felicia_smash_sister=kitty.png,I'm already a sister at my church. Do you think that one day I could be a Super Smash Sister?
+-1-female_must_strip,target:chell,targetStage:0=kitty.png,Cat got your tongue?
+-1-female_must_strip,target:neo,targetStage:0=kitty.png,Cat got your tongue?
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#fully clothed
+0-male_removing_accessory=sad.png,I'd rather take a bath than watch you strip small stuff all day... And I hate baths!
+0-male_removing_accessory=sad.png,I'd rather take a bath than watch you strip small stuff all day... And I hate baths!
+0-male_removing_accessory=kitty.png,Looks like you're starting small.
+0-male_removed_accessory=disappointed.png,Hmmph..
+0-male_removed_accessory=disappointed.png,Hissss....
+0-male_removed_accessory=disappointed.png,Not funny!
+0-male_removed_accessory=disappointed.png,Are you kittin' me?!
+0-male_removed_accessory=disappointed.png,Thought you... were different.
+0-male_removed_accessory=disappointed.png,How unfortunate.
+0-male_removed_accessory=disappointed.png,Cat... tastrophe...
+0-male_removed_accessory=butt.png,How boring... I don't even want to watch if you're going to strip small stuff like that.
+0-male_removed_accessory=disappointed.png,I was expecting a little more... Oh well...
+0-male_removed_accessory=distracted.png,That's all? I guess that's okay for now.
+0-male_removed_accessory=distracted.png,Boring...
+0-female_removing_accessory=kitty.png,Looks like you're starting small.
+0-female_removed_accessory=distracted.png,Boring...
+0-female_removed_accessory=distracted.png,That's all? I guess that's okay for now.
+0-female_removed_accessory=disappointed.png,Hmmph..
+0-female_removed_accessory=disappointed.png,Hissss....
+0-female_removed_accessory=disappointed.png,Not funny!
+0-female_removed_accessory=disappointed.png,Are you kittin' me?!
+0-female_removed_accessory=disappointed.png,Thought you... were different.
+0-female_removed_accessory=disappointed.png,How unfortunate.
+0-female_removed_accessory=disappointed.png,Cat... tastrophe...
+0-female_removed_accessory=distracted.png,This is a real CAT-astrophe! I know you can strip more than that.
+0-female_removed_accessory=disappointed.png,I was expecting a little more... Oh well...
+0-female_removed_accessory=butt.png,How boring... I don't even want to watch if you're going to strip small stuff like that.
+
+
+#lost fur
+1-male_removing_accessory=kitty.png,You won't be a star if you only strip the small stuff...
+1-male_removing_accessory=kitty.png,I wish you were taking off more...
+1-male_removed_accessory=distracted.png,Can you take off something bigger next time? Pretty please?
+1-male_removed_accessory=disappointed.png,I shaved myself for this?
+1-male_removed_accessory=disappointed.png,Hmmph..
+1-male_removed_accessory=disappointed.png,Hissss....
+1-male_removed_accessory=disappointed.png,Not funny!
+1-male_removed_accessory=disappointed.png,Are you kittin' me?!
+1-male_removed_accessory=disappointed.png,Thought you... were different.
+1-male_removed_accessory=disappointed.png,How unfortunate.
+1-male_removed_accessory=disappointed.png,Cat... tastrophe...
+1-male_removed_accessory=butt.png,How boring... I don't even want to watch if you're going to strip small stuff like that.
+1-male_removed_accessory=disappointed.png,I was expecting a little more... Oh well...
+1-male_removed_accessory=distracted.png,This is a real CAT-astrophe! I know you can strip more than that.
+1-female_removing_accessory=kitty.png,I wish you were taking off more...
+1-female_removing_accessory=kitty.png,You won't be a star if you only strip the small stuff...
+1-female_removed_accessory=distracted.png,Can you take off something bigger next time? Pretty please?
+1-female_removed_accessory=disappointed.png,I shaved myself for this?
+1-female_removed_accessory=disappointed.png,Hmmph..
+1-female_removed_accessory=disappointed.png,Hissss....
+1-female_removed_accessory=disappointed.png,Not funny!
+1-female_removed_accessory=disappointed.png,Are you kittin' me?!
+1-female_removed_accessory=disappointed.png,Thought you... were different.
+1-female_removed_accessory=disappointed.png,How unfortunate.
+1-female_removed_accessory=disappointed.png,Cat... tastrophe...
+1-female_removed_accessory=distracted.png,This is a real CAT-astrophe! I know you can strip more than that.
+1-female_removed_accessory=disappointed.png,I was expecting a little more... Oh well...
+1-female_removed_accessory=butt.png,How boring... I don't even want to watch if you're going to strip small stuff like that.
+
+
+#naked
+-3-male_removing_accessory=sad.png,I'd rather take a bath than watch you strip small stuff all day... And I hate baths!
+-3-male_removing_accessory=sad.png,I'd rather take a bath than watch you strip small stuff all day... And I hate baths!
+-3-male_removing_accessory=kitty.png,You won't be a star if you only strip the small stuff...
+-3-male_removing_accessory=kitty.png,I wish you were taking off more...
+-3-male_removed_accessory=butt.png,How boring... I don't even want to watch if you're going to strip small stuff like that.
+-3-male_removed_accessory=disappointed.png,I was expecting a little more... Oh well...
+-3-male_removed_accessory=angry.png,I'm naked, you should be too! Please strip more!
+-3-male_removed_accessory=angry.png,I'm totally nude and you are just stripping small stuff... That almost makes me want to use my claws...
+-3-male_removed_accessory=disappointed.png,I can't believe I shaved myself just for this...
+-3-male_removed_accessory=disappointed.png,Can you take off more next time? Pretty please?
+-3-male_removed_accessory=sad.png,You're making me sad... Take off more next time please.
+-3-male_removed_accessory=angry.png,Strip something big next time or you won't be getting nun of this pussy!
+-3-male_removed_accessory=distracted.png,Clothes are only good as litter box scraps. You don't need them so please take them off!
+-3-female_removing_accessory=kitty.png,I wish you were taking off more...
+-3-female_removing_accessory=kitty.png,You won't be a star if you only strip the small stuff...
+-3-female_removing_accessory=sad.png,I'd rather take a bath than watch you strip small stuff all day... And I hate baths!
+-3-female_removed_accessory=angry.png,I'm naked, you should be too! Please strip more!
+-3-female_removed_accessory=angry.png,I'm totally nude and you are just stripping small stuff... That almost makes me want to use my claws...
+-3-female_removed_accessory=disappointed.png,I can't believe I shaved myself just for this...
+-3-female_removed_accessory=disappointed.png,Can you take off more next time? Pretty please?
+-3-female_removed_accessory=sad.png,You're making me sad... Take off more next time please.
+-3-female_removed_accessory=angry.png,Strip something big next time or you won't be getting NUN of this pussy!
+-3-female_removed_accessory=distracted.png,Clothes are only good as litter box scraps. You don't need them so please take them off!
+-3-female_removed_accessory=distracted.png,This is a real CAT-astrophe! I know you can strip more than that.
+-3-female_removed_accessory=disappointed.png,I was expecting a little more... Oh well...
+-3-female_removed_accessory=butt.png,How boring... I don't even want to watch if you're going to strip small stuff like that.
+
+
+#masturbating
+-2-male_removing_accessory=sad.png,I'd rather take a bath than watch you strip small stuff all day... And I hate baths!
+-2-male_removing_accessory=sad.png,I'd rather take a bath than watch you strip small stuff all day... And I hate baths!
+-2-male_removing_accessory=kitty.png,You won't be a star if you only strip the small stuff...
+-2-male_removing_accessory=kitty.png,I wish you were taking off more...
+-2-male_removed_accessory=butt.png,How boring... I don't even want to watch if you're going to strip small stuff like that.
+-2-male_removed_accessory=disappointed.png,I was expecting a little more... Oh well...
+-2-male_removed_accessory=angry.png,Strip something big next time or you won't be getting nun of this pussy!
+-2-male_removed_accessory=distracted.png,Clothes are only good as litter box scraps. You don't need them so please take them off!
+-2-male_removed_accessory=sad.png,You're no fun...
+-2-female_removing_accessory=kitty.png,I wish you were taking off more...
+-2-female_removing_accessory=kitty.png,You won't be a star if you only strip the small stuff...
+-2-female_removing_accessory=sad.png,I'd rather take a bath than watch you strip small stuff all day... And I hate baths!
+-2-female_removed_accessory=angry.png,Strip something big next time or you won't be getting NUN of this pussy!
+-2-female_removed_accessory=distracted.png,Clothes are only good as litter box scraps. You don't need them so please take them off!
+-2-female_removed_accessory=distracted.png,This is a real CAT-astrophe! I know you can strip more than that.
+-2-female_removed_accessory=disappointed.png,I was expecting a little more... Oh well...
+-2-female_removed_accessory=butt.png,How boring... I don't even want to watch if you're going to strip small stuff like that.
+-2-female_removed_accessory=sad.png,You're no fun...
+
+
+#finished
+-1-male_removing_accessory=sad.png,I'd rather take a bath than watch you strip small stuff all day... And I hate baths!
+-1-male_removing_accessory=sad.png,I'd rather take a bath than watch you strip small stuff all day... And I hate baths!
+-1-male_removing_accessory=kitty.png,You won't be a star if you only strip the small stuff...
+-1-male_removing_accessory=kitty.png,I wish you were taking off more...
+-1-male_removed_accessory=butt.png,How boring... I don't even want to watch if you're going to strip small stuff like that.
+-1-male_removed_accessory=disappointed.png,I was expecting a little more... Oh well...
+-1-male_removed_accessory=distracted.png,I thought my star performance would inspire you to strip more... I guess not.
+-1-male_removed_accessory=sad.png,Ugh... You've got to be kitten me.
+-1-male_removed_accessory=sad.png,I lost the game before you even got to the good stuff... I could cry...
+-1-male_removed_accessory=angry.png,Strip something big next time or you won't be getting nun of this pussy!
+-1-male_removed_accessory=distracted.png,Clothes are only good as litter box scraps. You don't need them so please take them off!
+-1-male_removed_accessory=distracted.png,This is a real CAT-astrophe! I know you can strip more than that.
+-1-male_removed_accessory=sad.png,You're no fun...
+-1-female_removing_accessory=kitty.png,I wish you were taking off more...
+-1-female_removing_accessory=kitty.png,You won't be a star if you only strip the small stuff...
+-1-female_removing_accessory=sad.png,I'd rather take a bath than watch you strip small stuff all day... And I hate baths!
+-1-female_removed_accessory=distracted.png,I thought my star performance would inspire you to strip more... I guess not.
+-1-female_removed_accessory=sad.png,Ugh... You've got to be kitten me.
+-1-female_removed_accessory=sad.png,I lost the game before you even got to the good stuff... How sad...
+-1-female_removed_accessory=angry.png,Strip something big next time or you won't be getting NUN of this pussy!
+-1-female_removed_accessory=distracted.png,Clothes are only good as litter box scraps. You don't need them so please take them off!
+-1-female_removed_accessory=distracted.png,This is a real CAT-astrophe! I know you can strip more than that.
+-1-female_removed_accessory=disappointed.png,I was expecting a little more... Oh well...
+-1-female_removed_accessory=butt.png,How boring... I don't even want to watch if you're going to strip small stuff like that.
+-1-female_removed_accessory=sad.png,You're no fun...
+-1-female_removed_accessory,count-role;target&character;blake:=angry.png,Are you looking for a fight? If you only strip small stuff then we'll have a REAL cat fight!
+-1-female_removed_accessory,count-role;target&character;morrigan:=angry.png,Come on Morrigan, you better start stripping some more or we'll have a rematch!
+-1-female_removed_accessory,count-role;target&character;chun-li:=angry.png,You better start stripping for real or this is about to turn into Darkstalkers vs Street Fighter!
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#fully clothed
+0-male_removing_minor=interested.png,Nyya? Why were you wearing that mister?
+0-male_removing_minor=interested.png,Now this game is starting to get good!
+0-male_removing_minor=interested.png,Now this game is starting to get good! Yay!
+0-male_removed_minor=kitty.png,This game is starting to get interesting right meow.
+0-male_removed_minor=kitty.png,That's far from purr-fect but it's fine for now.
+0-male_removed_minor=happy.png,It's a good start, ~name~! I hope you strip more soon!
+0-male_removed_minor=calm.png,That seemed like it was getting in the way for you anyways ~name~.
+0-male_removed_minor=calm.png,This game is going good, but it would be even better if you stripped something more.
+0-female_removing_minor=excited.png,It's your time to shine, ~name~! Take something off!
+0-female_removed_minor=calm.png,That seemed like it was getting in the way for you anyways ~name~.
+0-female_removed_minor=kitty.png,That's far from purr-fect but it's fine for now.
+0-female_removed_minor=calm.png,I was hoping for something bigger, but I'm a patient girl.
+0-female_removed_minor=calm.png,You're looking good ~name~, I hope you get to strip again sometime soon.
+
+
+#lost fur
+1-male_removing_minor=happy.png,Now we're getting somewhere!
+1-male_removing_minor=distracted.png,Oh my! What ever is that over there on the side of the stage?
+1-male_removing_minor=interested.png,Oh I do wonder what will come from removing that ~name~!
+1-male_removed_minor=kitty.png,Maybe you'll take off more next time, I'm hoping I didn't shave for nothing.
+1-female_removing_minor=distracted.png,Oh my! What ever is that over there on the side of the stage?
+1-female_removed_minor=embarrassed.png,It would seem you have lost your ~clothing~, ~name~...
+
+
+#naked
+-3-male_removing_minor=interested.png,Oh I do wonder what will come from removing that ~name~!
+-3-male_removing_minor=angry.png,Rawr! Take off more you heathen or I'll claw off your clothes for you!
+-3-male_removed_minor=sad.png,I shaved a lot, the least you can do is show something good. Please?
+-3-male_removed_minor=kitty.png,It's alright. I have the patience of a Saint.
+-3-male_removed_minor=sad.png,You were still wearing that? Why does everyone wear so much clothing?
+-3-female_removing_minor=angry.png,That makes me angry, but the church taught me to stay calm...
+-3-female_removed_minor=distracted.png,Oh no. Do your eyes ever get locked onto something and you can't look away? That's totally happening right now!
+-3-female_removed_minor=sad.png,I shaved a lot, the least you can do is show something good. Please?
+-3-female_removed_minor=kitty.png,It's okay, the church taught me great patience.
+-3-female_removed_minor=sad.png,You were still wearing that? Why does everyone wear so much clothing?
+
+
+#masturbating
+-2-male_removing_minor=horny.png,Give me something to work with here!
+-2-male_removing_minor=horny.png,Strip something good please!
+-2-male_removing_minor=angry.png,Rawr! Take off more you heathen or I'll claw off your clothes for you!
+-2-male_removed_minor=sad.png,As a nun, I have to be patient with you. I can't get too mad.
+-2-male_removed_minor=sad.png,I wish you were showing more... I need some inspiration to be a star!
+-2-male_removed_minor=sad.png,A little disappointing...
+-2-male_removed_minor=kitty.png,It's alright. I have the patience of a Saint.
+-2-male_removed_minor=sad.png,You were still wearing that? Why does everyone wear so much clothing?
+-2-female_removing_minor=horny.png,Please strip something good, ~name~! I need inspiration for my performance!
+-2-female_removing_minor=horny.png,Give me something to work with here!
+-2-female_removing_minor=horny.png,Strip something good please!
+-2-female_removing_minor=horny.png,Oh wowie wow! I can't wait to see what you look like without that on!
+-2-female_removing_minor=angry.png,That makes me angry, but the church taught me to stay calm...
+-2-female_removed_minor=sad.png,As a nun, I have to be patient with you. I can't get too mad.
+-2-female_removed_minor=kitty.png,It's alright. I have the patience of a Saint.
+-2-female_removed_minor=sad.png,I wish you were showing more... I need some inspiration to be a star!
+-2-female_removed_minor=sad.png,A little disappointing...
+-2-female_removed_minor=sad.png,You were still wearing that? Why does everyone wear so much clothing?
+
+
+#finished
+-1-male_removing_minor=horny.png,Yay!!! More people getting naked with me.
+-1-male_removed_minor=sad.png,Ahw~ Is that really it? I was expecting more...
+-1-male_removed_minor=sad.png,We can't have fun if you only strip smaller items. Go big or go home!
+-1-male_removed_minor=sad.png,I want you to be a star too you know. I think I've had the spotlight for a long time.
+-1-male_removed_minor=sad.png,All my hard work and you still have a ton of clothing on...
+-1-male_removed_minor=sad.png,As a nun, I have to be patient with you. I can't get too mad.
+-1-male_removed_minor=sad.png,You were still wearing that? Why does everyone wear so much clothing?
+-1-female_removing_minor=sad.png,Wow, you still had something like that one? Why do you people wear so much?
+-1-female_removed_minor=sad.png,All my hard work and you still have a ton of clothing on...
+-1-female_removed_minor=sad.png,We can't have fun if you only strip smaller items. Go big or go home!
+-1-female_removed_minor=sad.png,I want you to be a star too you know. I think I've had the spotlight for a long time.
+-1-female_removed_minor=sad.png,As a nun, I have to be patient with you. I can't get too mad.
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_major=excited.png,Looks like you're taking off something good!
+male_removing_major=excited.png,Yay! Take it off!
+male_removing_major=excited.png,You can be a star now! Put on a show!
+male_removing_major=excited.png,Good choice ~name~! Strip your ~clothing~ and have fun!
+male_removing_major=excited.png,Okay, ~name~, the stage is all yours!
+male_removing_major=excited.png,It's your time to shine!
+male_removed_major=horny.png,Meow chicka meow meow!
+male_removed_major=horny.png,You're looking good, ~name~! I almost want to pounce on you.
+male_removed_major=horny.png,That really helps me stay PAWsitive!
+male_removed_major=horny.png,I'm sure you'll be wearing less than me in no time. I can't wait!
+male_removed_major=horny.png,If only you stripped that much every time, this game would be purrfect!
+male_removed_major=horny.png,See? Isn't this game fun!
+male_removed_major=horny.png,You look great, ~name~!
+female_removing_major=excited.png,You can be a star now! Put on a show!
+female_removing_major=excited.png,Looks like you're taking off something good!
+female_removing_major=excited.png,Yay! Take it off!
+female_removing_major=excited.png,Good choice ~name~! Strip your ~clothing~ and have fun!
+female_removing_major=excited.png,Okay, ~name~, the stage is all yours!
+female_removing_major=excited.png,It's your time to shine!
+female_removed_major=horny.png,I'm glad you're stripping so much so early. It's only fair since I don't have much to strip.
+female_removed_major=horny.png,Meow chicka meow meow!
+female_removed_major=horny.png,You're looking good, ~name~! I almost want to pounce on you.
+female_removed_major=horny.png,That really helps me stay PAWsitive!
+female_removed_major=horny.png,I'm sure you'll be wearing less than me in no time. I can't wait!
+female_removed_major=horny.png,If only you stripped that much every time, this game would be purrfect!
+female_removed_major=horny.png,See? Isn't this game fun!
+female_removed_major=horny.png,You look great, ~name~!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removed_major,oneShotId:3,count-athletic&role;target:=horny.png,Nice body, ~name~! I can tell you stay active.
+0-male_removed_major,oneShotId:4,count-confident&role;target:=horny.png,I love your confidence, ~name~! It makes you a star!
+0-male_removed_major,oneShotId:2,count-shy&role;target:=horny.png,Don't be shy, ~name~. I promise you look great!
+0-male_removed_major,totalRounds:0-5,oneShotId:1=horny.png,I'm glad you're stripping so much so early. It's only fair since I don't have much to strip.
+0-female_removed_major,count-athletic&role;target:=horny.png,Nice body, ~name~! I can tell you stay active.
+0-female_removed_major,count-confident&role;target:=horny.png,I love your confidence, ~name~! It makes you a star!
+0-female_removed_major,count-shy&role;target:=horny.png,Don't be shy, ~name~. I promise you look great!
+
+
+#lost fur
+1-male_removed_major,oneShotId:3,count-athletic&role;target:=horny.png,Nice body, ~name~! I can tell you stay active.
+1-male_removed_major,oneShotId:4,count-confident&role;target:=horny.png,I love your confidence, ~name~! It makes you a star!
+1-male_removed_major,oneShotId:2,count-shy&role;target:=horny.png,Don't be shy, ~name~. I promise you look great!
+1-male_removed_major,totalRounds:0-5,oneShotId:1=horny.png,I'm glad you're stripping so much so early. It's only fair since I don't have much to strip.
+1-female_removed_major,count-athletic&role;target:=horny.png,Nice body, ~name~! I can tell you stay active.
+1-female_removed_major,count-confident&role;target:=horny.png,I love your confidence, ~name~! It makes you a star!
+1-female_removed_major,count-shy&role;target:=horny.png,Don't be shy, ~name~. I promise you look great!
+
+
+#naked
+-3-male_removed_major,oneShotId:3,count-athletic&role;target:=horny.png,Nice body, ~name~! I can tell you stay active.
+-3-male_removed_major,oneShotId:4,count-confident&role;target:=horny.png,I love your confidence, ~name~! It makes you a star!
+-3-male_removed_major,oneShotId:2,count-shy&role;target:=horny.png,Don't be shy, ~name~. I promise you look great!
+-3-male_removed_major,totalRounds:0-5,oneShotId:1=horny.png,I'm glad you're stripping so much so early. It's only fair since I don't have much to strip.
+-3-female_removed_major,count-athletic&role;target:=horny.png,Nice body, ~name~! I can tell you stay active.
+-3-female_removed_major,count-confident&role;target:=horny.png,I love your confidence, ~name~! It makes you a star!
+-3-female_removed_major,count-shy&role;target:=horny.png,Don't be shy, ~name~. I promise you look great!
+
+
+#masturbating
+-2-male_removed_major,oneShotId:3,count-athletic&role;target:=horny.png,Nice body, ~name~! I can tell you stay active.
+-2-male_removed_major,oneShotId:4,count-confident&role;target:=horny.png,I love your confidence, ~name~! It makes you a star!
+-2-male_removed_major,oneShotId:2,count-shy&role;target:=horny.png,Don't be shy, ~name~. I promise you look great!
+-2-male_removed_major,totalRounds:0-5,oneShotId:1=horny.png,I'm glad you're stripping so much so early. It's only fair since I don't have much to strip.
+-2-female_removed_major,count-athletic&role;target:=horny.png,Nice body, ~name~! I can tell you stay active.
+-2-female_removed_major,count-confident&role;target:=horny.png,I love your confidence, ~name~! It makes you a star!
+-2-female_removed_major,count-shy&role;target:=horny.png,Don't be shy, ~name~. I promise you look great!
+
+
+#finished
+-1-male_removed_major,oneShotId:3,count-athletic&role;target:=horny.png,Nice body, ~name~! I can tell you stay active.
+-1-male_removed_major,oneShotId:4,count-confident&role;target:=horny.png,I love your confidence, ~name~! It makes you a star!
+-1-male_removed_major,oneShotId:2,count-shy&role;target:=horny.png,Don't be shy, ~name~. I promise you look great!
+-1-male_removed_major,totalRounds:0-5,oneShotId:1=horny.png,I'm glad you're stripping so much so early. It's only fair since I don't have much to strip.
+-1-female_removed_major,count-athletic&role;target:=horny.png,Nice body, ~name~! I can tell you stay active.
+-1-female_removed_major,count-confident&role;target:=horny.png,I love your confidence, ~name~! It makes you a star!
+-1-female_removed_major,count-shy&role;target:=horny.png,Don't be shy, ~name~. I promise you look great!
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character to have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_chest_will_be_visible=excited.png,Yes! Show off your chest, ~name~!
+male_chest_will_be_visible=excited.png,You don't need your ~clothing~ anyways. I bet you look better topless.
+male_chest_will_be_visible=excited.png,I'm excited! You're showing the good stuff now!
+male_chest_will_be_visible=excited.png,It's to show off your chest. I bet you will look more masculine, many fighters I know fight shirtless.
+male_chest_will_be_visible=excited.png,This is your moment, ~name~! Start showing off!
+male_chest_will_be_visible=kitty.png,Time to show off your catnips!
+male_chest_is_visible=happy.png,I like your chest ~name~. I'm glad you stripped something big.
+male_chest_is_visible=kitty.png,Very cute ~name~! Not as cute as me but you're still good.
+male_chest_is_visible=kitty.png,I'm starting to really like you, ~name~. Can we cuddle later?
+male_chest_is_visible=happy.png,Yay! You look good! Isn't it fun to show off every now and then?
+male_chest_is_visible=happy.png,MEOW!
+male_chest_is_visible=happy.png,If you work out more you could be a male model one day!
+male_crotch_will_be_visible=interested.png,Time for the big reveal!
+male_crotch_will_be_visible=interested.png,I hope you don't get stage fright, ~name~. It's your time to shine!
+male_crotch_will_be_visible=interested.png,I've been showing off all game, it's your turn now ~name~!
+male_crotch_will_be_visible=interested.png,Oooh, ~name~'s gonna get naked! This is almost as good as fresh catnip.
+male_crotch_will_be_visible=interested.png,Go on now, show it all off! It's fun!
+male_crotch_will_be_visible=excited.png,~Name~ is going to get all naked! I haven't been this excited since I was back in nun school.
+male_small_crotch_is_visible=kitty.png,Awww it's so small. Like a little cat toy.
+male_small_crotch_is_visible=kitty.png,I've had cat treats bigger than that!
+male_small_crotch_is_visible=kitty.png,At church they taught me to tolerate everybody, even less endowed individuals.
+male_small_crotch_is_visible=kitty.png,It's okay ~name~, I won't bat at it like a cat toy.
+male_small_crotch_is_visible=kitty.png,If I let you pet me, do you think it will get any bigger?
+female_chest_will_be_visible=excited.png,Oooh ~name~ is gonna show her chest! How exciting!
+female_chest_will_be_visible=excited.png,I wonder if they will be as big as mine... Probably not.
+female_chest_will_be_visible=excited.png,I want to compare chest sizes with you. I bet I'll win!
+female_chest_will_be_visible=excited.png,Your time to shine! All eyes are on you! Go topless!
+female_chest_will_be_visible=kitty.png,It's not that big of a deal. Technically, I've been showing my breasts all game.
+female_chest_will_be_visible=kitty.png,Time to show off your catnips!
+female_small_chest_is_visible=kitty.png,I knew they weren't gonna be as big as mine! Sorry... I hope I didn't hurt your feelings...
+female_small_chest_is_visible=kitty.png,How cute! You remind me of Lilith!
+female_small_chest_is_visible=kitty.png,They might be small but they sure are perky! Cute!
+female_small_chest_is_visible=kitty.png,Don't feel bad ~name~, maybe one day they'll grow as big as mine.
+female_small_chest_is_visible=kitty.png,Sometimes at church I overhear some of my sisters praying that their chest will grow. Do you do that too?
+female_medium_chest_is_visible=kitty.png,I knew they weren't gonna be as big as mine! They are cute though.
+female_medium_chest_is_visible=happy.png,I like them! They aren't as big as mine but they seem like less of a distraction.
+female_medium_chest_is_visible=kitty.png,They might be average but I like them!
+female_medium_chest_is_visible=kitty.png,Can I squeeze them? I promise I won't scratch you.
+female_medium_chest_is_visible=kitty.png,Do they bounce around a lot? Mine sure do.
+female_large_chest_is_visible=horny.png,Wow! You might be as big as me!
+female_large_chest_is_visible=horny.png,What a surprise! I might have met my match!
+female_large_chest_is_visible=horny.png,Those are huge! You're a good opponent.
+female_large_chest_is_visible=embarrassed.png,I'm not jealous... I promise...
+female_large_chest_is_visible=embarrassed.png,Okay... They might be bigger than mine... There, I said it...
+female_crotch_will_be_visible=interested.png,Being naked is fun, I'm pretty much naked all the time. Don't be scared, ~name~.
+female_crotch_will_be_visible=interested.png,I can't wait to see what you look like! This game is so much fun!
+female_crotch_will_be_visible=interested.png,Put on a show stopping performance, ~name~! Get naked!
+female_crotch_will_be_visible=interested.png,I hope you don't get stage fright, ~name~. It's your time to shine!
+female_crotch_will_be_visible=interested.png,Time for the big reveal!
+female_crotch_will_be_visible=interested.png,It's your stage now! Get naked!
+female_crotch_is_visible=kitty.png,I smell fish! Now I'm hungry.
+female_crotch_is_visible=happy.png,You look cute naked, ~name~. Can we cuddle sometime?
+female_crotch_is_visible=happy.png,You could be a model or a dancer! You have a great body!
+female_crotch_is_visible=happy.png,You should come to church with me sometime. It's fun, I promise!
+female_crotch_is_visible=happy.png,How nice! You're a real cutie, ~name~!
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_chest_is_visible,count-role;target&character;pit:=kitty.png,I like your wings, Pit! You're adorable!
+0-male_chest_is_visible,count-role;target&character;9s:=kitty.png,Where are your catnips?
+0-male_medium_crotch_is_visible=horny.png,Mmmm I feel more tingling than when I have catnip...
+0-male_medium_crotch_is_visible=horny.png,Ohh I feel all warm... I like what I see...
+0-male_medium_crotch_is_visible=horny.png,~Name~, we should hang out more...
+0-male_medium_crotch_is_visible=horny.png,I'm glad it doesn't have any barbs... It's purrrfect...
+0-male_medium_crotch_is_visible=horny.png,I'm catholic so I'm used to missionary if you know what I mean...
+0-male_medium_crotch_is_visible,count-role;target&character;9s:=kitty.png,I didn't know robots had those. I guess you learn something new everyday.
+0-male_large_crotch_is_visible=horny.png,That's better than milk and catnip combined! Wow!
+0-male_large_crotch_is_visible=horny.png,<i>Purrrrrrrrrrrrrrrrrr..</i>
+0-male_large_crotch_is_visible=horny.png,Did you rub catnip on it? Because I'm insanely attracted to it!
+0-male_large_crotch_is_visible=horny.png,I feel so hot... Mmmm...
+0-male_large_crotch_is_visible=horny.png,That's huge! I love it!
+0-male_large_crotch_is_visible=horny.png,I'm catholic so I'm used to missionary if you know what I mean...
+0-male_large_crotch_is_visible=horny.png,That's so long it could be your tail!
+0-female_medium_chest_is_visible,count-role;target&character;rinkah:=kitty.png,Wow, Rinkah! You really have a nice body. You are a strong warrior after all.
+0-female_large_chest_is_visible,count-role;target&character;morrigan:=kitty.png,Those are big Morrigan, but they aren't as big as mine!
+0-female_crotch_is_visible,count-role;target&character;raven:=interested.png,No panties huh? Yeah, I don't like them either.
+0-female_crotch_is_visible,count-role;target&character;morrigan:=interested.png,You ever fight naked? Knowing you, you'd probably really like it.
+0-female_crotch_is_visible,count-role;target&character;morrigan:=kitty.png,No hard feelings right, Morrigan? We're still friends?
+0-female_crotch_is_visible,count-role;target&character;chun-li:=interested.png,You ever fight naked? Technically I do it all the time.
+0-female_crotch_is_visible,count-hairy&role;target:=happy.png,Oh look, you're a little hairy down there too. You don't have as much as I do though.
+0-female_crotch_is_visible,count-shaved&role;target:=kitty.png,All shaved huh? I'll probably be joining you real soon.
+0-female_crotch_is_visible,count-trimmed&role;target:=kitty.png,You just trim? That seems like a lot of work to keep it maintained.
+
+
+#lost fur
+1-male_chest_is_visible,count-role;target&character;9s:=kitty.png,Do you not have any catnips? How sad.
+1-male_chest_is_visible,count-role;target&character;pit:=kitty.png,I like your wings, Pit! You're adorable!
+1-male_medium_crotch_is_visible=horny.png,Mmmm I feel more tingling than when I have catnip...
+1-male_medium_crotch_is_visible=horny.png,Ohh I feel all warm... I like what I see...
+1-male_medium_crotch_is_visible=horny.png,~Name~, we should hang out more...
+1-male_medium_crotch_is_visible=horny.png,I'm glad it doesn't have any barbs... It's purrrfect...
+1-male_medium_crotch_is_visible=horny.png,I'm catholic so I'm used to missionary if you know what I mean...
+1-male_medium_crotch_is_visible,count-role;target&character;9s:=kitty.png,I didn't know robots had those. I guess you learn something new everyday.
+1-male_large_crotch_is_visible=horny.png,I'd love to lick it! If you don't mind.
+1-male_large_crotch_is_visible=horny.png,That's better than milk and catnip combined! Wow!
+1-male_large_crotch_is_visible=horny.png,<i>Purrrrrrrrrrrrrrrrrr..</i>
+1-male_large_crotch_is_visible=horny.png,Did you rub catnip on it? Because I'm insanely attracted to it!
+1-male_large_crotch_is_visible=horny.png,I feel so hot... Mmmm...
+1-male_large_crotch_is_visible=horny.png,That's huge! I love it!
+1-male_large_crotch_is_visible=horny.png,I'm catholic so I'm used to missionary if you know what I mean...
+1-female_medium_chest_is_visible,count-role;target&character;rinkah:=kitty.png,Wow, Rinkah! You really have a nice body. You are a strong warrior after all.
+1-female_large_chest_is_visible,count-role;target&character;morrigan:=kitty.png,Those are big Morrigan, but they aren't as big as mine!
+1-female_crotch_is_visible,count-role;target&character;raven:=interested.png,No panties huh? Yeah, I don't like them either.
+1-female_crotch_is_visible,count-role;target&character;morrigan:=interested.png,You ever fight naked? Knowing you, you'd probably really like it.
+1-female_crotch_is_visible,count-role;target&character;morrigan:=kitty.png,No hard feelings right, Morrigan? We're still friends?
+1-female_crotch_is_visible,count-role;target&character;chun-li:=interested.png,You ever fight naked? Technically I do it all the time.
+1-female_crotch_is_visible,count-hairy&role;target:=happy.png,Oh look, you're a little hairy down there too. You don't have as much as I do though.
+1-female_crotch_is_visible,count-shaved&role;target:=kitty.png,All shaved huh? I'll probably be joining you real soon.
+1-female_crotch_is_visible,count-trimmed&role;target:=kitty.png,You just trim? That seems like a lot of work to keep it maintained.
+
+
+#naked
+-3-male_chest_is_visible,count-role;target&character;pit:=kitty.png,I like your wings, Pit! You're adorable!
+-3-male_chest_is_visible,count-role;target&character;9s:=kitty.png,Where are your catnips? Do you not have any?
+-3-male_medium_crotch_is_visible=horny.png,Mmmm I feel more tingling than when I have catnip...
+-3-male_medium_crotch_is_visible=horny.png,Ohh I feel all warm... I like what I see...
+-3-male_medium_crotch_is_visible=horny.png,~Name~, we should hang out more...
+-3-male_medium_crotch_is_visible=horny.png,I'm glad it doesn't have any barbs... It's purrrfect...
+-3-male_medium_crotch_is_visible=horny.png,I'm catholic so I'm used to missionary if you know what I mean...
+-3-male_medium_crotch_is_visible,count-role;target&character;9s:=kitty.png,I didn't know robots had those. I guess you learn something new everyday.
+-3-male_large_crotch_is_visible=horny.png,That's better than milk and catnip combined! Wow!
+-3-male_large_crotch_is_visible=horny.png,<i>Purrrrrrrrrrrrrrrrrr..</i>
+-3-male_large_crotch_is_visible=horny.png,Did you rub catnip on it? Because I'm insanely attracted to it!
+-3-male_large_crotch_is_visible=horny.png,I feel so hot... Mmmm...
+-3-male_large_crotch_is_visible=horny.png,That's huge! I love it!
+-3-male_large_crotch_is_visible=horny.png,I'm catholic so I'm used to missionary if you know what I mean...
+-3-male_large_crotch_is_visible=horny.png,You look excited! So am I!
+-3-female_medium_chest_is_visible,count-role;target&character;rinkah:=kitty.png,Wow, Rinkah! You really have a nice body. You are a strong warrior after all.
+-3-female_large_chest_is_visible,count-role;target&character;morrigan:=kitty.png,Those are big Morrigan, but they aren't as big as mine!
+-3-female_crotch_is_visible,count-role;target&character;raven:=interested.png,No panties huh? Yeah, I don't like them either.
+-3-female_crotch_is_visible,count-role;target&character;morrigan:=interested.png,You ever fight naked? Knowing you, you'd probably really like it.
+-3-female_crotch_is_visible,count-role;target&character;morrigan:=kitty.png,No hard feelings right, Morrigan? We're still friends?
+-3-female_crotch_is_visible,count-role;target&character;chun-li:=interested.png,You ever fight naked? Technically I do it all the time.
+-3-female_crotch_is_visible,count-hairy&role;target:=interested.png,You're almost as hairy as I was. I kind of miss it but it will grow back.
+-3-female_crotch_is_visible,count-shaved&role;target:=kitty.png,We match now! I'm all shaved too!
+-3-female_crotch_is_visible,count-trimmed&role;target:=kitty.png,You just trim? That seems like a lot of work to keep it maintained.
+
+
+#masturbating
+-2-male_chest_is_visible,count-role;target&character;pit:=kitty.png,I like your wings, Pit! You're adorable!
+-2-male_chest_is_visible,count-role;target&character;9s:=kitty.png,Where are your catnips? Do you not have any?
+-2-male_medium_crotch_is_visible=horny.png,Mmmm I feel more tingling than when I have catnip...
+-2-male_medium_crotch_is_visible=horny.png,Ohh I feel all warm... I like what I see...
+-2-male_medium_crotch_is_visible=horny.png,~Name~, we should hang out more...
+-2-male_medium_crotch_is_visible=horny.png,I'm glad it doesn't have any barbs... It's purrrfect...
+-2-male_medium_crotch_is_visible=horny.png,I'm catholic so I'm used to missionary if you know what I mean...
+-2-male_medium_crotch_is_visible,count-role;target&character;9s:=kitty.png,I didn't know robots had those. I guess you learn something new everyday.
+-2-male_large_crotch_is_visible=horny.png,I think I'm gonna climax soon! That's just sooo hot, ~name~!
+-2-male_large_crotch_is_visible=horny.png,That's better than milk and catnip combined! Wow!
+-2-male_large_crotch_is_visible=horny.png,<i>Purrrrrrrrrrrrrrrrrr..</i>
+-2-male_large_crotch_is_visible=horny.png,Did you rub catnip on it? Because I'm insanely attracted to it!
+-2-male_large_crotch_is_visible=horny.png,I feel so hot... Mmmm...
+-2-male_large_crotch_is_visible=horny.png,That's huge! I love it!
+-2-male_large_crotch_is_visible=horny.png,I'm catholic so I'm used to missionary if you know what I mean...
+-2-female_medium_chest_is_visible,count-role;target&character;rinkah:=kitty.png,Wow, Rinkah! You really have a nice body. You are a strong warrior after all.
+-2-female_large_chest_is_visible,count-role;target&character;morrigan:=kitty.png,Those are big Morrigan, but they aren't as big as mine!
+-2-female_crotch_is_visible,count-role;target&character;raven:=interested.png,No panties huh? Yeah, I don't like them either.
+-2-female_crotch_is_visible,count-role;target&character;morrigan:=interested.png,You ever fight naked? Knowing you, you'd probably really like it.
+-2-female_crotch_is_visible,count-role;target&character;morrigan:=kitty.png,No hard feelings right, Morrigan? We're still friends?
+-2-female_crotch_is_visible,count-role;target&character;chun-li:=interested.png,You ever fight naked? Technically I do it all the time.
+-2-female_crotch_is_visible,count-hairy&role;target:=interested.png,You're almost as hairy as I was. I kind of miss it but it will grow back.
+-2-female_crotch_is_visible,count-shaved&role;target:=kitty.png,We match now! I'm all shaved too!
+-2-female_crotch_is_visible,count-trimmed&role;target:=kitty.png,You just trim? That seems like a lot of work to keep it maintained.
+
+
+#finished
+-1-male_chest_is_visible,count-role;target&character;pit:=kitty.png,I like your wings, Pit! You're adorable!
+-1-male_chest_is_visible,count-role;target&character;9s:=kitty.png,No nipples? Or maybe they are just so small I can't see them
+-1-male_chest_is_visible,count-role;target&character;9s:=kitty.png,Where are your catnips? Do you not have any?
+-1-male_medium_crotch_is_visible=horny.png,Mmmm I feel more tingling than when I have catnip...
+-1-male_medium_crotch_is_visible=horny.png,Ohh I feel all warm... I like what I see...
+-1-male_medium_crotch_is_visible=horny.png,~Name~, we should hang out more...
+-1-male_medium_crotch_is_visible=horny.png,I'm glad it doesn't have any barbs... It's purrrfect...
+-1-male_medium_crotch_is_visible=horny.png,I'm catholic so I'm used to missionary if you know what I mean...
+-1-male_medium_crotch_is_visible=horny.png,You're very hard, ~name~! Is it because of my performance?
+-1-male_medium_crotch_is_visible=horny.png,All hard and erect... I'm getting all warm...
+-1-male_medium_crotch_is_visible=horny.png,I want to be all over it... Did you rub catnip on it?
+-1-male_medium_crotch_is_visible=horny.png,~Name~ now that you're naked... We can have some real fun.
+-1-male_medium_crotch_is_visible=horny.png,It's good to see you naked ~name~. This was well worth the wait.
+-1-male_medium_crotch_is_visible=horny.png,You look so turned on... Is it from watching me?
+-1-male_medium_crotch_is_visible=horny.png,I hope you lose the next round, I want to see you masturbate...
+-1-male_medium_crotch_is_visible=horny.png,So ~name~... Ever been with a catgirl before?
+-1-male_medium_crotch_is_visible=horny.png,We should hang out after this game... You seem like a great guy.
+-1-male_medium_crotch_is_visible=horny.png,Can I play with it? Please?
+-1-male_medium_crotch_is_visible=horny.png,Can I lick it? I promise I won't be rough!
+-1-male_medium_crotch_is_visible,count-role;target&character;9s:=kitty.png,I didn't know robots had those. I guess you learn something new everyday.
+-1-male_large_crotch_is_visible=horny.png,Can I play with it? Please? I promise I won't be rough!
+-1-male_large_crotch_is_visible=horny.png,You're so huge! Is it because of my performance?
+-1-male_large_crotch_is_visible=horny.png,That's better than milk and catnip combined! Wow!
+-1-male_large_crotch_is_visible=horny.png,<i>Purrrrrrrrrrrrrrrrrr..</i>
+-1-male_large_crotch_is_visible=horny.png,Did you rub catnip on it? Because I'm insanely attracted to it!
+-1-male_large_crotch_is_visible=horny.png,I feel so hot... Mmmm...
+-1-male_large_crotch_is_visible=horny.png,That's huge! I love it!
+-1-male_large_crotch_is_visible=horny.png,I'm catholic so I'm used to missionary if you know what I mean...
+-1-female_medium_chest_is_visible,count-role;target&character;rinkah:=kitty.png,Wow, Rinkah! You really have a nice body. You are a strong warrior after all.
+-1-female_large_chest_is_visible,count-role;target&character;morrigan:=kitty.png,Those are big Morrigan, but they aren't as big as mine!
+-1-female_crotch_is_visible,count-role;target&character;raven:=interested.png,No panties huh? Yeah, I don't like them either.
+-1-female_crotch_is_visible,count-role;target&character;morrigan:=interested.png,You ever fight naked? Knowing you, you'd probably really like it.
+-1-female_crotch_is_visible,count-role;target&character;morrigan:=kitty.png,No hard feelings right, Morrigan? We're still friends?
+-1-female_crotch_is_visible,count-role;target&character;chun-li:=interested.png,You ever fight naked? Technically I do it all the time.
+-1-female_crotch_is_visible,count-hairy&role;target:=interested.png,You're almost as hairy as I was. I kind of miss it but it will grow back.
+-1-female_crotch_is_visible,count-shaved&role;target:=kitty.png,We match now! I'm all shaved too!
+-1-female_crotch_is_visible,count-shy&role;target:=kitty.png,Don't be shy ~name~! You look really cute naked.
+-1-female_crotch_is_visible,count-trimmed&role;target:=kitty.png,You just trim? That seems like a lot of work to keep it maintained.
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#fully clothed
+0-male_must_masturbate=excited.png,You lose, ~name~, so you have to do the forfeit! It's part of the game after all.
+0-male_must_masturbate=excited.png,Ah! ~Name~ has to masturbate in front of all of us!
+0-male_must_masturbate=excited.png,Get ready, ~name~! You have to pleasure yourself for me.
+0-male_must_masturbate=interested.png,You lost the game, so you know what that means!
+0-male_must_masturbate=interested.png,You have to masturbate now! Don't be scared, have fun!
+0-male_start_masturbating=horny.png,There you go, ~name~! Now don't stop until you're finished!
+0-male_start_masturbating=happy.png,Yay! You're actually going to do it!
+0-male_start_masturbating=horny.png,Good start, ~name~! I like it.
+0-male_start_masturbating=happy.png,I'm glad you're starting! Have fun!
+0-male_start_masturbating=horny.png,Mmmm looking good already, ~name~.
+0-male_start_masturbating=kitty.png,Can I kiss you on the cheek for good luck?
+0-male_start_masturbating,count-exhibitionist&role;target:=kitty.png,You seem to really like this ~name~. Are you sure this counts as losing for you?
+0-male_masturbating=butt.png,Why are you staring at me like that? Is there somebody behind me? Let me turn around and check.
+0-male_masturbating=butt.png,Would it help you out if I turned around? I don't mind.
+0-male_masturbating=horny.png,You're really getting into this. You must be feline good.
+0-male_masturbating=happy.png,I love watching you, ~name~! You're a star!
+0-male_masturbating=horny.png,You're making me feel... All hot...
+0-male_masturbating=horny.png,Can I come close, ~name~? I can hold your hand for support.
+0-male_masturbating=happy.png,Keep going ~name~! You can't get stage fright now.
+0-male_masturbating=kitty.png,You're really kitten into it!
+0-male_masturbating=kitty.png,I want to cuddle with you all day!
+0-male_masturbating=kitty.png,You're lion if you say you're not enjoying yourself.
+0-male_finished_masturbating=sad.png,What? It's over already? Awww... I was just starting to have fun.
+0-male_finished_masturbating=kitty.png,You made a mess! Don't expect me to lick it up.
+0-male_finished_masturbating=kitty.png,All done? Well it was fun to watch.
+0-male_finished_masturbating=kitty.png,You must be all tired now, ~name~. Do you want to come back to my place and rest?
+0-male_finished_masturbating=kitty.png,Do you want to cuddle now? Or is that against the rules?
+0-male_finished_masturbating=kitty.png,You're all sticky now ~name~, can I lick you clean?
+0-male_finished_masturbating=kitty.png,Hey, can I just say one thing? Your face looks all funny now! Heehee!
+0-male_finished_masturbating=kitty.png,That's ocelot of cum!
+0-male_finished_masturbating=shocked.png,That shot out like a cat-apult!
+0-female_must_masturbate=excited.png,You lost, ~name~. Get ready to forfeit!
+0-female_must_masturbate=excited.png,Your turn to put on a show now!
+0-female_must_masturbate=interested.png,~Name~ has to forfeit!
+0-female_must_masturbate=interested.png,It's only fair you do the forfeit now.
+0-female_must_masturbate=excited.png,Get ready to explore yourself for us!
+0-female_must_masturbate,count-role;target&character;morrigan:=calm.png,You lost Morrigan, no hard feelings right?
+0-female_start_masturbating=horny.png,Yay! Just like that! Keep it up girl!
+0-female_start_masturbating=happy.png,Alright! You go girl!
+0-female_start_masturbating=horny.png,Are you ready to put on a show? I'm ready to watch!
+0-female_start_masturbating=happy.png,It's your time to shine! Put on a good performance!
+0-female_start_masturbating=horny.png,Don't be shy now, ~name~. It's your time to show off!
+0-female_start_masturbating=kitty.png,Do you need a hug for good luck?
+0-female_start_masturbating,count-role;target&character;morrigan:=excited.png,Oh hey Lilith! It's good to see you again!
+0-female_start_masturbating,count-exhibitionist&role;target:=kitty.png,You seem to really like this ~name~. Are you sure this counts as losing for you?
+0-female_masturbating=happy.png,This is so exciting! Keep going!
+0-female_masturbating=horny.png,Yeah! Work yourself! Keep up the pace!
+0-female_masturbating=kitty.png,You look so cute, ~name~. I could cuddle with you for hours!
+0-female_masturbating=horny.png,The way you pleasure yourself... It's driving me wild!
+0-female_masturbating=happy.png,You're a great performer! So much emotion!
+0-female_masturbating=butt.png,Why are you staring at me like that? Is there somebody behind me? Let me turn around and check.
+0-female_masturbating=butt.png,I think I heard something behind me. Let me check.
+0-female_masturbating,count-role;target&character;scarlet_witch:=interested.png,So that's how you use your powers? It looks fun!
+0-female_masturbating,count-role;target&character;morrigan:=happy.png,You two make a great team! Just like when you fight.
+0-female_finished_masturbating=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+0-female_finished_masturbating=kitty.png,Looks like your magic really helped you out!
+0-female_finished_masturbating=sad.png,What? It's over already? Awww... I was just starting to have fun.
+0-female_finished_masturbating=kitty.png,Hey, can I just say one thing? Your face looks all funny now! Heehee!
+0-female_finished_masturbating=kitty.png,Your face is funny and you look sticky! That's how I know you did a good job.
+0-female_finished_masturbating=kitty.png,You were great ~name~! I should have bought you flowers.
+0-female_finished_masturbating=kitty.png,With that performance you could win an award!
+0-female_finished_masturbating=kitty.png,Good job ~name~! You were great!
+0-female_finished_masturbating=kitty.png,That was so sexy! It was fun to watch.
+0-female_finished_masturbating,count-role;target&character;morrigan:=kitty.png,Bye, Lilith! It was good to see you again!
+0-female_finished_masturbating,count-role;target&character;chun-li:=kitty.png,Nice moves! I wouldn't want to get hit by that kick!
+0-female_finished_masturbating,count-role;target&character;wiifitfemale:=kitty.png,That really was a great work out!
+0-female_finished_masturbating,count-role;target&character;vriska:=kitty.png,Woah what a mess! It's all over the floor! Don't expect me to lick it up.
+0-female_finished_masturbating,target:chell=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+0-female_finished_masturbating,target:hermione=kitty.png,Looks like your magic really helped you out!
+0-female_finished_masturbating,target:neo=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+0-female_finished_masturbating,target:scarlet_witch=kitty.png,Looks like your magic really helped you out!
+
+
+#lost fur
+1-male_must_masturbate=excited.png,You lose, ~name~, so you have to do the forfeit! It's part of the game after all.
+1-male_must_masturbate=excited.png,Ah! ~Name~ has to masturbate in front of all of us!
+1-male_must_masturbate=excited.png,Get ready, ~name~! You have to pleasure yourself for me.
+1-male_must_masturbate=interested.png,You lost the game, so you know what that means!
+1-male_must_masturbate=interested.png,You have to masturbate now! Don't be scared, have fun!
+1-male_start_masturbating=horny.png,There you go, ~name~! Now don't stop until you're finished!
+1-male_start_masturbating=happy.png,Yay! You're actually going to do it!
+1-male_start_masturbating=horny.png,Good start, ~name~! I like it.
+1-male_start_masturbating=happy.png,I'm glad you're starting! Have fun!
+1-male_start_masturbating=horny.png,Mmmm looking good already, ~name~.
+1-male_start_masturbating=kitty.png,Can I kiss you on the cheek for good luck?
+1-male_start_masturbating,count-exhibitionist&role;target:=kitty.png,You seem to really like this ~name~. Are you sure this counts as losing for you?
+1-male_masturbating=butt.png,Why are you staring at me like that? Is there somebody behind me? Let me turn around and check.
+1-male_masturbating=butt.png,Would it help you out if I turned around? I don't mind.
+1-male_masturbating=horny.png,You're really getting into this. You must be feline good.
+1-male_masturbating=happy.png,I love watching you, ~name~! You're a star!
+1-male_masturbating=horny.png,You're making me feel... All hot...
+1-male_masturbating=horny.png,Can I come close, ~name~? I can hold your hand for support.
+1-male_masturbating=happy.png,Keep going ~name~! You can't get stage fright now.
+1-male_masturbating=kitty.png,You're really kitten into it!
+1-male_masturbating=kitty.png,I want to cuddle with you all day!
+1-male_masturbating=kitty.png,You're lion if you say you're not enjoying yourself.
+1-male_finished_masturbating=sad.png,What? It's over already? Awww... I was just starting to have fun.
+1-male_finished_masturbating=kitty.png,You made a mess! Don't expect me to lick it up.
+1-male_finished_masturbating=kitty.png,All done? Well it was fun to watch.
+1-male_finished_masturbating=kitty.png,You must be all tired now, ~name~. Do you want to come back to my place and rest?
+1-male_finished_masturbating=kitty.png,Do you want to cuddle now? Or is that against the rules?
+1-male_finished_masturbating=kitty.png,You're all sticky now ~name~, can I lick you clean?
+1-male_finished_masturbating=kitty.png,Hey, can I just say one thing? Your face looks all funny now! Heehee!
+1-male_finished_masturbating=kitty.png,That's ocelot of cum!
+1-male_finished_masturbating=shocked.png,That shot out like a cat-apult!
+1-female_must_masturbate=excited.png,You lost, ~name~. Get ready to forfeit!
+1-female_must_masturbate=excited.png,Your turn to put on a show now!
+1-female_must_masturbate=interested.png,~Name~ has to forfeit!
+1-female_must_masturbate=interested.png,It's only fair you do the forfeit now.
+1-female_must_masturbate=excited.png,Get ready to explore yourself for us!
+1-female_must_masturbate,count-role;target&character;morrigan:=calm.png,You lost Morrigan, no hard feelings right?
+1-female_start_masturbating=horny.png,Yay! Just like that! Keep it up girl!
+1-female_start_masturbating=happy.png,Alright! You go girl!
+1-female_start_masturbating=horny.png,Are you ready to put on a show? I'm ready to watch!
+1-female_start_masturbating=happy.png,It's your time to shine! Put on a good performance!
+1-female_start_masturbating=horny.png,Don't be shy now, ~name~. It's your time to show off!
+1-female_start_masturbating=kitty.png,Do you need a hug for good luck?
+1-female_start_masturbating,count-role;target&character;morrigan:=excited.png,Oh hey Lilith! It's good to see you again!
+1-female_start_masturbating,count-exhibitionist&role;target:=kitty.png,You seem to really like this ~name~. Are you sure this counts as losing for you?
+1-female_masturbating=happy.png,This is so exciting! Keep going!
+1-female_masturbating=horny.png,Yeah! Work yourself! Keep up the pace!
+1-female_masturbating=kitty.png,You look so cute, ~name~. I could cuddle with you for hours!
+1-female_masturbating=horny.png,The way you pleasure yourself... It's driving me wild!
+1-female_masturbating=happy.png,You're a great performer! So much emotion!
+1-female_masturbating=butt.png,Why are you staring at me like that? Is there somebody behind me? Let me turn around and check.
+1-female_masturbating=butt.png,I think I heard something behind me. Let me check.
+1-female_masturbating,count-role;target&character;scarlet_witch:=interested.png,So that's how you use your powers? It looks fun!
+1-female_masturbating,count-role;target&character;morrigan:=happy.png,You two make a great team! Just like when you fight.
+1-female_finished_masturbating=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+1-female_finished_masturbating=kitty.png,Looks like your magic really helped you out!
+1-female_finished_masturbating=sad.png,What? It's over already? Awww... I was just starting to have fun.
+1-female_finished_masturbating=kitty.png,Hey, can I just say one thing? Your face looks all funny now! Heehee!
+1-female_finished_masturbating=kitty.png,Your face is funny and you look sticky! That's how I know you did a good job.
+1-female_finished_masturbating=kitty.png,You were great ~name~! I should have bought you flowers.
+1-female_finished_masturbating=kitty.png,With that performance you could win an award!
+1-female_finished_masturbating=kitty.png,Good job ~name~! You were great!
+1-female_finished_masturbating=kitty.png,That was so sexy! It was fun to watch.
+1-female_finished_masturbating,count-role;target&character;morrigan:=kitty.png,Bye, Lilith! It was good to see you again!
+1-female_finished_masturbating,count-role;target&character;chun-li:=kitty.png,Nice moves! I wouldn't want to get hit by that kick!
+1-female_finished_masturbating,count-role;target&character;wiifitfemale:=kitty.png,That really was a great work out!
+1-female_finished_masturbating,count-role;target&character;vriska:=kitty.png,Woah what a mess! It's all over the floor! Don't expect me to lick it up.
+1-female_finished_masturbating,target:chell=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+1-female_finished_masturbating,target:hermione=kitty.png,Looks like your magic really helped you out!
+1-female_finished_masturbating,target:neo=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+1-female_finished_masturbating,target:scarlet_witch=kitty.png,Looks like your magic really helped you out!
+
+
+#naked
+-3-male_must_masturbate=excited.png,You lose, ~name~, so you have to do the forfeit! It's part of the game after all.
+-3-male_must_masturbate=excited.png,Ah! ~Name~ has to masturbate in front of all of us!
+-3-male_must_masturbate=excited.png,Get ready, ~name~! You have to pleasure yourself for me.
+-3-male_must_masturbate=interested.png,You lost the game, so you know what that means!
+-3-male_must_masturbate=interested.png,You have to masturbate now! Don't be scared, have fun!
+-3-male_start_masturbating=horny.png,Can you cuddle up with me while you do that? I just want to spend some more time with you.
+-3-male_start_masturbating=horny.png,There you go, ~name~! Now don't stop until you're finished!
+-3-male_start_masturbating=happy.png,Yay! You're actually going to do it!
+-3-male_start_masturbating=horny.png,Good start, ~name~! I like it.
+-3-male_start_masturbating=happy.png,I'm glad you're starting! Have fun!
+-3-male_start_masturbating=horny.png,Mmmm looking good already, ~name~.
+-3-male_start_masturbating=kitty.png,Can I kiss you on the cheek for good luck?
+-3-male_start_masturbating,count-exhibitionist&role;target:=kitty.png,You seem to really like this ~name~. Are you sure this counts as losing for you?
+-3-male_masturbating=butt.png,Why are you staring at me like that? Is there somebody behind me? Let me turn around and check.
+-3-male_masturbating=butt.png,Would it help you out if I turned around? I don't mind.
+-3-male_masturbating=horny.png,You're really getting into this. You must be feline good.
+-3-male_masturbating=happy.png,I love watching you, ~name~! You're a star!
+-3-male_masturbating=horny.png,You're making me feel... All hot...
+-3-male_masturbating=horny.png,Can I come close, ~name~? I can hold your hand for support.
+-3-male_masturbating=happy.png,Keep going ~name~! You can't get stage fright now.
+-3-male_masturbating=kitty.png,You're really kitten into it!
+-3-male_masturbating=kitty.png,I want to cuddle with you all day!
+-3-male_masturbating=kitty.png,You're lion if you say you're not enjoying yourself.
+-3-male_finished_masturbating=sad.png,What? It's over already? Awww... I was just starting to have fun.
+-3-male_finished_masturbating=kitty.png,You made a mess! Don't expect me to lick it up.
+-3-male_finished_masturbating=kitty.png,All done? Well it was fun to watch.
+-3-male_finished_masturbating=kitty.png,You must be all tired now, ~name~. Do you want to come back to my place and rest?
+-3-male_finished_masturbating=kitty.png,Do you want to cuddle now? Or is that against the rules?
+-3-male_finished_masturbating=kitty.png,You're all sticky now ~name~, can I lick you clean?
+-3-male_finished_masturbating=kitty.png,Hey, can I just say one thing? Your face looks all funny now! Heehee!
+-3-male_finished_masturbating=kitty.png,That's ocelot of cum!
+-3-male_finished_masturbating=shocked.png,That shot out like a cat-apult!
+-3-female_must_masturbate=excited.png,You lost, ~name~. Get ready to forfeit!
+-3-female_must_masturbate=excited.png,Your turn to put on a show now!
+-3-female_must_masturbate=interested.png,~Name~ has to forfeit!
+-3-female_must_masturbate=interested.png,It's only fair you do the forfeit now.
+-3-female_must_masturbate=excited.png,Get ready to explore yourself for us!
+-3-female_must_masturbate,count-role;target&character;morrigan:=calm.png,You lost Morrigan, no hard feelings right?
+-3-female_start_masturbating=horny.png,Yay! Just like that! Keep it up girl!
+-3-female_start_masturbating=happy.png,Alright! You go girl!
+-3-female_start_masturbating=horny.png,Are you ready to put on a show? I'm ready to watch!
+-3-female_start_masturbating=happy.png,It's your time to shine! Put on a good performance!
+-3-female_start_masturbating=horny.png,Don't be shy now, ~name~. It's your time to show off!
+-3-female_start_masturbating=kitty.png,Do you need a hug for good luck?
+-3-female_start_masturbating,count-role;target&character;morrigan:=excited.png,Oh hey Lilith! It's good to see you again!
+-3-female_start_masturbating,count-exhibitionist&role;target:=kitty.png,You seem to really like this ~name~. Are you sure this counts as losing for you?
+-3-female_masturbating=happy.png,This is so exciting! Keep going!
+-3-female_masturbating=horny.png,Yeah! Work yourself! Keep up the pace!
+-3-female_masturbating=kitty.png,You look so cute, ~name~. I could cuddle with you for hours!
+-3-female_masturbating=horny.png,The way you pleasure yourself... It's driving me wild!
+-3-female_masturbating=happy.png,You're a great performer! So much emotion!
+-3-female_masturbating=butt.png,Why are you staring at me like that? Is there somebody behind me? Let me turn around and check.
+-3-female_masturbating=butt.png,I think I heard something behind me. Let me check.
+-3-female_masturbating,count-role;target&character;scarlet_witch:=interested.png,So that's how you use your powers? It looks fun!
+-3-female_masturbating,count-role;target&character;morrigan:=happy.png,You two make a great team! Just like when you fight.
+-3-female_finished_masturbating=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+-3-female_finished_masturbating=kitty.png,Looks like your magic really helped you out!
+-3-female_finished_masturbating=sad.png,What? It's over already? Awww... I was just starting to have fun.
+-3-female_finished_masturbating=kitty.png,Hey, can I just say one thing? Your face looks all funny now! Heehee!
+-3-female_finished_masturbating=kitty.png,Your face is funny and you look sticky! That's how I know you did a good job.
+-3-female_finished_masturbating=kitty.png,You were great ~name~! I should have bought you flowers.
+-3-female_finished_masturbating=kitty.png,With that performance you could win an award!
+-3-female_finished_masturbating=kitty.png,Good job ~name~! You were great!
+-3-female_finished_masturbating=kitty.png,That was so sexy! It was fun to watch.
+-3-female_finished_masturbating,count-role;target&character;morrigan:=kitty.png,Bye, Lilith! It was good to see you again!
+-3-female_finished_masturbating,count-role;target&character;chun-li:=kitty.png,Nice moves! I wouldn't want to get hit by that kick!
+-3-female_finished_masturbating,count-role;target&character;wiifitfemale:=kitty.png,That really was a great work out!
+-3-female_finished_masturbating,count-role;target&character;vriska:=kitty.png,Woah what a mess! It's all over the floor! Don't expect me to lick it up.
+-3-female_finished_masturbating,target:chell=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+-3-female_finished_masturbating,target:hermione=kitty.png,Looks like your magic really helped you out!
+-3-female_finished_masturbating,target:neo=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+-3-female_finished_masturbating,target:scarlet_witch=kitty.png,Looks like your magic really helped you out!
+
+
+#masturbating
+-2-male_must_masturbate=excited.png,You lose, ~name~, so you have to do the forfeit! It's part of the game after all.
+-2-male_must_masturbate=excited.png,Ah! ~Name~ has to masturbate in front of all of us!
+-2-male_must_masturbate=excited.png,Get ready, ~name~! You have to pleasure yourself for me.
+-2-male_must_masturbate=interested.png,You lost the game, so you know what that means!
+-2-male_must_masturbate=interested.png,You have to masturbate now! Don't be scared, have fun!
+-2-male_start_masturbating=horny.png,There you go, ~name~! Now don't stop until you're finished!
+-2-male_start_masturbating=happy.png,Yay! You're actually going to do it!
+-2-male_start_masturbating=horny.png,Good start, ~name~! I like it.
+-2-male_start_masturbating=happy.png,I'm glad you're starting! Have fun!
+-2-male_start_masturbating=horny.png,Mmmm looking good already, ~name~.
+-2-male_start_masturbating=kitty.png,Can I kiss you on the cheek for good luck?
+-2-male_masturbating=horny.png,It's fun to do this with you ~name~, I feel like we have a bond together now.
+-2-male_masturbating=horny.png,You're making it hard for me to focus... So hot...
+-2-male_masturbating=horny.png,I wonder who's gonna finish first? With my vibrator I have an advantage.
+-2-male_masturbating=horny.png,I don't feel so lonely anymore!
+-2-male_masturbating=horny.png,You're really getting into this. You must be feline good.
+-2-male_masturbating=happy.png,I love watching you, ~name~! You're a star!
+-2-male_masturbating=horny.png,You're making me feel... All hot...
+-2-male_masturbating=horny.png,Can I come close, ~name~? I can hold your hand for support.
+-2-male_masturbating=happy.png,Keep going ~name~! You can't get stage fright now.
+-2-male_masturbating=kitty.png,You're really kitten into it!
+-2-male_masturbating=kitty.png,I want to cuddle with you all day!
+-2-male_masturbating=kitty.png,You're lion if you say you're not enjoying yourself.
+-2-male_finished_masturbating=sad.png,What? It's over already? Awww... I was just starting to have fun.
+-2-male_finished_masturbating=kitty.png,You made a mess! Don't expect me to lick it up.
+-2-male_finished_masturbating=kitty.png,All done? Well it was fun to watch.
+-2-male_finished_masturbating=kitty.png,You must be all tired now, ~name~. Do you want to come back to my place and rest?
+-2-male_finished_masturbating=kitty.png,Do you want to cuddle now? Or is that against the rules?
+-2-male_finished_masturbating=kitty.png,You're all sticky now ~name~, can I lick you clean?
+-2-male_finished_masturbating=kitty.png,Hey, can I just say one thing? Your face looks all funny now! Heehee!
+-2-male_finished_masturbating=kitty.png,That's ocelot of cum!
+-2-male_finished_masturbating=shocked.png,That shot out like a cat-apult!
+-2-female_must_masturbate=excited.png,You lost, ~name~. Get ready to forfeit!
+-2-female_must_masturbate=excited.png,Your turn to put on a show now!
+-2-female_must_masturbate=interested.png,~Name~ has to forfeit!
+-2-female_must_masturbate=interested.png,It's only fair you do the forfeit now.
+-2-female_must_masturbate=excited.png,Get ready to explore yourself for us!
+-2-female_must_masturbate,count-role;target&character;morrigan:=calm.png,You lost Morrigan, no hard feelings right?
+-2-female_start_masturbating=horny.png,Yay! Just like that! Keep it up girl!
+-2-female_start_masturbating=happy.png,Alright! You go girl!
+-2-female_start_masturbating=horny.png,Are you ready to put on a show? I'm ready to watch!
+-2-female_start_masturbating=happy.png,It's your time to shine! Put on a good performance!
+-2-female_start_masturbating=horny.png,Don't be shy now, ~name~. It's your time to show off!
+-2-female_start_masturbating=kitty.png,Do you need a hug for good luck?
+-2-female_start_masturbating,count-role;target&character;morrigan:=excited.png,Oh hey Lilith! It's good to see you again!
+-2-female_masturbating=kitty.png,Do you want to race me to finish ~name~? I bet I can win!
+-2-female_masturbating=horny.png,I wonder who's gonna finish first? With my vibrator I have an advantage.
+-2-female_masturbating=horny.png,I don't feel so lonely anymore!
+-2-female_masturbating=happy.png,This is so exciting! Keep going!
+-2-female_masturbating=horny.png,Yeah! Work yourself! Keep up the pace!
+-2-female_masturbating=kitty.png,You look so cute, ~name~. I could cuddle with you for hours!
+-2-female_masturbating=horny.png,The way you pleasure yourself... It's driving me wild!
+-2-female_masturbating=happy.png,You're a great performer! So much emotion!
+-2-female_masturbating,count-role;target&character;scarlet_witch:=interested.png,So that's how you use your powers? It looks fun!
+-2-female_masturbating,count-role;target&character;morrigan:=happy.png,You two make a great team! Just like when you fight.
+-2-female_finished_masturbating=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+-2-female_finished_masturbating=kitty.png,Looks like your magic really helped you out!
+-2-female_finished_masturbating=sad.png,What? It's over already? Awww... I was just starting to have fun.
+-2-female_finished_masturbating=kitty.png,Hey, can I just say one thing? Your face looks all funny now! Heehee!
+-2-female_finished_masturbating=kitty.png,Your face is funny and you look sticky! That's how I know you did a good job.
+-2-female_finished_masturbating=kitty.png,You were great ~name~! I should have bought you flowers.
+-2-female_finished_masturbating=kitty.png,With that performance you could win an award!
+-2-female_finished_masturbating=kitty.png,Good job ~name~! You were great!
+-2-female_finished_masturbating=kitty.png,That was so sexy! It was fun to watch.
+-2-female_finished_masturbating,count-role;target&character;morrigan:=kitty.png,Bye, Lilith! It was good to see you again!
+-2-female_finished_masturbating,count-role;target&character;chun-li:=kitty.png,Nice moves! I wouldn't want to get hit by that kick!
+-2-female_finished_masturbating,count-role;target&character;wiifitfemale:=kitty.png,That really was a great work out!
+-2-female_finished_masturbating,count-role;target&character;vriska:=kitty.png,Woah what a mess! It's all over the floor! Don't expect me to lick it up.
+-2-female_finished_masturbating,target:chell=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+-2-female_finished_masturbating,target:hermione=kitty.png,Looks like your magic really helped you out!
+-2-female_finished_masturbating,target:neo=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+-2-female_finished_masturbating,target:scarlet_witch=kitty.png,Looks like your magic really helped you out!
+
+
+#finished
+-1-male_must_masturbate=excited.png,Yay! It's your turn now, ~name~!
+-1-male_must_masturbate=excited.png,You lose, ~name~, so you have to do the forfeit! It's part of the game after all.
+-1-male_must_masturbate=excited.png,Ah! ~Name~ has to masturbate in front of all of us!
+-1-male_must_masturbate=excited.png,Get ready, ~name~! You have to pleasure yourself for me.
+-1-male_must_masturbate=interested.png,You lost the game, so you know what that means!
+-1-male_must_masturbate=interested.png,You have to masturbate now! Don't be scared, have fun!
+-1-male_start_masturbating=kitty.png,Get out there and break a leg!
+-1-male_start_masturbating=horny.png,There you go, ~name~! Now don't stop until you're finished!
+-1-male_start_masturbating=happy.png,Yay! You're actually going to do it!
+-1-male_start_masturbating=horny.png,Good start, ~name~! I like it.
+-1-male_start_masturbating=happy.png,I'm glad you're starting! Have fun!
+-1-male_start_masturbating=horny.png,Mmmm looking good already, ~name~.
+-1-male_start_masturbating=kitty.png,Can I kiss you on the cheek for good luck?
+-1-male_masturbating=butt.png,Why are you staring at me like that? Is there somebody behind me? Let me turn around and check.
+-1-male_masturbating=butt.png,Would it help you out if I turned around? I don't mind.
+-1-male_masturbating=horny.png,You're really getting into this. You must be feline good.
+-1-male_masturbating=happy.png,I love watching you, ~name~! You're a star!
+-1-male_masturbating=horny.png,You're making me feel... All hot...
+-1-male_masturbating=horny.png,Can I come close, ~name~? I can hold your hand for support.
+-1-male_masturbating=happy.png,Keep going ~name~! You can't get stage fright now.
+-1-male_masturbating=kitty.png,You're really kitten into it!
+-1-male_masturbating=kitty.png,I want to cuddle with you all day!
+-1-male_masturbating=kitty.png,You're lion if you say you're not enjoying yourself.
+-1-male_finished_masturbating=kitty.png,I should have brought you some flowers! Your performance was great!
+-1-male_finished_masturbating=kitty.png,You did great! Was my performance your inspiration?
+-1-male_finished_masturbating=sad.png,What? It's over already? Awww... I was just starting to have fun.
+-1-male_finished_masturbating=kitty.png,You made a mess! Don't expect me to lick it up.
+-1-male_finished_masturbating=kitty.png,All done? Well it was fun to watch.
+-1-male_finished_masturbating=kitty.png,You must be all tired now, ~name~. Do you want to come back to my place and rest?
+-1-male_finished_masturbating=kitty.png,Do you want to cuddle now? Or is that against the rules?
+-1-male_finished_masturbating=kitty.png,You're all sticky now ~name~, can I lick you clean?
+-1-male_finished_masturbating=kitty.png,Hey, can I just say one thing? Your face looks all funny now! Heehee!
+-1-male_finished_masturbating=kitty.png,That's ocelot of cum!
+-1-male_finished_masturbating=shocked.png,That shot out like a cat-apult!
+-1-female_must_masturbate=excited.png,Yay! It's your turn now, ~name~!
+-1-female_must_masturbate=excited.png,You lost, ~name~. Get ready to forfeit!
+-1-female_must_masturbate=excited.png,Your turn to put on a show now!
+-1-female_must_masturbate=interested.png,~Name~ has to forfeit!
+-1-female_must_masturbate=interested.png,It's only fair you do the forfeit now.
+-1-female_must_masturbate=excited.png,Get ready to explore yourself for us!
+-1-female_must_masturbate,count-role;target&character;morrigan:=calm.png,You lost Morrigan, no hard feelings right?
+-1-female_start_masturbating=kitty.png,Don't be scared ~name~, break a leg!
+-1-female_start_masturbating=horny.png,Yay! Just like that! Keep it up girl!
+-1-female_start_masturbating=happy.png,Alright! You go girl!
+-1-female_start_masturbating=horny.png,Are you ready to put on a show? I'm ready to watch!
+-1-female_start_masturbating=happy.png,It's your time to shine! Put on a good performance!
+-1-female_start_masturbating=horny.png,Don't be shy now, ~name~. It's your time to show off!
+-1-female_start_masturbating=kitty.png,Do you need a hug for good luck?
+-1-female_start_masturbating,count-role;target&character;morrigan:=excited.png,Oh hey Lilith! It's good to see you again!
+-1-female_masturbating=happy.png,This is so exciting! Keep going!
+-1-female_masturbating=horny.png,Yeah! Work yourself! Keep up the pace!
+-1-female_masturbating=kitty.png,You look so cute, ~name~. I could cuddle with you for hours!
+-1-female_masturbating=horny.png,The way you pleasure yourself... It's driving me wild!
+-1-female_masturbating=happy.png,You're a great performer! So much emotion!
+-1-female_masturbating=butt.png,Why are you staring at me like that? Is there somebody behind me? Let me turn around and check.
+-1-female_masturbating=butt.png,I think I heard something behind me. Let me check.
+-1-female_masturbating,count-role;target&character;scarlet_witch:=interested.png,So that's how you use your powers? It looks fun!
+-1-female_masturbating,count-role;target&character;morrigan:=happy.png,You two make a great team! Just like when you fight.
+-1-female_finished_masturbating=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+-1-female_finished_masturbating=kitty.png,I should have brought you some flowers! Your performance was great!
+-1-female_finished_masturbating=kitty.png,You did great! Was my performance your inspiration?
+-1-female_finished_masturbating=kitty.png,Looks like your magic really helped you out!
+-1-female_finished_masturbating=sad.png,What? It's over already? Awww... I was just starting to have fun.
+-1-female_finished_masturbating=kitty.png,Hey, can I just say one thing? Your face looks all funny now! Heehee!
+-1-female_finished_masturbating=kitty.png,Your face is funny and you look sticky! That's how I know you did a good job.
+-1-female_finished_masturbating=kitty.png,You were great ~name~! I should have bought you flowers.
+-1-female_finished_masturbating=kitty.png,With that performance you could win an award!
+-1-female_finished_masturbating=kitty.png,Good job ~name~! You were great!
+-1-female_finished_masturbating=kitty.png,That was so sexy! It was fun to watch.
+-1-female_finished_masturbating,count-role;target&character;morrigan:=kitty.png,Bye, Lilith! It was good to see you again!
+-1-female_finished_masturbating,count-role;target&character;chun-li:=kitty.png,Nice moves! I wouldn't want to get hit by that kick!
+-1-female_finished_masturbating,count-role;target&character;wiifitfemale:=kitty.png,That really was a great work out!
+-1-female_finished_masturbating,count-role;target&character;vriska:=kitty.png,Woah what a mess! It's all over the floor! Don't expect me to lick it up.
+-1-female_finished_masturbating,target:chell=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+-1-female_finished_masturbating,target:hermione=kitty.png,Looks like your magic really helped you out!
+-1-female_finished_masturbating,target:neo=kitty.png,I can't believe you still haven't said anything yet! That cat must really have your tongue.
+-1-female_finished_masturbating,target:scarlet_witch=kitty.png,Looks like your magic really helped you out!
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+
+#naked
+-3-must_masturbate_first=loss.png,I have to masturbate now, don't I? Well at least a star like me gets to go first!
+-3-must_masturbate_first=loss.png,I have to masturbate now, don't I? Feel free to take notes.
+-3-must_masturbate_first=loss.png,I have to masturbate now, don't I? I'm glad I get to be the opening act!
+-3-must_masturbate=loss.png,It's my turn to masturbate now? Good thing a star like me knows how to do it properly!
+-3-must_masturbate=loss.png,Get ready for a good show!
+-3-must_masturbate=loss.png,You are all so lucky. No one has ever seen me masturbate fully shaved before.
+-3-start_masturbating=starting.png,My claws prevent me from using my hands for masturbation. So I brought this vibrator to help me out.
+-3-start_masturbating=starting.png,I can't use my claws or tail to masturbate, that would be ridiculous. So I brought my favourite vibrator to do the job right!
+-3-start_masturbating=starting.png,Do you mind if I pull up a chair?
+-3-start_masturbating=starting.png,I need to sit down for this one.
+-3-start_masturbating=starting.png,I'm going to borrow this chair. Is that alright?
+-3-start_masturbating=starting.png,For this show, I'm gonna need to sit down.
+-3-start_masturbating=starting.png,I need a chair for this. It's about to get intense!
+-3-start_masturbating=starting.png,Nyeow's my chance!
+
+
+#masturbating
+-2-masturbating=horny.png,Wow! This feels better than I remember! Is it because I shaved?
+-2-masturbating=horny.png,*pant* *pant* Gosh... I need to take a little break! Anyone want to take over?
+-2-masturbating=happy.png,This feels a lot like dancing. When you get it just right, it feels great!
+-2-masturbating=horny.png,I can't believe this feels so good! Maybe all that hair was covering my sensitive areas more.
+-2-masturbating=horny.png,It's unbelievably smooth! OH WOW!
+-2-masturbating=horny.png,If I had some catnip this would feel so much better...
+-2-masturbating=masturbating.png,Mrrrr.....
+-2-masturbating=masturbating.png,Mmmm... This feels great.
+-2-masturbating=masturbating.png,Nyah!
+-2-masturbating=masturbating.png,Oh yes!
+-2-masturbating=masturbating.png,My whole body... Is shaking...
+-2-masturbating=masturbating.png,This pleasure is unreal!
+-2-masturbating=masturbating.png,Meeeeooowwwwww!
+-2-masturbating=masturbating.png,Whooooaaaaaaahhh...!
+-2-masturbating=masturbating.png,All in the wrist!
+-2-masturbating=masturbating.png,This is paws-itively delightful!
+-2-masturbating=masturbating.png,Wow, this is clawsome!
+-2-masturbating=masturbating.png,Nyan... nyan... nyan... nyan...
+-2-masturbating=masturbating.png,This vibrator sure is purr-sistent... It's been so good!
+-2-masturbating=horny.png,Mmm... Someone whis-purr something dirty in my ear...
+-2-masturbating=kitty.png,This is better than a new ball of yarn!
+-2-masturbating=horny.png,I'm hitting all the right spots!
+-2-masturbating=horny.png,I wish I had a glass of milk, I'm getting thirsty.
+-2-masturbating=horny.png,I'm in heat!
+-2-masturbating=horny.png,I feel so hot!
+-2-masturbating=masturbating.png,Meow!
+-2-masturbating=horny.png,Oooh that tickled!
+-2-masturbating=horny.png,Can someone pet me while I do this? Please?
+-2-masturbating=horny.png,Can someone hold this vibrator for me? My arms are getting tired.
+-2-masturbating=horny.png,This feels great now that I shaved! This is orgasmic!
+-2-masturbating=horny.png,At this point I'm almost as sex driven as Morrigan!
+-2-masturbating=horny.png,The vibration feels sooo good!
+-2-masturbating=horny.png,I love the way this feels! It's better than any massage I've ever had!
+-2-masturbating=horny.png,Oh yeah... This is soooo good! I couldn't be happier.
+-2-masturbating=horny.png,I'm feline sooo good!
+-2-masturbating,priority:0,count-role;other&character;shego:=kitty.png,Hey Shego, no pictures please!
+-2-masturbating,priority:0,count-role;other&character;streaming-chan:=kitty.png,Hey Streaming-chan, no pictures please!
+-2-masturbating,priority:0,count-role;other&character;sharla:=kitty.png,I'm really feline it!
+-2-heavy_masturbating=heavy.png,OH! I'M CLOSE TO CUMMING!
+-2-heavy_masturbating=heavy.png,THIS IS IT! I CAN FEEL IT!
+-2-heavy_masturbating=heavy.png,OHHH WOW! THIS FEELS ORGASMIC!
+-2-heavy_masturbating=heavy.png,OHH! I'M ON THE HIGHEST SETTING!
+-2-heavy_masturbating=heavy.png,THIS IS BETTER THAN CATNIP! OHHHH!
+-2-finishing_masturbating=finishing.png,THAT'S IT! I'M CUMMING!
+-2-finishing_masturbating=finishing.png,OHHHH!!!
+-2-finishing_masturbating=finishing.png,MEOW!!!
+-2-finishing_masturbating=finishing.png,PURRRRRR!!!
+-2-finishing_masturbating=finishing.png,NYAAAAAA!!!
+-2-finishing_masturbating=finishing.png,OOOOHHH!!!
+-2-finishing_masturbating=finishing.png,THIS IS IT!!!
+
+
+#finished
+-1-finished_masturbating=finished.png,Sorry if I overdid it a little... I just wanted to have my star moment!
+-1-finished_masturbating=finished.png,I'm pretty quick, huh? I'm a dancer, you know.
+-1-finished_masturbating=finished.png,That felt great. I had no idea shaving would have made such a big difference.
+-1-finished_masturbating=finished.png,Thanks for watching! It felt great to put on a show, I felt like a real star!
+-1-finished_masturbating=finished.png,I'm glad you all got to watch! It really made me feel special. I'd love to play this game again some time. My fur just needs to grow back again...
+-1-finished_masturbating=finished.png,Do you want an encore? I'll have to rest up first.
+-1-finished_masturbating=finished.png,How was that for a show? Did I put on a good performance?
+-1-finished_masturbating=finished.png,Sorry if I messed up the chair. It's a little sticky now.
+-1-finished_masturbating=finished.png,Do you want the chair back now? It's a little sticky.
+-1-finished_masturbating=finished.png,Can't beat purr-fection.
+-1-finished_masturbating=finished.png,This is a perfect example of claws and effect!
+
+
+
+
+#GAME OVER
+#Lines spoken after the overall winner has been decided and all the losers have finished their forfeits.
+
+#fully clothed
+0-game_over_victory=happy.png,Victory is like catnip... it makes me all tingly!
+0-game_over_victory=happy.png,Don't look at me like that. It's not my fault you lost!
+0-game_over_victory=win.png,Yay! I won!
+0-game_over_victory=win.png,I win! I win! I win!
+0-game_over_victory=win.png,What's this called again? 'An easy victory'? It feels so good!!
+0-game_over_victory=win.png,Too bad, so sad. I win!
+0-game_over_victory=win.png,A purr-fect victory!
+0-game_over_victory=kitty.png,Yay I won! Can I have a cheeseburger?
+0-game_over_victory=kitty.png,Yay I won! I Can Has Cheezburger?
+0-game_over_victory=kitty.png,This kitty's got claws!
+
+
+#lost fur
+1-game_over_victory=happy.png,Victory is like catnip... it makes me all tingly!
+1-game_over_victory=happy.png,Don't look at me like that. It's not my fault you lost!
+1-game_over_victory=win.png,Yay! I won!
+1-game_over_victory=win.png,I win! I win! I win!
+1-game_over_victory=embarrassed.png,Wait... I'm still naked and my fur won't grow back for a while... Uh oh...
+1-game_over_victory=win.png,Yay! I won!
+1-game_over_victory=win.png,I won! I won!
+1-game_over_victory=happy.png,Whew, I won by a whisker!
+1-game_over_victory=win.png,I win! I knew I could do it!
+1-game_over_victory=win.png,Wow I actually won! I knew I could do it!
+1-game_over_victory=win.png,Winner winner chicken dinner! Actually, can I have Meow Mix?
+1-game_over_victory=win.png,Winner winner chicken dinner! Actually, can I have Fancy Feast?
+1-game_over_victory=win.png,Winner winner chicken dinner! Actually, can I have cheeseburger?
+1-game_over_victory=win.png,I won by a whisker!
+1-game_over_victory=win.png,Yay! Go me! I won!
+1-game_over_victory=win.png,That was a claws encounter of the furred kind!
+1-game_over_victory=win.png,Paws-itively delightful!
+1-game_over_victory=win.png,I win! I win! I win, I win, I win!
+
+
+#naked
+-3-game_over_victory=embarrassed.png,Wait... I'm still naked and my fur won't grow back for a while... Uh oh...
+-3-game_over_victory=win.png,Yay! I won!
+-3-game_over_victory=win.png,I won! I won!
+
+
+#finished
+game_over_defeat=calm.png,Good job ~name~ you won fair and square!
+game_over_defeat=calm.png,I'm glad I got to play with you today ~name~, you're really good at this game!
+game_over_defeat=calm.png,Nice ~name~, you won!
+game_over_defeat=kitty.png,Next time I won't be kitten around.
+game_over_defeat=angry.png,Are you kittin' me?! I lost?
+game_over_defeat=angry.png,The next game will be purr-sonal!
+game_over_defeat=embarrassed.png,Wait... I'm all naked now and my fur won't grow back for a while... Uh oh...
+game_over_defeat=embarrassed.png,Since I'm all naked now and my fur won't grow back for a while I'm going to have to wear my nun's outfit to be modest.
+
+#EPILOGUE/ENDING
+
+ending=A Night Out
+	ending_gender=any
+	gallery_image=ending4.PNG
+
+	scene=background:ending1.PNG,x:0,y:0,width:1084,height:892
+		directive=type:text,arrow:none,iterations:0,layer:0,z:0,count:0,x:40%,y:50%
+			text=One week later... You are out for a walk around town.
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+		directive=type:text,arrow:none,iterations:0,layer:0,z:0,count:0,x:45%,y:60%
+			text=When suddenly...
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+
+	scene=background:ending2.PNG,width:1084,height:892
+		directive=type:text,arrow:left,iterations:0,layer:0,z:0,count:0,x:45%,y:15%
+			text=Hey ~name~! It's good to see you again!
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+
+	scene=background:ending3.PNG,width:1083,height:896
+		directive=type:text,arrow:left,iterations:0,layer:0,z:0,count:0,x:45%,y:15%
+			text=Oh... You probably don't recognize me with real clothes on.
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+		directive=type:text,arrow:left,iterations:0,layer:0,z:0,count:0,x:45%,y:30%
+			text=It's me! Felicia, from that poker game.
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+		directive=type:text,arrow:left,iterations:0,layer:0,z:0,count:0,x:45%,y:45%
+			text=Since I shaved my fur I have to wear clothes now to keep my modesty. So I'm just wearing my nun outfit until my fur grows back.
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+
+	scene=background:ending4.PNG,width:1085,height:896
+		directive=type:text,arrow:left,iterations:0,layer:0,z:0,count:0,x:45%,y:15%
+			text=Anyways, it's getting real late out here. Why don't you come back to my place? I'd love to spend some more time with you.
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+
+	scene=background:ending5.png,width:2000,height:1500
+		directive=type:text,arrow:left,iterations:0,layer:0,z:0,count:0,x:55%,y:30%
+			text=Welcome to my room! It's not much but it's mine.
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+
+	scene=background:ending6.png,width:2000,height:1500
+		directive=type:text,arrow:left,iterations:0,layer:0,z:0,count:0,x:55%,y:30%
+			text=Do you mind if I change into some more comfortable clothing?
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+		directive=type:text,arrow:left,iterations:0,layer:0,z:0,count:0,x:55%,y:45%
+			text=I hate wearing normal clothes, they are just too restricting.
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+
+	scene=background:ending7.png,width:2000,height:1500
+		directive=type:text,arrow:left,iterations:0,layer:0,z:0,count:0,x:55%,y:30%
+			text=There! Much better!
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+		directive=type:text,arrow:left,iterations:0,layer:0,z:0,count:0,x:55%,y:45%
+			text=As you can see, my furs been growing back but it's not enough to cover me up yet.
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+
+	scene=background:ending8.png,width:2000,height:1500
+		directive=type:text,arrow:right,iterations:0,layer:0,z:0,count:0,x:20%,y:30%
+			text=So ~name~... Now that you're here. I was wondering...
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+		directive=type:text,arrow:left,iterations:0,layer:0,z:0,count:0,x:60%,y:30%
+			text=Could we get intimate together? I just feel so warm...
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+		directive=type:text,arrow:left,iterations:0,layer:0,z:0,count:0,x:60%,y:70%
+			text=Yes! Just like that... Let's get started.
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+
+	scene=background:ending9.png,width:2000,height:1500
+		directive=type:text,arrow:right,iterations:0,layer:0,z:0,count:0,x:15%,y:30%
+			text=YES! OH ~name~! KEEP GOING!
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+		directive=type:text,arrow:right,iterations:0,layer:0,z:0,count:0,x:20%,y:40%
+			text=THIS FEELING IS AMAZING! OHHH!!
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+		directive=type:text,arrow:left,iterations:0,layer:0,z:0,count:0,x:60%,y:50%
+			text=I'M CUMMING!
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+
+	scene=background:ending10.png,width:2000,height:1500
+		directive=type:text,arrow:right,iterations:0,layer:0,z:0,count:0,x:20%,y:30%
+			text=Ohhhh ~name~... That was incredible... You were the best.
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+		directive=type:text,arrow:left,iterations:0,layer:0,z:0,count:0,x:60%,y:30%
+			text=We should do this again sometime.
+		directive=type:pause,iterations:0,layer:0,z:0,count:0
+
+#CUSTOM POSES
