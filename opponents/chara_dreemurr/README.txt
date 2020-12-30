@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited December 3 2020
+README edited December 29 2020
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -183,7 +183,7 @@ Chara will react to specific Player Names upon being selected:
 -------------------------------------------------------------------------------------------
 EPILOGUE
 -------------------------------------------------------------------------------------------
-Chara has one Epilogue, Power, available with the only prerequisite being to win the game. There is no sex in this epilogue, however the epilogue itself varies, with the use of
+Chara has one Epilogue, Control, available with the only prerequisite being to win the game. The epilogue itself varies, with the use of
 markers, depending on the following conditions:
 
 Case 1 - The player is seeing the epilogue for the first time.
@@ -524,8 +524,7 @@ ZONE-TAN
 PLANNED FEATURES
 -------------------------------------------------------------------------------------------
 
--I would like to add a sex scene to the epilogue. Just have to get the writing right. Though I am having second thoughts about that. I've done a lot of work on the new epilogue but
-I don't want to 'sunk cost' myself. Not every epilogue needs to be a sex scene.
+-Nothing at the moment. Maybe have Chara react to some player tags during the Hand=Any case.
 
 -------------------------------------------------------------------------------------------
 PLANNED CHARACTER INTERACTIONS
