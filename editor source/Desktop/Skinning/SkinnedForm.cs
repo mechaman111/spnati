@@ -516,6 +516,16 @@ namespace Desktop.Skinning
 			OnSkinChanged(SkinManager.Instance.CurrentSkin);
 		}
 
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				_mailbox.Destroy();
+				_mailbox = null;
+			}
+			base.Dispose(disposing);
+		}
+
 		private void OnSkinChanged(Skin skin)
 		{
 			Invalidate(true);

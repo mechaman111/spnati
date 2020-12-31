@@ -35,6 +35,13 @@
 	<li>Added an "Allow Scene Skip" option to let players switch between scenes when viewing an epilogue from the gallery.</li>
 </ul>
 
+<h3>Pose Matrix</h3>
+<ul>
+	<li>If part of a model (a belt, global arm, ribbon, etc.) is included in a pose code, but is not in any stage code or the sheet's base code, then it will now be included in the compiled code.</li>
+	<li>In layman's terms, this means it's now possible to add new ribbons, face marks, etc. in a pose. Previously you would need to include these items in the base or clothing code and position them somewhere far off the model by default.</li>
+	<li>Some limitations still apply: this doesn't work with image attachments, and you should still reserve a slot for the same thing in every pose (i.e. you shouldn't use ribbon 1 in slot 10 for stage 2 and then use ribbon 5 in slot 10 for stage 3).</li>
+</ul>
+
 <h3>Image Pipelines</h3>
 <ul>
 	<li>Added a Branch node for if/else logic.</li>
@@ -56,6 +63,10 @@
 
 <h3>Bug Fixes</h3>
 <ul>
+	<li>Fixed a memory leak with the pipeline editor.</li>
+	<li>Improved performance when opening the pipeline editor.</li>
+	<li>Improved responsiveness while editing nodes in a pipeline.</li>
+	<li>Fixed an issue with transparencies blending improperly when using overlay blending.</li>
 	<li>Fixed issue where unchecking all types of characters from the "Characters to hide" setting would hide all online characters the next time you started up the program.</li>
 	<li>Fixed crash when opening an old character that has never been saved in the Character Editor before.</li>
 	<li>Fixed the "Mark as Done" button in the Writing Aid so it actually does something.</li>

@@ -107,6 +107,7 @@ namespace SPNATI_Character_Editor.Controls.EditControls
 
 			PipelineEditor form = new PipelineEditor(_matrix.Character, _stage, _cell, graph);
 			form.ShowDialog();
+			form.Dispose();
 		}
 
 		private void cmdParams_Click(object sender, EventArgs e)

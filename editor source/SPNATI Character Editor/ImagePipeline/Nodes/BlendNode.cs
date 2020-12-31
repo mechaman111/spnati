@@ -88,7 +88,7 @@ namespace ImagePipeline
 					Color c2 = Color.Empty;
 					if (x2 >= 0 && x2 < w2 && y2 >= 0 && y2 < h2)
 					{
-						c2 = img2?.GetPixel(x2, y2) ?? Color.FromArgb(0, 0, 0, 0);
+						c2 = img2?.GetPixel(x2, y2) ?? Color.Empty;
 					}
 					BlendMode blendMode = mode;
 					float blendAmount = amountReader.Get(x2, y2);
@@ -101,50 +101,86 @@ namespace ImagePipeline
 						}
 						blendMode = BlendMode.Normal;
 					}
-					else if (mode == BlendMode.Overlay)
-					{
-						blendAmount = (c2.A / 255.0f) * blendAmount;
-					}
 
-					int r = Mix(c1.R, c2.R, blendAmount, blendMode);
-					int g = Mix(c1.G, c2.G, blendAmount, blendMode);
-					int b = Mix(c1.B, c2.B, blendAmount, blendMode);
-					int a = Mix(c1.A, c2.A, blendAmount, blendMode);
+					int a = MixAlpha(c1.A, c2.A, blendAmount, blendMode);
+					int r = Mix(c1.R, c2.R, blendAmount, blendMode, c1.A, c2.A);
+					int g = Mix(c1.G, c2.G, blendAmount, blendMode, c1.A, c2.A);
+					int b = Mix(c1.B, c2.B, blendAmount, blendMode, c1.A, c2.A);
 					output.SetPixel(x, y, Color.FromArgb(a, r, g, b));
 				}
 			}
 			return Task.FromResult(new PipelineResult(output));
 		}
 
-		private int Mix(byte c1, byte c2, float m, BlendMode mode)
+		private int MixAlpha(byte a1, byte a2, float m, BlendMode mode)
+		{
+			float src = a1 / 255.0f;
+			float blend = a2 / 255.0f;
+			float output = blend;
+
+			switch (mode)
+			{
+				case BlendMode.Overlay:
+					output = blend + src * (1 - blend);
+					output = ShaderFunctions.Saturate(src * (1 - m) + output * m);
+					break;
+				case BlendMode.Multiply:
+					output = src;
+					break;
+				case BlendMode.Additive:
+					output = src + blend;
+					break;
+
+				default:
+					return Mix(a1, a2, m, BlendMode.Normal, a1, a2);
+			}
+
+			return (int)(ShaderFunctions.Saturate(output) * 255);
+		}
+
+		private int Mix(byte c1, byte c2, float m, BlendMode mode, byte a1, byte a2)
 		{
 			float src = (float)c1 / 255;
 			float blend = (float)c2 / 255;
+			float srcAlpha = a1 / 255.0f;
+			float blendAlpha = a2 / 255.0f;
 
 			switch (mode)
 			{
 				case BlendMode.Multiply:
-					blend = src * blend;
+					blend = src * (1 - blendAlpha) + blend * blendAlpha;
 					break;
 				case BlendMode.Difference:
-					blend = Math.Abs(src - blend);
+					blend = Math.Abs(src * srcAlpha - blend * blendAlpha);
 					break;
 				case BlendMode.Screen:
-					blend = 1 - (1 - blend) * (1 - src);
+					blend = 1 - (1 - blend * blendAlpha) * (1 - src * srcAlpha);
 					break;
 				case BlendMode.Additive:
-					blend = src + blend;
+					blend = src * srcAlpha + blend * blendAlpha;
 					break;
 				case BlendMode.Lighten:
-					blend = Math.Max(src, blend);
+					blend = Math.Max(src * srcAlpha, blend * blendAlpha);
 					break;
 				case BlendMode.Darken:
-					blend = Math.Min(src, blend);
+					blend = Math.Min(src * srcAlpha, blend * blendAlpha);
 					break;
+				case BlendMode.Overlay:
+					blendAlpha *= m;
+					float d = blendAlpha + srcAlpha * (1 - blendAlpha);
+					if (blendAlpha == 0)
+					{
+						blend = src;
+					}
+					else
+					{
+						blend = ShaderFunctions.Saturate((blend * blendAlpha + src * srcAlpha * (1 - blendAlpha)) / d);
+					}
+					return (int)(blend * 255);
 			}
 
 			//interpolation
-			double a = Math.Max(0, Math.Min(1, src * (1 - m) + blend * m));
+			double a = ShaderFunctions.Saturate(src * (1 - m) + blend * m);
 			return (int)(a * 255);
 		}
 	}
