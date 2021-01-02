@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited December 29 2020
+README edited January 2 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -345,6 +345,7 @@ JOTARO
 
 JURA
 -Responses as Chara is losing.
+-Responds to Jura getting flowers from Amalia.
 
 KIZUNA
 -Responds when Kizuna is in her masturbation stage, but using her 'downloading' poses.
@@ -475,6 +476,9 @@ SPOOKY
 
 STREAMING-CHAN
 -Responds to Streaming-chan's interview.
+
+SUPERNOVA
+-Responds as Supernova is losing.
 
 THARJA
 -Responds to Tharja cursing Jessie.
