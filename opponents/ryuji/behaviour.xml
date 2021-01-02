@@ -275,20 +275,20 @@
         <trigger id="swap_cards">
             <case stage="0-7" priority="111">
                 <condition role="other" character="nayru" stage="5-6" notSaidMarker="null_possess" />
-                <state img="#-threathen.png">~cards~ cards! And make it snappy!</state>
-                <state img="#-pissed.png">C'mon, ~cards~ cards. We haven't got all day!</state>
-                <state img="#-threathen.png">~cards~ cards! NOW!</state>
-                <state img="#-pissed.png">~cards~!!</state>
+                <state img="#-threathen.png">~Cards.text~ card~cards.ifplural(s|)~! And make it snappy!</state>
+                <state img="#-pissed.png">C'mon, ~cards.text~ card~cards.ifplural(s|)~. We haven't got all day!</state>
+                <state img="#-threathen.png">~Cards.text~ card~cards.ifplural(s|)~! NOW!</state>
+                <state img="#-pissed.png">~Cards.text~!!</state>
             </case>
             <case stage="0-4">
-                <state img="#-pumped.png">I'm feelin' lucky! ~cards~ cards.</state>
-                <state img="#-fingerguns.png">Gimmie ~cards~ cards, dealer!</state>
+                <state img="#-pumped.png">I'm feelin' lucky! ~Cards.text~ card~cards.ifplural(s|)~.</state>
+                <state img="#-fingerguns.png">Gimmie ~cards.text~ card~cards.ifplural(s|)~, dealer!</state>
             </case>
             <case stage="0-7">
-                <state img="#-cheerful.png">~cards~ cards. Thanks dude!</state>
-                <state img="#-cheerful.png">Alright, gimmie ~cards~ cards.</state>
-                <state img="#-neutral.png">Gimmie ~cards~ cards, dealer.</state>
-                <state img="#-thinking.png">Uhhh. ~cards~ cards.</state>
+                <state img="#-cheerful.png">~Cards.text~ card~cards.ifplural(s|)~. Thanks dude!</state>
+                <state img="#-cheerful.png">Alright, gimmie ~cards.text~ card~cards.ifplural(s|)~.</state>
+                <state img="#-neutral.png">Gimmie ~cards.text~ card~cards.ifplural(s|)~, dealer.</state>
+                <state img="#-thinking.png">Uhhh. ~cards.text~ card~cards.ifplural(s|)~.</state>
             </case>
         </trigger>
 
@@ -2736,9 +2736,7 @@
                 <state img="#-cheerful.png">I like your accent! Where you from, man?</state>
             </case>
             <case stage="0" totalRounds="0-5" priority="150">
-                <condition count="0" filter="haru" />
-                <condition count="0" filter="futaba" />
-                <condition count="0" filter="ann_takamaki" />
+                <condition count="0" filter="phantom_thieves" />
                 <condition filter="hero" role="target" stage="1" />
                 <state img="#-pumped.png">Awesome!! You're a hero?</state>
                 <state img="#-pumped.png">Maybe you should join the Phantom Thie---I mean, you'd make a great Phantom Thief!</state>
@@ -3211,7 +3209,7 @@
                 <state img="#-threathen.png">&lt;i&gt;I swear, if you don't give Pinkie back to us!&lt;/i&gt;</state>
             </case>
             <case stage="0-4">
-                <condition role="target" character="jolyne" />
+                <condition role="target" character="jolyne" stage="0" />
                 <state img="#-fingerguns.png">That is some &lt;i&gt;sick&lt;/i&gt; hair! Maybe I should've dyed mine multiple colors.</state>
             </case>
             <case stage="0-5" totalRounds="0-4">
@@ -3236,9 +3234,7 @@
                 <state img="#-thinking.png">I honestly ain't sure whether I should be on m'guard or not. You're a vampire but are you a &lt;i&gt;shadow&lt;/i&gt;?</state>
             </case>
             <case stage="0" totalRounds="0-5" priority="149">
-                <condition count="0" filter="futaba" />
-                <condition count="0" filter="haru" />
-                <condition count="0" filter="ann_takamaki" />
+                <condition count="0" filter="phantom_thieves" />
                 <condition filter="hero" role="target" stage="0" />
                 <state img="#-pumped.png">Awesome!! You're a hero?</state>
                 <state img="#-pumped.png">You fight shitty people too?</state>
@@ -3338,7 +3334,7 @@
             <case stage="9">
                 <state img="#-grumpy.png">&lt;i&gt;She better not pull any tricks!&lt;/i&gt;</state>
                 <state img="#-aroused.png">Sorry...</state>
-                <state img="#-awkward.png">You ain't the only one embarassed, trust me.</state>
+                <state img="#-awkward.png">You ain't the only one embarrassed, trust me.</state>
             </case>
         </trigger>
 
@@ -4813,7 +4809,7 @@
             </case>
             <case stage="0-9">
                 <condition role="target" character="elizabeth" stage="2" />
-                <state img="#-startled.png">See!? &lt;i&gt;That's&lt;/i&gt; sumthin' you should be embarassed about!</state>
+                <state img="#-startled.png">See!? &lt;i&gt;That's&lt;/i&gt; sumthin' you should be embarrassed about!</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="gwen" stage="1" />
@@ -5131,7 +5127,7 @@
             </case>
             <case stage="0-6">
                 <condition role="target" character="gwen" />
-                <state img="#-cheerful.png">It's cool, you're secret safe with me.</state>
+                <state img="#-cheerful.png">It's cool -- your secret is safe with me.</state>
                 <state img="#-cheerful.png">Not the same when you're in the real world.</state>
                 <state img="#-cheerful.png">My mask's way cooler! Hell, you haven't seen the other me! I'm a badass biker-pirate rockin' metal and leather!</state>
                 <state img="#-thinking.png">&lt;i&gt;(Man, if she were in the Metaverse, that would've been really friggin' painful!)&lt;/i&gt;!</state>
