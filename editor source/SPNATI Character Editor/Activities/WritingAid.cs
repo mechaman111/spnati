@@ -360,16 +360,22 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			else
 			{
-				ResponseSetupForm setup = new ResponseSetupForm();
-				setup.SetData(_character, _activeSituation.LinkedCase, _response);
-				DialogResult result = setup.ShowDialog();
-				if (result == DialogResult.Cancel)
+				using (ResponseSetupForm setup = new ResponseSetupForm())
 				{
-					_response = null;
-					return;
-				}
+					setup.SetData(_character, _activeSituation.LinkedCase, _response);
+					DialogResult result = setup.ShowDialog();
+					if (result == DialogResult.Cancel)
+					{
+						_response = null;
+						return;
+					}
 
-				_editorData.MarkResponse(_activeCharacter, _activeSituation.LinkedCase, _response);
+					if (!Config.UseFullResponses)
+					{
+						_response.SimplifyConditions();
+					}
+					_editorData.MarkResponse(_activeCharacter, _activeSituation.LinkedCase, _response);
+				}
 			}
 
 			if (_response.Stages.Count == 0)

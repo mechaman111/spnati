@@ -94,8 +94,7 @@ namespace SPNATI_Character_Editor.Controls
 			_selectedCase = workingCase;
 			if (_selectedCase != null)
 			{
-				DataConversions.ConvertCase5_2(_selectedCase);
-				DataConversions.ConvertCase5_8(_selectedCase, _character);
+				DataConversions.ConvertCase(_selectedCase, _character);
 			}
 			TrackCase(_selectedCase);
 			if (_selectedCase != null)
@@ -241,7 +240,17 @@ namespace SPNATI_Character_Editor.Controls
 
 		public PoseMapping GetImage(int index)
 		{
-			return gridDialogue.GetImage(index);
+			PoseMapping mapping = gridDialogue.GetImage(index);
+			if (PreviewStage >= 0 && _selectedCase.Lines.Count > index)
+			{
+				DialogueLine line = _selectedCase.Lines[index];
+				StageImage stageImage = line.Images.Find(si => si.Stages.Contains(PreviewStage));
+				if (stageImage != null)
+				{
+					mapping = stageImage.Pose;
+				}
+			}
+			return mapping;
 		}
 		public DialogueLine GetLine(int index)
 		{

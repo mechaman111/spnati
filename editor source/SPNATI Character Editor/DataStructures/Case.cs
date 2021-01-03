@@ -1499,6 +1499,8 @@ namespace SPNATI_Character_Editor
 			//no way to respond to hidden cases, since they never display
 			if (Hidden == "1") { return null; }
 
+			DataConversions.ConvertCase(this, speaker);
+
 			Case response = new Case();
 
 			response.Tag = GetResponseTag(speaker, responder);
@@ -2803,6 +2805,31 @@ namespace SPNATI_Character_Editor
 				}
 			}
 			return null;
+		}
+
+		/// <summary>
+		/// Removes extraneous conditions to leave only the bare minimum
+		/// </summary>
+		public void SimplifyConditions()
+		{
+			return; //disable for now until all characters have removed conditions that aren't in TargetConditions
+
+			for (int i = Conditions.Count - 1; i>= 0; i--)
+			{
+				TargetCondition condition = Conditions[i];
+				if (string.IsNullOrEmpty(condition.SayingMarker))
+				{
+					Conditions.RemoveAt(i);
+				}
+				else
+				{
+					condition.Simplify();
+				}
+			}
+			foreach (Case alt in AlternativeConditions)
+			{
+				alt.SimplifyConditions();
+			}
 		}
 	}
 

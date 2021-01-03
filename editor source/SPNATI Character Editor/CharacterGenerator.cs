@@ -104,6 +104,10 @@ namespace SPNATI_Character_Editor
 				{
 					//search for any images that aren't in the character's images folder
 					string filename = Path.GetFileName(url);
+					if (filename.Contains(" "))
+					{
+						MessageBox.Show($"File names with spaces do not work properly. Please rename the file to not include a space. Bad file name: \"{url}\"", "Import Pose", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					}
 					string realFile = Path.Combine(imagesDir, filename);
 					if (!Directory.Exists(imagesDir))
 					{

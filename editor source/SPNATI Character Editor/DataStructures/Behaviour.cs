@@ -395,7 +395,9 @@ namespace SPNATI_Character_Editor
 			{
 				Case selected = new Case("selected");
 				selected.AddStage(0);
-				selected.Lines.Add(_character.StartingLines[0]);
+				DialogueLine selectedLine = _character.StartingLines[0];
+				selectedLine.Pose = _character.PoseLibrary.GetPose(selectedLine.Image);
+				selected.Lines.Add(selectedLine);
 				AddWorkingCase(selected);
 
 				Case start = new Case("game_start");
@@ -404,7 +406,9 @@ namespace SPNATI_Character_Editor
 				{
 					for (int i = 1; i < _character.StartingLines.Count; i++)
 					{
-						start.Lines.Add(_character.StartingLines[i]);
+						DialogueLine l = _character.StartingLines[i];
+						l.Pose = _character.PoseLibrary.GetPose(l.Image);
+						start.Lines.Add(l);
 					}
 				}
 				else

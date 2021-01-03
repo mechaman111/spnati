@@ -82,7 +82,8 @@ namespace SPNATI_Character_Editor
 						{
 							throw new ImportLinesException($"Unrecognized response target: {ResponseTarget.Id}");
 						}
-						Case response = ResponseTarget.Case.CreateResponse(speaker, character);
+						Case source = ResponseTarget.Case;
+						Case response = source.CreateResponse(speaker, character);
 						if (response == null)
 						{
 							throw new ImportLinesException($"Unable to create a response for target: {ResponseTarget.Id}");

@@ -788,7 +788,6 @@ namespace SPNATI_Character_Editor
 					!string.IsNullOrEmpty(StartingLayers) ||
 					!string.IsNullOrEmpty(Gender) ||
 					!string.IsNullOrEmpty(FilterTag) ||
-					!string.IsNullOrEmpty(Status) ||
 					!string.IsNullOrEmpty(Pose);
 			}
 		}
@@ -798,6 +797,26 @@ namespace SPNATI_Character_Editor
 			variable = variable.Replace("~", "");
 			variable = variable.Trim();
 			return variable;
+		}
+
+		public void Simplify()
+		{
+			if (string.IsNullOrEmpty(SayingMarker))
+			{
+				return;
+			}
+			Status = null;
+			TimeInStage = null;
+			Stage = null;
+			SaidMarker = null;
+			NotSaidMarker = null;
+			Saying = null;
+			Hand = null;
+			Layers = null;
+			StartingLayers = null;
+			Gender = null;
+			FilterTag = null;
+			Pose = null;
 		}
 	}
 

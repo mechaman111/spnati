@@ -23,7 +23,7 @@ namespace SPNATI_Character_Editor.Controls
 		private const float TextBuffer = 0.1f; //90% height of textbox row
 		private const string FontName = "Trebuchet MS";
 		private const int ArrowSize = 15;
-
+		
 		private float _time;
 		private Mailbox _mailbox;
 		private Image _singleUseImage;
@@ -120,6 +120,7 @@ namespace SPNATI_Character_Editor.Controls
 			float size = BaseSize * (screenWidth / 1000f);
 			_textFont = new Font("Trebuchet MS", size == 0 ? BaseSize : size);
 			_italicFont = new Font(_textFont, FontStyle.Italic);
+			UpdateRichText();
 		}
 
 		private void UpdateSceneTransform()
@@ -156,14 +157,18 @@ namespace SPNATI_Character_Editor.Controls
 		public void SetText(DialogueLine line)
 		{
 			_line = line;
-			if (line == null || line.Text == null)
+			if (line == null || line.Text == null || string.IsNullOrEmpty(line.Text))
 			{
 				_text = null;
+				txtPreview.Text = "";
+				txtPreview.Visible = false;
 				_words = null;
 			}
 			else
 			{
+				txtPreview.Visible = true;
 				_text = line.Text;
+				UpdateRichText();
 				_words = GUIHelper.ParseWords(_text);
 				_percent = 0.5f;
 				if (!string.IsNullOrEmpty(line.Location) && line.Location.EndsWith("%"))
@@ -178,7 +183,26 @@ namespace SPNATI_Character_Editor.Controls
 			canvas.Invalidate();
 		}
 
-		public void SetMarkers(List<string> markers)
+		private void UpdateRichText()
+		{
+			string previewText = _text ?? "";
+			if (!Config.GetBoolean(Settings.DisablePreviewFormatting))
+			{
+				previewText = previewText.Replace("<i>", "\\i ")
+					.Replace("</i>", "\\i0 ")
+					.Replace("<b>", "\\b ")
+					.Replace("</b>", "\\b0 ")
+					.Replace("<br>", "\r\n")
+					.Replace("<br/>", "\r\n");
+			}
+			int fontSize = (int)(_textFont.SizeInPoints * 2);
+			string rtf = @"{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Trebuchet MS;}}\viewkind4\uc1\pard\sl220\slmult1\qc\f0\fs" + fontSize + @"\lang9 " +
+				previewText + @"}";
+			txtPreview.Rtf = rtf;
+			
+		}
+
+			public void SetMarkers(List<string> markers)
 		{
 			_markers = markers;
 		}
@@ -308,17 +332,23 @@ namespace SPNATI_Character_Editor.Controls
 				int topPadding = (int)(textboxHeight * TextBuffer);
 				textboxHeight -= topPadding;
 
-				RectangleF bounds = new RectangleF(TextMargin + TextBorder + TextPadding,
+				int boxWidth = canvas.Width;
+				int maxWidth = (int)(0.245f * 1.3333333f * screenHeight);
+				boxWidth = Math.Min(boxWidth, maxWidth);
+
+				RectangleF bounds = new RectangleF(TextMargin + TextBorder + TextPadding + canvas.Width / 2 - boxWidth / 2,
 								topPadding + TextBorder + TextPadding,
-								canvas.Width - TextMargin * 2 - TextPadding * 2,
+								boxWidth - TextMargin * 2 - TextPadding * 2,
 								textboxHeight - TextBorder * 2 - TextPadding * 2);
+
 				StringFormat sf = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
 				SizeF size = g.MeasureString(_text, _textFont, (int)bounds.Width, sf);
-				if (size.Height > bounds.Height)
+				if (txtPreview.Height > bounds.Height)
 				{
-					textboxHeight += (int)(size.Height - bounds.Height);
+					textboxHeight += (int)(txtPreview.Height - bounds.Height);
 				}
-				bounds.Height = Math.Max(size.Height, bounds.Height);
+				bounds.Height = Math.Max(txtPreview.Height, bounds.Height);
+				txtPreview.Top = (int)(bounds.Top + bounds.Height / 2 - txtPreview.Height / 2) + 2;
 
 				//group words into lines
 				List<List<Word>> lines = new List<List<Word>>();
@@ -382,54 +412,8 @@ namespace SPNATI_Character_Editor.Controls
 				const int TopOffset = 4;
 				using (SolidBrush br = new SolidBrush(SkinManager.Instance.CurrentSkin.FieldBackColor))
 				{
-					g.FillRectangle(br, TextMargin, topPadding + TopOffset, canvas.Width - TextMargin * 2, textboxHeight - TopOffset);
-
-					if (formatText)
-					{
-						using (SolidBrush fr = new SolidBrush(SkinManager.Instance.CurrentSkin.Surface.ForeColor))
-						{
-							//print each line
-							float requiredHeight = height * lines.Count;
-							float lineY = bounds.Y + bounds.Height / 2 - requiredHeight / 2;
-							italics = false;
-							foreach (List<Word> workingLine in lines)
-							{
-								float totalWidth = workingLine.Sum(w => w.Width);
-								float lineX = bounds.X + bounds.Width / 2 - totalWidth / 2;
-								for (int j = 0; j < workingLine.Count; j++)
-								{
-									Word word = workingLine[j];
-									switch (word.Formatter)
-									{
-										case FormatMarker.ItalicOn:
-											italics = true;
-											break;
-										case FormatMarker.ItalicOff:
-											italics = false;
-											break;
-										case FormatMarker.None:
-											string text = word.Text;
-											float width = word.Width;
-											Font font = (italics ? _italicFont : _textFont);
-											g.DrawString(text, font, fr, lineX, lineY);
-											lineX += width;
-											break;
-									}
-
-								}
-								lineY += height;
-							}
-						}
-					}
-					else
-					{
-						using (SolidBrush fr = new SolidBrush(SkinManager.Instance.CurrentSkin.Surface.ForeColor))
-						{
-							g.DrawString(_text, _textFont, fr, bounds, sf);
-						}
-					}
-
-					g.DrawRectangle(_textBorder, TextMargin, topPadding + TopOffset, canvas.Width - TextMargin * 2, textboxHeight - TopOffset);
+					g.FillRectangle(br, bounds.Left - TextMargin - TextPadding, topPadding + TopOffset, bounds.Width + TextMargin * 2 + TextPadding * 2, textboxHeight - TopOffset);
+					g.DrawRectangle(_textBorder, bounds.Left - TextMargin - TextPadding, topPadding + TopOffset, bounds.Width + TextMargin * 2 + TextPadding * 2, textboxHeight - TopOffset);
 					if (_line.Direction != "none")
 					{
 						Point[] triangle = new Point[] {
@@ -442,6 +426,8 @@ namespace SPNATI_Character_Editor.Controls
 						g.DrawLine(_textBorder, triangle[1], triangle[2]);
 					}
 				}
+
+				sf.Dispose();
 			}
 		}
 
@@ -484,6 +470,13 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void CharacterImageBox_Resize(object sender, EventArgs e)
 		{
+			int screenHeight = canvas.Height - ScreenMargin * 2;
+			int boxWidth = canvas.Width;
+			int maxWidth = (int)(0.245f * 1.3333333f * screenHeight);
+			boxWidth = Math.Min(boxWidth, maxWidth);
+			boxWidth -= TextBorder * 2 + TextPadding * 2;
+			txtPreview.Width = boxWidth;
+			txtPreview.Left = canvas.Width / 2 - txtPreview.Width / 2;
 			UpdateFont();
 			UpdateSceneTransform();
 		}
@@ -491,6 +484,13 @@ namespace SPNATI_Character_Editor.Controls
 		public void OnUpdateSkin(Skin skin)
 		{
 			canvas.BackColor = skin.Background.Normal;
+			txtPreview.BackColor = skin.FieldBackColor;
+			txtPreview.ForeColor = skin.Surface.ForeColor;
+		}
+
+		private void txtPreview_ContentsResized(object sender, ContentsResizedEventArgs e)
+		{
+			((RichTextBox)sender).Height = e.NewRectangle.Height + 5;
 		}
 	}
 }
