@@ -10,6 +10,7 @@ namespace SPNATI_Character_Editor.Controls
 {
 	[Activity(typeof(Character), 1)]
 	[Activity(typeof(Costume), 5)]
+	[Tutorial("https://www.youtube.com/watch?v=48ak4Ao6p5I")]
 	public partial class WardrobeEditor : Activity
 	{
 		private IWardrobe _wardrobe;

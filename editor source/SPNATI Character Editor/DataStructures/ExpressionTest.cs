@@ -35,6 +35,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		public static readonly string[] Operators = new string[] { "==", "<=", "<", ">", ">=", "!=" };
+		public static readonly string[] OperatorsWithRange = new string[] { "==", "<=", "<", ">", ">=", "!=", "@" };
 
 		public ExpressionTest() { }
 

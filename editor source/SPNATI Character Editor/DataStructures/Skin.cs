@@ -2,8 +2,8 @@
 using SPNATI_Character_Editor.IO;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -22,17 +22,26 @@ namespace SPNATI_Character_Editor
 	/// <summary>
 	/// Alternate skin data stored in costume.xml
 	/// </summary>
-	public class Costume : IRecord, IWardrobe, ISkin, IHookSerialization
+	public class Costume : IRecord, ISkin, IHookSerialization
 	{
+		public Costume()
+		{
+			Labels = new List<StageSpecificValue>();
+		}
+
 		[XmlElement("id")]
-		public string Id;
+		public string Id { get; set; }
 
 		[XmlElement("label")]
-		public List<StageSpecificValue> Labels = new List<StageSpecificValue>();
+		public List<StageSpecificValue> Labels { get; set; }
 
 		[XmlArray("tags")]
 		[XmlArrayItem("tag")]
-		public List<SkinTag> Tags = new List<SkinTag>();
+		public List<CharacterTag> Tags
+		{
+			get;
+			set;
+		}
 
 		[XmlElement("folder")]
 		public List<StageSpecificValue> Folders = new List<StageSpecificValue>();
@@ -145,7 +154,7 @@ namespace SPNATI_Character_Editor
 		{
 			return Name.CompareTo(other.Name);
 		}
-		
+
 		/// <summary>
 		/// Links or re-links a character whose link had been broken
 		/// </summary>
@@ -287,34 +296,135 @@ namespace SPNATI_Character_Editor
 			get { return Poses; }
 			set { Poses = value; }
 		}
-	}
 
-	/// <summary>
-	/// For added realism on character models?
-	/// </summary>
-	public class SkinTag : IComparable<SkinTag>
-	{
-		[XmlText]
-		public string Name;
-
-		[DefaultValue(false)]
-		[XmlAttribute("remove")]
-		public bool Remove;
-
-		public override string ToString()
+		public string Gender
 		{
-			return $"{Name}{(Remove ? "(-)" : "")}";
+			get { return Character.Gender; }
 		}
 
-		public int CompareTo(SkinTag other)
+		public List<CharacterTag> GetTags()
 		{
-			return Name.CompareTo(other.Name);
+			//Use the character's tags
+			List<CharacterTag> list = new List<CharacterTag>();
+			foreach (CharacterTag tag in Character.Tags)
+			{
+				CharacterTag copy = tag.Clone() as CharacterTag;
+				list.Add(copy);
+			}
+
+			HashSet<string> removed = new HashSet<string>();
+
+			//now override it with the skin changes
+			foreach (CharacterTag tag in Tags)
+			{
+				//remove all previous entries
+				if (!removed.Contains(tag.Tag))
+				{
+					list = list.Where(t => t.Tag != tag.Tag).ToList();
+					removed.Add(tag.Tag);
+				}
+
+				if (!tag.Remove)
+				{
+					list.Add(tag);
+				}
+			}
+
+			return list;
 		}
 
-		public SkinTag() { }
-		public SkinTag(string name)
+		/// <summary>
+		/// Combines tags with different intervals into one tag and an interval string per tag
+		/// </summary>
+		/// <param name="tags"></param>
+		/// <returns></returns>
+		private Dictionary<string, Tuple<string, List<CharacterTag>>> GetTagsWithInterval(List<CharacterTag> tags)
 		{
-			Name = name;
+			Dictionary<string, Tuple<List<int>, List<CharacterTag>>> mainTags = new Dictionary<string, Tuple<List<int>, List<CharacterTag>>>();
+			foreach (CharacterTag tag in tags)
+			{
+				string key = tag.Tag;
+				Tuple<List<int>, List<CharacterTag>> group;
+				List<int> stages;
+				List<CharacterTag> groupTags;
+				if (mainTags.TryGetValue(key, out group))
+				{
+					stages = group.Item1;
+					groupTags = group.Item2;
+				}
+				else
+				{
+					stages = new List<int>();
+					groupTags = new List<CharacterTag>();
+				}
+
+				int from;
+				int to;
+				if (!string.IsNullOrEmpty(tag.From) && !string.IsNullOrEmpty(tag.To) && int.TryParse(tag.From, out from) && int.TryParse(tag.To, out to))
+				{
+					for (int s = from; s <= to; s++)
+					{
+						stages.Add(s);
+					}
+				}
+				else
+				{
+					for (int s = 0; s < Character.Layers + Clothing.ExtraStages; s++)
+					{
+						stages.Add(s);
+					}
+				}
+				groupTags.Add(tag);
+
+				mainTags[key] = new Tuple<List<int>, List<CharacterTag>>(stages, groupTags);
+			}
+
+			Dictionary<string, Tuple<string, List<CharacterTag>>> output = new Dictionary<string, Tuple<string, List<CharacterTag>>>();
+			foreach (KeyValuePair<string, Tuple<List<int>, List<CharacterTag>>> kvp in mainTags)
+			{
+				string interval = GUIHelper.ListToString(kvp.Value.Item1);
+				output[kvp.Key] = new Tuple<string, List<CharacterTag>>(interval, kvp.Value.Item2);
+			}
+
+			return output;
+		}
+
+		public void AddTags(List<CharacterTag> tags)
+		{
+			Dictionary<string, Tuple<string, List<CharacterTag>>> mainTags = GetTagsWithInterval(Character.Tags);
+			Dictionary<string, Tuple<string, List<CharacterTag>>> skinTags = GetTagsWithInterval(tags);
+
+			foreach (KeyValuePair<string, Tuple<string, List<CharacterTag>>> kvp in skinTags)
+			{
+				string key = kvp.Key;
+				string interval = kvp.Value.Item1;
+				List<CharacterTag> tagList = kvp.Value.Item2;
+				Tuple<string, List<CharacterTag>> source;
+				if (mainTags.TryGetValue(key, out source) && source.Item1 == interval)
+				{
+					mainTags.Remove(key);
+					continue; //same stages are present between main skin and this one, so ignore it
+				}
+
+				//different stages, so add the tags
+				Tags.AddRange(tagList);
+
+				mainTags.Remove(key);
+			}
+
+			//anything left in the main skin's dictionary is a tag that should be marked for removal
+			foreach (string tag in mainTags.Keys)
+			{
+				if (tag == CharacterDatabase.GetId(Character))
+				{
+					continue; //older characters might have this tag - ignore it
+				}
+				CharacterTag remover = new CharacterTag(tag);
+				remover.Remove = true;
+				Tags.Add(remover);
+			}
+
+			Tags.Sort();
 		}
 	}
 

@@ -73,7 +73,7 @@ namespace SPNATI_Character_Editor.Providers
 
 		public void SetFormatInfo(LookupFormat info)
 		{
-			info.Columns = new string[] { "Name", "Folder", "Last Update", "Writer", "Status" };
+			info.Columns = new string[] { "Name", "Folder", "Last Update", "Version", "Writer", "Status" };
 			if (_skinContext != null)
 			{
 				info.Caption = "Who Is This Alternate Outfit For?";
@@ -107,6 +107,7 @@ namespace SPNATI_Character_Editor.Providers
 				}
 				if (NameMatches(c.Name, text) ||
 					NameMatches(c.FolderName, text) ||
+					NameMatches(c.FirstName, text) ||
 					c.Labels.Any(l => NameMatches(l.Value, text)))
 				{
 					//partial match
@@ -138,7 +139,7 @@ namespace SPNATI_Character_Editor.Providers
 			Character c = record as Character;
 			DateTime updateTime = DateTimeOffset.FromUnixTimeMilliseconds(c.Metadata.LastUpdate).DateTime.ToLocalTime();
 			string lastUpdate = GetTimeSince(updateTime, DateTime.Now);
-			return new ListViewItem(new string[] { record.Name, record.Key, lastUpdate, c.Metadata.Writer, status == OpponentStatus.Testing || status == OpponentStatus.Main ? "" : status });
+			return new ListViewItem(new string[] { record.Name, record.Key, lastUpdate, c.Version, c.Metadata.Writer, status == OpponentStatus.Testing || status == OpponentStatus.Main ? "" : status });
 		}
 
 		public void SetContext(object context)

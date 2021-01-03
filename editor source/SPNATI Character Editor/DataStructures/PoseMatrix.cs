@@ -2,13 +2,16 @@
 using Desktop.DataStructures;
 using ImagePipeline;
 using KisekaeImporter;
+using KisekaeImporter.DataStructures.Kisekae;
 using KisekaeImporter.ImageImport;
+using KisekaeImporter.SubCodes;
 using SPNATI_Character_Editor.Controls.EditControls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
@@ -325,7 +328,7 @@ namespace SPNATI_Character_Editor.DataStructures
 						key = metadata.ImageKey;
 						PoseEntry cell = new PoseEntry(metadata);
 						cell.Key = key;
-						globalSheet.Stages[0].Poses.Add(cell);
+						globalSheet.Stages[0].AddCell(cell);
 					}
 				}
 			}
@@ -362,7 +365,7 @@ namespace SPNATI_Character_Editor.DataStructures
 						entry.Key = emotion.Key;
 						entry.Code = emotion.Code;
 						entry.Crop = emotion.Crop;
-						poseStage.Poses.Add(entry);
+						poseStage.AddCell(entry);
 					}
 				}
 			}
@@ -917,8 +920,93 @@ namespace SPNATI_Character_Editor.DataStructures
 			KisekaeCode modelCode = null;
 			if (baseCode != null || !string.IsNullOrEmpty(Stage.Code))
 			{
-				Emotion emotion = new Emotion(Key, Code, "", "", "", "");
-				modelCode = PoseTemplate.CreatePose(baseCode, new StageTemplate(Stage.Code ?? ""), emotion);
+				KisekaeCode stageCode = new KisekaeCode(Stage.Code ?? "");
+				KisekaeCode poseCode = new KisekaeCode(Code ?? "");
+
+				if (baseCode == null)
+				{
+					baseCode = new KisekaeCode();
+				}
+
+				List<KisekaeCode> stages = new List<KisekaeCode>();
+				foreach (PoseStage stage in sheet.Stages)
+				{
+					if (stage == Stage) { continue; }
+					stages.Add(new KisekaeCode(stage.Code ?? ""));
+				}
+
+				modelCode = new KisekaeCode("", true);
+				modelCode.MergeIn(baseCode, false, false);
+				modelCode.MergeIn(stageCode, false, false);
+
+				//try to determine which assets from the pose don't apply
+				for (int i = 0; i < poseCode.Models.Length; i++)
+				{
+					int assetIndex = 0;
+					KisekaeModel poseModel = poseCode.Models[i];
+					KisekaeExternalParts poseParts = poseModel?.GetComponent<KisekaeExternalParts>();
+					KisekaeModel stageModel = (stageCode.Models.Length > i ? stageCode.Models[i] : null);
+					KisekaeModel baseModel = null;
+					if (baseCode != null)
+					{
+						baseModel = (baseCode.Models.Length > i ? baseCode.Models[i] : null);
+					}
+					KisekaeExternalParts baseParts = baseModel?.GetComponent<KisekaeExternalParts>();
+					KisekaeExternalParts stageParts = stageModel?.GetComponent<KisekaeExternalParts>();
+					if (poseParts != null)
+					{
+						for (int j = 0; j < 100; j++)
+						{
+							if (poseParts.HasPart(j))
+							{
+								KisekaeImage img = poseParts.GetPart(j);
+								if (!img.IsEmpty)
+								{
+									bool inBase = baseParts?.HasPart(j) == true;
+									bool inStage = stageParts?.HasPart(j) == true;
+									bool keep = inBase || inStage;// || stages.Any(s =>
+																  //{
+																  //	//if the part also exists in the base or stage OR it doesn't exist in any other stage, then keep it
+																  //	//conditions are set up this way to prevent checking other stages if we don't need to
+																  //	KisekaeExternalParts parts = s.GetComponent<KisekaeExternalParts>();
+																  //	return parts?.HasPart(j) == true;
+																  //});
+
+									//the above is commented out because of complications with how assets are represented in the code. Namely, there's no direct mapping between a slot and an asset
+									//We might be able to resolve this problem by tracking our own map for each matrix component and then sorting the slots at the end of the merge.
+									//ex. base has poses in f00 and f02, which would map to Assets[0] and Assets[1]. Pose has pose in f00, f01 which map to Assets[0], [1].
+									//Final output would be f00 -> pose.Assets[0], f01 -> pose.Assets[1], f02 -> base.Assets[1]
+
+									if (keep)
+									{
+										assetIndex++;
+									}
+									else if (assetIndex < poseModel.Assets.Count)
+									{
+										poseModel.Assets.RemoveAt(assetIndex);
+									}
+								}
+							}
+						}
+					}
+				}
+
+				//Remove any belts and such that appear in the pose but not in the clothing or base
+				foreach (KisekaeSubCode subcode in poseCode.GetSubCodesOfType<IPoseable>())
+				{
+					bool inBase = baseCode.HasSubCode(subcode.Id, subcode.Index);
+					bool inStage = stageCode.HasSubCode(subcode.Id, subcode.Index);
+					if (!inBase && !inStage)
+					{
+						//if it's not in the base or stage, remove it IF it's in at least one other stage, because that implies that the pose code is being recycled across stages for convenience
+						if (stages.Any(s => s.HasSubCode(subcode.Id, subcode.Index)))
+						{
+							subcode.Reset();
+						}
+					}
+				}
+
+				modelCode.MergeIn(poseCode, false, true);
 			}
 			else
 			{

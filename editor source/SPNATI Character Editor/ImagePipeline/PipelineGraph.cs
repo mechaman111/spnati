@@ -435,6 +435,10 @@ namespace ImagePipeline
 			};
 
 			Dictionary<int, PipelineResult> processedNodes = new Dictionary<int, PipelineResult>();
+			if (node != MasterNode)
+			{
+				processedNodes = _processedNodes;
+			}
 			LinkedList<PipelineNode> nodesToProcess = new LinkedList<PipelineNode>();
 			nodesToProcess.AddLast(node);
 			while (nodesToProcess.Count > 0)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Character), 0)]
+	[Tutorial("https://www.youtube.com/watch?v=48ak4Ao6p5I")]
 	public partial class MetadataEditor : Activity
 	{
 		private bool _populatingImages;

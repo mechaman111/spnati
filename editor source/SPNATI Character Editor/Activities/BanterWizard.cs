@@ -8,6 +8,7 @@ namespace SPNATI_Character_Editor.Activities
 {
 	[Spacer]
 	[Activity(typeof(Character), 300, DelayRun = true, Caption = "Banter Wizard")]
+	[Tutorial("https://youtu.be/wyKiC3bMbeY?t=19")]
 	public partial class BanterWizard : Activity
 	{
 		private Character _character;

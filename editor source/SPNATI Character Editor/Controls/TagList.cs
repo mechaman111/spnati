@@ -13,10 +13,10 @@ namespace SPNATI_Character_Editor.Controls
 
 		private AutoCompleteStringCollection _tagAutoComplete = new AutoCompleteStringCollection();
 		private BindableTagList _binding;
-		private Character _character;
+		private ISkin _character;
 		private bool _adding;
 
-		public void SetData(BindableTagList dataSource, Character character)
+		public void SetData(BindableTagList dataSource, ISkin character)
 		{
 			if (_binding != null)
 			{
@@ -214,7 +214,7 @@ namespace SPNATI_Character_Editor.Controls
 
 					//default stages to All
 					_adding = true;
-					for (int i = 0; i < _character.Layers + Clothing.ExtraStages; i++)
+					for (int i = 0; i < _character.Character.Layers + Clothing.ExtraStages; i++)
 					{
 						tag.Stages.Add(i);
 					}

@@ -66,6 +66,11 @@ namespace SPNATI_Character_Editor
 		[XmlArrayItem("marker")]
 		public List<MarkerOperation> Markers = new List<MarkerOperation>();
 
+		[DefaultValue(false)]
+		[XmlAttribute("allowSceneSkip")]
+		[Boolean(DisplayName = "Allow Scene Skip", Description = "Allow the player to skip between scenes", GroupOrder = 15)]
+		public bool AllowSceneSkip;
+
 		[XmlElement("scene")]
 		public List<Scene> Scenes = new List<Scene>();
 

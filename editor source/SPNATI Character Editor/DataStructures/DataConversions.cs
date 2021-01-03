@@ -300,6 +300,12 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		public static void ConvertCase(Case theCase, Character character)
+		{
+			ConvertCase5_2(theCase);
+			ConvertCase5_8(theCase, character);
+		}
+
 		/// <summary>
 		/// Converts a case to use TargetConditions where it previously used direct properties
 		/// </summary>

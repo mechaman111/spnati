@@ -57,7 +57,17 @@ namespace Desktop.CommonControls.PropertyControls
 				}
 			}
 
-			recField.RecordContext = Context;
+			if (Bindings.Count > 0)
+			{
+				string contextBinding = Bindings[0];
+				object data = GetBindingValue(Bindings[0]);
+				recField.RecordContext = data;
+			}
+			else
+			{
+				recField.RecordContext = Context;
+			}
+
 			if (DataType == typeof(string))
 			{
 				recField.RecordKey = GetValue()?.ToString();
@@ -66,6 +76,14 @@ namespace Desktop.CommonControls.PropertyControls
 			{
 				IRecord record = GetValue() as IRecord;
 				recField.Record = record;
+			}
+		}
+
+		protected override void OnBindingUpdated(string property)
+		{
+			if (Bindings.Count > 0 && property == Bindings[0])
+			{
+				recField.RecordContext = GetBindingValue(property);
 			}
 		}
 

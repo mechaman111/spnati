@@ -3,9 +3,11 @@
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Character), 2)]
+	[Activity(typeof(Costume), 2)]
+	[Tutorial("https://www.youtube.com/watch?v=48ak4Ao6p5I")]
 	public partial class TagEditor : Activity
 	{
-		private Character _character;
+		private ISkin _character;
 		private BindableTagList _bindings;
 		private bool _pendingWardrobeChange;
 		private bool _initialized;
@@ -22,7 +24,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		protected override void OnInitialize()
 		{
-			_character = Record as Character;
+			_character = Record as ISkin;
 			SubscribeWorkspace(WorkspaceMessages.WardrobeUpdated, OnWardrobeChanged);
 			SubscribeWorkspace(WorkspaceMessages.SkinChanged, OnSkinChanged);
 		}

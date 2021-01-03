@@ -738,9 +738,10 @@ namespace Desktop.Skinning
 		private Point CalculateDropPosition()
 		{
 			Point point = new Point(0, this.Height);
-			if ((this.PointToScreen(new Point(0, 0)).Y + this.Height + _controlHost.Height) > Screen.PrimaryScreen.WorkingArea.Height)
+			if ((this.PointToScreen(new Point(0, 0)).Y + this.Height + _controlHost.Height) > Screen.FromControl(this).WorkingArea.Bottom)
 			{
-				point.Y = -this._controlHost.Height - 7;
+				int min = PointToScreen(new Point(0, 0)).Y - Screen.FromControl(this).WorkingArea.Top;
+				point.Y = Math.Max(-min, -this._controlHost.Height - 7);
 			}
 			return point;
 		}

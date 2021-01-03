@@ -793,6 +793,10 @@ namespace Desktop
 				activity.Workspace.Activate();
 				activity.Activate();
 				_activationOrder.Add(activity);
+				if (activity.Pane == WorkspacePane.Main)
+				{
+					PostOffice.SendMessage(CoreDesktopMessages.ActivityChanged, activity);
+				}
 			}
 
 			Cursor.Current = Cursors.Default;

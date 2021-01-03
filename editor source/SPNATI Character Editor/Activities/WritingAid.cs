@@ -12,6 +12,7 @@ namespace SPNATI_Character_Editor.Activities
 	/// Activity for finding noteworthy dialogue from other opponents and writing dialogue for it
 	/// </summary>
 	[Activity(typeof(Character), 310, DelayRun = true, Caption = "Writing Aid")]
+	[Tutorial("https://youtu.be/wyKiC3bMbeY?t=143")]
 	public partial class WritingAid : Activity
 	{
 		private const string SuggestionPreference = "WritingSuggestions";
@@ -359,16 +360,22 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			else
 			{
-				ResponseSetupForm setup = new ResponseSetupForm();
-				setup.SetData(_character, _activeSituation.LinkedCase, _response);
-				DialogResult result = setup.ShowDialog();
-				if (result == DialogResult.Cancel)
+				using (ResponseSetupForm setup = new ResponseSetupForm())
 				{
-					_response = null;
-					return;
-				}
+					setup.SetData(_character, _activeSituation.LinkedCase, _response);
+					DialogResult result = setup.ShowDialog();
+					if (result == DialogResult.Cancel)
+					{
+						_response = null;
+						return;
+					}
 
-				_editorData.MarkResponse(_activeCharacter, _activeSituation.LinkedCase, _response);
+					if (!Config.UseFullResponses)
+					{
+						_response.SimplifyConditions();
+					}
+					_editorData.MarkResponse(_activeCharacter, _activeSituation.LinkedCase, _response);
+				}
 			}
 
 			if (_response.Stages.Count == 0)
@@ -494,7 +501,7 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_activeSituation == null || _activeSituation.Id == 0) { return; }
 
-			if (_editorData.HasResponse(_activeCharacter, _activeSituation.Id))
+			if (!_editorData.HasResponse(_activeCharacter, _activeSituation.Id))
 			{
 				_editorData.MarkResponse(_activeCharacter, _activeSituation.Id);
 				UpdateResponseCount();

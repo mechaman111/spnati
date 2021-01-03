@@ -1,11 +1,11 @@
 ﻿using Desktop;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Costume), 0)]
+	[Tutorial("https://www.youtube.com/watch?v=35jIow_jMHE")]
 	public partial class SkinEditor : Activity
 	{
 		private bool _linkDataChanged = false;

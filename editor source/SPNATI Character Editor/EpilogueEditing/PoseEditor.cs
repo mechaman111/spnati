@@ -12,6 +12,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 {
 	[Activity(typeof(Character), 210)]
 	[Activity(typeof(Costume), 210)]
+	[Tutorial("https://www.youtube.com/watch?v=eRbmAf45Tn8&list=PL171KBpYNIxO2uorihSjYWGkJ9ybVZHzl")]
 	public partial class PoseEditor : Activity
 	{
 		private ISkin _character;

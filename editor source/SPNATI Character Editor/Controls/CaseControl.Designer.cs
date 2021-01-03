@@ -62,6 +62,8 @@
 			this.containerDialogue = new Desktop.Skinning.SkinnedPanel();
 			this.tabs = new Desktop.Skinning.SkinnedTabControl();
 			this.tabDialogue = new System.Windows.Forms.TabPage();
+			this.tsDialogue = new System.Windows.Forms.ToolStrip();
+			this.tsAddVariable = new System.Windows.Forms.ToolStripButton();
 			this.lblAvailableVars = new Desktop.Skinning.SkinnedLabel();
 			this.cmdCopyAll = new Desktop.Skinning.SkinnedButton();
 			this.cmdPasteAll = new Desktop.Skinning.SkinnedButton();
@@ -87,6 +89,7 @@
 			this.containerDialogue.SuspendLayout();
 			this.tabs.SuspendLayout();
 			this.tabDialogue.SuspendLayout();
+			this.tsDialogue.SuspendLayout();
 			this.tabNotes.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -591,6 +594,7 @@
 			// tabDialogue
 			// 
 			this.tabDialogue.BackColor = System.Drawing.Color.White;
+			this.tabDialogue.Controls.Add(this.tsDialogue);
 			this.tabDialogue.Controls.Add(this.lblAvailableVars);
 			this.tabDialogue.Controls.Add(this.cmdCopyAll);
 			this.tabDialogue.Controls.Add(this.cmdPasteAll);
@@ -603,6 +607,29 @@
 			this.tabDialogue.TabIndex = 0;
 			this.tabDialogue.Text = "Dialogue";
 			// 
+			// tsDialogue
+			// 
+			this.tsDialogue.Dock = System.Windows.Forms.DockStyle.None;
+			this.tsDialogue.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.tsDialogue.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsAddVariable});
+			this.tsDialogue.Location = new System.Drawing.Point(3, 4);
+			this.tsDialogue.Name = "tsDialogue";
+			this.tsDialogue.Size = new System.Drawing.Size(26, 25);
+			this.tsDialogue.TabIndex = 43;
+			this.tsDialogue.Tag = "Surface";
+			this.tsDialogue.Text = "toolStrip1";
+			// 
+			// tsAddVariable
+			// 
+			this.tsAddVariable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsAddVariable.Image = global::SPNATI_Character_Editor.Properties.Resources.AddVariable;
+			this.tsAddVariable.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsAddVariable.Name = "tsAddVariable";
+			this.tsAddVariable.Size = new System.Drawing.Size(23, 22);
+			this.tsAddVariable.Text = "Variable Wizard";
+			this.tsAddVariable.Click += new System.EventHandler(this.tsAddVariable_Click);
+			// 
 			// lblAvailableVars
 			// 
 			this.lblAvailableVars.AutoSize = true;
@@ -610,7 +637,7 @@
 			this.lblAvailableVars.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
 			this.lblAvailableVars.Highlight = Desktop.Skinning.SkinnedHighlight.Label;
 			this.lblAvailableVars.Level = Desktop.Skinning.SkinnedLabelLevel.Label;
-			this.lblAvailableVars.Location = new System.Drawing.Point(2, 8);
+			this.lblAvailableVars.Location = new System.Drawing.Point(33, 8);
 			this.lblAvailableVars.Name = "lblAvailableVars";
 			this.lblAvailableVars.Size = new System.Drawing.Size(158, 13);
 			this.lblAvailableVars.TabIndex = 32;
@@ -751,6 +778,8 @@
 			this.tabs.ResumeLayout(false);
 			this.tabDialogue.ResumeLayout(false);
 			this.tabDialogue.PerformLayout();
+			this.tsDialogue.ResumeLayout(false);
+			this.tsDialogue.PerformLayout();
 			this.tabNotes.ResumeLayout(false);
 			this.tabNotes.PerformLayout();
 			this.ResumeLayout(false);
@@ -801,5 +830,7 @@
 		private Desktop.Skinning.SkinnedPanel skinnedPanel2;
 		private Desktop.Skinning.SkinnedCheckBox chkBackground;
 		private Desktop.Skinning.SkinnedCheckBox chkPlayOnce;
+		private System.Windows.Forms.ToolStrip tsDialogue;
+		private System.Windows.Forms.ToolStripButton tsAddVariable;
 	}
 }

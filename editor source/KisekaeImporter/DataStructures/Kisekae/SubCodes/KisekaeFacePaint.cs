@@ -12,6 +12,7 @@
 			Rotation = paint.Rotation;
 			OffsetX = paint.OffsetX;
 			OffsetY = paint.OffsetY;
+			Alpha = paint.Alpha;
 		}
 
 		public void Pose(IPoseable pose)

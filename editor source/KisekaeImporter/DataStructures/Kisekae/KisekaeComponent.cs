@@ -147,7 +147,7 @@ namespace KisekaeImporter
 			KisekaeSubCode existingCode = GetSubCode(prefix);
 			if (existingCode == null || !code.IsEmpty || applyEmpties)
 			{
-				if (poseOnly && existingCode is IPoseable)
+				if (poseOnly && existingCode is IPoseable && !existingCode.IsEmpty)
 				{
 					((IPoseable)existingCode).Pose(code as IPoseable);
 				}

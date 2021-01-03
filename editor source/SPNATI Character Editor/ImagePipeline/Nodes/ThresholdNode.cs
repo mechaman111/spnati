@@ -70,7 +70,7 @@ namespace ImagePipeline
 				{
 					Color color = ShaderFunctions.Desaturate(img.GetPixel(x, y), 1.0f);
 					float threshold = ShaderFunctions.Saturate(floatReader.Get(x, y));
-					float gray = color.R / 255.0f;
+					float gray = color.R / 255.0f * color.A / 255.0f;
 					if (useAlpha)
 					{
 						if (gray < threshold)

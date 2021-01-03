@@ -59,7 +59,7 @@ namespace SPNATI_Character_Editor.Providers
 			string folder = $"opponents/reskins/{key}/";
 			skin.Folders.Add(new StageSpecificValue(0, folder));
 
-			skin.Tags.Add(new SkinTag("alternative_skin"));
+			skin.Tags.Add(new CharacterTag("alternative_skin"));
 			TagDatabase.AddTag(skin.Id);
 
 			//Link up basic information with the source character

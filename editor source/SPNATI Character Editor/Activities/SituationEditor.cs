@@ -7,6 +7,7 @@ using System.Windows.Forms;
 namespace SPNATI_Character_Editor.Activities
 {
 	[Activity(typeof(Character), 305, DelayRun = true, Caption = "Situations")]
+	[Tutorial("https://youtu.be/wyKiC3bMbeY?t=143")]
 	public partial class SituationEditor : Activity
 	{
 		private Character _character;

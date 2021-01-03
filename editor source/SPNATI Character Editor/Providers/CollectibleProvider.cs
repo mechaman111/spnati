@@ -17,7 +17,18 @@ namespace SPNATI_Character_Editor.Providers
 
 		public void SetContext(object context)
 		{
-			_character = context as Character;
+			if (context != null && context.GetType() == typeof(string))
+			{
+				_character = CharacterDatabase.Get((string)context);
+				if (_character is CachedCharacter)
+				{
+					_character = CharacterDatabase.Load((string)context);
+				}
+			}
+			else
+			{
+				_character = context as Character;
+			}
 		}
 
 		public bool TrackRecent

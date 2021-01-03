@@ -10,7 +10,8 @@ namespace SPNATI_Character_Editor
 		private Dictionary<string, BindableTag> _bindings = new Dictionary<string, BindableTag>();
 		private HashSet<BindableTag> _modifyingTags = new HashSet<BindableTag>();
 
-		public Character _character;
+		public ISkin _character;
+		private List<CharacterTag> _characterTags;
 
 		/// <summary>
 		/// Raised when at least one stage is added to a tag
@@ -25,9 +26,10 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public event EventHandler<BindableTag> TagModified;
 
-		public BindableTagList(Character character)
+		public BindableTagList(ISkin character)
 		{
 			_character = character;
+			_characterTags = character.GetTags();
 		}
 
 		public BindableTag Get(string tag)
@@ -45,7 +47,7 @@ namespace SPNATI_Character_Editor
 				Stages_CollectionChanged(bindable, e);
 			};
 
-			foreach (CharacterTag characterTag in _character.Tags.Where(t => t.Tag == tag))
+			foreach (CharacterTag characterTag in _characterTags.Where(t => t.Tag == tag))
 			{
 				int from = -1;
 				int to = -1;
@@ -63,7 +65,7 @@ namespace SPNATI_Character_Editor
 				}
 				else
 				{
-					to = _character.Layers + Clothing.ExtraStages - 1;
+					to = _character.Character.Layers + Clothing.ExtraStages - 1;
 				}
 				for (int i = from; i <= to; i++)
 				{
@@ -168,17 +170,16 @@ namespace SPNATI_Character_Editor
 		public void SaveIntoCharacter()
 		{
 			_character.Tags.Clear();
+			List<CharacterTag> tags = new List<CharacterTag>();
 			foreach (KeyValuePair<string, BindableTag> kvp in _bindings)
 			{
 				BindableTag bindable = kvp.Value;
 				if (bindable.Stages.Count > 0)
 				{
-					foreach (CharacterTag tag in bindable.GetCharacterTags(_character))
-					{
-						_character.Tags.Add(tag);
-					}
+					tags.AddRange(bindable.GetCharacterTags(_character));
 				}
 			}
+			_character.AddTags(tags);
 		}
 
 		public IEnumerable<BindableTag> GetPopulated()

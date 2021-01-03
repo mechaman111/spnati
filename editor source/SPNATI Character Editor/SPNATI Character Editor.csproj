@@ -169,6 +169,12 @@
     <Compile Include="Activities\DataRecovery.Designer.cs">
       <DependentUpon>DataRecovery.cs</DependentUpon>
     </Compile>
+    <Compile Include="Activities\DeckEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Activities\DeckEditor.Designer.cs">
+      <DependentUpon>DeckEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Activities\DialogueEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -222,12 +228,6 @@
     </Compile>
     <Compile Include="Activities\SkinEditor.Designer.cs">
       <DependentUpon>SkinEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Activities\SkinTagEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Activities\SkinTagEditor.Designer.cs">
-      <DependentUpon>SkinTagEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Activities\SpellCheck.cs">
       <SubType>UserControl</SubType>
@@ -551,7 +551,9 @@
       <DependentUpon>GraphEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Pipelines\NodeControls\INodeControl.cs" />
-    <Compile Include="Controls\Pipelines\NodeControls\NodeBooleanControl.cs" />
+    <Compile Include="Controls\Pipelines\NodeControls\NodeBooleanControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Pipelines\NodeControls\NodeBooleanControl.Designer.cs">
       <DependentUpon>NodeBooleanControl.cs</DependentUpon>
     </Compile>
@@ -561,7 +563,9 @@
     <Compile Include="Controls\Pipelines\NodeControls\NodeCellControl.Designer.cs">
       <DependentUpon>NodeCellControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Pipelines\NodeControls\NodeColorControl.cs" />
+    <Compile Include="Controls\Pipelines\NodeControls\NodeColorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Pipelines\NodeControls\NodeColorControl.Designer.cs">
       <DependentUpon>NodeColorControl.cs</DependentUpon>
     </Compile>
@@ -577,11 +581,15 @@
     <Compile Include="Controls\Pipelines\NodeControls\NodeFileControl.Designer.cs">
       <DependentUpon>NodeFileControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Pipelines\NodeControls\NodeFloatControl.cs" />
+    <Compile Include="Controls\Pipelines\NodeControls\NodeFloatControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Pipelines\NodeControls\NodeFloatControl.Designer.cs">
       <DependentUpon>NodeFloatControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Pipelines\NodeControls\NodeNumberControl.cs" />
+    <Compile Include="Controls\Pipelines\NodeControls\NodeNumberControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\Pipelines\NodeControls\NodeNumberControl.Designer.cs">
       <DependentUpon>NodeNumberControl.cs</DependentUpon>
     </Compile>
@@ -783,12 +791,19 @@
     <Compile Include="Controls\TreeViews\PoseView.cs" />
     <Compile Include="Controls\TreeViews\StageView.cs" />
     <Compile Include="Controls\TreeViews\TargetView.cs" />
+    <Compile Include="Controls\VariableControls\ParameterField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\VariableControls\ParameterField.Designer.cs">
+      <DependentUpon>ParameterField.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataSlicers\IntervalSlicer.cs" />
     <Compile Include="DataSlicers\OneShotSlicer.cs" />
     <Compile Include="DataSlicers\StageSlicer.cs" />
     <Compile Include="DataStructures\BackgroundDatabase.cs" />
     <Compile Include="DataStructures\BindableTag.cs" />
     <Compile Include="DataStructures\BindableTagList.cs" />
+    <Compile Include="DataStructures\CardDecks.cs" />
     <Compile Include="DataStructures\CaseDefinition.cs" />
     <Compile Include="DataStructures\CaseLabel.cs" />
     <Compile Include="DataStructures\CaseNote.cs" />
@@ -800,6 +815,7 @@
     <Compile Include="DataStructures\Collectible.cs" />
     <Compile Include="DataStructures\CollectibleData.cs" />
     <Compile Include="DataStructures\DataConversions.cs" />
+    <Compile Include="DataStructures\Deck.cs" />
     <Compile Include="DataStructures\Definition.cs" />
     <Compile Include="DataStructures\Definitions.cs" />
     <Compile Include="DataStructures\DialogueNode.cs" />
@@ -1097,16 +1113,24 @@
     <Compile Include="Forms\PoseSelectionForm.Designer.cs">
       <DependentUpon>PoseSelectionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\VariableWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VariableWizard.Designer.cs">
+      <DependentUpon>VariableWizard.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImagePipeline\ChannelReader.cs" />
     <Compile Include="ImagePipeline\DirectBitmap.cs" />
     <Compile Include="ImagePipeline\IPipelineNode.cs" />
     <Compile Include="ImagePipeline\Nodes\ApplyMaskNode.cs" />
     <Compile Include="ImagePipeline\Nodes\BlendNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\BranchNode.cs" />
     <Compile Include="ImagePipeline\Nodes\CellNode.cs" />
     <Compile Include="ImagePipeline\Nodes\CellReferenceNode.cs" />
     <Compile Include="ImagePipeline\Nodes\ChannelMixerNode.cs" />
     <Compile Include="ImagePipeline\Nodes\ColorMaskNode.cs" />
     <Compile Include="ImagePipeline\Nodes\ColorNode.cs" />
+    <Compile Include="ImagePipeline\Nodes\CommentNode.cs" />
     <Compile Include="ImagePipeline\Nodes\ContrastNode.cs" />
     <Compile Include="ImagePipeline\Nodes\DesaturateNode.cs" />
     <Compile Include="ImagePipeline\Nodes\ExtractNode.cs" />
@@ -1440,6 +1464,7 @@
     <Compile Include="CharacterValidator.cs" />
     <Compile Include="Workspaces\CharacterWorkspace.cs" />
     <Compile Include="Workspaces\CostumeWorkspace.cs" />
+    <Compile Include="Workspaces\TutorialAttribute.cs" />
     <Compile Include="XMLHelper.cs" />
     <EmbeddedResource Include="Activities\AdvancedMetadataEditor.resx">
       <DependentUpon>AdvancedMetadataEditor.cs</DependentUpon>
@@ -1476,6 +1501,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\DataRecovery.resx">
       <DependentUpon>DataRecovery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Activities\DeckEditor.resx">
+      <DependentUpon>DeckEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\DialogueEditor.resx">
       <DependentUpon>DialogueEditor.cs</DependentUpon>
@@ -1521,9 +1549,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\SkinEditor.resx">
       <DependentUpon>SkinEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Activities\SkinTagEditor.resx">
-      <DependentUpon>SkinTagEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Activities\SpellCheck.resx">
       <DependentUpon>SpellCheck.cs</DependentUpon>
@@ -1857,6 +1882,9 @@
     <EmbeddedResource Include="Controls\ValidationControl.resx">
       <DependentUpon>ValidationControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\VariableControls\ParameterField.resx">
+      <DependentUpon>ParameterField.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EpilogueEditing\EpilogueCanvas.resx">
       <DependentUpon>EpilogueCanvas.cs</DependentUpon>
     </EmbeddedResource>
@@ -1965,6 +1993,9 @@
     <EmbeddedResource Include="Forms\TrophyForm.resx">
       <DependentUpon>TrophyForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VariableWizard.resx">
+      <DependentUpon>VariableWizard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\WhatsNew.resx">
       <DependentUpon>WhatsNew.cs</DependentUpon>
     </EmbeddedResource>
@@ -2043,6 +2074,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Icons\FileMissing.png" />
+    <Content Include="Help\decks.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Help\images\pipeline.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2108,6 +2142,7 @@
     <None Include="Icons\RemoveRow.png" />
     <None Include="Icons\Pipeline.png" />
     <None Include="Icons\PlayOnce.png" />
+    <None Include="Icons\AddVariable.png" />
     <Content Include="Resources\Images\BaseCode.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2124,6 +2159,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Images\StageCode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VersionHistory\v6.3.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="VersionHistory\v6.2.1.html">
@@ -2660,6 +2698,7 @@
     </Content>
     <Content Include="variables.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="VersionHistory\v3.4.1.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -25,6 +25,7 @@ namespace SPNATI_Character_Editor.Activities
 	[Spacer]
 	[Activity(typeof(Character), 199, DelayRun = true, Caption = "Pose Matrix")]
 	[Activity(typeof(Costume), 199, DelayRun = true, Caption = "Pose Matrix")]
+	[Tutorial("https://www.youtube.com/watch?v=tzETssGeaEQ")]
 	public partial class PoseMatrixEditor : Activity
 	{
 		private ISkin _skin;
@@ -815,7 +816,6 @@ namespace SPNATI_Character_Editor.Activities
 				return;
 			}
 
-			string name = _currentPose.Key;
 			string code = _currentPose.Code;
 			if (string.IsNullOrEmpty(code))
 			{
@@ -824,27 +824,8 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			string key = _currentPose.GetFullKey();
 
-			string baseCode = _sheet.BaseCode;
-			string stageCode = _sheet.Stages[_currentStage].Code;
-			ImageMetadata preview = null;
-			if (!string.IsNullOrEmpty(baseCode) || !string.IsNullOrEmpty(stageCode))
-			{
-				StageTemplate stageTemplate = new StageTemplate(stageCode ?? "");
-				Emotion emotion = new Emotion(_currentPose.Key, _currentPose.Code ?? "", _currentPose.Crop.Left.ToString(), _currentPose.Crop.Top.ToString(), _currentPose.Crop.Right.ToString(), _currentPose.Crop.Bottom.ToString());
-				KisekaeCode templatedCode = PoseTemplate.CreatePose(new KisekaeCode(baseCode ?? "", true), stageTemplate, emotion);
-				preview = new ImageMetadata(key, templatedCode.ToString());
-			}
-			else
-			{
-				preview = new ImageMetadata(key, code);
-			}
-			if (_currentPose.Crop.Right > 0 && _currentPose.Crop.Bottom > 0)
-			{
-				preview.CropInfo = _currentPose.Crop;
-			}
-			preview.ExtraData = _currentPose.ExtraMetadata;
+			ImageMetadata preview = _currentPose.CreateMetadata();
 
-			preview.SkipPreprocessing = _currentPose.SkipPreProcessing;
 			ImageCropper cropper = new ImageCropper();
 			cropper.Import(preview, _skin, false);
 			if (cropper.ShowDialog() == DialogResult.OK)
@@ -929,7 +910,7 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			HashSet<int> globalData = new HashSet<int>();
 			PoseEntry lastCell = null;
-			StageTemplate lastStage = new StageTemplate("");
+
 			int max = Math.Min(_sheet.Stages.Count, 9);
 			max = Math.Min(max, _character.Layers < 7 ? _character.Layers + Clothing.ExtraStages : 9);
 			for (int i = 0; i < max; i++)
@@ -944,18 +925,7 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					lastCell = cell;
 					isEmpty = false;
-					KisekaeCode modelCode = null;
-					if (baseCode != null || !string.IsNullOrEmpty(stage.Code))
-					{
-						Emotion emotion = new Emotion(cell.Key, cell.Code, "", "", "", "");
-						StageTemplate stageTemplate = string.IsNullOrEmpty(stage.Code) ? lastStage : new StageTemplate(stage.Code);
-						lastStage = stageTemplate;
-						modelCode = PoseTemplate.CreatePose(baseCode, stageTemplate, emotion);
-					}
-					else
-					{
-						modelCode = new KisekaeCode(cell.Code, false);
-					}
+					KisekaeCode modelCode = new KisekaeCode(cell.CreateMetadata().Data, true);
 
 					string[] pieces = cell.Code.Split('*');
 					string versionNo = pieces[0];
@@ -1020,19 +990,9 @@ namespace SPNATI_Character_Editor.Activities
 
 			PoseStage stage = _sheet.Stages[_currentStage];
 			PoseEntry cell = stage.Poses.Find(p => !string.IsNullOrEmpty(p.Code));
-			KisekaeCode modelCode = null;
-			if (baseCode != null || !string.IsNullOrEmpty(stage.Code))
-			{
-				Emotion emotion = new Emotion("temp", cell?.Code ?? "", "", "", "", "");
-				modelCode = PoseTemplate.CreatePose(baseCode, new StageTemplate(stage.Code ?? ""), emotion);
-			}
-			else
-			{
-				modelCode = new KisekaeCode(cell?.Code ?? "", false);
-			}
 
 			//load in this code
-			ImageMetadata md = new ImageMetadata("lineup", modelCode.ToString());
+			ImageMetadata md = cell.CreateMetadata();
 			ImageLoader loader = new ImageLoader();
 			await loader.Import(md, _skin);
 		}
@@ -1985,6 +1945,7 @@ namespace SPNATI_Character_Editor.Activities
 				if (editor.ShowDialog() == DialogResult.OK)
 				{
 					BuildGrid(); //force everything to refresh
+					editor.Dispose();
 				}
 			}
 		}

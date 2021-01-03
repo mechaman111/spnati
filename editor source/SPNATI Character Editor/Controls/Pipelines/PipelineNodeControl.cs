@@ -94,6 +94,11 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 			MouseUp -= Control_MouseUp;
 			Enter -= Control_Enter;
 			Leave -= Control_Leave;
+			if (_previewBox != null)
+			{
+				_previewBox = null;
+			}
+			Preview?.Dispose();
 		}
 
 		private void Control_MouseLeave(object sender, EventArgs e)

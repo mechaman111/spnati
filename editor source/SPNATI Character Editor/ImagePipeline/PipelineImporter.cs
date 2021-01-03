@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using SPNATI_Character_Editor;
 using SPNATI_Character_Editor.DataStructures;
+using System.Windows.Forms;
 
 namespace ImagePipeline
 {
@@ -80,7 +81,10 @@ namespace ImagePipeline
 				}
 				image.Save(fullPath);
 			}
-			catch { }
+			catch
+			{
+				MessageBox.Show($"Failed to save to {fullPath}. This could be an indication that your Antivirus Software is blocking the Character Editor. Try adding an exception for \"SPNATI Character Editor.exe\" in your antivirus settings and restart before trying again.", "Save Image", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 
 			return fullPath;
 		}

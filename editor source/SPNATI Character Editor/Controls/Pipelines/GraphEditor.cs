@@ -3,6 +3,8 @@ using Desktop.Skinning;
 using ImagePipeline;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using SPNATI_Character_Editor.DataStructures;
 using System;
@@ -34,6 +36,8 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 		private int _hoverVertexInsertionPoint = -1;
 
 		private Dictionary<string, object> _processCache = new Dictionary<string, object>();
+		private Task _previewTask;
+		private CancellationTokenSource _previewCancel;
 
 		private List<PipelineNode> _pendingPreviews = new List<PipelineNode>();
 
@@ -46,7 +50,12 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 
 		public void Destroy()
 		{
-			_pendingPreviews.Clear();
+			if (_previewCancel != null)
+			{
+				_previewCancel.Cancel();
+				_previewCancel = null;
+				_previewTask = null;
+			}
 			Graph.Nodes.CollectionChanged -= Nodes_CollectionChanged;
 			Graph.PropertyChanged -= _graph_PropertyChanged;
 			foreach (PipelineNodeControl ctl in _nodeMap.Values)
@@ -229,7 +238,10 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 			{
 				ctl.Shield();
 			}
-			_pendingPreviews.Add(node);
+			lock (_pendingPreviews)
+			{
+				_pendingPreviews.Add(node);
+			}
 			tmrPreview.Start();
 		}
 
@@ -348,19 +360,49 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 			}
 		}
 
-		private async void tmrPreview_Tick(object sender, System.EventArgs e)
+		private void tmrPreview_Tick(object sender, System.EventArgs e)
 		{
-			Cursor.Current = Cursors.WaitCursor;
 			tmrPreview.Stop();
 
+			if (_previewTask != null && !_previewTask.IsCompleted)
+			{
+				return;
+			}
+			_previewCancel = new CancellationTokenSource();
+			CancellationToken token = _previewCancel.Token;
+			_previewTask = Task.Run(() => ProcessPreviews(token), token);
+		}
+
+		private async void ProcessPreviews(CancellationToken token)
+		{
 			PipelineSettings settings = new PipelineSettings() { PreviewMode = true, Cache = _processCache };
 
 			if (_pendingPreviews.Count > 0)
 			{
 				await Graph.Process(_cell, settings);
-				for (int i = 0; i < _pendingPreviews.Count; i++)
+				int i = 0;
+				while (true)
 				{
-					PipelineNode nextNode = _pendingPreviews[i];
+					if (token.IsCancellationRequested)
+					{
+						lock (_pendingPreviews)
+						{
+							_pendingPreviews.Clear();
+							return;
+						}
+					}
+					PipelineNode nextNode;
+					lock (_pendingPreviews)
+					{
+						if (i < _pendingPreviews.Count)
+						{
+							nextNode = _pendingPreviews[i];
+						}
+						else
+						{
+							break;
+						}
+					}
 					PipelineNodeControl ctl;
 					if (_nodeMap.TryGetValue(nextNode, out ctl))
 					{
@@ -369,373 +411,373 @@ namespace SPNATI_Character_Editor.Controls.Pipelines
 							await Graph.Process(_cell, settings, nextNode);
 						}
 						PipelineResult result = Graph.GetNodeOutput(nextNode.Id);
-						ctl.SetPreview(result);
+						ctl.Invoke((MethodInvoker)(() => { ctl.SetPreview(result); }));
 					}
+					i++;
 				}
 			}
 			_pendingPreviews.Clear();
-			Cursor.Current = Cursors.Default;
 		}
 
 		private class WorkingConnection
-		{
-			public PipelineNodeControl Control;
-			public PipelineNode Source;
-			public int OutputIndex;
-			public PipelineNode OldTarget;
-			public int OldInput;
-		}
+	{
+		public PipelineNodeControl Control;
+		public PipelineNode Source;
+		public int OutputIndex;
+		public PipelineNode OldTarget;
+		public int OldInput;
+	}
 
-		private void Ctl_OutputPortGrabbed(object sender, PortEventArgs e)
-		{
-			PipelineNodeControl ctl = sender as PipelineNodeControl;
-			PipelineNode node = ctl.Node;
+	private void Ctl_OutputPortGrabbed(object sender, PortEventArgs e)
+	{
+		PipelineNodeControl ctl = sender as PipelineNodeControl;
+		PipelineNode node = ctl.Node;
 
+		_connection = new WorkingConnection()
+		{
+			Source = node,
+			Control = ctl,
+			OutputIndex = e.Index,
+		};
+		_mousePosition = panel.PointToClient(ctl.PointToScreen(e.MousePosition));
+
+		ctl.MouseMove += Ctl_MouseMove;
+		ctl.MouseUp += Ctl_MouseUp;
+	}
+
+	private void Ctl_InputPortGrabbed(object sender, PortEventArgs e)
+	{
+		PipelineNodeControl ctl = sender as PipelineNodeControl;
+		PipelineNode node = ctl.Node;
+		int input = e.Index;
+
+		PortConnection from = Graph.GetInput(node, input);
+		if (from != null)
+		{
 			_connection = new WorkingConnection()
 			{
-				Source = node,
+				Source = from.Node,
 				Control = ctl,
-				OutputIndex = e.Index,
+				OutputIndex = from.Index,
+				OldTarget = node,
+				OldInput = input
 			};
 			_mousePosition = panel.PointToClient(ctl.PointToScreen(e.MousePosition));
 
 			ctl.MouseMove += Ctl_MouseMove;
 			ctl.MouseUp += Ctl_MouseUp;
+
+			//disconnect this input
+			Graph.Disconnect(ctl.Node, e.Index);
+			panel.Invalidate();
+		}
+	}
+
+	private void Ctl_InputPortReleased(object sender, PortEventArgs e)
+	{
+		if (_connection == null)
+		{
+			return;
 		}
 
-		private void Ctl_InputPortGrabbed(object sender, PortEventArgs e)
+		PipelineNode target = (sender as PipelineNodeControl).Node;
+
+		//make the connection
+		if (Graph.Connect(_connection.Source, _connection.OutputIndex, target, e.Index))
 		{
-			PipelineNodeControl ctl = sender as PipelineNodeControl;
-			PipelineNode node = ctl.Node;
-			int input = e.Index;
-
-			PortConnection from = Graph.GetInput(node, input);
-			if (from != null)
-			{
-				_connection = new WorkingConnection()
-				{
-					Source = from.Node,
-					Control = ctl,
-					OutputIndex = from.Index,
-					OldTarget = node,
-					OldInput = input
-				};
-				_mousePosition = panel.PointToClient(ctl.PointToScreen(e.MousePosition));
-
-				ctl.MouseMove += Ctl_MouseMove;
-				ctl.MouseUp += Ctl_MouseUp;
-
-				//disconnect this input
-				Graph.Disconnect(ctl.Node, e.Index);
-				panel.Invalidate();
-			}
+			InvalidatePreviews(target);
 		}
-
-		private void Ctl_InputPortReleased(object sender, PortEventArgs e)
+		else
 		{
-			if (_connection == null)
+			if (_connection.Source.Definition.Outputs[_connection.OutputIndex].Type != target.Definition.Inputs[e.Index].Type)
 			{
-				return;
-			}
-
-			PipelineNode target = (sender as PipelineNodeControl).Node;
-
-			//make the connection
-			if (Graph.Connect(_connection.Source, _connection.OutputIndex, target, e.Index))
-			{
-				InvalidatePreviews(target);
+				MessageBox.Show($"Incompatible ports. Trying to connect an output of type \"{_connection.Source.Definition.Outputs[_connection.OutputIndex].Type}\" to an input of type \"{target.Definition.Inputs[e.Index].Type}\".", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 			else
 			{
-				if (_connection.Source.Definition.Outputs[_connection.OutputIndex].Type != target.Definition.Inputs[e.Index].Type)
-				{
-					MessageBox.Show($"Incompatible ports. Trying to connect an output of type \"{_connection.Source.Definition.Outputs[_connection.OutputIndex].Type}\" to an input of type \"{target.Definition.Inputs[e.Index].Type}\".", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-				else
-				{
-					MessageBox.Show("This connection would a node to feed into itself, which is invalid.", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
+				MessageBox.Show("This connection would a node to feed into itself, which is invalid.", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
+	}
+
+	private void Ctl_MouseUp(object sender, MouseEventArgs e)
+	{
+		if (_connection == null) { return; }
+
+		Point screenPos = _connection.Control.PointToScreen(e.Location);
+		//need to manually tell all the controls about this event because they won't receive it otherwise due to how WinForms works while dragging
+		foreach (PipelineNodeControl ctl in _nodeMap.Values)
+		{
+			if (ctl != sender)
+			{
+				ctl.ParentMouseUp(e, screenPos);
 			}
 		}
 
-		private void Ctl_MouseUp(object sender, MouseEventArgs e)
+		if (_connection.OldTarget != null)
 		{
-			if (_connection == null) { return; }
-
-			Point screenPos = _connection.Control.PointToScreen(e.Location);
-			//need to manually tell all the controls about this event because they won't receive it otherwise due to how WinForms works while dragging
-			foreach (PipelineNodeControl ctl in _nodeMap.Values)
-			{
-				if (ctl != sender)
-				{
-					ctl.ParentMouseUp(e, screenPos);
-				}
-			}
-
-			if (_connection.OldTarget != null)
-			{
-				InvalidatePreviews(_connection.OldTarget);
-			}
-
-			_connection = null;
-			panel.Invalidate();
+			InvalidatePreviews(_connection.OldTarget);
 		}
 
-		/// <summary>
-		/// Invalidates the previews of a node and all its children
-		/// </summary>
-		/// <param name="node"></param>
-		private void InvalidatePreviews(PipelineNode node)
+		_connection = null;
+		panel.Invalidate();
+	}
+
+	/// <summary>
+	/// Invalidates the previews of a node and all its children
+	/// </summary>
+	/// <param name="node"></param>
+	private void InvalidatePreviews(PipelineNode node)
+	{
+		InvalidatePreview(node);
+		if (node.Definition.Outputs != null)
 		{
-			InvalidatePreview(node);
-			if (node.Definition.Outputs != null)
+			int outputCount = node.Definition.Outputs.Length;
+			for (int i = 0; i < outputCount; i++)
 			{
-				int outputCount = node.Definition.Outputs.Length;
-				for (int i = 0; i < outputCount; i++)
+				foreach (PortConnection output in Graph.GetOutputs(node, i))
 				{
-					foreach (PortConnection output in Graph.GetOutputs(node, i))
-					{
-						InvalidatePreviews(output.Node);
-					}
+					InvalidatePreviews(output.Node);
 				}
 			}
 		}
+	}
 
-		private void Ctl_MouseMove(object sender, MouseEventArgs e)
+	private void Ctl_MouseMove(object sender, MouseEventArgs e)
+	{
+		if (_connection == null) { return; }
+		Point screenPos = _connection.Control.PointToScreen(e.Location);
+		//need to manually tell all the controls about this MouseMove because they won't receive it otherwise due to how WinForms works while dragging
+		foreach (PipelineNodeControl ctl in _nodeMap.Values)
 		{
-			if (_connection == null) { return; }
-			Point screenPos = _connection.Control.PointToScreen(e.Location);
-			//need to manually tell all the controls about this MouseMove because they won't receive it otherwise due to how WinForms works while dragging
-			foreach (PipelineNodeControl ctl in _nodeMap.Values)
+			if (ctl != sender)
 			{
-				if (ctl != sender)
-				{
-					ctl.ParentMouseMove(e, screenPos);
-				}
-			}
-
-			_mousePosition = panel.PointToClient(screenPos);
-			panel.Invalidate();
-			panel.Update();
-		}
-
-		private void tsRemoveNode_Click(object sender, System.EventArgs e)
-		{
-			DeleteNode(_selectedControl);
-		}
-
-		private void Ctl_Deleted(object sender, System.EventArgs e)
-		{
-			DeleteNode(sender as PipelineNodeControl);
-		}
-
-		private void DeleteNode(PipelineNodeControl ctl)
-		{
-			if (ctl != null)
-			{
-				if (ctl.IsMasterNode)
-				{
-					MessageBox.Show("You cannot delete the Result node.");
-					return;
-				}
-				Graph.RemoveNode(ctl.Node);
-				panel.Invalidate();
+				ctl.ParentMouseMove(e, screenPos);
 			}
 		}
 
-		private void tsAddNode_Click(object sender, System.EventArgs e)
-		{
-			IPipelineNode record = RecordLookup.DoLookup(typeof(IPipelineNode), "", false, FilterNodes, null) as IPipelineNode;
-			if (record != null)
-			{
-				Graph.AddNode(record.Key);
-			}
-		}
+		_mousePosition = panel.PointToClient(screenPos);
+		panel.Invalidate();
+		panel.Update();
+	}
 
-		private bool FilterNodes(IRecord record)
-		{
-			return record.Key != "root";
-		}
+	private void tsRemoveNode_Click(object sender, System.EventArgs e)
+	{
+		DeleteNode(_selectedControl);
+	}
 
-		private void tsSaveAs_Click(object sender, System.EventArgs e)
+	private void Ctl_Deleted(object sender, System.EventArgs e)
+	{
+		DeleteNode(sender as PipelineNodeControl);
+	}
+
+	private void DeleteNode(PipelineNodeControl ctl)
+	{
+		if (ctl != null)
 		{
-			string name = InputBox.Show("Choose a new name for the pipeline:", "Save As");
-			if (name == null)
+			if (ctl.IsMasterNode)
 			{
+				MessageBox.Show("You cannot delete the Result node.");
 				return;
 			}
-			PipelineGraph existing = _matrix.Pipelines.Find(p => p.Name == name);
-			if (existing != null)
-			{
-				MessageBox.Show("A pipeline with that name already exists.");
-				tsSaveAs_Click(sender, e);
-				return;
-			}
+			Graph.RemoveNode(ctl.Node);
+			panel.Invalidate();
+		}
+	}
 
-			PipelineGraph copy = new PipelineGraph();
-			Graph.CopyPropertiesInto(copy);
-			copy.Key = copy.Name = name;
-			copy.Character = Graph.Character;
-			copy.OnAfterDeserialize("");
-			_matrix.Pipelines.Add(copy);
-			Destroy();
-			SetData(_character, _stage, _cell, copy);
-			NameChanged?.Invoke(this, EventArgs.Empty);
+	private void tsAddNode_Click(object sender, System.EventArgs e)
+	{
+		IPipelineNode record = RecordLookup.DoLookup(typeof(IPipelineNode), "", false, FilterNodes, null) as IPipelineNode;
+		if (record != null)
+		{
+			Graph.AddNode(record.Key);
+		}
+	}
+
+	private bool FilterNodes(IRecord record)
+	{
+		return record.Key != "root";
+	}
+
+	private void tsSaveAs_Click(object sender, System.EventArgs e)
+	{
+		string name = InputBox.Show("Choose a new name for the pipeline:", "Save As");
+		if (name == null)
+		{
+			return;
+		}
+		PipelineGraph existing = _matrix.Pipelines.Find(p => p.Name == name);
+		if (existing != null)
+		{
+			MessageBox.Show("A pipeline with that name already exists.");
+			tsSaveAs_Click(sender, e);
+			return;
 		}
 
-		private void panel_MouseMove(object sender, MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.None)
-			{
-				//check for hovering over a connection
-				foreach (Connection connection in Graph.Connections)
-				{
-					Point start = GetConnectionPoint(connection.From, connection.FromIndex, false);
-					Point end = GetConnectionPoint(connection.To, connection.ToIndex, true);
+		PipelineGraph copy = new PipelineGraph();
+		Graph.CopyPropertiesInto(copy);
+		copy.Key = copy.Name = name;
+		copy.Character = Graph.Character;
+		copy.OnAfterDeserialize("");
+		_matrix.Pipelines.Add(copy);
+		Destroy();
+		SetData(_character, _stage, _cell, copy);
+		NameChanged?.Invoke(this, EventArgs.Empty);
+	}
 
-					//make sure it's not near an end point
-					float distStart = e.Location.Distance(start);
-					float distEnd = e.Location.Distance(end);
-					if (distStart < EndPointThreshold || distEnd < EndPointThreshold)
+	private void panel_MouseMove(object sender, MouseEventArgs e)
+	{
+		if (e.Button == MouseButtons.None)
+		{
+			//check for hovering over a connection
+			foreach (Connection connection in Graph.Connections)
+			{
+				Point start = GetConnectionPoint(connection.From, connection.FromIndex, false);
+				Point end = GetConnectionPoint(connection.To, connection.ToIndex, true);
+
+				//make sure it's not near an end point
+				float distStart = e.Location.Distance(start);
+				float distEnd = e.Location.Distance(end);
+				if (distStart < EndPointThreshold || distEnd < EndPointThreshold)
+				{
+					break; //if we're near an end point, don't allow vertex dragging for any connections
+				}
+
+				Point lastPt = start;
+				for (int i = 0; i <= connection.Vertices.Count; i++)
+				{
+					Point pt = i < connection.Vertices.Count ? (Point)connection.Vertices[i] : end;
+					if (i < connection.Vertices.Count)
 					{
-						break; //if we're near an end point, don't allow vertex dragging for any connections
+						pt.X -= panel.HorizontalScroll.Value;
+						pt.Y -= panel.VerticalScroll.Value;
 					}
 
-					Point lastPt = start;
-					for (int i = 0; i <= connection.Vertices.Count; i++)
+					Point intersection = e.Location.GetClosestPointOnLineSegment(lastPt, pt);
+					float dist = e.Location.Distance(intersection);
+
+					if (dist <= VertexThreshold)
 					{
-						Point pt = i < connection.Vertices.Count ? (Point)connection.Vertices[i] : end;
-						if (i < connection.Vertices.Count)
+						//see if we're near the vertex
+						float vertDist = intersection.Distance(pt);
+						float startDist = intersection.Distance(lastPt);
+						if (vertDist <= VertexThreshold)
 						{
-							pt.X -= panel.HorizontalScroll.Value;
-							pt.Y -= panel.VerticalScroll.Value;
+							_hoverVertexIndex = i;
+							_hoverVertex = pt;
 						}
-
-						Point intersection = e.Location.GetClosestPointOnLineSegment(lastPt, pt);
-						float dist = e.Location.Distance(intersection);
-
-						if (dist <= VertexThreshold)
+						else if (startDist <= VertexThreshold && i > 0)
 						{
-							//see if we're near the vertex
-							float vertDist = intersection.Distance(pt);
-							float startDist = intersection.Distance(lastPt);
-							if (vertDist <= VertexThreshold)
-							{
-								_hoverVertexIndex = i;
-								_hoverVertex = pt;
-							}
-							else if (startDist <= VertexThreshold && i > 0)
-							{
-								_hoverVertexIndex = i - 1;
-								_hoverVertex = lastPt;
-							}
-							else
-							{
-								_hoverVertexInsertionPoint = i;
-								_hoverVertexIndex = -1;
-								_hoverVertex = intersection;
-							}
-							_hoverConnection = connection;
-							_hoverConnection.VerticesChanged += _hoverConnection_VerticesChanged;
-							panel.Invalidate();
-							return;
+							_hoverVertexIndex = i - 1;
+							_hoverVertex = lastPt;
 						}
-						lastPt = pt;
+						else
+						{
+							_hoverVertexInsertionPoint = i;
+							_hoverVertexIndex = -1;
+							_hoverVertex = intersection;
+						}
+						_hoverConnection = connection;
+						_hoverConnection.VerticesChanged += _hoverConnection_VerticesChanged;
+						panel.Invalidate();
+						return;
 					}
-				}
-
-				if (_hoverConnection != null)
-				{
-					ClearHoverConnection();
+					lastPt = pt;
 				}
 			}
-			else if (e.Button == MouseButtons.Left)
-			{
-				if (_hoverVertexIndex >= 0)
-				{
-					_hoverVertex = e.Location;
-					_hoverConnection.ReplaceVertex(_hoverVertexIndex, new Point2D(e.Location.X + panel.HorizontalScroll.Value, e.Location.Y + panel.VerticalScroll.Value));
-				}
-			}
-		}
 
-		private void panel_MouseDown(object sender, MouseEventArgs e)
-		{
 			if (_hoverConnection != null)
-			{
-				if (e.Button == MouseButtons.Right && _hoverVertexIndex >= 0)
-				{
-					//delete this vertex
-					_hoverConnection.RemoveVertex(_hoverVertexIndex);
-					ClearHoverConnection();
-				}
-				else if (e.Button == MouseButtons.Left && _hoverConnection != null)
-				{
-					if (_hoverVertexIndex == -1)
-					{
-						//add a new vertex
-						_hoverVertexIndex = _hoverConnection.InsertVertex(_hoverVertexInsertionPoint, new Point2D(_hoverVertex.X + panel.HorizontalScroll.Value, _hoverVertex.Y + panel.VerticalScroll.Value));
-					}
-				}
-			}
-		}
-
-		private void panel_MouseUp(object sender, MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Left && _hoverConnection != null)
 			{
 				ClearHoverConnection();
 			}
 		}
-
-		private void ClearHoverConnection()
+		else if (e.Button == MouseButtons.Left)
 		{
-			_hoverConnection.VerticesChanged -= _hoverConnection_VerticesChanged;
-			_hoverConnection = null;
-			_hoverVertexIndex = -1;
-			_hoverVertexInsertionPoint = -1;
-			panel.Invalidate();
-		}
-
-		private void _hoverConnection_VerticesChanged(object sender, EventArgs e)
-		{
-			panel.Invalidate();
-		}
-
-		/// <summary>
-		/// Gets the point where a connection hooks into a port
-		/// </summary>
-		/// <param name="nodeId"></param>
-		/// <param name="input"></param>
-		/// <returns></returns>
-		private Point GetConnectionPoint(int nodeId, int index, bool input)
-		{
-			PipelineNodeControl ctl;
-			PipelineNode node = Graph.GetNode(nodeId);
-			if (node != null)
+			if (_hoverVertexIndex >= 0)
 			{
-				if (_nodeMap.TryGetValue(node, out ctl))
-				{
-					Point pt = ctl.GetPortPosition(index, input);
-					pt.X += ctl.Left;
-					pt.Y += ctl.Top;
-					if (input)
-					{
-						pt.X -= PortExtensionLength;
-					}
-					else
-					{
-						pt.X += PortExtensionLength;
-					}
-					return pt;
-				}
+				_hoverVertex = e.Location;
+				_hoverConnection.ReplaceVertex(_hoverVertexIndex, new Point2D(e.Location.X + panel.HorizontalScroll.Value, e.Location.Y + panel.VerticalScroll.Value));
 			}
-			return new Point(0, 0);
-		}
-
-		private void panel_Scroll(object sender, ScrollEventArgs e)
-		{
-			panel.Invalidate();
 		}
 	}
+
+	private void panel_MouseDown(object sender, MouseEventArgs e)
+	{
+		if (_hoverConnection != null)
+		{
+			if (e.Button == MouseButtons.Right && _hoverVertexIndex >= 0)
+			{
+				//delete this vertex
+				_hoverConnection.RemoveVertex(_hoverVertexIndex);
+				ClearHoverConnection();
+			}
+			else if (e.Button == MouseButtons.Left && _hoverConnection != null)
+			{
+				if (_hoverVertexIndex == -1)
+				{
+					//add a new vertex
+					_hoverVertexIndex = _hoverConnection.InsertVertex(_hoverVertexInsertionPoint, new Point2D(_hoverVertex.X + panel.HorizontalScroll.Value, _hoverVertex.Y + panel.VerticalScroll.Value));
+				}
+			}
+		}
+	}
+
+	private void panel_MouseUp(object sender, MouseEventArgs e)
+	{
+		if (e.Button == MouseButtons.Left && _hoverConnection != null)
+		{
+			ClearHoverConnection();
+		}
+	}
+
+	private void ClearHoverConnection()
+	{
+		_hoverConnection.VerticesChanged -= _hoverConnection_VerticesChanged;
+		_hoverConnection = null;
+		_hoverVertexIndex = -1;
+		_hoverVertexInsertionPoint = -1;
+		panel.Invalidate();
+	}
+
+	private void _hoverConnection_VerticesChanged(object sender, EventArgs e)
+	{
+		panel.Invalidate();
+	}
+
+	/// <summary>
+	/// Gets the point where a connection hooks into a port
+	/// </summary>
+	/// <param name="nodeId"></param>
+	/// <param name="input"></param>
+	/// <returns></returns>
+	private Point GetConnectionPoint(int nodeId, int index, bool input)
+	{
+		PipelineNodeControl ctl;
+		PipelineNode node = Graph.GetNode(nodeId);
+		if (node != null)
+		{
+			if (_nodeMap.TryGetValue(node, out ctl))
+			{
+				Point pt = ctl.GetPortPosition(index, input);
+				pt.X += ctl.Left;
+				pt.Y += ctl.Top;
+				if (input)
+				{
+					pt.X -= PortExtensionLength;
+				}
+				else
+				{
+					pt.X += PortExtensionLength;
+				}
+				return pt;
+			}
+		}
+		return new Point(0, 0);
+	}
+
+	private void panel_Scroll(object sender, ScrollEventArgs e)
+	{
+		panel.Invalidate();
+	}
+}
 }
