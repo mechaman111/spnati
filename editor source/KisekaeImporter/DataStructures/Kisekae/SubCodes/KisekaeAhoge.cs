@@ -19,6 +19,7 @@
 			Gravity = ahoge.Gravity;
 			RotationZ = ahoge.RotationZ;
 			RotationPreScale = ahoge.RotationPreScale;
+			AttachPoint = ahoge.AttachPoint;
 		}
 
 		public void Pose(IPoseable pose)
@@ -128,6 +129,12 @@
 		{
 			get { return GetInt(15); }
 			set { Set(15, value); }
+		}
+
+		public int AttachPoint
+		{
+			get { return GetInt(16); }
+			set { Set(16, value); }
 		}
 	}
 }

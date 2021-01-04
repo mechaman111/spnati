@@ -31,7 +31,6 @@ namespace SPNATI_Character_Editor.Controls
 		private bool _animating;
 		private DialogueLine _line = null;
 		private string _text = null;
-		private List<Word> _words = null;
 		private float _percent = 0.5f;
 		private List<string> _markers = new List<string>();
 
@@ -162,14 +161,12 @@ namespace SPNATI_Character_Editor.Controls
 				_text = null;
 				txtPreview.Text = "";
 				txtPreview.Visible = false;
-				_words = null;
 			}
 			else
 			{
 				txtPreview.Visible = true;
 				_text = line.Text;
 				UpdateRichText();
-				_words = GUIHelper.ParseWords(_text);
 				_percent = 0.5f;
 				if (!string.IsNullOrEmpty(line.Location) && line.Location.EndsWith("%"))
 				{
@@ -196,10 +193,13 @@ namespace SPNATI_Character_Editor.Controls
 					.Replace("<br/>", "\r\n");
 			}
 			int fontSize = (int)(_textFont.SizeInPoints * 2);
-			string rtf = @"{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Trebuchet MS;}}\viewkind4\uc1\pard\sl220\slmult1\qc\f0\fs" + fontSize + @"\lang9 " +
+			Color foreColor = SkinManager.Instance.CurrentSkin.Surface.ForeColor;
+			string colortable = @"{\colortbl ;\red" + foreColor.R + @"\green" + foreColor.G + @"\blue" + foreColor.B + ";}";
+			string rtf = @"{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Trebuchet MS;}}" + colortable + 
+				@"\viewkind4\uc1\pard\sl220\slmult1\qc\cf1\f0\fs" + fontSize + @"\lang9 " +
 				previewText + @"}";
 			txtPreview.Rtf = rtf;
-			
+			txtPreview.ForeColor = SkinManager.Instance.CurrentSkin.Surface.ForeColor;
 		}
 
 			public void SetMarkers(List<string> markers)
@@ -349,65 +349,6 @@ namespace SPNATI_Character_Editor.Controls
 				}
 				bounds.Height = Math.Max(txtPreview.Height, bounds.Height);
 				txtPreview.Top = (int)(bounds.Top + bounds.Height / 2 - txtPreview.Height / 2) + 2;
-
-				//group words into lines
-				List<List<Word>> lines = new List<List<Word>>();
-				List<Word> line = new List<Word>();
-				float remainingWidth = bounds.Width;
-				bool italics = false;
-				float height = 0;
-				for (int i = 0; i < _words.Count; i++)
-				{
-					Word word = _words[i];
-					if (!string.IsNullOrEmpty(word.Text))
-					{
-						string text = word.Text;
-						Font font = (italics ? _italicFont : _textFont);
-						SizeF textSize = g.MeasureString(text, font);
-						word.Width = textSize.Width;
-						height = Math.Max(textSize.Height, height);
-
-						if (word.Width >= remainingWidth)
-						{
-							//need a new line
-							if (line.Count > 0)
-							{
-								lines.Add(line);
-							}
-							line = new List<Word>();
-							remainingWidth = bounds.Width;
-						}
-
-						line.Add(word);
-						remainingWidth -= word.Width;
-					}
-					else
-					{
-						switch (word.Formatter)
-						{
-							case FormatMarker.ItalicOn:
-								italics = true;
-								line.Add(word);
-								break;
-							case FormatMarker.ItalicOff:
-								italics = false;
-								line.Add(word);
-								break;
-							case FormatMarker.LineBreak:
-								if (line.Count > 0)
-								{
-									lines.Add(line);
-								}
-								line = new List<Word>();
-								remainingWidth = bounds.Width;
-								break;
-						}
-					}
-				}
-				if (line.Count > 0)
-				{
-					lines.Add(line);
-				}
 
 				const int TopOffset = 4;
 				using (SolidBrush br = new SolidBrush(SkinManager.Instance.CurrentSkin.FieldBackColor))
