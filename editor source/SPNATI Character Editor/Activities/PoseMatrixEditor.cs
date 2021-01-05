@@ -217,7 +217,7 @@ namespace SPNATI_Character_Editor.Activities
 			grid.Rows.Clear();
 			grid.Columns.Clear();
 
-			grid.TopLeftHeaderCell.Value = "Sheet";
+			grid.TopLeftHeaderCell.Value = "Sheet (click to edit)";
 
 			if (_sheet.IsEmpty)
 			{
