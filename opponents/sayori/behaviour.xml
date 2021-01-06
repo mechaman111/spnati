@@ -105,9 +105,24 @@
                 <state img="#-embarassed.png">Soooo... I didn't expect to find you at a place like this, Yuri!</state>
             </case>
             <case stage="0">
-                <condition role="other" character="yuri" />
+                <condition role="other" character="yuri" saying="really inseparable" />
                 <state img="#-laugh.png">Yep~! We're together forever... er, I guess, ehehe~</state>
                 <state img="#-happy-2.png">Yep! How many years has it been, ~player~? &lt;br&gt; ...I can't even remember anymore!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="yuri" saying="hear the end of" />
+                <condition role="other" character="natsuki" />
+                <state img="#-laugh.png">Ehehe... Yuri, you look kinda tense. &lt;br&gt; You should try to relax, I'm sure this is going to be fun! U-Uhm, in its own way, I mean!</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="natsuki" saying="hear the end of" />
+                <condition role="other" character="yuri" />
+                <state img="#-laugh.png">Ehehe... Natsuki, you look kinda tense. &lt;br&gt; I'm sure this is going to be... uhm, at least &lt;i&gt;interesting&lt;/i&gt; in its own way, so you should try to relax!</state>
+            </case>
+            <case stage="0" priority="999">
+                <condition role="other" character="natsuki" saying="hear the end of" />
+                <condition role="other" character="yuri" saying="hear the end of" />
+                <state img="#-laugh.png">Natsuki, Yuri... you both look super tense! &lt;br&gt; Is something wrong? You should both try to relax!</state>
             </case>
             <case stage="0" id="11">
                 <condition count="4" filter="ddlc" />
@@ -459,6 +474,23 @@
         </trigger>
 
         <trigger id="hand">
+            <case stage="0-4" oneShotId="1" priority="0">
+                <condition role="other" character="yuri" />
+                <alternative>
+                    <test expr="~background~" value="inventory" />
+                </alternative>
+                <alternative>
+                    <test expr="~background~" value="holiday lodge" />
+                </alternative>
+                <alternative>
+                    <test expr="~background~" value="library" />
+                </alternative>
+                <state img="#-thinking.png" marker="yuri_return=1">Hmm... you know, Yuri, aside from the stripping, this is the kind of place I'd imagine you'd visit a lot. &lt;br&gt; ...Do you think you might come back here? Maybe not &lt;i&gt;often&lt;/i&gt;, but, you know...?</state>
+            </case>
+            <case stage="0-4" oneShotId="2" priority="0">
+                <condition role="other" character="yuri" />
+                <state img="#-shocked.png" marker="yuri_homework=1">Oh no, I just remembered... I kiiiinda forgot that we had homework due tomorrow for class. It's, uhm, {small}also for that really hard math class so maybe I shouldn't ask you this, but...{!reset} &lt;i&gt;please help me, Yuri!&lt;/i&gt;</state>
+            </case>
             <case stage="0-7" id="70" priority="999">
                 <condition role="other" character="chihiro" stage="6" timeInStage="0" />
                 <state img="#-nervous.png" marker="chihiro_gender_reassurance_2">U-Uhm, that was kind of surprising, but... it's okay! Chihiro is still Chihiro, whether she... I mean, uhm, &lt;i&gt;he&lt;/i&gt; is a boy or a girl!</state>
