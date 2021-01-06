@@ -1,12 +1,17 @@
 # Background Metadata
 
+A guide for what to target when targeting backgrounds
+
+---
+
 ## How to use Background Metadata
 
 Background metadata can be used in dialogue in one of two ways:
- - By directly testing the background metadata value
- - By using background tags generated from the background metadata
+ 
+ - By directly testing the background metadata value  
+ - By using background tags generated from the background metadata  
 
-With the first method, you use a Variable Test to directly check the background metadata value:
+With the first method, you use a Variable Test to directly check the background metadata value:  
 ```
 ~background.location~ == indoors
 ~background.category~ == bar
@@ -14,7 +19,7 @@ With the first method, you use a Variable Test to directly check the background 
 ~background.water~ == true
 ```
 
-With the second method, you use a Variable Test to check if a the background has an associated tag:
+With the second method, you use a Variable Test to check if a the background has an associated tag:  
 ```
 ~background.tag.indoors~ == true
 ~background.tag.bar~ == true
@@ -38,6 +43,7 @@ If a background does not have a defined `status`, it is assumed to be
 available online and offline, similarly to opponent statuses.
 
 ### Possible Values
+
 | Value       | Description 
 | ----------- | ------------
 | (no value)  | The background should be available online and offline.
@@ -80,19 +86,26 @@ corresponding tag.
 | `forest`  | This background depicts a forested area.
 
 ### Examples
- - **Bars:**
-   - Inventory
-   - Tiki Bar
- - **School:**
-   - Classroom
-   - Hall (offline)
- - **Homes:**
-   - Bedroom
-   - Mansion
- - **Forests:**
-   - Haunted Forest
-   - Night (offline)
 
+**Bars:**
+
+   - Inventory  
+   - Tiki Bar  
+
+**School:**
+
+   - Classroom  
+   - Hall (offline)  
+
+**Homes:**
+
+   - Bedroom  
+   - Mansion  
+
+**Forests:**
+
+   - Haunted Forest  
+   - Night (offline)  
 
 ## Time of Day (`time`)
 
@@ -127,13 +140,15 @@ Backgrounds with a defined `temperature` are automatically given a corresponding
 
 ### Examples
 
- - **Hot:**
+**Hot:**
+
    - Tiki Bar
    - Beach
    - Hot Springs
- - **Cold:**
+
+**Cold:**
+
    - Haunted Forest
-   - Seasonal (offline)
 
 
 ## Location Privacy (`privacy`)
@@ -149,12 +164,16 @@ Backgrounds with a defined `privacy` level are automatically given a correspondi
 | `public`  | This background's setting depicts any location that could be open to any passerby or general patron of the venue, as well as outdoor areas.
 
 ### Examples
- - **Private:**
+
+**Private:**
+
    - Inventory
    - Beach _(note: this could go either way depending on how you headcanon it)_
    - Tiki Bar
    - Bedroom
- - **Public:**
+
+**Public:**
+
    - Classroom
    - Poolside
    - Street
@@ -171,6 +190,7 @@ This is a boolean value; it will either be `true` or completely undefined.
 Backgrounds with this set will also be automatically tagged with the `water` tag.
 
 ### Examples
+
  - Hot Spring
  - Poolside
  - Beach
@@ -186,6 +206,7 @@ This is a boolean value; it will either be `true` or completely undefined.
 Backgrounds with this set will also be automatically tagged with the `bathing` tag.
 
 ### Examples
+
  - Hot Spring
  - Poolside
  - Beach
@@ -201,6 +222,7 @@ This is a boolean value; it will either be `true` or completely undefined.
 Backgrounds with this set will also be automatically tagged with the `voyeur` tag.
 
 ### Examples
+
  - Street
  - Haunted Forest
  - Locker Room (look carefully)
@@ -215,6 +237,7 @@ This is a boolean value; it will either be `true` or completely undefined.
 Backgrounds with this set will also be automatically tagged with the `exhibition` tag.
 
 ### Examples
+
  - Street
  - Club (offline)
  - Green Screen (offline)
@@ -228,7 +251,8 @@ This is a boolean value; it will either be `true` or completely undefined.
 
 Backgrounds with this set will also be automatically tagged with the `dark` tag.
 
-### Example
+### Examples
+
  - Haunted Forest
  - Purple Room
  - Night (offline)

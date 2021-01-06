@@ -1,12 +1,12 @@
-# How to Use Github Desktop to Merge Files
+# How to Use Github Desktop to Submit Merge Requests
 
-The Old Fashioned Way
+Send In Files The Old Fashioned Way
 
 ---
 
 The SPNATI Utilities bot is a great resource for creators to quickly and easily keep their characters up to date, but it has a few drawbacks. You can't delete files, move existing files into a new sub-directory, or change the names of files. You can't use it to adjust files in an alt-costume, or submit minor bugfixes for others' characters.
 
-Thankfully, you can submit any update you want, without hassle, by using the GitHub Desktop application. The [Github Desktop Guide](https://www.reddit.com/r/spnati/comments/824j7p/keep_your_offline_version_up_to_date_with_github/) on Reddit I need to port over at some point should take you through the steps required to set up everything you need.
+Thankfully, you can submit any update you want, without hassle, by using the GitHub Desktop application. The [Github Desktop Guide](/basics/githubdesktop.html) that I finally ported over from Reddit should take you through the steps required to set up everything you need.
 
 As always, you can use Git via a command line interface to push changes and check out new branches. But if you understood that previous sentence, it's unlikely you need this guide.
 

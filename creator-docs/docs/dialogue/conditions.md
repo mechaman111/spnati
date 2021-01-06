@@ -1,5 +1,9 @@
 # Conditions
 
+How to have your character see the state of the game and opponents
+
+---
+
 The following is a list of conditions that can be used for cases.
 
 ## Variable Tests

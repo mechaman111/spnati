@@ -1,6 +1,8 @@
-_Written by: CorkyTheCactus_
+#Pose Organization
 
-_Last Edited: Jan 6, 2020_
+_Written by: CorkyTheCactus, Last Edited: Jan 6, 2020_
+
+---
 
 Ever find yourself losing hours of progress? Do you ever agonize after spending eons posing your character only to notice a glaring flaw in your model once you’re finished? Well, no more! After learning many hard lessons, I’ve developed a few methods to make the kisekae art process more efficient and ^^almost entirely fool-proof!
 

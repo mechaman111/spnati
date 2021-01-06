@@ -1,3 +1,9 @@
+# KKL Alpha Transparency
+
+How to make pieces of your character disappear
+
+---
+
 When loading a code from a file (**not** from the Import/Export tab), KKL will first look for `key=value` pairs, separated by '\n' (one per line).
 These key-value pairs can be used to specify alpha transparency for different parts of a character's body.
 
@@ -8,6 +14,9 @@ Note that the keys used are the property / attribute(?) names used internally by
 so many of them are in a mix of Japanese and English.
 
 Alpha transparency values are specified as integers ranging from 0 (invisible) to 255 (fully transparent).
+
+!!! note
+	The CE uses this method automatically, presented as a series of checkboxes. In other words, this is super advanced stuff, and most people will never need to do it manually.
 
 ### Core Body
 

@@ -1,6 +1,6 @@
 # The Dialogue Editor
 
-![annotated dialogue editor guide v3.5](images/dialogue-editor-annotated-3.5.png)
+![annotated dialogue editor guide v3.5](../img/dialogue-editor-annotated-3.5.png)
 
 ## Overview
 
@@ -131,7 +131,7 @@ This part of the dialogue editor (box 11, at center) is where you actually write
 Individual "lines" of dialogue consist of text and a character image at minimum.
 Lines can also have more complex settings or effects, many of which are hidden behind the _Show Advanced_ checkbox:
 
-![dialogue editor advanced settings](images/dialogue-editor-advanced-settings.png)
+![dialogue editor advanced settings](../img/dialogue-editor-advanced-settings.png)
 
  - **Markers** allow your character to remember things for use later in other dialogue. They can act as flags, counters, and can also store other information (such as what clothing a given character has taken off).
    - For the programming-savvy: markers are in essence variables.

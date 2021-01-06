@@ -1,7 +1,13 @@
-
 # KKL Control Protocol
 
+How to make a local server for Kisekae that the Character Editor can use
+
+---
+
 Starting from version v100.2, KKL comes with an optional built-in TCP server allowing for remote control of a running KKL instance.
+
+!!! note
+	This guide is intended for SPNatI coders. Those just interested in character development do not need to be concerned with this guide. Even the guy who organized these docs doesn't understand a lick of it.
 
 ## Enabling the server
 

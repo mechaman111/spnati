@@ -1,5 +1,9 @@
 # Collectibles
 
+Giving your characters fun trophies to earn
+
+---
+
 ## What are Collectibles?
 
 Have you ever wanted to design your own achievements? Collectibles are character-based trophies/achievements for SPNatI. By setting certain marker-like conditions in your character's dialogue, you can enable the unlocking of (a picture of) a physical keepsake to be kept into Collectibles gallery.

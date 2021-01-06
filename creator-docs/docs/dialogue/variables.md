@@ -1,4 +1,8 @@
-# Variables #
+# Variables
+
+How to let your characters talk about the game with dynamic text
+
+---
 
 Variables are placeholders that you can use in your dialogue and let your characters say things that are relevant to the situation; as the most basic example, the name of the player that lost the current hand and has to strip. In addition to appearing in dialogue text, they can be used in generic variable tests that let you determine which lines are relevant to a given situation.
 
@@ -33,7 +37,7 @@ see the page on backgrounds for more details.
 | Variable     | Description                                    |
 | ------------ | ---------------------------------------------- |
 | `~clothing~` | The name of the article of clothing the target is stripping/stripped. |
-| `~clothing.ifplural~` | Lets you make your dialogue correct according to the grammatically number of the current article of clothing. See the _ifplural_ section below, for how to use this variable. |
+| `~clothing.ifplural(|)~` | Lets you make your dialogue correct according to the grammatically number of the current article of clothing. See the _ifplural_ section below, for how to use this variable. |
 | `~clothing.plural~` | Expands to `plural` or `single`, for use in variable tests if you want to write completely separate cases depending on the grammatical number. |
 | `~clothing.generic~` | The generic designation of the current article. For example, sandals, boots, and shoes might all be generically referred to as shoes (TBD). If no generic designation is assigned in the character's behaviour file, this expands to the same as `~clothing~`. |
 | `~clothing.type~` | The `type` of the current article – `extra`, `minor`, `major`, or `important` |
@@ -104,9 +108,9 @@ Four special player IDs exist:
 | `.hand.noart`   | Like above, but with no indeterminate article. Use like `My ~self.hand.noart~ was better than your ~target.hand.noart~!` |
 | `.hand.score`   | A numerical value of the hand. The hundreds digit specifies the type of hand (0 = High card, 1 = One pair, 2 = Two pair, 3 = Trips, 4 = Straight, 5 = Flush, 6 = Full house, 7 = Quads, 8 = Straight flush, and 9 = Royal Flush). The rest of the digits specify the rank of the (top) pair, triplet and so on. So 14 = ace high, 107 = a pair of sevens, 413 = King-high straight. It's not complete information about the hand, but better than just "a pair"; the difference between a pair of aces and a pair of deuces is *huge*.
 
-## `.ifplural` ##
+### `.ifplural` 
 
-The `.ifplural` variables, available as `~cards.ifplural~` and `~clothing.ifplural~`
+The `.ifplural` variables, available as `~cards.ifplural(|)~` and `~clothing.ifplural(|)~`
 allow you to make your dialogue gramatically correct, according to whether or not
 the referenced item is plural or not.
 
@@ -119,7 +123,7 @@ For example, the dialogue `I have ~cards.ifplural(several cards|one card)~.` wil
 However, if you're trying to do something like `~clothing~` followed by `~clothing.ifplural(s|)~`,
 you should use `~clothing.toplural~` instead.
 
-## `~player.ifmale~` ##
+### `.ifmale` 
 
 `~player.ifmale(|)~` works similarly to `.ifplural` (described above), but works
 based on the referenced player's gender.
