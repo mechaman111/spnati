@@ -8,7 +8,7 @@ How to submit your character to the Testing Roster
 
 Before any character can be allowed into the main game, they must undergo a period of "beta testing" as part of the **Testing Roster**. Here, community members and other developers can give prospective new additions feedback. 
 
-Once a creator feels their character is sufficiently ready, they can begin the [Sponsorship process](/policy/sponsorship.html).
+Once a creator feels their character is sufficiently ready, they can begin the [Sponsorship process](/docs/policy/sponsorship.html).
 
 ## Testing Admittance
 

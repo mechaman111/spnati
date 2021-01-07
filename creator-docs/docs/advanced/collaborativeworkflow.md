@@ -4,7 +4,7 @@ A guide to collaborative workflow
 
 ---
 
-When a character is on testing, uploading an update can be done via the handy SPNATI Utilities bot, and synchronizing with the latest updates for your offline version is as easy as pressing a button. (You can read how to do this in **[this linked guide](/basics/githubdesktop.html)**.) If multiple people are working on one character, they can each push and pull changes like this and stay up-to-date with each others' progress. But what about for characters that haven't reached testing yet? Is there a better way than sending behaviour.xml files to each other via Discord? There sure is!
+When a character is on testing, uploading an update can be done via the handy SPNATI Utilities bot, and synchronizing with the latest updates for your offline version is as easy as pressing a button. (You can read how to do this in **[this linked guide](/docs/basics/githubdesktop.html)**.) If multiple people are working on one character, they can each push and pull changes like this and stay up-to-date with each others' progress. But what about for characters that haven't reached testing yet? Is there a better way than sending behaviour.xml files to each other via Discord? There sure is!
 
 You can use the power of GitGud to make a one-button synchronize for your own personal projects. And you can push your own changes to these just as easily!
 
@@ -99,7 +99,7 @@ You can update your character the same way you update your offline version. Clic
 
 This is where the magic happens. Along the left side of the screen in GitHub Desktop, a list of files that are different from the project's online version will be displayed. To create a "commit", tick the boxes of the files you want to change and type a title for these changes in the Summary box. Click "Commit to master" to put this in an envelope, and click "Push origin" (where "Fetch origin" usually is) to post the envelope. Your changes are now sent for other team members to fetch!
 
-If everything was set up correctly previously, team members should be able to push directly to the character's repository on Gitgud. This is the biggest difference with pushing to the main SPNatI repository, [which requires you to create a merge request instead](/advanced/githubmerge.html).
+If everything was set up correctly previously, team members should be able to push directly to the character's repository on Gitgud. This is the biggest difference with pushing to the main SPNatI repository, [which requires you to create a merge request instead](/docs/advanced/githubmerge.html).
 
 ---
 

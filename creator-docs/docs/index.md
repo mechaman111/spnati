@@ -38,9 +38,9 @@ Whether you're serious about developing or just want to prowl the lost character
 
 The repository [can be found here](https://gitgud.io/spnati/spnati).
 
-In oder to properly keep everything up to date, you’ll need to [set up your GitHub client](/basics/githubdesktop.html).
+In oder to properly keep everything up to date, you’ll need to [set up your GitHub client](/docs/basics/githubdesktop.html).
 
-To properly run the game on your own computer, [you’ll need this tool to help you play offline](/basics/playingoffline.html). You can find it in your folder once you’ve downloaded your repository. Also included is a workaround to allow you to play in Firefox.
+To properly run the game on your own computer, [you’ll need this tool to help you play offline](/docs/basics/playingoffline.html). You can find it in your folder once you’ve downloaded your repository. Also included is a workaround to allow you to play in Firefox.
 
 [You can also directly download a bundle with the characters and tools you want](https://spnati.net/bundles/download-bundles.html). However, you cannot update these bundles when new content is added, only re-download them.
 
@@ -50,4 +50,4 @@ This documentation is intended to cover everything you need to know for SPNATI c
 
 It's still very much a work in progress, and we're always looking for people who can help out with writing guides and docs!
 
-Unofficial but still very helpful guides are included in the **User Submitted** section. Feel free to submit your own! [A guide on proper formatting is available here](/advanced/writingguides.html).
+Unofficial but still very helpful guides are included in the **User Submitted** section. Feel free to submit your own! [A guide on proper formatting is available here](/docs/advanced/writingguides.html).

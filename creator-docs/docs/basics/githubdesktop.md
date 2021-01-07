@@ -29,7 +29,7 @@ When **it asks you to sign in to GitHub**, skip this step.
 
 ![githubdesktop_02.png](../img/githubdesktop_02.png "it asks you to sign in to GitHub")
 
-**The information you supply on the Configure Git screen** will be used to identify you if  you [create a manual merge request](/advanced/githubmerge.html).  Otherwise, it doesn't matter. You can just use the program to synchronize with the hosted version and not push commits through it.
+**The information you supply on the Configure Git screen** will be used to identify you if  you [create a manual merge request](/docs/advanced/githubmerge.html).  Otherwise, it doesn't matter. You can just use the program to synchronize with the hosted version and not push commits through it.
 
 ![githubdesktop_03.png](../img/githubdesktop_03.png "The information you supply on the Configure Git screen")
 

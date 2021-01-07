@@ -43,7 +43,7 @@ Add the path to your doc under the last guide on the list, taking care to keep t
 !!! warning
 	Only use legal characters in your doc file names, e.g. letters, numbers, underscores and dashes. Avoid spaces and special characters.
 
-Save .mkdocs.yml. You can now submit your changes as a merge request to the SPNatI repo on Gitgud. [Follow the directions here to do so.](/advanced/githubmerge.html)
+Save .mkdocs.yml. You can now submit your changes as a merge request to the SPNatI repo on Gitgud. [Follow the directions here to do so.](/docs/advanced/githubmerge.html)
 
 If all that seems too complicated, there's always the tried and true method: give it to a mod and make them figure it out.
 
@@ -53,7 +53,7 @@ There are a few ways to edit guides. If you find a mistake or typo, don't be afr
 
 ### Offline Repo
 
-Open up the `.md` file you want to edit in Notepad, TextEdit, or any word processor. Make your changes and save. [Submit as a merge request](/advanced/githubmerge.html).
+Open up the `.md` file you want to edit in Notepad, TextEdit, or any word processor. Make your changes and save. [Submit as a merge request](/docs/advanced/githubmerge.html).
 
 ### Git Page
 

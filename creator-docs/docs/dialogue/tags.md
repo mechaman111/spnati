@@ -4,7 +4,7 @@ Attributes that characters can target
 
 ---
 
-This is a comprehensive list of all tags you can give your characters, or which your character can target in dialogue. [Having a certain amount of filtered dialogue is necessary for being added to test](/policy/testing.html).
+This is a comprehensive list of all tags you can give your characters, or which your character can target in dialogue. [Having a certain amount of filtered dialogue is necessary for being added to test](/docs/policy/testing.html).
 
 If your character is from a new franchise, please add a new franchise tag in the Character Editor for them. Otherwise, do not add new tags yourself. However, if you have an idea for a new tag and know of multiple characters in-game it could apply to, you are welcome to suggest it.
 

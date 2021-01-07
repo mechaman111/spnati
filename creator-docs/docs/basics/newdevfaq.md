@@ -12,11 +12,11 @@ A: No, not at all! All of the character file formatting is handled by the Charac
 
 ### Q: Do I need to install software to make this work?
 
-A: Yes, though the softwares themselves are quite light, there is a bit of finesse involved to make life easy for yourself. See the [Character Development Guide](/basics/chardevguide.html) for more info.
+A: Yes, though the softwares themselves are quite light, there is a bit of finesse involved to make life easy for yourself. See the [Character Development Guide](/docs/basics/chardevguide.html) for more info.
 
 ### Q: What determines the criteria for adding a character to the Testing Roster? The core game?
 
-A: [Official Testing Requirements are available here.](/policy/testing.html) Once you feel you've been on Testing long enough, [you can apply for sponsorship and admittance into the Main Roster.](/policy/sponsorship.html)
+A: [Official Testing Requirements are available here.](/docs/policy/testing.html) Once you feel you've been on Testing long enough, [you can apply for sponsorship and admittance into the Main Roster.](/docs/policy/sponsorship.html)
 
 ### Q: I want to do [something] with my character, but I have no idea how to go about it!
 
@@ -55,7 +55,7 @@ A: Yeah IDK how that happens either. Feel free to ignore it or delete it.
 
 ### Q: How many lines should I have before tossing my character onto Testing?
 
-A: The minimum is 300, as seen on the [testing policy guide](/policy/testing.html). You'll want to avoid having too many more than that, as it can cause potential re-writes to be too daunting of an undertaking.
+A: The minimum is 300, as seen on the [testing policy guide](/docs/policy/testing.html). You'll want to avoid having too many more than that, as it can cause potential re-writes to be too daunting of an undertaking.
 
 ### Q: How many hand/masturbating (self)/masturbating (other)/finished/ etc. lines do I need?
 
@@ -86,7 +86,7 @@ A: A proper guide to generic and targeted dialogue is beyond the scope of this F
 
 ### Q: Do I need to have any artistic skills to make a character?
 
-A: You don't need to be an artist! All our models are created in Kisekae, a "paper doll" program. [A basic guide is available here](/kkl/kisekae_guide.html). Kisekae has a lot of little tricks that can make your models stand out, so if you'd like direct advice from experienced members, feel free to ask on the Development Discord server!
+A: You don't need to be an artist! All our models are created in Kisekae, a "paper doll" program. [A basic guide is available here](/docs/kkl/kisekae_guide.html). Kisekae has a lot of little tricks that can make your models stand out, so if you'd like direct advice from experienced members, feel free to ask on the Development Discord server!
 
 ### Q: What's the difference between Kisekae and KKL?
 
@@ -129,7 +129,7 @@ A: To allow a character to be selectable in the game, they need to be on `listin
 
 ### Q: I downloaded the .zip file from GitGud, but none of the images, .exes, or .zip files work!
 
-A: Long story short, SPNatI uses something called `LFS` to keep file sizes down. That unfortunately means the zip file download from GitGud doesn't work. Instead [use Github Desktop to keep your repo up to date](/basics/githubdesktop.html).
+A: Long story short, SPNatI uses something called `LFS` to keep file sizes down. That unfortunately means the zip file download from GitGud doesn't work. Instead [use Github Desktop to keep your repo up to date](/docs/basics/githubdesktop.html).
 
 ### Q: I can't pull updates from Gitgud! I'm seeing merge conflicts with `config.xml` and/or `listing.xml`!
 
