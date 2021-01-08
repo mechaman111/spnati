@@ -6,6 +6,8 @@ Strip Poker Night at the Inventory is an online game currently hosted at https:/
 
 Yes! You can download the game from https://spnati.net/bundles/download-bundles.html. After downloading, simply run `start_offline.exe` (or `start_offline.sh` on Linux / Mac OSX).
 
+More information is available here: https://spnati.net/docs/basics/playingoffline.html
+
 **How do I get endings?**
 
 To see one of the character endings, you need to:
@@ -36,7 +38,7 @@ It won't do anything, but you can request anything you want. Dozens of character
 
 Yes! We'd love you to. It's actually quite easy to make a character, just very time-consuming, and the players who are most interested in a character are usually the ones who are best suited to making them. It does not require any ability to code or make art.
 
-There's a walkthrough here: https://old.reddit.com/r/spnati/comments/89g9v8/strip_poker_night_at_the_inventory_development/
+Documentation related to character development is available here: https://spnati.net/docs/
 
 **I can't do art. Can I still make a character?**
 
