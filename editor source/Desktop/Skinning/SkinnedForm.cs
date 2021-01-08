@@ -520,7 +520,7 @@ namespace Desktop.Skinning
 		{
 			if (disposing)
 			{
-				_mailbox.Destroy();
+				_mailbox?.Destroy();
 				_mailbox = null;
 			}
 			base.Dispose(disposing);
