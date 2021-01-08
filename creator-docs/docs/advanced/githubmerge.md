@@ -26,6 +26,10 @@ Go to **Repository > Repository Settings** in the menu bar. in the **Remote** ta
 
 ![Repository Settings](../img/githubmerge-fork02.png)
 
+!!! note
+	In order to push and pull from Github Desktop to your fork, you'll need to set up a Gitgud password, which is separate from the Sapphire password you use to log in to Gitgud.  
+	You can set up a Gitgud password by going to "Settings" (under the top-right account button) and selecting "Password" in the left-hand menu.
+
 ---
 
 ## Keeping your fork up to date.
