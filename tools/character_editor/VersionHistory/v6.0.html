@@ -1,0 +1,126 @@
+﻿<h3>Dashboard</h3>
+<ul>
+	<li>Added a "Banter between all characters from a franchise" graph to the Franchise Comparison dashboard. This gives an overview for which characters from a franchise are most talkative amongst each other. For example, you can see which Fire Emblem character talks the most to other Fire Emblem characters and which characters completely ignore their franchise mates.</li>
+	<li>Use the left and right arrows to switch between graphs.</li>
+</ul>
+
+<h3>Metadata</h3>
+<ul>
+	<li>A separate gender can now be specified for the title/character selection screen. This is useful for characters like Chihiro so he can be listed as male during character selection (to avoid surprising the player with a trap), while still being initially considered female in game for the sake of the other characters.</li>
+	<li>Alternate costumes can also have their own gender specified.</li>
+</ul>
+
+<h3>Case Templates</h3>
+<ul>
+	<li>Ever wanted an Opponent Removing Accessory case type? Now you can!</li>
+	<li>Case templates are very similar to macros except they appear as their own category in Case View and in the Add dropdown. See the Case Templates tutorial in the help files or Youtube channel for more details.</li>
+</ul>
+
+<h3>Dialogue</h3>
+<ul>
+	<li>The Self > Hidden case condition has been moved to a more prominent, permanent "Background" checkbox next to the custom priority field. The purpose for this change is twofold: to eliminate conflicting terminology with cases that are simply hidden from view in the editor (which has no impact on gameplay), and to make it easier to find this functionality.</li>
+	<li>Add Reset checkboxes to a line's advanced dialogue settings for resetting the character's label and intelligence back to their initial values when played.</li>
+	<li>Added a + when the "to" field on a filter's counter is empty to make it more clear that leaving it empty means "from X and up".</li>
+</ul>
+
+<h3>Epilogues</h3>
+<ul>
+	<li>The epilogue editor has received a complete overhaul to make it more similar sequencers found in other software (including the Pose Maker in this software).</li>
+	<li>A tutorial has been added to the spnati_edit YouTube channel.</li>
+	<li>If an emitter's Y scale is left blank, it will now use the same value as the X scale, preserving aspect ratio.</li>
+	<li>Removed the "Persistent" column from the "Markers to Set" table. Markers set by an epilogue are always persistent.</li>
+	<li>More than one character can now be specified in the "Also Playing" condition.</li>
+</ul>
+<h4>Common Upgrade Issues With Epilogues</h4>
+Upon opening a scene in an existing ending, it will convert to the new format, which saves slightly differently from the old format. You should play through your entire epilogue to identify any inadvertent changes.
+Some common issues you may encounter include, but are not necessarily limited to,
+<ul>
+	<li>Duplicate keyframes: You might have had two keyframes in a Move directive with time "0.5s" thinking one would play at 0.5s and the next 0.5s later, but they would actually play at the same time (as evident by jerky motion when viewed in the game). Only one of these frames will be retained.</li>
+	<li>Move directives conflicting with loops: For example, a looping Move directive that moves to Y: 50 at time 1.0s, followed by a non-looping Move directive  moving to Y: 25 at time 0.5s. In game, these would play 
+	  simultaneously and conflict with each other up to 0.5s, at which point the loop would take over, but the editor does not allow this and will end the loop prior to the non-looping movement.
+	</li>
+	<li>Changing a value without stopping a loop: For eample, a looping Move directive that moves to Y: 50 at time 1.0s, followed by a non-looping Move directive with a 2.0s delay that changes Y to 25. In game, this would keep looping the Y: 50 animation, making the jump to 25 unnoticeable, but the editor 
+	assumes the loop is supposed to stop at the start of the Move directive.</li>
+	<li>There is a bug in the game engine where an initial fade opacity with no color specified will display a transparent color at 100% opacity instead of defaulting to black.
+	Some epilogues have worked around this by doing an immediate fade directive to set the color. The editor will see that the fade is going from 100% default (i.e. black) to 100% black, so it will discard it as redundant.</li>
+	<li>Aside from text boxes, positions can no longer be specified in percentages. These will be lost upon opening the scene.</li>
+	<li>All "wait for animations" directives are now replaced with delays of an equivalent amount. If a user clicks before animations have finished, the epilogue will skip to the end of the "wait for animations" directive. Since all "wait for animations" directives
+	are now grouped into a single block using delays, clicking early will skip past them all at once instead of one at a time.</li>
+	<li>The game engine does not support scaling sprites to 0, but in certain circumstances it would look like it still worked. With the new save format, it's more likely to encounter the problem, which would result in sprites scaling to 1 instead of 0.</li>
+	<li>There is much less flexibility in conditional directives now. Previously you could make individual animations conditional, but now an entire sprite is either conditional or not.</li>
+</ul>
+
+<h3>Pose Maker</h3>
+<ul>
+	<li>It's now possible to split a keyframe by dragging it while holding Ctrl.</li>
+	<li>Changed how the blocks of keyframes are displayed when splits are in use.</li>
+	<li>These features also apply to the Epilogue Editor.</li>
+	<li>Added buttons for changing a keyframe type instead of cycling through them.</li>
+	<li>Adjusted the colors across various themes.</li>
+	<li>Poses can now work across stages using stage-specific assets. See this brief tutorial <a href="https://www.youtube.com/watch?v=T7nIUgpGEZo" target="_blank">Cross Stage Poses</a> for how this works.</li>
+</ul>
+
+<h3>Scratch Pad</h3>
+<ul>
+	<li>Added a scratch pad to the Line Importer tab for writing down stream of consciousness. These can later be turned into real cases and assigned conditions.</li>
+</ul>
+
+<h3>Pose Matrix</h3>
+<ul>
+	<li>Wetness and labia position can now be applied to individual poses across stages.</li>
+	<li>For sheets that were created as "stage-independent", a subfolder can now be specified to store the images in a subfolder of the character's root directory. This is useful for organizing assets for custom poses and epilogues.</li>
+</ul>
+
+<h3>Writing Aid</h3>
+<ul>
+	<li>Added a "Mark as Done" button to the Writing Aid. This will treat a situation has having already been responded to even if you didn't respond to it previously through the Writing Aid.</li>
+</ul>
+
+<h3>General</h3>
+<ul>
+	<li>Characters with statuses that are marked to hide under the "Characters to hide" setting will no longer appear as suggestions in the Checklist dashboard, the Banter Wizard, or the Writing Aid.</li>
+	<li>Adjusted the default Blue theme.</li>
+	<li>Desaturated the Mandevilla theme.</li>
+</ul>
+
+<h3>Character Skins</h3>
+<ul>
+	<li>When creating a new alternate outfit, the format <i>character_skin</i> will now be enforced. This makes sorting easier when browsing the opponent/reskins folder.</li>
+	<li>When creating a new alternate outfit, the editor will now auto-select the character to link the outfit to based on the name of the skin.</li>
+</ul>
+
+<h3>Validator</h3>
+<ul>
+	<li>Uncountable nouns for clothing like "armor" and "jewelry" are now flagged because they don't pluralize well when writing generic dialogue.</li>
+</ul>
+
+<h3>Safe for Work Mode</h3>
+<ul>
+	<li>A rudimentary "Safe for Work" mode has been added to the general settings. Enabling this hides images, removes some potentially compromising tabs, and replaces references to nudity, masturbation, and so on with more innocuous synonyms.</li>
+	<li>This is intended to help with writing in public settings and not as a setting to use by default.</li>
+</ul>
+
+<h3>Bug Fixes</h3>
+<ul>
+	<li>Fixed crash when closing a character while the Find/Replace popup is open, and then attempting to use the popup.</li>
+	<li>Fixed various crashes that would occur on the Dashboard and Validator tabs when a Pose Maker pose contains a sprite with no source.</li>
+	<li>Fixed issue where creating a response to an "Opponent Selected" case where you are the target would create an "Opponent Selected" case instead of "Selected."</li>
+	<li>"Online" now appears as an option for epilogue status. This is the same as leaving it blank, but that wasn't obvious.</li>
+	<li>Fixed issue where required markers on an epilogue would duplicate when switching between epilogues on the same character.</li>
+	<li>Fixed issue where required markers on an epilogue would transfer to a new epilogue when creating a new one.</li>
+	<li>Fixed issue where the "Daily Goal Met" notification would appear repeatedly at certain times of the day.</li>
+	<li>Made Spell Check smarter about what it considers to be a word.</li>
+	<li>Fixed massive lag when opening an epilogue.</li>
+	<li>Speech bubble font size and padding in epilogues now scale to the camera like they have in game for a long time now. This should make it much easier to position bubbles, though they still won't be 1:1 with the game.</li>
+	<li>Fixed the skinning of preview fields (X, Y, source, etc.) when clicking between frames in the Pose Maker and Epilogue Editor.</li>
+	<li>Improved contrast of colors in the Pose Maker for the dark themes.</li>
+	<li>Fixed invisible tick marks in the Pose Maker in the Mandevilla theme.</li>
+	<li>Dragging a snap will now snap it to the grid as opposed to snapping in grid increments from the initial point.</li>
+	<li>Performance optimizations to the pose maker when there are lots of objects in the timeline.</li>
+	<li>The timeline can now be scrolled using the mousewheel while hovering over a sprite header.</li>
+	<li>Fixed emitter particles not previewing skew values.</li>
+	<li>Fixed isuse where renaming a sprite that has children linked to it would break that link.</li>
+	<li>Fixed issue with the stage dropdowns not providing numbers when a filter's role is self or a blank target/opponent.</li>
+	<li>Fixed crash when a stage is filled into a condition that is no longer valid when changing the target. (example: a condition that a character is at stage 10 and then switching to a character with only 5 layers)</li>
+	<li>Fixed issue with Macro lookup appearing blank when adding a case to a macro.</li>
+</ul>

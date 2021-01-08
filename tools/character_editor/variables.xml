@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<variables>
+  <variable name="player" description="Displays the human player's name." global="true" example="Florina">
+    <function name="ifMale" description="Displays text conditionally based on whether the human player is male or not.">
+      <param name="true" label="When male:" description="Text when male (ex. his)." example="Hector"/>
+      <param name="false" label="When female:" description="Text when not male (ex. her)." example="Florina"/>
+    </function>
+  </variable>
+  <variable name="human" description="Displays the human player's name." global="true" example="Florina">
+    <function name="ifMale" description="Displays text conditionally based on whether the human player is male or not.">
+      <param name="true" label="When male:" description="Text when male (ex. his)." example="Hector"/>
+      <param name="false" label="When female:" description="Text when not male (ex. her)." example="Florina"/>
+    </function>
+  </variable>
+  <variable name="name" description="Displays the target's name." example="Florina" />
+  <variable name="cards" description="Displays the number of cards being exchanged." example="4">
+    <function name="ifPlural" description="Displays text conditionally based on whether the clothing is singular or plural.">
+      <param name="true" label="When plural:" description="Text when cards being exchanged is plural (ex. 3)." example="1"/>
+      <param name="false" label="When singular:" description="Text when cards exchanged are not plural (ex. 1)." example="2"/>
+    </function>
+    <function name="text" description="Displays the number of cards being exchanged as a word instead of a number (ex. four rather than 4)." example="four"></function>
+  </variable>
+  <variable name="clothing" description="Displays the name of the clothing being removed.">
+    <function name="ifPlural" description="Displays text conditionally based on whether the clothing is singular or plural.">
+      <param name="true" label="When plural:" description="Text when plural (ex. pants)." example="pants"/>
+      <param name="false" label="When singular:" description="Text when not plural (ex. dress)." example="dress"/>
+    </function>
+    <function name="generic" example="shirt" description="Displays the generic name of the clothing."/>
+    <function name="plural" example="plural" description="Displays 'plural' or 'single' depending on if the clothing is plural."/>
+    <function name="position" example="upper" description="Displays the clothing's position (upper, lower, etc.)."/>
+    <function name="toPlural" example="shirts" description="Pluralizes the clothing name."/>
+  </variable>
+  <variable name="marker" description="Displays the value of a marker." global="true" useMarkers="true" example="MARKER_VALUE" />
+  <variable name="weekday" description="Displays the current day of the week." global="true" example="Tuesday">
+    <function name="number" description="Day of the week as a number (1-7, with 1 being Monday and 7 Sunday)" example="2" />
+  </variable>
+  <variable name="month" description="Displays the name of the current month." example="July" global="true">
+    <function name="number" description="Displays the number of the current month (1-12)" example="7" />
+  </variable>
+  <variable name="day" description="Displays the current day of the month (e.g. 31st)" global="true" example="22nd">
+    <function name="number" description="Day of the month as a number (1-31)" example="22" />
+  </variable>
+  <variable name="background" description="Displays the name of the background the player is using." global="true" example="Beach">
+    <function name="location" description="Displays 'indoors' or 'outdoors' depending on which background is in play." example="outdoors"/>
+    <function name="time" description="Displays 'day' or 'night' depending on which background is in play." example="night"/>
+    <function name="surface" description="Displays the type of floor in the current background (ex. floor vs sand)." example="floor" />
+  </variable>
+  <variable name="target" description="Displays the target's name, same as ~name~." example="Florina">
+    <function name="costume" description="Expands to the ID of the current skin the target is using, or 'default' by default." example="florina_easter" />
+    <function name="gender" description="Expands to 'male' or 'female' depending on the character's gender." example="female" />
+    <function name="ifMale" description="Displays text conditionally based on whether the target is male or not." >
+      <param name="true" label="When male:" description="Text when male (ex. his)." example="Hector" />
+      <param name="false" label="When female:" description="Text when not male (ex. her)." example="Florina" />
+    </function>
+    <function name="position" description="Expands to 'left', 'right', or 'self' based on the target's position on the screen relative to this character." example="right" />
+    <function name="size" description="Expands to small, medium, or large based on the character's chest or penis size." example="small" />
+    <function name="slot" description="Expands to 1, 2, 3, or 4 based on the target's position on screen, where 1 is leftmost and 4 is rightmost." example="2" />
+    <function name="tag" description="Expands to 'true' or 'false' depending on if the target has this tag." example="true" />
+    <function name="place" description="Expands to the character's current place (1-5) based on layers remaining." example="2" />
+    <function name="revplace" description="Expands to the character's current place in reverse order (1-5) based on layers remaining, so 1 means in last place." example="2" />
+    <function name="lead" description="Expands to the number of remaining layers this character has over 2nd place when in the leader, or a negative number difference from the leader if not in first." 
+              example="3"/>
+    <function name="trail" description="When in last place, expands to the difference in layers between this character and 2nd to last." example="2" />
+    <function name="hand" description="Expands to a description of the character's hand (ex. a pair of aces)" example="a pair of aces" />
+    <function name="diff" description="Difference between the number of layers of this player and other.">
+      <param name="other" label="Other character:" description="ID of the character to compare to." example="florina" />
+    </function>
+  </variable>
+  <variable name="self" description="Displays the character's name, same as ~name~." global="true" example="Florina">
+    <function name="costume" description="Expands to the ID of the current skin the character is using, or 'default' by default." example="florina_easter" />
+    <function name="slot" description="Expands to 1, 2, 3, or 4 based on the character's position on screen, where 1 is leftmost and 4 is rightmost." example="2" />
+    <function name="tag" description="Expands to 'true' or 'false' depending on if the character has this tag." example="true" />
+    <function name="place" description="Expands to the character's current place (1-5) based on layers remaining." example="3" />
+    <function name="revplace" description="Expands to the character's current place in reverse order (1-5) based on layers remaining, so 1 means in last place." example="2" />
+    <function name="lead" description="Expands to the number of remaining layers this character has over 2nd place when in the leader, or a negative number difference from the leader if not in first." 
+              example="2"/>
+    <function name="trail" description="When in last place, expands to the difference in layers between this character and 2nd to last."
+              example="3"/>
+    <function name="hand" description="Expands to a description of the character's hand (ex. a pair of aces)" example="a pair of aces" />
+    <function name="diff" description="Difference between the number of layers of this player and other.">
+      <param name="other" label="Other character:" description="ID of the character to compare to." example="florina" />
+    </function>
+  </variable>
+  <variable name="winner" description="Displays the name of the player who had the best hand of the most recent round (including this one)." global="true" example="Florina" />
+  <variable name="rng" description="Expands to a random number within a provided range (ex. ~rng(1-5)~" global="true">
+    <param name="interval" label="Range:" description="An inclusive range for the random number (ex. 1-3)" example="2" />
+  </variable>
+</variables>

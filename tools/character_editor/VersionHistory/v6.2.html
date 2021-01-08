@@ -1,0 +1,45 @@
+﻿<h3>Image Importing</h3>
+<ul>
+	<li style="color:red">The Pose List and Template tabs have been removed by default, since their functionality has been replaced by the Pose Matrix. You can restore them in the Image Import tab of the Settings.</li>
+	<li>Added a dashed line to the crop window that shows the center of the pose.</li>
+	<li>Added buttons in the Part Transparencies form to toggle groups on and off in bulk.</li>
+</ul>
+
+<h3>Programmable Image Pipeline</h3>
+<ul>
+	<li>An import pipeline has been added for adding post-processing effects to images that would normally require Photoshop or the Pose Maker (ex. transparencies, sprite overlays, etc.).
+	The practical use for this system is fairly niche, but handy when the need arises. See the help files for more information.</li>
+</ul>
+
+<h3>Dialogue Editor</h3>
+<ul>
+	<li>For easier access to a common feature, moved the "Play Once" case condition out of the Self dropdown and up next to the Background and Priority buttons.</li>
+	<li>For easier access to a common feature, moved the "Play Once" line option out of the ... popup and into a checkbox on the dialogue table itself.</li>
+	<li>Added a checkbox to the ... popup to make a speech bubble display on top of the pose when the text is long.</li>
+</ul>
+
+<h3>Epilogues</h3>
+<ul>
+	<li>You can now specify a marker for an entire action block so that it (and its corresponding pause) can be conditionally skipped in game.</li>
+</ul>
+
+<h3>Miscellaneous</h3>
+<ul>
+	<li>New characters will now be added to a separate listing.xml file so as to not interfere with the core game's listing. 
+	Any characters opened in the editor that are not present in a listing will be automatically added. This should reduce the complaints about a character not
+	appearing in game.
+	</li>
+	<li>Performance optimizations when opening a character tab.</li>
+</ul>
+
+<h3>Bug Fixes</h3>
+<ul>
+	<li>Fixed issue where adding an action and immediately changing its name wouldn't do anything.</li>
+	<li>Trying to open or target a character that is filtered out will now load in that character instead of creating a new one that would wipe out the filtered character's behaviour.xml</li>
+	<li>Better handling for generating responses to cases that use a format of something like "0 of self said marker="x"" (as opposed to the more standard "self, not said marker="x"")</li>
+	<li>Fixed crash during load when a character has an invalid behaviour.xml file (usually caused by the insertion of git merge conflict dividers when pulling an update)</li>
+	<li>Fixed the alignment of the Import Selected button in the Pose Matrix editor.</li>
+	<li>Fixed the tooltip of the Import Selected button in the Pose Matrix editor.</li>
+	<li>Fixed inconsistency between the editor and the game with how layers on parented objects would be ordered. Layers are now relative to their parent instead of the entire pose or scene.</li>
+	<li>Fixed the tooltip for the "ensure cases have generic lines" setting.</li>
+</ul>

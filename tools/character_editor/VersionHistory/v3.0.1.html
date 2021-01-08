@@ -1,0 +1,62 @@
+﻿<h3>Support for new conditions</h3>
+The target's current and starting layers, stripping status (decent, topless, etc.), as well as the number of players having a specific combination of gender, status, and tag, can now be used as conditions.
+
+<h3>Support for marker equations</h3>
+Markers can now optionally be given a value instead of being a simple true/false flag. The value can be either:
+<ol>
+    <li>Blank. Default behavior. The marker will be set to "true" when the associated line of dialogue is displayed.</li>
+    <li>A number. Use 0 to effectively turn off a marker, stopping subsequent "said marker" checks from triggering on it until it gets set again.</li>
+    <li>+. This will increment the marker's value by one, like a counter.</li>
+    <li>-. This will decrement the marker's value by one, like a countdown.</li>
+    <li>Free text. Use <i>~marker.foo~</i> in dialogue to display whatever text is currently stored in the marker called <i>foo</i>.</li>
+    <li>Variables. For example, ~clothing~ will store the name of the current article being stripped into the marker. Like with text, you can display the marker's value within a line of dialogue.</li>
+</ol>
+
+<p>The various "said marker" targets can now be given conditions (ex. foo=5) to further control when they come into effect. For instance, you could react to a major clothing reveal by setting the marker "majors" to "+". Targeting "said marker majors>=2" will cause the line to display only when two or more major pieces of clothing (across the whole table) have been removed.</p>
+
+<p>You're still free to leave the condition blank and it will continue to operate as before.</p>
+
+<h3>Kisekae Integration</h3>
+Scenes containing multiple characters can now be (officially) imported.
+
+<h3>Dialogue Editor</h3>
+<h4>Condition Editor</h4>
+In order to reduce clutter, the condition editor has received a complete overhaul. Only conditions currently applicable to the case display. To add conditions, you can either search for a relevant condition from the "Add a Condition" box, or use the quick menus next to it.
+To remove a condition, click the X beside it.
+
+If you wish to return to the old style editor with multiple tabs full of fields, you can click the ↺ beside the Conditions header. Please note that the old editor will not be maintained going forward and will eventually be removed.
+
+<h4>Cross-character Responses</h4>
+Multiple character workspaces make it easy to reference other characters while working on your own. Now you can respond to interesting lines directly from another character's workspace. Use the new "Respond to This" button on a line you wish to respond to, and it will open the selected character's workspace with a new case pre-generated to directly target the case you want to respond to.
+
+<h4>Call Out Cases</h4>
+A "Call Out..." button has been added to the Case screen. This will let you mark the current case as "noteworthy", making it easy to discover for other authors wishing to create interactions. See the next section for more information.
+
+<h3>Noteworthy Situations and Writing Aid</h3>
+Cross-character interactions make a game more lively, but how do you know what other characters are doing that's worth reacting to without playing dozens of games or browsing through 100+ characters' dialogue?
+<br/>
+You can now call out cases as being "noteworthy", describe the situation the case applies to, and other authors will be able to see the situation appear in their characters' Writing Aid screen, where they can immediately write an reaction.
+
+<h3>Writing Aid</h3>
+This new screen lets you discover situations that other author's characters have deemed noteworthy for targeted responses. The editor will randomly provide cases from which you can choose one to generate a targeted response immediately.
+
+This is only useful if people mark their lines as noteworthy, so make sure you call out your own character's noteworthy situations using the Call Out button in the dialogue editor!
+
+<h3>Banter Wizard</h3>
+The banter wizard has had some behind the scenes tweaks to make it a little more accurate.
+
+<h3>Goodbye, Simulator</h3>
+The Dialogue Tester has been retired. Due to the rapid evolution of the game, maintaining a simulator is unrealistic. Instead, you should use the debug options within the game itself for your testing.
+
+<h3>Marker Screen</h3>
+Markers can now be deleted by clicking the row header and pressing Delete. Note that if a marker is still being used in the dialogue, it will be added back next time you start up.
+
+<h3>Performance Improvements</h3>
+<ul>
+    <li>Poses screen now only loads images for rows displayed on screen, speeding up the initial visit when poses.txt is large.</li>
+</ul>
+
+<h3>Bug Fixes</h3>
+<ul>
+    <li>"Applies to Stages" region is now scrollable when content doesn't fit.</li>
+</ul>

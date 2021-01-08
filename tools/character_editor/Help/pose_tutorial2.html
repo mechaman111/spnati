@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta charset='utf-8' />
+    <link rel="stylesheet" type="text/css" href="topic.css" />
+    <title>Pose Maker Tutorial 2 - Motion Tween Animation</title>
+</head>
+<body>
+    <header id="header">Pose Maker Tutorial 2 - Motion Tween Animation</header>
+    <article id="main">
+        <section class="card">
+            This tutorial will walk through the steps of making a basic looping animation using tweening.
+        </section>
+        <section class="card">
+            <h1>Create the Pose</h1>
+            <ol>
+                <li>Open up your character and go to the Pose Maker. Click the Add Pose (+) button in the bottom left.<br/> <img src="images/tut1_addpose.png" /></li>
+                <li>Rename your pose (the Id field) to "pegasus". In the previous tutorial, we used a stage prefix (0-frames), which limited the pose to stage 0 (fully clothed). By not including a stage prefix, this pose will be available in all stages.</li>
+                <li>Leave Base Height alone. 1400 is fine.</li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Create the Sprites</h1>
+            After the humiliation from the last tutorial, we’re going to let Florina back into her comfort zone by letting her fly on a Pegasus. For this, we need three sprites: Florina on her Pegasus, and two wings to flap.
+            <ol>
+                <li>Click the Add Sprite (+) button at the top of the Pose Maker. An image selection will popup up automatically. Navigate to Florina’s folder and choose "ep_florina_ride.png". </li>
+                <li>Florina appears in the live preview with Huey. In the timeline, 4 rows have appeared: ep_florina_ride, Source, X, and Y.</li>
+                <li>ep_florina_ride isn’t the most convenient name, so let’s rename it to "florina". The Sprite Settings should already be open in the Property Window, so just change the ID to “florina”. It will update immediately in the timeline.
+                </li>
+                <li>Next we need the wings. Add another sprite and choose wing.png from Florina’s folder. </li>
+                <li>Rename this sprite to wingR. Sprites in the same pose must have unique IDs.<br/>
+                <img src="images/tut2_screen1.png" /></li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Position the Sprites</h1>
+            We’ve only added one wing so far, but that’s okay. We’ll add the other one later. For now, the more pressing issue is that the wing is covering Florina’s face and isn’t positioned on the Pegasus.
+            <ol>
+                <li>Click florina in the timeline to bring up her Sprite Settings. Change the Layer to 10. Florina moves in front of her wing. </li>
+                <li>Click the wing in the canvas (not the timeline). This will select the wing’s first key frame rather than the sprite. This is important because positioning is done in key frames. In the timeline, notice that wingR’s keyframes are white, meaning they’re currently selected. In the Property Window, you’ll see Keyframe: wingR (0s) and the various properties’ values at frame 0. </li>
+                <li>Time to move the wing into position. Either drag it in the canvas to a good position, or type directly in the X and Y fields. Somewhere around X: 230, Y: 275 is good.<br/>
+                <img src="images/tut2_wing.png" /></li>
+
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Setting the Pivot</h1>
+            With the wing in position, we’re almost ready to animate it.
+            <ol>
+                <li>wingR’s key frame should already be selected, but if not, click the diamond in the blue row in the timeline for wingR at 0s. The wing should have a selection box in the preview in the canvas, and the Property Window should be displaying “Keyframe: wingR (0s)." </li>
+                <li>Rotate the wing by either typing an angle in the Rotate (deg) field, or by grabbing outside one of the selection’s corners when a curved arrow appears and dragging it around.</li>
+                <li>An obvious issue should be visible. The wing is spinning around its center rather than at the point it connects with the horse’s body! This is because a sprite’s Pivot defaults to the center.</li>
+                <li>Click the eraser next to Rotation to reset it back to default.</li>
+                <li>There is a black dot in the middle of the sprite. Drag this dot to the point where the wing connects with the body.</li>
+                <li>Pivot points are not animateable, so they don’t appear in the key frame properties window. To manually edit a pivot point, click the sprite’s name (wingR) in the timeline to bring up the Sprite Settings. The pivot should be somewhere around (X: 0.04, Y : 0.50). </li>
+                <li>Select the key frame again (click the diamond in wingR’s blue bar at time 0s in the timeline).</li>
+                <li>Rotate the wing once more, and this time it will rotate around the connection point.</li>
+                <li>Click the eraser next to Rotation to clear it again.</li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Animating the Wing</h1>
+            Now we’re ready to animate.
+            <ol>
+                <li>In the timeline, click the middle tick mark between 0:00 and 1:00 to move the current time to 0.5s. <br/>
+                <img src="images/tut2_move_time.png" /></li>
+                <li>Select the wing if it isn’t already, and rotate it to -30 degrees. A key frame for Rotation is automatically added to 0.5s in the timeline.</li>
+                <li>Press the Play button to preview the animation. Nothing’s animating! This is because animations start with the value at the first key frame, which in Rotation’s case is at 0.5s. </li>
+                <li>Stop playback and select wingR's first key frame again. The red bar moves back to 0s</li>
+                <li>Type 0 into Rotation to force an initial key frame for Rotation. A diamond appears at 0 for Rotation, indicating this.
+                <ul><li>Note: If you didn’t use the eraser to reset the Rotation in the previous section, you would already have had a key frame at 0s and not seen this issue.</li></ul></li>
+                <li>Play the animation again. Now the wing moves up, but not back down. To move back down, we need another key frame. </li>
+                <li>Stop the playback and select 1:00 in the timeline. There is no key frame here yet, but the Property Window will display the calculated values for properties in gray (ex. -30 for rotation).</li>
+                <li>Type 0 into the Rotation field. Note that you must type 0 and not use the eraser, because the eraser will wipe out the key frame while 0 means “put a rotation of 0 at this key frame”</li>
+                <li>Play the animation again and the wing will be flapping now. </li>
+                <li>It could still look better, so let’s add a 3D effect.</li>
+                <li>Select wingR's key frame at time 0. Type 1 into Scale X to put a key frame for scaling at time 0. Otherwise we’ll have the same issue with scaling that we had in step 3 with rotation.</li>
+                <li>Click the key frame at 0.5s. Grab the right edge of the wing's selection box and pull it left to shrink the wing to somewhere around Scale X: 0.50. Alternatively, you can type directly into the field.</li>
+                <li>Click the key frame at 1.0s and give it a Scale X: 1.</li>
+                <li>Play the animation again. Tada! The wing is flapping nicely now.</li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Adjusting Key Frames</h1>
+            The wing is flapping perhaps a little too quickly. Maybe she’s in a hurry to get away from the game? Regardless, let’s slow it down a little.
+            <ol>
+                <li>Grab the wingR key frame at 1s and pull it to 1.5s. Make sure you grab the whole sprite’s key frame and not one of the individual properties in order to move them all together.</li>
+                <li>Click the wingR key frame at 0.5s and in the Property Window, replace Time: 0.5 with 0.75. This is an alternative way to move a key frame with more precision.</li>
+                <li>Play the animation. It's a little slower now.</li>
+                <li>There still isn’t much power to the flaps though. The downward movement should be quicker than the upward movement, so move the middle key frame from 0.75s to 1.2s.</li>
+                <li>Play the animation again. Now it’s a bit more natural.</li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Adding Movement</h1>
+            We can still improve the flapping movement by generating some upward thrust with each flap.
+            <ol>
+                <li>Select Florina and click the tick mark at 1.2s to move the time bar there. The property window should say “Keyframe: florina (1.2s).”</li>
+                <li>Drag her down somewhat, or use the Y field to move her to around Y: 20.</li>
+                <li>If dragging moved the X value too, click the eraser by X to reset it to the center.</li>
+                <li>Click the tick mark at 1.5s (the end of the animation) and type Y: 0 to move her back to her starting position.</li>
+                <li>Preview the animation playback. Looking better already, except the wing isn’t moving vertically with her.</li>
+                <li>Select the wing again and click on its key frame at 1.2s. Add the same offset to its Y that you did with Florina. If Florina moved down 20, add 20 to the wing as well. (i.e. if the wing was originally at Y: 275, then use Y: 295). </li>
+                <li>Click the “Copy First Frame to End” button. This is a convenient shortcut for copying all the values from frame 0 to the last frame, which is common for looping animations and something we’ve been doing manually up to this point.<br/>
+                    <img src="images/tut2_copy.png" />
+                    <ul>
+                        <li>This also copied frames for Source and X, which aren’t really needed. You can either clear them, or ignore them. </li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Looping</h1>
+            The animation’s looking good, but it’s not actually looped at the moment, meaning in game, she’ll do one flap and stop. To loop an animation, you will need to toggle which properties should loop in the timeline.
+            <ol>
+                <li>Hover over the empty space beneath the eyeball in the timeline on florina’s Y row. A circular looping arrow appears. Click it to enable looping for her Y property. <br/>
+                <img src="images/tut2_loop.png" /></li>
+                <li>A repeat sign appears at the end of this row to indicate that it loops</li>
+                <li>Do the same for wingR’s Rotation, Scale (X), and Y properties.</li>
+                <li>Now the animation actually loops. Switch the playback mode to “Play Once With Loops” using the dropdown arrow next to the Play button to confirm that it continues to loop upon reaching the end of the animation.</li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Adding the Other Wing</h1>
+            Now that we’ve got one wing set up, it’s time to add the other wing. We waited until the point because now we can simply duplicate the other wing, flip it, and be done without needing to set up all the key frames again. 
+            <ol>
+                <li>Select wingR (click its title in the timeline). Press Ctrl+D to duplicate it.</li>
+                <li>wingR(copy) appears. Select this sprite in the timeline and rename it to wingL</li>
+                <li>Now we need to flip it around. Select its first key frame at time 0.</li>
+                <li>Change the X scale to -1.</li>
+                <li>Drag it to an appropriate position, around (X: 150, Y: 275)</li>
+                <li>Click “Copy first frame to end” to copy these settings to the final key frame.</li>
+                <li>Click the key frame at 1.2s. Flip Scale X to -0.50 and rotation to 30.</li>
+                <li>That’s it! Florina’s ready to fly. Play back the animation to verify. The final timeline should look something like this:<br/>
+                <img src="images/tut2_final.png" /></li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Scaling</h1>
+            Compared to the previous tutorial, you might have noticed that Florina is looking a little small. This is because we were using assets from her epilogue which were scaled smaller to conserve file space. We can scale her back up for consistency's sake using the Base Height.
+            <ol>
+                <li>Click pegasus in the pose list (assuming that's what you named the pose in the first section). The Pose Properties appear. Change the Base Height to 700, which means "scale the pose so that 700px is considered full height". This will double her scale to match the other poses.</li>
+                <li>Assuming you create your assets at standard SPNATI scale, you will probably never need to change this value with your own poses.</li>
+            </ol>
+        </section>
+</article>
+</body>
+</html>

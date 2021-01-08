@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta charset='utf-8' />
+    <link rel="stylesheet" type="text/css" href="topic.css" />
+    <title>Advanced Metadata</title>
+</head>
+<body>
+    <header id="header">Advanced Metadata</header>
+    <article id="main">
+        <section class="card" id="overview">
+            <h1>Overview</h1>
+            The Advanced tab contains some lesser used options when building a character.
+        </section>
+        <section class="card" id="metadata">
+            <h1>Advanced Metadata</h1>
+            <ul>
+                <li><span class="label">Vary label by stage:</span> This allows you to change what other characters call your character based on their clothing stage. For example, Mulan is initially known as Ping but switches to Mulan after revealing her secret identity. You do not need to fill out every stage. If a stage is left blank, the previous stage's label is used.</li>
+                <li><span class="label">Scale factor:</span> This provides global scaling to your images in the game. Perhaps you made your images too big and don't want to regenerate all of them. You could instead scale them down here.</li>
+                <li><span class="label">Speech bubble position:</span> For talkative characters, it's possible for the speech bubble and the character model to overlap. Normally the bubble appears behind the character, blocking the text. You can use this to put the speech bubble in front of your character.</li>
+                <li><span class="label">Z layer:</span> This adjusts the sorting layers between players. If you are making a custom pose that extends into other character's spaces, you may want to apply a negative z layer so as to ensure your pose appears behind everybody else.</li>
+            </ul>
+        </section>
+        <section class="card" id="nicknames">
+            <h1>Nicknames</h1>
+            While the Label in the section above is what other characters call yours, nicknames are what other characters call yours when using the ~name~ variable. You can assign multiple nicknames to the same character, and the game will choose a random one each time it plays a line with ~name~.<br />
+            If you want to assign one or more nicknames to the entire roster, use the second table. Characters with specific nicknames assigned will have priority over this global list.
+            <div class="info">
+                <h5><i class="fa fa-info"></i>Dynamic Nicknames</h5>
+                You can also nicknames to characters in the middle of the game by using a special per-target marker called nickname. To use this in dialogue, rather than ~name~, use ~marker.nickname~. The following example will cause your character to call the target of the line where this marker was set "Biggest Loser" for the remainder of the game.<br />
+
+                <img src="images/nickname.png" /><br />
+            </div>
+        </section>
+        <section class="card" id="styles">
+            <h1>Custom Text Formatting</h1>
+            For added expressiveness, it's possible to add custom text formatting to your speech bubbles via custom styles. The game includes a handful of prebuilt styles available for all characters to use, but it's also possible to add styles unique to your character.
+            You can find this on your character's Advanced tab.<br />
+            <img src="images/text_formatting.png" />
+            <br />
+            <h3>Style Usage</h3>
+            To enable custom formatting in dialogue, type the style name in curly brackets. To remove all custom formatting mid-line, use {!reset}. For instance, the line "This text is {b}bold{!reset} and {i}italicized{!reset}." will produce "This text is <strong>bold</strong> and <em>italicized</em>" when displayed in game.
+            <h3>Creating Styles</h3>
+            Click the + in this section to create a style. The very first style will be called "example" and will turn text blue. Additional styles will start out being called just "style". To edit a style, select it from the list.
+            <br />
+            <ul>
+                <li><span class="label">Style name:</span> The name is how your style is accessed in dialogue. For instance a style named "example" is used in dialogue by typing {example}. Style names cannot contain spaces or special characters.</li>
+                <li><span class="label">Description:</span> This is used by intellisense when typing { in dialogue to describe what the style does. It has no effect in game.</li>
+            </ul>
+            To configure your style, click +Add to choose a property you want to modify (font, color, size, text effects, etc.). There is no limit to how many properties a single style modifies. For instance, you can use a single style to create small, bold, underlined green text.<br />
+            Once the property has been added, fields appear for customizing it. The preview at the bottom updates immediately to give an idea how it would look in game.<br/>
+            <h3>Miscellaneous Properties</h3>
+            Custom styles are really just CSS behind the scenes. You can use the "Other" style property type to add arbitrary CSS properties to your style. Note that the preview in the editor uses IE11, which is missing some of the more modern CSS properties. Therefore, it's possible that some effects won't appear in the editor but will still show in game when using a modern browser.
+            <br />
+            <h3>Global Styles</h3>
+            The game has several common styles available to all characters already. These are used the same way as character-specific custom styles. Global styles include:
+            <ul>
+                <li><span class="label">{b}:</span> Bold</li>
+                <li><span class="label">{i}:</span> Italics</li>
+                <li><span class="label">{s}:</span> Strikethrough</li>
+                <li><span class="label">{u}:</span> Underline</li>
+                <li><span class="label">{highlight}:</span> Applies a highlighter effect to text</li>
+                <li><span class="label">{mono}:</span> Monospace font (like a robot talking)</li>
+                <li><span class="label">{small}:</span> Slightly smaller text</li>
+                <li><span class="label">{big}:</span> Slightly larger text</li>
+            </ul>
+        </section>
+    </article>
+</body>
+</html>

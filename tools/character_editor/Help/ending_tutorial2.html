@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta charset='utf-8' />
+    <link rel="stylesheet" type="text/css" href="topic.css" />
+    <title>Epilogue Tutorial 2 - Animation</title>
+</head>
+<body>
+    <header id="header">Epilogue Tutorial 2 - Animation</header>
+    <article id="main">
+        <section class="card">
+            This tutorial expands upon the previous one by adding some animation. The same epilogue from Tutorial 1 will be used, so if you have not created it yet, do so before proceeding.
+        </section>
+        <section class="card">
+            <h1>Viewport</h1>
+            Touched upon in the previous tutorial was the camera viewport. Now we'll be utilizing the camera to change what part of the scene is visible.
+            <ol>
+                <li>Open your epilogue to the Scenes tab.</li>
+                <li>First, we need to zoom in the camera so that the whole background isn't visible at once.</li>
+                <li>Click the first scene in the Scene View.</li>
+                <li>Zoom out the canvas (slider in the toolbar or ctrl+mouse wheel) so that you can see the L corners of the camera viewport.</li>
+                <li>Grab the intersection of an L's legs and drag it around to change the camera's zoom. Whatever is outside the viewport appears slightly darker than what's inside.</li>
+                <li>To set the Zoom level exactly, with the scene selected, in the Property Table, set the zoom to 1.50. Remember, the canvas zoom and the camera zoom are two separate things.</li>
+                <li>Click the Play Scene button in the canvas toolbar. Notice how Florina's face is much bigger than last time. In fact, she is viewed at 1.5x zoom. Also notice how the portions of the background image outside the viewport are blacked out.</li>
+                <li>Stop playback to return to edit mode.</li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Moving the Camera</h1>
+            We're now going to animate the camera.
+			<ol>
+				<li>With the camera still selected (you can click the diamond next to "camera" in the timeline if it's not), set X to 130. You could also drag the viewport in the canvas, but for the sake of following this tutorial it's easier to type exact numbers.</li>
+				<li>
+					The viewport is now lined up with the right side of the background.
+					<br />
+					<img src="images/ending_viewport.png" />
+				</li>
+				<li>Drag the red time marker in the timeline to 1:00.</li>
+				<li>Set the camera's X value to 0. A diamond appears at the 1:00s mark in the timeline.</li>
+				<li>Put the time marker back to 0:00.</li>
+				<li>In the timeline, click the Play button. You'll see the viewport moving from position 130 to 0 in 1 second.</li>
+				<li>Click the Play Scene button. When playing a scene, you see the scene from the viewpoint of the camera, so it looks like a pan across the landscape as the camera moves.</li>
+				<li>Stop playback.</li>
+			</ol>
+        </section>
+        <section class="card">
+            <h1>Waiting for Animations</h1>
+            You may have noticed during playback that the speech bubble is stuck in place while the camera moves. This is because, unlike sprites, speech bubbles are not physical objects in the scene. Instead, they are like stickers overlaid atop the camera lens. We don't want to display the bubble until Florina moves into view, so we'll wait for the camera to stop before we display it.
+            <ol>
+                <li>In the timeline, grab the box with the green bar to the right of "Congratulations! You've unlocked..." and drag it so it starts at 1:00.</li>
+                <li>Play the scene again. This time the bubble doesn't appear until the camera has stopped.</li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Moving Sprites</h1>
+            Let's give Florina some animation by moving her into the scene too.
+            <ol>
+				<li>Select "calm" in the timeline. In the Property Table, change the ID to "florina". The timeline updates to use this new ID.</li>
+				<li>Giving your objects names helps identify them in a complicated timeline.</li>
+				<li>Click the diamond next to "florina" in the timeline to select the first keyframe.</li>
+                <li>Move Florina out of the viewport by dragging her left. Alternatively, you can manually type -200 into the X field of the Property Table.</li>
+                <li>In the timeline, drag the time marker to halfway between 0:00 and 1:00.</li>
+                <li>Drag Florina to the right back to where she was a few moments ago. Alternatively, type 0 into the X field of the Keyframe: florina (0.5s).</li>
+                <li>Play the scene and you'll see Florina slide in from the right.</li>
+                <li>Let's delay her movement a bit. Drag the diamond at 0.5s and move it to 1:00.</li>
+				<li>Put the time marker back to 0.5s and type -200 into the X field to create a new keyframe.</li>
+				<li>Click this diamond at 0.5 and then select the "Begin keyframe" button in the timeline toolbar. It looks like triangle pointing right.</li>
+                <li>Play the scene again. This time she waits a bit before popping into view. Stop playback.</li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Key Frames</h1>
+            The animation system uses key frames and tweening. Values for properties (X, Y, transparency, etc.) are defined at certain points in time, and the animation system fills the "in between" frames automatically.
+            At its core, the tweening system used by the epilogue system is virtually identical to the system used by custom poses, and so is working with them in the editor. This section will give a brief overview, but the Pose Maker tutorials go into more depth.
+            <br/>
+            It wouldn't be a Florina tutorial without summoning orbs being involved somehow. We'll use one to practice with animation key frames. 
+            <ol>
+                <li>Select Scene: Blue in the Scene View.</li>
+				<li>Click the "Toggle fixed length" button for the speech bubble. <img src="images/ending_fixed.png" />. This will cause the bubble to disappear when moving to the next action.</li>
+				<li>Add a new action in the Actions list.</li>
+				<li>Drag the time marker to 1:00.</li>
+				<li>Select the camera in the timeline. For a keyframe at 1s, give it the following values:
+					<ul>
+						<li><span class="label">Time: </span>1</li>
+						<li><span class="label">X: </span>-600</li>
+						<li><span class="label">Y: </span>384</li>
+						<li><span class="label">Zoom: </span>0.40</li>
+					</ul>
+                </li>
+                <li>This will pull back the camera and move Florina to the right side of the viewport as seen below:<br/>
+                You will likely need to recenter the canvas to see this all.
+                <br/>
+                <img src="images/ending_zoom.png" />
+                </li>
+				<li>Make sure the time marker is at 1:00..</li>
+                <li>Add a sprite (Add Sprite button in the toolbar). Use ep_orb.png from Florina's directory.</li>
+                <li>Give the sprite an ID of "orb."</li>
+                <li>Drag the orb to the lower left of the viewport, just outside of the rectangle. This should be somewhere around (X: -1500, Y: 1130).</li>
+                <li>Move the time marker to 2:00.</li>
+                <li>Drag the orb to Florina's feet, around (X: -100, Y: 1130). <strong>Fill out Y even though it's the same as the starting value.</strong> We're going to move Y in a bit and without putting it in the key frame, this frame would be skipped when animating Y and it would not animate as expected.</li>
+				<li>Move the time marker to the tick mark after 2:00 (at the default timeline zoom, this will be 2.12 and display as 1.12 for the orb's prospective keyframe.</li>
+                <li>Drag the orb up and to the left a bit, around (X: -230, Y: 990).</li>
+				<li>Move the time marker to the next tick mark.</li>
+                <li>Drag the orb back to the floor, around (X: -385, Y: 1130).</li>
+                <li>Play the scene. The camera will zoom out, and then the orb will roll up.</li>
+                <li>Stop playback. Let's give the orb a head start while the camera is still moving.</li>
+				<li>Grab the orb's in the timeline (rectangle with a blue line) and drag it so it starts at 0.5s.</li>
+                <li>Play the scene again. This time the orb is already moving by the time the camera stops.</li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Looping Animations</h1>
+            It's possible to loop different properties on a sprite at the same time. Let's add a rolling effect to the orb.
+            <ol>
+                <li>Make sure the orb is selected.</li>
+				<li>Click the initial keyframe for the orb (it should be at 0.5s).</li>
+				<li>Type 0 into the blank Rotation field to force an initial keyframe for rotation.</li>
+                <li>Drag the time marker to 1:00. Type 360 into the Rotation field.</li>
+				<li>Expand the orb's properties in the timeline by clicking the expand arrow to the left of the name.</li>
+				<li>On the Rotation row, hover over the empty space on the right and click it to enable looping.<br/> <img src="images/ending_keyframe.png" /></li>
+				<li>A repeat size appears next to Rotation's last keyframe.</li>
+                <li>Play the scene. The ball will be rolling in place, but stopping and starting.</li>
+                <li>This is because of the easing method, which defaults to "smooth": start slow, build up speed, and slow down.</li>
+                <li>Click the curve button two icons to the left of the looping button you just used to bring up a dropdown menu for easing functions.</li>
+                <li>Change the Easing to linear.</li>
+                <li>Preview the animation again. This time it rolls at a constant (linear) rate.</li>
+                <li>It looks decent enough, except it keeps rolling forever. Stop playback.</li>
+				<li>Select the last keyframe on the orb. This should be at time 1.75s (1.25 relative to the start of the orb).</li>
+				<li>Type 360 into the Rotation.</li>
+				<li>A new keyframe appears on the Rotation row and becomes part of the loop. We don't actually want this, so select the keyframe (only for the Rotation row) and click the "Begin keyframe" button in the timeline toolbar. This will make it part of a new animation block, ending the previous loop.</li>
+				<li>Play the action. The orb now stops rolling, but its rotation jumps to its new resting point. Change the rotation on this new frame to 190 and play it again to confirm that it looks better.</li>
+				<li>This looks good enough for tutorial purposes, but there are a number of ways we could accomplish this in a way that looks nicer. One idea would be to split the movement animation into before and after hitting Florina's leg and stop the loop between them, and then integrating a separate roll into the bounce. This will be left as an exercise to the reader.</li>
+                <li>One last finishing touch. Add a new speech bubble with the text, "Oh no!" and position it somewhere around Florina with the bubble arrow pointing at her.<br/></li>
+				<li>Drag this bubble in the timeline so that it starts at the point the orb hits Florina (around 1.5s).</li>
+                <li>
+                    Assuming you followed along exactly, your actions for the blue scene should look like this:<br/>
+                    <img src="images/ending_animation_tree.png" />
+                </li>
+            </ol>
+        </section>
+        <section class="card">
+            <h1>Next - Fade Effects</h1>
+            The <a href="ending_tutorial3.html">next tutorial</a> will add some flashiness to the ending to this scene using fade effects.
+        </section>
+    </article>
+</body>
+</html>

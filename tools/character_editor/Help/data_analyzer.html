@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta charset='utf-8' />
+    <link rel="stylesheet" type="text/css" href="topic.css" />
+    <title>Data Analyzer</title>
+</head>
+<body>
+    <header id="header">Data Analyzer</header>
+    <article id="main">
+        <section class="card">
+            <h1>Overview</h1>
+            <p>
+                The Data Analyzer is a tool (found under the Tools menu) for reporting on which characters fit one or more criteria. For example, you could use this tool to find which females have epilogues, which characters use the "shy" tag, or which female characters have more than 1000 lines and wear a dress.
+            </p>
+            <p>The main components of the Data Analyzer screen are as follows:
+            <ul>
+                <li><span class="label">Data Points list</span>: This lists out all the available criteria to analyze. Select an item and either click the + or double-click the item to add it to the criteria grid.</li>
+                <li><span class="label">Expression</span>:This controls how multiple criteria are evaluated. Refer to the Expressions section below.</li>
+                <li><span class="label">Criteria Grid</span>: This lists out all the available criteria to analyze. Select an item and either click the + or double-click the item to add it to the criteria grid.</li>
+                <li><span class="label">Results</span>: This lists out all the characters that are matched under the current criteria. Double click a character to open their workspace.</li>
+            </ul>
+            </p>
+        </section>
+        <section class="card">
+            <h1>Criteria Grid</h1>
+            <p>
+                When a data point is added to the Criteria Grid, you can tweak how the criterion should be evaluated by specifying an operator and value. For instance, you could check if a Line Count > 3, or that a character tag == "shaved". The report will auto-update upon leaving a cell.
+            </p>
+        </section>
+        <section class="card">
+            <h1>Expressions</h1>
+            <p>Criteria can be evaluated in three ways:</p>
+            <ul>
+                <li><span class="label">AND</span>: A character is included if every criterion is matched.</li>
+                <li><span class="label">OR</span>: A character is included if any of the criteria is matched.</li>
+                <li><span class="label">Custom</span>: You can create custom logic in this field. Each criterion has a row #, which you can reference in the logic expression. Examples:
+                <ul>
+                    <li><span class="label">(1 AND 2) OR 3</span>: A character matches if either criteria 1 and 2 are both met, or criterion 3 is met.</li>
+                    <li><span class="label">1 AND NOT 2</span>: A character matches if criterion 1 is met but not criterion 2.</li>
+                    <li><span class="label">(1 AND 2) OR (1 AND 3)</span>: A character matches if either criteria 1 and 2 are met, or criteria 1 and 3.</li>
+                </ul>
+                </li>
+            </ul>
+        </section>
+    </article>
+</body>
+</html>
