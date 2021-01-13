@@ -763,6 +763,11 @@ namespace SPNATI_Character_Editor.DataStructures
 			ExtraMetadata = metadata.ExtraData;
 		}
 
+		protected override void OnClone(BindableObject copy)
+		{
+			(copy as PoseEntry).ExtraMetadataRaw = ExtraMetadataRaw;
+		}
+
 		public string GetCode()
 		{
 			return Code;

@@ -304,7 +304,12 @@ namespace Desktop.DataStructures
 		{
 			BindableObject copy = Activator.CreateInstance(GetType()) as BindableObject;
 			CopyPropertiesInto(copy);
+			OnClone(copy);
 			return copy;
+		}
+
+		protected virtual void OnClone(BindableObject copy)
+		{
 		}
 
 		public void Dispose()

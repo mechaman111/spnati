@@ -148,6 +148,7 @@ namespace ImagePipeline
 			switch (mode)
 			{
 				case BlendMode.Multiply:
+					blend = src * blend;
 					blend = src * (1 - blendAlpha) + blend * blendAlpha;
 					break;
 				case BlendMode.Difference:

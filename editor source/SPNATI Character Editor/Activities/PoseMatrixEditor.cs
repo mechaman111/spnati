@@ -1414,6 +1414,7 @@ namespace SPNATI_Character_Editor.Activities
 					pose = CreatePoseEntry(cell, _currentPose.Key);
 				}
 				_currentPose.CopyPropertiesInto(pose);
+				pose.ExtraMetadataRaw = _currentPose.ExtraMetadataRaw;
 			}
 		}
 
@@ -1670,6 +1671,7 @@ namespace SPNATI_Character_Editor.Activities
 									cell = CreatePoseEntry(gridCell, gridCol.Name);
 								}
 								item.Item2.CopyPropertiesInto(cell);
+								cell.ExtraMetadataRaw = item.Item2.ExtraMetadataRaw;
 								cell.Key = gridCol.Name; //set the key back since a column's key should never change
 							}
 							gridCell.Selected = true;

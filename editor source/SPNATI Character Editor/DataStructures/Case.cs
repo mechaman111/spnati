@@ -1587,11 +1587,24 @@ namespace SPNATI_Character_Editor
 			string otherId = CharacterDatabase.GetId(responder);
 			foreach (ExpressionTest test in Expressions)
 			{
-				if (test.GetTarget() == otherId)
+				string testTarget = test.GetTarget();
+				if (testTarget == otherId)
 				{
-					ExpressionTest copy = test.Copy();
-					copy.ChangeTarget("self");
-					response.Expressions.Add(copy);
+					//special cases
+					if (test.Expression == $"~{testTarget}.position~")
+					{
+						string side = test.Value == "right" ? "left" : test.Value == "left" ? "right" : test.Value;
+						ExpressionTest copy = test.Copy();
+						copy.Expression = $"~{CharacterDatabase.GetId(speaker)}.position~";
+						copy.Value = side;
+						response.Expressions.Add(copy);
+					}
+					else
+					{
+						ExpressionTest copy = test.Copy();
+						copy.ChangeTarget("self");
+						response.Expressions.Add(copy);
+					}
 				}
 			}
 
@@ -1636,7 +1649,15 @@ namespace SPNATI_Character_Editor
 			{
 				if (!test.RefersTo(speaker, speaker, Target) && !test.RefersTo(responder, speaker, Target))
 				{
-					response.Expressions.Add(test);
+					if (test.Expression.EndsWith(".position~"))
+					{
+						//can't adequate flip this
+						continue;
+					}
+					else
+					{
+						response.Expressions.Add(test);
+					}
 				}
 			}
 

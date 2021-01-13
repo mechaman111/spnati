@@ -487,6 +487,15 @@ namespace SPNATI_Character_Editor.Controls
 				else if (e.ColumnIndex == ColImageOptions.Index)
 				{
 					img = Properties.Resources.ChevronDown;
+					if (e.RowIndex >= 0)
+					{
+						DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
+						DialogueLine line = row.Tag as DialogueLine;
+						if (line.Images != null && line.Images.Count > 0)
+						{
+							img = Properties.Resources.ChevronDownAlert;
+						}
+					}
 				}
 				e.Paint(e.CellBounds, DataGridViewPaintParts.All);
 				var w = img.Width;

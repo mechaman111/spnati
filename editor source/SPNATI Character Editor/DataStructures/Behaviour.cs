@@ -912,7 +912,7 @@ namespace SPNATI_Character_Editor
 				if (original.Stages[s] != splitPoint)
 				{
 					beforeSplitCase.AddStage(original.Stages[s]);
-					original.RemoveStage(s);
+					original.RemoveStage(original.Stages[s]);
 				}
 			}
 			ApplyChanges(original);
