@@ -69,22 +69,7 @@ namespace ImagePipeline
 				for (int y = 0; y < img.Height; y++)
 				{
 					Color color = img.GetPixel(x, y);
-					float r = color.R / 255.0f;
-					float g = color.G / 255.0f;
-					float b = color.B / 255.0f;
-					//float bw = (g * 0.59f + r * 0.3f + b * 0.11f);
-					float bw = (Math.Min(r, Math.Min(g, b)) + Math.Max(r, Math.Max(g, b))) * 0.5f;
-
-					float amount = floatReader.Get(x, y);
-					float fr = r * (1 - amount) + bw * amount;
-					float fg = g * (1 - amount) + bw * amount;
-					float fb = b * (1 - amount) + bw * amount;
-
-					int vr = (int)(fr * 255);
-					int vg = (int)(fg * 255);
-					int vb = (int)(fb * 255);
-
-					output.SetPixel(x, y, Color.FromArgb(color.A, vr, vg, vb));
+					output.SetPixel(x, y, ShaderFunctions.Desaturate(color, floatReader.Get(x, y)));
 				}
 			}
 			return Task.FromResult(new PipelineResult(output));
