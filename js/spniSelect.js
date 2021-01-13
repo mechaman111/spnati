@@ -1021,14 +1021,10 @@ function loadDefaultFillSuggestions () {
             return opp.highlightStatus === "new";
         });
         
-        /* This doesn't work right immediately after a re-sort, but we can't
-           use highest release number either, because of re-releases */
-        var newestChar = possibleNewPicks[possibleNewPicks.length - 1];
-        
         var fillPlayers = [];
         
         if (possibleNewPicks.length !== 0) {
-            /* select random new opponent - TODO: weight toward newest; awaiting official answer */
+            /* select random new opponent */
             var idx = getRandomNumber(0, possibleNewPicks.length);
             var randomOpponent = possibleNewPicks[idx];
             
@@ -1040,7 +1036,7 @@ function loadDefaultFillSuggestions () {
         }
         
         var possibleNewAndUpdatedPicks = possiblePicks.filter(function (opp) {
-            return opp.highlightStatus === "new" || opp.highlightStatus === "updated";
+            return opp.highlightStatus === "new" || opp.highlightStatus === "unsorted" || opp.highlightStatus === "updated";
         });
         
         for (var i = 0; i < 2; i++) {
@@ -1057,7 +1053,7 @@ function loadDefaultFillSuggestions () {
             fillPlayers.push(randomOpponent);
         }
         
-        /* Remove bottom 33% from consideration - TODO: finalize the percentage; awaiting official answer */
+        /* Remove bottom 33% from consideration */
         var cutoff = possiblePicks.length / 3;
         
         for (var i = 0; i < cutoff; i++) {
@@ -1079,8 +1075,8 @@ function loadDefaultFillSuggestions () {
             var status1 = a.highlightStatus;
             var status2 = b.highlightStatus;
             
-            if (!status1) status1 = "zzzzz";
-            if (!status2) status2 = "zzzzz";
+            if (!status1 || status1 === "unsorted") status1 = "zzzzz";
+            if (!status2 || status2 === "unsorted") status2 = "zzzzz";
             
             return status1.localeCompare(status2);
         });
