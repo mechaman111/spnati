@@ -3039,22 +3039,25 @@
             <directive type="clear-all" marker="Epilogue2DoSexM==1" />
             <directive type="move" id="RightArm" marker="Epilogue2DoSexM==1" x="-69" y="670" rotation="1" />
             <directive type="move" id="RightForearm" marker="Epilogue2DoSexM==1" src="Epilogue_SexMHand2.png" x="-89" y="906" rotation="-37.29251" />
-            <directive type="move" id="Chara" marker="Epilogue2DoSexM==1">
-                <keyframe time="0" src="Epilogue_SexM18.png" />
-                <keyframe time="3.1" src="Epilogue_SexM19.png" />
-                <keyframe time="5.2" src="Epilogue_SexM20.png" />
-            </directive>
             <directive type="move" id="Chara" marker="Epilogue2DoSexM==1" ease="linear">
                 <keyframe time="3" y="-190" />
                 <keyframe time="4.5" y="-190" />
                 <keyframe time="5" y="-215" />
                 <keyframe time="5.2" y="-250" />
             </directive>
+            <directive type="move" id="Chara" marker="Epilogue2DoSexM==1">
+                <keyframe time="0" src="Epilogue_SexM18.png" />
+                <keyframe time="3.1" src="Epilogue_SexM19.png" />
+                <keyframe time="6" src="Epilogue_SexMOpen1.png" />
+            </directive>
             <directive type="move" id="Vagina" marker="Epilogue2DoSexM==1" ease="linear">
                 <keyframe time="3" y="-190" />
                 <keyframe time="4.5" y="-190" />
                 <keyframe time="5" y="-215" />
                 <keyframe time="5.2" y="-250" />
+            </directive>
+            <directive type="move" id="Vagina" marker="Epilogue2DoSexM==1" ease="linear">
+                <keyframe time="6" src="Epilogue_SexMVagina3.png" />
             </directive>
             <directive type="move" id="RightArm" marker="Epilogue2DoSexM==1" ease="linear">
                 <keyframe time="3" x="-88" y="557" />
@@ -3073,7 +3076,23 @@
             <directive type="remove" id="LeftArm" marker="Epilogue2DoSexM==1" delay="3" />
             <directive type="remove" id="LeftForarm" marker="Epilogue2DoSexM==1" delay="3" />
             <directive type="remove" id="LeftLeg" marker="Epilogue2DoSexM==1" delay="3" />
-            <directive type="remove" id="Vagina" marker="Epilogue2DoSexM==1" delay="5.2" />
+            <directive type="sprite" id="CumDrip" marker="Epilogue2DoSexM==1" delay="6" layer="30" src="Epilogue_SexMDrip.png" x="55" y="950" scalex="0.75" scaley="0.1" pivotx="50%" pivoty="50%" alpha="85" />
+            <directive type="sprite" id="CumDrip2" marker="Epilogue2DoSexM==1" delay="6" layer="30" src="Epilogue_SexMDrip.png" x="55" y="950" scalex="0.3" scaley="0.5" pivotx="50%" pivoty="50%" alpha="85" />
+            <directive type="move" id="CumDrip" marker="Epilogue2DoSexM==1" delay="6" ease="linear">
+                <keyframe time="1.5" y="979" scalex="0.5" scaley="1" />
+                <keyframe time="2" y="991" scalex="0.35" scaley="1.5" />
+                <keyframe time="2.15" y="1388" scalex="0.25" scaley="2" />
+            </directive>
+            <directive type="move" id="CumDrip2" marker="Epilogue2DoSexM==1" delay="8">
+                <keyframe time="1.5" y="979" scalex="0.25" scaley="0.5" />
+                <keyframe time="2" y="991" scalex="0.16" scaley="0.75" />
+                <keyframe time="2.15" y="1388" scalex="0.13" scaley="1" />
+            </directive>
+            <directive type="pause" />
+            <directive type="remove" id="Vagina" marker="Epilogue2DoSexM==1" />
+            <directive type="remove" id="CumDrip" marker="Epilogue2DoSexM==1" />
+            <directive type="remove" id="CumDrip2" marker="Epilogue2DoSexM==1" />
+            <directive type="move" id="Chara" src="Epilogue_SexM20.png" />
             <directive type="pause" marker="Epilogue2DoSexM==1" />
             <directive type="camera" marker="Epilogue2DoSexM==1" time="2" x="-50" y="0" zoom="0.1" />
             <directive type="move" id="PlayerLegs" marker="Epilogue2DoSexM==1" time="1.5" y="2000" alpha="0" />
