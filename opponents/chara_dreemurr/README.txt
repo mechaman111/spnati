@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited January 2 2021
+README edited January 11 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -478,7 +478,7 @@ STREAMING-CHAN
 -Responds to Streaming-chan's interview.
 
 SUPERNOVA
--Responds as Supernova is losing.
+-Responds as either one is losing.
 
 THARJA
 -Responds to Tharja cursing Jessie.
