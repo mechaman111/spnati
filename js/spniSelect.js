@@ -1039,7 +1039,8 @@ function loadDefaultFillSuggestions () {
             return opp.highlightStatus === "new" || opp.highlightStatus === "unsorted" || opp.highlightStatus === "updated";
         });
         
-        for (var i = 0; i < 2; i++) {
+        /* Fill slots 2 and 3, but also fill slot 1 if still empty */
+        for (var i = fillPlayers.length; i < 3; i++) {
             if (possibleNewAndUpdatedPicks.length === 0) break;
             /* select random new or updated opponent */
             var idx = getRandomNumber(0, possibleNewAndUpdatedPicks.length);
