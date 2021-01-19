@@ -1,0 +1,588 @@
+#required for behaviour.xml
+first=Aoba
+last=Suzukaze
+label=Aoba
+gender=female
+size=small
+intelligence=average
+intelligence=good,4
+
+#Number of phases to "finish" masturbating
+timer=15
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=purple_hair
+tag=exotic_hair
+tag=long_hair
+tag=very_long_hair
+tag=twintails
+tag=violet_eyes
+tag=fair-skinned
+tag=skinny
+tag=shaved
+tag=small_breasts
+tag=cheerful
+tag=confident
+tag=innocent
+tag=moe
+tag=bisexual
+tag=single
+tag=japanese
+tag=anime
+tag=manga
+tag=artist
+
+#required for meta.xml
+#select screen image
+pic=
+height=4'10"
+from=New Game!
+writer=DestinyDolphin
+artist=
+description=
+z-layer=0
+dialogue-layer=over
+
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=,bow,extra,upper
+clothes=,slippers,extra,other,plural
+clothes=,socks,minor,other,plural
+clothes=,jacket,extra,upper
+clothes=,shirt,major,upper
+clothes=,skirt,major,lower
+clothes=,bra,important,upper
+clothes=,panties,important,lower,plural
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermione=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#INTRODUCTION
+#These lines are used to say different things depending on which other characters are present when the character
+#is selected and when the game starts.
+	
+
+#fully clothed
+0-selected,oneShotId:1=,This is what the character says after they've been selected
+
+
+
+
+#POKER PLAY
+#This is what a character says while they're exchanging cards and commenting on their hands afterwards.
+#When swapping cards, the game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+swap_cards=custom:new_pose,I'll exchange ~cards.text~ ~cards.ifplural(cards|card)~.
+good_hand=,I've got a good hand.
+okay_hand=,I've got an okay hand.
+bad_hand=,I've got a bad hand.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-swap_cards=,I'll exchange ~cards.text~ ~cards.ifplural(cards|card)~.
+0-good_hand=,I've got a good hand.
+0-okay_hand=,I've got an okay hand.
+0-bad_hand=,I've got a bad hand.
+
+
+#lost bow
+1-swap_cards=,I'll exchange ~cards.text~ ~cards.ifplural(cards|card)~.
+1-good_hand=,I've got a good hand.
+1-okay_hand=,I've got an okay hand.
+1-bad_hand=,I've got a bad hand.
+
+
+#naked
+-3-swap_cards=,I'll exchange ~cards.text~ ~cards.ifplural(cards|card)~.
+-3-good_hand=,I've got a good hand.
+-3-okay_hand=,I've got an okay hand.
+-3-bad_hand=,I've got a bad hand.
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+must_strip_winning=,They say this when they're winning - they have more clothing items left than other players.
+must_strip_normal=,What the character says when they're in the middle of the group in terms of clothes left.
+must_strip_losing=,The character has lost a round, and also has the fewest pieces of clothing left.
+stripping=,What the character says as they take their clothes off. The picture and text should be unique to what they're taking off.
+stripped=,What the character says just after they take their clothes off. Note that this is the start of a new stage.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#losing bow
+0-must_strip_winning=,They say this when they're winning - they have more clothing items left than other players.
+0-must_strip_normal=,What the character says when they're in the middle of the group in terms of clothes left.
+0-must_strip_losing=,The character has lost a round, and also has the fewest pieces of clothing left.
+0-stripping=,What the character says as they take their clothes off. The picture and text should be unique to what they're taking off.
+
+
+#losing slippers
+1-stripped=,What the character says just after they take their clothes off. Note that this is the start of a new stage.
+1-must_strip_winning=,They say this when they're winning - they have more clothing items left than other players.
+1-must_strip_normal=,What the character says when they're in the middle of the group in terms of clothes left.
+1-must_strip_losing=,The character has lost a round, and also has the fewest pieces of clothing left.
+1-stripping=,What the character says as they take their clothes off. The picture and text should be unique to what they're taking off.
+
+
+#naked
+-3-stripped=,What the character says just after they take their clothes off. Note that this is the start of a new stage.
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_strip=,What they say to a male NPC who has lost a round
+female_must_strip=,What they say to a female NPC who has lost a round
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_must_strip=,What they say to a male NPC who has lost a round
+0-female_must_strip=,What they say to a female NPC who has lost a round
+
+
+#lost bow
+1-male_must_strip=,What they say to a male NPC who has lost a round
+1-female_must_strip=,What they say to a female NPC who has lost a round
+
+
+#naked
+-3-male_must_strip=,What they say to a male NPC who has lost a round
+-3-female_must_strip=,What they say to a female NPC who has lost a round
+
+
+#masturbating
+-2-male_must_strip=,What they say to a male NPC who has lost a round
+-2-female_must_strip=,What they say to a female NPC who has lost a round
+
+
+#finished
+-1-male_must_strip=,What they say to a male NPC who has lost a round
+-1-female_must_strip=,What they say to a female NPC who has lost a round
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_accessory=,A male character is about to remove a small item, with the type "extra".
+male_removed_accessory=,A male character has just removed that small item.
+female_removing_accessory=,A female character is about to remove a small item, with the type "extra".
+female_removed_accessory=,A female character has just removed that small item.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_accessory=,A male character is about to remove a small item, with the type "extra".
+0-male_removed_accessory=,A male character has just removed that small item.
+0-female_removing_accessory=,A female character is about to remove a small item, with the type "extra".
+0-female_removed_accessory=,A female character has just removed that small item.
+
+
+#lost bow
+1-male_removing_accessory=,A male character is about to remove a small item, with the type "extra".
+1-male_removed_accessory=,A male character has just removed that small item.
+1-female_removing_accessory=,A female character is about to remove a small item, with the type "extra".
+1-female_removed_accessory=,A female character has just removed that small item.
+
+
+#naked
+-3-male_removing_accessory=,A male character is about to remove a small item, with the type "extra".
+-3-male_removed_accessory=,A male character has just removed that small item.
+-3-female_removing_accessory=,A female character is about to remove a small item, with the type "extra".
+-3-female_removed_accessory=,A female character has just removed that small item.
+
+
+#masturbating
+-2-male_removing_accessory=,A male character is about to remove a small item, with the type "extra".
+-2-male_removed_accessory=,A male character has just removed that small item.
+-2-female_removing_accessory=,A female character is about to remove a small item, with the type "extra".
+-2-female_removed_accessory=,A female character has just removed that small item.
+
+
+#finished
+-1-male_removing_accessory=,A male character is about to remove a small item, with the type "extra".
+-1-male_removed_accessory=,A male character has just removed that small item.
+-1-female_removing_accessory=,A female character is about to remove a small item, with the type "extra".
+-1-female_removed_accessory=,A female character has just removed that small item.
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+male_removed_minor=,The male character has just removed that minor item.
+female_removing_minor=,A female character is about to remove a clothing item with the type "minor".
+female_removed_minor=,The female character has just removed that minor item.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+0-male_removed_minor=,The male character has just removed that minor item.
+0-female_removing_minor=,A female character is about to remove a clothing item with the type "minor".
+0-female_removed_minor=,The female character has just removed that minor item.
+
+
+#lost bow
+1-male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+1-male_removed_minor=,The male character has just removed that minor item.
+1-female_removing_minor=,A female character is about to remove a clothing item with the type "minor".
+1-female_removed_minor=,The female character has just removed that minor item.
+
+
+#naked
+-3-male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+-3-male_removed_minor=,The male character has just removed that minor item.
+-3-female_removing_minor=,A female character is about to remove a clothing item with the type "minor".
+-3-female_removed_minor=,The female character has just removed that minor item.
+
+
+#masturbating
+-2-male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+-2-male_removed_minor=,The male character has just removed that minor item.
+-2-female_removing_minor=,A female character is about to remove a clothing item with the type "minor".
+-2-female_removed_minor=,The female character has just removed that minor item.
+
+
+#finished
+-1-male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+-1-male_removed_minor=,The male character has just removed that minor item.
+-1-female_removing_minor=,A female character is about to remove a clothing item with the type "minor".
+-1-female_removed_minor=,The female character has just removed that minor item.
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_major=,What the character says before a male loses an item with the "major" type.
+male_removed_major=,What the character says after the major item has been taken off.
+female_removing_major=,What the character says before a female loses an item with the "major" type.
+female_removed_major=,What the character says after the major item has been taken off.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_removing_major=,What the character says before a male loses an item with the "major" type.
+0-male_removed_major=,What the character says after the major item has been taken off.
+0-female_removing_major=,What the character says before a female loses an item with the "major" type.
+0-female_removed_major=,What the character says after the major item has been taken off.
+
+
+#lost bow
+1-male_removing_major=,What the character says before a male loses an item with the "major" type.
+1-male_removed_major=,What the character says after the major item has been taken off.
+1-female_removing_major=,What the character says before a female loses an item with the "major" type.
+1-female_removed_major=,What the character says after the major item has been taken off.
+
+
+#naked
+-3-male_removing_major=,What the character says before a male loses an item with the "major" type.
+-3-male_removed_major=,What the character says after the major item has been taken off.
+-3-female_removing_major=,What the character says before a female loses an item with the "major" type.
+-3-female_removed_major=,What the character says after the major item has been taken off.
+
+
+#masturbating
+-2-male_removing_major=,What the character says before a male loses an item with the "major" type.
+-2-male_removed_major=,What the character says after the major item has been taken off.
+-2-female_removing_major=,What the character says before a female loses an item with the "major" type.
+-2-female_removed_major=,What the character says after the major item has been taken off.
+
+
+#finished
+-1-male_removing_major=,What the character says before a male loses an item with the "major" type.
+-1-male_removed_major=,What the character says after the major item has been taken off.
+-1-female_removing_major=,What the character says before a female loses an item with the "major" type.
+-1-female_removed_major=,What the character says after the major item has been taken off.
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character to have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+male_chest_is_visible=,What the character says once the male character's chest is visible.
+male_crotch_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+female_crotch_is_visible=,What the character says after the female character's crotch has become visible.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+0-male_chest_is_visible=,What the character says once the male character's chest is visible.
+0-male_crotch_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+0-male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+0-male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+0-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+0-female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+0-female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+0-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+0-female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+0-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+0-female_crotch_is_visible=,What the character says after the female character's crotch has become visible.
+
+
+#lost bow
+1-male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+1-male_chest_is_visible=,What the character says once the male character's chest is visible.
+1-male_crotch_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+1-male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+1-male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+1-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+1-female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+1-female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+1-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+1-female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+1-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+1-female_crotch_is_visible=,What the character says after the female character's crotch has become visible.
+
+
+#naked
+-3-male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+-3-male_chest_is_visible=,What the character says once the male character's chest is visible.
+-3-male_crotch_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+-3-male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+-3-male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+-3-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+-3-female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+-3-female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+-3-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+-3-female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+-3-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+-3-female_crotch_is_visible=,What the character says after the female character's crotch has become visible.
+
+
+#masturbating
+-2-male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+-2-male_chest_is_visible=,What the character says once the male character's chest is visible.
+-2-male_crotch_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+-2-male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+-2-male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+-2-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+-2-female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+-2-female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+-2-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+-2-female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+-2-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+-2-female_crotch_is_visible=,What the character says after the female character's crotch has become visible.
+
+
+#finished
+-1-male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+-1-male_chest_is_visible=,What the character says once the male character's chest is visible.
+-1-male_crotch_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+-1-male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+-1-male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+-1-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+-1-female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+-1-female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+-1-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+-1-female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+-1-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+-1-female_crotch_is_visible=,What the character says after the female character's crotch has become visible.
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+male_start_masturbating=,What the character says when a male character has started masturbating.
+male_masturbating=,What the character says while a male character is masturbating.
+male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+female_start_masturbating=,What the character says when a female character has started masturbating.
+female_masturbating=,What the character says while a female character is masturbating.
+female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+0-male_start_masturbating=,What the character says when a male character has started masturbating.
+0-male_masturbating=,What the character says while a male character is masturbating.
+0-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+0-female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+0-female_start_masturbating=,What the character says when a female character has started masturbating.
+0-female_masturbating=,What the character says while a female character is masturbating.
+0-female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+#lost bow
+1-male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+1-male_start_masturbating=,What the character says when a male character has started masturbating.
+1-male_masturbating=,What the character says while a male character is masturbating.
+1-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+1-female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+1-female_start_masturbating=,What the character says when a female character has started masturbating.
+1-female_masturbating=,What the character says while a female character is masturbating.
+1-female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+#naked
+-3-male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+-3-male_start_masturbating=,What the character says when a male character has started masturbating.
+-3-male_masturbating=,What the character says while a male character is masturbating.
+-3-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+-3-female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+-3-female_start_masturbating=,What the character says when a female character has started masturbating.
+-3-female_masturbating=,What the character says while a female character is masturbating.
+-3-female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+#masturbating
+-2-male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+-2-male_start_masturbating=,What the character says when a male character has started masturbating.
+-2-male_masturbating=,What the character says while a male character is masturbating.
+-2-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+-2-female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+-2-female_start_masturbating=,What the character says when a female character has started masturbating.
+-2-female_masturbating=,What the character says while a female character is masturbating.
+-2-female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+#finished
+-1-male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+-1-male_start_masturbating=,What the character says when a male character has started masturbating.
+-1-male_masturbating=,What the character says while a male character is masturbating.
+-1-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+-1-female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+-1-female_start_masturbating=,What the character says when a female character has started masturbating.
+-1-female_masturbating=,What the character says while a female character is masturbating.
+-1-female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+
+#naked
+-3-must_masturbate_first=,This is the character response when they lost their last hand and have to masturbate, and they're the first character who's required to masturbate.
+-3-must_masturbate=,This is the character response when they lost their last hand and have to masturbate, and they're not the first character who's required to masturbate.
+-3-start_masturbating=,What the character says as they start masturbating.
+
+
+#masturbating
+-2-masturbating=,What the character says while they're masturbating.
+-2-heavy_masturbating=,What the character says while they're masturbating, and closer to "finishing".
+-2-finishing_masturbating=,What the masturbating character says as they "finish".
+
+
+#finished
+-1-finished_masturbating=,What the character says after they've finished masturbating.
+
+
+
+
+#GAME OVER
+#Lines spoken after the overall winner has been decided and all the losers have finished their forfeits.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+game_over_victory=,What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-game_over_victory=,What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.
+
+
+#lost bow
+1-game_over_victory=,What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.
+
+
+#naked
+-3-game_over_victory=,What the character says when they win the game. Can happen in any stage unless you have specific line for that stage.
+
+
+#finished
+game_over_defeat=,What the character says when someone else has won the game. This can only occur when a player is in the "finished" stage.
+
+#EPILOGUE/ENDING
+
+#CUSTOM POSES
+
+pose=new_pose
+	base_height=1400
