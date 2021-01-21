@@ -30,6 +30,14 @@ A: Playtest, playtest, playtest! Find all the obvious bugs yourself before the p
 
 A: Maybe! In order to adopt a character, you need the permission of the original author. If you cannot contact the original author, or if two months pass without a response from the original author, then you are free to take over that character. Note that Original Characters cannot be adopted.
 
+### Q: Is it possible to make a transgender or non-binary character?
+
+A: Unfortunately not. When this game was first created it only supported male/female binary options, and attempting to alter that would break too many existing characters. While many of the developers would like to be able to cater to our trans and non-binary players, it simply isn't feasible now or in the foreseeable future.
+
+### Q: Can I make an OC for my first character?
+
+A: While there are no rules currently prohibiting it, we don't reccomend starting out with an OC as your very first character. This is because it effectively doubles the workload for a new dev, needing to learn both proper SPNatI development *and* design an appealing character. It's also more difficult to get people excited for a character they don't know over a familiar face. We're not opposed to OCs, but new creators giving themselves uphill battles at the outset has too often ended in unhappiness.
+
 ### Q: Do I need to join the Discord?
 
 A: At some point you'll want to join the SPNatI Development Discord server. It's the best place to troubleshoot technical issues or get feedback on dialogue or art. You'll also be able to submit updates directly using the **SPNATI_Utilties bot**, so you won't need to bother with any tricky Git operations. Plus, you get to meet fellow smut-smiths. What's not to like?
@@ -48,6 +56,10 @@ A: Creators are only allowed to write lines for their own characters, or charact
 ### Q: I want to target X character, but I don't know the first thing about them.
 
 A: Every character has their own channel on the SPNatI Development Discord server, and many have a post with targetable qualities pinned. Give those a read if you're stumped. Otherwise, you could try asking a creator directly on the server or through DMs. Lastly, if all else fails, you can always target based on what you see before you when playing the character.
+
+### Q: If I want write conversations with a character, what's the best way to go about it mechanically?
+
+A: The most popular way is to write **targeted dialogue** ("targets") to another character in your character's "Opponent Must Strip", "Opponent Stripping", and "Opponent Stripped" cases. This is practical, as that character will be the center of attention in-game, and you can easily target that character and their status in the Character Editor. Simply make a new case in the CE (it's best to start with Opponent Must Strip), choose that character as a `target`, and choose what `stage` the target is in (to target a single stage, you only need to select a stage in the `From:` section). This also makes it easy for the other character's author to know how to direct their responses.
 
 ### Q: There's what appears to be a blank marker at the top of my markers list?
 
@@ -150,6 +162,10 @@ A: The validator tab in the CE will list out any issues that arise with your cha
 ### Q: Is there a way to download the Offline version or run the Character Editor on mobile?
 
 A: Unfortunately, not at this time.
+
+### Q: How can I give my character a custom in-game feedback message?
+
+A: Characters can receive anonymous feedback from players in-game, this is enabled by default but can be turned off. To change the feedback message, a user with update permissions must type in the character's channel on the Developer Discord server `b!feedback message [Message Here]`.
 
 ### Q: How do I update my character using the bot?
 

@@ -461,6 +461,8 @@ Possibly the most important Tab in Kisekae. Use the **Ribbon Placement Location*
 
 Much of these controls are similar to **Hairpieces** above, and better explained there.
 
+Holding down **shift** when using the controls will adjust all ribbons at once.
+
 ---
 
 ### Belts and Bracelets
@@ -478,6 +480,8 @@ Much of these controls are similar to **Hairpieces** above, and better explained
 Another critically important tab, though a first timer might not realize it. You can build a wide variety of clothing items out of belts.
 
 The **Mask Toggle** affects whether a belt will only be as wide at the outline of a character, or whether the whole belt is visible at once. The **Belt Position** control allows you to choose what configuration you want the the belt in, the amount varies by bely. The curved rope belt configuration of Belt `08` allows you to make curved outlines.
+
+Like ribbons, holding down **shift** when using the controls will adjust all belts.
 
 ---
 

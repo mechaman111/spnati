@@ -30,7 +30,7 @@ SPNATI is a fan-made project. Every character is made by a player who decided th
 
 **Can I request a character?**
 
-Sure you can! There's a character suggestion thread here: https://old.reddit.com/r/spnati/comments/afad5j/discussion_and_suggestion_thread/
+Sure you can! There's a character suggestion thread here: https://old.reddit.com/r/spnati/comments/l0wal1/suggestion_and_discussion_thread/
 
 It won't do anything, but you can request anything you want. Dozens of characters get requested and we'll dutifully add their names to the list. But if you want to see them get made, the best thing to do is to make them yourself.
 
