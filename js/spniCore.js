@@ -17,7 +17,7 @@ var ALT_COSTUMES_ENABLED = true;
 var DEFAULT_COSTUME_SET = null;
 var USAGE_TRACKING = undefined;
 var SENTRY_INITIALIZED = false;
-var RESORT_ACTIVE = false;
+var RESORT_KEY = null;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
@@ -163,7 +163,7 @@ function initialSetup () {
         save.load();
         updateTitleGender();
 
-        if (RESORT_ACTIVE && save.getPlayedCharacterSet().length >= 40) {
+        if (RESORT_KEY && save.getPlayedCharacterSet().length >= 40) {
             $(".title-resort-button").show();
         } else {
             $(".title-resort-button").hide();
@@ -374,12 +374,12 @@ function loadConfigFile () {
             console.log("Collectibles disabled");
         }
         
-        var _resort_mode = $xml.children('resort').text();
-        if (_resort_mode.toLowerCase() === 'true') {
-            console.log("Resort mode active!");
-            RESORT_ACTIVE = true;
+        var _resort_key = $xml.children('resort').text();
+        if (_resort_key && _resort_key.toLowerCase() !== 'false') {
+            console.log("Resort mode active, key: " + _resort_key);
+            RESORT_KEY = _resort_key;
         } else {
-            RESORT_ACTIVE = false;
+            RESORT_KEY = null;
             console.log("Resort mode disabled.");
         }
 
@@ -957,7 +957,7 @@ function showImportModal() {
 function showResortModal() {
     var playedCharacters = save.getPlayedCharacterSet();
 
-    if (RESORT_ACTIVE && playedCharacters.length >= 40) {
+    if (RESORT_KEY && playedCharacters.length >= 40) {
         if (!save.hasShownResortModal()) {
             $resortModal.modal('show');
         }

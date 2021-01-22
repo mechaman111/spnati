@@ -554,11 +554,11 @@ Save.prototype.savePlayedCharacterSet = function (set) {
 }
 
 Save.prototype.hasShownResortModal = function () {
-    return !!this.getItem("resortModalShown");
+    return (this.getItem("resortModalShown") === RESORT_KEY);
 }
 
 Save.prototype.setResortModalFlag = function (val) {
-    this.setItem("resortModalShown", !!val);
+    this.setItem("resortModalShown", !!val ? RESORT_KEY : null);
 }
 
 var save = new Save();
