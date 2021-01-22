@@ -163,7 +163,7 @@ function initialSetup () {
         save.load();
         updateTitleGender();
 
-        if (RESORT_ACTIVE && save.getPlayedCharacterSet().length >= 30) {
+        if (RESORT_ACTIVE && save.getPlayedCharacterSet().length >= 40) {
             $(".title-resort-button").show();
         } else {
             $(".title-resort-button").hide();
@@ -957,7 +957,7 @@ function showImportModal() {
 function showResortModal() {
     var playedCharacters = save.getPlayedCharacterSet();
 
-    if (RESORT_ACTIVE && playedCharacters.length >= 30) {
+    if (RESORT_ACTIVE && playedCharacters.length >= 40) {
         if (!save.hasShownResortModal()) {
             $resortModal.modal('show');
         }
