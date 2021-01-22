@@ -955,18 +955,7 @@ function showImportModal() {
 }
 
 function showResortModal() {
-    var playedCharacters = save.getPlayedCharacterSet();
-
-    if (RESORT_KEY && playedCharacters.length >= 40) {
-        if (!save.hasShownResortModal()) {
-            $resortModal.modal('show');
-        }
-        $(".title-resort-button").show();
-        save.setResortModalFlag(true);
-    } else {
-        $(".title-resort-button").hide();
-        save.setResortModalFlag(false);
-    }
+    $resortModal.modal('show');
 }
 
 /**********************************************************************

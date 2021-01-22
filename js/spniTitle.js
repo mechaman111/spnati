@@ -612,7 +612,18 @@ function validateTitleScreen () {
     if (USAGE_TRACKING === undefined) {
         showUsageTrackingModal();
     } else {
-        showResortModal();
+        var playedCharacters = save.getPlayedCharacterSet();
+
+        if (RESORT_KEY && playedCharacters.length >= 40) {
+            if (!save.hasShownResortModal()) {
+                showResortModal();
+            }
+            $(".title-resort-button").show();
+            save.setResortModalFlag(true);
+        } else {
+            $(".title-resort-button").hide();
+            save.setResortModalFlag(false);
+        }
     }
 }
 
