@@ -57,7 +57,7 @@ A: Creators are only allowed to write lines for their own characters, or charact
 
 A: Every character has their own channel on the SPNatI Development Discord server, and many have a post with targetable qualities pinned. Give those a read if you're stumped. Otherwise, you could try asking a creator directly on the server or through DMs. Lastly, if all else fails, you can always target based on what you see before you when playing the character.
 
-### Q: If I want write conversations with a character, what's the best way to go about it mechanically?
+### Q: If I want to write conversations with a character, what's the best way to go about it mechanically?
 
 A: The most popular way is to write **targeted dialogue** ("targets") to another character in your character's "Opponent Must Strip", "Opponent Stripping", and "Opponent Stripped" cases. This is practical, as that character will be the center of attention in-game, and you can easily target that character and their status in the Character Editor. Simply make a new case in the CE (it's best to start with Opponent Must Strip), choose that character as a `target`, and choose what `stage` the target is in (to target a single stage, you only need to select a stage in the `From:` section). This also makes it easy for the other character's author to know how to direct their responses.
 
