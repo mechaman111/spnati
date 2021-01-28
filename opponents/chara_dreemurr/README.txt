@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited January 11 2021
+README edited January 27 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -412,6 +412,7 @@ NAMI (ZSZ)
 NAMI
 -Responds to Nami preparing her rain stick.
 -Responds to Nami beginning to actually use her rain stick.
+-Responds to Nami as Chara is losing.
 
 NATSUKI
 -Responds to Natsuki as Chara is losing.
@@ -429,6 +430,7 @@ NEPTUNE
 PERONA
 -Response to Perona trying to recruit the player as a servant/maid.
 -Responses as Chara is losing.
+-Responds to Perona using her ability on Chara.
 
 PINKIE
 -Response to Pinkie turning to Pinkamena.
@@ -479,6 +481,11 @@ STREAMING-CHAN
 
 SUPERNOVA
 -Responds as either one is losing.
+
+SUSIE
+-Responds to Susie as she is losing.
+-Responds to Susie's 'godslayer' prompt.
+-Responds to Susie's Legion situation.
 
 THARJA
 -Responds to Tharja cursing Jessie.
