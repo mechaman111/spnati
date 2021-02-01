@@ -42,14 +42,13 @@ namespace SPNATI_Character_Editor.Controls
 			InitializeComponent();
 
 			cboView.Items.AddRange(new string[] { "Stage", "Case", "Target", "Folder", "Pose" });
-
-			Shell.Instance.PostOffice.Subscribe(DesktopMessages.SettingsUpdated, OnSettingsChanged);
 		}
 
 		private void DialogueTree_Load(object sender, EventArgs e)
 		{
 			if (!DesignMode)
 			{
+				Shell.Instance.PostOffice.Subscribe(DesktopMessages.SettingsUpdated, OnSettingsChanged);
 				recTreeTarget.RecordType = typeof(Character);
 				recTag.RecordType = typeof(Tag);
 

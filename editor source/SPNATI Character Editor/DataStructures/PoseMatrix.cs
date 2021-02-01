@@ -174,6 +174,14 @@ namespace SPNATI_Character_Editor.DataStructures
 			}
 			if (stage.EndsWith("_"))
 			{
+				//see if this is numeric and use - instead if so
+				string prefix = stage.Substring(0, stage.Length - 1);
+				int value;
+				if (int.TryParse(prefix, out value))
+				{
+					return $"{prefix}-{pose}";
+				}
+
 				return string.Format("{0}{1}", stage, pose);
 			}
 			return string.Format("{0}-{1}", stage, pose);
@@ -580,7 +588,7 @@ namespace SPNATI_Character_Editor.DataStructures
 			set { Set(value); }
 		}
 
-		[Text(DisplayName = "Name")]
+		[Text(DisplayName = "Name", Formatter = "FormatName")]
 		[XmlAttribute("name")]
 		public string Name
 		{
@@ -742,6 +750,12 @@ namespace SPNATI_Character_Editor.DataStructures
 		public void Sort()
 		{
 			Poses.Sort((p1, p2) => p1.Key.CompareTo(p2.Key));
+		}
+
+		public string FormatName(string name)
+		{
+			Regex regex = new Regex(@"[^a-zA-Z0-9 _\-]");
+			return regex.Replace(name, "");
 		}
 	}
 

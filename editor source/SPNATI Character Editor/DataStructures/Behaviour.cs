@@ -308,13 +308,14 @@ namespace SPNATI_Character_Editor
 				HashSet<string> knownLines = new HashSet<string>();
 				foreach (Case c in _workingCases)
 				{
+					TriggerDefinition trigger = TriggerDatabase.GetTrigger(c.Tag);
 					if (!string.IsNullOrEmpty(c.Hidden))
 					{
 						continue;
 					}
 					foreach (var line in c.Lines)
 					{
-						if (knownLines.Contains(line.Text))
+						if (knownLines.Contains(line.Text) || (!string.IsNullOrEmpty(trigger?.DefaultText) && line.Text == trigger.DefaultText))
 							continue;
 						knownLines.Add(line.Text);
 					}

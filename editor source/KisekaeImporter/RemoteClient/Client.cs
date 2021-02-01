@@ -85,6 +85,11 @@ namespace KisekaeImporter.RemoteClient
 				if (response.Type == MessageType.Heartbeat)
 				{
 					LastHeartbeat = DateTime.Now;
+					if (_pendingRequests.Count == 0)
+					{
+						//if not waiting on anything, stop
+						Stop();
+					}
 					continue;
 				}
 				else if (response.Type == MessageType.Disconnect)
@@ -252,7 +257,6 @@ namespace KisekaeImporter.RemoteClient
 
 			ServerResponse response = await pendedRequest;
 
-			Stop();
 			return response;
 		}
 	}
