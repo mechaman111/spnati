@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace SPNATI_Character_Editor
 {
@@ -10,9 +11,23 @@ namespace SPNATI_Character_Editor
 	{
 		private static Dictionary<string, string> _encodeMap = new Dictionary<string, string>();
 		private static Dictionary<string, string> _decodeMap = new Dictionary<string, string>();
+		private static Dictionary<string, Regex> _htmlRegex = new Dictionary<string, Regex>();
+		private static MatchEvaluator _htmlEncoder;
+		private static MatchEvaluator _htmlDecoder;
 
 		static XMLHelper()
 		{
+			_htmlRegex["script"] = new Regex(@"<script\b[^>]*>[\s\S]*?<\/script>", RegexOptions.IgnoreCase);
+			_htmlRegex["div"] = new Regex(@"<div\b[^>]*>[\s\S]*?<\/div>", RegexOptions.IgnoreCase);
+			_htmlRegex["span"] = new Regex(@"<span\b[^>]*>[\s\S]*?<\/span>", RegexOptions.IgnoreCase);
+			_htmlEncoder = delegate (Match match)
+			{
+				return match.ToString().Replace("<", "&lt;");
+			};
+			_htmlDecoder = delegate (Match match)
+			{
+				return match.ToString().Replace("&lt;", "<");
+			};
 			Load();
 		}
 
@@ -69,6 +84,16 @@ namespace SPNATI_Character_Editor
 			text = text.Replace("<HR>", "&lt;HR&gt;");
 			text = text.Replace("</hr>", "&lt;/hr&gt;");
 			text = text.Replace("</HR>", "&lt;/HR&gt;");
+
+			//special processing for script/html tags
+			//foreach (KeyValuePair<string, Regex> kvp in _htmlRegex)
+			//{
+			//	string tag = $"<{kvp.Key}>";
+			//	if (text.Contains(tag))
+			//	{
+			//		text = kvp.Value.Replace(text, _htmlEncoder);
+			//	}
+			//}
 			return text;
 		}
 
@@ -79,9 +104,21 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public static string DecodeEntityReferences(string text)
 		{
+			//these are done by the game itself now
 			//text = text.Replace("&lt;i&gt;", "<i>");
 			//text = text.Replace("&lt;/i&gt;", "</i>");
 			//text = text.Replace("&amp;", "&");
+
+			//but these aren't
+			//foreach (KeyValuePair<string, Regex> kvp in _htmlRegex)
+			//{
+			//	string tag = $"&lt;{kvp.Key}";
+			//	if (text.Contains(tag))
+			//	{
+			//		text = text.Replace(tag, $"<{kvp.Key}").Replace($"&lt;/{kvp.Key}", $"</{kvp.Key}");
+			//		text = kvp.Value.Replace(text, _htmlDecoder);
+			//	}
+			//}
 			return text;
 		}
 

@@ -230,6 +230,7 @@ namespace SPNATI_Character_Editor.Activities
 			if (_character == null)
 				return true;
 			Save();
+
 			if (Serialization.ExportCharacter(_character))
 			{
 				if (auto)
@@ -238,6 +239,15 @@ namespace SPNATI_Character_Editor.Activities
 				}
 				else
 				{
+					if (Listing.Instance.GetCharacterStatus(_character.FolderName) == OpponentStatus.Unlisted)
+					{
+						//auto-add to the listing
+						Opponent opp = new Opponent(_character.FolderName, OpponentStatus.Testing);
+						Listings.Test.Characters.Add(opp);
+						Listing.Instance.Characters.Add(opp);
+						Serialization.ExportListing(Listings.Test, "listing-test.xml");
+					}
+
 					Shell.Instance.SetStatus(string.Format("{0} exported successfully at {1}.", _character, DateTime.Now.ToShortTimeString()));
 				}
 				return true;
@@ -535,5 +545,21 @@ namespace SPNATI_Character_Editor.Activities
 			caseControl.Focus();
 		}
 		#endregion
+
+		private void cmdAddRecipe_Click(object sender, EventArgs e)
+		{
+			Save();
+			using (AddRecipeForm form = new AddRecipeForm())
+			{
+				form.Case = _selectedCase;
+				if (form.ShowDialog() == DialogResult.OK)
+				{
+					if (form.NeedEdit)
+					{
+						Shell.Instance.LaunchWorkspace(form.Recipe);
+					}
+				}
+			}
+		}
 	}
 }

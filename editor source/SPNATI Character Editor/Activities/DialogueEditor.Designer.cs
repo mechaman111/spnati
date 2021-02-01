@@ -35,9 +35,10 @@ namespace SPNATI_Character_Editor.Activities
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.cmdMakeResponse = new Desktop.Skinning.SkinnedButton();
 			this.cmdCallOut = new Desktop.Skinning.SkinnedButton();
+			this.cmdAddRecipe = new Desktop.Skinning.SkinnedButton();
 			this.splitDialogue = new Desktop.Skinning.SkinnedSplitContainer();
-			this.panelCase = new System.Windows.Forms.Panel();
 			this.treeDialogue = new SPNATI_Character_Editor.Controls.DialogueTree();
+			this.panelCase = new System.Windows.Forms.Panel();
 			this.caseControl = new SPNATI_Character_Editor.Controls.CaseControl();
 			((System.ComponentModel.ISupportInitialize)(this.splitDialogue)).BeginInit();
 			this.splitDialogue.Panel1.SuspendLayout();
@@ -58,7 +59,7 @@ namespace SPNATI_Character_Editor.Activities
 			this.cmdMakeResponse.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdMakeResponse.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
 			this.cmdMakeResponse.Flat = false;
-			this.cmdMakeResponse.Location = new System.Drawing.Point(508, 2);
+			this.cmdMakeResponse.Location = new System.Drawing.Point(478, 2);
 			this.cmdMakeResponse.Name = "cmdMakeResponse";
 			this.cmdMakeResponse.Size = new System.Drawing.Size(104, 23);
 			this.cmdMakeResponse.TabIndex = 45;
@@ -73,15 +74,30 @@ namespace SPNATI_Character_Editor.Activities
 			this.cmdCallOut.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
 			this.cmdCallOut.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
 			this.cmdCallOut.Flat = false;
-			this.cmdCallOut.Location = new System.Drawing.Point(618, 2);
+			this.cmdCallOut.Location = new System.Drawing.Point(588, 2);
 			this.cmdCallOut.Name = "cmdCallOut";
-			this.cmdCallOut.Size = new System.Drawing.Size(75, 23);
+			this.cmdCallOut.Size = new System.Drawing.Size(104, 23);
 			this.cmdCallOut.TabIndex = 44;
 			this.cmdCallOut.Text = "Call Out";
 			this.toolTip1.SetToolTip(this.cmdCallOut, "Marks this situation as being \"noteworthy\" so it will appear in other character\'s" +
         " Writing Aids.");
 			this.cmdCallOut.UseVisualStyleBackColor = true;
 			this.cmdCallOut.Click += new System.EventHandler(this.cmdCallOut_Click);
+			// 
+			// cmdAddRecipe
+			// 
+			this.cmdAddRecipe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmdAddRecipe.Background = Desktop.Skinning.SkinnedBackgroundType.Surface;
+			this.cmdAddRecipe.FieldType = Desktop.Skinning.SkinnedFieldType.Secondary;
+			this.cmdAddRecipe.Flat = false;
+			this.cmdAddRecipe.Location = new System.Drawing.Point(368, 2);
+			this.cmdAddRecipe.Name = "cmdAddRecipe";
+			this.cmdAddRecipe.Size = new System.Drawing.Size(104, 23);
+			this.cmdAddRecipe.TabIndex = 47;
+			this.cmdAddRecipe.Text = "To Recipe";
+			this.toolTip1.SetToolTip(this.cmdAddRecipe, "Creates a recipe out of this case");
+			this.cmdAddRecipe.UseVisualStyleBackColor = true;
+			this.cmdAddRecipe.Click += new System.EventHandler(this.cmdAddRecipe_Click);
 			// 
 			// splitDialogue
 			// 
@@ -101,21 +117,6 @@ namespace SPNATI_Character_Editor.Activities
 			this.splitDialogue.SplitterDistance = 266;
 			this.splitDialogue.TabIndex = 16;
 			// 
-			// panelCase
-			// 
-			this.panelCase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.panelCase.BackColor = System.Drawing.SystemColors.Control;
-			this.panelCase.Controls.Add(this.cmdMakeResponse);
-			this.panelCase.Controls.Add(this.cmdCallOut);
-			this.panelCase.Controls.Add(this.caseControl);
-			this.panelCase.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.panelCase.Location = new System.Drawing.Point(3, 0);
-			this.panelCase.Name = "panelCase";
-			this.panelCase.Size = new System.Drawing.Size(697, 668);
-			this.panelCase.TabIndex = 28;
-			// 
 			// treeDialogue
 			// 
 			this.treeDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -129,6 +130,22 @@ namespace SPNATI_Character_Editor.Activities
 			this.treeDialogue.SelectedNodeChanging += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseSelectionEventArgs>(this.tree_SelectedNodeChanging);
 			this.treeDialogue.SelectedNodeChanged += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseSelectionEventArgs>(this.tree_SelectedCaseChanged);
 			this.treeDialogue.CreatingCase += new System.EventHandler<SPNATI_Character_Editor.Controls.CaseCreationEventArgs>(this.tree_CreatingCase);
+			// 
+			// panelCase
+			// 
+			this.panelCase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panelCase.BackColor = System.Drawing.SystemColors.Control;
+			this.panelCase.Controls.Add(this.cmdAddRecipe);
+			this.panelCase.Controls.Add(this.cmdMakeResponse);
+			this.panelCase.Controls.Add(this.cmdCallOut);
+			this.panelCase.Controls.Add(this.caseControl);
+			this.panelCase.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.panelCase.Location = new System.Drawing.Point(3, 0);
+			this.panelCase.Name = "panelCase";
+			this.panelCase.Size = new System.Drawing.Size(697, 668);
+			this.panelCase.TabIndex = 28;
 			// 
 			// caseControl
 			// 
@@ -165,5 +182,6 @@ namespace SPNATI_Character_Editor.Activities
 		private Desktop.Skinning.SkinnedButton cmdMakeResponse;
 		private Controls.DialogueTree treeDialogue;
 		private CaseControl caseControl;
+		private Desktop.Skinning.SkinnedButton cmdAddRecipe;
 	}
 }

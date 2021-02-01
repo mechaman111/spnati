@@ -491,7 +491,7 @@ namespace SPNATI_Character_Editor.Controls
 					{
 						DataGridViewRow row = gridDialogue.Rows[e.RowIndex];
 						DialogueLine line = row.Tag as DialogueLine;
-						if (line.Images != null && line.Images.Count > 0)
+						if (line != null && line.Images != null && line.Images.Count > 0)
 						{
 							img = Properties.Resources.ChevronDownAlert;
 						}

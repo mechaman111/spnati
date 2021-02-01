@@ -35,6 +35,8 @@ namespace SPNATI_Character_Editor
 					return;
 				}
 
+				string extension = Path.GetExtension(image);
+				openFileDialog1.Filter = $"{extension} files|*{extension}";
 				openFileDialog1.FileName = image;
 				if (openFileDialog1.ShowDialog() == DialogResult.OK)
 				{
@@ -56,8 +58,24 @@ namespace SPNATI_Character_Editor
 						File.Copy(sourceFile, destFile);
 					}
 					catch { }
-					Image thumbnail = new Bitmap(destFile);
-					UpdateThumbnails(image, thumbnail);
+					try
+					{
+						Image thumbnail = new Bitmap(destFile);
+						UpdateThumbnails(image, thumbnail);
+					}
+					catch {
+						//use some placeholder if it failed
+						Image thumbnail = new Bitmap(50, 50);
+						using (Graphics g = Graphics.FromImage(thumbnail))
+						{
+							using (Pen pen = new Pen(Brushes.DarkGreen, 5))
+							{
+								g.DrawLine(pen, 5, 30, 15, 42);
+								g.DrawLine(pen, 15, 38, 43, 10);
+							}
+						}
+						UpdateThumbnails(image, thumbnail);
+					}
 
 					EnableOK();
 				}

@@ -177,7 +177,7 @@
 				case KisekaePart.LowerShirt:
 					return "dou.YsyatuDou";
 				case KisekaePart.UpperUndershirt:
-					return "mune.TsyatuMune/mune.TsyatuMune2";
+					return "mune.TsyatuMune";
 				case KisekaePart.LowerUndershirt:
 					return "dou.TsyatuDou";
 				case KisekaePart.Necktie:
@@ -261,7 +261,7 @@
 					return KisekaePart.UpperShirt;
 				case "dou.YsyatuDou":
 					return KisekaePart.LowerShirt;
-				case "mune.TsyatuMune/mune.TsyatuMune2":
+				case "mune.TsyatuMune":
 					return KisekaePart.UpperUndershirt;
 				case "dou.TsyatuDou":
 					return KisekaePart.LowerUndershirt;

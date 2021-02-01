@@ -85,6 +85,11 @@ namespace KisekaeImporter.RemoteClient
 				if (response.Type == MessageType.Heartbeat)
 				{
 					LastHeartbeat = DateTime.Now;
+					if (_pendingRequests.Count == 0)
+					{
+						//if not waiting on anything, stop
+						Stop();
+					}
 					continue;
 				}
 				else if (response.Type == MessageType.Disconnect)
@@ -124,7 +129,11 @@ namespace KisekaeImporter.RemoteClient
 					return new ServerResponse() { Type = MessageType.Disconnect, IsComplete = true };
 				}
 				byte[] bytes = new byte[header.Length];
-				await stream.ReadAsync(bytes, 0, header.Length);
+				int offset = 0;
+				while (offset < header.Length)
+				{
+					offset += await stream.ReadAsync(bytes, offset, header.Length - offset);
+				}
 				switch (header.Type)
 				{
 					case MessageType.CommandResponse:
@@ -152,6 +161,7 @@ namespace KisekaeImporter.RemoteClient
 			try
 			{
 				int i = 0;
+				const int HeaderSize = 5;
 				byte[] buffer = new byte[5];
 				while (true)
 				{
@@ -171,7 +181,11 @@ namespace KisekaeImporter.RemoteClient
 					}
 				}
 
-				await stream.ReadAsync(buffer, 0, 5);
+				int offset = 0;
+				while (offset < HeaderSize)
+				{
+					offset += await stream.ReadAsync(buffer, offset, HeaderSize - offset);
+				}
 				int type;
 				int length;
 				type = BitConverter.ToChar(buffer, 0);
@@ -243,7 +257,6 @@ namespace KisekaeImporter.RemoteClient
 
 			ServerResponse response = await pendedRequest;
 
-			Stop();
 			return response;
 		}
 	}

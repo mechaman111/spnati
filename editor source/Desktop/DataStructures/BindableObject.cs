@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -279,6 +280,7 @@ namespace Desktop.DataStructures
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
 		}
 
+		[JsonIgnore]
 		/// <summary>
 		/// Enumerates bindable values
 		/// </summary>

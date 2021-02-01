@@ -212,13 +212,20 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 
 				int finished = total;
 
+				HashSet<string> visitedTags = new HashSet<string>();
 				foreach (Case workingCase in cases)
 				{
 					string tag = workingCase.Tag;
-					for (int stage = 0; stage < _character.Layers + Clothing.ExtraStages; stage++)
+					foreach (int stage in workingCase.Stages)
 					{
 						if (TriggerDatabase.UsedInStage(tag, _character, stage))
 						{
+							string combo = tag + stage;
+							if (visitedTags.Contains(combo))
+							{
+								continue;
+							}
+							visitedTags.Add(combo);
 							finished--;
 						}
 					}

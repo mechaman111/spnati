@@ -299,9 +299,10 @@ namespace SPNATI_Character_Editor
 				LineFilter type = (c.HasTargetedConditions ? LineFilter.Targeted : c.HasFilters ? LineFilter.Filter : c.HasConditions ? LineFilter.Conditional : LineFilter.Generic);
 
 				int caseCount = 0;
+				TriggerDefinition trigger = TriggerDatabase.GetTrigger(c.Tag);
 				foreach (DialogueLine line in c.Lines)
 				{
-					if (lines.Contains(line.Text))
+					if (lines.Contains(line.Text) || trigger?.DefaultText == line.Text)
 					{
 						continue;
 					}
