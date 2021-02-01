@@ -230,10 +230,10 @@ function splitCreatorField (field) {
  ************************************************************/
 function loadListingFile () {
     if (listingFiles.length === 0) {
-        listingFiles.push("opponents/listing.xml");
         if (includedOpponentStatuses["testing"]) {
-            listingFiles.push("opponents/listing-test.xml");
+             listingFiles.push("opponents/listing-test.xml");
         }
+        listingFiles.push("opponents/listing.xml");
     }
 
 	/* clear the previous meta information */
@@ -298,6 +298,9 @@ function loadListingFile () {
         }
 	}
 
+    /* now actually load the characters */
+    var oppDefaultIndex = 0; // keep track of an opponent's default placement
+
     var listingProcessor = function($xml) {
         var available = {};
 
@@ -336,9 +339,6 @@ function loadListingFile () {
             loadedGroups.push(newGroup);
         });
 
-        /* now actually load the characters */
-        var oppDefaultIndex = 0; // keep track of an opponent's default placement
-
         $xml.find('>individuals>opponent').each(function () {
             var oppStatus = $(this).attr('status');
             var id = $(this).text();
@@ -366,9 +366,13 @@ function loadListingFile () {
 
     /* grab and parse the opponent listing file */
     var fetches = listingFiles.map(function (file) { 
-        return fetchXML(file).then(listingProcessor);
+        return fetchXML(file);
     });
-    return Promise.all(fetches);
+    return Promise.all(fetches).then(function (files) {
+        files.forEach(function (file) {
+          listingProcessor(file);
+        });
+    });
 }
 
 /************************************************************
