@@ -72,7 +72,7 @@ So you're gonna need some image with your stripes set up, or whatever pattern yo
 !!!note
     Pipelines are incredibly powerful! This image can be literally anything. I used an incredibly simple image of flat stripes. When you are actually making your model, you may want them to curve, or you may want multiple images to apply to different parts of the body. You can do all of these things, and it's generally very easy, but I'm not going to go too in-depth on them in this guide, as it's meant to just be the basics. Ask around in the discord servers, there will be many people very happy to help you figure it out!
 
-So since I'm just going for very simple stripes, I just used this site https://patternizer.com/ and made a nice pink-and-white pattern. Note that both the white and the pink will be put over, not just the white, so make sure they're both the colors you want.
+So since I'm just going for very simple stripes, I just used this site https://patternizer.com/ and made a nice pink-and-white pattern. Note that both the white and the pink will be put over, not just the pink, so make sure they're both the colors you want.
 
 ![An image of pink and white stripes](../img/AdriansDocs/patterns11.png)
 
