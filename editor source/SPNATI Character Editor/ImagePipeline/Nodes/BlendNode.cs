@@ -90,6 +90,17 @@ namespace ImagePipeline
 					{
 						c2 = img2?.GetPixel(x2, y2) ?? Color.Empty;
 					}
+
+					//special case for empty pixels - use the other color except for the alpha. Otherwise blending darkens it
+					if (c1.A == 0 && c1.R == 0 && c1.G == 0 && c1.B == 0)
+					{
+						c1 = Color.FromArgb(c1.A, c2.R, c2.G, c2.B);
+					}
+					else if (c2.A == 0 && c2.R == 0 && c2.G == 0 && c2.B == 0)
+					{
+						c2 = Color.FromArgb(c2.A, c1.R, c1.G, c1.B);
+					}
+
 					BlendMode blendMode = mode;
 					float blendAmount = amountReader.Get(x2, y2);
 					if (mode == BlendMode.Extract)

@@ -19,6 +19,7 @@ namespace SPNATI_Character_Editor.Activities
 			cboStatus.Items.Add("");
 			cboStatus.Items.Add("online");
 			cboStatus.Items.Add("offline");
+			cboStatus.Items.Add("unlisted");
 			cboGender.Items.AddRange(new string[] { "female", "male" });
 		}
 

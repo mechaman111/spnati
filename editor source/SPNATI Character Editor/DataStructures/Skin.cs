@@ -27,6 +27,7 @@ namespace SPNATI_Character_Editor
 		public Costume()
 		{
 			Labels = new List<StageSpecificValue>();
+			Tags = new List<CharacterTag>();
 		}
 
 		[XmlElement("id")]
