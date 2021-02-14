@@ -378,33 +378,43 @@ namespace SPNATI_Character_Editor.IO
 		{
 			Info = field;
 			FieldType = Info.GetDataType();
-			DefaultValue = field.GetCustomAttribute<DefaultValueAttribute>();
-			Element = field.GetCustomAttribute<XmlElementAttribute>();
-			Array = field.GetCustomAttribute<XmlArrayAttribute>();
-			ArrayItem = field.GetCustomAttribute<XmlArrayItemAttribute>();
-			Text = field.GetCustomAttribute<XmlTextAttribute>();
-			Attribute = field.GetCustomAttribute<XmlAttributeAttribute>();
-			NewLine = field.GetCustomAttribute<XmlNewLineAttribute>();
+			DefaultValue = GetCustomAttribute<DefaultValueAttribute>(field);
+			Element = GetCustomAttribute<XmlElementAttribute>(field);
+			Array = GetCustomAttribute<XmlArrayAttribute>(field);
+			ArrayItem = GetCustomAttribute<XmlArrayItemAttribute>(field);
+			Text = GetCustomAttribute<XmlTextAttribute>(field);
+			Attribute = GetCustomAttribute<XmlAttributeAttribute>(field);
+			NewLine = GetCustomAttribute<XmlNewLineAttribute>(field);
 
-			XmlOrderAttribute orderAttribute = field.GetCustomAttribute<XmlOrderAttribute>();
+			XmlOrderAttribute orderAttribute = GetCustomAttribute<XmlOrderAttribute>(field);
 			if (orderAttribute != null)
 			{
 				Order = orderAttribute.SortOrder;
 			}
 
-			XmlSortMethodAttribute sortAttribute = field.GetCustomAttribute<XmlSortMethodAttribute>();
+			XmlSortMethodAttribute sortAttribute = GetCustomAttribute<XmlSortMethodAttribute>(field);
 			if (sortAttribute != null)
 			{
 				SortMethod = parentType.GetMethod(sortAttribute.Method, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 			}
 
-			XmlConditionalTextAttribute conditionalAttribute = field.GetCustomAttribute<XmlConditionalTextAttribute>();
+			XmlConditionalTextAttribute conditionalAttribute = GetCustomAttribute<XmlConditionalTextAttribute>(field);
 			if (conditionalAttribute != null)
 			{
 				ConditionalTextMethod = parentType.GetMethod(conditionalAttribute.Method, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 			}
 
-			AnyElement = field.GetCustomAttribute<XmlAnyElementAttribute>();
+			AnyElement = GetCustomAttribute<XmlAnyElementAttribute>(field);
+		}
+
+		/// <summary>
+		/// Wrapper around GetCustomAttribute because something in Mono is complaining about duplicate attributes
+		/// </summary>
+		/// <param name="field"></param>
+		/// <returns></returns>
+		private static T GetCustomAttribute<T>(MemberInfo field) where T : Attribute
+		{
+			return field.GetCustomAttributes<T>().FirstOrDefault();
 		}
 
 		public object GetValue(object obj)

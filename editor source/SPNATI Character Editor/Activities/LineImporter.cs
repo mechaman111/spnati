@@ -3,7 +3,7 @@ using System;
 
 namespace SPNATI_Character_Editor.Activities
 {
-	[Activity(typeof(Character), 315, DelayRun = true, Caption = "Line Importer")]
+	[Activity(typeof(Character), 315, DelayRun = true, Caption = "Scratch Pad")]
 	[Tutorial("https://www.youtube.com/watch?v=CLRoebAM4zk")]
 	public partial class LineImporter : Activity
 	{
@@ -16,11 +16,12 @@ namespace SPNATI_Character_Editor.Activities
 
 		public override string Caption
 		{
-			get { return "Line Importer"; }
+			get { return "Scratch Pad"; }
 		}
 
 		protected override void OnInitialize()
 		{
+			tabs.TabPages.Remove(tabGameImport);
 			_character = Record as Character;
 		}
 

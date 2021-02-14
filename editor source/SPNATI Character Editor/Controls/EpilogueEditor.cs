@@ -5,7 +5,7 @@ using System.Windows.Forms;
 namespace SPNATI_Character_Editor.Controls
 {
 	[Activity(typeof(Character), 40, DelayRun = true, Caption = "Epilogues")]
-	[Tutorial("https://www.youtube.com/watch?v=tQDt3P-jD8w&list=PL171KBpYNIxM8d-QPCMelUugKzy-izWzZ")]
+	//[Tutorial("https://www.youtube.com/watch?v=tQDt3P-jD8w&list=PL171KBpYNIxM8d-QPCMelUugKzy-izWzZ")]
 	public partial class EpilogueEditor : Activity
 	{
 		private Character _character;
@@ -30,7 +30,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		protected override void OnInitialize()
 		{
-			tabs.TabPages.Remove(pageScenes);
+			tabs.TabPages.Remove(pageEditor);
 			SetCharacter(Record as Character);
 		}
 
@@ -107,7 +107,7 @@ namespace SPNATI_Character_Editor.Controls
 			cboEnding.SelectedItem = context.Epilogue;
 			if (context.Scene != null)
 			{
-				tabs.SelectedTab = pageEditor;
+				tabs.SelectedTab = pageScenes;
 			}
 			else
 			{
@@ -177,7 +177,7 @@ namespace SPNATI_Character_Editor.Controls
 
 			if (ending != null)
 			{
-				tabs.SelectedTab = (string.IsNullOrEmpty(ending.Title) || ending.Title == "New Ending" ? pageGeneral : pageEditor);
+				tabs.SelectedTab = (string.IsNullOrEmpty(ending.Title) || ending.Title == "New Ending" ? pageGeneral : pageScenes);
 			}
 			else
 			{

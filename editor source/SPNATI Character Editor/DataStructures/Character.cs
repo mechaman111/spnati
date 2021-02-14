@@ -315,7 +315,6 @@ namespace SPNATI_Character_Editor
 			Wardrobe = new List<Clothing>();
 			StartingLines = new List<DialogueLine>();
 			Endings = new List<Epilogue>();
-			Tags = new List<CharacterTag>();
 			Nicknames = new ObservableCollection<Nickname>();
 			Behavior = new Behaviour();
 			Poses = new List<Pose>();

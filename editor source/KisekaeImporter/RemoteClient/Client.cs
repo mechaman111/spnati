@@ -23,7 +23,7 @@ namespace KisekaeImporter.RemoteClient
 		private const int MaxRequestId = 2048;
 		private static int _requestId = 1;
 
-		private Dictionary<int, PendingRequest> _pendingRequests = new Dictionary<int, PendingRequest>();
+		private PendingRequest _currentRequest;
 
 		private DateTime LastHeartbeat;
 
@@ -85,31 +85,20 @@ namespace KisekaeImporter.RemoteClient
 				if (response.Type == MessageType.Heartbeat)
 				{
 					LastHeartbeat = DateTime.Now;
-					if (_pendingRequests.Count == 0)
-					{
-						//if not waiting on anything, stop
-						Stop();
-					}
 					continue;
 				}
 				else if (response.Type == MessageType.Disconnect)
 				{
 					//fail every pending request
-					foreach (PendingRequest pr in _pendingRequests.Values)
-					{
-						pr.SetResponse(response);
-					}
-					_pendingRequests.Clear();
+					_currentRequest?.SetResponse(response);
+					_currentRequest = null;
 				}
-				
+
 				int id = response.RequestId;
-				if (_pendingRequests.TryGetValue(id, out PendingRequest request))
+				if (response.IsComplete && _currentRequest != null && _currentRequest.RequestId == id)
 				{
-					if (response.IsComplete)
-					{
-						request.SetResponse(response);
-						_pendingRequests.Remove(id);
-					}
+					_currentRequest.SetResponse(response);
+					_currentRequest = null;
 				}
 			}
 		}
@@ -226,6 +215,11 @@ namespace KisekaeImporter.RemoteClient
 		{
 			Run(); //spin it up again
 
+			if (_currentRequest != null)
+			{
+				await _currentRequest;
+			}
+
 			int id = _requestId++;
 			if (_requestId > MaxRequestId)
 			{
@@ -249,13 +243,12 @@ namespace KisekaeImporter.RemoteClient
 			lengthB.CopyTo(bytes, header.Length);
 			payloadB.CopyTo(bytes, header.Length + lengthB.Length);
 
-			PendingRequest pendedRequest = new PendingRequest(id);
-			_pendingRequests[id] = pendedRequest;
+			_currentRequest = new PendingRequest(id);
 
 			stream.Write(bytes, 0, bytes.Length);
 			await stream.FlushAsync();
 
-			ServerResponse response = await pendedRequest;
+			ServerResponse response = await _currentRequest;
 
 			return response;
 		}
