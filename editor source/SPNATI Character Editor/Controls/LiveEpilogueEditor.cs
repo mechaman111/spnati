@@ -365,6 +365,10 @@ namespace SPNATI_Character_Editor.Controls
 		public void Save()
 		{
 			SaveScene();
+			if (_epilogue != null)
+			{
+				_epilogue.Version = 2;
+			}
 		}
 
 		private void lstScenes_SelectedIndexChanged(object sender, EventArgs e)

@@ -1,17 +1,19 @@
 ﻿using Desktop;
+using SPNATI_Character_Editor.Forms;
 using System;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Controls
 {
 	[Activity(typeof(Character), 40, DelayRun = true, Caption = "Epilogues")]
-	//[Tutorial("https://www.youtube.com/watch?v=tQDt3P-jD8w&list=PL171KBpYNIxM8d-QPCMelUugKzy-izWzZ")]
+	[Tutorial("https://www.youtube.com/watch?v=tQDt3P-jD8w&list=PL171KBpYNIxM8d-QPCMelUugKzy-izWzZ")]
 	public partial class EpilogueEditor : Activity
 	{
 		private Character _character;
 		private Epilogue _ending;
 		private bool _populatingEnding;
 		private ValidationContext _context;
+		private int _version = 0;
 
 		public EpilogueEditor()
 		{
@@ -30,6 +32,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		protected override void OnInitialize()
 		{
+			tabs.TabPages.Remove(pageScenes);
 			tabs.TabPages.Remove(pageEditor);
 			SetCharacter(Record as Character);
 		}
@@ -107,7 +110,7 @@ namespace SPNATI_Character_Editor.Controls
 			cboEnding.SelectedItem = context.Epilogue;
 			if (context.Scene != null)
 			{
-				tabs.SelectedTab = pageScenes;
+				tabs.SelectedTab = GetEditorTab();
 			}
 			else
 			{
@@ -167,21 +170,64 @@ namespace SPNATI_Character_Editor.Controls
 			SaveEnding();
 			Config.LastEnding = ending?.Title ?? "";
 			_ending = ending;
+			if (_ending.Version == 0)
+			{
+				using (EpilogueSelectForm form = new EpilogueSelectForm())
+				{
+					form.Epilogue = _ending;
+					form.ShowDialog();
+					_ending.Version = form.Version;
+				}
+			}
+
 			PopulateDataFields();
 			cmdDeleteEnding.Enabled = tabs.Enabled = (ending != null);
 			tableGeneral.Context = new EpilogueContext(_character, _ending, null);
 			tableGeneral.Data = _ending;
-			canvas.SetEpilogue(_ending, _character);
 
-			liveEditor.SetEpilogue(_character, _ending);
+			if (_ending.Version != _version)
+			{
+				_version = _ending.Version;
+				if (_version == 1)
+				{
+					tabs.TabPages.Add(pageScenes);
+					tabs.TabPages.Remove(pageEditor);
+				}
+				else
+				{
+					tabs.TabPages.Add(pageEditor);
+					tabs.TabPages.Remove(pageScenes);
+				}
+			}
+
+			if (_ending.Version == 2)
+			{
+				liveEditor.SetEpilogue(_character, _ending);
+			}
+			else
+			{
+				canvas.SetEpilogue(_ending, _character);
+			}
 
 			if (ending != null)
 			{
-				tabs.SelectedTab = (string.IsNullOrEmpty(ending.Title) || ending.Title == "New Ending" ? pageGeneral : pageScenes);
+				tabs.SelectedTab = (string.IsNullOrEmpty(ending.Title) || ending.Title == "New Ending" ? pageGeneral : GetEditorTab());
 			}
 			else
 			{
 				tabs.SelectedTab = pageGeneral;
+			}
+		}
+
+		private TabPage GetEditorTab()
+		{
+			if (_version == 2)
+			{
+				return pageEditor;
+			}
+			else
+			{
+				return pageScenes;
 			}
 		}
 
@@ -233,7 +279,10 @@ namespace SPNATI_Character_Editor.Controls
 			_ending.AlsoPlayingAnyMarkers = selAlsoPlayingAnyMarkers.SelectedItems.Length > 0 ? string.Join(" ", selAlsoPlayingAnyMarkers.SelectedItems) : null;
 			_ending.Markers = gridMarkers.GetMarkers();
 
-			liveEditor.Save();
+			if (_ending.Version == 2)
+			{
+				liveEditor.Save();
+			}
 		}
 
 		private void RemoveEnding()
