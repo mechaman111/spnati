@@ -52,6 +52,12 @@ namespace SPNATI_Character_Editor
 		[XmlElement("title")]
 		public string Title = "New Ending";
 
+		/// <summary>
+		/// What editor was used with this
+		/// </summary>
+		[XmlAttribute("version")]
+		public int Version;
+
 		[DefaultValue("online")]
 		[ComboBox(DisplayName = "Status", Description = "Where the epilogue is available", GroupOrder = 1, Options = new string[] {
 			"online",
