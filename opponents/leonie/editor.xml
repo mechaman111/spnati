@@ -29,18 +29,6 @@
         <case name="Op Lost Notice Uniform" id="38" priority="Prompt" min="0" max="3">
             <description>Leonie notices that the target has a non-military school uniform, and comments on it. If this triggers for a character with a military tag &amp; school uniform, please let me know.</description>
         </case>
-        <case name="Smalltalk:Polly" id="64" priority="Prompt" min="0" max="2">
-            <description>Leonie talks to Polly, having doubts about her being an actual ghost.</description>
-        </case>
-        <case name="Smalltalk Shamir" id="74" priority="MustTarget" min="0" max="7">
-            <description>With any hand, Leonie will prompt Shamir to talk about the fact that they are playing together.</description>
-        </case>
-        <case name="Smalltalk Bernie" id="44" priority="Prompt" min="0" max="2">
-            <description>Leonie makes small talk with Bernadetta. She may call her either 'Bernadetta' or 'Benie' based on if a nickname is assigned.</description>
-        </case>
-        <case name="Smalltalk:Spooky" id="103" priority="Prompt" min="0" max="2">
-            <description>Leone talks to Spooky, having doubts about her being an actual ghost.</description>
-        </case>
     </noteworthy>
     <reviewed>true</reviewed>
     <responses>
@@ -90,6 +78,15 @@
         <response id="96" opponent="akko" opponentId="30" />
         <response id="97" opponent="megumin" opponentId="222" />
         <response id="102" opponent="akko" opponentId="40" />
+        <response id="105" opponent="lymilark" opponentId="1" />
+        <response id="106" opponent="sayaka" opponentId="28" />
+        <response id="108" opponent="pauling" opponentId="102" />
+        <response id="109" opponent="lux" opponentId="16" />
+        <response id="114" opponent="sayori" opponentId="260" />
+        <response id="115" opponent="hanako" opponentId="193" />
+        <response id="116" opponent="hanako" opponentId="295" />
+        <response id="117" opponent="hanako" opponentId="461" />
+        <response id="118" opponent="hanako" opponentId="465" />
     </responses>
     <notes>
         <note id="28">throw cloth over chair? idk 4am brain</note>
@@ -102,6 +99,7 @@
         <note id="47">Notices Bernadetta from her school. The two aren't close, but are familiar (They have a B rank support). Bernadetta is in War, Leonie isn't.</note>
         <note id="48">Confuses Monika with Monica aka Kronya.</note>
         <note id="71">Secretly triggers Rivalry trait early, making her harder for the whole game.</note>
+        <note id="107">This is placeholder until she get a costume added. It shouldn't trigger under normal circumstances.</note>
     </notes>
     <labels>
         <label id="2" label="" folder="Background" sort="0" />
@@ -136,27 +134,57 @@
         <label id="100" label="" color="6" folder="" sort="0" />
         <label id="101" label="" color="6" folder="" sort="0" />
         <label id="104" label="Muscular or Athletic" folder="" sort="0" />
+        <label id="109" label="" folder="Character Interaction" sort="0" />
+        <label id="113" label="" color="2" folder="" sort="0" />
     </labels>
-    <nextId>104</nextId>
+    <nextId>119</nextId>
     <markers>
+        <marker scope="Public" name="" />
         <marker scope="Private" name="after_finish_mark">A marker used to advance dialogue when she is in After Finished stage.</marker>
-        <marker scope="Public" name="asked_armor">Target specific. Has asked this character about their armor. Stops Leonie from asking them repeatedly about their armor.</marker>
+        <marker scope="Public" name="asked_armor">Character specific. Has asked them about them wearing armor. This marker stops her repeatedly asking about it.</marker>
         <marker scope="Public" name="asked_fighter">Has asked someone with the 'fighter' tag a question. Happens once per game to avoid repetitiveness.</marker>
         <marker scope="Public" name="asked_mercenary_q_1">Asked her first question about being a mercenary.</marker>
+        <marker scope="Public" name="asked_teacher">Character specific. Has asked them about them being a teacher. This marker stops her repeatedly asking about it.</marker>
+        <marker scope="Public" name="hanako_author" />
+        <marker scope="Public" name="hanako_must_strip_females" />
+        <marker scope="Public" name="hanako_remove_minor_notdifferently" />
+        <marker scope="Private" name="hermione_robe">Talking to Hermione about her robe.</marker>
+        <marker scope="Private" name="hermione_ron_exp">Responding to Hermione's exposition about Ron.</marker>
+        <marker scope="Private" name="hermione_sweater_casual">Talking to Hermione about her sweater.</marker>
         <marker scope="Public" name="leonie_dueldiskremoval">Has taken notice of Chazz's duel disk, and is confused.</marker>
         <marker scope="Public" name="leonie_finished">Counts how many times she has 'Finished'. Helps cut down on 'beginner' dialogue in repeat playthroughs.</marker>
+        <marker scope="Private" name="leonie_first_chestVisible" />
         <marker scope="Public" name="leonie_sliferexplained">Leonie has listened to Chazz explain Slifer Red.</marker>
         <marker scope="Public" name="leonie_StoneOcean">Has spotted Jolyne saying the phrase 'Stone Free', and is confused.</marker>
+        <marker scope="Public" name="light_pun_overload_resp">Reacting to Lux running out of puns.</marker>
+        <marker scope="Public" name="lux_hammer">Responding to Lux's comment about Poppy (hero finder with a hammer).</marker>
         <marker scope="Public" name="megu_explosion_mentioned">Megumin mentioned explosion magic.</marker>
         <marker scope="Public" name="mentioned_jeralt">Has mentioned captain Jeralt, her former mentor. In the war outfit, this dialogue will be past tense only. Unlocks Hand Drawn Map if it's 10+ and you finish a game.</marker>
         <marker scope="Public" name="mercenary_title">Has talked about her mercenary title ideas and named one. This marker stores that name for later reference.</marker>
+        <marker scope="Public" name="miss_pauling_strip_0">Reacting to Miss Pauling stripping (stage 0). Comment is about her outfit in general.</marker>
+        <marker scope="Public" name="miss_pauling_strip_3" />
         <marker scope="Public" name="nickname">A per-target nickname she assignes to someone. This persists between games, so she always remembers it and doesn't need to ask again.</marker>
         <marker scope="Public" name="one_man_only">Leonie comments on the fact that there's only one male (the player).</marker>
         <marker scope="Public" name="op_lost_say_1">A beginner comment, part 1.</marker>
         <marker scope="Public" name="op_lost_say_2">A beginner comment, part 2.</marker>
+        <marker scope="Public" name="rivalry_masturbate">While in Rivalry mode, making comments while masturbating.</marker>
+        <marker scope="Public" name="sauna_confession">Leonie confesses to masturbating while in the monastery sauna once.</marker>
+        <marker scope="Public" name="sayori_chest_visible" />
         <marker scope="Public" name="seen_fighter">Has spotted someone else with the 'fighter' tag. She will ask follow up questions after thinking to herself.</marker>
         <marker scope="Public" name="smalltalkGhost">Smalltalk with a Ghost npc (e.g. Polly, Spooky). Only triggers once per game regardless of how many ghosts there are.</marker>
         <marker scope="Public" name="throw_over_chair">Talks about throwing clothes over a chair that might not be there. Just some dialogue.</marker>
         <marker scope="Public" name="trigger_rivalry">Special trait. Triggered against male-heavy tables. Increases AI to 'Good' when set, and gives her more competitive dialogue. Also lets the player unlock the Crude Arrowheads.</marker>
     </markers>
+    <recipes>
+        <recipe key="1ac2b058-5e06-4321-9ea7-d6bc3098748e">
+            <cases>
+                <id>111</id>
+            </cases>
+        </recipe>
+        <recipe key="b90f559d-7557-4180-989e-63b583b9a82d">
+            <cases>
+                <id>112</id>
+            </cases>
+        </recipe>
+    </recipes>
 </metadata>
