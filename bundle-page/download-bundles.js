@@ -1,4 +1,3 @@
-
 var MAIN_CATEGORIES = ['online', 'testing', 'offline']
 
 var SPECIAL_CASE_NAMES = {
@@ -20,6 +19,7 @@ var SPECIAL_CASE_NAMES = {
     "wiifitfemale": "Wii Fit Trainer",
         
     // classic opponents
+    "amy_rose_classic": "Amy Rose",
     "penny_classic": "Penny",
     "ryuko_classic": "Ryuko",
     "shantae_classic": "Shantae",
@@ -31,6 +31,7 @@ var SPECIAL_CASE_NAMES = {
     "chara_dreemurr": "Chara",
     "chell_wheatley": "Chell",
     "hermione_granger": "Hermione",
+    "mettaton_neo": "Mettaton",
     "misty_hgss": "Misty",
     "rarity_eg": "Rarity",
     "weiss_schnee": "Weiss",
