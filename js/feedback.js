@@ -247,10 +247,6 @@ $('#bug-report-type').change(updateBugReportOutput);
 $('#bug-report-desc').change(updateBugReportOutput);
 $('#bug-report-copy-btn').click(copyBugReportOutput);
 
-if (!document.fullscreenEnabled) {
-    $('.title-fullscreen-button, .game-menu-dropup li:has(#game-fullscreen-button), #epilogue-fullscreen-button').hide();
-}
-
  /************************************************************
   * The player clicked a bug-report button. Shows the bug reports modal.
   ************************************************************/

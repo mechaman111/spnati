@@ -920,6 +920,9 @@ function toggleFullscreen() {
     }
 }
 
+if (!document.fullscreenEnabled && !document.webkitFullscreenEnabled && !document.msRequestFullscreenEnabled) {
+    $('.title-fullscreen-button, .game-menu-dropup li:has(#game-fullscreen-button), #epilogue-fullscreen-button').hide();
+}
 $(':root').on('dblclick', ':input, .dialogue-bubble, .modal-dialog, .selection-card, .bordered, #epilogue-screen', function(ev) {
     ev.stopPropagation();
 });
