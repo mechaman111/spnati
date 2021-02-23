@@ -25,7 +25,7 @@ $titleCandy = [$("#left-title-candy"), $("#right-title-candy")];
 var CANDY_LIST = [
 
 /* VALENTINE'S EVENT */
-
+/*
     "reskins/meia_cupid/0-disappointed.png",
     "reskins/meia_cupid/1-busy.png",
     "reskins/meia_cupid/2-pleased.png",
@@ -74,7 +74,7 @@ var CANDY_LIST = [
     "reskins/twisted_fate_tango/1-Charming.png",
     "reskins/twisted_fate_tango/2-Calm.png",
     "reskins/twisted_fate_tango/0-Happy.png",
-
+*/
 /* SUMMER EVENT */
 /*
     "reskins/juri_summer/0-calm.png",
@@ -154,7 +154,7 @@ var CANDY_LIST = [
     "reskins/yunyun_trick_or_friends/2-Posing2.png",
     "reskins/yunyun_trick_or_friends/3-Posing.png",
 */
-/*
+
     "9s/0-happy.png",
     "9s/1-excited.png",
     "9s/2-clever.png",
@@ -311,7 +311,6 @@ var CANDY_LIST = [
     "zone-tan/1-explain.png",
     "zone-tan/1-smirk.png",
     "zone-tan/2-stroking.png",
-*/
 ];
 
 var clothingChoices = [];
