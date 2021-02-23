@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited January 27 2021
+README edited February 22 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -45,7 +45,7 @@ Chara's body frame would have her in the updated Large Breasts category. I guess
 
 CLOTHING DESTRUCTION - UPDATE MAY 31 2020 - Based on feedback, added Clothing Destruction tag to stages 2, 6, and 7 (Lost Belt, Lost Pants, Lost Bra, all of which Chara uses her knife
 to strip.
-	-UPDATE JUNE 16 - Based on testing, characters were telling Chara to stop destroying her clothes, when stripping something she was not destroying but came after something she had.
+	-UPDATE JUNE 16 2020 - Based on testing, characters were telling Chara to stop destroying her clothes, when stripping something she was not destroying but came after something she had.
 In light of this, I removed the Clothing Destruction tag from all stages and created hidden cases to apply/remove it in the relevant places.
 
 SUPERNATURAL - Post-Genocide, Chara is a literal demon, powerful enough to destroy the entire universe - multiple sources of evidence in Undertale point to that it is indeed
@@ -79,12 +79,12 @@ CREEPY - Chara's more demonic faces are meant to be this, and her devotion to co
 
 VILLAIN - While Narrator Chara posits that the player themselves, not Chara, is the driving force behind genocide, post-genocide Chara is nevertheless merciless and cruel.
 
-DEMON - UPDATE AUGUST 12 - The new tag 'demon' has been applied 0-10. If you do Genocide 2+ times, Chara refers to herself as a demon. Given the jumpscare face she has, I am inclined
+DEMON - UPDATE AUGUST 12 2020 - The new tag 'demon' has been applied 0-10. If you do Genocide 2+ times, Chara refers to herself as a demon. Given the jumpscare face she has, I am inclined
 to believe her.
 
-HIGH HEELS - UPDATE AUGUST 12 - The new tag 'high heels' has been applied 0-2. The model for Chara's shoes, when viewed from the side, has heels.
+HIGH HEELS - UPDATE AUGUST 12 2020 - The new tag 'high heels' has been applied 0-2. The model for Chara's shoes, when viewed from the side, has heels.
 
-THROWS THE GAME - UPDATE AUGUST 12 - The new tag 'throw the game' has been applied via a case when Chara starts to throw, for obvious reasons.
+THROWS THE GAME - UPDATE AUGUST 12 2020- The new tag 'throw the game' has been applied via a case when Chara starts to throw, for obvious reasons.
 
 -------------------------------------------------------------------------------------------
 GENERAL BEHAVIOR
@@ -112,14 +112,10 @@ SITUATIONS
 
 THROW - NOTEWORTHY - When it's just Chara and the Player, she begins to throw the game. She'll react differently to swapping cards, to hands, and to stripping. NOTE: This has a case
 where the player has seen Chara throw before. The situation itself points to the 'generic case' and should work for the non-generic, but still. Double-check the functionality.
-	-UPDATE JULY 25: Reduced priority from Must Target to Noteworthy.
+	-UPDATE JULY 25 2020: Reduced priority from Must Target to Noteworthy.
 
 DEMON EYES - NOTEWORTHY - Two of Chara's poses, DemonHappy and DemonAngry, feature her hollow-eyed look from Undertale. NOTE: This specific callout only references one time she uses these
 poses, to properly target them instead use Filter -> Dialogue -> Pose.
-
-HIDDEN BELT - FYI - The second item Chara removes is her belt, which is hidden beneath her shirt. As such, removing it does not actually change her appearance. Some opponents may find
-that unfair. NOTE: This specific callout only references one possible case for Chara stripping her belt. Make sure to target the general 'stripping, in stage 1' case instead. Though this
-points to the Generic Case already, but still. Double-check the functionality.
 
 REFUSE TO REMOVE - NOTEWORTHY - After removing her last layer of clothing, Chara will say she refuses to strip either her knife or locket, saying she would rather forfeit than do so.
 
@@ -271,6 +267,9 @@ ATSUKO
 -Responds to Atsuko using the Necronomicon.
 -Responds to Atsuko using a transformation to strip. She will only do this once per game.
 
+AYANO
+-Responds to Ayano as she's losing.
+
 AZAMI
 -Generic responses to handle Azami's, uh, unique masturbation sequence.
 
@@ -365,6 +364,10 @@ L'ARACHEL
 
 LUCY
 -Responds to Lucy attempting to cheat, targeting the Must Strip, Removing, and Removed cases for it.
+
+LUX
+-Responds to Lux losing.
+-Responds to Lux's light puns.
 
 MAKI
 -Responds to Maki's question about favorite foods.
@@ -523,7 +526,7 @@ YUNYUN
 
 YURI
 -Responds to Yuri fleeing to console Natsuki from a Daddy player.
--Responses as Yuri is losing.
+-Responses as either Yuri or Chara are losing.
 
 ZENOBIA
 -Generic responses to handle the, ah, unique masturbation sequence of Zenobia.
