@@ -576,6 +576,18 @@
                 <condition role="other" character="nagisa" stage="0-3" sayingMarker="nagisa_pauling_sorry" />
                 <state img="#-happy.png">Haha! Don't worry about it, Nagisa! I didn't come to play strip poker just to stay fully clothed the whole time! It's all in the&lt;br&gt; spirit of fun. </state>
             </case>
+            <case stage="1">
+                <condition role="other" character="ayano" stage="0-8" sayingMarker="pauling_reputation" />
+                <state img="#-appreciative.png">I am used to supervising children. </state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="ayano" stage="0-8" sayingMarker="pauling_prof" />
+                <state img="#-calm.png">I am an Administrative Professional!</state>
+            </case>
+            <case stage="1">
+                <condition role="other" character="ayano" stage="0-8" sayingMarker="pauling_favor" />
+                <state img="#-calm.png">I'm not concerned about anyone finding out about this. The confidentiality agreements we signed are pretty ironclad. The only way it's getting out is if there's a Spy in this room...</state>
+            </case>
             <case stage="0">
                 <condition role="other" character="d.va" stage="0" />
                 <state img="#-disappointed.png">2017? Retro? I don't know exactly what you're getting at, but I guess if I'm dressed like someone from 2017 I can't be doing too poorly.</state>
@@ -819,6 +831,14 @@
         </trigger>
 
         <trigger id="stripping">
+            <case stage="0-6">
+                <condition role="other" character="ayano" stage="0-8" sayingMarker="ayano_pauling_kill_count" />
+                <state img="#-calm.png">None that can be tied to me in a court of law. </state>
+            </case>
+            <case stage="0-6">
+                <condition role="other" character="ayano" stage="0-8" sayingMarker="ayano_pauling_gun_catalogue" />
+                <state img="#-happy.png">Well Mann Co. has a wide variety of weaponry and headgear for every situation!</state>
+            </case>
             <case stage="0">
                 <condition role="other" character="mia" stage="0-3" />
                 <state img="#-excited.png">Hah! No worries, I don't plan on committing any felonies tonight, so for the time being, we've got no problems at all! </state>
@@ -869,17 +889,24 @@
                 <condition role="other" character="pit" />
                 <state img="#-disappointed.png">I'm bribing him, what do you think! &lt;i&gt;Oh, did I say that out loud? Uh... oops...</state>
             </case>
+            <case stage="1">
+                <condition role="self" saidMarker="would_never_strip_belt" />
+                <state img="#-strip.png">Erm, I know what you're thinking, but I only have seven things even if I count this separately.</state>
+            </case>
             <case stage="0">
                 <state img="#-strip.png">Time to kick off these ~clothing~.</state>
+                <state img="#-strip.png">These are actually very comfortable. Perfect for office or light wetwork.</state>
             </case>
             <case stage="1">
                 <state img="#-strip.png">No more ~clothing~.</state>
             </case>
             <case stage="2">
                 <state img="#-strip.png">Want to see what's under my skirt?</state>
+                <state img="#-strip.png">Not too often I get to leave my skirt on a stranger's floor, but it is my day off. </state>
             </case>
             <case stage="3">
                 <state img="#-strip.png">Down go the ~clothing~.</state>
+                <state img="#-strip.png">You can look. If you play those cards right maybe you can touch. </state>
             </case>
             <case stage="4">
                 <state img="#-strip.png">I wore the sexiest bra I could find today.</state>
@@ -1239,6 +1266,7 @@
             <case stage="0">
                 <state img="#-interested.png">No joke? A tie? That's wild, absolutely wild.</state>
                 <state img="#-calm.png">Hm, so somebody gets to delay their fate for another turn. No worries, as long as it doesn't take up too much time. &lt;i&gt;I... don't have forever...</state>
+                <state img="#-disappointed.png">As my boss would say, "You're all Disappointments." </state>
             </case>
         </trigger>
 
@@ -1280,6 +1308,25 @@
         </trigger>
 
         <trigger id="male_removed_accessory">
+            <case stage="4-5">
+                <condition status="decent" role="target" />
+                <test expr="~clothing~" value="belt" />
+                <state img="#-appreciative.png">Was that belt just decorative or needed to keep your pants from falling down?</state>
+            </case>
+            <case stage="0-1" id="127">
+                <test expr="~clothing~" value="belt" />
+                <state img="#-disappointed.png" marker="would_never_strip_belt">You removed your belt separately? Shamefur dispray! Not like I'd do the same or anything...</state>
+                <state img="#-calm.png">Stripping your belt separately? Nothing wrong with that as long as you don't go over eight layers!</state>
+            </case>
+            <case stage="2-3">
+                <test expr="~clothing~" value="belt" />
+                <state img="#-appreciative.png">I see you're copying my strategy.</state>
+                <state img="#-calm.png">Taking off your belt separately is good use of resources and completely legal.</state>
+            </case>
+            <case stage="6-7">
+                <test expr="~clothing~" value="belt" />
+                <state img="#-appreciative.png">Surely a sign of what's coming next, I hope.</state>
+            </case>
             <case stage="0">
                 <state img="#-disappointed.png">I expected something... more.</state>
             </case>
@@ -1326,8 +1373,8 @@
             <case stage="0-9" id="106" target="nami" targetStage="2">
                 <state img="#-interested.png">Oh, I knew it, you're Straw Hat Nami. I'd normally joke about taking you in for your bounty, but don't worry about it. It's my day off.</state>
             </case>
-            <case stage="0-9" alsoPlaying="catria" alsoPlayingStage="0" totalRounds="0-0">
-                <condition role="other" character="catria" saidMarker="firstother" />
+            <case stage="0-9" totalRounds="0" priority="151">
+                <condition role="other" character="catria" stage="0" saidMarker="firstother" />
                 <state img="#-calm.png">You didn't know? That's... kinda fucked up. I mean, you can leave if you want to!</state>
             </case>
             <case stage="0">
@@ -1335,6 +1382,7 @@
             </case>
             <case stage="1">
                 <state img="#-loss.png">Just... that?</state>
+                <state img="#-interested.png">A tactical choice. I approve. </state>
             </case>
             <case stage="2">
                 <state img="#-disappointed.png">Oh, c'mon... That shouldn't count.</state>
@@ -1363,8 +1411,9 @@
         </trigger>
 
         <trigger id="female_removed_accessory">
-            <case stage="0-9" id="75" target="megumin" targetStage="5" targetSayingMarker="megumin_panty_teasing3">
+            <case stage="0-9" id="75">
                 <condition role="other" character="panty" saying="haven't ya" />
+                <condition role="target" character="megumin" stage="5" sayingMarker="megumin_panty_teasing3" />
                 <state img="#-appreciative.png">&lt;i&gt;Snrk,&lt;/i&gt;</state>
             </case>
             <case stage="0">
@@ -1409,6 +1458,7 @@
             </case>
             <case stage="2">
                 <state img="#-appreciative.png">Got to start small, I guess.</state>
+                <state img="#-interested.png">Tactical choice. You'll run out of those. </state>
             </case>
             <case stage="3">
                 <state img="#-happy.png">You can do better than that, ~name~!</state>
@@ -1418,6 +1468,7 @@
             </case>
             <case stage="5">
                 <state img="#-interested.png">Just your ~clothing~? You can do better.</state>
+                <state img="#-disappointed.png">Don't you want to join me? At least then we'd both have something nice to look at. </state>
             </case>
             <case stage="6">
                 <state img="#-calm.png">No more ~clothing~.</state>
@@ -1436,9 +1487,11 @@
         <trigger id="male_removed_minor">
             <case stage="0">
                 <state img="#-calm.png">Not much longer now, ~name~.</state>
+                <state img="#-calm.png">You can't stall forever. </state>
             </case>
             <case stage="1">
                 <state img="#-calm.png">Slow and steady...</state>
+                <state img="#-disappointed.png">Come on, rush the point, already! The point is getting naked! </state>
             </case>
             <case stage="2">
                 <state img="#-calm.png">We'll get there eventually.</state>
@@ -2217,8 +2270,9 @@
         </trigger>
 
         <trigger id="opponent_lost">
-            <case stage="0-9" id="74" alsoPlaying="yuelia" alsoPlayingStage="1-10" alsoPlayingSayingMarker="fetishTalk_sadism">
+            <case stage="0-9" id="74">
                 <condition filter="aggressive" role="target" />
+                <condition role="other" character="yuelia" stage="1-10" sayingMarker="fetishTalk_sadism" />
                 <state img="#-interested.png" marker="fetishTalk_sadism">Sadism! Hah! I wouldn't call myself a sadist necessarily, but I'm more than familiar with the many joys of causing pain to people who &lt;i&gt;(probably)&lt;/i&gt; deserve it. Why do you ask?</state>
             </case>
             <case stage="0-9" id="61" alsoPlaying="rainbow_dash">
@@ -2246,7 +2300,8 @@
         </trigger>
 
         <trigger id="opponent_crotch_is_visible">
-            <case stage="0-9" id="19" target="chihiro">
+            <case stage="0-9" id="19">
+                <condition role="target" character="chihiro" />
                 <state img="#-interested.png">Wait, that was a secret? Wait, &lt;i&gt;nobody else could tell?&lt;/i&gt;</state>
             </case>
         </trigger>
@@ -2276,6 +2331,7 @@
             </case>
             <case stage="7">
                 <state img="#-calm.png">Your time to shine, ~name~.</state>
+                <state img="#-horny.png">If it helps, just aim for these. </state>
             </case>
             <case stage="8">
                 <state img="#-excited.png">We get to masturbate to each other... It's a win-win situation.</state>
