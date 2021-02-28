@@ -16,7 +16,7 @@ Most browsers see a locally saved html file with the ability to access other fil
 
 This solution does not require any server hosting.
 
-Type `about:config` in the url bar,  and accept the warning (we won't break anything, I promise), then search `privacy.file\_unique\_origin`. Uncheck this, and it *should* allow access to local directories.
+Type `about:config` in the url bar,  and accept the warning (we won't break anything, I promise), then search `privacy.file_unique_origin`. Uncheck this, and it *should* allow access to local directories.
 
 **DISCLAIMER:** Be aware, this was changed for a reason. Be smart and don't open random files from internet. A malicious HTML file can look through, and maybe even upload your personal files to a foreign server if you disable this.
 
