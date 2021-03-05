@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited February 22 2021
+README edited March 4 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -269,6 +269,9 @@ ATSUKO
 
 AYANO
 -Responds to Ayano as she's losing.
+-Responds to Ayano as Chara is losing.
+-Responds to Ayano talking about weapons.
+-Responds to Ayano accusing Chara of being the one who gave her scars.
 
 AZAMI
 -Generic responses to handle Azami's, uh, unique masturbation sequence.
@@ -291,6 +294,9 @@ BROCK
 CHAZZ
 -Responds to Chazz attempting to leave the game.
 -Responds to Chazz blaming the player when he fails to leave the game.
+
+CHELL ( and Wheatley)
+-Responds to Wheatley asking about the robots in peoples' lives.
 
 CHIHIRO
 -Responds to Chihiro running away.
@@ -419,6 +425,7 @@ NAMI
 
 NATSUKI
 -Responds to Natsuki as Chara is losing.
+-Responds to Natsuki fleeing from a Daddy player.
 
 NAVI
 -Responds to Navi transforming from a ball of light into a fairy.
