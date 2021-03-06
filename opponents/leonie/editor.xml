@@ -8,7 +8,7 @@
         <case name="What makes a good mercenary?" id="14" priority="Prompt" min="0" max="3">
             <description>Leonie is asking what others think would make a great mercenary. Expected positive response e.g. "Someone who will fight for others", expected negative responses "One who finds the best paying job"</description>
         </case>
-        <case name="Leone's Title" id="15" priority="Prompt" min="0" max="3">
+        <case name="Leonie's Title" id="15" priority="Prompt" min="0" max="3">
             <description>A follow up to her previous question about being a mercenary. She will suggest a random title for herself. You can respond with approval, disapproval, or a new suggestion. She stores the one she says out loud.</description>
         </case>
         <case name="Seeing FE characters" id="34" priority="FYI" min="0" max="0">
@@ -96,6 +96,9 @@
         <response id="154" opponent="faye" opponentId="12" />
         <response id="156" opponent="ayano" opponentId="85" />
         <response id="157" opponent="ayano" opponentId="83" />
+        <response id="161" opponent="supernova" opponentId="176" />
+        <response id="162" opponent="chell_wheatley" opponentId="72" />
+        <response id="163" opponent="chell_wheatley" opponentId="87" />
     </responses>
     <notes>
         <note id="28">throw cloth over chair? idk 4am brain</note>
@@ -109,6 +112,7 @@
         <note id="48">Confuses Monika with Monica aka Kronya.</note>
         <note id="71">Secretly triggers Rivalry trait early, making her harder for the whole game.</note>
         <note id="107">This is placeholder until she get a costume added. It shouldn't trigger under normal circumstances.</note>
+        <note id="164">banter for all stages that should work instead of other hand quotes</note>
     </notes>
     <labels>
         <label id="2" label="" folder="Background" sort="0" />
@@ -174,11 +178,13 @@
         <label id="150" label="" folder="Clothing" sort="0" />
         <label id="151" label="" folder="Clothing" sort="0" />
         <label id="152" label="" folder="Clothing" sort="0" />
+        <label id="159" label="" folder="Clothing" sort="0" />
+        <label id="167" label="Emi 800m war" folder="" sort="0" />
     </labels>
     <prefixes>
         <prefix>unlock</prefix>
     </prefixes>
-    <nextId>157</nextId>
+    <nextId>167</nextId>
     <markers>
         <marker scope="Public" name="af_arcade">After Finished dialogue for: arcade background</marker>
         <marker scope="Public" name="af_beach">After Finished dialogue for: beach background</marker>
@@ -201,9 +207,13 @@
         <marker scope="Public" name="asked_fighter">Has asked someone with the 'fighter' tag a question. Happens once per game to avoid repetitiveness.</marker>
         <marker scope="Public" name="asked_mercenary_q_1">Asked her first question about being a mercenary.</marker>
         <marker scope="Public" name="asked_teacher">Character specific. Has asked them about them being a teacher. This marker stops her repeatedly asking about it.</marker>
+        <marker scope="Public" name="ayano_romance_resp" />
+        <marker scope="Public" name="ayano_scars_resp" />
+        <marker scope="Public" name="ayano_strip_ribbon" />
         <marker scope="Public" name="ayano_strip_stockings" />
         <marker scope="Public" name="ayano_strip_stockings1" />
         <marker scope="Public" name="birthday1">It's Leonie's birthday, and she makes everyone aware of this fact in idle conversation.</marker>
+        <marker scope="Public" name="chellwheatley_brain_damage" />
         <marker scope="Public" name="clothing_belt">Commenting on an opponent stripping this item.</marker>
         <marker scope="Public" name="clothing_cape">Commenting on an opponent stripping this item.</marker>
         <marker scope="Public" name="clothing_corset">Commenting on an opponent stripping this item.</marker>
@@ -216,13 +226,19 @@
         <marker scope="Public" name="clothing_shield1">Commenting on an opponent stripping this item (after).</marker>
         <marker scope="Public" name="clothing_sportsbra">Commenting on an opponent stripping this item.</marker>
         <marker scope="Public" name="cynthia_leoneIntro1_respond">Response to Cynthia banter.</marker>
+        <marker scope="Public" name="emi_remove_leg" />
+        <marker scope="Public" name="fate_hat_stays_on">Observing the fact that TF keeps his hat on.</marker>
+        <marker scope="Public" name="fate_idle_warning">Giving an idle warning to TF that she's been warned about him.</marker>
         <marker scope="Public" name="faye_finishedResp">Response to Faye finish.</marker>
         <marker scope="Public" name="faye_sidebetResp">Respond to Faye talking about a side bet.</marker>
+        <marker scope="Public" name="female_removing_hat" />
+        <marker scope="Public" name="female_removing_necklace" />
         <marker scope="Public" name="finished_not_hiding">Leonie is not bothering to cover herself up, since she just finished putting on her show anyway.</marker>
         <marker scope="Public" name="gwen_after_top">After Gwen has pulled down the top half of her suit.</marker>
         <marker scope="Public" name="hanako_author">Giving Hanako encouragement to be an author and write a good tale.</marker>
         <marker scope="Public" name="hanako_must_strip_females">Comment towards Hanako stripping that they're all here to have fun.</marker>
         <marker scope="Public" name="hanako_remove_minor_notdifferently">Response to Hanako telling other players to not treat her differently.</marker>
+        <marker scope="Public" name="hand-banter_missed">Bad hand. Talking about missing attacks.</marker>
         <marker scope="Private" name="hermione_robe">Talking to Hermione about her robe.</marker>
         <marker scope="Private" name="hermione_ron_exp">Responding to Hermione's exposition about Ron.</marker>
         <marker scope="Private" name="hermione_sweater_casual">Talking to Hermione about her sweater.</marker>
@@ -230,6 +246,7 @@
         <marker scope="Public" name="leonie_dueldiskremoval">Has taken notice of Chazz's duel disk, and is confused.</marker>
         <marker scope="Public" name="leonie_finished">Counts how many times she has 'Finished'. Helps cut down on 'beginner' dialogue in repeat playthroughs.</marker>
         <marker scope="Private" name="leonie_first_chestVisible">Leonie is the first one to have visible chest.</marker>
+        <marker scope="Public" name="leonie_mast_comment_bisex_human">Comment towards a bisexual human while she, a human (any gender), and a male opponent are all masturbating.</marker>
         <marker scope="Public" name="leonie_sliferexplained">Leonie has listened to Chazz explain Slifer Red.</marker>
         <marker scope="Public" name="leonie_StoneOcean">Has spotted Jolyne saying the phrase 'Stone Free', and is confused.</marker>
         <marker scope="Public" name="light_pun_overload_resp">Reacting to Lux running out of puns.</marker>
@@ -262,6 +279,7 @@
         <marker scope="Public" name="spotted_monika">Seen Monika at game start</marker>
         <marker scope="Public" name="spotted_palutena">Seen Palutena at game start</marker>
         <marker scope="Public" name="strip0_meia_homeworld">Responding to Meia saying her home world has no men when Leonie is stripping her jacker.</marker>
+        <marker scope="Public" name="supernova_professor" />
         <marker scope="Public" name="throw_over_chair">Talks about throwing clothes over a chair that might not be there. Just some dialogue.</marker>
         <marker scope="Public" name="trigger_rivalry">Special trait. Triggered against male-heavy tables. Increases AI to 'Good' when set, and gives her more competitive dialogue. Also lets the player unlock the Crude Arrowheads.</marker>
     </markers>
@@ -274,6 +292,21 @@
         <recipe key="b90f559d-7557-4180-989e-63b583b9a82d">
             <cases>
                 <id>112</id>
+            </cases>
+        </recipe>
+        <recipe key="9181b912-d7db-4c2a-8f23-c2ddea3aa7ee">
+            <cases>
+                <id>158</id>
+            </cases>
+        </recipe>
+        <recipe key="86776250-8f3f-46d3-a128-71f013e0e49b">
+            <cases>
+                <id>160</id>
+            </cases>
+        </recipe>
+        <recipe key="2c668cca-3598-4732-b937-c61a20f69cdb">
+            <cases>
+                <id>166</id>
             </cases>
         </recipe>
     </recipes>
