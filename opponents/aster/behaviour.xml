@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 12:03:23 AM on March 05, 2021. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 8:38:57 PM on March 05, 2021. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Asterisk</first>
@@ -34,6 +34,7 @@
         <tag>hentai</tag>
         <tag>video_game</tag>
         <tag>adventurer</tag>
+        <tag>fighter</tag>
     </tags>
     <nicknames />
     <stylesheet>styles.css</stylesheet>
@@ -130,22 +131,34 @@
         </trigger>
 
         <trigger id="hand">
-            <case stage="0-5" id="16" alsoPlaying="marinette" alsoPlayingStage="2-4" alsoPlayingSayingMarker="marinette_fashion">
-                <condition role="other" character="marinette" sayingMarker="marinette_fashion" />
+            <case stage="0-5" id="16" priority="141">
+                <condition role="other" character="marinette" stage="2-4" sayingMarker="marinette_fashion" />
                 <state img="#-pleasant.png" marker="marinette_fashion">Oh, yeah. These are the clothes I had on me when I swam to the continent. I've tried other armors, but this is the outfit that stuck.</state>
             </case>
             <case stage="0-5" id="15">
                 <condition role="other" character="mary" stage="3" sayingMarker="dakku" />
                 <state img="#-bewildered.png" marker="duck_confusion">A... duck? Is that some kind of insect?</state>
             </case>
+            <case stage="0-5" id="19" alsoPlaying="kazuma" alsoPlayingStage="0" alsoPlayingSayingMarker="devil_deal">
+                <state img="#-that_wasnt_very_cash_money_of_you.png" marker="Kazuma_sus">I was suspicious of you already, and hat just makes it worse.</state>
+            </case>
             <case stage="0-5" id="14" totalRounds="7-">
                 <condition count="4-5" status="alive" />
                 <condition role="other" character="mary" sayingMarker="mfk" />
                 <state img="#-never_say_never.png" marker="MFK">If we fuck, we're getting married! So I'd marry all the girls here!</state>
             </case>
+            <case stage="0-5" id="21" totalRounds="5-" priority="112">
+                <condition role="other" character="leonie" saidMarker="asked_mercenary_q_1==1" sayingMarker="mercenary_title=Blade Breaker II" />
+                <state img="#-uwuwuwuwuwu.png" marker="leonie_title">I'm not sure that title fits you... I do have some others in my mind, though.</state>
+                <state img="#-uwuwuwuwuwu.png">I don't really get that title looking at you... I'm thinking of something else, actually.</state>
+            </case>
             <case stage="0-5" id="12" totalRounds="4-" priority="111">
                 <condition role="other" character="revy" sayingMarker="killing" />
                 <state img="#-thoughtful.png" marker="revy_killing">Yeah. I've... killed outlaws before. A lot f them. They deserved it, though.</state>
+            </case>
+            <case stage="0-5" id="20" totalRounds="3-">
+                <condition role="other" character="leonie" sayingMarker="asked_mercenary_q_1=1" />
+                <state img="#-thoughtful.png" marker="leonie_mercenary">Honestly, I haven't had good luck with mercenary adventurers. Whatever the opposite of Yarase is, I guess.</state>
             </case>
             <case stage="0-5">
                 <condition role="other" character="tomoko" sayingMarker="tomoko_gohome" />
@@ -158,6 +171,22 @@
             <case stage="0-5">
                 <condition role="other" character="tomoko" sayingMarker="tomoko_asshole" />
                 <state img="#-that_wasnt_very_cash_money_of_you.png" marker="tomoko_asshole">No...? Uh, am I a dick? Because I don't think you are, Tomoko.</state>
+            </case>
+            <case stage="0-5" id="22">
+                <condition role="other" character="twisted_fate" sayingMarker="Crazy_Captain" />
+                <state img="#-horny_shonen_protagonist_lookin_ass.png" marker="fate_captain">Uh... fighting them head-on? That should work.</state>
+            </case>
+            <case stage="0-5" id="23">
+                <condition role="other" character="twisted_fate" sayingMarker="Stories" />
+                <state img="#-pleasant.png" marker="Fate_emptistories">Stories... must of mine are pretty long... Oh, I could share some of QD's `emptistories', if you'd like.</state>
+            </case>
+            <case stage="0-5" id="24">
+                <condition role="other" character="twisted_fate" sayingMarker="Relic_Hunting" />
+                <state img="#-what_would_riche_say.png" marker="fate_relics">Yeah! I've been to a bunch of Mother Eve's ruins before... good times. Usually not relic hunting, though.</state>
+            </case>
+            <case stage="0-5" id="25">
+                <condition role="other" character="twisted_fate" sayingMarker="Conman" />
+                <state img="#-that_wasnt_very_cash_money_of_you.png" marker="fate_conman">Uh... no? That sounds like a bad idea.</state>
             </case>
             <case stage="0" id="1" oneShotId="1" totalRounds="0-1" priority="100">
                 <state img="#-NANI.png" marker="rings_gone">Ah! My rings are gone! This really is another world! At least, I hope that's what it is!</state>
@@ -179,12 +208,16 @@
                 <state img="#-NANI.png" oneShotId="7" marker="sword_gone">Ah! Has anyone seen my sword? I think I dropped it when I teleported, and that thing was like 40 thousand gold!</state>
             </case>
             <case stage="0-4" id="8" oneShotId="9" priority="100">
-                <condition count="0-" gender="female" />
+                <condition count="0" gender="female" />
                 <state img="#-NANI.png" marker="no_girls">What the hell!? Where are all the girls? Don't tell me there aren't any girls in this world!</state>
             </case>
             <case stage="0-5" id="9" oneShotId="10" priority="100">
-                <condition count="0-" gender="male" />
+                <condition count="1" gender="male" />
                 <state img="#-what_would_riche_say.png" marker="no_dudes">I'm the only guy here... surrounded by a bunch of cute girls. I think I'm gonna like this world a lot.</state>
+            </case>
+            <case stage="0-2" oneShotId="19">
+                <test expr="~background~" value="beach" />
+                <state img="#-what_would_riche_say.png" marker="beach1">The beach... it reminds me of when I first met Riche. Heh. I woke up, and she was straddling me.</state>
             </case>
             <case stage="1-3" id="2" oneShotId="3" totalRounds="2-">
                 <state img="#-that_wasnt_very_cash_money_of_you.png" marker="wives_plural">I hope my wives are alright... How did we end up separated like this?</state>
@@ -252,7 +285,7 @@
         <trigger id="stripping">
             <case stage="0">
                 <state img="#-strip.png">...After I take off my shoes, I mean. That comes first.</state>
-                <state img="#-strip.png">I need to take my hoes off first, though. That's a requirement.</state>
+                <state img="#-strip.png">I need to take my shoes off first, though. That's a requirement.</state>
             </case>
             <case stage="2">
                 <state img="#-strip.png">I don't  have anything special for this jacket. I'll look weird without it, though.</state>
@@ -262,7 +295,7 @@
                 <state img="#-strip.png">Off comes the shirt, then. Who even needs shirts?</state>
             </case>
             <case stage="4">
-                <state img="#-strip.png">I promised Riche i wouldn't do anything weird if we get separated, and this probably counts...</state>
+                <state img="#-strip.png">I promised Riche I wouldn't do anything weird if we got separated, and this probably counts...</state>
                 <state img="#-strip.png">Showing my dick to a bunch of strangers without my wives knowing might be crazy...</state>
             </case>
             <case stage="1">
@@ -303,6 +336,10 @@
             <case stage="0-4" oneShotId="17">
                 <condition role="target" character="kazuma" stage="1" />
                 <state img="#-pleasant.png" marker="kazuma_armor">Wait, I know what you remind me of! There was an outfit that looked a lot like yours in Central.</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="twisted_fate" stage="0" />
+                <state img="#-thoughtful.png">Are you a knight, too? You're built like one, at least.</state>
             </case>
             <case stage="2-4">
                 <condition count="1-4" gender="female" status="alive" var="fem" />
@@ -352,6 +389,18 @@
             <case stage="0-5 7">
                 <condition role="target" character="revy" stage="1" />
                 <state img="#-thoughtful.png" marker="Revy_Millet">Come to think of it, you remind me of a knight... no, a dragon from my world. She did a lot of terrible things.</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="leonie" stage="0" />
+                <state img="#-uwuwuwuwuwu.png">Leonie... right? Eheh. I dig the tomboy look.</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="polly" stage="0" />
+                <state img="#-uwuwuwuwuwu.png" marker="polly_lively">Heh. You re a lot more lively than the other ghosts i've met.</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="polly" stage="1" />
+                <state img="#-what_would_riche_say.png" marker="polly_possess">Hey, do you ever... possess people for sex?</state>
             </case>
             <case stage="0-5 7" oneShotId="12">
                 <condition filter="princess" role="target" />
@@ -959,12 +1008,28 @@
                 <condition role="target" character="kazuma" stage="1" />
                 <state img="#-icy_ash.png" marker="kazuma_armor2">It had a weird air about it... but I guess so did most things there. Wearing it felt all wrong.</state>
             </case>
+            <case stage="0-5 7">
+                <condition role="target" character="leonie" stage="0" />
+                <state img="#-what_would_riche_say.png">Uh, sorry. It's always nice to see a female fighter that doesn't go all-in on the armor.</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="polly" stage="1" />
+                <state img="#-uwuwuwuwuwu.png" marker="polly_possess2">I'm just asking because one of my wives sometimes gets possessed by her sister's ghost so we could do it.</state>
+            </case>
         </trigger>
 
         <trigger id="opponent_stripped">
             <case stage="0-4" oneShotId="7">
                 <condition role="target" character="kazuma" stage="1" />
                 <state img="#-horny_shonen_protagonist_lookin_ass.png" marker="kazuma_rance2">So, it's probably nothing. I bet you're a great guy. &lt;br&gt;  (&lt;i&gt;I'm still keeping an eye on him, though.&lt;/i&gt;)</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="leonie" stage="1" />
+                <state img="#-never_say_never.png">Speaking of, that jacket was totally covering your hips! You should never wear it like that, unless it pushes up your boobs!</state>
+            </case>
+            <case stage="0-5 7">
+                <condition role="target" character="polly" stage="2" />
+                <state img="#-nonononono.png" marker="polly_possess3">Uh, it's not as weird as it sounds, by the way! Tio is okay with that arrangement!</state>
             </case>
         </trigger>
 
