@@ -867,7 +867,7 @@ function pluralize (text) {
 
 function indefiniteArticle(word) {
     if (/^[aeio]|^u(?!ni)/.test(word)) {
-	return "an";
+        return "an";
     } else {
         return "a";
     }
@@ -909,11 +909,11 @@ function expandDialogue (dialogue, self, target, bindings) {
                     } else {
                         substitution = clothing.name;
                     }
-                } else if (fn == 'withart') {
+                } else if (fn == 'a') {
                     if (clothing.plural === false) {
-                        substitution = indefiniteArticle(clothing.name) + ' ' + clothing.name;
+                        substitution = indefiniteArticle(clothing.name) + ' ';
                     } else {
-                        substitution = clothing.name;
+                        substitution = '';
                     }
                 } else if ((fn == 'type' || fn == 'position' || fn == 'generic') && args === undefined) {
                     substitution = clothing[fn];
