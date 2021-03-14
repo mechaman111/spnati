@@ -528,6 +528,7 @@ function restartGame () {
 	clearTimeout(timeoutID); // No error if undefined or no longer valid
 	timeoutID = autoForfeitTimeoutID = undefined;
 	stopCardAnimations();
+    $('link[href^="opponents/"]').remove();
 	resetPlayers();
     currentRound = -1;
 

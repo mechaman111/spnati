@@ -166,6 +166,8 @@ Player.prototype.resetState = function () {
 
         this.clothing = clothingArr;
         this.initClothingStatus();
+
+        this.loadStylesheet();
     }
 
     this.stageChangeUpdate();
@@ -532,21 +534,6 @@ Opponent.prototype.onSelected = function(individual) {
     console.log(this.slot+": ");
     console.log(this);
 
-    // check for duplicate <link> elements:
-    if (this.stylesheet) {
-        if ($('link[href=\"'+this.stylesheet+'\"]').length === 0) {
-            console.log("Loading stylesheet: "+this.stylesheet);
-
-            var link_elem = $('<link />', {
-                'rel': 'stylesheet',
-                'type': 'text/css',
-                'href': this.stylesheet
-            });
-
-            $('head').append(link_elem);
-        }
-    }
-
     if (SENTRY_INITIALIZED) {
         Sentry.addBreadcrumb({
             category: 'select',
@@ -566,6 +553,23 @@ Opponent.prototype.onSelected = function(individual) {
     }
 
     updateSelectionVisuals();
+}
+
+Opponent.prototype.loadStylesheet = function () {
+    // check for duplicate <link> elements:
+    if (this.stylesheet) {
+        if ($('link[href=\"'+this.stylesheet+'\"]').length === 0) {
+            console.log("Loading stylesheet: "+this.stylesheet);
+
+            var link_elem = $('<link />', {
+                'rel': 'stylesheet',
+                'type': 'text/css',
+                'href': this.stylesheet
+            });
+
+            $('head').append(link_elem);
+        }
+    }
 }
 
 Opponent.prototype.updateLabel = function () {
@@ -925,7 +929,20 @@ Opponent.prototype.unloadOpponent = function () {
 
 Opponent.prototype.fetchBehavior = function() {
     // Optionally, replace with fetchCompressedURL(this.folder + "behaviour.xml")
-    return fetchXML(this.folder + "behaviour.xml");
+    return fetchXML(this.folder + "behaviour.xml").then(function($xml) {
+        /* Always parse the stylesheet element, so we can use it both
+         * when selecting a character (loading the entire behaviour)
+         * and when playing an epilogue from the gallery */
+        this.stylesheet = null;
+        var stylesheet = $xml.children('stylesheet').text();
+        if (stylesheet) {
+            var m = stylesheet.match(/[a-zA-Z0-9()~!*:@,;\-.\/]+\.css/i);
+            if (m) {
+                this.stylesheet = 'opponents/'+this.id+'/'+m[0];
+            }
+        }
+        return $xml;
+    }.bind(this));
 }
 
 /**
@@ -987,16 +1004,6 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.startStates = $xml.children('start').children('state').get().map(function (el) {
                 return new State($(el));
             });
-
-            this.stylesheet = null;
-
-            var stylesheet = $xml.children('stylesheet').text();
-            if (stylesheet) {
-                var m = stylesheet.match(/[a-zA-Z0-9()~!*:@,;\-.\/]+\.css/i);
-                if (m) {
-                    this.stylesheet = 'opponents/'+this.id+'/'+m[0];
-                }
-            }
 
             this.default_costume = {
                 id: null,
