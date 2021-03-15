@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 8:44:23 PM on March 12, 2021. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 10:37:05 AM on March 15, 2021. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Asterisk</first>
@@ -217,9 +217,29 @@
                 <condition role="other" character="yuri" stage="0" sayingMarker="yuri_book_recommendations" />
                 <state img="#-bewildered.png" marker="Yuri_books">Does... porn count? I don't really read anything else.</state>
             </case>
+            <case stage="0-5">
+                <condition role="self" saidMarker="Pyrrha_plans" notSaidMarker="wives_plural" />
+                <condition role="other" character="pyrrha" stage="0-4" sayingMarker="aster_plans_wivesplural" />
+                <state img="#-horny_shonen_protagonist_lookin_ass.png" marker="pyrrha_adan_w">Well, Adan was the first human, but now he's... evil, and the source of all the monsters in the world. It gets complicated. &lt;br&gt; And yeah! I have ten wives!</state>
+            </case>
             <case stage="0-5" priority="142">
                 <condition role="other" character="ringo_ando" stage="0" saidMarker="Spell_explanation" sayingMarker="puyo_explanation" />
                 <state img="#-uwuwuwuwuwu.png" marker="Ringo_puyos">Huh... so they're like slime hannies, but charge your SP... That sounds super useful!</state>
+            </case>
+            <case stage="0-5">
+                <condition role="self" saidMarker="Pyrrha_plans" />
+                <condition role="other" character="pyrrha" stage="0-4" sayingMarker="aster_plans" />
+                <state img="#-thoughtful.png" marker="pyrrha_adan">Adan was the first human... But after he took in all of humanity's sin, he kind of blew up, apparently, and split the world apart.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="self" saidMarker="Yuri_books" />
+                <condition role="other" character="yuri" stage="0-4" sayingMarker="aster_books" />
+                <state img="#-uwuwuwuwuwu.png" marker="yuri_porn_comics">Ahh... Mostly magazines and comics and stuff. Ramius and I like to read them together.</state>
+            </case>
+            <case stage="0-5">
+                <condition role="self" sayingMarker="may_snacc" />
+                <condition role="other" character="may" stage="0-6" sayingMarker="aster_snacc" />
+                <state img="#-horny_shonen_protagonist_lookin_ass.png" marker="may_pokemon_food">I don't know what a Pokémon is, but if it's edible, it's edible, isn't it?</state>
             </case>
             <case stage="0-5" id="16" priority="141">
                 <condition role="other" character="marinette" stage="2-4" sayingMarker="marinette_fashion" />
@@ -416,6 +436,10 @@
                 <condition role="other" character="lyralei" sayingMarker="lyralei_nature_question" />
                 <state img="#-horny_shonen_protagonist_lookin_ass.png" marker="Lyralei_nature">It depends on how dangerous it is. Going around and seeing all sorts of natural wonders with my family is great.</state>
             </case>
+            <case stage="0-5" oneShotId="33">
+                <condition role="other" character="may" saidMarker="may_pokeblock" />
+                <state img="#-never_say_never.png" marker="may_goodboy">I don't know what a `Pokéblock' is... But I'll be the best boy I can be for you!</state>
+            </case>
             <case stage="0-1" id="1" oneShotId="1" totalRounds="0-2" priority="100">
                 <state img="#-NANI.png" marker="rings_gone">Ah! My rings are gone! This really is another world! At least, I hope that's what it is!</state>
             </case>
@@ -461,6 +485,15 @@
         </trigger>
 
         <trigger id="must_strip">
+            <case stage="0">
+                <condition role="self" saidMarker="wives_plural" />
+                <condition role="other" character="yuri" sayingMarker="aster_multiplewives" />
+                <state img="#-horny_shonen_protagonist_lookin_ass.png" marker="yuri_wives">Yeah! I have ten wives right now, but I can always rank up to have more.</state>
+            </case>
+            <case stage="0">
+                <condition role="other" character="pyrrha" sayingMarker="aster_adventurer" />
+                <state img="#-horny_shonen_protagonist_lookin_ass.png" marker="pyrrha_adventurer">Actually, I'm a knight, not an adventurer, but... It's awesome! I get to go around, fight monsters and meet tons of cute girls.</state>
+            </case>
             <case stage="0" totalRounds="0">
                 <state img="#-never_say_never.png">Strip? Yeah, I can strip! I can strip better than anyone!</state>
                 <state img="#-never_say_never.png">Strip poker? That's... incredible! I'm going all-in, then!</state>
@@ -603,6 +636,7 @@
                 <state img="#-never_say_never.png">Come on, ~name~! Have some gusto!</state>
                 <state img="#-never_say_never.png">It's now or never, ~name~! Show the world you're a man!</state>
                 <state img="#-never_say_never.png">Moments like these are your chance to prove yourself!</state>
+                <state img="#-never_say_never.png">This is your chance to prove yourself!</state>
             </case>
             <case stage="6">
                 <state img="#-bewildered.png">(&lt;i&gt;Just think about your wives instead, Aster.&lt;/i&gt;)</state>
@@ -648,7 +682,7 @@
                 <alternative>
                     <test expr="~player~" value="Kinou" />
                 </alternative>
-                <state img="#-uwuwuwuwuwu.png" marker="player_wife_name">Oh, hey! You share a name with one of my wives, ~player~.</state>
+                <state img="#-uwuwuwuwuwu.png" marker="player_wife_name">Oh, hey! You share a name with one of my wives, ~player~. What a coincidence!</state>
             </case>
         </trigger>
 
@@ -722,6 +756,10 @@
                 <state img="#-uwuwuwuwuwu.png" marker="Natsu_smol">Wow, you're really short.</state>
             </case>
             <case stage="0-5 7">
+                <condition role="target" character="may" stage="1" />
+                <state img="#-bewildered.png" marker="may_pokemon">Hey, those `Pokémon' you mentioned... what are they?</state>
+            </case>
+            <case stage="0-5 7">
                 <condition role="target" character="ringo_ando" />
                 <state img="#-uwuwuwuwuwu.png" marker="Ringo_smort">I don't get half the things you say, Ringo, but they sound really smart.</state>
             </case>
@@ -782,6 +820,7 @@
                 <state img="#-never_say_never.png">I already came, but I can go again just for you, ~name~!</state>
                 <state img="#-what_would_riche_say.png">Hah. And you guys are still going. Don't mind me, then.</state>
                 <state img="#-what_would_riche_say.png">Losing is all bad, ~name~.</state>
+                <state img="#-zoo_wee_mama.png">Even if I'm done jerking off for now, I'm glad to see you lose more!</state>
             </case>
         </trigger>
 
@@ -1277,6 +1316,7 @@
             <case stage="2-4">
                 <state img="#-what_would_riche_say.png">I think I've heard they get bigger if you rub them. Someone should research that.</state>
                 <state img="#-uwuwuwuwuwu.png">They're very sexy, ~name~. </state>
+                <state img="#-never_say_never.png">Those are perfect the way they are!</state>
             </case>
             <case stage="5 7">
                 <state img="#-what_would_riche_say.png">Those are perfect. All boobs are, but yours are extra perfect because they're on &lt;i&gt;you&lt;/i&gt;.</state>
@@ -1301,6 +1341,7 @@
             <case stage="5 7">
                 <state img="#-uwuwuwuwuwu.png">Can I touch them?</state>
                 <state img="#-uwuwuwuwuwu.png">Those girls are almost as pretty as you are.</state>
+                <state img="#-uwuwuwuwuwu.png">I just want to snuggle between them...</state>
             </case>
             <case stage="6">
                 <state img="#-heavy_trance.png">I'll... never tire of seeing boobs.</state>
