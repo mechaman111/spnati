@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 
-<!--This file was machine generated using the Character Editor v5.5 at 9:42:44 AM on June 08, 2020. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
+<!--This file was machine generated using the Character Editor v5.5 at 9:51:13 AM on March 15, 2021. Please do not edit it directly without preserving your improvements elsewhere or your changes may be lost the next time this file is generated.-->
 <opponent>
     <version>v5.5</version>
     <first>Mary</first>
@@ -970,6 +970,18 @@
             <case stage="3" id="41">
                 <state img="#-idle.png" oneShotId="73" marker="dakku">Y'know what that hoodie would have been good for? Carryin' ducks. I could carry at least three or four ducks in it.</state>
             </case>
+            <case stage="0-7" id="130" oneShotId="106" totalRounds="12-" priority="0">
+                <condition role="self" saidMarker="sideeffects&gt;=5" />
+                <state img="#-dread.png" marker="dread_morality">{Dread}Morality is a spook. An abstract concept made to keep you down. Why abide by it?{!reset}</state>
+                <state img="#-dread.png" marker="dread_ego">{Dread}People look down on egoism, but why is that? The only person you can truly understand is yourself, anyway.{!reset}</state>
+                <state img="#-dread.png" marker="dread_immortality">{Dread}Have you ever thought you might be immortal? You can only prove you aren't by dying, and you haven't done that yet, have you, ~player~?</state>
+            </case>
+            <case stage="0-7" id="131" oneShotId="107" totalRounds="6-" priority="0">
+                <condition role="self" saidMarker="sideeffects&lt;=5" />
+                <state img="#-isthishappy.png" marker="lastthursdayism">Y'know what's a fun thought? The world, everything in it and all your memories of it coulda just popped into existence five seconds ago, and there's no way to prove otherwise!</state>
+                <state img="#-idle.png" marker="descartes">`I think, therefore I am'. I kind of hate that quote. Descartes didn't know we'd be making thought-capable AIs and shit.</state>
+                <state img="#-yeahigottime.png" marker="amoral_immoral">Y'know, I sometimes tell people I'm amoral and they freak out. But `amoral' doesn't mean `immoral', y'know?</state>
+            </case>
         </trigger>
 
         <trigger id="must_strip">
@@ -1301,6 +1313,11 @@
         </trigger>
 
         <trigger id="stripped">
+            <case stage="6" priority="900">
+                <test expr="~month.number~" value="4" />
+                <test expr="~day.number~" value="1" />
+                <state img="#-isthishappy.png">Tits out for Harambe!</state>
+            </case>
             <case stage="1">
                 <condition role="self" saidMarker="Revy_internet" />
                 <condition role="other" character="revy" stage="0-7" sayingMarker="mary1s" saying="porno tape stash" />
@@ -1698,6 +1715,10 @@
             <case stage="0-7 9">
                 <condition role="target" character="lotte" stage="0" />
                 <state img="#-idle.png">Man, you really seem like the shy, timid type that would have nothing to do with this place, Lotte.</state>
+            </case>
+            <case stage="0-7 9">
+                <condition role="target" character="polly" stage="0" />
+                <state img="#-smug.png" marker="polly_party_girl">So, you're quite the party girl, huh? I would be too, if I went to parties.</state>
             </case>
             <case stage="0-7" oneShotId="31">
                 <condition role="target" character="komi-san" />
@@ -2982,6 +3003,10 @@
             <case stage="0-7 9">
                 <condition role="target" character="lotte" stage="0" />
                 <state img="#-smug.png">But here you are, in the flesh and stripping. Even if it's just some dumb trinket.</state>
+            </case>
+            <case stage="0-7 9">
+                <condition role="target" character="polly" stage="0" />
+                <state img="#-idle.png" marker="Polly_DMT">...You ever done DMT?</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="aimee" />
