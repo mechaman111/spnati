@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited March 4 2021
+README edited March 15 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -344,6 +344,7 @@ JOETTA
 -Responds to Joetta's Hand=Any Stage jokes that contain puns.
 -Responds with her own pun to Joetta, if Chara has responded to enough of Joetta's puns.
 -Responds to Joetta noting Chara likes her jokes.
+-Responses as Chara is losing.
 
 JOTARO
 -Responds the first time Jotaro uses his Stand powers to strip.
