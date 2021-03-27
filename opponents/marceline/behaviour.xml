@@ -53,7 +53,7 @@
 
     <behaviour>
         <trigger id="selected">
-            <case stage="0">
+            <case stage="0" id="267">
                 <state img="#-calm.png" marker="unknown">Poker, huh? Is it the boring type or the not-so boring type? Well, either way I'm in.</state>
                 <state img="#-calm.png">Ooh, strip poker? That game never gets old, count me in.</state>
                 <state img="#-calm.png" marker="unknown">Poker? Sure, I'll play. Now, the question is if it's the &lt;i&gt;fun&lt;/i&gt; version or not.</state>
@@ -775,14 +775,6 @@
         </trigger>
 
         <trigger id="male_removing_minor">
-            <case stage="0-2">
-                <state img="#-pleased.png">Now we're getting somewhere!</state>
-                <state img="#-pleased.png">It's comfier this way, trust me.</state>
-                <state img="#-calm.png">Come on, be confident!</state>
-                <state img="#-fingerguns.png">Aw are you blushing?</state>
-                <state img="#-pleased.png">Starting to pick up!</state>
-                <state img="#-flirt.png">Getting warm in here, isn't it?</state>
-            </case>
             <case stage="3-6">
                 <state img="#-pleased.png">Just keep going.</state>
                 <state img="#-calm.png">That's it, just keep it coming.</state>
@@ -792,19 +784,30 @@
                 <state img="#-smug.png">Next round should be more interesting.</state>
                 <state img="#-calm.png">You and me both.</state>
                 <state img="#-pleased.png">Right on schedule.</state>
-            </case>
-            <case stage="7 9">
-                <state img="#-pleased.png">You're such a prude.</state>
-                <state img="#-pleased.png">Don't be so modest.</state>
-                <state img="#-sing1.png">Haha... sooo sexy...</state>
-                <state img="#-smug.png">That's all?</state>
+                <state img="#-pleased.png">Now we're getting somewhere!</state>
+                <state img="#-pleased.png">It's comfier this way, trust me.</state>
+                <state img="#-calm.png">Come on, be confident!</state>
+                <state img="#-fingerguns.png">Aw are you blushing?</state>
+                <state img="#-pleased.png">Starting to pick up!</state>
+                <state img="#-flirt.png">Getting warm in here, isn't it?</state>
             </case>
             <case stage="8">
                 <state img="#-mad.png">More--ah... I want more...</state>
                 <state img="#-bored.png">Not enough... I wann-hhnnmore...</state>
+                <state img="#-mad.png">You're such a prude.</state>
+                <state img="#-smug.png">Don't be so modest.</state>
+                <state img="#-mad.png">Haha... sooo sexy...</state>
+                <state img="#-confused.png">That's all?</state>
+            </case>
+            <case stage="0-2">
+                <state img="#-pleased.png"></state>
+                <state img="#-fingerguns.png"></state>
+                <state img="#-smug.png"></state>
+                <state img="#-sing1.png"></state>
+                <state img="#-sing2.png"></state>
             </case>
         </trigger>
-
+        
         <trigger id="male_removed_minor">
             <case stage="8">
                 <state img="#-calm.png">Yeah... keep going...</state>
@@ -817,6 +820,11 @@
                 <state img="#-pleased.png">Alright, save some for later.</state>
                 <state img="#-pleased.png">I'm having fun already.</state>
                 <state img="#-pleased.png">Looking better each round!</state>
+                <state img="#-pleased.png">We haven't even gotten to the good stuff yet.</state>
+                <state img="#-calm.png">That's some real weak stuff right there, ~target~. </state>
+                <state img="#-smug.png">Tryin' your hardest to be this lame, ~target~?</state>
+                <state img="#-calm.png">Breezy, eh?</state>
+                <state img="#-calm.png">Next round, ~name~, next round...</state>
             </case>
             <case stage="7 9">
                 <state img="#-calm.png">Soon, ~name~, soon.</state>
@@ -831,6 +839,7 @@
                 <state img="#-smug.png">Tryin' your hardest to be this lame, ~target~?</state>
                 <state img="#-calm.png">Breezy, eh?</state>
                 <state img="#-calm.png">Next round, ~name~, next round...</state>
+                <state img="#-pleased.png">It's small, but it's enough to applease me... for now.</state>
             </case>
         </trigger>
 
@@ -1454,9 +1463,8 @@
         <trigger id="opponent_lost">
             <case stage="0-9" id="266">
                 <condition role="target" character="mettaton_neo" stage="0" />
-                <state img="#-confused.png" marker="mettaneverheard0">Wait, so let me get this straight; you're a famous personality? Why haven't I ever heard of you before then? </state>
                 <state img="#-pleased.png" marker="mettagames0">Hey, another cute boxy robot! Pass me the controller so I can start playin' the games on you, 'lil buddy.</state>
-                <state img="#-calm.png" marker="mettanewtech0">What are you? Some new Mo tech? You're a lot bigger than BMO, but I wasn't too invested in their stuff anyway.</state>
+                <state img="#-calm.png" marker="mettanewtech0">What are you? Some new Mo tech? You're a lot bigger than some of the other models I've seen.</state>
             </case>
             <case stage="0-2" id="270">
                 <condition role="target" character="mia" stage="0" />
@@ -1479,11 +1487,6 @@
                 <state img="#-pleased.png">I’m starving... I think I’ll drink the red from your hair, ~name~.</state>
                 <state img="#-pleased.png">Your adorable hairdo is looking &lt;i&gt;really&lt;/i&gt; appetizing. ~target~. You don't mind if I take a sip from it, right?</state>
                 <state img="#-flirt.png">How ‘bout I drink the red out of your hair, ~target~? You wouldn’t mind looking like a grandma, would you?</state>
-            </case>
-            <case stage="0-9" id="265">
-                <condition role="target" stage="0" />
-                <state img="#-calm.png" marker="gwengetup0">What's with the getup? I've only seen weird suits like that in PB's lab.</state>
-                <state img="#-fingerguns.png" marker="gwensuperhero0">A superhero? I don't know what makes you "super" but I do know a lotta heroes. </state>
             </case>
             <case stage="0-7" id="3" oneShotId="3">
                 <condition role="target" consecutiveLosses="3" />
@@ -1887,12 +1890,6 @@
             </case>
         </trigger>
 
-        <trigger id="after_masturbating">
-            <case stage="9">
-                <state>What the character says after masturbating during the exchange phase.</state>
-            </case>
-        </trigger>
-
         <trigger id="game_over_victory">
             <case stage="0-7" id="237">
                 <condition count="1-4" filter="journalist" />
@@ -1920,6 +1917,10 @@
                 <state img="#-sing1.png">You ever feel like playing again, just say the word.</state>
                 <state img="#-sing1.png">You sure know how to have fun. Let's play again sometime.</state>
                 <state img="#-sing2.png">I like this game. Even when I lose, I still win.</state>
+            </case>
+            <case stage="9" hidden="1" priority="999">
+                <test expr="~human.place~" value="1" />
+                <state img="#-flirt.png" collectible="Rock T-Shirt">Unlocks the rock t-shirt. You better start takin' good care of it.</state>
             </case>
         </trigger>
 
