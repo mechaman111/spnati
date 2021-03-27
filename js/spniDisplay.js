@@ -1035,13 +1035,11 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         
         if (!(this.pose instanceof Pose)) {
             this.simpleImage.one('load', function() {
-                this.bubble.show();
                 OpponentDisplay.prototype.rescaleSimplePose.call(this, player.scale);
                 this.simpleImage.show();
             }.bind(this));
         } else {
             this.pose.onLoadComplete = function () {
-                this.bubble.show();
                 this.imageArea.css('height', 0.8 * player.scale + '%').show();
             }.bind(this);
         }
