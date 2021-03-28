@@ -696,7 +696,7 @@ function parseSceneContent(player, scene, $scene) {
             x = getCenteredPosition(w);
         }
 
-        var text = fixupDialogue($(this).find("content").html().trim()); //the actual content of the text box
+        var text = $(this).find("content").html().trim(); //the actual content of the text box
 
         var css = $(this).attr('css');
 
@@ -764,7 +764,7 @@ function readProperties(sourceObj, scene) {
         }
 
         // text (not from an attribute, so not populated automatically)
-        targetObj.text = fixupDialogue($obj.html().trim());
+        targetObj.text = $obj.html().trim();
 
         var w = targetObj.width;
         //the width component is optional. Use a default of 20%.
