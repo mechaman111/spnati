@@ -1033,6 +1033,7 @@ var fixupDialogueSubstitutions = { // Order matters
     "''":  '\u201d', // right double quotation mark
     "'":   '\u2019', // right single quotation mark
     '\\':  '\xad', // soft hyphen
+    '~':   '\u223c', // tilde operator, bigger than ordinary tilde
     '&lt;i&gt;': '<i>',
     '&lt;br&gt;': '<br>',
     '&lt;hr&gt;': '<hr>',
