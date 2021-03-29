@@ -253,9 +253,12 @@ function Pose(poseDef, display) {
     this.baseHeight = poseDef.baseHeight || 1400;
     
     var container = document.createElement('div');
-    $(container).addClass("opponent-image custom-pose").css({
-        "position": "relative"
-    });
+    $(container).addClass("opponent-image custom-pose");
+    if (this.player.scale != 100) {
+        $(container).css({
+            "transform": "translate(-50%) scale("+this.player.scale+"%)",
+        });
+    }
     this.container = container;
     
     poseDef.sprites.forEach(function (def) {
@@ -631,7 +634,7 @@ OpponentDisplay.prototype.drawPose = function (pose) {
             this.clearCustomPose();
         }
         
-        this.imageArea.append(pose.container);
+        this.imageArea.prepend(pose.container);
         pose.draw();
         if (pose.needsAnimationLoop()) {
             pose.setWillChangeHints(true);
@@ -779,7 +782,7 @@ GameScreenDisplay.prototype.reset = function (player) {
     
     if (player) {
         this.opponentArea.show();
-        this.imageArea.css('height', 0.8 * player.scale + '%').show();
+        this.imageArea.show();
         this.label.removeClass("current loser tied");
     } else {
         this.opponentArea.hide();
@@ -1040,7 +1043,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
             }.bind(this));
         } else {
             this.pose.onLoadComplete = function () {
-                this.imageArea.css('height', 0.8 * player.scale + '%').show();
+                this.imageArea.show();
             }.bind(this);
         }
 
