@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 mkdir -p .public/opponents .public/img
 cp -r css fonts js player index.html version-info.xml backgrounds.xml .public
