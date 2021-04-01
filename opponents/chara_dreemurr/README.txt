@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited March 15 2021
+README edited March 31 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -81,6 +81,7 @@ VILLAIN - While Narrator Chara posits that the player themselves, not Chara, is 
 
 DEMON - UPDATE AUGUST 12 2020 - The new tag 'demon' has been applied 0-10. If you do Genocide 2+ times, Chara refers to herself as a demon. Given the jumpscare face she has, I am inclined
 to believe her.
+	-UPDATE MARCH 31 2021 - Removed the 'demon' tag as, while this interpretation of Chara has her as a legitimate demon, it is not greatly apparent.
 
 HIGH HEELS - UPDATE AUGUST 12 2020 - The new tag 'high heels' has been applied 0-2. The model for Chara's shoes, when viewed from the side, has heels.
 
@@ -301,6 +302,9 @@ CHELL ( and Wheatley)
 CHIHIRO
 -Responds to Chihiro running away.
 -Responds to Chihiro revealing he's actually male.
+
+COLT
+-Responds to Colt as Chara is losing.
 
 CYNTHIA
 -Responds to Cynthia as Chara loses.
