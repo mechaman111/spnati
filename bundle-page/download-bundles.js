@@ -9,6 +9,7 @@ var SPECIAL_CASE_NAMES = {
     "hk416": "HK416",
     "kool-aid": "Kool-Aid Man",
     "larachel": "L'Arachel",
+    "mom_alola": "Mom (Alola)",
     "pa-15": "PA-15",
     "pauling": "Miss Pauling",
     "penny_polendina": "Penny (RWBY)",
