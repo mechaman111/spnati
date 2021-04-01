@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited March 31 2021
+README edited April 1 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -386,6 +386,9 @@ MAKI
 MARINETTE
 -Responds to Marinette as she loses.
 
+MEGAMIX
+-Generic responses to handle Megamix's uh, unique masturbation sequence.
+
 MEGUMIN
 -Responds to Megumin's question about all-seeing demons.
 -Responds to Megumin must-strip on Fully Clothed with a comment about Explosion's ability to 1-shot things.
@@ -401,10 +404,6 @@ MEIA/REVY
 MEI
 -Responds to Mei encasing herself in an ice block.
 
-MOON
--Generic responses when Moon loses a hand and must strip.
--Responds to Moon complaining about having to remove her accessories.
-
 METTATON
 -Responds to Mettaton showing he has breasts.
 -Responds to Mettaton being forced to forfeit.
@@ -412,6 +411,10 @@ METTATON
 MIKO
 -Back and forth when Miko or Chara are losing.
 -Case to handle Miko having gone bi-bye.
+
+MOON
+-Generic responses when Moon loses a hand and must strip.
+-Responds to Moon complaining about having to remove her accessories.
 
 MULAN
 -Responds to Mulan's 'Fapping' joke.
@@ -454,6 +457,9 @@ POLLY
 -Response to Polly as Chara loses.
 -Response to Polly saying Chara is taking the game too seriously.
 
+POT OF GREED
+-Generic responses to handle POG's uh, unique stripping and masturbation sequence.
+
 REMILIA
 -Responds the first time Remilia's maid uses her time-stop powers to strip her.
 
@@ -479,6 +485,14 @@ SAKURA
 -Responds to Sakura's head falling off.
 -Responds to Sakura removing her makeup.
 -Responses as either of them are losing.
+
+SANS
+-Generic responses to handle Sans's, uh, unique masturbation sequence.
+-Responses to some of Sans's after-finishing jokes.
+-Responds to Sans asking about knock-knock jokes.
+
+SEX TOILET
+-Generic responses to handle Sex Toilet's, uh, unique stripping and masturbation sequence.
 
 SHANTAE
 -Responds to Shantae transforming into a monkey.
@@ -507,6 +521,9 @@ THARJA
 -Ditto for Jura.
 -Ditto if she's cursed the other one before, too.
 -Dialogue with Tharja as she is losing.
+
+TICK
+-Generic responses to handle Tick's, uh, unique stripping and masturbation sequence.
 
 TOMOKO
 -Responds to Tomoko asking Chara to protect her.
