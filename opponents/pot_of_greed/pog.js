@@ -469,6 +469,9 @@ if (!pog) var pog = (function (root) {
 			hand = players[i].hand;
 		}
 		
+		// I have no idea why I need to check for this, but...
+		if (hand == null) return;
+		
 		/* look for each strength, in composition */
 		var have_pair = [];
 		var have_three_kind = [];
