@@ -405,6 +405,14 @@ var playerTagSelections = {};
  ************************************************************/
 function loadTitleScreen () {
 	//selectedChoices = [false, false, true, false, true, false, true, true, false, true, false, false, true, false, true];
+	
+	/* hide Extra Opponents menu if online version */
+	if (getReportedOrigin().includes("spnati.net")) {
+		document.getElementById("title-fullscreen-button").style.left = "25.5%";
+	} else {
+		$(".title-extras-button").prop("hidden", false);
+	}
+	
     loadClothing();
 }
 

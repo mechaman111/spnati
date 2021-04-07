@@ -1185,6 +1185,12 @@ OpponentSelectionCard.prototype.isVisible = function (testingView, ignoreFilter)
 
     // Should this opponent be on the "main roster view"?
     var onMainView = (status === undefined || includedOpponentStatuses[status]);
+    
+    // Is this opponent hidden in the Extra Opponents menu?
+    if (status === "offline" && !SHOW_OFFLINE) onMainView = false;
+    else if (status === "incomplete" && !SHOW_INCOMPLETE) onMainView = false;
+    else if (status === "event" && !SHOW_EVENT) onMainView = false;
+    else if (status === "duplicate" && !SHOW_DUPLICATE) onMainView = false;
 
     if (!testingView) {
         // Regular view: include all opponents with undefined status and with

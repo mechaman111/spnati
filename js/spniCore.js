@@ -28,6 +28,11 @@ var VERSION_TAG = undefined;
 var DEFAULT_FILL = undefined;
 var FILL_DISABLED = false;
 
+var SHOW_OFFLINE = false;
+var SHOW_INCOMPLETE = false;
+var SHOW_EVENT = false;
+var SHOW_DUPLICATE = false;
+
 /* Game Wide Constants */
 var HUMAN_PLAYER = 0;
 
@@ -100,6 +105,7 @@ $versionModal = $('#version-modal');
 $playerTagsModal = $('#player-tags-modal');
 $collectibleInfoModal = $('#collectibles-info-modal');
 $ioModal = $('#io-modal');
+$extrasModal = $('#extras-modal');
 $resortModal = $('#resort-modal');
 
 /* Screen State */
@@ -954,6 +960,31 @@ function showImportModal() {
         }
     });
 }
+
+function showExtrasModal() {
+    setActiveOption('show-offline', SHOW_OFFLINE);
+    setActiveOption('show-incomplete', SHOW_INCOMPLETE);
+    setActiveOption('show-event', SHOW_EVENT);
+    setActiveOption('show-duplicate', SHOW_DUPLICATE);
+	
+    $extrasModal.modal('show');
+}
+
+$('ul#show-offline').on('click', 'a', function() {
+    SHOW_OFFLINE = $(this).attr('data-value') == "true";
+});
+
+$('ul#show-incomplete').on('click', 'a', function() {
+    SHOW_INCOMPLETE = $(this).attr('data-value') == "true";
+});
+
+$('ul#show-event').on('click', 'a', function() {
+    SHOW_EVENT = $(this).attr('data-value') == "true";
+});
+
+$('ul#show-duplicate').on('click', 'a', function() {
+    SHOW_DUPLICATE = $(this).attr('data-value') == "true";
+});
 
 function showResortModal() {
     $resortModal.modal('show');

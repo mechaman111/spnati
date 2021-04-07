@@ -305,6 +305,27 @@ Save.prototype.loadOptions = function(){
     var settings = this.getItem("settings") || {};
     if ('stamina' in settings) humanPlayer.stamina = settings.stamina;
 	
+	/* Load extra characters settings - if rehost, all are disabled by default;
+	 * if personal offline, offline and incomplete are enabled but event and duplicate aren't
+	 */
+	var origin = getReportedOrigin();
+	var isLocal = origin.includes("localhost") || origin.includes("local filesystem");
+	 
+	if ('showOffline' in settings) {
+		SHOW_OFFLINE = !!settings.showOffline;
+	} else {
+		SHOW_OFFLINE = isLocal;
+	}
+	
+	if ('showIncomplete' in settings) {
+		SHOW_INCOMPLETE = !!settings.showIncomplete;
+	} else {
+		SHOW_INCOMPLETE = isLocal;
+	}
+	
+	if ('showEvent' in settings) SHOW_EVENT = !!settings.showEvent;
+	if ('showDuplicate' in settings) SHOW_DUPLICATE = !!settings.showDuplicate;
+	
 	if ('fillDisabled' in settings) FILL_DISABLED = !!settings.fillDisabled;
 
     this.loadOptionsBackground(settings);
@@ -391,7 +412,11 @@ Save.prototype.saveSettings = function() {
     var settings = {
         stamina: humanPlayer.stamina,
         useGroupBackgrounds: useGroupBackgrounds,
-        fillDisabled: FILL_DISABLED
+        fillDisabled: FILL_DISABLED,
+        showOffline: SHOW_OFFLINE,
+        showIncomplete: SHOW_INCOMPLETE,
+        showEvent: SHOW_EVENT,
+        showDuplicate: SHOW_DUPLICATE
     };
 
     if (optionsBackground && optionsBackground.id !== defaultBackground.id) {
