@@ -304,6 +304,8 @@ Save.prototype.loadOptions = function(){
 
     var settings = this.getItem("settings") || {};
     if ('stamina' in settings) humanPlayer.stamina = settings.stamina;
+	
+	if ('fillDisabled' in settings) FILL_DISABLED = !!settings.fillDisabled;
 
     this.loadOptionsBackground(settings);
 
@@ -388,7 +390,8 @@ Save.prototype.saveOptions = function() {
 Save.prototype.saveSettings = function() {
     var settings = {
         stamina: humanPlayer.stamina,
-        useGroupBackgrounds: useGroupBackgrounds
+        useGroupBackgrounds: useGroupBackgrounds,
+        fillDisabled: FILL_DISABLED
     };
 
     if (optionsBackground && optionsBackground.id !== defaultBackground.id) {

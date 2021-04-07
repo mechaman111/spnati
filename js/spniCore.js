@@ -147,8 +147,6 @@ function initialSetup () {
             captureError(err);
         }
     }).then(loadBackgrounds).then(function () {
-        FILL_DISABLED = false;
-        
         loadVersionInfo();
         loadGeneralCollectibles();
         loadSelectScreen();

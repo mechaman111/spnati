@@ -1161,6 +1161,7 @@ function clickedRemoveAllButton (alsoRemoveSuggestions)
     
     if (alsoRemoveSuggestions && !anyLoaded) {
         FILL_DISABLED = !FILL_DISABLED;
+        save.saveSettings();
     }
     
     updateSelectionVisuals();
