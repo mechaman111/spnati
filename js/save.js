@@ -310,22 +310,14 @@ Save.prototype.loadOptions = function(){
 	 */
 	var origin = getReportedOrigin();
 	var isLocal = origin.includes("localhost") || origin.includes("local filesystem");
+    if ('showStatuses' in settings) {
+        for (var status of settings.showStatuses) {
+            includedOpponentStatuses[status] = true;
+        }
+    } else if (isLocal) {
+        includedOpponentStatuses['offline'] = includedOpponentStatuses['incomplete'] = true;
+    }
 	 
-	if ('showOffline' in settings) {
-		SHOW_OFFLINE = !!settings.showOffline;
-	} else {
-		SHOW_OFFLINE = isLocal;
-	}
-	
-	if ('showIncomplete' in settings) {
-		SHOW_INCOMPLETE = !!settings.showIncomplete;
-	} else {
-		SHOW_INCOMPLETE = isLocal;
-	}
-	
-	if ('showEvent' in settings) SHOW_EVENT = !!settings.showEvent;
-	if ('showDuplicate' in settings) SHOW_DUPLICATE = !!settings.showDuplicate;
-	
 	if ('fillDisabled' in settings) FILL_DISABLED = !!settings.fillDisabled;
 
     this.loadOptionsBackground(settings);
@@ -413,10 +405,7 @@ Save.prototype.saveSettings = function() {
         stamina: humanPlayer.stamina,
         useGroupBackgrounds: useGroupBackgrounds,
         fillDisabled: FILL_DISABLED,
-        showOffline: SHOW_OFFLINE,
-        showIncomplete: SHOW_INCOMPLETE,
-        showEvent: SHOW_EVENT,
-        showDuplicate: SHOW_DUPLICATE
+        showStatuses: Object.keys(includedOpponentStatuses).filter(k => k != 'testing' && k != 'online'),
     };
 
     if (optionsBackground && optionsBackground.id !== defaultBackground.id) {
