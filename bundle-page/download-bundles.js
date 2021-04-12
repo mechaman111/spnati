@@ -28,6 +28,7 @@ var SPECIAL_CASE_NAMES = {
     "velma_classic": "Velma",
     
     // newer opponents
+    "asuna_yuuki": "Asuna",
     "cammy_white": "Cammy",
     "chara_dreemurr": "Chara",
     "chell_wheatley": "Chell",
