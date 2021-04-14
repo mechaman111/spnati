@@ -513,7 +513,7 @@ SUPERNOVA
 -Responds as either one is losing.
 
 SUSIE
--Responds to Susie as either oen is losing.
+-Responds to Susie as either one is losing.
 -Responds to Susie's 'godslayer' prompt.
 -Responds to Susie's Legion situation.
 
