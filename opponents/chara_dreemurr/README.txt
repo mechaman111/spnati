@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited April 1 2021
+README edited April 13 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -499,11 +499,12 @@ SHANTAE
 
 SHEENA
 -Responds to Sheena summoning spirits. Specific responses for Celsius and Undine.
+-Responds to Sheena as Chara is losing.
 
 SPOOKY
 -Responds to Spooky or Chara losing.
 -Responds to Spooky talking about not being able to be hit.
--Responds to Spooky makingu underwear.
+-Responds to Spooky making underwear.
 
 STREAMING-CHAN
 -Responds to Streaming-chan's interview.
@@ -512,7 +513,7 @@ SUPERNOVA
 -Responds as either one is losing.
 
 SUSIE
--Responds to Susie as she is losing.
+-Responds to Susie as either one is losing.
 -Responds to Susie's 'godslayer' prompt.
 -Responds to Susie's Legion situation.
 
