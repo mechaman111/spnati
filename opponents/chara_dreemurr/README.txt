@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited April 13 2021
+README edited April 17 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -490,6 +490,9 @@ SANS
 -Generic responses to handle Sans's, uh, unique masturbation sequence.
 -Responses to some of Sans's after-finishing jokes.
 -Responds to Sans asking about knock-knock jokes.
+
+SENKO
+-Responds as Senko is losing.
 
 SEX TOILET
 -Generic responses to handle Sex Toilet's, uh, unique stripping and masturbation sequence.
