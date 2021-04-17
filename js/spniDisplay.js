@@ -686,6 +686,7 @@ OpponentDisplay.prototype.updateImage = function(player) {
         }
     } else {
         this.drawPose(player.folder + chosenState.image.replace('#', player.stage));
+        this.simpleImage.one('load', this.rescaleSimplePose.bind(this, player.scale));
     }
 }
 
@@ -755,12 +756,6 @@ function GameScreenDisplay (slot) {
         $('#game-image-area-'+slot),
         $('#game-name-label-'+slot)
     );
-    
-    /* The overarching imageArea is properly scaled according to opponent
-     * specifications already, so we only need to scale relative to the imageArea
-     * dimensions.
-     */
-    this.simpleImage.on('load', OpponentDisplay.prototype.rescaleSimplePose.bind(this, 100));
     
     this.opponentArea = $('#game-opponent-area-'+slot);
     this.collectibleIndicator = $('#collectible-button-'+slot);
