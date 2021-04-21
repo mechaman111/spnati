@@ -256,7 +256,7 @@ function Pose(poseDef, display) {
     $(container).addClass("opponent-image custom-pose");
     if (this.player.scale != 100) {
         $(container).css({
-            "transform": "translate(-50%) scale("+this.player.scale+"%)",
+            "transform": "translate(-50%) scale("+this.player.scale/100.0+")",
         });
     }
     this.container = container;
