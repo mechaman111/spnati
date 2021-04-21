@@ -1033,7 +1033,7 @@ MainSelectScreenDisplay.prototype.update = function (player) {
         
         if (!(this.pose instanceof Pose)) {
             this.simpleImage.one('load', function() {
-                OpponentDisplay.prototype.rescaleSimplePose.call(this, player.scale);
+                this.rescaleSimplePose(player.scale);
                 this.simpleImage.show();
             }.bind(this));
         } else {
@@ -1466,7 +1466,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.artistLabel.html(opponent.artist);
     this.descriptionLabel.html(opponent.description);
 
-    this.simpleImage.one('load', OpponentDisplay.prototype.rescaleSimplePose.bind(this, opponent.scale));
+    this.simpleImage.one('load', this.rescaleSimplePose.bind(this, opponent.scale));
     this.simpleImage.attr('src', opponent.selection_image).show();
     
     this.selectButton.prop('disabled', false);
