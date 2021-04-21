@@ -178,11 +178,6 @@ function loadGameScreen () {
         if(p.chosenState) {
             p.commitBehaviourUpdate();
         }
-        
-        if (p.startStates && p.startStates.length) {
-            var newState = new State(p.startStates[getRandomNumber(0, p.startStates.length)]);
-            p.updateChosenState(newState);
-        }
     }.bind(this));
 
     updateAllBehaviours(null, null, GAME_START);

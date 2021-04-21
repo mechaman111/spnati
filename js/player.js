@@ -996,15 +996,6 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.stamina = Number($xml.children('timer').text());
             this.intelligences = $xml.children('intelligence');
 
-            /* Load in the legacy "start" lines, and also
-             * initialize player.chosenState to the first listed line.
-             * This may be overridden by later updateBehaviour calls if
-             * the player has (new-style) selected or game start case lines.
-             */
-            this.startStates = $xml.children('start').children('state').get().map(function (el) {
-                return new State($(el));
-            });
-
             this.default_costume = {
                 id: null,
                 labels: $xml.children('label'),
@@ -1290,13 +1281,6 @@ Player.prototype.getImagesForStage = function (stage) {
             caseList.forEach(processCase);
         });
     } else {
-        /* Get all poses within the game start states. */
-        this.startStates.forEach(function (state) {
-            state.getPossibleImages(0).forEach(function (poseName) {
-                poseSet[poseName] = true;
-            });
-        });
-
         if (this.cases.has(GAME_START + ':0')) {
             this.cases.get(GAME_START + ':0').forEach(processCase);
         }
