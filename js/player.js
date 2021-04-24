@@ -123,8 +123,6 @@ Player.prototype.resetState = function () {
         this.currentTags = [];
         this.stateCommitted = false;
 
-        if (this.startStates.length > 0) this.updateChosenState(new State(this.startStates[0]));
-
         var appearance = this.default_costume;
         if (this.alt_costume) {
             appearance = this.alt_costume;
