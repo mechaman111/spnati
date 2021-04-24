@@ -546,7 +546,9 @@ function doEpilogueFromGallery(){
 					endingElem = this;
 				}
 			});
-			
+
+            player.loadStylesheet();
+
 			if($nameField.val()){
 				humanPlayer.label = $nameField.val();
 			} else {

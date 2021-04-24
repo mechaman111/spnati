@@ -696,7 +696,7 @@ function parseSceneContent(player, scene, $scene) {
             x = getCenteredPosition(w);
         }
 
-        var text = fixupDialogue($(this).find("content").html().trim()); //the actual content of the text box
+        var text = $(this).find("content").html().trim(); //the actual content of the text box
 
         var css = $(this).attr('css');
 
@@ -764,7 +764,7 @@ function readProperties(sourceObj, scene) {
         }
 
         // text (not from an attribute, so not populated automatically)
-        targetObj.text = fixupDialogue($obj.html().trim());
+        targetObj.text = $obj.html().trim();
 
         var w = targetObj.width;
         //the width component is optional. Use a default of 20%.
@@ -1213,8 +1213,8 @@ EpiloguePlayer.prototype.onLoadComplete = function () {
     if (this.readyToLoad) {
         $("#epilogue-spinner").hide();
         var container = $("#epilogue-container");
-        this.views.push(new SceneView(container, 0, this.assetMap));
-        this.views.push(new SceneView(container, 1, this.assetMap));
+        this.views.push(new SceneView(container, 0, this));
+        this.views.push(new SceneView(container, 1, this));
         container.append($("<div id='scene-fade' class='epilogue-overlay' style='z-index: 10000'></div>")); //scene transition overlay
         this.loaded = true;
         $epilogueButtons.addClass('force-show');
@@ -1514,13 +1514,14 @@ EpiloguePlayer.prototype.awaitAnims = function (directive, context) {
     this.advanceDirective();
 }
 
-function SceneView(container, index, assetMap) {
+function SceneView(container, index, epiloguePlayer) {
     this.scene = null;
     this.index = index;
     this.pendingDirectives = [];
     this.anims = [];
     this.camera = null;
-    this.assetMap = assetMap;
+    this.epiloguePlayer = epiloguePlayer;
+    this.assetMap = epiloguePlayer.assetMap;
     this.sceneObjects = {};
     this.textObjects = {};
     this.viewportWidth = 0;
@@ -1980,8 +1981,20 @@ SceneView.prototype.removeText = function (directive, context) {
 
 SceneView.prototype.applyTextDirective = function (directive, box) {
     var content = expandDialogue(directive.text, null, humanPlayer);
+    var playerID = this.epiloguePlayer.epilogue.player.id;
 
-    box.empty().append($('<span>', { html: content }));
+    var displayElems = parseStyleSpecifiers(content).map(function (comp) {
+        /* {'text': 'foo', 'classes': 'cls1 cls2 cls3'} --> <span class="cls1 cls2 cls3">foo</span> */
+
+        var wrapperSpan = document.createElement('span');
+        wrapperSpan.innerHTML = fixupDialogue(comp.text);
+        wrapperSpan.className = comp.classes;
+        wrapperSpan.setAttribute('data-character', playerID);
+
+        return wrapperSpan;
+    });
+    box.empty().append($('<span>', { 'class': 'dialogue' }).append(displayElems));
+
     box.removeClass('arrow-down arrow-left arrow-right arrow-up').addClass(directive.arrow);
     box.attr('style', directive.css);
 
