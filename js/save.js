@@ -304,6 +304,21 @@ Save.prototype.loadOptions = function(){
 
     var settings = this.getItem("settings") || {};
     if ('stamina' in settings) humanPlayer.stamina = settings.stamina;
+	
+	/* Load extra characters settings - if rehost, all are disabled by default;
+	 * if personal offline, offline and incomplete are enabled but event and duplicate aren't
+	 */
+	var origin = getReportedOrigin();
+	var isLocal = origin.includes("localhost") || origin.includes("local filesystem");
+    if ('showStatuses' in settings) {
+        for (var status of settings.showStatuses) {
+            includedOpponentStatuses[status] = true;
+        }
+    } else if (isLocal) {
+        includedOpponentStatuses['offline'] = includedOpponentStatuses['incomplete'] = true;
+    }
+	 
+	if ('fillDisabled' in settings) FILL_DISABLED = !!settings.fillDisabled;
 
     this.loadOptionsBackground(settings);
 
@@ -388,7 +403,9 @@ Save.prototype.saveOptions = function() {
 Save.prototype.saveSettings = function() {
     var settings = {
         stamina: humanPlayer.stamina,
-        useGroupBackgrounds: useGroupBackgrounds
+        useGroupBackgrounds: useGroupBackgrounds,
+        fillDisabled: FILL_DISABLED,
+        showStatuses: Object.keys(includedOpponentStatuses).filter(k => k != 'testing' && k != 'online'),
     };
 
     if (optionsBackground && optionsBackground.id !== defaultBackground.id) {

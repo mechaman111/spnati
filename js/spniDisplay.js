@@ -1180,7 +1180,7 @@ OpponentSelectionCard.prototype.isVisible = function (testingView, ignoreFilter)
 
     // Should this opponent be on the "main roster view"?
     var onMainView = (status === undefined || includedOpponentStatuses[status]);
-
+    
     if (!testingView) {
         // Regular view: include all opponents with undefined status and with
         // included statuses.

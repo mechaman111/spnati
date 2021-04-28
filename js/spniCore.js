@@ -100,6 +100,7 @@ $versionModal = $('#version-modal');
 $playerTagsModal = $('#player-tags-modal');
 $collectibleInfoModal = $('#collectibles-info-modal');
 $ioModal = $('#io-modal');
+$extrasModal = $('#extras-modal');
 $resortModal = $('#resort-modal');
 
 /* Screen State */
@@ -147,8 +148,6 @@ function initialSetup () {
             captureError(err);
         }
     }).then(loadBackgrounds).then(function () {
-        FILL_DISABLED = false;
-        
         loadVersionInfo();
         loadGeneralCollectibles();
         loadSelectScreen();
@@ -957,6 +956,18 @@ function showImportModal() {
         }
     });
 }
+
+function showExtrasModal() {
+    $('ul.character-status-toggle').each(function() {
+        var show = includedOpponentStatuses[$(this).data('status')];
+        $(this).children(':has(a[data-value=true])').toggleClass('active', show);
+        $(this).children(':has(a[data-value=false])').toggleClass('active', !show);
+    });
+    $extrasModal.modal('show');
+}
+$('ul.character-status-toggle').on('click', 'a', function() {
+    includedOpponentStatuses[$(this).parents('ul').data('status')] = $(this).data('value');
+});
 
 function showResortModal() {
     $resortModal.modal('show');

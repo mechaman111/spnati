@@ -88,7 +88,7 @@ function create_bundle_entry (manifest) {
         if (manifest.category === 'incomplete') {
             var desc = 'Includes the following extra opponents: '+includes_opponents;
         } else if (manifest.category === 'event') {
-            var desc = 'Includes the following event-only opponents: '+includes_opponents;
+            var desc = 'Includes the following April Fool\'s Day opponents: '+includes_opponents;
         } else if (manifest.category === 'duplicate') {
             var desc = 'Includes outdated versions of the following opponents: '+includes_opponents;
         } else {
