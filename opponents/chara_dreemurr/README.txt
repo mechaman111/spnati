@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited April 17 2021
+README edited April 26 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -492,7 +492,7 @@ SANS
 -Responds to Sans asking about knock-knock jokes.
 
 SENKO
--Responds as Senko is losing.
+-Responds as Senko or Chara are losing.
 
 SEX TOILET
 -Generic responses to handle Sex Toilet's, uh, unique stripping and masturbation sequence.
@@ -531,7 +531,7 @@ TICK
 
 TOMOKO
 -Responds to Tomoko asking Chara to protect her.
--Reponds to Tomoko as Chara is losing.
+-Responds to Tomoko as Chara is losing.
 
 TWILIGHT
 -Responds to Twilight removing her panties as her first item.
