@@ -411,7 +411,7 @@ Save.prototype.saveSettings = function() {
         stamina: humanPlayer.stamina,
         useGroupBackgrounds: useGroupBackgrounds,
         fillDisabled: FILL_DISABLED,
-        showStatuses: Object.keys(includedOpponentStatuses).filter(k => k != 'testing' && k != 'online'),
+        showStatuses: Object.keys(includedOpponentStatuses).filter(k => k != 'testing' && k != 'online' && includedOpponentStatuses[k]),
     };
 
     if (optionsBackground && optionsBackground.id !== defaultBackground.id) {
