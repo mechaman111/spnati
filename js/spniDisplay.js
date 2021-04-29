@@ -1389,9 +1389,14 @@ OpponentDetailsDisplay.prototype.updateEpiloguesView = function () {
         } else {
             genderText = 'All Genders';
         }
+		
+		var offlineIndicator = "";
+		if (group[0].attr('status') && group[0].attr('status') != "online") {
+			offlineIndicator = "[Offline] ";
+		}
         
         return this.createEpilogueCard(
-            group[0].text(), genderText, group[0].attr('hint')
+            (offlineIndicator + group[0].text()), genderText, group[0].attr('hint')
         );
     }.bind(this));
     

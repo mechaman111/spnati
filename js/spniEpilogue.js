@@ -487,6 +487,7 @@ function parseEpilogue(player, rawEpilogue) {
 
     var $epilogue = $(rawEpilogue);
     var title = $epilogue.children("title").html().trim();
+    var status = $epilogue.attr("status") || 'online';
     var gender = $epilogue.attr("gender") || 'any';
     var allowSceneSkip = $epilogue.attr("allowSceneSkip") == 'true';
 
@@ -519,6 +520,7 @@ function parseEpilogue(player, rawEpilogue) {
 
     var epilogue = {
         title: title,
+        status: status,
         player: player,
         gender: gender,
         scenes: [],
@@ -809,8 +811,13 @@ function addEpilogueEntry(epilogue) {
     if (player.first.length <= 0 || player.last.length <= 0) {
         nameStr = player.first + player.last; //only use a space if they have both first and last names
     }
+	
+	var offlineIndicator = "";
+	if (epilogue.status && epilogue.status != "online") {
+		offlineIndicator = "[Offline] ";
+	}
 
-    var epilogueTitle = nameStr + ": " + epilogue.title;
+    var epilogueTitle = nameStr + ": " + offlineIndicator + epilogue.title;
     var idName = 'epilogue-option-' + num;
     var clickAction = "selectEpilogue(" + num + ")";
     var unlocked = save.hasEnding(player.id, epilogue.title) ? " unlocked" : "";

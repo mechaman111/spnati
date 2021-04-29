@@ -52,9 +52,14 @@ function GEnding(player, ending){
     } else {
         console.log("No preview image found for: "+player.id+" ending: "+$(ending).html());
     }
+    
+    var offlineIndicator = "";
+    if ($(ending).attr('status') && $(ending).attr('status') != "online") {
+        offlineIndicator = "[Offline] ";
+    }
 
     this.image = previewImage;
-    this.title = $(ending).html();
+    this.title = offlineIndicator + $(ending).html();
     this.unlockHint = $(ending).attr('hint');
     this.unlocked = function() { return EPILOGUES_UNLOCKED || save.hasEnding(player.id, this.title); };
 }
