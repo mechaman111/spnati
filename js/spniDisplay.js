@@ -1404,11 +1404,16 @@ OpponentDetailsDisplay.prototype.createCollectibleCard = function (collectible) 
     var titleElem = container.appendChild(createElementWithClass('div', 'opponent-subview-title'));
     var subtitleElem = container.appendChild(createElementWithClass('div', 'opponent-subview-subtitle'));
     
+	var offlineIndicator = "";
+	if (collectible.status && collectible.status != "online") {
+		offlineIndicator = "[Offline] ";
+	}
+	
     if (!collectible.detailsHidden || collectible.isUnlocked()) {
-        $(titleElem).html(collectible.title);
+        $(titleElem).html(offlineIndicator + collectible.title);
         $(subtitleElem).html(collectible.subtitle);
     } else {
-        $(titleElem).html("[Locked]");
+        $(titleElem).html(offlineIndicator + "[Locked]");
         $(subtitleElem).html("");
     }
     
