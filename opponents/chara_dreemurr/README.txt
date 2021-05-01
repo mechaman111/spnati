@@ -493,6 +493,7 @@ SANS
 
 SENKO
 -Responds as Senko or Chara are losing.
+-Responds to Senko asking how she can pamper Chara.
 
 SEX TOILET
 -Generic responses to handle Sex Toilet's, uh, unique stripping and masturbation sequence.
