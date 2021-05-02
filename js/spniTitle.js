@@ -75,6 +75,43 @@ var CANDY_LIST = [
     "reskins/twisted_fate_tango/2-Calm.png",
     "reskins/twisted_fate_tango/0-Happy.png",
 */
+
+/* EASTER EVENT */
+
+    "reskins/new_year_aella/0-calm.png",
+    "reskins/new_year_aella/0-embarrassed.png",
+    "reskins/new_year_aella/0-happy.png",
+    "reskins/new_year_aella/0-interested.png",
+    "reskins/bunny_catria/0-calm.png",
+    "reskins/bunny_catria/0-ironic.png",
+    "reskins/bunny_catria/0-heart.png",
+    "reskins/bunny_catria/0-behind.png",
+    "reskins/emi_lovebunny/0-happy.png",
+    "reskins/emi_lovebunny/0-interested.png",
+    "reskins/emi_lovebunny/0-excited.png",
+    "reskins/emi_lovebunny/0-laughing.png",
+    "reskins/florina_easter/0-interested.png",
+    "reskins/florina_easter/0-horny.png",
+    "reskins/florina_easter/0-calm.png",
+    "reskins/florina_easter/1-stripped.png",
+    "reskins/kazuma_spring/0-awkward.png",
+    "reskins/kazuma_spring/0-embarrassed.png",
+    "reskins/kazuma_spring/0-horrified.png",
+    "reskins/kazuma_spring/0-shocked.png",
+    "reskins/sheena_chosen_beauty/0-excited.png",
+    "reskins/may_hopping_bunny/0-cute.png",
+    "reskins/may_hopping_bunny/0-oopsy.png",
+    "reskins/may_hopping_bunny/0-ready.png",
+    "reskins/may_hopping_bunny/0-confident.png",
+    "reskins/pink_bunny/0-hi.png",
+    "reskins/pink_bunny/0-wink.png",
+    "reskins/pink_bunny/1-happy.png",
+    "reskins/pink_bunny/1-excited.png",
+    "reskins/sheena_chosen_beauty/0-calm.png",
+    "reskins/sheena_chosen_beauty/0-flustered.png",
+    "reskins/sheena_chosen_beauty/0-interested.png",
+    "reskins/sheena_chosen_beauty/0-angry.png",
+
 /* SUMMER EVENT */
 /*
     "reskins/juri_summer/0-calm.png",
@@ -155,6 +192,8 @@ var CANDY_LIST = [
     "reskins/yunyun_trick_or_friends/3-Posing.png",
 */
 
+/* REGULAR CANDY IMAGES */
+/*
     "9s/0-happy.png",
     "9s/1-excited.png",
     "9s/2-clever.png",
@@ -315,6 +354,8 @@ var CANDY_LIST = [
     "zone-tan/1-explain.png",
     "zone-tan/1-smirk.png",
     "zone-tan/2-stroking.png",
+*/
+
 ];
 
 var clothingChoices = [];
