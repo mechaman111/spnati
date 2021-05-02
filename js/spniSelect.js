@@ -422,26 +422,28 @@ function fillCostumeSelector($selector, costumes, selected_costume) {
         val: '',
         text: 'Default Costume'
     }), costumes.map(function(c) {
-		var emoji = '\u{1f455} ';
-		
-		if (c.status != "online") {
-			emoji = '\u{1f6ab} ';
-		}
-		
-		if (c.set == "valentines") {
-			emoji = '\u{2764}\u{fe0f} ';
-		} else if (c.set == "april_fools") {
-			emoji = '\u{1f921} ';
-		} else if (c.set == "easter") {
-			emoji = '\u{1f430} ';
-		} else if (c.set == "summer") {
-			emoji = '\u{2600}\u{fe0f} ';
-		} else if (c.set == "halloween") {
-			emoji = '\u{1f383} ';
-		} else if (c.set == "xmas") {
-			emoji = '\u{1f384} ';
-		}
-		
+        var emoji = '\u{1f455} ';
+        
+        if (c.status != "online") {
+            emoji = '\u{1f6ab} ';
+        }
+        
+        if (c.set == "valentines") {
+            emoji = '\u{2764}\u{fe0f} ';
+        } else if (c.set == "april_fools") {
+            emoji = '\u{1f921} ';
+        } else if (c.set == "easter") {
+            emoji = '\u{1f430} ';
+        } else if (c.set == "summer") {
+            emoji = '\u{2600}\u{fe0f} ';
+        } else if (c.set == "oktoberfest") {
+            emoji = '\u{1f37a} ';
+        } else if (c.set == "halloween") {
+            emoji = '\u{1f383} ';
+        } else if (c.set == "xmas") {
+            emoji = '\u{1f384} ';
+        }
+        
         return $('<option>', {
             val: c.folder, text: emoji+c.name,
             selected: c.folder == selected_costume

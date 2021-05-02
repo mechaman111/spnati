@@ -811,11 +811,11 @@ function addEpilogueEntry(epilogue) {
     if (player.first.length <= 0 || player.last.length <= 0) {
         nameStr = player.first + player.last; //only use a space if they have both first and last names
     }
-	
-	var offlineIndicator = "";
-	if (epilogue.status && epilogue.status != "online") {
-		offlineIndicator = "[Offline] ";
-	}
+    
+    var offlineIndicator = "";
+    if (epilogue.status && epilogue.status != "online") {
+        offlineIndicator = "[Offline] ";
+    }
 
     var epilogueTitle = nameStr + ": " + offlineIndicator + epilogue.title;
     var idName = 'epilogue-option-' + num;
