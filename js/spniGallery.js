@@ -43,20 +43,20 @@ $collectibleText = $('#collectible-text');
 $collectibleImage = $('#collectible-image');
 
 function GEnding(player, ending){
-	this.player = player;
-	this.gender = $(ending).attr('gender');
+    this.player = player;
+    this.gender = $(ending).attr('gender');
 
-	var previewImage = $(ending).attr('img');
-	if (previewImage) {
-		previewImage = previewImage.charAt(0) === '/' ? previewImage : player.base_folder + previewImage;
-	} else {
-		console.log("No preview image found for: "+player.id+" ending: "+$(ending).html());
-	}
+    var previewImage = $(ending).attr('img');
+    if (previewImage) {
+        previewImage = previewImage.charAt(0) === '/' ? previewImage : player.base_folder + previewImage;
+    } else {
+        console.log("No preview image found for: "+player.id+" ending: "+$(ending).html());
+    }
 
-	this.image = previewImage;
-	this.title = $(ending).html();
-	this.unlockHint = $(ending).attr('hint');
-	this.unlocked = function() { return EPILOGUES_UNLOCKED || save.hasEnding(player.id, this.title); };
+    this.image = previewImage;
+    this.title = $(ending).html();
+    this.unlockHint = $(ending).attr('hint');
+    this.unlocked = function() { return EPILOGUES_UNLOCKED || save.hasEnding(player.id, this.title); };
 }
 
 var unescapeSubstitutions = {
@@ -69,18 +69,18 @@ var unescapeSubstitutions = {
 var unescapeDialogueRE = /(&(?:lt|gt|quot|apos|amp);)/gi
 
 function unescapeHTML(in_text) {
-	if (!in_text) return '';
-	
+    if (!in_text) return '';
+    
     return in_text.replace(unescapeDialogueRE, function (match, p1) {
         return unescapeSubstitutions[p1];
     });
 }
 
 function Collectible(xmlElem, player) {
-	this.id = xmlElem.attr('id');
-	this.image = xmlElem.attr('img');
-	this.thumbnail = xmlElem.attr('thumbnail') || this.image;
-	this.status = xmlElem.attr('status');
+    this.id = xmlElem.attr('id');
+    this.image = xmlElem.attr('img');
+    this.thumbnail = xmlElem.attr('thumbnail') || this.image;
+    this.status = xmlElem.attr('status');
     this.title = unescapeHTML(xmlElem.children('title').text());
     this.subtitle = unescapeHTML(xmlElem.children('subtitle').text());
     this.unlock_hint = unescapeHTML(xmlElem.children('unlock').text());
@@ -92,10 +92,10 @@ function Collectible(xmlElem, player) {
     if (this.counter <= 0) this.counter = undefined;
     
     if (player) {
-    	this.source = player.label;
+        this.source = player.label;
         this.player = player;
     } else {
-    	this.source = 'The Inventory';
+        this.source = 'The Inventory';
         this.player = undefined;
     }
 }
@@ -166,15 +166,15 @@ Collectible.prototype.display = function () {
     $collectibleTextPane.show();
     
     if (this.isUnlocked()) {
-    	$collectibleText.html(this.text);
+        $collectibleText.html(this.text);
         $collectibleTextContainer.show();
-    	
-    	if (this.image) {
-    		$collectibleImage.attr('src', this.image);
-    		$collectibleImagePane.show();
-    	} else {
-    		$collectibleImagePane.hide();
-    	}
+        
+        if (this.image) {
+            $collectibleImage.attr('src', this.image);
+            $collectibleImagePane.show();
+        } else {
+            $collectibleImagePane.hide();
+        }
     } else {
         $collectibleTextContainer.hide();
         $collectibleImagePane.hide();
@@ -182,22 +182,22 @@ Collectible.prototype.display = function () {
 };
 
 Collectible.prototype.listElement = function () {
-	if (this.status && !includedOpponentStatuses[this.status]) {
-		return null;
-	}
-	
+    if (this.status && !includedOpponentStatuses[this.status]) {
+        return null;
+    }
+    
     if (this.hidden && !this.isUnlocked()) {
         return null;
     }
     
-	var baseElem = $('<div class="collectibles-list-item bordered"></div>');
-	var imgElem = $('<img class="collectibles-item-icon">');
-	var titleElem = $('<div class="collectibles-item-title"></div>');
-	var subtitleElem = $('<div class="collectibles-item-subtitle"></div>');
-	
+    var baseElem = $('<div class="collectibles-list-item bordered"></div>');
+    var imgElem = $('<img class="collectibles-item-icon">');
+    var titleElem = $('<div class="collectibles-item-title"></div>');
+    var subtitleElem = $('<div class="collectibles-item-subtitle"></div>');
+    
     if (!this.detailsHidden || this.isUnlocked()) {
         titleElem.html(this.title);
-    	subtitleElem.html(this.subtitle);
+        subtitleElem.html(this.subtitle);
     } else {
         titleElem.html("[Locked]");
         subtitleElem.html(this.unlock_hint);
@@ -210,13 +210,13 @@ Collectible.prototype.listElement = function () {
     }
     
     if (this.isUnlocked()) {
-    	imgElem.attr('src', this.thumbnail);
+        imgElem.attr('src', this.thumbnail);
     } else {
         imgElem.attr('src', "img/unknown.svg");
     }
     
-	baseElem.append(imgElem, titleElem, subtitleElem).click(this.display.bind(this));
-	return baseElem;
+    baseElem.append(imgElem, titleElem, subtitleElem).click(this.display.bind(this));
+    return baseElem;
 };
 
 Collectible.prototype.displayInfoModal = function () {
@@ -250,19 +250,19 @@ var GALLERY_GENDER = 'all';
 var playerCollectibles = {}; /* Indexed by player ID. */
 
 function goToEpiloguesScreen() {
-	if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-epilogues");
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-epilogues");
 
-	$galleryEndingsScreen.show();
-	$galleryCollectiblesScreen.hide();
-	loadGalleryEndings();
-	updateGalleryScreen();
+    $galleryEndingsScreen.show();
+    $galleryCollectiblesScreen.hide();
+    loadGalleryEndings();
+    updateGalleryScreen();
 }
 
 function goToCollectiblesScreen() {
-	if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-collectibles");
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-collectibles");
 
-	$galleryCollectiblesScreen.show();
-	$galleryEndingsScreen.hide();
+    $galleryCollectiblesScreen.show();
+    $galleryEndingsScreen.hide();
     loadAllCollectibles();
     updateCollectiblesScreen();
     $collectibleTextPane.hide();    
@@ -279,7 +279,7 @@ function createFilterOption (opp) {
 }
 
 function loadGalleryScreen(){
-	screenTransition($titleScreen, $galleryScreen);
+    screenTransition($titleScreen, $galleryScreen);
     
     /* Set up filter lists: */
     
@@ -306,8 +306,8 @@ function loadGalleryScreen(){
 }
 
 function backGalleryScreen(){
-	if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
-	screenTransition($galleryScreen, $titleScreen);
+    if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
+    screenTransition($galleryScreen, $titleScreen);
 }
 
 function changeCharacterFilter (collectibleScreen) {
@@ -328,9 +328,9 @@ function loadAllCollectibles() {
     }));
 }
 
-function updateCollectiblesScreen() {	
-	$collectibleListPane.empty();
-	
+function updateCollectiblesScreen() {    
+    $collectibleListPane.empty();
+    
     var filter = $('#collectible-character-filter').val();
     
     if (!filter || filter === '__general') {
@@ -343,15 +343,15 @@ function updateCollectiblesScreen() {
     }
     
     loadedOpponents.forEach(function (opp) {
-		if (!opp) return;
+        if (!opp) return;
 
         if (opp.collectibles) {
-			if (!opp.has_collectibles) {
-				$('#collectible-character-filter [value=\"'+opp.id+'\"]').remove();
-				return;
-			}
+            if (!opp.has_collectibles) {
+                $('#collectible-character-filter [value=\"'+opp.id+'\"]').remove();
+                return;
+            }
 
-			if (filter && opp.id !== filter) return;
+            if (filter && opp.id !== filter) return;
             
             opp.collectibles.forEach(function (item) {
                 var elem = item.listElement();
@@ -364,23 +364,23 @@ function updateCollectiblesScreen() {
 }
 
 function loadGalleryEndings(){
-	if(allEndings.length > 0){
-		return;
-	}
-	
-	for(var i=0; i<loadedOpponents.length; i++){
-		if (loadedOpponents[i] && loadedOpponents[i].endings) {
-			loadedOpponents[i].endings.each(function () {
-				var status = $(this).attr('status');
-				if (status && !includedOpponentStatuses[status]) {
-					return;
-				}
+    if(allEndings.length > 0){
+        return;
+    }
+    
+    for(var i=0; i<loadedOpponents.length; i++){
+        if (loadedOpponents[i] && loadedOpponents[i].endings) {
+            loadedOpponents[i].endings.each(function () {
+                var status = $(this).attr('status');
+                if (status && !includedOpponentStatuses[status]) {
+                    return;
+                }
 
-				var gending = new GEnding(loadedOpponents[i], this);
-				allEndings.push(gending);
-			});
-		}
-	}
+                var gending = new GEnding(loadedOpponents[i], this);
+                allEndings.push(gending);
+            });
+        }
+    }
 }
 function updateGalleryScreen () {
     var charFilter = $('#epilogue-character-filter').val();
@@ -406,123 +406,123 @@ function updateGalleryScreen () {
     });
     
     galleryPages = Math.ceil(galleryEndings.length/parseFloat(epp));
-	galleryPage = 0;
-	$galleryPrevButton.attr('disabled', true);
-	if(galleryPages==1){
-		$galleryNextButton.attr('disabled', true);
-	}
-	else{
-		$galleryNextButton.attr('disabled', false);
-	}
-	loadThumbnails();
+    galleryPage = 0;
+    $galleryPrevButton.attr('disabled', true);
+    if(galleryPages==1){
+        $galleryNextButton.attr('disabled', true);
+    }
+    else{
+        $galleryNextButton.attr('disabled', false);
+    }
+    loadThumbnails();
 }
 
 function loadEndingThunbnail(element, ending){
-	element.removeClass('empty-thumbnail');
-	if (ending.unlocked()) {
-		element.removeClass('unlocked-thumbnail');
-		element.css('background-image','url(\''+ending.image+'\')');
-	} else {
-		element.css('background-image', '');
-		element.addClass('unlocked-thumbnail');
-	}
+    element.removeClass('empty-thumbnail');
+    if (ending.unlocked()) {
+        element.removeClass('unlocked-thumbnail');
+        element.css('background-image','url(\''+ending.image+'\')');
+    } else {
+        element.css('background-image', '');
+        element.addClass('unlocked-thumbnail');
+    }
 }
 
 function loadThumbnails(){
-	var i=0;
-	for(; i<epp && epp*galleryPage+i<galleryEndings.length; i++){
-		loadEndingThunbnail($galleryEndings.eq(i), galleryEndings[epp*galleryPage+i]);
-	}
-	for( ; i<epp; i++){
-		$galleryEndings.eq(i).removeClass('unlocked-thumbnail');
-		$galleryEndings.eq(i).addClass('empty-thumbnail');
-		$galleryEndings.eq(i).css('background-image', 'none');
-	}
+    var i=0;
+    for(; i<epp && epp*galleryPage+i<galleryEndings.length; i++){
+        loadEndingThunbnail($galleryEndings.eq(i), galleryEndings[epp*galleryPage+i]);
+    }
+    for( ; i<epp; i++){
+        $galleryEndings.eq(i).removeClass('unlocked-thumbnail');
+        $galleryEndings.eq(i).addClass('empty-thumbnail');
+        $galleryEndings.eq(i).css('background-image', 'none');
+    }
 }
 
 
 function galleryGender(gender){
-	GALLERY_GENDER = gender;
-	$('.gallery-gender-button').css('opacity', 0.4);
-	switch(gender){
-		case 'male':
-			$('#gallery-gender-male').css('opacity', 1);
-			break;
-		case 'female':
-			$('#gallery-gender-female').css('opacity', 1);
-			break;
-		case 'any':
-			$('#gallery-gender-any').css('opacity', 1);
-			break;
-		default:
-			$('#gallery-gender-all').css('opacity', 1);
-			break;
-	}
+    GALLERY_GENDER = gender;
+    $('.gallery-gender-button').css('opacity', 0.4);
+    switch(gender){
+        case 'male':
+            $('#gallery-gender-male').css('opacity', 1);
+            break;
+        case 'female':
+            $('#gallery-gender-female').css('opacity', 1);
+            break;
+        case 'any':
+            $('#gallery-gender-any').css('opacity', 1);
+            break;
+        default:
+            $('#gallery-gender-all').css('opacity', 1);
+            break;
+    }
     
     updateGalleryScreen();
 }
 
 function galleryNextPage(){
-	galleryPage++;
-	loadThumbnails();
-	$galleryEndings.css('opacity', '');
-	$galleryPrevButton.attr('disabled', false);
-	if(galleryPage+1==galleryPages){
-		$galleryNextButton.attr('disabled', true);
-	}
+    galleryPage++;
+    loadThumbnails();
+    $galleryEndings.css('opacity', '');
+    $galleryPrevButton.attr('disabled', false);
+    if(galleryPage+1==galleryPages){
+        $galleryNextButton.attr('disabled', true);
+    }
 }
 
 function galleryPrevPage(){
-	galleryPage--;
-	loadThumbnails();
-	$galleryEndings.css('opacity', '');
-	$galleryNextButton.attr('disabled', false);
-	if(galleryPage==0){
-		$galleryPrevButton.attr('disabled', true);
-	}
+    galleryPage--;
+    loadThumbnails();
+    $galleryEndings.css('opacity', '');
+    $galleryNextButton.attr('disabled', false);
+    if(galleryPage==0){
+        $galleryPrevButton.attr('disabled', true);
+    }
 }
 
 function selectEnding(i) {
-	selectedEnding = epp*galleryPage+i;
-	var ending = galleryEndings[selectedEnding];
+    selectedEnding = epp*galleryPage+i;
+    var ending = galleryEndings[selectedEnding];
 
-	if (!ending) {
-		return;
-	}
-	
-	if (ending.unlockHint) {
-		$selectedEndingHint[0].show();
-		$selectedEndingHint[1].html(ending.unlockHint);
-	} else {
-		$selectedEndingHint[0].hide();
-	}
+    if (!ending) {
+        return;
+    }
+    
+    if (ending.unlockHint) {
+        $selectedEndingHint[0].show();
+        $selectedEndingHint[1].html(ending.unlockHint);
+    } else {
+        $selectedEndingHint[0].hide();
+    }
 
-	if (ending.unlocked()) {
-		$galleryStartButton.attr('disabled', false);
-		$selectedEndingLabels[0].html(ending.title);
-	} else {
-		$galleryStartButton.attr('disabled', true);
-		$selectedEndingLabels[0].html('');
-	}
-	
-	$galleryEndings.css('opacity', '');
-	$galleryEndings.eq(i).css('opacity', 1);
-	loadEndingThunbnail($selectedEndingPreview, ending);
-	$selectedEndingLabels[1].html(ending.player.label);
-	$selectedEndingLabels[2].html(ending.gender);
-	switch(ending.gender){
-		case 'male':
-			$selectedEndingLabels[2].removeClass('female-style');
-			$selectedEndingLabels[2].addClass('male-style');
-			break;
-		case 'female':
-			$selectedEndingLabels[2].removeClass('male-style');
-			$selectedEndingLabels[2].addClass('female-style');
-			break;
-		default:
-			$selectedEndingLabels[2].removeClass('female-style');
-			$selectedEndingLabels[2].removeClass('male-style');
-	}
+    if (ending.unlocked()) {
+        $galleryStartButton.attr('disabled', false);
+        $selectedEndingLabels[0].html(ending.title);
+    } else {
+        $galleryStartButton.attr('disabled', true);
+        $selectedEndingLabels[0].html('');
+    }
+    
+    $galleryEndings.css('opacity', '');
+    $galleryEndings.eq(i).css('opacity', 1);
+    loadEndingThunbnail($selectedEndingPreview, ending);
+    $selectedEndingLabels[1].html(ending.player.label);
+    $selectedEndingLabels[2].html(ending.gender);
+    switch(ending.gender){
+        case 'male':
+            $selectedEndingLabels[2].removeClass('female-style');
+            $selectedEndingLabels[2].addClass('male-style');
+            break;
+        case 'female':
+            $selectedEndingLabels[2].removeClass('male-style');
+            $selectedEndingLabels[2].addClass('female-style');
+            break;
+        default:
+            $selectedEndingLabels[2].removeClass('female-style');
+            $selectedEndingLabels[2].removeClass('male-style');
+    }
 }
 
 function doEpilogueFromGallery(){
@@ -533,54 +533,54 @@ function doEpilogueFromGallery(){
 
     var player = epilogue.player;
     $galleryStartButton.attr('disabled', true);
-	
-	player.fetchBehavior()
-		/* Success callback.
-		 * 'this' is bound to the Opponent object.
-		 */
-		.then(function($xml) {			
-			var endingElem = null;
-			
-			$xml.children('epilogue').each(function () {
-				if ($(this).children('title').html() === epilogue.title && $(this).attr('gender') === epilogue.gender) {
-					endingElem = this;
-				}
-			});
+    
+    player.fetchBehavior()
+        /* Success callback.
+         * 'this' is bound to the Opponent object.
+         */
+        .then(function($xml) {
+            var endingElem = null;
+            
+            $xml.children('epilogue').each(function () {
+                if ($(this).children('title').html() === epilogue.title && $(this).attr('gender') === epilogue.gender) {
+                    endingElem = this;
+                }
+            });
 
             player.loadStylesheet();
 
-			if($nameField.val()){
-				humanPlayer.label = $nameField.val();
-			} else {
-				switch(epilogue.gender){
-					case "male": humanPlayer.label = "Mister"; break;
-					case "female" : humanPlayer.label = "Miss"; break;
-					default: humanPlayer.label = (humanPlayer.gender=="male")?"Mister":"Miss";
-				}
-			}
-			
-			// function definition in spniEpilogue.js
-			epilogue = parseEpilogue(player, endingElem);
+            if($nameField.val()){
+                humanPlayer.label = $nameField.val();
+            } else {
+                switch(epilogue.gender){
+                    case "male": humanPlayer.label = "Mister"; break;
+                    case "female" : humanPlayer.label = "Miss"; break;
+                    default: humanPlayer.label = (humanPlayer.gender=="male")?"Mister":"Miss";
+                }
+            }
+            
+            // function definition in spniEpilogue.js
+            epilogue = parseEpilogue(player, endingElem);
 
-			/* Load forward-declarations for persistent markers. */
-			$xml.find('persistent-markers>marker').each(function (i, elem) {
-				var markerName = $(elem).text();
-				player.persistentMarkers[markerName] = true;
-			});
+            /* Load forward-declarations for persistent markers. */
+            $xml.find('persistent-markers>marker').each(function (i, elem) {
+                var markerName = $(elem).text();
+                player.persistentMarkers[markerName] = true;
+            });
 
-			/* Execute marker operations. */
-			epilogue.markers.forEach(function(markerOp) {
-				if (markerOp.from_gallery) {
-					markerOp.apply(player, null);
-				}
-			});
-		
-			if (USAGE_TRACKING) {
-				recordEpilogueEvent(true, epilogue);
-			}
-		
-			loadEpilogue(epilogue, null, true); //initialise buttons and text boxes
-			screenTransition($galleryScreen, $epilogueScreen);
+            /* Execute marker operations. */
+            epilogue.markers.forEach(function(markerOp) {
+                if (markerOp.from_gallery) {
+                    markerOp.apply(player, null);
+                }
+            });
+        
+            if (USAGE_TRACKING) {
+                recordEpilogueEvent(true, epilogue);
+            }
+        
+            loadEpilogue(epilogue, null, true); //initialise buttons and text boxes
+            screenTransition($galleryScreen, $epilogueScreen);
             $galleryStartButton.attr('disabled', false);
         });
 }

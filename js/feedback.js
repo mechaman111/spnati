@@ -276,7 +276,7 @@ function showBugReportModal () {
 }
 
 $bugReportModal.on('shown.bs.modal', function() {
-	$('#bug-report-type').focus();
+    $('#bug-report-type').focus();
 });
 
 function closeBugReportModal() {

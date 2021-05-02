@@ -304,18 +304,18 @@ Save.prototype.loadOptions = function(){
 
     var settings = this.getItem("settings") || {};
     if ('stamina' in settings) humanPlayer.stamina = settings.stamina;
-	
-	/* Load extra characters settings - if rehost, all are disabled by default;
-	 * if personal offline, offline and incomplete are enabled but event and duplicate aren't
-	 */
-	var origin = getReportedOrigin();
-	var isLocal = origin.includes("localhost") || origin.includes("local filesystem");
-	
-	includedOpponentStatuses['offline'] = false;
-	includedOpponentStatuses['incomplete'] = false;
-	includedOpponentStatuses['event'] = false;
-	includedOpponentStatuses['duplicate'] = false;	
-	
+    
+    /* Load extra characters settings - if rehost, all are disabled by default;
+     * if personal offline, offline and incomplete are enabled but event and duplicate aren't
+     */
+    var origin = getReportedOrigin();
+    var isLocal = origin.includes("localhost") || origin.includes("local filesystem");
+    
+    includedOpponentStatuses['offline'] = false;
+    includedOpponentStatuses['incomplete'] = false;
+    includedOpponentStatuses['event'] = false;
+    includedOpponentStatuses['duplicate'] = false;
+    
     if ('showStatuses' in settings) {
         for (var status of settings.showStatuses) {
             includedOpponentStatuses[status] = true;
@@ -323,8 +323,8 @@ Save.prototype.loadOptions = function(){
     } else if (isLocal) {
         includedOpponentStatuses['offline'] = includedOpponentStatuses['incomplete'] = true;
     }
-	 
-	if ('fillDisabled' in settings) FILL_DISABLED = !!settings.fillDisabled;
+     
+    if ('fillDisabled' in settings) FILL_DISABLED = !!settings.fillDisabled;
 
     this.loadOptionsBackground(settings);
 
