@@ -27,6 +27,9 @@ var VERSION_TAG = undefined;
 
 var DEFAULT_FILL = undefined;
 var FILL_DISABLED = false;
+var TESTING_MAX_AGE = 14 * 86400 * 1000; // 14 days
+var TESTING_MIN_NUMBER = 10;
+var TESTING_NTH_MOST_RECENT_UPDATE;
 
 /* Game Wide Constants */
 var HUMAN_PLAYER = 0;
@@ -387,6 +390,15 @@ function loadConfigFile () {
             includedOpponentStatuses[$(this).text()] = true;
             console.log("Including", $(this).text(), "opponents");
         });
+
+        var _testing_max_age_days = Number.parseFloat($xml.children('testing-max-age').text());
+        if (!Number.isNaN(_testing_max_age_days)) {
+            TESTING_MAX_AGE = _testing_max_age_days * 86400 * 1000;
+        }
+        var _testing_min_number = Number.parseInt($xml.children('testing-min-number').text());
+        if (!Number.isNaN(_testing_min_number)) {
+            TESTING_MIN_NUMBER = _testing_min_number;
+        }
     }).catch(function (err) {
         console.error("Failed to load configuration");
         captureError(err);

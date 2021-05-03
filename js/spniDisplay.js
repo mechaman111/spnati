@@ -1186,10 +1186,13 @@ OpponentSelectionCard.prototype.isVisible = function (testingView, ignoreFilter)
         // included statuses.
         if (!onMainView) return false;
     } else {
-        /* Testing view: include all opponents with `testing` status and those
-         * targeted by testing opponents with 5+ lines.
+        /* Testing view: include all opponents with `testing` status
+         * updated within the last TESTING_MAX_AGE and those targeted
+         * by selected testing opponents with 5+ lines.
          */
-        if (status !== "testing" && this.opponent.inboundLinesFromSelected("testing") < 5)
+        if ((status !== "testing" || (Date.now() - this.opponent.lastUpdated > TESTING_MAX_AGE
+                                      && this.opponent.lastUpdated < TESTING_NTH_MOST_RECENT_UPDATE))
+            && this.opponent.inboundLinesFromSelected("testing") < 5)
             return false;
     }
 
