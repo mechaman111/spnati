@@ -1230,6 +1230,7 @@ OpponentDetailsDisplay = function () {
     this.descriptionLabel = $("#individual-select-screen .opponent-details-description");
     this.linecountLabel = $("#individual-select-screen .opponent-linecount");
     this.posecountLabel = $("#individual-select-screen .opponent-posecount");
+    this.lastUpdateLabel = $("#individual-select-screen .opponent-lastupdate");
     this.costumeSelector = $("#individual-select-screen .alt-costume-dropdown");
     this.simpleImage = $("#individual-select-screen .opponent-details-simple-image");
     this.imageArea = $("#individual-select-screen .opponent-details-image-area");
@@ -1312,6 +1313,7 @@ OpponentDetailsDisplay.prototype.clear = function () {
     this.writerLabel.empty();
     this.artistLabel.empty();
     this.descriptionLabel.empty();
+    this.lastUpdateLabel.empty();
     
     this.simpleImage.attr('src', null);
     this.selectButton.prop('disabled', true);
@@ -1467,6 +1469,9 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.sourceLabel.html(opponent.source);
     this.writerLabel.html(opponent.writer);
     this.artistLabel.html(opponent.artist);
+    this.lastUpdateLabel.text(new Intl.DateTimeFormat([], { dateStyle: 'short', timeStyle: 'short' })
+                              .format(new Date(opponent.lastUpdated))
+                              + " (" + fuzzyTimeAgo(opponent.lastUpdated) + ")");
     this.descriptionLabel.html(opponent.description);
 
     this.simpleImage.one('load', this.rescaleSimplePose.bind(this, opponent.scale));

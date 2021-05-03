@@ -116,6 +116,31 @@ var bubbleArrowOffsetRules;
  *****              Overarching Game Flow Functions               *****
  **********************************************************************/
 
+function fuzzyTimeAgo(ts) {
+    now = Date.now();
+
+    elapsed_time = now - ts;
+
+    /* Format last update time */
+    string = '';
+    if (elapsed_time < 5 * 60 * 1000) {
+        // <5 minutes ago - display 'just now'
+        string = 'just now';
+    } else if (elapsed_time < 60 * 60 * 1000) {
+        // < 1 hour ago - display minutes since last update
+        string = Math.floor(elapsed_time / (60 * 1000))+' minutes ago';
+    } else if (elapsed_time < 24 * 60 * 60 * 1000) {
+        // < 1 day ago - display hours since last update
+        var n_hours = Math.floor(elapsed_time / (60 * 60 * 1000));
+        string = n_hours + (n_hours === 1 ? ' hour ago' : ' hours ago');
+    } else {
+        // otherwise just display days since last update
+        var n_days = Math.floor(elapsed_time / (24 * 60 * 60 * 1000));
+        string =  n_days + (n_days === 1 ? ' day ago' : ' days ago');
+    }
+    return string;
+}
+
 /************************************************************
  * Loads the initial content of the game.
  ************************************************************/
@@ -240,29 +265,7 @@ function loadVersionInfo () {
         version_ts = versionInfo.find('>changelog > version[number=\"'+CURRENT_VERSION+'\"]').attr('timestamp');
         
         version_ts = parseInt(version_ts, 10);
-        now = Date.now();
-        
-        elapsed_time = now - version_ts;
-        
-        /* Format last update time */
-        last_update_string = '';
-        if (elapsed_time < 5 * 60 * 1000) {
-            // <5 minutes ago - display 'just now'
-            last_update_string = 'just now';
-        } else if (elapsed_time < 60 * 60 * 1000) {
-            // < 1 hour ago - display minutes since last update
-            last_update_string = Math.floor(elapsed_time / (60 * 1000))+' minutes ago';
-        } else if (elapsed_time < 24 * 60 * 60 * 1000) {
-            // < 1 day ago - display hours since last update
-            var n_hours = Math.floor(elapsed_time / (60 * 60 * 1000));
-            last_update_string = n_hours + (n_hours === 1 ? ' hour ago' : ' hours ago');
-        } else {
-            // otherwise just display days since last update
-            var n_days = Math.floor(elapsed_time / (24 * 60 * 60 * 1000));
-            last_update_string =  n_days + (n_days === 1 ? ' day ago' : ' days ago');
-        }
-        
-        $('.substitute-version-time').text('(updated '+last_update_string+')');
+        $('.substitute-version-time').text('(updated '+fuzzyTimeAgo(version_ts)+')');
 
         $('.version-button').click(showVersionModal);
     }).catch(function (err) {
