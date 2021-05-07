@@ -410,7 +410,6 @@ function startDealPhase () {
                     $gameOpponentAreas[i-1].hide();
                 }
             }
-            players[i].timeInStage++;
         }
     }
 
@@ -651,6 +650,7 @@ function endRound () {
     var inGame = 0;
     var lastPlayer = 0;
     for (var i = 0; i < players.length; i++) {
+        players[i].timeInStage++;
         if (players[i] && !players[i].out) {
             inGame++;
             lastPlayer = i;
@@ -684,7 +684,7 @@ function endRound () {
                 $gameOpponentAreas[i-1].hide();
             }
         }
-        endWaitDisplay = 0;
+        endWaitDisplay = -1;
 		handleGameOver();
 	} else {
         updateBiggestLead();
@@ -710,12 +710,15 @@ function handleGameOver() {
 
 		allowProgression(eGamePhase.GAME_OVER);
 		//window.setTimeout(doEpilogueModal, SHOW_ENDING_DELAY); //start the endings
-	} else {
-		if (endWaitDisplay == 0) {
-			players.forEach(function(p) { p.timeInStage++; });
-		}
-		allowProgression(eGamePhase.END_LOOP);
-	}
+    } else {
+        // endWaitDisplay starts at -1 so we get four phases before
+        // the timeInStage:s are first incremented at game end.
+        if (endWaitDisplay == 3) {
+            players.forEach(function(p) { p.timeInStage++; });
+        }
+        endWaitDisplay = (endWaitDisplay + 1) % 4;
+        allowProgression(eGamePhase.END_LOOP);
+    }
 }
 
 /**********************************************************************
@@ -772,7 +775,6 @@ function allowProgression (nextPhase) {
         for (var i = 0; i < endWaitDisplay; i++) {
             dots += ".";
         }
-        endWaitDisplay = (endWaitDisplay + 1) % 4;
         
 		/* someone is still forfeiting */
         if (humanPlayer.checkStatus(STATUS_MASTURBATING)) {
