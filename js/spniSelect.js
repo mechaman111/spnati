@@ -425,7 +425,7 @@ function fillCostumeSelector($selector, costumes, selected_costume) {
         var emoji = '\u{1f455} ';
         
         if (c.status != "online") {
-            emoji = '\u{1f6ab} ';
+            emoji = '\u{1f455} [Offline] ';
         }
         
         if (c.set == "valentines") {
