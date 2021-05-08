@@ -650,10 +650,12 @@ function endRound () {
     var inGame = 0;
     var lastPlayer = 0;
     for (var i = 0; i < players.length; i++) {
-        players[i].timeInStage++;
-        if (players[i] && !players[i].out) {
-            inGame++;
-            lastPlayer = i;
+        if (players[i]) {
+            players[i].timeInStage++;
+            if (!players[i].out) {
+                inGame++;
+                lastPlayer = i;
+            }
         }
     }
 
