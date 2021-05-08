@@ -625,10 +625,10 @@ State.prototype.applyCollectible = function (player) {
                     this.collectible.id
                 );
 
-		if (collectible.isUnlocked()) {
+        if (collectible.isUnlocked()) {
                     console.log("Collectible already unlocked; returning");
-		    return;
-		}
+            return;
+        }
                 
                 switch (this.collectible.op) {
                 default:
@@ -1207,7 +1207,7 @@ function checkMarker(predicate, self, target, currentOnly) {
         op = '!!';
     } else {
         name = match[1];
-    	perTarget = match[2];
+        perTarget = match[2];
         
         if (match[3]) {
             op = match[4];
@@ -1370,43 +1370,43 @@ function Case($xml) {
     if (this.customPriority !== undefined) {
         this.priority = this.customPriority;
     } else {
-    	this.priority = 0;
-    	if (this.target)                   this.priority += 300;
-    	if (this.filter)                   this.priority += 150;
-    	if (this.targetStage)              this.priority += 80;
-    	if (this.targetLayers)             this.priority += 40;
-    	if (this.targetStartingLayers)     this.priority += 40;
-    	if (this.targetStatus)             this.priority += 70;
-    	if (this.targetSaidMarker)         this.priority += 1;
-    	if (this.targetSayingMarker)       this.priority += 1;
+        this.priority = 0;
+        if (this.target)                   this.priority += 300;
+        if (this.filter)                   this.priority += 150;
+        if (this.targetStage)              this.priority += 80;
+        if (this.targetLayers)             this.priority += 40;
+        if (this.targetStartingLayers)     this.priority += 40;
+        if (this.targetStatus)             this.priority += 70;
+        if (this.targetSaidMarker)         this.priority += 1;
+        if (this.targetSayingMarker)       this.priority += 1;
         if (this.targetSaying)             this.priority += 1;
-    	if (this.targetNotSaidMarker)      this.priority += 1;
-    	if (this.consecutiveLosses)        this.priority += 60;
-    	if (this.oppHand)                  this.priority += 30;
-    	if (this.targetTimeInStage)        this.priority += 25;
-    	if (this.hasHand)                  this.priority += 20;
+        if (this.targetNotSaidMarker)      this.priority += 1;
+        if (this.consecutiveLosses)        this.priority += 60;
+        if (this.oppHand)                  this.priority += 30;
+        if (this.targetTimeInStage)        this.priority += 25;
+        if (this.hasHand)                  this.priority += 20;
 
-    	if (this.alsoPlaying)              this.priority += 100;
-    	if (this.alsoPlayingStage)         this.priority += 40;
-    	if (this.alsoPlayingTimeInStage)   this.priority += 15;
-    	if (this.alsoPlayingHand)          this.priority += 5;
-    	if (this.alsoPlayingSaidMarker)    this.priority += 1;
-    	if (this.alsoPlayingNotSaidMarker) this.priority += 1;
-    	if (this.alsoPlayingSayingMarker)  this.priority += 1;
+        if (this.alsoPlaying)              this.priority += 100;
+        if (this.alsoPlayingStage)         this.priority += 40;
+        if (this.alsoPlayingTimeInStage)   this.priority += 15;
+        if (this.alsoPlayingHand)          this.priority += 5;
+        if (this.alsoPlayingSaidMarker)    this.priority += 1;
+        if (this.alsoPlayingNotSaidMarker) this.priority += 1;
+        if (this.alsoPlayingSayingMarker)  this.priority += 1;
         if (this.alsoPlayingSaying)        this.priority += 1;
 
-    	if (this.totalRounds)              this.priority += 10;
-    	if (this.timeInStage)              this.priority += 8;
-    	if (this.totalMales)               this.priority += 5;
-    	if (this.totalFemales)             this.priority += 5;
-    	if (this.saidMarker)               this.priority += 1;
-    	if (this.notSaidMarker)            this.priority += 1;
+        if (this.totalRounds)              this.priority += 10;
+        if (this.timeInStage)              this.priority += 8;
+        if (this.totalMales)               this.priority += 5;
+        if (this.totalFemales)             this.priority += 5;
+        if (this.saidMarker)               this.priority += 1;
+        if (this.notSaidMarker)            this.priority += 1;
 
-    	if (this.totalAlive)               this.priority += 2 + this.totalAlive.max;
-    	if (this.totalExposed)             this.priority += 4 + this.totalExposed.max;
-    	if (this.totalNaked)               this.priority += 5 + this.totalNaked.max;
-    	if (this.totalMasturbating)        this.priority += 5 + this.totalMasturbating.max;
-    	if (this.totalFinished)            this.priority += 5 + this.totalFinished.max;
+        if (this.totalAlive)               this.priority += 2 + this.totalAlive.max;
+        if (this.totalExposed)             this.priority += 4 + this.totalExposed.max;
+        if (this.totalNaked)               this.priority += 5 + this.totalNaked.max;
+        if (this.totalMasturbating)        this.priority += 5 + this.totalMasturbating.max;
+        if (this.totalFinished)            this.priority += 5 + this.totalFinished.max;
 
         this.counters.forEach(function (c) { this.priority += c.priority; }, this);
 
@@ -1640,20 +1640,20 @@ Case.prototype.checkConditions = function (self, opp) {
         } else {
             if (this.alsoPlayingStage) {
                 if (!inInterval(ap.stage, this.alsoPlayingStage)) {
-                    return false;		// failed "alsoPlayingStage" requirement
+                    return false;        // failed "alsoPlayingStage" requirement
                 }
             }
                     
             if (this.alsoPlayingTimeInStage) {
                 if (!inInterval(ap.timeInStage, this.alsoPlayingTimeInStage)) {
-                    return false;		// failed "alsoPlayingTimeInStage" requirement
+                    return false;        // failed "alsoPlayingTimeInStage" requirement
                 }
             }
                     
             if (this.alsoPlayingHand) {
                 if (!ap.hand || ap.hand.strength !== handStrengthFromString(this.alsoPlayingHand))
                 {
-                    return false;		// failed "alsoPlayingHand" requirement
+                    return false;        // failed "alsoPlayingHand" requirement
                 }
             }
                     

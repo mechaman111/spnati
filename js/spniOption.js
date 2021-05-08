@@ -271,7 +271,7 @@ function showOptionsModal () {
     $("#options-modal").modal('show');
 }
 $("#options-modal").on('shown.bs.modal', function() {
-	$("#options-modal").find('li.active a').first().focus();
+    $("#options-modal").find('li.active a').first().focus();
 });
 
 function setUIMode(minimal) {
@@ -285,16 +285,16 @@ function setUIMode(minimal) {
 }
 
 $("#options-modal").on("hidden.bs.modal", function () {
-	if (autoForfeitTimeoutID) {
-		/* If we're waiting specifically for the auto forfeit timer,
-		   cancel it and restart it or enable the button. */
-		clearTimeout(autoForfeitTimeoutID);
-		allowProgression();
-	} else if (!actualMainButtonState) {
-		/* Start auto advance if enabled in pertinent state. */
+    if (autoForfeitTimeoutID) {
+        /* If we're waiting specifically for the auto forfeit timer,
+           cancel it and restart it or enable the button. */
+        clearTimeout(autoForfeitTimeoutID);
+        allowProgression();
+    } else if (!actualMainButtonState) {
+        /* Start auto advance if enabled in pertinent state. */
         $mainButton.attr('disabled', (actualMainButtonState = true));
-		allowProgression();
-	}
+        allowProgression();
+    }
 });
 
 $('ul#options-auto-fade').on('click', 'a', function() {
@@ -385,25 +385,25 @@ function showGameSettingsModal () {
 }
 
 $('#game-settings-modal').on('shown.bs.modal', function() {
-	console.log($('.modal:visible'));
+    console.log($('.modal:visible'));
 });
 
 /************************************************************
  * Loading the player masturbation timer.
  ************************************************************/
 function loadMasturbationTimer () {
-	$masturbationTimerBox.val(humanPlayer.stamina);
-	$masturbationWarningLabel.css("display", "none");
+    $masturbationTimerBox.val(humanPlayer.stamina);
+    $masturbationWarningLabel.css("display", "none");
 }
  /************************************************************
  * The player changed their masturbation timer.
  ************************************************************/
 $masturbationTimerBox.on('input', function() {
-	var newTimerValue = $masturbationTimerBox.val();
-	var newTime = Number(newTimerValue);
-	var isValidTimerValue = (newTime != "NaN") && (newTime > 0);
-	if (isValidTimerValue){
-		humanPlayer.stamina = newTime;
-	}
-	$masturbationWarningLabel.css("display", isValidTimerValue ? "none" : "table-row");
+    var newTimerValue = $masturbationTimerBox.val();
+    var newTime = Number(newTimerValue);
+    var isValidTimerValue = (newTime != "NaN") && (newTime > 0);
+    if (isValidTimerValue){
+        humanPlayer.stamina = newTime;
+    }
+    $masturbationWarningLabel.css("display", isValidTimerValue ? "none" : "table-row");
 });

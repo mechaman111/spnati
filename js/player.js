@@ -208,7 +208,7 @@ Player.prototype.updateTags = function () {
     });
 
     this.tags = expandTagsList(tags);
-	
+    
     /* "chubby" implies "curvy" on female characters only,
        so this has to be done separately */
     if (tags.includes("chubby") && this.gender == "female") {
