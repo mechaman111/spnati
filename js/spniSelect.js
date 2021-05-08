@@ -123,7 +123,6 @@ var singleSelectHidden = false;
 var groupSelectHidden = false;
 
 /* opponent listing file */
-var listingFiles = [];
 var metaFile = "meta.xml";
 
 /* opponent information storage */
@@ -229,11 +228,9 @@ function splitCreatorField (field) {
  * Loads and parses the main opponent listing file.
  ************************************************************/
 function loadListingFile () {
-    if (listingFiles.length === 0) {
-        if (includedOpponentStatuses["testing"]) {
-             listingFiles.push("opponents/listing-test.xml");
-        }
-        listingFiles.push("opponents/listing.xml");
+    var listingFiles = [ "opponents/listing.xml" ];
+    if (includedOpponentStatuses["testing"]) {
+        listingFiles.push("opponents/listing-test.xml");
     }
 
 	/* clear the previous meta information */
@@ -352,7 +349,7 @@ function loadListingFile () {
             }
             var highlightStatus = $(this).attr('highlight');
 
-            if (available[id]) {
+            if (available[id] && !(id in opponentMap)) {
                 outstandingLoads++;
                 totalLoads++;
                 opponentMap[id] = oppDefaultIndex++;
@@ -364,14 +361,11 @@ function loadListingFile () {
         });
     }
 
-    /* grab and parse the opponent listing file */
-    var fetches = listingFiles.map(function (file) { 
-        return fetchXML(file);
-    });
-    return Promise.all(fetches).then(function (files) {
-        files.forEach(function (file) {
-          listingProcessor(file);
-        });
+    /* grab and parse the opponent listing files */
+    return Promise.all(listingFiles.map(function (filename) {
+        return fetchXML(filename);
+    })).then(function (files) {
+        files.forEach(listingProcessor);
     });
 }
 
