@@ -1272,9 +1272,9 @@ OpponentDetailsDisplay.prototype.handleSelected = function (ev) {
     }
 
     players[selectedSlot] = this.opponent;
-	players[selectedSlot].loadBehaviour(selectedSlot, true);
+    players[selectedSlot].loadBehaviour(selectedSlot, true);
     updateSelectionVisuals();
-	screenTransition($individualSelectScreen, $selectScreen);
+    screenTransition($individualSelectScreen, $selectScreen);
     
     this.clear();
 }

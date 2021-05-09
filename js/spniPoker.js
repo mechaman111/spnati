@@ -36,10 +36,10 @@ $gameHiddenArea = $('#game-hidden-area');
  
 /* player card cells */
 $cardCells = [[$("#player-0-card-1"), $("#player-0-card-2"), $("#player-0-card-3"), $("#player-0-card-4"), $("#player-0-card-5")],
-			     [$("#player-1-card-1"), $("#player-1-card-2"), $("#player-1-card-3"), $("#player-1-card-4"), $("#player-1-card-5")],
-			     [$("#player-2-card-1"), $("#player-2-card-2"), $("#player-2-card-3"), $("#player-2-card-4"), $("#player-2-card-5")],
-			     [$("#player-3-card-1"), $("#player-3-card-2"), $("#player-3-card-3"), $("#player-3-card-4"), $("#player-3-card-5")],
-			     [$("#player-4-card-1"), $("#player-4-card-2"), $("#player-4-card-3"), $("#player-4-card-4"), $("#player-4-card-5")]];	
+                 [$("#player-1-card-1"), $("#player-1-card-2"), $("#player-1-card-3"), $("#player-1-card-4"), $("#player-1-card-5")],
+                 [$("#player-2-card-1"), $("#player-2-card-2"), $("#player-2-card-3"), $("#player-2-card-4"), $("#player-2-card-5")],
+                 [$("#player-3-card-1"), $("#player-3-card-2"), $("#player-3-card-3"), $("#player-3-card-4"), $("#player-3-card-5")],
+                 [$("#player-4-card-1"), $("#player-4-card-2"), $("#player-4-card-3"), $("#player-4-card-4"), $("#player-4-card-5")]];
 
 /**********************************************************************
  *****                       Poker Variables                      *****
@@ -55,7 +55,7 @@ var BLANK_CARD_IMAGE = IMG + "blank.png";
 var UNKNOWN_CARD_IMAGE = IMG + "unknown.jpg";
  
 /* card decks */
-var activeDeck;	/* deck for current round */
+var activeDeck;    /* deck for current round */
 
 /* deal lock */
 var dealLock = 0;
@@ -66,18 +66,18 @@ var dealLock = 0;
  * array can be used to determine the cards to discard.)
  ************************************************************/
 function Card(suit, rank) {
-	this.suit = suit;
-	this.rank = rank;
+    this.suit = suit;
+    this.rank = rank;
 }
 
 /* This toString() method means that using a card object in a URL
  * yields the same filename as before */
 Card.prototype.toString = function() {
-	return ["spade", "heart", "diamo", "clubs"][this.suit] + (this.rank == 14 ? 1 : this.rank);
+    return ["spade", "heart", "diamo", "clubs"][this.suit] + (this.rank == 14 ? 1 : this.rank);
 };
 
 Card.prototype.altText = function() {
-	return (this.rank >= 11 ? "JQKA"[this.rank-11] : this.rank) + String.fromCharCode(0x2660 + this.suit);
+    return (this.rank >= 11 ? "JQKA"[this.rank-11] : this.rank) + String.fromCharCode(0x2660 + this.suit);
 };
 
 /************************************************************
@@ -91,7 +91,7 @@ function Hand() {
 }
 
 Hand.prototype.toString = function() {
-	return handStrengthToString(this.strength);
+    return handStrengthToString(this.strength);
 }
 
 /************************************************************
@@ -101,11 +101,11 @@ Hand.prototype.toString = function() {
 function Deck() {
     var cards = [];
 
-	for (var i = 0; i < 4; i++) {
-		for (var j = 2; j <= 14; j++) {
-			cards.push(new Card(i, j));
-		}
-	}
+    for (var i = 0; i < 4; i++) {
+        for (var j = 2; j <= 14; j++) {
+            cards.push(new Card(i, j));
+        }
+    }
 
     /* Fisher-Yates shuffling algorithm.  At step i, cards 0 through i -
      * 1 of the shuffled deck have already been selected, while cards i
@@ -163,13 +163,13 @@ function setupPoker () {
  * Prefetches all card images
  ************************************************************/
 function preloadCardImages () {
-	[SPADES, HEARTS, CLUBS, DIAMONDS].forEach(function(suit) {
-		for (var r = 1; r < 14; r++) {
-			new Image().src = IMG + suit + r + '.jpg';
-		}
-	});
-	new Image().src = BLANK_CARD_IMAGE;
-	new Image().src = UNKNOWN_CARD_IMAGE;
+    [SPADES, HEARTS, CLUBS, DIAMONDS].forEach(function(suit) {
+        for (var r = 1; r < 14; r++) {
+            new Image().src = IMG + suit + r + '.jpg';
+        }
+    });
+    new Image().src = BLANK_CARD_IMAGE;
+    new Image().src = UNKNOWN_CARD_IMAGE;
 }
 
 /**********************************************************************
@@ -283,14 +283,14 @@ function dealHand (player, numPlayers, playersBefore) {
     /* reset the strength so any hand condition won't use the last
      * round's result. */
     players[player].hand.strength = NONE;
-	/* deal the new cards */
-	for (var i = 0; i < CARDS_PER_HAND; i++) {
-		players[player].hand.tradeIns[i] = false;
-		players[player].hand.cards[i] = activeDeck.dealCard();
-		// Simulate dealing one card to each player, then another to
-		// each player, and so on.
-		animateDealtCard(player, i, numPlayers * i + playersBefore);
-	}
+    /* deal the new cards */
+    for (var i = 0; i < CARDS_PER_HAND; i++) {
+        players[player].hand.tradeIns[i] = false;
+        players[player].hand.cards[i] = activeDeck.dealCard();
+        // Simulate dealing one card to each player, then another to
+        // each player, and so on.
+        animateDealtCard(player, i, numPlayers * i + playersBefore);
+    }
 }
 
 /************************************************************
@@ -330,36 +330,36 @@ function exchangeCards (player) {
  * in the order dealt, used to calculate the initial delay.
  ************************************************************/
 function animateDealtCard (player, card, n) {
-	var $clonedCard = $('#deck').clone().attr('id', '').addClass('shown-card').prependTo($gameHiddenArea);
-	
-	if (player == HUMAN_PLAYER) {
+    var $clonedCard = $('#deck').clone().attr('id', '').addClass('shown-card').prependTo($gameHiddenArea);
+    
+    if (player == HUMAN_PLAYER) {
         $clonedCard.addClass("large-card-image");
     } else {
         $clonedCard.addClass('small-card-image');
-	}
-	
-	var offset = $cardCells[player][card].offset();
-	var top = offset.top - $gameHiddenArea.offset().top;
-	var left = offset.left - $gameHiddenArea.offset().left - 6;
+    }
+    
+    var offset = $cardCells[player][card].offset();
+    var top = offset.top - $gameHiddenArea.offset().top;
+    var left = offset.left - $gameHiddenArea.offset().left - 6;
 
-	// Skip animation time calculation if skipping animation
-	if (ANIM_TIME === 0) {
-		var animTime = 0;
-	} else {
-		// Set card speed according to desired time to deal card to farthest position
-		var speed = getFarthestDealDistance() / ANIM_TIME;
-		var distance = offsetDistance($clonedCard.offset(), {left: left, top: top});
-		var animTime = distance / speed;
-	}
+    // Skip animation time calculation if skipping animation
+    if (ANIM_TIME === 0) {
+        var animTime = 0;
+    } else {
+        // Set card speed according to desired time to deal card to farthest position
+        var speed = getFarthestDealDistance() / ANIM_TIME;
+        var distance = offsetDistance($clonedCard.offset(), {left: left, top: top});
+        var animTime = distance / speed;
+    }
 
-	$clonedCard.delay(n * ANIM_DELAY).animate({top: top, left: left}, animTime, function() {
-		$clonedCard.remove();
-		displayCard(player, card, player == HUMAN_PLAYER);
-		dealLock--;
+    $clonedCard.delay(n * ANIM_DELAY).animate({top: top, left: left}, animTime, function() {
+        $clonedCard.remove();
+        displayCard(player, card, player == HUMAN_PLAYER);
+        dealLock--;
         if (dealLock <= 0) {
             $gameScreen.removeClass('prompt-exchange');
         }
-	});
+    });
 }
 
 /************************************************************
@@ -367,7 +367,7 @@ function animateDealtCard (player, card, n) {
  ************************************************************/
 function getFarthestDealDistance()
 {
-	return offsetDistance($('#player-4-card-5').offset(), $('#deck').offset());
+    return offsetDistance($('#player-4-card-5').offset(), $('#deck').offset());
 }
 
 /************************************************************
@@ -375,7 +375,7 @@ function getFarthestDealDistance()
  ************************************************************/
 function offsetDistance (offset1, offset2)
 {
-	return distance2d(offset1.left, offset1.top, offset2.left, offset2.top);
+    return distance2d(offset1.left, offset1.top, offset2.left, offset2.top);
 }
 
 
@@ -384,7 +384,7 @@ function offsetDistance (offset1, offset2)
  ************************************************************/
 function distance2d (x1, y1, x2, y2)
 {
-	return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+    return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 }
 
 /**********************************************************************
@@ -395,7 +395,7 @@ function distance2d (x1, y1, x2, y2)
  * Maps the hand strength to a string.
  ************************************************************/
 function handStrengthToString (number) {
-	switch (number) {
+    switch (number) {
         case NONE:              return undefined;
         case HIGH_CARD:         return "High card";
         case PAIR:              return "One pair";
@@ -407,7 +407,7 @@ function handStrengthToString (number) {
         case FOUR_OF_A_KIND:    return "Four of a kind";
         case STRAIGHT_FLUSH:    return "Straight flush";
         case ROYAL_FLUSH:       return "Royal flush";
-	}
+    }
 }
 
 function handStrengthFromString (string) {
@@ -530,50 +530,50 @@ function compareHands (h1, h2) {
  * player is a player object, not an index.
  ************************************************************/
 Hand.prototype.determine = function() {
-	/* start by getting a shorthand variable and resetting */
-	
-	/* look for each strength, in composition */
-	var have_pair = [];
-	var have_three_kind = 0;
-	var have_straight = 0;
-	var have_flush = 0;
+    /* start by getting a shorthand variable and resetting */
+    
+    /* look for each strength, in composition */
+    var have_pair = [];
+    var have_three_kind = 0;
+    var have_straight = 0;
+    var have_flush = 0;
 
-	/* start by collecting the ranks and suits of the cards */
-	this.ranks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    /* start by collecting the ranks and suits of the cards */
+    this.ranks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     this.suits = [0, 0, 0, 0];
     this.strength = NONE;
     this.value = [];
 
-	this.cards.forEach(function(card) {
-		this.ranks[card.rank - 1]++;
-		this.suits[card.suit]++;
-	}, this);
-	this.ranks[0] = this.ranks[13];
-	
-	/* look for four of a kind, three of a kind, and pairs */
-	for (var i = this.ranks.length-1; i > 0; i--) {
-		if (this.ranks[i] == 4) {
-			this.strength = FOUR_OF_A_KIND;
-			this.value = [i+1];
-			break;
-		} else if (this.ranks[i] == 3) {
-			have_three_kind = i+1;
-		} else if (this.ranks[i] == 2) {
-			have_pair.push(i+1);
-		}
-	}
-	
-	/* determine full house, three of a kind, two pair, and pair */
-	if (this.strength == NONE) {
-		if (have_three_kind && have_pair.length > 0) {
-			this.strength = FULL_HOUSE;
-			this.value = [have_three_kind, have_pair[0]];
-		} else if (have_three_kind) {
-			this.strength = THREE_OF_A_KIND;
-			this.value = [have_three_kind];
-		} else if (have_pair.length > 0) {
-			this.strength = have_pair.length == 2 ? TWO_PAIR : PAIR;
-			this.value = have_pair;
+    this.cards.forEach(function(card) {
+        this.ranks[card.rank - 1]++;
+        this.suits[card.suit]++;
+    }, this);
+    this.ranks[0] = this.ranks[13];
+    
+    /* look for four of a kind, three of a kind, and pairs */
+    for (var i = this.ranks.length-1; i > 0; i--) {
+        if (this.ranks[i] == 4) {
+            this.strength = FOUR_OF_A_KIND;
+            this.value = [i+1];
+            break;
+        } else if (this.ranks[i] == 3) {
+            have_three_kind = i+1;
+        } else if (this.ranks[i] == 2) {
+            have_pair.push(i+1);
+        }
+    }
+    
+    /* determine full house, three of a kind, two pair, and pair */
+    if (this.strength == NONE) {
+        if (have_three_kind && have_pair.length > 0) {
+            this.strength = FULL_HOUSE;
+            this.value = [have_three_kind, have_pair[0]];
+        } else if (have_three_kind) {
+            this.strength = THREE_OF_A_KIND;
+            this.value = [have_three_kind];
+        } else if (have_pair.length > 0) {
+            this.strength = have_pair.length == 2 ? TWO_PAIR : PAIR;
+            this.value = have_pair;
         }
     }
 
@@ -582,63 +582,63 @@ Hand.prototype.determine = function() {
             this.value.push(i+1);
         }
     }
-	
-	/* look for straights and flushes */
-	if (this.strength == NONE) {
-		/* first, straights */
-		var sequence = 0;
+    
+    /* look for straights and flushes */
+    if (this.strength == NONE) {
+        /* first, straights */
+        var sequence = 0;
 
-		for (var i = 0; i < this.ranks.length; i++) {
-			if (this.ranks[i] == 1) {
-				sequence++;
-				if (sequence == CARDS_PER_HAND) {
-					/* one card each of five consecutive ranks is a
-					 * straight */
-					have_straight = i+1;
-					break;
-				}
-			} else if (sequence > 0) {
+        for (var i = 0; i < this.ranks.length; i++) {
+            if (this.ranks[i] == 1) {
+                sequence++;
+                if (sequence == CARDS_PER_HAND) {
+                    /* one card each of five consecutive ranks is a
+                     * straight */
+                    have_straight = i+1;
+                    break;
+                }
+            } else if (sequence > 0) {
                 if (i == 1) {
-					/* Ace but no deuce is OK - we might have 10-A */
+                    /* Ace but no deuce is OK - we might have 10-A */
                     sequence = 0;
                 } else {
                     /* A hole in the sequence - can't have a straight */
                     break;
                 }
-			}
-		}
-		
-		/* second, flushes */
-		for (var i = 0; i < this.suits.length; i++) {
-			if (this.suits[i] == CARDS_PER_HAND) {
-				/* this is a flush */
-				have_flush = 1;
-				break;
-			} else if (this.suits[i] > 0) {
-				/* can't have a flush */
-				break;
-			}
-		}
-		
+            }
+        }
+        
+        /* second, flushes */
+        for (var i = 0; i < this.suits.length; i++) {
+            if (this.suits[i] == CARDS_PER_HAND) {
+                /* this is a flush */
+                have_flush = 1;
+                break;
+            } else if (this.suits[i] > 0) {
+                /* can't have a flush */
+                break;
+            }
+        }
+        
         /* determine royal flush, straight flush, flush, straight, and high card.
            this.value[] has already been populated */
-		if (have_flush && have_straight == 14) {
-			this.strength = ROYAL_FLUSH;
-		} else if (have_flush && have_straight) {
-			this.strength = STRAIGHT_FLUSH;
-		} else if (have_straight) {
-			this.strength = STRAIGHT;
-		} else {
-			this.strength = (have_flush ? FLUSH : HIGH_CARD);
-		}
+        if (have_flush && have_straight == 14) {
+            this.strength = ROYAL_FLUSH;
+        } else if (have_flush && have_straight) {
+            this.strength = STRAIGHT_FLUSH;
+        } else if (have_straight) {
+            this.strength = STRAIGHT;
+        } else {
+            this.strength = (have_flush ? FLUSH : HIGH_CARD);
+        }
         if (have_straight == 5) { // Wheel, special case, sort ace last
             this.value = [5, 4, 3, 2, 14];
         }
-	}
+    }
 
-	/* stats for the log */
+    /* stats for the log */
     console.log();
-	console.log("Rank: "+this.ranks);
-	console.log("Suit: "+this.suits);
-	console.log("Player has " +handStrengthToString(this.strength)+" of value "+this.value);
+    console.log("Rank: "+this.ranks);
+    console.log("Suit: "+this.suits);
+    console.log("Player has " +handStrengthToString(this.strength)+" of value "+this.value);
 }

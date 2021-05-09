@@ -124,9 +124,9 @@ function initialSetup () {
     /* Generate a random session ID. */
     sessionID = generateRandomID();
 
-	/* enable table opacity */
-	tableOpacity = 1;
-	$gameTable.css({opacity:1});
+    /* enable table opacity */
+    tableOpacity = 1;
+    $gameTable.css({opacity:1});
 
     /* Load title screen info first, since that's fast and synchronous */
     loadTitleScreen();
@@ -171,12 +171,12 @@ function initialSetup () {
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
 
-	/* show the title screen */
-	$titleScreen.show();
-	$('#warning-start-button').focus();
+    /* show the title screen */
+    $titleScreen.show();
+    $('#warning-start-button').focus();
     autoResizeFont();
-	/* set up future resizing */
-	window.onresize = autoResizeFont;
+    /* set up future resizing */
+    window.onresize = autoResizeFont;
 
     /* Construct a CSS rule for every combination of arrow direction, screen, and pseudo-element */
     bubbleArrowOffsetRules = [];
@@ -524,16 +524,16 @@ function restartGame () {
         Sentry.setTag("epilogue_gallery", undefined);
     }
 
-	clearTimeout(timeoutID); // No error if undefined or no longer valid
-	timeoutID = autoForfeitTimeoutID = undefined;
-	stopCardAnimations();
+    clearTimeout(timeoutID); // No error if undefined or no longer valid
+    timeoutID = autoForfeitTimeoutID = undefined;
+    stopCardAnimations();
     $('link[href^="opponents/"]').remove();
-	resetPlayers();
+    resetPlayers();
     currentRound = -1;
 
-	/* enable table opacity */
-	tableOpacity = 1;
-	$gameTable.css({opacity:1});
+    /* enable table opacity */
+    tableOpacity = 1;
+    $gameTable.css({opacity:1});
     $gamePlayerCardArea.show();
     $gamePlayerClothingArea.css('display', '');  /* Reset to default so as not to interfere with 
                                                     switching between classic and minimal UI. */
@@ -543,9 +543,9 @@ function restartGame () {
         Sentry.setTag("in_game", false);
     }
 
-	/* trigger screen refreshes */
-	updateSelectionVisuals();
-	updateAllGameVisuals();
+    /* trigger screen refreshes */
+    updateSelectionVisuals();
+    updateAllGameVisuals();
     selectTitleCandy();
 
     forceTableVisibility(true);
@@ -622,7 +622,7 @@ function compareVersions (v1, v2) {
 }
 
 $creditModal.on('shown.bs.modal', function() {
-	$('#credit-modal-button').focus();
+    $('#credit-modal-button').focus();
 });
 
 /************************************************************
@@ -675,7 +675,7 @@ function showVersionModal () {
 }
 
 $versionModal.on('shown.bs.modal', function() {
-	$('#version-modal-button').focus();
+    $('#version-modal-button').focus();
 });
 
 /************************************************************
@@ -883,23 +883,23 @@ function showPlayerTagsModal () {
  * The player clicked on a table opacity button.
  ************************************************************/
 function toggleTableVisibility () {
-	if (tableOpacity > 0) {
-		$gameTable.fadeOut();
-		tableOpacity = 0;
-	} else {
-		$gameTable.fadeIn();
-		tableOpacity = 1;
-	}
+    if (tableOpacity > 0) {
+        $gameTable.fadeOut();
+        tableOpacity = 0;
+    } else {
+        $gameTable.fadeIn();
+        tableOpacity = 1;
+    }
 }
 
 function forceTableVisibility(state) {
     if (!state) {
-		$gameTable.fadeOut();
-		tableOpacity = 0;
-	} else {
-		$gameTable.fadeIn();
-		tableOpacity = 1;
-	}
+        $gameTable.fadeOut();
+        tableOpacity = 0;
+    } else {
+        $gameTable.fadeIn();
+        tableOpacity = 1;
+    }
 }
 
 function toggleFullscreen() {
@@ -981,31 +981,31 @@ function showResortModal() {
  * Returns a random number in a range.
  ************************************************************/
 function getRandomNumber (min, max) {
-	return Math.floor(Math.random() * (max - min) + min);
+    return Math.floor(Math.random() * (max - min) + min);
 }
 
 function mergeObjects(a, b){
-	if(b === undefined || b === null){
-		return a;
-	}
-	else if(a === undefined || a === null){
-		return b;
-	}
-	for(var v in b){
-		if (typeof a[v] === 'object') {
-			a[v] = mergeObjects(a[v], b[v])
-		} else {
-			a[v] = b[v];
-		}
-	}
-	return a;
+    if(b === undefined || b === null){
+        return a;
+    }
+    else if(a === undefined || a === null){
+        return b;
+    }
+    for(var v in b){
+        if (typeof a[v] === 'object') {
+            a[v] = mergeObjects(a[v], b[v])
+        } else {
+            a[v] = b[v];
+        }
+    }
+    return a;
 }
 
 /************************************************************
  * Changes the first letter in a string to upper case.
  ************************************************************/
 String.prototype.initCap = function() {
-	return this.substr(0, 1).toUpperCase() + this.substr(1);
+    return this.substr(0, 1).toUpperCase() + this.substr(1);
 }
 
 // Polyfills for IE
@@ -1177,12 +1177,12 @@ function autoResizeFont ()
         return;
     }
 
-	if (backgroundImage && backgroundImage.height && backgroundImage.width) {
-		if (h > (3/4) * w) {
-			h = (3/4) * w;
-		} else {
-			w = 4 * h / 3;
-		}
+    if (backgroundImage && backgroundImage.height && backgroundImage.width) {
+        if (h > (3/4) * w) {
+            h = (3/4) * w;
+        } else {
+            w = 4 * h / 3;
+        }
         if (activeBackground.viewport) {
             var scale = backgroundImage.height / (activeBackground.viewport.bottom - activeBackground.viewport.top);
             var offset = ((backgroundImage.height - activeBackground.viewport.bottom) - activeBackground.viewport.top) / 2;
@@ -1199,13 +1199,13 @@ function autoResizeFont ()
             }
             $("body").css("background-position-y", '');
         }
-	}
+    }
 }
 
 $('.modal').on('show.bs.modal', function() {
-	$('.screen:visible').find('button, input').attr('tabIndex', -1);
+    $('.screen:visible').find('button, input').attr('tabIndex', -1);
 });
 
 $('.modal').on('hidden.bs.modal', function() {
-	$('.screen:visible').find('button, input').removeAttr('tabIndex');
+    $('.screen:visible').find('button, input').removeAttr('tabIndex');
 });

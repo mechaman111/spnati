@@ -40,10 +40,10 @@ $selectRandomTableButton = $("#select-random-group-button");
 $selectRemoveAllButton = $("#select-remove-all-button");
 
 mainSelectDisplays = [
-	new MainSelectScreenDisplay(1),
-	new MainSelectScreenDisplay(2),
-	new MainSelectScreenDisplay(3),
-	new MainSelectScreenDisplay(4)
+    new MainSelectScreenDisplay(1),
+    new MainSelectScreenDisplay(2),
+    new MainSelectScreenDisplay(3),
+    new MainSelectScreenDisplay(4)
 ];
 
 var individualDetailDisplay = new OpponentDetailsDisplay();
@@ -95,7 +95,7 @@ $creatorList = $("#creatorList");
 $searchGenderOptions = [$("#search-gender-1"), $("#search-gender-2"), $("#search-gender-3")];
 
 $searchModal.on('shown.bs.modal', function() {
-	$searchName.focus();
+    $searchName.focus();
 });
 
 $sortingOptionsItems = $(".sort-dropdown-options li a");
@@ -108,7 +108,7 @@ $groupSearchTag = $("#group-search-tag");
 $groupSearchGenderOptions = [$("#group-search-gender-1"), $("#group-search-gender-2"), $("#group-search-gender-3"), $("#group-search-gender-4")];
 
 $groupSearchModal.on('shown.bs.modal', function() {
-	$groupSearchGroupName.focus();
+    $groupSearchGroupName.focus();
 });
 
 var $indivSelectionCardContainer = $('#individual-select-screen .selection-cards-container');
@@ -123,7 +123,6 @@ var singleSelectHidden = false;
 var groupSelectHidden = false;
 
 /* opponent listing file */
-var listingFiles = [];
 var metaFile = "meta.xml";
 
 /* opponent information storage */
@@ -229,26 +228,24 @@ function splitCreatorField (field) {
  * Loads and parses the main opponent listing file.
  ************************************************************/
 function loadListingFile () {
-    if (listingFiles.length === 0) {
-        if (includedOpponentStatuses["testing"]) {
-             listingFiles.push("opponents/listing-test.xml");
-        }
-        listingFiles.push("opponents/listing.xml");
+    var listingFiles = [ "opponents/listing.xml" ];
+    if (includedOpponentStatuses["testing"]) {
+        listingFiles.push("opponents/listing-test.xml");
     }
 
-	/* clear the previous meta information */
-	var outstandingLoads = 0;
+    /* clear the previous meta information */
+    var outstandingLoads = 0;
     var totalLoads = 0;
-	var opponentGroupMap = {};
-	var opponentMap = {};
+    var opponentGroupMap = {};
+    var opponentMap = {};
     var tagSet = {};
     var sourceSet = {};
     var creatorSet = {};
 
-	var onComplete = function(opp) {
-		if (opp) {
-			if (opp.id in opponentMap) {
-				loadedOpponents[opp.listingIndex = opponentMap[opp.id]] = opp;
+    var onComplete = function(opp) {
+        if (opp) {
+            if (opp.id in opponentMap) {
+                loadedOpponents[opp.listingIndex = opponentMap[opp.id]] = opp;
                 opp.searchTags.forEach(function(tag) {
                     tagSet[tag] = true;
                 });
@@ -266,14 +263,14 @@ function loadListingFile () {
                 opp.selectionCard = disp;
                 disp.statusIcon.tooltip({ delay: { show: 200 }, placement: 'bottom',
                                           container: '#individual-select-screen .selection-cards-container' });
-			}
-			if (opp.id in opponentGroupMap) {
-				opponentGroupMap[opp.id].forEach(function(groupPos) {
-					groupPos.group.opponents[groupPos.idx] = opp;
+            }
+            if (opp.id in opponentGroupMap) {
+                opponentGroupMap[opp.id].forEach(function(groupPos) {
+                    groupPos.group.opponents[groupPos.idx] = opp;
                     groupPos.group.costumes[groupPos.idx] = groupPos.costume;
-				});
-			}
-		}
+                });
+            }
+        }
         
         if (--outstandingLoads == 0) {
             loadedOpponents = loadedOpponents.filter(Boolean); // Remove any empty slots should an opponent fail to load
@@ -296,7 +293,7 @@ function loadListingFile () {
             var progress = Math.floor(100 * (totalLoads - outstandingLoads) / totalLoads);
             $(".game-load-progress").text(progress.toString(10));
         }
-	}
+    }
 
     /* now actually load the characters */
     var oppDefaultIndex = 0; // keep track of an opponent's default placement
@@ -352,7 +349,7 @@ function loadListingFile () {
             }
             var highlightStatus = $(this).attr('highlight');
 
-            if (available[id]) {
+            if (available[id] && !(id in opponentMap)) {
                 outstandingLoads++;
                 totalLoads++;
                 opponentMap[id] = oppDefaultIndex++;
@@ -364,14 +361,11 @@ function loadListingFile () {
         });
     }
 
-    /* grab and parse the opponent listing file */
-    var fetches = listingFiles.map(function (file) { 
-        return fetchXML(file);
-    });
-    return Promise.all(fetches).then(function (files) {
-        files.forEach(function (file) {
-          listingProcessor(file);
-        });
+    /* grab and parse the opponent listing files */
+    return Promise.all(listingFiles.map(function (filename) {
+        return fetchXML(filename);
+    })).then(function (files) {
+        files.forEach(listingProcessor);
     });
 }
 
@@ -379,7 +373,7 @@ function loadListingFile () {
  * Loads and parses the meta XML file of an opponent.
  ************************************************************/
 function loadOpponentMeta (id, status, releaseNumber, highlightStatus) {
-	/* grab and parse the opponent meta file */
+    /* grab and parse the opponent meta file */
     console.log("Loading metadata for \""+id+"\"");
 
     return fetchXML('opponents/' + id + '/' + metaFile).then(function($xml) {
@@ -445,15 +439,15 @@ function fillCostumeSelector($selector, costumes, selected_costume) {
  * update this screen despite it not actually being visible.
  ************************************************************/
 function updateGroupSelectScreen (ignore_bg) {
-	/* safety wrap around */
+    /* safety wrap around */
     if (groupPage < 0) {
-		/* wrap to last page */
-		groupPage = (selectableGroups.length)-1;
-	} else if (groupPage > selectableGroups.length-1) {
-		/* wrap to the first page */
-		groupPage = 0;
-	}
-	$groupPageIndicator.val(groupPage+1);
+        /* wrap to last page */
+        groupPage = (selectableGroups.length)-1;
+    } else if (groupPage > selectableGroups.length-1) {
+        /* wrap to the first page */
+        groupPage = 0;
+    }
+    $groupPageIndicator.val(groupPage+1);
     $groupMaxPageIndicator.html("of "+selectableGroups.length);
 
     /* create and load all of the individual opponents */
@@ -760,7 +754,7 @@ function selectOpponentSlot (slot) {
     } else {
         /* remove the opponent that's there */
         $selectImages[slot-1].off('load');
-		
+        
         players[slot].unloadOpponent();
         delete players[slot];
 
@@ -833,8 +827,8 @@ function showPresetTables () {
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-group");
 
-	/* switch screens */
-	screenTransition($selectScreen, $groupSelectScreen);
+    /* switch screens */
+    screenTransition($selectScreen, $groupSelectScreen);
 }
 
 /************************************************************
@@ -888,7 +882,7 @@ function updateSelectableGroups() {
 function loadGroup (chosenGroup) {
     if (!chosenGroup) return;
 
-	clickedRemoveAllButton(false);
+    clickedRemoveAllButton(false);
     console.log(chosenGroup.title);
     
     if (SENTRY_INITIALIZED) {
@@ -908,7 +902,7 @@ function loadGroup (chosenGroup) {
     }
 
     /* load the group members */
-	for (var i = 1; i < 5; i++) {
+    for (var i = 1; i < 5; i++) {
         var member = chosenGroup.opponents[i-1];
         if (member) {
             if (players.some(function(p, j) { return i != j && p == member; })) {
@@ -934,24 +928,24 @@ function loadGroup (chosenGroup) {
             member.loadBehaviour(i);
             players[i] = member;
         }
-	}
+    }
 
-	updateSelectionVisuals();
+    updateSelectionVisuals();
 }
 
 /************************************************************
  * The player clicked on the select random group slot.
  ************************************************************/
 function clickedRandomGroupButton () {
-	selectedSlot = 1;
-	/* get a random number for the group listings */
-	var randomGroupNumber = getRandomNumber(0, loadedGroups.length);
-	var chosenGroup = loadedGroups[randomGroupNumber];
+    selectedSlot = 1;
+    /* get a random number for the group listings */
+    var randomGroupNumber = getRandomNumber(0, loadedGroups.length);
+    var chosenGroup = loadedGroups[randomGroupNumber];
 
     /* workaround for preset costumes */
-	for (var i = 0; i < 4; i++) {
-	    var costume = chosenGroup.costumes[i];
-	    
+    for (var i = 0; i < 4; i++) {
+        var costume = chosenGroup.costumes[i];
+        
         if (costume) {
             var costumeFolder = (costume.toLowerCase() == "default") ? '' : "opponents/reskins/" + costume;
             
@@ -959,28 +953,28 @@ function clickedRandomGroupButton () {
         } else {
             $groupCostumeSelectors[i].empty();
         }
-	}
+    }
 
-	loadGroup(chosenGroup);
+    loadGroup(chosenGroup);
 }
 
 /************************************************************
  * The player clicked on the all random button.
  ************************************************************/
 function clickedRandomFillButton (predicate) {
-	/* compose a copy of the loaded opponents list */
-	var loadedOpponentsCopy = loadedOpponents.filter(function(opp) {
+    /* compose a copy of the loaded opponents list */
+    var loadedOpponentsCopy = loadedOpponents.filter(function(opp) {
         // Filter out characters that can't be selected via the regular view
         return (opp.selectionCard.isVisible(individualSelectTesting, true) && 
                 (!predicate || predicate(opp)));
     });
 
-	/* select random opponents */
-	for (var i = 1; i < players.length; i++) {
-		/* if slot is empty */
-		if (!(i in players)) {
-			/* select random opponent */
-			var randomOpponent = getRandomNumber(0, loadedOpponentsCopy.length);
+    /* select random opponents */
+    for (var i = 1; i < players.length; i++) {
+        /* if slot is empty */
+        if (!(i in players)) {
+            /* select random opponent */
+            var randomOpponent = getRandomNumber(0, loadedOpponentsCopy.length);
 
             if (SENTRY_INITIALIZED) {
                 Sentry.addBreadcrumb({
@@ -990,16 +984,16 @@ function clickedRandomFillButton (predicate) {
                 });
             }
 
-			/* load opponent */
-			players[i] = loadedOpponentsCopy[randomOpponent];
-			players[i].loadBehaviour(i);
+            /* load opponent */
+            players[i] = loadedOpponentsCopy[randomOpponent];
+            players[i].loadBehaviour(i);
 
-			/* remove random opponent from copy list */
-			loadedOpponentsCopy.splice(randomOpponent, 1);
-		}
-	}
+            /* remove random opponent from copy list */
+            loadedOpponentsCopy.splice(randomOpponent, 1);
+        }
+    }
 
-	updateSelectionVisuals();
+    updateSelectionVisuals();
 }
 
 function loadDefaultFillSuggestions () {
@@ -1204,26 +1198,26 @@ function selectGroup () {
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "select-main");
 
     /* switch screens */
-	screenTransition($groupSelectScreen, $selectScreen);
+    screenTransition($groupSelectScreen, $selectScreen);
 }
 
 /************************************************************
  * The player is changing the page on the group screen.
  ************************************************************/
 function changeGroupPage (skip, page) {
-	if (skip) {
-		if (page == -1) {
-			/* go to first page */
+    if (skip) {
+        if (page == -1) {
+            /* go to first page */
             groupPage = 0;
-		} else if (page == 1) {
-			/* go to last page */
-			groupPage = selectableGroups.length-1;
-		} else {
-			/* go to selected page */
-			groupPage = Number($groupPageIndicator.val()) - 1;
-		}
-	} else {
-		groupPage += page;
+        } else if (page == 1) {
+            /* go to last page */
+            groupPage = selectableGroups.length-1;
+        } else {
+            /* go to selected page */
+            groupPage = Number($groupPageIndicator.val()) - 1;
+        }
+    } else {
+        groupPage += page;
     }
     
     if (SENTRY_INITIALIZED) {
@@ -1238,7 +1232,7 @@ function changeGroupPage (skip, page) {
         });
     }
 
-	updateGroupSelectScreen();
+    updateGroupSelectScreen();
     updateGroupCountStats();
 }
 
@@ -1276,8 +1270,8 @@ function backToSelect () {
 
     if (useGroupBackgrounds) optionsBackground.activateBackground();
 
-	screenTransition($individualSelectScreen, $selectScreen);
-	screenTransition($groupSelectScreen, $selectScreen);
+    screenTransition($individualSelectScreen, $selectScreen);
+    screenTransition($groupSelectScreen, $selectScreen);
 }
 
 /************************************************************
@@ -1304,7 +1298,7 @@ function advanceSelectScreen () {
 
     save.savePlayedCharacterSet(playedCharacters);
 
-	transcriptHistory = [];
+    transcriptHistory = [];
     inGame = true;
 
     advanceToNextScreen($selectScreen);
@@ -1316,7 +1310,7 @@ function advanceSelectScreen () {
  ************************************************************/
 function backSelectScreen () {
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
-	screenTransition($selectScreen, $titleScreen);
+    screenTransition($selectScreen, $titleScreen);
 }
 
 /* The player selected an alternate costume for an opponent.
@@ -1577,14 +1571,14 @@ function sortOpponentsByMultipleFields(fields) {
  * opponents have.
  */
 function sortOpponentsByMostTargeted() {
-	return function(opp1, opp2) {
-		counts = [opp1, opp2].map(function(opp) {
-			return opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined);
-		});
-		if (counts[0] > counts[1]) return -1;
-		if (counts[0] < counts[1]) return 1;
-		return 0;
-	}
+    return function(opp1, opp2) {
+        counts = [opp1, opp2].map(function(opp) {
+            return opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined);
+        });
+        if (counts[0] > counts[1]) return -1;
+        if (counts[0] < counts[1]) return 1;
+        return 0;
+    }
 }
 
 /**

@@ -111,7 +111,7 @@ Player.prototype.resetState = function () {
     this.biggestLead = 0;
     this.forfeit = "";
     this.stage = this.consecutiveLosses = 0;
-    this.timeInStage = -1;
+    this.timeInStage = 0;
     this.markers = {};
     this.oneShotCases = {};
     this.oneShotStates = {};
@@ -208,7 +208,7 @@ Player.prototype.updateTags = function () {
     });
 
     this.tags = expandTagsList(tags);
-	
+    
     /* "chubby" implies "curvy" on female characters only,
        so this has to be done separately */
     if (tags.includes("chubby") && this.gender == "female") {
