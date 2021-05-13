@@ -162,7 +162,7 @@ function initialSetup () {
         save.load();
         updateTitleGender();
 
-        if (RESORT_KEY && save.getPlayedCharacterSet().length >= 40) {
+        if (RESORT_KEY && save.getPlayedCharacterSet().length >= 24) {
             $(".title-resort-button").show();
         } else {
             $(".title-resort-button").hide();
