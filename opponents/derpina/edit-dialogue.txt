@@ -1,0 +1,499 @@
+#required for behaviour.xml
+first=Derpina
+last=
+label=Derpina
+gender=female
+size=large
+intelligence=bad
+
+#Number of phases to "finish" masturbating
+timer=20
+
+#Tags describe characters and allow dialogue directed to only characters with these tags, such as: confident, blonde, and british. All tags should be lower case. See tag_list.txt for a list of tags.
+tag=blonde
+tag=medium_hair
+tag=messy_hair
+tag=dark_eyes
+tag=unusual_skin
+tag=curvy
+tag=trimmed
+tag=pubic_hair
+tag=large_breasts
+tag=huge_breasts
+tag=choker
+tag=no_bra,from:4,to:6
+tag=no_underwear,from:3,to:6
+tag=ditzy
+tag=innocent
+tag=bisexual
+tag=single
+tag=internet_meme
+tag=bottomless_first
+tag=april_fools
+
+#required for meta.xml
+#select screen image
+pic=0-happy
+height=
+from=Rage comics
+writer=Corkcork76
+artist=Corkcork76
+description=Did you ever read rage comics? If so then you know who this is.
+z-layer=0
+dialogue-layer=over
+
+
+
+#Items of clothing should be listed here in order of removal.
+#The values are formal name, lower case name, how much they cover, what they cover
+#Please do not put spaces around the commas.
+#"Important" clothes cover genitals (lower) or chest/breasts (upper). For example: bras, panties, a skirt when going commando.
+#"Major" clothes cover underwear. For example: skirts, pants, shirts, dresses.
+#"Minor" clothes cover skin or are large pieces of clothing that do not cover skin. For example: jackets, socks, stockings, gloves.
+#"Extra" clothes are small items that may or may not be clothing but do not cover anything interesting. For example: jewelry, shoes or boots with socks underneath, belts, hats. In the rest of the code, "extra" clothes are called "accessory".
+#If for some reason you write another word for the type of clothes (e.g. "accessory"), other characters will not react at all when the clothing is removed.
+#What they cover = upper (upper body), lower (lower body), other (neither).
+#The game can support any number of entries, but typically we use 2-8, with at least one "important" layer for upper and lower (each).
+clothes=shoes,shoes,minor,feet,plural
+clothes=helmet,choker,extra,neck
+clothes=underwear,pants,important,lower,plural
+clothes=bra,shirt,important,upper
+
+
+
+#Notes on dialogue
+#All lines that start with a # symbol are comments and will be ignored by the tool that converts this file into a xml file for the game.
+#Where more than one line has an identical type, like "swap_cards" and "swap_cards", the game will randomly select one of these lines each time the character is in that situation.
+#You should try to include multiple lines for most stages, especially the final (finished) stage, -1. 
+
+#A character goes through multiple stages as they undress. The stage number starts at zero and indicates how many layers they have removed. Special stage numbers are used when they are nude (-3), masturbating (-2), and finished (-1).
+#Line types that start with a number will only display during that stage. The will override any numberless stage-generic lines. For example, in stage 4 "4-swap_cards" will be used over "swap_cards" if it is not blank here. Giving a character unique dialogue for each stage is an effective way of showing their changing openness/shyness as the game progresses.
+#You can combine the above points and make multiple lines for a particular situation in a particular stage, like "4-swap_cards" and "4-swap_cards".
+
+#Some special words can be used that will be substituted by the game for context-appropriate ones: ~name~ is the name of the character they're speaking to, but this only works if someone else is in focus. ~clothing~ is the type of clothing that is being removed by another player. ~Clothing~ is almost the same, but it starts with a capital letter in case you want to start a sentence with it.
+#~name~ can be used any time a line targets an opponent (game_over_defeat, _must_strip, _removing_, _removed, _must_masturbate, etc).
+#~clothing~ can be used only when clothing is being removed (_removing and _removed, but NOT _must_strip).
+#~player~ can be used at any time and refers to the human player.
+#~cards~ can be used only in the swap_cards lines.
+#All wildcards can be used once per line only! If you use ~name~ twice, the code will show up the second time.
+
+#Lines can be written that are only spoken when specific other characters are present. For a detailed explanation, read this guide: https://www.reddit.com/r/spnati/comments/6nhaj0/the_easy_way_to_write_targeted_lines/
+#Here is an example line (note that targeted lines must have a stage number):
+#0-female_must_strip,target:hermione=happy,Looks like your magic doesn't help with poker!
+
+
+
+
+#INTRODUCTION
+#These lines are used to say different things depending on which other characters are present when the character
+#is selected and when the game starts.
+	
+
+#fully clothed
+0-selected=happy.png,*le arrives to play strip poker*
+0-game_start=cutesy.png,Hoi lol, I hopes we all hav a fun gaem <3
+0-game_start=cutesy.png,Hiya! hope u all hav fun ^w^
+
+
+
+
+#POKER PLAY
+#This is what a character says while they're exchanging cards and commenting on their hands afterwards.
+#When swapping cards, the game will automatically put a display a number between 0-5 where you write ~cards~.
+#These lines display on the screen for only a brief time, so it is important to make them short enough to read at a glance.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+swap_cards=happy.png,*le discards ~cards.text~ ~cards.ifplural(cards|card)~*
+good_hand=awesome.png,Awesome!
+good_hand=happy.png,I think dis 1 is pretty gud lol.
+good_hand=cutesy.png,yay! :3
+good_hand=goofy smile.png,Thx dealer :D
+okay_hand=confused.png,Is dis gud? lol
+okay_hand=thinking.png,Dis hand looks fine...
+okay_hand=happy.png,R dis good? I'm not sure how to play dis gaem lul
+bad_hand=._..png,...
+bad_hand=meh.png,I'm not sure about this hand...
+bad_hand=meh.png,Meh...
+bad_hand=wtf.png,WTF?! dis hand sux!!
+bad_hand=meh.png,It's whatever...
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-swap_cards,test:~cards~:0=goofy smile.png,LEEEEEEEEEEEEEEROOOOOOOOOOOOY JEEEEEEEEENKINS
+0-hand,oneShotId:1,priority:4,count-role;self&timeinstage;5:,count-alive:5=confused.png,What wus that? Big chungus? I dunno what that is lol
+
+
+
+
+#SELF STRIPPING
+#This is the character says once they've lost a hand, but before they strip.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+must_strip=happy.png,nothing 2 big yet lul
+must_strip=^w^.png,no prob, I'm here to have fun ^w^
+must_strip=cutesy.png,okie dokie! no prob :3
+must_strip_winning=bleh.png,I was wondering if I was better than u all lol
+must_strip_winning=x3.png,doing gud hehe x3
+
+
+#stage-specific lines that override the stage-generic ones
+
+#losing shoes
+0-stripping=stripping.png,Bye bye shoes :P
+0-stripping=stripping.png,Off they come lul
+
+
+#losing choker
+1-stripped=happy.png,This floor feels sticky lol
+1-stripped=confused.png,U liek my feet? :3
+1-stripped=confused.png,I heard some peeps liked feet a lot lul. R u 1 of 'em?
+1-stripping=stripping.png,Last accesory :P
+1-stripping=stripping.png,Next time it's gon be sumtin' big ;P
+1-stripping=stripping.png,Y do they call it choker if it doesn't choke u lol
+
+
+#losing pants
+2-stripped=x3.png,Next time I lose I'm showing u a lil' heart X3
+2-stripped=happy.png,In case ur wondering, I'm not taking off my bow lol. Next time I'm taking my pants off <3
+2-stripped=cutesy.png,Ur rlly close to seeing my bod hehe :3
+2-stripped=bleh.png,Now you can't snap my choker lul
+2-must_strip,priority:5,count-crotch_visible:0=^w^.png,Mine first? hehe okie!
+2-must_strip,priority:5,count-crotch_visible:0=happy.png,I'm showing my pussy first?
+2-must_strip_winning=x3.png,About time I got 2 show off X3
+2-must_strip_winning=bleh.png,I've got a little something for ya <3
+2-must_strip_winning=bleh.png,I hope u like what I did with the hair lul
+2-must_strip_winning=bleh.png,Just fyi, I'm not wearing undies ;P
+2-must_strip_normal=x3.png,Now I get 2 show off X3
+2-must_strip_normal=bleh.png,I've got a little something for ya <3
+2-must_strip_normal=bleh.png,I hope u like what I did with the hair lul
+2-must_strip_normal=bleh.png,Just fyi, I'm not wearing undies ;P
+2-must_strip_losing=happy.png,No prob, some1 had 2 do it lul
+2-must_strip_losing=^w^.png,I hope u like what I did with the hair lul
+2-must_strip_losing=bleh.png,Just fyi, I'm not wearing undies ;P
+2-stripping=stripping.png,Sum peeps think it looks like a kitty X3
+2-stripping=stripping.png,Some peeps don't wear pants anyway X3
+2-stripping=stripping.png,Here I go! X3
+
+
+#losing shirt
+3-stripped=stripped.png,I <3 u ^///^
+3-stripped=stripped.png,Here's the kitty! hehe X3
+3-stripped=stripped.png,Does it look cute? X3
+3-must_strip,priority:5,count-chest_visible:0=^w^.png,I'm showing my chest first? Okie dokie!
+3-must_strip,priority:5,count-chest_visible:0=happy.png,Oh I'm showing my breasts first?
+3-must_strip_winning=^w^.png,I hope you'll like 'em ^///^
+3-must_strip_winning=x3.png,I do like 2 show them off X3
+3-must_strip_normal=^w^.png,I hope you'll like 'em ^///^
+3-must_strip_normal=x3.png,I do like 2 show them off X3
+3-must_strip_losing=^w^.png,I hope you'll like 'em ^///^
+3-must_strip_losing=x3.png,I do like 2 show them off X3
+3-stripping=stripping.png,Here come the melons! X3
+3-stripping=stripping.png,This shirt was getting thight anyway X3
+3-stripping=stripping.png,I hope you like 'em big X3
+
+
+#naked
+-3-stripped=stripped.png,Boing boing boing! X3
+-3-stripped=stripped.png,Here they are! ^///^
+-3-stripped=stripped.png,Hehehe ^///^
+-3-stripped=stripped.png,Do you like 'em? X3
+
+
+
+
+#OPPONENT MUST STRIP
+#These lines are spoken when an opponent must strip, but the character does not yet know what they will take off.
+#Writing different variations is important here, as these lines will be spoken about thirty times per game.
+#The "human" versions of the lines will only be spoken if the human player is stripping.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_strip=bleh.png,Sux 2 be u lol
+male_must_strip=happy.png,2 bad 4 u lol
+male_must_strip=bleh.png,Woopsie! u lost
+female_must_strip=bleh.png,Sux 2 be u lol
+female_must_strip=happy.png,2 bad 4 u lol
+female_must_strip=bleh.png,Woopsie! u lost
+
+
+#stage-specific lines that override the stage-generic ones
+
+#fully clothed
+0-male_must_strip,count-role;target&losses;3:=goofy smile.png,Oh baby a triple! Oh yeah!
+0-male_must_strip,priority:20,count-role;self&hashand;High Card:=trollface.png,Problem?
+0-female_must_strip,count-role;target&losses;3:=goofy smile.png,Oh baby a triple! Oh yeah!
+0-female_must_strip,count-role;self&hashand;High Card:=trollface.png,Problem?
+0-tie=confused.png,Tie? But I'm not wearing a tie...
+0-tie=confused.png,No1 won? But no1 lost either?
+
+
+#lost shoes
+1-male_must_strip,count-role;target&losses;3:=goofy smile.png,Oh baby a triple! Oh yeah!
+1-male_must_strip,priority:20,count-role;self&hashand;High Card:=trollface.png,Problem?
+1-female_must_strip,count-role;target&losses;3:=goofy smile.png,Oh baby a triple! Oh yeah!
+1-female_must_strip,count-role;self&hashand;High Card:=trollface.png,Problem?
+
+
+#lost choker
+2-male_must_strip,count-role;target&losses;3:=goofy smile.png,Oh baby a triple! Oh yeah!
+2-male_must_strip,priority:20,count-role;self&hashand;High Card:=trollface.png,Problem?
+2-female_must_strip,count-role;target&losses;3:=goofy smile.png,Oh baby a triple! Oh yeah!
+2-female_must_strip,count-role;self&hashand;High Card:=trollface.png,Problem?
+
+
+#lost pants
+3-male_must_strip,count-role;target&losses;3:=goofy smile.png,Oh baby a triple! Oh yeah!
+3-male_must_strip,priority:20,count-role;self&hashand;High Card:=trollface.png,Problem?
+3-female_must_strip,count-role;target&losses;3:=goofy smile.png,Oh baby a triple! Oh yeah!
+3-female_must_strip,count-role;self&hashand;High Card:=trollface.png,Problem?
+
+
+#naked
+-3-male_must_strip,count-role;target&losses;3:=goofy smile.png,Oh baby a triple! Oh yeah!
+-3-male_must_strip,priority:20,count-role;self&hashand;High Card:=trollface.png,Problem?
+-3-female_must_strip,count-role;target&losses;3:=goofy smile.png,Oh baby a triple! Oh yeah!
+-3-female_must_strip,count-role;self&hashand;High Card:=trollface.png,Problem?
+
+
+#masturbating
+-2-male_must_strip,count-role;target&losses;3:=goofy smile.png,Oh baby a triple! Oh yeah!
+-2-female_must_strip,count-role;target&losses;3:=goofy smile.png,Oh baby a triple! Oh yeah!
+
+
+#finished
+-1-male_must_strip,count-role;target&losses;3:=goofy smile.png,Oh baby a triple! Oh yeah!
+-1-female_must_strip,count-role;target&losses;3:=goofy smile.png,Oh baby a triple! Oh yeah!
+
+
+
+
+#OPPONENT REMOVING ACCESSORY
+#These lines are spoken when an opponent removes a small item that does not cover any skin.
+#Typically, characters are fine with this when they are fully dressed but less satisfied as they become more naked.
+#Note that all "removing" lines are NOT spoken to human players. Characters will skip straight from "6-male_human_must_strip" to "6-male_removed_accessory", for example.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_accessory=meh.png,Well I'm sure next time will be more interesting...
+male_removing_accessory=meh.png,The quicker you take that off the quicker we'll get to the good stuff.
+male_removing_accessory=meh.png,Not to be rude, but your ~clothing~ ain't that interesting.
+male_removing_accessory=meh.png,That's fine... you had to take it off eventually.
+male_removed_accessory=bleh.png,Aaaand the game moves on :P
+male_removed_accessory=happy.png,Not much has changed.
+female_removing_accessory=meh.png,Well I'm sure next time will be more interesting...
+female_removing_accessory=meh.png,The quicker you take that off the quicker we'll get to the good stuff.
+female_removing_accessory=meh.png,Not to be rude, but your ~clothing~ ain't that interesting.
+female_removing_accessory=meh.png,That's fine... you had to take it off eventually.
+female_removed_accessory=bleh.png,Aaaand the game moves on :P
+female_removed_accessory=happy.png,Not much has changed.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#masturbating
+-2-male_removing_accessory=meh.png,Mm...
+-2-male_removing_accessory=meh.png,Whatevs...
+-2-male_removing_accessory=meh.png,Not doing me any favors here.
+-2-male_removed_accessory=meh.png,Moving on...
+-2-male_removed_accessory=meh.png,,,,
+-2-male_removed_accessory=meh.png,Cool, anyway...
+-2-female_removing_accessory=meh.png,Mm...
+-2-female_removing_accessory=meh.png,Whatevs...
+-2-female_removing_accessory=meh.png,Not doing me any favors here.
+-2-female_removed_accessory=meh.png,Moving on...
+-2-female_removed_accessory=meh.png,...
+-2-female_removed_accessory=meh.png,Cool, anyway...
+
+
+
+
+#OPPONENT REMOVING MINOR CLOTHING
+#Minor pieces of clothing don't reveal much when removed, but probably indicate more progress than accessory removal.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+male_removed_minor=,The male character has just removed that minor item.
+female_removing_minor=,A female character is about to remove a clothing item with the type "minor".
+female_removed_minor=,The female character has just removed that minor item.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#lost choker
+2-male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+2-male_removed_minor=,The male character has just removed that minor item.
+2-female_removing_minor=,A female character is about to remove a clothing item with the type "minor".
+2-female_removed_minor=,The female character has just removed that minor item.
+
+
+#lost pants
+3-male_removing_minor=,A male character is about to remove a clothing item with the type "minor".
+3-male_removed_minor=,The male character has just removed that minor item.
+3-female_removing_minor=,A female character is about to remove a clothing item with the type "minor".
+3-female_removed_minor=,The female character has just removed that minor item.
+
+
+
+
+#OPPONENT REMOVING MAJOR CLOTHING
+#Major clothing reveals a significant amount of skin and likely underwear.
+#However, as we don't know if the opponent is taking off the top or the bottom, we can't presume that nice abs are showing; maybe she took of her skirt before her shirt.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_removing_major=,What the character says before a male loses an item with the "major" type.
+male_removed_major=,What the character says after the major item has been taken off.
+female_removing_major=,What the character says before a female loses an item with the "major" type.
+female_removed_major=,What the character says after the major item has been taken off.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#lost choker
+2-male_removing_major=,What the character says before a male loses an item with the "major" type.
+2-male_removed_major=,What the character says after the major item has been taken off.
+2-female_removing_major=,What the character says before a female loses an item with the "major" type.
+2-female_removed_major=,What the character says after the major item has been taken off.
+
+
+#lost pants
+3-male_removing_major=,What the character says before a male loses an item with the "major" type.
+3-male_removed_major=,What the character says after the major item has been taken off.
+3-female_removing_major=,What the character says before a female loses an item with the "major" type.
+3-female_removed_major=,What the character says after the major item has been taken off.
+
+
+
+
+#OPPONENT REVEALING CHEST OR CROTCH
+#Characters have different sizes, allowing your character to have different responses for each. Males have a small, medium, or large crotch. Females have small, medium, or large breasts.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+male_chest_is_visible=,What the character says once the male character's chest is visible.
+male_crotch_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+female_crotch_is_visible=,What the character says after the female character's crotch has become visible.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#lost choker
+2-male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+2-male_chest_is_visible=,What the character says once the male character's chest is visible.
+2-male_crotch_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+2-male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+2-male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+2-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+2-female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+2-female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+2-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+2-female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+2-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+2-female_crotch_is_visible=,What the character says after the female character's crotch has become visible.
+
+
+#lost pants
+3-male_chest_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+3-male_chest_is_visible=,What the character says once the male character's chest is visible.
+3-male_crotch_will_be_visible=,What the character says when a male character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+3-male_small_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "small".
+3-male_medium_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "medium".
+3-male_large_crotch_is_visible=,What the character says after the male character's crotch is visible, and has a size value of "large".
+3-female_chest_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their chest. For NPCs, this is a clothing element on the "upper" location, with the "important" type.
+3-female_small_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "small".
+3-female_medium_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "medium".
+3-female_large_chest_is_visible=,What the character says after the female character's chest is visible, and has a size value of "large".
+3-female_crotch_will_be_visible=,What the character says when a female character is about to remove the last piece of clothing covering their crotch. For NPCs, this is a clothing element on the "lower" location, with the "important" type.
+3-female_crotch_is_visible=,What the character says after the female character's crotch has become visible.
+
+
+
+
+#OPPONENT MASTURBATING
+#When an opponent is naked and loses a hand, they have lost the game and must pay the penalty by masturbating in front of everyone.
+#The "must_masturbate" line is for just before it happens, and the "start_masturbating" line immediately follows.
+#The "masturbating" line will be spoken a little after the opponent has started but before they climax.
+#When the opponent climaxes, your character will say the "finished_masturbating" line.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+male_start_masturbating=,What the character says when a male character has started masturbating.
+male_masturbating=,What the character says while a male character is masturbating.
+male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+female_start_masturbating=,What the character says when a female character has started masturbating.
+female_masturbating=,What the character says while a female character is masturbating.
+female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+#stage-specific lines that override the stage-generic ones
+
+#lost choker
+2-male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+2-male_start_masturbating=,What the character says when a male character has started masturbating.
+2-male_masturbating=,What the character says while a male character is masturbating.
+2-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+2-female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+2-female_start_masturbating=,What the character says when a female character has started masturbating.
+2-female_masturbating=,What the character says while a female character is masturbating.
+2-female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+#lost pants
+3-male_must_masturbate=,What the character says when a male character has lost a hand while nude, and must masturbate.
+3-male_start_masturbating=,What the character says when a male character has started masturbating.
+3-male_masturbating=,What the character says while a male character is masturbating.
+3-male_finished_masturbating=,What the character says when a male character "finishes" masturbating.
+3-female_must_masturbate=,What the character says when a female character has lost a hand while nude, and must masturbate.
+3-female_start_masturbating=,What the character says when a female character has started masturbating.
+3-female_masturbating=,What the character says while a female character is masturbating.
+3-female_finished_masturbating=,What the character says when a female character "finishes" masturbating.
+
+
+
+
+#SELF MASTURBATING
+#If your character is naked and loses a hand, they have lost the game and must masturbate.
+#These lines only come up in the relevant stages, so you don't need to include the stage numbers here. Just remember which stage is which when you make the images. The "starting" image is still in the naked stage.
+#The "finished_masturbating" line will repeat many times if the game is not yet finished. This plays as opponents comment on the how good their hands are.
+
+#naked
+-3-must_masturbate_first=,This is the character response when they lost their last hand and have to masturbate, and they're the first character who's required to masturbate.
+-3-must_masturbate=,This is the character response when they lost their last hand and have to masturbate, and they're not the first character who's required to masturbate.
+-3-start_masturbating=,What the character says as they start masturbating.
+
+
+#masturbating
+-2-masturbating=,What the character says while they're masturbating.
+-2-heavy_masturbating=,What the character says while they're masturbating, and closer to "finishing".
+-2-finishing_masturbating=,What the masturbating character says as they "finish".
+
+
+#finished
+-1-finished_masturbating=,What the character says after they've finished masturbating.
+
+
+
+
+#GAME OVER
+#Lines spoken after the overall winner has been decided and all the losers have finished their forfeits.
+
+#stage-generic lines that will be used for every individual stage that doesn't have a line written
+game_over_victory=trollface.png,Problem?
+
+
+#stage-specific lines that override the stage-generic ones
+
+#finished
+game_over_defeat=,What the character says when someone else has won the game. This can only occur when a player is in the "finished" stage.
+
+#EPILOGUE/ENDING
+
+#CUSTOM POSES
