@@ -52,9 +52,14 @@ function GEnding(player, ending){
     } else {
         console.log("No preview image found for: "+player.id+" ending: "+$(ending).html());
     }
+    
+    var offlineIndicator = "";
+    if ($(ending).attr('status') && $(ending).attr('status') != "online") {
+        offlineIndicator = "[Offline] ";
+    }
 
     this.image = previewImage;
-    this.title = $(ending).html();
+    this.title = offlineIndicator + $(ending).html();
     this.unlockHint = $(ending).attr('hint');
     this.unlocked = function() { return EPILOGUES_UNLOCKED || save.hasEnding(player.id, this.title); };
 }
@@ -137,11 +142,16 @@ Collectible.prototype.setCounter = function (val) {
 }
 
 Collectible.prototype.display = function () {
+    var offlineIndicator = "";
+    if (this.status && this.status != "online") {
+        offlineIndicator = "[Offline] ";
+    }
+    
     if ((!this.detailsHidden && !this.hidden) || this.isUnlocked()) {
-        $collectibleTitle.html(this.title);
+        $collectibleTitle.html(offlineIndicator + this.title);
         $collectibleSubtitle.html(this.subtitle).show();
     } else {
-        $collectibleTitle.html("[Locked]");
+        $collectibleTitle.html(offlineIndicator + "[Locked]");
         $collectibleSubtitle.html("").hide();
     }
     
@@ -195,11 +205,16 @@ Collectible.prototype.listElement = function () {
     var titleElem = $('<div class="collectibles-item-title"></div>');
     var subtitleElem = $('<div class="collectibles-item-subtitle"></div>');
     
+    var offlineIndicator = "";
+    if (this.status && this.status != "online") {
+        offlineIndicator = "[Offline] ";
+    }
+    
     if (!this.detailsHidden || this.isUnlocked()) {
-        titleElem.html(this.title);
+        titleElem.html(offlineIndicator + this.title);
         subtitleElem.html(this.subtitle);
     } else {
-        titleElem.html("[Locked]");
+        titleElem.html(offlineIndicator + "[Locked]");
         subtitleElem.html(this.unlock_hint);
     }
     

@@ -1390,8 +1390,13 @@ OpponentDetailsDisplay.prototype.updateEpiloguesView = function () {
             genderText = 'All Genders';
         }
         
+        var offlineIndicator = "";
+        if (group[0].attr('status') && group[0].attr('status') != "online") {
+            offlineIndicator = "[Offline] ";
+        }
+        
         return this.createEpilogueCard(
-            group[0].text(), genderText, group[0].attr('hint')
+            (offlineIndicator + group[0].text()), genderText, group[0].attr('hint')
         );
     }.bind(this));
     
@@ -1404,11 +1409,16 @@ OpponentDetailsDisplay.prototype.createCollectibleCard = function (collectible) 
     var titleElem = container.appendChild(createElementWithClass('div', 'opponent-subview-title'));
     var subtitleElem = container.appendChild(createElementWithClass('div', 'opponent-subview-subtitle'));
     
+    var offlineIndicator = "";
+    if (collectible.status && collectible.status != "online") {
+        offlineIndicator = "[Offline] ";
+    }
+    
     if (!collectible.detailsHidden || collectible.isUnlocked()) {
-        $(titleElem).html(collectible.title);
+        $(titleElem).html(offlineIndicator + collectible.title);
         $(subtitleElem).html(collectible.subtitle);
     } else {
-        $(titleElem).html("[Locked]");
+        $(titleElem).html(offlineIndicator + "[Locked]");
         $(subtitleElem).html("");
     }
     
