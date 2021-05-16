@@ -179,7 +179,7 @@ var statusIndicators = {
     },
     event: {
         icon: "badge-event.png",
-        tooltip: "This opponent only returns to the official version of the game for special events."
+        tooltip: "This opponent is only available in the official version of the game during the April Fool's Day event."
     }
 }
 
