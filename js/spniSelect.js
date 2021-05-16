@@ -228,10 +228,13 @@ function splitCreatorField (field) {
  * Loads and parses the main opponent listing file.
  ************************************************************/
 function loadListingFile () {
-    var listingFiles = [ "opponents/listing.xml" ];
+    var listingFiles = [];
+    
     if (includedOpponentStatuses["testing"]) {
         listingFiles.push("opponents/listing-test.xml");
     }
+    
+    listingFiles.push("opponents/listing.xml");
 
     /* clear the previous meta information */
     var outstandingLoads = 0;
