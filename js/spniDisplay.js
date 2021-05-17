@@ -1469,9 +1469,14 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.sourceLabel.html(opponent.source);
     this.writerLabel.html(opponent.writer);
     this.artistLabel.html(opponent.artist);
-    this.lastUpdateLabel.text(new Intl.DateTimeFormat([], { dateStyle: 'short', timeStyle: 'short' })
-                              .format(new Date(opponent.lastUpdated))
-                              + " (" + fuzzyTimeAgo(opponent.lastUpdated) + ")");
+    if (this.opponent.lastUpdated) {
+        var timeStyle = Date.now() - this.opponent.lastUpdated > TESTING_MAX_AGE ? undefined : 'short';
+        this.lastUpdateLabel.text(new Intl.DateTimeFormat([], { dateStyle: 'short', timeStyle: timeStyle })
+                                  .format(new Date(opponent.lastUpdated))
+                                  + " (" + fuzzyTimeAgo(opponent.lastUpdated) + ")");
+    } else {
+        this.lastUpdateLabel.text('Unknown');
+    }
     this.descriptionLabel.html(opponent.description);
 
     this.simpleImage.one('load', this.rescaleSimplePose.bind(this, opponent.scale));
