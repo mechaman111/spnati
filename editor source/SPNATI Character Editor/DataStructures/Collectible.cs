@@ -23,8 +23,8 @@ namespace SPNATI_Character_Editor.DataStructures
 
 		[DefaultValue("")]
 		[ComboBox(DisplayName = "Status", Description = "Where the collectible is available", GroupOrder = 1, Options = new string[] {
+			"online",
 			"offline",
-			"testing",
 		})]
 		[XmlAttribute("status")]
 		public string Status

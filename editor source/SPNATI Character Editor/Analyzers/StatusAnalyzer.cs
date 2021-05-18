@@ -35,6 +35,8 @@ namespace SPNATI_Character_Editor.Analyzers
 				"offline",
 				"incomplete",
 				"testing",
+				"duplicate",
+				"event",
 				"unlisted"
 			};
 			return values;
