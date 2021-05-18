@@ -132,7 +132,7 @@ namespace SPNATI_Character_Editor.Providers
 
 		public void SetFormatInfo(LookupFormat info)
 		{
-			info.Caption = "Skin Select";
+			info.Caption = "Costume Select";
 			info.Columns = new string[] { "Name", "ID", "Character", "Folder" };
 		}
 
