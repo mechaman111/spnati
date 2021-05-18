@@ -80,7 +80,6 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 
 			if (!skipMinor)
 			{
-				CheckMarkers();
 				CheckSituations();
 				grpChecklist.Unshield();
 
@@ -295,23 +294,6 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			}
 		}
 
-		private void CheckMarkers()
-		{
-			CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character);
-			if (editorData != null && editorData.Markers != null)
-			{
-				foreach (Marker marker in editorData.Markers.Markers)
-				{
-					if (!string.IsNullOrEmpty(marker.Name) && string.IsNullOrEmpty(marker.Description))
-					{
-						AddTask("Document markers", $"Documenting what your markers are used for helps you remember what each marker signifies and helps other authors use your markers appropriately.\r\n\r\n" +
-							$"Any markers that should be hidden from other authors should be given a \"private\" scope.", typeof(MarkerEditor));
-						break;
-					}
-				}
-			}
-		}
-
 		private void CheckSituations()
 		{
 			CharacterEditorData editorData = CharacterDatabase.GetEditorData(_character);
@@ -319,7 +301,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			{
 				if (editorData.NoteworthySituations == null || editorData.NoteworthySituations.Count == 0)
 				{
-					AddTask("Call out \"must target\" situations", "Use the \"Call Out\" button for dialogue cases where something particularly interesting is happening that other characters should definitely react to.\r\n\r\n" +
+					AddTask("Call out situations", "Use the \"Call Out\" button for dialogue cases where something particularly interesting is happening that other characters should definitely react to.\r\n\r\n" +
 						"These situations will appear in other characters' Writing Aid, making it easy to get other characters to interact with yours.", typeof(DialogueEditor));
 				}
 				else if (!editorData.ReviewedPriorities)
