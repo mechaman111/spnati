@@ -159,14 +159,14 @@
 			// 
 			this.tsHide.Name = "tsHide";
 			this.tsHide.Size = new System.Drawing.Size(178, 22);
-			this.tsHide.Text = "Hide Case";
+			this.tsHide.Text = "Hide Case in Editor";
 			this.tsHide.Click += new System.EventHandler(this.tsHide_Click);
 			// 
 			// tsUnhide
 			// 
 			this.tsUnhide.Name = "tsUnhide";
 			this.tsUnhide.Size = new System.Drawing.Size(178, 22);
-			this.tsUnhide.Text = "Unhide Case";
+			this.tsUnhide.Text = "Unhide Case in Editor";
 			this.tsUnhide.Click += new System.EventHandler(this.tsUnhide_Click);
 			// 
 			// toolStripSeparator1
