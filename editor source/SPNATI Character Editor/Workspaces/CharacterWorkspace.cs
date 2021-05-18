@@ -69,7 +69,7 @@ namespace SPNATI_Character_Editor.Workspaces
 			}
 			else if (status == OpponentStatus.Event)
 			{
-				ShowBanner("This character is not part of the permanent roster and is only available during certain events.", Desktop.Skinning.SkinnedHighlight.Bad);
+				ShowBanner("This is a joke character, only available during the April Fool's Day event.", Desktop.Skinning.SkinnedHighlight.Bad);
 			}
 			else if (status == OpponentStatus.Incomplete)
 			{
