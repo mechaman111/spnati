@@ -31,6 +31,8 @@
 			this.valSize = new Desktop.Skinning.SkinnedNumericUpDown();
 			this.radPt = new Desktop.Skinning.SkinnedRadioButton();
 			this.radPx = new Desktop.Skinning.SkinnedRadioButton();
+			this.radPct = new Desktop.Skinning.SkinnedRadioButton();
+			this.radEm = new Desktop.Skinning.SkinnedRadioButton();
 			((System.ComponentModel.ISupportInitialize)(this.valSize)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -78,12 +80,38 @@
 			this.radPx.Text = "px";
 			this.radPx.UseVisualStyleBackColor = true;
 			// 
+			// radPct
+			// 
+			this.radPct.AutoSize = true;
+			this.radPct.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.radPct.Location = new System.Drawing.Point(128, 2);
+			this.radPct.Name = "radPct";
+			this.radPct.Size = new System.Drawing.Size(36, 17);
+			this.radPct.TabIndex = 3;
+			this.radPct.TabStop = true;
+			this.radPct.Text = "%";
+			this.radPct.UseVisualStyleBackColor = true;
+			// 
+			// radEm
+			// 
+			this.radEm.AutoSize = true;
+			this.radEm.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
+			this.radEm.Location = new System.Drawing.Point(165, 2);
+			this.radEm.Name = "radEm";
+			this.radEm.Size = new System.Drawing.Size(36, 17);
+			this.radEm.TabIndex = 4;
+			this.radEm.TabStop = true;
+			this.radEm.Text = "em";
+			this.radEm.UseVisualStyleBackColor = true;
+			// 
 			// StyleFontSizeControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.radPx);
 			this.Controls.Add(this.radPt);
+			this.Controls.Add(this.radPct);
+			this.Controls.Add(this.radEm);
 			this.Controls.Add(this.valSize);
 			this.Name = "StyleFontSizeControl";
 			this.Size = new System.Drawing.Size(150, 21);
@@ -98,5 +126,7 @@
 		private Desktop.Skinning.SkinnedNumericUpDown valSize;
 		private Desktop.Skinning.SkinnedRadioButton radPt;
 		private Desktop.Skinning.SkinnedRadioButton radPx;
+		private Desktop.Skinning.SkinnedRadioButton radPct;
+		private Desktop.Skinning.SkinnedRadioButton radEm;
 	}
 }
