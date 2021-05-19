@@ -62,7 +62,6 @@ namespace SPNATI_Character_Editor
 		[ComboBox(DisplayName = "Status", Description = "Where the epilogue is available", GroupOrder = 1, Options = new string[] {
 			"online",
 			"offline",
-			"testing",
 			"unlisted",
 		})]
 		[XmlAttribute("status")]

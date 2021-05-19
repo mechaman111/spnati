@@ -418,9 +418,6 @@ namespace SPNATI_Character_Editor
 			shell.AddToolbarItem("New Character...", CreateNewCharacter, menu, Keys.None);
 			shell.AddToolbarItem("Save", Save, menu, Keys.Control | Keys.S);
 			shell.AddToolbarSeparator(menu);
-			shell.AddToolbarItem("Import .txt...", ImportCharacter, menu, Keys.Control | Keys.I);
-			shell.AddToolbarItem("Export .txt for make_xml.py", ExportCharacter, menu, Keys.Control | Keys.E);
-			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Settings...", Setup, menu, Keys.None);
 			shell.AddToolbarSeparator(menu);
 			shell.AddToolbarItem("Exit", Exit, menu, Keys.Alt | Keys.F4);
@@ -433,7 +430,7 @@ namespace SPNATI_Character_Editor
 
 			//Characters
 			shell.AddToolbarItem("Characters...", OpenCharacterSelect, Keys.None);
-			shell.AddToolbarItem("Skins...", OpenCostumeSelect, Keys.None);
+			shell.AddToolbarItem("Costumes...", OpenCostumeSelect, Keys.None);
 			//shell.AddToolbarItem("Decks...", OpenDeckSelect, Keys.None);
 
 			//Validate

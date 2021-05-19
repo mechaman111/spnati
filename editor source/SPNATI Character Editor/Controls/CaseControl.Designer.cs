@@ -95,9 +95,9 @@
 			// 
 			// splitCase
 			// 
-			this.splitCase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.splitCase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.splitCase.Location = new System.Drawing.Point(0, 0);
 			this.splitCase.Name = "splitCase";
 			this.splitCase.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -117,9 +117,9 @@
 			// 
 			// skinnedPanel1
 			// 
-			this.skinnedPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.skinnedPanel1.Controls.Add(this.tabCase);
 			this.skinnedPanel1.Location = new System.Drawing.Point(0, 28);
 			this.skinnedPanel1.Name = "skinnedPanel1";
@@ -130,9 +130,9 @@
 			// 
 			// tabCase
 			// 
-			this.tabCase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabCase.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tabCase.Controls.Add(this.tabConditions);
 			this.tabCase.Controls.Add(this.tabTags);
 			this.tabCase.Location = new System.Drawing.Point(1, 0);
@@ -165,7 +165,7 @@
 			this.chkPlayOnce.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.chkPlayOnce.AutoSize = true;
 			this.chkPlayOnce.FieldType = Desktop.Skinning.SkinnedFieldType.Primary;
-			this.chkPlayOnce.Location = new System.Drawing.Point(392, 128);
+			this.chkPlayOnce.Location = new System.Drawing.Point(417, 128);
 			this.chkPlayOnce.Name = "chkPlayOnce";
 			this.chkPlayOnce.Size = new System.Drawing.Size(75, 17);
 			this.chkPlayOnce.TabIndex = 63;
@@ -176,8 +176,8 @@
 			// stripConditions
 			// 
 			this.stripConditions.AddCaption = "AND";
-			this.stripConditions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.stripConditions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.stripConditions.DecorationText = null;
 			this.stripConditions.Location = new System.Drawing.Point(6, 122);
 			this.stripConditions.Margin = new System.Windows.Forms.Padding(0);
@@ -200,9 +200,9 @@
 			// 
 			// tabsConditions
 			// 
-			this.tabsConditions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabsConditions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tabsConditions.Controls.Add(this.tabPage1);
 			this.tabsConditions.Location = new System.Drawing.Point(32767, 15);
 			this.tabsConditions.Margin = new System.Windows.Forms.Padding(1);
@@ -224,9 +224,9 @@
 			// 
 			// skinnedPanel2
 			// 
-			this.skinnedPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.skinnedPanel2.Controls.Add(this.tabsConditions);
 			this.skinnedPanel2.Controls.Add(this.tableConditions);
 			this.skinnedPanel2.Location = new System.Drawing.Point(5, 149);
@@ -243,9 +243,9 @@
 			this.tableConditions.AllowFavorites = true;
 			this.tableConditions.AllowHelp = false;
 			this.tableConditions.AllowMacros = true;
-			this.tableConditions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tableConditions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tableConditions.BackColor = System.Drawing.Color.White;
 			this.tableConditions.Data = null;
 			this.tableConditions.HeaderType = Desktop.Skinning.SkinnedBackgroundType.Surface;
@@ -278,10 +278,10 @@
 			this.valPriority.ForeColor = System.Drawing.Color.Black;
 			this.valPriority.Location = new System.Drawing.Point(599, 127);
 			this.valPriority.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
+			10000,
+			0,
+			0,
+			0});
 			this.valPriority.Name = "valPriority";
 			this.valPriority.Size = new System.Drawing.Size(54, 20);
 			this.valPriority.TabIndex = 7;
@@ -302,8 +302,8 @@
 			// 
 			// skinnedGroupBox1
 			// 
-			this.skinnedGroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.skinnedGroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.skinnedGroupBox1.BackColor = System.Drawing.Color.White;
 			this.skinnedGroupBox1.Controls.Add(this.txtFolder);
 			this.skinnedGroupBox1.Controls.Add(this.skinnedLabel1);
@@ -326,8 +326,8 @@
 			// 
 			// txtFolder
 			// 
-			this.txtFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtFolder.BackColor = System.Drawing.Color.White;
 			this.txtFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.txtFolder.ForeColor = System.Drawing.Color.Black;
@@ -364,8 +364,8 @@
 			// 
 			// txtLabel
 			// 
-			this.txtLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtLabel.BackColor = System.Drawing.Color.White;
 			this.txtLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.txtLabel.ForeColor = System.Drawing.Color.Black;
@@ -403,8 +403,8 @@
 			// 
 			// cboCaseTags
 			// 
-			this.cboCaseTags.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.cboCaseTags.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.cboCaseTags.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
 			this.cboCaseTags.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
 			this.cboCaseTags.BackColor = System.Drawing.Color.White;
@@ -424,8 +424,8 @@
 			// 
 			// lblHelpText
 			// 
-			this.lblHelpText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblHelpText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lblHelpText.AutoEllipsis = true;
 			this.lblHelpText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.lblHelpText.ForeColor = System.Drawing.Color.Black;
@@ -470,9 +470,9 @@
 			this.chkBackground.Name = "chkBackground";
 			this.chkBackground.Size = new System.Drawing.Size(84, 17);
 			this.chkBackground.TabIndex = 62;
-			this.chkBackground.Text = "Background";
+			this.chkBackground.Text = "Hidden";
 			this.toolTip1.SetToolTip(this.chkBackground, "When conditions are met, runs this case in the background (setting markers, state" +
-        ", etc.) without displaying to the player.");
+		", etc.) without displaying to the player.");
 			this.chkBackground.UseVisualStyleBackColor = true;
 			// 
 			// tabTags
@@ -492,9 +492,9 @@
 			// 
 			// lstRemoveTags
 			// 
-			this.lstRemoveTags.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstRemoveTags.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lstRemoveTags.Location = new System.Drawing.Point(348, 19);
 			this.lstRemoveTags.Name = "lstRemoveTags";
 			this.lstRemoveTags.RecordContext = null;
@@ -506,8 +506,8 @@
 			// 
 			// lstAddTags
 			// 
-			this.lstAddTags.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+			this.lstAddTags.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)));
 			this.lstAddTags.Location = new System.Drawing.Point(6, 19);
 			this.lstAddTags.Name = "lstAddTags";
 			this.lstAddTags.RecordContext = null;
@@ -566,9 +566,9 @@
 			// 
 			// containerDialogue
 			// 
-			this.containerDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.containerDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.containerDialogue.Controls.Add(this.tabs);
 			this.containerDialogue.Location = new System.Drawing.Point(0, 23);
 			this.containerDialogue.Name = "containerDialogue";
@@ -579,9 +579,9 @@
 			// 
 			// tabs
 			// 
-			this.tabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tabs.Controls.Add(this.tabDialogue);
 			this.tabs.Controls.Add(this.tabNotes);
 			this.tabs.Location = new System.Drawing.Point(1, 0);
@@ -612,7 +612,7 @@
 			this.tsDialogue.Dock = System.Windows.Forms.DockStyle.None;
 			this.tsDialogue.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.tsDialogue.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsAddVariable});
+			this.tsAddVariable});
 			this.tsDialogue.Location = new System.Drawing.Point(3, 4);
 			this.tsDialogue.Name = "tsDialogue";
 			this.tsDialogue.Size = new System.Drawing.Size(26, 25);
@@ -675,9 +675,9 @@
 			// 
 			// gridDialogue
 			// 
-			this.gridDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gridDialogue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.gridDialogue.Location = new System.Drawing.Point(3, 32);
 			this.gridDialogue.Name = "gridDialogue";
 			this.gridDialogue.ReadOnly = false;
@@ -701,9 +701,9 @@
 			// 
 			// txtNotes
 			// 
-			this.txtNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtNotes.BackColor = System.Drawing.Color.White;
 			this.txtNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.txtNotes.ForeColor = System.Drawing.Color.Black;
@@ -726,7 +726,7 @@
 			this.label1.Size = new System.Drawing.Size(413, 13);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Jot down any personal notes about this case here. These notes won\'t appear in gam" +
-    "e.";
+	"e.";
 			// 
 			// stripTabs
 			// 

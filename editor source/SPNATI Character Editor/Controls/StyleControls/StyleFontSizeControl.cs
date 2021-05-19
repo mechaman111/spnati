@@ -21,11 +21,21 @@ namespace SPNATI_Character_Editor.Controls.StyleControls
 				Attribute.PropertyChanged += Attribute_PropertyChanged;
 			}
 			string value = Attribute.Value;
+
 			radPx.Checked = true;
 			if (value.EndsWith("pt"))
 			{
 				radPt.Checked = true;
 			}
+			else if (value.EndsWith("%"))
+			{
+				radPct.Checked = true;
+			}
+			else if (value.EndsWith("em"))
+			{
+				radEm.Checked = true;
+			}
+
 			float num;
 			value = Regex.Replace(value, @"[^0-9\.]*", "");
 			float.TryParse(value, out num);
@@ -55,6 +65,8 @@ namespace SPNATI_Character_Editor.Controls.StyleControls
 			valSize.ValueChanged += ValSize_ValueChanged;
 			radPt.CheckedChanged += ValSize_ValueChanged;
 			radPx.CheckedChanged += ValSize_ValueChanged;
+			radPct.CheckedChanged += ValSize_ValueChanged;
+			radEm.CheckedChanged += ValSize_ValueChanged;
 		}
 
 		protected override void RemoveHandlers()
@@ -62,6 +74,8 @@ namespace SPNATI_Character_Editor.Controls.StyleControls
 			valSize.ValueChanged -= ValSize_ValueChanged;
 			radPt.CheckedChanged -= ValSize_ValueChanged;
 			radPx.CheckedChanged -= ValSize_ValueChanged;
+			radPct.CheckedChanged -= ValSize_ValueChanged;
+			radEm.CheckedChanged -= ValSize_ValueChanged;
 		}
 
 		private void ValSize_ValueChanged(object sender, EventArgs e)
@@ -73,10 +87,20 @@ namespace SPNATI_Character_Editor.Controls.StyleControls
 		{
 			int size = (int)valSize.Value;
 			string unit = "px";
+
 			if (radPt.Checked)
 			{
 				unit = "pt";
 			}
+			else if (radPct.Checked)
+			{
+				unit = "%";
+			}
+			else if (radEm.Checked)
+			{
+				unit = "em";
+			}
+
 			Attribute.Value = $"{size}{unit}";
 		}
 	}

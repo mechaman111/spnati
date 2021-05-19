@@ -40,6 +40,8 @@
 			this.cboStatus = new Desktop.Skinning.SkinnedComboBox();
 			this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
 			this.cboGender = new Desktop.Skinning.SkinnedComboBox();
+			this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
+			this.cboEvent = new Desktop.Skinning.SkinnedComboBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -72,7 +74,7 @@
 			this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label2.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.label2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.label2.Location = new System.Drawing.Point(3, 64);
+			this.label2.Location = new System.Drawing.Point(3, 91);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(169, 13);
 			this.label2.TabIndex = 3;
@@ -88,7 +90,7 @@
 			this.cboBaseStage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboBaseStage.FormattingEnabled = true;
 			this.cboBaseStage.KeyMember = null;
-			this.cboBaseStage.Location = new System.Drawing.Point(178, 61);
+			this.cboBaseStage.Location = new System.Drawing.Point(178, 88);
 			this.cboBaseStage.Name = "cboBaseStage";
 			this.cboBaseStage.SelectedIndex = -1;
 			this.cboBaseStage.SelectedItem = null;
@@ -103,7 +105,7 @@
 			this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label3.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.label3.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.label3.Location = new System.Drawing.Point(3, 97);
+			this.label3.Location = new System.Drawing.Point(3, 124);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(41, 13);
 			this.label3.TabIndex = 6;
@@ -112,7 +114,7 @@
 			// gridLabels
 			// 
 			this.gridLabels.Label = "Display Name";
-			this.gridLabels.Location = new System.Drawing.Point(6, 113);
+			this.gridLabels.Location = new System.Drawing.Point(6, 140);
 			this.gridLabels.Name = "gridLabels";
 			this.gridLabels.Size = new System.Drawing.Size(195, 151);
 			this.gridLabels.TabIndex = 6;
@@ -128,7 +130,7 @@
 			this.label22.Name = "label22";
 			this.label22.Size = new System.Drawing.Size(43, 13);
 			this.label22.TabIndex = 96;
-			this.label22.Text = "Portrait:";
+			this.label22.Text = "Event:";
 			// 
 			// cboDefaultPic
 			// 
@@ -140,7 +142,7 @@
 			this.cboDefaultPic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboDefaultPic.FormattingEnabled = true;
 			this.cboDefaultPic.KeyMember = null;
-			this.cboDefaultPic.Location = new System.Drawing.Point(53, 29);
+			this.cboDefaultPic.Location = new System.Drawing.Point(273, 29);
 			this.cboDefaultPic.Name = "cboDefaultPic";
 			this.cboDefaultPic.SelectedIndex = -1;
 			this.cboDefaultPic.SelectedItem = null;
@@ -187,7 +189,7 @@
 			this.skinnedLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.skinnedLabel1.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
 			this.skinnedLabel1.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-			this.skinnedLabel1.Location = new System.Drawing.Point(224, 32);
+			this.skinnedLabel1.Location = new System.Drawing.Point(3, 59);
 			this.skinnedLabel1.Name = "skinnedLabel1";
 			this.skinnedLabel1.Size = new System.Drawing.Size(45, 13);
 			this.skinnedLabel1.TabIndex = 99;
@@ -203,7 +205,7 @@
 			this.cboGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.cboGender.FormattingEnabled = true;
 			this.cboGender.KeyMember = null;
-			this.cboGender.Location = new System.Drawing.Point(273, 29);
+			this.cboGender.Location = new System.Drawing.Point(53, 56);
 			this.cboGender.Name = "cboGender";
 			this.cboGender.SelectedIndex = -1;
 			this.cboGender.SelectedItem = null;
@@ -211,10 +213,43 @@
 			this.cboGender.Sorted = false;
 			this.cboGender.TabIndex = 4;
 			// 
+			// skinnedLabel2
+			// 
+			this.skinnedLabel2.AutoSize = true;
+			this.skinnedLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.skinnedLabel2.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.skinnedLabel2.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+			this.skinnedLabel2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+			this.skinnedLabel2.Location = new System.Drawing.Point(224, 32);
+			this.skinnedLabel2.Name = "skinnedLabel2";
+			this.skinnedLabel2.Size = new System.Drawing.Size(45, 13);
+			this.skinnedLabel2.TabIndex = 101;
+			this.skinnedLabel2.Text = "Portrait:";
+			// 
+			// cboEvent
+			// 
+			this.cboEvent.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+			this.cboEvent.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+			this.cboEvent.BackColor = System.Drawing.Color.White;
+			this.cboEvent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cboEvent.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+			this.cboEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.cboEvent.FormattingEnabled = true;
+			this.cboEvent.KeyMember = null;
+			this.cboEvent.Location = new System.Drawing.Point(53, 29);
+			this.cboEvent.Name = "cboEvent";
+			this.cboEvent.SelectedIndex = -1;
+			this.cboEvent.SelectedItem = null;
+			this.cboEvent.Size = new System.Drawing.Size(156, 21);
+			this.cboEvent.Sorted = false;
+			this.cboEvent.TabIndex = 100;
+			// 
 			// SkinEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.skinnedLabel2);
+			this.Controls.Add(this.cboEvent);
 			this.Controls.Add(this.cboGender);
 			this.Controls.Add(this.skinnedLabel1);
 			this.Controls.Add(this.lblStatus);
@@ -248,5 +283,7 @@
 		private Desktop.Skinning.SkinnedComboBox cboStatus;
 		private Desktop.Skinning.SkinnedLabel skinnedLabel1;
 		private Desktop.Skinning.SkinnedComboBox cboGender;
+		private Desktop.Skinning.SkinnedLabel skinnedLabel2;
+		private Desktop.Skinning.SkinnedComboBox cboEvent;
 	}
 }

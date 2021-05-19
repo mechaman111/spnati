@@ -21,6 +21,7 @@ namespace SPNATI_Character_Editor.Activities
 			cboStatus.Items.Add("offline");
 			cboStatus.Items.Add("unlisted");
 			cboGender.Items.AddRange(new string[] { "female", "male" });
+			cboEvent.Items.AddRange(new string[] { "", "none", "valentines", "april_fools", "easter", "summer", "oktoberfest", "halloween", "xmas" });
 		}
 
 		public override string Caption
@@ -71,6 +72,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				txtName.Text = link.Name;
 				cboStatus.Text = link.Status;
+				cboEvent.Text = link.Set;
 				string gender = link.Gender ?? _costume.Character.Gender;
 				cboGender.SelectedItem = gender;
 			}
@@ -127,12 +129,19 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					status = null;
 				}
+
+				string set = cboEvent.Text;
+				if (string.IsNullOrEmpty(set) || set == "none")
+				{
+					set = null;
+				}
+
 				string gender = cboGender.SelectedItem?.ToString();
 
 				string label = _costume.Labels.Count > 0 ? _costume.Labels[0].Value : null;
 
-				if (txtName.Text != _costume.Link.Name || status != _costume.Link.Status || _costume.Link.IsDirty || gender != _costume.Link.Gender
-					|| label != _costume.Link.Label)
+				if (txtName.Text != _costume.Link.Name || status != _costume.Link.Status || set != _costume.Link.Set || _costume.Link.IsDirty
+					|| gender != _costume.Link.Gender || label != _costume.Link.Label)
 				{
 					_linkDataChanged = true;
 				}
@@ -142,6 +151,7 @@ namespace SPNATI_Character_Editor.Activities
 					_costume.Link.IsDirty = false;
 					_costume.Link.Name = txtName.Text;
 					_costume.Link.Status = status;
+					_costume.Link.Set = set;
 					_costume.Link.Label = label;
 
 					if (gender != _costume.Character.Gender)
@@ -184,5 +194,5 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_costume, image, 0));
 		}
-	}
+    }
 }

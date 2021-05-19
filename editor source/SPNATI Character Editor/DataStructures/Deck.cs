@@ -93,11 +93,10 @@ namespace SPNATI_Character_Editor.DataStructures
 		}
 
 		[DefaultValue("online")]
-		[ComboBox(DisplayName = "Status", Description = "Where the epilogue is available", GroupOrder = 1, Options = new string[] {
+		[ComboBox(DisplayName = "Status", Description = "Where the deck is available", GroupOrder = 1, Options = new string[] {
 			"event",
 			"online",
 			"offline",
-			"testing",
 			"unlisted",
 		})]
 		[XmlElement("status")]
