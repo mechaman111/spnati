@@ -57,12 +57,6 @@ namespace SPNATI_Character_Editor
 				Directory.CreateDirectory(dir);
 			}
 
-			bool backupEnabled = Config.BackupEnabled;
-			if (backupEnabled)
-			{
-				CleanUpBackups(character);
-			}
-
 			string timestamp = GetTimeStamp();
 			bool success = BackupAndExportXml(character, character, "behaviour", timestamp) &&
 				BackupAndExportXml(character, character.Metadata, "meta", timestamp) &&
