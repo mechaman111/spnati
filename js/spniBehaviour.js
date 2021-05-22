@@ -858,8 +858,18 @@ function pluralize (text) {
         return text.replace(/ff?$/, 'ves');
     } else if (text.match(/s$/)) {
         return text + 'es';
+    } else if (text.match(/(?<!ae)y$/)) {
+        return text.replace(/y$/, 'ies');
     } else {
         return text + 's';
+    }
+}
+
+function indefiniteArticle(word) {
+    if (/^[aeio]|^u(?!ni)/.test(word)) {
+        return "an";
+    } else {
+        return "a";
     }
 }
 
@@ -888,14 +898,22 @@ function expandDialogue (dialogue, self, target, bindings) {
             case 'clothing':
                 var clothing = (target||self).removedClothing;
                 if (fn == 'ifplural' && args) {
-                    substitution = expandDialogue(args.split('|')[clothing.plural ? 0 : 1], self, target, bindings);
+                    args = args.split('|');
+                    substitution = expandDialogue(args[clothing.plural ? 0 : clothing.plural === null && args.length > 2 ? 2 : 1], self, target, bindings);
                 } else if (fn === 'plural') {
-                    substitution = clothing.plural ? 'plural' : 'single';
+                    substitution = clothing.plural ? 'plural'
+                        : clothing.plural === null ? 'uncountable' : 'single';
                 } else if (fn === 'toplural') {
-                    if (!clothing.plural) {
+                    if (clothing.plural === false) {
                         substitution = pluralize(clothing.name);
                     } else {
                         substitution = clothing.name;
+                    }
+                } else if (fn == 'a') {
+                    if (clothing.plural === false) {
+                        substitution = indefiniteArticle(clothing.name) + ' ';
+                    } else {
+                        substitution = '';
                     }
                 } else if ((fn == 'type' || fn == 'position' || fn == 'generic') && args === undefined) {
                     substitution = clothing[fn];

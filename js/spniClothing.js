@@ -42,7 +42,7 @@ function Clothing (name, generic, type, position, image, plural, id) {
     this.type = type;
     this.position = position;
     this.image = image;
-    this.plural = plural || false;
+    this.plural = (plural === undefined ? false : plural);
     this.id = id;
 }
 

@@ -37,8 +37,10 @@ see the page on backgrounds for more details.
 | Variable     | Description                                    |
 | ------------ | ---------------------------------------------- |
 | `~clothing~` | The name of the article of clothing the target is stripping/stripped. |
+| `~clothing.a~` | The proper indefinite article for `~clothing~`, if it's not plural or uncountable. Includes a following space as needed. For example, `~clothing.a~~clothing~` can expand to "an apron", "a shirt", or "pants". |
 | `~clothing.ifplural(|)~` | Lets you make your dialogue correct according to the grammatically number of the current article of clothing. See the _ifplural_ section below, for how to use this variable. |
 | `~clothing.plural~` | Expands to `plural` or `single`, for use in variable tests if you want to write completely separate cases depending on the grammatical number. |
+| `~clothing.toplural~` | Converts `~clothing~` to plural form if it isn't already, and isn't uncountable. Example: "dress" becomes "dresses". This can let your character talk more naturally about clothing of the same kind as that in question. |
 | `~clothing.generic~` | The generic designation of the current article. For example, sandals, boots, and shoes might all be generically referred to as shoes (TBD). If no generic designation is assigned in the character's behaviour file, this expands to the same as `~clothing~`. |
 | `~clothing.type~` | The `type` of the current article – `extra`, `minor`, `major`, or `important` |
 | `~clothing.position~` | The `position` of the current article – `upper`, `lower`, `both`, `feet`, `hands`, `arms`, `legs`, `waist`, `neck`, `head`, or `other`.

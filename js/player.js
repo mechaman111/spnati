@@ -153,7 +153,8 @@ Player.prototype.resetState = function () {
             var name = $(this).attr('name') || $(this).attr('lowercase');
             var type = $(this).attr('type');
             var position = $(this).attr('position');
-            var plural = ['true', 'yes'].indexOf($(this).attr('plural')) >= 0;
+            var plural = $(this).attr('plural');
+            plural = (plural == 'null' ? null : plural == 'true');
 
             var newClothing = new Clothing(name, generic, type, position, null, plural, 0);
 
