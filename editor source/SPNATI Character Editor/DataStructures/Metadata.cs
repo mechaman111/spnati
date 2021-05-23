@@ -190,7 +190,10 @@ namespace SPNATI_Character_Editor
 		{
 			FirstName = c.FirstName;
 			LastName = c.LastName;
-			Label = c.Label;
+			if (string.IsNullOrEmpty(Label))
+			{
+				Label = c.Label;
+			}
 			if (string.IsNullOrEmpty(Gender))
 			{
 				Gender = c.Gender;

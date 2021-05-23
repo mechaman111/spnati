@@ -237,7 +237,15 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public string Name
 		{
-			get { return Label; }
+			get
+			{
+				if (!string.IsNullOrEmpty(Metadata.Label))
+				{
+					return Metadata.Label;
+				}
+
+				return Label;
+			}
 		}
 
 		[XmlIgnore]
