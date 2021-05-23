@@ -858,7 +858,7 @@ function pluralize (text) {
         return text.replace(/ff?$/, 'ves');
     } else if (text.match(/s$/)) {
         return text + 'es';
-    } else if (text.match(/(?<!ae)y$/)) {
+    } else if (text.match(/[^ae]y$/)) {
         return text.replace(/y$/, 'ies');
     } else {
         return text + 's';
