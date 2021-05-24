@@ -11,6 +11,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 	public partial class TargetWidget : UserControl, IDashboardWidget
 	{
 		private const int MaxTargets = 4;
+		private const int MaxIncoming = 100;
 
 		private Character _banterTarget;
 
@@ -41,7 +42,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			{
 				List<Tuple<string, int>> lines = new List<Tuple<string, int>>();
 				graphLines.HorizontalOrientation = true;
-				DataSeries series = graphLines.AddSeries("Targets", 6);
+				DataSeries series = graphLines.AddSeries("Targets", MaxIncoming);
 				grpWidget.Text = "New Lines From Opponents";
 				lblName.Text = "New Lines Towards " + _character.ToString();
 				foreach (string source in GlobalCache.EnumerateChangeInTargets(character))
@@ -59,7 +60,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 					return compare;
 				});
 				_banterTarget = null;
-				for (int i = 0; i < 6 && i < lines.Count; i++)
+				for (int i = 0; i < MaxIncoming && i < lines.Count; i++)
 				{
 					Character c = CharacterDatabase.Get(lines[i].Item1);
 					if (_banterTarget == null)
