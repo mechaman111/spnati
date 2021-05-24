@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 namespace SPNATI_Character_Editor
 {
 	/// <summary>
-	/// Data represenation of meta.xml
+	/// Data representation of meta.xml
 	/// </summary>
 	/// <remarks>
 	/// PROPERTY ORDER IS IMPORTANT - Order determines attribute order in generated XML files

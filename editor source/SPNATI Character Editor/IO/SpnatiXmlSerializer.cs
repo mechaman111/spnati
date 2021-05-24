@@ -25,7 +25,7 @@ namespace SPNATI_Character_Editor.IO
 
 		private const string IndentString = "    ";
 
-		public void Serialize<T>(string filename, T data)
+		public void Serialize<T>(string filename, T data, bool deleteTags = false)
 		{
 			IHookSerialization hook = data as IHookSerialization;
 			if (hook != null)
@@ -49,7 +49,7 @@ namespace SPNATI_Character_Editor.IO
 			XmlWriter writer = XmlWriter.Create(sb, settings);
 			sb.AppendLine("<?xml version='1.0' encoding='UTF-8'?>");
 
-			WriteElement(data, root.ElementName, writer, sb);
+			WriteElement(data, root.ElementName, writer, sb, deleteTags);
 
 			writer.Flush();
 			sb.AppendLine();
@@ -72,9 +72,12 @@ namespace SPNATI_Character_Editor.IO
 			return elementInfo;
 		}
 
-		private void WriteElement(object data, string name, XmlWriter writer, StringBuilder builder)
+		private void WriteElement(object data, string name, XmlWriter writer, StringBuilder builder, bool deleteTags = false)
 		{
 			if (data == null)
+				return;
+
+			if (deleteTags && name == "tag")
 				return;
 
 			Type type = data.GetType();
@@ -238,7 +241,7 @@ namespace SPNATI_Character_Editor.IO
 						writer.WriteStartElement(tuple.Item2);
 						foreach (var obj in array)
 						{
-							WriteElement(obj, tuple.Item3, writer, builder);
+							WriteElement(obj, tuple.Item3, writer, builder, deleteTags);
 						}
 						writer.WriteEndElement();
 

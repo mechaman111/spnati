@@ -150,12 +150,15 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
+		[XmlIgnore]
+		public CharacterTagList TagList = new CharacterTagList();
+
 		[XmlArray("tags")]
 		[XmlArrayItem("tag")]
 		public List<CharacterTag> Tags
 		{
-			get;
-			set;
+			get { return TagList.Tags; }
+			set { TagList.Tags = value; }
 		}
 
 		[XmlArray("nicknames")]

@@ -60,6 +60,7 @@ namespace SPNATI_Character_Editor
 			string timestamp = GetTimeStamp();
 			bool success = BackupAndExportXml(character, character, "behaviour", timestamp) &&
 				BackupAndExportXml(character, character.Metadata, "meta", timestamp) &&
+				BackupAndExportXml(character, character.TagList, "tags", timestamp) &&
 				BackupAndExportXml(character, CharacterDatabase.GetEditorData(character), "editor", timestamp) &&
 				BackupAndExportXml(character, character.Collectibles, "collectibles", timestamp) &&
 				CharacterHistory.Save(character);
@@ -168,7 +169,14 @@ namespace SPNATI_Character_Editor
 			if (data == null) { return false; }
 			string dir = Config.GetRootDirectory(character);
 			string filename = Path.Combine(dir, name + ".xml");
-			if (ExportXml(data, filename))
+
+			bool deleteTags = false;
+			if (name == "behaviour" || name == "meta")
+			{
+				deleteTags = true;
+			}
+
+			if (ExportXml(data, filename, deleteTags))
 			{
 				bool backupEnabled = Config.BackupEnabled;
 				if (backupEnabled)
@@ -301,6 +309,12 @@ namespace SPNATI_Character_Editor
 				character.Collectibles = collectibles;
 			}
 
+			CharacterTagList tags = ImportTags(folderName);
+			if (tags != null)
+			{
+				character.Tags = tags.Tags;
+			}
+
 			CharacterEditorData editorData = ImportEditorData(folderName);
 			CharacterDatabase.AddEditorData(character, editorData);
 
@@ -414,13 +428,13 @@ namespace SPNATI_Character_Editor
 		/// <param name="data">Data to serialize</param>
 		/// <param name="filename">File name</param>
 		/// <returns>True if successful</returns>
-		public static bool ExportXml<T>(T data, string filename)
+		public static bool ExportXml<T>(T data, string filename, bool deleteTags = false)
 		{
 			TextWriter writer = null;
 			try
 			{
 				SpnatiXmlSerializer test = new SpnatiXmlSerializer();
-				test.Serialize(filename, data);
+				test.Serialize(filename, data, deleteTags);
 				return true;
 			}
 			catch (IOException e)
@@ -513,6 +527,21 @@ namespace SPNATI_Character_Editor
 			}
 
 			return ImportXml<MarkerData>(filename);
+		}
+
+		public static CharacterTagList ImportTags(string folderName)
+		{
+			string folder = Config.GetRootDirectory(folderName);
+			if (!Directory.Exists(folder))
+				return null;
+
+			string filename = Path.Combine(folder, "tags.xml");
+			if (!File.Exists(filename))
+			{
+				return null;
+			}
+
+			return ImportXml<CharacterTagList>(filename);
 		}
 
 		public static CharacterEditorData ImportEditorData(string folderName)
