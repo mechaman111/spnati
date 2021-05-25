@@ -124,6 +124,7 @@ var groupSelectHidden = false;
 
 /* opponent listing file */
 var metaFile = "meta.xml";
+var tagsFile = "tags.xml";
 
 /* opponent information storage */
 var loadedOpponents = [];
@@ -372,15 +373,26 @@ function loadListingFile () {
     });
 }
 
-/************************************************************
- * Loads and parses the meta XML file of an opponent.
- ************************************************************/
+/***************************************************************
+ * Loads and parses the meta and tags XML files of an opponent.
+ ***************************************************************/
 function loadOpponentMeta (id, status, releaseNumber, highlightStatus) {
     /* grab and parse the opponent meta file */
     console.log("Loading metadata for \""+id+"\"");
 
     return fetchXML('opponents/' + id + '/' + metaFile).then(function($xml) {
-        return new Opponent(id, $xml, status, releaseNumber, highlightStatus);
+        var opp = new Opponent(id, $xml, status, releaseNumber, highlightStatus);
+        
+        return fetchXMLNoError('opponents/' + id + '/' + tagsFile).then(function ($xml) {
+            if ($xml) {
+                opp.tagsXml = $xml;
+                opp.loadBaseTagsFromXml($xml);
+            }
+            
+            return opp;
+        }).catch(function(err) {
+            return opp;
+        })
     }).catch(function(err) {
         console.error("Failed reading \""+id+"\":");
         captureError(err);

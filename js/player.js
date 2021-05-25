@@ -75,6 +75,7 @@ function Player (id) {
     this.tags = this.baseTags = [];
     this.xml = null;
     this.metaXml = null;
+    this.tagsXml = null;
     this.persistentMarkers = {};
 
     this.resetState();
@@ -452,22 +453,7 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.loaded = false;
     this.loadProgress = undefined;
 
-    /* baseTags stores tags that will be later used in resetState to build the
-     * opponent's true tags list. It does not store implied tags.
-     *
-     * The tags list stores the fully-expanded list of tags for the opponent,
-     * including implied tags.
-     */
-    this.baseTags = $metaXml.find('>tags>tag').map(function() { return canonicalizeTag($(this).text()); }).get();
-    this.removeTag(this.id);
-    this.updateTags();
-    this.searchTags = expandTagsList(this.baseTags);
-    
-    /* "chubby" implies "curvy" on female characters only,
-       so this has to be done separately */
-    if (this.searchTags.includes("chubby") && this.gender == "female") {
-        this.searchTags.push("curvy");
-    }
+    this.loadBaseTagsFromXml($metaXml);
 
     this.cases = new Map();
 
@@ -1014,7 +1000,15 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 
             this.default_costume.poses = poseDefs;
 
-            var tagsArray = $xml.find('>tags>tag').map(function () {
+            var $tagsXml;
+
+            if (this.tagsXml) {
+                $tagsXml = this.tagsXml;
+            } else {
+                $tagsXml = $xml;
+            }
+
+            var tagsArray = $tagsXml.find('>tags>tag').map(function () {
                 return {
                     'tag': canonicalizeTag($(this).text()),
                     'from': $(this).attr('from'),
@@ -1091,6 +1085,25 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             delete players[this.slot];
             updateSelectionVisuals();
         }.bind(this));
+}
+
+Opponent.prototype.loadBaseTagsFromXml = function ($xml) {
+    /* baseTags stores tags that will be later used in resetState to build the
+     * opponent's true tags list. It does not store implied tags.
+     *
+     * The tags list stores the fully-expanded list of tags for the opponent,
+     * including implied tags.
+     */
+    this.baseTags = $xml.find('>tags>tag').map(function() { return canonicalizeTag($(this).text()); }).get();
+    this.removeTag(this.id);
+    this.updateTags();
+    this.searchTags = expandTagsList(this.baseTags);
+    
+    /* "chubby" implies "curvy" on female characters only,
+       so this has to be done separately */
+    if (this.searchTags.includes("chubby") && this.gender == "female") {
+        this.searchTags.push("curvy");
+    }
 }
 
 Opponent.prototype.recordTargetedCase = function (caseObj) {
