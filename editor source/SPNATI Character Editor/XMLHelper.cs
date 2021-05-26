@@ -26,7 +26,7 @@ namespace SPNATI_Character_Editor
 			};
 			_htmlDecoder = delegate (Match match)
 			{
-				return match.ToString().Replace("&lt;", "<");
+				return match.ToString().Replace("&lt;", "<").Replace("&gt;", ">");
 			};
 			Load();
 		}
@@ -86,14 +86,14 @@ namespace SPNATI_Character_Editor
 			text = text.Replace("</HR>", "&lt;/HR&gt;");
 
 			//special processing for script/html tags
-			//foreach (KeyValuePair<string, Regex> kvp in _htmlRegex)
-			//{
-			//	string tag = $"<{kvp.Key}>";
-			//	if (text.Contains(tag))
-			//	{
-			//		text = kvp.Value.Replace(text, _htmlEncoder);
-			//	}
-			//}
+			foreach (KeyValuePair<string, Regex> kvp in _htmlRegex)
+			{
+				string tag = $"<{kvp.Key}>";
+				if (text.Contains(tag))
+				{
+					text = kvp.Value.Replace(text, _htmlEncoder);
+				}
+			}
 			return text;
 		}
 
@@ -110,15 +110,16 @@ namespace SPNATI_Character_Editor
 			//text = text.Replace("&amp;", "&");
 
 			//but these aren't
-			//foreach (KeyValuePair<string, Regex> kvp in _htmlRegex)
-			//{
-			//	string tag = $"&lt;{kvp.Key}";
-			//	if (text.Contains(tag))
-			//	{
-			//		text = text.Replace(tag, $"<{kvp.Key}").Replace($"&lt;/{kvp.Key}", $"</{kvp.Key}");
-			//		text = kvp.Value.Replace(text, _htmlDecoder);
-			//	}
-			//}
+			foreach (KeyValuePair<string, Regex> kvp in _htmlRegex)
+			{
+				string tag = $"&lt;{kvp.Key}&gt;";
+				if (text.Contains(tag))
+				{
+					text = text.Replace(tag, $"<{kvp.Key}>").Replace($"&lt;/{kvp.Key}&gt;", $"</{kvp.Key}>");
+					text = kvp.Value.Replace(text, _htmlDecoder);
+				}
+			}
+
 			return text;
 		}
 
