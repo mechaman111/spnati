@@ -1117,29 +1117,6 @@ function fetchXML(url) {
 }
 
 /**
- * Fetch an XML resource and parse it, returning null if failed.
- * Does not produce exceptions.
- * 
- * @param {string} url The resource to fetch.
- * @returns {Promise<jQuery>} The fetched XML contents as a jQuery object.
- */
-function fetchXMLNoError(url) {
-    return fetch(url, { method: "GET" }).then(function (resp) {
-        if (resp.status < 200 || resp.status > 299) {
-            return null;
-        } else {
-            return resp.text();
-        }
-    }).catch(function() {}).then(function (xml) {
-        if (xml) {
-            return $(xml);
-        } else {
-            return null;
-        }
-    });
-}
-
-/**
  * Fetch a possibly compressed XML file.
  * Attempts to fetch a compressed version of the file first,
  * then fetches the uncompressed version of the file if that isn't found.

@@ -383,8 +383,8 @@ function loadOpponentMeta (id, status, releaseNumber, highlightStatus) {
     return fetchXML('opponents/' + id + '/' + metaFile).then(function($xml) {
         var opp = new Opponent(id, $xml, status, releaseNumber, highlightStatus);
         
-        return fetchXMLNoError('opponents/' + id + '/' + tagsFile).then(function ($xml) {
-            if ($xml) {
+        return fetchXML('opponents/' + id + '/' + tagsFile).then(function ($xml) {
+            if ($xml.length > 0) {
                 opp.tagsXml = $xml;
                 opp.loadBaseTagsFromXml($xml);
             }
