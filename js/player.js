@@ -392,13 +392,19 @@ Player.prototype.inboundLinesFromSelected = function (filterStatus) {
  * @param {number} [releaseNumber]
  * @param {string} [highlightStatus]
  */
-function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
+function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     Player.call(this, id);
 
     this.id = id;
     this.folder = 'opponents/'+id+'/';
     this.base_folder = 'opponents/'+id+'/';
-    this.metaXml = $metaXml;
+    
+    var $metaXml = this.metaXml = metaFiles[0];
+    var $tagsXml = null;
+    
+    if (metaFiles[1].length > 0) {
+        $tagsXml = this.tagsXml = metaFiles[1];
+    }
 
     this.status = status;
     this.highlightStatus = highlightStatus || status || '';
@@ -452,8 +458,12 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
 
     this.loaded = false;
     this.loadProgress = undefined;
-
-    this.loadBaseTagsFromXml($metaXml);
+    
+    if ($tagsXml) {
+        this.loadBaseTagsFromXml($tagsXml);
+    } else {
+        this.loadBaseTagsFromXml($metaXml);
+    }
 
     this.cases = new Map();
 

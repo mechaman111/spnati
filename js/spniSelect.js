@@ -382,14 +382,7 @@ function loadOpponentMeta (id, status, releaseNumber, highlightStatus) {
     return Promise.all(metaFiles.map(function (filename) {
         return fetchXML('opponents/' + id + '/' + filename);
     })).then(function(files) {
-        var opp = new Opponent(id, files[0], status, releaseNumber, highlightStatus);
-        
-        if (files[1].length > 0) {
-            opp.tagsXml = files[1];
-            opp.loadBaseTagsFromXml(files[1]);
-        }
-        
-        return opp;
+        return new Opponent(id, files, status, releaseNumber, highlightStatus);
     }).catch(function(err) {
         console.error("Failed reading \""+id+"\":");
         captureError(err);
