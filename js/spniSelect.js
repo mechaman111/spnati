@@ -123,8 +123,7 @@ var singleSelectHidden = false;
 var groupSelectHidden = false;
 
 /* opponent listing file */
-var metaFile = "meta.xml";
-var tagsFile = "tags.xml";
+var metaFiles = ["meta.xml", "tags.xml"];
 
 /* opponent information storage */
 var loadedOpponents = [];
@@ -380,19 +379,17 @@ function loadOpponentMeta (id, status, releaseNumber, highlightStatus) {
     /* grab and parse the opponent meta file */
     console.log("Loading metadata for \""+id+"\"");
 
-    return fetchXML('opponents/' + id + '/' + metaFile).then(function($xml) {
-        var opp = new Opponent(id, $xml, status, releaseNumber, highlightStatus);
+    return Promise.all(metaFiles.map(function (filename) {
+        return fetchXML('opponents/' + id + '/' + filename);
+    })).then(function(files) {
+        var opp = new Opponent(id, files[0], status, releaseNumber, highlightStatus);
         
-        return fetchXML('opponents/' + id + '/' + tagsFile).then(function ($xml) {
-            if ($xml.length > 0) {
-                opp.tagsXml = $xml;
-                opp.loadBaseTagsFromXml($xml);
-            }
-            
-            return opp;
-        }).catch(function(err) {
-            return opp;
-        })
+        if (files[1].length > 0) {
+            opp.tagsXml = files[1];
+            opp.loadBaseTagsFromXml(files[1]);
+        }
+        
+        return opp;
     }).catch(function(err) {
         console.error("Failed reading \""+id+"\":");
         captureError(err);
