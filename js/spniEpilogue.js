@@ -53,7 +53,7 @@ var endingTips = [
     "Bug reports are sent to publicly viewable channels on Discord. They are not sent to the characters in-game. If you use the bug report function to RP, you will be openly made fun of, then blocked for spam.",
     "Card suggest is useful when you don't feel like thinking, but it isn't perfect.",
     "Enjoying a character? Let us know in the Discord! We love to get praise!",
-    "Cant find a character? It may have been moved to the offline version.",
+    "Can't find a character? It may have been moved to the offline version.",
     "Have a character you want to see in the game? Make them!",
     "Poker is mostly a game of luck. If you don't win the first time, try again!",
     "If you have no other hand, then you're dependent on your high card. Good luck.",
