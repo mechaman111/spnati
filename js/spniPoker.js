@@ -15,17 +15,17 @@ var DIAMONDS = "diamo";
 var CLUBS    = "clubs";
 
 /* hand strengths */
-var NONE			= 0;
-var HIGH_CARD 		= 1;
-var PAIR			= 2;
-var TWO_PAIR		= 3;
-var THREE_OF_A_KIND	= 4;
-var STRAIGHT		= 5;
-var FLUSH			= 6;
-var FULL_HOUSE		= 7;
-var FOUR_OF_A_KIND	= 8;
-var STRAIGHT_FLUSH	= 9;
-var ROYAL_FLUSH 	= 10;
+var NONE            = 0;
+var HIGH_CARD       = 1;
+var PAIR            = 2;
+var TWO_PAIR        = 3;
+var THREE_OF_A_KIND = 4;
+var STRAIGHT        = 5;
+var FLUSH           = 6;
+var FULL_HOUSE      = 7;
+var FOUR_OF_A_KIND  = 8;
+var STRAIGHT_FLUSH  = 9;
+var ROYAL_FLUSH     = 10;
 
 /**********************************************************************
  *****                      Poker UI Elements                     *****

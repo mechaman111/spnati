@@ -74,7 +74,6 @@ function Player (id) {
     this.scale = undefined;
     this.tags = this.baseTags = [];
     this.xml = null;
-    this.metaXml = null;
     this.persistentMarkers = {};
 
     this.resetState();
@@ -179,6 +178,38 @@ Player.prototype.updateIntelligence = function () { }
 Player.prototype.updateFolder = function () { }
 Player.prototype.updateBehaviour = function() { }
 
+/**********************************************************************
+ * Convert a tags list to canonical form:
+ * - Canonicalize each input tag
+ * - Resolve tag implications
+ * This function also filters out duplicated tags.
+ **********************************************************************/
+Player.prototype.expandTagsList = function(input_tags) {
+    let tmp = input_tags.map(canonicalizeTag);
+    let output_tags = [];
+
+    while (tmp.length > 0) {
+        let tag = tmp.shift();
+
+        // Ensure exactly one instance of each tag remains within the output array.
+        if (output_tags.indexOf(tag) >= 0) continue;
+        output_tags.push(tag);
+
+        // If this tag implies other tags, queue those for processing as well.
+        if (TAG_IMPLICATIONS.hasOwnProperty(tag)) {
+            Array.prototype.push.apply(tmp, TAG_IMPLICATIONS[tag]);
+        }
+    }
+
+    /* "chubby" implies "curvy" on female characters only,
+       so this has to be done separately */
+    if (output_tags.includes("chubby") && this.gender == eGender.FEMALE) {
+        output_tags.push("curvy");
+    }
+
+    return output_tags;
+}
+
 /* Compute the Player's tags list from their baseTags list. */
 Player.prototype.updateTags = function () {
     var tags = [this.id];
@@ -208,13 +239,7 @@ Player.prototype.updateTags = function () {
         }
     });
 
-    this.tags = expandTagsList(tags);
-    
-    /* "chubby" implies "curvy" on female characters only,
-       so this has to be done separately */
-    if (tags.includes("chubby") && this.gender == "female") {
-        tags.push("curvy");
-    }
+    this.tags = this.expandTagsList(tags);
 }
 
 Player.prototype.stageChangeUpdate = function () {
@@ -225,7 +250,7 @@ Player.prototype.stageChangeUpdate = function () {
 }
 
 Player.prototype.addTag = function(tag) {
-    this.baseTags.push(canonicalizeTag(tag));
+    if (tag) this.baseTags.push(canonicalizeTag(tag));
 }
 
 Player.prototype.removeTag = function(tag) {
@@ -391,13 +416,19 @@ Player.prototype.inboundLinesFromSelected = function (filterStatus) {
  * @param {number} [releaseNumber]
  * @param {string} [highlightStatus]
  */
-function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
+function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     Player.call(this, id);
 
     this.id = id;
     this.folder = 'opponents/'+id+'/';
     this.base_folder = 'opponents/'+id+'/';
-    this.metaXml = $metaXml;
+    
+    var $metaXml = metaFiles[0],
+        $tagsXml = $metaXml;
+    
+    if (metaFiles[1].length > 0) {
+        $tagsXml = metaFiles[1];
+    }
 
     this.status = status;
     this.highlightStatus = highlightStatus || status || '';
@@ -452,22 +483,20 @@ function Opponent (id, $metaXml, status, releaseNumber, highlightStatus) {
     this.loaded = false;
     this.loadProgress = undefined;
 
-    /* baseTags stores tags that will be later used in resetState to build the
+    /* originalTags stores tags that will be later used in resetState to build the
      * opponent's true tags list. It does not store implied tags.
      *
      * The tags list stores the fully-expanded list of tags for the opponent,
      * including implied tags.
      */
-    this.baseTags = $metaXml.find('>tags>tag').map(function() { return canonicalizeTag($(this).text()); }).get();
-    this.removeTag(this.id);
-    this.updateTags();
-    this.searchTags = expandTagsList(this.baseTags);
-    
-    /* "chubby" implies "curvy" on female characters only,
-       so this has to be done separately */
-    if (this.searchTags.includes("chubby") && this.gender == "female") {
-        this.searchTags.push("curvy");
-    }
+    this.originalTags = $tagsXml.find('>tags>tag').map(function () {
+        return {
+            'tag': canonicalizeTag($(this).text()),
+            'from': $(this).attr('from'),
+            'to': $(this).attr('to'),
+        }
+    }).get();
+    this.searchTags = this.expandTagsList(this.originalTags.map(obj => obj.tag));
 
     this.cases = new Map();
 
@@ -998,7 +1027,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             this.default_costume = {
                 id: null,
                 labels: $xml.children('label'),
-                tags: null,
+                tags: this.originalTags,
                 folders: this.folder,
                 wardrobe: $xml.children('wardrobe'),
                 gender: $xml.children('gender').text(),
@@ -1013,16 +1042,6 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             }.bind(this));
 
             this.default_costume.poses = poseDefs;
-
-            var tagsArray = $xml.find('>tags>tag').map(function () {
-                return {
-                    'tag': canonicalizeTag($(this).text()),
-                    'from': $(this).attr('from'),
-                    'to': $(this).attr('to'),
-                }
-            }).get();
-
-            this.default_costume.tags = tagsArray;
 
             /* Load forward-declarations for persistent markers. */
             $xml.find('persistent-markers>marker').each(function (i, elem) {
