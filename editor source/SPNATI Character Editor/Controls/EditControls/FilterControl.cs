@@ -219,6 +219,8 @@ namespace SPNATI_Character_Editor
 			}
 			if (!string.IsNullOrEmpty(_filter.Character))
 			{
+				// Don't create blank characters when loading a case that targets a nonexistent character
+				recCharacter.RecordContext = new Character(); // bypasses the character creation process
 				recCharacter.RecordKey = _filter.Character;
 			}
 			if (string.IsNullOrEmpty(_filter.Gender))

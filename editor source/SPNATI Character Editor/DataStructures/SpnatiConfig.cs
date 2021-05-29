@@ -49,7 +49,7 @@ namespace SPNATI_Character_Editor
 		[XmlElement("default-background")]
 		public string DefaultBackground;
 		[XmlElement("resort")]
-		public bool ResortMode;
+		public string ResortMode;
 		[XmlElement("include-status")]
 		public List<string> IncludeStatus;
 	}

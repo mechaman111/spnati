@@ -74,6 +74,12 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			txtLabel.Text = _character.Label;
 
+			if (_character.Metadata.Label != _character.Label && !string.IsNullOrEmpty(_character.Metadata.Label))
+			{
+				txtTitleLabel.Text = _character.Metadata.Label;
+				ExpandLabel();
+			}
+
 			PoseMapping image = _character.PoseLibrary.GetPose(_character.Metadata.Portrait);
 			if (image == null)
 				return;
@@ -84,6 +90,7 @@ namespace SPNATI_Character_Editor.Activities
 		public override void Save()
 		{
 			_character.Label = txtLabel.Text;
+			_character.Metadata.Label = txtTitleLabel.Text;
 			_character.FirstName = txtFirstName.Text;
 			_character.LastName = txtLastName.Text;
 			_character.Stamina = (int)valRounds.Value;
@@ -136,6 +143,18 @@ namespace SPNATI_Character_Editor.Activities
 			cmdExpandGender.Visible = false;
 			lblTitleGender.Visible = true;
 			cboTitleGender.Visible = true;
+		}
+
+		private void cmdExpandLabel_Click(object sender, EventArgs e)
+		{
+			ExpandLabel();
+		}
+
+		private void ExpandLabel()
+		{
+			cmdExpandLabel.Visible = false;
+			lblTitleLabel.Visible = true;
+			txtTitleLabel.Visible = true;
 		}
 	}
 }

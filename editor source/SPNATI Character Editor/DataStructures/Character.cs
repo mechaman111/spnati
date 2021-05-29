@@ -150,12 +150,15 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
+		[XmlIgnore]
+		public CharacterTagList TagList = new CharacterTagList();
+
 		[XmlArray("tags")]
 		[XmlArrayItem("tag")]
 		public List<CharacterTag> Tags
 		{
-			get;
-			set;
+			get { return TagList.Tags; }
+			set { TagList.Tags = value; }
 		}
 
 		[XmlArray("nicknames")]
@@ -237,7 +240,15 @@ namespace SPNATI_Character_Editor
 		[XmlIgnore]
 		public string Name
 		{
-			get { return Label; }
+			get
+			{
+				if (!string.IsNullOrEmpty(Metadata.Label))
+				{
+					return Metadata.Label;
+				}
+
+				return Label;
+			}
 		}
 
 		[XmlIgnore]

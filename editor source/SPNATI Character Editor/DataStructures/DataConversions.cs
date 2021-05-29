@@ -46,6 +46,11 @@ namespace SPNATI_Character_Editor
 			{
 				Convert6_1(character);
 			}
+			// necessary due to bug in pre-6.6
+			if (Config.VersionPredates(version, "v6.6"))
+			{
+				Convert5_8(character);
+			}
 		}
 
 		private static void Convert3_2(Character character)

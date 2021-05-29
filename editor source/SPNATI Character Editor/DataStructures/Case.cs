@@ -1702,6 +1702,11 @@ namespace SPNATI_Character_Editor
 				response.AlternativeConditions.Add(alternateResponse);
 			}
 
+			// This is inefficient and would be better served by fixing
+			// the helper functions (CopySelfIntoAlsoPlaying, etc)
+			// to not use oldstyle conditions - do this later
+			DataConversions.ConvertCase(response, responder);
+
 			return response;
 		}
 
