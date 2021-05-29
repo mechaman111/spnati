@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited April 26 2021
+README edited May 28 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -118,7 +118,7 @@ where the player has seen Chara throw before. The situation itself points to the
 DEMON EYES - NOTEWORTHY - Two of Chara's poses, DemonHappy and DemonAngry, feature her hollow-eyed look from Undertale. NOTE: This specific callout only references one time she uses these
 poses, to properly target them instead use Filter -> Dialogue -> Pose.
 
-REFUSE TO REMOVE - NOTEWORTHY - After removing her last layer of clothing, Chara will say she refuses to strip either her knife or locket, saying she would rather forfeit than do so.
+REFUSE TO REMOVE - FYI - After removing her last layer of clothing, Chara will say she refuses to strip either her knife or locket, saying she would rather forfeit than do so.
 
 KNIFETURBATE - FYI - Chara does not let go of her knife at any point in the game, including her masturbation sequence.
 
@@ -303,6 +303,9 @@ CHIHIRO
 -Responds to Chihiro running away.
 -Responds to Chihiro revealing he's actually male.
 
+COLRESS
+-Responds to Colress's situation about interdimensional travel.
+
 COLT
 -Responds to Colt as Chara is losing.
 
@@ -326,6 +329,10 @@ ERUFUDA
 
 FLORINA
 -Responds to Florina fleeing the game.
+
+FLUTTERSHY
+-Responds to Fluttershy asking about jokes.
+-Responds to Fluttershy talking about flowers.
 
 GALATEA
 -Responds to Galatea having to strip with rock puns.
