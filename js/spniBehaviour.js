@@ -218,32 +218,6 @@ for (child_tag in TAG_IMPLICATIONS) {
 }
 TAG_IMPLICATIONS = fixedImplies;
 
-/**********************************************************************
- * Convert a tags list to canonical form:
- * - Canonicalize each input tag
- * - Resolve tag implications
- * This function also filters out duplicated tags.
- **********************************************************************/
-function expandTagsList(input_tags) {
-    let tmp = input_tags.map(canonicalizeTag);
-    let output_tags = [];
-    
-    while (tmp.length > 0) {
-        let tag = tmp.shift();
-        
-        // Ensure exactly one instance of each tag remains within the output array.
-        if (output_tags.indexOf(tag) >= 0) continue;
-        output_tags.push(tag);
-        
-        // If this tag implies other tags, queue those for processing as well.
-        if (TAG_IMPLICATIONS.hasOwnProperty(tag)) {
-            Array.prototype.push.apply(tmp, TAG_IMPLICATIONS[tag]);
-        }
-    }
-    
-    return output_tags;
-}
-
 /**
  * Represents an operation on a marker.
  * 
