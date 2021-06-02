@@ -743,6 +743,8 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
     if (split_fn.length > 0) var fn = split_fn[0].toLowerCase();
     
     switch (fn) {
+    case 'id':
+        return player.id;
     case 'position':
         if (player.slot === self.slot) return 'self';
         if (player === humanPlayer) return 'across';

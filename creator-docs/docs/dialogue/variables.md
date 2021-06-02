@@ -89,6 +89,7 @@ Four special player IDs exist:
 | Subvariable  | Description                                    |
 | ------------ | ---------------------------------------------- |
 | (none)       | Using only `~character_id~`, `~target~`, or `~self~` returns the name of the referenced player, or a nickname if one has been specified for that character. |
+| `.id`        | The ID (folder name) of the referenced player. Can be useful to store in a marker.   |
 | `.position`  | The position, `left` or `right` (from the perspective of the human player, not the characters) of the player relative to the subject character. The human player is considered to be to `across` from all characters. `~self.position~` resolves to simply `self`. |
 | `.distance` | How many slots away this character is from the subject character. `1` indicates the characters are adjacent. |
 | `.slot`      | The slot number of the player, from 0 (the human player) to 5. |
