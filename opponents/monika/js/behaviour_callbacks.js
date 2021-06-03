@@ -146,13 +146,6 @@
         }
     });
 
-    monika.registerBehaviourCallback('setRealizationMarkers', function (id) {
-        var m = monika.utils.get_monika_player();
-        if (m) {
-            m.markers['realization_' + id] = 1;
-        }
-    });
-
     monika.registerBehaviourCallback('delayChange', function (text, delay) {
         var slot = monika.utils.monika_slot();
         var currentHTML = $gameDialogues[slot - 1].html();
