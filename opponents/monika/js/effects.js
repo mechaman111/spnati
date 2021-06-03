@@ -981,12 +981,18 @@
 
     GlitchMasturbationEffect.prototype.shuffleImages = function () {
         this.images = [];
+        
+        var folderPath = 'opponents/monika/';
+        
+        if (monika.utils.get_monika_player().alt_costume.id === 'monika_love_bug') {
+            folderPath = 'opponents/reskins/monika_love_bug/';
+        }
 
         for (var i = 1; i <= 9; i++) {
             if (this.heavy) {
-                this.images.push('opponents/monika/9-mast-' + i + '-alt.png');
+                this.images.push(folderPath + '9-mast-' + i + '-alt.png');
             } else {
-                this.images.push('opponents/monika/9-mast-' + i + '.png');
+                this.images.push(folderPath + '9-mast-' + i + '.png');
             }
         }
 
