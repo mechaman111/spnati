@@ -170,6 +170,8 @@
 
         monika_pl.markers['affections-glitch'] = 1;
         sayori.markers['affections-glitch'] = 1;
+        sayori.removeTag('straight');
+        sayori.addTag('bi-curious');
 
         monika.SAYORI_AFFECTIONS_GLITCH = true;
 
@@ -305,6 +307,8 @@
             players[sayori_slot] = saved_sayori_player;
             sayori.markers['joint-masturbation'] = 1;
             sayori.markers['joint-masturbation-finished-1'] = 1;
+            sayori.removeTag('bi-curious');
+            sayori.addTag('bisexual');
 
             /* Hard reset stage, forfeit status, and other data for Sayori. */
             sayori.stage = 9;
