@@ -299,8 +299,6 @@
         var sayori_slot = sayori.slot;
 
         monika.JOINT_FORFEIT_ACTIVE = false;
-        monika_pl.removeTag('tandem');
-        monika_pl.removeTag('bondage_forfeit');
 
         setTimeout(function () {
             /* Put Sayori back in her slot. */
