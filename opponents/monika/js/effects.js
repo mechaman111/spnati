@@ -990,7 +990,7 @@
 
         for (var i = 1; i <= 9; i++) {
             if (this.heavy) {
-                this.images.push(folderPath + '9-mast-' + i + '-alt.png');
+                this.images.push(folderPath + '9-heavy-' + i + '.png');
             } else {
                 this.images.push(folderPath + '9-mast-' + i + '.png');
             }
