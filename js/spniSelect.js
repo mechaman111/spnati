@@ -1631,21 +1631,19 @@ function isStaleOnTesting(opp) {
  */
 function sortTestingOpponents(opp1, opp2) {
     var scores = [opp1, opp2].map(function (opp) {
+        if (opp.status !== "testing") return 0;
+        
         if (!isStaleOnTesting(opp)) {
             if (opp.highlightStatus === "sponsorship") {
                 return 4;
-            } else if (opp.status === "testing") {
-                return 3;
             } else {
-                return 0;
+                return 3;
             }
         } else {
             if (opp.highlightStatus === "sponsorship") {
                 return 2;
-            } else if (opp.status === "testing") {
-                return 1;
             } else {
-                return 0;
+                return 1;
             }
         }
     });
