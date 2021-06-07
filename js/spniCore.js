@@ -27,6 +27,9 @@ var VERSION_TAG = undefined;
 
 var DEFAULT_FILL = undefined;
 var FILL_DISABLED = false;
+var TESTING_MAX_AGE = 14 * 86400 * 1000; // 14 days
+var TESTING_MIN_NUMBER = 10;
+var TESTING_NTH_MOST_RECENT_UPDATE;
 
 /* Game Wide Constants */
 var HUMAN_PLAYER = 0;
@@ -112,6 +115,31 @@ var bubbleArrowOffsetRules;
 /**********************************************************************
  *****              Overarching Game Flow Functions               *****
  **********************************************************************/
+
+function fuzzyTimeAgo(ts) {
+    now = Date.now();
+
+    elapsed_time = now - ts;
+
+    /* Format last update time */
+    string = '';
+    if (elapsed_time < 5 * 60 * 1000) {
+        // <5 minutes ago - display 'just now'
+        string = 'just now';
+    } else if (elapsed_time < 60 * 60 * 1000) {
+        // < 1 hour ago - display minutes since last update
+        string = Math.floor(elapsed_time / (60 * 1000))+' minutes ago';
+    } else if (elapsed_time < 24 * 60 * 60 * 1000) {
+        // < 1 day ago - display hours since last update
+        var n_hours = Math.floor(elapsed_time / (60 * 60 * 1000));
+        string = n_hours + (n_hours === 1 ? ' hour ago' : ' hours ago');
+    } else {
+        // otherwise just display days since last update
+        var n_days = Math.floor(elapsed_time / (24 * 60 * 60 * 1000));
+        string =  n_days + (n_days === 1 ? ' day ago' : ' days ago');
+    }
+    return string;
+}
 
 /************************************************************
  * Loads the initial content of the game.
@@ -237,29 +265,7 @@ function loadVersionInfo () {
         version_ts = versionInfo.find('>changelog > version[number=\"'+CURRENT_VERSION+'\"]').attr('timestamp');
         
         version_ts = parseInt(version_ts, 10);
-        now = Date.now();
-        
-        elapsed_time = now - version_ts;
-        
-        /* Format last update time */
-        last_update_string = '';
-        if (elapsed_time < 5 * 60 * 1000) {
-            // <5 minutes ago - display 'just now'
-            last_update_string = 'just now';
-        } else if (elapsed_time < 60 * 60 * 1000) {
-            // < 1 hour ago - display minutes since last update
-            last_update_string = Math.floor(elapsed_time / (60 * 1000))+' minutes ago';
-        } else if (elapsed_time < 24 * 60 * 60 * 1000) {
-            // < 1 day ago - display hours since last update
-            var n_hours = Math.floor(elapsed_time / (60 * 60 * 1000));
-            last_update_string = n_hours + (n_hours === 1 ? ' hour ago' : ' hours ago');
-        } else {
-            // otherwise just display days since last update
-            var n_days = Math.floor(elapsed_time / (24 * 60 * 60 * 1000));
-            last_update_string =  n_days + (n_days === 1 ? ' day ago' : ' days ago');
-        }
-        
-        $('.substitute-version-time').text('(updated '+last_update_string+')');
+        $('.substitute-version-time').text('(updated '+fuzzyTimeAgo(version_ts)+')');
 
         $('.version-button').click(showVersionModal);
     }).catch(function (err) {
@@ -387,6 +393,15 @@ function loadConfigFile () {
             includedOpponentStatuses[$(this).text()] = true;
             console.log("Including", $(this).text(), "opponents");
         });
+
+        var _testing_max_age_days = Number.parseFloat($xml.children('testing-max-age').text());
+        if (!Number.isNaN(_testing_max_age_days)) {
+            TESTING_MAX_AGE = _testing_max_age_days * 86400 * 1000;
+        }
+        var _testing_min_number = Number.parseInt($xml.children('testing-min-number').text());
+        if (!Number.isNaN(_testing_min_number)) {
+            TESTING_MIN_NUMBER = _testing_min_number;
+        }
     }).catch(function (err) {
         console.error("Failed to load configuration");
         captureError(err);

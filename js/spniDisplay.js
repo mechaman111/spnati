@@ -1186,10 +1186,13 @@ OpponentSelectionCard.prototype.isVisible = function (testingView, ignoreFilter)
         // included statuses.
         if (!onMainView) return false;
     } else {
-        /* Testing view: include all opponents with `testing` status and those
-         * targeted by testing opponents with 5+ lines.
+        /* Testing view: include all opponents with `testing` status
+         * updated within the last TESTING_MAX_AGE and those targeted
+         * by selected testing opponents with 5+ lines.
          */
-        if (status !== "testing" && this.opponent.inboundLinesFromSelected("testing") < 5)
+        if ((status !== "testing" || (Date.now() - this.opponent.lastUpdated > TESTING_MAX_AGE
+                                      && this.opponent.lastUpdated < TESTING_NTH_MOST_RECENT_UPDATE))
+            && this.opponent.inboundLinesFromSelected("testing") < 5)
             return false;
     }
 
@@ -1227,6 +1230,7 @@ OpponentDetailsDisplay = function () {
     this.descriptionLabel = $("#individual-select-screen .opponent-details-description");
     this.linecountLabel = $("#individual-select-screen .opponent-linecount");
     this.posecountLabel = $("#individual-select-screen .opponent-posecount");
+    this.lastUpdateLabel = $("#individual-select-screen .opponent-lastupdate");
     this.costumeSelector = $("#individual-select-screen .alt-costume-dropdown");
     this.simpleImage = $("#individual-select-screen .opponent-details-simple-image");
     this.imageArea = $("#individual-select-screen .opponent-details-image-area");
@@ -1309,6 +1313,7 @@ OpponentDetailsDisplay.prototype.clear = function () {
     this.writerLabel.empty();
     this.artistLabel.empty();
     this.descriptionLabel.empty();
+    this.lastUpdateLabel.empty();
     
     this.simpleImage.attr('src', null);
     this.selectButton.prop('disabled', true);
@@ -1474,6 +1479,14 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
     this.sourceLabel.html(opponent.source);
     this.writerLabel.html(opponent.writer);
     this.artistLabel.html(opponent.artist);
+    if (this.opponent.lastUpdated) {
+        var timeStyle = Date.now() - this.opponent.lastUpdated > TESTING_MAX_AGE ? undefined : 'short';
+        this.lastUpdateLabel.text(new Intl.DateTimeFormat([], { dateStyle: 'short', timeStyle: timeStyle })
+                                  .format(new Date(opponent.lastUpdated))
+                                  + " (" + fuzzyTimeAgo(opponent.lastUpdated) + ")");
+    } else {
+        this.lastUpdateLabel.text('Unknown');
+    }
     this.descriptionLabel.html(opponent.description);
 
     this.simpleImage.one('load', this.rescaleSimplePose.bind(this, opponent.scale));

@@ -290,6 +290,11 @@ function loadListingFile () {
                 return new Option(source);
             }));
             loadedOpponents.forEach(function(p) { p.selectionCard.updateEpilogueBadge() });
+            /* Determine the time of the nth most recently updated character on testing, so we
+               can show at least n characters. (.sort() sorts in place, but .filter() makes a copy. */
+            TESTING_NTH_MOST_RECENT_UPDATE = (loadedOpponents.filter(p => p.status == "testing")
+                                              .sort((p1, p2) => p2.lastUpdated - p1.lastUpdated)
+                                              .slice(0, TESTING_MIN_NUMBER).pop() ?? {}).lastUpdated;
             updateIndividualSelectSort();
             updateIndividualSelectFilters();
         } else {
