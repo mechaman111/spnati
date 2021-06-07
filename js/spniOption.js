@@ -372,12 +372,19 @@ function pushBackgroundOption (background) {
  * Shows the background selection modal.
  ************************************************************/
 function showGameSettingsModal () {
+    var firstOfflineBackground = false;
+    
     /* Push selection images for all backgrounds not already on the menu. */
     Object.keys(backgrounds).forEach(function (id) {
         var bg = backgrounds[id];
+        
+        if (bg.status === 'offline' && !firstOfflineBackground) {
+            firstOfflineBackground = true;
+            $("#settings-background").append($("<hr />", { "class": "background-separator" }));
+        }
 
         if ($('#settings-background .background-option[data-background="'+id+'"]').length === 0) {
-            pushBackgroundOption(backgrounds[id]);
+            pushBackgroundOption(bg);
         }
     });
 
