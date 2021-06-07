@@ -698,8 +698,8 @@ function updateIndividualSelectSort() {
 
     individualSelectSeparatorIndices = [];
     var cutFn
-    /* Separate Testing from other types if they come before others in Testing view */
-        = testingFirst                  ? function(opp) { return opp.status !== "testing"; }
+    /* Separate (normally-visible) Testing from other types if they come before others in Testing view */
+        = testingFirst                  ? function(opp) { return (opp.status !== "testing" || isStaleOnTesting(opp)); }
     /* Separate out characters with no data if using Recently Updated sort */
         : sortingMode == "-lastUpdated" ? function(opp) { return opp.lastUpdated === 0; }
     /* Separate out characters with no targets if using Targeted sort */
@@ -1624,16 +1624,29 @@ function isStaleOnTesting(opp) {
  * Testing-specific rules. The sort order produced by this callback is:
  * - highlight="sponsorship"
  * - status="testing"
+ * - SEPARATOR GOES HERE
+ * - highlight="sponsorship", hidden due to lack of updates
+ * - status="testing", hidden due to lack of updates
  * - everything else
  */
 function sortTestingOpponents(opp1, opp2) {
     var scores = [opp1, opp2].map(function (opp) {
-        if (opp.highlightStatus === "sponsorship") {
-            return 2;
-        } else if (opp.status === "testing") {
-            return 1;
+        if (!isStaleOnTesting(opp)) {
+            if (opp.highlightStatus === "sponsorship") {
+                return 4;
+            } else if (opp.status === "testing") {
+                return 3;
+            } else {
+                return 0;
+            }
         } else {
-            return 0;
+            if (opp.highlightStatus === "sponsorship") {
+                return 2;
+            } else if (opp.status === "testing") {
+                return 1;
+            } else {
+                return 0;
+            }
         }
     });
 
