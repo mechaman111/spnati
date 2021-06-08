@@ -1117,7 +1117,7 @@ function loadDefaultFillSuggestions () {
             if (!individualSelectTesting) {
                 if (opp.highlightStatus !== DEFAULT_FILL) return false;
             } else {
-                if (opp.status !== "testing") return false;
+                if (opp.status !== "testing" || isStaleOnTesting(opp)) return false;
             }
             return !isCharacterUsed(opp);
         });
@@ -1611,6 +1611,12 @@ function sortOpponentsByMostTargeted() {
         if (counts[0] < counts[1]) return 1;
         return 0;
     }
+}
+
+/* Returns true if the testing opponent wasn't updated recently enough to be shown. */
+function isStaleOnTesting(opp) {
+    return (Date.now() - opp.lastUpdated > TESTING_MAX_AGE
+            && opp.lastUpdated < TESTING_NTH_MOST_RECENT_UPDATE);
 }
 
 /**

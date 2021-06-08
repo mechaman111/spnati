@@ -1190,8 +1190,7 @@ OpponentSelectionCard.prototype.isVisible = function (testingView, ignoreFilter)
          * updated within the last TESTING_MAX_AGE and those targeted
          * by selected testing opponents with 5+ lines.
          */
-        if ((status !== "testing" || (Date.now() - this.opponent.lastUpdated > TESTING_MAX_AGE
-                                      && this.opponent.lastUpdated < TESTING_NTH_MOST_RECENT_UPDATE))
+        if ((status !== "testing" || isStaleOnTesting(this.opponent))
             && this.opponent.inboundLinesFromSelected("testing") < 5)
             return false;
     }
