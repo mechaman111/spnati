@@ -983,8 +983,9 @@
         this.images = [];
         
         var folderPath = 'opponents/monika/';
+        var monika_pl = monika.utils.get_monika_player();
         
-        if (monika.utils.get_monika_player().alt_costume.id === 'monika_love_bug') {
+        if (monika_pl.alt_costume && monika_pl.alt_costume.id === 'monika_love_bug') {
             folderPath = 'opponents/reskins/monika_love_bug/';
         }
 
