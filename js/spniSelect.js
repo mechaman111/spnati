@@ -294,7 +294,7 @@ function loadListingFile () {
                can show at least n characters. (.sort() sorts in place, but .filter() makes a copy. */
             TESTING_NTH_MOST_RECENT_UPDATE = (loadedOpponents.filter(p => p.status == "testing")
                                               .sort((p1, p2) => p2.lastUpdated - p1.lastUpdated)
-                                              .slice(0, TESTING_MIN_NUMBER).pop() ?? {}).lastUpdated;
+                                              .slice(0, TESTING_MIN_NUMBER).pop() || {}).lastUpdated;
             updateIndividualSelectSort();
             updateIndividualSelectFilters();
         } else {
@@ -1761,7 +1761,7 @@ function countLinesImages($xml) {
             while (matched.length > 0 && performance.now() - startTs < 50) {
                 data = matched.pop();
                 numTotalLines++;
-                
+
                 // count only unique lines of dialogue
                 if (data.textContent.trim() != "") lines.add(data.textContent.trim());
                 if ($(data).children('text').length) lines.add($(data).children('text').html().trim());
