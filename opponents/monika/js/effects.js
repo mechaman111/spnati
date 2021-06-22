@@ -400,8 +400,36 @@
     exports.VisualGlitchEffect = VisualGlitchEffect;
 
 
+    /* VisualSuggestedOppGlitchEffect - a variant on the above VisualGlitchEffect
+     * that is used for the Suggested Opponents instead.
+     */
+    function VisualSuggestedOppGlitchEffect(target_slot, target_quad, start_y, affected_height) {
+        CollectionEffect.call(this);
+
+        this.target_slot = target_slot;
+        this.target_quad = target_quad;
+        this.target_image = mainSelectDisplays[target_slot].suggestionQuad[target_quad].children('.opponent-suggestion-image');
+
+        this.start_y = start_y;
+        this.affected_height = affected_height;
+        
+        this.subeffects.push(new CanvasEffect(
+            this.target_image,
+            function (canvas_effect) {
+                canvas_effect.channel_split_filter(this.start_y, this.affected_height);
+                canvas_effect.waver_filter(this.start_y, this.affected_height);
+            }.bind(this),
+            false
+        ));
+    }
+
+    VisualSuggestedOppGlitchEffect.prototype = Object.create(CollectionEffect.prototype);
+    VisualSuggestedOppGlitchEffect.prototype.constructor = VisualSuggestedOppGlitchEffect;
+    exports.VisualSuggestedOppGlitchEffect = VisualSuggestedOppGlitchEffect;
+
+
     /* RepeatingVisualGlitchEffect - a variant on the above VisualGlitchEffect
-     * That repeatedly applies a visual glitch.
+     * that repeatedly applies a visual glitch.
      */
     function RepeatingVisualGlitchEffect(target_slot, glitchTime, normalTime) {
         Effect.call(this);

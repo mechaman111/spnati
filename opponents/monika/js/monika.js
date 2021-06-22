@@ -232,8 +232,86 @@ if (!monika) var monika = (function (root) {
     root.completeRevealPhase = hookWrapper('completeRevealPhase');
     root.updateGameVisual = hookWrapper('updateGameVisual');
     root.advanceSelectScreen = hookWrapper('advanceSelectScreen');
+    root.updateSelectionVisuals = hookWrapper('updateSelectionVisuals');
     root.restartGame = hookWrapper('restartGame');
     root.exitRollback = hookWrapper('exitRollback');
+    
+    function removeAmySuggestion() {
+        /* Remove any active Suggested Opponents glitches first */
+        var active_copy = active_effects.slice();
+
+        active_copy.forEach(function (eff) {
+            if (eff instanceof monika.effects.VisualSuggestedOppGlitchEffect) {
+                try {
+                    eff.revert();
+                } catch (e) {
+                    reportException("while cleaning up " + eff.constructor.name, e);
+                }
+            }
+        });
+        
+        if (!utils.monika_present()) { return; }
+        
+        var loaded = 0;
+        
+        players.forEach(function(p, idx) {
+            if (idx > 0 && p.isLoaded()) {
+                loaded++;
+            }
+        });
+        
+        if (loaded == 2 || loaded == 3) {
+            /* Find Amy in the suggestion pool */
+            var amySlot = null, amyQuad = null; 
+            
+            for (var i = 1; i < players.length; i++) {
+                if (players[i] === undefined) {
+                    for (var j = 0; j < 4; j++) {
+                        /* Sadly we can't check label == "Amy" because of Amy Rose */
+                        if (mainSelectDisplays[i - 1].suggestionQuad[j].children('.opponent-suggestion-image').attr('src').includes("opponents/amy/")) {
+                            amySlot = i - 1;
+                            amyQuad = j;
+                            break;
+                        }
+                    }
+                    
+                    if (amySlot) { break; }
+                }
+            }
+            
+            if (!amySlot) { return; }
+            
+            /* get the next most targeted character that isn't already suggested */
+            var suggested_opponents = loadedOpponents.filter(function(opp) {
+                if (individualSelectTesting && opp.status !== "testing") return false;
+                return opp.selectionCard.isVisible(individualSelectTesting, true);
+            });
+            
+            suggested_opponents.sort(sortOpponentsByMostTargeted());
+            
+            var idx = (loaded == 2) ? 8 : 4;
+            
+            /* Wait 2 seconds, then visually glitch Amy and replace her */
+            var visEffect = new monika.effects.VisualSuggestedOppGlitchEffect(amySlot, amyQuad);
+            
+            setTimeout(function () {
+                /* need to re-check just in case something changed */
+                if (mainSelectDisplays[amySlot].suggestionQuad[amyQuad].children('.opponent-suggestion-label').text() == "Amy") {
+                    visEffect.execute(function () {
+                        setTimeout(function () {
+                            /* need to re-check just in case something changed */
+                            if (mainSelectDisplays[amySlot].suggestionQuad[amyQuad].children('.opponent-suggestion-label').text() == "Amy") {
+                                mainSelectDisplays[amySlot].updateTargetSuggestionDisplay(amyQuad, suggested_opponents[idx]);
+                            }
+                            
+                            visEffect.revert();
+                        }, 750);
+                    });
+                }
+            }, 2000);
+        }
+    }
+    registerHook('updateSelectionVisuals', 'post', removeAmySuggestion);
 
     function handleOptionsModal() {
         if (utils.monika_present()) {
