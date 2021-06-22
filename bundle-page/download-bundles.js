@@ -6,18 +6,22 @@ var SPECIAL_CASE_NAMES = {
     "ae86": "AE86",
     "alice_mgq": "Alice (MGQ)",
     "d.va": "D.Va",
+    "hatsune_miku": "Miku",
     "hk416": "HK416",
     "kool-aid": "Kool-Aid Man",
     "larachel": "L'Arachel",
     "mom_alola": "Mom (Alola)",
+    "nami_szs": "Nami (SZS)",
     "pa-15": "PA-15",
     "pauling": "Miss Pauling",
     "penny_polendina": "Penny (RWBY)",
-    "nami_szs": "Nami (SZS)",
+    "pot_of_greed": "Pot of Greed",
+    "ringo_ando": "Ringo",
     "saki_zls": "Saki (ZLS)",
     "scm": "Suction Cup Man",
     "uravity": "Ochako", // nmasp, wtf?
     "wiifitfemale": "Wii Fit Trainer",
+    "yshtola": "Y'shtola",
         
     // classic opponents
     "amy_rose_classic": "Amy Rose",
