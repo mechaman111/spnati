@@ -77,9 +77,6 @@ namespace SPNATI_Character_Editor.IO
 			if (data == null)
 				return;
 
-			if (deleteTags && name == "tag")
-				return;
-
 			Type type = data.GetType();
 			ElementInformation elementInfo = GetSerializationInformation(type);
 			if (elementInfo.Header != null)
@@ -179,6 +176,9 @@ namespace SPNATI_Character_Editor.IO
 			// now do elements and arrays
 			foreach (var tuple in subElements)
 			{
+				if (deleteTags && tuple.Item2 == "tags")
+					continue;
+
 				FieldInformation field = tuple.Item1;
 
 				//Element
@@ -241,7 +241,7 @@ namespace SPNATI_Character_Editor.IO
 						writer.WriteStartElement(tuple.Item2);
 						foreach (var obj in array)
 						{
-							WriteElement(obj, tuple.Item3, writer, builder, deleteTags);
+							WriteElement(obj, tuple.Item3, writer, builder);
 						}
 						writer.WriteEndElement();
 
