@@ -267,8 +267,7 @@ if (!monika) var monika = (function (root) {
             for (var i = 1; i < players.length; i++) {
                 if (players[i] === undefined) {
                     for (var j = 0; j < 4; j++) {
-                        /* Sadly we can't check label == "Amy" because of Amy Rose */
-                        if (mainSelectDisplays[i - 1].suggestionQuad[j].children('.opponent-suggestion-image').attr('src').includes("opponents/amy/")) {
+                        if (mainSelectDisplays[i - 1].targetSuggestions[j].id == "amy") {
                             amySlot = i - 1;
                             amyQuad = j;
                             break;
@@ -296,11 +295,11 @@ if (!monika) var monika = (function (root) {
             
             setTimeout(function () {
                 /* need to re-check just in case something changed */
-                if (mainSelectDisplays[amySlot].suggestionQuad[amyQuad].children('.opponent-suggestion-label').text() == "Amy") {
+                if (mainSelectDisplays[amySlot].targetSuggestions[amyQuad].id == "amy") {
                     visEffect.execute(function () {
                         setTimeout(function () {
                             /* need to re-check just in case something changed */
-                            if (mainSelectDisplays[amySlot].suggestionQuad[amyQuad].children('.opponent-suggestion-label').text() == "Amy") {
+                            if (mainSelectDisplays[amySlot].targetSuggestions[amyQuad].id == "amy") {
                                 mainSelectDisplays[amySlot].updateTargetSuggestionDisplay(amyQuad, suggested_opponents[idx]);
                             }
                             
