@@ -763,7 +763,7 @@ namespace SPNATI_Character_Editor
 		public static readonly string HideNoPrefix = "hidenoprefix";
 		public static readonly string PrefixFilter = "prefixfilter";
 		public static readonly string HideImages = "safemode";
-		public static readonly string ShowPreviewText = "previewtext";
+		public static readonly string HidePreviewText = "hidepreviewtext";
 		public static readonly string DisablePreviewFormatting = "notextboxformatting";
 
 		#region Settings that probably only make sense for debugging

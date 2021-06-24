@@ -42,7 +42,7 @@ namespace SPNATI_Character_Editor
 			chkChecklistValidation.Checked = Config.EnableDashboardValidation;
 			chkStartDashboard.Checked = Config.StartOnDashboard;
 			chkHideImages.Checked = !Config.GetBoolean(Settings.HideImages);
-			chkPreviewBubble.Checked = Config.GetBoolean(Settings.ShowPreviewText);
+			chkPreviewBubble.Checked = !Config.GetBoolean(Settings.HidePreviewText);
 			chkPreviewFormatting.Checked = !Config.GetBoolean(Settings.DisablePreviewFormatting);
 			valFranchise.Value = Config.MaxFranchisePartners;
 			chkAutoFill.Checked = Config.AutoPopulateStageImages;
@@ -296,7 +296,7 @@ namespace SPNATI_Character_Editor
 
 		private void chkPreviewBubble_CheckedChanged(object sender, EventArgs e)
 		{
-			Config.Set(Settings.ShowPreviewText, chkPreviewBubble.Checked);
+			Config.Set(Settings.HidePreviewText, !chkPreviewBubble.Checked);
 			Shell.Instance.PostOffice.SendMessage(DesktopMessages.ToggleImages);
 		}
 
