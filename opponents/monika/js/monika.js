@@ -235,7 +235,7 @@ if (!monika) var monika = (function (root) {
     root.updateSelectionVisuals = hookWrapper('updateSelectionVisuals');
     root.restartGame = hookWrapper('restartGame');
     root.exitRollback = hookWrapper('exitRollback');
-    
+
     function removeAmySuggestion() {
         /* Remove any active Suggested Opponents glitches first */
         var active_copy = active_effects.slice();
@@ -249,21 +249,21 @@ if (!monika) var monika = (function (root) {
                 }
             }
         });
-        
+
         if (!utils.monika_present()) { return; }
-        
+
         var loaded = 0;
-        
+
         players.forEach(function(p, idx) {
             if (idx > 0 && p.isLoaded()) {
                 loaded++;
             }
         });
-        
+
         if (loaded == 2 || loaded == 3) {
             /* Find Amy in the suggestion pool */
             var amySlot = null, amyQuad = null; 
-            
+
             for (var i = 1; i < players.length; i++) {
                 if (players[i] === undefined) {
                     for (var j = 0; j < 4; j++) {
@@ -273,26 +273,26 @@ if (!monika) var monika = (function (root) {
                             break;
                         }
                     }
-                    
+
                     if (amySlot) { break; }
                 }
             }
-            
+
             if (!amySlot) { return; }
-            
+
             /* get the next most targeted character that isn't already suggested */
             var suggested_opponents = loadedOpponents.filter(function(opp) {
                 if (individualSelectTesting && opp.status !== "testing") return false;
                 return opp.selectionCard.isVisible(individualSelectTesting, true);
             });
-            
+
             suggested_opponents.sort(sortOpponentsByMostTargeted());
-            
+
             var idx = (loaded == 2) ? 8 : 4;
-            
+
             /* Wait 2 seconds, then visually glitch Amy and replace her */
             var visEffect = new monika.effects.VisualSuggestedOppGlitchEffect(amySlot, amyQuad);
-            
+
             setTimeout(function () {
                 /* need to re-check just in case something changed */
                 if (mainSelectDisplays[amySlot].targetSuggestions[amyQuad].id == "amy") {
@@ -302,7 +302,7 @@ if (!monika) var monika = (function (root) {
                             if (mainSelectDisplays[amySlot].targetSuggestions[amyQuad].id == "amy") {
                                 mainSelectDisplays[amySlot].updateTargetSuggestionDisplay(amyQuad, suggested_opponents[idx]);
                             }
-                            
+
                             visEffect.revert();
                         }, 750);
                     });

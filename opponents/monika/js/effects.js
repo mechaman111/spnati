@@ -412,7 +412,7 @@
 
         this.start_y = start_y;
         this.affected_height = affected_height;
-        
+
         this.subeffects.push(new CanvasEffect(
             this.target_image,
             function (canvas_effect) {
@@ -1009,10 +1009,10 @@
 
     GlitchMasturbationEffect.prototype.shuffleImages = function () {
         this.images = [];
-        
+
         var folderPath = 'opponents/monika/';
         var monika_pl = monika.utils.get_monika_player();
-        
+
         if (monika_pl.alt_costume && monika_pl.alt_costume.id === 'monika_love_bug') {
             folderPath = 'opponents/reskins/monika_love_bug/';
         }
