@@ -290,7 +290,7 @@ if (!monika) var monika = (function (root) {
 
             var idx = (loaded == 2) ? 8 : 4;
 
-            /* Wait 2 seconds, then visually glitch Amy and replace her */
+            /* Wait 2 seconds, then visually glitch Amy briefly, then wait 1.5 seconds, then glitch her again and replace her */
             var visEffect = new monika.effects.VisualSuggestedOppGlitchEffect(amySlot, amyQuad);
 
             setTimeout(function () {
@@ -300,7 +300,23 @@ if (!monika) var monika = (function (root) {
                         setTimeout(function () {
                             /* need to re-check just in case something changed */
                             if (mainSelectDisplays[amySlot].targetSuggestions[amyQuad].id == "amy") {
-                                mainSelectDisplays[amySlot].updateTargetSuggestionDisplay(amyQuad, suggested_opponents[idx]);
+                                var visEffect2 = new monika.effects.VisualSuggestedOppGlitchEffect(amySlot, amyQuad);
+
+                                setTimeout(function () {
+                                    /* need to re-check just in case something changed */
+                                    if (mainSelectDisplays[amySlot].targetSuggestions[amyQuad].id == "amy") {
+                                        visEffect2.execute(function () {
+                                            setTimeout(function () {
+                                                /* need to re-check just in case something changed */
+                                                if (mainSelectDisplays[amySlot].targetSuggestions[amyQuad].id == "amy") {
+                                                    mainSelectDisplays[amySlot].updateTargetSuggestionDisplay(amyQuad, suggested_opponents[idx]);
+                                                }
+
+                                                visEffect2.revert();
+                                            }, 750);
+                                        });
+                                    }
+                                }, 1500);
                             }
 
                             visEffect.revert();
