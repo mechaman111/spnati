@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited May 28 2021
+README edited June 22 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -220,6 +220,14 @@ The 99 counter is to reference how, in Undertale, the Locket item has 99 Defense
 Please make it known if having wingdings in text causes problems in some devices. This was not tested, for instance, on mobile.
 
 -------------------------------------------------------------------------------------------
+SKINS
+-------------------------------------------------------------------------------------------
+
+DEFAULT - Self explanatory; it's the default skin.
+
+BEACH GARDENER - Summer Event costume.
+
+-------------------------------------------------------------------------------------------
 CHARACTER INTERACTIONS
 -------------------------------------------------------------------------------------------
 Below follows a list of Chara's specific interactions with other opponents. Note: Chara's reactions to an opponent being selected on the pregame screen are NOT listed here.
@@ -286,6 +294,9 @@ BERNADETTA
 BI
 -Response to Bi doing anything.
 
+BOBOBO
+-Responds to Bobobo removing all his clothes at once.
+
 BROCK
 -Responds to Brock launching a missile.
 -Responds to Brock getting hit by a missile.
@@ -327,12 +338,17 @@ EMI
 ERUFUDA
 -Responds to Erufuda's question about favorite foods.
 
+FINA
+-Responds to Fina as Chara is losing.
+-Responds to Fina's prompt about worlds.
+
 FLORINA
 -Responds to Florina fleeing the game.
 
 FLUTTERSHY
 -Responds to Fluttershy asking about jokes.
 -Responds to Fluttershy talking about flowers.
+-Responds to Fluttershy asking if she's friends with the player.
 
 GALATEA
 -Responds to Galatea having to strip with rock puns.
@@ -418,6 +434,9 @@ METTATON
 MIKO
 -Back and forth when Miko or Chara are losing.
 -Case to handle Miko having gone bi-bye.
+
+MONIKA
+-Responds to Monika losing.
 
 MOON
 -Generic responses when Moon loses a hand and must strip.
@@ -588,8 +607,6 @@ PLANNED CHARACTER INTERACTIONS
 Planned interactions not yet implemented for any number of reasons.
 
 -A 'spider donut, don't worry, spider didn't' joke with Amy.
--Interactions with Monika, particularly her glitches. However, as Chara and Monika both use 'different types' of 4th wall screwiness, and given my limited knowledge of JS, I might
-have to resign myself to simply ignoring her.
 
 -------------------------------------------------------------------------------------------
 MISC
