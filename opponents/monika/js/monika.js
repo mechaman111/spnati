@@ -320,6 +320,8 @@ if (!monika) var monika = (function (root) {
                             }
 
                             visEffect.revert();
+                            /* why is this needed? revert() should work */
+                            mainSelectDisplays[amySlot].suggestionQuad[amyQuad].children('.opponent-suggestion-image').attr('src', mainSelectDisplays[amySlot].targetSuggestions[amyQuad].selection_image);
                         }, 750);
                     });
                 }
