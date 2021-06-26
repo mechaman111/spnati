@@ -987,6 +987,10 @@ function clickedRandomGroupButton () {
         }
     }
 
+    $selectScreen.append($('<div>', {
+        'class': 'bordered toast',
+        'text': chosenGroup.title,
+    }).on('animationend', function() { $(this).remove(); }));
     loadGroup(chosenGroup);
 }
 
