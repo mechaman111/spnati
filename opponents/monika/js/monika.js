@@ -300,19 +300,17 @@ if (!monika) var monika = (function (root) {
                         setTimeout(function () {
                             /* need to re-check just in case something changed */
                             if (mainSelectDisplays[amySlot].targetSuggestions[amyQuad].id == "amy") {
-                                var visEffect2 = new monika.effects.VisualSuggestedOppGlitchEffect(amySlot, amyQuad);
-
                                 setTimeout(function () {
                                     /* need to re-check just in case something changed */
                                     if (mainSelectDisplays[amySlot].targetSuggestions[amyQuad].id == "amy") {
-                                        visEffect2.execute(function () {
+                                        visEffect.execute(function () {
                                             setTimeout(function () {
                                                 /* need to re-check just in case something changed */
                                                 if (mainSelectDisplays[amySlot].targetSuggestions[amyQuad].id == "amy") {
                                                     mainSelectDisplays[amySlot].updateTargetSuggestionDisplay(amyQuad, suggested_opponents[idx]);
                                                 }
 
-                                                visEffect2.revert();
+                                                visEffect.revert();
                                             }, 750);
                                         });
                                     }
