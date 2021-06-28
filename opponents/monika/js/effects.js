@@ -486,6 +486,75 @@
     }
 
 
+    /* SuggestedAmyGlitchEffect - a variant on the above RepeatingVisualGlitchEffect
+     * that applies a visual glitch in Suggested Opponents exactly twice. Possibly too specific.
+     */
+    function SuggestedAmyGlitchEffect(target_slot, target_quad, on_finished) {
+        Effect.call(this);
+        this.visual_glitch_effect = new VisualSuggestedOppGlitchEffect(target_slot, target_quad);
+
+        this.slot = target_slot;
+        this.quad = target_quad;
+        this.phase = 0;
+
+        this.cancelled = false;
+        this.currentTimerID = null;
+    }
+
+    SuggestedAmyGlitchEffect.prototype = Object.create(Effect.prototype);
+    SuggestedAmyGlitchEffect.prototype.constructor = SuggestedAmyGlitchEffect;
+    exports.SuggestedAmyGlitchEffect = SuggestedAmyGlitchEffect;
+
+    SuggestedAmyGlitchEffect.prototype.glitchOn = function () {
+        if (this.cancelled || mainSelectDisplays[this.slot].targetSuggestions[this.quad].id != "amy") {
+            return;
+        }
+        this.visual_glitch_effect.execute(function () {
+            this.currentTimerID = setTimeout(this.glitchOff.bind(this), 750);
+            this.phase++;
+        }.bind(this));
+    }
+
+    SuggestedAmyGlitchEffect.prototype.glitchOff = function () {
+        if (this.cancelled || mainSelectDisplays[this.slot].targetSuggestions[this.quad].id != "amy") {
+            return;
+        }
+
+        if (this.phase == 0) {
+            this.visual_glitch_effect.revert(function () {
+                this.currentTimerID = setTimeout(this.glitchOn.bind(this), 2000);
+                this.phase++;
+            }.bind(this));
+        } else if (this.phase == 2) {
+            this.visual_glitch_effect.revert(function () {
+                this.currentTimerID = setTimeout(this.glitchOn.bind(this), 1500);
+                this.phase++;
+            }.bind(this));
+        } else { // this.phase == 4
+            this.revert();
+            if (this.on_finished) this.on_finished();
+        }
+    }
+
+    SuggestedAmyGlitchEffect.prototype.execute = function (on_finished) {
+        Effect.prototype.execute.call(this);
+
+        this.on_finished = on_finished;
+        this.cancelled = false;
+        this.glitchOff();
+    }
+
+    SuggestedAmyGlitchEffect.prototype.revert = function () {
+        if (this.active) {
+            Effect.prototype.revert.call(this);
+
+            this.cancelled = true;
+            clearTimeout(this.currentTimerID);
+            this.visual_glitch_effect.revert();
+        }
+    }
+
+
     function GlitchPoseChange(target_slot, dest_pose, glitch_time, start_y, affected_height) {
         VisualGlitchEffect.call(this, target_slot, start_y, affected_height);
 

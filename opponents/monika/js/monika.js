@@ -237,11 +237,11 @@ if (!monika) var monika = (function (root) {
     root.exitRollback = hookWrapper('exitRollback');
 
     function removeAmySuggestion() {
-        /* Remove any active Suggested Opponents glitches first */
+        /* Don't double up on effects */
         var active_copy = active_effects.slice();
 
         active_copy.forEach(function (eff) {
-            if (eff instanceof monika.effects.VisualSuggestedOppGlitchEffect) {
+            if (eff instanceof monika.effects.SuggestedAmyGlitchEffect) {
                 try {
                     eff.revert();
                 } catch (e) {
@@ -262,7 +262,7 @@ if (!monika) var monika = (function (root) {
 
         if (loaded == 2 || loaded == 3) {
             /* Find Amy in the suggestion pool */
-            var amySlot = null, amyQuad = null; 
+            var amySlot = null, amyQuad = null;
 
             for (var i = 1; i < players.length; i++) {
                 if (players[i] === undefined) {
@@ -291,39 +291,11 @@ if (!monika) var monika = (function (root) {
             var idx = (loaded == 2) ? 8 : 4;
 
             /* Wait 2 seconds, then visually glitch Amy briefly, then wait 1.5 seconds, then glitch her again and replace her */
-            var visEffect = new monika.effects.VisualSuggestedOppGlitchEffect(amySlot, amyQuad);
+            var visEffect = new monika.effects.SuggestedAmyGlitchEffect(amySlot, amyQuad);
 
-            setTimeout(function () {
-                /* need to re-check just in case something changed */
-                if (mainSelectDisplays[amySlot].targetSuggestions[amyQuad].id == "amy") {
-                    visEffect.execute(function () {
-                        setTimeout(function () {
-                            /* need to re-check just in case something changed */
-                            if (mainSelectDisplays[amySlot].targetSuggestions[amyQuad].id == "amy") {
-                                setTimeout(function () {
-                                    /* need to re-check just in case something changed */
-                                    if (mainSelectDisplays[amySlot].targetSuggestions[amyQuad].id == "amy") {
-                                        visEffect.execute(function () {
-                                            setTimeout(function () {
-                                                /* need to re-check just in case something changed */
-                                                if (mainSelectDisplays[amySlot].targetSuggestions[amyQuad].id == "amy") {
-                                                    mainSelectDisplays[amySlot].updateTargetSuggestionDisplay(amyQuad, suggested_opponents[idx]);
-                                                }
-
-                                                visEffect.revert();
-                                            }, 750);
-                                        });
-                                    }
-                                }, 1500);
-                            }
-
-                            visEffect.revert();
-                            /* why is this needed? revert() should work */
-                            mainSelectDisplays[amySlot].suggestionQuad[amyQuad].children('.opponent-suggestion-image').attr('src', mainSelectDisplays[amySlot].targetSuggestions[amyQuad].selection_image);
-                        }, 750);
-                    });
-                }
-            }, 2000);
+            visEffect.execute(function () {
+                mainSelectDisplays[amySlot].updateTargetSuggestionDisplay(amyQuad, suggested_opponents[idx]);
+            });
         }
     }
     registerHook('updateSelectionVisuals', 'post', removeAmySuggestion);
