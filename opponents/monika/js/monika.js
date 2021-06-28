@@ -232,8 +232,73 @@ if (!monika) var monika = (function (root) {
     root.completeRevealPhase = hookWrapper('completeRevealPhase');
     root.updateGameVisual = hookWrapper('updateGameVisual');
     root.advanceSelectScreen = hookWrapper('advanceSelectScreen');
+    root.updateSelectionVisuals = hookWrapper('updateSelectionVisuals');
     root.restartGame = hookWrapper('restartGame');
     root.exitRollback = hookWrapper('exitRollback');
+
+    function removeAmySuggestion() {
+        /* Don't double up on effects */
+        var active_copy = active_effects.slice();
+
+        active_copy.forEach(function (eff) {
+            if (eff instanceof monika.effects.SuggestedAmyGlitchEffect) {
+                try {
+                    eff.revert();
+                } catch (e) {
+                    reportException("while cleaning up " + eff.constructor.name, e);
+                }
+            }
+        });
+
+        if (!utils.monika_present()) { return; }
+
+        var loaded = 0;
+
+        players.forEach(function(p, idx) {
+            if (idx > 0 && p.isLoaded()) {
+                loaded++;
+            }
+        });
+
+        if (loaded == 2 || loaded == 3) {
+            /* Find Amy in the suggestion pool */
+            var amySlot = null, amyQuad = null;
+
+            for (var i = 1; i < players.length; i++) {
+                if (players[i] === undefined) {
+                    for (var j = 0; j < 4; j++) {
+                        if (mainSelectDisplays[i - 1].targetSuggestions[j].id == "amy") {
+                            amySlot = i - 1;
+                            amyQuad = j;
+                            break;
+                        }
+                    }
+
+                    if (amySlot) { break; }
+                }
+            }
+
+            if (!amySlot) { return; }
+
+            /* get the next most targeted character that isn't already suggested */
+            var suggested_opponents = loadedOpponents.filter(function(opp) {
+                if (individualSelectTesting && opp.status !== "testing") return false;
+                return opp.selectionCard.isVisible(individualSelectTesting, true);
+            });
+
+            suggested_opponents.sort(sortOpponentsByMostTargeted());
+
+            var idx = (loaded == 2) ? 8 : 4;
+
+            /* Wait 2 seconds, then visually glitch Amy briefly, then wait 1.5 seconds, then glitch her again and replace her */
+            var visEffect = new monika.effects.SuggestedAmyGlitchEffect(amySlot, amyQuad);
+
+            visEffect.execute(function () {
+                mainSelectDisplays[amySlot].updateTargetSuggestionDisplay(amyQuad, suggested_opponents[idx]);
+            });
+        }
+    }
+    registerHook('updateSelectionVisuals', 'post', removeAmySuggestion);
 
     function handleOptionsModal() {
         if (utils.monika_present()) {

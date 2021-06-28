@@ -400,8 +400,36 @@
     exports.VisualGlitchEffect = VisualGlitchEffect;
 
 
+    /* VisualSuggestedOppGlitchEffect - a variant on the above VisualGlitchEffect
+     * that is used for the Suggested Opponents instead.
+     */
+    function VisualSuggestedOppGlitchEffect(target_slot, target_quad, start_y, affected_height) {
+        CollectionEffect.call(this);
+
+        this.target_slot = target_slot;
+        this.target_quad = target_quad;
+        this.target_image = mainSelectDisplays[target_slot].suggestionQuad[target_quad].children('.opponent-suggestion-image');
+
+        this.start_y = start_y;
+        this.affected_height = affected_height;
+
+        this.subeffects.push(new CanvasEffect(
+            this.target_image,
+            function (canvas_effect) {
+                canvas_effect.channel_split_filter(this.start_y, this.affected_height);
+                canvas_effect.waver_filter(this.start_y, this.affected_height);
+            }.bind(this),
+            false
+        ));
+    }
+
+    VisualSuggestedOppGlitchEffect.prototype = Object.create(CollectionEffect.prototype);
+    VisualSuggestedOppGlitchEffect.prototype.constructor = VisualSuggestedOppGlitchEffect;
+    exports.VisualSuggestedOppGlitchEffect = VisualSuggestedOppGlitchEffect;
+
+
     /* RepeatingVisualGlitchEffect - a variant on the above VisualGlitchEffect
-     * That repeatedly applies a visual glitch.
+     * that repeatedly applies a visual glitch.
      */
     function RepeatingVisualGlitchEffect(target_slot, glitchTime, normalTime) {
         Effect.call(this);
@@ -454,6 +482,75 @@
             this.visual_glitch_effect.revert(on_finished);
         } else if (on_finished) {
             return on_finished();
+        }
+    }
+
+
+    /* SuggestedAmyGlitchEffect - a variant on the above RepeatingVisualGlitchEffect
+     * that applies a visual glitch in Suggested Opponents exactly twice. Possibly too specific.
+     */
+    function SuggestedAmyGlitchEffect(target_slot, target_quad, on_finished) {
+        Effect.call(this);
+        this.visual_glitch_effect = new VisualSuggestedOppGlitchEffect(target_slot, target_quad);
+
+        this.slot = target_slot;
+        this.quad = target_quad;
+        this.phase = 0;
+
+        this.cancelled = false;
+        this.currentTimerID = null;
+    }
+
+    SuggestedAmyGlitchEffect.prototype = Object.create(Effect.prototype);
+    SuggestedAmyGlitchEffect.prototype.constructor = SuggestedAmyGlitchEffect;
+    exports.SuggestedAmyGlitchEffect = SuggestedAmyGlitchEffect;
+
+    SuggestedAmyGlitchEffect.prototype.glitchOn = function () {
+        if (this.cancelled || mainSelectDisplays[this.slot].targetSuggestions[this.quad].id != "amy") {
+            return;
+        }
+        this.visual_glitch_effect.execute(function () {
+            this.currentTimerID = setTimeout(this.glitchOff.bind(this), 750);
+            this.phase++;
+        }.bind(this));
+    }
+
+    SuggestedAmyGlitchEffect.prototype.glitchOff = function () {
+        if (this.cancelled || mainSelectDisplays[this.slot].targetSuggestions[this.quad].id != "amy") {
+            return;
+        }
+
+        if (this.phase == 0) {
+            this.visual_glitch_effect.revert(function () {
+                this.currentTimerID = setTimeout(this.glitchOn.bind(this), 2000);
+                this.phase++;
+            }.bind(this));
+        } else if (this.phase == 2) {
+            this.visual_glitch_effect.revert(function () {
+                this.currentTimerID = setTimeout(this.glitchOn.bind(this), 1500);
+                this.phase++;
+            }.bind(this));
+        } else { // this.phase == 4
+            this.revert();
+            if (this.on_finished) this.on_finished();
+        }
+    }
+
+    SuggestedAmyGlitchEffect.prototype.execute = function (on_finished) {
+        Effect.prototype.execute.call(this);
+
+        this.on_finished = on_finished;
+        this.cancelled = false;
+        this.glitchOff();
+    }
+
+    SuggestedAmyGlitchEffect.prototype.revert = function () {
+        if (this.active) {
+            Effect.prototype.revert.call(this);
+
+            this.cancelled = true;
+            clearTimeout(this.currentTimerID);
+            this.visual_glitch_effect.revert();
         }
     }
 
@@ -981,10 +1078,10 @@
 
     GlitchMasturbationEffect.prototype.shuffleImages = function () {
         this.images = [];
-        
+
         var folderPath = 'opponents/monika/';
         var monika_pl = monika.utils.get_monika_player();
-        
+
         if (monika_pl.alt_costume && monika_pl.alt_costume.id === 'monika_love_bug') {
             folderPath = 'opponents/reskins/monika_love_bug/';
         }
