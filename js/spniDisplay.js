@@ -777,7 +777,6 @@ GameScreenDisplay.prototype.reset = function (player) {
     
     if (player) {
         this.opponentArea.show();
-        this.imageArea.show();
         this.label.removeClass("current loser tied");
     } else {
         this.opponentArea.hide();
@@ -921,7 +920,7 @@ MainSelectScreenDisplay.prototype.displaySingleSuggestion = function () {
         OpponentDisplay.prototype.rescaleSimplePose.call(this, player.scale);
     }.bind(this));
     this.label.html(player.label.initCap()).addClass('suggestion-label');
-    this.imageArea.addClass('prefill-suggestion');
+    this.imageArea.addClass('prefill-suggestion').css('z-index', player.z_index - 100);
     this.selectButton.html("Select Other Opponent").removeClass("red").addClass("green suggestion-shown").attr('disabled', false);
     this.prefillButton.show();
     this.altCostumeSelector.hide();
@@ -1036,10 +1035,6 @@ MainSelectScreenDisplay.prototype.update = function (player) {
                 this.rescaleSimplePose(player.scale);
                 this.simpleImage.show();
             }.bind(this));
-        } else {
-            this.pose.onLoadComplete = function () {
-                this.imageArea.show();
-            }.bind(this);
         }
 
         this.altCostumeSelector.hide();
