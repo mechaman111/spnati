@@ -93,11 +93,11 @@ namespace SPNATI_Character_Editor.Activities
 			SelectLine(0);
 		}
 
-		private void lstTags_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			ShowTargetedLines(lstTags.SelectedItem as Character, _filterLines, TargetType.Filter);
-			SelectLine(0);
-		}
+		//private void lstTags_SelectedIndexChanged(object sender, EventArgs e)
+		//{
+		//	ShowTargetedLines(lstTags.SelectedItem as Character, _filterLines, TargetType.Filter);
+		//	SelectLine(0);
+		//}
 
 		private List<TargetData> LoadLines(Character other, TargetType targetType)
 		{
@@ -443,32 +443,32 @@ namespace SPNATI_Character_Editor.Activities
 			}
 		}
 
-		private void cmdLoadTags_Click(object sender, EventArgs e)
-		{
-			if (MessageBox.Show("This can take a long time. Proceed?", "Load Tag Information", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
-			{
-				Cursor.Current = Cursors.WaitCursor;
-				LoadTags();
-				Cursor.Current = Cursors.Default;
-			}
-		}
+		//private void cmdLoadTags_Click(object sender, EventArgs e)
+		//{
+		//	if (MessageBox.Show("This can take a long time. Proceed?", "Load Tag Information", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+		//	{
+		//		Cursor.Current = Cursors.WaitCursor;
+		//		LoadTags();
+		//		Cursor.Current = Cursors.Default;
+		//	}
+		//}
 
-		private void LoadTags()
-		{
-			CharacterDatabase.LoadAll();
-			foreach (Character other in CharacterDatabase.FilteredCharacters)
-			{
-				Lazy<List<TargetData>> lines = new Lazy<List<TargetData>>(() => LoadLines(other, TargetType.Filter));
-				_filterLines[other] = lines;
-				if (lines.Value.Count > 0)
-				{
-					lstTags.Items.Add(other);
-				}
-			}
+		//private void LoadTags()
+		//{
+		//	CharacterDatabase.LoadAll();
+		//	foreach (Character other in CharacterDatabase.FilteredCharacters)
+		//	{
+		//		Lazy<List<TargetData>> lines = new Lazy<List<TargetData>>(() => LoadLines(other, TargetType.Filter));
+		//		_filterLines[other] = lines;
+		//		if (lines.Value.Count > 0)
+		//		{
+		//			lstTags.Items.Add(other);
+		//		}
+		//	}
 
-			cmdLoadTags.Visible = false;
-			lstTags.Visible = true;
-		}
+		//	cmdLoadTags.Visible = false;
+		//	lstTags.Visible = true;
+		//}
 
 		private void cmdFilter_Click(object sender, EventArgs e)
 		{
