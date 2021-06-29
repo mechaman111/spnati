@@ -41,21 +41,51 @@
         <response id="1179" opponent="ayano" opponentId="83" />
         <response id="1184" opponent="bobobo" opponentId="93" />
     </responses>
+    <notes>
+        <note id="1191">If you name yourself something Monika dislikes and then start the game, this case plays. You can substitute ~marker.RealName~ for ~player~ at any point to have Monika use the player's "real" name (the last acceptable name they used, or Player if there was none) to give them a surprise later on.</note>
+        <note id="1186">If you change your name to something Monika approves of, this case will play and store the name you chose in the marker RealName.</note>
+        <note id="1197">If you start the game named Daddy with Natsuki present, this case plays.</note>
+        <note id="1187">If you name yourself something Monika doesn't like (currently: Master, Daddy), she tells you to go back and change it. You can change which names she dislikes by adding or removing the OR conditions, but unfortunately you have to remember to do it in all the cases that use them.
+
+This sets a marker, FakeName, which stores the inappropriate name you chose so that Monika knows what you picked last time. Use ~marker.FakeName~ to put the name in dialogue. After the game starts, FakeName will be cleared.</note>
+        <note id="1188">Monika has a special reprimand if you call yourself "Daddy" when Natsuki is present. This sets the marker NatsukiDaddy, which indicates that you previously called yourself Daddy with Natsuki around.</note>
+        <note id="1189">If you change from a name Monika dislikes to another name Monika also dislikes, this case will play.</note>
+        <note id="1190">If you named yourself something Monika doesn't like and then change it to something better, this case plays.</note>
+        <note id="1194">If you come back to the select screen without changing your name, or re-select Monika, after she told you to change your name, this case plays.</note>
+        <note id="1195">If you re-select Monika with Natsuki present and are still called Daddy, this case plays.</note>
+        <note id="1196">A version of Monika's reprimand for you if you select Natsuki while already called Daddy. Also sets the NatsukiDaddy marker.</note>
+        <note id="1198">If you previously named yourself Daddy with Natsuki present, Monika acknowledges that your new name is less offensive, but still wants you to change it.</note>
+    </notes>
     <labels>
         <label id="1147" label="FarawayVision" folder="Player Name" sort="0" />
-        <label id="1148" label="MisterSolitaire" folder="Player Name" sort="0" />
+        <label id="1148" label="MisterSolitaire" folder="Player Name" sort="2" />
         <label id="1152" label="" folder="Stirring Mermaid" sort="0" />
-        <label id="1153" label="" folder="Stirring Mermaid" sort="0" />
-        <label id="1154" label="" folder="Stirring Mermaid" sort="0" />
-        <label id="1155" label="" folder="Stirring Mermaid" sort="0" />
-        <label id="1156" label="" folder="Stirring Mermaid" sort="0" />
-        <label id="1157" label="" folder="Stirring Mermaid" sort="0" />
-        <label id="1158" label="" folder="Stirring Mermaid" sort="0" />
-        <label id="1182" label="spnanon" folder="Player Name" sort="0" />
-        <label id="1183" label="Sonamy" folder="Player Name" sort="0" />
+        <label id="1153" label="" folder="Stirring Mermaid" sort="2" />
+        <label id="1154" label="" folder="Stirring Mermaid" sort="3" />
+        <label id="1155" label="" folder="Stirring Mermaid" sort="4" />
+        <label id="1156" label="" folder="Stirring Mermaid" sort="5" />
+        <label id="1157" label="" folder="Stirring Mermaid" sort="6" />
+        <label id="1158" label="" folder="Stirring Mermaid" sort="7" />
+        <label id="1182" label="spnanon" folder="Player Name" sort="3" />
+        <label id="1183" label="Sonamy" folder="Player Name" sort="4" />
+        <label id="1185" label="" color="1" folder="Marker Tricks" sort="2" />
+        <label id="1186" label="" color="1" folder="Marker Tricks" sort="4" />
+        <label id="1187" label="" color="1" folder="Marker Tricks" sort="6" />
+        <label id="1188" label="" color="1" folder="Marker Tricks" sort="8" />
+        <label id="1189" label="" color="1" folder="Marker Tricks" sort="10" />
+        <label id="1190" label="" color="1" folder="Marker Tricks" sort="12" />
+        <label id="1191" label="" color="1" folder="Marker Tricks" sort="14" />
+        <label id="1192" label="" color="1" folder="Marker Tricks" sort="16" />
+        <label id="1193" label="" color="1" folder="Marker Tricks" sort="18" />
+        <label id="1194" label="" color="1" folder="Marker Tricks" sort="20" />
+        <label id="1195" label="" color="1" folder="Marker Tricks" sort="22" />
+        <label id="1196" label="" color="1" folder="Marker Tricks" sort="24" />
+        <label id="1197" label="" color="1" folder="Marker Tricks" sort="26" />
+        <label id="1198" label="" color="1" folder="Marker Tricks" sort="28" />
     </labels>
-    <nextId>1184</nextId>
+    <nextId>1198</nextId>
     <markers>
+        <marker scope="Public" name="" />
         <marker scope="Public" name="3_musician_table_reaction" />
         <marker scope="Public" name="4_musician_table_reaction" />
         <marker scope="Public" name="9s_hack1" />
@@ -114,6 +144,7 @@
         <marker scope="Public" name="did_i_break_anything">Monika has said at least one of her "Oops" lines in response to a round glitch.</marker>
         <marker scope="Public" name="disappearing_clothes" />
         <marker scope="Public" name="emistriplegs" />
+        <marker scope="Public" name="FakeName">Stores a name you picked that Monika doesn't like. This will be cleared after the game actually starts.</marker>
         <marker scope="Public" name="glitched">Monika has glitched a round of gameplay. This includes the current round and any previous rounds.</marker>
         <marker scope="Public" name="glitch-type-corrupt">Someone in the round is being affected by the 'corruption' glitch, causing their dialogue to be corrupted either with 'zalgotext' characters or by making their dialogue text overflow the speech bubble boundaries.</marker>
         <marker scope="Public" name="glitch-type-delete">Someone in the round is being affected by the 'deletion' glitch, causing their character sprite to be replaced by glitch blocks, replacing their character label with glitch characters, and partially corrupting their dialogue.</marker>
@@ -145,8 +176,10 @@
         <marker scope="Public" name="mistyskinnydip_resp" />
         <marker scope="Public" name="monika_rin_offered_help" />
         <marker scope="Public" name="nagisa_food_resp" />
+        <marker scope="Public" name="natsuki_doessheusetoy" />
         <marker scope="Public" name="natsuki_doyoumasturbate" />
         <marker scope="Public" name="natsukicharacter" />
+        <marker scope="Public" name="NatsukiDaddy">You've named yourself Daddy with Natsuki present. This will be cleared after the game actually starts.</marker>
         <marker scope="Public" name="ponytails" />
         <marker scope="Public" name="psa_deliver" />
         <marker scope="Public" name="psa_deliver2" />
@@ -161,6 +194,7 @@
         <marker scope="Public" name="realization_3" />
         <marker scope="Public" name="realization_3a" />
         <marker scope="Public" name="realization_3b" />
+        <marker scope="Public" name="RealName">Stores your "real name", which is the last name you used that Monika liked. If you've never used a name she approved of, "Player" will be stored here.</marker>
         <marker scope="Public" name="resp-natsuki-10-rounds" />
         <marker scope="Public" name="resp-natsuki-15-rounds" />
         <marker scope="Public" name="resp-natsuki-20-rounds" />
@@ -368,6 +402,7 @@
         <marker scope="Public" name="runs_the_place_resp" />
         <marker scope="Public" name="sayaka_0" />
         <marker scope="Public" name="sayonika-start-prompt" />
+        <marker scope="Public" name="sayori_doessheusetoy" />
         <marker scope="Public" name="sayori_doyoumasturbate" />
         <marker scope="Public" name="singforclub" />
         <marker scope="Public" name="streamingchan_kink_resp" />
@@ -568,6 +603,7 @@
         <marker scope="Public" name="YouShouldPickSayori" />
         <marker scope="Public" name="YouShouldPickYuri" />
         <marker scope="Public" name="YouShouldRemoveAmy" />
+        <marker scope="Public" name="yuri_doessheusetoy" />
         <marker scope="Public" name="yuri_doyoumasturbate" />
         <marker scope="Public" name="yuri_relax" />
     </markers>
