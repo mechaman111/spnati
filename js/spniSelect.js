@@ -1430,10 +1430,10 @@ function updateSelectionVisuals () {
      * Testing roster. */
     if (individualSelectTesting) {
         $("#select-group-button").hide();
-        $selectRandomTableButton.hide();
+        $selectRandomTableButton.css('visibility', 'hidden');
     } else {
         $("#select-group-button").show();
-        $selectRandomTableButton.show();
+        $selectRandomTableButton.css('visibility', 'visible');
     }
 
     /* if enough opponents are selected, and all those are loaded, then enable progression */
