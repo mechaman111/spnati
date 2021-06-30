@@ -6,16 +6,32 @@
             <description>A generic NPC has shown up to play! Other characters might want to assign her a nickname (like "Red" or "Hoodie"), because she doesn't have a real name otherwise - she gets cut off by the game starting before she can say it.</description>
         </case>
         <case name="Showing her butt" id="2" priority="FYI" min="8" max="8">
-            <description>After becoming naked, she will occasionally around and show her butt while panicking. All instances of her showing her butt have the showing_butt marker.</description>
+            <description>After becoming naked, she will occasionally around and show her butt while panicking. All instances of her showing her butt have the "magma_showing_butt" marker.</description>
+        </case>
+        <case name="Hood Down" id="92" priority="FYI" min="4" max="4">
+            <description>Her face is no longer covered by a big shadow from her hoodie. She's also very protective of her hoodie, noting that she'd have to pay for a replacement if she lost it.</description>
+        </case>
+        <case name="Checking the Group Chat" id="95" priority="FYI" min="10" max="10">
+            <description>When she's saying the marker af_idle_group_chat, she's checking the Team Magma Grunt group chat on her phone. The marker is set to a specific number for each line.</description>
         </case>
     </noteworthy>
     <reviewed>true</reviewed>
+    <responses>
+        <response id="115" opponent="nagisa" opponentId="164" />
+        <response id="116" opponent="may" opponentId="128" />
+        <response id="117" opponent="colress" opponentId="47" />
+        <response id="118" opponent="colress" opponentId="113" />
+        <response id="119" opponent="penny_polendina" opponentId="35" />
+        <response id="135" opponent="chell_wheatley" opponentId="106" />
+    </responses>
     <notes>
         <note id="18">If the player isn't gay, magma grunt slowly starts flirting with them when they strip</note>
         <note id="25">If the player isn't gay, magma grunt slowly starts flirting with them when they strip</note>
         <note id="48">replace later</note>
         <note id="49">replace later</note>
         <note id="81">This is a fallback in case, for some reason, the finish_dramatic or finish_silent cases don't work. It defaults to a silent one anyway.</note>
+        <note id="83">If she doesnt say the marker for Loud or Silent by this point, she ends up defaulting to a silent one anyway.</note>
+        <note id="136">If this line fires, she recognises May when May has to strip from stage 0. If that line fires first, this one doesn't play.</note>
     </notes>
     <labels>
         <label id="3" label="Magma Team 1" folder="Characters" sort="0" />
@@ -23,7 +39,7 @@
         <label id="5" label="" folder="April Fools Characters" sort="0" />
         <label id="6" label="" folder="April Fools Characters" sort="0" />
         <label id="7" label="General" folder="April Fools Characters" sort="0" />
-        <label id="9" label="" folder="Play Once Opponents" sort="0" />
+        <label id="9" label="" folder="May" sort="0" />
         <label id="10" label="" folder="Play Once Opponents" sort="0" />
         <label id="11" label="" folder="Opp Dialogue" sort="0" />
         <label id="12" label="" folder="Opp Dialogue" sort="0" />
@@ -53,15 +69,15 @@
         <label id="36" label="Magma Team 2" folder="Characters" sort="0" />
         <label id="37" label="Magma Team 3" folder="Characters" sort="0" />
         <label id="38" label="Magma Team 4" folder="Characters" sort="0" />
-        <label id="39" label="Idles" folder="" sort="0" />
+        <label id="39" label="Idles" folder="Play Once Idle" sort="0" />
         <label id="2" label="Self Butt Reveal" folder="Butt" sort="0" />
-        <label id="40" label="Feels out of place" color="4" folder="Play Once Idle" sort="0" />
-        <label id="41" label="Getting the hang of things" color="4" folder="Play Once Idle" sort="0" />
+        <label id="40" label="Feels out of place" color="0" folder="Play Once Idle" sort="0" />
+        <label id="41" label="Getting the hang of things" color="0" folder="Play Once Idle" sort="0" />
         <label id="42" label="" folder="Play Once Opponents" sort="0" />
         <label id="43" label="Second Self Butt Reveal" folder="Butt" sort="0" />
         <label id="44" label="Team Name Aqua" folder="Background" sort="0" />
         <label id="45" label="Team Name Magma" folder="Background" sort="0" />
-        <label id="46" label="Idles" folder="" sort="0" />
+        <label id="46" label="Idles" folder="Play Once Idle" sort="0" />
         <label id="49" label="" color="1" folder="" sort="0" />
         <label id="48" label="" color="1" folder="" sort="0" />
         <label id="50" label="Normal" folder="" sort="0" />
@@ -91,7 +107,7 @@
         <label id="74" label="Go All The Way?" folder="" sort="0" />
         <label id="75" label="After" folder="player flirt" sort="0" />
         <label id="76" label="After" folder="player flirt" sort="0" />
-        <label id="77" label="Hoodie Unlock" folder="" sort="0" />
+        <label id="77" label="Hoodie Unlock" folder="Hidden" sort="0" />
         <label id="78" label="" folder="April Fools Opponents" sort="0" />
         <label id="79" label="Loud" folder="" sort="0" />
         <label id="80" label="Silent" folder="" sort="0" />
@@ -99,10 +115,57 @@
         <label id="82" label="Moon and Alolamom" folder="Characters" sort="0" />
         <label id="83" label="" color="1" folder="" sort="0" />
         <label id="84" label="Pokémonopoly" folder="Play Once Idle" sort="0" />
-        <label id="85" label="" folder="Human" sort="0" />
-        <label id="86" label="" color="1" folder="" sort="0" />
+        <label id="85" label="Crotch Vis Small Penis" folder="Human States of Dress" sort="0" />
+        <label id="86" label="Butt Think (Game 3+)" color="0" folder="" sort="0" />
         <label id="87" label="Force Finish Type" folder="" sort="0" />
         <label id="88" label="Entirely First Naked" folder="" sort="0" />
+        <label id="89" label="Beach" folder="Background" sort="0" />
+        <label id="90" label="Beach" folder="" sort="0" />
+        <label id="91" label="3 Loss Bad Hand" folder="Loss Chain" sort="0" />
+        <label id="93" label="Summer" folder="Summer Alt" sort="0" />
+        <label id="94" label="Summer" folder="Summer Alt" sort="0" />
+        <label id="95" label="Checking Phone" folder="" sort="0" />
+        <label id="96" label="Crotch Vis General" folder="Human States of Dress" sort="0" />
+        <label id="97" label="Chest Vis General" folder="Human States of Dress" sort="0" />
+        <label id="98" label="Idles Phone" folder="Play Once Idle" sort="0" />
+        <label id="99" label="Which Pokémon Are You?" folder="" sort="0" />
+        <label id="100" label="First Game" folder="Hidden Logic" sort="0" />
+        <label id="101" label="First Game" folder="Hidden" sort="0" />
+        <label id="102" label="Finished Game" folder="Hidden" sort="0" />
+        <label id="103" label="Second Game" folder="Hidden Logic" sort="0" />
+        <label id="104" label="Second Game" folder="Hidden" sort="0" />
+        <label id="105" label="Third Game" folder="Hidden Logic" sort="0" />
+        <label id="106" label="Third Game" folder="Hidden" sort="0" />
+        <label id="107" label="First Game" folder="Hidden" sort="0" />
+        <label id="108" label="I won" folder="Hidden" sort="0" />
+        <label id="109" label="Human Won" folder="Hidden" sort="0" />
+        <label id="110" label="Human Won" folder="Hidden" sort="0" />
+        <label id="111" label="Other Player Won" folder="Hidden" sort="0" />
+        <label id="112" label="" folder="Disabled" sort="0" />
+        <label id="113" label="I won the last game" folder="Logic" sort="0" />
+        <label id="114" label="The human won the last game" folder="Logic" sort="0" />
+        <label id="120" label="" folder="Human" sort="0" />
+        <label id="121" label="" folder="Human" sort="0" />
+        <label id="122" label="" folder="Human" sort="0" />
+        <label id="123" label="One Finger Selfie (Player Loss)" folder="" sort="0" />
+        <label id="124" label="One Finger Selfie (Human win)" folder="Collectable" sort="0" />
+        <label id="125" label="One Finger Selfie (MG Defeat, Human Loss)" folder="Collectable" sort="0" />
+        <label id="126" label="Beach" folder="Background" sort="0" />
+        <label id="127" label="Beach 6" folder="Background" sort="0" />
+        <label id="128" label="" folder="April Fools Opponents" sort="0" />
+        <label id="129" label="" folder="May" sort="0" />
+        <label id="130" label="" folder="May" sort="0" />
+        <label id="131" label="" folder="May" sort="0" />
+        <label id="132" label="" folder="May" sort="0" />
+        <label id="133" label="" folder="May" sort="0" />
+        <label id="134" label="" folder="May" sort="0" />
+        <label id="136" label="" folder="Play Once Opponents" sort="0" />
+        <label id="116" label="" folder="Play Once Opponents" sort="0" />
+        <label id="137" label="" folder="May" sort="0" />
+        <label id="138" label="Removed Shoes - Outdoors" folder="Background" sort="0" />
+        <label id="139" label="Idles Indoors" folder="Play Once Idle" sort="0" />
+        <label id="140" label="Butt Think (Game 3+)" color="0" folder="" sort="0" />
+        <label id="141" label="Finished Game" folder="Hidden" sort="0" />
     </labels>
     <prefixes>
         <prefix>Epilogue_chat</prefix>
@@ -110,8 +173,16 @@
         <prefix>magma_shorts</prefix>
         <prefix>magma_undies</prefix>
     </prefixes>
-    <nextId>88</nextId>
+    <nextId>141</nextId>
     <markers>
+        <marker scope="Public" name="af_idle_group_chat">Idle dialogue in her After Finished stage where she checks the Magma Grunt group chat.</marker>
+        <marker scope="Public" name="af_idle_group_chat1">Idle dialogue in her After Finished stage where she checks the Magma Grunt group chat.</marker>
+        <marker scope="Public" name="af_idle_group_chat2">Idle dialogue in her After Finished stage where she checks the Magma Grunt group chat.</marker>
+        <marker scope="Public" name="af_idle_group_chat3">Idle dialogue in her After Finished stage where she checks the Magma Grunt group chat.</marker>
+        <marker scope="Public" name="af_idle_group_chat4">Idle dialogue in her After Finished stage where she checks the Magma Grunt group chat.</marker>
+        <marker scope="Public" name="af_idle_group_chat5">Idle dialogue in her After Finished stage where she checks the Magma Grunt group chat.</marker>
+        <marker scope="Public" name="af_idle_group_chat6">Idle dialogue in her After Finished stage where she checks the Magma Grunt group chat.</marker>
+        <marker scope="Public" name="af_idle_phone_quiz">She does a Electabuzzfeed quiz and finds out that she is a charmander at heart.</marker>
         <marker scope="Public" name="butt_didntlose">Shown her butt (butt_pre_roundreveal) but didn't lose the round</marker>
         <marker scope="Public" name="butt_didntlose_after">Shown her butt (butt_didntlose_after), didn't lose the round, turns forward again</marker>
         <marker scope="Public" name="butt_lostround">Shown her butt (butt_pre_roundreveal), lost the round</marker>
@@ -126,13 +197,20 @@
         <marker scope="Public" name="finish_silent2">Follow up from finish_silent, she explains that she's not really a screamer and had a subdued orgasm.</marker>
         <marker scope="Private" name="force_loud_orgasm">Forces her orgasm to be loud by eliminating the quiet dialogue</marker>
         <marker scope="Private" name="force_quiet_orgasm">Forces her orgasm to be quiet by eliminating the loud dialogue</marker>
+        <marker scope="Public" name="gamestart_back_for_more" />
+        <marker scope="Public" name="gamestart_revenge" />
         <marker scope="Public" name="grunt_team_name" />
-        <marker scope="Public" name="idle_go_all_the_way">Idle dialogue. She knew it was strip poker, doesn't know if it's one where you have to masturbate when you lose or not.</marker>
+        <marker scope="Public" name="idle_phone_namedrop_brodie" />
+        <marker scope="Public" name="idle_phone_namedrop_tabitha" />
+        <marker scope="Public" name="idle_phone_on_silent" />
+        <marker scope="Public" name="idle_wifi_password" />
         <marker scope="Private" name="increment_marker">An incremental marker</marker>
+        <marker scope="Public" name="logic_game_finished">Counts how many times the player has finished a full game against the Magma Grunt (to the very end incl. last lines of dialogue)</marker>
+        <marker scope="Public" name="logic_wonlastgame">Stores who won the last game, this is either SELF if she won, or it's the id of the player who won, e.g. human.</marker>
         <marker scope="Public" name="magdonalds">Has mentioned the fast food place owned by team magma</marker>
         <marker scope="Private" name="magma_epilogue_unlock">Has said dialogue that unlocks the epilogue.</marker>
         <marker scope="Public" name="magma_grunt_idle_hot_bodies" />
-        <marker scope="Public" name="magma_grunt_is_a_team_aqua_goon_giving_me_these_cards" />
+        <marker scope="Public" name="magma_grunt_is_a_team_aqua_goon_giving_me_these_cards">MG makes the most blatant, overused "bad cards" joke in the game, and even she doesn't like that she did it.</marker>
         <marker scope="Public" name="magma_grunt_target_strip_hoodie" />
         <marker scope="Public" name="magma_showing_butt">Magma Grunt is showing her butt when saying this marker.</marker>
         <marker scope="Public" name="magma_startmast_courtney">Magma Grunt starts masturbating. She name drops the Magma Admin, Courtney</marker>
@@ -158,8 +236,32 @@
         <marker scope="Public" name="magma_strip_wild_poochyena" />
         <marker scope="Public" name="magmagrunt_gamestart_duplicate">Has seen another Team Magma Grunt at game start</marker>
         <marker scope="Public" name="magmagrunt_gamestart_livingdead">Has seen an Undead player at game start</marker>
+        <marker scope="Public" name="mast_butt_think" />
+        <marker scope="Public" name="may_magmagrunt_01_respond" />
+        <marker scope="Public" name="mg_chellwheatley_footballprompt" />
+        <marker scope="Public" name="mg_colress_coveringup" />
+        <marker scope="Public" name="mg_colress_wormholes" />
+        <marker scope="Public" name="mg_head_to_head" />
+        <marker scope="Public" name="mg_may_bunny_favorite_pokemon" />
+        <marker scope="Public" name="mg_may_strip_0a" />
+        <marker scope="Public" name="mg_may_strip_0b" />
+        <marker scope="Public" name="mg_may_strip_0c" />
+        <marker scope="Public" name="mg_may_strip_1a" />
+        <marker scope="Public" name="mg_may_strip_1b" />
+        <marker scope="Public" name="mg_may_strip_2c" />
+        <marker scope="Public" name="mg_nagisa_only_child_response" />
+        <marker scope="Public" name="mg_nagisa_strip2a" />
+        <marker scope="Public" name="mg_nagisa_strip2b" />
+        <marker scope="Public" name="mg_nagisa_strip2c">When Nagisa says "please be nice to me" the MG genuinely takes it to heart and eases up on her.</marker>
+        <marker scope="Public" name="mg_penny_animaltalk" />
+        <marker scope="Public" name="mg_unlock_selfie_both_lost" />
+        <marker scope="Public" name="mg_unlock_selfie_mg_win" />
+        <marker scope="Public" name="mg_unlock_selfie_player_win" />
+        <marker scope="Public" name="mg_visible_huge_breasts" />
+        <marker scope="Public" name="mg_will_be_visible_huge_breasts" />
+        <marker scope="Public" name="mg_witness_finish_bobobo" />
         <marker scope="Public" name="name_interrupt_gamestart">When the game was starting she was interrupted before she could say her name.</marker>
-        <marker scope="Public" name="player_compatible" />
+        <marker scope="Public" name="player_compatible">Player's preferences allow her to be flirty towards the player.</marker>
         <marker scope="Public" name="player_f_attraction1">Used in a dialogue chain when the player is stripping.</marker>
         <marker scope="Public" name="player_f_attraction2">Used in a dialogue chain when the player is stripping.</marker>
         <marker scope="Public" name="player_f_attraction3">Used in a dialogue chain when the player is stripping.</marker>
@@ -176,6 +278,7 @@
         <marker scope="Public" name="spotted_cynthia_reset_ai">After spotting Cynthia, dialogue with this marker resets MG's AI back to her normal level.</marker>
         <marker scope="Public" name="spotted_may_fear">Magma Grunt recognises May and is a bit afraid of her.</marker>
         <marker scope="Public" name="spotted_may_gamestart">Magma Grunt has spotted May at the start of the game, doesn't recognise her yet.</marker>
+        <marker scope="Public" name="summerskin_afterstripping_4_hat" />
         <marker scope="Public" name="team_motto">Said a motto in the name of Team Magma</marker>
         <marker scope="Public" name="wcdonalds" />
     </markers>
