@@ -109,15 +109,39 @@ var CANDY_LIST = [
 */
 
 /* SUMMER EVENT */
-/*
+
+    "reskins/chara_dreemurr_summer/0-devious.png",
+    "reskins/chara_dreemurr_summer/0-happy.png",
+    "reskins/chara_dreemurr_summer/0-rigid.png",
+    "reskins/chara_dreemurr_summer/0-thinking.png",
+    "reskins/ignatz_sunshiny_assassin/0-determination.png",
+    "reskins/ignatz_sunshiny_assassin/0-friendly.png",
+    "reskins/ignatz_sunshiny_assassin/0-stripping+.png",
+    "reskins/ignatz_sunshiny_assassin/0-fearthedeer.png",
     "reskins/juri_summer/0-calm.png",
     "reskins/juri_summer/0-horny.png",
     "reskins/juri_summer/1-excited.png",
     "reskins/juri_summer/1-interested.png",
-    "reskins/monika_stirring_mermaid/0-writing-tip.png",
-    "reskins/monika_stirring_mermaid/1-interested.png",
-    "reskins/monika_stirring_mermaid/2-happy.png",
-    "reskins/monika_stirring_mermaid/3-shy-happy.png",
+    "reskins/laevatein_bonfires_blaze/0-sceptical.png",
+    "reskins/laevatein_bonfires_blaze/0-unsure.png",
+    "reskins/laevatein_bonfires_blaze/0-default.png",
+    "reskins/laevatein_bonfires_blaze/0-unamused.png",
+    "reskins/leonie_relentless_rays/0-stretch-alt.png",
+    "reskins/leonie_relentless_rays/1-after.png",
+    "reskins/leonie_relentless_rays/1-flustered.png",
+    "reskins/leonie_relentless_rays/1-pondering.png",
+    "reskins/may_summer/0-ready.png",
+    "reskins/may_summer/0-oopsy.png",
+    "reskins/may_summer/0-calm.png",
+    "reskins/may_summer/0-cute.png",
+    //"reskins/monika_stirring_mermaid/0-writing-tip.png",
+    //"reskins/monika_stirring_mermaid/1-interested.png",
+    //"reskins/monika_stirring_mermaid/2-happy.png",
+    //"reskins/monika_stirring_mermaid/3-shy-happy.png",
+    "reskins/pyrrha_summer_maiden/0-happy.png",
+    "reskins/pyrrha_summer_maiden/1-stripped.png",
+    "reskins/pyrrha_summer_maiden/3-stripping.png",
+    "reskins/pyrrha_summer_maiden/4-encourage.png",
     "reskins/summertime_ryuji/0-cocky.png",
     "reskins/summertime_ryuji/1-cheerful.png",
     "reskins/summertime_ryuji/2-startled.png",
@@ -126,6 +150,14 @@ var CANDY_LIST = [
     "reskins/swimsuit_sheena/1-excited.png",
     "reskins/swimsuit_sheena/2-interested.png",
     "reskins/swimsuit_sheena/3-sulky.png",
+    "reskins/wikipe-tan_summer/0-flirt.png",
+    "reskins/wikipe-tan_summer/1-smirk.png",
+    "reskins/wikipe-tan_summer/2-casual.png",
+    "reskins/wikipe-tan_summer/4-neutral.png",
+    "reskins/yshtola_scion_vacationer/0-coy.png",
+    "reskins/yshtola_scion_vacationer/0-delighted.png",
+    "reskins/yshtola_scion_vacationer/0-calm.png",
+    "reskins/yshtola_scion_vacationer/0-neutral.png",
     "reskins/summer_larachel/0-calm.png",
     "reskins/summer_larachel/1-confident.png",
     "reskins/summer_larachel/2-calm.png",
@@ -146,7 +178,7 @@ var CANDY_LIST = [
     "reskins/summertime_sayaka/1-calm.png",
     "reskins/summertime_sayaka/2-bored.png",
     "reskins/summertime_sayaka/3-awkward.png",
-*/
+
 
 /* HALLOWEEN EVENT */
 /*
@@ -181,7 +213,7 @@ var CANDY_LIST = [
 */
 
 /* REGULAR CANDY IMAGES */
-
+/*
     "9s/0-happy.png",
     "9s/1-excited.png",
     "9s/2-clever.png",
@@ -342,7 +374,7 @@ var CANDY_LIST = [
     "zone-tan/1-explain.png",
     "zone-tan/1-smirk.png",
     "zone-tan/2-stroking.png",
-
+*/
 ];
 
 var clothingChoices = [];
