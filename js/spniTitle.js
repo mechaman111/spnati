@@ -157,7 +157,7 @@ var CANDY_LIST = [
     "reskins/yshtola_scion_vacationer/0-coy.png",
     "reskins/yshtola_scion_vacationer/0-delighted.png",
     "reskins/yshtola_scion_vacationer/0-calm.png",
-    "reskins/yshtola_scion_vacationer/0-neutral.png",
+    "reskins/yshtola_scion_vacationer/0-smug.png",
     "reskins/summer_larachel/0-calm.png",
     "reskins/summer_larachel/1-confident.png",
     "reskins/summer_larachel/2-calm.png",
