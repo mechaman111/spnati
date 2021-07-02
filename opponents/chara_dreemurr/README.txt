@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited June 22 2021
+README edited July 1 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -349,6 +349,7 @@ FLUTTERSHY
 -Responds to Fluttershy asking about jokes.
 -Responds to Fluttershy talking about flowers.
 -Responds to Fluttershy asking if she's friends with the player.
+-Responds to Fluttershy as Chara is losing.
 
 GALATEA
 -Responds to Galatea having to strip with rock puns.
