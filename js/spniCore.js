@@ -148,6 +148,7 @@ function initialSetup () {
     /* start by creating the human player object */
     players[HUMAN_PLAYER] = humanPlayer = new Player('human'); //createNewPlayer("human", "", "", "", eGender.MALE, eSize.MEDIUM, eIntelligence.AVERAGE, 20, undefined, [], null);
     humanPlayer.slot = HUMAN_PLAYER;
+    humanPlayer.resetState();
 
     /* Generate a random session ID. */
     sessionID = generateRandomID();

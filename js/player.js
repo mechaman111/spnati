@@ -75,8 +75,6 @@ function Player (id) {
     this.tags = this.baseTags = [];
     this.xml = null;
     this.persistentMarkers = {};
-
-    this.resetState();
 }
 
 /*******************************************************************
@@ -112,8 +110,6 @@ Player.prototype.resetState = function () {
     this.stage = this.consecutiveLosses = 0;
     this.timeInStage = 0;
     this.markers = {};
-    this.oneShotCases = {};
-    this.oneShotStates = {};
     this.hand = null;
 
     if (this.xml !== null) {
@@ -121,6 +117,9 @@ Player.prototype.resetState = function () {
         this.currentTarget = null;
         this.currentTags = [];
         this.stateCommitted = false;
+
+        this.oneShotCases = {};
+        this.oneShotStates = {};
 
         var appearance = this.default_costume;
         if (this.alt_costume) {
@@ -160,15 +159,12 @@ Player.prototype.resetState = function () {
             clothingArr.push(newClothing);
         });
 
-        this.poses = appearance.poses;
-
         this.clothing = clothingArr;
         this.initClothingStatus();
 
         this.loadStylesheet();
+        this.stageChangeUpdate();
     }
-
-    this.stageChangeUpdate();
 }
 
 /* These shouldn't do anything for the human player, but exist as empty functions
@@ -643,6 +639,11 @@ Opponent.prototype.setIntelligence = function (intelligence) {
 
 Opponent.prototype.updateFolder = function () {
     if (this.folders) this.folder = this.getByStage(this.folders);
+    if (this.folder == this.base_folder) {
+        this.poses = this.default_costume.poses;
+    } else if (this.alt_costume) {
+        this.poses = this.alt_costume.poses;
+    }
 }
 
 Opponent.prototype.getByStage = function (arr, stage) {
