@@ -773,12 +773,8 @@ function allowProgression (nextPhase) {
     } else if (nextPhase[0]) {
         $mainButton.html(nextPhase[0]);
     } else if (nextPhase === eGamePhase.END_LOOP) { // Special case
-        var dots = "";
-        for (var i = 0; i < endWaitDisplay; i++) {
-            dots += ".";
-        }
-        
         /* someone is still forfeiting */
+        var dots = '.'.repeat(endWaitDisplay);
         if (humanPlayer.checkStatus(STATUS_MASTURBATING)) {
             $mainButton.html("<small>Keep going" + dots + "</small>");
         } else {
