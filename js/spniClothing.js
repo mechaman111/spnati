@@ -330,9 +330,6 @@ function prepareToStripPlayer (player) {
 function showStrippingModal () {
   console.log("The stripping modal is being set up.");
   
-  /* Prevent double-clicks from calling up the modal twice */
-  $mainButton.attr('disabled', true);
-  actualMainButtonState = true;
 
   /* clear the area */
   $stripClothing.html("");

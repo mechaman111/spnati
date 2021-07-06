@@ -94,8 +94,6 @@ function tickForfeitTimers () {
             players[i].timer = 0;
             /* set the button state */
             $mainButton.html("Cumming...");
-            $mainButton.attr('disabled', true);
-            actualMainButtonState = true;
 
             /* hide everyone else's dialogue bubble */
             gameDisplays.forEach(function (d) {
