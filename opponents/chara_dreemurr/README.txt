@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited July 1 2021
+README edited July 5 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -303,6 +303,9 @@ BROCK
 -Responds to Brock explaining how he survived getting hit by a missile.
 -Responds to Brock as she is losing.
 
+CHARLIE
+-Responds to Charlie as she's losing.
+
 CHAZZ
 -Responds to Chazz attempting to leave the game.
 -Responds to Chazz blaming the player when he fails to leave the game.
@@ -540,6 +543,9 @@ SPOOKY
 STREAMING-CHAN
 -Responds to Streaming-chan's interview.
 
+SUCROSE
+-Responds as Chara is losing.
+
 SUPERNOVA
 -Responds as either one is losing.
 
@@ -570,6 +576,10 @@ VRISKA
 
 YANG-XIAO-LONG
 -Responds to Yang losing.
+-Responds to puns from Yang as Chara is losing.
+
+Y'SHTOLA
+-Responds as Chara is losing.
 
 YUELIA
 -Responds to Yuelia's question about fetishes - since Chara is tagged MEAN she gets the question about Edging.
