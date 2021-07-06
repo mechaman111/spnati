@@ -758,16 +758,6 @@ function allowProgression (nextPhase) {
         nextPhase = gamePhase;
     }
     
-    if (FORFEIT_DELAY && nextPhase != eGamePhase.GAME_OVER && humanPlayer.out && humanPlayer.timer > 1) {
-        timeoutID = autoForfeitTimeoutID = setTimeout(advanceGame, FORFEIT_DELAY);
-    } else if (ENDING_DELAY && nextPhase != eGamePhase.GAME_OVER && (humanPlayer.finished || (!humanPlayer.out && gameOver))) {
-        /* Human is finished or human is the winner */
-        timeoutID = autoForfeitTimeoutID = setTimeout(advanceGame, ENDING_DELAY);
-    } else {
-        $mainButton.attr('disabled', false);
-        actualMainButtonState = false;
-    }
-
     if (humanPlayer.out && !humanPlayer.finished && humanPlayer.timer == 1 && gamePhase != eGamePhase.STRIP) {
         $mainButton.html("Cum!");
     } else if (nextPhase[0]) {
@@ -781,6 +771,22 @@ function allowProgression (nextPhase) {
             $mainButton.html("Wait" + dots);
         }
     }
+
+    actualMainButtonState = false;
+    if (nextPhase != eGamePhase.GAME_OVER && !inRollback()) {
+        if (FORFEIT_DELAY && humanPlayer.out && humanPlayer.timer > 1) {
+            timeoutID = autoForfeitTimeoutID = setTimeout(advanceGame, FORFEIT_DELAY);
+            $mainButton.attr('disabled', true);
+            return;
+        } else if (ENDING_DELAY && (humanPlayer.finished || (!humanPlayer.out && gameOver))) {
+            /* Human is finished or human is the winner */
+            timeoutID = autoForfeitTimeoutID = setTimeout(advanceGame, ENDING_DELAY);
+            $mainButton.attr('disabled', true);
+            return;
+        }
+    }
+    timeoutID = autoForfeitTimeoutID = undefined;
+    $mainButton.attr('disabled', false);
 }
 
 /************************************************************
@@ -788,8 +794,7 @@ function allowProgression (nextPhase) {
  ************************************************************/
 function advanceGame () {    
     /* disable the button to prevent double clicking */
-    $mainButton.attr('disabled', true);
-    actualMainButtonState = true;
+    $mainButton.attr('disabled', actualMainButtonState = true);
     autoForfeitTimeoutID = undefined;
     
     /* lower the timers of everyone who is forfeiting */
@@ -802,15 +807,37 @@ function advanceGame () {
 }
 
 /************************************************************
+ * If Auto-advance is auto-advancing, stop it.
+ ************************************************************/
+function pauseAutoAdvance () {
+    if (autoForfeitTimeoutID) {
+        clearTimeout(autoForfeitTimeoutID);
+    }
+}
+/************************************************************
+ * If Auto-advance is enabled and we're not currently in the middle of
+ * something, set the timeout again by calling AllowProgression().
+ ************************************************************/
+function resumeAutoAdvance () {
+    if (!actualMainButtonState) {
+        allowProgression();
+    }
+}
+
+/************************************************************
  * The player clicked the home button. Shows the restart modal.
  ************************************************************/
 function showRestartModal () {
     $restartModal.modal('show');
 }
 
-function closeRestartModal() {
-    $mainButton.attr('disabled', actualMainButtonState);
-}
+$restartModal.on('shown.bs.modal', function() {
+    pauseAutoAdvance();
+});
+
+$restartModal.on('hide.bs.modal', function() {
+    resumeAutoAdvance();
+});
 
 /************************************************************
  * Functions and classes for the dialogue transcript and rollback.
@@ -870,6 +897,7 @@ RollbackPoint.prototype.load = function () {
     if (!returnRollbackPoint) {
         returnRollbackPoint = new RollbackPoint();
         allowProgression(eGamePhase.EXIT_ROLLBACK);
+        $mainButton.attr('disabled', false);
     }
 
     if (SENTRY_INITIALIZED) {
@@ -917,8 +945,9 @@ function exitRollback() {
     }
     
     returnRollbackPoint.load();
-    allowProgression(returnRollbackPoint.gamePhase);
+    var prevPhase = returnRollbackPoint.gamePhase;
     returnRollbackPoint = null;
+    allowProgression(prevPhase);
 }
 
 /* Adds a log message to the dialogue transcript */
@@ -966,8 +995,10 @@ function createLogEntryElement(label, text, pt) {
     container.appendChild(textElem);
     
     container.onclick = function (ev) {
-        pt.load();
-        $logModal.modal('hide');
+        if (!actualMainButtonState) {
+            pt.load();
+            $logModal.modal('hide');
+        }
     }
     
     return container;
@@ -994,6 +1025,7 @@ function createLogMessageElement(text) {
  * The player clicked the log button. Shows the log modal.
  ************************************************************/
 function showLogModal () {
+    pauseAutoAdvance();
     $logContainer.empty();
     
     transcriptHistory.forEach(function (pt) {
@@ -1009,10 +1041,13 @@ function showLogModal () {
             $logContainer.append(createLogMessageElement(pt));
         }
     });
-    
+
     $logModal.modal('show');
 }
 
+$logModal.on("hide.bs.modal", function () {
+    resumeAutoAdvance();
+});
 
 /************************************************************
  * A keybound handler.
