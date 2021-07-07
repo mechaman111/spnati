@@ -271,7 +271,6 @@ function showOptionsModal () {
     $("#options-modal").modal('show');
 }
 $("#options-modal").on('shown.bs.modal', function() {
-    pauseAutoAdvance();
     $("#options-modal").find('li.active a').first().focus();
 });
 
@@ -284,10 +283,6 @@ function setUIMode(minimal) {
         $gameScreen.removeClass('ui-minimal');
     }
 }
-
-$("#options-modal").on("hide.bs.modal", function () {
-    resumeAutoAdvance();
-});
 
 $('ul#options-auto-fade').on('click', 'a', function() {
     AUTO_FADE = $(this).attr('data-value') == "true";

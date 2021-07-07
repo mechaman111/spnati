@@ -554,6 +554,7 @@ function restartGame () {
     $gamePlayerClothingArea.css('display', '');  /* Reset to default so as not to interfere with 
                                                     switching between classic and minimal UI. */
     inGame = false;
+    autoAdvancePaused = false;
 
     if (SENTRY_INITIALIZED) {
         Sentry.setTag("in_game", false);

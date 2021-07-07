@@ -276,12 +276,7 @@ function showBugReportModal () {
 }
 
 $bugReportModal.on('shown.bs.modal', function() {
-    pauseAutoAdvance();
     $('#bug-report-type').focus();
-});
-
-$bugReportModal.on('hide.bs.modal', function() {
-    resumeAutoAdvance();
 });
 
 function closeBugReportModal() {
@@ -404,11 +399,6 @@ function closeFeedbackReportModal() {
 
 $feedbackReportModal.on('shown.bs.modal', function () {
     $('#feedback-report-character').focus();
-    pauseAutoAdvance();
-});
-
-$feedbackReportModal.on('hide.bs.modal', function() {
-    resumeAutoAdvance();
 });
 
 /*

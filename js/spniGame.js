@@ -122,6 +122,7 @@ var recentLoser = -1;
 var recentWinner = -1;
 var gameOver = false;
 var actualMainButtonState = false;
+var autoAdvancePaused = false;  // Flag that prevents auto advance if a modal is opened when not waiting for auto advance
 var endWaitDisplay = 0;
 var showDebug = false;
 var chosenDebug = -1;
@@ -774,7 +775,10 @@ function allowProgression (nextPhase) {
 
     actualMainButtonState = false;
     if (nextPhase != eGamePhase.GAME_OVER && !inRollback()) {
-        if (FORFEIT_DELAY && humanPlayer.out && humanPlayer.timer > 1) {
+        if (autoAdvancePaused) {
+            // Closing the modal that the flag to be set should call allowProgression() again.
+            return;
+        } else if (FORFEIT_DELAY && humanPlayer.out && humanPlayer.timer > 1) {
             timeoutID = autoForfeitTimeoutID = setTimeout(advanceGame, FORFEIT_DELAY);
             $mainButton.attr('disabled', true);
             return;
@@ -812,13 +816,18 @@ function advanceGame () {
 function pauseAutoAdvance () {
     if (autoForfeitTimeoutID) {
         clearTimeout(autoForfeitTimeoutID);
+        timeoutID = autoForfeitTimeoutID = undefined;
     }
+    autoAdvancePaused = true;
 }
 /************************************************************
  * If Auto-advance is enabled and we're not currently in the middle of
  * something, set the timeout again by calling AllowProgression().
  ************************************************************/
 function resumeAutoAdvance () {
+    /* Important to clear the flag if the user opens and closes a modal during 
+       game activity. */
+    autoAdvancePaused = false;
     if (!actualMainButtonState) {
         allowProgression();
     }
@@ -830,14 +839,6 @@ function resumeAutoAdvance () {
 function showRestartModal () {
     $restartModal.modal('show');
 }
-
-$restartModal.on('shown.bs.modal', function() {
-    pauseAutoAdvance();
-});
-
-$restartModal.on('hide.bs.modal', function() {
-    resumeAutoAdvance();
-});
 
 /************************************************************
  * Functions and classes for the dialogue transcript and rollback.
@@ -1025,7 +1026,6 @@ function createLogMessageElement(text) {
  * The player clicked the log button. Shows the log modal.
  ************************************************************/
 function showLogModal () {
-    pauseAutoAdvance();
     $logContainer.empty();
     
     transcriptHistory.forEach(function (pt) {
@@ -1045,9 +1045,16 @@ function showLogModal () {
     $logModal.modal('show');
 }
 
-$logModal.on("hide.bs.modal", function () {
-    resumeAutoAdvance();
-});
+$('#restart-modal,#log-modal,#bug-report-modal,#feedback-report-modal,#options-modal,#help-modal')
+    .on('shown.bs.modal', function() {
+        if (inGame) {
+            pauseAutoAdvance();
+        }})
+    .on('hide.bs.modal', function() {
+        if (inGame) {
+            resumeAutoAdvance();
+        }
+    });
 
 /************************************************************
  * A keybound handler.
