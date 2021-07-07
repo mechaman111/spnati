@@ -778,7 +778,7 @@ function allowProgression (nextPhase) {
         if (autoAdvancePaused) {
             // Closing the modal that the flag to be set should call allowProgression() again.
             return;
-        } else if (FORFEIT_DELAY && humanPlayer.out && humanPlayer.timer > 1) {
+        } else if (FORFEIT_DELAY && humanPlayer.out && (humanPlayer.timer > 1 || gamePhase == eGamePhase.STRIP)) {
             timeoutID = autoForfeitTimeoutID = setTimeout(advanceGame, FORFEIT_DELAY);
             $mainButton.attr('disabled', true);
             return;
