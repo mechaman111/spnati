@@ -194,5 +194,33 @@ namespace SPNATI_Character_Editor.Activities
 			}
 			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_costume, image, 0));
 		}
+
+        private void cboStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+			if (cboStatus.SelectedItem.Equals("online"))
+            {
+				cboEvent.SelectedItem = "";
+				cboEvent.Enabled = false;
+			}
+			else
+            {
+				cboEvent.Enabled = true;
+			}
+        }
+
+        private void cboEvent_SelectedIndexChanged(object sender, EventArgs e)
+        {
+			if (cboEvent.SelectedItem.Equals("") || cboEvent.SelectedItem.Equals("none"))
+			{
+				if (!cboStatus.Items.Contains("online"))
+                {
+					cboStatus.Items.Insert(1, "online");
+				}
+			}
+			else
+			{
+				cboStatus.Items.Remove("online");
+			}
+		}
     }
 }

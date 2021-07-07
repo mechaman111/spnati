@@ -63,7 +63,17 @@ namespace SPNATI_Character_Editor
 
 			//Basic info to copy over
 			CacheVersion = CurrentVersion;
-			Label = character.Label;
+
+			// Allows title-screen labels to be the ones used in the CE
+			if (!string.IsNullOrEmpty(character.Metadata.Label))
+			{
+				Label = character.Metadata.Label;
+			}
+			else
+			{
+				Label = character.Label;
+			}
+
 			FolderName = character.FolderName;
 			FirstName = character.FirstName;
 			LastName = character.LastName;

@@ -63,17 +63,18 @@ namespace SPNATI_Character_Editor.Workspaces
 			}
 
 			string status = Listing.Instance.GetCharacterStatus(_character.FolderName);
-			if (status == OpponentStatus.Duplicate)
+
+			if (Config.WarnAboutIncompleteStatus)
 			{
-				ShowBanner("This character has been replaced by a newer version.", Desktop.Skinning.SkinnedHighlight.Bad);
-			}
-			else if (status == OpponentStatus.Event)
-			{
-				ShowBanner("This is a joke character, only available during the April Fool's Day event.", Desktop.Skinning.SkinnedHighlight.Bad);
-			}
-			else if (status == OpponentStatus.Incomplete)
-			{
-				if (Config.WarnAboutIncompleteStatus)
+				if (status == OpponentStatus.Duplicate)
+				{
+					ShowBanner("This character has been replaced by a newer version.", Desktop.Skinning.SkinnedHighlight.Bad);
+				}
+				else if (status == OpponentStatus.Event)
+				{
+					ShowBanner("This is a joke character, only available during the April Fool's Day event.", Desktop.Skinning.SkinnedHighlight.Bad);
+				}
+				else if (status == OpponentStatus.Incomplete)
 				{
 					ShowBanner("This character is incomplete, meaning they have likely been abandoned.", Desktop.Skinning.SkinnedHighlight.Bad);
 				}

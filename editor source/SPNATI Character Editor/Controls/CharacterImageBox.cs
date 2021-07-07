@@ -99,7 +99,7 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			get
 			{
-				return Config.GetBoolean(Settings.ShowPreviewText);
+				return !Config.GetBoolean(Settings.HidePreviewText);
 			}
 		}
 
@@ -301,7 +301,7 @@ namespace SPNATI_Character_Editor.Controls
 
 		private void DrawSpeechBubble(Graphics g, int screenHeight)
 		{
-			bool showText = Config.GetBoolean(Settings.ShowPreviewText);
+			bool showText = !Config.GetBoolean(Settings.HidePreviewText);
 			if (showText && !string.IsNullOrEmpty(_text))
 			{
 				bool formatText = !Config.GetBoolean(Settings.DisablePreviewFormatting);

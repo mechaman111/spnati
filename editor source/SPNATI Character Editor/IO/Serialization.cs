@@ -171,7 +171,7 @@ namespace SPNATI_Character_Editor
 			string filename = Path.Combine(dir, name + ".xml");
 
 			bool deleteTags = false;
-			if (name == "behaviour" || name == "meta")
+			if (/*name == "behaviour" ||*/ name == "meta")
 			{
 				deleteTags = true;
 			}

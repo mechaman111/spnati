@@ -681,9 +681,18 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				_selectedCase.AddCharacterTags = string.Join(",", addTags);
 			}
+			else
+			{
+				_selectedCase.AddCharacterTags = null;
+			}
+
 			if (removeTags.Length > 0)
 			{
 				_selectedCase.RemoveCharacterTags = string.Join(",", removeTags);
+			}
+			else
+			{
+				_selectedCase.RemoveCharacterTags = null;
 			}
 		}
 

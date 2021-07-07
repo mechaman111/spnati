@@ -128,7 +128,7 @@
             this.label22.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
             this.label22.Location = new System.Drawing.Point(3, 32);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(43, 13);
+            this.label22.Size = new System.Drawing.Size(38, 13);
             this.label22.TabIndex = 4;
             this.label22.Text = "Event:";
             // 
@@ -181,6 +181,7 @@
             this.cboStatus.Size = new System.Drawing.Size(156, 21);
             this.cboStatus.Sorted = false;
             this.cboStatus.TabIndex = 3;
+            this.cboStatus.SelectedIndexChanged += new System.EventHandler(this.cboStatus_SelectedIndexChanged);
             // 
             // skinnedLabel1
             // 
@@ -222,7 +223,7 @@
             this.skinnedLabel2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
             this.skinnedLabel2.Location = new System.Drawing.Point(224, 32);
             this.skinnedLabel2.Name = "skinnedLabel2";
-            this.skinnedLabel2.Size = new System.Drawing.Size(45, 13);
+            this.skinnedLabel2.Size = new System.Drawing.Size(43, 13);
             this.skinnedLabel2.TabIndex = 6;
             this.skinnedLabel2.Text = "Portrait:";
             // 
@@ -243,6 +244,7 @@
             this.cboEvent.Size = new System.Drawing.Size(156, 21);
             this.cboEvent.Sorted = false;
             this.cboEvent.TabIndex = 5;
+            this.cboEvent.SelectedIndexChanged += new System.EventHandler(this.cboEvent_SelectedIndexChanged);
             // 
             // SkinEditor
             // 
