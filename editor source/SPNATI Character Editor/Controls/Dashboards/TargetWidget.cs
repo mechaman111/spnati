@@ -11,7 +11,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 	public partial class TargetWidget : UserControl, IDashboardWidget
 	{
 		private const int MaxTargets = 4;
-		private const int MaxIncoming = 6;
+		private const int MaxIncoming = 100;
 
 		private Character _banterTarget;
 
