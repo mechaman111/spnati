@@ -224,11 +224,6 @@ function loadBackgrounds() {
     }).catch(function (err) {
         console.error("Could not load backgrounds:");
         captureError(err);
-    }).then(
-        save.loadOptionsBackground.bind(save, undefined)
-    ).catch(function (err) {
-        console.error("Could not activate background in player options:");
-        captureError(err);
     });
 }
 

@@ -176,7 +176,12 @@ function initialSetup () {
         } catch (err) {
             captureError(err);
         }
+        /* Make sure that save data is loaded before updateTitleGender(),
+         * since the latter uses selectedClothing.
+         */
+        save.loadLocalStorage();
     }).then(loadBackgrounds).then(function () {
+        save.load();
         loadVersionInfo();
         loadGeneralCollectibles();
         loadSelectScreen();
@@ -184,11 +189,6 @@ function initialSetup () {
         if (!EPILOGUES_ENABLED && !COLLECTIBLES_ENABLED) {
             $('.title-gallery-edge').css('visibility', 'hidden');
         }
-        /* Make sure that save data is loaded before updateTitleGender(),
-         * since the latter uses selectedClothing.
-         */
-        save.loadLocalStorage();
-        save.load();
         updateTitleGender();
 
         if (RESORT_KEY && save.getPlayedCharacterSet().length >= 24) {
