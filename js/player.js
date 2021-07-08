@@ -507,11 +507,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
         var set = $(elem).attr('set') || 'offline';
         var status = $(elem).attr('status') || 'offline';
 
-        if (alternateCostumeSets['all'] || alternateCostumeSets[set]) {
-            if (!includedOpponentStatuses[status] && set !== DEFAULT_COSTUME_SET) {
-                return;
-            }
-
+        if (alternateCostumeSets['all'] || alternateCostumeSets[set] || includedOpponentStatuses[status]) {
             var costume_descriptor = {
                 'folder': $(elem).attr('folder'),
                 'name': $(elem).text(),
