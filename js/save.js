@@ -179,12 +179,12 @@ Save.prototype.convertCookie = function() {
                 } catch (ex) { }
             }
         }
+        if ('masturbationTimer' in data) {
+            options.stamina = data.masturbationTimer;
+        }
         this.setItem("options", options);
 
         var settings = {};
-        if ('masturbationTimer' in data) {
-            settings.stamina = data.masturbationTimer;
-        }
         if (data.background) {
             settings.background = LEGACY_BG_INDICES[data.background - 1];
         }
@@ -284,6 +284,7 @@ Save.prototype.savePlayer = function() {
 
 Save.prototype.loadOptions = function(){
     var options = this.getItem("options")|| {};
+    var settings = this.getItem("settings") || {};
 
     if ('autoFade' in options && typeof options.autoFade == 'boolean') AUTO_FADE = options.autoFade;
     if ('cardSuggest' in options && typeof options.cardSuggest == 'boolean') CARD_SUGGEST = options.cardSuggest;
@@ -302,8 +303,7 @@ Save.prototype.loadOptions = function(){
     if ('minimalUI' in options && typeof options.minimalUI == 'boolean') setUIMode(options.minimalUI);
     if ('playerFinishingEffect' in options && typeof options.playerFinishingEffect == 'boolean') PLAYER_FINISHING_EFFECT = options.playerFinishingEffect;
 
-    var settings = this.getItem("settings") || {};
-    if ('stamina' in settings) humanPlayer.stamina = settings.stamina;
+    if ('stamina' in options) humanPlayer.stamina = options.stamina;
     
     /* Load extra characters settings - if rehost, all are disabled by default;
      * if personal offline, offline and incomplete are enabled but event and duplicate aren't
@@ -400,6 +400,7 @@ Save.prototype.saveOptions = function() {
         autoForfeit: FORFEIT_DELAY,
         autoEnding: ENDING_DELAY,
         minimalUI: MINIMAL_UI,
+        stamina: humanPlayer.stamina,
         playerFinishingEffect: PLAYER_FINISHING_EFFECT,
     };
     
@@ -408,7 +409,6 @@ Save.prototype.saveOptions = function() {
 
 Save.prototype.saveSettings = function() {
     var settings = {
-        stamina: humanPlayer.stamina,
         useGroupBackgrounds: useGroupBackgrounds,
         fillDisabled: FILL_DISABLED,
         showStatuses: Object.keys(includedOpponentStatuses).filter(k => k != 'testing' && k != 'online' && includedOpponentStatuses[k]),
@@ -592,7 +592,6 @@ function saveSettings(){
 
 function saveOptions(){
     save.saveOptions();
-    save.saveSettings();
 }
 
 /**
