@@ -391,7 +391,6 @@ namespace SPNATI_Character_Editor
 				//XML files can contain HTML-encoding characters which aren't recognized in real XML, so the file is preprocessed to decode these
 				//before passing through the actual serializer
 				string text = File.ReadAllText(filename);
-				text = XMLHelper.Decode(text);
 
 				//Also, italics are a funky case since they use invalid XML. Encode these to make the serializer happy, and then they will be switched back to the "bad" format in the character's OnAfterDeserialize
 				text = XMLHelper.EncodeEntityReferences(text);
