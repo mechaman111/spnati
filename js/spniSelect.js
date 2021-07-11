@@ -1070,7 +1070,7 @@ function loadDefaultFillSuggestions () {
         }
         
         var possibleNewAndUpdatedPicks = possiblePicks.filter(function (opp) {
-            return opp.highlightStatus === "new" || opp.highlightStatus === "unsorted" || opp.highlightStatus === "updated";
+            return opp.highlightStatus === "new" || opp.highlightStatus === "unsorted" || opp.highlightStatus === "updated" || opp.highlightStatus === "unsorted-updated";
         });
         
         /* Fill slots 2 and 3, but also fill slot 1 if still empty */
@@ -1110,8 +1110,8 @@ function loadDefaultFillSuggestions () {
             var status1 = a.highlightStatus;
             var status2 = b.highlightStatus;
             
-            if (!status1 || status1 === "unsorted") status1 = "zzzzz";
-            if (!status2 || status2 === "unsorted") status2 = "zzzzz";
+            if (!status1 || status1 === "unsorted" || status1 === "unsorted-updated") status1 = "zzzzz";
+            if (!status2 || status2 === "unsorted" || status2 === "unsorted-updated") status2 = "zzzzz";
             
             return status1.localeCompare(status2);
         });
