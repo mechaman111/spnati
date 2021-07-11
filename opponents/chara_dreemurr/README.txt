@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited July 5 2021
+README edited July 10 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -304,7 +304,7 @@ BROCK
 -Responds to Brock as she is losing.
 
 CHARLIE
--Responds to Charlie as she's losing.
+-Responds to Charlie as either one is losing.
 
 CHAZZ
 -Responds to Chazz attempting to leave the game.
@@ -399,6 +399,9 @@ KYU
 
 L'ARACHEL
 -Responds to L'Arachel's staff breaking.
+
+LEONIE
+-Responds to Leonie as Chara's losing.
 
 LUCY
 -Responds to Lucy attempting to cheat, targeting the Must Strip, Removing, and Removed cases for it.
