@@ -344,6 +344,7 @@ ERUFUDA
 FINA
 -Responds to Fina as Chara is losing.
 -Responds to Fina's prompt about worlds.
+-Responds to Fina talking about asking the player not to play w/ Chara.
 
 FLORINA
 -Responds to Florina fleeing the game.
