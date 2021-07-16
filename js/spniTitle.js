@@ -109,7 +109,7 @@ var CANDY_LIST = [
 */
 
 /* SUMMER EVENT */
-
+/*
     "reskins/chara_dreemurr_summer/0-devious.png",
     "reskins/chara_dreemurr_summer/0-happy.png",
     "reskins/chara_dreemurr_summer/0-rigid.png",
@@ -178,7 +178,7 @@ var CANDY_LIST = [
     "reskins/summertime_sayaka/1-calm.png",
     "reskins/summertime_sayaka/2-bored.png",
     "reskins/summertime_sayaka/3-awkward.png",
-
+*/
 
 /* HALLOWEEN EVENT */
 /*
@@ -213,7 +213,6 @@ var CANDY_LIST = [
 */
 
 /* REGULAR CANDY IMAGES */
-/*
     "9s/0-happy.png",
     "9s/1-excited.png",
     "9s/2-clever.png",
@@ -374,7 +373,6 @@ var CANDY_LIST = [
     "zone-tan/1-explain.png",
     "zone-tan/1-smirk.png",
     "zone-tan/2-stroking.png",
-*/
 ];
 
 var clothingChoices = [];
