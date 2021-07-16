@@ -262,7 +262,7 @@ function showOptionsModal () {
     setActiveOption('options-auto-ending', ENDING_DELAY);
     setActiveOption('options-minimal-ui', MINIMAL_UI);
     setActiveOption('options-player-finishing-effect', PLAYER_FINISHING_EFFECT);
-    
+
     $("#options-modal").modal('show');
 }
 $("#options-modal").on('shown.bs.modal', function() {
@@ -278,19 +278,6 @@ function setUIMode(minimal) {
         $gameScreen.removeClass('ui-minimal');
     }
 }
-
-$("#options-modal").on("hidden.bs.modal", function () {
-    if (autoForfeitTimeoutID) {
-        /* If we're waiting specifically for the auto forfeit timer,
-           cancel it and restart it or enable the button. */
-        clearTimeout(autoForfeitTimeoutID);
-        allowProgression();
-    } else if (!actualMainButtonState) {
-        /* Start auto advance if enabled in pertinent state. */
-        $mainButton.attr('disabled', (actualMainButtonState = true));
-        allowProgression();
-    }
-});
 
 $('ul#options-auto-fade').on('click', 'a', function() {
     AUTO_FADE = $(this).attr('data-value') == "true";

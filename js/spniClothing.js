@@ -328,26 +328,22 @@ function prepareToStripPlayer (player) {
  * player can select an article of clothing to remove.
  ************************************************************/
 function showStrippingModal () {
-  console.log("The stripping modal is being set up.");
+    console.log("The stripping modal is being set up.");
   
-  /* Prevent double-clicks from calling up the modal twice */
-  $mainButton.attr('disabled', true);
-  actualMainButtonState = true;
+    /* clear the area */
+    $stripClothing.html("");
 
-  /* clear the area */
-  $stripClothing.html("");
+    /* load the player's clothing into the modal */
+    for (var i = 0; i < humanPlayer.clothing.length; i++) {
+        var clothingCard =
+            "<div class='clothing-modal-container'><input type='image' class='bordered modal-clothing-image' src="+
+            humanPlayer.clothing[i].image+" onclick='selectClothingToStrip.bind(this)("+i+")'/></div>";
 
-  /* load the player's clothing into the modal */
-  for (var i = 0; i < humanPlayer.clothing.length; i++) {
-    var clothingCard =
-      "<div class='clothing-modal-container'><input type='image' class='bordered modal-clothing-image' src="+
-      humanPlayer.clothing[i].image+" onclick='selectClothingToStrip.bind(this)("+i+")'/></div>";
+        $stripClothing.append(clothingCard);
+    }
 
-    $stripClothing.append(clothingCard);
-  }
-
-  /* disable the strip button */
-  $stripButton.attr('disabled', true);
+    /* disable the strip button */
+    $stripButton.attr('disabled', true);
 
     /* display the stripping modal */
     $stripModal.modal({show: true, keyboard: false, backdrop: 'static'});
