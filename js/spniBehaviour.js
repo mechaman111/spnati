@@ -1775,6 +1775,7 @@ Case.prototype.checkConditions = function (self, opp) {
                     || (ctr.role == "target" && p == opp)
                     || (ctr.role == "winner" && p.slot == recentWinner)
                     || (ctr.role == "opp" && p != self)
+                    || (ctr.role == "aiopp" && p != humanPlayer && p != self)
                     || (ctr.role == "other" && p != self && p != opp))
                 && (ctr.id === undefined || p.id == ctr.id)
                 && (ctr.stage === undefined || inInterval(p.stage, ctr.stage))

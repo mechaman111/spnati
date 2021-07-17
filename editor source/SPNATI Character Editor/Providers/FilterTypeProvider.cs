@@ -39,6 +39,11 @@ namespace SPNATI_Character_Editor.Providers
 					CanSpecifyRange = true,
 					CanSpecifyCharacter = true,
 				},
+				new FilterType("aiopp", "AI Opponent", "General", "Match zero or more AI characters other than the speaker")
+				{
+					CanSpecifyRange = true,
+					CanSpecifyCharacter = true,
+				},
 				new FilterType("other", "Also Playing", "General", "Match zero or more characters who are neither the current target nor the speaker")
 				{
 					CanSpecifyRange = true,

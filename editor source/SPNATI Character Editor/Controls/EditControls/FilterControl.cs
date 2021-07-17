@@ -305,6 +305,7 @@ namespace SPNATI_Character_Editor
 					break;
 				case "other":
 				case "opp":
+				case "aiopp":
 					grpContainer.PanelType = SkinnedBackgroundType.Group2;
 					break;
 				case "winner":
@@ -384,6 +385,7 @@ namespace SPNATI_Character_Editor
 				case "self":
 				case "target":
 				case "opp":
+				case "aiopp":
 				case "other":
 				case "winner":
 					return type.Key;
