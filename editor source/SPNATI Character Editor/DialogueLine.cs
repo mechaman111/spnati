@@ -125,6 +125,15 @@ namespace SPNATI_Character_Editor
 			set { if (_layer != value) { _layer = value; NotifyPropertyChanged(); } }
 		}
 
+		private string _fontSize;
+		[DefaultValue("")]
+		[XmlAttribute("font-size")]
+		public string FontSize
+		{
+			get { return _fontSize; }
+			set { if (_fontSize != value) { _fontSize = value; NotifyPropertyChanged(); } }
+		}
+
 		private string _gender;
 		[DefaultValue("")]
 		[XmlAttribute("set-gender")]
@@ -199,6 +208,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		public static readonly string[] ArrowDirections = new string[] { "", "down", "left", "right", "up", "none" };
+		public static readonly string[] FontSizes = new string[] { "", "small", "smaller" };
 		public static readonly string[] AILevels = new string[] { "", "throw", "bad", "average", "good", "best" };
 
 		public DialogueLine()

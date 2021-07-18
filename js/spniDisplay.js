@@ -723,11 +723,11 @@ OpponentDisplay.prototype.update = function(player) {
         if (chosenState.direction != 'none') this.bubble.addClass('arrow-'+chosenState.direction);
         bubbleArrowOffsetRules[this.slot-1][0].style.left = chosenState.location;
         bubbleArrowOffsetRules[this.slot-1][1].style.top = chosenState.location;
+        /* Configure z-indices */
+        this.imageArea.css('z-index', player.z_index);
+        this.bubble.removeClass('over under').addClass(chosenState.dialogue_layering || player.dialogue_layering);
+        this.dialogue.removeClass('small smaller').addClass(chosenState.fontSize);
     }
-    
-    /* Configure z-indices */
-    this.imageArea.css('z-index', player.z_index);
-    this.bubble.removeClass('over under').addClass(chosenState.dialogue_layering || player.dialogue_layering);
     
     if (showDebug && !inRollback()) {
         appendRepeats(this.slot);
