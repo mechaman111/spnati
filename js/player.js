@@ -504,10 +504,10 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
 
     if (!ALT_COSTUMES_ENABLED) return;
     $metaXml.find('>alternates>costume').each(function (i, elem) {
-        var set = $(elem).attr('set') || 'offline';
+        var set = $(elem).attr('set');
         var status = $(elem).attr('status') || 'offline';
 
-        if (alternateCostumeSets['all'] || alternateCostumeSets[set] || includedOpponentStatuses[status]) {
+        if ((set && (alternateCostumeSets['all'] || alternateCostumeSets[set])) || includedOpponentStatuses[status]) {
             var costume_descriptor = {
                 'folder': $(elem).attr('folder'),
                 'name': $(elem).text(),
