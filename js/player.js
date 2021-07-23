@@ -75,6 +75,7 @@ function Player (id) {
     this.tags = this.baseTags = [];
     this.xml = null;
     this.persistentMarkers = {};
+    this.exposed = { upper: false, lower: false };
 }
 
 /*******************************************************************
