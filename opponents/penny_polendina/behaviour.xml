@@ -148,7 +148,7 @@
             </case>
             <case stage="0-4">
                 <state img="#-coy.png">I'll have ~cards.text~ ~cards.ifplural(cards|card)~, please!</state>
-                <state img="#-calm.png">It is intresting how much this stage of the game means to us all.</state>
+                <state img="#-calm.png">It is interesting how much this stage of the game means to us all.</state>
             </case>
             <case stage="5-7">
                 <state img="#-embarrassed.png">Can I have ~cards.text~ ~cards.ifplural(cards|card)~?</state>
@@ -198,7 +198,7 @@
                 <state img="#-thinking.png" oneShotId="416" marker="arms">I wonder why I got made with two arms with this upgrade as well. Was it just for my comfort or is it better somehow?</state>
                 <state img="#-sad.png">I hope that building I threw a Grimm into rebuilds okay. I didn't mean to hurt it.</state>
                 <state img="#-unsure.png" oneShotId="599" marker="cutemeep">I hope they keep that nice cleaning bot. It had a very cute meep.</state>
-                <state img="#-calm.png">This hand is good enough, I think.</state>
+                <state img="#-calm.png">I did win a round with a hand like this once.</state>
             </case>
         </trigger>
 
@@ -207,7 +207,7 @@
                 <state img="#-happy.png">I've got a great hand! *hic* </state>
                 <state img="#-salute.png">I'm fine to lose this round to help you all!</state>
                 <state img="#-unsure.png">I don't think I'll win with this...</state>
-                <state img="#-calm.png">I think I'll lose this one.</state>
+                <state img="#-calm.png">It would be a nice surprise to win this round.</state>
                 <state img="#-salute.png">Good job! I think I'm the loser this time.</state>
             </case>
             <case stage="5-7">
@@ -796,6 +796,22 @@
                 <condition filter="confident" role="other" layers="0-3" />
                 <state img="#-horny.png">You're so unbothered by losing clothes it's... really hot.</state>
             </case>
+            <case stage="0-7" oneShotId="181">
+                <condition role="self" hasHand="Royal Flush" />
+                <alternative />
+                <alternative>
+                    <condition role="self" hasHand="Straight Flush" />
+                </alternative>
+                <state img="#-thinking.png">I feel like this hand might be really good, but I haven't gotten one before.</state>
+            </case>
+            <case stage="0-7" oneShotId="182">
+                <condition role="self" hasHand="Three of a Kind" />
+                <state img="#-laugh.png">If I lose with this hand, I will be quite impressed by everyone.</state>
+            </case>
+            <case stage="5-7" oneShotId="183">
+                <condition role="self" hasHand="Three of a Kind" />
+                <state img="#-horny.png">I am looking forward to winning this round.</state>
+            </case>
             <case stage="3-7">
                 <condition filter="tsundere" role="other" />
                 <condition status="exposed" />
@@ -865,6 +881,7 @@
             <case stage="0-7" priority="0">
                 <state img="#-sad.png" oneShotId="32" marker="workingalone">This break is nice. Though I'm perfectly happy working alone most days. *hic*</state>
                 <state img="#-excited.png" oneShotId="714" marker="kingdomwonder">I wonder if the other two kingdoms are as pretty as Atlas and Beacon.</state>
+                <state img="#-laugh.png" oneShotId="774">Yang would probably be talking about how handy this is.</state>
             </case>
             <case stage="0-7" id="37">
                 <state img="#-thinking.png">Yang won with a hand like this... But Qrow lost with one... Hmm.</state>
@@ -1092,6 +1109,10 @@
             <case stage="0">
                 <condition role="other" character="komi-san" sayingMarker="not_human_1" />
                 <state img="#-stripping+.png">Komi, why are you looking so closely? Am I malfunctioning?</state>
+            </case>
+            <case stage="2" oneShotId="184">
+                <condition role="other" character="saki_zls" sayingMarker="PennyGloves2" />
+                <state img="#-stripping+.png" marker="sakigloves3">For real! I haven't been called a mecha before though, is that like a robot?</state>
             </case>
             <case stage="4-5">
                 <alternative>
@@ -1819,7 +1840,7 @@
                 <alternative>
                     <condition filter="bi-curious" gender="male" role="other" />
                 </alternative>
-                <state img="#-calm.png">You seem a little confused ~target~, I am not sure why.</state>
+                <state img="#-calm.png">You seem a little confused, ~target~. I am not sure why.</state>
             </case>
             <case stage="0-4">
                 <state img="#-thinking.png">It's so flat... I knew it would be but it's flatter then that.</state>
@@ -2101,7 +2122,7 @@
             </case>
             <case stage="9">
                 <state img="#-horny.png">I'd still like to... spend some time you know with... you.</state>
-                <state img="#-coy.png">I'll be aroused again soon, do you want to play with me... again?</state>
+                <state img="#-coy.png">I'll be aroused again soon. Do you want to play with me... again?</state>
             </case>
         </trigger>
 
@@ -2124,7 +2145,7 @@
                 <alternative>
                     <condition filter="bisexual" role="target" />
                 </alternative>
-                <state img="#-thinking.png">It would be odd to only like some people when everyone is so pretty. I am not sure if that makes sense, but you seem to understand ~target~.</state>
+                <state img="#-thinking.png">It would be odd to only like some people when everyone is so pretty. I am not sure if that makes sense, but you seem to understand, ~target~.</state>
             </case>
             <case stage="0-7 9" priority="141">
                 <condition role="other" character="lux" stage="4-6" sayingMarker="Light_Pun_Trigger" />
@@ -2244,7 +2265,7 @@
             </case>
             <case stage="0-6" id="46" priority="5">
                 <condition status="crotch_visible" role="target" />
-                <state img="#-horny.png" oneShotId="380">We will join you soon, ~target~ don't worry!</state>
+                <state img="#-horny.png" oneShotId="380">We will join you soon, ~target~. Don't worry!</state>
                 <state img="#-coy.png" oneShotId="379">You're as brave as you are pretty, ~target~!</state>
             </case>
             <case stage="0-4 9">
@@ -2573,7 +2594,7 @@
         <trigger id="female_finished_masturbating">
             <case stage="8" priority="600">
                 <state img="#-horny.png">That's so hot!</state>
-                <state img="#-happy.png">You look so beautiful like that wow!</state>
+                <state img="#-happy.png">You look so beautiful like that!</state>
                 <state img="#-coy.png">It'll be my turn soon... and you can watch if you want to.</state>
             </case>
             <case stage="0-7 9" priority="600">
@@ -2778,6 +2799,10 @@
             <case stage="8" oneShotId="21" priority="700">
                 <state img="#-embarrassed.png">Just like normal? I mean, I guess I need to be comfortable if I'm going to... do this.</state>
             </case>
+            <case stage="0-9" oneShotId="180" priority="400">
+                <condition role="other" character="sucrose" sayingMarker="sucrose_howdo" />
+                <state img="#-horny.png">I just use my hands, I've never thought too hard about other ways... until now.</state>
+            </case>
             <case stage="0-7" oneShotId="46" priority="300">
                 <condition role="other" character="nagisa" sayingMarker="nagisa_penny_enjoy_exciting" />
                 <state img="#-coy.png" marker="nagisaexcite">You're exciting me too, Nagisa.</state>
@@ -2798,7 +2823,7 @@
             <case stage="1" oneShotId="113">
                 <condition role="other" character="miko" sayingMarker="PennyStockings3" />
                 <state img="#-confused.png" marker="miko_robots">Do they have robots where you come from? My dad is a very smart scientist. </state>
-                <state img="#-laugh.png" marker="miko_gods">My dad isn't a god! He is very smart though... do gods just make people where you are from?</state>
+                <state img="#-laugh.png" marker="miko_gods">My dad isn't a god! He is very smart, though... Do gods just make people where you are from?</state>
             </case>
             <case stage="0-7" oneShotId="50">
                 <condition role="other" character="nagisa" sayingMarker="nagisa_penny_enjoy_memory" />
@@ -2818,13 +2843,13 @@
                 <state img="#-laugh.png" oneShotId="693" marker="ignatz_rambledontworry">Oh, you are adorable! There is no need to worry about that, I do not mind.</state>
                 <state img="#-coy.png" marker="ignatz_ramblecutie">We would be in your bedroom? I promise I do not mind as long as you do not... cutie.</state>
             </case>
-            <case stage="6">
-                <condition role="other" character="ignatz" sayingMarker="igpennyadorable" />
-                <state>This can appear at any point in the game if its priority is higher or equal to the highest of the more specific case.</state>
-            </case>
             <case stage="0-9">
                 <condition role="other" character="sucrose" sayingMarker="sucrose_lingerie1" />
                 <state img="#-horny.png">It looks really good on you! Even though it makes me want to take them off you.</state>
+            </case>
+            <case stage="6-8">
+                <condition role="other" character="ignatz" saidMarker="igpennyadorable" />
+                <state img="#-embarrassed.png">I am... um, not nearly as adorable as you Ignatz!</state>
             </case>
             <case stage="0-9" oneShotId="153">
                 <condition role="other" character="fina" />
