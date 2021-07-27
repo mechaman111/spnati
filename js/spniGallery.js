@@ -97,7 +97,7 @@ function Collectible(xmlElem, player) {
     if (this.counter <= 0) this.counter = undefined;
     
     if (player) {
-        this.source = player.label;
+        this.source = player.metaLabel;
         this.player = player;
     } else {
         this.source = 'The Inventory';
@@ -287,7 +287,7 @@ function goToCollectiblesScreen() {
 function createFilterOption (opp) {
     var elem = document.createElement('option');
     elem.value = opp.id;
-    elem.text = opp.label;
+    elem.text = opp.metaLabel;
     elem.className = 'gallery-character-filter-option'
     
     return elem;
@@ -303,11 +303,11 @@ function loadGalleryScreen(){
     
     $('#collectible-character-filter').append(loadedOpponents.filter(function (opp) {
         return opp && opp.has_collectibles;
-    }).sort(function(a, b) { return a.label < b.label ? -1 : 1; }).map(createFilterOption));
+    }).sort(function(a, b) { return a.metaLabel < b.metaLabel ? -1 : 1; }).map(createFilterOption));
     
     $('#epilogue-character-filter').append(loadedOpponents.filter(function (opp) {
         return opp && opp.endings;
-    }).sort(function(a, b) { return a.label < b.label ? -1 : 1; }).map(createFilterOption));
+    }).sort(function(a, b) { return a.metaLabel < b.metaLabel ? -1 : 1; }).map(createFilterOption));
     
     if (COLLECTIBLES_ENABLED) {
         goToCollectiblesScreen();
@@ -523,7 +523,7 @@ function selectEnding(i) {
     $galleryEndings.css('opacity', '');
     $galleryEndings.eq(i).css('opacity', 1);
     loadEndingThunbnail($selectedEndingPreview, ending);
-    $selectedEndingLabels[1].html(ending.player.label);
+    $selectedEndingLabels[1].html(ending.player.metaLabel);
     $selectedEndingLabels[2].html(ending.gender);
     switch(ending.gender){
         case 'male':
