@@ -1086,11 +1086,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             });
             this.nicknames = nicknames;
 
-            if (this.xml.children('behaviour').children('trigger').length > 0) {
-                return this.loadXMLTriggers();
-            } else {
-                return this.loadXMLStages();
-            }
+            return this.loadXMLTriggers();
         }.bind(this)).then(function () {
             /* Wait for loading of all other stuff to complete: */
             if (this.selected_costume) {
@@ -1198,59 +1194,6 @@ Opponent.prototype.loadXMLTriggers = function () {
             setTimeout(process.bind(this), 10);
         }
 
-        setTimeout(process.bind(this), 0);
-    }.bind(this));
-}
-
-/**
- * Traverses an old-format opponent's behaviour <stage> elements
- * and pre-emptively adds their Cases to the opponent's cases structure.
- * This is done in 50ms chunks to avoid blocking the UI, similarly to
- * loadXMLTriggers.
- *
- * @returns {Promise<number>} A Promise that resolves once all cases have been processed.
- */
-Opponent.prototype.loadXMLStages = function () {
-    return new Promise(function(resolve) {
-        var $cases = this.xml.find('>behaviour>stage>case');
-    
-        var loadItemsTotal = $cases.length;
-        if (loadItemsTotal == 0) {
-            return resolve(0);
-        }
-        var loadItemsCompleted = 0;
-    
-        function process() {
-            var startTS = performance.now();
-    
-            /* break tasks into roughly 50ms chunks */
-            while (performance.now() - startTS < 50) {
-                if (loadItemsCompleted >= loadItemsTotal) {
-                    this.loadProgress = undefined;
-                    return resolve(loadItemsCompleted);
-                }
-    
-                let $case = $($cases.get(loadItemsCompleted));
-                let c = new Case($case);
-                let stage = $case.parent().attr('id');
-                this.recordTargetedCase(c);
-    
-                var key = c.tag + ':' + stage;
-                if (!this.cases.has(key)) {
-                    this.cases.set(key, []);
-                }
-    
-                this.cases.get(key).push(c);
-    
-                loadItemsCompleted++;
-            }
-            
-            this.loadProgress = loadItemsCompleted / loadItemsTotal;
-            mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
-                
-            setTimeout(process.bind(this), 10);
-        }
-    
         setTimeout(process.bind(this), 0);
     }.bind(this));
 }
