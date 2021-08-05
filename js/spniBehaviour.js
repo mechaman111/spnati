@@ -830,9 +830,9 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
 }
 
 function pluralize (text) {
-    if (text.match(/ff?$/)) {
-        return text.replace(/ff?$/, 'ves');
-    } else if (text.match(/sh?$/)) {
+    if (text.match(/(ff?|ife)?$/)) {
+        return text.replace(/f[fe]?$/, 'ves');
+    } else if (text.match(/(s|[cs]h)$/)) {
         return text + 'es';
     } else if (text.match(/[^ae]y$/)) {
         return text.replace(/y$/, 'ies');
