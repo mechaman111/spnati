@@ -547,6 +547,8 @@ function updateGroupSelectScreen (ignore_bg) {
                         }
                     }
                 }
+            } else {
+                opponent.selectAlternateCostume(null);
             }
 
             $groupNameLabels[i].html(opponent.first + " " + opponent.last);
