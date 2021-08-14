@@ -247,6 +247,8 @@ Not all **Ears** allow you to pick colors. Those that don't will just be the mod
 
 **Face Marks** can layer above or below the eyes. These can be used to create custom facial shading.
 
+Holding down **shift** when making adjustments will apply the change to **all** Face Marks.
+
 ---
 
 #### Ears, Horns, and Tails
