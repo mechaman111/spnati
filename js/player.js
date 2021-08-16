@@ -420,12 +420,8 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.folder = 'opponents/'+id+'/';
     this.base_folder = 'opponents/'+id+'/';
     
-    var $metaXml = metaFiles[0],
-        $tagsXml = $metaXml;
-    
-    if (metaFiles[1].length > 0) {
-        $tagsXml = metaFiles[1];
-    }
+    var $metaXml = metaFiles[0];
+    var $tagsXml = metaFiles[1];
 
     this.status = status;
     this.highlightStatus = highlightStatus || status || '';
