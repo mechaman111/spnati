@@ -32,7 +32,7 @@ This rule extends to "self-inserts" of the creator.
 
 Characters must possess humanoid sexual organs, and have basic human anatomy.
 
-"Monstergirls" and similar sorts of characters are allowed, but they should still look recognizably humanoid. For instance, a lamia who keeps most of her snake attributes to below the crotch would be accepted.
+"Monstergirls" and similar sorts of characters are allowed, but they should still look recognizably humanoid. For instance, a lamia character who limits most of her snake attributes to below the crotch would be accepted.
 
 Note that a character's anatomy should match the character's sex and gender. This is partially a game code limitation.
 
@@ -46,6 +46,14 @@ It must be clear that the characters could voluntarily leave the game if they so
 
 Non-consensual activities cannot be alluded to or discussed in a character's dialogue or implied by a character's posing.
 
+## Your First Character Cannot Be An OC
+
+A developer must have a writing credit on a main roster character, meaning successfully completed sponsorship and Mod QA, before being allowed to submit an **OC (Original Character)**. 
+
+An OC is a character whose personality, setting, and design are invented by its SPNatI author. This is separate from a **Fan Character**, who has a design or backstory originating outside of its SPNatI author and which would be known by other players. Amy from *Doki-Doki Literature Club* is one example of a popular Fan Character. A character from a franchise that lacks core characters but has ample lore to draw from, such as *Dungeons & Dragons*, would also be allowed.
+
+The Moderation Team will be the final arbitrators of whether a character deserves OC status, but creators are welcome to discuss their plans with the team prior to starting work.
+
 ---
 
-*Rules Effective 2021-01-01*
+*Rules Effective 2021-08-23*

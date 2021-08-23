@@ -30,7 +30,7 @@ see the page on backgrounds for more details.
 | ------------ | ---------------------------------------------- |
 | `~cards~`  | In the `swap_cards` situation, the number of cards swapped. |
 | `~cards.text~` | The number of cards swapped in textual form, e.g. `three`. |
-| `~cards.ifplural(text if plural\|text if singular)` | Expands to `text if singular` if the number of cards swapped is one, and `text if plural` otherwise, so you can actually include the word "card" or "cards" as appropriate. |
+| `~cards.ifplural(text if plural|text if singular)~` | Expands to `text if singular` if the number of cards swapped is one, and `text if plural` otherwise, so you can actually include the word "card" or "cards" as appropriate. |
 
 ## Clothing ##
 

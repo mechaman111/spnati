@@ -22,6 +22,8 @@ For admittance on to testing, a new character file must meet the following requi
 
 - Recommended, but not essential, is the use of the "Writing Aid" button so your character reacts appropriately!
 
+**Please do not submit a character with more than 1000 lines to test!** Too many lines will make it difficult for the mods to do Pre-Test QA, and would be wasteful for the author if they later decide to do rewrites. 
+
 ## How to Submit
 
 The best way to send your character to Testing is through **Reddit Modmail**. First, .zip up the character folder and upload it to a file sharing site. Next, find the button on the [r/spnati subreddit](https://www.reddit.com/r/spnati/)'s sidebar that says **"Message the Mods"**
