@@ -331,6 +331,10 @@ namespace SPNATI_Character_Editor
 					{
 						lineCode += $",direction:{defaultLine.Direction}";
 					}
+					if (!string.IsNullOrEmpty(defaultLine.FontSize) && defaultLine.FontSize != "normal")
+					{
+						lineCode += $",font-size:{defaultLine.FontSize}";
+					}
 					if (!string.IsNullOrEmpty(defaultLine.Location))
 					{
 						lineCode += $",location:{defaultLine.Location}";
@@ -1449,6 +1453,9 @@ namespace SPNATI_Character_Editor
 						break;
 					case "direction":
 						line.Direction = value;
+						break;
+					case "font-size":
+						line.FontSize = value;
 						break;
 					case "oneshotid":
 						int oneShotId;

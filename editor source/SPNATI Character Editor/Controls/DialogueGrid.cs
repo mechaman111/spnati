@@ -1208,6 +1208,7 @@ namespace SPNATI_Character_Editor.Controls
 					if (otherLine != null)
 					{
 						otherLine.Direction = line.Direction;
+						otherLine.FontSize = line.FontSize;
 						otherLine.Gender = line.Gender;
 						otherLine.Intelligence = line.Intelligence;
 						otherLine.Location = line.Location;

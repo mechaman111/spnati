@@ -25,6 +25,7 @@ namespace SPNATI_Character_Editor.Controls
 			cboGender.Items.AddRange(new string[] { "", "female", "male" });
 			cboSize.Items.AddRange(new string[] { "", "small", "medium", "large" });
 			cboDirection.DataSource = DialogueLine.ArrowDirections;
+			cboFontSize.DataSource = DialogueLine.FontSizes;
 			cboAI.DataSource = DialogueLine.AILevels;
 			OnUpdateSkin(SkinManager.Instance.CurrentSkin);
 		}
@@ -46,7 +47,7 @@ namespace SPNATI_Character_Editor.Controls
 			_line = line;
 			_character = character;
 			cboDirection.Text = line.Direction ?? "";
-			
+
 			cboSize.Text = line.Size ?? "";
 			cboAI.Text = line.Intelligence ?? "";
 			cboGender.Text = line.Gender ?? "";
@@ -69,6 +70,8 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			valLocation.Value = Math.Max(valLocation.Minimum, Math.Min(valLocation.Maximum, (decimal)location));
 
+			// has to be at end or else weight and location are set incorrectly
+			cboFontSize.Text = line.FontSize ?? "";
 		}
 
 		public DialogueLine GetLine()
@@ -88,6 +91,12 @@ namespace SPNATI_Character_Editor.Controls
 				direction = null;
 			}
 			_line.Direction = direction;
+			string fontSize = cboFontSize.Text;
+			if (string.IsNullOrEmpty(fontSize))
+			{
+				fontSize = null;
+			}
+			_line.FontSize = fontSize;
 			_line.Weight = (float)valWeight.Value;
 
 			string size = cboSize.Text;
@@ -151,9 +160,14 @@ namespace SPNATI_Character_Editor.Controls
 		{
 			txtLabel.Enabled = !chkResetLabel.Checked;
 		}
-	}
 
-	public interface IDialogueDropDownControl : ISkinnedPanel, ISkinControl
+        private void cboFontSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+			DataUpdated?.Invoke(this, e);
+		}
+    }
+
+    public interface IDialogueDropDownControl : ISkinnedPanel, ISkinControl
 	{
 		event EventHandler DataUpdated;
 		int RowIndex { get; }

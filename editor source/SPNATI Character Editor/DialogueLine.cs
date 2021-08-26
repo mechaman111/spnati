@@ -126,7 +126,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _fontSize;
-		[DefaultValue("")]
+		[DefaultValue("normal")]
 		[XmlAttribute("font-size")]
 		public string FontSize
 		{
@@ -208,7 +208,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		public static readonly string[] ArrowDirections = new string[] { "", "down", "left", "right", "up", "none" };
-		public static readonly string[] FontSizes = new string[] { "", "small", "smaller" };
+		public static readonly string[] FontSizes = new string[] { "", "normal", "small", "smaller" };
 		public static readonly string[] AILevels = new string[] { "", "throw", "bad", "average", "good", "best" };
 
 		public DialogueLine()
@@ -216,6 +216,7 @@ namespace SPNATI_Character_Editor
 			Image = "";
 			Text = "";
 			Direction = "down";
+			FontSize = "normal";
 			Weight = 1;
 			Marker = null;
 			Images = new List<StageImage>();
@@ -239,6 +240,7 @@ namespace SPNATI_Character_Editor
 			copy._oneShotId = this._oneShotId;
 			copy._marker = this._marker;
 			copy._direction = this._direction;
+			copy._fontSize = this._fontSize;
 			copy._location = this._location;
 			copy._gender = this._gender;
 			copy._intelligence = this._intelligence;
@@ -349,7 +351,7 @@ namespace SPNATI_Character_Editor
 			get
 			{
 				return !string.IsNullOrEmpty(Gender) || !string.IsNullOrEmpty(Size) || Intelligence != null || (!string.IsNullOrEmpty(Direction) && Direction != "down") ||
-					Label != null || !string.IsNullOrEmpty(Location) || !string.IsNullOrEmpty(Layer) || Weight != 1;
+					(!string.IsNullOrEmpty(FontSize) && FontSize != "normal") || Label != null || !string.IsNullOrEmpty(Location) || !string.IsNullOrEmpty(Layer) || Weight != 1;
 			}
 		}
 
