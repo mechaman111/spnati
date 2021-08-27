@@ -122,6 +122,16 @@ namespace SPNATI_Character_Editor
 			set { if (_hidden != value) { _hidden = value; NotifyPropertyChanged(); } }
 		}
 
+		private string _disabled;
+		[XmlOrder(45)]
+		[XmlAttribute("disabled")]
+		[JsonProperty("disabled")]
+		public string Disabled
+		{
+			get { return _disabled; }
+			set { if (_disabled != value) { _disabled = value; NotifyPropertyChanged(); } }
+		}
+
 		private string _targetStage;
 		[StageSelect(DisplayName = "Target Stage", GroupOrder = 2, Description = "Target is currently within a range of stages", BoundProperties = new string[] { "Target" }, FilterStagesToTarget = true, SkinVariable = "~target.costume~")]
 		[XmlOrder(50)]
@@ -614,7 +624,7 @@ namespace SPNATI_Character_Editor
 			{
 				result += " " + ToConditionsString(false);
 			}
-			if (string.IsNullOrEmpty(Hidden))
+			if (string.IsNullOrEmpty(Hidden) && string.IsNullOrEmpty(Disabled))
 			{
 				int priority = GetPriority();
 				if (priority > 0)
@@ -790,7 +800,7 @@ namespace SPNATI_Character_Editor
 		{
 			foreach (MemberInfo field in this.GetType().GetMembers(BindingFlags.Public | BindingFlags.Instance))
 			{
-				if (field.Name == "StageRange" || field.Name == "Tag" || field.Name == "OneShotId" || field.Name == "Id" || field.Name == "StageId" || field.Name == "Hidden")
+				if (field.Name == "StageRange" || field.Name == "Tag" || field.Name == "OneShotId" || field.Name == "Id" || field.Name == "StageId" || field.Name == "Hidden" || field.Name == "Disabled")
 				{
 					continue;
 				}
@@ -898,7 +908,7 @@ namespace SPNATI_Character_Editor
 		public int GetPriority()
 		{
 			int totalPriority = 0;
-			if (!string.IsNullOrEmpty(Hidden))
+			if (!string.IsNullOrEmpty(Hidden) || !string.IsNullOrEmpty(Disabled))
 			{
 				return int.MinValue;
 			}
@@ -1225,6 +1235,7 @@ namespace SPNATI_Character_Editor
 				  !string.IsNullOrEmpty(TargetSaying) ||
 				  !string.IsNullOrEmpty(AlsoPlayingSaying) ||
 				  !string.IsNullOrEmpty(Hidden) ||
+				  !string.IsNullOrEmpty(Disabled) ||
 				  Conditions.Count > 0 ||
 				  Expressions.Count > 0;
 			}
@@ -1496,8 +1507,8 @@ namespace SPNATI_Character_Editor
 		/// <returns></returns>
 		public Case CreateResponse(Character speaker, Character responder)
 		{
-			//no way to respond to hidden cases, since they never display
-			if (Hidden == "1") { return null; }
+			//no way to respond to hidden/disabled cases, since they never display
+			if (Hidden == "1" || Disabled == "1") { return null; }
 
 			DataConversions.ConvertCase(this, speaker);
 

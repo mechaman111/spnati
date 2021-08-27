@@ -769,6 +769,10 @@ namespace SPNATI_Character_Editor
 			{
 				filters.Add("hidden:1");
 			}
+			if (!string.IsNullOrEmpty(stageCase.Disabled))
+			{
+				filters.Add("disabled:1");
+			}
 			if (stageCase.OneShotId > 0)
 			{
 				filters.Add("oneShotId:" + stageCase.OneShotId);
@@ -1437,6 +1441,9 @@ namespace SPNATI_Character_Editor
 						break;
 					case "hidden":
 						lineCase.Hidden = (value == "1" ? "1" : null);
+						break;
+					case "disabled":
+						lineCase.Disabled = (value == "1" ? "1" : null);
 						break;
 					case "priority":
 						lineCase.CustomPriority = value;

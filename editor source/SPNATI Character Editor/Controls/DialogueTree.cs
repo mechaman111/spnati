@@ -506,16 +506,39 @@ namespace SPNATI_Character_Editor.Controls
 			DialogueNode node = lstDialogue.SelectedItem as DialogueNode;
 			if (node == null || node.Case == null)
 			{
+				tsDisable.Enabled = false;
+				tsEnable.Enabled = false;
 				tsHide.Enabled = false;
 				tsUnhide.Enabled = false;
 			}
 			else
 			{
 				Case selectedCase = node.Case;
+				bool enabled = string.IsNullOrEmpty(selectedCase.Disabled);
+				tsDisable.Enabled = enabled;
+				tsEnable.Enabled = !enabled;
 				bool hidden = _editorData.IsHidden(selectedCase);
 				tsHide.Enabled = !hidden;
 				tsUnhide.Enabled = hidden;
 			}
+		}
+
+		private void tsDisable_Click(object sender, EventArgs e)
+		{
+			DialogueNode node = lstDialogue.SelectedItem as DialogueNode;
+			Case selectedCase = node?.Case;
+			if (selectedCase == null) { return; }
+
+			selectedCase.Disabled = "1";
+		}
+
+		private void tsEnable_Click(object sender, EventArgs e)
+		{
+			DialogueNode node = lstDialogue.SelectedItem as DialogueNode;
+			Case selectedCase = node?.Case;
+			if (selectedCase == null) { return; }
+
+			selectedCase.Disabled = null;
 		}
 
 		private void tsHide_Click(object sender, EventArgs e)
@@ -632,9 +655,9 @@ namespace SPNATI_Character_Editor.Controls
 			_view.MoveItem(e.Source, e.Target, e.Before);
 		}
 
-	}
+    }
 
-	public class CaseSelectionEventArgs : EventArgs
+    public class CaseSelectionEventArgs : EventArgs
 	{
 		public Stage Stage;
 		public Case Case;

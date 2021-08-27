@@ -110,6 +110,8 @@ namespace SPNATI_Character_Editor
 				filters.Add("filter:" + c1.Filter);
 			if (!string.IsNullOrEmpty(c1.Hidden))
 				filters.Add("hidden:" + c1.Hidden);
+			if (!string.IsNullOrEmpty(c1.Disabled))
+				filters.Add("disabled:" + c1.Disabled);
 
 			//multi_word_targets
 			if (!string.IsNullOrEmpty(c1.TargetStage))

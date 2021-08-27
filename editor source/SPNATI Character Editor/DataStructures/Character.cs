@@ -761,7 +761,7 @@ namespace SPNATI_Character_Editor
 
 		private void AddLines(HashSet<string> poses, HashSet<string> lines, Case theCase, LineFilter filters, ref int poseCount, ref int count)
 		{
-			if (!string.IsNullOrEmpty(theCase.Hidden))
+			if (!string.IsNullOrEmpty(theCase.Hidden) || !string.IsNullOrEmpty(theCase.Disabled))
 			{
 				return;
 			}

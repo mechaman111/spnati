@@ -325,6 +325,7 @@ namespace SPNATI_Character_Editor
 			SlicerProvider.AddSlicer("Consecutive Losses", "Groups by losses in a row", () => new IntervalSlicer("ConsecutiveLosses", "Consecutive Losses", 0, 20));
 
 			SlicerProvider.AddSlicer("Hidden", "Groups by Hidden case", () => new BooleanSlicer("Hidden", "Hidden"));
+			SlicerProvider.AddSlicer("Disabled", "Groups by Disabled case", () => new BooleanSlicer("Disabled", "Disabled"));
 			SlicerProvider.AddSlicer("Said Marker", "Groups by marker", () => new RecordSlicer(typeof(Marker), "SaidMarker", "Said Marker", true, true));
 			SlicerProvider.AddSlicer("Not Said Marker", "Groups by marker not said", () => new RecordSlicer(typeof(Marker), "NotSaidMarker", "Not Said Marker", true, true));
 
