@@ -871,7 +871,7 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
             }
             return "";
         }
-    case 'stripped':
+    case 'numstripped':
         return args.split('|').reduce(function(sum, type) {
             return sum + (player.numStripped[type] || 0);
         }, 0);
