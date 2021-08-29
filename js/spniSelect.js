@@ -140,6 +140,13 @@ var individualSelectSeparatorIndices = [];
 /** Are the default fill suggestions using Testing opponents? */
 var suggestedTestingOpponents = undefined;
 
+/** 
+ * List of tags for filtering opponents with the "event" fill mode.
+ * Characters with activated alt costumes are automatically considered for filling.
+ * @type {string[]}
+ */
+var eventFillTags = [];
+
 /* page variables */
 var individualPage = 0;
 var groupPage = 0;
@@ -150,6 +157,7 @@ var sortingOptionsMap = {
     target: sortOpponentsByMostTargeted(),
     oldest: sortOpponentsByMultipleFields(["release", "-listingIndex"]),
     newest: sortOpponentsByMultipleFields(["-release", "listingIndex"]),
+    event: sortEventOpponents(),
 };
 var groupCreditsShown = false;
 
@@ -708,6 +716,8 @@ function updateIndividualSelectSort() {
         : sortingMode == "target"       ? function(opp) { return opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined) === 0; }
     /* Separate characters with a release number from characters without one */
         : sortingMode == "newest" || sortingMode == "oldest" ? function(opp) { return opp.release === undefined ? -1 : opp.release == Infinity ? 1 : 0; }
+    /* Separate characters with costumes, characters that match event tags, and everyone else */
+        : sortingMode == "event"        ? function (opp) { return opp.hasDefaultCostume ? 0 : (opp.matchesEventTag ? 1 : 2); }
         : null;
 
     var currentPartition = undefined;
@@ -825,6 +835,17 @@ function showIndividualSelectionScreen() {
         }
     } else {
         $talkedToOption.show();
+    }
+
+    /* Make sure the event sort option is hidden if no events are active. */
+    var $eventOption = $('.sort-dropdown-options>li:has(a[data-value=event])');
+    if (activeGameEvents.length == 0) {
+        $eventOption.hide();
+        if (sortingMode == "event") {
+            setSortingMode("listingIndex");
+        }
+    } else {
+        $eventOption.show();
     }
 
     updateIndividualEpilogueBadges();
@@ -1117,6 +1138,38 @@ function loadDefaultFillSuggestions () {
             
             return status1.localeCompare(status2);
         });
+    } else if (DEFAULT_FILL === "event") {
+        /*
+         * Get a copy of the loaded opponents list, same as above.
+         * Select opponents that have activated default alt costumes or match a event fill tag.
+         * Ignore staleness for Testing opponents.
+         */
+        var filterTags = [];
+        eventFillTags.forEach(function (tag) { filterTags.push(tag); });
+
+        var possiblePicks = loadedOpponents.filter(function (opp) {
+            if (!opp.hasDefaultCostume && !filterTags.some(function (tag) {
+                return opp.hasTag(tag);
+            })) {
+                return false;
+            }
+
+            if (individualSelectTesting && opp.status !== "testing") {
+                return false;
+            }
+
+            return !isCharacterUsed(opp);
+        });
+
+        for (var i = fillPlayers.length; i < players.length-1; i++) {
+            if (possiblePicks.length === 0) break;
+            /* select random opponent */
+            var idx = getRandomNumber(0, possiblePicks.length);
+            var randomOpponent = possiblePicks[idx];
+            possiblePicks.splice(idx, 1);
+
+            fillPlayers.push(randomOpponent);
+        }
     } else {
         /* get a copy of the loaded opponents list, same as above */
         var possiblePicks = loadedOpponents.filter(function (opp) {
@@ -1655,6 +1708,38 @@ function sortTestingOpponents(opp1, opp2) {
     });
 
     return scores[1] - scores[0];
+}
+
+/**
+ * Special callback for Arrays.sort to sort an array of opponents using rules
+ * for featured event characters. The sort order produced by this callback is: 
+ * - Characters with activated default costumes
+ *   (Note: this is equivalent to characters with costumes from event sets, since all event sets are marked as defaults automatically).
+ * - Characters that match an event fill tag (but without costumes)
+ * - Everyone else
+ * @param {Opponent} opp1 
+ * @param {Opponent} opp2 
+ */
+function sortEventOpponents() {
+    return function (opp1, opp2) {
+        if (opp1.hasDefaultCostume && opp2.hasDefaultCostume) {
+            return 0;
+        } else if (opp1.hasDefaultCostume) {
+            return -1;
+        } else if (opp2.hasDefaultCostume) {
+            return 1;
+        } else {    
+            if (opp1.matchesEventTag && opp2.matchesEventTag) {
+                return 0;
+            } else if (opp1.matchesEventTag) {
+                return -1;
+            } else if (opp2.matchesEventTag) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
 }
 
 function setSortingMode(mode) {

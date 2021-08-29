@@ -499,6 +499,10 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.alternate_costumes = [];
     this.selection_image = this.folder + this.image;
 
+    this.matchesEventTag = eventFillTags.some(function (tag) {
+        return this.searchTags.indexOf(tag) >= 0;
+    }.bind(this));
+
     if (!ALT_COSTUMES_ENABLED) return;
 
     var defaultCostumes = [];

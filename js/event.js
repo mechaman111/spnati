@@ -49,8 +49,9 @@ DateRange.prototype.toString = function () {
  * @param {Set<string>} altCostumes 
  * @param {string?} background 
  * @param {Set<string>} candyImages 
+ * @param {Set<string>} fillTags
  */
-function GameEvent(id, dateRanges, altCostumes, background, candyImages) {
+function GameEvent(id, dateRanges, altCostumes, background, candyImages, fillTags) {
     /** @type {string} */
     this.id = id;
 
@@ -65,6 +66,9 @@ function GameEvent(id, dateRanges, altCostumes, background, candyImages) {
 
     /** @type {Set<string>} */
     this.candyImages = candyImages;
+
+    /** @type {Set<string>} */
+    this.fillTags = fillTags;
 }
 
 /** @returns {GameEvent} */
@@ -85,7 +89,11 @@ function parseEventElement ($xml) {
         return $elem.text();
     }));
 
-    return new GameEvent(id, dateRanges, altCostumes, background, candyImages);
+    var fillTags = new Set($xml.children("fill>tag").map(function (index, $elem) {
+        return $elem.text();
+    }));
+
+    return new GameEvent(id, dateRanges, altCostumes, background, candyImages, fillTags);
 }
 
 /**
@@ -122,10 +130,11 @@ function loadEventData () {
         if (activeGameEvents.length > 0) {
             var candySet = new Set();
             var eventBackgrounds = new Set();
+            
             DEFAULT_COSTUME_SETS = new Set();
+            fillTagSet = new Set();
 
-            for (let i = 0; i < activeGameEvents.length; i++) {
-                let event = activeGameEvents[i];
+            activeGameEvents.forEach(function (event) {
                 event.altCostumes.forEach(function (v) {
                     alternateCostumeSets[v.setId] = true;
 
@@ -145,12 +154,26 @@ function loadEventData () {
                     console.log("[" + event.id + "]" + " Adding default background option: " + event.background + ".");
                     eventBackgrounds.add(event.background);
                 }
-            }
 
-            CANDY_LIST = new Array(candySet);
+                event.fillTags.forEach(function (tag) {
+                    if (!fillTagSet.has(tag)) {
+                        console.log("[" + event.id + "]" + " Adding tag for event filling: " + tag + ".");
+                        fillTagSet.add(tag);
+                    }
+                });
+            });
+
+            eventFillTags = [];
+            fillTagSet.forEach(function (tag) {
+                eventFillTags.push(tag);
+            });
+
+            CANDY_LIST = [];
+
             console.log("Event Candy Images:")
-            CANDY_LIST.forEach(function (path) {
+            candySet.forEach(function (path) {
                 console.log("    * " + path);
+                CANDY_LIST.push(path);
             });
 
             if (CANDY_LIST.length > 0) {
@@ -158,11 +181,13 @@ function loadEventData () {
             }
 
             if (eventBackgrounds.size > 0) {
-                eventBackgrounds = new Array(eventBackgrounds);
-                defaultBackgroundID = eventBackgrounds[getRandomNumber(0, eventBackgrounds.length)];
+                var choices = [];
+                eventBackgrounds.forEach(function (v) { choices.push(v); });
+                defaultBackgroundID = choices[getRandomNumber(0, choices.length)];
             }
 
             DEFAULT_FILL = "event";
+            sortingMode = "event";
         }
     });
 }
