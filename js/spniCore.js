@@ -14,7 +14,7 @@ var EPILOGUES_UNLOCKED = false;
 var COLLECTIBLES_ENABLED = true;
 var COLLECTIBLES_UNLOCKED = false;
 var ALT_COSTUMES_ENABLED = true;
-var DEFAULT_COSTUME_SET = null;
+var DEFAULT_COSTUME_SETS = new Set();
 var USAGE_TRACKING = undefined;
 var SENTRY_INITIALIZED = false;
 var RESORT_KEY = null;
@@ -49,6 +49,12 @@ var FEMALE_SYMBOL = IMG + 'female.svg';
 
 var includedOpponentStatuses = {};
 var alternateCostumeSets = {};
+
+/** @type {Set<string>} */
+var FORCE_EVENTS = new Set();
+
+/** @type {GameEvent[]} */
+var activeGameEvents = [];
 
 var versionInfo = null;
 
@@ -180,7 +186,7 @@ function initialSetup () {
          * since the latter uses selectedClothing.
          */
         save.loadLocalStorage();
-    }).then(loadBackgrounds).then(function () {
+    }).then(loadEventData).then(loadBackgrounds).then(function () {
         save.load();
         loadVersionInfo();
         loadGeneralCollectibles();
@@ -348,11 +354,14 @@ function loadConfigFile () {
         } else {
             console.log("Alternate costumes enabled");
 
-            DEFAULT_COSTUME_SET = $xml.children('default-costume-set').text();
-            if (DEFAULT_COSTUME_SET) {
-                console.log("Defaulting to alternate costume set: "+DEFAULT_COSTUME_SET);
-                alternateCostumeSets[DEFAULT_COSTUME_SET] = true;
-            }
+            DEFAULT_COSTUME_SETS = new Set($xml.children('default-costume-set').map(function (index, $elem) {
+                return $elem.text();
+            }));
+
+            DEFAULT_COSTUME_SETS.forEach(function (setId) {
+                console.log("Added default alternate costume set: " + setId);
+                alternateCostumeSets[setId] = true;
+            });
 
             $xml.children('alternate-costume-sets').each(function () {
                 var set = $(this).text();
@@ -364,6 +373,10 @@ function loadConfigFile () {
                 }
             });
         }
+
+        FORCE_EVENTS = new Set($xml.children("event").map(function (index, $elem) {
+            return $elem.text();
+        }));
         
         COLLECTIBLES_ENABLED = false;
         COLLECTIBLES_UNLOCKED = false;

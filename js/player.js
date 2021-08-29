@@ -500,6 +500,8 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.selection_image = this.folder + this.image;
 
     if (!ALT_COSTUMES_ENABLED) return;
+
+    var defaultCostumes = [];
     $metaXml.find('>alternates>costume').each(function (i, elem) {
         var set = $(elem).attr('set');
         var status = $(elem).attr('status') || 'offline';
@@ -515,14 +517,21 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
                 'status': status,
             };
 
-            if (set === DEFAULT_COSTUME_SET) {
-                this.selection_image = costume_descriptor['folder'] + costume_descriptor['image'];
-                this.selectAlternateCostume(costume_descriptor);
+            if (DEFAULT_COSTUME_SETS.has(set)) {
+                defaultCostumes.push(costume_descriptor);
             }
 
             this.alternate_costumes.push(costume_descriptor);
         }
     }.bind(this)).get();
+
+    this.hasDefaultCostume = defaultCostumes.length > 0;
+    if (this.hasDefaultCostume) {
+        var selectedDefault = defaultCostumes[getRandomNumber(0, defaultCostumes.length)];
+        this.selection_image = selectedDefault['folder'] + selectedDefault['image'];
+        this.selectAlternateCostume(selectedDefault);
+    }
+
     // Not reached if alt costumes are disabled
 }
 
