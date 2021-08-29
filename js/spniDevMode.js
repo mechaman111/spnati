@@ -286,7 +286,7 @@ DevModeDialogueBox.prototype.saveEdits = function () {
             'responseTarget': null,                                                 // info on the selected response target
             'stage': this.player.stage,                                             // current character stage
             'state': {'text': this.editData.text, 'image': this.editData.image},    // edited state data
-            'suggestedTag': this.player.lastUpdateTags[0],                          // a suggested tag for generic lines
+            'suggestedTag': this.player.lastUpdateTriggers[0],                      // a suggested trigger for generic lines
         };
         
         /* Dumps relevant edit log data for a given player into a serializable object. */

@@ -116,7 +116,7 @@ Player.prototype.resetState = function () {
     if (this.xml !== null) {
         /* Initialize reaction handling state. */
         this.currentTarget = null;
-        this.currentTags = [];
+        this.currentTriggers = [];
         this.stateCommitted = false;
 
         this.oneShotCases = {};

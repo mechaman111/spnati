@@ -1934,7 +1934,7 @@ Case.prototype.applyOneShot = function (player) {
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
 
-Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
+Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
     /* get the AI stage */
     var stageNum = this.stage;
     var bestMatchPriority = 0;
@@ -1944,16 +1944,16 @@ Opponent.prototype.findBehaviour = function(tags, opp, volatileOnly) {
 
     var cases = [];
 
-    tags.forEach(function (tag) {
-        var relCases = this.cases.get(tag+':'+stageNum) || [];
+    triggers.forEach(function (trigger) {
+        var relCases = this.cases.get(trigger+':'+stageNum) || [];
         relCases.forEach(function (c) {
             if (cases.indexOf(c) < 0) cases.push(c);
         });
     }, this);
 
-    /* quick check to see if the tag exists */
+    /* quick check to see if the trigger exists */
     if (cases.length <= 0) {
-        console.log("Warning: couldn't find " + tags.join() + " dialogue for player " + this.slot + " at stage " + stageNum);
+        console.log("Warning: couldn't find " + triggers + " dialogue for player " + this.slot + " at stage " + stageNum);
         return false;
     }
     
@@ -2040,35 +2040,35 @@ Opponent.prototype.clearChosenState = function () {
 
 /************************************************************
  * Updates the behaviour of the given player based on the 
- * provided tag.
+ * provided triggers.
  ************************************************************/
-Opponent.prototype.updateBehaviour = function(tags, opp) {
+Opponent.prototype.updateBehaviour = function(triggers, opp) {
     /* determine if the AI is dialogue locked */
-    if (this.out && this.forfeit[1] == CANNOT_SPEAK && tags !== DEALING_CARDS) {
+    if (this.out && this.forfeit[1] == CANNOT_SPEAK && triggers !== DEALING_CARDS) {
         /* their is restricted to this only */
-        tags = [this.forfeit[0]];
+        triggers = [this.forfeit[0]];
     }
 
-    if (Array.isArray(tags) && Array.isArray(tags[0])) {
-        return tags.some(function(t) { return this.updateBehaviour(t, opp) }, this);
+    if (Array.isArray(triggers) && Array.isArray(triggers[0])) {
+        return triggers.some(function(t) { return this.updateBehaviour(t, opp) }, this);
     }
-    if (!Array.isArray(tags)) {
-        tags = [tags];
+    if (!Array.isArray(triggers)) {
+        triggers = [triggers];
     }
     
     /* Global lines play in any phase except DEALING_CARDS */
-    if (tags[0] !== DEALING_CARDS) {
-        tags.push(GLOBAL_CASE);
+    if (triggers[0] !== DEALING_CARDS) {
+        triggers.push(GLOBAL_CASE);
     }
     
     this.currentTarget = opp;
-    this.currentTags = tags;
+    this.currentTriggers = triggers;
 
-    var state = this.findBehaviour(tags, opp, false);
+    var state = this.findBehaviour(triggers, opp, false);
 
     if (state) {
         this.updateChosenState(state);
-        this.lastUpdateTags = tags;
+        this.lastUpdateTriggers = triggers;
         
         return true;
     }
@@ -2097,7 +2097,7 @@ Opponent.prototype.updateVolatileBehaviour = function () {
         console.log("Player "+this.slot+": Current priority "+this.chosenState.parentCase.priority);
     }
     
-    var newState = this.findBehaviour(this.currentTags, this.currentTarget, true);
+    var newState = this.findBehaviour(this.currentTriggers, this.currentTarget, true);
 
     if (newState) {
         /* Assign new best-match case and state. */
