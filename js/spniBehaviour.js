@@ -1930,6 +1930,23 @@ Case.prototype.applyOneShot = function (player) {
     }
 }
 
+/*
+ * Helper function to add more triggers to a set of triggers, keeping in
+ * mind that triggers can be either a single trigger, an array of
+ * triggers tried in parallel, or an array of arrays of triggers tried
+ * in sequence.  In the last case, adds the new trigger(s) to the first set,
+ * because there's no point searching them more than once.
+ * newTriggers can be a single trigger or an array, because concat() handles both.
+ * Does not modify the original set of triggers.
+ */
+function addTriggers(triggers, newTriggers) {
+    if (Array.isArray(triggers) && Array.isArray(triggers[0])) {
+        return [triggers[0].concat(newTriggers), triggers.slice(1)];
+    } else {
+        return (Array.isArray(triggers) ? triggers : [triggers]).concat(newTriggers);
+    }
+}
+
 /**********************************************************************
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
