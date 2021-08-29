@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited July 10 2021
+README edited August 29 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -28,7 +28,8 @@ a personality for Chara that likes puns, gardening, etc.
 -------------------------------------------------------------------------------------------
 TAGS
 -------------------------------------------------------------------------------------------
-BRUNETTE - Chara's Undertale sprite has slightly lighter hair than Frisk, but in Kisekae that is still very dark. The shade I used is slightly lighter, but still brown.
+RED HAIR - Chara's Undertale sprite has slightly lighter hair than Frisk, but in Kisekae that is still very dark. The shade I used is slightly lighter, but still brown.
+	-UPDATE AUGUST 29 2021 - Per Hex's tag updates, this was changed from Brunette to Red Hair, presumably due to an edge case of shading.
 
 MEDIUM HAIR - Chara's Undertale sprite has medium length hair.
 
@@ -86,6 +87,12 @@ to believe her.
 HIGH HEELS - UPDATE AUGUST 12 2020 - The new tag 'high heels' has been applied 0-2. The model for Chara's shoes, when viewed from the side, has heels.
 
 THROWS THE GAME - UPDATE AUGUST 12 2020- The new tag 'throw the game' has been applied via a case when Chara starts to throw, for obvious reasons.
+
+JEWELRY - UPDATE AUGUST 29 2021 - As per Hex's updates, the Jewelry tag was applied, presumably due to her Locket.
+
+SWEATER - UPDATE AUGUST 29 2021 - As per Hex's updates, the Sweater tag was applied. Personally, I disagree with this, since it is meant to be a Shirt.
+
+BREAKS THE FOURTH WALL - Update August 29 2021 - As per Hex's updates, the new Breaks the Fourth Wall tag was applied, presumably due to Chara's general behavior.
 
 -------------------------------------------------------------------------------------------
 GENERAL BEHAVIOR
