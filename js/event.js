@@ -86,13 +86,12 @@ function GameEvent(id, name, dateRanges, altCostumes, background, candyImages, f
     /** @type {Set<string>} */
     this.fillTags = fillTags;
 }
-
 /**
  * 
  * @param {Date} queryDate 
- * @returns {boolean}
+ * @returns {DateRange[]}
  */
-GameEvent.prototype.isActiveDate = function (queryDate) {
+ GameEvent.prototype.getActiveRanges = function (queryDate) {
     var queryYear = queryDate.getUTCFullYear();
     var currentYearOverrides = this.dateRanges.filter(function (range) {
         return range.override && queryYear >= range.from.getUTCFullYear() && queryYear <= range.to.getUTCFullYear();
@@ -103,11 +102,32 @@ GameEvent.prototype.isActiveDate = function (queryDate) {
          * At least one override exists for this year. Match _only_ the ranges marked as overrides.
          * This allows override ranges to be shorter than repeating ranges (since the repeating range would overlap and cause the event to activate past the override).
          */
-        return currentYearOverrides.some(function (range) { return range.contains(queryDate); })
+        return currentYearOverrides.filter(function (range) { return range.contains(queryDate); })
     } else {
         /* Otherwise, just match against everything. */
-        return this.dateRanges.some(function (range) { return range.contains(queryDate); })
+        return this.dateRanges.filter(function (range) { return range.contains(queryDate); })
     }
+}
+
+/**
+ * 
+ * @param {Date} queryDate 
+ * @returns {boolean}
+ */
+GameEvent.prototype.isActiveDate = function (queryDate) {
+    return this.getActiveRanges(queryDate).length > 0;
+}
+
+/**
+ * 
+ * @param {Date} queryDate 
+ * @returns {Date?}
+ */
+GameEvent.prototype.getEndDate = function (queryDate) {
+    var endDates = this.getActiveRanges(queryDate).map(function (range) { return range.to; });
+    endDates.sort(function (a, b) { return a.getTime() - b.getTime(); });
+    console.log(endDates);
+    return endDates.pop();
 }
 
 /**
