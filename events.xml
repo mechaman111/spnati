@@ -95,24 +95,12 @@
             
             Characters with multiple event costumes from the same set (or who have multiple enabled costumes due to overlapping events)
             will randomly select one to use by default when the game is loaded.
-
-            Characters with event costumes will also be shifted to the top of the roster by default
-            during events (using a special Event sorting mode), and will also be available as
-            random prefill characters.
-
-            The optional "highlight" attribute can be used to give characters with event costumes
-            special highlighting in the character selection screen, for example as seen in the
-            Valentine's Day event.
         -->
-        <costume-set highlight="summer-event">summer</costume-set>
+        <costumes highlight="summer-event">summer</costumes>
 
         <!--
             This specifies a character tag to highlight during the event.
             Multiple tags can be highlighted by repeating this element.
-
-            Characters with these tags will be moved higher in the roster (below characters with event costumes,
-            but above everyone else) when using the Event sorting mode, and will also be available as
-            random prefill characters.
 
             Note that this feature only looks at base character tags: since tags from alternate costumes
             aren't loaded until the character themselves is selected and fully loaded, these filters
@@ -120,31 +108,47 @@
 
             (To be specific, you can only filter against tags that work in the selection screen search menu.
             This excludes tags from alternate costumes as well as tags that are added via dialogue cases.)
-
-            As with costumes, an optional "highlight" attribute can be used to give matching characters
-            special highlighting in the character selection screen.
-            Highlighting from costume sets will override highlighting from tags.
         -->
         <tag highlight="summer-event">summer_event_featured</tag>
 
         <!--
-            This specifies a specific character to highlight during the event.
-            Multiple characters can be highlighted by repeating this element.
-
-            As with costumes and tags, the "highlight" attribute can be used to give
-            characters listed here special highlighting in the character selection screen.
-
-            Highlighting listed here overrides highlighting from costume sets and tags.
+            This applies specific settings to a character during the event.
+            Multiple characters can be configured by repeating this element.
         -->
         <character highlight="summer-event">shimakaze</character>
 
         <!--
-            Highlighting from costumes, tags, and specific listed characters will also
-            override any highlighting from listing.xml, such as Testing or Sponsorship
-            highlights.
+            The <costumes>, <tag>, and <character> elements can all have the following optional attributes:
+            - "highlight"
+            - "partition"
+            - "sort"
+            - "prefill"
 
-            If multiple overlapping events specify highlighting for the same costumes, tags, or characters,
-            the settings from the topmost listed event win.
+            Per-character settings (<character> elements) take priority over all others.
+            Per-costume settings (<costume> elements) are used next.
+            Finally, per-tag settings (<tag> elements) are used last.
+
+            Furthermore, if multiple overlapping events set an attribute for a character, then the value
+            from the topmost overlapping event will be applied.
+
+            The "highlight" attribute can be used to apply special roster highlighting (such as Valentine's
+            Day highlighting or sponsorship highlighting) to matching characters.
+
+            The "partition" and "sort" attributes can be used to change how characters are sorted on the roster:
+             - Characters are first grouped into partitions based on their "partition" attribute (higher partition numbers are placed first).
+             - Characters within a partition are then sorted based on their "sort" attribute (higher sort values go first).
+             - Characters with identical "partition" and "sort" values are then sorted by position in listing.xml.
+
+            Note that non-event characters are placed in partition 0 and have a sort value of 0.
+            Therefore, setting costumes/tags/characters to have `partition="0"` will group them together with
+            non-event characters, while setting them to have a negative partition value will place them
+            after non-event characters.
+
+            Event characters can be configured to either be prioritized when selecting prefill characters
+            by setting `prefill="force"`. Setting `prefil="default"` will move characters to the default
+            pool of characters for prefilling (as configured in `config.xml`).
+
+            By default, if no explicit prefill settings are applied to an event character, they will be force-prefilled.
         -->
 
         <!--
@@ -273,7 +277,7 @@
 
         <background>romantic</background>
 
-        <costume-set highlight="valentines">valentines</costume-set>
+        <costumes highlight="valentines">valentines</costumes>
 
         <candy>
             <path>reskins/meia_cupid/0-disappointed.png</path>
@@ -337,7 +341,7 @@
             </date>
         </dates>
 
-        <costume-set highlight="easter">easter</costume-set>
+        <costumes highlight="easter">easter</costumes>
 
         <candy>
             <path>reskins/new_year_aella/0-calm.png</path>
@@ -383,7 +387,7 @@
 
         <background>haunted forest</background>
 
-        <costume-set highlight="halloween">halloween</costume-set>
+        <costumes highlight="halloween">halloween</costumes>
 
         <candy>
             <path>reskins/emi_shadow/0-annoyed.png</path>
@@ -438,7 +442,7 @@
 
         <background>holiday lodge</background>
 
-        <costume-set highlight="xmas">xmas</costume-set>
+        <costumes highlight="xmas">xmas</costumes>
         
         <!-- NOTE: I'm not sure if the Christmas Event has candy images. I didn't see any, going through the commit logs for the 2020 event.-->
     </event>
@@ -451,8 +455,9 @@
             </date>
         </dates>
 
-        <costume-set highlight="april_fools">april_fools</costume-set>
-        <tag highlight="april_fools">april_fools</tag>
+        <!-- Put AF costumes and AF characters into the same group, but place costumes before AF-only characters -->
+        <costumes highlight="april_fools" partition="1" sort="2">april_fools</costumes>
+        <tag highlight="april_fools" partition="1" sort="1">april_fools</tag>
 
         <!-- This works exactly like <include-status> in (prod-)config.xml. -->
         <include-status>event</include-status>

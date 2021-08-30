@@ -150,7 +150,7 @@ var sortingOptionsMap = {
     target: sortOpponentsByMostTargeted(),
     oldest: sortOpponentsByMultipleFields(["release", "-listingIndex"]),
     newest: sortOpponentsByMultipleFields(["-release", "listingIndex"]),
-    event: sortEventOpponents,
+    event: sortOpponentsByMultipleFields(["-event_partition", "-event_sort_order", "listingIndex"]),
 };
 var groupCreditsShown = false;
 
@@ -709,8 +709,8 @@ function updateIndividualSelectSort() {
         : sortingMode == "target"       ? function(opp) { return opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined) === 0; }
     /* Separate characters with a release number from characters without one */
         : sortingMode == "newest" || sortingMode == "oldest" ? function(opp) { return opp.release === undefined ? -1 : opp.release == Infinity ? 1 : 0; }
-    /* Separate characters with costumes, characters that match event tags, and everyone else */
-        : sortingMode == "event"        ? function (opp) { return opp.hasDefaultCostume ? 0 : (opp.matchesEventTag ? 1 : 2); }
+    /* Separate characters according to event settings */
+        : sortingMode == "event"        ? function (opp) { return opp.event_partition; }
         : null;
 
     var currentPartition = undefined;
@@ -1069,6 +1069,32 @@ function loadDefaultFillSuggestions () {
         }
     }
 
+    var fillPlayers = [];
+    var forcedPrefills = loadedOpponents.filter(function (opp) {
+        /* Allow opponents with other statuses (such as "event") to be force-prefilled on the main roster,
+         * but testing characters should always stay restricted to the Testing roster.
+         * Likewise, force-prefilled characters with non-testing status shouldn't be shown on the Testing menu.
+         */
+        if (individualSelectTesting !== (opp.status === "testing")) {
+            return false;
+        }
+
+        return opp.force_prefill && !isCharacterUsed(opp);
+    });
+
+    if (forcedPrefills.length > 0) {
+        /* select forced prefill characters from events */
+        for (var i = 0; i < 4; i++) {
+            if (forcedPrefills.length === 0) break;
+
+            let idx = getRandomNumber(0, forcedPrefills.length);
+            let randomOpponent = forcedPrefills[idx];
+            forcedPrefills.splice(idx, 1);
+
+            fillPlayers.push(randomOpponent);
+        }
+    }
+
     if (DEFAULT_FILL === 'default' && !individualSelectTesting) {
         /* get a copy of the loaded opponents list */
         var possiblePicks = loadedOpponents.filter(function (opp) {
@@ -1079,10 +1105,8 @@ function loadDefaultFillSuggestions () {
         var possibleNewPicks = possiblePicks.filter(function (opp) {
             return opp.highlightStatus === "new";
         });
-        
-        var fillPlayers = [];
-        
-        if (possibleNewPicks.length !== 0) {
+
+        if (fillPlayers.length < 4 && possibleNewPicks.length !== 0) {
             /* select random new opponent */
             var idx = getRandomNumber(0, possibleNewPicks.length);
             var randomOpponent = possibleNewPicks[idx];
@@ -1130,47 +1154,22 @@ function loadDefaultFillSuggestions () {
             fillPlayers.push(randomOpponent);
         }
         
-        /* Sort in order of New -> Updated -> Other, it just looks better */
+        /* Sort in order of Event -> New -> Updated -> Other, it just looks better */
         fillPlayers.sort(function(a, b) {
             var status1 = a.highlightStatus;
             var status2 = b.highlightStatus;
+
+            if (a.force_prefill && !b.force_prefill) {
+                return -1;
+            } else if (!a.force_prefill && b.force_prefill) {
+                return 1;
+            }
             
             if (!status1 || status1 === "unsorted" || status1 === "unsorted-updated") status1 = "zzzzz";
             if (!status2 || status2 === "unsorted" || status2 === "unsorted-updated") status2 = "zzzzz";
             
             return status1.localeCompare(status2);
         });
-    } else if (DEFAULT_FILL === "event") {
-        /*
-         * Get a copy of the loaded opponents list, same as above.
-         * Select opponents that have activated default alt costumes or match a event fill tag.
-         * Ignore staleness for Testing opponents.
-         */
-        var filterTags = Object.keys(eventTagHighlights);
-        var possiblePicks = loadedOpponents.filter(function (opp) {
-            if (!opp.hasDefaultCostume && !filterTags.some(function (tag) {
-                return opp.hasTag(tag);
-            })) {
-                return false;
-            }
-
-            if (!individualSelectTesting) {
-                return !opp.status && !isCharacterUsed(opp);
-            } else {
-                return (opp.status === "testing") && !isCharacterUsed(opp);
-            }
-        });
-
-        var fillPlayers = [];
-        for (var i = fillPlayers.length; i < players.length-1; i++) {
-            if (possiblePicks.length === 0) break;
-            /* select random opponent */
-            var idx = getRandomNumber(0, possiblePicks.length);
-            var randomOpponent = possiblePicks[idx];
-            possiblePicks.splice(idx, 1);
-
-            fillPlayers.push(randomOpponent);
-        }
     } else {
         /* get a copy of the loaded opponents list, same as above */
         var possiblePicks = loadedOpponents.filter(function (opp) {
@@ -1182,7 +1181,6 @@ function loadDefaultFillSuggestions () {
             return !isCharacterUsed(opp);
         });
         
-        var fillPlayers = [];
         if (DEFAULT_FILL === 'new' || DEFAULT_FILL === 'default') {
             /* Special case: for the 'new' fill mode, always suggest the most
              * recently-added or recently-updated character.
@@ -1705,30 +1703,6 @@ function sortTestingOpponents(opp1, opp2) {
             } else {
                 return 1;
             }
-        }
-    });
-
-    return scores[1] - scores[0];
-}
-
-/**
- * Special callback for Arrays.sort to sort an array of opponents using rules
- * for featured event characters. The sort order produced by this callback is: 
- * - Characters with activated default costumes
- *   (Note: this is equivalent to characters with costumes from event sets, since all event sets are marked as defaults automatically).
- * - Characters that match an event fill tag (but without costumes)
- * - Everyone else
- * @param {Opponent} opp1 
- * @param {Opponent} opp2 
- */
-function sortEventOpponents(opp1, opp2) {
-    var scores = [opp1, opp2].map(function (opp) {
-        if (opp.hasDefaultCostume) {
-            return 2;
-        } else if (opp.matchesEventTag) {
-            return 1;
-        } else {
-            return 0;
         }
     });
 

@@ -424,7 +424,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     var $tagsXml = metaFiles[1];
 
     this.status = status;
-    this.highlightStatus = eventCharacterHighlights[id] ||  highlightStatus || status || '';
+    this.highlightStatus = eventCharacterSettings.highlights[id] ||  highlightStatus || status || '';
     this.first = $metaXml.children('first').text();
     this.last = $metaXml.children('last').text();
 
@@ -499,9 +499,39 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.alternate_costumes = [];
     this.selection_image = this.folder + this.image;
 
-    this.matchesEventTag = Object.keys(eventTagHighlights).some(function (tag) {
+    this.event_default_costume = null;
+    this.event_sort_order = (eventCharacterSettings.sorting[id] !== undefined) ? eventCharacterSettings.sorting[id] : 0;
+    this.event_partition = (eventCharacterSettings.partitions[id] !== undefined) ? eventCharacterSettings.partitions[id] : 0;
+    this.force_prefill = eventCharacterSettings.prefills[id];
+
+    if (eventCharacterSettings.ids.has(id) && eventCharacterSettings.prefills[id] === undefined) {
+        this.force_prefill = true;
+    }
+
+    this.matchesEventTag = false;
+    eventTagList.some(function (tag) {
         if (this.searchTags.indexOf(tag) >= 0) {
-            if (eventTagHighlights[tag] && !eventCharacterHighlights[id]) this.highlightStatus = eventTagHighlights[tag];
+            this.matchesEventTag = true;
+            if (eventTagSettings.highlights[tag] && !eventCharacterSettings.highlights[id]) {
+                this.highlightStatus = eventTagSettings.highlights[tag];
+            }
+
+            if (eventTagSettings.sorting[tag] && eventCharacterSettings.sorting[id] === undefined) {
+                this.event_sort_order = eventTagSettings.sorting[tag];
+            }
+
+            if (eventCharacterSettings.partitions[id] === undefined) {
+                this.event_partition = (eventTagSettings.partitions[tag] !== undefined) ? eventTagSettings.partitions[tag] : 2;
+            }
+
+            if (eventCharacterSettings.prefills[id] === undefined) {
+                if (eventTagSettings.ids.has(tag) && eventTagSettings.prefills[tag] === undefined) {
+                    this.force_prefill = true;
+                } else {
+                    this.force_prefill = eventTagSettings.prefills[tag];
+                }
+            }
+
             return true;
         }
         return false;
@@ -536,11 +566,33 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.hasDefaultCostume = defaultCostumes.length > 0;
     if (this.hasDefaultCostume) {
         var selectedDefault = defaultCostumes[getRandomNumber(0, defaultCostumes.length)];
+        var costumeSet = selectedDefault.set;
+
         this.selection_image = selectedDefault['folder'] + selectedDefault['image'];
         this.selectAlternateCostume(selectedDefault);
 
-        if (eventCostumeHighlights[selectedDefault.set] && !eventCharacterHighlights[id]) {
-            this.highlightStatus = eventCostumeHighlights[selectedDefault.set];
+        if (activeGameEvents.length > 0) {
+            this.event_default_costume = selectedDefault;
+            if (eventCostumeSettings.highlights[costumeSet] && !eventCharacterSettings.highlights[id]) {
+                this.highlightStatus = eventCostumeSettings.highlights[costumeSet];
+            }
+    
+            if (eventCostumeSettings.sorting[costumeSet] && eventCharacterSettings.sorting[id] === undefined) {
+                this.event_sort_order = eventCostumeSettings.sorting[costumeSet];
+            }
+    
+            if (eventCharacterSettings.partitions[costumeSet] === undefined) {
+                this.event_partition = (eventCostumeSettings.partitions[costumeSet] !== undefined) ? eventCostumeSettings.partitions[costumeSet] : 3;
+            }
+
+            if (eventCharacterSettings.prefills[id] === undefined) {
+                if (eventCostumeSettings.prefills[costumeSet] !== undefined) {
+                    this.force_prefill = eventCostumeSettings.prefills[costumeSet];
+                } else if (!this.matchesEventTag) {
+                    this.force_prefill = true;
+                }
+                // If an event tag is matched, fall back to the value used there
+            }
         }
     }
 
