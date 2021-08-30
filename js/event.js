@@ -9,10 +9,10 @@ function parseDateRangeElem($xml) {
     var day = parseInt($xml.attr("day"), 10);
     var year = parseInt($xml.attr("year"), 10);
 
-    if (year == null) {
+    if (isNaN(year)) {
         year = (new Date()).getUTCFullYear();
     }
-
+    
     return new Date(Date.UTC(year, month, day));
 }
 
@@ -32,7 +32,7 @@ function DateRange($xml) {
     this.to = new Date(baseEndDate.getTime() + (24 * 60 * 60 * 1000));
 
     /** @type {boolean} */
-    this.override = ($xml.attr("override").trim().toLowerCase() === "true");
+    this.override = (($xml.attr("override") || "").trim().toLowerCase() === "true");
 }
 
 /**
@@ -130,7 +130,6 @@ GameEvent.prototype.isActiveDate = function (queryDate) {
 GameEvent.prototype.getEndDate = function (queryDate) {
     var endDates = this.getActiveRanges(queryDate).map(function (range) { return range.to; });
     endDates.sort(function (a, b) { return a.getTime() - b.getTime(); });
-    console.log(endDates);
     return endDates.pop();
 }
 
@@ -152,8 +151,8 @@ function parseEventElement ($xml) {
 
     var name = $xml.children("name").text() || null;
 
-    var dateRanges = $xml.children("dates>date").map(function (index, $elem) {
-        return new DateRange($elem);
+    var dateRanges = $xml.find("dates>date").map(function (index, elem) {
+        return new DateRange($(elem));
     }).get();
 
     var altCostumes = loadChildSet($xml, "costume-sets>set");
@@ -170,9 +169,9 @@ function parseEventElement ($xml) {
  */
 function loadEventData () {
     return fetchXML("events.xml").then(function ($xml) {
-        var events = $xml.children("events>event").map(function (index, elem) {
+        var events = $xml.children("event").map(function (index, elem) {
             return parseEventElement($(elem));
-        });
+        }).get();
 
         /** @type {Set<string>} */
         var activeIds = new Set();
@@ -186,7 +185,7 @@ function loadEventData () {
                 activeIds.add(event.id);
             } else if (FORCE_EVENTS.size == 0) {
                 if (event.isActiveDate(curDate) && !activeIds.has(event.id)) {
-                    console.log("Activating event: " + event.name + " (" + event.dateRanges[j].toString() + ")")
+                    console.log("Activating event: " + event.name);
                     activeGameEvents.push(event);
                     activeIds.add(event.id);
                     break;
