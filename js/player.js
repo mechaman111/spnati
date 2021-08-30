@@ -424,7 +424,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     var $tagsXml = metaFiles[1];
 
     this.status = status;
-    this.highlightStatus = highlightStatus || status || '';
+    this.highlightStatus = eventCharacterHighlights[id] ||  highlightStatus || status || '';
     this.first = $metaXml.children('first').text();
     this.last = $metaXml.children('last').text();
 
@@ -499,8 +499,12 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.alternate_costumes = [];
     this.selection_image = this.folder + this.image;
 
-    this.matchesEventTag = eventFillTags.some(function (tag) {
-        return this.searchTags.indexOf(tag) >= 0;
+    this.matchesEventTag = Object.keys(eventTagHighlights).some(function (tag) {
+        if (this.searchTags.indexOf(tag) >= 0) {
+            if (eventTagHighlights[tag] && !eventCharacterHighlights[id]) this.highlightStatus = eventTagHighlights[tag];
+            return true;
+        }
+        return false;
     }.bind(this));
 
     if (!ALT_COSTUMES_ENABLED) return;
@@ -534,6 +538,10 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
         var selectedDefault = defaultCostumes[getRandomNumber(0, defaultCostumes.length)];
         this.selection_image = selectedDefault['folder'] + selectedDefault['image'];
         this.selectAlternateCostume(selectedDefault);
+
+        if (eventCostumeHighlights[selectedDefault.set] && !eventCharacterHighlights[id]) {
+            this.highlightStatus = eventCostumeHighlights[selectedDefault.set];
+        }
     }
 
     // Not reached if alt costumes are disabled

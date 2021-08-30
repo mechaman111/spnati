@@ -140,13 +140,6 @@ var individualSelectSeparatorIndices = [];
 /** Are the default fill suggestions using Testing opponents? */
 var suggestedTestingOpponents = undefined;
 
-/** 
- * List of tags for filtering opponents with the "event" fill mode.
- * Characters with activated alt costumes are automatically considered for filling.
- * @type {string[]}
- */
-var eventFillTags = [];
-
 /* page variables */
 var individualPage = 0;
 var groupPage = 0;
@@ -1153,9 +1146,7 @@ function loadDefaultFillSuggestions () {
          * Select opponents that have activated default alt costumes or match a event fill tag.
          * Ignore staleness for Testing opponents.
          */
-        var filterTags = [];
-        eventFillTags.forEach(function (tag) { filterTags.push(tag); });
-
+        var filterTags = Object.keys(eventTagHighlights);
         var possiblePicks = loadedOpponents.filter(function (opp) {
             if (!opp.hasDefaultCostume && !filterTags.some(function (tag) {
                 return opp.hasTag(tag);

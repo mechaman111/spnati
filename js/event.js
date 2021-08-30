@@ -1,3 +1,6 @@
+var eventCostumeHighlights = {};
+var eventTagHighlights = {};
+var eventCharacterHighlights = {};
 
 /**
  * Parse a child object of a <date-range> element (a <from> or <to> element).
@@ -59,13 +62,14 @@ DateRange.prototype.toString = function () {
  * @param {string} id 
  * @param {string} name
  * @param {DateRange} dateRanges 
- * @param {Set<string>} altCostumes 
+ * @param {Object<string, string>} costumeHighlights
  * @param {string?} background 
  * @param {Set<string>} candyImages 
- * @param {Set<string>} fillTags
+ * @param {Object<string, string>} tagHighlights
  * @param {Set<string>} includeStatuses
+ * @param {Object<string, string>} characterHighlights
  */
-function GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags, includeStatuses) {
+function GameEvent(id, name, dateRanges, costumeHighlights, background, candyImages, tagHighlights, includeStatuses, characterHighlights) {
     /** @type {string} */
     this.id = id;
 
@@ -75,9 +79,6 @@ function GameEvent(id, name, dateRanges, altCostumes, background, candyImages, f
     /** @type {DateRange[]} */
     this.dateRanges = dateRanges;
 
-    /** @type {Set<string>} */
-    this.altCostumes = altCostumes;
-
     /** @type {string?} */
     this.background = background;
 
@@ -85,11 +86,18 @@ function GameEvent(id, name, dateRanges, altCostumes, background, candyImages, f
     this.candyImages = candyImages;
 
     /** @type {Set<string>} */
-    this.fillTags = fillTags;
-
-    /** @type {Set<string>} */
     this.includeStatuses = includeStatuses;
+
+    /** @type {Object<string, string>} */
+    this.costumeHighlights = costumeHighlights;
+
+    /** @type {Object<string, string>} */
+    this.tagHighlights = tagHighlights;
+
+    /** @type {Object<string, string>} */
+    this.characterHighlights = characterHighlights;
 }
+
 /**
  * 
  * @param {Date} queryDate 
@@ -133,20 +141,38 @@ GameEvent.prototype.getEndDate = function (queryDate) {
     return endDates.pop();
 }
 
-/**
- * Load a list of simple text elements from an XML JQuery object as a Set.
- * @param {JQuery} $xml 
- * @param {string} selector 
- * @returns {Set<string>}
- */
-function loadChildSet ($xml, selector) {
-    return new Set($xml.find(selector).map(function (index, elem) {
-        return $(elem).text();
-    }).get());
-}
 
 /** @returns {GameEvent} */
 function parseEventElement ($xml) {
+    /**
+     * Load a list of simple text elements from an XML JQuery object as a Set.
+     * @param {JQuery} $xml 
+     * @param {string} selector 
+     * @returns {Set<string>}
+     */
+    function loadChildSet ($xml, selector) {
+        return new Set($xml.find(selector).map(function (index, elem) {
+            return $(elem).text();
+        }).get());
+    }
+
+    /**
+     * Load a list of text elements with highlight attributes from an XML JQuery object as an object.
+     * @param {JQuery} $xml 
+     * @param {string} selector 
+     * @returns {Object<string, string>}
+     */
+    function loadHighlightedSet ($xml, selector) {
+        var ret = {};
+        $xml.find(selector).each(function (index, elem) {
+            var key = $(elem).text();
+            var highlight = $(elem).attr("highlight") || "";
+            ret[key] = highlight
+        });
+
+        return ret
+    }
+
     var id = $xml.attr("id");
 
     var name = $xml.children("name").text() || null;
@@ -155,13 +181,14 @@ function parseEventElement ($xml) {
         return new DateRange($(elem));
     }).get();
 
-    var altCostumes = loadChildSet($xml, "costume-sets>set");
+    var altCostumes = loadHighlightedSet($xml, "costume-set");
     var background = $xml.children("background").text() || null;
     var candyImages = loadChildSet($xml, "candy>path");
-    var fillTags = loadChildSet($xml, "fill>tag");
-    var includeStatuses = loadChildSet($xml, "include>status");
+    var fillTags = loadHighlightedSet($xml, "tag");
+    var includeStatuses = loadChildSet($xml, "include-status");
+    var characterHighlights = loadHighlightedSet($xml, "characters>character");
 
-    return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags, includeStatuses);
+    return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags, includeStatuses, characterHighlights);
 }
 
 /**
@@ -198,17 +225,20 @@ function loadEventData () {
             var eventBackgrounds = new Set();
             
             DEFAULT_COSTUME_SETS = new Set();
-            fillTagSet = new Set();
 
             activeGameEvents.forEach(function (event) {
-                event.altCostumes.forEach(function (setId) {
-                    alternateCostumeSets[setId] = true;
+                Object.keys(event.costumeHighlights).forEach(function (setId) {
+                    var highlightStatus = event.costumeHighlights[setId];
 
+                    alternateCostumeSets[setId] = true;
                     if (setId == "all") {
                         console.log("[" + event.id + "]" + " Activating all costume sets.");
                     } else {
-                        console.log("[" + event.id + "]" + " Activating costume set " + setId + ".");
+                        console.log("[" + event.id + "]" + " Activating costume set " + setId + " with highlight " + highlightStatus + ".");
+                        
                         DEFAULT_COSTUME_SETS.add(setId);
+                        if (!eventCostumeHighlights[setId] && highlightStatus)
+                            eventCostumeHighlights[setId] = highlightStatus;
                     }
                 });
 
@@ -220,24 +250,23 @@ function loadEventData () {
                     console.log("[" + event.id + "]" + " Adding default background option: " + event.background + ".");
                     eventBackgrounds.add(event.background);
                 }
-
-                event.fillTags.forEach(function (tag) {
-                    if (!fillTagSet.has(tag)) {
-                        console.log("[" + event.id + "]" + " Adding tag for event filling: " + tag + ".");
-                        fillTagSet.add(tag);
-                    }
+                
+                Object.keys(event.tagHighlights).forEach(function (tag) {
+                    if (!eventTagHighlights[tag] && event.tagHighlights[tag])
+                        eventTagHighlights[tag] = event.tagHighlights[tag];
                 });
 
                 event.includeStatuses.forEach(function (status) {
                     console.log("[" + event.id + "]" + " Enabling opponent status: " + status + ".");
                     includedOpponentStatuses[status] = true;
                 });
+
+                Object.keys(event.characterHighlights).forEach(function (id) {
+                    if (!eventCharacterHighlights[id] && event.characterHighlights[id])
+                        eventCharacterHighlights[id] = event.characterHighlights[id];
+                });
             });
 
-            eventFillTags = [];
-            fillTagSet.forEach(function (tag) {
-                eventFillTags.push(tag);
-            });
 
             if (candySet.size > 0) {
                 CANDY_LIST = [];
