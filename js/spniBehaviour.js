@@ -990,13 +990,13 @@ function expandDialogue (dialogue, self, target, bindings) {
                 var found_event = false;
                 for (let i = 0; i < activeGameEvents.length; i++) {
                     if (activeGameEvents[i].id === fn) {
-                        substitution = "1";
+                        substitution = "true";
                         found_event = true;
                         break;
                     }
                 }
                 if (!found_event) {
-                    substitution = "0";
+                    substitution = "false";
                 }
                 break;
             case 'target':
