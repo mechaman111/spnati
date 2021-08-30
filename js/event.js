@@ -63,8 +63,9 @@ DateRange.prototype.toString = function () {
  * @param {string?} background 
  * @param {Set<string>} candyImages 
  * @param {Set<string>} fillTags
+ * @param {Set<string>} includeStatuses
  */
-function GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags) {
+function GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags, includeStatuses) {
     /** @type {string} */
     this.id = id;
 
@@ -85,6 +86,9 @@ function GameEvent(id, name, dateRanges, altCostumes, background, candyImages, f
 
     /** @type {Set<string>} */
     this.fillTags = fillTags;
+
+    /** @type {Set<string>} */
+    this.includeStatuses = includeStatuses;
 }
 /**
  * 
@@ -156,8 +160,9 @@ function parseEventElement ($xml) {
     var background = $xml.children("background").text() || null;
     var candyImages = loadChildSet($xml, "candy>path");
     var fillTags = loadChildSet($xml, "fill>tag");
+    var includeStatuses = loadChildSet($xml, "include>status");
 
-    return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags);
+    return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags, includeStatuses);
 }
 
 /**
@@ -222,6 +227,11 @@ function loadEventData () {
                         console.log("[" + event.id + "]" + " Adding tag for event filling: " + tag + ".");
                         fillTagSet.add(tag);
                     }
+                });
+
+                event.includeStatuses.forEach(function (status) {
+                    console.log("[" + event.id + "]" + " Enabling opponent status: " + status + ".");
+                    includedOpponentStatuses[status] = true;
                 });
             });
 

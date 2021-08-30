@@ -323,7 +323,14 @@ Save.prototype.loadOptions = function(){
     } else if (isLocal) {
         includedOpponentStatuses['offline'] = includedOpponentStatuses['incomplete'] = true;
     }
-     
+
+    /* Re-apply opponent status settings from events, if any */
+    activeGameEvents.forEach(function (event) {
+        event.includeStatuses.forEach(function (status) {
+            includedOpponentStatuses[status] = true;
+        });
+    });
+
     if ('fillDisabled' in settings) FILL_DISABLED = !!settings.fillDisabled;
 
     this.loadOptionsBackground(settings);

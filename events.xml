@@ -202,6 +202,19 @@
             <path>reskins/monika_stirring_mermaid/3-shy-happy.png</path>
             -->
         </candy>
+
+        <!--
+            NOTE: there is one element that the Summer event does not use:
+            the <include> element.
+
+            <include> is used to mark additional character statuses for
+            inclusion in the selection screen. 
+
+            This is mainly used by the April Fools event, where
+            `event` status characters are included.
+
+            See the April Fools event data below for an example of how this works.
+        -->
     </event>
     <event id="valentines">
         <name>Valentine's Day</name>
@@ -209,24 +222,24 @@
         <dates>
             <!-- Date ranges for each year cover the week of 02/14, plus half of the next week (up to and including Wednesday). -->
             <date>
-                <from year="2022" month="02" day="13" />
-                <to year="2022" month="02" day="23" />
+                <from year="2022" month="2" day="13" />
+                <to year="2022" month="2" day="23" />
             </date>
             <date>
-                <from year="2023" month="02" day="12" />
-                <to year="2023" month="02" day="22" />
+                <from year="2023" month="2" day="12" />
+                <to year="2023" month="2" day="22" />
             </date>
             <date>
-                <from year="2024" month="02" day="11" />
-                <to year="2024" month="02" day="21" />
+                <from year="2024" month="2" day="11" />
+                <to year="2024" month="2" day="21" />
             </date>
             <date>
-                <from year="2025" month="02" day="9" />
-                <to year="2025" month="02" day="19" />
+                <from year="2025" month="2" day="9" />
+                <to year="2025" month="2" day="19" />
             </date>
             <date>
-                <from year="2026" month="02" day="8" />
-                <to year="2026" month="02" day="18" />
+                <from year="2026" month="2" day="8" />
+                <to year="2026" month="2" day="18" />
             </date>
         </dates>
 
@@ -408,5 +421,27 @@
         </costume-sets>
         
         <!-- NOTE: I'm not sure if the Christmas Event has candy images. I didn't see any, going through the commit logs for the 2020 event.-->
+    </event>
+    <event id="april_fools">
+        <name>April Fools Day</name>
+
+        <dates>
+            <date>
+                <from month="4" day="1" />
+            </date>
+        </dates>
+
+        <costume-sets>
+            <set>april_fools</set>
+        </costume-sets>
+
+        <fill>
+            <tag>april_fools</tag>
+        </fill>
+
+        <include>
+            <!-- This works exactly like <include-status> in (prod-)config.xml. -->
+            <status>event</status>
+        </include>
     </event>
 </events>
