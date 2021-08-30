@@ -28,21 +28,35 @@
         <dates>
             <date>
                 <!-- 
-                    The <from> and <to> elements specify the start and end dates of the event, respectively.
+                    The <from> element specifies the start date of the event.
                     The month and day must both be specified.
 
                     The year is optional; if the year is omitted, the event is assumed to repeat every year
                     at the same month and day.
-                    
-                    Events begin and end at midnight UTC, and the end date itself is included as part of the date range.
 
-                    This particular event is scheduled every year, lasting from August 1 to August 14.
+                    The <to> element, on the other hand, specifies the end date of the event.
+                    This can be given as:
+                    - A month/day year (with optional year)
+                    - A number of days after the start date.
 
-                    The end date of an event can also be omitted; the event is then assumed to last for exactly
-                    one day.
+                    The first option uses `year`, `month`, and `day` attributes; similarly to the <from> element,
+                    if the year is omitted, the date is assumed to repeat every year.
+                    The end date itself is included as part of the date range in this case.
+
+                    The second option uses the `days` attribute to specify the length of time the event should last,
+                    starting from the date specified in the <from> element. 
+
+                    This particular event is scheduled every year, starting July 1 and lasting for 14 days.
+
+                    The end date of an event can also be omitted entirely; the event is then assumed to last for exactly one day.
+
+                    Date ranges (both repeating and one-shot) can cross over into a new year if desired.
+                    For example, <from month="12" day="20" /> and <to month="1" day="5" /> specifies
+                    a repeating date range starting December 20 of each year and ending on January 5 of the next year.
+                    Date ranges specified as a start date and a length in days can also cross over into different years.
                 -->
                 <from month="7" day="1" />
-                <to month="7" day="14" />
+                <to days="14" />
             </date>
 
             <date override="true">
@@ -63,8 +77,7 @@
 
                     This can be used to reschedule, shorten, or lengthen an event during a particular year.
 
-                    This override, for example, shortens the 2019 Summer Event to only last 7 days,
-                    instead of 14 days.
+                    This override, for example, shortens the 2019 Summer Event to end on July 7, instead of July 14.
 
                     NOTE: these are just examples, and are not meant to be indicative of actual scheduling.
                 -->
@@ -73,7 +86,7 @@
             </date>
 
             <date override="true">
-                <!-- This particular override reschedules the 2020 Summer Event to July, instead of August. -->
+                <!-- This particular override reschedules the 2020 Summer Event to June, instead of July. -->
                 <from year="2020" month="6" day="1" />
                 <to year="2020" month="6" day="14" />
             </date>
@@ -95,10 +108,7 @@
 
                 <date> and <weekOf> can both be used at the same time in an event.
                 <weekOf> elements can also be marked with `override="true"`, and this works the same way as date range overrides.
-
-                As a side note: date ranges specified by <weekOf> can cross over between years, if it happens to
-                cover New Year's Eve/Day. This works as expected for both repeating and one-shot schedules, unlike regular
-                repeating <date> ranges. 
+                As with regular <date> ranges, both repeating and one-shot <weekOf> ranges can also cross over into different years if desired.
             -->
         </dates>
 
@@ -456,18 +466,8 @@
         <dates>
             <date>
                 <from month="12" day="15" />
-                <to month="12" day="31" />
-            </date>
-            <!--
-
-            NOTE: repreating ranges can't wrap around past the start of the new year.
-            You can work around this by just sticking a second range at the beginning of the year, like so:
-
-            <date>
-                <from month="1" day="1" />
                 <to month="1" day="5" />
             </date>
-            -->
         </dates>
 
         <background>holiday lodge</background>

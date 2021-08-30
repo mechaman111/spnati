@@ -25,7 +25,7 @@ function parseDateRangeElem($xml) {
     if (isNaN(year)) {
         year = (new Date()).getUTCFullYear();
     }
-    
+
     return new Date(Date.UTC(year, month, day));
 }
 
@@ -54,14 +54,27 @@ function DateRange(startDate, endDate, override) {
 DateRange.parseRange = function ($xml) {
     var from = parseDateRangeElem($xml.children("from"));
     var toElem = $xml.children("to");
-    var baseEndDate = from;
+    var to = from;
 
     if (toElem.length > 0) {
-        baseEndDate = parseDateRangeElem(toElem);
+        var nDays = parseInt(toElem.attr("days"), 10);
+        if (nDays) {
+            to = new Date(from.getTime() + (nDays * DAY_MS));
+        } else {
+            // Parse the element as a year/month/day set.
+            // Add one day to the end date/time to make the range inclusive on both sides.
+            to = new Date(parseDateRangeElem(toElem).getTime() + DAY_MS);
+
+            if (to.getTime() <= from.getTime() && !toElem.attr("year")) {
+                // Wrap the date around to the next year.
+                to.setUTCFullYear(to.getUTCFullYear() + 1);
+            }
+        }
+    } else {
+        // Otherwise assume the end date is one day after the start.
+        to = new Date(from.getTime() + DAY_MS);
     }
 
-    // Add one day to the end date/time to make the range inclusive on both sides.
-    var to = new Date(baseEndDate.getTime() + DAY_MS);
     var override = (($xml.attr("override") || "").trim().toLowerCase() === "true");
 
     return new DateRange(from, to, override);
