@@ -10,18 +10,29 @@ function parseDateRangeElem($xml) {
     var year = parseInt($xml.attr("year"), 10);
 
     if (year == null) {
-        year = (new Date()).getFullYear();
+        year = (new Date()).getUTCFullYear();
     }
 
-    return new Date(year, month, day);
+    return new Date(Date.UTC(year, month, day));
 }
 
 function DateRange($xml) {
     /** @type {Date} */
     this.from = parseDateRangeElem($xml.children("from"));
 
+    var toElem = $xml.children("to");
+    var baseEndDate = this.from;
+
+    if (toElem.length > 0) {
+        baseEndDate = parseDateRangeElem(toElem);
+    }
+
+    // Add one day to the end date/time to make the range inclusive on both sides.
     /** @type {Date} */
-    this.to = parseDateRangeElem($xml.children("to"));
+    this.to = new Date(baseEndDate.getTime() + (24 * 60 * 60 * 1000));
+
+    /** @type {boolean} */
+    this.override = ($xml.attr("override").trim().toLowerCase() === "true");
 }
 
 /**
@@ -31,7 +42,7 @@ function DateRange($xml) {
  */
 DateRange.prototype.contains = function (queryDate) {
     var ts = queryDate.getTime();
-    return (ts >= this.from.getTime()) && (ts <= this.to.getTime());
+    return (ts >= this.from.getTime()) && (ts < this.to.getTime());
 }
 
 /**
@@ -39,21 +50,26 @@ DateRange.prototype.contains = function (queryDate) {
  * @returns {string}
  */
 DateRange.prototype.toString = function () {
-    return "from " + this.from.toDateString() + " to " + this.to.toDateString();
+    var endDay = new Date(this.to.getTime() - 1);
+    return "from " + this.from.toDateString() + " to " + endDay.toDateString();
 }
 
 /**
  * 
  * @param {string} id 
- * @param {DateRange[]} dateRanges 
+ * @param {string} name
+ * @param {DateRange} dateRanges 
  * @param {Set<string>} altCostumes 
  * @param {string?} background 
  * @param {Set<string>} candyImages 
  * @param {Set<string>} fillTags
  */
-function GameEvent(id, dateRanges, altCostumes, background, candyImages, fillTags) {
+function GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags) {
     /** @type {string} */
     this.id = id;
+
+    /** @type {string} */
+    this.name = name;
 
     /** @type {DateRange[]} */
     this.dateRanges = dateRanges;
@@ -71,9 +87,34 @@ function GameEvent(id, dateRanges, altCostumes, background, candyImages, fillTag
     this.fillTags = fillTags;
 }
 
+/**
+ * 
+ * @param {Date} queryDate 
+ * @returns {boolean}
+ */
+GameEvent.prototype.isActiveDate = function (queryDate) {
+    var queryYear = queryDate.getUTCFullYear();
+    var currentYearOverrides = this.dateRanges.filter(function (range) {
+        return range.override && queryYear >= range.from.getUTCFullYear() && queryYear <= range.to.getUTCFullYear();
+    });
+
+    if (currentYearOverrides.length > 0) {
+        /*
+         * At least one override exists for this year. Match _only_ the ranges marked as overrides.
+         * This allows override ranges to be shorter than repeating ranges (since the repeating range would overlap and cause the event to activate past the override).
+         */
+        return currentYearOverrides.some(function (range) { return range.contains(queryDate); })
+    } else {
+        /* Otherwise, just match against everything. */
+        return this.dateRanges.some(function (range) { return range.contains(queryDate); })
+    }
+}
+
 /** @returns {GameEvent} */
 function parseEventElement ($xml) {
     var id = $xml.attr("id");
+
+    var name = $xml.children("name").text() || null;
 
     var dateRanges = $xml.children("dates>date").map(function (index, $elem) {
         return new DateRange($elem);
@@ -93,7 +134,7 @@ function parseEventElement ($xml) {
         return $elem.text();
     }));
 
-    return new GameEvent(id, dateRanges, altCostumes, background, candyImages, fillTags);
+    return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags);
 }
 
 /**
@@ -116,13 +157,11 @@ function loadEventData () {
                 activeGameEvents.push(event);
                 activeIds.add(event.id);
             } else if (FORCE_EVENTS.size == 0) {
-                for (let j = 0; j < event.dateRanges.length; j++) {
-                    if (event.dateRanges[j].contains(curDate) && !activeIds.has(event.id)) {
-                        console.log("Activating event: " + event.name + " (" + event.dateRanges[j].toString() + ")")
-                        activeGameEvents.push(event);
-                        activeIds.add(event.id);
-                        break;
-                    };
+                if (event.isActiveDate(curDate) && !activeIds.has(event.id)) {
+                    console.log("Activating event: " + event.name + " (" + event.dateRanges[j].toString() + ")")
+                    activeGameEvents.push(event);
+                    activeIds.add(event.id);
+                    break;
                 }
             }
         }
