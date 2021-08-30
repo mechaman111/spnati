@@ -77,6 +77,29 @@
                 <from year="2020" month="6" day="1" />
                 <to year="2020" month="6" day="14" />
             </date>
+
+            <!--
+                As an alternative, <weekOf> elements can be used to schedule events to run for one or more weeks,
+                covering a particular date (but lined up with the start of the week).
+
+                The date range is automatically calculated to begin and end on the appropriate Sundays in UTC.
+                If the reference date for a <weekOf> range happens to fall on a Sunday, the start date is adjusted so that
+                the range starts on the previous Sunday (so the range always begins at least one day before the reference date).
+
+                For example, the Valentine's Day event uses this to define a schedule that lasts two weeks and covers 02/14.
+                In 2022, the Valentine's Day event would begin at midnight on Sunday, February 13 and end at midnight on Sunday, Feburary 27;
+                in 2023, the Valentine's Day event would begin at midnight on Sunday, February 12 and end at midnight on Sunday, Feburary 26.
+
+                In 2021, since 02/14 falls on a Sunday, the Valentine's Day event would instead start on February 7 and end on February 21,
+                instead of starting right at 02/14.
+
+                <date> and <weekOf> can both be used at the same time in an event.
+                <weekOf> elements can also be marked with `override="true"`, and this works the same way as date range overrides.
+
+                As a side note: date ranges specified by <weekOf> can cross over between years, if it happens to
+                cover New Year's Eve/Day. This works as expected for both repeating and one-shot schedules, unlike regular
+                repeating <date> ranges. 
+            -->
         </dates>
 
         <!--
@@ -262,27 +285,8 @@
         <name>Valentine's Day</name>
         
         <dates>
-            <!-- Date ranges for each year cover the week of 02/14 and the following week. -->
-            <date>
-                <from year="2022" month="2" day="13" />
-                <to year="2022" month="2" day="26" />
-            </date>
-            <date>
-                <from year="2023" month="2" day="12" />
-                <to year="2023" month="2" day="25" />
-            </date>
-            <date>
-                <from year="2024" month="2" day="11" />
-                <to year="2024" month="2" day="24" />
-            </date>
-            <date>
-                <from year="2025" month="2" day="9" />
-                <to year="2025" month="2" day="22" />
-            </date>
-            <date>
-                <from year="2026" month="2" day="8" />
-                <to year="2026" month="2" day="21" />
-            </date>
+            <!-- This event will start on the Sunday before 02/14, and last for two weeks. -->
+            <weekOf month="2" day="14" weeks="2" />
         </dates>
 
         <background>romantic</background>
@@ -489,7 +493,7 @@
         <!-- This works exactly like <include-status> in (prod-)config.xml. -->
         <include-status>event</include-status>
     </event>
-    
+
     <event id="critical_darling_new">
         <name>Critical Darling New Highlight</name>
 

@@ -10,8 +10,10 @@ var eventTagList = [];
 /** @type {HighlightedAttributeList} */
 var eventCharacterSettings = null;
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+
 /**
- * Parse a child object of a <date-range> element (a <from> or <to> element).
+ * Parse a child object of a date range element (a <from>, <to>, or <weekOf> element).
  * @param {JQuery} $xml 
  * @returns {Date}
  */
@@ -27,23 +29,64 @@ function parseDateRangeElem($xml) {
     return new Date(Date.UTC(year, month, day));
 }
 
-function DateRange($xml) {
+/**
+ * 
+ * @param {Date} startDate 
+ * @param {Date} endDate 
+ * @param {boolean} override 
+ */
+function DateRange(startDate, endDate, override) {
     /** @type {Date} */
-    this.from = parseDateRangeElem($xml.children("from"));
+    this.from = startDate
 
+    /** @type {Date} */
+    this.to = endDate;
+
+    /** @type {boolean} */
+    this.override = override;
+}
+
+/**
+ * Parse a <date> element.
+ * @param {JQuery} $xml 
+ * @returns {DateRange}
+ */
+DateRange.parseRange = function ($xml) {
+    var from = parseDateRangeElem($xml.children("from"));
     var toElem = $xml.children("to");
-    var baseEndDate = this.from;
+    var baseEndDate = from;
 
     if (toElem.length > 0) {
         baseEndDate = parseDateRangeElem(toElem);
     }
 
     // Add one day to the end date/time to make the range inclusive on both sides.
-    /** @type {Date} */
-    this.to = new Date(baseEndDate.getTime() + (24 * 60 * 60 * 1000));
+    var to = new Date(baseEndDate.getTime() + DAY_MS);
+    var override = (($xml.attr("override") || "").trim().toLowerCase() === "true");
 
-    /** @type {boolean} */
-    this.override = (($xml.attr("override") || "").trim().toLowerCase() === "true");
+    return new DateRange(from, to, override);
+}
+
+/**
+ * Parse a <weekOf> element.
+ * @param {JQuery} $xml 
+ * @returns 
+ */
+DateRange.parseWeekOf = function ($xml) {
+    var refDate = parseDateRangeElem($xml);
+    var nWeeks = parseInt($xml.attr("weeks"), 10) || 1;
+    var override = (($xml.attr("override") || "").trim().toLowerCase() === "true");
+    var adjustDays = refDate.getUTCDay();
+
+    /* As a special case, if the reference date happens to fall on a Sunday,
+     * push back the start by a week (so that the range always starts before the reference date).
+     */
+    if (adjustDays === 0) adjustDays = 7;
+
+    var startTs = refDate.getTime() - (adjustDays * DAY_MS);
+    var endTs = startTs + (nWeeks * 7 * DAY_MS);
+
+    return new DateRange(new Date(startTs), new Date(endTs), override);
 }
 
 /**
@@ -253,8 +296,12 @@ function parseEventElement ($xml) {
     var indefinite = ($xml.children("dates").attr("indefinite") || "").trim().toLowerCase() === "true";
 
     var dateRanges = $xml.find("dates>date").map(function (index, elem) {
-        return new DateRange($(elem));
+        return DateRange.parseRange($(elem));
     }).get();
+
+    $xml.find("dates>weekOf").each(function (index, elem) {
+        dateRanges.push(DateRange.parseWeekOf($(elem)));
+    });
 
     var altCostumes = HighlightedAttributeList.parse($xml, "costumes");
     var background = $xml.children("background").text() || null;
