@@ -354,9 +354,9 @@ function loadConfigFile () {
         } else {
             console.log("Alternate costumes enabled");
 
-            DEFAULT_COSTUME_SETS = new Set($xml.children('default-costume-set').map(function (index, $elem) {
+            DEFAULT_COSTUME_SETS = new Set($xml.find('default-costume-set').map(function (index, $elem) {
                 return $elem.text();
-            }));
+            }).get());
 
             DEFAULT_COSTUME_SETS.forEach(function (setId) {
                 console.log("Added default alternate costume set: " + setId);
@@ -374,9 +374,9 @@ function loadConfigFile () {
             });
         }
 
-        FORCE_EVENTS = new Set($xml.children("event").map(function (index, $elem) {
-            return $elem.text();
-        }));
+        FORCE_EVENTS = new Set($xml.find("event").map(function (index, elem) {
+            return $(elem).text();
+        }).get());
         
         COLLECTIBLES_ENABLED = false;
         COLLECTIBLES_UNLOCKED = false;

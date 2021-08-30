@@ -157,7 +157,7 @@ var sortingOptionsMap = {
     target: sortOpponentsByMostTargeted(),
     oldest: sortOpponentsByMultipleFields(["release", "-listingIndex"]),
     newest: sortOpponentsByMultipleFields(["-release", "listingIndex"]),
-    event: sortEventOpponents(),
+    event: sortEventOpponents,
 };
 var groupCreditsShown = false;
 
@@ -823,6 +823,13 @@ function showIndividualSelectionScreen() {
         updateIndividualSelectSort();
     }
 
+    if (sortingMode === "event") {
+        /* Event sorting is a special case, since it might be set from event.js.
+         * We only need to update the dropdown box, though.
+         */
+        setSortingMode("event", true);
+    }
+
     updateIndividualSelectVisibility(true);
 
     /* Make sure the user doesn't have target-count sorting set if
@@ -859,7 +866,9 @@ function toggleIndividualSelectView() {
     individualSelectTesting = !individualSelectTesting;
 
     /* Switch to the default sort mode for the selected view. */
-    if (individualSelectTesting) {
+    if (activeGameEvents.length > 0) {
+        setSortingMode("event");
+    } else if (individualSelectTesting) {
         setSortingMode("-lastUpdated");
     } else {
         setSortingMode("listingIndex");
@@ -1154,13 +1163,14 @@ function loadDefaultFillSuggestions () {
                 return false;
             }
 
-            if (individualSelectTesting && opp.status !== "testing") {
-                return false;
+            if (!individualSelectTesting) {
+                return !opp.status && !isCharacterUsed(opp);
+            } else {
+                return (opp.status === "testing") && !isCharacterUsed(opp);
             }
-
-            return !isCharacterUsed(opp);
         });
 
+        var fillPlayers = [];
         for (var i = fillPlayers.length; i < players.length-1; i++) {
             if (possiblePicks.length === 0) break;
             /* select random opponent */
@@ -1720,33 +1730,27 @@ function sortTestingOpponents(opp1, opp2) {
  * @param {Opponent} opp1 
  * @param {Opponent} opp2 
  */
-function sortEventOpponents() {
-    return function (opp1, opp2) {
-        if (opp1.hasDefaultCostume && opp2.hasDefaultCostume) {
-            return 0;
-        } else if (opp1.hasDefaultCostume) {
-            return -1;
-        } else if (opp2.hasDefaultCostume) {
+function sortEventOpponents(opp1, opp2) {
+    var scores = [opp1, opp2].map(function (opp) {
+        if (opp.hasDefaultCostume) {
+            return 2;
+        } else if (opp.matchesEventTag) {
             return 1;
-        } else {    
-            if (opp1.matchesEventTag && opp2.matchesEventTag) {
-                return 0;
-            } else if (opp1.matchesEventTag) {
-                return -1;
-            } else if (opp2.matchesEventTag) {
-                return 1;
-            } else {
-                return 0;
-            }
+        } else {
+            return 0;
         }
-    }
+    });
+
+    return scores[1] - scores[0];
 }
 
-function setSortingMode(mode) {
-    sortingMode = mode;
+function setSortingMode(mode, viewOnly) {
     // change the dropdown text to the selected option
     $("#sort-dropdown-selection").html($sortingOptionsItems.filter(function() { return $(this).data('value') == mode; }).html()); 
-    updateIndividualSelectSort();
+    if (!viewOnly) {
+        sortingMode = mode;
+        updateIndividualSelectSort();
+    }
 }
 
 /** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */

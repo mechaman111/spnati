@@ -110,6 +110,18 @@ GameEvent.prototype.isActiveDate = function (queryDate) {
     }
 }
 
+/**
+ * Load a list of simple text elements from an XML JQuery object as a Set.
+ * @param {JQuery} $xml 
+ * @param {string} selector 
+ * @returns {Set<string>}
+ */
+function loadChildSet ($xml, selector) {
+    return new Set($xml.find(selector).map(function (index, elem) {
+        return $(elem).text();
+    }).get());
+}
+
 /** @returns {GameEvent} */
 function parseEventElement ($xml) {
     var id = $xml.attr("id");
@@ -118,21 +130,12 @@ function parseEventElement ($xml) {
 
     var dateRanges = $xml.children("dates>date").map(function (index, $elem) {
         return new DateRange($elem);
-    });
+    }).get();
 
-    var altCostumes = new Set($xml.children("costume-sets>set").map(function (index, $elem) {
-        return $elem.text();
-    }));
-
+    var altCostumes = loadChildSet($xml, "costume-sets>set");
     var background = $xml.children("background").text() || null;
-
-    var candyImages = new Set($xml.children("candy>path").map(function (index, $elem) {
-        return $elem.text();
-    }));
-
-    var fillTags = new Set($xml.children("fill>tag").map(function (index, $elem) {
-        return $elem.text();
-    }));
+    var candyImages = loadChildSet($xml, "candy>path");
+    var fillTags = loadChildSet($xml, "fill>tag");
 
     return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags);
 }
@@ -142,8 +145,8 @@ function parseEventElement ($xml) {
  */
 function loadEventData () {
     return fetchXML("events.xml").then(function ($xml) {
-        var events = $xml.children("events>event").map(function (index, $elem) {
-            return parseEventElement($elem);
+        var events = $xml.children("events>event").map(function (index, elem) {
+            return parseEventElement($(elem));
         });
 
         /** @type {Set<string>} */
@@ -174,14 +177,14 @@ function loadEventData () {
             fillTagSet = new Set();
 
             activeGameEvents.forEach(function (event) {
-                event.altCostumes.forEach(function (v) {
-                    alternateCostumeSets[v.setId] = true;
+                event.altCostumes.forEach(function (setId) {
+                    alternateCostumeSets[setId] = true;
 
-                    if (v.setId == "all") {
+                    if (setId == "all") {
                         console.log("[" + event.id + "]" + " Activating all costume sets.");
                     } else {
-                        console.log("[" + event.id + "]" + " Activating costume set " + v.setId + ".");
-                        DEFAULT_COSTUME_SETS.add(v.setId);
+                        console.log("[" + event.id + "]" + " Activating costume set " + setId + ".");
+                        DEFAULT_COSTUME_SETS.add(setId);
                     }
                 });
 
@@ -207,15 +210,15 @@ function loadEventData () {
                 eventFillTags.push(tag);
             });
 
-            CANDY_LIST = [];
-
-            console.log("Event Candy Images:")
-            candySet.forEach(function (path) {
-                console.log("    * " + path);
-                CANDY_LIST.push(path);
-            });
-
-            if (CANDY_LIST.length > 0) {
+            if (candySet.size > 0) {
+                CANDY_LIST = [];
+    
+                console.log("Event Candy Images:")
+                candySet.forEach(function (path) {
+                    console.log("    * " + path);
+                    CANDY_LIST.push(path);
+                });
+    
                 selectTitleCandy();
             }
 
