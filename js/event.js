@@ -275,7 +275,7 @@ function loadEventData () {
     eventCharacterSettings = HighlightedAttributeList.empty();
 
     return fetchXML("events.xml").then(function ($xml) {
-        var events = $xml.children("event").map(function (index, elem) {
+        var events = $xml.find("event").map(function (index, elem) {
             return parseEventElement($(elem));
         }).get();
 
@@ -284,6 +284,7 @@ function loadEventData () {
 
         for (let i = 0; i < events.length; i++) {
             let event = events[i];
+
             if (FORCE_EVENTS.has(event.id) && !activeIds.has(event.id)) {
                 console.log("Force activating event: " + event.name);
                 activeGameEvents.push(event);
@@ -293,7 +294,6 @@ function loadEventData () {
                     console.log("Activating event: " + event.name);
                     activeGameEvents.push(event);
                     activeIds.add(event.id);
-                    break;
                 }
             }
         }
