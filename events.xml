@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<events>
+    <!-- Note: Event IDs must be unique. -->
+    <event id="summer">
+        <!--
+            This is a human-friendly name for the event.
+            The game reads this, but doesn't currently use it in any way.
+            In the future, it could be used for things like an "Upcoming Events" screen,
+            event banners, and so on.
+        -->
+        <name>Summer Event</name>
+
+        <!--
+            Event Dates:
+            Events can be configured to automatically begin and end on certain dates by adding
+            the <dates> element.
+
+            The <dates> element can contain <date> elements that specify each scheduled date
+            range that the event will activate on.
+            Multiple date ranges can be specified (for example, for events that change dates across different years).
+
+            Events without any <dates> listed can only be activated manually, by editing
+            config.xml and/or prod-config.xml.
+        -->
+        <dates>
+            <date>
+                <!-- 
+                    The <from> and <to> elements specify the start and end dates of the event, respectively.
+                    The month and day must both be specified.
+
+                    The year is optional; if the year is omitted, the event is assumed to repeat every year
+                    at the same month and day.
+                    
+                    Events begin and end at midnight UTC, and the end date itself is included as part of the date range.
+
+                    This particular event is scheduled every year, lasting the entire month of August.
+
+                    The end date of an event can also be omitted; the event is then assumed to last for exactly
+                    one day.
+                -->
+                <from month="8" day="1" />
+                <to month="8" day="31" />
+            </date>
+
+            <date override="true">
+                <!-- 
+                    Repeating date ranges and year-specific date ranges aren't mutually exclusive.
+                    For example, a "rerun" of an event outside of the usual repeating dates can be scheduled
+                    by adding another, one-shot date range with years specified.
+
+                    Additionally, adding `override="true"` to a date range will cause that date range
+                    to override other date ranges for that year.
+
+                    To be specific: when a date range is marked as an override, it will take priority
+                    over all other date ranges for that year (and that year only).
+                    Other date ranges not marked as overrides will not be checked during years where
+                    overrides are scheduled.
+
+                    Multiple override ranges can be listed (either for different years, or for the same year).
+
+                    This can be used to reschedule, shorten, or lengthen an event during a particular year.
+
+                    This override, for example, shortens the 2022 Summer Event to only last two weeks,
+                    instead of the entire month.
+                -->
+                <from month="8" day="1" />
+                <to month="8" day="14" />
+            </date>
+
+            <date override="true">
+                <!-- This particular override reschedules the 2023 Summer Event to July, instead of August. -->
+                <from month="7" day="1" />
+                <to month="7" day="31" />
+            </date>
+        </dates>
+
+        <!--
+            This specifies a default background to use during the event.
+            Only one default background can be specified per event.
+
+            Note that if two or more different events happen to overlap in time, then the game will randomly
+            choose a default background from one of the overlapping events upon each startup.
+        -->
+        <background>tiki bar</background>
+
+        <!--
+            This specifies a list of (possibly multiple) costume sets to enable during the event.
+            Specifying "all" will enable all costume sets during the event.
+            
+            Characters who have event costumes from these sets will automatically wear them by default.
+            
+            Characters with multiple event costumes from the same set (or who have multiple enabled costumes due to overlapping events)
+            will randomly select one to use by default when the game is loaded.
+
+            Characters with event costumes will also be shifted to the top of the roster by default
+            during events (using a special Event sorting mode), and will also be available as
+            random prefill characters.
+        -->
+        <costume-sets>
+            <set>summer</set>
+        </costume-sets>
+
+        <!--
+            This specifies a list of (possibly multiple) character tags to highlight during the event.
+
+            Characters with these tags will be moved higher in the roster (below characters with event costumes,
+            but above everyone else) when using the Event sorting mode, and will also be available as
+            random prefill characters.
+
+            Note that this feature only looks at base character tags: since tags from alternate costumes
+            aren't loaded until the character themselves is selected and fully loaded, these filters
+            cannot highlight tags that are listed as part of character alternate costumes.
+
+            (To be specific, you can only filter against tags that work in the selection screen search menu.
+            This excludes tags from alternate costumes as well as tags that are added via dialogue cases.)
+        -->
+        <fill>
+            <tag>summer_event_featured</tag>
+        </fill>
+
+        <!--
+            This specifies a list of candy images to use during the event.
+            Each <path> element should contain a relative path to an image from the `opponents/` folder,
+            like the candy image paths found in `spniTitle.js`.
+
+            These images will completely replace the default candy images during the event.
+            However, if no candy images are specified for an event, then the default images will be used instead.
+
+            If multiple overlapping events are active, all of their candy images will be combined
+            into a single large pool of images to randomly draw from.
+        -->
+        <candy>
+            <path>reskins/chara_dreemurr_summer/0-devious.png</path>
+            <path>reskins/chara_dreemurr_summer/0-happy.png</path>
+            <path>reskins/chara_dreemurr_summer/0-rigid.png</path>
+            <path>reskins/chara_dreemurr_summer/0-thinking.png</path>
+            <path>reskins/ignatz_sunshiny_assassin/0-determination.png</path>
+            <path>reskins/ignatz_sunshiny_assassin/0-friendly.png</path>
+            <path>reskins/ignatz_sunshiny_assassin/0-stripping+.png</path>
+            <path>reskins/ignatz_sunshiny_assassin/0-fearthedeer.png</path>
+            <path>reskins/juri_summer/0-calm.png</path>
+            <path>reskins/juri_summer/0-horny.png</path>
+            <path>reskins/juri_summer/1-excited.png</path>
+            <path>reskins/juri_summer/1-interested.png</path>
+            <path>reskins/laevatein_bonfires_blaze/0-sceptical.png</path>
+            <path>reskins/laevatein_bonfires_blaze/0-unsure.png</path>
+            <path>reskins/laevatein_bonfires_blaze/0-default.png</path>
+            <path>reskins/laevatein_bonfires_blaze/0-unamused.png</path>
+            <path>reskins/leonie_relentless_rays/0-stretch-alt.png</path>
+            <path>reskins/leonie_relentless_rays/1-after.png</path>
+            <path>reskins/leonie_relentless_rays/1-flustered.png</path>
+            <path>reskins/leonie_relentless_rays/1-pondering.png</path>
+            <path>reskins/may_summer/0-ready.png</path>
+            <path>reskins/may_summer/0-oopsy.png</path>
+            <path>reskins/may_summer/0-calm.png</path>
+            <path>reskins/may_summer/0-cute.png</path>
+            <path>reskins/pyrrha_summer_maiden/0-happy.png</path>
+            <path>reskins/pyrrha_summer_maiden/1-stripped.png</path>
+            <path>reskins/pyrrha_summer_maiden/3-stripping.png</path>
+            <path>reskins/pyrrha_summer_maiden/4-encourage.png</path>
+            <path>reskins/summertime_ryuji/0-cocky.png</path>
+            <path>reskins/summertime_ryuji/1-cheerful.png</path>
+            <path>reskins/summertime_ryuji/2-startled.png</path>
+            <path>reskins/summertime_ryuji/3-awkward.png</path>
+            <path>reskins/swimsuit_sheena/0-calm.png</path>
+            <path>reskins/swimsuit_sheena/1-excited.png</path>
+            <path>reskins/swimsuit_sheena/2-interested.png</path>
+            <path>reskins/swimsuit_sheena/3-sulky.png</path>
+            <path>reskins/wikipe-tan_summer/0-flirt.png</path>
+            <path>reskins/wikipe-tan_summer/1-smirk.png</path>
+            <path>reskins/wikipe-tan_summer/2-casual.png</path>
+            <path>reskins/wikipe-tan_summer/4-neutral.png</path>
+            <path>reskins/yshtola_scion_vacationer/0-coy.png</path>
+            <path>reskins/yshtola_scion_vacationer/0-delighted.png</path>
+            <path>reskins/yshtola_scion_vacationer/0-calm.png</path>
+            <path>reskins/yshtola_scion_vacationer/0-smug.png</path>
+            <path>reskins/summer_larachel/0-calm.png</path>
+            <path>reskins/summer_larachel/1-confident.png</path>
+            <path>reskins/summer_larachel/2-calm.png</path>
+            <path>reskins/summer_larachel/3-confident.png</path>
+            <path>reskins/nugi-chan_bikini/0-select.png</path>
+            <path>reskins/nugi-chan_bikini/1-loss.png</path>
+            <path>reskins/nugi-chan_bikini/2-embarrassed.png</path>
+            <path>reskins/nugi-chan_bikini/3-interested.png</path>
+            <path>reskins/estelle_refreshing_dress/0-calm.png</path>
+            <path>reskins/estelle_refreshing_dress/1-strip.png</path>
+            <path>reskins/estelle_refreshing_dress/2-happy.png</path>
+            <path>reskins/estelle_refreshing_dress/2-after.png</path>
+            <path>reskins/zizou_summer/0-appreciative.png</path>
+            <path>reskins/zizou_summer/0-victory.png</path>
+            <path>reskins/zizou_summer/0-angry.png</path>
+            <path>reskins/zizou_summer/0-awkward.png</path>
+            <path>reskins/summertime_sayaka/0-happy.png</path>
+            <path>reskins/summertime_sayaka/1-calm.png</path>
+            <path>reskins/summertime_sayaka/2-bored.png</path>
+            <path>reskins/summertime_sayaka/3-awkward.png</path>
+        </candy>
+    </event>
+</events>
