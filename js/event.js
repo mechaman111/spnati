@@ -166,8 +166,9 @@ HighlightedAttributeList.merge = function (lists) {
  * @param {HighlightedAttributeList} tags
  * @param {Set<string>} includeStatuses
  * @param {HighlightedAttributeList} characters
+ * @param {boolean} indefinite
  */
-function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags, includeStatuses, characters) {
+function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags, includeStatuses, characters, indefinite) {
     /** @type {string} */
     this.id = id;
 
@@ -194,6 +195,12 @@ function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags
 
     /** @type {HighlightedAttributeList} */
     this.characters = characters;
+
+    /** @type {boolean} */
+    this.indefinite = indefinite;
+
+    /** @type {boolean} */
+    this.forced = false;
 }
 
 /**
@@ -221,22 +228,10 @@ function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags
 
 /**
  * 
- * @param {Date} queryDate 
  * @returns {boolean}
  */
-GameEvent.prototype.isActiveDate = function (queryDate) {
-    return this.getActiveRanges(queryDate).length > 0;
-}
-
-/**
- * 
- * @param {Date} queryDate 
- * @returns {Date?}
- */
-GameEvent.prototype.getEndDate = function (queryDate) {
-    var endDates = this.getActiveRanges(queryDate).map(function (range) { return range.to; });
-    endDates.sort(function (a, b) { return a.getTime() - b.getTime(); });
-    return endDates.pop();
+GameEvent.prototype.isActive = function () {
+    return this.forced || this.indefinite || this.getActiveRanges(new Date()).length > 0;
 }
 
 /** @returns {GameEvent} */
@@ -254,8 +249,8 @@ function parseEventElement ($xml) {
     }
 
     var id = $xml.attr("id");
-
     var name = $xml.children("name").text() || null;
+    var indefinite = ($xml.children("dates").attr("indefinite") || "").trim().toLowerCase() === "true";
 
     var dateRanges = $xml.find("dates>date").map(function (index, elem) {
         return new DateRange($(elem));
@@ -268,7 +263,7 @@ function parseEventElement ($xml) {
     var includeStatuses = loadChildSet($xml, "include-status");
     var characters = HighlightedAttributeList.parse($xml, "character");
 
-    return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags, includeStatuses, characters);
+    return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags, includeStatuses, characters, indefinite);
 }
 
 /**
@@ -286,7 +281,6 @@ function loadEventData () {
 
         /** @type {Set<string>} */
         var activeIds = new Set();
-        var curDate = new Date();
 
         for (let i = 0; i < events.length; i++) {
             let event = events[i];
@@ -295,7 +289,7 @@ function loadEventData () {
                 activeGameEvents.push(event);
                 activeIds.add(event.id);
             } else if (FORCE_EVENTS.size == 0) {
-                if (event.isActiveDate(curDate) && !activeIds.has(event.id)) {
+                if (event.isActive() && !activeIds.has(event.id)) {
                     console.log("Activating event: " + event.name);
                     activeGameEvents.push(event);
                     activeIds.add(event.id);
