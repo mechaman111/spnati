@@ -841,7 +841,18 @@ namespace SPNATI_Character_Editor
 				string path = GetRelativeImagePath(character, sprite.Src);
 				if (!string.IsNullOrEmpty(path))
 				{
-					unusedImages.Remove(path);
+					if (path.Substring(0, 1) != "#")
+					{
+						unusedImages.Remove(path);
+					}
+					else
+                    {
+						// mark as used for all layers if cross-stage
+						for (int i = 0; i <= character.Layers + 2; i++)
+                        {
+							unusedImages.Remove(i + path.Substring(1));
+						}
+                    }
 				}
 			}
 
@@ -854,7 +865,18 @@ namespace SPNATI_Character_Editor
 						string path = GetRelativeImagePath(character, kf.Src);
 						if (!string.IsNullOrEmpty(path))
 						{
-							unusedImages.Remove(path);
+							if (path.Substring(0, 1) != "#")
+							{
+								unusedImages.Remove(path);
+							}
+							else
+							{
+								// mark as used for all layers if cross-stage
+								for (int i = 0; i <= character.Layers + 2; i++)
+								{
+									unusedImages.Remove(i + path.Substring(1));
+								}
+							}
 						}
 					}
 				}
