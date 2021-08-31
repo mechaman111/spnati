@@ -1185,12 +1185,11 @@ OpponentSelectionCard.prototype.isVisible = function (testingView, ignoreFilter)
          * updated within the last TESTING_MAX_AGE and those targeted
          * by selected testing opponents with 5+ lines.
          * 
-         * Additionally, if an event is active, include opponents 
-         * with `testing` status who have event costumes or who match event tags,
-         * ignoring staleness.
+         * Additionally, if an event is active, ignore staleness for
+         * event characters on Testing.
          */
 
-        if (status === "testing" && (this.opponent.hasDefaultCostume || this.opponent.matchesEventTag)) {
+        if (status === "testing" && this.opponent.event_character) {
             return true;
         }
 

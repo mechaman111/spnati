@@ -22,6 +22,11 @@ var OVERRIDE_EVENTS = new Set();
 /** @type {GameEvent[]} */
 var activeGameEvents = [];
 
+/** 
+ * Set to true if any event has customized partitioning or sort order.
+ * @type {boolean} */
+var eventSortingActive = false;
+
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 var $announcementDropdown = $("#title-announcement-dropdown");
@@ -657,8 +662,6 @@ function loadEventData () {
 
             eventTagList = [];
             eventTagSettings.ids.forEach(function (tag) { eventTagList.push(tag); });
-
-            sortingMode = "event";
         }
     });
 }

@@ -145,12 +145,12 @@ var individualPage = 0;
 var groupPage = 0;
 var chosenGender = -1;
 var chosenGroupGender = -1;
-var sortingMode = "listingIndex";
+var sortingMode = "featured";
 var sortingOptionsMap = {
     target: sortOpponentsByMostTargeted(),
     oldest: sortOpponentsByMultipleFields(["release", "-listingIndex"]),
     newest: sortOpponentsByMultipleFields(["-release", "listingIndex"]),
-    event: sortOpponentsByMultipleFields(["-event_partition", "-event_sort_order", "listingIndex"]),
+    featured: sortOpponentsByMultipleFields(["-event_partition", "-event_sort_order", "listingIndex"]),
 };
 var groupCreditsShown = false;
 
@@ -689,7 +689,7 @@ function updateIndividualSelectSort() {
         loadedOpponents.sort(sortOpponentsByMultipleFields(sortingMode.split(/\s+/)));
     }
     
-    var testingFirst = individualSelectTesting && (sortingMode === "listingIndex" || sortingMode === "-lastUpdated");
+    var testingFirst = individualSelectTesting && (sortingMode === "featured" || sortingMode === "-lastUpdated");
     
     if (testingFirst) {
         /*
@@ -701,16 +701,16 @@ function updateIndividualSelectSort() {
 
     individualSelectSeparatorIndices = [];
     var cutFn
-    /* Separate (normally-visible) Testing from other types if they come before others in Testing view */
-        = testingFirst                  ? function(opp) { return (opp.status !== "testing" || isStaleOnTesting(opp)); }
+    /* Separate (normally-visible) Testing from other types if they come before others in Testing view, while still respecting event partitioning if set */
+        = testingFirst                  ? function (opp) { return opp.event_partition ? opp.event_partition : (opp.status !== "testing" || isStaleOnTesting(opp)); }
     /* Separate out characters with no data if using Recently Updated sort */
         : sortingMode == "-lastUpdated" ? function(opp) { return opp.lastUpdated === 0; }
     /* Separate out characters with no targets if using Targeted sort */
         : sortingMode == "target"       ? function(opp) { return opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined) === 0; }
     /* Separate characters with a release number from characters without one */
         : sortingMode == "newest" || sortingMode == "oldest" ? function(opp) { return opp.release === undefined ? -1 : opp.release == Infinity ? 1 : 0; }
-    /* Separate characters according to event settings */
-        : sortingMode == "event"        ? function (opp) { return opp.event_partition; }
+    /* Separate characters according to event settings (if any are active) */
+        : sortingMode == "featured"        ? function (opp) { return opp.event_partition; }
         : null;
 
     var currentPartition = undefined;
@@ -816,13 +816,6 @@ function showIndividualSelectionScreen() {
         updateIndividualSelectSort();
     }
 
-    if (sortingMode === "event") {
-        /* Event sorting is a special case, since it might be set from event.js.
-         * We only need to update the dropdown box, though.
-         */
-        setSortingMode("event", true);
-    }
-
     updateIndividualSelectVisibility(true);
 
     /* Make sure the user doesn't have target-count sorting set if
@@ -831,21 +824,10 @@ function showIndividualSelectionScreen() {
     if (players.countTrue() <= 1) {
         $talkedToOption.hide();
         if (sortingMode === "target") {
-            setSortingMode("listingIndex");
+            setSortingMode("featured");
         }
     } else {
         $talkedToOption.show();
-    }
-
-    /* Make sure the event sort option is hidden if no events are active. */
-    var $eventOption = $('.sort-dropdown-options>li:has(a[data-value=event])');
-    if (activeGameEvents.length == 0) {
-        $eventOption.hide();
-        if (sortingMode == "event") {
-            setSortingMode("listingIndex");
-        }
-    } else {
-        $eventOption.show();
     }
 
     updateIndividualEpilogueBadges();
@@ -859,12 +841,10 @@ function toggleIndividualSelectView() {
     individualSelectTesting = !individualSelectTesting;
 
     /* Switch to the default sort mode for the selected view. */
-    if (activeGameEvents.length > 0) {
-        setSortingMode("event");
-    } else if (individualSelectTesting) {
+    if (individualSelectTesting) {
         setSortingMode("-lastUpdated");
     } else {
-        setSortingMode("listingIndex");
+        setSortingMode("featured");
     }
 
     updateSelectionVisuals();
@@ -1679,15 +1659,26 @@ function isStaleOnTesting(opp) {
 
 /**
  * Special callback for Arrays.sort to sort an array of opponents using the
- * Testing-specific rules. The sort order produced by this callback is:
+ * Testing-specific rules.
+ * By default, the sort order produced by this callback is:
  * - highlight="sponsorship"
  * - status="testing"
  * - SEPARATOR GOES HERE
  * - highlight="sponsorship", hidden due to lack of updates
  * - status="testing", hidden due to lack of updates
  * - everything else
+ * If any custom event sorting is active, then those settings take priority
+ * over these rules (but testing opponents still come first).
  */
 function sortTestingOpponents(opp1, opp2) {
+    if (eventSortingActive) {
+        if (opp1.status === "testing" && opp2.status !== "testing") return -1;
+        if (opp1.status !== "testing" && opp2.status === "testing") return 1;
+
+        if (opp1.event_partition !== opp2.event_partition) return opp2.event_partition - opp1.event_partition;
+        if (opp1.event_sort_order !== opp2.event_sort_order) return opp2.event_sort_order - opp1.event_sort_order;
+    }
+
     var scores = [opp1, opp2].map(function (opp) {
         if (opp.status !== "testing") return 0;
         
@@ -1709,13 +1700,11 @@ function sortTestingOpponents(opp1, opp2) {
     return scores[1] - scores[0];
 }
 
-function setSortingMode(mode, viewOnly) {
+function setSortingMode(mode) {
+    sortingMode = mode;
     // change the dropdown text to the selected option
     $("#sort-dropdown-selection").html($sortingOptionsItems.filter(function() { return $(this).data('value') == mode; }).html()); 
-    if (!viewOnly) {
-        sortingMode = mode;
-        updateIndividualSelectSort();
-    }
+    updateIndividualSelectSort();
 }
 
 /** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */

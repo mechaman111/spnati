@@ -499,7 +499,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.alternate_costumes = [];
     this.selection_image = this.folder + this.image;
 
-    this.event_default_costume = null;
+    this.event_character = eventCharacterSettings.ids.has(id);
     this.event_sort_order = (eventCharacterSettings.sorting[id] !== undefined) ? eventCharacterSettings.sorting[id] : 0;
     this.event_partition = (eventCharacterSettings.partitions[id] !== undefined) ? eventCharacterSettings.partitions[id] : 0;
     this.force_prefill = eventCharacterSettings.prefills[id];
@@ -512,6 +512,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     eventTagList.some(function (tag) {
         if (this.searchTags.indexOf(tag) >= 0) {
             this.matchesEventTag = true;
+            this.event_character = true;
             if (eventTagSettings.highlights[tag] && !eventCharacterSettings.highlights[id]) {
                 this.highlightStatus = eventTagSettings.highlights[tag];
             }
@@ -536,6 +537,8 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
         }
         return false;
     }.bind(this));
+
+    if (this.event_sort_order !== 0 || this.event_partition !== 0) eventSortingActive = true;
 
     if (!ALT_COSTUMES_ENABLED) return;
 
@@ -571,18 +574,21 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
         this.selection_image = selectedDefault['folder'] + selectedDefault['image'];
         this.selectAlternateCostume(selectedDefault);
 
-        if (activeGameEvents.length > 0) {
-            this.event_default_costume = selectedDefault;
+        if (eventCostumeSettings.ids.has(costumeSet)) {
+            this.event_character = true;
+            
             if (eventCostumeSettings.highlights[costumeSet] && !eventCharacterSettings.highlights[id]) {
                 this.highlightStatus = eventCostumeSettings.highlights[costumeSet];
             }
     
             if (eventCostumeSettings.sorting[costumeSet] && eventCharacterSettings.sorting[id] === undefined) {
                 this.event_sort_order = eventCostumeSettings.sorting[costumeSet];
+                eventSortingActive = true;
             }
     
             if (eventCharacterSettings.partitions[costumeSet] === undefined) {
                 this.event_partition = (eventCostumeSettings.partitions[costumeSet] !== undefined) ? eventCostumeSettings.partitions[costumeSet] : 3;
+                eventSortingActive = true;
             }
 
             if (eventCharacterSettings.prefills[id] === undefined) {
