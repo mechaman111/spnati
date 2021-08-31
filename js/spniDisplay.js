@@ -726,7 +726,7 @@ OpponentDisplay.prototype.update = function(player) {
         /* Configure z-indices */
         this.imageArea.css('z-index', player.z_index);
         this.bubble.removeClass('over under').addClass(chosenState.dialogue_layering || player.dialogue_layering);
-        this.dialogue.removeClass('small smaller').addClass(chosenState.fontSize);
+        this.dialogue.removeClass('small smaller').addClass(chosenState.fontSize || player.fontSize);
     }
     
     if (showDebug && !inRollback()) {
