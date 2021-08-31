@@ -160,7 +160,7 @@ namespace SPNATI_Character_Editor
 		/// <summary>
 		/// Speech bubble position relative to image
 		/// </summary>
-		[DefaultValue(DialogueLayer.over)]
+		[DefaultValue(DialogueLayer.under)]
 		[XmlElement("dialogue-layer")]
 		public DialogueLayer BubblePosition
 		{
@@ -277,8 +277,8 @@ namespace SPNATI_Character_Editor
 
 	public enum DialogueLayer
 	{
-		over,
-		under
+		under,
+		over
 	}
 
 	public enum FontSize
