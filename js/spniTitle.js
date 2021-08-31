@@ -505,7 +505,7 @@ function validateTitleScreen () {
         updateAnnouncementDropdown();
         showAnnouncements();
 
-        if (!curResortEvent || !curResortEvent.resort.checkCharacterThreshold()) {
+        if (curResortEvent && !curResortEvent.resort.checkCharacterThreshold()) {
             curResortEvent.resort.setFlag(false);
         }
     }

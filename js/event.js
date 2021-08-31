@@ -222,8 +222,9 @@ HighlightedAttributeList.merge = function (lists) {
  * 
  * @param {JQuery} header 
  * @param {JQuery} body 
+ * @param {number} threshold
  */
-function EventAnnouncement (header, body) {
+function EventAnnouncement (header, body, threshold) {
     /** @type {GameEvent?} */
     this.event = null;
 
@@ -232,6 +233,9 @@ function EventAnnouncement (header, body) {
 
     /** @type {JQuery} */
     this.body = body;
+
+    /** @type {number} */
+    this.threshold = threshold;
 }
 
 /**
@@ -242,8 +246,9 @@ function EventAnnouncement (header, body) {
 EventAnnouncement.parse = function ($xml) {
     var header = $xml.children("header").contents();
     var body = $xml.children("announce-body").contents();
+    var threshold = parseInt($xml.children("min-characters").text(), 10) || 0;
 
-    return new EventAnnouncement(header, body);
+    return new EventAnnouncement(header, body, threshold);
 }
 
 /**
@@ -256,12 +261,22 @@ EventAnnouncement.prototype.previouslyShown = function () {
 }
 
 /**
+ * Check whether the character threshold for this announcement has been met.
+ * @returns {boolean}
+ */
+EventAnnouncement.prototype.checkCharacterThreshold = function () {
+    return save.getPlayedCharacterSet().length >= this.threshold;
+}
+
+
+/**
  * Show this announcement.
  * @param {GameEvent} event
  */
 EventAnnouncement.prototype.show = function () {
-    save.setEventAnnouncementFlag(this.event, true);
+    if (!this.checkCharacterThreshold()) return;
 
+    save.setEventAnnouncementFlag(this.event, true);
     $("#event-announcement-header").contents().detach();
     $("#event-announcement-body").contents().detach();
 
@@ -351,7 +366,7 @@ ResortEventInfo.prototype.setEvent = function (event) {
  * @returns {boolean}
  */
 ResortEventInfo.prototype.checkCharacterThreshold = function () {
-    return save.getPlayedCharacterSet().length > 40;
+    return save.getPlayedCharacterSet().length >= 40;
 }
 
 /**
@@ -661,7 +676,7 @@ function showAnnouncements() {
 
 function updateAnnouncementDropdown () {
     var announceEvents = activeGameEvents.filter(function (event) {
-        return event.announcement;
+        return event.announcement && event.announcement.checkCharacterThreshold();
     });
     var dropdownButtons = [];
 
