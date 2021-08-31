@@ -1149,7 +1149,7 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
  */
 Opponent.prototype.loadXMLTriggers = function () {
     return new Promise(function (resolve) {
-        var $cases = this.xml.find('>behaviour>trigger>case:not([disabled="true"])');
+        var $cases = this.xml.find('>behaviour>trigger>case:not([disabled="1"])');
 
         var loadItemsTotal = $cases.length;
         if (loadItemsTotal == 0) {
