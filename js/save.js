@@ -583,12 +583,66 @@ Save.prototype.savePlayedCharacterSet = function (set) {
     this.setItem("playedCharacters", Object.keys(o));
 }
 
-Save.prototype.hasShownResortModal = function () {
-    return (this.getItem("resortModalShown") === RESORT_KEY);
+/**
+ * 
+ * @param {ResortEventInfo} resortInfo 
+ * @returns {boolean}
+ */
+Save.prototype.hasShownResortModal = function (resortInfo) {
+    var flagVal = resortInfo.season + "-" + resortInfo.year.toString();
+    return (this.getItem("resortModalShown") === flagVal);
 }
 
-Save.prototype.setResortModalFlag = function (val) {
-    this.setItem("resortModalShown", !!val ? RESORT_KEY : null);
+/**
+ * 
+ * @param {ResortEventInfo} resortInfo 
+ * @param {boolean} val
+ */
+Save.prototype.setResortModalFlag = function (resortInfo, val) {
+    var flagVal = resortInfo.season + "-" + resortInfo.year.toString();
+    this.setItem("resortModalShown", !!val ? flagVal : null);
+}
+
+/**
+ * 
+ * @param {GameEvent} event 
+ * @returns {[string, string]}
+ */
+function eventAnnouncementKV (event) {
+    /* The storage key for each announcement flag is derived from the event ID.
+     * For each announcement, we store the start year and month of the current event instance as the flag value.
+     * We consider the announcement to have been shown if the current event start time matches the stored start year and month.
+     * This allows announcements to work for events that have multiple active date ranges (such as repeating events).
+     * 
+     * If the event was manually activated, then it won't have a start time; in this case, we use the current start year and month.
+     * This has the downside of causing the announcement to pop up again if the month changes while the event is active, but
+     * that should be a relatively minor downside.
+     */
+    var eventStart = event.getStartDate() || new Date();
+    var key = "announcement." + event.id;
+    var value = eventStart.getUTCFullYear() + "/" + eventStart.getUTCMonth();
+
+    return [key, value];
+}
+
+/**
+ * Get whether an event announcement has been shown previously.
+ * @param {GameEvent} event 
+ * @returns {boolean}
+ */
+Save.prototype.hasShownEventAnnouncement = function (event) {
+    var kv = eventAnnouncementKV(event);
+    return (this.getItem(kv[0]) === kv[1]);
+}
+
+/**
+ * Set the 'shown' flag for an event announcement.
+ * @param {GameEvent} event 
+ * @param {boolean} val
+ */
+Save.prototype.setEventAnnouncementFlag = function (event, val) {
+    var kv = eventAnnouncementKV(event);
+    this.setItem(kv[0], !!val ? kv[1] : null);
 }
 
 var save = new Save();

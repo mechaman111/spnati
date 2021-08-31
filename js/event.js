@@ -10,7 +10,14 @@ var eventTagList = [];
 /** @type {HighlightedAttributeList} */
 var eventCharacterSettings = null;
 
+/** @type {GameEvent?} */
+var curResortEvent = null;
+
 const DAY_MS = 24 * 60 * 60 * 1000;
+
+var $announcementDropdown = $("#title-announcement-dropdown");
+var $titleResortButton = $("#title-resort-button");
+var $dropdownResortButton = $("#dropdown-resort-button");
 
 /**
  * Parse a child object of a date range element (a <from>, <to>, or <weekOf> element).
@@ -213,6 +220,164 @@ HighlightedAttributeList.merge = function (lists) {
 
 /**
  * 
+ * @param {JQuery} header 
+ * @param {JQuery} body 
+ */
+function EventAnnouncement (header, body) {
+    /** @type {GameEvent?} */
+    this.event = null;
+
+    /** @type {JQuery} */
+    this.header = header;
+
+    /** @type {JQuery} */
+    this.body = body;
+}
+
+/**
+ * 
+ * @param {JQuery} $xml 
+ * @returns {EventAnnouncement}
+ */
+EventAnnouncement.parse = function ($xml) {
+    var header = $xml.children("header").contents();
+    var body = $xml.children("announce-body").contents();
+
+    return new EventAnnouncement(header, body);
+}
+
+/**
+ * Get whether this announcement has been previously shown.
+ * @param {GameEvent} event
+ * @returns {boolean}
+ */
+EventAnnouncement.prototype.previouslyShown = function () {
+    return save.hasShownEventAnnouncement(this.event);
+}
+
+/**
+ * Show this announcement.
+ * @param {GameEvent} event
+ */
+EventAnnouncement.prototype.show = function () {
+    save.setEventAnnouncementFlag(this.event, true);
+
+    $("#event-announcement-header").contents().detach();
+    $("#event-announcement-body").contents().detach();
+
+    this.header.appendTo("#event-announcement-header");
+    this.body.appendTo("#event-announcement-body");
+
+    $eventAnnouncementModal.modal('show');
+}
+
+/**
+ * 
+ * @param {string} season 
+ * @param {string} link 
+ * @param {number} threshold
+ */
+function ResortEventInfo (season, link, threshold) {
+    /** @type {string} */
+    this.season = season;
+
+    /** @type {string} */
+    this.link = link;
+
+    /** @type {GameEvent?} */
+    this.event = null;
+
+    /** @type {number} */
+    this.threshold = threshold;
+
+    /** @type {number?} */
+    this.year = null;
+}
+
+/**
+ * 
+ * @param {JQuery} $xml 
+ * @returns {ResortEventInfo}
+ */
+ResortEventInfo.parse = function ($xml) {
+    var season = ($xml.children("season").text() || "auto").trim().toLowerCase();
+    var link = $xml.children("poll").text();
+    var threshold = parseInt($xml.children("min-characters").text(), 10) || 40;
+
+    return new ResortEventInfo(season, link, threshold);
+}
+
+/**
+ * 
+ * @param {GameEvent} event 
+ */
+ResortEventInfo.prototype.setEvent = function (event) {
+    var startDate = event.getStartDate() || new Date();
+
+    this.event = event;
+    this.year = startDate.getUTCFullYear();
+    if (!this.season || this.season === "auto") {
+        switch (startDate.getUTCMonth()) {
+        /* December - February */
+        case 11:
+        case 0:
+        case 1:
+            this.season = "winter";
+            break;
+        /* March - May */
+        case 2:
+        case 3:
+        case 4:
+            this.season = "spring";
+            break;
+        /* June - August */
+        case 5:
+        case 6:
+        case 7:
+            this.season = "summer";
+            break;
+        /* September - November */
+        case 8:
+        case 9:
+        case 10:
+            this.season = "autumn";
+            break;
+        }
+    }
+}
+
+/**
+ * Check whether the resort character threshold has been met.
+ * @returns {boolean}
+ */
+ResortEventInfo.prototype.checkCharacterThreshold = function () {
+    return save.getPlayedCharacterSet().length > 40;
+}
+
+/**
+ * Check whether the resort modal has previously been shown 
+ * @returns {boolean}
+ */
+ResortEventInfo.prototype.previouslyShown = function () {
+    return save.hasShownResortModal(this);
+}
+
+ResortEventInfo.prototype.setFlag = function (val) {
+    save.setResortModalFlag(this, val);
+}
+
+ResortEventInfo.prototype.show = function () {
+    if (!this.checkCharacterThreshold()) return;
+
+    $(".resort-label").text(this.season[0].toUpperCase() + this.season.substring(1) + " " + this.year.toString());
+    $(".resort-link-button").attr("href", this.link);
+    this.setFlag(true);
+
+    $resortModal.modal('show');
+}
+
+/**
+ * 
  * @param {string} id 
  * @param {string} name
  * @param {DateRange} dateRanges 
@@ -223,8 +388,10 @@ HighlightedAttributeList.merge = function (lists) {
  * @param {Set<string>} includeStatuses
  * @param {HighlightedAttributeList} characters
  * @param {boolean} indefinite
+ * @param {ResortEventInfo?} resort
+ * @param {EventAnnouncement?} announcement
  */
-function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags, includeStatuses, characters, indefinite) {
+function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags, includeStatuses, characters, indefinite, resort, announcement) {
     /** @type {string} */
     this.id = id;
 
@@ -257,6 +424,14 @@ function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags
 
     /** @type {boolean} */
     this.forced = false;
+
+    /** @type {ResortEventInfo?} */
+    this.resort = resort;
+    if (this.resort) this.resort.setEvent(this);
+
+    /** @type {EventAnnouncement?} */
+    this.announcement = announcement;
+    if (this.announcement) this.announcement.event = this;
 }
 
 /**
@@ -288,6 +463,22 @@ function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags
  */
 GameEvent.prototype.isActive = function () {
     return this.forced || this.indefinite || this.getActiveRanges(new Date()).length > 0;
+}
+
+/**
+ * Get the earliest start date of this event.
+ * If this event is not active or was manually activated, returns null.
+ * @returns {Date?}
+ */
+GameEvent.prototype.getStartDate = function () {
+    var activeRanges = this.getActiveRanges(new Date());
+    activeRanges.sort(function (a, b) { return a.from.getTime() - b.from.getTime(); });
+
+    if (!this.indefinite && activeRanges.length > 0) {
+        return activeRanges[0].from;
+    } else {
+        return null;
+    }
 }
 
 /** @returns {GameEvent} */
@@ -323,13 +514,28 @@ function parseEventElement ($xml) {
     var includeStatuses = loadChildSet($xml, "include-status");
     var characters = HighlightedAttributeList.parse($xml, "character");
 
-    return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags, includeStatuses, characters, indefinite);
+    var resortElem = $xml.children("resort");
+    var resortInfo = null;
+    if (resortElem.length > 0) {
+        resortInfo = ResortEventInfo.parse(resortElem);
+    }
+
+    var announceElem = $xml.children("announcement");
+    var announceInfo = null;
+    if (announceElem.length > 0) {
+        announceInfo = EventAnnouncement.parse(announceElem);
+    }
+
+    return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags, includeStatuses, characters, indefinite, resortInfo, announceInfo);
 }
 
 /**
  * @returns {Promise<void>}
  */
 function loadEventData () {
+    $resortModal.on("hidden.bs.modal", function () { showAnnouncements(); });
+    $eventAnnouncementModal.on("hidden.bs.modal", function () { showAnnouncements(); });
+
     eventCostumeSettings = HighlightedAttributeList.empty();
     eventTagSettings = HighlightedAttributeList.empty();
     eventCharacterSettings = HighlightedAttributeList.empty();
@@ -347,6 +553,7 @@ function loadEventData () {
 
             if (FORCE_EVENTS.has(event.id) && !activeIds.has(event.id)) {
                 console.log("Force activating event: " + event.name);
+                event.indefinite = true;
                 activeGameEvents.push(event);
                 activeIds.add(event.id);
             } else if (FORCE_EVENTS.size == 0) {
@@ -383,6 +590,11 @@ function loadEventData () {
                 costumeSettings.push(event.costumes);
                 tagSettings.push(event.tags);
                 characterSettings.push(event.characters);
+
+                if (event.resort && !curResortEvent) {
+                    console.log("[" + event.id + "] Activating resort mode.");
+                    curResortEvent = event;
+                }
             });
 
             if (candySet.size > 0) {
@@ -427,4 +639,82 @@ function loadEventData () {
             sortingMode = "event";
         }
     });
+}
+
+function showAnnouncements() {
+    /* If a resort is active, show that first. */
+    if (curResortEvent && !curResortEvent.resort.previouslyShown()) {
+        curResortEvent.resort.show();
+        return;
+    }
+
+    /* Otherwise show other event announcements. */
+    if (activeGameEvents.some(function (event) {
+        if (event.announcement && !event.announcement.previouslyShown()) {
+            event.announcement.show();
+            return true;
+        }
+        
+        return false;
+    })) return;
+}
+
+function updateAnnouncementDropdown () {
+    var announceEvents = activeGameEvents.filter(function (event) {
+        return event.announcement;
+    });
+    var dropdownButtons = [];
+
+    if (curResortEvent && curResortEvent.resort.checkCharacterThreshold()) {
+        if (announceEvents.length > 0) {
+            var liElem = document.createElement("li");
+            var aElem = document.createElement("a");
+
+            var headerText = (
+                curResortEvent.resort.season[0].toUpperCase() +
+                curResortEvent.resort.season.substring(1) + " " +
+                curResortEvent.resort.year.toString() +
+                " Re-Sort"
+            );
+
+            $(aElem)
+                .addClass("smooth-button red bordered announcement-dropdown-item")
+                .attr("a", "#")
+                .text(headerText)
+                .on("click", function (ev) { showResortModal(); })
+                .appendTo(liElem);
+
+            dropdownButtons.push(liElem);
+            $(".title-resort-button").hide();
+        } else {
+            $(".title-resort-button").show();
+        }
+    } else {
+        $(".title-resort-button").hide();
+    }
+
+    announceEvents.forEach(function (event) {
+        var liElem = document.createElement("li");
+        var aElem = document.createElement("a");
+
+        $(aElem)
+            .addClass("smooth-button red bordered announcement-dropdown-item")
+            .attr("a", "#")
+            .text(event.name)
+            .on("click", function (ev) { event.announcement.show(); })
+            .appendTo(liElem);
+
+        dropdownButtons.push(liElem);
+    });
+
+    if (dropdownButtons.length > 0) {
+        $(".announcement-dropdown-options").empty().append(dropdownButtons);
+        $(".title-announcement-dropdown").show();
+    } else {
+        $(".title-announcement-dropdown").hide();
+    }
+}
+
+function showResortModal () {
+    if (curResortEvent) curResortEvent.resort.show();
 }

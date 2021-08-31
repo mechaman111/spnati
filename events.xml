@@ -519,4 +519,85 @@
 
         <character highlight="new" prefill="default">may</character>
     </event>
+
+    <!--
+        This event defines a resort; the resort-specific data is contained in the <resort> section.
+
+        <season> specifies the season of the resort; aside from the actual name of the relevant season,
+        it can be omitted or set to "auto", to automatically determine it from the event start date.
+
+        For the purposes of determining the season of a resort,
+        Winter is December - February, Spring is March - May, Summer is June - August, and Autumn is September - November.
+        All of these ranges are inclusive.
+
+        <poll> specifies the link to the public poll for this resort; people will be linked there when
+        clicking on the "Roster Re-Sort Poll" button in the resort announcement dialog.
+
+        <min-characters> specifies the minimum number of played characters needed to show the resort dialog.
+    -->
+
+    <!--
+    <event id="resort">
+        <name>Resort</name>
+
+        <dates>
+            <date>
+                <from year="2021" month="8" day="21" />
+                <to year="2021" month="9" day="18" />
+            </date>
+        </dates>
+
+        <resort>
+            <season>auto</season>
+            <poll>https://forms.gle/KrJ6oxtGetWDbQoh9</poll>
+            <min-characters>40</min-characters>
+        </resort>
+    </event>
+    -->
+
+    <!--
+        This event includes an announcement that will pop up on screen when the player enters the selection screen,
+        similarly to the resort notification dialog (though without the played characters requirement).
+
+        Announcement headers and bodies can contain arbitrary HTML.
+        The `event-announcement-link` CSS class can be used for prominent button links
+        (similarly to the "Re-Sort Poll" button in the Resort modal).
+
+        Like the resort dialog, announcements will normally only be shown to the player once.
+        However, they can also be accessed via a dropdown on the title bar.
+
+        If a re-sort is active and other events have announcements, the re-sort dialog will be
+        displayed first (if the character threshold is met and the dialog has not been previously seen),
+        followed squentially by the other events' announcements, in file order (top of this file to the bottom).
+
+        If an active resort is the only available announcement, then the regular "Re-Sort Poll" button will
+        be shown on the title bar.
+        However, if a resort is active at the same time as another announcement, then the button to view the
+        re-sort poll dialog will instead be moved to the Announcements dropdown.
+    -->
+
+    <!--
+    <event id="announce-example">
+        <name>Announcement Example</name>
+
+        <dates>
+            <date>
+                <from year="2021" month="8" day="21" />
+                <to year="2021" month="9" day="18" />
+            </date>
+        </dates>
+
+        <announcement>
+            <header>Announcement Example</header>
+            <announce-body>
+                <p>This is an example announcement.</p>
+                <p>The body of an announcement can contain <i>arbitrary <span>HTML</span>.</i></p>
+
+                <a class="bordered smooth-button green event-announcement-link"
+                    target="_blank" rel="noreferrer"
+                    href="https://example.com">Example Announcement Link</a>
+            </announce-body>
+        </announcement>
+    </event>
+    -->
 </events>

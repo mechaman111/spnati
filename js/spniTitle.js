@@ -502,17 +502,11 @@ function validateTitleScreen () {
     if (USAGE_TRACKING === undefined) {
         showUsageTrackingModal();
     } else {
-        var playedCharacters = save.getPlayedCharacterSet();
+        updateAnnouncementDropdown();
+        showAnnouncements();
 
-        if (RESORT_KEY && playedCharacters.length >= 40) {
-            if (!save.hasShownResortModal()) {
-                showResortModal();
-            }
-            $(".title-resort-button").show();
-            save.setResortModalFlag(true);
-        } else {
-            $(".title-resort-button").hide();
-            save.setResortModalFlag(false);
+        if (!curResortEvent || !curResortEvent.resort.checkCharacterThreshold()) {
+            curResortEvent.resort.setFlag(false);
         }
     }
 }

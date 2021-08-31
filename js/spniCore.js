@@ -17,7 +17,6 @@ var ALT_COSTUMES_ENABLED = true;
 var DEFAULT_COSTUME_SETS = new Set();
 var USAGE_TRACKING = undefined;
 var SENTRY_INITIALIZED = false;
-var RESORT_KEY = null;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
@@ -111,6 +110,7 @@ $collectibleInfoModal = $('#collectibles-info-modal');
 $ioModal = $('#io-modal');
 $extrasModal = $('#extras-modal');
 $resortModal = $('#resort-modal');
+$eventAnnouncementModal = $('#event-announcement-modal');
 
 /* Screen State */
 $previousScreen = null;
@@ -196,12 +196,7 @@ function initialSetup () {
             $('.title-gallery-edge').css('visibility', 'hidden');
         }
         updateTitleGender();
-
-        if (RESORT_KEY && save.getPlayedCharacterSet().length >= 24) {
-            $(".title-resort-button").show();
-        } else {
-            $(".title-resort-button").hide();
-        }
+        updateAnnouncementDropdown();
     });
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
@@ -391,15 +386,6 @@ function loadConfigFile () {
             }
         } else {
             console.log("Collectibles disabled");
-        }
-        
-        var _resort_key = $xml.children('resort').text();
-        if (_resort_key && _resort_key.toLowerCase() !== 'false') {
-            console.log("Resort mode active, key: " + _resort_key);
-            RESORT_KEY = _resort_key;
-        } else {
-            RESORT_KEY = null;
-            console.log("Resort mode disabled.");
         }
 
         includedOpponentStatuses.online = true;
@@ -998,10 +984,6 @@ function showExtrasModal() {
 $('ul.character-status-toggle').on('click', 'a', function() {
     includedOpponentStatuses[$(this).parents('ul').data('status')] = $(this).data('value');
 });
-
-function showResortModal() {
-    $resortModal.modal('show');
-}
 
 /**********************************************************************
  *****                     Utility Functions                      *****
