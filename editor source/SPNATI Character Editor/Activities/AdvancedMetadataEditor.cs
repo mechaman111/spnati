@@ -16,6 +16,7 @@ namespace SPNATI_Character_Editor.Activities
 			InitializeComponent();
 			
 			cboDialogueLayer.Items.AddRange(Enum.GetValues(typeof(DialogueLayer)));
+			cboFontSize.Items.AddRange(Enum.GetValues(typeof(FontSize)));
 			ColCharacter.RecordType = typeof(Character);
 		}
 
@@ -37,6 +38,7 @@ namespace SPNATI_Character_Editor.Activities
 			valScale.Value = Math.Max(valScale.Minimum, Math.Min((decimal)_character.Metadata.Scale, valScale.Maximum));
 			valLayer.Value = _character.Metadata.Z;
 			cboDialogueLayer.SelectedItem = _character.Metadata.BubblePosition;
+			cboFontSize.SelectedItem = _character.Metadata.TextSize;
 			gridNicknames.Data = _character.Nicknames;
 			LoadNicknames();
 			styleControl.SetCharacter(_character);
@@ -62,6 +64,7 @@ namespace SPNATI_Character_Editor.Activities
 			gridNicknames.EndEdit();
 			_character.Metadata.Scale = (float)valScale.Value;
 			_character.Metadata.BubblePosition = (DialogueLayer)cboDialogueLayer.SelectedItem;
+			_character.Metadata.TextSize = (FontSize)cboFontSize.SelectedItem;
 			_character.Metadata.Z = (int)valLayer.Value;
 			gridLabels.Save(colLabelsStage);
 			SaveNicknames();

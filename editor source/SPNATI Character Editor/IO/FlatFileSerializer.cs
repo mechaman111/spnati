@@ -67,6 +67,7 @@ namespace SPNATI_Character_Editor
 			lines.Add("description=" + metadata.Description);
 			lines.Add("z-layer=" + metadata.Z);
 			lines.Add("dialogue-layer=" + metadata.BubblePosition);
+			lines.Add("font-size=" + metadata.TextSize);
 
 			lines.Add("");
 
@@ -925,6 +926,13 @@ namespace SPNATI_Character_Editor
 						if (Enum.TryParse(value, out pos))
 						{
 							character.Metadata.BubblePosition = pos;
+						}
+						break;
+					case "font-size":
+						FontSize size;
+						if (Enum.TryParse(value, out size))
+						{
+							character.Metadata.TextSize = size;
 						}
 						break;
 					case "start":

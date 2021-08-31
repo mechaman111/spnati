@@ -168,6 +168,17 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
+		/// <summary>
+		/// Size of speech bubble text
+		/// </summary>
+		[DefaultValue(FontSize.normal)]
+		[XmlElement("font-size")]
+		public FontSize TextSize
+		{
+			get { return Get<FontSize>(); }
+			set { Set(value); }
+		}
+
 		[XmlAnyElement]
 		public List<System.Xml.XmlElement> ExtraXml { get; set; }
 
@@ -268,5 +279,12 @@ namespace SPNATI_Character_Editor
 	{
 		over,
 		under
+	}
+
+	public enum FontSize
+	{
+		normal,
+		small,
+		smaller
 	}
 }
