@@ -49,12 +49,6 @@ var FEMALE_SYMBOL = IMG + 'female.svg';
 var includedOpponentStatuses = {};
 var alternateCostumeSets = {};
 
-/** @type {Set<string>} */
-var FORCE_EVENTS = new Set();
-
-/** @type {GameEvent[]} */
-var activeGameEvents = [];
-
 var versionInfo = null;
 
 /* game table */
@@ -369,9 +363,20 @@ function loadConfigFile () {
             });
         }
 
-        FORCE_EVENTS = new Set($xml.find("event").map(function (index, elem) {
-            return $(elem).text();
-        }).get());
+        MANUAL_EVENTS = new Set();
+        OVERRIDE_EVENTS = new Set();
+
+        $xml.find("event").each(function (index, elem) {
+            var $elem = $(elem);
+            var eventID = $elem.text();
+            if (($elem.attr("override") || "").trim().toLowerCase() === "true") {
+                console.log("Manually activating event: " + eventID + " (as override)");
+                OVERRIDE_EVENTS.add(eventID);
+            } else {
+                console.log("Manually activating event: " + eventID);
+                MANUAL_EVENTS.add(eventID);
+            }
+        });
         
         COLLECTIBLES_ENABLED = false;
         COLLECTIBLES_UNLOCKED = false;

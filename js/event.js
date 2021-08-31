@@ -13,6 +13,15 @@ var eventCharacterSettings = null;
 /** @type {GameEvent?} */
 var curResortEvent = null;
 
+/** @type {Set<string>} */
+var MANUAL_EVENTS = new Set();
+
+/** @type {Set<string>} */
+var OVERRIDE_EVENTS = new Set();
+
+/** @type {GameEvent[]} */
+var activeGameEvents = [];
+
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 var $announcementDropdown = $("#title-announcement-dropdown");
@@ -404,11 +413,10 @@ ResortEventInfo.prototype.show = function () {
  * @param {HighlightedAttributeList} tags
  * @param {Set<string>} includeStatuses
  * @param {HighlightedAttributeList} characters
- * @param {boolean} indefinite
  * @param {ResortEventInfo?} resort
  * @param {EventAnnouncement?} announcement
  */
-function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags, includeStatuses, characters, indefinite, resort, announcement) {
+function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags, includeStatuses, characters, resort, announcement) {
     /** @type {string} */
     this.id = id;
 
@@ -436,12 +444,6 @@ function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags
     /** @type {HighlightedAttributeList} */
     this.characters = characters;
 
-    /** @type {boolean} */
-    this.indefinite = indefinite;
-
-    /** @type {boolean} */
-    this.forced = false;
-
     /** @type {ResortEventInfo?} */
     this.resort = resort;
     if (this.resort) this.resort.setEvent(this);
@@ -457,6 +459,8 @@ function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags
  * @returns {DateRange[]}
  */
  GameEvent.prototype.getActiveRanges = function (queryDate) {
+    if (OVERRIDE_EVENTS.size > 0 || MANUAL_EVENTS.has(this.id)) return [];
+
     var queryYear = queryDate.getUTCFullYear();
     var currentYearOverrides = this.dateRanges.filter(function (range) {
         return range.override && queryYear >= range.from.getUTCFullYear() && queryYear <= range.to.getUTCFullYear();
@@ -478,8 +482,17 @@ function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags
  * 
  * @returns {boolean}
  */
+GameEvent.prototype.isManuallyActivated = function () {
+    if (OVERRIDE_EVENTS.size > 0) return OVERRIDE_EVENTS.has(this.id);
+    return MANUAL_EVENTS.has(this.id);
+}
+
+/**
+ * 
+ * @returns {boolean}
+ */
 GameEvent.prototype.isActive = function () {
-    return this.forced || this.indefinite || this.getActiveRanges(new Date()).length > 0;
+    return this.isManuallyActivated() || this.getActiveRanges(new Date()).length > 0;
 }
 
 /**
@@ -488,10 +501,12 @@ GameEvent.prototype.isActive = function () {
  * @returns {Date?}
  */
 GameEvent.prototype.getStartDate = function () {
+    if (this.isManuallyActivated()) return null;
+
     var activeRanges = this.getActiveRanges(new Date());
     activeRanges.sort(function (a, b) { return a.from.getTime() - b.from.getTime(); });
 
-    if (!this.indefinite && activeRanges.length > 0) {
+    if (activeRanges.length > 0) {
         return activeRanges[0].from;
     } else {
         return null;
@@ -514,7 +529,6 @@ function parseEventElement ($xml) {
 
     var id = $xml.attr("id");
     var name = $xml.children("name").text() || null;
-    var indefinite = ($xml.children("dates").attr("indefinite") || "").trim().toLowerCase() === "true";
 
     var dateRanges = $xml.find("dates>date").map(function (index, elem) {
         return DateRange.parseRange($(elem));
@@ -543,7 +557,7 @@ function parseEventElement ($xml) {
         announceInfo = EventAnnouncement.parse(announceElem);
     }
 
-    return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags, includeStatuses, characters, indefinite, resortInfo, announceInfo);
+    return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags, includeStatuses, characters, resortInfo, announceInfo);
 }
 
 /**
@@ -565,22 +579,13 @@ function loadEventData () {
         /** @type {Set<string>} */
         var activeIds = new Set();
 
-        for (let i = 0; i < events.length; i++) {
-            let event = events[i];
-
-            if (FORCE_EVENTS.has(event.id) && !activeIds.has(event.id)) {
-                console.log("Force activating event: " + event.name);
-                event.indefinite = true;
-                activeGameEvents.push(event);
+        events.forEach(function (event) {
+            if (!activeIds.has(event.id) && event.isActive()) {
+                console.log("Activating event: " + event.name);
                 activeIds.add(event.id);
-            } else if (FORCE_EVENTS.size == 0) {
-                if (event.isActive() && !activeIds.has(event.id)) {
-                    console.log("Activating event: " + event.name);
-                    activeGameEvents.push(event);
-                    activeIds.add(event.id);
-                }
+                activeGameEvents.push(event);
             }
-        }
+        });
         
         if (activeGameEvents.length > 0) {
             var candySet = new Set();
