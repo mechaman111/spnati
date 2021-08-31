@@ -91,22 +91,8 @@
 
             <!--
                 As an alternative, <weekOf> elements can be used to schedule events to run for one or more weeks,
-                covering a particular date (but lined up with the start of the week).
-
-                The date range is automatically calculated to begin and end on the appropriate Sundays in UTC.
-                If the reference date for a <weekOf> range happens to fall on a Sunday, the start date is adjusted so that
-                the range starts on the previous Sunday (so the range always begins at least one day before the reference date).
-
-                For example, the Valentine's Day event uses this to define a schedule that lasts two weeks and covers 02/14.
-                In 2022, the Valentine's Day event would begin at midnight on Sunday, February 13 and end at midnight on Sunday, Feburary 27;
-                in 2023, the Valentine's Day event would begin at midnight on Sunday, February 12 and end at midnight on Sunday, Feburary 26.
-
-                In 2021, since 02/14 falls on a Sunday, the Valentine's Day event would instead start on February 7 and end on February 21,
-                instead of starting right at 02/14.
-
-                <date> and <weekOf> can both be used at the same time in an event.
-                <weekOf> elements can also be marked with `override="true"`, and this works the same way as date range overrides.
-                As with regular <date> ranges, both repeating and one-shot <weekOf> ranges can also cross over into different years if desired.
+                covering a particular date (but lined up with a given day of the week).
+                See the Valentine's Day event for more info on how to use this feature.
             -->
         </dates>
 
@@ -293,8 +279,39 @@
         <name>Valentine's Day</name>
         
         <dates>
-            <!-- This event will start on the Sunday before 02/14, and last for two weeks. -->
-            <weekOf month="2" day="14" weeks="2" />
+            <!--
+                The `year`, `month`, and `day` attributes are used to specify a
+                "reference date" for the event, while the `start-on` attribute
+                specifies on which day of the week the event will start (0 = Sunday, 1 = Monday, etc.).
+
+                Finally, the `days` attribute specifies how many days the date range
+                will cover.
+
+                The actual start and end dates of the event will be calculated such that:
+                 - the start date is strictly before the reference date
+                 - the start date falls on the specified day of the week
+                 - the date range covers the reference date, if the given length
+                 allows for it.
+
+                This particular example specifies that this event should start on
+                the Sunday before February 14 and last for two weeks.
+
+                In 2022, the Valentine's Day event would begin at midnight on Sunday, February 13 and end at midnight on Sunday, Feburary 27.
+                in 2023, the Valentine's Day event would begin at midnight on Sunday, February 12 and end at midnight on Sunday, Feburary 26.
+                In 2021, since 02/14 falls on a Sunday, the Valentine's Day event would instead start on February 7 and end on February 21,
+                instead of starting right at 02/14.
+
+                Note that if the length of the range is less than 8 days, the event may not last long enough to actually cover
+                the reference date.
+
+                By default, if `start-on` and/or `days` are not specified, the date range will start on a Sunday
+                and last for 8 days.
+
+                <date> and <weekOf> can both be used at the same time in an event.
+                <weekOf> elements can also be marked with `override="true"`; this works the same way as date range overrides.
+                As with regular <date> ranges, both repeating and one-shot <weekOf> ranges can also cross over into different years if desired.
+            -->
+            <weekOf month="2" day="14" start-on="0" days="14" />
         </dates>
 
         <background>romantic</background>

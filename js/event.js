@@ -94,17 +94,19 @@ DateRange.parseRange = function ($xml) {
  */
 DateRange.parseWeekOf = function ($xml) {
     var refDate = parseDateRangeElem($xml);
-    var nWeeks = parseInt($xml.attr("weeks"), 10) || 1;
+    var startDay = parseInt($xml.attr("start-on"), 10) || 0;
+    var nDays = parseInt($xml.attr("days"), 10) || 8;
     var override = (($xml.attr("override") || "").trim().toLowerCase() === "true");
-    var adjustDays = refDate.getUTCDay();
 
-    /* As a special case, if the reference date happens to fall on a Sunday,
-     * push back the start by a week (so that the range always starts before the reference date).
+    var adjustDays = refDate.getUTCDay() - startDay;
+
+    /* If the reference day happens to fall on or later in the week than the start day,
+     * push the start date back by a week so that the start is always strictly before the reference date.
      */
-    if (adjustDays === 0) adjustDays = 7;
+    if (adjustDays <= 0) adjustDays += 7;
 
     var startTs = refDate.getTime() - (adjustDays * DAY_MS);
-    var endTs = startTs + (nWeeks * 7 * DAY_MS);
+    var endTs = startTs + (nDays * DAY_MS);
 
     return new DateRange(new Date(startTs), new Date(endTs), override);
 }
