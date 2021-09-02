@@ -151,8 +151,9 @@ DateRange.prototype.toString = function () {
  * @param {Object<string, number>} sorting
  * @param {Object<string, number>} partitions
  * @param {Object<string, boolean?>} prefills
+ * @param {Object<string, boolean?>} allowTestingGuests
  */
-function HighlightedAttributeList (ids, highlights, sorting, partitions, prefills) {
+function HighlightedAttributeList (ids, highlights, sorting, partitions, prefills, allowTestingGuests) {
     /** @type {Set<string>} */
     this.ids = ids;
 
@@ -167,10 +168,13 @@ function HighlightedAttributeList (ids, highlights, sorting, partitions, prefill
 
     /** @type {Object<string, boolean?>} */
     this.prefills = prefills;
+
+    /** @type {Object<string, boolean?>} */
+    this.allowTestingGuests = allowTestingGuests;
 }
 
 HighlightedAttributeList.empty = function () {
-    return new HighlightedAttributeList(new Set(), {}, {}, {}, {});
+    return new HighlightedAttributeList(new Set(), {}, {}, {}, {}, {});
 }
 
 /**
@@ -184,6 +188,7 @@ HighlightedAttributeList.parse = function ($xml, selector) {
     var sorting = {};
     var partitions = {};
     var prefills = {};
+    var allowTestingGuests = {};
 
     $xml.find(selector).each(function (index, elem) {
         var $elem = $(elem);
@@ -204,9 +209,18 @@ HighlightedAttributeList.parse = function ($xml, selector) {
                 prefills[id] = true;
             }
         }
+
+        if ($elem.attr("testing-guest")) {
+            var val = $elem.attr("testing-guest").trim().toLowerCase();
+            if (val === "true") {
+                allowTestingGuests[id] = true;
+            } else if (val === "false") {
+                allowTestingGuests[id] = false;
+            }
+        }
     });
 
-    return new HighlightedAttributeList(ids, highlights, sorting, partitions, prefills);
+    return new HighlightedAttributeList(ids, highlights, sorting, partitions, prefills, allowTestingGuests);
 }
 
 /**
@@ -229,6 +243,7 @@ HighlightedAttributeList.merge = function (lists) {
         mergeKV(acc.sorting, list.sorting);
         mergeKV(acc.partitions, list.partitions);
         mergeKV(acc.prefills, list.prefills);
+        mergeKV(acc.allowTestingGuests, list.allowTestingGuests);
 
         return acc;
     }, HighlightedAttributeList.empty());

@@ -506,6 +506,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     );
     this.event_partition = eventCharacterSettings.partitions[id] || 0;
     this.force_prefill = (eventCharacterSettings.prefills[id] !== undefined) ? eventCharacterSettings.prefills[id] : false;
+    this.allow_testing_guest = (eventCharacterSettings.allowTestingGuests[id] !== undefined) ? eventCharacterSettings.allowTestingGuests[id] : false;
 
     this.matchesEventTag = false;
     eventTagList.some(function (tag) {
@@ -531,6 +532,12 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
                 } else {
                     this.force_prefill = eventTagSettings.prefills[tag];
                 }
+            }
+
+            if (eventCharacterSettings.allowTestingGuests[id] === undefined && eventTagSettings.allowTestingGuests[tag] !== undefined) {
+                this.allow_testing_guest = eventTagSettings.allowTestingGuests[tag];
+                // The default value of allowTestingGuests for specific characters and for tagged characters is false, so if the tag
+                // has no specified attribute value, we don't need to do anything.
             }
 
             return true;
@@ -603,6 +610,14 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
                     this.force_prefill = true;
                 }
                 // If an event tag is matched, fall back to the value used there
+            }
+
+            if (eventCharacterSettings.allowTestingGuests[id] === undefined) {
+                if (eventCostumeSettings.allowTestingGuests[costumeSet] !== undefined) {
+                    this.allow_testing_guest = eventCostumeSettings.allowTestingGuests[costumeSet];
+                } else if (!this.matchesEventTag) {
+                    this.allow_testing_guest = true;
+                }
             }
         }
     }

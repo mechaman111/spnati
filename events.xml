@@ -143,6 +143,7 @@
             - "partition"
             - "sort"
             - "prefill"
+            - "testing-guest"
 
             Per-character settings (<character> elements) take priority over all others.
             Per-costume settings (<costume> elements) are used next.
@@ -172,7 +173,7 @@
             can temporarily set a character to have a higher partition value than normal in order to push them
             higher in the roster, while other events are running.
 
-            Event characters can be configured to either be prioritized when selecting prefill characters
+            Event characters can be configured to be prioritized when selecting prefill characters
             by setting `prefill="force"`. Setting `prefil="default"` will move characters to the default
             pool of characters for prefilling (as configured in `config.xml`).
 
@@ -183,6 +184,13 @@
             Note that, if there aren't enough event characters to completely fill the selection screen slots
             (i.e. if there are less than four event characters configured to be force-prefilled), then 
             the remaining slots will be prefilled with characters from the default prefilling pool.
+
+            The "testing-guest" attribute can be set to "true" or "false", to either show or hide matching
+            characters that are in Testing on the main roster screen.
+            
+            By default, Testing characters with event costumes are allowed to appear on the main roster;
+            other event characters (i.e. characters with event tags, or that are specifically listed) are not.
+            Note that this attribute only applies to Testing characters, specifically.
         -->
 
         <!--
