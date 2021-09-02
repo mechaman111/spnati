@@ -159,10 +159,14 @@
              - Characters within a partition are then sorted based on their "sort" attribute (higher sort values go first).
              - Characters with identical "partition" and "sort" values are then sorted by position in listing.xml.
 
-            Note that non-event characters are placed in partition 0 and have a sort value of 0.
-            Therefore, setting costumes/tags/characters to have `partition="0"` will group them together with
-            non-event characters, while setting them to have a negative partition value will place them
-            after non-event characters.
+            Note that by default, all characters are placed in partition 0.
+            Negative partition values are supported, and will be placed after non-event characters in the roster.
+
+            By default, the following sort values are used:
+            - Characters with event costumes are given a sort value of 3.
+            - Characters with event tags are given a sort value of 2.
+            - Other specifically-listed characters in an event are given a sort value of 1.
+            - Non-event characters are given a sort value of 0.
 
             Overlapping events share partition and sorting values; for example, short-term "highlighting" events
             can temporarily set a character to have a higher partition value than normal in order to push them
@@ -172,7 +176,13 @@
             by setting `prefill="force"`. Setting `prefil="default"` will move characters to the default
             pool of characters for prefilling (as configured in `config.xml`).
 
-            By default, if no explicit prefill settings are applied to an event character, they will be force-prefilled.
+            By default, if no explicit prefill settings are applied, characters with event costumes or tags
+            will be force-prefilled, while other listed characters for the event will not (they will be relegated
+            to the default prefill pool).
+
+            Note that, if there aren't enough event characters to completely fill the selection screen slots
+            (i.e. if there are less than four event characters configured to be force-prefilled), then 
+            the remaining slots will be prefilled with characters from the default prefilling pool.
         -->
 
         <!--
@@ -516,7 +526,7 @@
             </date>
         </dates>
 
-        <character highlight="new" prefill="default">critical_darling</character>
+        <character highlight="new" prefill="default" sort="0">critical_darling</character>
     </event>
 
     <event id="may_new">
@@ -529,7 +539,7 @@
             </date>
         </dates>
 
-        <character highlight="new" prefill="default">may</character>
+        <character highlight="new" prefill="default" sort="0">may</character>
     </event>
 
     <!--

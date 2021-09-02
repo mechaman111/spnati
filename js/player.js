@@ -500,13 +500,12 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.selection_image = this.folder + this.image;
 
     this.event_character = eventCharacterSettings.ids.has(id);
-    this.event_sort_order = (eventCharacterSettings.sorting[id] !== undefined) ? eventCharacterSettings.sorting[id] : 0;
-    this.event_partition = (eventCharacterSettings.partitions[id] !== undefined) ? eventCharacterSettings.partitions[id] : 0;
-    this.force_prefill = eventCharacterSettings.prefills[id];
-
-    if (eventCharacterSettings.ids.has(id) && eventCharacterSettings.prefills[id] === undefined) {
-        this.force_prefill = true;
-    }
+    this.event_sort_order = (
+        (eventCharacterSettings.sorting[id] !== undefined) ? eventCharacterSettings.sorting[id]
+        : (eventCharacterSettings.ids.has(id) ? 1 : 0)
+    );
+    this.event_partition = eventCharacterSettings.partitions[id] || 0;
+    this.force_prefill = (eventCharacterSettings.prefills[id] !== undefined) ? eventCharacterSettings.prefills[id] : false;
 
     this.matchesEventTag = false;
     eventTagList.some(function (tag) {
@@ -517,12 +516,13 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
                 this.highlightStatus = eventTagSettings.highlights[tag];
             }
 
-            if (eventTagSettings.sorting[tag] && eventCharacterSettings.sorting[id] === undefined) {
-                this.event_sort_order = eventTagSettings.sorting[tag];
+            if (eventCharacterSettings.sorting[id] === undefined) {
+                this.event_sort_order = (eventTagSettings.sorting[tag] !== undefined) ? eventTagSettings.sorting[tag] : 2;
             }
 
-            if (eventCharacterSettings.partitions[id] === undefined) {
-                this.event_partition = (eventTagSettings.partitions[tag] !== undefined) ? eventTagSettings.partitions[tag] : 2;
+            if (eventCharacterSettings.partitions[id] === undefined && eventTagSettings.partitions[tag] !== undefined) {
+                /* The default partition value in all cases is 0, so if eventTagSettings.partitions[tag] === undefined, we don't need to do anything. */
+                this.event_partition = eventTagSettings.partitions[tag];
             }
 
             if (eventCharacterSettings.prefills[id] === undefined) {
@@ -581,14 +581,19 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
                 this.highlightStatus = eventCostumeSettings.highlights[costumeSet];
             }
     
-            if (eventCostumeSettings.sorting[costumeSet] && eventCharacterSettings.sorting[id] === undefined) {
-                this.event_sort_order = eventCostumeSettings.sorting[costumeSet];
-                eventSortingActive = true;
+            if (eventCharacterSettings.sorting[id] === undefined) {
+                if (eventCostumeSettings.sorting[costumeSet] !== undefined) {
+                    this.event_sort_order = eventCostumeSettings.sorting[costumeSet];
+                } else if (!this.matchesEventTag) {
+                    this.event_sort_order = 3;
+                }
+
+                if (this.event_sort_order != 0) eventSortingActive = true;
             }
     
-            if (eventCharacterSettings.partitions[costumeSet] === undefined) {
-                this.event_partition = (eventCostumeSettings.partitions[costumeSet] !== undefined) ? eventCostumeSettings.partitions[costumeSet] : 3;
-                eventSortingActive = true;
+            if (eventCharacterSettings.partitions[costumeSet] === undefined && eventCostumeSettings.partitions[costumeSet] !== undefined) {
+                this.event_partition = eventCostumeSettings.partitions[costumeSet];
+                if (this.event_partition != 0) eventSortingActive = true;
             }
 
             if (eventCharacterSettings.prefills[id] === undefined) {
