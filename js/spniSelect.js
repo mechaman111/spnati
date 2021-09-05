@@ -1628,10 +1628,8 @@ function isStaleOnTesting(opp) {
 /**
  * Special callback for Arrays.sort to sort an array of opponents using the
  * Testing-specific rules. The sort order produced by this callback is:
- * - highlight="sponsorship"
  * - status="testing"
  * - SEPARATOR GOES HERE
- * - highlight="sponsorship", hidden due to lack of updates
  * - status="testing", hidden due to lack of updates
  * - everything else
  */
@@ -1640,17 +1638,9 @@ function sortTestingOpponents(opp1, opp2) {
         if (opp.status !== "testing") return 0;
         
         if (!isStaleOnTesting(opp)) {
-            if (opp.highlightStatus === "sponsorship") {
-                return 4;
-            } else {
-                return 3;
-            }
+            return 2;
         } else {
-            if (opp.highlightStatus === "sponsorship") {
-                return 2;
-            } else {
-                return 1;
-            }
+            return 1;
         }
     });
 
