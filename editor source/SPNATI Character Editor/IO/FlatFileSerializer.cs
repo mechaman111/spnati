@@ -380,7 +380,7 @@ namespace SPNATI_Character_Editor
 					{
 						lineCode += $",weight:{defaultLine.Weight.ToString(CultureInfo.InvariantCulture)}";
 					}
-					string text = String.IsNullOrEmpty(defaultLine.Text) ? "~silent~" : defaultLine.Text;
+					string text = String.IsNullOrEmpty(defaultLine.Text) ? "~empty~" : defaultLine.Text;
 					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Pose?.GetFlatFormat() ?? "", text));
 				}
 			}
@@ -1301,11 +1301,6 @@ namespace SPNATI_Character_Editor
 			else
 			{
 				text = value;
-			}
-
-			if (text == "~silent~")
-			{
-				text = "";
 			}
 
 			PoseMapping mapping = character.PoseLibrary.GetFlatFilePose(img);

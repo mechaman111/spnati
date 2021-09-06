@@ -317,10 +317,6 @@ namespace SPNATI_Character_Editor
 			string tag = dialogueCase.Tag;
 			Regex varRegex = new Regex(@"~[^\s~]*~", RegexOptions.IgnoreCase);
 			List<string> invalidVars = new List<string>();
-			if (text == "~silent~")
-			{
-				return invalidVars;
-			}
 			MatchCollection matches = varRegex.Matches(text);
 			foreach (var match in matches)
 			{

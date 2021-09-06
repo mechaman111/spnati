@@ -258,10 +258,6 @@ namespace SPNATI_Character_Editor.Controls
 				line.Marker = newMarker.ToString();
 			}
 
-			if (text == "~silent~")
-			{
-				text = "";
-			}
 			if (text == null && pose == null)
 				return null;
 
