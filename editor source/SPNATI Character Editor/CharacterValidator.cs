@@ -91,14 +91,6 @@ namespace SPNATI_Character_Editor
 
 					if (!TriggerDatabase.UsedInStage(stageCase.Tag, character, stage.Id))
 					{
-						#region hardcoded exclusions
-						if (stageCase.Tag == "stripped" && stage.Id == 0 || stageCase.Tag == "game_over_victory" && (stage.Id == character.Behavior.Stages.Count - 1 || stage.Id == character.Behavior.Stages.Count - 2))
-						{
-							//Pretend these cases don't even exist. make_xml.py mistakenly generates them even though the game will never use them
-							continue;
-						}
-						#endregion
-
 						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case \"{0}\" is invalid for stage {1}", stageCase.Tag, stage.Id), context));
 						continue;
 					}
@@ -373,17 +365,16 @@ namespace SPNATI_Character_Editor
 							}
 						}
 
-						//Validate variables
-						//List<string> invalidVars = DialogueLine.GetInvalidVariables(stageCase, line.Text);
-						//if (invalidVars.Count > 0)
-						//{
-						//	warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Invalid variables for case {0}: {1}", caseLabel, string.Join(",", invalidVars)), context));
-						//}
-
 						//Make sure it's not a placeholder
 						if (defaultLine.Equals(line.Text))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case is still using placeholder text: {0}", caseLabel), context));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case is still using placeholder text. {0}", caseLabel), context));
+						}
+
+						//Make sure it's not blank
+						if (line.Text.Equals(""))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case has no text. {0} If this was intentional, the correct way to create a blank line is to use ~blank~.", caseLabel), context));
 						}
 
 						//check for mismatched italics

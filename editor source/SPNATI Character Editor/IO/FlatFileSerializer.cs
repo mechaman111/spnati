@@ -380,7 +380,7 @@ namespace SPNATI_Character_Editor
 					{
 						lineCode += $",weight:{defaultLine.Weight.ToString(CultureInfo.InvariantCulture)}";
 					}
-					string text = String.IsNullOrEmpty(defaultLine.Text) ? "~empty~" : defaultLine.Text;
+					string text = String.IsNullOrEmpty(defaultLine.Text) ? "~blank~" : defaultLine.Text;
 					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Pose?.GetFlatFormat() ?? "", text));
 				}
 			}
