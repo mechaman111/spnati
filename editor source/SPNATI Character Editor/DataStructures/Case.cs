@@ -1274,23 +1274,28 @@ namespace SPNATI_Character_Editor
 		}
 
 		/// <summary>
-		/// Gets whether this case has any direct targeted dialogue towards other players
+		/// Gets whether this case has any direct targeted dialogue towards other players EXCEPT human
 		/// </summary>
 		public bool HasTargetedConditions
 		{
 			get
 			{
-				bool targeted = !string.IsNullOrEmpty(Target) || !string.IsNullOrEmpty(AlsoPlaying) || (!string.IsNullOrEmpty(Filter) && CharacterDatabase.Get(Filter) != null);
+				string[] humanTargets = { "human", "human_male", "human_female" };
+
+				bool targeted = (!string.IsNullOrEmpty(Target) && !humanTargets.Contains(Target))
+					|| (!string.IsNullOrEmpty(AlsoPlaying) && !humanTargets.Contains(Target))
+					|| (!string.IsNullOrEmpty(Filter) && CharacterDatabase.Get(Filter) != null && !humanTargets.Contains(Filter));
+
 				if (!targeted)
 				{
 					foreach (TargetCondition condition in Conditions)
 					{
-						if (!string.IsNullOrEmpty(condition.Character))
+						if (!string.IsNullOrEmpty(condition.Character) && !humanTargets.Contains(condition.Character))
 						{
 							targeted = true;
 							break;
 						}
-						if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.Get(condition.FilterTag) != null)
+						if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.Get(condition.FilterTag) != null && !humanTargets.Contains(condition.FilterTag))
 						{
 							targeted = true;
 							break;
