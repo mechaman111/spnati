@@ -127,7 +127,6 @@ var endWaitDisplay = 0;
 var showDebug = false;
 var chosenDebug = -1;
 var autoForfeitTimeoutID; // Remember this specifically so that it can be cleared if auto forfeit is turned off.
-var repeatLog = {1:{}, 2:{}, 3:{}, 4:{}};
 
 var transcriptHistory = [];
 
@@ -209,18 +208,6 @@ function updateGameVisual (player) {
         gameDisplays[player-1].update(players[player]);
     }
 }
-
-/************************************************************
- * Adds lines to the repeat count and displays if the count > 1.
- ************************************************************/
- function appendRepeats(slot) {
-    var current = $gameDialogues[slot-1].html();
-    repeatLog[slot][current] = repeatLog[slot][current] + 1 || 1;
-    if (repeatLog[slot][current] > 1) {
-        $gameDialogues[slot-1].html(current + "<br><span style=\"color:red;\">(" + repeatLog[slot][current] + ")<\span>");
-    }
-}
-
 
 /************************************************************
  * Updates all of the main visuals on the main game screen.

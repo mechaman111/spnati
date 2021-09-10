@@ -667,6 +667,16 @@ OpponentDisplay.prototype.updateText = function (player) {
         
         return wrapperSpan;
     });
+
+    /* Show repeat count if debug mode is on. */
+    if (showDebug && player.getRepeatCount() > 1) {
+        displayElems.push(document.createElement("br"));
+
+        var repeatElem = document.createElement("span");
+        repeatElem.innerHTML = "(" + player.getRepeatCount() + ")";
+        repeatElem.className = "repeat-count";
+        displayElems.push(repeatElem);
+    }
     
     this.dialogue.empty().append(displayElems);
 }
@@ -728,10 +738,6 @@ OpponentDisplay.prototype.update = function(player) {
     /* Configure z-indices */
     this.imageArea.css('z-index', player.z_index);
     this.bubble.removeClass('over under').addClass(chosenState.dialogue_layering || player.dialogue_layering);
-    
-    if (showDebug && !inRollback()) {
-        appendRepeats(this.slot);
-    }
 }
 
 OpponentDisplay.prototype.loop = function (timestamp) {
