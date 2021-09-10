@@ -68,6 +68,7 @@ var endingTips = [
     "A Royal Flush is specifically an Ace, King, Queen, Jack, and 10, all of the same suit. It is the rarest and strongest hand. It is never really worth going for if you want to win, but it's still pretty damn cool if you can get it.",
     "Despite what a certain spiky haired protagonist might say, believing in the heart of the cards is not a great strategy. Going for safe hands is usually the way to go.",
     "Remember, you don't need the best hand: you just need to not have the worst. Getting any hand above a high card is usually enough to survive a round.",
+    "Want to find characters with specific traits or features, like being a tomboy or shaved? There's a search field at the top of the character select screen to filter for certain tags!",
 ];
 
 /************************************************************
