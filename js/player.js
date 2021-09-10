@@ -140,6 +140,9 @@ Player.prototype.resetState = function () {
         this.gender = appearance.gender;
         this.size = appearance.size;
 
+        /* Clear the repeat log between games. */
+        this.repeatLog = {};
+
         /* Load the player's wardrobe. */
 
         /* Find and grab the wardrobe tag */
@@ -472,6 +475,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.poses = {};
     this.labelOverridden = this.intelligenceOverridden = false;
     this.pendingCollectiblePopups = [];
+    this.repeatLog = {};
 
     this.loaded = false;
     this.loadProgress = undefined;
@@ -656,6 +660,18 @@ Opponent.prototype.getByStage = function (arr, stage) {
     }
     return bestFit;
 };
+
+/**
+ * Get the repeat count for the currently displayed line, if any.
+ * @returns {number}
+ */
+Opponent.prototype.getRepeatCount = function () {
+    if (!this.chosenState || !this.chosenState.rawDialogue) {
+        return 0;
+    }
+
+    return this.repeatLog[this.chosenState.rawDialogue] || 0;
+}
 
 Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
     if (!costumeDesc) {

@@ -2137,7 +2137,10 @@ Opponent.prototype.updateVolatileBehaviour = function () {
 Opponent.prototype.commitBehaviourUpdate = function () {
     if (!this.chosenState) return;
     if (this.stateCommitted) return;
-    
+
+    /* Use rawDialogue so that variables don't affect repeat count.  */
+    this.repeatLog[this.chosenState.rawDialogue] = this.getRepeatCount() + 1;
+
     this.chosenState.expandDialogue(this, this.currentTarget);
 
     this.applyState(this.chosenState, this.currentTarget);
