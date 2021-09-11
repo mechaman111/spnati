@@ -273,6 +273,15 @@ namespace SPNATI_Character_Editor
 						warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("hasHand \"{1}\" is unrecognized. {0}", caseLabel, stageCase.HasHand)));
 					}
 
+					foreach (Case alt in stageCase.AlternativeConditions)
+                    {
+						if (!alt.HasConditions)
+                        {
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case contains an empty OR tab, which will reduce it to a generic line. {0}", caseLabel), context));
+							break;
+						}
+                    }
+
 					warnings.AddRange(ValidateRangeField(stageCase.TotalFemales, "totalFemales", caseLabel, 0, 5, context));
 					warnings.AddRange(ValidateRangeField(stageCase.TotalMales, "totalMales", caseLabel, 0, 5, context));
 					warnings.AddRange(ValidateRangeField(stageCase.TotalRounds, "totalRounds", caseLabel, -1, -1, context));
