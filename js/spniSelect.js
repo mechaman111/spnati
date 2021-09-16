@@ -1621,6 +1621,8 @@ function sortOpponentsByMostTargeted() {
 
 /* Returns true if the testing opponent wasn't updated recently enough to be shown. */
 function isStaleOnTesting(opp) {
+    if (isLocal) return false;
+
     return (Date.now() - opp.lastUpdated > TESTING_MAX_AGE
             && opp.lastUpdated < TESTING_NTH_MOST_RECENT_UPDATE);
 }

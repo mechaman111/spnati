@@ -308,9 +308,6 @@ Save.prototype.loadOptions = function(){
     /* Load extra characters settings - if rehost, all are disabled by default;
      * if personal offline, offline and incomplete are enabled but event and duplicate aren't
      */
-    var origin = getReportedOrigin();
-    var isLocal = origin.includes("localhost") || origin.includes("local filesystem");
-    
     includedOpponentStatuses['offline'] = false;
     includedOpponentStatuses['incomplete'] = false;
     includedOpponentStatuses['event'] = false;
