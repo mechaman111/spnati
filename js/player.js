@@ -722,6 +722,7 @@ Opponent.prototype.loadAlternateCostume = function () {
 
         var poses = $xml.children('poses');
         var poseDefs = {};
+        Object.assign(poseDefs, this.default_costume.poses);
         $(poses).children('pose').each(function (i, elem) {
             var def = new PoseDefinition($(elem), this);
             poseDefs[def.id] = def;
