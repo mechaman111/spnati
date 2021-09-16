@@ -81,6 +81,7 @@ var sessionID = '';
 var gameID = '';
 var generalCollectibles = [];
 var isLocal = false;
+var isMainSite = true;
 
 /**********************************************************************
  * Screens & Modals
@@ -165,9 +166,10 @@ function initialSetup () {
     /* Attempt to detect broken images as caused by running SPNATI from an invalid archive. */
     detectBrokenOffline();
 
-    /* load global locality variable */
+    /* load global origin variables */
     var origin = getReportedOrigin();
     isLocal = origin.includes("localhost") || origin.includes("local filesystem");
+    isMainSite = origin.includes("spnati.net");
     
     /* Make sure that the config file is loaded before processing the
      *  opponent list, so that includedOpponentStatuses is populated.
