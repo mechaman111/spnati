@@ -641,6 +641,19 @@ namespace SPNATI_Character_Editor
 			{
 				ending.OnBeforeSerialize();
 			}
+
+			// dumb and also bad
+			foreach (Pose pose in Poses)
+            {
+				foreach (Sprite sp in pose.Sprites)
+                {
+					if (sp.Src.Contains(FolderName + "/"))
+                    {
+						sp.Src = sp.Src.Substring(FolderName.Length + 1);
+                    }
+                }
+            }
+
 			Behavior.Serializing = false;
 		}
 
@@ -663,6 +676,15 @@ namespace SPNATI_Character_Editor
 			foreach (Pose pose in Poses)
 			{
 				pose.OnAfterDeserialize();
+
+				// dumb and also bad
+				foreach (Sprite sp in pose.Sprites)
+                {
+					if (!sp.Src.Contains("/"))
+					{
+						sp.Src = FolderName + "/" + sp.Src;
+					}
+                }
 			}
 
 			PoseLibrary = new PoseMap(this);
