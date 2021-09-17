@@ -139,6 +139,11 @@ namespace SPNATI_Character_Editor
 				{
 					ReadLegacySettings(filename);
 				}
+				else
+                {
+					// default settings
+					Set("autosave", 10);
+                }
 			}
 		}
 
@@ -557,6 +562,7 @@ namespace SPNATI_Character_Editor
 					if (!HasValue("statusfilter"))
 					{
 						set.Add(OpponentStatus.Incomplete);
+						set.Add(OpponentStatus.Duplicate);
 						set.Add(OpponentStatus.Event);
 						_statusFilters = set;
 						return set;
