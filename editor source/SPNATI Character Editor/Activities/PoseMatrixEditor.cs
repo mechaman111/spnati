@@ -246,6 +246,12 @@ namespace SPNATI_Character_Editor.Activities
 					}
 				}
 
+				// create dummy column to prevent crash
+				if (_columns.Count == 0)
+                {
+					AddColumn("calm");
+				}
+
 				DataGridViewRow row = grid.Rows[grid.Rows.Add()];
 				row.Tag = stage;
 
