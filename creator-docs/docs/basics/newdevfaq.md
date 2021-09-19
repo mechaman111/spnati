@@ -34,9 +34,9 @@ A: Maybe! In order to adopt a character, you need the permission of the original
 
 A: Unfortunately not. When this game was first created it only supported male/female binary options, and attempting to alter that would break too many existing characters. While many of the developers would like to be able to cater to our trans and non-binary players, it simply isn't feasible now or in the foreseeable future.
 
-### Q: Can I make an OC for my first character?
+### Q: Why can I not make an OC for my first character?
 
-A: While there are no rules currently prohibiting it, we don't reccomend starting out with an OC as your very first character. This is because it effectively doubles the workload for a new dev, needing to learn both proper SPNatI development *and* design an appealing character. It's also more difficult to get people excited for a character they don't know over a familiar face. We're not opposed to OCs, but new creators giving themselves uphill battles at the outset has too often ended in unhappiness.
+[A recently added rule](/docs/policy/rules.html) now prohibits creators from making an original character. Starting with an OC effectively doubles a new dev's workload, as they need to both learn proper SPNatI development *and* design an appealing character. It's also more difficult to get the community excited for a character they don't know over a familiar face. We're not opposed to OCs, but seek to prevent new creators from giving themselves uphill battles at the outset.
 
 ### Q: Do I need to join the Discord?
 

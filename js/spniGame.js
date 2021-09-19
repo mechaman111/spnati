@@ -127,7 +127,6 @@ var endWaitDisplay = 0;
 var showDebug = false;
 var chosenDebug = -1;
 var autoForfeitTimeoutID; // Remember this specifically so that it can be cleared if auto forfeit is turned off.
-var repeatLog = {1:{}, 2:{}, 3:{}, 4:{}};
 
 var transcriptHistory = [];
 
@@ -209,18 +208,6 @@ function updateGameVisual (player) {
         gameDisplays[player-1].update(players[player]);
     }
 }
-
-/************************************************************
- * Adds lines to the repeat count and displays if the count > 1.
- ************************************************************/
- function appendRepeats(slot) {
-    var current = $gameDialogues[slot-1].html();
-    repeatLog[slot][current] = repeatLog[slot][current] + 1 || 1;
-    if (repeatLog[slot][current] > 1) {
-        $gameDialogues[slot-1].html(current + "<br><span style=\"color:red;\">(" + repeatLog[slot][current] + ")<\span>");
-    }
-}
-
 
 /************************************************************
  * Updates all of the main visuals on the main game screen.
@@ -329,7 +316,9 @@ function advanceTurn () {
         /* check to see if they are still in the game */
         if (players[currentTurn].out && currentTurn > 0) {
             /* update their speech and skip their turn */
-            players[currentTurn].updateBehaviour(players[currentTurn].forfeit[0]);
+            players[currentTurn].updateBehaviour(players[currentTurn].forfeit[1] == CAN_SPEAK ?
+                                                 addTriggers(players[currentTurn].forfeit[0], ANY_HAND) :
+                                                 players[currentTurn].forfeit[0]);
             players[currentTurn].commitBehaviourUpdate();
             
             saveSingleTranscriptEntry(currentTurn);
@@ -778,7 +767,7 @@ function allowProgression (nextPhase) {
         if (autoAdvancePaused) {
             // Closing the modal that the flag to be set should call allowProgression() again.
             return;
-        } else if (FORFEIT_DELAY && humanPlayer.out && (humanPlayer.timer > 1 || gamePhase == eGamePhase.STRIP)) {
+        } else if (FORFEIT_DELAY && humanPlayer.out && !humanPlayer.finished && (humanPlayer.timer > 1 || gamePhase == eGamePhase.STRIP)) {
             timeoutID = autoForfeitTimeoutID = setTimeout(advanceGame, FORFEIT_DELAY);
             $mainButton.attr('disabled', true);
             return;

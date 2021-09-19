@@ -75,6 +75,7 @@ function Player (id) {
     this.tags = this.baseTags = [];
     this.xml = null;
     this.persistentMarkers = {};
+    this.exposed = { upper: false, lower: false };
 }
 
 /*******************************************************************
@@ -115,7 +116,7 @@ Player.prototype.resetState = function () {
     if (this.xml !== null) {
         /* Initialize reaction handling state. */
         this.currentTarget = null;
-        this.currentTags = [];
+        this.currentTriggers = [];
         this.stateCommitted = false;
 
         this.oneShotCases = {};
@@ -138,6 +139,9 @@ Player.prototype.resetState = function () {
          */
         this.gender = appearance.gender;
         this.size = appearance.size;
+
+        /* Clear the repeat log between games. */
+        this.repeatLog = {};
 
         /* Load the player's wardrobe. */
 
@@ -419,12 +423,8 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.folder = 'opponents/'+id+'/';
     this.base_folder = 'opponents/'+id+'/';
     
-    var $metaXml = metaFiles[0],
-        $tagsXml = $metaXml;
-    
-    if (metaFiles[1].length > 0) {
-        $tagsXml = metaFiles[1];
-    }
+    var $metaXml = metaFiles[0];
+    var $tagsXml = metaFiles[1];
 
     this.status = status;
     this.highlightStatus = highlightStatus || status || '';
@@ -477,6 +477,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.poses = {};
     this.labelOverridden = this.intelligenceOverridden = false;
     this.pendingCollectiblePopups = [];
+    this.repeatLog = {};
 
     this.loaded = false;
     this.loadProgress = undefined;
@@ -506,10 +507,10 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
 
     if (!ALT_COSTUMES_ENABLED) return;
     $metaXml.find('>alternates>costume').each(function (i, elem) {
-        var set = $(elem).attr('set') || 'offline';
+        var set = $(elem).attr('set');
         var status = $(elem).attr('status') || 'offline';
 
-        if (alternateCostumeSets['all'] || alternateCostumeSets[set] || includedOpponentStatuses[status]) {
+        if ((set && (alternateCostumeSets['all'] || alternateCostumeSets[set])) || includedOpponentStatuses[status]) {
             var costume_descriptor = {
                 'folder': $(elem).attr('folder'),
                 'name': $(elem).text(),
@@ -661,6 +662,18 @@ Opponent.prototype.getByStage = function (arr, stage) {
     }
     return bestFit;
 };
+
+/**
+ * Get the repeat count for the currently displayed line, if any.
+ * @returns {number}
+ */
+Opponent.prototype.getRepeatCount = function () {
+    if (!this.chosenState || !this.chosenState.rawDialogue) {
+        return 0;
+    }
+
+    return this.repeatLog[this.chosenState.rawDialogue] || 0;
+}
 
 Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
     if (!costumeDesc) {
@@ -1088,11 +1101,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
             });
             this.nicknames = nicknames;
 
-            if (this.xml.children('behaviour').children('trigger').length > 0) {
-                return this.loadXMLTriggers();
-            } else {
-                return this.loadXMLStages();
-            }
+            return this.loadXMLTriggers();
         }.bind(this)).then(function () {
             /* Wait for loading of all other stuff to complete: */
             if (this.selected_costume) {
@@ -1159,7 +1168,7 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
  */
 Opponent.prototype.loadXMLTriggers = function () {
     return new Promise(function (resolve) {
-        var $cases = this.xml.find('>behaviour>trigger>case');
+        var $cases = this.xml.find('>behaviour>trigger>case:not([disabled="1"])');
 
         var loadItemsTotal = $cases.length;
         if (loadItemsTotal == 0) {
@@ -1200,59 +1209,6 @@ Opponent.prototype.loadXMLTriggers = function () {
             setTimeout(process.bind(this), 10);
         }
 
-        setTimeout(process.bind(this), 0);
-    }.bind(this));
-}
-
-/**
- * Traverses an old-format opponent's behaviour <stage> elements
- * and pre-emptively adds their Cases to the opponent's cases structure.
- * This is done in 50ms chunks to avoid blocking the UI, similarly to
- * loadXMLTriggers.
- *
- * @returns {Promise<number>} A Promise that resolves once all cases have been processed.
- */
-Opponent.prototype.loadXMLStages = function () {
-    return new Promise(function(resolve) {
-        var $cases = this.xml.find('>behaviour>stage>case');
-    
-        var loadItemsTotal = $cases.length;
-        if (loadItemsTotal == 0) {
-            return resolve(0);
-        }
-        var loadItemsCompleted = 0;
-    
-        function process() {
-            var startTS = performance.now();
-    
-            /* break tasks into roughly 50ms chunks */
-            while (performance.now() - startTS < 50) {
-                if (loadItemsCompleted >= loadItemsTotal) {
-                    this.loadProgress = undefined;
-                    return resolve(loadItemsCompleted);
-                }
-    
-                let $case = $($cases.get(loadItemsCompleted));
-                let c = new Case($case);
-                let stage = $case.parent().attr('id');
-                this.recordTargetedCase(c);
-    
-                var key = c.tag + ':' + stage;
-                if (!this.cases.has(key)) {
-                    this.cases.set(key, []);
-                }
-    
-                this.cases.get(key).push(c);
-    
-                loadItemsCompleted++;
-            }
-            
-            this.loadProgress = loadItemsCompleted / loadItemsTotal;
-            mainSelectDisplays[this.slot - 1].updateLoadPercentage(this);
-                
-            setTimeout(process.bind(this), 10);
-        }
-    
         setTimeout(process.bind(this), 0);
     }.bind(this));
 }

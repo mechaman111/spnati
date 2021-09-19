@@ -676,6 +676,16 @@ OpponentDisplay.prototype.updateText = function (player) {
         
         return wrapperSpan;
     });
+
+    /* Show repeat count if debug mode is on. */
+    if (showDebug && player.getRepeatCount() > 1) {
+        displayElems.push(document.createElement("br"));
+
+        var repeatElem = document.createElement("span");
+        repeatElem.innerHTML = "(" + player.getRepeatCount() + ")";
+        repeatElem.className = "repeat-count";
+        displayElems.push(repeatElem);
+    }
     
     this.dialogue.empty().append(displayElems);
 }
@@ -737,7 +747,7 @@ OpponentDisplay.prototype.update = function(player) {
         this.bubble.removeClass('over under').addClass(chosenState.dialogue_layering || player.dialogue_layering);
         this.dialogue.removeClass('small smaller').addClass(chosenState.fontSize || player.fontSize);
     }
-    
+
     if (showDebug && !inRollback()) {
         appendRepeats(this.slot);
     }

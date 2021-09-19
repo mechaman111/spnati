@@ -25,6 +25,7 @@ var SPECIAL_CASE_NAMES = {
         
     // classic opponents
     "amy_rose_classic": "Amy Rose",
+    "dawn_classic": "Dawn",
     "penny_classic": "Penny",
     "ryuko_classic": "Ryuko",
     "shantae_classic": "Shantae",
