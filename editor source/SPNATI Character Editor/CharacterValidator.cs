@@ -386,6 +386,19 @@ namespace SPNATI_Character_Editor
 							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case has no text. {0} If this was intentional, the correct way to create a blank line is to use ~blank~.", caseLabel), context));
 						}
 
+						//Make sure it doesn't contain invalid variables (~name~ or ~target~ in untargeted cases)
+						if (!TriggerDatabase.GetTrigger(stageCase.Tag).HasTarget)
+						{
+							if (line.Text.Contains("~name~"))
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Line contains ~name~, but is in a case with no target. {0}", caseLabel), context));
+							}
+							else if (line.Text.Contains("~target~"))
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Line contains ~target~, but is in a case with no target. {0}", caseLabel), context));
+							}
+						}
+
 						//check for mismatched italics
 						string[] pieces = line.Text.ToLower().Split(new string[] { "<i>" }, StringSplitOptions.None);
 						int count = 0;
