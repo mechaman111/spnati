@@ -47,12 +47,27 @@ namespace SPNATI_Character_Editor.Providers
 				owner = CharacterDatabase.Load(owner.FolderName);
 			}
 
+			bool wasRenamed = false;
+
 			//force the key to fit a certain pattern
 			if (!key.StartsWith(owner.FolderName + "_"))
 			{
 				key = key.Replace(owner.FolderName, "").Trim('_');
 				key = owner.FolderName + "_" + key;
 				skin.Id = key;
+				wasRenamed = true;
+			}
+
+			if (key.Contains(" "))
+            {
+				key = key.Replace(" ", "_");
+				key = key.Replace("__", "_"); // why does this happen
+				skin.Id = key;
+				wasRenamed = true;
+            }
+
+			if (wasRenamed)
+            {
 				MessageBox.Show($"This outfit has been renamed to {key}.");
 			}
 
