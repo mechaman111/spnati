@@ -502,8 +502,22 @@
         <label id="505" label="" folder="Myriam" sort="0" />
         <label id="506" label="" folder="Myriam" sort="0" />
         <label id="507" label="" folder="Myriam" sort="0" />
+        <label id="509" label="Prev. Game (Unfinished, Not Today)" folder="" sort="0" />
+        <label id="510" label="Prev. Game (Mari Victorious, Not Today)" folder="" sort="0" />
+        <label id="511" label="Prev. Game (Player Victorious, Not Today)" folder="" sort="0" />
+        <label id="512" label="Prev. Game (Other Victorious, Not Today)" folder="" sort="0" />
+        <label id="513" label="No Prev. Game" folder="" sort="0" />
+        <label id="514" label="Prev. Game (Unfinished, Today)" folder="" sort="0" />
+        <label id="515" label="Prev. Game (Player Victorious, Today)" folder="" sort="0" />
+        <label id="516" label="Prev. Game (Mari Victorious, Today)" folder="" sort="0" />
+        <label id="517" label="Prev. Game (Other Victorious, Today)" folder="" sort="0" />
+        <label id="518" label="Prev. Game (3rd Game)" folder="" sort="0" />
+        <label id="519" label="Prev. Game (4th Game)" folder="" sort="0" />
+        <label id="520" label="Prev. Game (5th Game)" folder="" sort="0" />
+        <label id="521" label="Prev. Game (6th+ Game)" folder="" sort="0" />
+        <label id="522" label="First Round" folder="" sort="0" />
     </labels>
-    <nextId>507</nextId>
+    <nextId>522</nextId>
     <markers>
         <marker scope="Public" name="about_to_lose">Mari has a good chance of losing the game, this round. (Only set during the very last round of the game - only two players are left, and both Mari and the other player are naked.)</marker>
         <marker scope="Public" name="about_to_win">Mari has a good chance of winning the game, this round. (Only set during the very last round of the game - only two players are left, and both Mari and the other player are naked.)</marker>
@@ -599,12 +613,24 @@
         <marker scope="Public" name="IgnatzTargetLoss1">Set during Ignatz's glasses sequence on the first Opponent Lost phase, if Ignatz lost.</marker>
         <marker scope="Public" name="IgnatzWait1">Mari asks if the game shouldn't stop while Ignatz finds his glasses.</marker>
         <marker scope="Public" name="last_round_neutral">It's the last round of the game, and things could go either way for Mari. (Only two players are left, both Mari and the other player are naked, and Mari only has an Okay hand.)</marker>
+        <marker scope="Public" name="LastGameStatus">Holds the ID of the winner of the previous game, or "none" if the game was left unfinished.</marker>
+        <marker scope="Public" name="LastPlayTime">Holds the date of the last game played with Mari. Format is: [month number]0[day number] (e.g. "901", "10031", "101")</marker>
+        <marker scope="Public" name="LastPlayTime!=~month.number~-~day.number~" />
+        <marker scope="Public" name="LastPlayTime!=~month.number~0~day.number~" />
+        <marker scope="Public" name="LastPlayTime==&quot;~month.number~-~day.number~&quot;" />
+        <marker scope="Public" name="LastPlayTime==~month.number~-~day.number~" />
+        <marker scope="Public" name="LastPlayTime==~month.number~0~day.number~" />
         <marker scope="Public" name="might_win">Mari has had a good chance of winning the game at least once (1 opponent left with no layers on, Mari is not naked, and she has a Good or Okay hand). These lines can repeat, and this marker will count up every time she says them.</marker>
         <marker scope="Public" name="MikuIdol1">Mari asked Miku if she's an idol. Note that this Mari's from the mid-late 2000s or so-- she probably doesn't know what a Vocaloid is.</marker>
         <marker scope="Public" name="MikuRobot1">Mari asked Miku if she's a robot. Note that this Mari's from the mid-late 2000s or so-- she probably doesn't know what a Vocaloid is.</marker>
         <marker scope="Public" name="Myriam_Allowed1" />
+        <marker scope="Public" name="Myriam_OkayIGuessA1" />
+        <marker scope="Public" name="Myriam_OkayIGuessB1" />
         <marker scope="Public" name="Myriam_OkayIGuessC1" />
         <marker scope="Public" name="Myriam_Shy1" />
+        <marker scope="Public" name="Myriam_UnfairA1" />
+        <marker scope="Public" name="Myriam_UnfairB1" />
+        <marker scope="Public" name="Myriam_UnfairC1" />
         <marker scope="Public" name="Myriam_Why1" />
         <marker scope="Public" name="NoelleArmor1">Mari asked Noelle about getting in and out of her armor. Doesn't that take a while?</marker>
         <marker scope="Public" name="NoelleArmor2" />
@@ -644,6 +670,8 @@
         <marker scope="Public" name="OppSelected_Yshtola" />
         <marker scope="Public" name="OppSelected_Yuna" />
         <marker scope="Public" name="OppSelected_Zoe" />
+        <marker scope="Public" name="PlaysToday">Number of times Mari's been played against today.</marker>
+        <marker scope="Public" name="PlaysTotal">Number of times Mari's been played against in total.</marker>
         <marker scope="Public" name="question_fruit">Mari likes keeping fresh fruits to eat around her place; she wants to know what kind of fruit everyone else likes.</marker>
         <marker scope="Public" name="question_hobbies">Mari asks everyone about their hobbies. After all, everyone probably does something interesting, no matter where they're from.</marker>
         <marker scope="Public" name="question_stress">Mari's under a lot of stress in her life; she really wants to know how other people handle it.</marker>
@@ -867,11 +895,6 @@
         <recipe key="15f3a04f-8e03-40e0-b426-dcba8b4f5b3b">
             <cases>
                 <id>8</id>
-            </cases>
-        </recipe>
-        <recipe key="352366df-ef02-4874-a2eb-0fdc4c210fbd">
-            <cases>
-                <id>186</id>
             </cases>
         </recipe>
     </recipes>
