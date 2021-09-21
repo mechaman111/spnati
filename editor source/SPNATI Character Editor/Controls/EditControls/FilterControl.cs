@@ -39,7 +39,7 @@ namespace SPNATI_Character_Editor
 					return true;
 				}
 				Case workingCase = Data as Case;
-				if (workingCase != null)
+				if (workingCase != null && workingCase.Tag != null)
 				{
 					string gender = "";
 					if (workingCase.Tag.Contains("female_"))
