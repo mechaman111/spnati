@@ -1363,7 +1363,9 @@ function Case($xml) {
     }
     
     // Calculate case priority ahead of time.
-    if (this.customPriority !== undefined) {
+    if (this.hidden) {
+        this.priority = this.customPriority || 0;
+    } else if (this.customPriority !== undefined) {
         this.priority = this.customPriority;
     } else {
         this.priority = 0;
@@ -1410,11 +1412,11 @@ function Case($xml) {
         this.priority += (tests.length * 50);
     }
 
-    this.isVolatile = this.targetSayingMarker || this.targetSaying
+    this.isVolatile = !this.hidden && (this.targetSayingMarker || this.targetSaying
         || this.alsoPlayingSayingMarker || this.alsoPlayingSaying
         || this.counters.some(function(c) {
             return c.sayingMarker || c.saying || c.pose;
-        });
+        }));
 }
 
 /**
@@ -1953,67 +1955,102 @@ function addTriggers(triggers, newTriggers) {
  *****                 Behaviour Parsing Functions                *****
  **********************************************************************/
 
-Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
-    /* get the AI stage */
-    var stageNum = this.stage;
-    var bestMatchPriority = 0;
-    if (volatileOnly && this.chosenState && this.chosenState.parentCase) {
-        bestMatchPriority = this.chosenState.parentCase.priority + 1;
-    }
+Opponent.prototype.findRelevantCases = function (triggers) {
+    this.preDialogueCases = [];
+    this.dialogueCases = [];
+    this.postDialogueCases = [];
 
-    var cases = [];
-
+    var hiddenCases = {};
+    var dialogueCases = {};
+    
     triggers.forEach(function (trigger) {
-        var relCases = this.cases.get(trigger+':'+stageNum) || [];
+        var relCases = this.cases.get(trigger+':'+this.stage) || [];
         relCases.forEach(function (c) {
-            if (cases.indexOf(c) < 0) cases.push(c);
-        });
+            if (c.hidden) {
+                if (!hiddenCases[c.priority]) hiddenCases[c.priority] = [];
+                if (hiddenCases[c.priority].indexOf(c) < 0) hiddenCases[c.priority].push(c);
+            } else {
+                if (!dialogueCases[c.priority]) dialogueCases[c.priority] = [];
+                if (dialogueCases[c.priority].indexOf(c) < 0) dialogueCases[c.priority].push(c);
+            }
+        }, this);
     }, this);
 
-    /* quick check to see if the trigger exists */
-    if (cases.length <= 0) {
-        console.log("Warning: couldn't find " + triggers + " dialogue for player " + this.slot + " at stage " + stageNum);
-        return false;
-    }
-    
-    /* Find the best match, as well as potential volatile matches. */
-    var bestMatch = [];
-    
-    for (var i = 0; i < cases.length; i++) {
-        var curCase = cases[i];
-        
-        if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
-            (!volatileOnly || curCase.isVolatile) &&
-            curCase.checkConditions(this, opp))
-        {
-            if (curCase.hidden) {
-                //if it's hidden, set markers and collectibles but don't actually count as a match
-                curCase.cleanupMutableState();
-                this.applyHiddenStates(curCase, opp);
-                continue;
-            }
-
-            if (curCase.priority > bestMatchPriority) {
-                /* Cleanup all mutable state on previous best-match cases. */
-                bestMatch.forEach(function (c) { c.cleanupMutableState(); });
-
-                bestMatch = [curCase];
-                bestMatchPriority = curCase.priority;
+    Object.keys(hiddenCases)
+        .map(function (k) { return parseInt(k, 10); })
+        .sort(function (a, b) { return b - a; })
+        .forEach(function (priority) {
+            if (priority >= 0) {
+                this.preDialogueCases.push(hiddenCases[priority]);
             } else {
-                bestMatch.push(curCase);
+                this.postDialogueCases.push(hiddenCases[priority]);
             }
-        }
+        }, this);
+
+    Object.keys(dialogueCases)
+        .map(function (k) { return parseInt(k, 10); })
+        .sort(function (a, b) { return b - a; })
+        .forEach(function (priority) {
+            this.dialogueCases.push(dialogueCases[priority]);
+        }, this);
+
+    if (this.dialogueCases.length == 0) {
+        console.log("Warning: couldn't find " + triggers + " dialogue for player " + this.slot + " at stage " + this.stage);
     }
+}
+
+Opponent.prototype.applyHiddenCases = function (postDialogue, opp) {
+    var relCaseGroups = postDialogue ? this.postDialogueCases : this.preDialogueCases;
+
+    relCaseGroups.forEach(function (cases) {
+        cases.filter(function (c) {
+            return c.checkConditions(this, opp);
+        }, this).forEach(function (c) {
+            this.applyHiddenStates(c, opp);
+        }, this);
+    }, this);
+}
+
+Opponent.prototype.cleanupHiddenCases = function () {
+    this.preDialogueCases.forEach(function (cases) {
+        cases.forEach(function (c) { c.cleanupMutableState(); });
+    });
+
+    this.postDialogueCases.forEach(function (cases) {
+        cases.forEach(function (c) { c.cleanupMutableState(); });
+    });
+}
+
+Opponent.prototype.findDialogueState = function (opp, volatileOnly) {
+    var bestMatch = [];
+    var minPriority = 0;
+
+    if (volatileOnly && this.chosenState && this.chosenState.parentCase) {
+        minPriority = this.chosenState.parentCase.priority + 1;
+    }
+
+    if(!this.dialogueCases.some(function (cases) {
+        if ((cases.length == 0) || (cases[0].priority < minPriority)) return false;
+        var curMatches = cases.filter(function (c) {
+            return (!volatileOnly || c.isVolatile) && c.checkConditions(this, opp);
+        }, this);
+
+        bestMatch = curMatches;
+        return curMatches.length > 0;
+    }, this)) {
+        return null;
+    }
+    
     var states = bestMatch.reduce(function(list, caseObject) {
         return list.concat(caseObject.states);
     }.bind(this), []).filter(function(state) {
         return (!state.oneShotId || !this.oneShotStates[state.oneShotId])
             && state.checkUnwanteds(this, opp);
-    }.bind(this));
+    }, this);
     
     var weightSum = states.reduce(function(sum, state) { return sum + state.weight; }, 0);
     if (weightSum > 0) {
-        console.log("Current case priority for player "+this.slot+": "+bestMatchPriority);
+        console.log("Current case priority for player "+this.slot+": "+bestMatch[0].priority);
 
         var rnd = Math.random() * weightSum;
         for (var i = 0, x = 0; x <= rnd && i < states.length; x += states[i++].weight);
@@ -2061,7 +2098,7 @@ Opponent.prototype.clearChosenState = function () {
  * Updates the behaviour of the given player based on the 
  * provided triggers.
  ************************************************************/
-Opponent.prototype.updateBehaviour = function(triggers, opp) {
+Opponent.prototype.updateBehaviour = function(triggers, opp, asGroup) {
     /* determine if the AI is dialogue locked */
     if (this.out && this.forfeit[1] == CANNOT_SPEAK && triggers !== DEALING_CARDS) {
         /* their is restricted to this only */
@@ -2069,7 +2106,7 @@ Opponent.prototype.updateBehaviour = function(triggers, opp) {
     }
 
     if (Array.isArray(triggers) && Array.isArray(triggers[0])) {
-        return triggers.some(function(t) { return this.updateBehaviour(t, opp) }, this);
+        return triggers.some(function(t) { return this.updateBehaviour(t, opp, asGroup) }, this);
     }
     if (!Array.isArray(triggers)) {
         triggers = [triggers];
@@ -2083,15 +2120,22 @@ Opponent.prototype.updateBehaviour = function(triggers, opp) {
     this.currentTarget = opp;
     this.currentTriggers = triggers;
 
-    var state = this.findBehaviour(triggers, opp, false);
+    this.findRelevantCases(triggers, opp);
+    this.applyHiddenCases(false, opp);
 
+    var state = this.findDialogueState(opp, false);
     if (state) {
         this.updateChosenState(state);
         this.lastUpdateTriggers = triggers;
-        
-        return true;
     }
-    return false;
+
+    /* If called as part of updateAllBehaviours, defer evaluation of post-dialogue hidden cases. */
+    if (!asGroup) {
+        this.applyHiddenCases(true, opp);
+        this.cleanupHiddenCases();
+    }
+
+    return !!state;
 }
 
 /************************************************************
@@ -2116,13 +2160,12 @@ Opponent.prototype.updateVolatileBehaviour = function () {
         console.log("Player "+this.slot+": Current priority "+this.chosenState.parentCase.priority);
     }
     
-    var newState = this.findBehaviour(this.currentTriggers, this.currentTarget, true);
+    var newState = this.findDialogueState(this.currentTarget, true);
 
     if (newState) {
         /* Assign new best-match case and state. */
         console.log("Found new volatile state for player "+this.slot+" with priority "+newState.parentCase.priority);
         this.updateChosenState(newState);
-
         return true;
     } else {
         console.log("Found no volatile matches for player "+this.slot);
@@ -2179,8 +2222,10 @@ Opponent.prototype.applyState = function(state, opp) {
  * Applies markers and operations from all lines in a case
  ************************************************************/
 Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
-    chosenCase.states.forEach(function (c) {
-        this.applyState(c, opp);
+    chosenCase.states.filter(function (state) {
+        return (!state.oneShotId || !this.oneShotStates[state.oneShotId]);
+    }, this).forEach(function (state) {
+        this.applyState(state, opp);
         /* Yes, this may apply the case-level oneShot multiple times,
          * but that's no real problem. */
     }, this);
@@ -2191,25 +2236,40 @@ Opponent.prototype.applyHiddenStates = function (chosenCase, opp) {
  * based on the provided tag.
  ************************************************************/
 function updateAllBehaviours (target, target_tags, other_tags) {
-    for (var i = 2; i < players.length; i++) {
-        if (!players[i]) continue;
-        /* Indicate that current state will be overwritten and can't
-         * be used with *SayingMarker and *Saying checks. */
-        players[i].updatePending = true;
-    }
+    var targetPlayer = (target !== null) ? (players[target] || null) : null;
+    var updatePlayers = players.filter(function (player) {
+        return (player.slot !== HUMAN_PLAYER) && player.isLoaded();
+    });
 
-    for (var i = 1; i < players.length; i++) {
-        if (!players[i] || !players[i].isLoaded()) continue;
-        if (target === null || i != target) {
-            players[i].updateBehaviour(other_tags, players[target]);
-        } else if (i == target && target_tags !== null) {
-            players[i].updateBehaviour(target_tags, null);
+    updatePlayers.forEach(function (player) {
+        /* Indicate that current state will be overwritten and can't
+         * be used with *SayingMarker and *Saying checks.
+         * This should happen before pre-dialogue hidden cases are applied.
+         */
+        player.updatePending = true;
+    });
+
+    updatePlayers.forEach(function (player) {
+        if (player !== targetPlayer) {
+            player.updateBehaviour(other_tags, targetPlayer, true);
+        } else if (target_tags !== null) {
+            player.updateBehaviour(target_tags, null, true);
         }
-        players[i].updatePending = false;
-    }
+        player.updatePending = false;
+    });
     
     updateAllVolatileBehaviours();
     commitAllBehaviourUpdates();
+
+    updatePlayers.forEach(function (player) {
+        if (player !== targetPlayer) {
+            player.applyHiddenCases(true, targetPlayer);
+            player.cleanupHiddenCases();
+        } else if (target_tags !== null) {
+            player.applyHiddenCases(true, null);
+            player.cleanupHiddenCases();
+        }
+    });
 }
 
 /************************************************************

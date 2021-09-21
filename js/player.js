@@ -122,6 +122,10 @@ Player.prototype.resetState = function () {
         this.oneShotCases = {};
         this.oneShotStates = {};
 
+        this.preDialogueCases = [];
+        this.dialogueCases = [];
+        this.postDialogueCases = [];
+
         var appearance = this.default_costume;
         if (this.alt_costume) {
             appearance = this.alt_costume;
