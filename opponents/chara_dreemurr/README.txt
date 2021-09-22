@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited August 29 2021
+README edited September 22 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -294,6 +294,9 @@ AZAMI
 
 TOYOTA SPRINTER
 -Generic responses to handle the car's, uh, unique stripping and masturbation sequence.
+
+BASIL
+-Response to Basil's prompt about flowers.
 
 BERNADETTA
 -Response to Bernadetta if Chara loses.
