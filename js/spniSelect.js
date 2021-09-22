@@ -145,11 +145,12 @@ var individualPage = 0;
 var groupPage = 0;
 var chosenGender = -1;
 var chosenGroupGender = -1;
-var sortingMode = "listingIndex";
+var sortingMode = "featured";
 var sortingOptionsMap = {
     target: sortOpponentsByMostTargeted(),
     oldest: sortOpponentsByMultipleFields(["release", "-listingIndex"]),
     newest: sortOpponentsByMultipleFields(["-release", "listingIndex"]),
+    featured: sortOpponentsByMultipleFields(["-event_partition", "-event_sort_order", "listingIndex"]),
 };
 var groupCreditsShown = false;
 
@@ -688,7 +689,7 @@ function updateIndividualSelectSort() {
         loadedOpponents.sort(sortOpponentsByMultipleFields(sortingMode.split(/\s+/)));
     }
     
-    var testingFirst = individualSelectTesting && (sortingMode === "listingIndex" || sortingMode === "-lastUpdated");
+    var testingFirst = individualSelectTesting && (sortingMode === "featured" || sortingMode === "-lastUpdated");
     
     if (testingFirst) {
         /*
@@ -700,14 +701,16 @@ function updateIndividualSelectSort() {
 
     individualSelectSeparatorIndices = [];
     var cutFn
-    /* Separate (normally-visible) Testing from other types if they come before others in Testing view */
-        = testingFirst                  ? function(opp) { return (opp.status !== "testing" || isStaleOnTesting(opp)); }
+    /* Separate (normally-visible) Testing from other types if they come before others in Testing view, while still respecting event partitioning if set */
+        = testingFirst                  ? function (opp) { return opp.event_partition ? opp.event_partition : (opp.status !== "testing" || isStaleOnTesting(opp)); }
     /* Separate out characters with no data if using Recently Updated sort */
         : sortingMode == "-lastUpdated" ? function(opp) { return opp.lastUpdated === 0; }
     /* Separate out characters with no targets if using Targeted sort */
         : sortingMode == "target"       ? function(opp) { return opp.inboundLinesFromSelected(individualSelectTesting ? "testing" : undefined) === 0; }
     /* Separate characters with a release number from characters without one */
         : sortingMode == "newest" || sortingMode == "oldest" ? function(opp) { return opp.release === undefined ? -1 : opp.release == Infinity ? 1 : 0; }
+    /* Separate characters according to event settings (if any are active) */
+        : sortingMode == "featured"        ? function (opp) { return opp.event_partition; }
         : null;
 
     var currentPartition = undefined;
@@ -821,7 +824,7 @@ function showIndividualSelectionScreen() {
     if (players.countTrue() <= 1) {
         $talkedToOption.hide();
         if (sortingMode === "target") {
-            setSortingMode("listingIndex");
+            setSortingMode("featured");
         }
     } else {
         $talkedToOption.show();
@@ -841,7 +844,7 @@ function toggleIndividualSelectView() {
     if (individualSelectTesting) {
         setSortingMode("-lastUpdated");
     } else {
-        setSortingMode("listingIndex");
+        setSortingMode("featured");
     }
 
     updateSelectionVisuals();
@@ -1046,6 +1049,32 @@ function loadDefaultFillSuggestions () {
         }
     }
 
+    var fillPlayers = [];
+    var forcedPrefills = loadedOpponents.filter(function (opp) {
+        /* Allow opponents with other statuses (such as "event") to be force-prefilled on the main roster,
+         * but testing characters should always stay restricted to the Testing roster.
+         * Likewise, force-prefilled characters with non-testing status shouldn't be shown on the Testing menu.
+         */
+        if (individualSelectTesting !== (opp.status === "testing")) {
+            return false;
+        }
+
+        return opp.force_prefill && !isCharacterUsed(opp);
+    });
+
+    if (forcedPrefills.length > 0) {
+        /* select forced prefill characters from events */
+        for (var i = 0; i < 4; i++) {
+            if (forcedPrefills.length === 0) break;
+
+            let idx = getRandomNumber(0, forcedPrefills.length);
+            let randomOpponent = forcedPrefills[idx];
+            forcedPrefills.splice(idx, 1);
+
+            fillPlayers.push(randomOpponent);
+        }
+    }
+
     if (DEFAULT_FILL === 'default' && !individualSelectTesting) {
         /* get a copy of the loaded opponents list */
         var possiblePicks = loadedOpponents.filter(function (opp) {
@@ -1056,10 +1085,8 @@ function loadDefaultFillSuggestions () {
         var possibleNewPicks = possiblePicks.filter(function (opp) {
             return opp.highlightStatus === "new";
         });
-        
-        var fillPlayers = [];
-        
-        if (possibleNewPicks.length !== 0) {
+
+        if (fillPlayers.length < 4 && possibleNewPicks.length !== 0) {
             /* select random new opponent */
             var idx = getRandomNumber(0, possibleNewPicks.length);
             var randomOpponent = possibleNewPicks[idx];
@@ -1107,10 +1134,16 @@ function loadDefaultFillSuggestions () {
             fillPlayers.push(randomOpponent);
         }
         
-        /* Sort in order of New -> Updated -> Other, it just looks better */
+        /* Sort in order of Event -> New -> Updated -> Other, it just looks better */
         fillPlayers.sort(function(a, b) {
             var status1 = a.highlightStatus;
             var status2 = b.highlightStatus;
+
+            if (a.force_prefill && !b.force_prefill) {
+                return -1;
+            } else if (!a.force_prefill && b.force_prefill) {
+                return 1;
+            }
             
             if (!status1 || status1 === "unsorted" || status1 === "unsorted-updated") status1 = "zzzzz";
             if (!status2 || status2 === "unsorted" || status2 === "unsorted-updated") status2 = "zzzzz";
@@ -1128,7 +1161,6 @@ function loadDefaultFillSuggestions () {
             return !isCharacterUsed(opp);
         });
         
-        var fillPlayers = [];
         if (DEFAULT_FILL === 'new' || DEFAULT_FILL === 'default') {
             /* Special case: for the 'new' fill mode, always suggest the most
              * recently-added or recently-updated character.
@@ -1634,8 +1666,18 @@ function isStaleOnTesting(opp) {
  * - SEPARATOR GOES HERE
  * - status="testing", hidden due to lack of updates
  * - everything else
+ * If any custom event sorting is active, then those settings take priority
+ * over these rules (but testing opponents still come first).
  */
 function sortTestingOpponents(opp1, opp2) {
+    if (eventSortingActive) {
+        if (opp1.status === "testing" && opp2.status !== "testing") return -1;
+        if (opp1.status !== "testing" && opp2.status === "testing") return 1;
+
+        if (opp1.event_partition !== opp2.event_partition) return opp2.event_partition - opp1.event_partition;
+        if (opp1.event_sort_order !== opp2.event_sort_order) return opp2.event_sort_order - opp1.event_sort_order;
+    }
+
     var scores = [opp1, opp2].map(function (opp) {
         if (opp.status !== "testing") return 0;
         

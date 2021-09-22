@@ -1181,6 +1181,7 @@ OpponentSelectionCard.prototype.isVisible = function (testingView, ignoreFilter)
 
     // Should this opponent be on the "main roster view"?
     var onMainView = (status === undefined || includedOpponentStatuses[status]);
+    if (status === "testing") onMainView = onMainView || this.opponent.allow_testing_guest;
     
     if (!testingView) {
         // Regular view: include all opponents with undefined status and with
@@ -1190,7 +1191,15 @@ OpponentSelectionCard.prototype.isVisible = function (testingView, ignoreFilter)
         /* Testing view: include all opponents with `testing` status
          * updated within the last TESTING_MAX_AGE and those targeted
          * by selected testing opponents with 5+ lines.
+         * 
+         * Additionally, if an event is active, ignore staleness for
+         * event characters on Testing.
          */
+
+        if (status === "testing" && this.opponent.event_character) {
+            return true;
+        }
+
         if ((status !== "testing" || isStaleOnTesting(this.opponent))
             && this.opponent.inboundLinesFromSelected("testing") < 5)
             return false;

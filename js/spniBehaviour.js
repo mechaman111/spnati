@@ -1032,6 +1032,20 @@ function expandDialogue (dialogue, self, target, bindings) {
                     console.error("Invalid RNG range");
                 }
                 break;
+            case 'event':
+                fn = fn_parts[0];
+                var found_event = false;
+                for (let i = 0; i < activeGameEvents.length; i++) {
+                    if (activeGameEvents[i].id === fn) {
+                        substitution = "true";
+                        found_event = true;
+                        break;
+                    }
+                }
+                if (!found_event) {
+                    substitution = "false";
+                }
+                break;
             case 'target':
             case 'self':
             case 'winner':

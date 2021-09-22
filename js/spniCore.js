@@ -14,10 +14,9 @@ var EPILOGUES_UNLOCKED = false;
 var COLLECTIBLES_ENABLED = true;
 var COLLECTIBLES_UNLOCKED = false;
 var ALT_COSTUMES_ENABLED = true;
-var DEFAULT_COSTUME_SET = null;
+var DEFAULT_COSTUME_SETS = new Set();
 var USAGE_TRACKING = undefined;
 var SENTRY_INITIALIZED = false;
-var RESORT_KEY = null;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 
@@ -107,6 +106,7 @@ $collectibleInfoModal = $('#collectibles-info-modal');
 $ioModal = $('#io-modal');
 $extrasModal = $('#extras-modal');
 $resortModal = $('#resort-modal');
+$eventAnnouncementModal = $('#event-announcement-modal');
 
 /* Screen State */
 $previousScreen = null;
@@ -187,7 +187,7 @@ function initialSetup () {
          * since the latter uses selectedClothing.
          */
         save.loadLocalStorage();
-    }).then(loadBackgrounds).then(function () {
+    }).then(loadEventData).then(loadBackgrounds).then(function () {
         save.load();
         loadVersionInfo();
         loadGeneralCollectibles();
@@ -197,12 +197,7 @@ function initialSetup () {
             $('.title-gallery-edge').css('visibility', 'hidden');
         }
         updateTitleGender();
-
-        if (RESORT_KEY && save.getPlayedCharacterSet().length >= 24) {
-            $(".title-resort-button").show();
-        } else {
-            $(".title-resort-button").hide();
-        }
+        updateAnnouncementDropdown();
     });
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
@@ -355,11 +350,14 @@ function loadConfigFile () {
         } else {
             console.log("Alternate costumes enabled");
 
-            DEFAULT_COSTUME_SET = $xml.children('default-costume-set').text();
-            if (DEFAULT_COSTUME_SET) {
-                console.log("Defaulting to alternate costume set: "+DEFAULT_COSTUME_SET);
-                alternateCostumeSets[DEFAULT_COSTUME_SET] = true;
-            }
+            DEFAULT_COSTUME_SETS = new Set($xml.find('default-costume-set').map(function (index, $elem) {
+                return $elem.text();
+            }).get());
+
+            DEFAULT_COSTUME_SETS.forEach(function (setId) {
+                console.log("Added default alternate costume set: " + setId);
+                alternateCostumeSets[setId] = true;
+            });
 
             $xml.children('alternate-costume-sets').each(function () {
                 var set = $(this).text();
@@ -371,6 +369,21 @@ function loadConfigFile () {
                 }
             });
         }
+
+        MANUAL_EVENTS = new Set();
+        OVERRIDE_EVENTS = new Set();
+
+        $xml.find("event").each(function (index, elem) {
+            var $elem = $(elem);
+            var eventID = $elem.text();
+            if (($elem.attr("override") || "").trim().toLowerCase() === "true") {
+                console.log("Manually activating event: " + eventID + " (as override)");
+                OVERRIDE_EVENTS.add(eventID);
+            } else {
+                console.log("Manually activating event: " + eventID);
+                MANUAL_EVENTS.add(eventID);
+            }
+        });
         
         COLLECTIBLES_ENABLED = false;
         COLLECTIBLES_UNLOCKED = false;
@@ -385,15 +398,6 @@ function loadConfigFile () {
             }
         } else {
             console.log("Collectibles disabled");
-        }
-        
-        var _resort_key = $xml.children('resort').text();
-        if (_resort_key && _resort_key.toLowerCase() !== 'false') {
-            console.log("Resort mode active, key: " + _resort_key);
-            RESORT_KEY = _resort_key;
-        } else {
-            RESORT_KEY = null;
-            console.log("Resort mode disabled.");
         }
 
         includedOpponentStatuses.online = true;
@@ -992,10 +996,6 @@ function showExtrasModal() {
 $('ul.character-status-toggle').on('click', 'a', function() {
     includedOpponentStatuses[$(this).parents('ul').data('status')] = $(this).data('value');
 });
-
-function showResortModal() {
-    $resortModal.modal('show');
-}
 
 /**********************************************************************
  *****                     Utility Functions                      *****

@@ -428,7 +428,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     var $tagsXml = metaFiles[1];
 
     this.status = status;
-    this.highlightStatus = highlightStatus || status || '';
+    this.highlightStatus = eventCharacterSettings.highlights[id] ||  highlightStatus || status || '';
     this.first = $metaXml.children('first').text();
     this.last = $metaXml.children('last').text();
 
@@ -504,7 +504,57 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.alternate_costumes = [];
     this.selection_image = this.folder + this.image;
 
+    this.event_character = eventCharacterSettings.ids.has(id);
+    this.event_sort_order = (
+        (eventCharacterSettings.sorting[id] !== undefined) ? eventCharacterSettings.sorting[id]
+        : (eventCharacterSettings.ids.has(id) ? 1 : 0)
+    );
+    this.event_partition = eventCharacterSettings.partitions[id] || 0;
+    this.force_prefill = (eventCharacterSettings.prefills[id] !== undefined) ? eventCharacterSettings.prefills[id] : false;
+    this.allow_testing_guest = (eventCharacterSettings.allowTestingGuests[id] !== undefined) ? eventCharacterSettings.allowTestingGuests[id] : false;
+
+    this.matchesEventTag = false;
+    eventTagList.some(function (tag) {
+        if (this.searchTags.indexOf(tag) >= 0) {
+            this.matchesEventTag = true;
+            this.event_character = true;
+            if (eventTagSettings.highlights[tag] && !eventCharacterSettings.highlights[id]) {
+                this.highlightStatus = eventTagSettings.highlights[tag];
+            }
+
+            if (eventCharacterSettings.sorting[id] === undefined) {
+                this.event_sort_order = (eventTagSettings.sorting[tag] !== undefined) ? eventTagSettings.sorting[tag] : 2;
+            }
+
+            if (eventCharacterSettings.partitions[id] === undefined && eventTagSettings.partitions[tag] !== undefined) {
+                /* The default partition value in all cases is 0, so if eventTagSettings.partitions[tag] === undefined, we don't need to do anything. */
+                this.event_partition = eventTagSettings.partitions[tag];
+            }
+
+            if (eventCharacterSettings.prefills[id] === undefined) {
+                if (eventTagSettings.ids.has(tag) && eventTagSettings.prefills[tag] === undefined) {
+                    this.force_prefill = true;
+                } else {
+                    this.force_prefill = eventTagSettings.prefills[tag];
+                }
+            }
+
+            if (eventCharacterSettings.allowTestingGuests[id] === undefined && eventTagSettings.allowTestingGuests[tag] !== undefined) {
+                this.allow_testing_guest = eventTagSettings.allowTestingGuests[tag];
+                // The default value of allowTestingGuests for specific characters and for tagged characters is false, so if the tag
+                // has no specified attribute value, we don't need to do anything.
+            }
+
+            return true;
+        }
+        return false;
+    }.bind(this));
+
+    if (this.event_sort_order !== 0 || this.event_partition !== 0) eventSortingActive = true;
+
     if (!ALT_COSTUMES_ENABLED) return;
+
+    var defaultCostumes = [];
     $metaXml.find('>alternates>costume').each(function (i, elem) {
         var set = $(elem).attr('set');
         var status = $(elem).attr('status') || 'offline';
@@ -520,14 +570,63 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
                 'status': status,
             };
 
-            if (set === DEFAULT_COSTUME_SET) {
-                this.selection_image = costume_descriptor['folder'] + costume_descriptor['image'];
-                this.selectAlternateCostume(costume_descriptor);
+            if (DEFAULT_COSTUME_SETS.has(set)) {
+                defaultCostumes.push(costume_descriptor);
             }
 
             this.alternate_costumes.push(costume_descriptor);
         }
     }.bind(this)).get();
+
+    this.hasDefaultCostume = defaultCostumes.length > 0;
+    if (this.hasDefaultCostume) {
+        var selectedDefault = defaultCostumes[getRandomNumber(0, defaultCostumes.length)];
+        var costumeSet = selectedDefault.set;
+
+        this.selection_image = selectedDefault['folder'] + selectedDefault['image'];
+        this.selectAlternateCostume(selectedDefault);
+
+        if (eventCostumeSettings.ids.has(costumeSet)) {
+            this.event_character = true;
+            
+            if (eventCostumeSettings.highlights[costumeSet] && !eventCharacterSettings.highlights[id]) {
+                this.highlightStatus = eventCostumeSettings.highlights[costumeSet];
+            }
+    
+            if (eventCharacterSettings.sorting[id] === undefined) {
+                if (eventCostumeSettings.sorting[costumeSet] !== undefined) {
+                    this.event_sort_order = eventCostumeSettings.sorting[costumeSet];
+                } else if (!this.matchesEventTag) {
+                    this.event_sort_order = 3;
+                }
+
+                if (this.event_sort_order != 0) eventSortingActive = true;
+            }
+    
+            if (eventCharacterSettings.partitions[costumeSet] === undefined && eventCostumeSettings.partitions[costumeSet] !== undefined) {
+                this.event_partition = eventCostumeSettings.partitions[costumeSet];
+                if (this.event_partition != 0) eventSortingActive = true;
+            }
+
+            if (eventCharacterSettings.prefills[id] === undefined) {
+                if (eventCostumeSettings.prefills[costumeSet] !== undefined) {
+                    this.force_prefill = eventCostumeSettings.prefills[costumeSet];
+                } else if (!this.matchesEventTag) {
+                    this.force_prefill = true;
+                }
+                // If an event tag is matched, fall back to the value used there
+            }
+
+            if (eventCharacterSettings.allowTestingGuests[id] === undefined) {
+                if (eventCostumeSettings.allowTestingGuests[costumeSet] !== undefined) {
+                    this.allow_testing_guest = eventCostumeSettings.allowTestingGuests[costumeSet];
+                } else if (!this.matchesEventTag) {
+                    this.allow_testing_guest = true;
+                }
+            }
+        }
+    }
+
     // Not reached if alt costumes are disabled
 }
 

@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<events>
+    <!-- Note: Event IDs must be unique. -->
+    <event id="summer">
+        <!--
+            This is a human-friendly name for the event.
+            At the moment, this is only used for announcements listed in the Announcements dropdown.
+        -->
+        <name>Summer</name>
+
+        <!--
+            Event Dates:
+            Events can be configured to automatically begin and end on certain dates by adding
+            the <dates> element.
+
+            The <dates> element can contain <date> elements that specify each scheduled date
+            range that the event will activate on.
+            Multiple date ranges can be specified (for example, for events that change dates across different years).
+
+            Events can also be manually activated by changing a setting in config.xml and/or prod-config.xml.
+            If no dates are specified for an event, it can only be activated manually.
+        -->
+        <dates>
+            <date>
+                <!-- 
+                    The <from> element specifies the start date of the event.
+                    The month and day must both be specified.
+
+                    The year is optional; if the year is omitted, the event is assumed to repeat every year
+                    at the same month and day.
+
+                    The <to> element, on the other hand, specifies the end date of the event.
+                    This can be given as:
+                    - A month/day year (with optional year)
+                    - A number of days after the start date.
+
+                    The first option uses `year`, `month`, and `day` attributes; similarly to the <from> element,
+                    if the year is omitted, the date is assumed to repeat every year.
+                    The end date itself is included as part of the date range in this case.
+
+                    The second option uses the `days` attribute to specify the length of time the event should last,
+                    starting from the date specified in the <from> element. 
+
+                    This particular event is scheduled every year, starting July 1 and lasting for 14 days.
+
+                    The end date of an event can also be omitted entirely; the event is then assumed to last for exactly one day.
+
+                    Date ranges (both repeating and one-shot) can cross over into a new year if desired.
+                    For example, <from month="12" day="20" /> and <to month="1" day="5" /> specifies
+                    a repeating date range starting December 20 of each year and ending on January 5 of the next year.
+                    Date ranges specified as a start date and a length in days can also cross over into different years.
+                -->
+                <from month="7" day="1" />
+                <to days="14" />
+            </date>
+
+            <date override="true">
+                <!-- 
+                    Repeating date ranges and year-specific date ranges aren't mutually exclusive.
+                    For example, a "rerun" of an event outside of the usual repeating dates can be scheduled
+                    by adding another, one-shot date range with years specified.
+
+                    Additionally, adding `override="true"` to a date range will cause that date range
+                    to override other date ranges for that year.
+
+                    To be specific: when a date range is marked as an override, it will take priority
+                    over all other date ranges for that year (and that year only).
+                    Other date ranges not marked as overrides will not be checked during years where
+                    overrides are scheduled.
+
+                    Multiple override ranges can be listed (either for different years, or for the same year).
+
+                    This can be used to reschedule, shorten, or lengthen an event during a particular year.
+
+                    This override, for example, shortens the 2019 Summer Event to end on July 7, instead of July 14.
+
+                    NOTE: these are just examples, and are not meant to be indicative of actual scheduling.
+                -->
+                <from year="2019" month="7" day="1" />
+                <to year="2019" month="7" day="7" />
+            </date>
+
+            <date override="true">
+                <!-- This particular override reschedules the 2020 Summer Event to June, instead of July. -->
+                <from year="2020" month="6" day="1" />
+                <to year="2020" month="6" day="14" />
+            </date>
+
+            <!--
+                As an alternative, <weekOf> elements can be used to schedule events to run for one or more weeks,
+                covering a particular date (but lined up with a given day of the week).
+                See the Valentine's Day event for more info on how to use this feature.
+            -->
+        </dates>
+
+        <!--
+            This specifies a default background to use during the event.
+            Only one default background can be specified per event.
+            This can be omitted to prevent the event from changing the background.
+
+            Note that if two or more different events happen to overlap in time, then the game will randomly
+            choose a default background from one of the overlapping events upon each startup.
+        -->
+        <background>tiki bar</background>
+
+        <!--
+            This specifies a costume set to enable during the event.
+            Multiple costume sets can be enabled by repeating this element.
+            Specifying "all" as a set will enable all costume sets during the event.
+            
+            Characters who have event costumes from these sets will automatically wear them by default.
+            
+            Characters with multiple event costumes from the same set (or who have multiple enabled costumes due to overlapping events)
+            will randomly select one to use by default when the game is loaded.
+        -->
+        <costumes highlight="summer-event">summer</costumes>
+
+        <!--
+            This specifies a character tag to highlight during the event.
+            Multiple tags can be highlighted by repeating this element.
+
+            Note that this feature only looks at base character tags: since tags from alternate costumes
+            aren't loaded until the character themselves is selected and fully loaded, these filters
+            cannot highlight tags that are listed as part of character alternate costumes.
+
+            (To be specific, you can only filter against tags that work in the selection screen search menu.
+            This excludes tags from alternate costumes as well as tags that are added via dialogue cases.)
+        -->
+        <tag highlight="summer-event">summer_event_featured</tag>
+
+        <!--
+            This applies specific settings to a character during the event.
+            Multiple characters can be configured by repeating this element.
+        -->
+        <character highlight="summer-event">nami</character>
+        <character highlight="summer-event">misty_hgss</character>
+        <character highlight="summer-event">shimakaze</character>
+        <character highlight="summer-event">athena</character>
+
+        <!--
+            The <costumes>, <tag>, and <character> elements can all have the following optional attributes:
+            - "highlight"
+            - "partition"
+            - "sort"
+            - "prefill"
+            - "testing-guest"
+
+            Per-character settings (<character> elements) take priority over all others.
+            Per-costume settings (<costume> elements) are used next.
+            Finally, per-tag settings (<tag> elements) are used last.
+
+            Furthermore, if multiple overlapping events set an attribute for a character, then the value
+            from the topmost overlapping event will be applied.
+
+            The "highlight" attribute can be used to apply special roster highlighting (such as Valentine's
+            Day highlighting or sponsorship highlighting) to matching characters.
+
+            The "partition" and "sort" attributes can be used to change how characters are sorted on the roster:
+             - Characters are first grouped into partitions based on their "partition" attribute (higher partition numbers are placed first).
+             - Characters within a partition are then sorted based on their "sort" attribute (higher sort values go first).
+             - Characters with identical "partition" and "sort" values are then sorted by position in listing.xml.
+
+            Note that by default, all characters are placed in partition 0.
+            Negative partition values are supported, and will be placed after non-event characters in the roster.
+
+            By default, the following sort values are used:
+            - Characters with event costumes are given a sort value of 3.
+            - Characters with event tags are given a sort value of 2.
+            - Other specifically-listed characters in an event are given a sort value of 1.
+            - Non-event characters are given a sort value of 0.
+
+            Overlapping events share partition and sorting values; for example, short-term "highlighting" events
+            can temporarily set a character to have a higher partition value than normal in order to push them
+            higher in the roster, while other events are running.
+
+            Event characters can be configured to be prioritized when selecting prefill characters
+            by setting `prefill="force"`. Setting `prefil="default"` will move characters to the default
+            pool of characters for prefilling (as configured in `config.xml`).
+
+            By default, if no explicit prefill settings are applied, characters with event costumes or tags
+            will be force-prefilled, while other listed characters for the event will not (they will be relegated
+            to the default prefill pool).
+
+            Note that, if there aren't enough event characters to completely fill the selection screen slots
+            (i.e. if there are less than four event characters configured to be force-prefilled), then 
+            the remaining slots will be prefilled with characters from the default prefilling pool.
+
+            The "testing-guest" attribute can be set to "true" or "false", to either show or hide matching
+            characters that are in Testing on the main roster screen.
+            
+            By default, Testing characters with event costumes are allowed to appear on the main roster;
+            other event characters (i.e. characters with event tags, or that are specifically listed) are not.
+            Note that this attribute only applies to Testing characters, specifically.
+        -->
+
+        <!--
+            This specifies a list of candy images to use during the event.
+            Each <path> element should contain a relative path to an image from the `opponents/` folder,
+            like the candy image paths found in `spniTitle.js`.
+
+            These images will completely replace the default candy images during the event.
+            However, if no candy images are specified for an event, then the default images will be used instead.
+
+            If multiple overlapping events are active, all of their candy images will be combined
+            into a single large pool of images to randomly draw from.
+        -->
+        <candy>
+            <path>reskins/chara_dreemurr_summer/0-devious.png</path>
+            <path>reskins/chara_dreemurr_summer/0-happy.png</path>
+            <path>reskins/chara_dreemurr_summer/0-rigid.png</path>
+            <path>reskins/chara_dreemurr_summer/0-thinking.png</path>
+            <path>reskins/ignatz_sunshiny_assassin/0-determination.png</path>
+            <path>reskins/ignatz_sunshiny_assassin/0-friendly.png</path>
+            <path>reskins/ignatz_sunshiny_assassin/0-stripping+.png</path>
+            <path>reskins/ignatz_sunshiny_assassin/0-fearthedeer.png</path>
+            <path>reskins/juri_summer/0-calm.png</path>
+            <path>reskins/juri_summer/0-horny.png</path>
+            <path>reskins/juri_summer/1-excited.png</path>
+            <path>reskins/juri_summer/1-interested.png</path>
+            <path>reskins/laevatein_bonfires_blaze/0-sceptical.png</path>
+            <path>reskins/laevatein_bonfires_blaze/0-unsure.png</path>
+            <path>reskins/laevatein_bonfires_blaze/0-default.png</path>
+            <path>reskins/laevatein_bonfires_blaze/0-unamused.png</path>
+            <path>reskins/leonie_relentless_rays/0-stretch-alt.png</path>
+            <path>reskins/leonie_relentless_rays/1-after.png</path>
+            <path>reskins/leonie_relentless_rays/1-flustered.png</path>
+            <path>reskins/leonie_relentless_rays/1-pondering.png</path>
+            <path>reskins/may_summer/0-ready.png</path>
+            <path>reskins/may_summer/0-oopsy.png</path>
+            <path>reskins/may_summer/0-calm.png</path>
+            <path>reskins/may_summer/0-cute.png</path>
+            <path>reskins/pyrrha_summer_maiden/0-happy.png</path>
+            <path>reskins/pyrrha_summer_maiden/1-stripped.png</path>
+            <path>reskins/pyrrha_summer_maiden/3-stripping.png</path>
+            <path>reskins/pyrrha_summer_maiden/4-encourage.png</path>
+            <path>reskins/summertime_ryuji/0-cocky.png</path>
+            <path>reskins/summertime_ryuji/1-cheerful.png</path>
+            <path>reskins/summertime_ryuji/2-startled.png</path>
+            <path>reskins/summertime_ryuji/3-awkward.png</path>
+            <path>reskins/swimsuit_sheena/0-calm.png</path>
+            <path>reskins/swimsuit_sheena/1-excited.png</path>
+            <path>reskins/swimsuit_sheena/2-interested.png</path>
+            <path>reskins/swimsuit_sheena/3-sulky.png</path>
+            <path>reskins/wikipe-tan_summer/0-flirt.png</path>
+            <path>reskins/wikipe-tan_summer/1-smirk.png</path>
+            <path>reskins/wikipe-tan_summer/2-casual.png</path>
+            <path>reskins/wikipe-tan_summer/4-neutral.png</path>
+            <path>reskins/yshtola_scion_vacationer/0-coy.png</path>
+            <path>reskins/yshtola_scion_vacationer/0-delighted.png</path>
+            <path>reskins/yshtola_scion_vacationer/0-calm.png</path>
+            <path>reskins/yshtola_scion_vacationer/0-smug.png</path>
+            <path>reskins/summer_larachel/0-calm.png</path>
+            <path>reskins/summer_larachel/1-confident.png</path>
+            <path>reskins/summer_larachel/2-calm.png</path>
+            <path>reskins/summer_larachel/3-confident.png</path>
+            <path>reskins/nugi-chan_bikini/0-select.png</path>
+            <path>reskins/nugi-chan_bikini/1-loss.png</path>
+            <path>reskins/nugi-chan_bikini/2-embarrassed.png</path>
+            <path>reskins/nugi-chan_bikini/3-interested.png</path>
+            <path>reskins/estelle_refreshing_dress/0-calm.png</path>
+            <path>reskins/estelle_refreshing_dress/1-strip.png</path>
+            <path>reskins/estelle_refreshing_dress/2-happy.png</path>
+            <path>reskins/estelle_refreshing_dress/2-after.png</path>
+            <path>reskins/zizou_summer/0-appreciative.png</path>
+            <path>reskins/zizou_summer/0-victory.png</path>
+            <path>reskins/zizou_summer/0-angry.png</path>
+            <path>reskins/zizou_summer/0-awkward.png</path>
+            <path>reskins/summertime_sayaka/0-happy.png</path>
+            <path>reskins/summertime_sayaka/1-calm.png</path>
+            <path>reskins/summertime_sayaka/2-bored.png</path>
+            <path>reskins/summertime_sayaka/3-awkward.png</path>
+            <!--
+            <path>reskins/monika_stirring_mermaid/0-writing-tip.png</path>
+            <path>reskins/monika_stirring_mermaid/1-interested.png</path>
+            <path>reskins/monika_stirring_mermaid/2-happy.png</path>
+            <path>reskins/monika_stirring_mermaid/3-shy-happy.png</path>
+            -->
+        </candy>
+
+        <!--
+            NOTE: there is one element that the Summer event does not use:
+            the <include-status> element.
+
+            <include-status> is used to mark additional character statuses for
+            inclusion in the selection screen. 
+
+            This is mainly used by the April Fools event, where
+            `event` status characters are included.
+
+            See the April Fools event data below for an example of how this works.
+        -->
+    </event>
+    <event id="valentines">
+        <name>Valentine's Day</name>
+        
+        <dates>
+            <!--
+                The `year`, `month`, and `day` attributes are used to specify a
+                "reference date" for the event, while the `start-on` attribute
+                specifies on which day of the week the event will start (0 = Sunday, 1 = Monday, etc.).
+
+                Finally, the `days` attribute specifies how many days the date range
+                will cover.
+
+                The actual start and end dates of the event will be calculated such that:
+                 - the start date is strictly before the reference date
+                 - the start date falls on the specified day of the week
+                 - the date range covers the reference date, if the given length
+                 allows for it.
+
+                This particular example specifies that this event should start on
+                the Sunday before February 14 and last for two weeks.
+
+                In 2022, the Valentine's Day event would begin at midnight on Sunday, February 13 and end at midnight on Sunday, Feburary 27.
+                in 2023, the Valentine's Day event would begin at midnight on Sunday, February 12 and end at midnight on Sunday, Feburary 26.
+                In 2021, since 02/14 falls on a Sunday, the Valentine's Day event would instead start on February 7 and end on February 21,
+                instead of starting right at 02/14.
+
+                Note that if the length of the range is less than 8 days, the event may not last long enough to actually cover
+                the reference date.
+
+                By default, if `start-on` and/or `days` are not specified, the date range will start on a Sunday
+                and last for 8 days.
+
+                <date> and <weekOf> can both be used at the same time in an event.
+                <weekOf> elements can also be marked with `override="true"`; this works the same way as date range overrides.
+                As with regular <date> ranges, both repeating and one-shot <weekOf> ranges can also cross over into different years if desired.
+            -->
+            <weekOf month="2" day="14" start-on="0" days="14" />
+        </dates>
+
+        <background>romantic</background>
+
+        <costumes highlight="valentines">valentines</costumes>
+
+        <candy>
+            <path>reskins/meia_cupid/0-disappointed.png</path>
+            <path>reskins/meia_cupid/1-busy.png</path>
+            <path>reskins/meia_cupid/2-pleased.png</path>
+            <path>reskins/meia_cupid/2-addressing.png</path>
+            <path>reskins/cheerleaderochako/0-calm.png</path>
+            <path>reskins/cheerleaderochako/1-heroic.png</path>
+            <path>reskins/cheerleaderochako/2-happy.png</path>
+            <path>reskins/cheerleaderochako/3-embarrassed.png</path>
+            <path>reskins/monika_love_bug/0-writing-tip.png</path>
+            <path>reskins/monika_love_bug/1-interested.png</path>
+            <path>reskins/monika_love_bug/2-happy.png</path>
+            <path>reskins/monika_love_bug/3-shy-happy.png</path>
+            <path>reskins/flower_girl_ini/0-sleepy.png</path>
+            <path>reskins/flower_girl_ini/1-excited.png</path>
+            <path>reskins/flower_girl_ini/2-dumb.png</path>
+            <path>reskins/flower_girl_ini/3-cracker.png</path>
+            <path>reskins/festival_aella/0-happy.png</path>
+            <path>reskins/festival_aella/1-flustered.png</path>
+            <path>reskins/festival_aella/2-interested.png</path>
+            <path>reskins/festival_aella/2-happy.png</path>
+            <path>reskins/lynbride/0-calm.png</path>
+            <path>reskins/lynbride/1-happy.png</path>
+            <path>reskins/lynbride/2-interested.png</path>
+            <path>reskins/lynbride/3-happy.png</path>
+            <path>reskins/chiakimaid/0-sleepy.png</path>
+            <path>reskins/chiakimaid/1-happy.png</path>
+            <path>reskins/chiakimaid/2-excited.png</path>
+            <path>reskins/chiakimaid/3-embarrassed.png</path>
+            <path>reskins/zizou_valentine/0-happy.png</path>
+            <path>reskins/zizou_valentine/1-excited.png</path>
+            <path>reskins/zizou_valentine/2-appreciative.png</path>
+            <path>reskins/zizou_valentine/2-puzzled.png</path>
+            <path>reskins/nagisa_maid_cafe/0-happy.png</path>
+            <path>reskins/nagisa_maid_cafe/1-z_stripping.png</path>
+            <path>reskins/nagisa_maid_cafe/2-wink.png</path>
+            <path>reskins/nagisa_maid_cafe/3-embarrassed_2.png</path>
+            <path>reskins/spooky_nurse/0-innocent.png</path>
+            <path>reskins/spooky_nurse/0-excited.png</path>
+            <path>reskins/spooky_nurse/0-calm.png</path>
+            <path>reskins/spooky_nurse/0-happy.png</path>
+            <path>reskins/emi_lovebunny/0-excited.png</path>
+            <path>reskins/emi_lovebunny/1-interested.png</path>
+            <path>reskins/emi_lovebunny/2-stripping.png</path>
+            <path>reskins/emi_lovebunny/3-happy.png</path>
+            <path>reskins/twisted_fate_tango/0-1.png</path>
+            <path>reskins/twisted_fate_tango/1-Charming.png</path>
+            <path>reskins/twisted_fate_tango/2-Calm.png</path>
+            <path>reskins/twisted_fate_tango/0-Happy.png</path>
+        </candy>
+    </event>
+    <event id="easter">
+        <name>Easter</name>
+
+        <!-- The April Fool's event is always the first week of April, and we want to keep these event separate where possible because of how different they are. -->
+        <dates>
+            <date>
+                <from year="2022" month="4" day="15" /> <!-- Good Friday in 2022 is April 15 -->
+                <to year="2022" month="4" day="29" />
+            </date>
+            <date>
+                <from year="2023" month="4" day="8" /> <!-- Good Friday in 2023 is April 7, so these dates are deferred by one day. -->
+                <to year="2023" month="4" day="23" />
+            </date>
+            <date>
+                <from year="2024" month="3" day="18" /> <!-- Good Friday in 2024 is March 29, so these dates are mostly early. -->
+                <to year="2024" month="3" day="31" />
+            </date>
+            <date>
+                <from year="2025" month="4" day="18" /> <!-- Good Friday in 2025 is April 18 -->
+                <to year="2025" month="5" day="2" />
+            </date>
+            <date>
+                <from year="2026" month="3" day="8" /> <!-- Good Friday in 2026 is April 3, so these dates are all early. -->
+                <to year="2026" month="3" day="31" />
+            </date>
+        </dates>
+
+        <costumes highlight="easter">easter</costumes>
+
+        <candy>
+            <path>reskins/new_year_aella/0-calm.png</path>
+            <path>reskins/new_year_aella/0-embarrassed.png</path>
+            <path>reskins/new_year_aella/0-happy.png</path>
+            <path>reskins/new_year_aella/0-interested.png</path>
+            <path>reskins/bunny_catria/0-calm.png</path>
+            <path>reskins/bunny_catria/0-ironic.png</path>
+            <path>reskins/bunny_catria/0-heart.png</path>
+            <path>reskins/bunny_catria/0-behind.png</path>
+            <path>reskins/florina_easter/0-interested.png</path>
+            <path>reskins/florina_easter/0-horny.png</path>
+            <path>reskins/florina_easter/0-calm.png</path>
+            <path>reskins/florina_easter/1-stripped.png</path>
+            <path>reskins/kazuma_spring/0-awkward.png</path>
+            <path>reskins/kazuma_spring/0-embarrassed.png</path>
+            <path>reskins/kazuma_spring/0-horrified.png</path>
+            <path>reskins/kazuma_spring/0-shocked.png</path>
+            <path>reskins/may_hopping_bunny/0-cute.png</path>
+            <path>reskins/may_hopping_bunny/0-oopsy.png</path>
+            <path>reskins/may_hopping_bunny/0-ready.png</path>
+            <path>reskins/may_hopping_bunny/0-confident.png</path>
+            <path>reskins/pink_bunny/0-hi.png</path>
+            <path>reskins/pink_bunny/0-wink.png</path>
+            <path>reskins/pink_bunny/1-happy.png</path>
+            <path>reskins/pink_bunny/1-excited.png</path>
+            <path>reskins/sheena_chosen_beauty/0-calm.png</path>
+            <path>reskins/sheena_chosen_beauty/0-flustered.png</path>
+            <path>reskins/sheena_chosen_beauty/0-interested.png</path>
+            <path>reskins/sheena_chosen_beauty/0-angry.png</path>
+        </candy>
+    </event>
+    <event id="halloween">
+        <name>Halloween</name>
+
+        <dates>
+            <!-- 13 days, leading up to the 31st. Spooky. -->
+            <date>
+                <from month="10" day="19" />
+                <to month="10" day="31" />
+            </date>
+        </dates>
+
+        <background>haunted forest</background>
+
+        <costumes highlight="halloween">halloween</costumes>
+
+        <candy>
+            <path>reskins/emi_shadow/0-annoyed.png</path>
+            <path>reskins/emi_shadow/1-shrug.png</path>
+            <path>reskins/emi_shadow/2-calm.png</path>
+            <path>reskins/emi_shadow/3-stripped.png</path>
+            <path>reskins/misato_catrina/0-Calm.png</path>
+            <path>reskins/misato_catrina/1-Confident.png</path>
+            <path>reskins/misato_catrina/2-Happy.png</path>
+            <path>reskins/misato_catrina/3-Drink.png</path>
+            <path>reskins/ghost_bride_weiss_schnee/0-angry.png</path>
+            <path>reskins/ghost_bride_weiss_schnee/1-grinning.png</path>
+            <path>reskins/ghost_bride_weiss_schnee/2-happy.png</path>
+            <path>reskins/ghost_bride_weiss_schnee/3-confused.png</path>
+            <path>reskins/larachel_harvest_princess/0-calm.png</path>
+            <path>reskins/larachel_harvest_princess/1-smug.png</path>
+            <path>reskins/larachel_harvest_princess/2-dismissive.png</path>
+            <path>reskins/larachel_harvest_princess/3-confident.png</path>
+            <path>reskins/white_raven/0-selected.png</path>
+            <path>reskins/white_raven/1-loss.png</path>
+            <path>reskins/white_raven/2-happy.png</path>
+            <path>reskins/white_raven/3-thinking.png</path>
+            <path>reskins/witchs_costume/0-calm.png</path>
+            <path>reskins/witchs_costume/1-pushing.png</path>
+            <path>reskins/witchs_costume/2-interested.png</path>
+            <path>reskins/witchs_costume/3-happy.png</path>
+            <path>reskins/yunyun_trick_or_friends/0-Happy.png</path>
+            <path>reskins/yunyun_trick_or_friends/1-Excited.png</path>
+            <path>reskins/yunyun_trick_or_friends/2-Posing2.png</path>
+            <path>reskins/yunyun_trick_or_friends/3-Posing.png</path>
+        </candy>
+    </event>
+    <event id="xmas">
+        <name>Christmas</name>
+
+        <dates>
+            <date>
+                <from month="12" day="15" />
+                <to month="1" day="5" />
+            </date>
+        </dates>
+
+        <background>holiday lodge</background>
+
+        <costumes highlight="xmas">xmas</costumes>
+        
+        <!-- NOTE: I'm not sure if the Christmas Event has candy images. I didn't see any, going through the commit logs for the 2020 event.-->
+    </event>
+    <event id="april_fools">
+        <name>April Fools Day</name>
+
+        <dates>
+            <date>
+                <from month="4" day="1" />
+                <from month="4" day="7" />
+            </date>
+        </dates>
+
+        <!-- Put AF costumes and AF characters into the same group, but place costumes before AF-only characters -->
+        <costumes highlight="april_fools" partition="1" sort="2">april_fools</costumes>
+        <tag highlight="april_fools" partition="1" sort="1">april_fools</tag>
+
+        <!-- This works exactly like <include-status> in (prod-)config.xml. -->
+        <include-status>event</include-status>
+    </event>
+
+    <!--
+        This event defines a resort; the resort-specific data is contained in the <resort> section.
+
+        <season> specifies the season of the resort; aside from the actual name of the relevant season,
+        it can be omitted or set to "auto", to automatically determine it from the event start date.
+
+        For the purposes of determining the season of a resort,
+        Winter is December - February, Spring is March - May, Summer is June - August, and Autumn is September - November.
+        All of these ranges are inclusive.
+
+        <poll> specifies the link to the public poll for this resort; people will be linked there when
+        clicking on the "Roster Re-Sort Poll" button in the resort announcement dialog.
+
+        <min-characters> specifies the minimum number of played characters needed to show the resort dialog.
+        If not specified, the threshold is set to 40 by default.
+    -->
+
+    <!--
+    <event id="resort">
+        <name>Resort</name>
+
+        <dates>
+            <date>
+                <from year="2021" month="8" day="21" />
+                <to year="2021" month="9" day="18" />
+            </date>
+        </dates>
+
+        <resort>
+            <season>auto</season>
+            <poll>https://forms.gle/KrJ6oxtGetWDbQoh9</poll>
+            <min-characters>40</min-characters>
+        </resort>
+    </event>
+    -->
+
+    <!--
+        This event includes an announcement that will pop up on screen when the player enters the selection screen,
+        similarly to the resort notification dialog (though without the played characters requirement).
+
+        Announcement headers and bodies can contain arbitrary HTML.
+        The `event-announcement-link` CSS class can be used for prominent button links
+        (similarly to the "Re-Sort Poll" button in the Resort modal).
+
+        Like the resort dialog, announcements will normally only be shown to the player once.
+        However, they can also be accessed via a dropdown on the title bar.
+
+        If a re-sort is active and other events have announcements, the re-sort dialog will be
+        displayed first (if the character threshold is met and the dialog has not been previously seen),
+        followed squentially by the other events' announcements, in file order (top of this file to the bottom).
+
+        If an active resort is the only available announcement, then the regular "Re-Sort Poll" button will
+        be shown on the title bar.
+        However, if a resort is active at the same time as another announcement, then the button to view the
+        re-sort poll dialog will instead be moved to the Announcements dropdown.
+
+        <min-characters> specifies the minimum number of played characters needed to show the announcement;
+        this works exactly the same as the resort dialog threshold.
+
+        By default, however, the played character threshold for regular announcements is set to 0, allowing all
+        players to see them.
+    -->
+
+    <!--
+    <event id="announce-example">
+        <name>Announcement Example</name>
+
+        <dates>
+            <date>
+                <from year="2021" month="8" day="21" />
+                <to year="2021" month="9" day="18" />
+            </date>
+        </dates>
+
+        <announcement>
+            <header>Announcement Example</header>
+            <announce-body>
+                <p>This is an example announcement.</p>
+                <p>The body of an announcement can contain <i>arbitrary <span>HTML</span>.</i></p>
+
+                <a class="bordered smooth-button green event-announcement-link"
+                    target="_blank" rel="noreferrer"
+                    href="https://example.com">Example Announcement Link</a>
+            </announce-body>
+            <min-characters>0</<min-characters>
+        </announcement>
+    </event>
+    -->
+</events>
