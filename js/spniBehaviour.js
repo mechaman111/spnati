@@ -736,6 +736,32 @@ function expandNicknames (self, target) {
     return target.label;
 }
 
+function expandClothingVariable(clothing, fn, args, self, target, bindings) {
+    if (fn == 'ifplural' && args) {
+        args = args.split('|');
+        return expandDialogue(args[clothing.plural ? 0 : clothing.plural === null && args.length > 2 ? 2 : 1], self, target, bindings);
+    } else if (fn === 'plural') {
+        return clothing.plural ? 'plural'
+            : clothing.plural === null ? 'uncountable' : 'single';
+    } else if (fn === 'toplural') {
+        if (clothing.plural === false) {
+            return pluralize(clothing.name);
+        } else {
+            return clothing.name;
+        }
+    } else if (fn == 'a') {
+        if (clothing.plural === false) {
+            return indefiniteArticle(clothing.name) + ' ';
+        } else {
+            return '';
+        }
+    } else if ((fn == 'type' || fn == 'position' || fn == 'generic') && args === undefined) {
+        return clothing[fn];
+    } else if (fn === undefined && args === undefined) {
+        return clothing.name;
+    }
+}
+
 /************************************************************
  * Expands ~target.*~ and ~[player].*~ variables.
  ************************************************************/
@@ -824,6 +850,31 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         } else if (split_fn[1] == 'noart' || split_fn[1] === undefined) {
             return player.hand.describe(split_fn[1] == undefined);
         }
+    case 'wearing':
+        {
+            var types = [], positions = [], names = [];
+            args.split('|').forEach(function(keyword) {
+                if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE, MINOR_ARTICLE, EXTRA_ARTICLE].indexOf(keyword) >= 0) {
+                    types.push(keyword);
+                } else if ([UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE, OTHER_ARTICLE,
+                            'arms', 'feet', 'hands', 'head', 'legs', 'neck', 'waist'].indexOf(keyword) >= 0) {
+                    positions.push(keyword);
+                } else {
+                    names.push(keyword);
+                }
+            });
+            var result = player.findClothing(types.length ? types : undefined,
+                                             positions.length ? positions : undefined,
+                                             names.length ? names : undefined);
+            if (result.length) {
+                return result[getRandomNumber(0, result.length)].name;
+            }
+            return "";
+        }
+    case 'numstripped':
+        return args.split('|').reduce(function(sum, type) {
+            return sum + (player.numStripped[type] || 0);
+        }, 0);
     default:
         return expandNicknames(self, player);
     }
@@ -873,28 +924,22 @@ function expandDialogue (dialogue, self, target, bindings) {
                 break;
             case 'clothing':
                 var clothing = (target||self).removedClothing;
-                if (fn == 'ifplural' && args) {
-                    args = args.split('|');
-                    substitution = expandDialogue(args[clothing.plural ? 0 : clothing.plural === null && args.length > 2 ? 2 : 1], self, target, bindings);
-                } else if (fn === 'plural') {
-                    substitution = clothing.plural ? 'plural'
-                        : clothing.plural === null ? 'uncountable' : 'single';
-                } else if (fn === 'toplural') {
-                    if (clothing.plural === false) {
-                        substitution = pluralize(clothing.name);
-                    } else {
-                        substitution = clothing.name;
+                substitution = expandClothingVariable(clothing, fn, args, self, target, bindings);
+                break;
+            case 'revealed':
+                target = target || self;
+                clothing = target.removedClothing;
+                substitution = '';
+                if ([UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(clothing.position) >= 0) {
+                    var revealedClothing
+                        = target.findClothing(undefined,
+                                              clothing.position == FULL_ARTICLE
+                                              ? [UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE]
+                                              : [clothing.position, FULL_ARTICLE]);
+                    if (revealedClothing.length) {
+                        substitution = expandClothingVariable(revealedClothing[getRandomNumber(0, revealedClothing.length)],
+                                                              fn, args, self, target, bindings);
                     }
-                } else if (fn == 'a') {
-                    if (clothing.plural === false) {
-                        substitution = indefiniteArticle(clothing.name) + ' ';
-                    } else {
-                        substitution = '';
-                    }
-                } else if ((fn == 'type' || fn == 'position' || fn == 'generic') && args === undefined) {
-                    substitution = clothing[fn];
-                } else if (fn === undefined && args === undefined) {
-                    substitution = clothing.name;
                 }
                 break;
             case 'cards': /* determine how many cards are being swapped */

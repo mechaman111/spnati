@@ -93,6 +93,7 @@ Player.prototype.initClothingStatus = function () {
             this.exposed[position] = false;
         };
     }
+    this.numStripped = { extra: 0, minor: 0, major: 0, important: 0 };
     this.mostlyClothed = this.decent = !(this.exposed.upper || this.exposed.lower)
         && this.clothing.some(function(c) {
             return c.type == MAJOR_ARTICLE
