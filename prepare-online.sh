@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 mkdir -p .public/opponents .public/img
-cp -r css fonts js player index.html version-info.xml backgrounds.xml .public
+cp -r css fonts js player index.html version-info.xml backgrounds.xml events.xml .public
 
 # Copy non-recursively to exclude the backgrounds folder.
 cp img/* .public/img
