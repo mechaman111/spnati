@@ -503,6 +503,24 @@ namespace SPNATI_Character_Editor
 				{
 					warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{c.Name}\" uses an uncountable noun with no plural form, which makes incoming generic dialogue awkward (ex. \"I've seen many {c.Name} in my day\"). Consider renaming this layer (ex. \"armor\" to \"breastplate\")."));
 				}
+
+				if (!String.IsNullOrEmpty(c.GenericName))
+				{
+					bool validCategory = false;
+					foreach (ClothingCategoryItem cc in ClothingDefinitions.Instance.Categories)
+					{
+						if (cc.Key == c.GenericName)
+						{
+							validCategory = true;
+							break;
+						}
+					}
+
+					if (!validCategory)
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{c.Name}\" has an invalid classification: \"{c.GenericName}\". Opening the Wardrobe tab will delete this classification, at which point you can enter a valid one if possible."));
+					}
+				}
 			}
 			if (!foundBoth)
 			{
