@@ -1091,17 +1091,6 @@ namespace SPNATI_Character_Editor
 				ConvertedWardrobe[lowestUnimportantUpper].Position = "upper";
 			}
 
-			Console.WriteLine("Wardrobe:");
-			for (int i = 0; i < Wardrobe.Count; i++)
-			{
-				Console.WriteLine(i + " (" + Wardrobe[i].Name + "): " + Wardrobe[i].Type + ", " + Wardrobe[i].Position);
-			}
-			Console.WriteLine("\nConvertedWardrobe:");
-			for (int i = 0; i < ConvertedWardrobe.Count; i++)
-			{
-				Console.WriteLine(i + " (" + ConvertedWardrobe[i].Name + "): " + ConvertedWardrobe[i].Type + ", " + ConvertedWardrobe[i].Position);
-			}
-
 			return ConvertedWardrobe;
 		}
 
