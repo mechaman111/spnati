@@ -215,7 +215,7 @@ namespace SPNATI_Character_Editor
 								if (layer < 0 || layer >= character.Layers)
 									continue;
 
-								Clothing clothing = character.Wardrobe[character.Layers - layer - 1];
+								Clothing clothing = character.GetConvertedWardrobe()[character.Layers - layer - 1];
 								string realType = clothing.Type;
 								if (filterType != realType.ToLower() || (filterPosition != null && clothing.Position != filterPosition))
 									continue;

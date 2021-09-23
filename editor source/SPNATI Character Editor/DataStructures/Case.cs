@@ -2006,7 +2006,7 @@ namespace SPNATI_Character_Editor
 			{
 				//if there is only one important for these layers, don't both including a targetStage
 				string position = (other.Tag.Contains("crotch") ? "lower" : "upper");
-				int layerCount = speaker.Wardrobe.Count(c => c.Position == position && c.Type == "important");
+				int layerCount = speaker.GetConvertedWardrobe().Count(c => c.Position == position && c.Type == "important");
 				if (layerCount == 1)
 				{
 					speakerStageRange = null;

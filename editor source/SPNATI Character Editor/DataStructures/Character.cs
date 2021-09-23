@@ -1019,6 +1019,92 @@ namespace SPNATI_Character_Editor
 			return Wardrobe[index];
 		}
 
+		public List<Clothing> GetConvertedWardrobe()
+        {
+			List<Clothing> ConvertedWardrobe = new List<Clothing>();
+			
+			foreach (Clothing c in Wardrobe)
+            {
+				ConvertedWardrobe.Add(c.Copy());
+            }
+
+			int lowestUnimportantUpper = 1000;
+			int lowestUnimportantLower = 1000;
+			int importantUpper = 1000;
+			int importantLower = 1000;
+
+			for (int i = 0; i < Wardrobe.Count; i++)
+			{
+				if (Wardrobe[i].Type == "important")
+				{
+					if (importantUpper == 1000 && (Wardrobe[i].Position == "upper" || Wardrobe[i].Position == "both"))
+					{
+						importantUpper = i;
+					}
+					if (importantLower == 1000 && (Wardrobe[i].Position == "lower" || Wardrobe[i].Position == "both"))
+					{
+						importantLower = i;
+					}
+				}
+
+				if (importantUpper != 1000 && importantLower != 1000)
+                {
+					break;
+                }
+			}
+
+			// if both chest and crotch are exposed at once, no important upper
+			if (importantUpper == importantLower && importantLower != 1000)
+			{
+				ConvertedWardrobe[importantLower].Position = "lower";
+			}
+
+			for (int i = 0; i < Wardrobe.Count; i++)
+			{
+				if (Wardrobe[i].Type != "important")
+				{
+					if (lowestUnimportantUpper == 1000 && (Wardrobe[i].Position == "upper" || Wardrobe[i].Position == "both"))
+					{
+						lowestUnimportantUpper = i;
+					}
+					if (lowestUnimportantLower == 1000 && (Wardrobe[i].Position == "lower" || Wardrobe[i].Position == "both"))
+					{
+						lowestUnimportantLower = i;
+					}
+				}
+
+				if (lowestUnimportantUpper != 1000 && lowestUnimportantLower != 1000)
+                {
+					break;
+				}
+            }
+
+			if (lowestUnimportantLower < importantLower)
+            {
+				ConvertedWardrobe[lowestUnimportantLower].Type = "important";
+				ConvertedWardrobe[lowestUnimportantLower].Position = "lower";
+			}
+
+			if (lowestUnimportantUpper < importantUpper)
+			{
+				ConvertedWardrobe[lowestUnimportantUpper].Type = "important";
+				ConvertedWardrobe[lowestUnimportantUpper].Position = "upper";
+			}
+
+			Console.WriteLine("Wardrobe:");
+			for (int i = 0; i < Wardrobe.Count; i++)
+			{
+				Console.WriteLine(i + " (" + Wardrobe[i].Name + "): " + Wardrobe[i].Type + ", " + Wardrobe[i].Position);
+			}
+			Console.WriteLine("\nConvertedWardrobe:");
+			for (int i = 0; i < ConvertedWardrobe.Count; i++)
+			{
+				Console.WriteLine(i + " (" + ConvertedWardrobe[i].Name + "): " + ConvertedWardrobe[i].Type + ", " + ConvertedWardrobe[i].Position);
+			}
+
+			return ConvertedWardrobe;
+		}
+
 		public string GetDirectory()
 		{
 			return Config.GetRootDirectory(this);

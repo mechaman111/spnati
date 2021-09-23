@@ -754,7 +754,7 @@ namespace SPNATI_Character_Editor
 					string type = tag.Substring(index + 1);
 					if (type == "accessory")
 						type = "extra";
-					clothing = character.Wardrobe[character.Layers - stage - 1];
+					clothing = character.GetConvertedWardrobe()[character.Layers - stage - 1];
 					string realType = clothing.Type;
 					if (type != realType.ToLower())
 					{
