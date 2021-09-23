@@ -171,7 +171,7 @@ namespace SPNATI_Character_Editor.Controls
 		public void SetText(DialogueLine line)
 		{
 			_line = line;
-			if (line == null || line.Text == null || string.IsNullOrEmpty(line.Text))
+			if (line == null || line.Text == null || string.IsNullOrEmpty(line.Text) || line.Text.Trim() == "~blank~")
 			{
 				_text = null;
 				_words = null;

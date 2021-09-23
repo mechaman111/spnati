@@ -383,17 +383,17 @@ namespace SPNATI_Character_Editor
 						//Make sure it's not blank
 						if (line.Text.Equals(""))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case has no text. {0} If this was intentional, the correct way to create a blank line is to use ~blank~.", caseLabel), context));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case has no text. If this was intentional, the correct way to create a blank line is to use ~blank~. {0}", caseLabel), context));
 						}
 
 						//Make sure it doesn't contain invalid variables (~name~ or ~target~ in untargeted cases)
 						if (!TriggerDatabase.GetTrigger(stageCase.Tag).HasTarget)
 						{
-							if (line.Text.Contains("~name~"))
+							if (line.Text.ToLower().Contains("~name~"))
 							{
 								warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Line contains ~name~, but is in a case with no target. {0}", caseLabel), context));
 							}
-							else if (line.Text.Contains("~target~"))
+							else if (line.Text.ToLower().Contains("~target~"))
 							{
 								warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Line contains ~target~, but is in a case with no target. {0}", caseLabel), context));
 							}
