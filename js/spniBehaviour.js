@@ -1927,7 +1927,7 @@ Case.prototype.checkConditions = function (self, opp) {
         addExtraNumberedBindings(bindingCombinations[i], Object.entries(counterMatches));
         if (this.tests.every(function(test) {
             var expr = expandDialogue(test.attr('expr'), self, opp, bindingCombinations[i]);
-            var value = test.attr('value');
+            var value = test.attr('value') || "";
             if (value) {
                 value = expandDialogue(value, self, opp, bindingCombinations[i]);
             }
