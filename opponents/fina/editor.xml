@@ -47,6 +47,9 @@
         <case name="Bullet Wounds" id="133" priority="Prompt" min="0" max="7">
             <description>After watching Aimee shoot off her clothes, Fina is concerned someone might have gotten hurt. She'll do this even while masturbating.</description>
         </case>
+        <case name="Cupl Chirps" id="2037" priority="FYI" min="2" max="2">
+            <description>Before his appearance, Cupil may chirp while Fina is stripping her sleeves. All cases where he does so have the marker CupilStrippingChirp.</description>
+        </case>
     </noteworthy>
     <reviewed>true</reviewed>
     <responses>
@@ -427,6 +430,30 @@
         <response id="1988" opponent="mari" opponentId="526" />
         <response id="1991" opponent="mari" opponentId="532" />
         <response id="1993" opponent="mari" opponentId="533" />
+        <response id="2013" opponent="mari" opponentId="618" />
+        <response id="2018" opponent="mari" opponentId="606" />
+        <response id="2020" opponent="mari" opponentId="603" />
+        <response id="2022" opponent="mari" opponentId="607" />
+        <response id="2025" opponent="mari" opponentId="600" />
+        <response id="2027" opponent="mari" opponentId="599" />
+        <response id="2029" opponent="mari" opponentId="614" />
+        <response id="2031" opponent="mari" opponentId="608" />
+        <response id="2033" opponent="mari" opponentId="613" />
+        <response id="2035" opponent="mari" opponentId="602" />
+        <response id="2038" opponent="mari" opponentId="616" />
+        <response id="2040" opponent="mari" opponentId="617" />
+        <response id="2042" opponent="mari" opponentId="604" />
+        <response id="2061" opponent="mari" opponentId="626" />
+        <response id="2062" opponent="mari" opponentId="628" />
+        <response id="2063" opponent="mari" opponentId="625" />
+        <response id="2064" opponent="mari" opponentId="621" />
+        <response id="2065" opponent="mari" opponentId="631" />
+        <response id="2067" opponent="mari" opponentId="632" />
+        <response id="2069" opponent="mari" opponentId="633" />
+        <response id="2070" opponent="mari" opponentId="622" />
+        <response id="2071" opponent="mari" opponentId="630" />
+        <response id="2072" opponent="mari" opponentId="623" />
+        <response id="2073" opponent="mari" opponentId="624" />
     </responses>
     <notes>
         <note id="1384">The Orb of Serenity is actually worth less than the three legendary Idols in Skies of Arcadia, but those are obtained in a completely different way depending on whether you're playing the Dreamcast original or the Gamecube remake, and I don't want to figure out how to handle that.</note>
@@ -455,6 +482,14 @@
         <note id="1937">Be sure to delete any seenNPCCrotch conditions if responding, or they'll break the response.</note>
         <note id="1962">This is split into a separate case so I can make sure it doesn't play in the same game as the question about Drachma, at least until I know how that conversation will go - hunting Rhaknam is a major part of Drachma's character.</note>
         <note id="1963">This is split into a separate case so I can make sure it doesn't play in the same game as the question about Rhaknam, at least until I know how that conversation will go - hunting Rhaknam is a major part of Drachma's character.</note>
+        <note id="2017">Talk about edge cases, but hey...</note>
+        <note id="2044">Months later, trying out RC's optimization on this new case. Since ~name~ produces additional variables ~name2~, ~name3~, etc. for additional matches, I only need one AlsoPlaying and can ensure that one of those matches is the human player, and use the variable tests on the others.</note>
+        <note id="2045">Months later, trying out RC's optimization on this new case. Since ~name~ produces additional variables ~name2~, ~name3~, etc. for additional matches, I only need one AlsoPlaying and can ensure that one of those matches is the human player, and use the variable tests on the others.</note>
+        <note id="2058">Need to treat the human player separately because they're in slot 0 which messes up said marker conditions.</note>
+        <note id="2047">Months later, trying out RC's optimization on this new case. Since ~name~ produces additional variables ~name2~, ~name3~, etc. for additional matches, I only need one AlsoPlaying and can ensure that one of those matches is the human player, and use the variable tests on the others.</note>
+        <note id="2052">Alt case for if the human player has the same name as an NPC. I seem to need this since otherwise I can't use Said Marker conditions with whichever slot the human player gets put in, as they are in slot 0.</note>
+        <note id="2053">Alt case for if the human player has the same name as an NPC. I seem to need this since otherwise I can't use Said Marker conditions with whichever slot the human player gets put in, as they are in slot 0.</note>
+        <note id="2054">Need to treat the player character specially to avoid issues with ~human~ being in slot 0.</note>
     </notes>
     <labels>
         <label id="93" label="" folder="Stranger" sort="2" />
@@ -540,14 +575,14 @@
         <label id="199" label="" folder="NPC Memory" sort="60" />
         <label id="200" label="" folder="NPC Memory" sort="66" />
         <label id="203" label="" folder="Friend" sort="496" />
-        <label id="205" label="" folder="Stranger" sort="86" />
-        <label id="206" label="" folder="Player Names" sort="158" />
+        <label id="205" label="" folder="Nicknames" sort="86" />
+        <label id="206" label="" folder="Nicknames" sort="158" />
         <label id="207" label="" folder="Friend" sort="350" />
         <label id="208" label="" folder="Stranger" sort="92" />
         <label id="209" label="" folder="Friend" sort="354" />
         <label id="210" label="" folder="Stranger" sort="94" />
-        <label id="211" label="" folder="Player Names" sort="16" />
-        <label id="212" label="" folder="Player Names" sort="146" />
+        <label id="211" label="" folder="Nicknames" sort="16" />
+        <label id="212" label="" folder="Nicknames" sort="146" />
         <label id="213" label="" folder="Stranger" sort="82" />
         <label id="214" label="" folder="Stranger" sort="78" />
         <label id="215" label="" folder="Friend" sort="322" />
@@ -1643,12 +1678,12 @@
         <label id="1584" label="" folder="Responses" sort="152" />
         <label id="1564" label="" folder="Responses" sort="37" />
         <label id="1581" label="" folder="Responses" sort="27" />
-        <label id="1588" label="" folder="Player Names" sort="19" />
-        <label id="1589" label="" folder="Player Names" sort="20" />
-        <label id="1590" label="" folder="Player Names" sort="0" />
-        <label id="1591" label="" folder="Player Names" sort="2" />
-        <label id="1592" label="" folder="Player Names" sort="3" />
-        <label id="1593" label="" folder="Player Names" sort="4" />
+        <label id="1588" label="" folder="Nicknames" sort="19" />
+        <label id="1589" label="" folder="Nicknames" sort="20" />
+        <label id="1590" label="" folder="Nicknames" sort="0" />
+        <label id="1591" label="" folder="Nicknames" sort="2" />
+        <label id="1592" label="" folder="Nicknames" sort="3" />
+        <label id="1593" label="" folder="Nicknames" sort="4" />
         <label id="1594" label="" folder="Responses" sort="78" />
         <label id="1595" label="" folder="Responses" sort="79" />
         <label id="1596" label="" folder="Responses" sort="153" />
@@ -1691,7 +1726,7 @@
         <label id="1631" label="" folder="Player Names" sort="23" />
         <label id="1632" label="" folder="Player Names" sort="31" />
         <label id="1633" label="" folder="Player Names" sort="32" />
-        <label id="1492" label="" folder="Player Names" sort="30" />
+        <label id="1492" label="" folder="Nicknames" sort="30" />
         <label id="1636" label="" folder="Responses" sort="92" />
         <label id="1637" label="" folder="Responses" sort="93" />
         <label id="1638" label="" folder="Responses" sort="94" />
@@ -1940,25 +1975,35 @@
         <label id="1921" label="" folder="Friend" sort="91" />
         <label id="1922" label="" folder="Friend" sort="90" />
         <label id="1923" label="" folder="Friend" sort="0" />
-        <label id="1926" label="" folder="Responses" sort="0" />
-        <label id="1933" label="" folder="NPC Memory" sort="0" />
-        <label id="1934" label="" folder="NPC Memory" sort="0" />
-        <label id="1948" label="" folder="Responses" sort="0" />
-        <label id="1949" label="" folder="Responses" sort="0" />
-        <label id="1950" label="" folder="Responses" sort="0" />
-        <label id="1951" label="" folder="Responses" sort="0" />
-        <label id="1952" label="" folder="Responses" sort="0" />
-        <label id="1954" label="" folder="Responses" sort="0" />
-        <label id="1943" label="" folder="Responses" sort="0" />
+        <label id="1926" label="" folder="Responses" sort="130" />
+        <label id="1933" label="" folder="NPC Memory" sort="37" />
+        <label id="1934" label="" folder="NPC Memory" sort="38" />
+        <label id="1948" label="" folder="Responses" sort="73" />
+        <label id="1949" label="" folder="Responses" sort="74" />
+        <label id="1950" label="" folder="Responses" sort="75" />
+        <label id="1951" label="" folder="Responses" sort="76" />
+        <label id="1952" label="" folder="Responses" sort="77" />
+        <label id="1954" label="" folder="Responses" sort="268" />
+        <label id="1943" label="" folder="Responses" sort="267" />
         <label id="1995" label="" folder="Friend" sort="0" />
         <label id="1996" label="" folder="Stranger" sort="0" />
-        <label id="1997" label="" folder="Friend" sort="0" />
-        <label id="1998" label="" folder="Friend" sort="0" />
-        <label id="1999" label="" folder="Friend" sort="0" />
-        <label id="2000" label="" folder="Stranger" sort="0" />
-        <label id="2001" label="" folder="Stranger" sort="0" />
+        <label id="1997" label="" folder="Friend" sort="213" />
+        <label id="1998" label="" folder="Friend" sort="214" />
+        <label id="1999" label="" folder="Friend" sort="215" />
+        <label id="2000" label="" folder="Stranger" sort="69" />
+        <label id="2001" label="" folder="Stranger" sort="74" />
+        <label id="2016" label="" folder="Stranger" sort="70" />
+        <label id="2017" label="" folder="Friend" sort="216" />
+        <label id="2024" label="" folder="Friend" sort="221" />
+        <label id="2048" label="" folder="Nicknames" sort="11" />
+        <label id="2049" label="" folder="Nicknames" sort="4" />
+        <label id="2050" label="" folder="Nicknames" sort="3" />
+        <label id="2051" label="" folder="Nicknames" sort="2" />
+        <label id="2055" label="" folder="Nicknames" sort="0" />
+        <label id="2056" label="" folder="Nicknames" sort="0" />
+        <label id="2057" label="" folder="Nicknames" sort="0" />
     </labels>
-    <nextId>2011</nextId>
+    <nextId>2073</nextId>
     <markers>
         <marker scope="Public" name="AikaBirthday">Fina notes that it's Aika's birthday today.</marker>
         <marker scope="Public" name="BlessCollectibleCounter">The player has heard Fina say her "bless" finishing line.</marker>
@@ -1981,17 +2026,21 @@
         <marker scope="Public" name="CupilSleeves">Cupil wants Fina to put her sleeves back on so he can hide under them.</marker>
         <marker scope="Public" name="CupilStrippingChirp">Marks lines where Cupil chirps while Fina is stripping her sleeves, before he's actually revealed.</marker>
         <marker scope="Private" name="defeated">The player has defeated Fina before and has seen her nude and masturbating. She'll remember this in future games.</marker>
+        <marker scope="Public" name="DuplicateFour" />
+        <marker scope="Public" name="DuplicateOne" />
+        <marker scope="Public" name="DuplicateThree" />
+        <marker scope="Public" name="DuplicateTwo" />
         <marker scope="Public" name="ExposedHumanReact">Fina reacts to a human player who starts the game partly exposed. Prevents her normal partly-exposed lines from playing this game as they don't make sense in this situation.</marker>
         <marker scope="Public" name="FamiliarFaces">Counts the number of opponents in this game Fina recognizes from previous games (not counting the player). This doesn't completely work yet.</marker>
         <marker scope="Public" name="FemaleToMale">The player was previously female, but in this game, they have changed their gender to male.</marker>
         <marker scope="Public" name="FinaAdoraStart1">First part of stripping conversation for Adora's first layer.</marker>
         <marker scope="Public" name="FinaAikaUnderwear">First part of a sequence where Fina thinks about Aika in her underwear.</marker>
-        <marker scope="Public" name="FinaAimeeDefeat" />
+        <marker scope="Public" name="FinaAimeeDefeatMet" />
+        <marker scope="Public" name="FinaAimeeDefeatUnmet">Fina's dialogue at the end of a game with Aimee (if she lost the game and hadn't met Aimee before).</marker>
         <marker scope="Public" name="FinaAimeeGreet">Fina is unhappy to see that Aimee has been selected to join the game, having met her in a previous game.</marker>
         <marker scope="Public" name="FinaAimeeRinApology">In a game with both Aimee and Rin, Fina accidentally suggests using your hands is the proper way to undress, then apologizes to Rin. (I can't believe I wrote for this case either!)</marker>
-        <marker scope="Public" name="FinaAimeeVictoryFriend" />
-        <marker scope="Public" name="FinaAimeeVictoryMet" />
-        <marker scope="Public" name="FinaAimeeVictoryUnmet" />
+        <marker scope="Public" name="FinaAimeeVictoryMet">Fina's dialogue at the end of a game with Aimee (if she won the game and had met Aimee before).</marker>
+        <marker scope="Public" name="FinaAimeeVictoryUnmet">Fina's dialogue at the end of a game with Aimee (if she won the game and hadn't met Aimee before).</marker>
         <marker scope="Public" name="FinaAimeeWorried">Fina is worried that someone might have been hurt by Aimee's stripping technique last round.</marker>
         <marker scope="Public" name="FinaAkkoFinish">Fina reacts to Akko's magical finish.</marker>
         <marker scope="Public" name="FinaAllAdventurers">Fina suggests going on an expedition after the game to a table of all adventurers.</marker>
@@ -2110,8 +2159,10 @@
         <marker scope="Public" name="FinaCharaContinueFriends1">Second part of stripping conversation for Chara's first layer ("friends" branch).</marker>
         <marker scope="Public" name="FinaCharaContinueMagic1">Second part of stripping conversation for Chara's first layer ("magic" branch).</marker>
         <marker scope="Public" name="FinaCharaContinueReveal1">Second part of stripping conversation for Chara's first layer (if Fina has learned Chara's true nature).</marker>
+        <marker scope="Public" name="FinaCharaContinueReveal2" />
         <marker scope="Public" name="FinaCharaCorruption">Fina tells Chara that she'll continue to fight and attempt to reform the player.</marker>
         <marker scope="Public" name="FinaCharaCountdown">When she defeats either Chara or the player, Fina mimics Chara's countdown.</marker>
+        <marker scope="Public" name="FinaCharaEnd2" />
         <marker scope="Public" name="FinaCharaEndDetermination1">Last part of stripping conversation for Chara's first layer ("determination" branch).</marker>
         <marker scope="Public" name="FinaCharaEndReveal1">First part of stripping conversation for Chara's first layer (if Fina has learned Chara's true nature).</marker>
         <marker scope="Public" name="FinaCharaEndRevive1">Last part of stripping conversation for Chara's first layer ("revive" branch).</marker>
@@ -2157,6 +2208,7 @@
         <marker scope="Public" name="FinaCharaSoul" />
         <marker scope="Public" name="FinaCharaStart1">First part of stripping conversation for Chara's first layer.</marker>
         <marker scope="Public" name="FinaCharaStart2">First part of stripping conversation for Chara's second layer.</marker>
+        <marker scope="Public" name="FinaCharaStart3" />
         <marker scope="Public" name="FinaCharaStartReveal1">First part of stripping conversation for Chara's first layer (if Fina already knows of Chara's past deeds).</marker>
         <marker scope="Public" name="FinaCharaStartReveal2" />
         <marker scope="Public" name="FinaCharaSupernovaDetermination">Fina is determined to win against Chara and offers Supernova her support. Unfortunately, she's already playing at her best, so this doesn't make her any better...</marker>
@@ -2244,7 +2296,7 @@
         <marker scope="Public" name="FinaCynthiaStart2">First part of stripping conversation for Cynthia's second layer.</marker>
         <marker scope="Public" name="FinaDatingPrompt">Fina asks the others for advice on how to invite someone to bed with her.</marker>
         <marker scope="Public" name="FinaDawnContinue1">Second part of stripping conversation for Dawn's first layer.</marker>
-        <marker scope="Public" name="FinaDawnContinue2" />
+        <marker scope="Public" name="FinaDawnContinue2">Second part of stripping conversation for Dawn's second layer.</marker>
         <marker scope="Public" name="FinaDawnCreatures">Fina tells Dawn she could study Cupil if she wants. (Cupil not present version)</marker>
         <marker scope="Public" name="FinaDawnCupilCreatures">Fina tells Dawn she could study Cupil if she wants. (Cupil present version)</marker>
         <marker scope="Public" name="FinaDawnEnd1">Last part of stripping conversation for Dawn's first layer.</marker>
@@ -2260,9 +2312,10 @@
         <marker scope="Public" name="FinaDonPatchReact">Fina is amused by Don Patch appearing to cover Bobobo's privates.</marker>
         <marker scope="Public" name="FinaDonPatchReactRerun">Fina is amused by Don Patch appearing to cover Bobobo's privates... again.</marker>
         <marker scope="Public" name="FinaDream">Fina tells the player about a dream she had in which she is herself from Valkyria Chronicles.</marker>
-        <marker scope="Public" name="FinaDreamAmyRose" />
-        <marker scope="Public" name="FinaDreamDonPatch" />
+        <marker scope="Public" name="FinaDreamAmyRose">Fina tells the player about a dream she had in which Vyse raced against Amy Rose in Sonic &amp; All-Stars Racing Transformed.</marker>
+        <marker scope="Public" name="FinaDreamDonPatch">Fina tells the player about a dream she had in which she is herself from Valkyria Chronicles, except Don Patch was there for some reason...</marker>
         <marker scope="Public" name="FinaDressBra">Fina explains she has a bra built into her dress, thus couldn't take it off separately.</marker>
+        <marker scope="Public" name="FinaDuplicateNames" />
         <marker scope="Public" name="FinaDustChazzReact1">Fina reacts to Dust biting Chazz on the ass, part one.</marker>
         <marker scope="Public" name="FinaDustChazzReact2">Fina reacts to Dust biting Chazz on the ass, part two.</marker>
         <marker scope="Public" name="FinaDustChazzReact3">Fina reacts to Dust biting Chazz on the ass, part three.</marker>
@@ -2411,6 +2464,7 @@
         <marker scope="Public" name="FinaHomeworldsPrompt">Fina asks a table without any other Skies of Arcadia characters about their homeworlds.</marker>
         <marker scope="Public" name="FinaHugeBreasts">Fina reacts to a character with huge breasts.</marker>
         <marker scope="Public" name="FinaHugePenis">Fina reacts to a character with a huge penis.</marker>
+        <marker scope="Public" name="FinaHumanDuplicate" />
         <marker scope="Public" name="FinaIgnatzAngel">Fina notices Ignatz staring at her and is concerned he thinks she isn't stripping enough.</marker>
         <marker scope="Public" name="FinaIgnatzAssassin">Fina is surprised that Ignatz wants to be an assassin.</marker>
         <marker scope="Public" name="FinaIgnatzContinue1">Second part of stripping conversation for Ignatz's first layer.</marker>
@@ -2590,22 +2644,50 @@
         <marker scope="Public" name="FinaMan">Fina is exposed in front of one or more men. This marker is to prevent more than one of her lines for such a situation from playing.</marker>
         <marker scope="Public" name="FinaMansionAika">While masturbating, Fina has a shower thought that Aika might have an easy time getting off in a mansion full of expensive items.</marker>
         <marker scope="Public" name="FinaManyCompanions">To a table of all has_companion-tagged characters, Fina comments that everyone appears to have brought a friend.</marker>
+        <marker scope="Public" name="FinaMari" />
         <marker scope="Public" name="FinaMariContinue1" />
         <marker scope="Public" name="FinaMariCupil" />
         <marker scope="Public" name="FinaMariDress1" />
+        <marker scope="Public" name="FinaMariEnd1Piano" />
+        <marker scope="Public" name="FinaMariEnd1Song" />
+        <marker scope="Public" name="FinaMariEnd1Stress" />
         <marker scope="Public" name="FinaMariInexperienced" />
         <marker scope="Public" name="FinaMariRelationships" />
         <marker scope="Public" name="FinaMariReply1" />
-        <marker scope="Public" name="FinaMariReplyAdventurer" />
         <marker scope="Public" name="FinaMariReplyBlackPirates" />
-        <marker scope="Public" name="FinaMariReplyComfortable2Stranger" />
         <marker scope="Public" name="FinaMariReplyComfortableFriend" />
-        <marker scope="Public" name="FinaMariReplyComfortableFriendExposed" />
         <marker scope="Public" name="FinaMariReplyComfortableStranger" />
-        <marker scope="Public" name="FinaMariReplyComfortableStrangerExposed" />
+        <marker scope="Public" name="FinaMariReplyContinue" />
         <marker scope="Public" name="FinaMariReplyContinue1Heard" />
         <marker scope="Public" name="FinaMariReplyContinue1Unknown" />
-        <marker scope="Public" name="FinaMariReplyDanger" />
+        <marker scope="Public" name="FinaMariReplyContinueAika" />
+        <marker scope="Public" name="FinaMariReplyContinueAika2" />
+        <marker scope="Public" name="FinaMariReplyContinueAika2Cupil" />
+        <marker scope="Public" name="FinaMariReplyContinueAikaCupil" />
+        <marker scope="Public" name="FinaMariReplyContinueComfortableFriend" />
+        <marker scope="Public" name="FinaMariReplyContinueComfortableStranger" />
+        <marker scope="Public" name="FinaMariReplyContinueDomingo" />
+        <marker scope="Public" name="FinaMariReplyContinueDomingoCupil" />
+        <marker scope="Public" name="FinaMariReplyContinueDrachma" />
+        <marker scope="Public" name="FinaMariReplyContinueGilder" />
+        <marker scope="Public" name="FinaMariReplyContinueGilderCupil" />
+        <marker scope="Public" name="FinaMariReplyContinueInexperienced" />
+        <marker scope="Public" name="FinaMariReplyContinueInexperiencedFriend" />
+        <marker scope="Public" name="FinaMariReplyContinueInexperiencedStranger" />
+        <marker scope="Public" name="FinaMariReplyContinueKirala" />
+        <marker scope="Public" name="FinaMariReplyContinueKiralaCupil" />
+        <marker scope="Public" name="FinaMariReplyContinueMenaceEmpire" />
+        <marker scope="Public" name="FinaMariReplyContinueMenacePirates" />
+        <marker scope="Public" name="FinaMariReplyContinueMenacePiratesCupil" />
+        <marker scope="Public" name="FinaMariReplyContinueRhaknam" />
+        <marker scope="Public" name="FinaMariReplyContinueRhaknamCupil" />
+        <marker scope="Public" name="FinaMariReplyContinueSheltered" />
+        <marker scope="Public" name="FinaMariReplyContinueShip" />
+        <marker scope="Public" name="FinaMariReplyContinueShip2" />
+        <marker scope="Public" name="FinaMariReplyContinueShipCupil" />
+        <marker scope="Public" name="FinaMariReplyContinueValuans" />
+        <marker scope="Public" name="FinaMariReplyContinueValuansCupil" />
+        <marker scope="Public" name="FinaMariReplyContinueVyse" />
         <marker scope="Public" name="FinaMariReplyDomingo" />
         <marker scope="Public" name="FinaMariReplyDrachma" />
         <marker scope="Public" name="FinaMariReplyEnd1" />
@@ -2618,14 +2700,9 @@
         <marker scope="Public" name="FinaMariReplyOtherWomen" />
         <marker scope="Public" name="FinaMariReplyRhaknam" />
         <marker scope="Public" name="FinaMariReplySheltered" />
-        <marker scope="Public" name="FinaMariReplySheltered1" />
-        <marker scope="Public" name="FinaMariReplySheltered2" />
-        <marker scope="Public" name="FinaMariReplySheltered3" />
         <marker scope="Public" name="FinaMariReplyShip" />
         <marker scope="Public" name="FinaMariReplyValuans" />
         <marker scope="Public" name="FinaMariReplyVyse" />
-        <marker scope="Public" name="FinaMariReplyWomen" />
-        <marker scope="Public" name="FinaMariStart" />
         <marker scope="Public" name="FinaMariStart1" />
         <marker scope="Public" name="FinaMariStartFriend" />
         <marker scope="Public" name="FinaMariStartStranger" />
@@ -3254,6 +3331,7 @@
         <marker scope="Public" name="FinaTikiLoqua">Fina wonders if the Tiki Bar serves loqua.</marker>
         <marker scope="Public" name="FinaTrainerFitness">Fina tells WFT she's not good at sticking to a fitness routine.</marker>
         <marker scope="Public" name="FinaTrainerStart1">First part of stripping conversation for Wii Fit Trainer's first layer.</marker>
+        <marker scope="Public" name="FinaTriplicateNames" />
         <marker scope="Public" name="FinaTrite">Fina wonders why her own adventures were so similar to everyone else's at the Inventory. (It's because Skies of Arcadia is hilariously tropey.)</marker>
         <marker scope="Public" name="FinaValuanEmpire">Fina talks about the Valuan Empire.</marker>
         <marker scope="Public" name="FinaVictoryRedeeming">Fina wins the game, and thinks the player is breaking free of Chara's influence.</marker>
@@ -3297,11 +3375,13 @@
         <marker scope="Public" name="FinaYshtolaEnd1">Last part of stripping conversation for Y'shtola's first layer.</marker>
         <marker scope="Public" name="FinaYshtolaEnd2">Last part of stripping conversation for Y'shtola's first layer.</marker>
         <marker scope="Public" name="FinaYshtolaEnd2Stranger">Last part of stripping conversation for Y'shtola's first layer, if it's Fina's first game.</marker>
+        <marker scope="Public" name="FinaYshtolaEnd3" />
         <marker scope="Public" name="FinaYshtolaReply1">First part of stripping conversation with Y'shtola for Fina's first layer.</marker>
         <marker scope="Public" name="FinaYshtolaReply2">First part of stripping conversation with Y'shtola for Fina's second layer.</marker>
         <marker scope="Public" name="FinaYshtolaReply3" />
         <marker scope="Public" name="FinaYshtolaReplyContinue1">Second part of stripping conversation with Y'shtola for Fina's first layer.</marker>
         <marker scope="Public" name="FinaYshtolaReplyContinue2">Second part of stripping conversation with Y'shtola for Fina's second layer.</marker>
+        <marker scope="Public" name="FinaYshtolaReplyContinue3" />
         <marker scope="Public" name="FinaYshtolaReplyEnd1">Last part of stripping conversation with Y'shtola for Fina's first layer.</marker>
         <marker scope="Public" name="FinaYshtolaReplyEnd2" />
         <marker scope="Public" name="FinaYshtolaStart1">First part of stripping conversation for Y'shtola's first layer.</marker>
@@ -3369,7 +3449,6 @@
         <marker scope="Public" name="RemembersYourName">Fina will remember the player's name across games, and she'll comment and update it if they change it to something else. She'll also use it instead of objectionable names like "Daddy" and "Master".</marker>
         <marker scope="Public" name="removedPants">Per-target marker that tracks whether each character has removed their pants (value=removed).</marker>
         <marker scope="Public" name="removedSocks">Per-target marker that tracks whether each character has removed their socks (value=removed).</marker>
-        <marker scope="Public" name="s" />
         <marker scope="Public" name="seenBreasts">Fina has seen another (non-Aika) woman's breasts before. She'll remember this in future games.</marker>
         <marker scope="Public" name="seenEmiPirate">Fina has seen Emi talking like a pirate during a game with her.</marker>
         <marker scope="Public" name="seenHugeBreasts">Fina has seen huge breasts for the first time. She'll remember whose breasts they were, and reference that person across future games.</marker>
