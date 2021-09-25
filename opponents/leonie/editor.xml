@@ -35,6 +35,12 @@
         <case name="CQC Advice (Multiple)" id="545" priority="FYI" min="0" max="3">
             <description>A variation of her question where she asks a fighter for combat tips that fires whenever there are multiple opponents with the same tag. The asked_fighter marker is set to be her intended target's ID in this version.</description>
         </case>
+        <case name="Crafting Prompt" id="746" priority="Prompt" min="0" max="7">
+            <description>Leonie asks other people if they are any good with their hands - in the sense that they would be good at crafting something, either realistically or in an abstract game way.</description>
+        </case>
+        <case name="Rivalry Activation (Mid-game)" id="39" priority="FYI" min="5" max="5">
+            <description>Leonie starts becoming very competitive under certain circumstances, such as when she's stripped down with two or more men present.</description>
+        </case>
     </noteworthy>
     <reviewed>true</reviewed>
     <responses>
@@ -239,6 +245,12 @@
         <response id="730" opponent="hilda" opponentId="232" />
         <response id="732" opponent="hilda" opponentId="233" />
         <response id="733" opponent="hilda" opponentId="236" />
+        <response id="754" opponent="petra" opponentId="305" />
+        <response id="755" opponent="petra" opponentId="308" />
+        <response id="756" opponent="petra" opponentId="306" />
+        <response id="760" opponent="petra" opponentId="289" />
+        <response id="761" opponent="petra" opponentId="307" />
+        <response id="762" opponent="petra" opponentId="309" />
     </responses>
     <notes>
         <note id="28">throw cloth over chair? idk 4am brain</note>
@@ -270,6 +282,12 @@
         <note id="627">Leonie is asking about if Wikipedia has 'adult articles' out of genuine curiosity</note>
         <note id="628">Leonie is disturbed by the idea that young people (children/teens) outside the Officers Academy might be drafted into war</note>
         <note id="405">when war outfit gets a butt pose, add it to this case</note>
+        <note id="751">This version takes priority over the basic case in order to jump-start the flirting sequence. It can happen two stages sooner than the normal case.</note>
+        <note id="749">In petra's response, this increases the flirt counter by 1</note>
+        <note id="743">In petra's response, this increases the flirt counter by 1</note>
+        <note id="753">In petra's response, this increases the flirt counter by 1</note>
+        <note id="747">If Yuna is present, this overrides the 'gate' that they need to have flirted already.</note>
+        <note id="750">If Yuna is present, this overrides the 'gate' that they need to have flirted twice already.</note>
     </notes>
     <labels>
         <label id="2" label="" folder="Background" sort="0" />
@@ -289,7 +307,7 @@
         <label id="49" label="" folder="Background" sort="4" />
         <label id="50" label="" folder="Background" sort="5" />
         <label id="51" label="" folder="Background" sort="6" />
-        <label id="71" label="" color="6" folder="Hidden" sort="3" />
+        <label id="71" label="" color="6" folder="Hidden" sort="0" />
         <label id="72" label="Rivalry" color="2" folder="" sort="0" />
         <label id="73" label="Rivalry" color="2" folder="" sort="0" />
         <label id="77" label="" color="1" folder="" sort="0" />
@@ -598,7 +616,7 @@
         <label id="408" label="Default" folder="Character Interaction" sort="3" />
         <label id="409" label="War" folder="Character Interaction" sort="11" />
         <label id="410" label="Toy" folder="" sort="0" />
-        <label id="411" label="" color="6" folder="Hidden" sort="9" />
+        <label id="411" label="" color="6" folder="Hidden" sort="0" />
         <label id="412" label="Rivalry" color="2" folder="" sort="0" />
         <label id="413" label="RIVALRY (early) - 2+ other alive males" color="2" folder="" sort="0" />
         <label id="414" label="" folder="Also Playing" sort="7" />
@@ -788,11 +806,11 @@
         <label id="685" label="" folder="Responses Petra" sort="0" />
         <label id="686" label="" folder="Responses Petra" sort="0" />
         <label id="687" label="Professor" folder="Player Name" sort="0" />
-        <label id="688" label="" folder="Responses Petra" sort="0" />
-        <label id="689" label="" folder="Responses Petra" sort="0" />
+        <label id="688" label="P&gt;L 1" folder="Responses Petra" sort="0" />
+        <label id="689" label="P&gt;L 1" folder="Responses Petra" sort="0" />
         <label id="690" label="" folder="Responses" sort="0" />
         <label id="691" label="" folder="Responses" sort="0" />
-        <label id="692" label="" folder="Responses Petra" sort="0" />
+        <label id="692" label="P&gt;L 1" folder="Responses Petra" sort="0" />
         <label id="694" label="" folder="Responses" sort="0" />
         <label id="695" label="" folder="Responses" sort="0" />
         <label id="697" label="" folder="Responses Petra" sort="0" />
@@ -834,12 +852,37 @@
         <label id="734" label="" folder="Hilda + Adrien" sort="0" />
         <label id="735" label="" folder="Hilda + Adrien" sort="0" />
         <label id="736" label="" color="2" folder="Hilda + Adrien" sort="0" />
+        <label id="737" label="" folder="Target Petra" sort="0" />
+        <label id="738" label="" folder="Target Petra" sort="0" />
+        <label id="739" label="" folder="Target Petra" sort="0" />
+        <label id="740" label="" folder="tag Targets" sort="0" />
+        <label id="741" label="" folder="Target Petra (Flirt)" sort="0" />
+        <label id="742" label="" folder="Target Petra (Flirt)" sort="0" />
+        <label id="743" label="" color="6" folder="Target Petra (Flirt)" sort="0" />
+        <label id="744" label="Onboro" color="2" folder="Player Name" sort="0" />
+        <label id="745" label="" folder="Good Hand Idle Lines" sort="0" />
+        <label id="746" label="Crafting Q" folder="Questions" sort="0" />
+        <label id="747" label="" folder="Target Petra (Flirt)" sort="0" />
+        <label id="748" label="" folder="Target Petra (Flirt)" sort="0" />
+        <label id="749" label="" color="6" folder="Target Petra (Flirt)" sort="0" />
+        <label id="750" label="" folder="Target Petra (Flirt)" sort="0" />
+        <label id="751" label="Stage 2 Flirt Yuna override" folder="Target Petra (Flirt)" sort="0" />
+        <label id="752" label="" folder="Target Petra (Flirt)" sort="0" />
+        <label id="753" label="" color="6" folder="Target Petra (Flirt)" sort="0" />
+        <label id="754" label="P&gt;L 3" folder="Responses Petra" sort="0" />
+        <label id="756" label="P&gt;L 3" folder="Responses Petra" sort="0" />
+        <label id="757" label="P&gt;L 3 Rivalry" folder="Responses Petra" sort="0" />
+        <label id="758" label="" folder="Responses Petra" sort="0" />
+        <label id="755" label="P&gt;L 3" folder="Responses Petra" sort="0" />
+        <label id="759" label="P&gt;L 3 Rivalry" color="2" folder="Responses Petra" sort="0" />
+        <label id="760" label="P&gt;L 2" folder="Responses Petra" sort="0" />
+        <label id="761" label="P&gt;L 2" folder="Responses Petra" sort="0" />
     </labels>
     <prefixes>
         <prefix>unlock</prefix>
         <prefix>epilogue_</prefix>
     </prefixes>
-    <nextId>736</nextId>
+    <nextId>762</nextId>
     <markers>
         <marker scope="Public" name="" />
         <marker scope="Public" name="adrien_strip_transformation" />
@@ -986,6 +1029,7 @@
         <marker scope="Public" name="Hilda_LeonieMast_Part8">A dialogue chain with Hilda while Leonie is masturbating.</marker>
         <marker scope="Public" name="hilda_poker_face">Banter with Hilda about having a good poker face</marker>
         <marker scope="Public" name="Hilda_UnoArgument">Continued banter with Hilda about UNO</marker>
+        <marker scope="Public" name="idle_3_leatherworking" />
         <marker scope="Public" name="idle_girls_night_out">Mentions that this could a girl's night out</marker>
         <marker scope="Public" name="idle_men_only_table">Idle dialogue at a table with 4 men.</marker>
         <marker scope="Public" name="idle_summer_beach_bugs" />
@@ -1185,15 +1229,32 @@
         <marker scope="Public" name="leonie_perona_flying" />
         <marker scope="Public" name="leonie_petra_arm_tattoo" />
         <marker scope="Public" name="leonie_petra_flirt_counter" />
+        <marker scope="Public" name="leonie_petra_leonieFlirt1" />
+        <marker scope="Public" name="leonie_petra_leonieFlirt1b" />
+        <marker scope="Public" name="leonie_petra_leonieFlirt1c" />
+        <marker scope="Public" name="leonie_petra_leonieFlirt2a" />
+        <marker scope="Public" name="leonie_petra_leonieFlirt2b" />
+        <marker scope="Public" name="leonie_petra_leonieFlirt2c" />
+        <marker scope="Public" name="leonie_petra_leonieFlirt3a" />
+        <marker scope="Public" name="leonie_petra_leonieFlirt3b" />
+        <marker scope="Public" name="leonie_petra_leonieFlirt3c" />
         <marker scope="Public" name="leonie_petra_PetraFlirc1c" />
         <marker scope="Public" name="leonie_petra_PetraFlirt1" />
         <marker scope="Public" name="leonie_petra_PetraFlirt1b" />
+        <marker scope="Public" name="leonie_petra_PetraFlirt2" />
+        <marker scope="Public" name="leonie_petra_PetraFlirt2b" />
+        <marker scope="Public" name="leonie_petra_PetraFlirt3" />
+        <marker scope="Public" name="leonie_petra_selfmast_1" />
         <marker scope="Public" name="leonie_petra_selfstrip0a" />
         <marker scope="Public" name="leonie_petra_selfstrip0b" />
         <marker scope="Public" name="leonie_petra_selfstrip0c" />
         <marker scope="Public" name="leonie_petra_selfstrip1a" />
         <marker scope="Public" name="leonie_petra_selfstrip1b" />
         <marker scope="Public" name="leonie_petra_selfstrip2a" />
+        <marker scope="Public" name="leonie_petra_strip0a" />
+        <marker scope="Public" name="leonie_petra_strip0b" />
+        <marker scope="Public" name="leonie_petra_strip0c" />
+        <marker scope="Public" name="leonie_petra_strip2a" />
         <marker scope="Public" name="leonie_pyrrha_plans_tomorrow_prompt" />
         <marker scope="Public" name="leonie_pyrrha_strip_summer1b" />
         <marker scope="Public" name="leonie_pyrrha_strip_summer1c" />
@@ -1339,11 +1400,18 @@
         <marker scope="Public" name="opponent_lost_military">Opponent has lost and they have the military tag</marker>
         <marker scope="Public" name="opponent_lost_school_uniform">Opponent has lost and they are wearing a school uniform that doesnt appear to be a military academy uniform.</marker>
         <marker scope="Public" name="opponent_lost_school_uniform_military">Opponent has lost and they have both the military and school uniform tags</marker>
+        <marker scope="Public" name="petra_leonie_PetraFlirt2" />
+        <marker scope="Public" name="petra_leonie_PetraFlirt2b" />
+        <marker scope="Public" name="petra_leonie_PetraFlirt2c" />
+        <marker scope="Public" name="petra_leonie_PetraFlirt3" />
+        <marker scope="Public" name="petra_leonie_PetraFlirt3b" />
+        <marker scope="Public" name="petra_leonie_PetraFlirt3c" />
         <marker scope="Public" name="PlayerCalledSelfJeralt">The player called themselves Jeralt. Leonie doesn't like this. Activates Rivalry early and changes their nickname.</marker>
         <marker scope="Public" name="Polly_Leonie_DrinkingCompetition" />
         <marker scope="Public" name="Polly_Leonie_Drugs_response" />
         <marker scope="Public" name="Polly_Leonie_Jeralt_response" />
         <marker scope="Public" name="Polly_Leonie_Killing_response" />
+        <marker scope="Public" name="prompt_good_with_hands" />
         <marker scope="Public" name="remove_acc_female_make_them_yourself" />
         <marker scope="Public" name="remove_acc_female_shame_to_see_it_go" />
         <marker scope="Public" name="respond_bernadetta_leonie_loses">Response to some Bernadetta inbound</marker>
