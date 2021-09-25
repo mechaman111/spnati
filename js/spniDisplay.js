@@ -1526,16 +1526,8 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
             showPositive = true;
         } else if (bestMatchEpilogue.wrongGender) {
             text = bestMatchEpilogue.gender.initCap() + 's Only';
-        } else if (bestMatchEpilogue.missingCharacter) {
-            var opp = loadedOpponents.find(function (p) {
-                return p.id === bestMatchEpilogue.missingCharacter;
-            });
-
-            if (opp) {
-                text = "Requires " + opp.selectLabel;
-            } else {
-                text = "Requires Missing Character";
-            }
+        } else if (bestMatchEpilogue.characterIsMissing) {
+            text = "Requires " + bestMatchEpilogue.requiredCharactersAsText
         } else {
             text = (bestMatchEpilogue.extraConditions > 0 ? "Conditionally " : "") + "Available";
             showPositive = true;

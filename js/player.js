@@ -926,8 +926,8 @@ Opponent.prototype.getAllEpilogueStatus = function () {
             title: $elem.text(),
             extraConditions: false,
             wrongGender: false,
-            needsCharacters: null,
-            missingCharacter: false,
+            requiredCharacters: null,
+            characterIsMissing: false,
             hint: undefined,
         };
 
@@ -946,16 +946,22 @@ Opponent.prototype.getAllEpilogueStatus = function () {
                 return players.some(function (p) { return p.id == ap; });
             })) {
                 /* Player requirement not met */
-                summary.missingCharacter = true;
+                summary.characterIsMissing = true;
             }
-            summary.needsCharacters = alsoPlaying;
+            summary.requiredCharacters = alsoPlaying;
+            summary.requiredCharactersLabels = alsoPlaying.map(function(id) {
+                var opp = loadedOpponents.find(function (p) {
+                    return p && p.id === id;
+                });
+                return opp ? opp.selectLabel : id.initCap();
+            });
         }
 
         summary.hint = $elem.attr('hint');
         summary.extraConditions = $elem.attr('markers') == 'true';
         summary.score = (summary.wrongGender ? 4 : 0)
-            + (summary.missingCharacter ? 2 : 0)
-            + (summary.needsCharacters || summary.extraConditions ? 1 : 0);
+            + (summary.characterIsMissing ? 2 : 0)
+            + (summary.requiredCharacters || summary.extraConditions ? 1 : 0);
 
         ret.push(summary);
     }.bind(this));
@@ -1012,22 +1018,22 @@ Opponent.prototype.getEpilogueStatus = function(mainSelect) {
         badge = "-unavailable";
     } else if (bestMatchEpilogue.wrongGender) {
         badge = '-' + bestMatchEpilogue.gender;
-    } else if ((bestMatchEpilogue.needsCharacters && !mainSelect) || bestMatchEpilogue.extraConditions) {
+    } else if ((bestMatchEpilogue.requiredCharacters && !mainSelect) || bestMatchEpilogue.extraConditions) {
         badge = "-conditional";
     }
     var tooltip;
     if (bestMatchEpilogue) {
         if (bestMatchEpilogue.wrongGender) {
             tooltip = "Play as " + bestMatchEpilogue.gender + " for a chance to unlock another epilogue";
-        } else if (bestMatchEpilogue.needsCharacters && (!mainSelect || bestMatchEpilogue.missingCharacter)) {
-            var needsCharactersLabels = bestMatchEpilogue.needsCharacters.map(function(id) {
+        } else if (bestMatchEpilogue.requiredCharacters && (!mainSelect || bestMatchEpilogue.characterIsMissing)) {
+            bestMatchEpilogue.requiredCharactersAsText = englishJoin(bestMatchEpilogue.requiredCharacters.map(function(id) {
                 var opp = loadedOpponents.find(function (p) {
                     return p && p.id === id;
                 });
                 return opp ? opp.selectLabel : id.initCap();
-            });
+            }));
 
-            tooltip = "Play with " + englishJoin(needsCharactersLabels)
+            tooltip = "Play with " + bestMatchEpilogue.requiredCharactersAsText
                 + " for a chance to unlock another epilogue";
         } else if (bestMatchEpilogue.extraConditions) {
             if (bestMatchEpilogue.hint) {
