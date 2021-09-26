@@ -453,6 +453,8 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.posesImageCount = parseInt($metaXml.children('poses').text(), 10) || undefined;
     this.z_index = parseInt($metaXml.children('z-index').text(), 10) || 0;
     this.dialogue_layering = $metaXml.children('dialogue-layer').text();
+    this.fontSize = $metaXml.children('font-size').text();
+    if (!['small', 'smaller'].includes(this.fontSize)) this.fontSize = undefined;
     this.lastUpdated = parseInt($metaXml.children('lastupdate').text(), 10) || 0;
 
     this.endings = null;
@@ -833,6 +835,7 @@ Opponent.prototype.loadAlternateCostume = function () {
 
         var poses = $xml.children('poses');
         var poseDefs = {};
+        Object.assign(poseDefs, this.default_costume.poses);
         $(poses).children('pose').each(function (i, elem) {
             var def = new PoseDefinition($(elem), this);
             poseDefs[def.id] = def;

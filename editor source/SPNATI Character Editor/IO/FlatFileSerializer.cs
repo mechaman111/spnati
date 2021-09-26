@@ -67,6 +67,7 @@ namespace SPNATI_Character_Editor
 			lines.Add("description=" + metadata.Description);
 			lines.Add("z-layer=" + metadata.Z);
 			lines.Add("dialogue-layer=" + metadata.BubblePosition);
+			lines.Add("font-size=" + metadata.TextSize);
 
 			lines.Add("");
 
@@ -331,6 +332,10 @@ namespace SPNATI_Character_Editor
 					{
 						lineCode += $",direction:{defaultLine.Direction}";
 					}
+					if (!string.IsNullOrEmpty(defaultLine.FontSize) && defaultLine.FontSize != "normal")
+					{
+						lineCode += $",font-size:{defaultLine.FontSize}";
+					}
 					if (!string.IsNullOrEmpty(defaultLine.Location))
 					{
 						lineCode += $",location:{defaultLine.Location}";
@@ -375,7 +380,7 @@ namespace SPNATI_Character_Editor
 					{
 						lineCode += $",weight:{defaultLine.Weight.ToString(CultureInfo.InvariantCulture)}";
 					}
-					string text = String.IsNullOrEmpty(defaultLine.Text) ? "~silent~" : defaultLine.Text;
+					string text = String.IsNullOrEmpty(defaultLine.Text) ? "~blank~" : defaultLine.Text;
 					lines.Add(string.Format("{0}={1},{2}", lineCode, defaultLine.Pose?.GetFlatFormat() ?? "", text));
 				}
 			}
@@ -765,6 +770,10 @@ namespace SPNATI_Character_Editor
 			{
 				filters.Add("hidden:1");
 			}
+			if (!string.IsNullOrEmpty(stageCase.Disabled))
+			{
+				filters.Add("disabled:1");
+			}
 			if (stageCase.OneShotId > 0)
 			{
 				filters.Add("oneShotId:" + stageCase.OneShotId);
@@ -917,6 +926,13 @@ namespace SPNATI_Character_Editor
 						if (Enum.TryParse(value, out pos))
 						{
 							character.Metadata.BubblePosition = pos;
+						}
+						break;
+					case "font-size":
+						FontSize size;
+						if (Enum.TryParse(value, out size))
+						{
+							character.Metadata.TextSize = size;
 						}
 						break;
 					case "start":
@@ -1287,11 +1303,6 @@ namespace SPNATI_Character_Editor
 				text = value;
 			}
 
-			if (text == "~silent~")
-			{
-				text = "";
-			}
-
 			PoseMapping mapping = character.PoseLibrary.GetFlatFilePose(img);
 			if (mapping != null)
 			{
@@ -1434,6 +1445,9 @@ namespace SPNATI_Character_Editor
 					case "hidden":
 						lineCase.Hidden = (value == "1" ? "1" : null);
 						break;
+					case "disabled":
+						lineCase.Disabled = (value == "1" ? "1" : null);
+						break;
 					case "priority":
 						lineCase.CustomPriority = value;
 						break;
@@ -1449,6 +1463,9 @@ namespace SPNATI_Character_Editor
 						break;
 					case "direction":
 						line.Direction = value;
+						break;
+					case "font-size":
+						line.FontSize = value;
 						break;
 					case "oneshotid":
 						int oneShotId;

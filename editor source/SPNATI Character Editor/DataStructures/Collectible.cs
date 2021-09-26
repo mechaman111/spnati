@@ -25,6 +25,7 @@ namespace SPNATI_Character_Editor.DataStructures
 		[ComboBox(DisplayName = "Status", Description = "Where the collectible is available", GroupOrder = 1, Options = new string[] {
 			"online",
 			"offline",
+			"unlisted",
 		})]
 		[XmlAttribute("status")]
 		public string Status

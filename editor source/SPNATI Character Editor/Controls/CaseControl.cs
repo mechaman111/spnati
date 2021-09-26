@@ -417,7 +417,11 @@ namespace SPNATI_Character_Editor.Controls
 			table.AddSpeedButton("Self", "Said Marker", (data) => { return AddFilter("self", data, "SaidMarker"); });
 			table.AddSpeedButton("Self", "Not Said Marker", (data) => { return AddFilter("self", data, "NotSaidMarker"); });
 			table.AddSpeedButton("Self", "Time in Stage", (data) => { return AddFilter("self", data, "TimeInStage"); });
+			table.AddSpeedButton("Self", "Consecutive Losses", (data) => { return AddFilter("self", data, "ConsecutiveLosses"); });
 			table.AddSpeedButton("Self", "Has Hand", (data) => { return AddFilter("self", data, "Hand"); });
+			table.AddSpeedButton("Self", "Status", (data) => { return AddFilter("self", data, "Status"); });
+			table.AddSpeedButton("Self", "Current Layers", (data) => { return AddFilter("self", data, "Layers"); });
+			table.AddSpeedButton("Self", "Starting Layers", (data) => { return AddFilter("self", data, "StartingLayers"); });
 
 			//Table
 			table.AddSpeedButton("Table", "Total Females", (data) => { return AddGenderFilter(data, "female"); });
@@ -431,13 +435,18 @@ namespace SPNATI_Character_Editor.Controls
 
 			//Also Playing
 			table.AddSpeedButton("Also Playing", "Also Playing", (data) => { return AddFilter("other", data); });
+			table.AddSpeedButton("Also Playing", "Also Playing Tag", (data) => { return AddFilter("other", data, "FilterTag"); });
 			table.AddSpeedButton("Also Playing", "Also Playing Stage", (data) => { return AddFilter("other", data, "Stage"); });
 			table.AddSpeedButton("Also Playing", "Also Playing Said Marker", (data) => { return AddFilter("other", data, "SaidMarker"); });
 			table.AddSpeedButton("Also Playing", "Also Playing Not Said Marker", (data) => { return AddFilter("other", data, "NotSaidMarker"); });
 			table.AddSpeedButton("Also Playing", "Also Playing Saying Marker", (data) => { return AddFilter("other", data, "SayingMarker"); });
 			table.AddSpeedButton("Also Playing", "Also Playing Saying Text", (data) => { return AddFilter("other", data, "Saying"); });
 			table.AddSpeedButton("Also Playing", "Also Playing Time in Stage", (data) => { return AddFilter("other", data, "TimeInStage"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Consecutive Losses", (data) => { return AddFilter("other", data, "ConsecutiveLosses"); });
 			table.AddSpeedButton("Also Playing", "Also Playing Hand", (data) => { return AddFilter("other", data, "Hand"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Status", (data) => { return AddFilter("other", data, "Status"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Layers", (data) => { return AddFilter("other", data, "Layers"); });
+			table.AddSpeedButton("Also Playing", "Also Playing Starting Layers", (data) => { return AddFilter("other", data, "StartingLayers"); });
 			table.AddSpeedButton("Also Playing", "Also Playing Pose", (data) => { return AddFilter("other", data, "Pose"); });
 
 			//Game-wide
@@ -455,6 +464,7 @@ namespace SPNATI_Character_Editor.Controls
 			table.AddSpeedButton("Filter", "Self", (data) => { return AddFilter("self", data); });
 			table.AddSpeedButton("Filter", "Also Playing", (data) => { return AddFilter("other", data); });
 			table.AddSpeedButton("Filter", "Opponent", (data) => { return AddFilter("opp", data); });
+			table.AddSpeedButton("Filter", "AI Opponent", (data) => { return AddFilter("aiopp", data); });
 			table.AddSpeedButton("Filter", "Winner", (data) => { return AddFilter("winner", data); });
 			table.AddSpeedButton("Filter", "Specific Character", (data) =>
 			{
@@ -497,6 +507,7 @@ namespace SPNATI_Character_Editor.Controls
 				table.AddSpeedButton("Target", "Target Saying Marker", (data) => { return AddFilter("target", data, "SayingMarker"); });
 				table.AddSpeedButton("Target", "Target Saying Text", (data) => { return AddFilter("target", data, "Saying"); });
 				table.AddSpeedButton("Target", "Target Time in Stage", (data) => { return AddFilter("target", data, "TimeInStage"); });
+				table.AddSpeedButton("Target", "Target Consecutive Losses", (data) => { return AddFilter("target", data, "ConsecutiveLosses"); });
 				table.AddSpeedButton("Target", "Target Hand", (data) => { return AddFilter("target", data, "Hand"); });
 				table.AddSpeedButton("Target", "Target Status", (data) => { return AddFilter("target", data, "Status"); });
 				table.AddSpeedButton("Target", "Target Layers", (data) => { return AddFilter("target", data, "Layers"); });

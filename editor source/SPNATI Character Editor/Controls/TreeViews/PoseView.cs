@@ -360,6 +360,10 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				args.ForeColor = skin.LightGray;
 			}
+			else if (node.Case.Disabled == "1")
+			{
+				args.ForeColor = skin.LightGray;
+			}
 			else if (node.Case.Hidden == "1")
 			{
 				args.ForeColor = skin.Gray;

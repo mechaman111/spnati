@@ -27,7 +27,6 @@ namespace SPNATI_Character_Editor.Controls
 			ColPosition.RecordFilter = FilterPosition;
 			ColPlural.TrueValue = true;
 			ColPosition.AllowsNew = true;
-			ColGeneric.AllowsNew = true;
 		}
 
 		public override string Caption
@@ -64,6 +63,27 @@ namespace SPNATI_Character_Editor.Controls
 			for (int i = _wardrobe.Layers - 1; i >= 0; i--)
 			{
 				Clothing c = _wardrobe.GetClothing(i);
+
+				if (!String.IsNullOrEmpty(c.GenericName))
+				{
+					bool validCategory = false;
+					c.GenericName = c.GenericName.ToLower();
+
+					foreach (ClothingCategoryItem cc in ClothingDefinitions.Instance.Categories)
+					{
+						if (cc.Key == c.GenericName)
+						{
+							validCategory = true;
+							break;
+						}
+					}
+
+					if (!validCategory)
+					{
+						c.GenericName = null;
+					}
+				}
+
 				try
 				{
 					DataGridViewRow row = gridWardrobe.Rows[gridWardrobe.Rows.Add(c.Name, c.GenericName, c.Plural, c.Type, c.Position)];

@@ -91,14 +91,6 @@ namespace SPNATI_Character_Editor
 
 					if (!TriggerDatabase.UsedInStage(stageCase.Tag, character, stage.Id))
 					{
-						#region hardcoded exclusions
-						if (stageCase.Tag == "stripped" && stage.Id == 0 || stageCase.Tag == "game_over_victory" && (stage.Id == character.Behavior.Stages.Count - 1 || stage.Id == character.Behavior.Stages.Count - 2))
-						{
-							//Pretend these cases don't even exist. make_xml.py mistakenly generates them even though the game will never use them
-							continue;
-						}
-						#endregion
-
 						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case \"{0}\" is invalid for stage {1}", stageCase.Tag, stage.Id), context));
 						continue;
 					}
@@ -281,6 +273,15 @@ namespace SPNATI_Character_Editor
 						warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("hasHand \"{1}\" is unrecognized. {0}", caseLabel, stageCase.HasHand)));
 					}
 
+					foreach (Case alt in stageCase.AlternativeConditions)
+                    {
+						if (!alt.HasConditions)
+                        {
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case contains an empty OR tab, which will reduce it to a generic line. {0}", caseLabel), context));
+							break;
+						}
+                    }
+
 					warnings.AddRange(ValidateRangeField(stageCase.TotalFemales, "totalFemales", caseLabel, 0, 5, context));
 					warnings.AddRange(ValidateRangeField(stageCase.TotalMales, "totalMales", caseLabel, 0, 5, context));
 					warnings.AddRange(ValidateRangeField(stageCase.TotalRounds, "totalRounds", caseLabel, -1, -1, context));
@@ -367,23 +368,35 @@ namespace SPNATI_Character_Editor
 								}
 								stageImages.Add(img);
 							}
-							else if (!string.IsNullOrEmpty(line.Text) && string.IsNullOrEmpty(stageCase.Hidden))
+							else if (!string.IsNullOrEmpty(line.Text) && string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
 							{
 								warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line has no pose assigned. {0}", caseLabel), context));
 							}
 						}
 
-						//Validate variables
-						//List<string> invalidVars = DialogueLine.GetInvalidVariables(stageCase, line.Text);
-						//if (invalidVars.Count > 0)
-						//{
-						//	warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Invalid variables for case {0}: {1}", caseLabel, string.Join(",", invalidVars)), context));
-						//}
-
 						//Make sure it's not a placeholder
 						if (defaultLine.Equals(line.Text))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case is still using placeholder text: {0}", caseLabel), context));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case is still using placeholder text. {0}", caseLabel), context));
+						}
+
+						//Make sure it's not blank
+						if (line.Text.Equals(""))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case has no text. If this was intentional, the correct way to create a blank line is to use ~blank~. {0}", caseLabel), context));
+						}
+
+						//Make sure it doesn't contain invalid variables (~name~ or ~target~ in untargeted cases)
+						if (!TriggerDatabase.GetTrigger(stageCase.Tag).HasTarget)
+						{
+							if (line.Text.ToLower().Contains("~name~"))
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Line contains ~name~, but is in a case with no target. {0}", caseLabel), context));
+							}
+							else if (line.Text.ToLower().Contains("~target~"))
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Line contains ~target~, but is in a case with no target. {0}", caseLabel), context));
+							}
 						}
 
 						//check for mismatched italics
@@ -489,6 +502,24 @@ namespace SPNATI_Character_Editor
 				if (IsUncountable(c.Name))
 				{
 					warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{c.Name}\" uses an uncountable noun with no plural form, which makes incoming generic dialogue awkward (ex. \"I've seen many {c.Name} in my day\"). Consider renaming this layer (ex. \"armor\" to \"breastplate\")."));
+				}
+
+				if (!String.IsNullOrEmpty(c.GenericName))
+				{
+					bool validCategory = false;
+					foreach (ClothingCategoryItem cc in ClothingDefinitions.Instance.Categories)
+					{
+						if (cc.Key == c.GenericName)
+						{
+							validCategory = true;
+							break;
+						}
+					}
+
+					if (!validCategory)
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{c.Name}\" has an invalid classification: \"{c.GenericName}\". Opening the Wardrobe tab will delete this classification, at which point you can enter a valid one if possible."));
+					}
 				}
 			}
 			if (!foundBoth)
@@ -741,7 +772,7 @@ namespace SPNATI_Character_Editor
 					string type = tag.Substring(index + 1);
 					if (type == "accessory")
 						type = "extra";
-					clothing = character.Wardrobe[character.Layers - stage - 1];
+					clothing = character.GetConvertedWardrobe()[character.Layers - stage - 1];
 					string realType = clothing.Type;
 					if (type != realType.ToLower())
 					{
@@ -841,7 +872,18 @@ namespace SPNATI_Character_Editor
 				string path = GetRelativeImagePath(character, sprite.Src);
 				if (!string.IsNullOrEmpty(path))
 				{
-					unusedImages.Remove(path);
+					if (path.Substring(0, 1) != "#")
+					{
+						unusedImages.Remove(path);
+					}
+					else
+                    {
+						// mark as used for all layers if cross-stage
+						for (int i = 0; i <= character.Layers + 2; i++)
+                        {
+							unusedImages.Remove(i + path.Substring(1));
+						}
+                    }
 				}
 			}
 
@@ -854,7 +896,18 @@ namespace SPNATI_Character_Editor
 						string path = GetRelativeImagePath(character, kf.Src);
 						if (!string.IsNullOrEmpty(path))
 						{
-							unusedImages.Remove(path);
+							if (path.Substring(0, 1) != "#")
+							{
+								unusedImages.Remove(path);
+							}
+							else
+							{
+								// mark as used for all layers if cross-stage
+								for (int i = 0; i <= character.Layers + 2; i++)
+								{
+									unusedImages.Remove(i + path.Substring(1));
+								}
+							}
 						}
 					}
 				}

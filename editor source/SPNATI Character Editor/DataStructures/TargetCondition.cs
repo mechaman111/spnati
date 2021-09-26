@@ -488,6 +488,9 @@ namespace SPNATI_Character_Editor
 							case "opp":
 								str += " opposing";
 								break;
+							case "aiopp":
+								str += " AI opp";
+								break;
 							case "other":
 								str += " other";
 								break;
@@ -514,6 +517,9 @@ namespace SPNATI_Character_Editor
 							break;
 						case "opp":
 							str += " opposing";
+							break;
+						case "aiopp":
+							str += " AI opp";
 							break;
 						case "other":
 							str += " other";

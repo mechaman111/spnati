@@ -292,7 +292,7 @@ namespace SPNATI_Character_Editor
 			counts[LineFilter.Conditional] = 0;
 			foreach (Case c in character.Behavior.GetWorkingCases())
 			{
-				if (!string.IsNullOrEmpty(c.Hidden))
+				if (!string.IsNullOrEmpty(c.Hidden) || !string.IsNullOrEmpty(c.Disabled))
 				{
 					continue;
 				}

@@ -309,7 +309,7 @@ namespace SPNATI_Character_Editor
 				foreach (Case c in _workingCases)
 				{
 					TriggerDefinition trigger = TriggerDatabase.GetTrigger(c.Tag);
-					if (!string.IsNullOrEmpty(c.Hidden))
+					if (!string.IsNullOrEmpty(c.Hidden) || !string.IsNullOrEmpty(c.Disabled))
 					{
 						continue;
 					}
@@ -515,11 +515,13 @@ namespace SPNATI_Character_Editor
 								rootAlt.Id = 0;
 								rootAlt.TriggerSet = 0;
 								rootAlt.Hidden = null;
+								rootAlt.Disabled = null;
 								rootCase.ClearConditions();
 								rootCase.AlternativeConditions.Add(rootAlt);
 							}
 							existingCase.Tag = null;
 							existingCase.Hidden = null;
+							existingCase.Disabled = null;
 							rootCase.AlternativeConditions.Add(existingCase);
 						}
 					}
@@ -777,11 +779,13 @@ namespace SPNATI_Character_Editor
 									rootAlt.Id = 0;
 									rootAlt.TriggerSet = 0;
 									rootAlt.Hidden = null;
+									rootAlt.Disabled = null;
 									similar.ClearConditions();
 									similar.AlternativeConditions.Add(rootAlt);
 								}
 								c.Tag = null;
 								c.Hidden = null;
+								c.Disabled = null;
 								similar.AlternativeConditions.Add(c);
 								foundSimilar = true;
 								newCase = false;

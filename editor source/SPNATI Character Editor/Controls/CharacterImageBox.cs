@@ -31,6 +31,7 @@ namespace SPNATI_Character_Editor.Controls
 		private bool _animating;
 		private DialogueLine _line = null;
 		private string _text = null;
+		private string _size = null;
 		private List<Word> _words = null;
 		private float _percent = 0.5f;
 		private List<string> _markers = new List<string>();
@@ -116,7 +117,21 @@ namespace SPNATI_Character_Editor.Controls
 
 			int screenWidth = (int)(canvas.Height * 1.33f);
 
-			const float BaseSize = 12;
+			float BaseSize;
+
+			if (_size == "small")
+			{
+				BaseSize = (11.7f * (92 / 100f));
+			}
+			else if (_size == "smaller")
+			{
+				BaseSize = (11.7f * (85 / 100f));
+			}
+			else
+			{
+				BaseSize = 11.7f;
+			}
+
 			float size = BaseSize * (screenWidth / 1000f);
 			_textFont = new Font("Trebuchet MS", size == 0 ? BaseSize : size);
 			_italicFont = new Font(_textFont, FontStyle.Italic);
@@ -156,17 +171,24 @@ namespace SPNATI_Character_Editor.Controls
 		public void SetText(DialogueLine line)
 		{
 			_line = line;
-			if (line == null || line.Text == null || string.IsNullOrEmpty(line.Text))
+			if (line == null || line.Text == null || string.IsNullOrEmpty(line.Text) || line.Text.Trim() == "~blank~")
 			{
 				_text = null;
 				_words = null;
-
+				_size = null;
 			}
 			else
 			{
 				_text = line.Text;
 				_words = GUIHelper.ParseWords(_text);
 				_percent = 0.5f;
+				_size = null;
+
+				if (!string.IsNullOrEmpty(line.FontSize) && line.FontSize != "normal")
+				{
+					_size = line.FontSize;
+				}
+
 				if (!string.IsNullOrEmpty(line.Location) && line.Location.EndsWith("%"))
 				{
 					int percent;
@@ -176,6 +198,7 @@ namespace SPNATI_Character_Editor.Controls
 					}
 				}
 			}
+			UpdateFont();
 			canvas.Invalidate();
 		}
 

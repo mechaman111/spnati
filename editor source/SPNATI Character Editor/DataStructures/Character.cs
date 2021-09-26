@@ -641,6 +641,19 @@ namespace SPNATI_Character_Editor
 			{
 				ending.OnBeforeSerialize();
 			}
+
+			// dumb and also bad
+			foreach (Pose pose in Poses)
+            {
+				foreach (Sprite sp in pose.Sprites)
+                {
+					if (sp.Src.Contains(FolderName + "/"))
+                    {
+						sp.Src = sp.Src.Substring(FolderName.Length + 1);
+                    }
+                }
+            }
+
 			Behavior.Serializing = false;
 		}
 
@@ -663,6 +676,15 @@ namespace SPNATI_Character_Editor
 			foreach (Pose pose in Poses)
 			{
 				pose.OnAfterDeserialize();
+
+				// dumb and also bad
+				foreach (Sprite sp in pose.Sprites)
+                {
+					if (!sp.Src.Contains("/"))
+					{
+						sp.Src = FolderName + "/" + sp.Src;
+					}
+                }
 			}
 
 			PoseLibrary = new PoseMap(this);
@@ -761,7 +783,7 @@ namespace SPNATI_Character_Editor
 
 		private void AddLines(HashSet<string> poses, HashSet<string> lines, Case theCase, LineFilter filters, ref int poseCount, ref int count)
 		{
-			if (!string.IsNullOrEmpty(theCase.Hidden))
+			if (!string.IsNullOrEmpty(theCase.Hidden) || !string.IsNullOrEmpty(theCase.Disabled))
 			{
 				return;
 			}
@@ -995,6 +1017,81 @@ namespace SPNATI_Character_Editor
 		public Clothing GetClothing(int index)
 		{
 			return Wardrobe[index];
+		}
+
+		public List<Clothing> GetConvertedWardrobe()
+        {
+			List<Clothing> ConvertedWardrobe = new List<Clothing>();
+			
+			foreach (Clothing c in Wardrobe)
+            {
+				ConvertedWardrobe.Add(c.Copy());
+            }
+
+			int lowestUnimportantUpper = 1000;
+			int lowestUnimportantLower = 1000;
+			int importantUpper = 1000;
+			int importantLower = 1000;
+
+			for (int i = 0; i < Wardrobe.Count; i++)
+			{
+				if (Wardrobe[i].Type == "important")
+				{
+					if (importantUpper == 1000 && (Wardrobe[i].Position == "upper" || Wardrobe[i].Position == "both"))
+					{
+						importantUpper = i;
+					}
+					if (importantLower == 1000 && (Wardrobe[i].Position == "lower" || Wardrobe[i].Position == "both"))
+					{
+						importantLower = i;
+					}
+				}
+
+				if (importantUpper != 1000 && importantLower != 1000)
+                {
+					break;
+                }
+			}
+
+			// if both chest and crotch are exposed at once, no important upper
+			if (importantUpper == importantLower && importantLower != 1000)
+			{
+				ConvertedWardrobe[importantLower].Position = "lower";
+			}
+
+			for (int i = 0; i < Wardrobe.Count; i++)
+			{
+				if (Wardrobe[i].Type != "important")
+				{
+					if (lowestUnimportantUpper == 1000 && (Wardrobe[i].Position == "upper" || Wardrobe[i].Position == "both"))
+					{
+						lowestUnimportantUpper = i;
+					}
+					if (lowestUnimportantLower == 1000 && (Wardrobe[i].Position == "lower" || Wardrobe[i].Position == "both"))
+					{
+						lowestUnimportantLower = i;
+					}
+				}
+
+				if (lowestUnimportantUpper != 1000 && lowestUnimportantLower != 1000)
+                {
+					break;
+				}
+            }
+
+			if (lowestUnimportantLower < importantLower)
+            {
+				ConvertedWardrobe[lowestUnimportantLower].Type = "important";
+				ConvertedWardrobe[lowestUnimportantLower].Position = "lower";
+			}
+
+			if (lowestUnimportantUpper < importantUpper)
+			{
+				ConvertedWardrobe[lowestUnimportantUpper].Type = "important";
+				ConvertedWardrobe[lowestUnimportantUpper].Position = "upper";
+			}
+
+			return ConvertedWardrobe;
 		}
 
 		public string GetDirectory()

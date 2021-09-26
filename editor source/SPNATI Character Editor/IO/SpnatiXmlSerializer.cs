@@ -55,7 +55,7 @@ namespace SPNATI_Character_Editor.IO
 			sb.AppendLine();
 			string text = sb.ToString();
 			text = text.Replace("\r\n>", ">\r\n");
-			text = XMLHelper.Encode(text);
+			text = XMLHelper.DecodeEntityReferences(text);
 
 			File.WriteAllText(filename, text);
 			writer.Dispose();

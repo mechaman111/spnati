@@ -9,8 +9,6 @@ namespace SPNATI_Character_Editor
 	/// </summary>
 	public static class XMLHelper
 	{
-		private static Dictionary<string, string> _encodeMap = new Dictionary<string, string>();
-		private static Dictionary<string, string> _decodeMap = new Dictionary<string, string>();
 		private static Dictionary<string, Regex> _htmlRegex = new Dictionary<string, Regex>();
 		private static MatchEvaluator _htmlEncoder;
 		private static MatchEvaluator _htmlDecoder;
@@ -28,40 +26,6 @@ namespace SPNATI_Character_Editor
 			{
 				return match.ToString().Replace("&lt;", "<").Replace("&gt;", ">");
 			};
-			Load();
-		}
-
-		private static void Load()
-		{
-			string file = Path.Combine(Config.ExecutableDirectory, "xml_encoding.txt");
-			string[] lines = File.ReadAllLines(file);
-			foreach (string kvp in lines)
-			{
-				string[] pieces = kvp.Split(',');
-				if (pieces.Length != 2)
-					continue;
-				_encodeMap[pieces[0]] = pieces[1];
-				_decodeMap[pieces[1]] = pieces[0];
-			}
-		}
-
-		public static string Encode(string text)
-		{
-			foreach (var kvp in _encodeMap)
-			{
-				text = text.Replace(kvp.Key, kvp.Value);
-			}
-			text = DecodeEntityReferences(text);
-			return text;
-		}
-
-		public static string Decode(string text)
-		{
-			foreach (var kvp in _decodeMap)
-			{
-				text = text.Replace(kvp.Key, kvp.Value);
-			}
-			return text;
 		}
 
 		/// <summary>

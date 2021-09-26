@@ -125,6 +125,15 @@ namespace SPNATI_Character_Editor
 			set { if (_layer != value) { _layer = value; NotifyPropertyChanged(); } }
 		}
 
+		private string _fontSize;
+		[DefaultValue("normal")]
+		[XmlAttribute("font-size")]
+		public string FontSize
+		{
+			get { return _fontSize; }
+			set { if (_fontSize != value) { _fontSize = value; NotifyPropertyChanged(); } }
+		}
+
 		private string _gender;
 		[DefaultValue("")]
 		[XmlAttribute("set-gender")]
@@ -199,6 +208,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		public static readonly string[] ArrowDirections = new string[] { "", "down", "left", "right", "up", "none" };
+		public static readonly string[] FontSizes = new string[] { "", "normal", "small", "smaller" };
 		public static readonly string[] AILevels = new string[] { "", "throw", "bad", "average", "good", "best" };
 
 		public DialogueLine()
@@ -206,6 +216,7 @@ namespace SPNATI_Character_Editor
 			Image = "";
 			Text = "";
 			Direction = "down";
+			FontSize = "normal";
 			Weight = 1;
 			Marker = null;
 			Images = new List<StageImage>();
@@ -229,6 +240,7 @@ namespace SPNATI_Character_Editor
 			copy._oneShotId = this._oneShotId;
 			copy._marker = this._marker;
 			copy._direction = this._direction;
+			copy._fontSize = this._fontSize;
 			copy._location = this._location;
 			copy._gender = this._gender;
 			copy._intelligence = this._intelligence;
@@ -305,10 +317,6 @@ namespace SPNATI_Character_Editor
 			string tag = dialogueCase.Tag;
 			Regex varRegex = new Regex(@"~[^\s~]*~", RegexOptions.IgnoreCase);
 			List<string> invalidVars = new List<string>();
-			if (text == "~silent~")
-			{
-				return invalidVars;
-			}
 			MatchCollection matches = varRegex.Matches(text);
 			foreach (var match in matches)
 			{
@@ -339,7 +347,7 @@ namespace SPNATI_Character_Editor
 			get
 			{
 				return !string.IsNullOrEmpty(Gender) || !string.IsNullOrEmpty(Size) || Intelligence != null || (!string.IsNullOrEmpty(Direction) && Direction != "down") ||
-					Label != null || !string.IsNullOrEmpty(Location) || !string.IsNullOrEmpty(Layer) || Weight != 1;
+					(!string.IsNullOrEmpty(FontSize) && FontSize != "normal") || Label != null || !string.IsNullOrEmpty(Location) || !string.IsNullOrEmpty(Layer) || Weight != 1;
 			}
 		}
 

@@ -10,7 +10,7 @@ function PoseSprite(id, src, onload, pose, args) {
     this.pose = pose;
     this.id = id;
     this.player = args.player;
-    this.src = this.prevSrc = 'opponents/' + src;
+    this.src = src;
     this.x = args.x || 0;
     this.y = args.y || 0;
     this.z = args.z || 'auto';
@@ -42,7 +42,7 @@ function PoseSprite(id, src, onload, pose, args) {
         onload(this);
         this.draw();
     }.bind(this);
-    this.img.src = this.src.replace('#', this.player.stage);
+    this.img.src = this.prevSrc = getActualSpriteSrc(this.src, this.pose.player);
     
     this.pivot.appendChild(this.img);
     
@@ -57,6 +57,18 @@ function PoseSprite(id, src, onload, pose, args) {
     }
     
     $(this.vehicle).css("z-index", this.z);
+}
+
+function getActualSpriteSrc (src, player, stage) {
+    if (!src) return undefined;
+    var folder;
+    if (stage === undefined) stage = player.stage;
+    if (src.indexOf('/') < 0) {
+        folder = player.folders ? player.getByStage(player.folders, stage) : player.folder;
+    } else {
+        folder = 'opponents/';
+    }
+    return folder + src.replace('#', stage);
 }
 
 PoseSprite.prototype.linkParent = function () {
@@ -98,8 +110,9 @@ PoseSprite.prototype.draw = function() {
         properties.transform = "translateX(" + this.scaleToDisplay(this.x) + "px) translateY(" + this.scaleToDisplay(this.y) + "px)";
     }
     $(this.vehicle).css(properties);
-    
-    if (this.prevSrc !== this.src) {        
+
+    var newSrc = getActualSpriteSrc(this.src, this.pose.player);
+    if (this.prevSrc !== newSrc) {
         /* Recompute image height/width only _after_ images have loaded. */
         this.img.onload = function () {
             this.height = this.img.naturalHeight;
@@ -111,7 +124,7 @@ PoseSprite.prototype.draw = function() {
             });
         }.bind(this);
         
-        this.img.src = this.prevSrc = this.src;
+        this.img.src = this.prevSrc = newSrc;
     } else if (this.img) {
         $(this.img).css({
             'height': this.scaleToDisplay(this.height) + "px",
@@ -392,9 +405,6 @@ function parseSpriteDefinition ($xml, player) {
 function parseKeyframeDefinition($xml) {
     var targetObj = parseSpriteDefinition($xml);
     targetObj.time = parseFloat(targetObj.time) * 1000;
-    if (targetObj.src) {
-        targetObj.src = "opponents/" + targetObj.src;
-    }
     
     return targetObj;
 }
@@ -534,19 +544,18 @@ PoseDefinition.prototype.addAnimation = function (directive) {
 }
 
 PoseDefinition.prototype.getUsedImages = function(stage) {
-    var baseFolder = 'opponents/';
     var imageSet = {};
     
     this.sprites.forEach(function (sprite) {
-        imageSet[baseFolder+sprite.src] = true;
-    });
+        imageSet[getActualSpriteSrc(sprite.src, this.player, stage)] = true;
+    }, this);
     this.animations.forEach(function (animation) {
         animation.keyframes.forEach(function (keyframe) {
             if (keyframe.src) {
-                imageSet[keyframe.src] = true;
+                imageSet[getActualSpriteSrc(keyframe.src, this.player, stage)] = true;
             }
-        });
-    });
+        }, this);
+    }, this);
     
     return Object.keys(imageSet);
 }
@@ -733,11 +742,15 @@ OpponentDisplay.prototype.update = function(player) {
         if (chosenState.direction != 'none') this.bubble.addClass('arrow-'+chosenState.direction);
         bubbleArrowOffsetRules[this.slot-1][0].style.left = chosenState.location;
         bubbleArrowOffsetRules[this.slot-1][1].style.top = chosenState.location;
+        /* Configure z-indices */
+        this.imageArea.css('z-index', player.z_index);
+        this.bubble.removeClass('over under').addClass(chosenState.dialogue_layering || player.dialogue_layering);
+        this.dialogue.removeClass('small smaller').addClass(chosenState.fontSize || player.fontSize);
     }
-    
-    /* Configure z-indices */
-    this.imageArea.css('z-index', player.z_index);
-    this.bubble.removeClass('over under').addClass(chosenState.dialogue_layering || player.dialogue_layering);
+
+    if (showDebug && !inRollback()) {
+        appendRepeats(this.slot);
+    }
 }
 
 OpponentDisplay.prototype.loop = function (timestamp) {

@@ -410,7 +410,7 @@ namespace SPNATI_Character_Editor.Activities
 			{
 				splitDialogue.Panel2.Visible = true;
 				panelCase.Visible = true;
-				cmdCallOut.Enabled = cmdMakeResponse.Enabled = _selectedCase.GetResponseTag(_character, _character) != null && string.IsNullOrEmpty(_selectedCase.Hidden);
+				cmdCallOut.Enabled = cmdMakeResponse.Enabled = _selectedCase.GetResponseTag(_character, _character) != null && string.IsNullOrEmpty(_selectedCase.Hidden) && string.IsNullOrEmpty(_selectedCase.Disabled);
 			}
 			else
 			{
