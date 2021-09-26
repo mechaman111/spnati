@@ -747,10 +747,6 @@ OpponentDisplay.prototype.update = function(player) {
         this.bubble.removeClass('over under').addClass(chosenState.dialogue_layering || player.dialogue_layering);
         this.dialogue.removeClass('small smaller').addClass(chosenState.fontSize || player.fontSize);
     }
-
-    if (showDebug && !inRollback()) {
-        appendRepeats(this.slot);
-    }
 }
 
 OpponentDisplay.prototype.loop = function (timestamp) {
