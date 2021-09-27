@@ -51,6 +51,10 @@ namespace SPNATI_Character_Editor
 			{
 				Convert5_8(character);
 			}
+			if (Config.VersionPredates(version, "v6.7"))
+			{
+				Convert6_7(character);
+			}
 		}
 
 		private static void Convert3_2(Character character)
@@ -556,12 +560,6 @@ namespace SPNATI_Character_Editor
 				workingCase.Conditions.Add(filter);
 				workingCase.TotalPlaying = null;
 			}
-
-			int newPriority = workingCase.GetPriority();
-			if (priority != newPriority && string.IsNullOrEmpty(workingCase.CustomPriority))
-			{
-				workingCase.CustomPriority = newPriority.ToString();
-			}
 		}
 
 		private static TargetCondition GetCondition(Case workingCase, string role, string character)
@@ -632,6 +630,38 @@ namespace SPNATI_Character_Editor
 			foreach (Case alternate in workingCase.AlternativeConditions)
 			{
 				ConvertCase6_1(alternate, character);
+			}
+		}
+
+		/// <summary>
+		/// 6.7 conversion: rerun 5.8 and 6.1 conversions but on alternative cases
+		/// </summary>
+		/// <param name="character"></param>
+		private static void Convert6_7(Character character)
+		{
+			int count = 0;
+			foreach (Case wc in character.Behavior.GetWorkingCases())
+			{
+				foreach (Case wsc in wc.AlternativeConditions)
+				{
+					if (wsc.HasLegacyConditions())
+					{
+						ConvertCase5_2(wsc);
+						count++;
+					}
+					foreach (TargetCondition condition in wsc.Conditions)
+					{
+						if (condition.Hand == "Nothing")
+						{
+							condition.Hand = "High Card";
+						}
+					}
+					ConvertCase6_1(wsc, character);
+				}
+			}
+			if (count > 0 && Shell.Instance != null)
+			{
+				Shell.Instance.SetStatus("Auto-converted conditions for " + count + " cases.");
 			}
 		}
 	}
