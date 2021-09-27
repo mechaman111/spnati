@@ -1028,8 +1028,8 @@ namespace SPNATI_Character_Editor
 				ConvertedWardrobe.Add(c.Copy());
             }
 
-			int lowestUnimportantUpper = 1000;
-			int lowestUnimportantLower = 1000;
+			int lowestMajorUpper = 1000;
+			int lowestMajorLower = 1000;
 			int importantUpper = 1000;
 			int importantLower = 1000;
 
@@ -1061,34 +1061,34 @@ namespace SPNATI_Character_Editor
 
 			for (int i = 0; i < Wardrobe.Count; i++)
 			{
-				if (Wardrobe[i].Type != "important")
+				if (Wardrobe[i].Type == "major")
 				{
-					if (lowestUnimportantUpper == 1000 && (Wardrobe[i].Position == "upper" || Wardrobe[i].Position == "both"))
+					if (lowestMajorUpper == 1000 && (Wardrobe[i].Position == "upper" || Wardrobe[i].Position == "both"))
 					{
-						lowestUnimportantUpper = i;
+						lowestMajorUpper = i;
 					}
-					if (lowestUnimportantLower == 1000 && (Wardrobe[i].Position == "lower" || Wardrobe[i].Position == "both"))
+					if (lowestMajorLower == 1000 && (Wardrobe[i].Position == "lower" || Wardrobe[i].Position == "both"))
 					{
-						lowestUnimportantLower = i;
+						lowestMajorLower = i;
 					}
 				}
 
-				if (lowestUnimportantUpper != 1000 && lowestUnimportantLower != 1000)
+				if (lowestMajorUpper != 1000 && lowestMajorLower != 1000)
                 {
 					break;
 				}
             }
 
-			if (lowestUnimportantLower < importantLower)
+			if (lowestMajorLower < importantLower)
             {
-				ConvertedWardrobe[lowestUnimportantLower].Type = "important";
-				ConvertedWardrobe[lowestUnimportantLower].Position = "lower";
+				ConvertedWardrobe[lowestMajorLower].Type = "important";
+				ConvertedWardrobe[lowestMajorLower].Position = "lower";
 			}
 
-			if (lowestUnimportantUpper < importantUpper)
+			if (lowestMajorUpper < importantUpper)
 			{
-				ConvertedWardrobe[lowestUnimportantUpper].Type = "important";
-				ConvertedWardrobe[lowestUnimportantUpper].Position = "upper";
+				ConvertedWardrobe[lowestMajorUpper].Type = "important";
+				ConvertedWardrobe[lowestMajorUpper].Position = "upper";
 			}
 
 			return ConvertedWardrobe;
