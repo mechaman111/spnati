@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace SPNATI_Character_Editor
 {
@@ -635,6 +636,7 @@ namespace SPNATI_Character_Editor
 
 		/// <summary>
 		/// 6.7 conversion: rerun 5.8 and 6.1 conversions but on alternative cases
+		/// Also converts px and pt to %
 		/// </summary>
 		/// <param name="character"></param>
 		private static void Convert6_7(Character character)
@@ -663,6 +665,33 @@ namespace SPNATI_Character_Editor
 			{
 				Shell.Instance.SetStatus("Auto-converted conditions for " + count + " cases.");
 			}
+
+			foreach (StyleRule rule in character.Styles.Rules)
+            {
+				foreach (StyleAttribute att in rule.Attributes)
+                {
+					if (att.Name == "font-size" && (att.Value.EndsWith("px") || att.Value.EndsWith("pt")))
+                    {
+						float num;
+						string attval = Regex.Replace(att.Value, @"[^0-9\.]*", "");
+						float.TryParse(attval, out num);
+
+						num *= (100 / 11.7f);
+
+						if (att.Value.EndsWith("px"))
+						{
+							num *= 0.75f;
+						}
+
+						if (num == 0)
+						{
+							num = 100;
+						}
+
+						att.Value = System.Math.Floor(num) + "%";
+					}
+                }
+            }
 		}
 	}
 }
