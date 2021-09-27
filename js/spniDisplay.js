@@ -63,7 +63,7 @@ function getActualSpriteSrc (src, player, stage) {
     if (!src) return undefined;
     var folder;
     if (stage === undefined) stage = player.stage;
-    if (src.indexOf('/') < 0) {
+    if (src.indexOf(player.id + '/') < 0) {
         folder = player.folders ? player.getByStage(player.folders, stage) : player.folder;
     } else {
         folder = 'opponents/';
