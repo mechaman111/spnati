@@ -90,6 +90,29 @@ namespace SPNATI_Character_Editor
 			DeleteFile(character, "markers.edit.bak");
 			DeleteFile(character, "editor.edit.bak");
 
+			// I really wish I didn't have to put this here
+			foreach (Pose pose in character.Poses)
+			{
+				foreach (Sprite sp in pose.Sprites)
+				{
+					if (!sp.Src.Contains(character.FolderName + "/"))
+					{
+						sp.Src = character.FolderName + "/" + sp.Src;
+					}
+				}
+
+				foreach (Directive d in pose.Directives)
+				{
+					foreach (Keyframe keyf in d.Keyframes)
+					{
+						if (!String.IsNullOrEmpty(keyf.Src) && !keyf.Src.Contains(character.FolderName + "/"))
+						{
+							keyf.Src = character.FolderName + "/" + keyf.Src;
+						}
+					}
+				}
+			}
+
 			if (success)
 			{
 				character.IsDirty = false;

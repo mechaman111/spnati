@@ -666,32 +666,35 @@ namespace SPNATI_Character_Editor
 				Shell.Instance.SetStatus("Auto-converted conditions for " + count + " cases.");
 			}
 
-			foreach (StyleRule rule in character.Styles.Rules)
+			if (character.Styles != null)
             {
-				foreach (StyleAttribute att in rule.Attributes)
-                {
-					if (att.Name == "font-size" && (att.Value.EndsWith("px") || att.Value.EndsWith("pt")))
-                    {
-						float num;
-						string attval = Regex.Replace(att.Value, @"[^0-9\.]*", "");
-						float.TryParse(attval, out num);
-
-						num *= (100 / 11.7f);
-
-						if (att.Value.EndsWith("px"))
+				foreach (StyleRule rule in character.Styles.Rules)
+				{
+					foreach (StyleAttribute att in rule.Attributes)
+					{
+						if (att.Name == "font-size" && (att.Value.EndsWith("px") || att.Value.EndsWith("pt")))
 						{
-							num *= 0.75f;
-						}
+							float num;
+							string attval = Regex.Replace(att.Value, @"[^0-9\.]*", "");
+							float.TryParse(attval, out num);
 
-						if (num == 0)
-						{
-							num = 100;
-						}
+							num *= (100 / 11.7f);
 
-						att.Value = System.Math.Floor(num) + "%";
+							if (att.Value.EndsWith("px"))
+							{
+								num *= 0.75f;
+							}
+
+							if (num == 0)
+							{
+								num = 100;
+							}
+
+							att.Value = System.Math.Floor(num) + "%";
+						}
 					}
-                }
-            }
+				}
+			}
 		}
 	}
 }

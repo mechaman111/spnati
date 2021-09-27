@@ -652,6 +652,17 @@ namespace SPNATI_Character_Editor
 						sp.Src = sp.Src.Substring(FolderName.Length + 1);
                     }
                 }
+
+				foreach (Directive dir in pose.Directives)
+                {
+					foreach (Keyframe keyf in dir.Keyframes)
+                    {
+						if (!String.IsNullOrEmpty(keyf.Src) && keyf.Src.Contains(FolderName + "/"))
+						{
+							keyf.Src = keyf.Src.Substring(FolderName.Length + 1);
+						}
+					}
+                }
             }
 
 			Behavior.Serializing = false;
@@ -680,11 +691,22 @@ namespace SPNATI_Character_Editor
 				// dumb and also bad
 				foreach (Sprite sp in pose.Sprites)
                 {
-					if (!sp.Src.Contains("/"))
+					if (!sp.Src.Contains(FolderName + "/"))
 					{
 						sp.Src = FolderName + "/" + sp.Src;
 					}
                 }
+
+				foreach (Directive dir in pose.Directives)
+				{
+					foreach (Keyframe keyf in dir.Keyframes)
+					{
+						if (!String.IsNullOrEmpty(keyf.Src) && !keyf.Src.Contains(FolderName + "/"))
+						{
+							keyf.Src = FolderName + "/" + keyf.Src;
+						}
+					}
+				}
 			}
 
 			PoseLibrary = new PoseMap(this);
