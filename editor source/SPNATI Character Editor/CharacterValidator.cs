@@ -65,13 +65,114 @@ namespace SPNATI_Character_Editor
 				if (stageCase.Stages.Count > 0)
 				{
 					ValidationContext context = new ValidationContext(new Stage(stageCase.Stages[0]), stageCase, null);
-					ValidateSaying(stageCase.Target, stageCase.TargetSaying, warnings, "targetSaying", stageCase.Tag, context);
-					ValidateSaying(stageCase.AlsoPlaying, stageCase.AlsoPlayingSaying, warnings, "alsoPlayingSaying", stageCase.Tag, context);
-					foreach (TargetCondition condition in stageCase.Conditions)
+					TriggerDefinition trigger = TriggerDatabase.GetTrigger(stageCase.Tag);
+					string caseLabel = string.Format("({0})", stageCase.Tag);
+					string caseTag = stageCase.Tag;
+
+					warnings = ValidateCase(character, stageCase, context, trigger, caseLabel, caseTag, warnings, validHands, targetRange);
+
+					foreach (Case subcase in stageCase.AlternativeConditions)
+                    {
+						warnings = ValidateCase(character, subcase, context, trigger, caseLabel, caseTag, warnings, validHands, targetRange);
+					}
+
+					if (!string.IsNullOrEmpty(stageCase.CustomPriority))
 					{
-						if (!string.IsNullOrEmpty(condition.Saying))
+						int priority;
+						if (!int.TryParse(stageCase.CustomPriority, out priority))
 						{
-							ValidateSaying(condition.Character, condition.Saying, warnings, "sayingText", stageCase.Tag, context);
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Custom priority {1} must be numeric. {0}", caseLabel, stageCase.CustomPriority)));
+						}
+					}
+
+					foreach (Case alt in stageCase.AlternativeConditions)
+					{
+						if (!alt.HasConditions)
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case contains an empty OR tab, which will reduce it to a generic line. {0}", caseLabel), context));
+							break;
+						}
+					}
+
+					warnings.AddRange(ValidateRangeField(stageCase.TotalRounds, "totalRounds", caseLabel, -1, -1, context));
+
+					ValidateExpressions(warnings, stageCase, caseLabel, context);
+
+					Tuple<string, string> template = DialogueDatabase.GetTemplate(stageCase.Tag);
+					string defaultLine = template.Item2;
+					Regex regex = new Regex(@"\<\/i\>");
+
+					foreach (DialogueLine line in stageCase.Lines)
+					{
+						//Make sure it's not a placeholder
+						if (defaultLine.Equals(line.Text))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case is still using placeholder text. {0}", caseLabel), context));
+						}
+
+						//Make sure it's not blank
+						if (line.Text.Equals(""))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case has no text. If this was intentional, the correct way to create a blank line is to use ~blank~. {0}", caseLabel), context));
+						}
+
+						//Make sure it doesn't contain invalid variables (~name~ or ~target~ in untargeted cases)
+						if (!trigger.HasTarget)
+						{
+							if (line.Text.ToLower().Contains("~name~"))
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Line contains ~name~, but is in a case with no target. {0}", caseLabel), context));
+							}
+							else if (line.Text.ToLower().Contains("~target~"))
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Line contains ~target~, but is in a case with no target. {0}", caseLabel), context));
+							}
+						}
+
+						//check for pointless ifMales
+						if (!string.IsNullOrEmpty(trigger.Gender))
+                        {
+							if (line.Text.ToLower().Contains("target.ifMale"))
+                            {
+								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("\"target.ifMale\" is redundant in a gendered case. {0}", caseLabel), context));
+							}
+                        }
+						else if (trigger.Name.Contains("human_must_strip"))
+                        {
+							if (line.Text.ToLower().Contains("player.ifMale"))
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("\"player.ifMale\" is redundant in a case that already defines the human player's gender. {0}", caseLabel), context));
+							}
+							else if (line.Text.ToLower().Contains("human.ifMale"))
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("\"human.ifMale\" is redundant in a case that already defines the human player's gender. {0}", caseLabel), context));
+							}
+						}
+
+						//check for mismatched italics
+						string[] pieces = line.Text.ToLower().Split(new string[] { "<i>" }, StringSplitOptions.None);
+						int count = 0;
+						for (int i = 0; i < pieces.Length; i++)
+						{
+							if (i > 0)
+							{
+								count++;
+							}
+							count -= regex.Matches(pieces[i]).Count;
+						}
+						if (count != 0)
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, $"Line has mismatched <i> </i> tags: \"{line.Text}\" {caseLabel}", context));
+						}
+
+						//validate collectibles
+						if (!string.IsNullOrEmpty(line.CollectibleId))
+						{
+							usedCollectibles.Add(line.CollectibleId);
+							if (character.Collectibles.Get(line.CollectibleId) == null)
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.Collectibles, string.Format("Unknown collectible: {1} {0}", caseLabel, line.CollectibleId), context));
+							}
 						}
 					}
 				}
@@ -91,239 +192,10 @@ namespace SPNATI_Character_Editor
 
 					if (!TriggerDatabase.UsedInStage(stageCase.Tag, character, stage.Id))
 					{
-						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case \"{0}\" is invalid for stage {1}", stageCase.Tag, stage.Id), context));
+						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case \"{0}\" is invalid for stage {1}.", stageCase.Tag, stage.Id), context));
 						continue;
 					}
 					string caseLabel = string.Format("(Stage {0}, {1})", stage.Id, stageCase.Tag);
-
-					#region Target
-					if (!string.IsNullOrEmpty(stageCase.Target))
-					{
-						if (!trigger.HasTarget)
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"target\" is not allowed for case {0}", caseLabel), context));
-						}
-						Character target = CharacterDatabase.Get(stageCase.Target);
-						if (target == null)
-						{
-							if (stageCase.Target != "human")
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.MissingTargets, string.Format("target \"{1}\" does not exist. {0}", caseLabel, stageCase.Target), context));
-							}
-						}
-						else
-						{
-							if (target.FolderName != "human")
-							{
-								if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender)
-								{
-									if (!target.Metadata.CrossGender)
-									{
-										warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" is {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Gender), context));
-									}
-								}
-								if (!string.IsNullOrEmpty(trigger.Size) && target.Size != trigger.Size)
-								{
-									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" has a size of {2}, so this case will never trigger. {0}", caseLabel, stageCase.Target, target.Size), context));
-								}
-								if (!string.IsNullOrEmpty(stageCase.TargetStage))
-								{
-									int targetStage;
-									if (int.TryParse(stageCase.TargetStage, out targetStage))
-									{
-										if (target.Layers + Clothing.ExtraStages <= targetStage)
-										{
-											warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("target \"{1}\" does not have {2} stages. {0}", caseLabel, stageCase.Target, stageCase.TargetStage), context));
-										}
-										Clothing clothing;
-										if (!ValidateStageWithTag(target, targetStage, stageCase.Tag, out clothing))
-										{
-											if (clothing == null)
-												warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("using the first stage as a target stage for a removed_item case. Removed cases should use the stage following the removing stage. {0}", caseLabel), context));
-											else warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targeting \"{1}\" at stage {2} ({3}), which will never happen because {3} is of type {4}. {0}", caseLabel, target, targetStage, clothing.Name, clothing.Type), context));
-										}
-									}
-								}
-							}
-							ValidateMarker(warnings, target, caseLabel, stageCase.TargetSaidMarker, stageCase.TargetStage, context);
-							ValidateMarker(warnings, target, caseLabel, stageCase.TargetSayingMarker, stageCase.TargetStage, context);
-							ValidateMarker(warnings, target, caseLabel, stageCase.TargetNotSaidMarker, context);
-						}
-					}
-					if (!string.IsNullOrEmpty(stageCase.TargetStage))
-					{
-						if (!trigger.HasTarget)
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"targetStage\" is not allowed for case {0}", caseLabel), context));
-						}
-						if (!targetRange.IsMatch(stageCase.TargetStage))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("targetStage \"{1}\" should be numeric or a range. {0}", caseLabel, stageCase.TargetStage), context));
-						}
-					}
-					if (!string.IsNullOrEmpty(stageCase.TargetHand))
-					{
-						if (!trigger.HasTarget)
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"oppHand\" is not allowed for case {0}", caseLabel), context));
-						}
-						if (!validHands.Contains(stageCase.TargetHand.ToLowerInvariant()))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("oppHand \"{1}\" is unrecognized. {0}", caseLabel, stageCase.TargetHand), context));
-						}
-					}
-					if (!string.IsNullOrEmpty(stageCase.Filter))
-					{
-						if (!trigger.HasTarget)
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"filter\" is not allowed for case {0}", caseLabel), context));
-						}
-						if (!TagDatabase.TagExists(stageCase.Filter))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("No character has the tag \"{1}\". {0}", caseLabel, stageCase.Filter), context));
-						}
-					}
-					#endregion
-
-					#region Also Playing
-					Character other = CharacterDatabase.Get(stageCase.AlsoPlaying);
-					if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
-					{
-						if (other == null)
-						{
-							if (stageCase.AlsoPlaying != "human")
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.MissingTargets, string.Format("alsoPlaying target \"{1}\" does not exist. {0}", caseLabel, stageCase.AlsoPlaying), context));
-							}
-						}
-					}
-					if (!string.IsNullOrEmpty(stageCase.AlsoPlayingHand))
-					{
-						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingHand must be accompanied with alsoPlaying. {0}", caseLabel), context));
-						}
-						if (!validHands.Contains(stageCase.AlsoPlayingHand.ToLowerInvariant()))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingHand \"{1}\" is unrecognized. {0}", caseLabel, stageCase.AlsoPlayingHand), context));
-						}
-					}
-					if (!string.IsNullOrEmpty(stageCase.AlsoPlayingStage))
-					{
-						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingStage must be accompanied with alsoPlaying. {0}", caseLabel), context));
-						}
-						int alsoPlayingStage;
-						if (!int.TryParse(stageCase.AlsoPlayingStage, out alsoPlayingStage))
-						{
-							if (!targetRange.IsMatch(stageCase.AlsoPlayingStage))
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingStage \"{1}\" should be numeric or a range. {0}", caseLabel, stageCase.AlsoPlayingStage), context));
-							}
-						}
-						else
-						{
-							if (other != null)
-							{
-								if (other.Layers + Clothing.ExtraStages <= alsoPlayingStage && other.FolderName != "human")
-								{
-									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlaying target \"{1}\" does not have {2} stages. {0}", caseLabel, stageCase.AlsoPlaying, stageCase.AlsoPlayingStage), context));
-								}
-							}
-						}
-					}
-					if (!string.IsNullOrEmpty(stageCase.AlsoPlayingTimeInStage))
-					{
-						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingTimeInStage must be accompanied with alsoPlaying. {0}", caseLabel), context));
-						}
-						warnings.AddRange(ValidateRangeField(stageCase.AlsoPlayingTimeInStage, "alsoPlayingTimeInStage", caseLabel, -1, -1, context));
-					}
-					if (!string.IsNullOrEmpty(stageCase.AlsoPlayingSaidMarker))
-					{
-						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingSaidMarker must be accompanied with alsoPlaying. {0}", caseLabel), context));
-						}
-						else ValidateMarker(warnings, other, caseLabel, stageCase.AlsoPlayingSaidMarker, stageCase.AlsoPlayingStage, context);
-					}
-					if (!string.IsNullOrEmpty(stageCase.AlsoPlayingSayingMarker))
-					{
-						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingSayingMarker must be accompanied with alsoPlaying. {0}", caseLabel), context));
-						}
-						else ValidateMarker(warnings, other, caseLabel, stageCase.AlsoPlayingSayingMarker, stageCase.AlsoPlayingStage, context);
-					}
-					if (!string.IsNullOrEmpty(stageCase.AlsoPlayingNotSaidMarker))
-					{
-						if (string.IsNullOrEmpty(stageCase.AlsoPlaying))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("alsoPlayingHand must be accompanied with alsoPlaying. {0}", caseLabel), context));
-						}
-						else ValidateMarker(warnings, other, caseLabel, stageCase.AlsoPlayingNotSaidMarker, context);
-					}
-					#endregion
-
-					#region Misc
-					if (!string.IsNullOrEmpty(stageCase.HasHand) && !validHands.Contains(stageCase.HasHand.ToLowerInvariant()))
-					{
-						warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("hasHand \"{1}\" is unrecognized. {0}", caseLabel, stageCase.HasHand)));
-					}
-
-					foreach (Case alt in stageCase.AlternativeConditions)
-                    {
-						if (!alt.HasConditions)
-                        {
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case contains an empty OR tab, which will reduce it to a generic line. {0}", caseLabel), context));
-							break;
-						}
-                    }
-
-					warnings.AddRange(ValidateRangeField(stageCase.TotalFemales, "totalFemales", caseLabel, 0, 5, context));
-					warnings.AddRange(ValidateRangeField(stageCase.TotalMales, "totalMales", caseLabel, 0, 5, context));
-					warnings.AddRange(ValidateRangeField(stageCase.TotalRounds, "totalRounds", caseLabel, -1, -1, context));
-					warnings.AddRange(ValidateRangeField(stageCase.TotalPlaying, "totalAlive", caseLabel, 0, 5, context));
-					warnings.AddRange(ValidateRangeField(stageCase.TotalExposed, "totalExposed", caseLabel, 0, 5, context));
-					warnings.AddRange(ValidateRangeField(stageCase.TotalNaked, "totalNaked", caseLabel, 0, 5, context));
-					warnings.AddRange(ValidateRangeField(stageCase.TotalMasturbating, "totalMasturbating", caseLabel, 0, 5, context));
-					warnings.AddRange(ValidateRangeField(stageCase.TotalFinished, "totalFinished", caseLabel, 0, 5, context));
-					warnings.AddRange(ValidateRangeField(stageCase.ConsecutiveLosses, "consecutiveLosses", caseLabel, -1, -1, context));
-					warnings.AddRange(ValidateRangeField(stageCase.TargetTimeInStage, "targetTimeInStage", caseLabel, -1, -1, context));
-					warnings.AddRange(ValidateRangeField(stageCase.TimeInStage, "timeInStage", caseLabel, -1, -1, context));
-					if (!string.IsNullOrEmpty(stageCase.CustomPriority))
-					{
-						int priority;
-						if (!int.TryParse(stageCase.CustomPriority, out priority))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("customPriority {1} must be numeric. {0}", caseLabel, stageCase.CustomPriority)));
-						}
-					}
-					ValidateMarker(warnings, character, caseLabel, stageCase.SaidMarker, context);
-					ValidateMarker(warnings, character, caseLabel, stageCase.NotSaidMarker, context);
-
-					#endregion
-
-					#region Filters
-					foreach (var condition in stageCase.Conditions)
-					{
-						warnings.AddRange(ValidateRangeField(condition.Count, string.Format("\"{0}\" tag count", condition.FilterTag), caseLabel, 0, 5, context));
-						if (condition.FilterTag != "human" && condition.FilterTag != "human_male" && condition.FilterTag != "human_female" && !string.IsNullOrEmpty(condition.FilterTag) && !TagDatabase.TagExists(condition.FilterTag))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Filtering on tag \"{1}\" which is not used by any characters. {0}", caseLabel, condition.FilterTag), context));
-						}
-					}
-					#endregion
-
-					#region Variable tests
-					ValidateExpressions(warnings, stageCase, context); 
-					#endregion
-
-					Tuple<string, string> template = DialogueDatabase.GetTemplate(stageCase.Tag);
-					string defaultLine = template.Item2;
-					Regex regex = new Regex(@"\<\/i\>");
 
 					foreach (DialogueLine line in stageCase.Lines)
 					{
@@ -368,60 +240,9 @@ namespace SPNATI_Character_Editor
 								}
 								stageImages.Add(img);
 							}
-							else if (!string.IsNullOrEmpty(line.Text) && string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
+							else if (!string.IsNullOrEmpty(line.Text) && line.Text.Trim() != "~blank~" && string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
 							{
 								warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line has no pose assigned. {0}", caseLabel), context));
-							}
-						}
-
-						//Make sure it's not a placeholder
-						if (defaultLine.Equals(line.Text))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case is still using placeholder text. {0}", caseLabel), context));
-						}
-
-						//Make sure it's not blank
-						if (line.Text.Equals(""))
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case has no text. If this was intentional, the correct way to create a blank line is to use ~blank~. {0}", caseLabel), context));
-						}
-
-						//Make sure it doesn't contain invalid variables (~name~ or ~target~ in untargeted cases)
-						if (!TriggerDatabase.GetTrigger(stageCase.Tag).HasTarget)
-						{
-							if (line.Text.ToLower().Contains("~name~"))
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Line contains ~name~, but is in a case with no target. {0}", caseLabel), context));
-							}
-							else if (line.Text.ToLower().Contains("~target~"))
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Line contains ~target~, but is in a case with no target. {0}", caseLabel), context));
-							}
-						}
-
-						//check for mismatched italics
-						string[] pieces = line.Text.ToLower().Split(new string[] { "<i>" }, StringSplitOptions.None);
-						int count = 0;
-						for (int i = 0; i < pieces.Length; i++)
-						{
-							if (i > 0)
-							{
-								count++;
-							}
-							count -= regex.Matches(pieces[i]).Count;
-						}
-						if (count != 0)
-						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, $"Line has mismatched <i> </i> tags: {line.Text}", context));
-						}
-
-						//validate collectibles
-						if (!string.IsNullOrEmpty(line.CollectibleId))
-						{
-							usedCollectibles.Add(line.CollectibleId);
-							if (character.Collectibles.Get(line.CollectibleId) == null)
-							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Collectibles, string.Format("Unknown collectible for case {0}: {1}", caseLabel, line.CollectibleId), context));
 							}
 						}
 					}
@@ -461,6 +282,121 @@ namespace SPNATI_Character_Editor
 				return true;
 
 			return false;
+		}
+
+		private static List<ValidationError> ValidateCase(Character character, Case stageCase, ValidationContext context, TriggerDefinition trigger, string caseLabel, string caseTag, List<ValidationError> warnings, HashSet<string> validHands, Regex targetRange)
+		{
+			foreach (TargetCondition condition in stageCase.Conditions)
+			{
+				if (!string.IsNullOrEmpty(condition.Saying))
+				{
+					ValidateSaying(condition.Character, condition.Saying, warnings, caseTag, context);
+				}
+
+				if (condition.Role == "target" && !trigger.HasTarget)
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("\"target\" is not allowed for case \"{0}\".", caseTag), context));
+				}
+
+				if (!String.IsNullOrEmpty(condition.Character))
+				{
+					Character target = CharacterDatabase.Get(condition.Character);
+
+					if (target == null)
+					{
+						if (condition.Character != "human")
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.MissingTargets, string.Format("Character \"{1}\" does not exist. {0}", caseLabel, condition.Character), context));
+						}
+					}
+					else
+					{
+						if (condition.Role == "target" && target.FolderName != "human")
+						{
+							if (!string.IsNullOrEmpty(trigger.Gender) && target.Gender != trigger.Gender)
+							{
+								if (!target.Metadata.CrossGender)
+								{
+									warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Target \"{1}\" is {2}, so this case will never trigger. {0}", caseLabel, condition.Character, target.Gender), context));
+								}
+							}
+							if (!string.IsNullOrEmpty(trigger.Size) && target.Size != trigger.Size)
+							{
+								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Target \"{1}\" has a size of {2}, so this case will never trigger. {0}", caseLabel, condition.Character, target.Size), context));
+							}
+							if (!string.IsNullOrEmpty(condition.Stage))
+							{
+								int targetStage;
+								if (int.TryParse(condition.Stage, out targetStage))
+								{
+									if (target.Layers + Clothing.ExtraStages <= targetStage)
+									{
+										warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Target \"{1}\" does not have {2} stages. {0}", caseLabel, condition.Character, condition.Stage), context));
+									}
+									Clothing clothing;
+									if (!ValidateStageWithTag(target, targetStage, caseTag, out clothing))
+									{
+										if (clothing == null)
+											warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Using the first stage as a target stage for a removed_item case. Removed cases should use the stage following the removing stage. {0}", caseLabel), context));
+										else warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Targeting {1} at stage {2} ({3}), which will never happen because {3} is of type {4}. {0}", caseLabel, target, targetStage, clothing.Name, clothing.Type), context));
+									}
+								}
+							}
+						}
+
+						// marker checking is horribly broken right now
+						//ValidateMarker(warnings, target, caseLabel, condition.SaidMarker, condition.Stage, context);
+						//ValidateMarker(warnings, target, caseLabel, condition.SayingMarker, condition.Stage, context);
+						//ValidateMarker(warnings, target, caseLabel, condition.NotSaidMarker, context);
+					}
+				}
+
+				if (condition.Role == "self")
+				{
+					// marker checking is horribly broken right now
+					//ValidateMarker(warnings, character, caseLabel, condition.SaidMarker, context);
+					//ValidateMarker(warnings, character, caseLabel, condition.NotSaidMarker, context);
+
+					if (!String.IsNullOrEmpty(condition.SayingMarker))
+                    {
+						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Saying Marker condition on Self, which will always fail. {0}", caseLabel), context));
+					}
+					if (!String.IsNullOrEmpty(condition.Saying))
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Saying Text condition on Self, which will always fail. {0}", caseLabel), context));
+					}
+					if (!String.IsNullOrEmpty(condition.Pose))
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Pose condition on Self, which will always fail. {0}", caseLabel), context));
+					}
+				}
+
+				if (!string.IsNullOrEmpty(condition.Stage) && !targetRange.IsMatch(condition.Stage))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Stage condition \"{1}\" should be numeric or a range. {0}", caseLabel, condition.Stage), context));
+				}
+
+				if (!string.IsNullOrEmpty(condition.Hand) && !validHands.Contains(condition.Hand.ToLowerInvariant()))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("Hand condition \"{1}\" is unrecognized. {0}", caseLabel, condition.Hand), context));
+				}
+
+				if (condition.FilterTag != "human" && condition.FilterTag != "human_male" && condition.FilterTag != "human_female" && !string.IsNullOrEmpty(condition.FilterTag) && !TagDatabase.TagExists(condition.FilterTag))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Filtering on tag \"{1}\" which is not used by any characters. {0}", caseLabel, condition.FilterTag), context));
+				}
+
+				warnings.AddRange(ValidateRangeField(condition.ConsecutiveLosses, "Consecutive Losses condition", caseLabel, -1, -1, context));
+				warnings.AddRange(ValidateRangeField(condition.TimeInStage, "Time in Stage condition", caseLabel, -1, -1, context));
+				warnings.AddRange(ValidateRangeField(condition.Count, string.Format("\"{0}\" tag count", condition.FilterTag), caseLabel, 0, 5, context));
+
+				if (condition.Count == "0-")
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Condition has a count of \"0+\", which is meaningless. If you meant a count of zero, you also need to fill in the \"to:\" field. {0}", caseLabel), context));
+				}
+			}
+
+			return warnings;
 		}
 
 		private static bool IsUncountable(string name)
@@ -507,6 +443,7 @@ namespace SPNATI_Character_Editor
 				if (!String.IsNullOrEmpty(c.GenericName))
 				{
 					bool validCategory = false;
+					bool lowercaseCategory = false;
 					foreach (ClothingCategoryItem cc in ClothingDefinitions.Instance.Categories)
 					{
 						if (cc.Key == c.GenericName)
@@ -514,11 +451,23 @@ namespace SPNATI_Character_Editor
 							validCategory = true;
 							break;
 						}
+						else if (cc.Key == c.GenericName.ToLower())
+                        {
+							lowercaseCategory = true;
+							break;
+						}
 					}
 
 					if (!validCategory)
 					{
-						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{c.Name}\" has an invalid classification: \"{c.GenericName}\". Opening the Wardrobe tab will delete this classification, at which point you can enter a valid one if possible."));
+						if (lowercaseCategory)
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{c.Name}\" has classification \"{c.GenericName}\", which is inappropriately capitalized. Opening the Wardrobe tab will fix this."));
+						}
+						else
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{c.Name}\" has an invalid classification: \"{c.GenericName}\". Opening the Wardrobe tab will delete this classification, at which point you can enter a valid one if possible."));
+						}
 					}
 				}
 			}
@@ -528,7 +477,7 @@ namespace SPNATI_Character_Editor
 				{
 					if (!string.IsNullOrEmpty(importantUpper))
 					{
-						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"{importantUpper} has no major article covering it. Either an article{(!string.IsNullOrEmpty(lower) ? $" ({lower}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")} should be given position: both if it covers both the chest and crotch, or {importantUpper} should use type: major instead of important."));
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{importantUpper}\" has no major article covering it. Either an article{(!string.IsNullOrEmpty(lower) ? $" ({lower}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")} should be given position: both if it covers both the chest and crotch, or {importantUpper} should use type: major instead of important."));
 					}
 					else
 					{
@@ -539,7 +488,7 @@ namespace SPNATI_Character_Editor
 				{
 					if (!string.IsNullOrEmpty(importantLower))
 					{
-						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"{importantLower} has no major article covering it. Either an article{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")} should be given position: both if it covers both the chest and crotch, or {importantLower} should use type: major instead of important."));
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{importantLower}\" has no major article covering it. Either an article{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")} should be given position: both if it covers both the chest and crotch, or {importantLower} should use type: major instead of important."));
 					}
 					else
 					{
@@ -612,17 +561,17 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private static void ValidateExpressions(List<ValidationError> warnings, Case stageCase, ValidationContext context)
+		private static void ValidateExpressions(List<ValidationError> warnings, Case stageCase, string caseLabel, ValidationContext context)
 		{
 			foreach (ExpressionTest test in stageCase.Expressions)
 			{
 				if (string.IsNullOrEmpty(test.Expression))
 				{
-					warnings.Add(new ValidationError(ValidationFilterLevel.Case, $"Variable test has no expression: {test}", context));
+					warnings.Add(new ValidationError(ValidationFilterLevel.Case, $"Variable test has no expression: {test} {caseLabel}", context));
 				}
 				if (string.IsNullOrEmpty(test.Value))
 				{
-					warnings.Add(new ValidationError(ValidationFilterLevel.Case, $"Variable test has no value: {test}", context));
+					warnings.Add(new ValidationError(ValidationFilterLevel.Case, $"Variable test has no value: {test} {caseLabel}", context));
 				}
 			}
 		}
@@ -646,12 +595,6 @@ namespace SPNATI_Character_Editor
 				string value;
 				MarkerOperator op;
 				bool perTarget;
-
-				//check for simple typos
-				if (name.Contains(" "))
-				{
-					warnings.Add(new ValidationError(ValidationFilterLevel.Lines, $"Markers cannot contain spaces: \"{name}\". {caseLabel}", context));
-				}
 
 				name = Marker.ExtractConditionPieces(name, out op, out value, out perTarget);
 				if (character.Markers.IsValueCreated && !character.Markers.Value.Contains(name))
@@ -974,7 +917,7 @@ namespace SPNATI_Character_Editor
 			return path;
 		}
 
-		private static void ValidateSaying(string target, string text, List<ValidationError> warnings, string conditionType, string caseLabel, ValidationContext context)
+		private static void ValidateSaying(string target, string text, List<ValidationError> warnings, string caseLabel, ValidationContext context)
 		{
 			if (string.IsNullOrEmpty(text))
 			{
@@ -1001,7 +944,7 @@ namespace SPNATI_Character_Editor
 				}
 				if (!found)
 				{
-					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"Using {conditionType} but {target} never says this text: \"{text}\". {caseLabel}.", context));
+					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"Using a Saying Text condition but {target} never says this text: \"{text}\" ({caseLabel})", context));
 				}
 			}
 		}

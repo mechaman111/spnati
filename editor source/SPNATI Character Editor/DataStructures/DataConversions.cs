@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace SPNATI_Character_Editor
 {
@@ -50,6 +51,10 @@ namespace SPNATI_Character_Editor
 			if (Config.VersionPredates(version, "v6.6"))
 			{
 				Convert5_8(character);
+			}
+			if (Config.VersionPredates(version, "v6.7"))
+			{
+				Convert6_7(character);
 			}
 		}
 
@@ -556,12 +561,6 @@ namespace SPNATI_Character_Editor
 				workingCase.Conditions.Add(filter);
 				workingCase.TotalPlaying = null;
 			}
-
-			int newPriority = workingCase.GetPriority();
-			if (priority != newPriority && string.IsNullOrEmpty(workingCase.CustomPriority))
-			{
-				workingCase.CustomPriority = newPriority.ToString();
-			}
 		}
 
 		private static TargetCondition GetCondition(Case workingCase, string role, string character)
@@ -632,6 +631,69 @@ namespace SPNATI_Character_Editor
 			foreach (Case alternate in workingCase.AlternativeConditions)
 			{
 				ConvertCase6_1(alternate, character);
+			}
+		}
+
+		/// <summary>
+		/// 6.7 conversion: rerun 5.8 and 6.1 conversions but on alternative cases
+		/// Also converts px and pt to %
+		/// </summary>
+		/// <param name="character"></param>
+		private static void Convert6_7(Character character)
+		{
+			int count = 0;
+			foreach (Case wc in character.Behavior.GetWorkingCases())
+			{
+				foreach (Case wsc in wc.AlternativeConditions)
+				{
+					if (wsc.HasLegacyConditions())
+					{
+						ConvertCase5_2(wsc);
+						count++;
+					}
+					foreach (TargetCondition condition in wsc.Conditions)
+					{
+						if (condition.Hand == "Nothing")
+						{
+							condition.Hand = "High Card";
+						}
+					}
+					ConvertCase6_1(wsc, character);
+				}
+			}
+			if (count > 0 && Shell.Instance != null)
+			{
+				Shell.Instance.SetStatus("Auto-converted conditions for " + count + " cases.");
+			}
+
+			if (character.Styles != null)
+            {
+				foreach (StyleRule rule in character.Styles.Rules)
+				{
+					foreach (StyleAttribute att in rule.Attributes)
+					{
+						if (att.Name == "font-size" && (att.Value.EndsWith("px") || att.Value.EndsWith("pt")))
+						{
+							float num;
+							string attval = Regex.Replace(att.Value, @"[^0-9\.]*", "");
+							float.TryParse(attval, out num);
+
+							num *= (100 / 11.7f);
+
+							if (att.Value.EndsWith("px"))
+							{
+								num *= 0.75f;
+							}
+
+							if (num == 0)
+							{
+								num = 100;
+							}
+
+							att.Value = System.Math.Floor(num) + "%";
+						}
+					}
+				}
 			}
 		}
 	}

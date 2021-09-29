@@ -22,16 +22,8 @@ namespace SPNATI_Character_Editor.Controls.StyleControls
 			}
 			string value = Attribute.Value;
 
-			radPx.Checked = true;
-			if (value.EndsWith("pt"))
-			{
-				radPt.Checked = true;
-			}
-			else if (value.EndsWith("%"))
-			{
-				radPct.Checked = true;
-			}
-			else if (value.EndsWith("em"))
+			radPct.Checked = true;
+			if (value.EndsWith("em"))
 			{
 				radEm.Checked = true;
 			}
@@ -41,7 +33,7 @@ namespace SPNATI_Character_Editor.Controls.StyleControls
 			float.TryParse(value, out num);
 			if (num == 0)
 			{
-				num = 16;
+				num = 100;
 			}
 			valSize.Value = Math.Min(valSize.Maximum, Math.Max(valSize.Minimum, (int)num));
 		}
@@ -63,8 +55,6 @@ namespace SPNATI_Character_Editor.Controls.StyleControls
 		protected override void AddHandlers()
 		{
 			valSize.ValueChanged += ValSize_ValueChanged;
-			radPt.CheckedChanged += ValSize_ValueChanged;
-			radPx.CheckedChanged += ValSize_ValueChanged;
 			radPct.CheckedChanged += ValSize_ValueChanged;
 			radEm.CheckedChanged += ValSize_ValueChanged;
 		}
@@ -72,8 +62,6 @@ namespace SPNATI_Character_Editor.Controls.StyleControls
 		protected override void RemoveHandlers()
 		{
 			valSize.ValueChanged -= ValSize_ValueChanged;
-			radPt.CheckedChanged -= ValSize_ValueChanged;
-			radPx.CheckedChanged -= ValSize_ValueChanged;
 			radPct.CheckedChanged -= ValSize_ValueChanged;
 			radEm.CheckedChanged -= ValSize_ValueChanged;
 		}
@@ -86,17 +74,9 @@ namespace SPNATI_Character_Editor.Controls.StyleControls
 		protected override void OnSave()
 		{
 			int size = (int)valSize.Value;
-			string unit = "px";
+			string unit = "%";
 
-			if (radPt.Checked)
-			{
-				unit = "pt";
-			}
-			else if (radPct.Checked)
-			{
-				unit = "%";
-			}
-			else if (radEm.Checked)
+			if (radEm.Checked)
 			{
 				unit = "em";
 			}
