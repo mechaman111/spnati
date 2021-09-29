@@ -61,6 +61,10 @@ function determineAIAction (player) {
             }
         }
 
+    /*for no-swap intelligence characters just don't swap any cards*/
+    } else if (player.intelligence == eIntelligence.NOSWAP) {
+        player.hand.tradeIns = [false, false, false, false, false];
+
     /*for good intelligence characters only attempt to get pairs or improve on pairs*/
     /*for average intelligence characters use the standard algorithm. Average intelligence is also the default case*/
     } else {
