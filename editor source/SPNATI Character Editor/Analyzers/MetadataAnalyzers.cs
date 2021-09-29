@@ -139,7 +139,7 @@ namespace SPNATI_Character_Editor.Analyzers
 
 		public string[] GetValues()
 		{
-			return new string[] { "best", "good", "average", "bad" };
+			return new string[] { "best", "good", "average", "bad", "throw", "no-swap" };
 		}
 
 		public Type GetValueType()

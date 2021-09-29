@@ -209,7 +209,7 @@ namespace SPNATI_Character_Editor
 
 		public static readonly string[] ArrowDirections = new string[] { "", "down", "left", "right", "up", "none" };
 		public static readonly string[] FontSizes = new string[] { "", "normal", "small", "smaller" };
-		public static readonly string[] AILevels = new string[] { "", "throw", "bad", "average", "good", "best" };
+		public static readonly string[] AILevels = new string[] { "", "no-swap", "throw", "bad", "average", "good", "best" };
 
 		public DialogueLine()
 		{
