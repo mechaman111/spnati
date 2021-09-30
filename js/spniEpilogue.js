@@ -1991,17 +1991,7 @@ SceneView.prototype.applyTextDirective = function (directive, box) {
     var content = expandDialogue(directive.text, null, humanPlayer);
     var playerID = this.epiloguePlayer.epilogue.player.id;
 
-    var displayElems = parseStyleSpecifiers(content).map(function (comp) {
-        /* {'text': 'foo', 'classes': 'cls1 cls2 cls3'} --> <span class="cls1 cls2 cls3">foo</span> */
-
-        var wrapperSpan = document.createElement('span');
-        wrapperSpan.innerHTML = fixupDialogue(comp.text);
-        wrapperSpan.className = comp.classes;
-        wrapperSpan.setAttribute('data-character', playerID);
-
-        return wrapperSpan;
-    });
-    box.empty().append($('<span>', { 'class': 'dialogue' }).append(displayElems));
+    box.empty().append($('<span>', { 'class': 'dialogue' }).append(applyDialogueStyling(content, playerID)));
 
     box.removeClass('arrow-down arrow-left arrow-right arrow-up').addClass(directive.arrow);
     box.attr('style', directive.css);

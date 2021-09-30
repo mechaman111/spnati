@@ -666,16 +666,7 @@ OpponentDisplay.prototype.updateText = function (player) {
         return;
     }
 
-    var displayElems = parseStyleSpecifiers(player.chosenState.dialogue).map(function (comp) {
-        /* {'text': 'foo', 'classes': 'cls1 cls2 cls3'} --> <span class="cls1 cls2 cls3">foo</span> */
-        
-        var wrapperSpan = document.createElement('span');
-        wrapperSpan.innerHTML = fixupDialogue(comp.text);
-        wrapperSpan.className = comp.classes;
-        wrapperSpan.setAttribute('data-character', player.id);
-        
-        return wrapperSpan;
-    });
+    var displayElems = applyDialogueStyling(player.chosenState.dialogue, player.id);
 
     /* Show repeat count if debug mode is on. */
     if (showDebug && player.getRepeatCount() > 1) {
