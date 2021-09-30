@@ -1302,7 +1302,7 @@ function parseMarkdown (text, characterID) {
             if (reduceToken === curToken) {
                 /*
                  * Combine all parsed elements from reduceIdx onwards into a single 'reduced' HTML element,
-                 * then replace the token matched at reduceIdx itself with the that HTML element.
+                 * then replace the token matched at reduceIdx itself with that HTML element.
                  * 
                  * We also need to fix up escaped tokens (\*, etc.) before inserting them into the formatted <span>.
                  */
@@ -1341,7 +1341,7 @@ function parseMarkdown (text, characterID) {
             if (endSpace.length > 0) parseStack.push(endSpace);
         }
     });
-    
+
     /* Go back and replace escaped tokens with their regular counterparts. */
     return parseStack.map(unescapeMarkdownTokens);
 }
