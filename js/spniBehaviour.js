@@ -1091,10 +1091,10 @@ var fixupDialogueSubstitutions = { // Order matters
     "'":   '\u2019', // right single quotation mark
     '\\':  '\xad', // soft hyphen
     '~':   '\u223c', // tilde operator, bigger than ordinary tilde
-    '&lt;i&gt;': '<i>',
+    '&lt;i&gt;': '<i>', // this is preempted by a specific replacement pass-- but still substitute it for normalizeConditionText
     '&lt;br&gt;': '<br>',
     '&lt;hr&gt;': '<hr>',
-    '&lt;/i&gt;': '</i>',
+    '&lt;/i&gt;': '</i>', // same rationale as <i>, above: substitute specifically for normalizeConditionText
     '&lt;/br&gt;': '</br>',
     '&lt;/hr&gt;': '</hr>'
 };
@@ -1266,7 +1266,12 @@ function unescapeMarkdownTokens(token) {
  * @returns {(string|HTMLElement)[]}
  */
 function parseMarkdown (text, characterID) {
-    var tokens = filteredSplit(text, mdTokenRE);
+    /*
+     * As a special case, convert <i> and </i> to asterisks, to ensure mixed formatting doesn't break.
+     * (As a side effect, this also corrects lines where an <i> tag is nested within another <i> tag,
+     *  so that the inner <i> is correctly emphasized by removing italics.)
+     */
+    var tokens = filteredSplit(text.replace(/&lt;\/?i&gt;/gi, "*"), mdTokenRE);
     var parseStack = [];
 
     while (tokens.length > 0) {
@@ -1323,20 +1328,14 @@ function parseMarkdown (text, characterID) {
             }
         } else {
             /* Push leading and trailing whitespace separately, since parseFromString won't preserve it. */
-            let startSpace = text.match(/^\s*/)[0];
-            let endSpace = text.match(/\s*$/)[0];
-        
-            if (startSpace.length > 0) {
-                parseStack.push(startSpace);
-                text = text.substring(startSpace.length);
-            }
-        
-            if (endSpace.length > 0) {
-                text = text.substring(0, text.length - endSpace.length);
-            }
+            let startSpace = curToken.match(/^\s*/)[0];
+            let endSpace = curToken.match(/\s*$/)[0];
+            curToken = curToken.substring(startSpace.length, curToken.length - endSpace.length);
+            
+            if (startSpace.length > 0) parseStack.push(startSpace);
         
             let parser = new DOMParser();
-            let parsed = parser.parseFromString(fixupDialogue(text), "text/html");
+            let parsed = parser.parseFromString(fixupDialogue(curToken), "text/html");
             Array.prototype.push.apply(parseStack, parsed.body.childNodes);
         
             if (endSpace.length > 0) parseStack.push(endSpace);
