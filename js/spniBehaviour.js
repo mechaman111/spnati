@@ -1316,7 +1316,7 @@ function parseMarkdown (text, characterID) {
                  * In this case, we've matched reduceToken as "___" or "***",
                  * with curToken being "__"/"_" or "**"/"*" respectively.
                  *
-                 * Split reduceToken in-place, by removing whatever doesn't match curToken.
+                 * Split reduceToken in-place, by removing only the part that matches curToken.
                  * Then reduce everything else into the appropriate HTML element for curToken.
                  */
                 parseStack[reduceIdx] = parseStack[reduceIdx].substring(curToken.length);
