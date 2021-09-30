@@ -1207,7 +1207,7 @@ function emitMarkdownHTML (fmtType, contents, characterID) {
  * - ___underlined italics_ underlined-only text__
  * 
  * @param {string} curToken The Markdown formatting token to match against.
- * @param {string} matchToken The candidate parse stack element.
+ * @param {string|HTMLElement} matchToken The candidate parse stack element.
  * @returns {boolean}
  */
 function isMatchingToken (curToken, matchToken) {
@@ -1271,7 +1271,7 @@ function parseMarkdown (text, characterID) {
      * (As a side effect, this also corrects lines where an <i> tag is nested within another <i> tag,
      *  so that the inner <i> is correctly emphasized by removing italics.)
      * 
-     * Underscores are used here instead of italics, since underscores are used much less often in dialogue.
+     * Underscores are used here instead of asterisks, since underscores are used much less often in dialogue.
      */
     var tokens = filteredSplit(text.replace(/&lt;\/?i&gt;/gi, "_"), mdTokenRE);
     var parseStack = [];
