@@ -1267,11 +1267,13 @@ function unescapeMarkdownTokens(token) {
  */
 function parseMarkdown (text, characterID) {
     /*
-     * As a special case, convert <i> and </i> to asterisks, to ensure mixed formatting doesn't break.
+     * As a special case, convert <i> and </i> to underscores, to ensure mixed formatting doesn't break.
      * (As a side effect, this also corrects lines where an <i> tag is nested within another <i> tag,
      *  so that the inner <i> is correctly emphasized by removing italics.)
+     * 
+     * Underscores are used here instead of italics, since underscores are used much less often in dialogue.
      */
-    var tokens = filteredSplit(text.replace(/&lt;\/?i&gt;/gi, "*"), mdTokenRE);
+    var tokens = filteredSplit(text.replace(/&lt;\/?i&gt;/gi, "_"), mdTokenRE);
     var parseStack = [];
 
     while (tokens.length > 0) {
