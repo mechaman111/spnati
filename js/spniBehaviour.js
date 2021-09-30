@@ -1217,7 +1217,7 @@ function isMatchingToken (curToken, matchToken) {
     case "***": return matchToken === "***"; 
     case "_": return (matchToken === "_" || matchToken === "___");
     case "__": return (matchToken === "__" || matchToken === "___");
-    case "__": return matchToken === "___";
+    case "___": return matchToken === "___";
     default: return false;
     }
 }
