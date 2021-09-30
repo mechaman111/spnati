@@ -1369,7 +1369,18 @@ function applyDialogueStyling (text, characterID) {
     return parseStyleSpecifiers(text).map(function (comp) {
         /* {'text': 'foo', 'classes': 'cls1 cls2 cls3'} --> <span class="cls1 cls2 cls3">foo</span> */
         var wrapperSpan = createWrapperSpan(comp.classes, characterID);
-        var contents = parseMarkdown(comp.text, characterID);
+
+        /* Suppress Markdown parsing for <script> tag contents. */
+        var contents = comp.text.split(/(<script>.*?<\/script>)/i).reduce(function (contents, segment) {
+            if (segment.startsWith("<script>")) {
+                contents.push(segment);
+            } else {
+                Array.prototype.push.apply(contents, parseMarkdown(segment, characterID));
+            }
+
+            return contents;
+        }, []);
+        
         $(wrapperSpan).append(contents);
         
         return wrapperSpan;
