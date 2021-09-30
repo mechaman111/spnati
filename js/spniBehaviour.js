@@ -1276,9 +1276,7 @@ function parseMarkdown (text, characterID) {
     var tokens = filteredSplit(text.replace(/&lt;\/?i&gt;/gi, "_"), mdTokenRE);
     var parseStack = [];
 
-    while (tokens.length > 0) {
-        let curToken = tokens.shift();
-
+    tokens.forEach(function (curToken) {
         if (curToken == "\\*" || curToken == "\\_" || curToken == "\\\\") {
             /* 
              * Push the escaping backslash along with the actual escaped character,
@@ -1297,7 +1295,7 @@ function parseMarkdown (text, characterID) {
             /* If no previous token was matched, push this token onto the stack for later tokens to match. */
             if (reduceIdx === -1) {
                 parseStack.push(curToken);
-                continue;
+                return;
             }
             
             let reduceToken = parseStack[reduceIdx];
@@ -1342,8 +1340,8 @@ function parseMarkdown (text, characterID) {
         
             if (endSpace.length > 0) parseStack.push(endSpace);
         }
-    }
-
+    });
+    
     /* Go back and replace escaped tokens with their regular counterparts. */
     return parseStack.map(unescapeMarkdownTokens);
 }
