@@ -443,6 +443,7 @@ function closeStrippingModal (id) {
 
         humanPlayer.clothing.splice(id, 1);
         humanPlayer.timeInStage = -1;
+        humanPlayer.ticksInStage = 0;
         humanPlayer.removedClothing = removedClothing;
         humanPlayer.numStripped[removedClothing.type]++;
 
@@ -526,6 +527,7 @@ function stripAIPlayer (player) {
 
     players[player].stage++;
     players[player].timeInStage = -1;
+    players[player].ticksInStage = 0;
     players[player].stageChangeUpdate();
 
     /* update behaviour */

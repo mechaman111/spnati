@@ -26,21 +26,8 @@ var HEAVY_LAST_ROUND = 2;
  **********************************************************************/
 
 /************************************************************
- * Sets the forfeit timer of the given player, with a random
- * offset, if applicable.
- ************************************************************/
-Player.prototype.setForfeitTimer = function() {
-    // THE TIMER IS HARD SET RIGHT NOW
-    this.timer = this.stamina;
-    
-    // THE STAGE IS HARD SET RIGHT NOW
-    this.stage += 1;
-    this.timeInStage = -1;
-    this.stageChangeUpdate();
-}
-
-/************************************************************
- * Initiate masturbation for the selected player
+ * Initiate masturbation for the selected player.
+ * In the future, we might want to make this a method of Player.
  ************************************************************/
 function startMasturbation (player) {
     players[player].forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
@@ -53,6 +40,11 @@ function startMasturbation (player) {
         updateDebugState(showDebug);
     }
 
+    players[player].ticksInStage = 0;
+
+    /* Set timer before playing dialogue, so that forfeitTimer conditions work properly. */
+    players[player].timer = players[player].stamina;
+
     /* update behaviour */
     updateAllBehaviours(
         player, 
@@ -61,7 +53,9 @@ function startMasturbation (player) {
          OPPONENT_START_MASTURBATING]]
     );
 
-    players[player].setForfeitTimer();
+    players[player].stage += 1;
+    players[player].timeInStage = -1;
+    players[player].stageChangeUpdate();
     
     if (player == HUMAN_PLAYER) {
         $gameClothingLabel.html("You're Masturbating...");
@@ -92,6 +86,7 @@ function tickForfeitTimers () {
     if (gamePhase != eGamePhase.STRIP) for (var i = 0; i < players.length; i++) {
         if (players[i] && players[i].out && players[i].timer == 1) {
             players[i].timer = 0;
+            players[i].ticksInStage++;
             /* set the button state */
             $mainButton.html("Cumming...");
 
@@ -141,6 +136,11 @@ function tickForfeitTimers () {
             return true;
         }
     }
+
+    /* Always update ticksInStage for all players, even if they're not out. */
+    players.forEach(function (p) {
+        p.ticksInStage++;
+    });
 
     for (var i = 0; i < players.length; i++) {
         if (players[i] && players[i].out && players[i].timer > 1) {
@@ -218,6 +218,7 @@ function finishMasturbation (player) {
         [[players[player].gender == eGender.MALE ? MALE_FINISHED_MASTURBATING : FEMALE_FINISHED_MASTURBATING,
          OPPONENT_FINISHED_MASTURBATING]]
     );
+    players[player].ticksInStage = 0;
     players[player].timeInStage = 0;
     
     if (AUTO_FADE && globalSavedTableVisibility !== undefined) {

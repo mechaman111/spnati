@@ -877,6 +877,12 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         return args.split('|').reduce(function(sum, type) {
             return sum + (player.numStripped[type] || 0);
         }, 0);
+    case 'timeinstage':
+        return player.timeInStage;
+    case 'ticksinstage':
+        return player.ticksInStage;
+    case 'timer':
+        return player.out ? player.timer : player.stamina;
     default:
         return expandNicknames(self, player);
     }
