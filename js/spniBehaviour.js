@@ -875,6 +875,12 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         return args.split('|').reduce(function(sum, type) {
             return sum + (player.numStripped[type] || 0);
         }, 0);
+    case 'timeinstage':
+        return player.timeInStage;
+    case 'ticksinstage':
+        return player.ticksInStage;
+    case 'timer':
+        return player.out ? player.timer : player.stamina;
     default:
         return expandNicknames(self, player);
     }
@@ -1306,8 +1312,6 @@ function Condition($xml) {
     this.gender         = $xml.attr('gender');
     this.status         = $xml.attr('status');
     this.timeInStage    = parseInterval($xml.attr('timeInStage'));
-    this.ticksInStage    = parseInterval($xml.attr('ticksInStage'));
-    this.forfeitTimer    = parseInterval($xml.attr('forfeitTimer'));
     this.hand           = $xml.attr('hasHand');
     this.consecutiveLosses = parseInterval($xml.attr('consecutiveLosses'));
     this.saidMarker     = $xml.attr('saidMarker');
@@ -1320,16 +1324,12 @@ function Condition($xml) {
     if (this.role == "self") {
         this.priority = (this.tag ? 0 : 0) + (this.status ? 20 : 0)
             + (this.consecutiveLosses ? 60 : 0) + (this.timeInStage ? 8 : 0)
-            + (this.ticksInStage ? 8 : 0)
-            + (this.forfeitTimer ? 8 : 0)
             + (this.hand ? 20 : 0) + (this.gender ? 5 : 0)
     } else if (this.role == "target") {
         this.priority = (this.id ? 300 : 0) + (this.tag ? 150 : 0)
             + (this.stage ? 80 : 0) + (this.status ? 70 : 0)
             + (this.layers ? 40 : 0) + (this.startingLayers ? 40 : 0)
             + (this.consecutiveLosses ? 60 : 0) + (this.timeInStage ? 25 : 0)
-            + (this.ticksInStage ? 25 : 0)
-            + (this.forfeitTimer ? 25 : 0)
             + (this.hand ? 30 : 0) + (this.gender ? 5 : 0)
     } else {
         this.priority = (this.role == "winner" ? 1.5 : 1) *
@@ -1337,8 +1337,6 @@ function Condition($xml) {
              + (this.stage ? 40 : 0) + (this.status ? 5 : 0)
              + (this.layers ? 20 : 0) + (this.startingLayers ? 20 : 0)
              + (this.consecutiveLosses ? 30 : 0) + (this.timeInStage ? 15 : 0)
-             + (this.ticksInStage ? 15 : 0)
-             + (this.forfeitTimer ? 15 : 0)
              + (this.hand ? 15 : 0) + (this.gender ? 5 : 0))
     }
     this.priority += (this.saidMarker ? 1 : 0) + (this.notSaidMarker ? 1 : 0)
@@ -1853,8 +1851,6 @@ Case.prototype.checkConditions = function (self, opp) {
                 && (ctr.layers === undefined || inInterval(p.clothing.length, ctr.layers))
                 && (ctr.startingLayers === undefined || inInterval(p.startingLayers, ctr.startingLayers))
                 && (ctr.timeInStage === undefined || inInterval(p.timeInStage, ctr.timeInStage))
-                && (ctr.ticksInStage === undefined || inInterval(p.ticksInStage, ctr.ticksInStage))
-                && (ctr.forfeitTimer === undefined || inInterval(p.out ? p.timer : p.stamina, ctr.forfeitTimer))
                 && (ctr.hand === undefined || (p.hand && p.hand.strength === handStrengthFromString(ctr.hand)))
                 && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, ctr.consecutiveLosses))
                 && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, opp))
