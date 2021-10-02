@@ -26,22 +26,8 @@ var HEAVY_LAST_ROUND = 2;
  **********************************************************************/
 
 /************************************************************
- * Sets the forfeit timer of the given player, with a random
- * offset, if applicable.
- ************************************************************/
-Player.prototype.setForfeitTimer = function() {
-    // THE TIMER IS HARD SET RIGHT NOW
-    this.timer = this.stamina;
-    
-    // THE STAGE IS HARD SET RIGHT NOW
-    this.stage += 1;
-    this.timeInStage = -1;
-    // ticksInStage has already been reset to 0 before this call.
-    this.stageChangeUpdate();
-}
-
-/************************************************************
- * Initiate masturbation for the selected player
+ * Initiate masturbation for the selected player.
+ * In the future, we might want to make this a method of Player.
  ************************************************************/
 function startMasturbation (player) {
     players[player].forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
@@ -56,6 +42,9 @@ function startMasturbation (player) {
 
     players[player].ticksInStage = 0;
 
+    /* Set timer before playing dialogue, so that forfeitTimer conditions work properly. */
+    players[player].timer = players[player].stamina;
+
     /* update behaviour */
     updateAllBehaviours(
         player, 
@@ -64,7 +53,9 @@ function startMasturbation (player) {
          OPPONENT_START_MASTURBATING]]
     );
 
-    players[player].setForfeitTimer();
+    players[player].stage += 1;
+    players[player].timeInStage = -1;
+    players[player].stageChangeUpdate();
     
     if (player == HUMAN_PLAYER) {
         $gameClothingLabel.html("You're Masturbating...");
