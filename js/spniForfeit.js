@@ -36,6 +36,7 @@ Player.prototype.setForfeitTimer = function() {
     // THE STAGE IS HARD SET RIGHT NOW
     this.stage += 1;
     this.timeInStage = -1;
+    // ticksInStage has already been reset to 0 before this call.
     this.stageChangeUpdate();
 }
 
@@ -52,6 +53,8 @@ function startMasturbation (player) {
         chosenDebug = -1;
         updateDebugState(showDebug);
     }
+
+    players[player].ticksInStage = 0;
 
     /* update behaviour */
     updateAllBehaviours(
@@ -92,6 +95,7 @@ function tickForfeitTimers () {
     if (gamePhase != eGamePhase.STRIP) for (var i = 0; i < players.length; i++) {
         if (players[i] && players[i].out && players[i].timer == 1) {
             players[i].timer = 0;
+            players[i].ticksInStage++;
             /* set the button state */
             $mainButton.html("Cumming...");
 
@@ -141,6 +145,11 @@ function tickForfeitTimers () {
             return true;
         }
     }
+
+    /* Always update ticksInStage for all players, even if they're not out. */
+    players.forEach(function (p) {
+        p.ticksInStage++;
+    });
 
     for (var i = 0; i < players.length; i++) {
         if (players[i] && players[i].out && players[i].timer > 1) {
@@ -218,6 +227,7 @@ function finishMasturbation (player) {
         [[players[player].gender == eGender.MALE ? MALE_FINISHED_MASTURBATING : FEMALE_FINISHED_MASTURBATING,
          OPPONENT_FINISHED_MASTURBATING]]
     );
+    players[player].ticksInStage = 0;
     players[player].timeInStage = 0;
     
     if (AUTO_FADE && globalSavedTableVisibility !== undefined) {

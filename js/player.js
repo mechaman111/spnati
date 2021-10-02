@@ -111,6 +111,7 @@ Player.prototype.resetState = function () {
     this.forfeit = "";
     this.stage = this.consecutiveLosses = 0;
     this.timeInStage = 0;
+    this.ticksInStage = 0;
     this.markers = {};
     this.hand = null;
 
