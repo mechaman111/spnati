@@ -11,6 +11,7 @@ var SPECIAL_CASE_NAMES = {
     "kool-aid": "Kool-Aid Man",
     "larachel": "L'Arachel",
     "mom_alola": "Mom (Alola)",
+    "ms.fortune": "Ms. Fortune",
     "nami_szs": "Nami (SZS)",
     "pa-15": "PA-15",
     "pauling": "Miss Pauling",
