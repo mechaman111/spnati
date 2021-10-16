@@ -6736,7 +6736,7 @@
                     </markers>
                 </state>
                 <state img="#-strippinghappy.png" marker="ThrowingStripping">
-                    <text>This pitcfork can be the first.</text>
+                    <text>This pitchfork can be the first.</text>
                     <markers>
                         <marker name="HalloweenStripping" />
                     </markers>
@@ -6796,7 +6796,7 @@
                     </markers>
                 </state>
                 <state img="#-strippinghappy.png" marker="ThrowingStripping">
-                    <text>I think these stockings were quite fetching, do you not afgree?</text>
+                    <text>I think these stockings were quite fetching, do you not agree?</text>
                     <markers>
                         <marker name="HalloweenStripping" />
                     </markers>
@@ -15587,37 +15587,6 @@
                 <state img="#-happy.png">Take a moment to think, ~player~. You've the chance to swap &lt;i&gt;after&lt;/i&gt; seeing all other reactions.</state>
                 <state img="#-rigid.png">Take a deep breath, ~player~. Focus.</state>
             </case>
-            <case stage="10" id="2363" oneShotId="398" totalRounds="9-" priority="25">
-                <condition role="self" saidMarker="DetectHands&gt;=2" notSaidMarker="HardModeStart" />
-                <condition status="alive" character="human" />
-                <condition count="0" status="alive" role="other" hasHand="High Card" />
-                <condition count="0" status="alive" role="other" hasHand="One Pair" />
-                <condition role="other" saying=" " />
-                <alternative>
-                    <condition count="4-" status="alive" role="other" />
-                    <condition count="3-" role="other" saying=" " />
-                </alternative>
-                <alternative>
-                    <condition count="3-" status="alive" role="other" />
-                    <condition count="2-" role="other" saying=" " />
-                </alternative>
-                <alternative>
-                    <condition count="3-" status="alive" role="other" />
-                    <condition count="2-" role="other" saying=" " />
-                </alternative>
-                <state img="#-thinking.png" marker="DetectStrength">
-                    <text>Hmm... oh dear, ~player~. You may have to take a risk this round.</text>
-                    <markers>
-                        <marker name="DetectHands" op="=" value="0" />
-                    </markers>
-                </state>
-                <state img="#-displeased.png" marker="DetectStrength">
-                    <text>Tch, so many powerful hands. Be cautious, partner.</text>
-                    <markers>
-                        <marker name="DetectHands" op="=" value="0" />
-                    </markers>
-                </state>
-            </case>
             <case stage="10" id="2364" totalRounds="9-" priority="25">
                 <condition role="self" saidMarker="DetectHands&gt;=2" notSaidMarker="HardModeStart" />
                 <condition status="alive" role="other" var="weakchr" hasHand="High Card" saying=" " />
@@ -15652,6 +15621,37 @@
                 <state img="#-happy.png">So, ~player~, what are your plans after this? Another world, or this one again?</state>
                 <state img="#-anger.png">Oh, hurry up.</state>
                 <state img="#-displeased.png">How much longer will you entertain this, ~player~? You've the power to begin anew at any time.</state>
+            </case>
+            <case stage="10" id="2363" hidden="1" totalRounds="9-" priority="25">
+                <condition role="self" saidMarker="DetectHands&gt;=2" notSaidMarker="HardModeStart" />
+                <condition status="alive" character="human" />
+                <condition count="0" status="alive" role="other" hasHand="High Card" />
+                <condition count="0" status="alive" role="other" hasHand="One Pair" />
+                <condition role="other" saying=" " />
+                <alternative>
+                    <condition count="4-" status="alive" role="other" />
+                    <condition count="3-" role="other" saying=" " />
+                </alternative>
+                <alternative>
+                    <condition count="3-" status="alive" role="other" />
+                    <condition count="2-" role="other" saying=" " />
+                </alternative>
+                <alternative>
+                    <condition count="3-" status="alive" role="other" />
+                    <condition count="2-" role="other" saying=" " />
+                </alternative>
+                <state img="#-thinking.png" marker="DetectStrength">
+                    <text>Hmm... oh dear, ~player~. You may have to take a risk this round.</text>
+                    <markers>
+                        <marker name="DetectHands" op="=" value="0" />
+                    </markers>
+                </state>
+                <state img="#-displeased.png" marker="DetectStrength">
+                    <text>Tch, so many powerful hands. Be cautious, partner.</text>
+                    <markers>
+                        <marker name="DetectHands" op="=" value="0" />
+                    </markers>
+                </state>
             </case>
         </trigger>
 
