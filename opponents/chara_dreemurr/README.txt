@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited September 22 2021
+README edited October 14 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -129,6 +129,8 @@ REFUSE TO REMOVE - FYI - After removing her last layer of clothing, Chara will s
 
 KNIFETURBATE - FYI - Chara does not let go of her knife at any point in the game, including her masturbation sequence.
 
+PITCHFORK - FYI - In the Halloween costume, Chara's first layer has a pitchfork she waves around, and some characters may fear getting hit.
+
 -------------------------------------------------------------------------------------------
 PERSISTENTS
 -------------------------------------------------------------------------------------------
@@ -233,6 +235,8 @@ SKINS
 DEFAULT - Self explanatory; it's the default skin.
 
 BEACH GARDENER - Summer Event costume.
+
+DEVIL ON YOUR SHOULDER - Halloween Event costume.
 
 -------------------------------------------------------------------------------------------
 CHARACTER INTERACTIONS
@@ -615,6 +619,9 @@ YURI
 
 ZENOBIA
 -Generic responses to handle the, ah, unique masturbation sequence of Zenobia.
+
+ZOE
+-Responds to Zoe losing.
 
 ZONE-TAN
 -Responds to Zone-Tan's demon form.
