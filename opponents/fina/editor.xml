@@ -494,6 +494,7 @@
         <response id="2316" opponent="reimu" opponentId="97" />
         <response id="2317" opponent="reimu" opponentId="106" />
         <response id="2318" opponent="reimu" opponentId="107" />
+        <response id="2322" opponent="ms.fortune" opponentId="87" />
     </responses>
     <notes>
         <note id="1384">The Orb of Serenity is actually worth less than the three legendary Idols in Skies of Arcadia, but those are obtained in a completely different way depending on whether you're playing the Dreamcast original or the Gamecube remake, and I don't want to figure out how to handle that.</note>
@@ -538,6 +539,13 @@
         <note id="193">Warning: If you reply, make sure to delete MetNPC from the conditions, as it will probably break them.</note>
         <note id="2243">If it's just her, the player, and the Nami doll, and the player has seen her lose before, Fina switches to her "showing" mode and doesn't cover herself at all.</note>
         <note id="2249">If the player has played more games without Chara than with Chara since Fina's ultimatum, she may reward the player in games without Chara by not covering herself, regardless of her comfort level.</note>
+        <note id="2323">The multiple versions of this case store different values in FinaMeiaReplyContinue5 - check for the appropriate value to respond to a specific variant.</note>
+        <note id="2324">The multiple versions of this case store different values in FinaMeiaReplyContinue5 - check for the appropriate value to respond to a specific variant.</note>
+        <note id="2325">The multiple versions of this case store different values in FinaMeiaReplyContinue5 - check for the appropriate value to respond to a specific variant.</note>
+        <note id="2326">The multiple versions of this case store different values in FinaMeiaReplyContinue5 - check for the appropriate value to respond to a specific variant.</note>
+        <note id="2331">Of course, there is a numerical value for it in her game. Fina's not aware of it though, since it's a meta property.</note>
+        <note id="2332">Sorry, I had to. Also, if replying to this case, make sure to delete any MetNPC conditions as they will probably break your response.</note>
+        <note id="2333">The multiple versions of this case store different values in FinaMeiaReplyContinue5 - check for the appropriate value to respond to a specific variant.</note>
     </notes>
     <labels>
         <label id="93" label="" folder="Stranger" sort="2" />
@@ -2271,9 +2279,14 @@
         <label id="2318" label="" folder="Responses" sort="311" />
         <label id="2319" label="" folder="Stripping Order" sort="76" />
         <label id="2320" label="" folder="Stripping Order" sort="101" />
+        <label id="2321" label="" folder="Responses" sort="0" />
+        <label id="2327" label="" folder="Responses" sort="0" />
+        <label id="2328" label="" folder="Responses" sort="0" />
+        <label id="2329" label="" folder="Responses" sort="0" />
     </labels>
-    <nextId>2320</nextId>
+    <nextId>2333</nextId>
     <markers>
+        <marker scope="Public" name="" />
         <marker scope="Public" name="AikaBirthday">Fina notes that it's Aika's birthday today.</marker>
         <marker scope="Public" name="BlessCollectibleCounter">The player has heard Fina say her "bless" finishing line.</marker>
         <marker scope="Public" name="BlessingCollectibleCounter">The player has heard Fina say her "blessing" finishing line.</marker>
@@ -2285,7 +2298,7 @@
         <marker scope="Public" name="closeFriend">Active if Fina has defeated, lost to, and lost alongside the human player.</marker>
         <marker scope="Public" name="CompletelyNaked">Fina realizes the human player is completely exposed. She may later realize they are wearing some accessories or minor items.</marker>
         <marker scope="Public" name="countAccessories">Per-target marker that counts the number of accessories each opponent has removed.</marker>
-        <marker scope="Public" name="cover">Indicates the extent to which Fina is covering herself when exposed. "covering" = a lot, "default" = sometimes, "uncovering" = not deliberately, "showing" = deliberately making herself visible.</marker>
+        <marker scope="Public" name="cover">Indicates the extent to which Fina is covering herself when exposed. Default is cover = 0, where she covers herself based on her mood. "covering" = a lot, "uncovering" = not deliberately, "showing" = deliberately making herself visible.</marker>
         <marker scope="Public" name="CupilBattle">Fina describes how Cupil protects her in battle.</marker>
         <marker scope="Public" name="CupilCapabilities">Fina describes some of Cupil's capabilities.</marker>
         <marker scope="Public" name="CupilChamNear">Cupil notices a Cham nearby and Fina wants to take a quick look for it.</marker>
@@ -2398,6 +2411,7 @@
         <marker scope="Public" name="FinaBernieEnd1">Last part of stripping conversation for Bernadetta's first layer.</marker>
         <marker scope="Public" name="FinaBernieGreet">Fina greets Bernadetta, whom she met in a previous game, and says she hopes she'll be comfortable since the player is also here.</marker>
         <marker scope="Public" name="FinaBernieStart1">First part of stripping conversation for Bernadetta's first layer.</marker>
+        <marker scope="Public" name="FinaBetterHands" />
         <marker scope="Public" name="FinaBirthday">It's Fina's birthday today (assuming "Silver December" counts as December).</marker>
         <marker scope="Public" name="FinaBirthdayDefeat">Fina loses the game on her birthday.</marker>
         <marker scope="Public" name="FinaBirthdayVictory">Fina wins the game on her birthday.</marker>
@@ -2585,6 +2599,9 @@
         <marker scope="Public" name="FinaDefeatRedeeming">Fina loses the game, and she feels the player is breaking free of Chara's influence.</marker>
         <marker scope="Public" name="FinaDifferentSkinColors">Fina reacts to a table with diverse skin colors.</marker>
         <marker scope="Public" name="FinaDisturbingGreet">Fina greets a character she finds disturbing, as tagged in the formedOpinion marker.</marker>
+        <marker scope="Public" name="FinaDMGContinue1" />
+        <marker scope="Public" name="FinaDMGCupilKuriboh" />
+        <marker scope="Public" name="FinaDMGKuriboh" />
         <marker scope="Public" name="FinaDMGStart1" />
         <marker scope="Public" name="FinaDonPatchGreet">Fina greets Don Patch after he appears.</marker>
         <marker scope="Public" name="FinaDonPatchReact">Fina is amused by Don Patch appearing to cover Bobobo's privates.</marker>
@@ -2716,6 +2733,7 @@
         <marker scope="Public" name="FinaFlutterStrip">Fina reacts to Flutter having to "strip".</marker>
         <marker scope="Public" name="FinaFootBattles">Fina talks about fighting on foot.</marker>
         <marker scope="Public" name="FinaFortuneContinue1" />
+        <marker scope="Public" name="FinaFortuneEnd1" />
         <marker scope="Public" name="FinaFortuneFinish" />
         <marker scope="Public" name="FinaFortuneHeadQuestion" />
         <marker scope="Public" name="FinaFortuneHeavy" />
@@ -2863,12 +2881,18 @@
         <marker scope="Public" name="FinaKomiStart1">First part of stripping conversation for Komi's first layer.</marker>
         <marker scope="Public" name="FinaKomiStart2" />
         <marker scope="Public" name="FinaKumatoraMotherExpo1" />
+        <marker scope="Public" name="FinaKumatoraMotherExpo2" />
         <marker scope="Public" name="FinaKumatoraParentalGuidance" />
         <marker scope="Public" name="FinaKumatoraRegulars" />
         <marker scope="Public" name="FinaKumatoraReply1" />
         <marker scope="Public" name="FinaKumatoraSiblings" />
+        <marker scope="Public" name="FinaKumatoraSiblings2" />
         <marker scope="Public" name="FinaKumatoraStart1" />
         <marker scope="Public" name="FinaKumatoraWeirdDudes" />
+        <marker scope="Public" name="FinaKyouHerePlayerKyou" />
+        <marker scope="Public" name="FinaKyouLuckPenalty" />
+        <marker scope="Public" name="FinaKyouStart1" />
+        <marker scope="Public" name="FinaKyouWherePlayerKyou" />
         <marker scope="Public" name="FinaKyuGreet">Fina greets Kyu and suggests the player really shouldn't need her help to get Fina out of her clothes.</marker>
         <marker scope="Public" name="FinaLadybugBodysuit">Fina reacts to Ladybug losing her bodysuit.</marker>
         <marker scope="Public" name="FinaLandingStrip">Fina reacts to someone with a landing strip pubic hair style.</marker>
@@ -3064,6 +3088,7 @@
         <marker scope="Public" name="FinaMeiaContinue2Combat" />
         <marker scope="Public" name="FinaMeiaContinue2Location" />
         <marker scope="Public" name="FinaMeiaContinue2Supplies" />
+        <marker scope="Public" name="FinaMeiaContinue3" />
         <marker scope="Public" name="FinaMeiaDating">Fina talks with Meia about dating men, part 1.</marker>
         <marker scope="Public" name="FinaMeiaDating2" />
         <marker scope="Public" name="FinaMeiaEnd1">Last part of stripping conversation for Meia's first layer.</marker>
@@ -3092,6 +3117,9 @@
         <marker scope="Public" name="FinaMeiaReplyContinue2" />
         <marker scope="Public" name="FinaMeiaReplyContinue3" />
         <marker scope="Public" name="FinaMeiaReplyContinue4" />
+        <marker scope="Public" name="FinaMeiaReplyContinue5" />
+        <marker scope="Public" name="FinaMeiaReplyContinue5Stranger" />
+        <marker scope="Public" name="FinaMeiaReplyContinue5StrangerMast" />
         <marker scope="Public" name="FinaMeiaReplyEnd1">Last part of stripping conversation with Meia for Fina's first layer.</marker>
         <marker scope="Public" name="FinaMeiaReplyEnd2" />
         <marker scope="Public" name="FinaMeiaReplyEnd3" />
@@ -3211,6 +3239,7 @@
         <marker scope="Public" name="FinaModesty2">Fina talks about the Elders' instructions for her on modesty, part 2.</marker>
         <marker scope="Public" name="FinaMonikaBlazer1">Fina reacts to Monika glitching away her blazer, part 1.</marker>
         <marker scope="Public" name="FinaMonikaBlazer2">Fina reacts to Monika glitching away her blazer, part 2.</marker>
+        <marker scope="Public" name="FinaMonikaContinue2" />
         <marker scope="Public" name="FinaMonikaContinueAware1">Second part of stripping conversation for Monika's first layer, if Fina was already aware that the human player's in the Literature Club.</marker>
         <marker scope="Public" name="FinaMonikaContinueIgnorant1">Second part of stripping conversation for Monika's first layer, if Fina didn't know the human player was in the Literature Club.</marker>
         <marker scope="Public" name="FinaMonikaDeletion">Fina's inner monologue about what Monika means by "deleting" things.</marker>
@@ -3222,6 +3251,7 @@
         <marker scope="Public" name="FinaMonikaOptionsMenuFollowup">Fina tentatively accepts Monika's explanation of what she meant by an "Options Menu".</marker>
         <marker scope="Public" name="FinaMonikaReply1">First part of stripping conversation with Monika for Fina's first layer.</marker>
         <marker scope="Public" name="FinaMonikaReplyContinue1" />
+        <marker scope="Public" name="FinaMonikaReplyEnd1" />
         <marker scope="Public" name="FinaMonikaStart1">First part of stripping conversation for Monika's first layer.</marker>
         <marker scope="Public" name="FinaMonikaStart2" />
         <marker scope="Public" name="FinaMonikaWritingTip">Fina reacts to Monika's Writing Tip of the Day.</marker>
@@ -3414,6 +3444,7 @@
         <marker scope="Public" name="FinaNoelleCupilStripping" />
         <marker scope="Public" name="FinaNoelleHeaddress" />
         <marker scope="Public" name="FinaNoelleStart1">First part of stripping conversation for Noelle's first layer.</marker>
+        <marker scope="Public" name="FinaNoireStart1" />
         <marker scope="Public" name="FinaNotEarthling">Fina apologizes to Meia and says since she's not an Earthling, she can't give any insight into them.</marker>
         <marker scope="Public" name="FinaNotRemembered">Fina remembers people in this game, but no one seems to remember her. Meant to provide an easy out for those who would rather not engage with Fina's memory gimmick.</marker>
         <marker scope="Public" name="FinaNotShaving">Fina explains she doesn't shave, it's just that she doesn't seem to grow hair on that part of her body.</marker>
