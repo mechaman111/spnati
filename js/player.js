@@ -561,9 +561,9 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     var defaultCostumes = [];
     $metaXml.find('>alternates>costume').each(function (i, elem) {
         var set = $(elem).attr('set');
-        var status = $(elem).attr('status') || 'offline';
+        var status = $(elem).attr('status') || 'online';
 
-        if ((set && (alternateCostumeSets['all'] || alternateCostumeSets[set])) || includedOpponentStatuses[status]) {
+        if ((set === undefined || alternateCostumeSets['all'] || alternateCostumeSets[set]) && includedOpponentStatuses[status]) {
             var costume_descriptor = {
                 'folder': $(elem).attr('folder'),
                 'name': $(elem).text(),
@@ -574,7 +574,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
                 'status': status,
             };
 
-            if (DEFAULT_COSTUME_SETS.has(set)) {
+            if (set && DEFAULT_COSTUME_SETS.has(set)) {
                 defaultCostumes.push(costume_descriptor);
             }
 

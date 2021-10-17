@@ -843,7 +843,7 @@ function populateUnavailableEpilogues() {
             var title = ending.text();
             
             /* Don't display unlisted epilogues */
-            if (ending.attr('status') === "Unlisted") return;
+            if (ending.attr('status').toLowerCase() === "unlisted") return;
 
             /* Skip any epilogues that share titles with available epilogues */
             if (epilogues.some(function (e) { return e.title === title; })) return;
