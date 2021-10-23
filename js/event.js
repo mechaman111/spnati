@@ -662,7 +662,6 @@ function loadEventData () {
             eventCharacterSettings = HighlightedAttributeList.merge(characterSettings);
 
             DEFAULT_COSTUME_SETS = new Set();
-            alternateCostumeSets = {};
 
             eventCostumeSettings.ids.forEach(function (costumeSet) {
                 alternateCostumeSets[costumeSet] = true;
