@@ -1202,13 +1202,8 @@ OpponentSelectionCard.prototype.isVisible = function (testingView, ignoreFilter)
          * by selected testing opponents with 5+ lines.
          * 
          * Additionally, if an event is active, ignore staleness for
-         * event characters on Testing.
+         * event characters on Testing (handled by isStaleOnTesting()).
          */
-
-        if (status === "testing" && this.opponent.event_character) {
-            return true;
-        }
-
         if ((status !== "testing" || isStaleOnTesting(this.opponent))
             && this.opponent.inboundLinesFromSelected("testing") < 5)
             return false;
