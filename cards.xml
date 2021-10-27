@@ -4,20 +4,100 @@
  -->
 
 <card-decks>
+    <!-- The deck ID should be unique for each deck. -->
     <deck id="default">
+        <!--
+            These elements should be fairly self-explanatory.
+            They're shown in the Gallery, in the Deck Selection screen.
+        -->
         <title>Default</title>
         <subtitle>The standard deck of cards.</subtitle>
         <description>Enabled by default.</description>
         <credits>[insert here]</credits>
+        
+        <!--
+            Each <front> element describes the paths to the card-front images for a card set.
+
+            The `src` attribute describes a *pattern* of image paths, which the game will automatically
+            fill in for each applicable card suit and rank for that front.
+
+            Within the `src` attribute value, %s will be filled in with the card suit ID:
+            - Spades: `spade`
+            - Clubs: `clubs`
+            - Diamonds: `diamo`
+            - Hearts: `heart`
+
+            %i will be filled in with the numerical rank of the card:
+            - Ace: 1
+            - number cards: the actual number (2 - 10)
+            - Jack: 11
+            - Queen: 12
+            - King: 13
+
+            The pattern `%s%i` therefore matches the naming scheme for the default cards:
+            - Ace of Spades => `spade1`
+            - 2 of Clubs => `clubs2`
+            - Jack of Diamonds: `diamo11`
+            - King of Hearts: `heart13`
+            
+            The `suit` attribute can be used to specify a space-separated list of suits to which this pattern applies.
+            The suit name can be abbreviated: "diamonds", "diamo", and "d" all refer to the suit of diamonds, for example.
+            Suit names are also case-insensitive.
+            By default, if no `suit` is provided, the pattern is assumed to apply to all suits.
+
+            The `rank` attribute can be used to specify the card ranks to which this pattern applies.
+            This uses the usual interval notation.
+            Aces are considered to be both rank 1 and rank 14: "1-13" and "2-14", therefore, refer to all possible card ranks.
+            By default, patterns are assumed to apply to all card ranks.
+
+            Multiple <front> elements can be listed, to describe multiple image path patterns.
+            If a given card has multiple possible image paths, it is undefined which one is actually used.
+            Card sets do not need to be complete: you don't have to have an image for every card in a suit, and you don't have to fill in all suits.
+        -->
+
+        <!--
+            Examples:
+
+            Specify an image for the Ace of Spades in particular:
+            <front suit="spade" rank="14" src="img/my-cards/ace_of_spades.jpg" />
+
+            Specify images for Jacks, Queens, and Kings only (of all suits):
+            <front rank="11-13" src="img/my-cards/%s%i.jpg" />
+
+            Specify images for Hearts only (of all ranks):
+            <front suit="hearts" src="img/my-cards/%s%i.jpg" />
+        -->
 
         <front src="img/%s%i.jpg" />
+
+        <!--
+            Each <back> element lists the path to a single card back image.
+            Each back image needs an ID that is unique within the set (though IDs can be re-used in different sets).
+            Multiple card back images can be listed in a single set.
+        -->
         <back id="default" src="img/unknown.jpg" />
     </deck>
+
     <deck id="xmas">
         <title>Christmas Cards</title>
         <subtitle>A festive card deck for the holidays.</subtitle>
         <description>Available during Winter. (Testing)</description>
         <credits>Arndress</credits>
+
+        <!-- By default, a card set's status is "online", but that can be changed using a <status> element. -->
+        <status>offline</status>
+
+        <!--
+            A <collectible> element can be used to tie a card set to a collectible, so that
+            unlocking the collectible unlocks the card set for use as well.
+
+            "character" should be the ID of the character with the collectible,
+            and "id" should be the collectible's ID.
+
+            Each set can only be tied to a single collectible.
+
+            <collectible character="character" id="collectible_id" />
+        -->
 
         <front src="img/xmascards/%s%i.png" />
         <back id="1" src="img/xmascards/unknown.png" />

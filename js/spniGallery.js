@@ -906,7 +906,7 @@ function CardDeckDisplay (imageSet) {
 
     var suits = {"spade": [], "diamo": [], "heart": [], "clubs": []};
     imageSet.includedFrontCards.forEach(function (c) {
-        suits[c.suit].push(c);	
+        suits[c.suit].push(c);
     });
 
     /** @type {Array<CardDeckGroup>} */

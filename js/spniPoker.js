@@ -292,9 +292,11 @@ function imageSetFromXML($xml) {
     var subtitle = $xml.children("subtitle").text();
     var description = $xml.children("description").text();
     var credits = $xml.children("credits").text();
-    var unlockChar = $xml.attr("character") || null;
-    var unlockCollectible = $xml.attr("collectible") || null;
     var status = $xml.attr("status") || null;
+
+    var collectibleElem = $xml.children("collectible");
+    var unlockChar = collectibleElem.attr("character") || null;
+    var unlockCollectible = collectibleElem.attr("id") || null;
 
     $xml.children('front').each(function () {
         var $elem = $(this);
@@ -305,7 +307,7 @@ function imageSetFromXML($xml) {
         if (!suits) {
             suits = SUIT_PREFIXES;
         } else {
-            suits = suits.split(/[\s,]+/).map(function (val) {
+            suits = suits.toLowerCase().split(/[\s,]+/).map(function (val) {
                 switch (val[0]) {
                     case "s": return "spade";
                     case "c": return "clubs";
