@@ -502,6 +502,12 @@ namespace SPNATI_Character_Editor
 			set { Set("colortargets", value); }
 		}
 
+		public static bool DisableEmptyValidation
+		{
+			get { return GetBoolean("noemptyvalidation"); }
+			set { Set("noemptyvalidation", value); }
+		}
+
 		public static bool DisableWorkflowTracer
 		{
 			get { return GetBoolean("workflowtracer"); }
