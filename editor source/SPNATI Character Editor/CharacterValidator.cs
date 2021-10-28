@@ -1033,6 +1033,13 @@ namespace SPNATI_Character_Editor
 				missingImages.Remove("custom:" + pose.Id);
 			}
 
+			// custom poses from the base skin can never be missing in an alt skin
+			// because alt skins inherit all poses from the base skin
+			foreach (Pose pose in character.Poses)
+			{
+				missingImages.Remove("custom:" + pose.Id);
+			}
+
 			if (missingImages.Count > 0)
 			{
 				warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"{skin.Folder} is missing the following images: {string.Join(",", missingImages)}"));
