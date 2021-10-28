@@ -46,6 +46,7 @@ namespace SPNATI_Character_Editor.Controls
 			RowIndex = row;
 			_line = line;
 			_character = character;
+			string fontSize = line.FontSize;
 			cboDirection.Text = line.Direction ?? "";
 
 			cboSize.Text = line.Size ?? "";
@@ -71,7 +72,7 @@ namespace SPNATI_Character_Editor.Controls
 			valLocation.Value = Math.Max(valLocation.Minimum, Math.Min(valLocation.Maximum, (decimal)location));
 
 			// has to be at end or else weight and location are set incorrectly
-			cboFontSize.Text = line.FontSize ?? "";
+			cboFontSize.Text = fontSize ?? "";
 		}
 
 		public DialogueLine GetLine()
