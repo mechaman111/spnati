@@ -1316,6 +1316,45 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
+		/// <summary>
+		/// Gets whether this case has any direct targeted dialogue towards other players INCLUDING human
+		/// </summary>
+		public bool HasTargetedConditionsIncludeHuman
+		{
+			get
+			{
+				bool targeted = !string.IsNullOrEmpty(Target) || !string.IsNullOrEmpty(AlsoPlaying) || (!string.IsNullOrEmpty(Filter) && CharacterDatabase.Get(Filter) != null);
+
+				if (!targeted)
+				{
+					foreach (TargetCondition condition in Conditions)
+					{
+						if (!string.IsNullOrEmpty(condition.Character))
+						{
+							targeted = true;
+							break;
+						}
+						if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.Get(condition.FilterTag) != null)
+						{
+							targeted = true;
+							break;
+						}
+					}
+				}
+				if (!targeted)
+				{
+					foreach (Case alternative in AlternativeConditions)
+					{
+						if (alternative.HasTargetedConditions)
+						{
+							return true;
+						}
+					}
+				}
+				return targeted;
+			}
+		}
+
 		public IEnumerable<Case> GetConditionSets()
 		{
 			yield return this;
