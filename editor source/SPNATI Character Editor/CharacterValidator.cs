@@ -111,7 +111,7 @@ namespace SPNATI_Character_Editor
 						}
 
 						//Make sure it's not blank
-						if (line.Text.Equals("") && string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
+						if (!Config.DisableEmptyValidation && line.Text.Equals("") && string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case has no text. If this was intentional, the correct way to create a blank line is to use ~blank~. {0}", caseLabel), context));
 						}
