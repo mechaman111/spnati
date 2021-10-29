@@ -650,8 +650,18 @@ namespace SPNATI_Character_Editor
 					if (sp.Src.Contains(FolderName + "/"))
                     {
 						sp.Src = sp.Src.Substring(FolderName.Length + 1);
+
+						// dumber and also worse (I mean REALLY bad, I hate it)
+						foreach (Character c in CharacterDatabase.Characters)
+                        {
+							if (sp.Src.StartsWith(c.FolderName + "/"))
+                            {
+								sp.Src = "../" + sp.Src;
+								break;
+                            }
+                        }
                     }
-                }
+				}
 
 				foreach (Directive dir in pose.Directives)
                 {
@@ -660,6 +670,16 @@ namespace SPNATI_Character_Editor
 						if (!String.IsNullOrEmpty(keyf.Src) && keyf.Src.Contains(FolderName + "/"))
 						{
 							keyf.Src = keyf.Src.Substring(FolderName.Length + 1);
+
+							// dumber and also worse (I mean REALLY bad, I hate it)
+							foreach (Character c in CharacterDatabase.Characters)
+							{
+								if (keyf.Src.StartsWith(c.FolderName + "/"))
+								{
+									keyf.Src = "../" + keyf.Src;
+									break;
+								}
+							}
 						}
 					}
                 }
