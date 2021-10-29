@@ -134,40 +134,71 @@ label {
 
 .screen-container {
     position: absolute;
-    width: 100vw;
-    height: 75vw;
-    max-width: 133.33vh;
-    max-height: 100vh;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-}
 
-.wide-screen-container {
-    position: absolute;
-    width: 100vw;
+    /* NOTE: uncomment to force the container to a 16:9 layout */
+    /* width: 100vw;
     height: 56.25vw;
     max-width: 177.78vh;
-    max-height: 100vh;
+    max-height: 100vh; */
+
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     margin: auto;
 }
-
 
 .screen {
     position: absolute;
+    width: 99vw;
+    height: calc(75vw - 0.75vw);
+    max-width: calc(133.33vh - (133.33vh * 0.01));
+    max-height: calc(100vh - 1vh);
+
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 0;
-    margin: 0.5%;
+    margin: auto;
 }
+
+.screen.wide {
+    width: 99vw;
+    height: calc(56.25vw - (56.25vw * 0.01));
+    max-width: calc(177.78vh - (177.78vh * 0.01));
+    max-height: calc(100vh - 1vh);
+}
+
+.wing {
+    position: absolute;
+    height: 99%;
+    width: calc((100% - 133.33vh) / 2);
+    top: 0.5rem;
+    bottom: 0.5rem;
+}
+
+.wing.left {
+    left: 0;
+}
+
+.wing.right {
+    right: 0;
+}
+
+@media (max-aspect-ratio: 3/2) {
+    .screen-container {
+        width: 100vw;
+        height: 75vw;
+        max-width: 133.33vh;
+        max-height: 100vh;
+    }
+    
+    .wing {
+        display: none;
+    }
+}
+
 
 .select-table>*,
 #game-table>*,
@@ -2683,7 +2714,7 @@ ul.dropdown-menu>li {
 /* Modifications on non-widescreen devices
    Note: The threshold here must match autoResizeFont(). */
 @media (max-aspect-ratio: 3/2) {
-    .wide-screen-container {
+    .screen.wide {
         height: 75vw;
         max-width: 133.33vh;
     }
