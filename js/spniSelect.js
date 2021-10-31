@@ -1099,7 +1099,7 @@ function loadDefaultFillSuggestions () {
         }
         
         var possibleNewAndUpdatedPicks = possiblePicks.filter(function (opp) {
-            return opp.highlightStatus === "new" || opp.highlightStatus === "unsorted" || opp.highlightStatus === "updated" || opp.highlightStatus === "unsorted-updated";
+            return opp.highlightStatus === "new" || opp.highlightStatus === "unsorted" || opp.highlightStatus === "updated" || opp.highlightStatus === "unsorted-updated" || opp.highlightStatus == "prefill";
         });
         
         /* Fill slots 2 and 3, but also fill slot 1 if still empty */
