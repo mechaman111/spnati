@@ -15,6 +15,11 @@ def process(opponent_folder_path: str, original_path: str):
     with open(meta_path, 'r', encoding='utf-8') as f:
         meta_soup = BeautifulSoup(f.read(), features="html.parser")
 
+    # If an update timestamp is already present in meta.xml, use that instead of
+    # looking through Git.
+    if meta_soup.opponent.lastupdate is not None:
+        return
+
     # Passed options:
     # "-n 1"           : limit to 1 commit
     # "--pretty=..."   : get UNIX timestamp only
@@ -36,18 +41,15 @@ def process(opponent_folder_path: str, original_path: str):
         sys.stderr.flush()
         return
     
-    # Always pull times from Git when deploying to production, to keep things
-    # consistent.
-    cur_tag = meta_soup.opponent.lastupdate
-    if cur_tag is None:
-        update_tag = meta_soup.new_tag('lastupdate')
-        update_tag.string = str(ts)
-        meta_soup.opponent.append(update_tag)
-    else:
-        cur_tag.string = str(ts)
+    update_tag = meta_soup.new_tag('lastupdate')
+    update_tag.string = str(ts)
+    meta_soup.opponent.append(update_tag)
     
     with open(meta_path, 'w', encoding='utf-8') as f:
         f.write(str(meta_soup))
+
+    sys.stderr.write("Filled in update timestamp for " + opponent_folder_path + "\n")
+    sys.stderr.flush()
 
 if __name__ == "__main__":
     target_path = sys.argv[1]
