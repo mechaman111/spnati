@@ -136,6 +136,18 @@ namespace SPNATI_Character_Editor
 							}
 						}
 
+						// check if line is entirely covered by {small}
+						if (line.Text.Trim().StartsWith("{small}") && !line.Text.Substring(1).Contains("{"))
+                        {
+							warnings.Add(new ValidationError(ValidationFilterLevel.Case, "Line uses \"{small}\" " + string.Format("to shrink the entire line. Instead, please use the built-in \"Text size\" option. {0}", caseLabel), context));
+						}
+
+						// check if line has {!reset} at the end
+						if (line.Text.Trim().EndsWith("{!reset}"))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, "\"{!reset}\" " + string.Format("at the end of a line is unnecessary. {0}", caseLabel), context));
+						}
+
 						//check for pointless ifMales
 						if (!string.IsNullOrEmpty(trigger.Gender))
                         {
