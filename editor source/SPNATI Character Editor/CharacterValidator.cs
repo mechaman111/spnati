@@ -451,6 +451,13 @@ namespace SPNATI_Character_Editor
 					warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{c.Name}\" uses an uncountable noun with no plural form, which makes incoming generic dialogue awkward (ex. \"I've seen many {c.Name} in my day\"). Consider renaming this layer (ex. \"armor\" to \"breastplate\")."));
 				}
 
+				String[] falsePlurals = { "pants", "shorts", "panties", "boxers", "tights", "leggings", "spats", "glasses", "sunglasses", "shades" };
+
+				if (!c.Plural && falsePlurals.Contains(c.Name))
+                {
+					warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{c.Name}\" should be set to plural. Even though it's only one item, it's still a grammatically plural noun (ex. \"Those are some nice {c.Name}\")."));
+				}
+
 				if (!String.IsNullOrEmpty(c.GenericName))
 				{
 					bool validCategory = false;
