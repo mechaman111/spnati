@@ -23,6 +23,7 @@ var SPECIAL_CASE_NAMES = {
     "uravity": "Ochako", // nmasp, wtf?
     "wiifitfemale": "Wii Fit Trainer",
     "yshtola": "Y'shtola",
+    "yuna_ffx": "Yuna (FFX)",
         
     // classic opponents
     "amy_rose_classic": "Amy Rose",
