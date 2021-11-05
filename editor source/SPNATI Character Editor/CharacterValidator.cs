@@ -85,6 +85,12 @@ namespace SPNATI_Character_Editor
 						}
 					}
 
+					// comment this out until it's easy to have multiple of the same condition
+					/*if (stageCase.AlternativeConditions.Count == 1)
+                    {
+						warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Case contains only one OR tab. It would be more readable if you condensed these conditions onto the default tab. {0}", caseLabel), context));
+					}*/
+
 					foreach (Case alt in stageCase.AlternativeConditions)
 					{
 						if (!alt.HasConditions)
@@ -92,6 +98,11 @@ namespace SPNATI_Character_Editor
 							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case contains an empty OR tab, which will reduce it to a generic line. {0}", caseLabel), context));
 							break;
 						}
+					}
+
+					if (stageCase.Lines.Count == 0 && string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
+                    {
+						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case has no lines assigned. {0}", caseLabel), context));
 					}
 
 					warnings.AddRange(ValidateRangeField(stageCase.TotalRounds, "totalRounds", caseLabel, -1, -1, context));
