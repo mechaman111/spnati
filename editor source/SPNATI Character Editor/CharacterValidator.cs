@@ -105,10 +105,6 @@ namespace SPNATI_Character_Editor
 						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case has no lines assigned. {0}", caseLabel), context));
 					}
 
-					warnings.AddRange(ValidateRangeField(stageCase.TotalRounds, "totalRounds", caseLabel, -1, -1, context));
-
-					ValidateExpressions(warnings, stageCase, caseLabel, context);
-
 					Tuple<string, string> template = DialogueDatabase.GetTemplate(stageCase.Tag);
 					string defaultLine = template.Item2;
 					Regex regex = new Regex(@"\<\/i\>");
@@ -407,6 +403,10 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
+			warnings.AddRange(ValidateRangeField(stageCase.TotalRounds, "totalRounds", caseLabel, -1, -1, context));
+
+			ValidateExpressions(warnings, stageCase, caseLabel, context);
+
 			return warnings;
 		}
 
@@ -586,6 +586,10 @@ namespace SPNATI_Character_Editor
 				if (string.IsNullOrEmpty(test.Expression))
 				{
 					warnings.Add(new ValidationError(ValidationFilterLevel.Case, $"Variable test has no expression: {test} {caseLabel}", context));
+				}
+				else if (test.Expression.Contains("~_."))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Case, $"Variable test has no subject: {test} {caseLabel}", context));
 				}
 				if (string.IsNullOrEmpty(test.Value))
 				{
