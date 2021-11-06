@@ -190,6 +190,8 @@ function loadBackgroundFromXml($xml, auto_tag_values) {
  */
 function loadBackgrounds() {
     console.log("Loading backgrounds...");
+    updateStartupProgress("Backgrounds", 0, 1);
+
     return fetchXML(BACKGROUND_CONFIG_FILE).then(function ($xml) {
         var auto_tag_metadata = {};
 
@@ -209,8 +211,11 @@ function loadBackgrounds() {
             });
         });
 
-        $xml.children('background').each(function () {
-            var bg = loadBackgroundFromXml($(this), auto_tag_metadata);
+        var backgroundElems = $xml.children('background').get();
+        backgroundElems.forEach(function (elem, idx, arr) {
+            updateStartupProgress("Backgrounds", idx, arr.length);
+            var bg = loadBackgroundFromXml($(elem), auto_tag_metadata);
+
             /* If the background has a listed status, check to ensure it's
              * available with the current configuration.
              */
@@ -221,6 +226,8 @@ function loadBackgrounds() {
         if (defaultBackgroundID && backgrounds[defaultBackgroundID]) {
             defaultBackground = backgrounds[defaultBackgroundID];
         }
+
+        updateStartupProgress("Backgrounds", 1, 1);
     }).catch(function (err) {
         console.error("Could not load backgrounds:");
         captureError(err);

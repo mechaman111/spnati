@@ -238,7 +238,7 @@ function loadListingFile () {
     listingFiles.push("opponents/listing.xml");
 
     /* clear the previous meta information */
-    var outstandingLoads = 0;
+    var currentLoads = 0;
     var totalLoads = 0;
     var opponentGroupMap = {};
     var opponentMap = {};
@@ -275,11 +275,10 @@ function loadListingFile () {
                 });
             }
         }
-        
-        if (--outstandingLoads == 0) {
+
+        updateStartupProgress("Roster", ++currentLoads, totalLoads);
+        if (currentLoads == totalLoads) {
             loadedOpponents = loadedOpponents.filter(Boolean); // Remove any empty slots should an opponent fail to load
-            $(".title-menu-buttons-container>div").removeAttr("hidden");
-            $("#title-load-container").hide();
             
             $tagList.append(Object.keys(TAG_ALIASES).concat(Object.keys(tagSet)).sort().map(function(tag) {
                 return new Option(tag);
@@ -298,9 +297,6 @@ function loadListingFile () {
                                               .slice(0, TESTING_MIN_NUMBER).pop() || {}).lastUpdated;
             updateIndividualSelectSort();
             updateIndividualSelectFilters();
-        } else {
-            var progress = Math.floor(100 * (totalLoads - outstandingLoads) / totalLoads);
-            $(".game-load-progress").text(progress.toString(10));
         }
     }
 
@@ -308,6 +304,7 @@ function loadListingFile () {
     var oppDefaultIndex = 0; // keep track of an opponent's default placement
 
     var listingProcessor = function($xml) {
+        if (!$xml) return immediatePromise();
         var available = {};
 
         /* start by checking which characters will be loaded and available */
@@ -345,7 +342,7 @@ function loadListingFile () {
             loadedGroups.push(newGroup);
         });
 
-        $xml.find('>individuals>opponent').each(function () {
+        return Promise.all($xml.find('>individuals>opponent').map(function () {
             var oppStatus = $(this).attr('status');
             var id = $(this).text();
             var releaseNumber = $(this).attr('release');
@@ -359,22 +356,25 @@ function loadListingFile () {
             var highlightStatus = $(this).attr('highlight');
 
             if (available[id] && !(id in opponentMap)) {
-                outstandingLoads++;
                 totalLoads++;
                 opponentMap[id] = oppDefaultIndex++;
-                loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus).then(onComplete).catch(function (err) {
+                return loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus).then(onComplete).catch(function (err) {
                     console.error("Could not load metadata for " + id + ":");
                     captureError(err);
                 });
+            } else {
+                return immediatePromise();
             }
-        });
+        }).get());
     }
+
+    updateStartupProgress("Roster", 0, 1);
 
     /* grab and parse the opponent listing files */
     return Promise.all(listingFiles.map(function (filename) {
         return fetchXML(filename);
     })).then(function (files) {
-        files.forEach(listingProcessor);
+        return Promise.all(files.map(listingProcessor));
     });
 }
 

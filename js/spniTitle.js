@@ -17,6 +17,8 @@ $clothingTable = $("#title-clothing-table");
 $warningLabel = $("#title-warning-label");
 $titleCandy = [$("#left-title-candy"), $("#right-title-candy")];
 
+var $gameLoadLabel = $(".game-load-label");
+var $gameLoadProgress = $(".game-load-progress");
 
 /**********************************************************************
  *****                    Title Screen Variables                  *****
@@ -267,9 +269,26 @@ var playerTagOptions = {
 };
 var playerTagSelections = {};
 
+
 /**********************************************************************
  *****                    Start Up Functions                      *****
  **********************************************************************/
+
+/************************************************************
+ * Functions for the startup loading progress menu.
+ ************************************************************/
+
+function updateStartupProgress (label, curItems, totalItems) {
+    var progress = Math.floor(100 * curItems / totalItems);
+    $gameLoadLabel.text(label);
+    $gameLoadProgress.text(progress.toString(10));
+}
+
+function finishStartupLoading () {
+    $(".title-menu-buttons-container>div").removeAttr("hidden");
+    $("#title-load-container").hide();
+}
+
 
 /************************************************************
  * Loads all of the content required to display the title

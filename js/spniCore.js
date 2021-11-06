@@ -70,6 +70,17 @@ var humanPlayer;
 /* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
 var timeoutID;
 
+
+/*
+ * Path to a compiled 'index' XML file combining collectible definitions for all opponents.
+ * This is automatically generated for the online version during CI/CD; if present, this is used
+ * to load collectibles for all characters at once, instead of requesting collectibles.xml for
+ * each opponent individually.
+ */
+
+var COLLECTIBLES_INDEX = "__COLLECTIBLES_INDEX";
+
+
 /**********************************************************************
  * Game Wide Global Variables
  **********************************************************************/
@@ -189,9 +200,9 @@ function initialSetup () {
         save.loadLocalStorage();
     }).then(loadEventData).then(loadBackgrounds).then(function () {
         save.load();
-        loadVersionInfo();
-        loadGeneralCollectibles();
-        loadSelectScreen();
+        return loadVersionInfo();
+    }).then(loadSelectScreen).then(loadAllCollectibles).then(function () {
+        finishStartupLoading();
 
         if (!EPILOGUES_ENABLED && !COLLECTIBLES_ENABLED) {
             $('.title-gallery-edge').css('visibility', 'hidden');
@@ -255,6 +266,8 @@ function initialSetup () {
 
 function loadVersionInfo () {
     $('.substitute-version').text('Unknown Version');
+
+    updateStartupProgress("Version Info", 0, 1);
     
     return fetchXML("version-info.xml").then(function($xml) {
         versionInfo = $xml;
@@ -271,6 +284,8 @@ function loadVersionInfo () {
         $('.substitute-version-time').text('(updated '+fuzzyTimeAgo(version_ts)+')');
 
         $('.version-button').click(showVersionModal);
+
+        updateStartupProgress("Version Info", 1, 1);
     }).catch(function (err) {
         console.error("Failed to load version info");
         captureError(err);
@@ -279,6 +294,8 @@ function loadVersionInfo () {
 
 
 function loadConfigFile () {
+    updateStartupProgress("Configuration", 0, 1);
+
     return fetchXML("config.xml").then(function($xml) {
         var _epilogues = $xml.children('epilogues').text();
         if(_epilogues.toLowerCase() === 'false') {
@@ -414,19 +431,10 @@ function loadConfigFile () {
         if (!Number.isNaN(_testing_min_number)) {
             TESTING_MIN_NUMBER = _testing_min_number;
         }
+
+        updateStartupProgress("Configuration", 1, 1);
     }).catch(function (err) {
         console.error("Failed to load configuration");
-        captureError(err);
-    });
-}
-
-function loadGeneralCollectibles () {
-    return fetchXML('opponents/general_collectibles.xml').then(function($xml) {
-        $xml.children('collectible').each(function (idx, elem) {
-            generalCollectibles.push(new Collectible($(elem), undefined));
-        });
-    }).catch(function (err) {
-        console.error("Failed to load general collectibles");
         captureError(err);
     });
 }

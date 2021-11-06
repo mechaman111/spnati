@@ -278,7 +278,6 @@ function goToCollectiblesScreen() {
 
     $galleryCollectiblesScreen.show();
     $galleryEndingsScreen.hide();
-    loadAllCollectibles();
     updateCollectiblesScreen();
     $collectibleTextPane.hide();    
     $collectibleImagePane.hide();    
@@ -333,14 +332,51 @@ function changeCharacterFilter (collectibleScreen) {
     }
 }
 
+function loadGeneralCollectibles () {
+    return fetchXML('opponents/general_collectibles.xml').then(function($xml) {
+        $xml.children('collectible').each(function (idx, elem) {
+            generalCollectibles.push(new Collectible($(elem), undefined));
+        });
+    }).catch(function (err) {
+        console.error("Failed to load general collectibles");
+        captureError(err);
+    });
+}
+
 function loadAllCollectibles() {
-    return Promise.all(loadedOpponents.map(function (opp) {
-        if (opp && opp.has_collectibles) {
-            return opp.loadCollectibles().then(updateCollectiblesScreen);
-        } else {
-            return Promise.resolve();
-        }
-    }));
+    var retPromise = loadGeneralCollectibles();
+
+    if (!COLLECTIBLES_INDEX.startsWith("__")) {
+        retPromise = retPromise.then(function () {
+            updateStartupProgress("Collectibles Index", 0, 1);
+            return fetchXML(COLLECTIBLES_INDEX);
+        }).then(function($xml) {
+            $xml.children('collectibles')
+                .get()
+                .forEach(function (elem, idx, arr) {
+                    updateStartupProgress("Collectibles Index", idx, arr.length);
+
+                    var $elem = $(elem);
+                    var oppID = $elem.attr("id");
+                    var opp = loadedOpponents.find(function (opp) {
+                        return opp.id == oppID
+                    });
+
+                    if (!opp) return;
+                    opp.loadCollectibles($elem);
+                });
+        }).catch(function () {}).then(function () {
+            updateStartupProgress("Collectibles Index", 1, 1);
+        });
+    }
+
+    var nLoaded = 0;
+    return retPromise.then(Promise.all(loadedOpponents.map(function (opp) {
+        var ret = (opp && opp.has_collectibles) ? opp.fetchCollectibles() : Promise.resolve();
+        return ret.then(function () {
+            updateStartupProgress("Collectibles", ++nLoaded, loadedOpponents.length);
+        });
+    })));
 }
 
 function updateCollectiblesScreen() {    

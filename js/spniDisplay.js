@@ -1556,7 +1556,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
             .addClass('blue')
             .prop('disabled', false);
         
-        opponent.loadCollectibles().then(function () {
+        opponent.fetchCollectibles().then(function () {
             if (!opponent.has_collectibles) {
                 this.collectiblesField.removeClass('has-collectibles');
             }

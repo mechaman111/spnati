@@ -591,6 +591,9 @@ function loadEventData () {
     eventTagSettings = HighlightedAttributeList.empty();
     eventCharacterSettings = HighlightedAttributeList.empty();
 
+    updateStartupProgress("Events", 0, 2);
+    console.log("Loading events...");
+
     return fetchXML("events.xml").then(function ($xml) {
         var events = $xml.find("event").map(function (index, elem) {
             return parseEventElement($(elem));
@@ -606,6 +609,8 @@ function loadEventData () {
                 activeGameEvents.push(event);
             }
         });
+
+        updateStartupProgress("Events", 1, 2);
         
         if (activeGameEvents.length > 0) {
             var candySet = new Set();
@@ -677,6 +682,8 @@ function loadEventData () {
             eventTagList = [];
             eventTagSettings.ids.forEach(function (tag) { eventTagList.push(tag); });
         }
+
+        updateStartupProgress("Events", 2, 2);
     });
 }
 
