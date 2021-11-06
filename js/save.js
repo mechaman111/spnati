@@ -1,8 +1,26 @@
 //Class for saving user's progress and preferences
 
 var DEFAULT_WARDROBES = {
-    'male': [ 'jacket', 't-shirt', 'belt', 'pants', 'boxers', 'gloves', 'socks', 'boots' ],
-    'female': [ 'jacket', 'tank top', 'bra', 'belt', 'pants', 'panties', 'stockings', 'shoes' ],
+    'male': [
+        '_default.jacketA', 
+        '_default.tshirt',
+        '_default.belt',
+        '_default.pantsA',
+        '_default.boxers',
+        '_default.gloves',
+        '_default.socksA',
+        '_default.boots'
+    ],
+    'female': [
+        '_default.jacketB',
+        '_default.tanktop',
+        '_default.bra',
+        '_default.belt',
+        '_default.pantsB',
+        '_default.panties',
+        '_default.stockings',
+        '_default.shoesB'
+    ],
 };
 
 var LEGACY_OPTION_INDICES = {
@@ -197,11 +215,6 @@ Save.prototype.convertCookie = function() {
         ['male', 'female'].forEach(function(gender) {
             if (gender in data) {
                 var profile = data[gender];
-
-                profile.clothing = clothingChoices[gender].filter(function(item, ix) {
-                    return profile.clothing[ix];
-                }).map(function(item) { return item.name; });
-
                 this.setItem(gender, profile);
             }
         }.bind(this));
@@ -260,9 +273,6 @@ Save.prototype.loadPlayer = function() {
 
     $nameField.val(profile.name || '');
     changePlayerSize(profile.size || eSize.MEDIUM);
-    selectedChoices = clothingChoices[gender].map(function(item) {
-        return (profile.clothing || DEFAULT_WARDROBES[gender]).indexOf(item.name) >= 0;
-    });
     playerTagSelections = profile.tags || {};
 };
 
@@ -270,12 +280,7 @@ Save.prototype.savePlayer = function() {
     var profile = {
         name: $nameField.val(),
         size: humanPlayer.size,
-        tags: playerTagSelections,
-        clothing: clothingChoices[humanPlayer.gender].filter(function (item, ix) {
-            return selectedChoices[ix];
-        }).map(function (item) {
-            return item.name;
-        }),
+        tags: playerTagSelections
     };
 
     this.setItem("gender", humanPlayer.gender);
@@ -430,6 +435,61 @@ Save.prototype.saveSettings = function() {
 Save.prototype.loadEndings = function () {
     this.endings = this.getItem("endings") || {};
 }
+
+/**
+ * Get the raw list of selected clothing IDs for the current player gender.
+ * @returns {Set<string>}
+ */
+Save.prototype.selectedClothingIDs = function () {
+    var ids = this.getItem("clothing." + humanPlayer.gender) || DEFAULT_WARDROBES[humanPlayer.gender];
+    return new Set(ids);
+}
+
+/**
+ * Get the selected PlayerClothing objects for the current player gender.
+ * @returns {PlayerClothing[]}
+ */
+Save.prototype.selectedClothing = function () {
+    var ids = this.selectedClothingIDs();
+    var ret = [];
+    for (var id of ids) {
+        if (PLAYER_CLOTHING_OPTIONS[id] && PLAYER_CLOTHING_OPTIONS[id].isAvailable())
+            ret.push(PLAYER_CLOTHING_OPTIONS[id]);
+    }
+
+    return ret;
+}
+
+/**
+ * Get whether the player has this clothing currently selected.
+ * 
+ * @param {PlayerClothing} clothing
+ * @returns {Boolean}
+ */
+Save.prototype.isClothingSelected = function(clothing) {
+    return this.selectedClothingIDs().has(clothing.id);
+};
+
+/**
+ * Add or remove the given clothing from the player's selected clothing list.
+ * 
+ * @param {PlayerClothing} clothing
+ * @param {Boolean} selected
+ */
+ Save.prototype.setClothingSelected = function(clothing, selected) {
+    var selectedClothing = this.selectedClothingIDs();
+    if (selected) {
+        selectedClothing.add(clothing.id);
+    } else {
+        selectedClothing.delete(clothing.id);
+    }
+
+    var newIDList = [];
+    for (var id of selectedClothing) {
+        newIDList.push(id);
+    }
+    this.setItem("clothing." + humanPlayer.gender, newIDList);
+};
 
 /**
  * Get whether an epilogue has been unlocked by the player.

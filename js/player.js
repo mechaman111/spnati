@@ -161,7 +161,7 @@ Player.prototype.resetState = function () {
             var plural = $(this).attr('plural');
             plural = (plural == 'null' ? null : plural == 'true');
 
-            var newClothing = new Clothing(name, generic, type, position, null, plural, 0);
+            var newClothing = new Clothing(name, generic, type, position, plural);
 
             clothingArr.push(newClothing);
         });

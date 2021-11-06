@@ -36,14 +36,12 @@ var STATUS_FINISHED = "finished";
 /************************************************************
  * Stores information on an article of clothing.
  ************************************************************/
-function Clothing (name, generic, type, position, image, plural, id) {
+function Clothing (name, generic, type, position, plural) {
     this.name = name;
     this.generic = generic || name;
     this.type = type;
     this.position = position;
-    this.image = image;
     this.plural = (plural === undefined ? false : plural);
-    this.id = id;
 }
 
 /*************************************************************
@@ -103,6 +101,74 @@ Player.prototype.findClothing = function(types, positions, names) {
     return matches;
 };
 
+/**
+ * 
+ * @param {string} name The specific name of the clothing article.
+ * @param {string} generic The generic name for the clothing article.
+ * @param {string} type The clothing's type.
+ * @param {string} position The clothing's position.
+ * @param {string} image The image used for the clothing in selection menus.
+ * @param {Boolean} plural Whether or not the clothing is plural.
+ * @param {string} id A unique ID for this clothing. If this clothing is attached to a collectible,
+ * the ID of the character associated with that collectible will be prepended to this ID.
+ * @param {string} applicable_genders What genders are allowed to wear this clothing. Can be "all".
+ * @param {Collectible} collectible An optional collectible that must be unlocked before this clothing can be selected.
+ */
+function PlayerClothing (
+    name, generic, type, position, image, plural, id, applicable_genders, collectible
+) {
+    Clothing.call(this, name, generic, type, position, plural);
+
+    this.id = ((collectible && collectible.player) ? collectible.player.id : "_default") + "." + id;
+    this.image = image;
+    this.applicable_genders = applicable_genders.toLowerCase();
+    this.collectible = collectible;
+}
+
+PlayerClothing.prototype = Object.create(Clothing.prototype);
+PlayerClothing.prototype.constructor = PlayerClothing;
+
+/**
+ * Get whether this clothing is available to wear at the title screen.
+ * @returns {Boolean}
+ */
+PlayerClothing.prototype.isAvailable = function () {
+    if (this.applicable_genders !== "all" && humanPlayer.gender !== this.applicable_genders) {
+        return false;
+    }
+
+    return !this.collectible || this.collectible.isUnlocked()
+}
+
+/**
+ * Create a basic HTML <input> element for this clothing.
+ * @returns {HTMLInputElement}
+ */
+PlayerClothing.prototype.createSelectionElement = function () {
+    var elem = document.createElement("input");
+    elem.setAttribute("src", this.image);
+    elem.setAttribute("alt", this.name);
+    elem.setAttribute("type", "image");
+    elem.className = "bordered player-clothing-select";
+
+    return elem;
+}
+
+/**
+ * Get whether this clothing has been selected for the current player gender.
+ * @returns {Boolean}
+ */
+PlayerClothing.prototype.isSelected = function () {
+    return save.isClothingSelected(this);
+}
+
+/**
+ * Set whether this clothing has been selected for the current player gender.
+ * @param {Boolean} selected 
+ */
+PlayerClothing.prototype.setSelected = function (selected) {
+    return save.setClothingSelected(this, selected);
+}
 
 /**********************************************************************
  *****                    Stripping Variables                     *****

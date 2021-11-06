@@ -187,8 +187,6 @@ var CANDY_LIST = [
     "zone-tan/2-stroking.png",
 ];
 
-var clothingChoices = [];
-var selectedChoices;
 /* maybe move this data to an external file if the hardcoded stuff changes often enough */
 var playerTagOptions = {
     'hair_color': {
@@ -269,6 +267,75 @@ var playerTagOptions = {
 };
 var playerTagSelections = {};
 
+/* Order matters here. */
+var DEFAULT_CLOTHING_OPTIONS = [
+    new PlayerClothing('hat', 'hat', EXTRA_ARTICLE, 'head', "player/male/hat.png", false, "hat", "all", null),
+    new PlayerClothing('headphones', 'headphones', EXTRA_ARTICLE, 'head', "player/male/headphones.png", true, "headphones", "all", null),
+
+    /****/
+
+    new PlayerClothing('jacket', 'jacket', MINOR_ARTICLE, UPPER_ARTICLE, "player/male/jacket.png", false, "jacketA", "male", null),
+    new PlayerClothing('shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/shirt.png", false, "shirtA", "male", null),
+    new PlayerClothing('t-shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/tshirt.png", false, "tshirt", "male", null),
+    new PlayerClothing('undershirt', 'shirt', IMPORTANT_ARTICLE, UPPER_ARTICLE, "player/male/undershirt.png", false, "undershirt", "male", null),
+
+    new PlayerClothing('jacket', 'jacket', MINOR_ARTICLE, UPPER_ARTICLE, "player/female/jacket.png", false, "jacketB", "female", null),
+    new PlayerClothing('shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/female/shirt.png", false, "shirtB", "female", null),
+    new PlayerClothing('tank top', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/female/tanktop.png", false, "tanktop", "female", null),
+    new PlayerClothing('bra', 'bra', IMPORTANT_ARTICLE, UPPER_ARTICLE, "player/female/bra.png", false, "bra", "female", null),
+
+    /****/
+
+    new PlayerClothing('glasses', 'glasses', EXTRA_ARTICLE, 'head', "player/male/glasses.png", true, "glasses", "all", null),
+    new PlayerClothing('belt', 'belt', EXTRA_ARTICLE, 'waist', "player/male/belt.png", false, "belt", "all", null),
+    
+    /****/
+
+    new PlayerClothing('pants', 'pants', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/pants.png", true, "pantsA", "male", null),
+    new PlayerClothing('shorts', 'shorts', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/shorts.png", true, "shortsA", "male", null),
+    new PlayerClothing('kilt', 'skirt', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/kilt.png", false, "kilt", "male", null),
+    new PlayerClothing('boxers', 'underwear', IMPORTANT_ARTICLE, LOWER_ARTICLE, "player/male/boxers.png", true, "boxers", "male", null),
+
+    new PlayerClothing('pants', 'pants', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/pants.png", true, "pantsB", "female", null),
+    new PlayerClothing('shorts', 'shorts', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/shorts.png", true, "shortsB", "female", null),
+    new PlayerClothing('skirt', 'skirt', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/skirt.png", false, "skirt", "female", null),
+    new PlayerClothing('panties', 'underwear', IMPORTANT_ARTICLE, LOWER_ARTICLE, "player/female/panties.png", true, "panties", "female", null),
+
+    /****/
+
+    new PlayerClothing('necklace', 'jewelry', EXTRA_ARTICLE, 'neck', "player/male/necklace.png", false, "necklace", "all", null),
+    new PlayerClothing('gloves', 'gloves', EXTRA_ARTICLE, 'hands', "player/male/gloves.png", true, "gloves", "all", null),
+    
+    /****/
+
+    new PlayerClothing('tie', 'tie', EXTRA_ARTICLE, 'neck', "player/male/tie.png", false, "tie", "male", null),
+
+    new PlayerClothing('bracelet', 'jewelry', EXTRA_ARTICLE, 'arms', "player/female/bracelet.png", false, "bracelet", "female", null),
+
+    /****/
+
+    new PlayerClothing('socks', 'socks', MINOR_ARTICLE, 'feet', "player/male/socks.png", true, "socksA", "male", null),
+    new PlayerClothing('shoes', 'shoes', EXTRA_ARTICLE, 'feet', "player/male/shoes.png", true, "shoesA", "male", null),
+    new PlayerClothing('boots', 'shoes', EXTRA_ARTICLE, 'feet', "player/male/boots.png", true, "boots", "male", null),
+
+    new PlayerClothing('stockings', 'socks', MINOR_ARTICLE, 'legs', "player/female/stockings.png", true, "stockings", "female", null),
+    new PlayerClothing('socks', 'socks', MINOR_ARTICLE, 'feet', "player/female/socks.png", true, "socksB", "female", null),
+    new PlayerClothing('shoes', 'shoes', EXTRA_ARTICLE, 'feet', "player/female/shoes.png", true, "shoesB", "female", null),
+];
+
+/**
+ * @type {Object<string, PlayerClothing>}
+ */
+var PLAYER_CLOTHING_OPTIONS = {};
+DEFAULT_CLOTHING_OPTIONS.forEach(function (clothing) {
+    PLAYER_CLOTHING_OPTIONS[clothing.id] = clothing;
+});
+
+/**
+ * @type {TitleClothingSelectionIcon[]}
+ */
+var titleClothingSelectors = [];
+
  /* Keep in sync with total number of calls to beginStartupStage */
 var totalLoadStages = 7;
 var curLoadStage = -1;
@@ -305,14 +372,45 @@ function finishStartupLoading () {
     $("#warning-load-container").hide();
 }
 
+/**
+ * @param {PlayerClothing} clothing 
+ */
+function TitleClothingSelectionIcon (clothing) {
+    this.clothing = clothing;
+    this.elem = clothing.createSelectionElement();
+
+    $(this.elem).on("click", this.onClick.bind(this)).addClass("title-content-button");
+}
+
+TitleClothingSelectionIcon.prototype.update = function () {
+    if (this.clothing.isAvailable()) {
+        $(this.elem).addClass("available");
+    } else {
+        $(this.elem).removeClass("available");
+    }
+
+    if (this.clothing.isSelected()) {
+        $(this.elem).addClass("selected");
+    } else {
+        $(this.elem).removeClass("selected");
+    }
+}
+
+TitleClothingSelectionIcon.prototype.onClick = function () {
+    this.clothing.setSelected(
+        this.clothing.isAvailable() &&
+        !this.clothing.isSelected()
+    );
+
+    this.update();
+}
+
 
 /************************************************************
  * Loads all of the content required to display the title
  * screen.
  ************************************************************/
 function loadTitleScreen () {
-    //selectedChoices = [false, false, true, false, true, false, true, true, false, true, false, false, true, false, true];
-    
     /* hide Extra Opponents menu if online version */
     if (getReportedOrigin().includes("spnati.net")) {
         document.getElementById("title-fullscreen-button").style.left = "25.5%";
@@ -320,81 +418,14 @@ function loadTitleScreen () {
         $(".title-extras-button").prop("hidden", false);
     }
     
-    loadClothing();
-}
+    var elems = [];
+    Object.keys(PLAYER_CLOTHING_OPTIONS).forEach(function (id) {
+        var selector = new TitleClothingSelectionIcon(PLAYER_CLOTHING_OPTIONS[id]);
+        titleClothingSelectors.push(selector);
+        elems.push(selector.elem);
+    });
 
-/************************************************************
- * Loads and parses the player clothing XML file.
- ************************************************************/
-function loadClothing () {
-    clothingChoices = {
-        'male': [
-            new Clothing('hat', 'hat', EXTRA_ARTICLE, 'head', "player/male/hat.png", false, 0),
-            new Clothing('headphones', 'headphones', EXTRA_ARTICLE, 'head', "player/male/headphones.png", true, 1),
-            new Clothing('jacket', 'jacket', MINOR_ARTICLE, UPPER_ARTICLE, "player/male/jacket.png", false, 2),
-            new Clothing('shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/shirt.png", false, 3),
-            new Clothing('t-shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/tshirt.png", false, 4),
-            new Clothing('undershirt', 'shirt', IMPORTANT_ARTICLE, UPPER_ARTICLE, "player/male/undershirt.png", false, 5),
-
-            new Clothing('glasses', 'glasses', EXTRA_ARTICLE, 'head', "player/male/glasses.png", true, 6),
-            new Clothing('belt', 'belt', EXTRA_ARTICLE, 'waist', "player/male/belt.png", false, 7),
-            new Clothing('pants', 'pants', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/pants.png", true, 8),
-            new Clothing('shorts', 'shorts', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/shorts.png", true, 9),
-            new Clothing('kilt', 'skirt', MAJOR_ARTICLE, LOWER_ARTICLE, "player/male/kilt.png", false, 10),
-            new Clothing('boxers', 'underwear', IMPORTANT_ARTICLE, LOWER_ARTICLE, "player/male/boxers.png", true, 11),
-
-            new Clothing('necklace', 'jewelry', EXTRA_ARTICLE, 'neck', "player/male/necklace.png", false, 12),
-            new Clothing('tie', 'tie', EXTRA_ARTICLE, 'neck', "player/male/tie.png", false, 13),
-            new Clothing('gloves', 'gloves', EXTRA_ARTICLE, 'hands', "player/male/gloves.png", true, 14),
-            new Clothing('socks', 'socks', MINOR_ARTICLE, 'feet', "player/male/socks.png", true, 15),
-            new Clothing('shoes', 'shoes', EXTRA_ARTICLE, 'feet', "player/male/shoes.png", true, 16),
-            new Clothing('boots', 'shoes', EXTRA_ARTICLE, 'feet', "player/male/boots.png", true, 17),
-        ],
-        female: [
-            new Clothing('hat', 'hat', EXTRA_ARTICLE, 'head', "player/female/hat.png", false, 0),
-            new Clothing('headphones', 'headphones', EXTRA_ARTICLE, 'head', "player/female/headphones.png", true, 1),
-            new Clothing('jacket', 'jacket', MINOR_ARTICLE, UPPER_ARTICLE, "player/female/jacket.png", false, 2),
-            new Clothing('shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/female/shirt.png", false, 3),
-            new Clothing('tank top', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/female/tanktop.png", false, 4),
-            new Clothing('bra', 'bra', IMPORTANT_ARTICLE, UPPER_ARTICLE, "player/female/bra.png", false, 5),
-
-            new Clothing('glasses', 'glasses', EXTRA_ARTICLE, 'head', "player/female/glasses.png", true, 6),
-            new Clothing('belt', 'belt', EXTRA_ARTICLE, 'waist', "player/female/belt.png", false, 7),
-            new Clothing('pants', 'pants', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/pants.png", true, 8),
-            new Clothing('shorts', 'shorts', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/shorts.png", true, 9),
-            new Clothing('skirt', 'skirt', MAJOR_ARTICLE, LOWER_ARTICLE, "player/female/skirt.png", false, 10),
-            new Clothing('panties', 'underwear', IMPORTANT_ARTICLE, LOWER_ARTICLE, "player/female/panties.png", true, 11),
-
-            new Clothing('necklace', 'jewelry', EXTRA_ARTICLE, 'neck', "player/female/necklace.png", false, 12),
-            new Clothing('bracelet', 'jewelry', EXTRA_ARTICLE, 'arms', "player/female/bracelet.png", false, 13),
-            new Clothing('gloves', 'gloves', EXTRA_ARTICLE, 'hands', "player/female/gloves.png", true, 14),
-            new Clothing('stockings', 'socks', MINOR_ARTICLE, 'legs', "player/female/stockings.png", true, 15),
-            new Clothing('socks', 'socks', MINOR_ARTICLE, 'feet', "player/female/socks.png", true, 16),
-            new Clothing('shoes', 'shoes', EXTRA_ARTICLE, 'feet', "player/female/shoes.png", true, 17),
-        ]
-    };
-}
-
-/************************************************************
- * Updates the clothing on the title screen.
- ************************************************************/
-function updateTitleClothing () {
-    if (humanPlayer.gender == eGender.MALE) {
-        $('#female-clothing-container').hide();
-        $('#male-clothing-container').show();
-    } else if (humanPlayer.gender == eGender.FEMALE) {
-        $('#male-clothing-container').hide();
-        $('#female-clothing-container').show();
-    }
-
-    for (var i = 0; i < selectedChoices.length; i++) {
-        if (selectedChoices[i]) {
-            $('#'+humanPlayer.gender+'-clothing-option-'+i).css('opacity', '1');
-        } else {
-            $('#'+humanPlayer.gender+'-clothing-option-'+i).css('opacity', '0.4');
-        }
-    }
-    //$warningLabel.html("");
+    $("#title-clothing-container").append(elems);
 }
 
 /**********************************************************************
@@ -409,18 +440,20 @@ function changePlayerGender (gender) {
     save.savePlayer();
     humanPlayer.gender = gender;
     save.loadPlayer();
-    updateTitleGender();
+    updateTitleScreen();
     updateSelectionVisuals(); // To update epilogue availability status
 }
 
 /************************************************************
  * Updates the gender dependent controls on the title screen.
  ************************************************************/
-function updateTitleGender() {
+function updateTitleScreen() {
     $titleContainer.removeClass('male female').addClass(humanPlayer.gender);
     $playerTagsModal.removeClass('male female').addClass(humanPlayer.gender);
 
-    updateTitleClothing();
+    titleClothingSelectors.forEach(function (selector) {
+        selector.update();
+    });
 }
 
 /************************************************************
@@ -431,19 +464,6 @@ function changePlayerSize (size) {
     humanPlayer.size = size;
 
     $sizeBlocks.removeClass(eSize.SMALL + ' ' + eSize.MEDIUM + ' ' + eSize.LARGE).addClass(size).attr('data-size', size);
-}
-
-/************************************************************
- * The player clicked on an article of clothing on the title
- * screen.
- ************************************************************/
-function selectClothing (id) {
-    if (selectedChoices[id]) {
-        selectedChoices[id] = false;
-    } else {
-        selectedChoices[id] = true;
-    }
-    updateTitleClothing();
 }
 
 /**************************************************************
@@ -498,24 +518,11 @@ function validateTitleScreen () {
     $gameLabels[HUMAN_PLAYER].html(humanPlayer.label);
 
     /* count clothing */
-    var clothingCount = [0, 0, 0, 0];
-    var genderClothingChoices = clothingChoices[humanPlayer.gender];
-    for (var i = 0; i < genderClothingChoices.length; i++) {
-        if (selectedChoices[i]) {
-            if (genderClothingChoices[i].position == UPPER_ARTICLE) {
-                clothingCount[0]++;
-            } else if (genderClothingChoices[i].position == LOWER_ARTICLE) {
-                clothingCount[1]++;
-            } else {
-                clothingCount[2]++;
-            }
-            clothingCount[3]++;
-        }
-    }
-    console.log(clothingCount);
+    var clothingItems = save.selectedClothing();
+    console.log(clothingItems.length);
 
     /* ensure the player is wearing enough clothing */
-    if (clothingCount[3] > 8) {
+    if (clothingItems.length > 8) {
         $warningLabel.html("You cannot wear more than 8 articles of clothing. Cheater.");
         return;
     }
@@ -556,21 +563,16 @@ function validateTitleScreen () {
  ************************************************************/
 function wearClothing () {
     var position = [[], [], []];
-    var importantWorn = [false, false];
-    var genderClothingChoices = clothingChoices[humanPlayer.gender];
 
-    /* sort the clothing by position */
-    for (var i = genderClothingChoices.length - 1; i >= 0; i--) {
-        if (selectedChoices[i]) {
-            if (genderClothingChoices[i].position == UPPER_ARTICLE) {
-                position[0].push(genderClothingChoices[i]);
-            } else if (genderClothingChoices[i].position == LOWER_ARTICLE) {
-                position[1].push(genderClothingChoices[i]);
-            } else {
-                position[2].push(genderClothingChoices[i]);
-            }
+    save.selectedClothing().reverse().forEach(function (clothing) {
+        if (clothing.position == UPPER_ARTICLE) {
+            position[0].push(clothing);
+        } else if (clothing.position == LOWER_ARTICLE) {
+            position[1].push(clothing);
+        } else {
+            position[2].push(clothing);
         }
-    }
+    });
 
     /* clear player clothing array */
     humanPlayer.clothing = [];

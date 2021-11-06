@@ -194,7 +194,7 @@ function initialSetup () {
         } catch (err) {
             captureError(err);
         }
-        /* Make sure that save data is loaded before updateTitleGender(),
+        /* Make sure that save data is loaded before updateTitleScreen(),
          * since the latter uses selectedClothing.
          */
         save.loadLocalStorage();
@@ -207,7 +207,7 @@ function initialSetup () {
         if (!EPILOGUES_ENABLED && !COLLECTIBLES_ENABLED) {
             $('.title-gallery-edge').css('visibility', 'hidden');
         }
-        updateTitleGender();
+        updateTitleScreen();
         updateAnnouncementDropdown();
     });
 
