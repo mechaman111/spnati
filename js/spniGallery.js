@@ -118,7 +118,7 @@ function Collectible(xmlElem, player) {
         plural = (plural == 'null' ? null : plural == 'true');
 
         var genders = $elem.attr('gender') || "all";
-        var image = $elem.attr('img') || this.img;
+        var image = $elem.attr('img') || this.image;
 
         var newClothing = new PlayerClothing(name, generic, type, position, image, plural, this.id, genders, this);
         this.clothing = newClothing;
