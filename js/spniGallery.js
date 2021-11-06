@@ -344,17 +344,18 @@ function loadGeneralCollectibles () {
 }
 
 function loadAllCollectibles() {
-    var retPromise = loadGeneralCollectibles();
+    var retPromise = loadGeneralCollectibles().then(function () {
+        beginStartupStage("Collectibles");
+    });
 
     if (!COLLECTIBLES_INDEX.startsWith("__")) {
         retPromise = retPromise.then(function () {
-            updateStartupProgress("Collectibles Index", 0, 1);
             return fetchXML(COLLECTIBLES_INDEX);
         }).then(function($xml) {
             $xml.children('collectibles')
                 .get()
                 .forEach(function (elem, idx, arr) {
-                    updateStartupProgress("Collectibles Index", idx, arr.length);
+                    updateStartupStageProgress(idx, arr.length);
 
                     var $elem = $(elem);
                     var oppID = $elem.attr("id");
@@ -365,18 +366,19 @@ function loadAllCollectibles() {
                     if (!opp) return;
                     opp.loadCollectibles($elem);
                 });
-        }).catch(function () {}).then(function () {
-            updateStartupProgress("Collectibles Index", 1, 1);
-        });
+        }).catch(function () {});
     }
 
     var nLoaded = 0;
-    return retPromise.then(Promise.all(loadedOpponents.map(function (opp) {
-        var ret = (opp && opp.has_collectibles) ? opp.fetchCollectibles() : Promise.resolve();
-        return ret.then(function () {
-            updateStartupProgress("Collectibles", ++nLoaded, loadedOpponents.length);
-        });
-    })));
+    return retPromise.then(function () {
+        beginStartupStage("Collectibles");
+        return Promise.all(loadedOpponents.map(function (opp) {
+            var ret = (opp && opp.has_collectibles) ? opp.fetchCollectibles() : Promise.resolve();
+            return ret.then(function () {
+                updateStartupStageProgress(++nLoaded, loadedOpponents.length);
+            });
+        }));
+    });
 }
 
 function updateCollectiblesScreen() {    

@@ -267,7 +267,7 @@ function initialSetup () {
 function loadVersionInfo () {
     $('.substitute-version').text('Unknown Version');
 
-    updateStartupProgress("Version Info", 0, 1);
+    beginStartupStage("Version Info");
     
     return fetchXML("version-info.xml").then(function($xml) {
         versionInfo = $xml;
@@ -284,8 +284,6 @@ function loadVersionInfo () {
         $('.substitute-version-time').text('(updated '+fuzzyTimeAgo(version_ts)+')');
 
         $('.version-button').click(showVersionModal);
-
-        updateStartupProgress("Version Info", 1, 1);
     }).catch(function (err) {
         console.error("Failed to load version info");
         captureError(err);
@@ -294,7 +292,7 @@ function loadVersionInfo () {
 
 
 function loadConfigFile () {
-    updateStartupProgress("Configuration", 0, 1);
+    beginStartupStage("Configuration");
 
     return fetchXML("config.xml").then(function($xml) {
         var _epilogues = $xml.children('epilogues').text();
@@ -431,8 +429,6 @@ function loadConfigFile () {
         if (!Number.isNaN(_testing_min_number)) {
             TESTING_MIN_NUMBER = _testing_min_number;
         }
-
-        updateStartupProgress("Configuration", 1, 1);
     }).catch(function (err) {
         console.error("Failed to load configuration");
         captureError(err);

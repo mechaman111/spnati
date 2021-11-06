@@ -269,6 +269,9 @@ var playerTagOptions = {
 };
 var playerTagSelections = {};
 
+ /* Keep in sync with total number of calls to beginStartupStage */
+var totalLoadStages = 7;
+var curLoadStage = -1;
 
 /**********************************************************************
  *****                    Start Up Functions                      *****
@@ -278,10 +281,25 @@ var playerTagSelections = {};
  * Functions for the startup loading progress menu.
  ************************************************************/
 
-function updateStartupProgress (label, curItems, totalItems) {
-    var progress = Math.floor(100 * curItems / totalItems);
+function beginStartupStage (label) {
+    curLoadStage++;
     $gameLoadLabel.text(label);
+    updateStartupStageProgress(0, 1);
+}
+
+function updateStartupStageProgress (curItems, totalItems) {
+    /*
+     * Add the overall loading progress for all prior stages (curLoadStage / totalLoadStages)
+     * to a fraction of (1 / totalLoadStages).
+     * (1 / totalLoadStages) * (curItems / totalItems) == curItems / (totalItems * totalLoadStages)
+     */
+    var progress = Math.floor(100 * (
+        (curLoadStage / totalLoadStages) +
+        (curItems / (totalItems * totalLoadStages))
+    ));
     $gameLoadProgress.text(progress.toString(10));
+
+    console.log("Load percent: " + progress.toString(10));
 }
 
 function finishStartupLoading () {
