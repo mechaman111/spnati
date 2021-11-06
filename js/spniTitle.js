@@ -439,10 +439,7 @@ function setupTitleClothing () {
         $("#title-clothing-container").append(separator);
     }
 
-    Object.keys(PLAYER_CLOTHING_OPTIONS).forEach(function (id) {
-        var clothing = PLAYER_CLOTHING_OPTIONS[id];
-        if (clothing.collectible) return;
-        
+    DEFAULT_CLOTHING_OPTIONS.forEach(function (clothing) {
         var selector = new TitleClothingSelectionIcon(clothing);
         titleClothingSelectors.push(selector);
         $("#title-clothing-container").append(selector.elem);
