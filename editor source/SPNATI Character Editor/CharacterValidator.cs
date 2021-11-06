@@ -114,13 +114,13 @@ namespace SPNATI_Character_Editor
 						//Make sure it's not a placeholder
 						if (defaultLine.Equals(line.Text))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case is still using placeholder text. {0}", caseLabel), context));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Case is still using placeholder text. {0}", caseLabel), context));
 						}
 
 						//Make sure it's not blank
 						if (!Config.DisableEmptyValidation && line.Text.Equals("") && string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case has no text. If this was intentional, the correct way to create a blank line is to use ~blank~. {0}", caseLabel), context));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line has no text. If this was intentional, the correct way to create a blank line is to use ~blank~. {0}", caseLabel), context));
 						}
 
 						//Make sure it doesn't contain invalid variables (~name~ or ~target~ in untargeted cases)
@@ -128,18 +128,18 @@ namespace SPNATI_Character_Editor
 						{
 							if (line.Text.ToLower().Contains("~name~"))
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Line contains ~name~, but is in a case with no target. {0}", caseLabel), context));
+								warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line contains ~name~, but is in a case with no target. {0}", caseLabel), context));
 							}
 							else if (line.Text.ToLower().Contains("~target~"))
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Line contains ~target~, but is in a case with no target. {0}", caseLabel), context));
+								warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line contains ~target~, but is in a case with no target. {0}", caseLabel), context));
 							}
 						}
 
 						// check if line is entirely covered by {small}
 						if (line.Text.Trim().StartsWith("{small}") && !line.Text.Substring(1).Contains("{"))
                         {
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, "Line uses \"{small}\" " + string.Format("to shrink the entire line. Instead, please use the built-in \"Text size\" option. {0}", caseLabel), context));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, "Line uses \"{small}\" " + string.Format("to shrink the entire line. Instead, please use the built-in \"Text size\" option. {0}", caseLabel), context));
 						}
 
 						// check if line has {!reset} at the end
@@ -147,6 +147,51 @@ namespace SPNATI_Character_Editor
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, "\"{!reset}\" " + string.Format("at the end of a line is unnecessary. {0}", caseLabel), context));
 						}
+
+						// check for undefined custom styles
+						// commented out due to false positives on Monika/Pot of Greed/etc.
+						/*var temptext = line.Text;
+
+						while (temptext.Contains("{"))
+                        {
+							temptext = temptext.Substring(temptext.IndexOf("{") + 1);
+
+							var style = temptext.Split('}')[0];
+							if (style == "!reset") continue;
+
+							var customstyles = style.Split(' ');
+
+							foreach (var cs in customstyles)
+                            {
+								bool foundStyle = false;
+
+								foreach (StyleRule rule in StyleDatabase.GlobalStyles)
+								{
+									if (rule.ClassName == cs)
+									{
+										foundStyle = true;
+										break;
+									}
+								}
+
+								if (!foundStyle && character.Styles != null)
+								{
+									foreach (StyleRule rule in character.Styles.Rules)
+									{
+										if (rule.ClassName == cs)
+										{
+											foundStyle = true;
+											break;
+										}
+									}
+								}
+
+								if (!foundStyle)
+                                {
+									warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Custom style \"{0}\" is undefined. {1}", cs, caseLabel), context));
+								}
+							}
+                        }*/
 
 						//check for pointless ifMales
 						if (!string.IsNullOrEmpty(trigger.Gender))
@@ -430,6 +475,7 @@ namespace SPNATI_Character_Editor
 		private static void ValidateWardrobe(Character character, List<ValidationError> warnings)
 		{
 			bool foundPlural = false;
+			bool foundGeneric = false;
 			string pluralGuess = null;
 			string upper = null;
 			string lower = null;
@@ -445,6 +491,8 @@ namespace SPNATI_Character_Editor
 				{
 					pluralGuess = c.Name;
 				}
+				foundGeneric = !String.IsNullOrEmpty(c.GenericName) || foundGeneric;
+
 				if (c.Position == "upper" && c.Type == "major")
 					upper = c.Name;
 				if (c.Position == "lower" && c.Type == "major")
@@ -530,6 +578,11 @@ namespace SPNATI_Character_Editor
 			if (!foundPlural && pluralGuess != null)
 			{
 				warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"No clothing items are marked as plural. Should they be (ex. {pluralGuess})?"));
+			}
+
+			if (!foundGeneric)
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"No clothing items have a classification. Are you sure this is correct?"));
 			}
 		}
 
