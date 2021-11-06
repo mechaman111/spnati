@@ -202,6 +202,7 @@ function initialSetup () {
         save.load();
         return loadVersionInfo();
     }).then(loadSelectScreen).then(loadAllCollectibles).then(function () {
+        setupTitleClothing();
         finishStartupLoading();
 
         if (!EPILOGUES_ENABLED && !COLLECTIBLES_ENABLED) {

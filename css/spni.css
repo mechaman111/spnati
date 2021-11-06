@@ -1491,6 +1491,15 @@ ul.dropdown-menu>li {
     margin-left: 0.1rem;
 }
 
+.custom-clothing-img {
+    width: auto;
+    height: auto;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
 #title-clothing-container .player-clothing-select {
     display: none;
     width: 7rem;
@@ -1511,6 +1520,13 @@ ul.dropdown-menu>li {
 
 #title-clothing-container .player-clothing-select:hover {
     opacity: 0.6;
+}
+
+#title-clothing-container .clothing-separator {
+    border-top: 0.2rem solid gray;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 99%;
 }
 
 #title-warning-label {
@@ -3188,11 +3204,10 @@ ul.dropdown-menu>li {
  * main game screen.
  ************************************************************/
 
-.small-clothing-image {
+.legacy-ui .small-clothing-image-container {
     width: 28%;
     height: 47%;
     margin-bottom: 3.5%;
-    background-color: white;
 }
 
 .clothing-float-right {
@@ -3534,8 +3549,15 @@ ul.dropdown-menu>li {
 }
 
 .small-clothing-image-container {
-    width: 12.5%;
-    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+.ui-minimal .small-clothing-image-container {
+    width: 4.25rem;
+    height: 4.25rem;
     margin-left: 1%;
     transform: none;
 
@@ -3543,19 +3565,20 @@ ul.dropdown-menu>li {
     transition-duration: 0.5s;
 }
 
-
-.player-lost .small-clothing-image-container {
-    width: 20%;
+.ui-minimal .player-lost .small-clothing-image-container {
+    width: 6.5rem;
+    height: 6.5rem;
 
     transition-property: width;
     transition-duration: 0.5s;
 }
 
-.minimal-clothing-area-row .small-clothing-image {
+.small-clothing-image {
     height: auto;
-    width: 100%;
-
-    margin-bottom: 0;
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
     object-fit: contain;
 }
 

@@ -145,11 +145,20 @@ PlayerClothing.prototype.isAvailable = function () {
  * @returns {HTMLInputElement}
  */
 PlayerClothing.prototype.createSelectionElement = function () {
-    var elem = document.createElement("input");
-    elem.setAttribute("src", this.image);
-    elem.setAttribute("alt", this.name);
-    elem.setAttribute("type", "image");
+    var title = this.name.initCap();
+    if (this.collectible && this.collectible.player) {
+        title += " (from " + this.collectible.player.metaLabel + ")";
+    }
+
+    var img = document.createElement("img");
+    img.setAttribute("src", this.image);
+    img.setAttribute("alt", title);
+    img.className = "custom-clothing-img";
+
+    var elem = document.createElement("button");
+    elem.setAttribute("title", title);
     elem.className = "bordered player-clothing-select";
+    elem.appendChild(img);
 
     return elem;
 }

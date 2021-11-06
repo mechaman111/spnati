@@ -417,15 +417,36 @@ function loadTitleScreen () {
     } else {
         $(".title-extras-button").prop("hidden", false);
     }
-    
-    var elems = [];
-    Object.keys(PLAYER_CLOTHING_OPTIONS).forEach(function (id) {
-        var selector = new TitleClothingSelectionIcon(PLAYER_CLOTHING_OPTIONS[id]);
-        titleClothingSelectors.push(selector);
-        elems.push(selector.elem);
+}
+
+function setupTitleClothing () {
+    loadedOpponents.forEach(function (opp) {
+        if (!opp.has_collectibles || !opp.collectibles) return;
+
+        opp.collectibles.forEach(function (collectible) {
+            var clothing = collectible.clothing;
+            if (!clothing || !PLAYER_CLOTHING_OPTIONS[clothing.id]) return;
+
+            var selector = new TitleClothingSelectionIcon(clothing);
+            titleClothingSelectors.push(selector);
+            $("#title-clothing-container").append(selector.elem);
+        });
     });
 
-    $("#title-clothing-container").append(elems);
+    if (titleClothingSelectors.length > 0) {
+        var separator = document.createElement("hr");
+        separator.className = "clothing-separator";
+        $("#title-clothing-container").append(separator);
+    }
+
+    Object.keys(PLAYER_CLOTHING_OPTIONS).forEach(function (id) {
+        var clothing = PLAYER_CLOTHING_OPTIONS[id];
+        if (clothing.collectible) return;
+        
+        var selector = new TitleClothingSelectionIcon(clothing);
+        titleClothingSelectors.push(selector);
+        $("#title-clothing-container").append(selector.elem);
+    });
 }
 
 /**********************************************************************
@@ -451,9 +472,20 @@ function updateTitleScreen() {
     $titleContainer.removeClass('male female').addClass(humanPlayer.gender);
     $playerTagsModal.removeClass('male female').addClass(humanPlayer.gender);
 
+    var collectibleClothingVisible = false;
     titleClothingSelectors.forEach(function (selector) {
         selector.update();
+
+        if (selector.clothing.isAvailable()) {
+            collectibleClothingVisible = collectibleClothingVisible || !!selector.clothing.collectible;
+        }
     });
+
+    if (collectibleClothingVisible) {
+        $(".clothing-separator").show();
+    } else {
+        $(".clothing-separator").hide();
+    }
 }
 
 /************************************************************
