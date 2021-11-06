@@ -380,6 +380,18 @@ function TitleClothingSelectionIcon (clothing) {
     this.elem = clothing.createSelectionElement();
 
     $(this.elem).on("click", this.onClick.bind(this)).addClass("title-content-button");
+
+    if (clothing.collectible) {
+        var tooltip = clothing.collectible.title;
+        if (clothing.collectible.player && tooltip.indexOf(clothing.collectible.player.metaLabel) < 0) {
+            tooltip += " - from " + clothing.collectible.player.metaLabel;
+        }
+
+        $(this.elem).attr({
+            "data-original-title": $(this.elem).attr("title"),
+            "title": tooltip
+        }).tooltip({ delay: { show: 200 } });
+    }
 }
 
 TitleClothingSelectionIcon.prototype.update = function () {
