@@ -759,6 +759,8 @@ function expandClothingVariable(clothing, fn, args, self, target, bindings) {
         }
     } else if ((fn == 'type' || fn == 'position' || fn == 'generic') && args === undefined) {
         return clothing[fn];
+    } else if (fn === "id") {
+        return clothing.id || "";
     } else if (fn === undefined && args === undefined) {
         return clothing.name;
     }

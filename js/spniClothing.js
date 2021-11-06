@@ -119,7 +119,7 @@ function PlayerClothing (
 ) {
     Clothing.call(this, name, generic, type, position, plural);
 
-    this.id = ((collectible && collectible.player) ? collectible.player.id : "_default") + "." + id;
+    this.id = ((collectible && collectible.player) ? "" : "_default.") + id;
     this.image = image;
     this.applicable_genders = applicable_genders.toLowerCase();
     this.collectible = collectible;
