@@ -179,6 +179,11 @@ $stripModal = $("#stripping-modal");
 $stripClothing = $("#stripping-clothing-area");
 $stripButton = $("#stripping-modal-button");
 
+/**
+ * @type {StripClothingSelectionIcon[]}
+ */
+var clothingStripSelectors = [];
+
 /**********************************************************************
  *****                      Strip Functions                       *****
  **********************************************************************/
@@ -420,24 +425,69 @@ function prepareToStripPlayer (player) {
     }
 }
 
+
+/**
+ * @param {PlayerClothing} clothing 
+ */
+ function StripClothingSelectionIcon (clothing) {
+    this.clothing = clothing;
+    this.elem = clothing.createSelectionElement();
+    this.selected = false;
+
+    $(this.elem).on("click", this.select.bind(this)).addClass("player-strip-selector");
+}
+
+StripClothingSelectionIcon.prototype.canSelect = function () {
+    return humanPlayer.clothing.some(function (clothing) {
+        return clothing.id == this.clothing.id;
+    }.bind(this));
+}
+
+StripClothingSelectionIcon.prototype.update = function () {
+    $(this.elem).removeClass("available selected");
+
+    if (this.canSelect()) {
+        $(this.elem).addClass("available");
+
+        if (this.selected) {
+            $(this.elem).addClass("selected");
+        }
+    }
+}
+
+StripClothingSelectionIcon.prototype.select = function () {
+    if (!this.canSelect) return;
+    clothingStripSelectors.forEach(function (selector) {
+        selector.selected = (selector === this);
+        selector.update();
+    }.bind(this));
+
+    /* enable the strip button */
+    $stripButton.attr('disabled', false).attr('onclick', 'closeStrippingModal();');
+}
+
+function setupStrippingModal () {
+    clothingStripSelectors = humanPlayer.clothing.map(function (clothing) {
+        return new StripClothingSelectionIcon(clothing);
+    });
+
+    $stripClothing.empty().append(clothingStripSelectors.map(function (selector) {
+        return selector.elem;
+    }));
+}
+
+
 /************************************************************
  * Sets up and displays the stripping modal, so that the human
  * player can select an article of clothing to remove.
  ************************************************************/
 function showStrippingModal () {
-    console.log("The stripping modal is being set up.");
-  
-    /* clear the area */
-    $stripClothing.html("");
+    console.log("The stripping modal is being shown.");
 
-    /* load the player's clothing into the modal */
-    for (var i = 0; i < humanPlayer.clothing.length; i++) {
-        var clothingCard =
-            "<div class='clothing-modal-container'><input type='image' class='bordered modal-clothing-image' src="+
-            humanPlayer.clothing[i].image+" onclick='selectClothingToStrip.bind(this)("+i+")'/></div>";
-
-        $stripClothing.append(clothingCard);
-    }
+    clothingStripSelectors.forEach(function (selector) {
+        selector.selected = false;
+        selector.update();
+    }.bind(this));
 
     /* disable the strip button */
     $stripButton.attr('disabled', true);
@@ -458,38 +508,24 @@ function showStrippingModal () {
             allowProgression();
         }
     });
+
     $(document).keyup(clothing_keyUp);
-}
-
-/************************************************************
- * The human player clicked on an article of clothing in
- * the stripping modal.
- ************************************************************/
-function selectClothingToStrip (id) {
-  console.log(id);
-  if (humanPlayer.clothing.length <= id) {
-    console.error('Error: Attempted to select clothing out of bounds', id, humanPlayer.clothing);
-    return;
-  }
-
-  /* designate the selected article */
-  $(".modal-selected-clothing-image").removeClass("modal-selected-clothing-image");
-  $(this).addClass("modal-selected-clothing-image");
-
-  /* enable the strip button */
-  $stripButton.attr('disabled', false).attr('onclick', 'closeStrippingModal(' + id + ');');
 }
 
 /************************************************************
  * A keybound handler.
  ************************************************************/
 function clothing_keyUp(e) {
+    var availableSelectors = clothingStripSelectors.filter(function (selector) {
+        return selector.canSelect();
+    });
+
     if (e.keyCode == 32 && !$stripButton.prop('disabled')  // Space
-        && $('.modal-clothing-image:focus').not('.modal-selected-clothing-image').length == 0) {
+        && availableSelectors.some(function (selector) { return selector.selected; })) {
         $stripButton.click();
         e.preventDefault();
-    } else if (e.keyCode >= 49 && e.keyCode < 49 + humanPlayer.clothing.length) { // A number key
-        $('.clothing-modal-container:nth-child('+(e.keyCode - 48)+') > .modal-clothing-image').focus().click();
+    } else if (e.keyCode >= 49 && e.keyCode < 49 + availableSelectors.length) { // A number key
+        availableSelectors[e.keyCode - 49].select();
     }
 }
 
@@ -497,73 +533,84 @@ function clothing_keyUp(e) {
  * The human player closed the stripping modal. Removes an
  * article of clothing from the human player.
  ************************************************************/
-function closeStrippingModal (id) {
-    if (id >= 0) {
-        /* prevent double-clicking the stripping modal buttons. */
-        $stripButton.attr('disabled', true).removeAttr('onclick');
-        $stripClothing.html("");
-                
-        /* grab the removed article of clothing */
-        var removedClothing = humanPlayer.clothing[id];
-        var origClothingType = removedClothing.type;
+function closeStrippingModal () {
+    var selector = clothingStripSelectors.find(function (selector) {
+        return selector.selected;
+    });
 
-        humanPlayer.clothing.splice(id, 1);
-        humanPlayer.timeInStage = -1;
-        humanPlayer.ticksInStage = 0;
-        humanPlayer.removedClothing = removedClothing;
-        humanPlayer.numStripped[removedClothing.type]++;
-
-        /* figure out if it should be important */
-        if ([UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(removedClothing.position) >= 0
-            && ([IMPORTANT_ARTICLE, MAJOR_ARTICLE].indexOf(removedClothing.type) >= 0)) {
-            for (position in humanPlayer.exposed) {
-                if (!humanPlayer.isCovered(position)) {
-                    humanPlayer.exposed[position] = true;
-                } else if ((removedClothing.type == IMPORTANT_ARTICLE && removedClothing.position == position)) {
-                    removedClothing.type = MAJOR_ARTICLE;
-                }
-            }
-            // For the future; there are no human clothes with position = both, especially no important ones.
-            if (removedClothing.position == FULL_ARTICLE && removedClothing.type == IMPORTANT_ARTICLE && humanPlayer.isCovered()) {
-                removedClothing.type = MAJOR_ARTICLE;
-            }
-        }
-        if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE, MINOR_ARTICLE].indexOf(removedClothing.type) >= 0) {
-            humanPlayer.mostlyClothed = false;
-        }
-        humanPlayer.decent = humanPlayer.isDecent();
-        
-        /* determine its dialogue trigger */
-        var dialogueTrigger = getClothingTrigger(humanPlayer, removedClothing, true);
-        console.log(removedClothing);
-        removedClothing.type = origClothingType;
-        /* display the remaining clothing */
-        displayHumanPlayerClothing();
-        
-        /* count the clothing the player has remaining */
-        humanPlayer.stage++
-        
-        /* update label */
-        if (humanPlayer.clothing.length > 0) {
-            $gameClothingLabel.html("Your Remaining Clothing");
-        } else {
-            $gameClothingLabel.html("You're Naked");
-        }
-            
-        /* update behaviour */
-        dialogueTrigger.push(OPPONENT_STRIPPED);
-        updateAllBehaviours(HUMAN_PLAYER, null, [dialogueTrigger]);
-
-        /* allow progression */
-        $('#stripping-modal').modal('hide');
-        $stripModal.off("hidden.bs.modal");
-        $(document).off('keyup', clothing_keyUp);
-        endRound();
-    } else {
+    if (!selector) {
         /* how the hell did this happen? */
         console.log("Error: there was no selected article.");
         showStrippingModal();
+        return;
     }
+
+    /* prevent double-clicking the stripping modal buttons. */
+    $stripButton.attr('disabled', true).removeAttr('onclick');
+    
+    /* grab the removed article of clothing */
+    var removedClothing = selector.clothing;
+    var origClothingType = removedClothing.type;
+    var clothingIdx = humanPlayer.clothing.indexOf(removedClothing);
+
+    if (clothingIdx == -1) {
+        console.log("Error: could not find clothing to remove");
+        showStrippingModal();
+        return;
+    }
+
+    humanPlayer.clothing.splice(clothingIdx, 1);
+    humanPlayer.timeInStage = -1;
+    humanPlayer.ticksInStage = 0;
+    humanPlayer.removedClothing = removedClothing;
+    humanPlayer.numStripped[removedClothing.type]++;
+
+    /* figure out if it should be important */
+    if ([UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(removedClothing.position) >= 0
+        && ([IMPORTANT_ARTICLE, MAJOR_ARTICLE].indexOf(removedClothing.type) >= 0)) {
+        for (position in humanPlayer.exposed) {
+            if (!humanPlayer.isCovered(position)) {
+                humanPlayer.exposed[position] = true;
+            } else if ((removedClothing.type == IMPORTANT_ARTICLE && removedClothing.position == position)) {
+                removedClothing.type = MAJOR_ARTICLE;
+            }
+        }
+        // For the future; there are no human clothes with position = both, especially no important ones.
+        if (removedClothing.position == FULL_ARTICLE && removedClothing.type == IMPORTANT_ARTICLE && humanPlayer.isCovered()) {
+            removedClothing.type = MAJOR_ARTICLE;
+        }
+    }
+    if ([IMPORTANT_ARTICLE, MAJOR_ARTICLE, MINOR_ARTICLE].indexOf(removedClothing.type) >= 0) {
+        humanPlayer.mostlyClothed = false;
+    }
+    humanPlayer.decent = humanPlayer.isDecent();
+    
+    /* determine its dialogue trigger */
+    var dialogueTrigger = getClothingTrigger(humanPlayer, removedClothing, true);
+    console.log(removedClothing);
+    removedClothing.type = origClothingType;
+    /* display the remaining clothing */
+    displayHumanPlayerClothing();
+    
+    /* count the clothing the player has remaining */
+    humanPlayer.stage++
+    
+    /* update label */
+    if (humanPlayer.clothing.length > 0) {
+        $gameClothingLabel.html("Your Remaining Clothing");
+    } else {
+        $gameClothingLabel.html("You're Naked");
+    }
+        
+    /* update behaviour */
+    dialogueTrigger.push(OPPONENT_STRIPPED);
+    updateAllBehaviours(HUMAN_PLAYER, null, [dialogueTrigger]);
+
+    /* allow progression */
+    $('#stripping-modal').modal('hide');
+    $stripModal.off("hidden.bs.modal");
+    $(document).off('keyup', clothing_keyUp);
+    endRound();
 }
 
 /************************************************************

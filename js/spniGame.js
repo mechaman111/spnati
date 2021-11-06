@@ -192,6 +192,9 @@ function loadGameScreen () {
         $cardButtons[i].attr('disabled', true);
     }
 
+    /* Set up strip modal selectors */
+    setupStrippingModal();
+
     /* enable and set up the main button */
     allowProgression(eGamePhase.DEAL);
 }
