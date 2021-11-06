@@ -793,6 +793,13 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
             if (split_fn[2] && split_fn[2] === 'counter') {
                 if (targetCollectible) return targetCollectible.getCounter();
                 return 0;
+            } else if (split_fn[2] && split_fn[2] === 'wearing') {
+                if (targetCollectible && targetCollectible.clothing) {
+                    return humanPlayer.clothing.some(function (clothing) {
+                        return clothing.id === targetCollectible.clothing.id;
+                    });
+                }
+                return false;
             } else {
                 if (targetCollectible) return targetCollectible.isUnlocked();
                 return false;
@@ -973,6 +980,14 @@ function expandDialogue (dialogue, self, target, bindings) {
                             substitution = targetCollectible.getCounter();
                         } else {
                             substitution = 0;
+                        }
+                    } else if (fn_parts[1] && fn_parts[1] === 'wearing') {
+                        if (targetCollectible && targetCollectible.clothing) {
+                            substitution = humanPlayer.clothing.some(function (clothing) {
+                                return clothing.id === targetCollectible.clothing.id;
+                            });
+                        } else {
+                            substitution = false;
                         }
                     } else {
                         if (targetCollectible) {
