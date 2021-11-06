@@ -387,10 +387,7 @@ function TitleClothingSelectionIcon (clothing) {
             tooltip += " - from " + clothing.collectible.player.metaLabel;
         }
 
-        $(this.elem).attr({
-            "data-original-title": $(this.elem).attr("title"),
-            "title": tooltip
-        }).tooltip({ delay: { show: 200 } });
+        $(this.elem).attr("title", tooltip).tooltip({ delay: { show: 50 } });
     }
 }
 
