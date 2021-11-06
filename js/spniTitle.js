@@ -381,37 +381,62 @@ function TitleClothingSelectionIcon (clothing) {
 
     $(this.elem).on("click", this.onClick.bind(this)).addClass("title-content-button");
 
-    if (clothing.collectible) {
-        var tooltip = clothing.collectible.title;
-        if (clothing.collectible.player && tooltip.indexOf(clothing.collectible.player.metaLabel) < 0) {
-            tooltip += " - from " + clothing.collectible.player.metaLabel;
+    if (this.clothing.collectible) {
+        $(this.elem).attr("title", null).tooltip({
+            delay: { show: 50 },
+            title: this.tooltip.bind(this)
+        });
+    }
+}
+
+TitleClothingSelectionIcon.prototype.visible = function () {
+    if (this.clothing.isAvailable()) {
+        return true;
+    }
+    
+    if (this.clothing.applicable_genders !== "all" && humanPlayer.gender !== this.clothing.applicable_genders) {
+        return false;
+    }
+
+    if (this.clothing.collectible) {
+        return !this.clothing.collectible.hidden;
+    }
+
+    return false;
+}
+
+TitleClothingSelectionIcon.prototype.tooltip = function () {
+    var collectible = this.clothing.collectible;
+    if (!collectible) return "";
+
+    if (this.clothing.isAvailable()) {
+        let tooltip = collectible.title;
+        if (collectible.player && tooltip.indexOf(collectible.player.metaLabel) < 0) {
+            tooltip += " - from " + collectible.player.metaLabel;
         }
 
-        $(this.elem).attr("title", tooltip).tooltip({ delay: { show: 50 } });
+        return tooltip;
+    } else {
+        return "To unlock: " + collectible.unlock_hint;
     }
 }
 
 TitleClothingSelectionIcon.prototype.update = function () {
+    $(this.elem).removeClass("available selected");
     if (this.clothing.isAvailable()) {
         $(this.elem).addClass("available");
-    } else {
-        $(this.elem).removeClass("available");
     }
 
     if (this.clothing.isSelected()) {
         $(this.elem).addClass("selected");
-    } else {
-        $(this.elem).removeClass("selected");
     }
 }
 
 TitleClothingSelectionIcon.prototype.onClick = function () {
-    this.clothing.setSelected(
-        this.clothing.isAvailable() &&
-        !this.clothing.isSelected()
-    );
-
-    this.update();
+    if (this.clothing.isAvailable()) {
+        this.clothing.setSelected(!this.clothing.isSelected());
+        this.update();
+    }
 }
 
 
@@ -438,20 +463,12 @@ function setupTitleClothing () {
 
             var selector = new TitleClothingSelectionIcon(clothing);
             titleClothingSelectors.push(selector);
-            $("#title-clothing-container").append(selector.elem);
         });
     });
-
-    if (titleClothingSelectors.length > 0) {
-        var separator = document.createElement("hr");
-        separator.className = "clothing-separator";
-        $("#title-clothing-container").append(separator);
-    }
 
     DEFAULT_CLOTHING_OPTIONS.forEach(function (clothing) {
         var selector = new TitleClothingSelectionIcon(clothing);
         titleClothingSelectors.push(selector);
-        $("#title-clothing-container").append(selector.elem);
     });
 }
 
@@ -471,26 +488,62 @@ function changePlayerGender (gender) {
     updateSelectionVisuals(); // To update epilogue availability status
 }
 
+function createClothingSeparator () {
+    var separator = document.createElement("hr");
+    separator.className = "clothing-separator";
+    return separator;
+}
+
 /************************************************************
  * Updates the gender dependent controls on the title screen.
  ************************************************************/
-function updateTitleScreen() {
+function updateTitleScreen () {
     $titleContainer.removeClass('male female').addClass(humanPlayer.gender);
     $playerTagsModal.removeClass('male female').addClass(humanPlayer.gender);
 
-    var collectibleClothingVisible = false;
-    titleClothingSelectors.forEach(function (selector) {
-        selector.update();
+    var availableSelectors = [];
+    var defaultSelectors = [];
+    var lockedSelectors = [];
 
-        if (selector.clothing.isAvailable()) {
-            collectibleClothingVisible = collectibleClothingVisible || !!selector.clothing.collectible;
+    titleClothingSelectors.forEach(function (selector) {
+        var clothing = selector.clothing;
+        $(selector.elem).detach();
+
+        if (!selector.visible()) {
+            return;
         }
+
+        if (selector.clothing.collectible) {
+            if (selector.clothing.isAvailable()) {
+                availableSelectors.push(selector);
+            } else {
+                lockedSelectors.push(selector);
+            }
+        } else {
+            defaultSelectors.push(selector);
+        }
+
+        selector.update();
     });
 
-    if (collectibleClothingVisible) {
-        $(".clothing-separator").show();
-    } else {
-        $(".clothing-separator").hide();
+    $("#title-clothing-container").empty();
+
+    if (availableSelectors.length > 0) {
+        $("#title-clothing-container").append(availableSelectors.map(function (s) {
+            return s.elem;
+        })).append(createClothingSeparator());
+    }
+
+    $("#title-clothing-container").append(defaultSelectors.map(function (s) {
+        return s.elem;
+    }));
+
+    if (lockedSelectors.length > 0) {
+        $("#title-clothing-container").append(createClothingSeparator()).append(
+            lockedSelectors.map(function (s) {
+                return s.elem;
+            })
+        );
     }
 }
 
