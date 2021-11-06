@@ -298,13 +298,11 @@ function updateStartupStageProgress (curItems, totalItems) {
         (curItems / (totalItems * totalLoadStages))
     ));
     $gameLoadProgress.text(progress.toString(10));
-
-    console.log("Load percent: " + progress.toString(10));
 }
 
 function finishStartupLoading () {
-    $(".title-menu-buttons-container>div").removeAttr("hidden");
-    $("#title-load-container").hide();
+    $("#warning-start-container").removeAttr("hidden");
+    $("#warning-load-container").hide();
 }
 
 
