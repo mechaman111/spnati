@@ -1391,6 +1391,7 @@ function advanceSelectScreen () {
  ************************************************************/
 function backSelectScreen () {
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
+    updateTitleScreen();
     screenTransition($selectScreen, $titleScreen);
 }
 
