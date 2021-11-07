@@ -693,6 +693,22 @@ Save.prototype.setFavoritedCharacters = function (set) {
     this.setFavoritedCharacters(curFavorites);
 }
 
+Save.prototype.getSavedSortMode = function (testing) {
+    if (testing) {
+        return this.getItem("testingSortMode");
+    } else {
+        return this.getItem("mainSortMode");
+    }
+}
+
+Save.prototype.setSavedSortMode = function (testing, value) {
+    if (testing) {
+        return this.setItem("testingSortMode", value);
+    } else {
+        return this.setItem("mainSortMode", value);
+    }
+}
+
 /**
  * 
  * @param {ResortEventInfo} resortInfo 

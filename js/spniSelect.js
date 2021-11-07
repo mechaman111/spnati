@@ -834,17 +834,17 @@ function showIndividualSelectionScreen() {
      * to the indiv. select screen, since the filters cannot actually change
      * unless the user is already on said screen.
      * 
-     * We also don't need to update sorting, since any change to the sort mode
-     * (anywhere) automatically updates the display order.
-     * The exceptions are the targeted sort mode and the testing roster,
-     * which require sorting after the selected characters change.
+     * We do, however, need to make sure we're actually using the saved sorting
+     * mode for each roster.
      * 
-     * The visibility of characters might change, however, depending on the
+     * The visibility of characters might change as well, depending on the
      * view type and what characters have already been selected.
      */
-    if (sortingMode === "target" || individualSelectTesting) {
-        updateIndividualSelectSort();
-    }
+
+    setSortingMode(
+        save.getSavedSortMode(individualSelectTesting) ||
+        (individualSelectTesting ? "-lastUpdated" : "featured")
+    );
 
     updateIndividualSelectVisibility(true);
 
@@ -870,13 +870,13 @@ function showIndividualSelectionScreen() {
 function toggleIndividualSelectView() {
     individualSelectTesting = !individualSelectTesting;
 
-    /* Switch to the default sort mode for the selected view. */
-    if (individualSelectTesting) {
-        setSortingMode("-lastUpdated");
-    } else {
-        setSortingMode("featured");
-    }
-
+    /* Switch to the saved sort mode for the selected view, or
+     * to a default mode if not set.
+     */
+    setSortingMode(
+        save.getSavedSortMode(individualSelectTesting) ||
+        (individualSelectTesting ? "-lastUpdated" : "featured")
+    );
     updateSelectionVisuals();
 
     $("#select-group-testing-button").text(
@@ -1728,6 +1728,12 @@ function sortFavoriteOpponents(opp1, opp2) {
 }
 
 function setSortingMode(mode) {
+    var modeOption = $sortingOptionsItems.filter(function() { return $(this).data('value') == mode; });
+    if (modeOption.length === 0) {
+        /* sorting mode does not have a corresponding dropdown option, revert to default */
+        mode = individualSelectTesting ? "-lastUpdated" : "featured";
+    }
+
     sortingMode = mode;
     // change the dropdown text to the selected option
     $("#sort-dropdown-selection").html($sortingOptionsItems.filter(function() { return $(this).data('value') == mode; }).html()); 
@@ -1736,7 +1742,9 @@ function setSortingMode(mode) {
 
 /** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */
 $sortingOptionsItems.on("click", function(e) {
-    setSortingMode($(this).data('value'));
+    var mode = $(this).data('value');
+    save.setSavedSortMode(individualSelectTesting, mode);
+    setSortingMode(mode);
 });
 
 /************************************************************
