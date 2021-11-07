@@ -27,7 +27,7 @@ def compile_index():
             elem["id"] = xml_path.parts[-2]
             index_elem.append(elem)
 
-    index_contents = index_soup.prettify(encoding="utf-8")
+    index_contents = index_soup.encode(encoding="utf-8")
 
     m = hashlib.sha1()
     m.update(index_contents)
