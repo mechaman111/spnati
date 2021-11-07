@@ -122,8 +122,16 @@ var mainSelectHidden = false;
 var singleSelectHidden = false;
 var groupSelectHidden = false;
 
-/* opponent listing file */
-var metaFiles = ["meta.xml", "tags.xml"];
+/* 
+ * Opponent metadata file collections.
+ */
+var metaFiles = [
+    new DataFileCollection("opponents/", "meta.xml", "__META_XML_INDEX"),
+    new DataFileCollection("opponents/", "tags.xml", "__TAGS_XML_INDEX")
+];
+
+/* put this here, because player.js is loaded before spniCore.js */
+var costumeDataIndex = new DataFileCollection("", "costume.xml", "__COSTUMES_XML_INDEX");
 
 /* opponent information storage */
 var loadedOpponents = [];
@@ -362,9 +370,13 @@ function loadListingFile () {
     beginStartupStage("Roster");
 
     /* grab and parse the opponent listing files */
-    return Promise.all(listingFiles.map(function (filename) {
-        return fetchXML(filename);
-    })).then(function (files) {
+    return Promise.all(metaFiles.map(function (collection) {
+        return collection.loadIndex();
+    })).then(function () {
+        return Promise.all(listingFiles.map(function (filename) {
+            return fetchXML(filename);
+        }));
+    }).then(function (files) {
         return Promise.all(files.map(listingProcessor));
     }).then(function () {
         loadedOpponents = loadedOpponents.filter(Boolean); // Remove any empty slots should an opponent fail to load
@@ -396,8 +408,8 @@ function loadOpponentMeta (id, status, releaseNumber, highlightStatus) {
     /* grab and parse the opponent meta file */
     console.log("Loading metadata for \""+id+"\"");
 
-    return Promise.all(metaFiles.map(function (filename) {
-        return fetchXML('opponents/' + id + '/' + filename);
+    return Promise.all(metaFiles.map(function (dataCollection) {
+        return dataCollection.getFile(id);
     })).then(function(files) {
         return new Opponent(id, files, status, releaseNumber, highlightStatus);
     }).catch(function(err) {

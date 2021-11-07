@@ -76,16 +76,6 @@ var humanPlayer;
 var timeoutID;
 
 
-/*
- * Path to a compiled 'index' XML file combining collectible definitions for all opponents.
- * This is automatically generated for the online version during CI/CD; if present, this is used
- * to load collectibles for all characters at once, instead of requesting collectibles.xml for
- * each opponent individually.
- */
-
-var COLLECTIBLES_INDEX = "__COLLECTIBLES_INDEX";
-
-
 /**********************************************************************
  * Game Wide Global Variables
  **********************************************************************/
@@ -219,7 +209,7 @@ function initialSetup () {
         }
         updateTitleScreen();
         updateAnnouncementDropdown();
-    });
+    }).then(costumeDataIndex.loadIndex.bind(costumeDataIndex));
 
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "warning");
 
@@ -1253,6 +1243,68 @@ function postJSON(url, data) {
         }
         return resp;
     });
+}
+
+/**
+ * 
+ * @param {string} basePath The base path to the files to fetch (e.g. "opponents/").
+ * @param {string} fileName The file names to fetch for this collection (e.g. "collectibles.xml").
+ * @param {string} indexFilePath The full path to the index file for this collection.
+ * This should be a placeholder beginning with "__" that is automatically filled in during CI/CD.
+ * (For example, "__COLLECTIBLES_INDEX".)
+ */
+function DataFileCollection (basePath, fileName, indexFilePath) {
+    if (!basePath) {
+        basePath = "";
+    } else if (!basePath.endsWith("/")) {
+        basePath += "/";
+    }
+
+    this.basePath = basePath;
+    this.fileName = fileName;
+    this.indexFilePath = indexFilePath.startsWith("__") ? null : indexFilePath;
+    this.index = {};
+    this.fetchedIndex = false;
+}
+
+/**
+ * 
+ * @returns {Promise<void>}
+ */
+DataFileCollection.prototype.loadIndex = function () {
+    if (!this.indexFilePath || this.fetchedIndex) return immediatePromise();
+
+    console.log("Loading index: " + this.indexFilePath);
+
+    var indexMap = this.index;
+    return fetchXML(this.indexFilePath).then(function ($xml) {
+        $xml.children().each(function () {
+            var $elem = $(this);
+            var id = $elem.attr("id");
+            indexMap[id] = $elem;
+        }).get();
+
+        this.fetchedIndex = true;
+    }.bind(this));
+}
+
+/**
+ * 
+ * @param {string} id The ID (i.e. subfolder name) of the file to fetch.
+ * For example, if this collection's basePath is "opponents/" and its fileName is "collectibles.xml",
+ * then getFile("mari") will fetch "opponents/mari/collectibles.xml" (if not already fetched or read from the index).
+ * @returns {Promise<jQuery>}
+ */
+DataFileCollection.prototype.getFile = function (id) {
+    if (id.endsWith("/")) {
+        id = id.substr(0, id.length-1);
+    }
+
+    if (this.index[id]) return Promise.resolve(this.index[id]);
+    return fetchXML(this.basePath + id + "/" + this.fileName).then(function ($xml) {
+        this.index[id] = $xml;
+        return $xml;
+    }.bind(this));
 }
 
 

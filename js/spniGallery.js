@@ -58,6 +58,9 @@ var $deckStatusAlert = $("#deck-status-alert");
 var $deckEnableAllBtn = $("#deck-activate-btn");
 var $deckDisableAllBtn = $("#deck-deactivate-btn");
 
+var collectiblesDataIndex = new DataFileCollection("opponents/", "collectibles.xml", "__COLLECTIBLES_XML_INDEX");
+
+
 function GEnding(player, ending){
     this.player = player;
     this.gender = $(ending).attr('gender');
@@ -410,36 +413,16 @@ function loadGeneralCollectibles () {
 }
 
 function loadAllCollectibles() {
-    var retPromise = loadGeneralCollectibles().then(function () {
+    console.log("Loading all collectibles");
+    return loadGeneralCollectibles().then(function () {
         beginStartupStage("Collectibles");
-    });
-
-    if (!COLLECTIBLES_INDEX.startsWith("__")) {
-        retPromise = retPromise.then(function () {
-            return fetchXML(COLLECTIBLES_INDEX);
-        }).then(function($xml) {
-            $xml.children('collectibles')
-                .get()
-                .forEach(function (elem, idx, arr) {
-                    updateStartupStageProgress(idx, arr.length);
-
-                    var $elem = $(elem);
-                    var oppID = $elem.attr("id");
-                    var opp = loadedOpponents.find(function (opp) {
-                        return opp.id == oppID
-                    });
-
-                    if (!opp) return;
-                    opp.loadCollectibles($elem);
-                });
-        }).catch(function () {});
-    }
-
-    var nLoaded = 0;
-    return retPromise.then(function () {
+        return collectiblesDataIndex.loadIndex();
+    }).then(function () {
         beginStartupStage("Collectibles");
+
+        var nLoaded = 0;
         return Promise.all(loadedOpponents.map(function (opp) {
-            var ret = (opp && opp.has_collectibles) ? opp.fetchCollectibles() : Promise.resolve();
+            var ret = opp ? opp.fetchCollectibles() : immediatePromise();
             return ret.then(function () {
                 updateStartupStageProgress(++nLoaded, loadedOpponents.length);
             });

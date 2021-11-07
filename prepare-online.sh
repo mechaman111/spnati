@@ -28,9 +28,13 @@ find `python opponents/list_opponents.py` -regextype egrep -iregex '.*\.(png|gif
 
 # Combine all collectibles.xml files for deployed opponents to speed up loading
 # for the online version.
-COLLECTIBLES_INDEX_PATH=$(python3 deploy-scripts/compile_xml_index.py .public 'opponents/*/collectibles.xml' opponents/collectibles_index.xml)
-ESCAPED_COLLECTIBLES_INDEX_PATH=$(printf '%s\n' "$COLLECTIBLES_INDEX_PATH" | sed -e 's/[\/&]/\\&/g')
-sed "s/__COLLECTIBLES_INDEX/${ESCAPED_COLLECTIBLES_INDEX_PATH}/g" js/spniCore.js > .public/js/spniCore.js
+COLLECTIBLES_INDEX_PATH=$(python3 deploy-scripts/compile_xml_index.py subfolder .public 'opponents/*/collectibles.xml' opponents/collectibles_index.xml)
+META_INDEX_PATH=$(python3 deploy-scripts/compile_xml_index.py subfolder .public 'opponents/*/meta.xml' opponents/meta_index.xml)
+TAGS_INDEX_PATH=$(python3 deploy-scripts/compile_xml_index.py subfolder .public 'opponents/*/tags.xml' opponents/tags_index.xml)
+COSTUMES_INDEX_PATH=$(python3 deploy-scripts/compile_xml_index.py path .public 'opponents/reskins/*/costume.xml' opponents/costumes_index.xml)
+
+sed "s/__COLLECTIBLES_XML_INDEX/${COLLECTIBLES_INDEX_PATH}/g" js/spniGallery.js > .public/js/spniGallery.js
+sed "s/__META_XML_INDEX/${META_INDEX_PATH}/g; s/__TAGS_XML_INDEX/${TAGS_INDEX_PATH}/g; s/__COSTUMES_XML_INDEX/${COSTUMES_INDEX_PATH}/g" js/spniSelect.js > .public/js/spniSelect.js
 
 # Copy alternate costume files for deployment.
 python3 deploy-scripts/copy_alternate_costumes.py .public/ ./ all
