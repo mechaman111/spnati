@@ -137,7 +137,7 @@ PlayerClothing.prototype.isAvailable = function () {
         return false;
     }
 
-    return !this.collectible || this.collectible.isUnlocked()
+    return !this.collectible || this.collectible.isUnlocked();
 }
 
 /**

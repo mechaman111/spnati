@@ -105,8 +105,7 @@ function Collectible(xmlElem, player) {
     }
 
     this.clothing = null;
-    var collectible = this;
-
+    
     var clothingElems = xmlElem.children("clothing").map(function () { return $(this); }).get();
     if (clothingElems.length > 0) {
         var $elem = clothingElems[0];
