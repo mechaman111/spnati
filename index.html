@@ -59,7 +59,11 @@
 
                 <!-- Start Button -->
                 <div class='title-menu-buttons-container'>
-                    <div id="warning-start-container" class='bordered title-start-edge'>
+                    <div id="warning-load-container">
+                        <span class="game-load-label"></span>
+                        <span class="game-load-progress">0</span>
+                    </div>
+                    <div id="warning-start-container" class='bordered title-start-edge' hidden>
                         <button id='warning-start-button' class='bordered smooth-button red title-start-button'
                             onclick="enterTitleScreen()">
                             <img class="title-entrance-image" src="img/enter.png" alt="Enter the Inventory" />
@@ -117,142 +121,19 @@
                 <div id='title-wardrobe-block'>
                     <div class='title-label'>What are you wearing?</div>
                     <div id='title-warning-label'>Select 0 to 8 articles. Wear whatever you want.</div>
-
-                    <!-- Male Clothing -->
-                    <div id='male-clothing-container' class='title-clothing-container'>
-                        <input type='image' id="male-clothing-option-0"
-                            class='bordered title-clothing-button title-content-button titleClothing0'
-                            src='player/male/hat.png' alt="Hat" onclick='selectClothing(0)'>
-                        <input type='image' id="male-clothing-option-1"
-                            class='bordered title-clothing-button title-content-button titleClothing1'
-                            src='player/male/headphones.png' alt="Headphones" onclick='selectClothing(1)'>
-                        <input type='image' id="male-clothing-option-2"
-                            class='bordered title-clothing-button title-content-button titleClothing2'
-                            src='player/male/jacket.png' alt="Jacket" onclick='selectClothing(2)'>
-                        <input type='image' id="male-clothing-option-3"
-                            class='bordered title-clothing-button title-content-button titleClothing3'
-                            src='player/male/shirt.png' alt="Shirt" onclick='selectClothing(3)'>
-                        <input type='image' id="male-clothing-option-4"
-                            class='bordered title-clothing-button title-content-button titleClothing4'
-                            src='player/male/tshirt.png' alt="T-shirt" onclick='selectClothing(4)'>
-                        <input type='image' id="male-clothing-option-5"
-                            class='bordered title-clothing-button title-content-button titleClothing5'
-                            src='player/male/undershirt.png' alt="Undershirt" onclick='selectClothing(5)'>
-
-                        <input type='image' id="male-clothing-option-6"
-                            class='bordered title-clothing-button title-content-button titleClothing6'
-                            src='player/male/glasses.png' alt="Glasses" onclick='selectClothing(6)'>
-                        <input type='image' id="male-clothing-option-7"
-                            class='bordered title-clothing-button title-content-button titleClothing7'
-                            src='player/male/belt.png' alt="Belt" onclick='selectClothing(7)'>
-                        <input type='image' id="male-clothing-option-8"
-                            class='bordered title-clothing-button title-content-button titleClothing8'
-                            src='player/male/pants.png' alt="Pants" onclick='selectClothing(8)'>
-                        <input type='image' id="male-clothing-option-9"
-                            class='bordered title-clothing-button title-content-button titleClothing9'
-                            src='player/male/shorts.png' alt="Shorts" onclick='selectClothing(9)'>
-                        <input type='image' id="male-clothing-option-10"
-                            class='bordered title-clothing-button title-content-button titleClothing10'
-                            src='player/male/kilt.png' alt="Kilt" onclick='selectClothing(10)'>
-                        <input type='image' id="male-clothing-option-11"
-                            class='bordered title-clothing-button title-content-button titleClothing11'
-                            src='player/male/boxers.png' alt="Boxers" onclick='selectClothing(11)'>
-
-                        <input type='image' id="male-clothing-option-12"
-                            class='bordered title-clothing-button title-content-button titleClothing12'
-                            src='player/male/necklace.png' alt="Necklace" onclick='selectClothing(12)'>
-                        <input type='image' id="male-clothing-option-13"
-                            class='bordered title-clothing-button title-content-button titleClothing13'
-                            src='player/male/tie.png' alt="Tie" onclick='selectClothing(13)'>
-                        <input type='image' id="male-clothing-option-14"
-                            class='bordered title-clothing-button title-content-button titleClothing14'
-                            src='player/male/gloves.png' alt="Gloves" onclick='selectClothing(14)'>
-                        <input type='image' id="male-clothing-option-15"
-                            class='bordered title-clothing-button title-content-button titleClothing15'
-                            src='player/male/socks.png' alt="Socks" onclick='selectClothing(15)'>
-                        <input type='image' id="male-clothing-option-16"
-                            class='bordered title-clothing-button title-content-button titleClothing16'
-                            src='player/male/shoes.png' alt="Shoes" onclick='selectClothing(16)'>
-                        <input type='image' id="male-clothing-option-17"
-                            class='bordered title-clothing-button title-content-button titleClothing17'
-                            src='player/male/boots.png' alt="Boots" onclick='selectClothing(17)'>
-                    </div>
-
-                    <!-- Female Clothing -->
-                    <div id='female-clothing-container' class='title-clothing-container' hidden>
-                        <input type='image' id="female-clothing-option-0"
-                            class='bordered title-clothing-button title-content-button titleClothing0'
-                            src='player/female/hat.png' alt="Hat" onclick='selectClothing(0)'>
-                        <input type='image' id="female-clothing-option-1"
-                            class='bordered title-clothing-button title-content-button titleClothing1'
-                            src='player/female/headphones.png' alt="Headphones" onclick='selectClothing(1)'>
-                        <input type='image' id="female-clothing-option-2"
-                            class='bordered title-clothing-button title-content-button titleClothing2'
-                            src='player/female/jacket.png' alt="Jacket" onclick='selectClothing(2)'>
-                        <input type='image' id="female-clothing-option-3"
-                            class='bordered title-clothing-button title-content-button titleClothing3'
-                            src='player/female/shirt.png' alt="Shirt" onclick='selectClothing(3)'>
-                        <input type='image' id="female-clothing-option-4"
-                            class='bordered title-clothing-button title-content-button titleClothing4'
-                            src='player/female/tanktop.png' alt="Tank top" onclick='selectClothing(4)'>
-                        <input type='image' id="female-clothing-option-5"
-                            class='bordered title-clothing-button title-content-button titleClothing5'
-                            src='player/female/bra.png' alt="Bra" onclick='selectClothing(5)'>
-
-                        <input type='image' id="female-clothing-option-6"
-                            class='bordered title-clothing-button title-content-button titleClothing6'
-                            src='player/female/glasses.png' alt="Glasses" onclick='selectClothing(6)'>
-                        <input type='image' id="female-clothing-option-7"
-                            class='bordered title-clothing-button title-content-button titleClothing7'
-                            src='player/female/belt.png' alt="Belt" onclick='selectClothing(7)'>
-                        <input type='image' id="female-clothing-option-8"
-                            class='bordered title-clothing-button title-content-button titleClothing8'
-                            src='player/female/pants.png' alt="Pants" onclick='selectClothing(8)'>
-                        <input type='image' id="female-clothing-option-9"
-                            class='bordered title-clothing-button title-content-button titleClothing9'
-                            src='player/female/shorts.png' alt="Shorts" onclick='selectClothing(9)'>
-                        <input type='image' id="female-clothing-option-10"
-                            class='bordered title-clothing-button title-content-button titleClothing10'
-                            src='player/female/skirt.png' alt="Skirt" onclick='selectClothing(10)'>
-                        <input type='image' id="female-clothing-option-11"
-                            class='bordered title-clothing-button title-content-button titleClothing11'
-                            src='player/female/panties.png' alt="Panties" onclick='selectClothing(11)'>
-
-                        <input type='image' id="female-clothing-option-12"
-                            class='bordered title-clothing-button title-content-button titleClothing12'
-                            src='player/female/necklace.png' alt="Necklace" onclick='selectClothing(12)'>
-                        <input type='image' id="female-clothing-option-13"
-                            class='bordered title-clothing-button title-content-button titleClothing13'
-                            src='player/female/bracelet.png' alt="Bracelet" onclick='selectClothing(13)'>
-                        <input type='image' id="female-clothing-option-14"
-                            class='bordered title-clothing-button title-content-button titleClothing14'
-                            src='player/female/gloves.png' alt="Gloves" onclick='selectClothing(14)'>
-                        <input type='image' id="female-clothing-option-15"
-                            class='bordered title-clothing-button title-content-button titleClothing15'
-                            src='player/female/stockings.png' alt="Stockings" onclick='selectClothing(15)'>
-                        <input type='image' id="female-clothing-option-16"
-                            class='bordered title-clothing-button title-content-button titleClothing16'
-                            src='player/female/socks.png' alt="Socks" onclick='selectClothing(16)'>
-                        <input type='image' id="female-clothing-option-17"
-                            class='bordered title-clothing-button title-content-button titleClothing17'
-                            src='player/female/shoes.png' alt="Shoes" onclick='selectClothing(17)'>
-                    </div>
+                    <div id='title-clothing-container'></div>
                 </div>
 
                 <!-- Start Button -->
                 <div class='title-menu-buttons-container'>
-                    <div id="title-load-container">
-                        <span class="game-load-label">Loading: </span>
-                        <span class="game-load-progress">0</span>
-                    </div>
-                    <div class='bordered title-gallery-edge' hidden>
+                    <div class='bordered title-gallery-edge'>
                         <button
                             class='bordered smooth-button red centered-icon-button title-menu-button title-gallery-button'
                             onclick="loadGalleryScreen()">
                             <img class="centered-icon-image" src="img/gallery.svg" alt="Gallery" />
                         </button>
                     </div>
-                    <div class='bordered title-start-edge' hidden>
+                    <div class='bordered title-start-edge'>
                         <button id='title-start-button'
                             class='bordered smooth-button red centered-icon-button title-start-button'
                             onclick="validateTitleScreen()">
@@ -260,7 +141,7 @@
                                 alt="Enter the Inventory" />
                         </button>
                     </div>
-                    <div class='bordered title-tags-edge' hidden>
+                    <div class='bordered title-tags-edge'>
                         <button
                             class='bordered smooth-button red centered-icon-button title-menu-button title-tags-button'
                             onclick="showPlayerTagsModal()">
@@ -1381,9 +1262,7 @@
                                 <h4 class="modal-title text-center">Select an article of clothing to remove</h4>
                             </div>
                             <div class="modal-body">
-                                <div id="stripping-clothing-area" class="modal-body-special-container">
-
-                                </div>
+                                <div id="stripping-clothing-area" class="strip-selector-container"></div>
                             </div>
                             <div class="modal-footer">
                                 <button id="stripping-modal-button" class="bordered smooth-button modal-button"
@@ -3230,26 +3109,42 @@
                 </div>
 
                 <!-- Player Clothing and Label -->
-                <div id="player-game-clothing-area" class="bordered">
+                <div id="player-game-clothing-area" class="bordered legacy-ui">
                     <div class="left player-clothing-container">
-                        <img class="bordered clothing-float-left small-clothing-image player-0-clothing-7"
-                            src="img/blank.png" alt="">
-                        <img class="bordered clothing-float-left small-clothing-image player-0-clothing-6"
-                            src="img/blank.png" alt="">
-                        <img class="bordered clothing-float-left small-clothing-image player-0-clothing-5"
-                            src="img/blank.png" alt="">
-                        <img class="bordered clothing-float-left small-clothing-image player-0-clothing-8"
-                            src="img/blank.png" alt="">
+                        <div class="bordered clothing-float-left small-clothing-image-container">
+                            <img class="small-clothing-image player-0-clothing-7"
+                                src="img/blank.png" alt="">
+                        </div>
+                        <div class="bordered clothing-float-left small-clothing-image-container">
+                            <img class="small-clothing-image player-0-clothing-6"
+                                src="img/blank.png" alt="">
+                        </div>
+                        <div class="bordered clothing-float-left small-clothing-image-container">
+                            <img class="small-clothing-image player-0-clothing-5"
+                                src="img/blank.png" alt="">
+                        </div>
+                        <div class="bordered clothing-float-left small-clothing-image-container">
+                            <img class="small-clothing-image player-0-clothing-8"
+                                src="img/blank.png" alt="">
+                        </div>
                     </div>
                     <div class="right player-clothing-container">
-                        <img class="bordered clothing-float-right small-clothing-image player-0-clothing-2"
-                            src="img/blank.png" alt="">
-                        <img class="bordered clothing-float-right small-clothing-image player-0-clothing-3"
-                            src="img/blank.png" alt="">
-                        <img class="bordered clothing-float-right small-clothing-image player-0-clothing-4"
-                            src="img/blank.png" alt="">
-                        <img class="bordered clothing-float-right small-clothing-image player-0-clothing-1"
-                            src="img/blank.png" alt="">
+                        <div class="bordered clothing-float-right small-clothing-image-container">
+                            <img class="small-clothing-image player-0-clothing-2"
+                                src="img/blank.png" alt="">
+                        </div>
+                        <div class="bordered clothing-float-right small-clothing-image-container">
+                            <img class="small-clothing-image player-0-clothing-3"
+                                src="img/blank.png" alt="">
+                        </div>
+                        <div class="bordered clothing-float-right small-clothing-image-container">
+                            <img class="small-clothing-image player-0-clothing-4"
+                                src="img/blank.png" alt="">
+                        </div>
+                        <div class="bordered clothing-float-right small-clothing-image-container">
+                            <img class="small-clothing-image player-0-clothing-1"
+                                src="img/blank.png" alt="">
+                        </div>
                     </div>
 
                     <div class="game-name-label-0 bordered name-label">Player</div>
@@ -3258,31 +3153,31 @@
 
                 <div id="player-game-clothing-area-minimal" class="">
                     <div class="minimal-clothing-area-row">
-                        <div class="small-clothing-image-container"><img
-                                class="bordered small-clothing-image player-0-clothing-8" src="img/blank.png" alt=""
+                        <div class="bordered small-clothing-image-container"><img
+                                class="small-clothing-image player-0-clothing-8" src="img/blank.png" alt=""
                                 data-slot="8"></div>
-                        <div class="small-clothing-image-container"><img
-                                class="bordered small-clothing-image player-0-clothing-7" src="img/blank.png" alt=""
+                        <div class="bordered small-clothing-image-container"><img
+                                class="small-clothing-image player-0-clothing-7" src="img/blank.png" alt=""
                                 data-slot="7"></div>
-                        <div class="small-clothing-image-container"><img
-                                class="bordered small-clothing-image player-0-clothing-6" src="img/blank.png" alt=""
+                        <div class="bordered small-clothing-image-container"><img
+                                class="small-clothing-image player-0-clothing-6" src="img/blank.png" alt=""
                                 data-slot="6"></div>
-                        <div class="small-clothing-image-container"><img
-                                class="bordered small-clothing-image player-0-clothing-5" src="img/blank.png" alt=""
+                        <div class="bordered small-clothing-image-container"><img
+                                class="small-clothing-image player-0-clothing-5" src="img/blank.png" alt=""
                                 data-slot="5"></div>
                     </div>
                     <div class="minimal-clothing-area-row">
-                        <div class="small-clothing-image-container"><img
-                                class="bordered small-clothing-image player-0-clothing-4" src="img/blank.png" alt=""
+                        <div class="bordered small-clothing-image-container"><img
+                                class="small-clothing-image player-0-clothing-4" src="img/blank.png" alt=""
                                 data-slot="4"></div>
-                        <div class="small-clothing-image-container"><img
-                                class="bordered small-clothing-image player-0-clothing-3" src="img/blank.png" alt=""
+                        <div class="bordered small-clothing-image-container"><img
+                                class="small-clothing-image player-0-clothing-3" src="img/blank.png" alt=""
                                 data-slot="3"></div>
-                        <div class="small-clothing-image-container"><img
-                                class="bordered small-clothing-image player-0-clothing-2" src="img/blank.png" alt=""
+                        <div class="bordered small-clothing-image-container"><img
+                                class="small-clothing-image player-0-clothing-2" src="img/blank.png" alt=""
                                 data-slot="2"></div>
-                        <div class="small-clothing-image-container"><img
-                                class="bordered small-clothing-image player-0-clothing-1" src="img/blank.png" alt=""
+                        <div class="bordered small-clothing-image-container"><img
+                                class="small-clothing-image player-0-clothing-1" src="img/blank.png" alt=""
                                 data-slot="1"></div>
                     </div>
                 </div>
@@ -3476,11 +3371,11 @@
     <script src="js/spniCore.js"></script>
     <script src="js/spniDevMode.js"></script>
     <script src="js/spniDisplay.js"></script>
-    <script src="js/spniTitle.js"></script>
     <script src="js/spniSelect.js"></script>
     <script src="js/spniGame.js"></script>
     <script src="js/spniPoker.js"></script>
     <script src="js/spniClothing.js"></script>
+    <script src="js/spniTitle.js"></script>
     <script src="js/spniForfeit.js"></script>
     <script src="js/spniBehaviour.js"></script>
     <script src="js/spniAI.js"></script>

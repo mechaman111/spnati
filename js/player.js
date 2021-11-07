@@ -161,7 +161,7 @@ Player.prototype.resetState = function () {
             var plural = $(this).attr('plural');
             plural = (plural == 'null' ? null : plural == 'true');
 
-            var newClothing = new Clothing(name, generic, type, position, null, plural, 0);
+            var newClothing = new Clothing(name, generic, type, position, plural);
 
             clothingArr.push(newClothing);
         });
@@ -884,7 +884,22 @@ Opponent.prototype.unloadAlternateCostume = function () {
 }
 
 /**
- * Loads the collectibles for this opponent.
+ * Loads the collectibles for this opponent from an XML element.
+ */
+Opponent.prototype.loadCollectibles = function ($xml) {
+    var collectiblesArray = [];
+    $xml.children('collectible').each(function (idx, elem) {
+        collectiblesArray.push(new Collectible($(elem), this));
+    }.bind(this));
+
+    this.collectibles = collectiblesArray;
+    this.has_collectibles = this.collectibles.some(function (c) {
+        return !c.status || includedOpponentStatuses[c.status];
+    });
+}
+
+/**
+ * Load the collectibles for this opponent by fetching collectibles.xml if necessary.
  * 
  * @returns {Promise<void>} A Promise that resolves after all collectibles are
  * loaded.
@@ -892,26 +907,17 @@ Opponent.prototype.unloadAlternateCostume = function () {
  * @throws The returned Promise will reject if the collectibles for this character
  * cannot be fetched or if loading them causes an error.
  */
-Opponent.prototype.loadCollectibles = function () {
+Opponent.prototype.fetchCollectibles = function () {
     if (!this.has_collectibles || this.collectibles !== null) {
         return immediatePromise();
     }
 
-    return fetchXML(this.folder + 'collectibles.xml').then(function($xml) {
-        var collectiblesArray = [];
-        $xml.children('collectible').each(function (idx, elem) {
-            collectiblesArray.push(new Collectible($(elem), this));
+    return fetchXML(this.folder + 'collectibles.xml')
+        .then(this.loadCollectibles.bind(this))
+        .catch(function (err) {
+            console.error("Error loading collectibles for "+this.id);
+            throw err;
         }.bind(this));
-
-        this.collectibles = collectiblesArray;
-
-        this.has_collectibles = this.collectibles.some(function (c) {
-            return !c.status || includedOpponentStatuses[c.status];
-        });
-    }.bind(this)).catch(function (err) {
-        console.error("Error loading collectibles for "+this.id);
-        throw err;
-    }.bind(this));
 }
 
 /**
@@ -1126,7 +1132,7 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
     }
 
     // start loading collectibles in parallel with behaviour.xml
-    var collectiblesPromise = this.loadCollectibles();
+    var collectiblesPromise = this.fetchCollectibles();
 
     /* Success callback.
      * 'this' is bound to the Opponent object.

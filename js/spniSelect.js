@@ -238,76 +238,54 @@ function loadListingFile () {
     listingFiles.push("opponents/listing.xml");
 
     /* clear the previous meta information */
-    var outstandingLoads = 0;
-    var totalLoads = 0;
+    var loadProgress = [];
     var opponentGroupMap = {};
     var opponentMap = {};
     var tagSet = {};
     var sourceSet = {};
     var creatorSet = {};
 
+    loadProgress = listingFiles.map(function () {
+        return { current: 0, total: 0 };
+    });
+
     var onComplete = function(opp) {
-        if (opp) {
-            if (opp.id in opponentMap) {
-                loadedOpponents[opp.listingIndex = opponentMap[opp.id]] = opp;
-                opp.searchTags.forEach(function(tag) {
-                    tagSet[tag] = true;
-                });
-                sourceSet[opp.source] = true;
-                
-                splitCreatorField(opp.artist).forEach(function (creator) {
-                    creatorSet[creator] = true;
-                });
-                
-                splitCreatorField(opp.writer).forEach(function (creator) {
-                    creatorSet[creator] = true;
-                });
-                
-                var disp = new OpponentSelectionCard(opp);
-                opp.selectionCard = disp;
-                disp.statusIcon.tooltip({ delay: { show: 200 }, placement: 'bottom',
-                                          container: '#individual-select-screen .selection-cards-container' });
-            }
-            if (opp.id in opponentGroupMap) {
-                opponentGroupMap[opp.id].forEach(function(groupPos) {
-                    groupPos.group.opponents[groupPos.idx] = opp;
-                    groupPos.group.costumes[groupPos.idx] = groupPos.costume;
-                });
-            }
-        }
-        
-        if (--outstandingLoads == 0) {
-            loadedOpponents = loadedOpponents.filter(Boolean); // Remove any empty slots should an opponent fail to load
-            $(".title-menu-buttons-container>div").removeAttr("hidden");
-            $("#title-load-container").hide();
+        if (!opp) return;
+
+        if (opp.id in opponentMap) {
+            loadedOpponents[opp.listingIndex = opponentMap[opp.id]] = opp;
+            opp.searchTags.forEach(function(tag) {
+                tagSet[tag] = true;
+            });
+            sourceSet[opp.source] = true;
             
-            $tagList.append(Object.keys(TAG_ALIASES).concat(Object.keys(tagSet)).sort().map(function(tag) {
-                return new Option(tag);
-            }));
-            $sourceList.append(Object.keys(sourceSet).sort().map(function(source) {
-                return new Option(source);
-            }));
-            $creatorList.append(Object.keys(creatorSet).sort().map(function(source) {
-                return new Option(source);
-            }));
-            loadedOpponents.forEach(function(p) { p.selectionCard.updateEpilogueBadge() });
-            /* Determine the time of the nth most recently updated character on testing, so we
-               can show at least n characters. (.sort() sorts in place, but .filter() makes a copy. */
-            TESTING_NTH_MOST_RECENT_UPDATE = (loadedOpponents.filter(p => p.status == "testing")
-                                              .sort((p1, p2) => p2.lastUpdated - p1.lastUpdated)
-                                              .slice(0, TESTING_MIN_NUMBER).pop() || {}).lastUpdated;
-            updateIndividualSelectSort();
-            updateIndividualSelectFilters();
-        } else {
-            var progress = Math.floor(100 * (totalLoads - outstandingLoads) / totalLoads);
-            $(".game-load-progress").text(progress.toString(10));
+            splitCreatorField(opp.artist).forEach(function (creator) {
+                creatorSet[creator] = true;
+            });
+            
+            splitCreatorField(opp.writer).forEach(function (creator) {
+                creatorSet[creator] = true;
+            });
+            
+            var disp = new OpponentSelectionCard(opp);
+            opp.selectionCard = disp;
+            disp.statusIcon.tooltip({ delay: { show: 200 }, placement: 'bottom',
+                                      container: '#individual-select-screen .selection-cards-container' });
+        }
+
+        if (opp.id in opponentGroupMap) {
+            opponentGroupMap[opp.id].forEach(function(groupPos) {
+                groupPos.group.opponents[groupPos.idx] = opp;
+                groupPos.group.costumes[groupPos.idx] = groupPos.costume;
+            });
         }
     }
 
     /* now actually load the characters */
     var oppDefaultIndex = 0; // keep track of an opponent's default placement
 
-    var listingProcessor = function($xml) {
+    var listingProcessor = function($xml, fileIdx) {
+        if (!$xml) return immediatePromise();
         var available = {};
 
         /* start by checking which characters will be loaded and available */
@@ -345,7 +323,7 @@ function loadListingFile () {
             loadedGroups.push(newGroup);
         });
 
-        $xml.find('>individuals>opponent').each(function () {
+        return Promise.all($xml.find('>individuals>opponent').map(function () {
             var oppStatus = $(this).attr('status');
             var id = $(this).text();
             var releaseNumber = $(this).attr('release');
@@ -359,22 +337,55 @@ function loadListingFile () {
             var highlightStatus = $(this).attr('highlight');
 
             if (available[id] && !(id in opponentMap)) {
-                outstandingLoads++;
-                totalLoads++;
+                loadProgress[fileIdx].total++;
                 opponentMap[id] = oppDefaultIndex++;
-                loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus).then(onComplete).catch(function (err) {
-                    console.error("Could not load metadata for " + id + ":");
-                    captureError(err);
-                });
+
+                return loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus)
+                    .then(onComplete).then(function () {
+                        loadProgress[fileIdx].current++;
+                        var progress = loadProgress.reduce(function (acc, val) {
+                            if (val.total > 0) acc += (val.current / val.total);
+                            return acc;
+                        }, 0);
+
+                        updateStartupStageProgress(progress, loadProgress.length);
+                    }).catch(function (err) {
+                        console.error("Could not load metadata for " + id + ":");
+                        captureError(err);
+                    });
+            } else {
+                return immediatePromise();
             }
-        });
+        }).get());
     }
+
+    beginStartupStage("Roster");
 
     /* grab and parse the opponent listing files */
     return Promise.all(listingFiles.map(function (filename) {
         return fetchXML(filename);
     })).then(function (files) {
-        files.forEach(listingProcessor);
+        return Promise.all(files.map(listingProcessor));
+    }).then(function () {
+        loadedOpponents = loadedOpponents.filter(Boolean); // Remove any empty slots should an opponent fail to load
+            
+        $tagList.append(Object.keys(TAG_ALIASES).concat(Object.keys(tagSet)).sort().map(function(tag) {
+            return new Option(tag);
+        }));
+        $sourceList.append(Object.keys(sourceSet).sort().map(function(source) {
+            return new Option(source);
+        }));
+        $creatorList.append(Object.keys(creatorSet).sort().map(function(source) {
+            return new Option(source);
+        }));
+        loadedOpponents.forEach(function(p) { p.selectionCard.updateEpilogueBadge() });
+        /* Determine the time of the nth most recently updated character on testing, so we
+           can show at least n characters. (.sort() sorts in place, but .filter() makes a copy. */
+        TESTING_NTH_MOST_RECENT_UPDATE = (loadedOpponents.filter(p => p.status == "testing")
+                                          .sort((p1, p2) => p2.lastUpdated - p1.lastUpdated)
+                                          .slice(0, TESTING_MIN_NUMBER).pop() || {}).lastUpdated;
+        updateIndividualSelectSort();
+        updateIndividualSelectFilters();
     });
 }
 
@@ -1380,6 +1391,7 @@ function advanceSelectScreen () {
  ************************************************************/
 function backSelectScreen () {
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
+    updateTitleScreen();
     screenTransition($selectScreen, $titleScreen);
 }
 
