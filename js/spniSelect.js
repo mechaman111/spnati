@@ -710,6 +710,9 @@ function updateIndividualSelectSort() {
         loadedOpponents.sort(sortTestingOpponents);
     }
 
+    /* Finally, sort favorited opponents before everyone else. */
+    loadedOpponents.sort(sortFavoriteOpponents);
+
     individualSelectSeparatorIndices = [];
     var cutFn
     /* Separate (normally-visible) Testing from other types if they come before others in Testing view, while still respecting event partitioning if set */
@@ -724,8 +727,23 @@ function updateIndividualSelectSort() {
         : sortingMode == "featured"        ? function (opp) { return opp.event_partition; }
         : null;
 
+    var favoritedOpponents = loadedOpponents.filter(function (opp) {
+        return opp.favorite;
+    });
+
+    if (favoritedOpponents.length > 0) {
+        /* Ignore regular partitioning for favorited opponents. */
+        favoritedOpponents.forEach(function (opp) {
+            $(opp.selectionCard.mainElem).appendTo($indivSelectionCardContainer);
+        });
+
+        $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
+    }
+
     var currentPartition = undefined;
     loadedOpponents.forEach(function (opp, index) {
+        if (opp.favorite) return;
+
         if (cutFn !== null) {
             var newPartition = cutFn(opp);
             if (currentPartition !== undefined && newPartition != currentPartition) {
@@ -736,7 +754,7 @@ function updateIndividualSelectSort() {
         }
         $(opp.selectionCard.mainElem).appendTo($indivSelectionCardContainer);
     });
-    if (individualSelectSeparatorIndices.length > 0) {
+    if (individualSelectSeparatorIndices.length > 0 || favoritedOpponents.length > 0) {
         updateIndividualSelectVisibility();
     }
 }
@@ -1701,6 +1719,11 @@ function sortTestingOpponents(opp1, opp2) {
     });
 
     return scores[1] - scores[0];
+}
+
+/* Sorts favorited characters before non-favorites. */
+function sortFavoriteOpponents(opp1, opp2) {
+    return opp2.favorite - opp1.favorite;
 }
 
 function setSortingMode(mode) {

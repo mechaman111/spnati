@@ -641,6 +641,59 @@ Save.prototype.savePlayedCharacterSet = function (set) {
 }
 
 /**
+ * Gets the set of favorited characters.
+ * @returns {Set<string>}
+ */
+ Save.prototype.getFavoritedCharacters = function () {
+    var s = this.getItem("favoriteCharacters");
+    var ret = new Set();
+
+    if (Array.isArray(s)) {
+        s.forEach(function (id) { ret.add(id); });
+    }
+
+    return ret;
+}
+
+/**
+ * Save the set of favorited characters.
+ * @param {Set<string>} set
+ */
+Save.prototype.setFavoritedCharacters = function (set) {
+    /* Get unique characters in set. */
+    var arr = [];
+    set.forEach(function (v) {
+        arr.push(v);
+    });
+
+    this.setItem("favoriteCharacters", arr);
+}
+
+/**
+ * Check whether a character has been favorited.
+ * @param {Opponent} character
+ * @returns {boolean}
+ */
+ Save.prototype.isCharacterFavorited = function (character) {
+    return this.getFavoritedCharacters().has(character.id);
+}
+
+/**
+ * Mark a character as being favorited or not.
+ * @param {Opponent} character
+ * @param {boolean} value
+ */
+ Save.prototype.setCharacterFavorited = function (character, value) {
+    var curFavorites = this.getFavoritedCharacters();
+    if (value) {
+        curFavorites.add(character.id);
+    } else {
+        curFavorites.delete(character.id);
+    }
+    this.setFavoritedCharacters(curFavorites);
+}
+
+/**
  * 
  * @param {ResortEventInfo} resortInfo 
  * @returns {boolean}

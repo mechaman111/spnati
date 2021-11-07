@@ -508,6 +508,8 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
     this.alternate_costumes = [];
     this.selection_image = this.folder + this.image;
 
+    this.favorite = save.isCharacterFavorited(this);
+
     this.event_character = eventCharacterSettings.ids.has(id);
     this.event_sort_order = (
         (eventCharacterSettings.sorting[id] !== undefined) ? eventCharacterSettings.sorting[id]
@@ -775,6 +777,16 @@ Opponent.prototype.getRepeatCount = function () {
     }
 
     return this.repeatLog[this.chosenState.rawDialogue] || 0;
+}
+
+/**
+ * Mark this character as favorited or not.
+ * @param {boolean} value 
+ */
+Opponent.prototype.setFavorited = function (value) {
+    this.favorite = value;
+    save.setCharacterFavorited(this, value);
+    updateIndividualSelectSort();
 }
 
 Opponent.prototype.selectAlternateCostume = function (costumeDesc) {
