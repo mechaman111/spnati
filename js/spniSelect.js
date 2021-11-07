@@ -738,23 +738,24 @@ function updateIndividualSelectSort() {
         });
 
         $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
+        individualSelectSeparatorIndices.push(favoritedOpponents.length);
     }
 
     var currentPartition = undefined;
-    loadedOpponents.forEach(function (opp, index) {
-        if (opp.favorite) return;
-
+    loadedOpponents.filter(function (opp) {
+        return !opp.favorite;
+    }).forEach(function (opp, index) {
         if (cutFn !== null) {
             var newPartition = cutFn(opp);
             if (currentPartition !== undefined && newPartition != currentPartition) {
                 $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
-                individualSelectSeparatorIndices.push(index);
+                individualSelectSeparatorIndices.push(favoritedOpponents.length + index);
             }
             currentPartition = newPartition;
         }
         $(opp.selectionCard.mainElem).appendTo($indivSelectionCardContainer);
     });
-    if (individualSelectSeparatorIndices.length > 0 || favoritedOpponents.length > 0) {
+    if (individualSelectSeparatorIndices.length > 0) {
         updateIndividualSelectVisibility();
     }
 }
