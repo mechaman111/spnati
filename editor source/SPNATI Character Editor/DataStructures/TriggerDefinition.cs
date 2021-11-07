@@ -239,12 +239,13 @@ namespace SPNATI_Character_Editor
 
 		public static void Load()
 		{
-			TriggerDefinition start = new TriggerDefinition(TriggerDefinition.StartTrigger, "Start Game")
+			// outdated Start Game trigger - no longer necessary
+			/*TriggerDefinition start = new TriggerDefinition(TriggerDefinition.StartTrigger, "Start Game")
 			{
 				StartStage = -1,
 				EndStage = -1
 			};
-			AddTrigger(start);
+			AddTrigger(start);*/
 
 			TagList list = Serialization.ImportTriggers();
 			if (list != null)
