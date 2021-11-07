@@ -459,7 +459,12 @@ function setupTitleClothing () {
 
         opp.collectibles.forEach(function (collectible) {
             var clothing = collectible.clothing;
-            if (!clothing || !PLAYER_CLOTHING_OPTIONS[clothing.id]) return;
+            if (
+                (!clothing || !PLAYER_CLOTHING_OPTIONS[clothing.id]) ||
+                (collectible.status && !includedOpponentStatuses[collectible.status])
+            ) {
+                return;
+            }
 
             var selector = new TitleClothingSelectionIcon(clothing);
             titleClothingSelectors.push(selector);
