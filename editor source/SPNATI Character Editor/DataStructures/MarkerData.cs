@@ -74,7 +74,39 @@ namespace SPNATI_Character_Editor
 			string op;
 			marker = Marker.ExtractPieces(marker, out value, out perTarget, out op);
 			Marker m = _markers.GetOrAddDefault(marker, () => new Marker(marker));
-			m.AddValue(value);
+
+			if (!String.IsNullOrEmpty(op) && op != "=")
+			{
+				m.AddValue(op);
+			}
+			else
+			{
+				m.AddValue(value);
+			}
+		}
+
+		public void Cache(MarkerOperation marker)
+		{
+			if (marker == null || string.IsNullOrEmpty(marker.Name))
+				return;
+
+			string name = marker.Name;
+
+			if (name.EndsWith("*"))
+			{
+				name = name.Substring(0, name.Length - 1);
+			}
+
+			Marker m = _markers.GetOrAddDefault(name, () => new Marker(name));
+
+			if (!String.IsNullOrEmpty(marker.Operator) && marker.Operator != "=")
+			{
+				m.AddValue(marker.Operator);
+			}
+			else
+			{
+				m.AddValue(marker.Value);
+			}
 		}
 
 		public void RemoveReference(string marker)

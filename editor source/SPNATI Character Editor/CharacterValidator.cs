@@ -408,18 +408,20 @@ namespace SPNATI_Character_Editor
 							}
 						}
 
-						// marker checking is horribly broken right now
-						//ValidateMarker(warnings, target, caseLabel, condition.SaidMarker, condition.Stage, context);
-						//ValidateMarker(warnings, target, caseLabel, condition.SayingMarker, condition.Stage, context);
-						//ValidateMarker(warnings, target, caseLabel, condition.NotSaidMarker, context);
+						if(string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
+                        {
+							ValidateMarker(warnings, target, caseLabel, condition.SaidMarker, condition.Stage, context);
+							ValidateMarker(warnings, target, caseLabel, condition.SayingMarker, condition.Stage, context);
+						}
 					}
 				}
 
 				if (condition.Role == "self")
 				{
-					// marker checking is horribly broken right now
-					//ValidateMarker(warnings, character, caseLabel, condition.SaidMarker, context);
-					//ValidateMarker(warnings, character, caseLabel, condition.NotSaidMarker, context);
+					if (string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
+					{
+						ValidateMarker(warnings, character, caseLabel, condition.SaidMarker, context);
+					}
 
 					if (!String.IsNullOrEmpty(condition.SayingMarker))
                     {
@@ -673,6 +675,10 @@ namespace SPNATI_Character_Editor
 			if (string.IsNullOrEmpty(name))
 				return;
 
+			// Monika and Sayori do scripting that results in false positives
+			if (character.FolderName == "monika" || character.FolderName == "sayori")
+				return;
+
 			if (character == null)
 			{
 				warnings.Add(new ValidationError(ValidationFilterLevel.MissingTargets, string.Format("Missing character for {1}. {0}", caseLabel, name), context));
@@ -687,7 +693,7 @@ namespace SPNATI_Character_Editor
 				if (character.Markers.IsValueCreated && !character.Markers.Value.Contains(name))
 				{
 					//Count could be 0 for characters who have no editor data, so unless we decide to duplicate MarkerData in CachedCharacter, just ignore it for unloaded characters
-					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue that sets marker {2}. {0}", caseLabel, character.FolderName, name), context));
+					warnings.Add(new ValidationError(ValidationFilterLevel.Markers, string.Format("{1} has no dialogue that sets marker {2}, so this case will never trigger. {0}", caseLabel, character.Name, name), context));
 				}
 				else
 				{
@@ -696,6 +702,7 @@ namespace SPNATI_Character_Editor
 						if (!string.IsNullOrEmpty(stageRange))
 						{
 							//verify that a marker can even be set prior to this point
+							bool setsAtAll = false;
 
 							int min, max;
 							Case.ToRange(stageRange, out min, out max);
@@ -714,11 +721,40 @@ namespace SPNATI_Character_Editor
 											string markerName = Marker.ExtractPieces(line.Marker, out val, out pt, out markerOp);
 											if (markerName == name)
 											{
+												// persistent markers could always have been set
+												if (character.Behavior.PersistentMarkers.Contains(name))
+													return;
+
 												for (int i = 0; i < c.Stages.Count; i++)
 												{
-													if (c.Stages[i] <= min)
+													if (c.Stages[i] <= max)
 													{
 														return;
+													}
+												}
+
+												setsAtAll = true;
+											}
+
+											if (line.Markers != null)
+											{
+												foreach (MarkerOperation m in line.Markers)
+												{
+													if (m.Name == name)
+													{
+														// persistent markers could always have been set
+														if (character.Behavior.PersistentMarkers.Contains(name))
+															return;
+
+														for (int i = 0; i < c.Stages.Count; i++)
+														{
+															if (c.Stages[i] <= max)
+															{
+																return;
+															}
+														}
+
+														setsAtAll = true;
 													}
 												}
 											}
@@ -744,10 +780,18 @@ namespace SPNATI_Character_Editor
 									}
 								}
 							}
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue prior to stage {2} that sets marker {3}, so this case will never trigger. {0}", caseLabel, character.FolderName, min, name), context));
+
+							if (setsAtAll)
+                            {
+								warnings.Add(new ValidationError(ValidationFilterLevel.Markers, string.Format("{1} has no dialogue before or during stage {2} that sets marker {3}, so this case will never trigger. {0}", caseLabel, character.Name, max, name), context));
+							}
+							else
+                            {
+								warnings.Add(new ValidationError(ValidationFilterLevel.Markers, string.Format("{1} has no dialogue that sets marker {2}, so this case will never trigger. {0}", caseLabel, character.Name, name), context));
+							}
 						}
 
-						if (!string.IsNullOrEmpty(value))
+						if (!string.IsNullOrEmpty(value) && value != "1" && value != "0")
 						{
 							bool used = false;
 							Marker m = character.Markers.Value.Values.FirstOrDefault(marker => marker.Name == name);
@@ -755,18 +799,31 @@ namespace SPNATI_Character_Editor
 							{
 								used = m.Values.Contains(value);
 								if (!used)
-								{
-									int test;
-									//they never set the value directly, but if it's numeric, then they might be able to increment or decrement to it
-									if (int.TryParse(value, out test))
+                                {
+									// if value is set to a variable, it could be any value
+									foreach (String val in m.Values)
+                                    {
+										if (val.Contains("~"))
+                                        {
+											used = true;
+											break;
+                                        }
+                                    }
+
+									if (!used)
 									{
-										used = (m.Values.Contains("+") || m.Values.Contains("-"));
+										int test;
+										//they never set the value directly, but if it's numeric, then they might be able to increment or decrement to it
+										if (int.TryParse(value, out test))
+										{
+											used = (m.Values.Contains("+") || m.Values.Contains("-") || m.Values.Contains("*") || m.Values.Contains("/") || m.Values.Contains("%"));
+										}
 									}
 								}
 							}
 							if (!used)
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"{character.FolderName} has no dialogue that sets marker {name} to {value}, so this case will never trigger. {caseLabel}", context));
+								warnings.Add(new ValidationError(ValidationFilterLevel.Markers, $"{character.Name} has no dialogue that sets marker {name} to {value}, so this case will never trigger. {caseLabel}", context));
 							}
 						}
 					}
@@ -1031,7 +1088,7 @@ namespace SPNATI_Character_Editor
 				}
 				if (!found)
 				{
-					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"Using a Saying Text condition but {target} never says this text: \"{text}\" ({caseLabel})", context));
+					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"Using a Saying Text condition but {other.Name} never says this text: \"{text}\" ({caseLabel})", context));
 				}
 			}
 		}
@@ -1211,15 +1268,16 @@ namespace SPNATI_Character_Editor
 	{
 		None = 0,
 		Minor = 1 << 0,
-		MissingTargets = 1 << 1,
-		MissingImages = 1 << 2,
-		Metadata = 1 << 3,
-		Lines = 1 << 4,
-		TargetedDialogue = 1 << 5,
-		Case = 1 << 6,
-		Stage = 1 << 7,
-		Epilogue = 1 << 8,
-		Reskins = 1 << 9,
-		Collectibles = 1 << 10,
+		Markers = 1 << 1,
+		MissingTargets = 1 << 2,
+		MissingImages = 1 << 3,
+		Metadata = 1 << 4,
+		Lines = 1 << 5,
+		TargetedDialogue = 1 << 6,
+		Case = 1 << 7,
+		Stage = 1 << 8,
+		Epilogue = 1 << 9,
+		Reskins = 1 << 10,
+		Collectibles = 1 << 11,
 	}
 }

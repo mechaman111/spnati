@@ -1045,6 +1045,11 @@ namespace SPNATI_Character_Editor
 			Markers.Value.Cache(marker);
 		}
 
+		public void CacheMarker(MarkerOperation marker)
+		{
+			Markers.Value.Cache(marker);
+		}
+
 		public WardrobeRestrictions GetWardrobeRestrictions()
 		{
 			//For established characters, lock down changing the layer amount and order since it's hugely disruptive

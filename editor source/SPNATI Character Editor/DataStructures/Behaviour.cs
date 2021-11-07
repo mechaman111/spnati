@@ -133,6 +133,11 @@ namespace SPNATI_Character_Editor
 						line.Marker = null;
 					}
 					_character.CacheMarker(line.Marker);
+
+					foreach (MarkerOperation op in line.Markers)
+					{
+						_character.CacheMarker(op);
+					}
 				}
 			}
 		}
