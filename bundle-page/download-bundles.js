@@ -43,6 +43,7 @@ var SPECIAL_CASE_NAMES = {
     "mettaton_neo": "Mettaton",
     "misty_hgss": "Misty",
     "rarity_eg": "Rarity",
+    "samus_aran": "Samus",
     "weiss_schnee": "Weiss",
     "yang_xiao_long": "Yang"
 }
