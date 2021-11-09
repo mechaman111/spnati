@@ -710,6 +710,9 @@ function updateIndividualSelectSort() {
         loadedOpponents.sort(sortTestingOpponents);
     }
 
+    /* Finally, sort favorited opponents before everyone else. */
+    loadedOpponents.sort(sortFavoriteOpponents);
+
     individualSelectSeparatorIndices = [];
     var cutFn
     /* Separate (normally-visible) Testing from other types if they come before others in Testing view, while still respecting event partitioning if set */
@@ -724,13 +727,29 @@ function updateIndividualSelectSort() {
         : sortingMode == "featured"        ? function (opp) { return opp.event_partition; }
         : null;
 
+    var favoritedOpponents = loadedOpponents.filter(function (opp) {
+        return opp.favorite;
+    });
+
+    if (favoritedOpponents.length > 0) {
+        /* Ignore regular partitioning for favorited opponents. */
+        favoritedOpponents.forEach(function (opp) {
+            $(opp.selectionCard.mainElem).appendTo($indivSelectionCardContainer);
+        });
+
+        $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
+        individualSelectSeparatorIndices.push(favoritedOpponents.length);
+    }
+
     var currentPartition = undefined;
-    loadedOpponents.forEach(function (opp, index) {
+    loadedOpponents.filter(function (opp) {
+        return !opp.favorite;
+    }).forEach(function (opp, index) {
         if (cutFn !== null) {
             var newPartition = cutFn(opp);
             if (currentPartition !== undefined && newPartition != currentPartition) {
                 $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
-                individualSelectSeparatorIndices.push(index);
+                individualSelectSeparatorIndices.push(favoritedOpponents.length + index);
             }
             currentPartition = newPartition;
         }
@@ -815,17 +834,17 @@ function showIndividualSelectionScreen() {
      * to the indiv. select screen, since the filters cannot actually change
      * unless the user is already on said screen.
      * 
-     * We also don't need to update sorting, since any change to the sort mode
-     * (anywhere) automatically updates the display order.
-     * The exceptions are the targeted sort mode and the testing roster,
-     * which require sorting after the selected characters change.
+     * We do, however, need to make sure we're actually using the saved sorting
+     * mode for each roster.
      * 
-     * The visibility of characters might change, however, depending on the
+     * The visibility of characters might change as well, depending on the
      * view type and what characters have already been selected.
      */
-    if (sortingMode === "target" || individualSelectTesting) {
-        updateIndividualSelectSort();
-    }
+
+    setSortingMode(
+        save.getSavedSortMode(individualSelectTesting) ||
+        (individualSelectTesting ? "-lastUpdated" : "featured")
+    );
 
     updateIndividualSelectVisibility(true);
 
@@ -851,13 +870,13 @@ function showIndividualSelectionScreen() {
 function toggleIndividualSelectView() {
     individualSelectTesting = !individualSelectTesting;
 
-    /* Switch to the default sort mode for the selected view. */
-    if (individualSelectTesting) {
-        setSortingMode("-lastUpdated");
-    } else {
-        setSortingMode("featured");
-    }
-
+    /* Switch to the saved sort mode for the selected view, or
+     * to a default mode if not set.
+     */
+    setSortingMode(
+        save.getSavedSortMode(individualSelectTesting) ||
+        (individualSelectTesting ? "-lastUpdated" : "featured")
+    );
     updateSelectionVisuals();
 
     $("#select-group-testing-button").text(
@@ -1703,7 +1722,18 @@ function sortTestingOpponents(opp1, opp2) {
     return scores[1] - scores[0];
 }
 
+/* Sorts favorited characters before non-favorites. */
+function sortFavoriteOpponents(opp1, opp2) {
+    return opp2.favorite - opp1.favorite;
+}
+
 function setSortingMode(mode) {
+    var modeOption = $sortingOptionsItems.filter(function() { return $(this).data('value') == mode; });
+    if (modeOption.length === 0) {
+        /* sorting mode does not have a corresponding dropdown option, revert to default */
+        mode = individualSelectTesting ? "-lastUpdated" : "featured";
+    }
+
     sortingMode = mode;
     // change the dropdown text to the selected option
     $("#sort-dropdown-selection").html($sortingOptionsItems.filter(function() { return $(this).data('value') == mode; }).html()); 
@@ -1712,7 +1742,9 @@ function setSortingMode(mode) {
 
 /** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */
 $sortingOptionsItems.on("click", function(e) {
-    setSortingMode($(this).data('value'));
+    var mode = $(this).data('value');
+    save.setSavedSortMode(individualSelectTesting, mode);
+    setSortingMode(mode);
 });
 
 /************************************************************
