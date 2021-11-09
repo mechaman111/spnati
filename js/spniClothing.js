@@ -133,10 +133,6 @@ PlayerClothing.prototype.constructor = PlayerClothing;
  * @returns {Boolean}
  */
 PlayerClothing.prototype.isAvailable = function () {
-    if (this.applicable_genders !== "all" && humanPlayer.gender !== this.applicable_genders) {
-        return false;
-    }
-
     return !this.collectible || this.collectible.isUnlocked();
 }
 
@@ -144,7 +140,7 @@ PlayerClothing.prototype.isAvailable = function () {
  * Create a basic HTML <input> element for this clothing.
  * @returns {HTMLInputElement}
  */
-PlayerClothing.prototype.createSelectionElement = function () {
+PlayerClothing.prototype.createIconElement = function (wrapper_tag) {
     var title = this.name.initCap();
     if (this.collectible && this.collectible.player) {
         title += " (from " + this.collectible.player.metaLabel + ")";
@@ -155,9 +151,9 @@ PlayerClothing.prototype.createSelectionElement = function () {
     img.setAttribute("alt", title);
     img.className = "custom-clothing-img";
 
-    var elem = document.createElement("button");
+    var elem = document.createElement(wrapper_tag);
     elem.setAttribute("title", title);
-    elem.className = "bordered player-clothing-select";
+    elem.className = "bordered player-clothing-icon";
     elem.appendChild(img);
 
     return elem;
@@ -443,7 +439,7 @@ function prepareToStripPlayer (player) {
  */
  function StripClothingSelectionIcon (clothing) {
     this.clothing = clothing;
-    this.elem = clothing.createSelectionElement();
+    this.elem = clothing.createIconElement("button");
     this.selected = false;
 
     $(this.elem).on("click", this.select.bind(this)).addClass("player-strip-selector");

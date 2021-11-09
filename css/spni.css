@@ -1483,7 +1483,7 @@ ul.dropdown-menu>li {
 .title-controls-col {
     display: flex;
     flex-direction: column;
-    row-gap: 0.5rem;
+    row-gap: 0.25rem;
 }
 
 .bg-grey {
@@ -1529,7 +1529,7 @@ ul.dropdown-menu>li {
 }
 
 #title-main-settings-container {
-    height: 20rem;
+    height: 19rem;
     display: flex;
 }
 
@@ -1562,7 +1562,7 @@ ul.dropdown-menu>li {
 
 #title-stamina-block {
     width: 100%;
-    margin: 0.5rem auto 0;
+    margin: 0.25rem auto 0;
     height: 3rem;
     align-items: center;
 }
@@ -1595,10 +1595,17 @@ ul.dropdown-menu>li {
 }
 
 #selected-clothing-list {
-    flex: 1;
     width: 100%;
-    display: flex;
     margin: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+#selected-clothing-list .player-clothing-icon {
+    width: 5rem;
+    height: 5rem;
+    background: white;
 }
 
 .title-size-block {
@@ -1607,6 +1614,7 @@ ul.dropdown-menu>li {
 
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
     row-gap: 0.25rem;
 
     border-top-left-radius: 0;
@@ -1628,10 +1636,8 @@ ul.dropdown-menu>li {
     display: none;
 }
 
-.title-size-block {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+.small .title-small-button, .medium .title-medium-button, .large .title-large-button {
+    opacity: 1
 }
 
 #title-gender-btns {
@@ -1649,6 +1655,14 @@ ul.dropdown-menu>li {
 
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+
+.male .male-gender-button, .female .female-gender-button {
+    opacity: 1;
+}
+
+.male #title-female-size-block, .female #title-male-size-block {
+    display: none;
 }
 
 /* Wardrobe controls: */
@@ -1693,27 +1707,27 @@ ul.dropdown-menu>li {
     object-fit: contain;
 }
 
-#title-clothing-container .player-clothing-select {
-    width: 7rem;
-    height: 7rem;
+#title-clothing-container .player-clothing-icon {
+    width: 5rem;
+    height: 5rem;
     opacity: 0.6;
-    background: repeating-linear-gradient(-45deg, #333 0px, #333 5px, #888 6px, #888 11px, #333 12px);
+    background: repeating-linear-gradient( -45deg, #333 0px, #333 5px, #888 6px, #888 11px, #333 12px);
 }
 
-#title-clothing-container .player-clothing-select.available {
+#title-clothing-container .player-clothing-icon.available {
     opacity: 0.6;
     background: white;
 }
 
-#title-clothing-container .player-clothing-select.selected {
+#title-clothing-container .player-clothing-icon.selected {
     opacity: 1;
 }
 
-#title-clothing-container .player-clothing-select.available:hover {
+#title-clothing-container .player-clothing-icon.available:hover {
     opacity: 0.8;
 }
 
-#title-clothing-container .player-clothing-select.selected:hover {
+#title-clothing-container .player-clothing-icon.selected:hover {
     opacity: 1;
 }
 

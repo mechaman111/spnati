@@ -592,7 +592,7 @@ function finishStartupLoading () {
  */
 function TitleClothingSelectionIcon (clothing) {
     this.clothing = clothing;
-    this.elem = clothing.createSelectionElement();
+    this.elem = clothing.createIconElement("button");
 
     $(this.elem).on("click", this.onClick.bind(this)).addClass("title-content-button");
 
@@ -618,19 +618,11 @@ function TitleClothingSelectionIcon (clothing) {
 }
 
 TitleClothingSelectionIcon.prototype.visible = function () {
-    if (this.clothing.isAvailable()) {
-        return true;
-    }
-    
-    if (this.clothing.applicable_genders !== "all" && humanPlayer.gender !== this.clothing.applicable_genders) {
-        return false;
-    }
-
     if (this.clothing.collectible) {
         return !this.clothing.collectible.hidden;
     }
 
-    return false;
+    return true;
 }
 
 TitleClothingSelectionIcon.prototype.tooltip = function () {
@@ -666,6 +658,7 @@ TitleClothingSelectionIcon.prototype.onClick = function () {
     if (this.clothing.isAvailable()) {
         this.clothing.setSelected(!this.clothing.isSelected());
         this.update();
+        updateSelectedClothingView();
     }
 }
 
@@ -733,53 +726,63 @@ function createClothingSeparator () {
  * Updates the gender dependent controls on the title screen.
  ************************************************************/
 function updateTitleScreen () {
-    $titleContainer.removeClass('male female').addClass(humanPlayer.gender);
+    $('#title-gender-size-container').removeClass('male female').addClass(humanPlayer.gender)
     $playerTagsModal.removeClass('male female').addClass(humanPlayer.gender);
 
-    var availableSelectors = [];
-    var defaultSelectors = [];
-    var lockedSelectors = [];
+    var groups = [[], [], [], [], [], []];
+
+    titleClothingSelectors.sort(function (a, b) {
+        var cmpA = (a.clothing.applicable_genders === humanPlayer.gender);
+        var cmpB = (b.clothing.applicable_genders === humanPlayer.gender);
+        return cmpB - cmpA;
+    }).sort(function (a, b) {
+        return (a.clothing.position < b.clothing.position);
+    }).sort(function (a, b) {
+        return b.clothing.isAvailable() - a.clothing.isAvailable();
+    });
 
     titleClothingSelectors.forEach(function (selector) {
-        var clothing = selector.clothing;
         $(selector.elem).detach();
+        if (!selector.visible()) return;
 
-        if (!selector.visible()) {
-            return;
+        var groupIdx = 0;
+        switch (selector.clothing.type) {
+        case "important":
+            groupIdx = (selector.clothing.position === 'upper') ? 0 : 1;
+            break;
+        case "major": 
+            groupIdx = (selector.clothing.position === 'upper') ? 2 : 3;
+            break;
+        case "minor":
+            groupIdx = 4; break;
+        case "extra":
+        default:
+            groupIdx = 5; break;
         }
 
-        if (selector.clothing.collectible) {
-            if (selector.clothing.isAvailable()) {
-                availableSelectors.push(selector);
-            } else {
-                lockedSelectors.push(selector);
-            }
-        } else {
-            defaultSelectors.push(selector);
-        }
-
+        groups[groupIdx].push(selector);
         selector.update();
     });
 
     $("#title-clothing-container").empty();
-
-    if (availableSelectors.length > 0) {
-        $("#title-clothing-container").append(availableSelectors.map(function (s) {
+    groups.forEach(function (group, idx, arr) {
+        $("#title-clothing-container").append(group.map(function (s) {
             return s.elem;
-        })).append(createClothingSeparator());
-    }
+        }));
 
-    $("#title-clothing-container").append(defaultSelectors.map(function (s) {
-        return s.elem;
+        if (idx !== (arr.length - 1)) {
+            $("#title-clothing-container").append(createClothingSeparator());
+        }
+    });
+
+    updateSelectedClothingView();
+}
+
+function updateSelectedClothingView () {
+    var selected = save.selectedClothing();
+    $("#selected-clothing-list").empty().append(selected.map(function (clothing) {
+        return clothing.createIconElement("div");
     }));
-
-    if (lockedSelectors.length > 0) {
-        $("#title-clothing-container").append(createClothingSeparator()).append(
-            lockedSelectors.map(function (s) {
-                return s.elem;
-            })
-        );
-    }
 }
 
 /************************************************************
@@ -788,7 +791,6 @@ function updateTitleScreen () {
  ************************************************************/
 function changePlayerSize (size) {
     humanPlayer.size = size;
-
     $sizeBlocks.removeClass(eSize.SMALL + ' ' + eSize.MEDIUM + ' ' + eSize.LARGE).addClass(size).attr('data-size', size);
 }
 
