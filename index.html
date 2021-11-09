@@ -22,12 +22,12 @@
 
     <!-- Warning / Title Screen -->
     <div id="title-screen" class="screen-container" hidden>
-        <div class="screen">
+        <div class="screen wide">
 
             <!-- Title Candy -->
             <img id="left-title-candy" class="title-candy" src="img/blank.png" alt="" hidden />
             <img id="right-title-candy" class="title-candy" src="img/blank.png" alt="" hidden />
-
+            
             <!-- Content -->
             <div id="warning-container">
 
@@ -35,16 +35,12 @@
                     <p>This game contains material that is only suitable for adults.<br /><b style="color:#DD3333">If
                             you are under the age of 18, please leave now.</b></p>
 
-                    <br>
-
                     <p><b style="color:#DD3333">Strip Poker Night at the Inventory</b> is a free, open source, and
                         community run project. All characters represented within are 18+ and the property of their
                         original owners.</p>
 
                     <p>The latest version of the game can be played at
                         <br><a href="https://spnati.net/"><b>spnati.net</b></a></p>
-
-                    <br>
 
                     <p>Make sure to check out our list of <a href="#" onclick="showHelpModal()">Frequently-Asked
                             Questions</a>!</p>
@@ -73,138 +69,159 @@
 
             </div>
 
-            <div id="main-title-container" class="male" style="display: none">
-
-                <!-- Player Name -->
-                <div id="title-name-block">
-                    <div class="title-label">Who are you?</div>
-                    <input type="text" class='bordered' id='player-name-field' />
-                </div>
-
-                <div class="title-gender-size-container">
-                    <!-- Player Gender -->
-                    <input type='image' id='male-gender-button'
-                        class='bordered title-content-button title-gender-button' src='img/male.svg' alt="Male"
-                        onclick='changePlayerGender("male")'>
-                    <input type='image' id='female-gender-button'
-                        class='bordered title-content-button title-gender-button' src='img/female.svg' alt="Female"
-                        onclick='changePlayerGender("female")'>
-
-                    <!-- Player Male Size -->
-                    <div id='male-size-container' class='title-size-block medium'>
-                        <input type='image' id="small-junk-button"
-                            class='bordered title-small-button title-content-button title-size-button'
-                            src='img/male_small.png' alt="Small penis" onclick='changePlayerSize("small")'>
-                        <input type='image' id="medium-junk-button"
-                            class='bordered title-medium-button title-content-button title-size-button'
-                            src='img/male_medium.png' alt="Medium penis" onclick='changePlayerSize("medium")'>
-                        <input type='image' id="large-junk-button"
-                            class='bordered title-large-button title-content-button title-size-button'
-                            src='img/male_large.png' alt="Large penis" onclick='changePlayerSize("large")'>
+            <div id="main-title-container" style="display: none">
+                <div id="title-main-controls" class="title-controls-col">
+                    <!-- Player Name -->
+                    <div id="title-name-block" class="title-control-col-item">
+                        <div class="title-label">Who are you?</div>
+                        <input type="text" class='bordered' id='player-name-field' />
                     </div>
 
-                    <!-- Player Female Size -->
-                    <div id='female-size-container' class='title-size-block medium'>
-                        <input type='image' id="small-boobs-button"
-                            class='bordered title-small-button title-content-button title-size-button'
-                            src='img/female_small.png' alt="Small breasts" onclick='changePlayerSize("small")'>
-                        <input type='image' id="medium-boobs-button"
-                            class='bordered title-medium-button title-content-button title-size-button'
-                            src='img/female_medium.png' alt="Medium breasts" onclick='changePlayerSize("medium")'>
-                        <input type='image' id="large-boobs-button"
-                            class='bordered title-large-button title-content-button title-size-button'
-                            src='img/female_large.png' alt="Large breasts" onclick='changePlayerSize("large")'>
+                    <div id="title-settings-container" class="title-control-col-item">
+                        <div id="title-main-settings-container">
+                            <div id="title-tags-block" class="bordered bg-grey">
+                                <div id="title-tags-list"></div>
+                                <button id="title-tags-edit-btn" class='bordered smooth-button red' onclick="showPlayerTagsModal()">Edit</button>
+                            </div>
+                            <div id="title-gender-size-container" class="male">
+                                <!-- Player Male Size -->
+                                <div id="title-male-size-block" class="bordered title-size-block bg-grey">
+                                    <input type='image' id="small-junk-button"
+                                        class='bordered title-small-button title-content-button title-size-button'
+                                        src='img/male_small.png' alt="Small penis" onclick='changePlayerSize("small")'>
+                                    <input type='image' id="medium-junk-button"
+                                        class='bordered title-medium-button title-content-button title-size-button'
+                                        src='img/male_medium.png' alt="Medium penis" onclick='changePlayerSize("medium")'>
+                                    <input type='image' id="large-junk-button"
+                                        class='bordered title-large-button title-content-button title-size-button'
+                                        src='img/male_large.png' alt="Large penis" onclick='changePlayerSize("large")'>
+                                </div>
+    
+                                <!-- Player Female Size -->
+                                <div id="title-female-size-block" class="bordered title-size-block bg-grey">
+                                    <input type='image' id="small-boobs-button"
+                                        class='bordered title-small-button title-content-button title-size-button'
+                                        src='img/female_small.png' alt="Small breasts" onclick='changePlayerSize("small")'>
+                                    <input type='image' id="medium-boobs-button"
+                                        class='bordered title-medium-button title-content-button title-size-button'
+                                        src='img/female_medium.png' alt="Medium breasts" onclick='changePlayerSize("medium")'>
+                                    <input type='image' id="large-boobs-button"
+                                        class='bordered title-large-button title-content-button title-size-button'
+                                        src='img/female_large.png' alt="Large breasts" onclick='changePlayerSize("large")'>
+                                </div>
+
+                                <div id="title-gender-btns">
+                                    <!-- Player Gender -->
+                                    <input type='image' id='male-gender-button'
+                                        class='bordered title-content-button title-gender-button' src='img/male.svg' alt="Male"
+                                        onclick='changePlayerGender("male")'>
+                                    <input type='image' id='female-gender-button'
+                                        class='bordered title-content-button title-gender-button' src='img/female.svg' alt="Female"
+                                        onclick='changePlayerGender("female")'>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="title-stamina-block" class="bordered bg-grey">
+                            <span id="title-stamina-label">How long do you... last?</span>
+                            <input type="number" min="1" id="title-stamina-box">&nbsp;Clicks
+                        </div>
+                    </div>
+
+                    <div id="selected-clothing-block" class="title-control-col-item">
+                        <div id="selected-clothing-label" class="bordered bg-white">Selected Clothing</div>
+                        <div id="selected-clothing-list" class=""></div>
                     </div>
                 </div>
 
-                <!-- Player Wardrobe -->
-                <div id='title-wardrobe-block'>
-                    <div class='title-label'>What are you wearing?</div>
-                    <div id='title-warning-label'>Select 0 to 8 articles. Wear whatever you want.</div>
-                    <div id='title-clothing-container'></div>
+                <div id="title-clothing-desc-controls" class="title-controls-cols">
+                    <div id="title-clothing-desc-block" class="bordered title-control-col-item"></div>
+                    <button id="title-gallery-button"
+                        class='bordered smooth-button red centered-icon-button title-control-col-item'
+                        onclick="loadGalleryScreen()">
+                        <img class="centered-icon-image" src="img/gallery.svg" alt="Gallery" />
+                    </button>
+                </div>
+
+                <div id="title-wardrobe-controls" class="title-controls-cols">
+                    <div class='title-label title-control-col-item'>What are you wearing?</div>
+                    <div id='title-warning-label' class="title-control-col-item">Select 0 to 8 articles. Wear whatever you want.</div>
+                    <div id="title-clothing-container" class="title-control-col-item"></div>
                 </div>
 
                 <!-- Start Button -->
-                <div class='title-menu-buttons-container'>
-                    <div class='bordered title-gallery-edge'>
-                        <button
-                            class='bordered smooth-button red centered-icon-button title-menu-button title-gallery-button'
-                            onclick="loadGalleryScreen()">
-                            <img class="centered-icon-image" src="img/gallery.svg" alt="Gallery" />
+                <div class='bordered title-start-edge'>
+                    <button id='title-start-button'
+                        class='bordered smooth-button red centered-icon-button title-start-button'
+                        onclick="validateTitleScreen()">
+                        <img class="centered-icon-image title-entrance-image" src="img/enter.png"
+                            alt="Enter the Inventory" />
+                    </button>
+                </div>
+            </div>
+
+            <div class="title-topbar-container">
+                <!-- Banner -->
+                <div class="bordered title-banner-container">
+                    <div class="bordered title-banner-area">
+                        <img class="title-banner" src="img/title.png" alt="Strip Poker Night at the Inventory">
+                    </div>
+                </div>
+
+                <div class="banner-flair-row">
+                    <div class="banner-flair-section banner-flair-left">
+                        <!-- Banner Flair -->
+                        <button class="title-settings-button bordered smooth-button red banner-flair" onclick="showGameSettingsModal()">
+                            <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+                        </button>
+                        <a class="bordered reddit-button smooth-button orange banner-flair" target="_blank" href="https://www.reddit.com/r/spnati/">
+                            <img class="reddit-logo" src="img/reddit.png" alt="reddit" />
+                        </a>
+                        <a class="bordered twitter-button smooth-button blue banner-flair" target="_blank" href="https://twitter.com/spnati_game">
+                            <img class="twitter-logo" src="img/twitter.png" alt="twitter" />
+                        </a>
+                        <button class="bordered smooth-button red banner-flair title-bug-report-button"
+                            onclick="showBugReportModal()">
+                            <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                        </button>
+                        <button class="title-load-button bordered smooth-button red banner-flair"
+                            onclick="showImportModal()">
+                            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                        </button>
+                        <button class="title-extras-button bordered smooth-button red banner-flair"
+                            onclick="showExtrasModal()" hidden>
+                            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                        </button>
+                        <button id="title-fullscreen-button" class="title-fullscreen-button bordered smooth-button red banner-flair"
+                        onclick="toggleFullscreen()">
+                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                        </button>
+                        <button class="title-resort-button bordered smooth-button red banner-flair"
+                        onclick="showResortModal()" style="display:none">
+                            Re-Sort Poll
                         </button>
                     </div>
-                    <div class='bordered title-start-edge'>
-                        <button id='title-start-button'
-                            class='bordered smooth-button red centered-icon-button title-start-button'
-                            onclick="validateTitleScreen()">
-                            <img class="centered-icon-image title-entrance-image" src="img/enter.png"
-                                alt="Enter the Inventory" />
+        
+                    <div class="banner-flair-section dropdown title-announcement-dropdown banner-flair-center" style="display: none;">
+                        <button id="announcement-dropdown" class="bordered btn btn-sm dropdown-toggle wide-dropdown red smooth-button"
+                            type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span id="announcement-dropdown-selection">Announcements</span>
+                            <span class="caret"></span>
                         </button>
+                        <ul class="dropdown-menu announcement-dropdown-options"></ul>
                     </div>
-                    <div class='bordered title-tags-edge'>
-                        <button
-                            class='bordered smooth-button red centered-icon-button title-menu-button title-tags-button'
-                            onclick="showPlayerTagsModal()">
-                            <span class="glyphicon glyphicon-tags centered-icon-glyphicon" aria-hidden="true"></span>
+
+                    <div class="banner-flair-section banner-flair-right">
+                        <button id="title-version-button" class="bordered smooth-button red banner-flair version-button">
+                            <span class="substitute-version">Unknown Version</span><br>
+                            <span class="substitute-version-time"></span>
+                        </button>
+                        <button class="title-help-button bordered smooth-button red banner-flair" onclick="showHelpModal()">
+                            Help &amp; FAQ
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Banner Flair -->
-            <button class="title-settings-button bordered smooth-button red banner-flair" onclick="showGameSettingsModal()">
-                <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-            </button>
-            <button class="bordered smooth-button red banner-flair title-bug-report-button"
-                onclick="showBugReportModal()">
-                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-            </button>
-            <a class="bordered reddit-button smooth-button orange banner-flair" target="_blank" href="https://www.reddit.com/r/spnati/">
-                <img class="reddit-logo" src="img/reddit.png" alt="reddit" />
-            </a>
-            <a class="bordered twitter-button smooth-button blue banner-flair" target="_blank" href="https://twitter.com/spnati_game">
-                <img class="twitter-logo" src="img/twitter.png" alt="twitter" />
-            </a>
-            <button class="title-load-button bordered smooth-button red banner-flair"
-                onclick="showImportModal()">
-                <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
-            </button>
-            <button class="title-extras-button bordered smooth-button red banner-flair"
-                onclick="showExtrasModal()" hidden>
-                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-            </button>
-            <button id="title-fullscreen-button" class="title-fullscreen-button bordered smooth-button red banner-flair"
-		    onclick="toggleFullscreen()">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-            </button>
-            <button class="title-resort-button bordered smooth-button red banner-flair"
-		    onclick="showResortModal()" style="display:none">
-                Re-Sort Poll
-            </button>
-
-            <div class="dropdown title-announcement-dropdown" style="display: none;">
-                <button id="announcement-dropdown" class="bordered btn btn-sm dropdown-toggle wide-dropdown red smooth-button"
-                    type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <span id="announcement-dropdown-selection">Announcements</span>
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu announcement-dropdown-options"></ul>
-            </div>
-
-            <button id="title-version-button" class="bordered smooth-button red banner-flair version-button">
-                <span class="substitute-version">Unknown Version</span><br>
-                <span class="substitute-version-time"></span>
-            </button>
-            <button class="title-help-button bordered smooth-button red banner-flair" onclick="showHelpModal()">
-                Help &amp; FAQ
-            </button>
-
-            <!-- Banner -->
-            <div class="title-banner-container">
-                <div class="bordered title-banner-area">
-                    <img class="bordered title-banner" src="img/title.png" alt="Strip Poker Night at the Inventory">
-                </div>
-            </div>
 
         </div>
     </div>
@@ -530,8 +547,8 @@
         </div>
     </div>
 
-    <div id="individual-select-screen" class="wide-screen-container" hidden>
-        <div class="screen">
+    <div id="individual-select-screen" class="screen-container" hidden>
+        <div class="screen wide">
             <div class="selection-cards-container">
                 <!--
     (example opponent card element)
