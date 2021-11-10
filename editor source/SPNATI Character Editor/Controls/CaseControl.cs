@@ -433,21 +433,21 @@ namespace SPNATI_Character_Editor.Controls
 			table.AddSpeedButton("Table", "# Players Finished", (data) => { return AddStatusFilter(data, "finished"); });
 			table.AddSpeedButton("Table", "Human Name", (data) => { return AddVariableTest("~player~", data); });
 
-			//Also Playing
-			table.AddSpeedButton("Also Playing", "Also Playing", (data) => { return AddFilter("other", data); });
-			table.AddSpeedButton("Also Playing", "Also Playing Tag", (data) => { return AddFilter("other", data, "FilterTag"); });
-			table.AddSpeedButton("Also Playing", "Also Playing Stage", (data) => { return AddFilter("other", data, "Stage"); });
-			table.AddSpeedButton("Also Playing", "Also Playing Said Marker", (data) => { return AddFilter("other", data, "SaidMarker"); });
-			table.AddSpeedButton("Also Playing", "Also Playing Not Said Marker", (data) => { return AddFilter("other", data, "NotSaidMarker"); });
-			table.AddSpeedButton("Also Playing", "Also Playing Saying Marker", (data) => { return AddFilter("other", data, "SayingMarker"); });
-			table.AddSpeedButton("Also Playing", "Also Playing Saying Text", (data) => { return AddFilter("other", data, "Saying"); });
-			table.AddSpeedButton("Also Playing", "Also Playing Time in Stage", (data) => { return AddFilter("other", data, "TimeInStage"); });
-			table.AddSpeedButton("Also Playing", "Also Playing Consecutive Losses", (data) => { return AddFilter("other", data, "ConsecutiveLosses"); });
-			table.AddSpeedButton("Also Playing", "Also Playing Hand", (data) => { return AddFilter("other", data, "Hand"); });
-			table.AddSpeedButton("Also Playing", "Also Playing Status", (data) => { return AddFilter("other", data, "Status"); });
-			table.AddSpeedButton("Also Playing", "Also Playing Layers", (data) => { return AddFilter("other", data, "Layers"); });
-			table.AddSpeedButton("Also Playing", "Also Playing Starting Layers", (data) => { return AddFilter("other", data, "StartingLayers"); });
-			table.AddSpeedButton("Also Playing", "Also Playing Pose", (data) => { return AddFilter("other", data, "Pose"); });
+			//Opponent
+			table.AddSpeedButton("Opponent", "Opponent", (data) => { return AddFilter("opp", data); });
+			table.AddSpeedButton("Opponent", "Opponent Tag", (data) => { return AddFilter("opp", data, "FilterTag"); });
+			table.AddSpeedButton("Opponent", "Opponent Stage", (data) => { return AddFilter("opp", data, "Stage"); });
+			table.AddSpeedButton("Opponent", "Opponent Said Marker", (data) => { return AddFilter("opp", data, "SaidMarker"); });
+			table.AddSpeedButton("Opponent", "Opponent Not Said Marker", (data) => { return AddFilter("opp", data, "NotSaidMarker"); });
+			table.AddSpeedButton("Opponent", "Opponent Saying Marker", (data) => { return AddFilter("opp", data, "SayingMarker"); });
+			table.AddSpeedButton("Opponent", "Opponent Saying Text", (data) => { return AddFilter("opp", data, "Saying"); });
+			table.AddSpeedButton("Opponent", "Opponent Time in Stage", (data) => { return AddFilter("opp", data, "TimeInStage"); });
+			table.AddSpeedButton("Opponent", "Opponent Consecutive Losses", (data) => { return AddFilter("opp", data, "ConsecutiveLosses"); });
+			table.AddSpeedButton("Opponent", "Opponent Hand", (data) => { return AddFilter("opp", data, "Hand"); });
+			table.AddSpeedButton("Opponent", "Opponent Status", (data) => { return AddFilter("opp", data, "Status"); });
+			table.AddSpeedButton("Opponent", "Opponent Layers", (data) => { return AddFilter("opp", data, "Layers"); });
+			table.AddSpeedButton("Opponent", "Opponent Starting Layers", (data) => { return AddFilter("opp", data, "StartingLayers"); });
+			table.AddSpeedButton("Opponent", "Opponent Pose", (data) => { return AddFilter("opp", data, "Pose"); });
 
 			//Game-wide
 			table.AddSpeedButton("Game", "Background", (data) => { return AddVariableTest("~background~", data); });
