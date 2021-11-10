@@ -943,6 +943,12 @@ function showPlayerTagsModal () {
                     formElements[i].value = '';
                 }
             }
+
+            playerTagSelections = {};
+            updatePlayerTagsView();
+            save.savePlayer();
+
+            $playerTagsModal.modal('hide');
         });
     }
 
@@ -959,6 +965,9 @@ function showPlayerTagsModal () {
                 }
             }
         }
+
+        updatePlayerTagsView();
+        save.savePlayer();
     });
     $playerTagsModal.modal('show');
 }

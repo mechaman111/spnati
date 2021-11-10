@@ -74,18 +74,23 @@
                     <!-- Player Name -->
                     <div id="title-name-block" class="title-control-col-item">
                         <div class="title-label">Who are you?</div>
-                        <input type="text" class='bordered' id='player-name-field' />
+                        <input type="text" class='bordered' id='player-name-field' placeholder="Name..." />
                     </div>
 
                     <div id="title-settings-container" class="title-control-col-item">
                         <div id="title-main-settings-container">
-                            <div id="title-tags-block" class="bordered bg-grey">
-                                <div id="title-tags-list"></div>
-                                <button id="title-tags-edit-btn" class='bordered smooth-button red' onclick="showPlayerTagsModal()">Edit</button>
+                            <div id="title-tags-block" class="bordered bg-white">
+                                <table id="title-tags-list" class=""></table>
+                                <div id="title-tags-empty">
+                                    You don't have any player tags set. <br>
+                                    <br>
+                                    Add some tags describing yourself for a more customized experience!
+                                </div>
+                                <button id="title-tags-edit-btn" class='bordered smooth-button blue' onclick="showPlayerTagsModal()">Edit Tags...</button>
                             </div>
                             <div id="title-gender-size-container">
                                 <!-- Player Male Size -->
-                                <div id="title-male-size-block" class="bordered title-size-block bg-grey">
+                                <div id="title-male-size-block" class="bordered title-size-block bg-white">
                                     <input type='image' id="small-junk-button"
                                         class='bordered title-small-button title-content-button title-size-button'
                                         src='img/male_small.png' alt="Small penis" onclick='changePlayerSize("small")'>
@@ -98,7 +103,7 @@
                                 </div>
     
                                 <!-- Player Female Size -->
-                                <div id="title-female-size-block" class="bordered title-size-block bg-grey">
+                                <div id="title-female-size-block" class="bordered title-size-block bg-white">
                                     <input type='image' id="small-boobs-button"
                                         class='bordered title-small-button title-content-button title-size-button'
                                         src='img/female_small.png' alt="Small breasts" onclick='changePlayerSize("small")'>
@@ -121,7 +126,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="title-stamina-block" class="bordered bg-grey">
+                        <div id="title-stamina-block" class="bordered bg-white">
                             <span id="title-stamina-label">How long do you... last?</span>
                             <input type="number" min="1" id="title-stamina-box">&nbsp;Clicks
                         </div>
@@ -134,11 +139,19 @@
                 </div>
 
                 <div id="title-clothing-desc-controls" class="title-controls-cols">
-                    <div id="title-clothing-desc-block" class="bordered title-control-col-item"></div>
+                    <div id="title-clothing-desc-block" class="bordered title-control-col-item bg-white">
+                        <div class="bordered player-clothing-icon"><img class="custom-clothing-img"></div>
+                        <div id="title-clothing-title" class="title-clothing-desc-item"></div>
+                        <div id="title-clothing-subtitle" class="title-clothing-desc-item"></div>
+                        <div id="title-clothing-source" class="title-clothing-desc-item"></div>
+                        <div id="title-clothing-unlock-label" class="title-clothing-desc-item">To Unlock:</div>
+                        <div id="title-clothing-description" class="title-clothing-desc-item"></div>
+                    </div>
                     <button id="title-gallery-button"
                         class='bordered smooth-button red centered-icon-button title-control-col-item'
                         onclick="loadGalleryScreen()">
                         <img class="centered-icon-image" src="img/gallery.svg" alt="Gallery" />
+                        <span class="gallery-label">Gallery</span>
                     </button>
                 </div>
 
