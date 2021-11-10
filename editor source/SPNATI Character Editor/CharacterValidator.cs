@@ -9,6 +9,8 @@ namespace SPNATI_Character_Editor
 {
 	public static class CharacterValidator
 	{
+		static String[] falsePlurals = { "pants", "shorts", "panties", "boxers", "tights", "leggings", "spats", "glasses", "sunglasses", "shades" };
+
 		/// <summary>
 		/// Validates the character's dialogue and returns a list of warnings (bad images, targets, etc.)
 		/// </summary>
@@ -513,8 +515,6 @@ namespace SPNATI_Character_Editor
 					warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{c.Name}\" uses an uncountable noun with no plural form, which makes incoming generic dialogue awkward (ex. \"I've seen many {c.Name} in my day\"). Consider renaming this layer (ex. \"armor\" to \"breastplate\")."));
 				}
 
-				String[] falsePlurals = { "pants", "shorts", "panties", "boxers", "tights", "leggings", "spats", "glasses", "sunglasses", "shades" };
-
 				if (!c.Plural && falsePlurals.Contains(c.Name))
                 {
 					warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{c.Name}\" should be set to plural. Even though it's only one item, it's still a grammatically plural noun (ex. \"Those are some nice {c.Name}\")."));
@@ -572,7 +572,7 @@ namespace SPNATI_Character_Editor
 					}
 					else
 					{
-						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Character has no clothing of type: major, position: upper. If an item covers underwear over both the chest and crotch{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")}, it should be given a position: both"));
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Character has no clothing of type: major, position: lower. If an item covers underwear over both the chest and crotch{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")}, it should be given a position: both"));
 					}
 				}
 			}
@@ -1036,6 +1036,11 @@ namespace SPNATI_Character_Editor
 				{
 					warnings.Add(new ValidationError(ValidationFilterLevel.Collectibles, $"The image \"{collectible.Image}\" for collectible \"{collectible.Id}\" does not exist.", context));
 				}
+			}
+
+			if (collectible.Wearable && !collectible.ClothingIsPlural && falsePlurals.Contains(collectible.ClothingName))
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Collectible \"{collectible.Id}\" has associated clothing, \"{collectible.ClothingName}\", which should be set to plural. Even though it's only one item, it's still a grammatically plural noun (ex. \"Those are some nice {collectible.ClothingName}\")."));
 			}
 		}
 
