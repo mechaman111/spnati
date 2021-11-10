@@ -87,11 +87,10 @@ namespace SPNATI_Character_Editor
 						}
 					}
 
-					// comment this out until it's easy to have multiple of the same condition
-					/*if (stageCase.AlternativeConditions.Count == 1)
+					if (stageCase.AlternativeConditions.Count == 1)
                     {
 						warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Case contains only one OR tab. It would be more readable if you condensed these conditions onto the default tab. {0}", caseLabel), context));
-					}*/
+					}
 
 					foreach (Case alt in stageCase.AlternativeConditions)
 					{

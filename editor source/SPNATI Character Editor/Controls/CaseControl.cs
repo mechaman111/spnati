@@ -535,20 +535,12 @@ namespace SPNATI_Character_Editor.Controls
 		private static SpeedButtonData AddFilter(string role, object data, string subproperty = null, Character character = null)
 		{
 			Case theCase = data as Case;
-			TargetCondition condition = theCase.Conditions.Find(c => c.Role == role && (character == null || c.Character == character.FolderName));
-			if (subproperty == null)
+			TargetCondition condition = new TargetCondition();
+			condition.Role = role;
+			theCase.Conditions.Add(condition);
+			if (character != null)
 			{
-				condition = null; //always create new filters for roles
-			}
-			if (condition == null)
-			{
-				condition = new TargetCondition();
-				condition.Role = role;
-				theCase.Conditions.Add(condition);
-				if (character != null)
-				{
-					condition.Character = character.FolderName;
-				}
+				condition.Character = character.FolderName;
 			}
 			return new SpeedButtonData("Conditions", subproperty) { ListItem = condition };
 		}
