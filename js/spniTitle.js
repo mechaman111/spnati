@@ -478,7 +478,6 @@ var DEFAULT_CLOTHING_OPTIONS = [
     new PlayerClothing('boots', 'shoes', EXTRA_ARTICLE, 'feet', "player/male/boots.png", true, "boots", "male", null),
 
     new PlayerClothing('stockings', 'socks', MINOR_ARTICLE, 'legs', "player/female/stockings.png", true, "stockings", "female", null),
-    new PlayerClothing('socks', 'socks', MINOR_ARTICLE, 'feet', "player/female/socks.png", true, "socksB", "female", null),
     new PlayerClothing('shoes', 'shoes', EXTRA_ARTICLE, 'feet', "player/female/shoes.png", true, "shoesB", "female", null),
 ];
 
@@ -759,8 +758,26 @@ function updateTitleScreen () {
 function updateSelectedClothingView () {
     var selected = orderSelectedClothing();
     $("#selected-clothing-list").empty().append(selected.map(function (clothing) {
-        return clothing.createIconElement("div");
+        var elem = clothing.createIconElement("div");
+        $(elem).on("click", function () {
+            clothing.setSelected(false);
+            updateTitleScreen();
+        });
+        
+        $(elem).on("mouseover", function () {
+            displayClothingDescription(clothing);
+        });
+
+        return elem;
     }));
+
+    if (selected.length > 0) {
+        $("#selected-clothing-empty").hide();
+        $("#selected-clothing-list").show();
+    } else {
+        $("#selected-clothing-empty").show();
+        $("#selected-clothing-list").hide();
+    }
 }
 
 /**
@@ -829,16 +846,16 @@ function displayClothingDescription (clothing) {
 
         $("#title-clothing-title").html(collectible.title);
         
-        var subtitleShown = (!collectible.detailsHidden && !collectible.hidden) || clothing.isAvailable();
-        if (subtitleShown) {
+        if (clothing.isAvailable()) {
             $("#title-clothing-subtitle").html(collectible.subtitle).show();
         } else {
             $("#title-clothing-subtitle").hide();
         }
         if (
             collectible.player && !(
-                collectible.title.indexOf(collectible.player.metaLabel) >= 0 ||
-                (subtitleShown && collectible.subtitle.indexOf(collectible.player.metaLabel) >= 0)
+                (collectible.title.indexOf(collectible.player.metaLabel) >= 0) ||
+                (clothing.isAvailable() && collectible.subtitle.indexOf(collectible.player.metaLabel) >= 0) ||
+                (!clothing.isAvailable() && collectible.unlock_hint.indexOf(collectible.player.metaLabel) >= 0)
             )
         ) {
             $("#title-clothing-source").text(collectible.player.metaLabel).show();
