@@ -432,7 +432,7 @@ namespace SPNATI_Character_Editor
 			//Characters
 			shell.AddToolbarItem("Characters...", OpenCharacterSelect, Keys.None);
 			shell.AddToolbarItem("Costumes...", OpenCostumeSelect, Keys.None);
-			shell.AddToolbarItem("Decks...", OpenDeckSelect, Keys.None);
+			//shell.AddToolbarItem("Decks...", OpenDeckSelect, Keys.None);
 
 			//Validate
 			menu = shell.AddToolbarSubmenu("Validate");
