@@ -50,7 +50,7 @@ namespace SPNATI_Character_Editor.IO
 						{
 							//parse out the relevant class name
 							string selectorText = working.ToString().Trim();
-							Regex regex = new Regex(@"\.dialogue \.(\w+)\[data-character=""\w+""\]");
+							Regex regex = new Regex(@"\.dialogue \.(\w+)\[data-character=""[\w\-\.]+""\]");
 							Match match = regex.Match(selectorText);
 							if (match.Success)
 							{

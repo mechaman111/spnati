@@ -151,34 +151,24 @@ namespace SPNATI_Character_Editor
 						}
 
 						// check for undefined custom styles
-						// commented out due to false positives on Monika/Pot of Greed/etc.
-						/*var temptext = line.Text;
+						var temptext = line.Text;
 
-						while (temptext.Contains("{"))
-                        {
-							temptext = temptext.Substring(temptext.IndexOf("{") + 1);
+						if ((character.Styles == null || !character.Styles.AdvancedMode) && !temptext.Contains("<script>"))
+						{
+							while (temptext.Contains("{"))
+							{
+								temptext = temptext.Substring(temptext.IndexOf("{") + 1);
 
-							var style = temptext.Split('}')[0];
-							if (style == "!reset") continue;
+								var style = temptext.Split('}')[0];
+								if (style == "!reset") continue;
 
-							var customstyles = style.Split(' ');
+								var customstyles = style.Split(' ');
 
-							foreach (var cs in customstyles)
-                            {
-								bool foundStyle = false;
-
-								foreach (StyleRule rule in StyleDatabase.GlobalStyles)
+								foreach (var cs in customstyles)
 								{
-									if (rule.ClassName == cs)
-									{
-										foundStyle = true;
-										break;
-									}
-								}
+									bool foundStyle = false;
 
-								if (!foundStyle && character.Styles != null)
-								{
-									foreach (StyleRule rule in character.Styles.Rules)
+									foreach (StyleRule rule in StyleDatabase.GlobalStyles)
 									{
 										if (rule.ClassName == cs)
 										{
@@ -186,14 +176,26 @@ namespace SPNATI_Character_Editor
 											break;
 										}
 									}
-								}
 
-								if (!foundStyle)
-                                {
-									warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Custom style \"{0}\" is undefined. {1}", cs, caseLabel), context));
+									if (!foundStyle && character.Styles != null)
+									{
+										foreach (StyleRule rule in character.Styles.Rules)
+										{
+											if (rule.ClassName == cs)
+											{
+												foundStyle = true;
+												break;
+											}
+										}
+									}
+
+									if (!foundStyle)
+									{
+										warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Custom style \"{0}\" is undefined. {1}", cs, caseLabel), context));
+									}
 								}
 							}
-                        }*/
+						}
 
 						//check for pointless ifMales
 						if (!string.IsNullOrEmpty(trigger.Gender))
@@ -228,7 +230,7 @@ namespace SPNATI_Character_Editor
 						}
 						if (count != 0)
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, $"Line has mismatched <i> </i> tags: \"{line.Text}\" {caseLabel}", context));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, $"Line has mismatched <i> </i> tags. {caseLabel}", context));
 						}
 
 						//validate collectibles
