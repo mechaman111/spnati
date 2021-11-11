@@ -776,12 +776,14 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
     case 'id':
         return player.id;
     case 'position':
-        if (player.slot === self.slot) return 'self';
-        if (player === humanPlayer) return 'across';
-        return (player.slot < self.slot) ? 'left' : 'right';
+        var other = (!args ? self : findVariablePlayer(args, self, target, bindings));
+        if (player.slot === other.slot) return 'self';
+        if (player === humanPlayer || other === humanPlayer) return 'across';
+        return (player.slot < other.slot) ? 'left' : 'right';
     case 'distance':
-        if (player === humanPlayer) return undefined;
-        return Math.abs(player.slot - self.slot);
+        var other = (!args ? self : findVariablePlayer(args, self, target, bindings));
+        if (player !== other && (player === humanPlayer || other === humanPlayer)) return undefined;
+        return Math.abs(player.slot - other.slot);
     case 'slot':
         return player.slot;
     case 'collectible':
