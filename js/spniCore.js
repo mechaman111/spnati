@@ -580,6 +580,7 @@ function restartGame () {
     updateSelectionVisuals();
     updateAllGameVisuals();
     selectTitleCandy();
+    updateTitleScreen();
 
     forceTableVisibility(true);
 
