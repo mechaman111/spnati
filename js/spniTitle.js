@@ -373,23 +373,92 @@ function finishStartupLoading () {
 }
 
 /**
+ * Schedule a function to be called when a swipe happens (on a touchscreen).
+ * @param {HTMLElement} elem 
+ * @param {(touch: Touch, lastPos: [number, number], startPos: [number, number]) => void} onSwipe 
+ */
+function handleSwipe (elem, onSwipe) {
+    var curTouchIdentifier = null;
+    var startPos = [0, 0];
+    var lastPos = [0, 0];
+
+    $(elem).on("touchstart", function (ev) {
+        if (curTouchIdentifier === null) {
+            let touch = null;
+            if (ev.targetTouches.length >= 1) {
+                touch = ev.targetTouches.item(0);
+            } else {
+                touch = ev.touches.item(0);
+            }
+
+            curTouchIdentifier = touch.identifier;
+            startPos = [touch.clientX, touch.clientY];
+            lastPos = [touch.clientX, touch.clientY];
+        }
+    }).on("touchmove", function (ev) {
+        if (curTouchIdentifier !== null) {
+            let touch = null;
+            for (let i = 0; i < ev.touches.length; i++) {
+                if (ev.touches.item(i).identifier === curTouchIdentifier) {
+                    touch = ev.touches.item(i);
+                }
+            }
+
+            if (!touch) {
+                curTouchIdentifier = null;
+                return;
+            }
+
+            onSwipe(touch, lastPos, startPos);
+            lastPos = [touch.clientX, touch.clientY];
+        }
+    }).on("touchend", function (ev) {
+        if (curTouchIdentifier !== null) {
+            let touch = null;
+            for (let i = 0; i < ev.touches.length; i++) {
+                if (ev.touches.item(i).identifier === curTouchIdentifier) {
+                    touch = ev.touches.item(i);
+                }
+            }
+
+            if (!touch) {
+                curTouchIdentifier = null;
+            }
+        }
+    });
+}
+
+/**
  * @param {PlayerClothing} clothing 
  */
 function TitleClothingSelectionIcon (clothing) {
     this.clothing = clothing;
     this.elem = clothing.createSelectionElement();
 
-    $(this.elem).on("click", this.onClick.bind(this)).addClass("title-content-button");
-
-    if (this.clothing.collectible) {
-        $(this.elem).attr("title", null).tooltip({
+    $(this.elem)
+        .addClass("title-content-button")
+        .attr("title", null)
+        .tooltip({
             delay: { show: 50 },
+            html: true,
             title: this.tooltip.bind(this)
-        });
-    }
+        }).on("click", this.onClick.bind(this)).on("touchstart", function () {
+            $(this.elem).tooltip("show");
+        }.bind(this));
+
+    /* Selectors block default touch-scrolling behavior, so manually handle that */
+    handleSwipe(this.elem, function (touch, lastPos, startPos) {
+        var listElem = document.getElementById("title-clothing-container");
+        listElem.scrollTop -= touch.clientY - lastPos[1];
+
+        /* Hide tooltips when the user is scrolling */
+        if (Math.abs(touch.clientY - startPos[1]) >= 25) {
+            $(this.elem).tooltip("hide");
+        }
+    }.bind(this));
 }
 
-TitleClothingSelectionIcon.prototype.visible = function () {
+TitleClothingSelectionIcon.prototype.isVisible = function () {
     if (this.clothing.isAvailable()) {
         return true;
     }
@@ -405,26 +474,61 @@ TitleClothingSelectionIcon.prototype.visible = function () {
     return false;
 }
 
+TitleClothingSelectionIcon.prototype.getOverlappingClothing = function () {
+    var selectedClothing = save.selectedClothing();
+    if (selectedClothing.indexOf(this.clothing) >= 0) return null;
+
+    var pos = this.clothing.position;
+    var type = this.clothing.type;
+    var generic = this.clothing.generic;
+
+    if (type == IMPORTANT_ARTICLE) {
+        return selectedClothing.find(function (clothing) {
+            return (clothing.type == IMPORTANT_ARTICLE) && (pos == FULL_ARTICLE || clothing.position == FULL_ARTICLE || clothing.position == pos);
+        });
+    } else if (generic == "shoes") {
+        return selectedClothing.find(function (clothing) {
+            return clothing.generic == "shoes";
+        });
+    }
+
+    return null;
+}
+
 TitleClothingSelectionIcon.prototype.tooltip = function () {
     var collectible = this.clothing.collectible;
-    if (!collectible) return "";
 
     if (this.clothing.isAvailable()) {
-        let tooltip = collectible.title;
-        if (collectible.player && tooltip.indexOf(collectible.player.metaLabel) < 0) {
-            tooltip += " - from " + collectible.player.metaLabel;
+        
+        let tooltip = "";
+        if (collectible) {
+            tooltip = collectible.title;
+            if (collectible.player && tooltip.indexOf(collectible.player.metaLabel) < 0) {
+                tooltip += " - from " + collectible.player.metaLabel;
+            }
+        }
+
+        let overlap = this.getOverlappingClothing();
+        if (overlap) {
+            tooltip += (tooltip.length > 0 ? "<br>" : "") + "(Remove your " + overlap.name + " to wear this.)";
         }
 
         return tooltip;
-    } else {
+    } else if (collectible) {
         return "To unlock: " + collectible.unlock_hint;
     }
 }
 
 TitleClothingSelectionIcon.prototype.update = function () {
-    $(this.elem).removeClass("available selected");
+    $(this.elem).removeClass("invalid locked available selected");
     if (this.clothing.isAvailable()) {
-        $(this.elem).addClass("available");
+        if (this.getOverlappingClothing()) {
+            $(this.elem).addClass("invalid");
+        } else {
+            $(this.elem).addClass("available");
+        }
+    } else {
+        $(this.elem).addClass("locked");
     }
 
     if (this.clothing.isSelected()) {
@@ -433,9 +537,11 @@ TitleClothingSelectionIcon.prototype.update = function () {
 }
 
 TitleClothingSelectionIcon.prototype.onClick = function () {
-    if (this.clothing.isAvailable()) {
+    if (this.clothing.isAvailable() && !this.getOverlappingClothing()) {
         this.clothing.setSelected(!this.clothing.isSelected());
-        this.update();
+        titleClothingSelectors.forEach(function (selector) {
+            selector.update();
+        });
     }
 }
 
@@ -514,7 +620,7 @@ function updateTitleScreen () {
         var clothing = selector.clothing;
         $(selector.elem).detach();
 
-        if (!selector.visible()) {
+        if (!selector.isVisible()) {
             return;
         }
 
@@ -620,6 +726,33 @@ function validateTitleScreen () {
     /* ensure the player is wearing enough clothing */
     if (clothingItems.length > 8) {
         $warningLabel.html("You cannot wear more than 8 articles of clothing. Cheater.");
+        return;
+    }
+
+    /* ensure the player isn't wearing overlapping important items or multiple pairs of shoes */
+    var importantItems = { "upper": [], "lower": [] };
+    var shoes = [];
+
+    clothingItems.forEach(function (clothing) {
+        if (clothing.type == IMPORTANT_ARTICLE) {
+            if (clothing.position == FULL_ARTICLE) {
+                importantItems[UPPER_ARTICLE].push(clothing);
+                importantItems[LOWER_ARTICLE].push(clothing);
+            } else {
+                importantItems[clothing.position].push(clothing);
+            }
+        } else if (clothing.generic == "shoes") {
+            shoes.push(clothing);
+        }
+    });
+
+    if (importantItems[UPPER_ARTICLE].length > 1 || importantItems[LOWER_ARTICLE].length > 1) {
+        $warningLabel.html("You're wearing overlapping underwear items. Please take something off.");
+        return;
+    }
+
+    if (shoes.length > 1) {
+        $warningLabel.html("Please only wear one pair of shoes.");
         return;
     }
 

@@ -156,8 +156,7 @@ PlayerClothing.prototype.createSelectionElement = function () {
     img.className = "custom-clothing-img";
 
     var elem = document.createElement("button");
-    elem.setAttribute("title", title);
-    elem.className = "bordered player-clothing-select";
+    elem.className = "bordered player-clothing-icon";
     elem.appendChild(img);
 
     return elem;
@@ -443,17 +442,70 @@ function prepareToStripPlayer (player) {
     this.elem = clothing.createSelectionElement();
     this.selected = false;
 
-    $(this.elem).on("click", this.select.bind(this)).addClass("player-strip-selector");
+    $(this.elem)
+        .on("click", this.select.bind(this))
+        .attr("title", "")
+        .tooltip({
+            delay: { show: 50 },
+            title: this.tooltip.bind(this)
+        });
 }
 
-StripClothingSelectionIcon.prototype.canSelect = function () {
+/**
+ * Get all currently worn clothing items that go over the clothing associated with this selector.
+ * @returns {PlayerClothing[]}
+ */
+StripClothingSelectionIcon.prototype.getCoveringClothing = function () {
+    var type = this.clothing.type;
+    var pos = this.clothing.position;
+    var generic = this.clothing.generic;
+
+    if (type == IMPORTANT_ARTICLE) {
+        /* Don't allow player to remove important articles before major articles that cover them. */
+        return humanPlayer.clothing.filter(function (c) {
+            return (
+                (c.type === MAJOR_ARTICLE) &&
+                (type === FULL_ARTICLE || c.position === FULL_ARTICLE || c.position === pos)
+            );
+        });
+    } else if (generic == "socks") {
+        /* Don't allow player to remove socks before shoes. */
+        return humanPlayer.clothing.filter(function (c) { return c.generic == "shoes"; });
+    } else {
+        return [];
+    }
+}
+
+StripClothingSelectionIcon.prototype.isVisible = function () {
     return humanPlayer.clothing.some(function (clothing) {
         return clothing.id == this.clothing.id;
     }.bind(this));
 }
 
+StripClothingSelectionIcon.prototype.canSelect = function () {
+    return this.getCoveringClothing().length === 0;
+}
+
+StripClothingSelectionIcon.prototype.tooltip = function () {
+    var overlaps = this.getCoveringClothing();
+    if (overlaps.length > 0) {
+        return "Remove your " + englishJoin(overlaps.map(function (clothing) {
+            return clothing.name;
+        })) + " first.";
+    } else {
+        return "";
+    }
+}
+
 StripClothingSelectionIcon.prototype.update = function () {
-    $(this.elem).removeClass("available selected");
+    $(this.elem).removeClass("locked available selected");
+
+    if (!this.isVisible()) {
+        $(this.elem).hide();
+        return;
+    } else {
+        $(this.elem).show();
+    }
 
     if (this.canSelect()) {
         $(this.elem).addClass("available");
@@ -461,11 +513,14 @@ StripClothingSelectionIcon.prototype.update = function () {
         if (this.selected) {
             $(this.elem).addClass("selected");
         }
+    } else {
+        $(this.elem).addClass("locked");
     }
 }
 
 StripClothingSelectionIcon.prototype.select = function () {
-    if (!this.canSelect) return;
+    if (!this.isVisible() || !this.canSelect()) return;
+
     clothingStripSelectors.forEach(function (selector) {
         selector.selected = (selector === this);
         selector.update();
@@ -476,8 +531,26 @@ StripClothingSelectionIcon.prototype.select = function () {
 }
 
 function setupStrippingModal () {
+    var clothingTypeIdx = {
+        "important": 0,
+        "major": 1,
+        "minor": 2,
+        "extra": 3,
+    };
+
     clothingStripSelectors = humanPlayer.clothing.map(function (clothing) {
         return new StripClothingSelectionIcon(clothing);
+    }).sort(function (selectorA, selectorB) {
+        /* Ensure that clothing items are listed before items that overlap them.
+         * Then sort in ascending order of importance.
+         */
+        if (selectorA.getCoveringClothing().indexOf(selectorB.clothing) >= 0) {
+            return -1;
+        } else if (selectorB.getCoveringClothing().indexOf(selectorA.clothing) >= 0) {
+            return 1;
+        } else {
+            return clothingTypeIdx[selectorA.clothing.type] - clothingTypeIdx[selectorB.clothing.type];
+        }
     });
 
     $stripClothing.empty().append(clothingStripSelectors.map(function (selector) {
@@ -525,16 +598,16 @@ function showStrippingModal () {
  * A keybound handler.
  ************************************************************/
 function clothing_keyUp(e) {
-    var availableSelectors = clothingStripSelectors.filter(function (selector) {
-        return selector.canSelect();
+    var visibleSelectors = clothingStripSelectors.filter(function (selector) {
+        return selector.isVisible();
     });
 
     if (e.keyCode == 32 && !$stripButton.prop('disabled')  // Space
-        && availableSelectors.some(function (selector) { return selector.selected; })) {
+        && visibleSelectors.some(function (selector) { return selector.canSelect() && selector.selected; })) {
         $stripButton.click();
         e.preventDefault();
-    } else if (e.keyCode >= 49 && e.keyCode < 49 + availableSelectors.length) { // A number key
-        availableSelectors[e.keyCode - 49].select();
+    } else if (e.keyCode >= 49 && e.keyCode < 49 + visibleSelectors.length) { // A number key
+        visibleSelectors[e.keyCode - 49].select();
     }
 }
 
