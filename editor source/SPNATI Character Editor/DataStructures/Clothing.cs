@@ -46,7 +46,7 @@ namespace SPNATI_Character_Editor
 		public string Type;
 
 		// only used for <clothing> elements within collectibles
-		[XmlAttribute("image")]
+		[XmlAttribute("img")]
 		public string CollectibleImage;
 
 		[XmlAttribute("plural")]
