@@ -55,13 +55,13 @@
     <start />
 
     <wardrobe>
-        <clothing name="boxers" position="lower" type="important" plural="true" />
-        <clothing name="bra" position="upper" type="important" />
-        <clothing name="pants" position="lower" type="major" plural="true" />
-        <clothing name="shirt" position="upper" type="major" />
-        <clothing name="hoodie" position="upper" type="minor" />
-        <clothing name="tie" position="neck" type="extra" />
-        <clothing name="crocs" position="feet" type="extra" plural="true" />
+        <clothing name="boxers" generic="underwear" position="lower" type="important" plural="true" />
+        <clothing name="bra" generic="bra" position="upper" type="important" />
+        <clothing name="pants" generic="pants" position="lower" type="major" plural="true" />
+        <clothing name="shirt" generic="shirt" position="upper" type="major" />
+        <clothing name="hoodie" generic="jacket" position="upper" type="minor" />
+        <clothing name="tie" generic="tie" position="neck" type="extra" />
+        <clothing name="crocs" generic="shoes" position="feet" type="extra" plural="true" />
     </wardrobe>
 
     <poses />
@@ -281,7 +281,7 @@
                 <state img="#-mendokuse.png">Crap, I like these shoes. Could someone fuck up their hand real quick? Thanks.</state>
             </case>
             <case stage="1-6">
-                <state img="#-dread.png" marker="dread" weight="0.1">{Dread}Well, that's not good.{!reset}</state>
+                <state img="#-dread.png" marker="dread" weight="0.1">{Dread}Well, that's not good.</state>
                 <state img="#-buthow.png" weight="0.1">But... how?</state>
                 <state img="#-MINDBOOLETS.png">This terrible hand is all part of a master plan you're too simple to see...! And so am I, apparently.</state>
                 <state img="#-mendokuse.png">Well, at least whatever I lose will be fun to get rid of.</state>
@@ -294,7 +294,7 @@
             </case>
             <case stage="7">
                 <state img="#-thatdamnfinalchaosemerald.png">Lady luck can &lt;i&gt;suck my dick&lt;/i&gt;.</state>
-                <state img="#-dread.png" marker="dread">{Dread}Oh, isn't that just lovely?{!reset}</state>
+                <state img="#-dread.png" marker="dread">{Dread}Oh, isn't that just lovely?</state>
                 <state img="#-buthow.png">But... there was no better move! That was it! That was my path to victory!</state>
                 <state img="#-thatdamnfinalchaosemerald.png">I really should have been cheating more.</state>
                 <state img="#-mendokuse.png">There is no refractory period when life is fucking you in the ass.</state>
@@ -492,7 +492,7 @@
             </case>
             <case stage="0-7" id="99" priority="102">
                 <condition role="other" character="arash" saidMarker="martha" sayingMarker="question-martha" />
-                <state img="#-dread.png" marker="arash_privateface">{dread}Oh, you don't have the slightest clue, do you?{!reset}</state>
+                <state img="#-dread.png" marker="arash_privateface">{Dread}Oh, you don't have the slightest clue, do you?</state>
             </case>
             <case stage="0-7" id="91" priority="102">
                 <condition role="other" character="megumin" saidMarker="megumin_ShavedDiscovery" sayingMarker="megumin_learnShave" />
@@ -668,11 +668,6 @@
                 <condition role="other" character="cynthia" sayingMarker="MaryGossip2" />
                 <state img="#-isthishappy.png" marker="CynthiaObsession">I guess. But as far as these concepts go, I find obsession more charming. It just has a bit more soul to it!</state>
             </case>
-            <case stage="0-7" priority="102">
-                <condition role="self" saidMarker="SPNATIStrandGame" />
-                <condition role="other" character="amy" sayingMarker="amy_meta_DS" />
-                <state img="#-idle.png" marker="AmyDeathStranding2"></state>
-            </case>
             <case stage="0-7" id="25" priority="101">
                 <condition role="other" character="saki_zls" sayingMarker="q_saki_badluck" />
                 <state img="#-toughcrowd.png" marker="Saki_Badluck">Uh. I can't say I've had much luck... ever. Gettin' told my brain's fucked was probably the worst of it.</state>
@@ -719,7 +714,7 @@
             </case>
             <case stage="0-7" oneShotId="12">
                 <condition role="other" character="jessie" sayingMarker="JessieQA_Smokers" />
-                <state img="#-toughcrowd.png" marker="JessieSmoke">I used to smoke reefers, though they just... Don't work anymore. It's a tough habit to break, so I've picked up menthols.</state>
+                <state img="#-toughcrowd.png" marker="JessieSmokers">I used to smoke reefers, though they just... Don't work anymore. It's a tough habit to break, so I've picked up menthols.</state>
             </case>
             <case stage="0-7" oneShotId="13">
                 <condition role="other" character="jessie" sayingMarker="JessieQA_Open" />
@@ -731,7 +726,7 @@
             </case>
             <case stage="0-7" oneShotId="15">
                 <condition role="other" character="jessie" sayingMarker="JessieQA_DarkSecrets" />
-                <state img="#-toughcrowd.png" marker="JesieSecrets">Plenty, Jessie, but you sound like you're asking with a lot more... innocence than would be advisable.</state>
+                <state img="#-toughcrowd.png" marker="JessieSecrets">Plenty, Jessie, but you sound like you're asking with a lot more... innocence than would be advisable.</state>
             </case>
             <case stage="0-7" oneShotId="26">
                 <condition role="self" saidMarker="litclub" />
@@ -901,7 +896,6 @@
             <case stage="0-7" oneShotId="93">
                 <condition role="other" character="marinette" />
                 <state img="#-yourearealcomedianbro.png" marker="Marinette_hero">A superhero? Cute. Not accurate as a term, but cute.</state>
-                <state></state>
             </case>
             <case stage="1-7" oneShotId="99">
                 <condition role="self" saidMarker="Office1" />
@@ -974,8 +968,8 @@
             </case>
             <case stage="0-7" id="130" oneShotId="106" totalRounds="12-" priority="0">
                 <condition role="self" saidMarker="sideeffects&gt;=5" />
-                <state img="#-dread.png" marker="dread_morality">{Dread}Morality is a spook. An abstract concept made to keep you down. Why abide by it?{!reset}</state>
-                <state img="#-dread.png" marker="dread_ego">{Dread}People look down on egoism, but why is that? The only person you can truly understand is yourself, anyway.{!reset}</state>
+                <state img="#-dread.png" marker="dread_morality">{Dread}Morality is a spook. An abstract concept made to keep you down. Why abide by it?</state>
+                <state img="#-dread.png" marker="dread_ego">{Dread}People look down on egoism, but why is that? The only person you can truly understand is yourself, anyway.</state>
                 <state img="#-dread.png" marker="dread_immortality">{Dread}Have you ever thought you might be immortal? You can only prove you aren't by dying, and you haven't done that yet, have you, ~player~?</state>
             </case>
             <case stage="0-7" id="131" oneShotId="107" totalRounds="6-" priority="0">
@@ -1198,7 +1192,7 @@
         <trigger id="stripping">
             <case stage="0">
                 <condition role="self" saidMarker="Revy_nerds" />
-                <condition role="other" character="revy" stage="0-7" saying="internet" />
+                <condition role="other" character="revy" stage="0-7" saying="Internet" />
                 <state img="#-strip.png" marker="Revy_internet">Listen, even I'm not sure why I'm here. But seeing stuff like this live beats seeing it on a screen. At least, until VR catches up some more.</state>
             </case>
             <case stage="0">
@@ -1592,7 +1586,7 @@
             </case>
             <case stage="0-7">
                 <condition role="target" character="launch" stage="5" saying="ACHOO!!" />
-                <state img="#-dread.png" oneShotId="90" marker="dread">{dread}Sneeze into your fucking arm, you slut.{!reset}</state>
+                <state img="#-dread.png" oneShotId="90" marker="dread">{Dread}Sneeze into your fucking arm, you slut.</state>
             </case>
             <case stage="0-7">
                 <condition role="target" character="launch" stage="1" saying="ACHOO!!" />
@@ -1763,7 +1757,7 @@
 
         <trigger id="tie">
             <case stage="0-9">
-                <state img="#-dread.png">{Dread}Well isn't that neat—why don't you post a screenshot on reddit so people can go `bruh' in the comments and forget about it immediately?{!reset}</state>
+                <state img="#-dread.png">{Dread}Well isn't that neat—why don't you post a screenshot on reddit so people can go `bruh' in the comments and forget about it immediately?</state>
             </case>
         </trigger>
 
@@ -1780,7 +1774,7 @@
                 <state img="#-headon.png">Of course. Fucking typical. You want to see the rest of us naked but can't be fucked doing it yourself.</state>
                 <state img="#-idle.png">Not cool, broseph. Not cool at all.</state>
                 <state img="#-thatdamnfinalchaosemerald.png">~Clothing~? In this economy? Have you no shame?</state>
-                <state img="#-dread.png">{Dread}Oh, wonderful, the coward is stripping. Let's all watch intently!{!reset}</state>
+                <state img="#-dread.png">{Dread}Oh, wonderful, the coward is stripping. Let's all watch intently!</state>
             </case>
             <case stage="8">
                 <state img="#-toughcrowd.png">Oh, come on, at least do something fun with it!</state>
@@ -1919,7 +1913,7 @@
             </case>
             <case stage="8">
                 <state img="#-MINDBOOLETS.png">Perhaps you could be persuaded? Persuaded to not be such a bitch? No?</state>
-                <state img="#-dread.png" marker="dread">{Dread}Man, wouldn't it be lovely to just watch you get fucked.{!reset}</state>
+                <state img="#-dread.png" marker="dread">{Dread}Man, wouldn't it be lovely to just watch you get fucked.</state>
                 <state img="#-idle.png">Wait, my hand fell asleep, give me a moment.</state>
             </case>
             <case stage="0-2">
@@ -2074,7 +2068,7 @@
                 <state img="#-toughcrowd.png">I really don't get women. Or men. Or people. At least horses are easy.</state>
                 <state img="#-thatdamnfinalchaosemerald.png">Degenerates like you belong... well, here, frankly, but you should also be naked!</state>
                 <state img="#-mendokuse.png">I wanna go home and watch some virtual camgirls or something. At least they won't let me down.</state>
-                <state img="#-dread.png" marker="dread">{Dread}You're pathetic.{!reset}</state>
+                <state img="#-dread.png" marker="dread">{Dread}You're pathetic.</state>
                 <state img="#-mendokuse.png">It doesn't make sense. I'd have done the same, yet I feel the need to complain.</state>
             </case>
             <case stage="0-3">
@@ -2527,14 +2521,12 @@
             <case stage="0-9">
                 <condition count="3-4" filter="hairy" gender="female" status="crotch_visible" />
                 <test expr="~human.gender~" value="male" />
-                <alternative />
                 <state img="#-thissparksjoy.png">Quite the hairy bunch we have here today. I love it!</state>
                 <state img="#-isthishappy.png">Shaving's for losers, anyway! Real girls have curls!</state>
             </case>
             <case stage="0-9">
                 <condition count="4-" gender="female" status="crotch_visible" />
                 <test expr="~human.gender~" value="male" />
-                <alternative />
                 <state img="#-isthishappy.png">Pussy squad, roll up!</state>
                 <state img="#-isthishappy.png">Would you look at that---the gang's all here with their coochies out!</state>
             </case>
@@ -2993,7 +2985,7 @@
             </case>
             <case stage="0-7 9">
                 <condition role="target" character="amy" stage="4" />
-                <state img="#-yourearealcomedianbro.png">{smol}Amy. Amy, your shirt. Amy, nooo, stop.{!reset}</state>
+                <state img="#-yourearealcomedianbro.png">{smol}Amy. Amy, your shirt. Amy, nooo, stop.</state>
             </case>
             <case stage="0-7 9">
                 <condition role="target" character="streaming-chan" stage="0" />
@@ -3143,7 +3135,7 @@
             </case>
             <case stage="0-9">
                 <condition role="target" character="kokichi" stage="1" />
-                <state img="#-dread.png" set-intelligence="best">{dread}It's cute to me that you think you might be a threat to a fly. I guess I'll have to show you wrong.{!reset}</state>
+                <state img="#-dread.png" set-intelligence="best">{Dread}It's cute to me that you think you might be a threat to a fly. I guess I'll have to show you wrong.</state>
             </case>
             <case stage="0-9">
                 <condition role="target" character="tomoko" stage="3" />
@@ -3446,9 +3438,7 @@
                 <state img="#-heavy3.png">~Name~, I... fuck, I just want to feel your breath on my skin... that would be enough!</state>
             </case>
             <case stage="0-9" priority="0">
-                <alternative>
-                    <test expr="~background.category~" value="bar" />
-                </alternative>
+                <test expr="~background.category~" value="bar" />
                 <state img="#-isthishappy.png">Is someone gonna need to get the wet floor sign? This is a bar, they gotta have one.</state>
             </case>
             <case stage="0-9">
@@ -3565,7 +3555,7 @@
             </case>
             <case stage="8" priority="50">
                 <condition role="self" saidMarker="horny" />
-                <test expr="~_.gender~" value="male" />
+                <test expr="~human.gender~" value="male" />
                 <state img="#-heavy2.png">God, ~player~... I'd let you do whatever you want to me right now.</state>
                 <state img="#-heavy1.png">I need someone to thrust into me, damn it!</state>
                 <state img="#-thissparksjoy.png">Can you believe I've never fucked, ~player~? You should consider the chance to be that change in the world.</state>
@@ -3587,14 +3577,14 @@
             </case>
             <case stage="8" priority="50">
                 <condition role="self" saidMarker="horny" />
-                <test expr="~_.gender~" value="male" />
+                <test expr="~human.gender~" value="male" />
                 <test expr="~background~" value="bedroom" />
                 <state img="#-heavy2.png">What are your thoughts on the mating press, ~player~? We're in a good spot to give it a go...</state>
                 <state img="#-heavy3.png">D-do you think you could... r-ram me s-so hard, we broke the bed?</state>
             </case>
             <case stage="8" priority="50">
                 <condition role="self" saidMarker="horny" />
-                <test expr="~_.gender~" value="male" />
+                <test expr="~human.gender~" value="male" />
                 <test expr="~background~" value="locker room" />
                 <state img="#-heavy1.png">P-push me against a l-locker and stick it in me!</state>
                 <state img="#-heavy3.png">G-getting fucked in a locker room... I-I've definitely... read a doujin like that before!</state>
@@ -3614,7 +3604,7 @@
             <case stage="8" priority="50">
                 <condition role="self" saidMarker="horny" />
                 <test expr="~background.category~" value="school" />
-                <test expr="~_.gender~" value="male" />
+                <test expr="~human.gender~" value="male" />
                 <state img="#-heavy3.png">~Player~, j-just imagine... bending me over a desk and having me... hngh...!</state>
             </case>
             <case stage="8" priority="50">
@@ -3626,7 +3616,7 @@
             <case stage="8" priority="50">
                 <condition role="self" saidMarker="horny" />
                 <test expr="~background~" value="alley" />
-                <test expr="~_.gender~" value="male" />
+                <test expr="~human.gender~" value="male" />
                 <state img="#-heavy2.png">F-fucking a chick in an alleyway... god, that'd be kinky...</state>
                 <state img="#-heavy3.png">P-pressing me against this wall... raising my leg, and s-slamming yourself inside o-of me...</state>
             </case>
@@ -3643,8 +3633,8 @@
             <case stage="8" priority="50">
                 <condition role="self" saidMarker="horny" />
                 <test expr="~background~" value="office" />
-                <test expr="~_.gender~" value="male" />
-                <state img="#-smug.png">Maybe you'd like me to... put on a tight skirt, stockings, an open blouse... then bend me over a desk, ~name~?</state>
+                <test expr="~human.gender~" value="male" />
+                <state img="#-smug.png">Maybe you'd like me to... put on a tight skirt, stockings, an open blouse... then bend me over a desk, ~player~?</state>
             </case>
             <case stage="8">
                 <state img="#-smug.png">I can usually keep going for a while like this. That's a positive, right?</state>
