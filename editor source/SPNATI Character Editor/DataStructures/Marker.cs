@@ -116,7 +116,13 @@ namespace SPNATI_Character_Editor
 				op = MarkerOperator.Equals;
 				return marker;
 			}
-			Match match = Regex.Match(marker, @"([\w\-]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(\-?\w+|~\w+~))?");
+
+			// stupid workaround because *some people* put exclamation points in their markers...
+			marker = marker.Replace("!=", "zzzzzz1njnr3icn4");
+			marker = marker.Replace("!", "zzzzzz1njnr3icnx");
+			marker = marker.Replace("zzzzzz1njnr3icn4", "!=");
+
+			Match match = Regex.Match(marker, @"([^\>\<\=\!\*]+)(\*?)(\s*((?:\>|\<|\=|\!)\=?)\s*(\-?[\w ]+|~\w+~))?");
 			op = ToOperator(match.Groups[4].ToString());
 			value = match.Groups[5]?.ToString();
 			if (value == "")
@@ -124,7 +130,7 @@ namespace SPNATI_Character_Editor
 				value = null;
 			}
 			perTarget = !string.IsNullOrEmpty(match.Groups[2]?.ToString());
-			return match.Groups[1].ToString();
+			return match.Groups[1].ToString().Replace("zzzzzz1njnr3icnx", "!");
 		}
 
 		/// <summary>

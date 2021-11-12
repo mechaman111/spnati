@@ -1,6 +1,7 @@
 ﻿using Desktop;
 using Desktop.CommonControls.PropertyControls;
 using Desktop.DataStructures;
+using SPNATI_Character_Editor.Categories;
 using SPNATI_Character_Editor.Controls;
 using System;
 using System.Collections.Generic;
@@ -113,6 +114,151 @@ namespace SPNATI_Character_Editor.DataStructures
 		{
 			get { return Get<int>(); }
 			set { Set(value); }
+		}
+
+		[Boolean(DisplayName = "Wearable", GroupOrder = 130, Description = "If checked, the item will be wearable by the player when unlocked")]
+		[DefaultValue(false)]
+		[XmlElement("wearable")]
+		public bool Wearable
+		{
+			get { return clothing != null; }
+			set
+			{
+				if (value)
+                {
+					if (clothing == null)
+					{
+						clothing = new Clothing();
+					}
+                }
+				else
+                {
+					clothing = null;
+                }
+			}
+		}
+
+		[XmlElement("clothing")]
+		public Clothing clothing;
+
+		[Text(DisplayName = "ClothingName", Description = "The name of the wearable form of this item, as used in characters' dialogue", GroupOrder = 140)]
+		[DefaultValue("")]
+		public string ClothingName
+		{
+			get
+			{
+				if (clothing != null)
+					return clothing.Name;
+				else
+					return "";
+			}
+			set
+			{
+				if (clothing != null)
+				{
+					clothing.Name = value;
+				}
+			}
+		}
+
+		[RecordSelect(RecordType = typeof(ClothingCategory), AllowCreate = false, DisplayName = "Classification", Description = "The clothing classification of the wearable form of this item", GroupOrder = 150)]
+		[DefaultValue("")]
+		public string ClothingGeneric
+		{
+			get
+			{
+				if (clothing != null)
+					return clothing.GenericName;
+				else
+					return "";
+			}
+			set
+			{
+				if (clothing != null)
+				{
+					clothing.GenericName = value;
+				}
+			}
+		}
+
+		[RecordSelect(RecordType = typeof(ClothingPositionCategory), AllowCreate = false, DisplayName = "Position", Description = "The clothing position of the wearable form of this item", GroupOrder = 170)]
+		[DefaultValue("")]
+		public string ClothingPosition
+		{
+			get
+			{
+				if (clothing != null)
+					return clothing.Position;
+				else
+					return "";
+			}
+			set
+			{
+				if (clothing != null)
+				{
+					clothing.Position = value;
+				}
+			}
+		}
+
+		[RecordSelect(RecordType = typeof(ClothingTypeCategory), AllowCreate = false, DisplayName = "Type", Description = "The clothing type of the wearable form of this item", GroupOrder = 160)]
+		[DefaultValue("")]
+		public string ClothingType
+		{
+			get
+			{
+				if (clothing != null)
+					return clothing.Type;
+				else
+					return "";
+			}
+			set
+			{
+				if (clothing != null)
+				{
+					clothing.Type = value;
+				}
+			}
+		}
+
+		[Boolean(DisplayName = "Is Plural?", GroupOrder = 180, Description = "Whether the name of the wearable form of this item is plural")]
+		[DefaultValue(false)]
+		public bool ClothingIsPlural
+		{
+			get
+			{
+				if (clothing != null)
+					return clothing.Plural;
+				else
+					return false;
+			}
+			set
+			{
+				if (clothing != null)
+				{
+					clothing.Plural = value;
+				}
+			}
+		}
+
+		[FileSelect(DisplayName = "ClothingImage", Description = "Image for the wearable form of this item (leave blank to use the existing collectible image)", GroupOrder = 190)]
+		[DefaultValue("")]
+		public string ClothingImage
+		{
+			get
+			{
+				if (clothing != null)
+					return clothing.CollectibleImage;
+				else
+					return "";
+			}
+			set
+			{
+				if (clothing != null)
+				{
+					clothing.CollectibleImage = value;
+				}
+			}
 		}
 
 		[XmlAnyElement]

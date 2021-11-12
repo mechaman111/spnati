@@ -196,12 +196,7 @@ namespace SPNATI_Character_Editor.Controls
 						_character.CacheMarker(line.Marker);
 						foreach (MarkerOperation op in line.Markers)
 						{
-							string name = op.Name;
-							if (name.EndsWith("*"))
-							{
-								name = name.Substring(0, name.Length - 1);
-							}
-							_character.CacheMarker(name);
+							_character.CacheMarker(op);
 						}
 					}
 				}

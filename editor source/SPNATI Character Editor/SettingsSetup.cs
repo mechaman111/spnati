@@ -25,6 +25,7 @@ namespace SPNATI_Character_Editor
 			chkAutoBackup.Checked = Config.BackupEnabled;
 			chkInitialAdd.Checked = Config.AutoOpenConditions;
 			chkDefaults.Checked = !Config.SuppressDefaults;
+			chkWarnEmpty.Checked = !Config.DisableEmptyValidation;
 			chkCaseTree.Checked = !Config.UseSimpleTree;
 			chkColorTargets.Checked = Config.ColorTargetedLines;
 			chkWorkflowTracer.Checked = !Config.DisableWorkflowTracer;
@@ -144,6 +145,7 @@ namespace SPNATI_Character_Editor
 			Config.AutoOpenConditions = chkInitialAdd.Checked;
 			Config.KisekaeDirectory = txtKisekae.Text;
 			Config.SuppressDefaults = !chkDefaults.Checked;
+			Config.DisableEmptyValidation = !chkWarnEmpty.Checked;
 			Config.UseSimpleTree = !chkCaseTree.Checked;
 			Config.ColorTargetedLines = chkColorTargets.Checked;
 			Config.DisableWorkflowTracer = !chkWorkflowTracer.Checked;

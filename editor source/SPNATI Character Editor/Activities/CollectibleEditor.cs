@@ -1,4 +1,5 @@
 ﻿using Desktop;
+using Desktop.CommonControls;
 using Desktop.Skinning;
 using SPNATI_Character_Editor.Controls;
 using SPNATI_Character_Editor.DataStructures;
@@ -7,6 +8,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor.Activities
@@ -185,6 +187,7 @@ namespace SPNATI_Character_Editor.Activities
 			Collectible collectible = item.Tag as Collectible;
 			table.Data = collectible;
 			UpdatePreview();
+			ToggleClothingVisibility();
 		}
 
 		public override void Save()
@@ -223,6 +226,26 @@ namespace SPNATI_Character_Editor.Activities
 			else if (e.PropertyName == "Image")
 			{
 				UpdatePreview();
+			}
+			else if (e.PropertyName == "Wearable")
+            {
+				ToggleClothingVisibility();
+			}
+		}
+
+		private void ToggleClothingVisibility()
+        {
+			Collectible collectible = _selectedItem.Tag as Collectible;
+
+			Control[] rows = table.Controls.Find("PropertyTableRow", true);
+			String[] names = { "ClothingName", "Classification", "Position", "Type", "Is Plural?", "ClothingImage" };
+
+			foreach (PropertyTableRow c in rows)
+			{
+				if (names.Contains(c.Record.Key))
+				{
+					c.Visible = collectible.Wearable;
+				}
 			}
 		}
 

@@ -9,6 +9,8 @@ namespace SPNATI_Character_Editor
 {
 	public static class CharacterValidator
 	{
+		static String[] falsePlurals = { "pants", "shorts", "panties", "boxers", "tights", "leggings", "spats", "glasses", "sunglasses", "shades" };
+
 		/// <summary>
 		/// Validates the character's dialogue and returns a list of warnings (bad images, targets, etc.)
 		/// </summary>
@@ -85,6 +87,11 @@ namespace SPNATI_Character_Editor
 						}
 					}
 
+					if (stageCase.AlternativeConditions.Count == 1)
+                    {
+						warnings.Add(new ValidationError(ValidationFilterLevel.Minor, string.Format("Case contains only one OR tab. It would be more readable if you condensed these conditions onto the default tab. {0}", caseLabel), context));
+					}
+
 					foreach (Case alt in stageCase.AlternativeConditions)
 					{
 						if (!alt.HasConditions)
@@ -94,9 +101,10 @@ namespace SPNATI_Character_Editor
 						}
 					}
 
-					warnings.AddRange(ValidateRangeField(stageCase.TotalRounds, "totalRounds", caseLabel, -1, -1, context));
-
-					ValidateExpressions(warnings, stageCase, caseLabel, context);
+					if (stageCase.Lines.Count == 0 && string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
+                    {
+						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case has no lines assigned. {0}", caseLabel), context));
+					}
 
 					Tuple<string, string> template = DialogueDatabase.GetTemplate(stageCase.Tag);
 					string defaultLine = template.Item2;
@@ -107,13 +115,13 @@ namespace SPNATI_Character_Editor
 						//Make sure it's not a placeholder
 						if (defaultLine.Equals(line.Text))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case is still using placeholder text. {0}", caseLabel), context));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Case is still using placeholder text. {0}", caseLabel), context));
 						}
 
 						//Make sure it's not blank
-						if (line.Text.Equals(""))
+						if (!Config.DisableEmptyValidation && line.Text.Equals("") && string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Case has no text. If this was intentional, the correct way to create a blank line is to use ~blank~. {0}", caseLabel), context));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line has no text. If this was intentional, the correct way to create a blank line is to use ~blank~. {0}", caseLabel), context));
 						}
 
 						//Make sure it doesn't contain invalid variables (~name~ or ~target~ in untargeted cases)
@@ -121,11 +129,70 @@ namespace SPNATI_Character_Editor
 						{
 							if (line.Text.ToLower().Contains("~name~"))
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Line contains ~name~, but is in a case with no target. {0}", caseLabel), context));
+								warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line contains ~name~, but is in a case with no target. {0}", caseLabel), context));
 							}
 							else if (line.Text.ToLower().Contains("~target~"))
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Line contains ~target~, but is in a case with no target. {0}", caseLabel), context));
+								warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Line contains ~target~, but is in a case with no target. {0}", caseLabel), context));
+							}
+						}
+
+						// check if line is entirely covered by {small}
+						if (line.Text.Trim().StartsWith("{small}") && !line.Text.Substring(1).Contains("{"))
+                        {
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, "Line uses \"{small}\" " + string.Format("to shrink the entire line. Instead, please use the built-in \"Text size\" option. {0}", caseLabel), context));
+						}
+
+						// check if line has {!reset} at the end
+						if (line.Text.Trim().EndsWith("{!reset}"))
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Minor, "\"{!reset}\" " + string.Format("at the end of a line is unnecessary. {0}", caseLabel), context));
+						}
+
+						// check for undefined custom styles
+						var temptext = line.Text;
+
+						if ((character.Styles == null || !character.Styles.AdvancedMode) && !temptext.Contains("<script>"))
+						{
+							while (temptext.Contains("{"))
+							{
+								temptext = temptext.Substring(temptext.IndexOf("{") + 1);
+
+								var style = temptext.Split('}')[0];
+								if (style == "!reset") continue;
+
+								var customstyles = style.Split(' ');
+
+								foreach (var cs in customstyles)
+								{
+									bool foundStyle = false;
+
+									foreach (StyleRule rule in StyleDatabase.GlobalStyles)
+									{
+										if (rule.ClassName == cs)
+										{
+											foundStyle = true;
+											break;
+										}
+									}
+
+									if (!foundStyle && character.Styles != null)
+									{
+										foreach (StyleRule rule in character.Styles.Rules)
+										{
+											if (rule.ClassName == cs)
+											{
+												foundStyle = true;
+												break;
+											}
+										}
+									}
+
+									if (!foundStyle)
+									{
+										warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Custom style \"{0}\" is undefined. {1}", cs, caseLabel), context));
+									}
+								}
 							}
 						}
 
@@ -162,7 +229,7 @@ namespace SPNATI_Character_Editor
 						}
 						if (count != 0)
 						{
-							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, $"Line has mismatched <i> </i> tags: \"{line.Text}\" {caseLabel}", context));
+							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, $"Line has mismatched <i> </i> tags. {caseLabel}", context));
 						}
 
 						//validate collectibles
@@ -344,18 +411,20 @@ namespace SPNATI_Character_Editor
 							}
 						}
 
-						// marker checking is horribly broken right now
-						//ValidateMarker(warnings, target, caseLabel, condition.SaidMarker, condition.Stage, context);
-						//ValidateMarker(warnings, target, caseLabel, condition.SayingMarker, condition.Stage, context);
-						//ValidateMarker(warnings, target, caseLabel, condition.NotSaidMarker, context);
+						if(string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
+                        {
+							ValidateMarker(warnings, target, caseLabel, condition.SaidMarker, condition.Stage, context);
+							ValidateMarker(warnings, target, caseLabel, condition.SayingMarker, condition.Stage, context);
+						}
 					}
 				}
 
 				if (condition.Role == "self")
 				{
-					// marker checking is horribly broken right now
-					//ValidateMarker(warnings, character, caseLabel, condition.SaidMarker, context);
-					//ValidateMarker(warnings, character, caseLabel, condition.NotSaidMarker, context);
+					if (string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
+					{
+						ValidateMarker(warnings, character, caseLabel, condition.SaidMarker, context);
+					}
 
 					if (!String.IsNullOrEmpty(condition.SayingMarker))
                     {
@@ -396,6 +465,10 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
+			warnings.AddRange(ValidateRangeField(stageCase.TotalRounds, "totalRounds", caseLabel, -1, -1, context));
+
+			ValidateExpressions(warnings, stageCase, caseLabel, context);
+
 			return warnings;
 		}
 
@@ -407,6 +480,7 @@ namespace SPNATI_Character_Editor
 		private static void ValidateWardrobe(Character character, List<ValidationError> warnings)
 		{
 			bool foundPlural = false;
+			bool foundGeneric = false;
 			string pluralGuess = null;
 			string upper = null;
 			string lower = null;
@@ -422,6 +496,8 @@ namespace SPNATI_Character_Editor
 				{
 					pluralGuess = c.Name;
 				}
+				foundGeneric = !String.IsNullOrEmpty(c.GenericName) || foundGeneric;
+
 				if (c.Position == "upper" && c.Type == "major")
 					upper = c.Name;
 				if (c.Position == "lower" && c.Type == "major")
@@ -438,6 +514,11 @@ namespace SPNATI_Character_Editor
 				if (IsUncountable(c.Name))
 				{
 					warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{c.Name}\" uses an uncountable noun with no plural form, which makes incoming generic dialogue awkward (ex. \"I've seen many {c.Name} in my day\"). Consider renaming this layer (ex. \"armor\" to \"breastplate\")."));
+				}
+
+				if (!c.Plural && falsePlurals.Contains(c.Name))
+                {
+					warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Clothing layer \"{c.Name}\" should be set to plural. Even though it's only one item, it's still a grammatically plural noun (ex. \"Those are some nice {c.Name}\")."));
 				}
 
 				if (!String.IsNullOrEmpty(c.GenericName))
@@ -492,7 +573,7 @@ namespace SPNATI_Character_Editor
 					}
 					else
 					{
-						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Character has no clothing of type: major, position: upper. If an item covers underwear over both the chest and crotch{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")}, it should be given a position: both"));
+						warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Character has no clothing of type: major, position: lower. If an item covers underwear over both the chest and crotch{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")}, it should be given a position: both"));
 					}
 				}
 			}
@@ -500,6 +581,11 @@ namespace SPNATI_Character_Editor
 			if (!foundPlural && pluralGuess != null)
 			{
 				warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"No clothing items are marked as plural. Should they be (ex. {pluralGuess})?"));
+			}
+
+			if (!foundGeneric)
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"No clothing items have a classification. Are you sure this is correct?"));
 			}
 		}
 
@@ -569,6 +655,10 @@ namespace SPNATI_Character_Editor
 				{
 					warnings.Add(new ValidationError(ValidationFilterLevel.Case, $"Variable test has no expression: {test} {caseLabel}", context));
 				}
+				else if (test.Expression.Contains("~_."))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Case, $"Variable test has no subject: {test} {caseLabel}", context));
+				}
 				if (string.IsNullOrEmpty(test.Value))
 				{
 					warnings.Add(new ValidationError(ValidationFilterLevel.Case, $"Variable test has no value: {test} {caseLabel}", context));
@@ -586,6 +676,10 @@ namespace SPNATI_Character_Editor
 			if (string.IsNullOrEmpty(name))
 				return;
 
+			// Monika and Sayori do scripting that results in false positives
+			if (character.FolderName == "monika" || character.FolderName == "sayori")
+				return;
+
 			if (character == null)
 			{
 				warnings.Add(new ValidationError(ValidationFilterLevel.MissingTargets, string.Format("Missing character for {1}. {0}", caseLabel, name), context));
@@ -600,7 +694,7 @@ namespace SPNATI_Character_Editor
 				if (character.Markers.IsValueCreated && !character.Markers.Value.Contains(name))
 				{
 					//Count could be 0 for characters who have no editor data, so unless we decide to duplicate MarkerData in CachedCharacter, just ignore it for unloaded characters
-					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue that sets marker {2}. {0}", caseLabel, character.FolderName, name), context));
+					warnings.Add(new ValidationError(ValidationFilterLevel.Markers, string.Format("{1} has no dialogue that sets marker {2}, so this case will never trigger. {0}", caseLabel, character.Name, name), context));
 				}
 				else
 				{
@@ -609,6 +703,7 @@ namespace SPNATI_Character_Editor
 						if (!string.IsNullOrEmpty(stageRange))
 						{
 							//verify that a marker can even be set prior to this point
+							bool setsAtAll = false;
 
 							int min, max;
 							Case.ToRange(stageRange, out min, out max);
@@ -627,11 +722,40 @@ namespace SPNATI_Character_Editor
 											string markerName = Marker.ExtractPieces(line.Marker, out val, out pt, out markerOp);
 											if (markerName == name)
 											{
+												// persistent markers could always have been set
+												if (character.Behavior.PersistentMarkers.Contains(name))
+													return;
+
 												for (int i = 0; i < c.Stages.Count; i++)
 												{
-													if (c.Stages[i] <= min)
+													if (c.Stages[i] <= max)
 													{
 														return;
+													}
+												}
+
+												setsAtAll = true;
+											}
+
+											if (line.Markers != null)
+											{
+												foreach (MarkerOperation m in line.Markers)
+												{
+													if (m.Name == name)
+													{
+														// persistent markers could always have been set
+														if (character.Behavior.PersistentMarkers.Contains(name))
+															return;
+
+														for (int i = 0; i < c.Stages.Count; i++)
+														{
+															if (c.Stages[i] <= max)
+															{
+																return;
+															}
+														}
+
+														setsAtAll = true;
 													}
 												}
 											}
@@ -657,10 +781,18 @@ namespace SPNATI_Character_Editor
 									}
 								}
 							}
-							warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, string.Format("{1} has no dialogue prior to stage {2} that sets marker {3}, so this case will never trigger. {0}", caseLabel, character.FolderName, min, name), context));
+
+							if (setsAtAll)
+                            {
+								warnings.Add(new ValidationError(ValidationFilterLevel.Markers, string.Format("{1} has no dialogue before or during stage {2} that sets marker {3}, so this case will never trigger. {0}", caseLabel, character.Name, max, name), context));
+							}
+							else
+                            {
+								warnings.Add(new ValidationError(ValidationFilterLevel.Markers, string.Format("{1} has no dialogue that sets marker {2}, so this case will never trigger. {0}", caseLabel, character.Name, name), context));
+							}
 						}
 
-						if (!string.IsNullOrEmpty(value))
+						if (!string.IsNullOrEmpty(value) && value != "1" && value != "0")
 						{
 							bool used = false;
 							Marker m = character.Markers.Value.Values.FirstOrDefault(marker => marker.Name == name);
@@ -668,18 +800,31 @@ namespace SPNATI_Character_Editor
 							{
 								used = m.Values.Contains(value);
 								if (!used)
-								{
-									int test;
-									//they never set the value directly, but if it's numeric, then they might be able to increment or decrement to it
-									if (int.TryParse(value, out test))
+                                {
+									// if value is set to a variable, it could be any value
+									foreach (String val in m.Values)
+                                    {
+										if (val.Contains("~"))
+                                        {
+											used = true;
+											break;
+                                        }
+                                    }
+
+									if (!used)
 									{
-										used = (m.Values.Contains("+") || m.Values.Contains("-"));
+										int test;
+										//they never set the value directly, but if it's numeric, then they might be able to increment or decrement to it
+										if (int.TryParse(value, out test))
+										{
+											used = (m.Values.Contains("+") || m.Values.Contains("-") || m.Values.Contains("*") || m.Values.Contains("/") || m.Values.Contains("%"));
+										}
 									}
 								}
 							}
 							if (!used)
 							{
-								warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"{character.FolderName} has no dialogue that sets marker {name} to {value}, so this case will never trigger. {caseLabel}", context));
+								warnings.Add(new ValidationError(ValidationFilterLevel.Markers, $"{character.Name} has no dialogue that sets marker {name} to {value}, so this case will never trigger. {caseLabel}", context));
 							}
 						}
 					}
@@ -893,6 +1038,11 @@ namespace SPNATI_Character_Editor
 					warnings.Add(new ValidationError(ValidationFilterLevel.Collectibles, $"The image \"{collectible.Image}\" for collectible \"{collectible.Id}\" does not exist.", context));
 				}
 			}
+
+			if (collectible.Wearable && !collectible.ClothingIsPlural && falsePlurals.Contains(collectible.ClothingName))
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"Collectible \"{collectible.Id}\" has associated clothing, \"{collectible.ClothingName}\", which should be set to plural. Even though it's only one item, it's still a grammatically plural noun (ex. \"Those are some nice {collectible.ClothingName}\")."));
+			}
 		}
 
 		private static string GetRelativeImagePath(Character character, string path)
@@ -944,7 +1094,7 @@ namespace SPNATI_Character_Editor
 				}
 				if (!found)
 				{
-					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"Using a Saying Text condition but {target} never says this text: \"{text}\" ({caseLabel})", context));
+					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"Using a Saying Text condition but {other.Name} never says this text: \"{text}\" ({caseLabel})", context));
 				}
 			}
 		}
@@ -1033,6 +1183,13 @@ namespace SPNATI_Character_Editor
 				missingImages.Remove("custom:" + pose.Id);
 			}
 
+			// custom poses from the base skin can never be missing in an alt skin
+			// because alt skins inherit all poses from the base skin
+			foreach (Pose pose in character.Poses)
+			{
+				missingImages.Remove("custom:" + pose.Id);
+			}
+
 			if (missingImages.Count > 0)
 			{
 				warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"{skin.Folder} is missing the following images: {string.Join(",", missingImages)}"));
@@ -1117,15 +1274,16 @@ namespace SPNATI_Character_Editor
 	{
 		None = 0,
 		Minor = 1 << 0,
-		MissingTargets = 1 << 1,
-		MissingImages = 1 << 2,
-		Metadata = 1 << 3,
-		Lines = 1 << 4,
-		TargetedDialogue = 1 << 5,
-		Case = 1 << 6,
-		Stage = 1 << 7,
-		Epilogue = 1 << 8,
-		Reskins = 1 << 9,
-		Collectibles = 1 << 10,
+		Markers = 1 << 1,
+		MissingTargets = 1 << 2,
+		MissingImages = 1 << 3,
+		Metadata = 1 << 4,
+		Lines = 1 << 5,
+		TargetedDialogue = 1 << 6,
+		Case = 1 << 7,
+		Stage = 1 << 8,
+		Epilogue = 1 << 9,
+		Reskins = 1 << 10,
+		Collectibles = 1 << 11,
 	}
 }

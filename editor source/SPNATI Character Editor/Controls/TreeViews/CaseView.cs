@@ -427,7 +427,7 @@ namespace SPNATI_Character_Editor.Controls
 			{
 				args.ForeColor = skin.Orange;
 			}
-			else if ((Config.ColorTargetedLines || Config.UseSimpleTree) && node.Case.HasTargetedConditions)
+			else if ((Config.ColorTargetedLines || Config.UseSimpleTree) && node.Case.HasTargetedConditionsIncludeHuman)
 			{
 				args.ForeColor = skin.Green;
 			}
