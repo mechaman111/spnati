@@ -728,8 +728,16 @@ function validateTitleScreen () {
  ************************************************************/
 function wearClothing () {
     var position = [[], [], []];
+    var typeIdx = {
+        "important": 0,
+        "major": 1,
+        "minor": 2,
+        "extra": 3,
+    };
 
-    save.selectedClothing().reverse().forEach(function (clothing) {
+    save.selectedClothing().sort(function (a, b) {
+        return typeIdx[a.type] - typeIdx[b.type];
+    }).forEach(function (clothing) {
         if (clothing.position == UPPER_ARTICLE) {
             position[0].push(clothing);
         } else if (clothing.position == LOWER_ARTICLE) {
