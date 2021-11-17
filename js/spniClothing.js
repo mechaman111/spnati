@@ -442,7 +442,7 @@ function prepareToStripPlayer (player) {
     this.elem = clothing.createIconElement("button");
     this.selected = false;
 
-    $(this.elem).on("click", this.select.bind(this)).addClass("player-strip-selector");
+    $(this.elem).on("click", this.select.bind(this));
 }
 
 StripClothingSelectionIcon.prototype.canSelect = function () {
@@ -452,7 +452,7 @@ StripClothingSelectionIcon.prototype.canSelect = function () {
 }
 
 StripClothingSelectionIcon.prototype.update = function () {
-    $(this.elem).removeClass("available selected");
+    $(this.elem).removeClass("hidden available selected");
 
     if (this.canSelect()) {
         $(this.elem).addClass("available");
@@ -460,6 +460,8 @@ StripClothingSelectionIcon.prototype.update = function () {
         if (this.selected) {
             $(this.elem).addClass("selected");
         }
+    } else {
+        $(this.elem).addClass("hidden");
     }
 }
 

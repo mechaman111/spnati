@@ -607,15 +607,17 @@ TitleClothingSelectionIcon.prototype.visible = function () {
 }
 
 TitleClothingSelectionIcon.prototype.update = function () {
-    $(this.elem).removeClass("available selected");
+    $(this.elem).removeClass("available selected locked");
     if (this.clothing.isAvailable()) {
         $(this.elem).addClass("available");
-		updateClothingCount();
+        updateClothingCount();
+    } else {
+        $(this.elem).addClass("locked");
     }
 
     if (this.clothing.isSelected()) {
         $(this.elem).addClass("selected");
-		updateClothingCount();
+        updateClothingCount();
     }
 }
 
@@ -763,9 +765,7 @@ function updateSelectedClothingView () {
         $(elem).on("click", function () {
             clothing.setSelected(false);
             updateTitleScreen();
-        });
-        
-        $(elem).on("mouseover", function () {
+        }).on("mouseover", function () {
             displayClothingDescription(clothing);
         });
 
@@ -849,8 +849,10 @@ function displayClothingDescription (clothing) {
         
         if (clothing.isAvailable()) {
             $("#title-clothing-subtitle").html(collectible.subtitle).show();
+            $("#title-clothing-desc-icon").removeClass("locked").addClass("available");
         } else {
             $("#title-clothing-subtitle").hide();
+            $("#title-clothing-desc-icon").removeClass("available").addClass("locked");
         }
         if (
             collectible.player && !(
