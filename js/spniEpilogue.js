@@ -29,14 +29,17 @@ var winStr = "You've won the game, and some of your competitors might be ready f
 // Player won the game, but none of the characters have an ending written.
 var winStrNone = "You've won the game!<br>We hope you enjoyed the game!  Be sure to play again sometime!";
 
-// Player lost the game. Currently no support for ending scenes when other players win.
-var lossStr = "Although you didn't win this time, we hope you had a good time anyway.<br>You were probably just unlucky, so be sure to give it another try soon!";
+// Player lost the game, with endings available.
+var lossStr = "You didn't win this time... but some of your competitors might be ready for something <i>extra</i> anyways.<br>Who among these players did you become close with?";
+
+// Player lost the game, with no endings available.
+var lossStrNone = "Although you didn't win this time, we hope you had a good time anyway.<br>You were probably just unlucky, so be sure to give it another try soon!";
 
 // Player won the game, but epilogues are disabled.
 var winEpiloguesDisabledStr = winStrNone; // "You won... but epilogues have been disabled.";
 
 // Player lost the game with epilogues disabled.
-var lossEpiloguesDisabledStr = lossStr; // "You lost... but epilogues have been disabled.";
+var lossEpiloguesDisabledStr = lossStrNone; // "You lost... but epilogues have been disabled.";
 
 /* Random tips displayed at game end. */
 var endingTips = [
@@ -300,6 +303,7 @@ function loadEpilogueData(player) {
     }
 
     var playerGender = humanPlayer.gender;
+    var playerWon = !humanPlayer.out;
 
     //get the XML tree that relates to the epilogue, for the specific player gender
     //var epXML = $($.parseXML(xml)).find('epilogue[gender="'+playerGender+'"]'); //use parseXML() so that <image> tags come through properly //IE doesn't like this
@@ -317,6 +321,12 @@ function loadEpilogueData(player) {
         var epilogue_gender = $(this).attr('gender');
         if (epilogue_gender && epilogue_gender !== playerGender && epilogue_gender !== 'any') {
             // if the gender doesn't match, don't make this epilogue selectable
+            return false;
+        }
+
+        /* 'winner-only' attribute: the epilogue will only be selectable if the player character won the game. */
+        var win_only = $(this).attr('winner-only');
+        if (win_only === "true" && !playerWon) {
             return false;
         }
 
@@ -947,7 +957,7 @@ function doEpilogueModal() {
     //whether or not the human player won
     var playerWon = !humanPlayer.out;
 
-    if (EPILOGUES_ENABLED && playerWon) { //all the epilogues are for when the player wins, so don't allow them to choose one if they lost
+    if (EPILOGUES_ENABLED) {
         //load the epilogue data for each player
         players.forEach(function (p) {
             loadEpilogueData(p).forEach(addEpilogueEntry);
@@ -963,23 +973,16 @@ function doEpilogueModal() {
     var randomTip = endingTips[getRandomNumber(0, endingTips.length)];
     $epilogueTip.html(randomTip);
 
+    //decide which header string to show the player. This describes the situation.
+    var headerStr = '';
     if (EPILOGUES_ENABLED) {
-        //decide which header string to show the player. This describes the situation.
-        var headerStr = '';
         if (playerWon) {
-            headerStr = winStr; //player won, and there are epilogues available
-            if (!haveEpilogues) {
-                headerStr = winStrNone; //player won, but none of the NPCs have epilogues
-            }
+            headerStr = haveEpilogues ? winStr : winStrNone;
         } else {
-            headerStr = lossStr; //player lost
+            headerStr = haveEpilogues ? lossStr : lossStrNone;
         }
     } else {
-        if (playerWon) {
-            headerStr = winEpiloguesDisabledStr;
-        } else {
-            headerStr = lossEpiloguesDisabledStr;
-        }
+        headerStr = playerWon ? winEpiloguesDisabledStr : lossEpiloguesDisabledStr;
     }
 
     $epilogueHeader.html(headerStr); //set the header string
