@@ -356,6 +356,14 @@ h6,
     background-color: #FF5700;
 }
 
+.smooth-button.color-gallery {
+    background: rgb(208, 187, 31) linear-gradient(rgb(241, 220, 55), rgb(208, 187, 31));
+}
+
+.smooth-button.color-gallery:hover:not(:disabled) {
+    background: rgb(253, 231, 60) linear-gradient(rgb(249, 236, 138), rgb(253, 231, 60));    
+}
+
 .smooth-button:disabled {
     background: linear-gradient(#CCC, #AAA);
     background-color: #BBB;
@@ -1496,13 +1504,11 @@ ul.dropdown-menu>li {
 /* Main title screen blocks: */
 
 #main-title-container {
-    display: flex;
     position: absolute;
-    top: 21%;
-    left: 13.5%;
-    right: 13.5%;
-    bottom: 0;
-    column-gap: 1rem;
+    top: 2.5%;
+    bottom: 2.5%;
+    left: 0;
+    right: 0;
 }
 
 .title-controls-col {
@@ -1511,41 +1517,35 @@ ul.dropdown-menu>li {
     row-gap: 0.25rem;
 }
 
-.bg-grey {
-    background: rgb(119, 119, 119) radial-gradient(rgb(136, 136, 136), rgb(102, 102, 102)) repeat scroll 0% 0%;
+.menu-bg-primary {
+    background: #727272;
 }
 
-.bg-white {
-    background: rgba(255, 255, 255, 0.85);
+.menu-bg-secondary {
+    background: #b3b3b3;
+}
+
+.menu-bg-input {
+    background: white;
+}
+
+.menu-bg-screen {
+    background: rgba(114, 114, 114, 0.6);
 }
 
 #title-main-controls {
-    width: 40%;
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    bottom: 1rem;
+    width: 37.5rem;
 }
 
 #player-name-block {
     display: flex;
 }
 
-.title-label {
-    padding: 0;
-    margin-top: 0.5rem;
-    margin-bottom: 0;
-    text-align: center;
-    font-size: 140%;
-    color: #DD3333;
-    text-shadow:
-        -0.1rem -0.1rem 0 #000,
-        0.1rem -0.1rem 0 #000,
-        -0.1rem 0.1rem 0 #000,
-        0.1rem 0.1rem 0 #000;
-
-    /* height: 2rem;
-    white-space: nowrap; */
-}
-
 #player-name-field {
-    margin-top: 0.5rem;
     width: 100%;
     height: 4rem;
     text-align: center;
@@ -1558,9 +1558,15 @@ ul.dropdown-menu>li {
     font-style: italic;
 }
 
-#title-main-settings-container {
-    height: 19rem;
+#title-settings-container {
     display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+#title-main-settings-container {
+    display: flex;
+    flex: 1;
 }
 
 #title-tags-block {
@@ -1574,19 +1580,17 @@ ul.dropdown-menu>li {
     border-right: none;
 }
 
-#title-tags-list, #title-tags-empty {
-    font-size: 1.1rem;
-}
-
 #title-tags-list {
     margin: 1rem 2rem;
     flex: 1;
     overflow-y: auto;
+    font-size: 1.4rem;
 }
 
 #title-tags-empty {
     margin: auto 1rem;
     text-align: center;
+    font-size: 1.5rem;
 }
 
 #title-tags-edit-btn {
@@ -1601,44 +1605,66 @@ ul.dropdown-menu>li {
 }
 
 #title-stamina-block {
-    width: 100%;
-    margin: 0.25rem auto 0;
+    width: 86%;
+    margin: 0.25rem 0;
     height: 3rem;
+    display: flex;
     align-items: center;
 }
 
 #title-stamina-label {
     display: inline-block;
-    margin-right: 0.5rem;
     padding: 0.3rem 1rem;
     height: 100%;
     border-right: 0.2rem solid rgb(17, 17, 17);
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+#title-stamina-input-container {
+    flex: 1;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    padding-left: 0.5rem;
+    height: 100%;
 }
 
 #title-stamina-box {
-    width: 4.5rem
+    width: 6rem;
+    height: 100%;
 }
 
 #selected-clothing-block {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    margin-bottom: 0.5rem;
-    flex: 1;
+    justify-content: center;
+    width: 86%;
 }
 
 #selected-clothing-label {
-    height: 2.5rem;
+    height: 2.25rem;
     width: 60%;
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     text-align: center;
+}
+
+#title-selected-clothing-list-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0.5rem 1rem;
+    width: 100%;
 }
 
 #selected-clothing-list {
     width: 21rem;
-    height: 10.5rem;
+    height: 11rem;
+    overflow-y: hidden;
 
-    margin: 0.5rem;
     display: flex;
     flex-wrap: wrap;
     gap: 0.25rem;
@@ -1659,15 +1685,21 @@ ul.dropdown-menu>li {
 
 .title-size-block {
     width: 60%;
-    padding: 0.25rem;
+    padding: 2.5rem 0.25rem 0;
 
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    row-gap: 0.25rem;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 1rem;
 
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+
+.title-size-button {
+    width: 6rem;
+    height: 6rem;
 }
 
 #title-wardrobe-block {
@@ -1716,19 +1748,13 @@ ul.dropdown-menu>li {
 
 /* Clothing description controls */
 
-#title-clothing-desc-controls {
-    width: 30%;
-    margin-bottom: 11rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 #title-clothing-desc-block {
-    flex: 1;
-    width: 100%;
-    /* margin-bottom: 1rem; */
-    margin-top: 0.5rem;
+    position: absolute;
+    left: 34.25rem;
+    right: 37rem;
+    bottom: 1rem;
+    top: 18rem;
+    padding: 1rem;
 
     display: flex;
     flex-direction: column;
@@ -1738,7 +1764,6 @@ ul.dropdown-menu>li {
 #title-clothing-desc-icon {
     width: 7rem;
     height: 7rem;
-    margin-top: 0.5rem;
 }
 
 #title-clothing-desc-icon.locked {
@@ -1751,16 +1776,16 @@ ul.dropdown-menu>li {
 }
 
 #title-clothing-title {
-    font-size: 1.5rem;
+    font-size: 2.25rem;
 }
 
 #title-clothing-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.75rem;
     font-style: italic;
 }
 
 #title-clothing-source {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
 }
 
 #title-clothing-source::before {
@@ -1768,39 +1793,39 @@ ul.dropdown-menu>li {
 }
 
 #title-clothing-unlock-label {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     margin-top: 0.5rem;
 }
 
 #title-clothing-description {
-    font-size: 1.1rem;
+    font-size: 1.5rem;
 }
 
 #title-clothing-description.unlocked {
     margin-top: 0.5rem;
 }
 
-#title-gallery-button {
-    width: 100%;
-    /* padding: 0.25rem;
-    margin-top: 0.5rem; */
-}
-
-#title-gallery-button .centered-icon-image {
-    width: 2.25rem;
-}
-
-.gallery-label {
-    font-size: 1.75rem;
-    margin-left: 1rem;
-}
-
 /* Wardrobe controls: */
 
 #title-wardrobe-controls {
-    width: 35%;
+    position: absolute;
+    top: 1rem;
+    bottom: 1rem;
+    right: 1rem;
+    width: 35rem;
+
     display: flex;
     flex-direction: column;
+}
+
+#title-clothing-label {
+    width: 25rem;
+    margin: 0 auto;
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    text-align: center;
+    font-size: 1.75rem;
 }
 
 #title-clothing-container {
@@ -1809,21 +1834,57 @@ ul.dropdown-menu>li {
     gap: 0.25rem;
     
     overflow-y: auto;
-    margin-left: 0.1rem;
-    margin-bottom: 1rem;
+    padding: 1rem 0.6rem;
+    scroll-behavior: smooth;
+}
+
+#title-clothing-nav-block {
+    position: absolute;
+    top: 1rem;
+    left: 39rem;
+    right: 36.5rem;
+    height: 16rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#title-clothing-nav-label {
+    font-size: 1.75rem;
+    text-align: center;
+    width: 15rem;
+    margin: 0 auto;
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#title-clothing-nav-container {
+    padding: 0.5rem;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.2rem;
+}
+
+.title-clothing-nav-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 0.2rem;
+    column-gap: 0.25rem;
+}
+
+.title-clothing-nav-button {
+    font-size: 1.15rem;
+    padding: 0.15rem 0.25rem;
 }
 
 #title-warning-label {
-    color: red;
     text-align: center;
     margin-top: 0.2rem;
     margin-bottom: 0.2rem;
-    text-shadow:
-        -0.1rem -0.1rem 0 #000,
-        0.1rem -0.1rem 0 #000,
-        -0.1rem 0.1rem 0 #000,
-        0.1rem 0.1rem 0 #000;
-
     font-size: 1.3rem;
     margin-bottom: 0.5rem;
 }
@@ -1847,6 +1908,56 @@ ul.dropdown-menu>li {
 
 /* Gallery / Start / Tag button elements: */
 
+#title-nav-buttons-container {
+    /* height: 15rem; */
+    margin-top: 0.5rem;
+
+    display: flex;
+    justify-content: space-between;
+    column-gap: 1rem;
+}
+
+.title-start-edge {
+    font-size: 200%;
+    padding: 0.25rem;
+    background: linear-gradient(#222222, #111111);
+}
+
+#title-nav-buttons-container .title-start-edge {
+    flex: 1;
+}
+
+#warning-start-container {
+    width: 16rem;
+}
+
+#title-gallery-container {
+    flex: 1;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: 0.5rem;
+}
+
+.title-gallery-button {
+    width: 100%;
+    flex: 1;
+}
+
+.title-gallery-button .centered-icon-image {
+    width: 2.25rem;
+}
+
+#title-epilogues-button .glyphicon {
+    font-size: 2.5rem;
+}
+
+.gallery-label {
+    font-size: 1.75rem;
+    margin-left: 1rem;
+}
+
 .centered-icon-button {
     display: flex;
     justify-content: center;
@@ -1864,21 +1975,6 @@ ul.dropdown-menu>li {
     font-size: 1.25em;
 }
 
-.title-start-edge {
-    width: 15rem;
-    font-size: 200%;
-    padding: 0.25rem;
-    background: linear-gradient(#222222, #111111);
-}
-
-#main-title-container .title-start-edge {
-    position: absolute;
-    bottom: 2rem;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-}
-
 .title-start-button {
     width: 100%;
 }
@@ -1888,22 +1984,6 @@ ul.dropdown-menu>li {
     margin-top: 0.6rem;
     margin-right: 0.2rem;
     width: 88.5%;
-}
-
-.title-gallery-edge {
-    width: 20%;
-    height: 80%;
-
-    font-size: 200%;
-    padding: 0.1rem;
-    background: linear-gradient(#222222, #111111);
-
-    margin-right: 6.25%;
-}
-
-.title-gallery-button {
-    width: 100%;
-    height: 100%;
 }
 
 .title-tags-edge {

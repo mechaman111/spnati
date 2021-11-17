@@ -436,7 +436,7 @@ var DEFAULT_CLOTHING_OPTIONS = [
     new PlayerClothing('jacket', 'jacket', MINOR_ARTICLE, UPPER_ARTICLE, "player/male/jacket.png", false, "jacketA", "male", null),
     new PlayerClothing('shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/shirt.png", false, "shirtA", "male", null),
     new PlayerClothing('t-shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/tshirt.png", false, "tshirt", "male", null),
-    new PlayerClothing('undershirt', 'shirt', IMPORTANT_ARTICLE, UPPER_ARTICLE, "player/male/undershirt.png", false, "undershirt", "male", null),
+    new PlayerClothing('undershirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/male/undershirt.png", false, "undershirt", "male", null),
 
     new PlayerClothing('jacket', 'jacket', MINOR_ARTICLE, UPPER_ARTICLE, "player/female/jacket.png", false, "jacketB", "female", null),
     new PlayerClothing('shirt', 'shirt', MAJOR_ARTICLE, UPPER_ARTICLE, "player/female/shirt.png", false, "shirtB", "female", null),
@@ -488,6 +488,16 @@ var PLAYER_CLOTHING_OPTIONS = {};
 DEFAULT_CLOTHING_OPTIONS.forEach(function (clothing) {
     PLAYER_CLOTHING_OPTIONS[clothing.id] = clothing;
 });
+
+/* note: "full" clothing is not included here, so that it's grouped with misc. items */
+var CLOTHING_POSITION_SORT_ORDER = [
+    [UPPER_ARTICLE],
+    [LOWER_ARTICLE],
+    ["waist"],
+    ["feet", "legs"],
+    ["head", "neck"],
+    ["hands", "arms"],
+]
 
 /**
  * @type {TitleClothingSelectionIcon[]}
@@ -596,6 +606,16 @@ function TitleClothingSelectionIcon (clothing) {
     $(this.elem).on("click", this.onClick.bind(this)).addClass("title-content-button");
     $(this.elem).on("mouseover", displayClothingDescription.bind(null, this.clothing));
     $(this.elem).on("focus", displayClothingDescription.bind(null, this.clothing));
+
+    handleSwipe(this.elem, function (touch, lastPos, startPos) {
+        var container = document.getElementById("title-clothing-container");
+        var delta = touch.clientY - lastPos[1];
+
+        /* subtract delta so that upward swipes scroll downward and vice-versa */
+        container.scroll({
+            top: container.scrollTop - delta
+        });
+    });
 }
 
 TitleClothingSelectionIcon.prototype.visible = function () {
@@ -685,8 +705,6 @@ function changePlayerGender (gender) {
 }
 
 function createClothingSeparator () {
-    var separator = document.createElement("hr");
-    separator.className = "clothing-separator";
     return separator;
 }
 
@@ -696,6 +714,94 @@ function appendSelectors (elem, selectors) {
     }));
 }
 
+/**
+ * 
+ * @param {string} pos
+ * @returns {number} 
+ */
+function getPositionSortKey(pos) {
+    var ret = CLOTHING_POSITION_SORT_ORDER.findIndex(function (group) {
+        return group.indexOf(pos) >= 0;
+    });
+
+    return (ret >= 0) ? ret : CLOTHING_POSITION_SORT_ORDER.length;
+}
+
+/**
+ * 
+ * @param {TitleClothingSelectionIcon[]} selectors 
+ * @param {number} typeIdx 
+ */
+function appendClothingTypeGroup (selectors, typeIdx) {
+    var positions = {};
+
+    selectors.forEach(function (selector) {
+        var key = getPositionSortKey(selector.clothing.position);
+        if (!positions[key]) positions[key] = [];
+        positions[key].push(selector);
+    });
+
+    var typeStr = (typeIdx == 0) ? "important" : ((typeIdx == 1) ? "major" : "other");
+    var $container = $("#title-clothing-container");
+    var separatorKeys = [];
+
+    Object.keys(positions).sort().reduce(function (ret, key) {
+        ret.push([key, positions[key]]);
+        return ret;
+    }, []).forEach(function (pair, subgroupIdx) {
+        var positionKey = pair[0];
+        var subgroup = pair[1];
+
+        if ((typeIdx !== 0 || subgroupIdx !== 0) && subgroup.length > 0) {
+            let separator = document.createElement("hr");
+            separator.className = "clothing-separator";
+            separator.setAttribute("data-position-key", positionKey);
+            separator.setAttribute("data-clothing-type", typeStr);
+            separatorKeys.push(positionKey);
+
+            $container.append(separator);
+        }
+
+        $container.append(subgroup.map(function (s) {
+            return s.elem;
+        }));
+    });
+
+    $(".title-clothing-nav-button").filter(function (idx, elem) {
+        return (
+            (elem.getAttribute("data-nav-target-type") == typeStr) &&
+            (separatorKeys.indexOf(elem.getAttribute("data-nav-target-key")) >= 0)
+        );
+    }).show();
+}
+
+function scrollToClothingSeparator (clothingType, positionKey) {
+    var container = document.getElementById("title-clothing-container");
+    var separator = $(".clothing-separator").filter(function (idx, elem) {
+        return (
+            (elem.getAttribute("data-clothing-type") == clothingType) &&
+            (elem.getAttribute("data-position-key") == positionKey)
+        );
+    });
+
+    if (separator.length === 0) {
+        container.scrollTop = 0;
+    } else {
+        var offset = separator.position().top - separator.outerHeight(true);
+        if (Math.abs(offset) > 5) {
+            container.scrollTop += offset;
+        }
+    }
+}
+
+$(".title-clothing-nav-button").on("click", function (ev) {
+    var target = ev.target;
+    scrollToClothingSeparator(
+        target.getAttribute("data-nav-target-type"),
+        target.getAttribute("data-nav-target-key")
+    );
+});
+
 /************************************************************
  * Updates the gender dependent controls on the title screen.
  ************************************************************/
@@ -703,14 +809,28 @@ function updateTitleScreen () {
     $('#title-gender-size-container').removeClass('male female').addClass(humanPlayer.gender)
     $playerTagsModal.removeClass('male female').addClass(humanPlayer.gender);
 
-    var typeGroups = [[], [], [], [], [], []];
+    var typeGroups = [[], [], []];
+    var typeIdx = {
+        "important": 0,
+        "major": 1,
+        "minor": 2,
+        "extra": 3,
+    };
 
     titleClothingSelectors.sort(function (a, b) {
         var cmpA = (a.clothing.applicable_genders === "all" || a.clothing.applicable_genders === humanPlayer.gender);
         var cmpB = (b.clothing.applicable_genders === "all" || b.clothing.applicable_genders === humanPlayer.gender);
         return cmpB - cmpA;
     }).sort(function (a, b) {
-        return b.clothing.position < a.clothing.position;
+        if (a.clothing.generic === b.clothing.generic) {
+            return 0;
+        } else if (a.clothing.generic < b.clothing.generic) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }).sort(function (a, b) {
+        return typeIdx[a.clothing.type] - typeIdx[b.clothing.type];
     }).sort(function (a, b) {
         return b.clothing.isAvailable() - a.clothing.isAvailable();
     });
@@ -720,16 +840,12 @@ function updateTitleScreen () {
         if (!selector.visible()) return;
 
         switch (selector.clothing.type) {
-        case "important":
-            typeGroups[(selector.clothing.position === 'upper') ? 0 : 1].push(selector);
-            break;
-        case "major":
-            typeGroups[(selector.clothing.position === 'upper') ? 2 : 3].push(selector);
-            break;
-        case "minor": typeGroups[4].push(selector); break;
+        case "important": typeGroups[0].push(selector); break;
+        case "major": typeGroups[1].push(selector); break;
+        case "minor":
         case "extra":
         default:
-            typeGroups[5].push(selector);
+            typeGroups[2].push(selector);
             break;
         }
 
@@ -737,22 +853,14 @@ function updateTitleScreen () {
     });
 
     $("#title-clothing-container").empty();
-    typeGroups.forEach(function (group, idx, arr) {
-        appendSelectors("#title-clothing-container", group);
+    $(".title-clothing-nav-button").hide();
+    typeGroups.forEach(appendClothingTypeGroup);
 
-        if (idx !== (arr.length - 1)) {
-            $("#title-clothing-container").append(createClothingSeparator());
-        }
-    });
+    $('.title-clothing-nav-button[data-nav-target-type="important"][data-nav-target-key="0"]').show();
 
     updateSelectedClothingView();
 
     $("#title-clothing-desc-block").css({"visibility": "hidden"});
-    $("#player-name-field").attr(
-        "placeholder", 
-        (humanPlayer.gender === "male") ? "Mister" : "Miss"
-    );
-
     $("#title-stamina-box")[0].value = humanPlayer.stamina;
 
     updatePlayerTagsView();

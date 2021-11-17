@@ -61,7 +61,7 @@
                     </div>
                     <div id="warning-start-container" class='bordered title-start-edge' hidden>
                         <button id='warning-start-button' class='bordered smooth-button red title-start-button'
-                            onclick="enterTitleScreen()">
+                            onclick="enterCustomizationScreen()">
                             <img class="title-entrance-image" src="img/enter.png" alt="Enter the Inventory" />
                         </button>
                     </div>
@@ -69,17 +69,12 @@
 
             </div>
 
-            <div id="main-title-container" style="display: none">
+            <div id="main-title-container" style="display: none" class="menu-bg-screen bordered">
                 <div id="title-main-controls" class="title-controls-col">
-                    <!-- Player Name -->
-                    <div id="title-name-block" class="title-control-col-item">
-                        <div class="title-label">Who are you?</div>
-                        <input type="text" class='bordered' id='player-name-field' placeholder="Name..." />
-                    </div>
-
+                    <input type="text" class='bordered title-control-col-item' id='player-name-field' placeholder="What should we call you?" />
                     <div id="title-settings-container" class="title-control-col-item">
                         <div id="title-main-settings-container">
-                            <div id="title-tags-block" class="bordered bg-white">
+                            <div id="title-tags-block" class="bordered menu-bg-primary">
                                 <table id="title-tags-list" class=""></table>
                                 <div id="title-tags-empty">
                                     You don't have any player tags set. <br>
@@ -90,7 +85,7 @@
                             </div>
                             <div id="title-gender-size-container">
                                 <!-- Player Male Size -->
-                                <div id="title-male-size-block" class="bordered title-size-block bg-white">
+                                <div id="title-male-size-block" class="bordered title-size-block menu-bg-primary">
                                     <input type='image' id="small-junk-button"
                                         class='bordered title-small-button title-content-button title-size-button'
                                         src='img/male_small.png' alt="Small penis" onclick='changePlayerSize("small")'>
@@ -103,7 +98,7 @@
                                 </div>
     
                                 <!-- Player Female Size -->
-                                <div id="title-female-size-block" class="bordered title-size-block bg-white">
+                                <div id="title-female-size-block" class="bordered title-size-block menu-bg-primary">
                                     <input type='image' id="small-boobs-button"
                                         class='bordered title-small-button title-content-button title-size-button'
                                         src='img/female_small.png' alt="Small breasts" onclick='changePlayerSize("small")'>
@@ -126,50 +121,85 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="title-stamina-block" class="bordered bg-white">
-                            <span id="title-stamina-label">How long do you... last?</span>
-                            <input type="number" min="1" id="title-stamina-box">&nbsp;Clicks
+                        <div id="title-stamina-block" class="bordered">
+                            <div id="title-stamina-label" class="menu-bg-secondary">How long do you... last?</div>
+                            <div id="title-stamina-input-container" class="menu-bg-input">
+                                <input type="number" min="1" id="title-stamina-box">&nbsp;Clicks
+                            </div>
                         </div>
                     </div>
 
                     <div id="selected-clothing-block" class="title-control-col-item">
-                        <div id="selected-clothing-label" class="bordered bg-white">Selected Clothing</div>
-                        <div id="selected-clothing-list" class=""></div>
-                        <div id="selected-clothing-empty" class='bordered bg-white'>You're completely naked!</div>
+                        <div id="selected-clothing-label" class="bordered menu-bg-secondary">Selected Clothing</div>
+                        <div id="title-selected-clothing-list-wrapper" class="bordered menu-bg-primary">
+                            <div id="selected-clothing-list"></div>
+                            <div id="selected-clothing-empty" class='bordered menu-bg-secondary'>You're completely naked!</div>
+                            <div id='title-warning-label' class="title-control-col-item">Select 0 to 8 articles. Wear whatever you want.</div>
+                        </div>
                     </div>
                 </div>
 
-                <div id="title-clothing-desc-controls" class="title-controls-cols">
-                    <button id="title-gallery-button"
-                        class='bordered smooth-button red centered-icon-button title-control-col-item'
-                        onclick="loadGalleryScreen()">
-                        <img class="centered-icon-image" src="img/gallery.svg" alt="Gallery" />
-                        <span class="gallery-label">Gallery</span>
-                    </button>
-                    <div id="title-clothing-desc-block" class="bordered title-control-col-item bg-white">
-                        <div id="title-clothing-desc-icon" class="bordered player-clothing-icon"><img class="custom-clothing-img"></div>
-                        <div id="title-clothing-title" class="title-clothing-desc-item"></div>
-                        <div id="title-clothing-subtitle" class="title-clothing-desc-item"></div>
-                        <div id="title-clothing-source" class="title-clothing-desc-item"></div>
-                        <div id="title-clothing-unlock-label" class="title-clothing-desc-item">To Unlock:</div>
-                        <div id="title-clothing-description" class="title-clothing-desc-item"></div>
+                <div id="title-clothing-nav-block">
+                    <div id="title-clothing-nav-label" class="bordered menu-bg-secondary">Go To:</div>
+                    <div id="title-clothing-nav-container" class="bordered menu-bg-primary">
+                        <div class="title-clothing-nav-group">
+                            <button class='bordered title-clothing-nav-button' data-nav-target-type="important" data-nav-target-key="0" >Bras</button>
+                            <button class='bordered title-clothing-nav-button' data-nav-target-type="important" data-nav-target-key="1" >Underwear</button>
+                            <button class='bordered title-clothing-nav-button' data-nav-target-type="important" data-nav-target-key="6" >Other Undergarments</button>
+                        </div>
+                        <div class="title-clothing-nav-group">
+                            <button class='bordered title-clothing-nav-button' data-nav-target-type="major" data-nav-target-key="0" >Tops</button>
+                            <button class='bordered title-clothing-nav-button' data-nav-target-type="major" data-nav-target-key="1" >Bottoms</button>
+                            <button class='bordered title-clothing-nav-button' data-nav-target-type="major" data-nav-target-key="6" >Other Coverings</button>
+                        </div>
+                        <div class="title-clothing-nav-group">
+                            <button class='bordered title-clothing-nav-button' data-nav-target-type="other" data-nav-target-key="0" >Top Accessories</button>
+                            <button class='bordered title-clothing-nav-button' data-nav-target-type="other" data-nav-target-key="1" >Bottom Accessories</button>
+                            <button class='bordered title-clothing-nav-button' data-nav-target-type="other" data-nav-target-key="2" >Waist</button>
+                            <button class='bordered title-clothing-nav-button' data-nav-target-type="other" data-nav-target-key="3" >Feet / Legs</button>
+                            <button class='bordered title-clothing-nav-button' data-nav-target-type="other" data-nav-target-key="4" >Head / Neck</button>
+                            <button class='bordered title-clothing-nav-button' data-nav-target-type="other" data-nav-target-key="5" >Hands / Arms</button>
+                            <button class='bordered title-clothing-nav-button' data-nav-target-type="other" data-nav-target-key="6" >Other Items</button>
+                        </div>
                     </div>
+                </div>
+
+                <div id="title-clothing-desc-block" class="bordered title-control-col-item menu-bg-primary">
+                    <div id="title-clothing-desc-icon" class="bordered player-clothing-icon"><img class="custom-clothing-img"></div>
+                    <div id="title-clothing-title" class="title-clothing-desc-item"></div>
+                    <div id="title-clothing-subtitle" class="title-clothing-desc-item"></div>
+                    <div id="title-clothing-source" class="title-clothing-desc-item"></div>
+                    <div id="title-clothing-unlock-label" class="title-clothing-desc-item">To Unlock:</div>
+                    <div id="title-clothing-description" class="title-clothing-desc-item"></div>
                 </div>
 
                 <div id="title-wardrobe-controls" class="title-controls-cols">
-                    <div class='title-label title-control-col-item'>What are you wearing?</div>
-                    <div id='title-warning-label' class="title-control-col-item">Select 0 to 8 articles. Wear whatever you want.</div>
-                    <div id="title-clothing-container" class="title-control-col-item"></div>
-                </div>
-
-                <!-- Start Button -->
-                <div class='bordered title-start-edge'>
-                    <button id='title-start-button'
-                        class='bordered smooth-button red centered-icon-button title-start-button'
-                        onclick="validateTitleScreen()">
-                        <img class="centered-icon-image title-entrance-image" src="img/enter.png"
-                            alt="Enter the Inventory" />
-                    </button>
+                    <div id="title-clothing-label" class='title-control-col-item bordered menu-bg-secondary'>What are you wearing?</div>
+                    <div id="title-clothing-container" class="title-control-col-item bordered menu-bg-primary"></div>
+                    <div id="title-nav-buttons-container" class="title-control-col-item">
+                        <div id="title-gallery-container">
+                            <button id="title-collectibles-button"
+                                class='bordered smooth-button color-gallery centered-icon-button title-gallery-button'
+                                onclick="loadGalleryScreen()">
+                                <img class="centered-icon-image" src="img/gallery.svg" alt="Gallery" />
+                                <span class="gallery-label">Collectibles</span>
+                            </button>
+                            <button id="title-epilogues-button"
+                                class='bordered smooth-button color-gallery centered-icon-button title-gallery-button'
+                                onclick="loadGalleryScreen()">
+                                <span class="glyphicon glyphicon-film"></span>
+                                <span class="gallery-label">Epilogues</span>
+                            </button>
+                        </div>
+                        <div class='bordered title-start-edge'>
+                            <button id='title-start-button'
+                                class='bordered smooth-button red centered-icon-button title-start-button'
+                                onclick="validateTitleScreen()">
+                                <img class="centered-icon-image title-entrance-image" src="img/enter.png"
+                                    alt="Enter the Inventory" />
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
