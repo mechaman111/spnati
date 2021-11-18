@@ -59,19 +59,23 @@
                 <state img="#-fangirling.png">Are we coming here regularly now? Are we gonna meet all sorts of characters together?</state>
             </case>
             <case stage="0">
-                <alternative>
-                    <test expr="~month.number~" value="6" />
-                    <test expr="~day.number~" value="19" />
-                </alternative>
-                <alternative id="102">
-                    <alternative>
-                        <test expr="~player~" value="Blackjack" />
-                    </alternative>
-                    <alternative>
-                        <test expr="~player~" value="BlackjackXXI" />
-                    </alternative>
-                </alternative>
+                <test expr="~month.number~" value="6" />
+                <test expr="~day.number~" value="19" />
                 <state img="#-scared.png" dialogue-layer="over">OMG, ~player~! I was so focused on getting here on time that I forgot my &lt;i&gt;Garfield&lt;/i&gt; hoodie! Can we go back for it after the game? We gotta celebrate &lt;i&gt;Garfield Day&lt;/i&gt; properly!</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="LeitmotifJoke" notSaidMarker="LeitmotifJoke1" />
+                <state img="#-delighted.png" marker="LeitmotifJoke1">Hewwo, ~player~! I've missed you! Have you used my leitmotif in your battle theme? Let's go meet some new fictional characters to~background.time~!</state>
+            </case>
+            <case stage="0">
+                <condition role="self" saidMarker="PollyIntroducedThePlayer" />
+                <state img="#-smug.png">Look at at that. ~player~ came back for more. Well, I could use more inspiration for my next fic. What are we waiting for?</state>
+                <state img="#-blush.png">I was wondering when would we play again, ~player~. N-not because I &lt;i&gt;wanted&lt;/i&gt; to play with you, I was simply wondering where you've been.</state>
+            </case>
+            <case stage="0">
+                <condition count="1-" role="other" />
+                <state img="#-scared.png">H-hey! ~player~, right? Is this where the strip poker game's happening? I'm Zoe, by the way!</state>
+                <state img="#-scared.png">Am I early? Was the game canceled? Hi, I'm Zoe. The strip poker game IS happening here, right?</state>
             </case>
             <case stage="0" id="110">
                 <alternative>
@@ -204,9 +208,6 @@
                 <alternative>
                     <test expr="~player~" value="Brian Yu" />
                 </alternative>
-                <alternative>
-                    <condition count="3-4" role="other" />
-                </alternative>
                 <state img="#-delighted.png">Another ~player~! I know someone back in Spooky High called ~player~ too, but you're way more alive and... not-as-rotting!</state>
             </case>
             <case stage="0" id="103">
@@ -216,10 +217,14 @@
                 <alternative>
                     <test expr="~player~" value="Nez" />
                 </alternative>
-                <alternative>
-                    <condition role="self" saidMarker="LeitmotifJoke" notSaidMarker="LeitmotifJoke1" />
-                </alternative>
                 <state img="#-smug.png">O-M-G! You're Nez! I love your YouTube channel! You should totally do more MonProm related content, though. Especially mods.</state>
+            </case>
+            <case stage="0">
+                <condition count="3-4" role="other" />
+                <state img="#-scared.png">{small}S-sorry I'm late! I was caught up in an argument about whether OTPs being canon or not invalidate other people's OTPs and I lost track of time... N-name's Zoe, pronouns she/her, by the way!{!reset}</state>
+                <state img="#-happy.png">Hi, y'all. The name's Zoe, pronouns she/her, and I came here to get inspiration for my next fic: "Stripping Where The TF2 Players Get Items At."</state>
+                <state img="#-blush.png">Oops. You weren't waiting for me, were you? The name's Zoe, pronouns she/her, we can begin whenever you folk want to!</state>
+                <state img="#-delighted.png">Hewwo, everyone! Name's Zoe, pronouns she/her. Pleased to meet you all!</state>
             </case>
             <case stage="0" id="3">
                 <state img="#-scared.png">H-hewwo folks! I'm Zoe, pronouns she/her. Pleased to meet you all!</state>
