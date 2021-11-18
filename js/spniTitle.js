@@ -337,7 +337,7 @@ DEFAULT_CLOTHING_OPTIONS.forEach(function (clothing) {
 var titleClothingSelectors = [];
 
  /* Keep in sync with total number of calls to beginStartupStage */
-var totalLoadStages = 7;
+var totalLoadStages = 6;
 var curLoadStage = -1;
 
 /**********************************************************************

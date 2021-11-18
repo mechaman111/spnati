@@ -1,53 +1,64 @@
 #!/usr/bin/env python3
-from __future__ import print_function
+from __future__ import print_function, annotations
 
-from bs4 import BeautifulSoup
-from bs4.element import Tag
 import hashlib
 from pathlib import PurePath, Path
+from typing import List
 import sys
 
 
+def pad_bytes(data: bytes, alignment: int = 4):
+    pad_len = alignment - (len(data) % alignment)
+    pad_byte = pad_len.to_bytes(1, "big")
+    return data + (pad_byte * pad_len)
+
+
+class IndexElement:
+    def __init__(self, data: bytes, rel_path: PurePath):
+        self.data: bytes = data
+        self.rel_path: PurePath = rel_path
+
+    def encode(self) -> bytes:
+        padded_path = pad_bytes(self.rel_path.as_posix().encode("utf-8"), alignment=4)
+        padded_data = pad_bytes(self.data, alignment=4)
+
+        return (
+            len(padded_path).to_bytes(4, "big")
+            + len(padded_data).to_bytes(4, "big")
+            + padded_path
+            + padded_data
+        )
+
+
 def compile_index():
-    index_key = sys.argv[1]
+    local_mode = sys.argv[1] == "dev"
     root_dir = Path(sys.argv[2])
-    index_soup = BeautifulSoup(
-        "<?xml version='1.0' encoding='UTF-8'?><index></index>", features="html.parser"
-    )
-    index_elem = index_soup.find("index")
+    out_base_path = PurePath(sys.argv[3])
+    index_elems: List[IndexElement] = []
 
-    # This should be applicable for collectibles, costumes, and (hopefully) anything else
-    # of that nature that we add in the future.
-    for xml_path in filter(Path.is_file, root_dir.glob(sys.argv[3])):
-        with xml_path.open("rb") as f:
-            soup = BeautifulSoup(f.read(), features="html.parser")
+    for glob_pattern in sys.argv[4:]:
+        for file_path in filter(Path.is_file, root_dir.glob(glob_pattern)):
+            with file_path.open("rb") as f:
+                index_elems.append(IndexElement(f.read(), file_path.relative_to(root_dir)))
 
-        for elem in filter(
-            lambda e: isinstance(e, Tag) and len(e.contents) > 0, soup.children
-        ):
-            if index_key == "subfolder":
-                elem["id"] = xml_path.parts[-2]
-            elif index_key == "path":
-                elem["id"] = str(xml_path.relative_to(root_dir).parent.as_posix())
-            index_elem.append(elem)
-
-    index_contents = index_soup.encode(encoding="utf-8")
-
+    encoded = b"".join(map(IndexElement.encode, index_elems))
     m = hashlib.sha1()
-    m.update(index_contents)
+    m.update(encoded)
 
-    # Compute the actual name of the output file by adding the hash of the file contents.
-    out_base_path = PurePath(sys.argv[4])
-    hashed_name = out_base_path.stem + "." + m.hexdigest() + out_base_path.suffix
-    out_rel_path = out_base_path.parent.joinpath(hashed_name)
+    if local_mode:
+        out_rel_path = out_base_path
+    else:
+        # Compute the actual name of the output file by adding the hash of the file contents.
+        hashed_name = out_base_path.stem + "." + m.hexdigest() + out_base_path.suffix
+        out_rel_path = out_base_path.parent.joinpath(hashed_name)
 
     with root_dir.joinpath(out_rel_path).open("wb") as f:
-        f.write(index_contents)
+        f.write(encoded)
 
     # Escape slashes to make the result acceptable for insertion into sed's arguments.
     out_str = out_rel_path.as_posix()
-    out_str.replace("\\", "\\/").replace("/", "\\/")
-
+    if not local_mode:
+        out_str = out_str.replace("\\", "\\/").replace("/", "\\/")
     print(out_str, end="")  # output without newline
 
 

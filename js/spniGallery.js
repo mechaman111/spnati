@@ -58,8 +58,6 @@ var $deckStatusAlert = $("#deck-status-alert");
 var $deckEnableAllBtn = $("#deck-activate-btn");
 var $deckDisableAllBtn = $("#deck-deactivate-btn");
 
-var collectiblesDataIndex = new DataFileCollection("opponents/", "collectibles.xml", "__COLLECTIBLES_XML_INDEX");
-
 
 function GEnding(player, ending){
     this.player = player;
@@ -415,9 +413,6 @@ function loadGeneralCollectibles () {
 function loadAllCollectibles() {
     console.log("Loading all collectibles");
     return loadGeneralCollectibles().then(function () {
-        beginStartupStage("Collectibles");
-        return collectiblesDataIndex.loadIndex();
-    }).then(function () {
         beginStartupStage("Collectibles");
 
         var nLoaded = 0;

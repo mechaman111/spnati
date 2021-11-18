@@ -839,7 +839,7 @@ Opponent.prototype.loadAlternateCostume = function () {
     console.log("Loading alternate costume: "+this.selected_costume);
     this.loaded = false;
 
-    return costumeDataIndex.getFile(this.selected_costume).then(function ($xml) {
+    return metadataIndex.getFile(this.selected_costume+'costume.xml').then(function ($xml) {
         if (SENTRY_INITIALIZED) {
             Sentry.addBreadcrumb({
                 category: 'select',
@@ -923,7 +923,7 @@ Opponent.prototype.fetchCollectibles = function () {
 
     console.log("Fetching collectibles for " + this.id);
 
-    return collectiblesDataIndex.getFile(this.id).then(function ($xml) {
+    return metadataIndex.getFile(this.folder + "collectibles.xml").then(function ($xml) {
         var collectiblesArray = [];
         $xml.children('collectible').each(function (idx, elem) {
             collectiblesArray.push(new Collectible($(elem), this));
