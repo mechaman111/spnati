@@ -306,7 +306,11 @@ Save.prototype.loadOptions = function(){
         && (typeof options.autoEnding == 'number' || options.autoEnding === null))
         ENDING_DELAY = options.autoEnding;
     if ('minimalUI' in options && typeof options.minimalUI == 'boolean') setUIMode(options.minimalUI);
+    if ('uiFontWeight' in options && typeof options.uiFontWeight == 'number') UI_FONT_WEIGHT = options.uiFontWeight;
+    if ('uiFontWidth' in options && typeof options.uiFontWidth == 'number') UI_FONT_WIDTH = options.uiFontWidth;
     if ('playerFinishingEffect' in options && typeof options.playerFinishingEffect == 'boolean') PLAYER_FINISHING_EFFECT = options.playerFinishingEffect;
+
+    setUIFontSettings(UI_FONT_WEIGHT, UI_FONT_WIDTH);
 
     if ('stamina' in options) humanPlayer.stamina = options.stamina;
     
@@ -409,6 +413,8 @@ Save.prototype.saveOptions = function() {
         autoForfeit: FORFEIT_DELAY,
         autoEnding: ENDING_DELAY,
         minimalUI: MINIMAL_UI,
+        uiFontWeight: UI_FONT_WEIGHT,
+        uiFontWidth: UI_FONT_WIDTH,
         stamina: humanPlayer.stamina,
         playerFinishingEffect: PLAYER_FINISHING_EFFECT,
     };
