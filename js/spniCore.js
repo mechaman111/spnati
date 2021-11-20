@@ -19,7 +19,7 @@ var USAGE_TRACKING = undefined;
 var SENTRY_INITIALIZED = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
-var UI_FONT_WEIGHT = 400;
+var UI_FONT_WEIGHT = 500;
 var UI_FONT_WIDTH = 100;
 
 var CURRENT_VERSION = undefined;

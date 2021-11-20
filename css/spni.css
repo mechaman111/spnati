@@ -42,6 +42,12 @@ html {
     touch-action: manipulation;
 }
 
+:root {
+    --base-font-weight: 500;
+    --medium-font-weight: calc(var(--base-font-weight) + 100);
+    --base-font-stretch: 100%;
+}
+
 body {
     color: #050505;
     background-color: #050505;
@@ -53,6 +59,8 @@ body {
     background-position: center center;
     background-repeat: repeat-x;
     overflow: hidden;
+    font-weight: var(--base-font-weight);
+    font-stretch: var(--base-font-stretch);
 }
 
 button,
@@ -127,8 +135,20 @@ ul {
     padding-left: 2em;
 }
 
-label {
-    font-weight: 500;
+label,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-weight: var(--medium-font-weight);
 }
 
 .glyphicon {
@@ -1021,7 +1041,7 @@ ul.dropdown-menu>li {
     width: 100%;
     position: absolute;
     z-index: 0;
-    font-size: 110%;
+    font-size: 113%;
     background: #F5F5F5;
     opacity: 95%;
     border-radius: 1rem;
@@ -2998,7 +3018,7 @@ ul.dropdown-menu>li {
 
 #group-preset-background-label::before {
     content: "BG: ";
-    font-weight: 500;
+    font-weight: var(--medium-font-weight);
 }
 
 #group-preset-background-label {
@@ -3443,21 +3463,20 @@ ul.dropdown-menu>li {
 
 .text-option-container {
     display: flex;
-    justify-content: center;
 }
 
 .text-option-container .ui-text-option {
     width: 20rem;
-    margin-right: auto;
+    margin-right: 5rem;
 }
 
 .text-option-sample {
-    margin-right: auto;
     font-size: 1.75rem;
     width: 15rem;
 }
 
 .text-option-label {
+    margin-left: auto;
     margin-right: 0.5rem;
     font-size: 1.75rem;
     width: 5rem;
@@ -3770,7 +3789,7 @@ ul.dropdown-menu>li {
 .epilogue-content .dialogue-bubble {
     padding: 0.9rem;
     margin: 0;
-    font-size: 100%;
+    font-size: 103%;
     border-radius: 0.7rem;
 }
 
@@ -4210,7 +4229,7 @@ ul.dropdown-menu>li {
     margin-top: 0.1em;
     margin-bottom: 0.2em;
     font-size: 2em;
-    font-weight: 500;
+    font-weight: var(--medium-font-weight);
     line-height: 1.1;
     text-align: left;
 }

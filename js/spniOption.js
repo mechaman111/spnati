@@ -287,7 +287,7 @@ function setUIMode(minimal) {
 }
 
 function setUIFontSettings(weight, width) {
-    weight = (typeof weight != "number") ? 400 : weight;
+    weight = (typeof weight != "number") ? 500 : weight;
     width = (typeof width != "number") ? 100 : width;
 
     /* These are the max supported ranges for the Open Sans font.
@@ -322,7 +322,7 @@ function setUIFontSettings(weight, width) {
         document.head.appendChild(targetSheet);
     }
 
-    targetSheet.innerText = "body { font-weight: " + weight + "; font-stretch: " + roundedWidth + "% }";
+    targetSheet.innerText = ":root { --base-font-weight: " + weight + "; --base-font-stretch: " + roundedWidth + "% }";
 }
 
 $('ul#options-auto-fade').on('click', 'a', function() {
