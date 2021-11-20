@@ -4581,6 +4581,18 @@
                 <state img="#-shocked.png" marker="Myriam_Allowed1">W-Wait, what? Is... is that even &lt;i&gt;allowed?&lt;/i&gt; Sure, it's just a tie, but...</state>
                 <state img="#-shocked.png" marker="Myriam_Allowed1">W-Wait, is that even &lt;i&gt;allowed?&lt;/i&gt; I mean, it's just a tie, but...</state>
             </case>
+            <case stage="4-9" id="866">
+                <condition filter="ginger" role="target" />
+                <condition role="self" saidMarker="ValidFlirtingTarget*==1" notSaidMarker="Flirt_Ginger" />
+                <condition count="0" filter="red_hair" role="target" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
+                <state img="#-tease.png" marker="Flirt_Ginger=~name~">Has anyone ever told you how much you stand out, ~name~? Especially your hair-- tell me, are you as fiery as you look?</state>
+            </case>
             <case stage="0-7" id="131">
                 <condition filter="bottomless_first" role="target" />
                 <test expr="~clothing.type~" value="important" />
@@ -4596,6 +4608,50 @@
                 <state img="#-shocked.png">~Clothing~ first? That's definitely a bold move.</state>
                 <state img="#-shocked-2.png">Whoa, wait, you're taking off your ~clothing~ first? Pretty bold!</state>
                 <state img="#-shocked.png">Whoa, that's a bold move, taking your ~clothing~ off first...</state>
+            </case>
+            <case stage="4-9" id="853">
+                <condition filter="ponytail" role="target" />
+                <condition role="self" saidMarker="ValidFlirtingTarget*==1" notSaidMarker="Flirt_Ponytail" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
+                <state img="#-coy.png" marker="Flirt_Ponytail=~name~">By the way... I &lt;i&gt;love&lt;/i&gt; what you're doing with that ponytail, ~name~. &lt;br&gt; But maybe you could let your hair down, just for me? After all, we're here to live a little, right? Hehe...</state>
+            </case>
+            <case stage="4-9" id="854">
+                <condition filter="messy_hair" role="target" />
+                <condition role="self" saidMarker="ValidFlirtingTarget*==1" notSaidMarker="Flirt_MessyHair" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
+                <state img="#-smug-2.png" marker="Flirt_MessyHair=~name~">My, your hair's pretty messy, isn't it ~name~? Perhaps I can come closer and help you clean up... or would you be more interested in making a mess out of &lt;i&gt;me,&lt;/i&gt; instead?</state>
+            </case>
+            <case stage="4-9" id="865">
+                <condition filter="red_hair" role="target" />
+                <condition role="self" saidMarker="ValidFlirtingTarget*==1" notSaidMarker="Flirt_RedHair" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
+                <state img="#-tease.png" marker="Flirt_RedHair=~name~">By the way, ~name~, that shade of red in your hair is quite lovely... I bet you make a lot of heads turn, hehe.</state>
+            </case>
+            <case stage="4-9" id="867">
+                <condition filter="purple_hair" role="target" />
+                <condition role="self" saidMarker="ValidFlirtingTarget*==1" notSaidMarker="Flirt_PurpleHair" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
+                <state img="#-tease.png" marker="Flirt_PurpleHair=~name~">You know, ~name~, I'm quite fond of the color purple-- and I'm really falling in love with the violet shade of your hair, hehe...</state>
             </case>
             <case stage="6-7" id="104" oneShotId="5" priority="0">
                 <condition count="0" filter="omori" role="opp" />
@@ -4687,28 +4743,6 @@
                 <test expr="~clothing.type~" value="minor" />
                 <state img="#-tease.png" marker="Indifferent_Stripping=1">Man, it really takes a lot to get a rise out of you, ~name~... don't think I won't try to break through your walls of ice, though, hehe!</state>
                 <state img="#-tease.png" marker="Indifferent_Stripping=2">You're pretty icy, hm, ~name~... don't think I won't stop trying to break through that ice, though!</state>
-            </case>
-            <case stage="0-9" id="853" disabled="1">
-                <condition filter="ponytail" role="target" />
-                <condition role="self" saidMarker="ValidFlirtingTarget*==1" notSaidMarker="Flirt_Ponytail" />
-                <alternative>
-                    <test expr="~clothing.type~" value="extra" />
-                </alternative>
-                <alternative>
-                    <test expr="~clothing.type~" value="minor" />
-                </alternative>
-                <state img="#-tease.png" marker="Flirt_Ponytail=~name~">By the way... I &lt;i&gt;love&lt;/i&gt; what you're doing with that ponytail, ~name~. &lt;br&gt; But maybe you could let your hairl down, just for me? After all, we're here to live a little, right? Hehe...</state>
-            </case>
-            <case stage="0-9" id="854" disabled="1">
-                <condition filter="messy_hair" role="target" />
-                <condition role="self" saidMarker="ValidFlirtingTarget*==1" notSaidMarker="Flirt_MessyHair" />
-                <alternative>
-                    <test expr="~clothing.type~" value="extra" />
-                </alternative>
-                <alternative>
-                    <test expr="~clothing.type~" value="minor" />
-                </alternative>
-                <state img="#-smug.png" marker="Flirt_MessyHair=~name~">My, your hair's pretty messy, isn't it ~name~? Perhaps I can come closer and help you clean up... or would you be more interested in making a mess out of &lt;i&gt;me,&lt;/i&gt; instead?</state>
             </case>
         </trigger>
 
@@ -5257,6 +5291,28 @@
                 <state img="#-tease.png">You're all dressed-up, even under the surface... hehe. Were you hoping to show off ~revealed.ifPlural(those|that)~ ~revealed~, ~name~?</state>
                 <state img="#-tease.png">Lookin' pretty sexy up there, ~name~... I bet you were hoping to show off ~revealed.ifPlural(those|that)~ ~revealed~ to us, hehe.</state>
             </case>
+            <case stage="4-9" id="851">
+                <condition filter="dark_eyes" role="target" />
+                <condition role="self" saidMarker="ValidFlirtingTarget*==1" notSaidMarker="Flirt_DarkEyes" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
+                <state img="#-coy.png" marker="Flirt_DarkEyes=~name~">~name~, I couldn't help but be drawn to your eyes... they're so dark and deep. I got lost in them for a moment, hehe...</state>
+            </case>
+            <case stage="4-9" id="852">
+                <condition filter="blue_eyes" role="target" />
+                <condition role="self" saidMarker="ValidFlirtingTarget*==1" notSaidMarker="Flirt_BlueEyes" />
+                <alternative>
+                    <test expr="~clothing.type~" value="extra" />
+                </alternative>
+                <alternative>
+                    <test expr="~clothing.type~" value="minor" />
+                </alternative>
+                <state img="#-coy.png" marker="Flirt_BlueEyes=~name~">Your eyes are like the sea, ~name~, rich and blue... when I look into them, it feels like I'm sinking into serene waters...</state>
+            </case>
             <case stage="0-9" id="835" priority="200">
                 <condition role="self" notSaidMarker="Target_MultipleUnderwear*" />
                 <test expr="~clothing.generic~" value="underwear" />
@@ -5367,28 +5423,6 @@
                 <condition count="0" filter="omori" role="target" />
                 <state img="#-smug.png" marker="Moe_Stripped=1">Hehe, so even someone as cute and adorable as you can get pretty sexy... who would have thought?</state>
                 <state img="#-tease.png" marker="Moe_Stripped=2">On top of how cute and adorable you look, ~name~... you can get pretty sexy, when it counts! I'm liking it, hehe...</state>
-            </case>
-            <case stage="0-9" id="851" disabled="1">
-                <condition filter="dark_eyes" role="target" />
-                <condition role="self" saidMarker="ValidFlirtingTarget*==1" notSaidMarker="Flirt_DarkEyes" />
-                <alternative>
-                    <test expr="~clothing.type~" value="extra" />
-                </alternative>
-                <alternative>
-                    <test expr="~clothing.type~" value="minor" />
-                </alternative>
-                <state img="#-tease.png" marker="Flirt_DarkEyes=~name~">~name~, I couldn't help but be drawn to your eyes... they're so dark and deep. I got lost in them for a moment, hehe...</state>
-            </case>
-            <case stage="0-9" id="852" disabled="1">
-                <condition filter="blue_eyes" role="target" />
-                <condition role="self" saidMarker="ValidFlirtingTarget*==1" notSaidMarker="Flirt_BlueEyes" />
-                <alternative>
-                    <test expr="~clothing.type~" value="extra" />
-                </alternative>
-                <alternative>
-                    <test expr="~clothing.type~" value="minor" />
-                </alternative>
-                <state img="#-tease.png" marker="Flirt_BlueEyes=~name~">Your eyes are like the sea, ~name~, rich and blue... when I look into them, it feels like I'm sinking into serene waters...</state>
             </case>
             <case stage="0-9" id="803" oneShotId="94" hidden="1">
                 <condition role="target" character="human" />
