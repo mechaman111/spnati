@@ -267,6 +267,8 @@ function showOptionsModal () {
     setActiveOption('options-auto-ending', ENDING_DELAY);
     setActiveOption('options-minimal-ui', MINIMAL_UI);
     setActiveOption('options-player-finishing-effect', PLAYER_FINISHING_EFFECT);
+    $("#options-ui-font-weight").val(UI_FONT_WEIGHT);
+    $("#options-ui-font-width").val(UI_FONT_WIDTH);
 
     $("#options-modal").modal('show');
 }
@@ -282,6 +284,45 @@ function setUIMode(minimal) {
     } else {
         $gameScreen.removeClass('ui-minimal');
     }
+}
+
+function setUIFontSettings(weight, width) {
+    weight = (typeof weight != "number") ? 500 : weight;
+    width = (typeof width != "number") ? 100 : width;
+
+    /* These are the max supported ranges for the Open Sans font.
+     * The in-game UI font option sliders are more constrained than this.
+     */
+    if (weight < 300) {
+        weight = 300;
+    } else if (weight > 800) {
+        weight = 800;
+    }
+    
+    if (width < 75) {
+        width = 75;
+    } else if (width > 100) {
+        width = 100;
+    }
+
+    UI_FONT_WEIGHT = weight;
+    UI_FONT_WIDTH = width;
+
+    /* Round width to 1 digit of precision */
+    var roundedWidth = Math.round(width * 10) / 10;
+
+    $("#text-weight-label").text(UI_FONT_WEIGHT);
+    $("#text-width-label").text(roundedWidth);
+
+    var targetSheet = document.getElementById("font-options-sheet");
+    if (!targetSheet) {
+        targetSheet = document.createElement("style");
+        targetSheet.type = "text/css";
+        targetSheet.id = "font-options-sheet";
+        document.head.appendChild(targetSheet);
+    }
+
+    targetSheet.innerText = ":root { --base-font-weight: " + weight + "; --base-font-stretch: " + roundedWidth + "% }";
 }
 
 $('ul#options-auto-fade').on('click', 'a', function() {
@@ -315,6 +356,13 @@ $('ul#options-auto-ending').on('click', 'a', function() {
 
 $('ul#options-minimal-ui').on('click', 'a', function() {
     setUIMode($(this).attr('data-value') === 'true');
+});
+
+$('.ui-text-option').on('input', function() {
+    setUIFontSettings(
+        Number($('#options-ui-font-weight').val()),
+        Number($('#options-ui-font-width').val()),
+    );
 });
 
 $('ul#options-player-finishing-effect').on('click', 'a', function() {
