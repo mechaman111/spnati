@@ -36,8 +36,6 @@ Characters must possess humanoid sexual organs, and have basic human anatomy.
 
 Note that a character's anatomy should match the character's sex and gender. This is partially a game code limitation.
 
-**Note:** in the past, this rule was waived during April Fool's events. Going forward, we will adhere to this rule for any future April Fool's characters. However, clemency can be sought for April Fool's 2021 characters ahead of time from the mod team.
-
 ## No Non-Consensual Activities
 
 All characters must be at The Inventory and engage in sexual activities of their own free will.
@@ -56,4 +54,4 @@ The Moderation Team will be the final arbitrators of whether a character deserve
 
 ---
 
-*Rules Effective 2021-08-23*
+*Rules Effective 2021-11-23*
