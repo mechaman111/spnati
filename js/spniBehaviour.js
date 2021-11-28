@@ -1449,6 +1449,10 @@ function expandDialogue (dialogue, self, target, bindings) {
                 } else if (fn === 'tag') {
                     var bg_tag = fixupTagFormatting(fn_parts[1]);
                     substitution = !!activeBackground.tags && (activeBackground.tags.indexOf(bg_tag) >= 0);
+                } else if (fn === 'preposition') {
+                    substitution = activeBackground.metadata[fn] || 'in';
+                } else if (fn === 'term') {
+                    substitution = activeBackground.metadata.term || activeBackground.id;
                 } else if (fn == 'time' && !('time' in activeBackground.metadata) && args === undefined) {
                     substitution = localDayOrNight;
                 } else if (args === undefined) {
