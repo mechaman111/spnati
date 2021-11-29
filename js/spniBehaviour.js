@@ -688,16 +688,24 @@ NicknameOperation.prototype.apply = function (self, opp) {
  function parseOperationXML(xml, parentCase) {
     var $elem = $(xml);
     var type = xml.tagName.toLowerCase();
-    var attr = $elem.attr("attr");
-    var rhs = $elem.attr("value");
-    var op = $elem.attr("op") || "=";
-
+    
     if (type == "forfeit") {
-        return new ForfeitTimerOperation(attr, op, rhs, $elem.attr("heavy"), parentCase);
+        return new ForfeitTimerOperation(
+            $elem.attr("attr"), 
+            $elem.attr("op") || "=",
+            $elem.attr("value"),
+            $elem.attr("heavy"),
+            parentCase
+        );
     } else if (type == "nickname") {
-        return new NicknameOperation(attr, op, rhs, parentCase);
+        return new NicknameOperation(
+            $elem.attr("character"),
+            $elem.attr("op") || "=",
+            $elem.attr("name"),
+            parentCase
+        );
     } else if (type == "player") {
-        return new PlayerAttributeOperation(attr, rhs, parentCase);
+        return new PlayerAttributeOperation($elem.attr("attr"), $elem.attr("value"), parentCase);
     }
 }
 
