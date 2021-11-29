@@ -155,7 +155,7 @@ function tickForfeitTimers () {
                     $gamePlayerCountdown.addClass('pulse');
                 }
                 masturbatingPlayers.push(i); // Double the chance of commenting on human player
-            } else {
+            } else if (!players[i].forfeitLocked) {
                 /* AI player */
                 /* random chance they go into heavy masturbation */
                 // CHANGE THIS TO ACTIVATE ONLY IN THE LAST 4 TURNS

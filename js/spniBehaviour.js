@@ -426,6 +426,278 @@ MarkerOperation.prototype.serialize = function (self, opp) {
 }
 
 
+/**
+ * A State-based operation for setting per-player attributes:
+ * - AI Difficulty / Intelligence
+ * - Label
+ * - Size
+ * - Gender
+ * 
+ * These operations take string values.
+ * 
+ * @param {string} attr 
+ * @param {string} value 
+ * @param {Case} parentCase 
+ */
+function PlayerAttributeOperation (attr, value, parentCase) {
+    this.attr = attr;
+    this.value = value;
+    this.parentCase = parentCase;
+}
+
+/**
+ * Apply this operation to a player.
+ * 
+ * @param {Player} self 
+ * @param {Player} opp 
+ * @returns 
+ */
+PlayerAttributeOperation.prototype.apply = function (self, opp) {
+    var value = expandDialogue(
+        this.value, self, opp, 
+        this.parentCase && this.parentCase.variableBindings
+    );
+
+    switch (this.attr) {
+    case "intelligence":
+        self.setIntelligence(value);
+        break;
+    case "label":
+        self.setLabel(value);
+        break;
+    case "size":
+        self.size = value;
+        break;
+    case "gender":
+        self.gender = value;
+        break;
+    default:
+        console.error("Unknown player attribute: ", this.attr);
+        break;
+    }
+}
+
+
+/**
+ * A State-based operation for altering a character's forfeit:
+ * - stamina (for opponents still in the game)
+ * - current forfeit timer (for opponents currently masturbating)
+ * - heavy masturbation status (ditto)
+ * 
+ * Operations on player stamina and timers take numeric RHS values and
+ * support arithmetic operations, similarly to marker operations.
+ * 
+ * Operations on heavy masturbation status take either 'true', 'false', or 'reset',
+ * and do not support arithmetic operations.
+ * 
+ * @param {string} attr 
+ * @param {string} op 
+ * @param {string} value 
+ * @param {Case} parentCase 
+ */
+function ForfeitTimerOperation (attr, op, value, parentCase) {
+    this.attr = attr;
+    this.op = op || "=";
+    this.value = value;
+    this.parentCase = parentCase;
+}
+
+/**
+ * Apply this operation to a player.
+ * 
+ * @param {Player} self 
+ * @param {Player} opp 
+ */
+ForfeitTimerOperation.prototype.apply = function (self, opp) {
+    if (
+        self.finished ||
+        (!self.out && this.attr != "stamina") ||
+        (self.out && this.attr == "stamina")
+    ) return;
+
+    var rhs = expandDialogue(
+        this.value, self, opp, 
+        this.parentCase && this.parentCase.variableBindings
+    );
+
+    if (this.attr == "heavy") {
+        if (rhs == "true") {
+            /* Force the player into heavy masturbation. */
+            self.forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
+            self.forfeitLocked = true;
+        } else if (rhs == "false") {
+            /* Force the player out of heavy masturbation. */
+            self.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
+            self.forfeitLocked = true;
+        } else if (rhs == "reset") {
+            /* Reset the player's forfeit type. */
+            var threshold = getRandomNumber(HEAVY_LAST_ROUND, HEAVY_FIRST_ROUND);
+            if (threshold >= self.timer) {
+                self.forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
+            } else {
+                self.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
+            }
+            self.forfeitLocked = false;
+        }
+    } else {
+        let lhs = 0;
+        if (this.attr == "timer") {
+            lhs = self.timer;
+        } else if (this.attr == "stamina") {
+            lhs = self.stamina;
+        }
+
+        if (typeof(rhs) !== 'number' || isNaN(rhs)) {
+            rhs = 0;
+        }
+
+        let newValue = lhs;
+        switch (this.op) {
+        case '=':
+        default:
+            newValue = rhs;
+            break;
+        case '+':
+            newValue = lhs + rhs;
+            break;
+        case '-':
+            newValue = lhs - rhs;
+            break;
+        case '*':
+            newValue = lhs * rhs;
+            break;
+        case '/':
+            newValue = (rhs === 0) ? 0 : Math.round(lhs / rhs);
+            break;
+        case '%':
+            newValue = (rhs === 0) ? 0 : lhs % rhs;
+            break;
+        }
+
+        /* 0 is not a valid value for stamina and timer. */
+        if (newValue === 0) newValue = 1;
+
+        if (this.attr == "stamina") {
+            self.stamina = newValue;
+        } else if (this.attr == "timer") {
+            self.timer = newValue;
+        } else {
+            console.error("Unknown forfeit attribute: ", this.attr);
+        }
+    }
+}
+
+
+/**
+ * A State-based operation for altering player nicknames.
+ * 
+ * These operations take a target, an operation, and a string nickname value.
+ * 
+ * The target can be either '*' (to modify the default nickname list), or a 
+ * player reference. Player references are resolved using the same rules as
+ * variables: 'self', 'target', and 'winner' are all valid, as are bound
+ * variable names. 
+ * 
+ * Depending on the operation type, the nickname list for the referenced player
+ * is modified as follows:
+ * - "=": (re)sets the target nickname list to only contain the operation value.
+ * - "+": adds the operation value to the target nickname list, if not already present.
+ * - "-": removes the operation value from the target nickname list, if present.
+ * 
+ * Nickname operations respect the `nickname` per-target marker: if set, it will
+ * override the normal contents of the target nickname list, and the marker will
+ * be cleared when the operation is applied.
+ *  
+ * @param {string} target 
+ * @param {string} op
+ * @param {string} value 
+ * @param {Case} parentCase 
+ */
+ function NicknameOperation (target, op, value, parentCase) {
+    this.target = target.toLowerCase();
+    this.op = op;
+    this.value = value;
+    this.parentCase = parentCase;
+}
+
+/**
+ * Apply this operation to a player.
+ * 
+ * @param {Player} self 
+ * @param {Player} opp 
+ */
+NicknameOperation.prototype.apply = function (self, opp) {
+    var newNicknames = [];
+    var nickPlayerID = '';
+    var rhs = expandDialogue(
+        this.value, self, opp, 
+        this.parentCase && this.parentCase.variableBindings
+    );
+    
+    if (this.target === '*') {
+        nickPlayerID = '*';
+        if ("*" in self.nicknames) newNicknames = self.nicknames["*"].slice();
+    } else {
+        let nickPlayer = findVariablePlayer(
+            this.target, self, opp, this.parentCase && this.parentCase.variableBindings
+        );
+    
+        if (!nickPlayer) {
+            console.error("Unknown player for nickname:", this.target);
+            return;
+        }
+
+        nickPlayerID = nickPlayer.id;
+        let nickmarker = self.getMarker('nickname', nickPlayer, false, true);
+
+        if (nickmarker) {
+            newNicknames = [nickmarker];
+            self.setMarker("nickname", nickPlayer, "");
+        } else if (nickPlayerID in self.nicknames || '*' in self.nicknames) {
+            newNicknames = (self.nicknames[nickPlayerID] || self.nicknames['*']).slice();
+        }
+    }
+
+    if (this.op == "=") {
+        newNicknames = [rhs];
+    } else if (this.op == "+") {
+        if (newNicknames.indexOf(rhs) < 0) newNicknames.push(rhs);
+    } else if (this.op == "-") {
+        newNicknames = newNicknames.filter(function (v) { return v !== rhs; });
+    }
+
+    if (newNicknames.length === 0) {
+        delete self.nicknames[nickPlayerID];
+    } else {
+        self.nicknames[nickPlayerID] = newNicknames;        
+    }
+}
+
+
+/**
+ * Parse an XML operation element.
+ * 
+ * @param {HTMLElement} xml 
+ * @param {Case} parentCase 
+ * @returns {PlayerAttributeOperation|ForfeitTimerOperation|NicknameOperation}
+ */
+ function parseOperationXML(xml, parentCase) {
+    var $elem = $(xml);
+    var type = xml.tagName.toLowerCase();
+    var attr = $elem.attr("attr");
+    var rhs = $elem.attr("value");
+    var op = $elem.attr("op") || "=";
+
+    if (type == "forfeit") {
+        return new ForfeitTimerOperation(attr, op, rhs, parentCase);
+    } else if (type == "nickname") {
+        return new NicknameOperation(attr, op, rhs, parentCase);
+    } else if (type == "player") {
+        return new PlayerAttributeOperation(attr, rhs, parentCase);
+    }
+}
+
+
 /**********************************************************************
  *****                  State Object Specification                *****
  **********************************************************************/
@@ -461,10 +733,23 @@ function State($xml_or_state, parentCase) {
         this.markers.push(parseMarkerOp(markerOp, parentCase));
     }
 
+    /** @type {(PlayerAttributeOperation|NicknameOperation|ForfeitTimerOperation)[]} */
+    this.operations = [];
+
+    ["intelligence", "size", "gender", "label"].forEach(function (attr) {
+        var val = $xml.attr("set-" + attr);
+        if (val) {
+            this.operations.push(new PlayerAttributeOperation(attr, val, parentCase));
+        }
+    }.bind(this));
+
     if (this.rawDialogue = $xml.children('text').html()) {
         this.alt_images = $xml.children('alt-img');
         $xml.children('markers').children('marker').each(function (idx, elem) {
             this.markers.push(parseMarkerXML(elem, parentCase));
+        }.bind(this));
+        $xml.children('operations').children().each(function (idx, elem) {
+            this.operations.push(parseOperationXML(elem, parentCase));
         }.bind(this));
     } else {
         this.rawDialogue = $xml.html();
@@ -476,11 +761,7 @@ function State($xml_or_state, parentCase) {
         // It seems that location was specified as a number without "%"
         this.location = this.location + "%";
     }
-    
-    this.setIntelligence = $xml.attr('set-intelligence');
-    this.setSize = $xml.attr('set-size');
-    this.setGender = $xml.attr('set-gender');
-    this.setLabel = $xml.attr('set-label');
+
     this.oneShotId = $xml.attr('oneShotId');
     
     var collectibleId = $xml.attr('collectible') || undefined;
@@ -554,6 +835,18 @@ State.prototype.applyMarkers = function (self, opp) {
             newVal
         );
     }
+}
+
+/**
+ * Apply player operations tied to this state.
+ * 
+ * @param {Player} self
+ * @param {Player} opp
+ */
+State.prototype.applyOperations = function (self, opp) {
+    this.operations.forEach(function (op) {
+        op.apply(self, opp);
+    });
 }
 
 State.prototype.expandDialogue = function(self, target) {
@@ -2253,14 +2546,7 @@ Opponent.prototype.applyState = function(state, opp) {
     state.applyMarkers(this, opp);
     state.applyCollectible(this);
     state.applyOneShot(this);
-    this.setLabel(state.setLabel);
-    this.setIntelligence(state.setIntelligence);
-    if (state.setGender) {
-        this.gender = state.setGender;
-    }
-    if (state.setSize) {
-        this.size = state.setSize;
-    }
+    state.applyOperations(this, opp);
     var parentCase = state.parentCase;
     if (parentCase) {
         if (parentCase.removeTags.length > 0 || parentCase.addTags.length > 0) {
@@ -2306,7 +2592,7 @@ function updateAllBehaviours (target, target_tags, other_tags) {
     }
     
     updateAllVolatileBehaviours();
-    commitAllBehaviourUpdates();
+    commitAllBehaviourUpdates(target_tags !== null ? players[target] : null);
 }
 
 /************************************************************
@@ -2334,11 +2620,17 @@ function updateAllVolatileBehaviours () {
 /************************************************************
  * Commits all player behaviour updates.
  ************************************************************/
-function commitAllBehaviourUpdates () {
-    /* Apply setLabel first so that ~name~ is the same for all players */
+function commitAllBehaviourUpdates (target) {
+    /* Apply label-setting operations first so that ~name~ is the same for all players.
+     * NOTE: maybe apply nickname operations here too?
+     */
     players.opponents.forEach(function (p) {
         if (p.chosenState) {
-            p.setLabel(p.chosenState.setLabel);
+            p.chosenState.operations.forEach(function (op) {
+                if ((op instanceof PlayerAttributeOperation) && op.attr === "label") {
+                    op.apply(p, (p !== target) ? target : null);
+                }
+            });
         }
     });
 

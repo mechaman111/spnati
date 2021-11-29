@@ -110,6 +110,7 @@ Player.prototype.resetState = function () {
     this.outOrder = undefined;
     this.biggestLead = 0;
     this.forfeit = "";
+    this.forfeitLocked = false;
     this.stage = this.consecutiveLosses = 0;
     this.timeInStage = 0;
     this.ticksInStage = 0;
