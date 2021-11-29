@@ -493,12 +493,14 @@ PlayerAttributeOperation.prototype.apply = function (self, opp) {
  * @param {string} attr 
  * @param {string} op 
  * @param {string} value 
+ * @param {string} heavyStatus 
  * @param {Case} parentCase 
  */
-function ForfeitTimerOperation (attr, op, value, parentCase) {
+function ForfeitTimerOperation (attr, op, value, heavyStatus, parentCase) {
     this.attr = attr;
     this.op = op || "=";
     this.value = value;
+    this.heavy = heavyStatus;
     this.parentCase = parentCase;
 }
 
@@ -515,31 +517,12 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
         (self.out && this.attr == "stamina")
     ) return;
 
-    var rhs = expandDialogue(
-        this.value, self, opp, 
-        this.parentCase && this.parentCase.variableBindings
-    );
+    if (this.attr) {
+        var rhs = expandDialogue(
+            this.value, self, opp, 
+            this.parentCase && this.parentCase.variableBindings
+        );
 
-    if (this.attr == "heavy") {
-        if (rhs == "true") {
-            /* Force the player into heavy masturbation. */
-            self.forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
-            self.forfeitLocked = true;
-        } else if (rhs == "false") {
-            /* Force the player out of heavy masturbation. */
-            self.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
-            self.forfeitLocked = true;
-        } else if (rhs == "reset") {
-            /* Reset the player's forfeit type. */
-            var threshold = getRandomNumber(HEAVY_LAST_ROUND, HEAVY_FIRST_ROUND);
-            if (threshold >= self.timer) {
-                self.forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
-            } else {
-                self.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
-            }
-            self.forfeitLocked = false;
-        }
-    } else {
         let lhs = 0;
         if (this.attr == "timer") {
             lhs = self.timer;
@@ -583,6 +566,27 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
             self.timer = newValue;
         } else {
             console.error("Unknown forfeit attribute: ", this.attr);
+        }
+    }
+
+    if (self.out) {
+        if (this.heavy == "true") {
+            /* Force the player into heavy masturbation. */
+            self.forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
+            self.forfeitLocked = true;
+        } else if (this.heavy == "false") {
+            /* Force the player out of heavy masturbation. */
+            self.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
+            self.forfeitLocked = true;
+        } else if (this.heavy == "reset") {
+            /* Reset the player's forfeit type. */
+            var threshold = getRandomNumber(HEAVY_LAST_ROUND, HEAVY_FIRST_ROUND);
+            if (threshold >= self.timer) {
+                self.forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
+            } else {
+                self.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
+            }
+            self.forfeitLocked = false;
         }
     }
 }
@@ -689,7 +693,7 @@ NicknameOperation.prototype.apply = function (self, opp) {
     var op = $elem.attr("op") || "=";
 
     if (type == "forfeit") {
-        return new ForfeitTimerOperation(attr, op, rhs, parentCase);
+        return new ForfeitTimerOperation(attr, op, rhs, $elem.attr("heavy"), parentCase);
     } else if (type == "nickname") {
         return new NicknameOperation(attr, op, rhs, parentCase);
     } else if (type == "player") {
