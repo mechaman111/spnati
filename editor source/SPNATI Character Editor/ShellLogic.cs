@@ -10,8 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Text;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace SPNATI_Character_Editor
@@ -31,6 +33,8 @@ namespace SPNATI_Character_Editor
 			BuildDefinitions();
 			CreateActionBar();
 			CreateToolbar();
+			LoadFonts();
+
 			Shell.Instance.PostOffice.Subscribe<IActivity>(CoreDesktopMessages.ActivityChanged, OnActivityChanged);
 			Shell.Instance.LaunchWorkspace(new LoaderRecord());
 			Shell.Instance.Maximize(true);
@@ -467,6 +471,16 @@ namespace SPNATI_Character_Editor
 			shell.AddToolbarItem("View Help", OpenHelp, menu, Keys.F1);
 			shell.AddToolbarItem("Change Log", OpenChangeLog, menu, Keys.None);
 			shell.AddToolbarItem("About Character Editor...", OpenAbout, menu, Keys.None);
+		}
+
+		private static void LoadFonts()
+        {
+			Shell.Instance.Fonts = new PrivateFontCollection();
+			int fontLength = Properties.Resources.OpenSans_VariableFont.Length;
+			byte[] fontdata = Properties.Resources.OpenSans_VariableFont;
+			System.IntPtr data = Marshal.AllocCoTaskMem(fontLength);
+			Marshal.Copy(fontdata, 0, data, fontLength);
+			Shell.Instance.Fonts.AddMemoryFont(data, fontLength);
 		}
 
 		private static void CreateNewCharacter()

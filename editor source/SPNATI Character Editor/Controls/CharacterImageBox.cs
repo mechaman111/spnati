@@ -21,7 +21,7 @@ namespace SPNATI_Character_Editor.Controls
 		private const int TextBorder = 2;
 		private const int TextPadding = 10;
 		private const float TextBuffer = 0.1f; //90% height of textbox row
-		private const string FontName = "Trebuchet MS";
+		private const string FontName = "Open Sans";
 		private const int ArrowSize = 15;
 		
 		private float _time;
@@ -121,19 +121,19 @@ namespace SPNATI_Character_Editor.Controls
 
 			if (_size == "small")
 			{
-				BaseSize = (11.7f * (92 / 100f));
+				BaseSize = (11.3f * (92 / 100f));
 			}
 			else if (_size == "smaller")
 			{
-				BaseSize = (11.7f * (85 / 100f));
+				BaseSize = (11.3f * (85 / 100f));
 			}
 			else
 			{
-				BaseSize = 11.7f;
+				BaseSize = 11.3f;
 			}
 
 			float size = BaseSize * (screenWidth / 1000f);
-			_textFont = new Font("Trebuchet MS", size == 0 ? BaseSize : size);
+			_textFont = new Font(Shell.Instance.Fonts.Families[0], size == 0 ? BaseSize : size);
 			_italicFont = new Font(_textFont, FontStyle.Italic);
 		}
 

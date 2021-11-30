@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Xml.Serialization;
+using Desktop;
 using Desktop.CommonControls.PropertyControls;
 using SPNATI_Character_Editor.Controls;
 using SPNATI_Character_Editor.Controls.EditControls;
@@ -24,7 +25,7 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 
 		static LiveBubble()
 		{
-			_font = new Font("Trebuchet MS", 14);
+			_font = new Font(Shell.Instance.Fonts.Families[0], 11.3f);
 			_stringFormat = new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center };
 			_graphics = Graphics.FromImage(new Bitmap(1, 1));
 			_alignmentPen = new Pen(Color.FromArgb(127, 255, 255, 255), 2);
@@ -214,11 +215,11 @@ namespace SPNATI_Character_Editor.EpilogueEditor
 			if (camera != null)
 			{
 				//size to the camera
-				float size = Math.Max(1, camera.Height / 75.0f);
+				float size = Math.Max(1, camera.Height / 79.646f);
 				if (size != _font.Size)
 				{
 					_font?.Dispose();
-					_font = new Font("Trebuchet MS", size);
+					_font = new Font(Shell.Instance.Fonts.Families[0], size);
 				}
 			}
 
