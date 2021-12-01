@@ -30,7 +30,8 @@ namespace SPNATI_Character_Editor
 					}
 				}
 			}
-			if (Config.VersionPredates(version, "v5.2"))
+			// Below two were causing weird behavior when accidentally going backwards in versions
+			/*if (Config.VersionPredates(version, "v5.2"))
 			{
 				Convert5_1(character);
 				Convert5_2(character);
@@ -38,7 +39,7 @@ namespace SPNATI_Character_Editor
 			if (Config.VersionPredates(version, "v5.2.7"))
 			{
 				Convert5_2_7(character);
-			}
+			}*/
 			if (Config.VersionPredates(version, "v5.8"))
 			{
 				Convert5_8(character);
