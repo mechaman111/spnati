@@ -4,9 +4,9 @@ Guide by Mattlau04, last updated 02/12/2021
     
 --- 
 
-!!!note
+!!!note  
     You will need a computer for this, this guide is not about how to host SPNATI offline on a phone, but rather hosting it on your PC in a way that allows you to access it from your phone (or other LAN devices).
-!!!note
+!!!note  
     This is also not a guide on how to install SPNATI offline, for this guide i will assume you already have it downloaded on your pc
     
 ## Step 1: Installing python  
@@ -18,7 +18,7 @@ If not, go download it from [Python's website](https://www.python.org/downloads/
 ## Step 2: Installing the required packages  
 You need both the `bottle` and `gevent` librairies installed for this. 
 To install them, just open a CMD window and type `pip install bottle gevent`, then press enter.
-!!!note
+!!!note  
     To open a CMD window, just hold the windows key, press r, type then `cmd` then enter
 
 ## Step 3: Editing the .py file
