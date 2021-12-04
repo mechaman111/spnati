@@ -95,6 +95,8 @@ function tickForfeitTimers () {
                 if (d.slot != i) d.hideBubble();
             });
 
+            saveTranscriptMessage('<b>' + players[i].label.escapeHTML() + '</b> is finishing...');
+            console.log(players[i].label+" is finishing!");
             if (i == HUMAN_PLAYER) {
                 /* player's timer is up */
                 /* TEMP FIX: prevent this animation on Safari */
@@ -110,13 +112,10 @@ function tickForfeitTimers () {
                     $gamePlayerCountdown.hide();
                     finishMasturbation(i);
                 }
-                console.log(players[i].label+" is finishing!");
                 $gamePlayerCountdown.html('');
                 $gameClothingLabel.html("<b>You're 'Finished'</b>");
 
             } else {
-                console.log(players[i].label+" is finishing!");
-
                 /* let the player speak again */
                 players[i].forfeit = [PLAYER_FINISHING_MASTURBATING, CAN_SPEAK];
 
