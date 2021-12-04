@@ -177,6 +177,7 @@ function loadGameScreen () {
         }
     }.bind(this));
 
+    saveAllTranscriptEntries();
     updateAllBehaviours(null, null, GAME_START);
     updateBiggestLead();
 
