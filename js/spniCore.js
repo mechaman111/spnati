@@ -1036,9 +1036,17 @@ function mergeObjects(a, b){
 /************************************************************
  * Changes the first letter in a string to upper case.
  ************************************************************/
-String.prototype.initCap = function() {
-    return this.substr(0, 1).toUpperCase() + this.substr(1);
-}
+Object.defineProperty(String.prototype, 'initCap', {
+    value: function initCap() {
+        return this.substr(0, 1).toUpperCase() + this.substr(1);
+    }
+});
+
+Object.defineProperty(String.prototype, 'escapeHTML', {
+    value: function escapeHTML() {
+        return document.createElement('span').appendChild(document.createTextNode(this)).parentNode.innerHTML;
+    }
+});
 
 // Polyfills for IE
 if (!String.prototype.startsWith) {

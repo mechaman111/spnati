@@ -735,7 +735,7 @@ function expandNicknames (self, target) {
             return expandDialogue(nickList[getRandomNumber(0, nickList.length)], null, target);
         }
     }
-    return target.label;
+    return target.label.escapeHTML();
 }
 
 function expandClothingVariable(clothing, fn, args, self, target, bindings) {

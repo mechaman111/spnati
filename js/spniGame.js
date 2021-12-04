@@ -578,9 +578,9 @@ function completeRevealPhase () {
     }
 
     /* update behaviour */
-    saveTranscriptMessage("<b>"+players[recentLoser].label+"</b> has lost the hand.");
+    saveTranscriptMessage("<b>"+players[recentLoser].label.escapeHTML()+"</b> has lost the hand.");
     var clothes = playerMustStrip (recentLoser);
-    
+
     /* playerMustStrip() calls updateAllBehaviours. */
 
     /* highlight the loser */
