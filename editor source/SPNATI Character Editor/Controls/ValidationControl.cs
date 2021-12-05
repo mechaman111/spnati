@@ -156,7 +156,7 @@ namespace SPNATI_Character_Editor.Controls
 				if (level == ValidationFilterLevel.None)
 					continue;
 				lstFilters.Items.Add(level);
-				if (level != ValidationFilterLevel.Minor && level != ValidationFilterLevel.MissingTargets)
+				if (level != ValidationFilterLevel.Minor && level != ValidationFilterLevel.MissingTargets && level != ValidationFilterLevel.Markers)
 					lstFilters.SelectedItems.Add(level);
 			}
 		}

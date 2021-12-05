@@ -1124,6 +1124,18 @@ function OpponentSelectionCard (opponent) {
     }
 
     var sidebarElem = this.mainElem.appendChild(createElementWithClass('div', 'selection-card-sidebar'));
+
+    var favoriteButton = sidebarElem.appendChild(createElementWithClass('button', 'selection-card-favorite-btn'));
+    favoriteButton.appendChild(createElementWithClass("span", "unfavorite-icon glyphicon glyphicon-heart-empty"));
+    favoriteButton.appendChild(createElementWithClass("span", "favorite-icon glyphicon glyphicon-heart"));
+
+    this.favoriteButton = $(favoriteButton).attr("type", "button").on("click", this.onFavoriteBtnClick.bind(this));
+    if (opponent.favorite) {
+        this.favoriteButton.addClass("favorited");
+    } else {
+        this.favoriteButton.addClass("not-favorited");
+    }
+
     this.layerIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'layer-icon')));
     this.genderIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'gender-icon')));
     this.statusIcon = $(sidebarElem.appendChild(createElementWithClass('img', 'status-icon')));
@@ -1171,6 +1183,19 @@ OpponentSelectionCard.prototype.clear = function () {}
 
 OpponentSelectionCard.prototype.handleClick = function (ev) {
     individualDetailDisplay.update(this.opponent);
+}
+
+OpponentSelectionCard.prototype.onFavoriteBtnClick = function (ev) {
+    this.opponent.setFavorited(!this.opponent.favorite);
+    this.favoriteButton.removeClass("favorited not-favorited");
+    if (this.opponent.favorite) {
+        this.favoriteButton.addClass("favorited");
+    } else {
+        this.favoriteButton.addClass("not-favorited");
+    }
+
+    ev.stopPropagation();
+    ev.preventDefault();
 }
 
 /**
@@ -1556,7 +1581,7 @@ OpponentDetailsDisplay.prototype.update = function (opponent) {
             .addClass('blue')
             .prop('disabled', false);
         
-        opponent.loadCollectibles().then(function () {
+        opponent.fetchCollectibles().then(function () {
             if (!opponent.has_collectibles) {
                 this.collectiblesField.removeClass('has-collectibles');
             }

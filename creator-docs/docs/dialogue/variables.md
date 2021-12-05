@@ -44,6 +44,7 @@ see the page on backgrounds for more details.
 | `~clothing.generic~` | The generic designation of the current article. For example, sandals, boots, and shoes might all be generically referred to as shoes (TBD). If no generic designation is assigned in the character's behaviour file, this expands to the same as `~clothing~`. |
 | `~clothing.type~` | The `type` of the current article – `extra`, `minor`, `major`, or `important` |
 | `~clothing.position~` | The `position` of the current article – `upper`, `lower`, `both`, `feet`, `hands`, `arms`, `legs`, `waist`, `neck`, `head`, or `other`.
+| `~clothing.id~` | Expands to the ID of the collectible associated with this piece of clothing, if any. For player clothing options that are available by default, this will instead expand to something starting with `_default.`. Note that this is only defined for clothing worn by the human player: this variable will always expand to an empty string for clothing worn by NPCs. |
 
 ## Collectibles ##
 
@@ -54,6 +55,7 @@ more detail on how those work.
 | ------------ | ---------------------------------------------- |
 | `~collectible.Collectible_ID~` | `true` if the collectible `Collectible_ID` has been unlocked, `false` otherwise. |
 | `~collectible.Collectible_ID.counter~` | The current value of `Collectible_ID`s counter. |
+| `~collectible.Collectible_ID.wearing~` | `true` if the clothing associated with `Collectible_ID` is currently being worn by the human player, and `false` otherwise. |
 
 ## Date and Time ##
 

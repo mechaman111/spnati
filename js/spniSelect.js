@@ -238,76 +238,54 @@ function loadListingFile () {
     listingFiles.push("opponents/listing.xml");
 
     /* clear the previous meta information */
-    var outstandingLoads = 0;
-    var totalLoads = 0;
+    var loadProgress = [];
     var opponentGroupMap = {};
     var opponentMap = {};
     var tagSet = {};
     var sourceSet = {};
     var creatorSet = {};
 
+    loadProgress = listingFiles.map(function () {
+        return { current: 0, total: 0 };
+    });
+
     var onComplete = function(opp) {
-        if (opp) {
-            if (opp.id in opponentMap) {
-                loadedOpponents[opp.listingIndex = opponentMap[opp.id]] = opp;
-                opp.searchTags.forEach(function(tag) {
-                    tagSet[tag] = true;
-                });
-                sourceSet[opp.source] = true;
-                
-                splitCreatorField(opp.artist).forEach(function (creator) {
-                    creatorSet[creator] = true;
-                });
-                
-                splitCreatorField(opp.writer).forEach(function (creator) {
-                    creatorSet[creator] = true;
-                });
-                
-                var disp = new OpponentSelectionCard(opp);
-                opp.selectionCard = disp;
-                disp.statusIcon.tooltip({ delay: { show: 200 }, placement: 'bottom',
-                                          container: '#individual-select-screen .selection-cards-container' });
-            }
-            if (opp.id in opponentGroupMap) {
-                opponentGroupMap[opp.id].forEach(function(groupPos) {
-                    groupPos.group.opponents[groupPos.idx] = opp;
-                    groupPos.group.costumes[groupPos.idx] = groupPos.costume;
-                });
-            }
-        }
-        
-        if (--outstandingLoads == 0) {
-            loadedOpponents = loadedOpponents.filter(Boolean); // Remove any empty slots should an opponent fail to load
-            $(".title-menu-buttons-container>div").removeAttr("hidden");
-            $("#title-load-container").hide();
+        if (!opp) return;
+
+        if (opp.id in opponentMap) {
+            loadedOpponents[opp.listingIndex = opponentMap[opp.id]] = opp;
+            opp.searchTags.forEach(function(tag) {
+                tagSet[tag] = true;
+            });
+            sourceSet[opp.source] = true;
             
-            $tagList.append(Object.keys(TAG_ALIASES).concat(Object.keys(tagSet)).sort().map(function(tag) {
-                return new Option(tag);
-            }));
-            $sourceList.append(Object.keys(sourceSet).sort().map(function(source) {
-                return new Option(source);
-            }));
-            $creatorList.append(Object.keys(creatorSet).sort().map(function(source) {
-                return new Option(source);
-            }));
-            loadedOpponents.forEach(function(p) { p.selectionCard.updateEpilogueBadge() });
-            /* Determine the time of the nth most recently updated character on testing, so we
-               can show at least n characters. (.sort() sorts in place, but .filter() makes a copy. */
-            TESTING_NTH_MOST_RECENT_UPDATE = (loadedOpponents.filter(p => p.status == "testing")
-                                              .sort((p1, p2) => p2.lastUpdated - p1.lastUpdated)
-                                              .slice(0, TESTING_MIN_NUMBER).pop() || {}).lastUpdated;
-            updateIndividualSelectSort();
-            updateIndividualSelectFilters();
-        } else {
-            var progress = Math.floor(100 * (totalLoads - outstandingLoads) / totalLoads);
-            $(".game-load-progress").text(progress.toString(10));
+            splitCreatorField(opp.artist).forEach(function (creator) {
+                creatorSet[creator] = true;
+            });
+            
+            splitCreatorField(opp.writer).forEach(function (creator) {
+                creatorSet[creator] = true;
+            });
+            
+            var disp = new OpponentSelectionCard(opp);
+            opp.selectionCard = disp;
+            disp.statusIcon.tooltip({ delay: { show: 200 }, placement: 'bottom',
+                                      container: '#individual-select-screen .selection-cards-container' });
+        }
+
+        if (opp.id in opponentGroupMap) {
+            opponentGroupMap[opp.id].forEach(function(groupPos) {
+                groupPos.group.opponents[groupPos.idx] = opp;
+                groupPos.group.costumes[groupPos.idx] = groupPos.costume;
+            });
         }
     }
 
     /* now actually load the characters */
     var oppDefaultIndex = 0; // keep track of an opponent's default placement
 
-    var listingProcessor = function($xml) {
+    var listingProcessor = function($xml, fileIdx) {
+        if (!$xml) return immediatePromise();
         var available = {};
 
         /* start by checking which characters will be loaded and available */
@@ -345,7 +323,7 @@ function loadListingFile () {
             loadedGroups.push(newGroup);
         });
 
-        $xml.find('>individuals>opponent').each(function () {
+        return Promise.all($xml.find('>individuals>opponent').map(function () {
             var oppStatus = $(this).attr('status');
             var id = $(this).text();
             var releaseNumber = $(this).attr('release');
@@ -359,22 +337,55 @@ function loadListingFile () {
             var highlightStatus = $(this).attr('highlight');
 
             if (available[id] && !(id in opponentMap)) {
-                outstandingLoads++;
-                totalLoads++;
+                loadProgress[fileIdx].total++;
                 opponentMap[id] = oppDefaultIndex++;
-                loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus).then(onComplete).catch(function (err) {
-                    console.error("Could not load metadata for " + id + ":");
-                    captureError(err);
-                });
+
+                return loadOpponentMeta(id, oppStatus, releaseNumber, highlightStatus)
+                    .then(onComplete).then(function () {
+                        loadProgress[fileIdx].current++;
+                        var progress = loadProgress.reduce(function (acc, val) {
+                            if (val.total > 0) acc += (val.current / val.total);
+                            return acc;
+                        }, 0);
+
+                        updateStartupStageProgress(progress, loadProgress.length);
+                    }).catch(function (err) {
+                        console.error("Could not load metadata for " + id + ":");
+                        captureError(err);
+                    });
+            } else {
+                return immediatePromise();
             }
-        });
+        }).get());
     }
+
+    beginStartupStage("Roster");
 
     /* grab and parse the opponent listing files */
     return Promise.all(listingFiles.map(function (filename) {
         return fetchXML(filename);
     })).then(function (files) {
-        files.forEach(listingProcessor);
+        return Promise.all(files.map(listingProcessor));
+    }).then(function () {
+        loadedOpponents = loadedOpponents.filter(Boolean); // Remove any empty slots should an opponent fail to load
+            
+        $tagList.append(Object.keys(TAG_ALIASES).concat(Object.keys(tagSet)).sort().map(function(tag) {
+            return new Option(tag);
+        }));
+        $sourceList.append(Object.keys(sourceSet).sort().map(function(source) {
+            return new Option(source);
+        }));
+        $creatorList.append(Object.keys(creatorSet).sort().map(function(source) {
+            return new Option(source);
+        }));
+        loadedOpponents.forEach(function(p) { p.selectionCard.updateEpilogueBadge() });
+        /* Determine the time of the nth most recently updated character on testing, so we
+           can show at least n characters. (.sort() sorts in place, but .filter() makes a copy. */
+        TESTING_NTH_MOST_RECENT_UPDATE = (loadedOpponents.filter(p => p.status == "testing")
+                                          .sort((p1, p2) => p2.lastUpdated - p1.lastUpdated)
+                                          .slice(0, TESTING_MIN_NUMBER).pop() || {}).lastUpdated;
+        updateIndividualSelectSort();
+        updateIndividualSelectFilters();
     });
 }
 
@@ -699,6 +710,9 @@ function updateIndividualSelectSort() {
         loadedOpponents.sort(sortTestingOpponents);
     }
 
+    /* Finally, sort favorited opponents before everyone else. */
+    loadedOpponents.sort(sortFavoriteOpponents);
+
     individualSelectSeparatorIndices = [];
     var cutFn
     /* Separate (normally-visible) Testing from other types if they come before others in Testing view, while still respecting event partitioning if set */
@@ -713,13 +727,29 @@ function updateIndividualSelectSort() {
         : sortingMode == "featured"        ? function (opp) { return opp.event_partition; }
         : null;
 
+    var favoritedOpponents = loadedOpponents.filter(function (opp) {
+        return opp.favorite;
+    });
+
+    if (favoritedOpponents.length > 0) {
+        /* Ignore regular partitioning for favorited opponents. */
+        favoritedOpponents.forEach(function (opp) {
+            $(opp.selectionCard.mainElem).appendTo($indivSelectionCardContainer);
+        });
+
+        $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
+        individualSelectSeparatorIndices.push(favoritedOpponents.length);
+    }
+
     var currentPartition = undefined;
-    loadedOpponents.forEach(function (opp, index) {
+    loadedOpponents.filter(function (opp) {
+        return !opp.favorite;
+    }).forEach(function (opp, index) {
         if (cutFn !== null) {
             var newPartition = cutFn(opp);
             if (currentPartition !== undefined && newPartition != currentPartition) {
                 $indivSelectionCardContainer.append($("<hr />", { "class": "card-separator" }));
-                individualSelectSeparatorIndices.push(index);
+                individualSelectSeparatorIndices.push(favoritedOpponents.length + index);
             }
             currentPartition = newPartition;
         }
@@ -804,17 +834,17 @@ function showIndividualSelectionScreen() {
      * to the indiv. select screen, since the filters cannot actually change
      * unless the user is already on said screen.
      * 
-     * We also don't need to update sorting, since any change to the sort mode
-     * (anywhere) automatically updates the display order.
-     * The exceptions are the targeted sort mode and the testing roster,
-     * which require sorting after the selected characters change.
+     * We do, however, need to make sure we're actually using the saved sorting
+     * mode for each roster.
      * 
-     * The visibility of characters might change, however, depending on the
+     * The visibility of characters might change as well, depending on the
      * view type and what characters have already been selected.
      */
-    if (sortingMode === "target" || individualSelectTesting) {
-        updateIndividualSelectSort();
-    }
+
+    setSortingMode(
+        save.getSavedSortMode(individualSelectTesting) ||
+        (individualSelectTesting ? "-lastUpdated" : "featured")
+    );
 
     updateIndividualSelectVisibility(true);
 
@@ -840,13 +870,13 @@ function showIndividualSelectionScreen() {
 function toggleIndividualSelectView() {
     individualSelectTesting = !individualSelectTesting;
 
-    /* Switch to the default sort mode for the selected view. */
-    if (individualSelectTesting) {
-        setSortingMode("-lastUpdated");
-    } else {
-        setSortingMode("featured");
-    }
-
+    /* Switch to the saved sort mode for the selected view, or
+     * to a default mode if not set.
+     */
+    setSortingMode(
+        save.getSavedSortMode(individualSelectTesting) ||
+        (individualSelectTesting ? "-lastUpdated" : "featured")
+    );
     updateSelectionVisuals();
 
     $("#select-group-testing-button").text(
@@ -1099,7 +1129,7 @@ function loadDefaultFillSuggestions () {
         }
         
         var possibleNewAndUpdatedPicks = possiblePicks.filter(function (opp) {
-            return opp.highlightStatus === "new" || opp.highlightStatus === "unsorted" || opp.highlightStatus === "updated" || opp.highlightStatus === "unsorted-updated";
+            return opp.highlightStatus === "new" || opp.highlightStatus === "unsorted" || opp.highlightStatus === "updated" || opp.highlightStatus === "unsorted-updated" || opp.highlightStatus == "prefill";
         });
         
         /* Fill slots 2 and 3, but also fill slot 1 if still empty */
@@ -1380,6 +1410,7 @@ function advanceSelectScreen () {
  ************************************************************/
 function backSelectScreen () {
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "title");
+    updateTitleScreen();
     screenTransition($selectScreen, $titleScreen);
 }
 
@@ -1691,7 +1722,18 @@ function sortTestingOpponents(opp1, opp2) {
     return scores[1] - scores[0];
 }
 
+/* Sorts favorited characters before non-favorites. */
+function sortFavoriteOpponents(opp1, opp2) {
+    return opp2.favorite - opp1.favorite;
+}
+
 function setSortingMode(mode) {
+    var modeOption = $sortingOptionsItems.filter(function() { return $(this).data('value') == mode; });
+    if (modeOption.length === 0) {
+        /* sorting mode does not have a corresponding dropdown option, revert to default */
+        mode = individualSelectTesting ? "-lastUpdated" : "featured";
+    }
+
     sortingMode = mode;
     // change the dropdown text to the selected option
     $("#sort-dropdown-selection").html($sortingOptionsItems.filter(function() { return $(this).data('value') == mode; }).html()); 
@@ -1700,7 +1742,9 @@ function setSortingMode(mode) {
 
 /** Event handler for the sort dropdown options. Fires when user clicks on a dropdown item. */
 $sortingOptionsItems.on("click", function(e) {
-    setSortingMode($(this).data('value'));
+    var mode = $(this).data('value');
+    save.setSavedSortMode(individualSelectTesting, mode);
+    setSortingMode(mode);
 });
 
 /************************************************************

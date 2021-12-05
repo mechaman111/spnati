@@ -10,6 +10,7 @@ var SPECIAL_CASE_NAMES = {
     "hk416": "HK416",
     "kool-aid": "Kool-Aid Man",
     "larachel": "L'Arachel",
+    "miki_miura": "Miki",
     "mom_alola": "Mom (Alola)",
     "ms.fortune": "Ms. Fortune",
     "nami_szs": "Nami (SZS)",
@@ -23,6 +24,7 @@ var SPECIAL_CASE_NAMES = {
     "uravity": "Ochako", // nmasp, wtf?
     "wiifitfemale": "Wii Fit Trainer",
     "yshtola": "Y'shtola",
+    "yuna_ffx": "Yuna (FFX)",
         
     // classic opponents
     "amy_rose_classic": "Amy Rose",
@@ -42,6 +44,7 @@ var SPECIAL_CASE_NAMES = {
     "mettaton_neo": "Mettaton",
     "misty_hgss": "Misty",
     "rarity_eg": "Rarity",
+    "samus_aran": "Samus",
     "weiss_schnee": "Weiss",
     "yang_xiao_long": "Yang"
 }

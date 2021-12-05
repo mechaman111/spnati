@@ -591,6 +591,9 @@ function loadEventData () {
     eventTagSettings = HighlightedAttributeList.empty();
     eventCharacterSettings = HighlightedAttributeList.empty();
 
+    beginStartupStage("Events");
+    console.log("Loading events...");
+
     return fetchXML("events.xml").then(function ($xml) {
         var events = $xml.find("event").map(function (index, elem) {
             return parseEventElement($(elem));

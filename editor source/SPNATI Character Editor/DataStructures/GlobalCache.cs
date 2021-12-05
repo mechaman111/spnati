@@ -38,7 +38,7 @@ namespace SPNATI_Character_Editor
 
 		public static void CreateDiff(CachedCharacter old, CachedCharacter current)
 		{
-			if (old == null || current == null)
+			if (current == null)
 			{
 				return;
 			}
@@ -47,7 +47,13 @@ namespace SPNATI_Character_Editor
 			{
 				string target = ti.Target;
 				int lines = ti.LineCount;
-				int oldLines = old.GetTargetedCountTowards(target);
+				int oldLines = 0;
+
+				if (old != null)
+				{
+					oldLines = old.GetTargetedCountTowards(target);
+				}
+
 				int diff = lines - oldLines;
 				if (diff > 0)
 				{

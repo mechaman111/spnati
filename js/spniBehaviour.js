@@ -759,6 +759,8 @@ function expandClothingVariable(clothing, fn, args, self, target, bindings) {
         }
     } else if ((fn == 'type' || fn == 'position' || fn == 'generic') && args === undefined) {
         return clothing[fn];
+    } else if (fn === "id") {
+        return clothing.id || "";
     } else if (fn === undefined && args === undefined) {
         return clothing.name;
     }
@@ -774,12 +776,14 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
     case 'id':
         return player.id;
     case 'position':
-        if (player.slot === self.slot) return 'self';
-        if (player === humanPlayer) return 'across';
-        return (player.slot < self.slot) ? 'left' : 'right';
+        var other = (!args ? self : findVariablePlayer(args, self, target, bindings));
+        if (player.slot === other.slot) return 'self';
+        if (player === humanPlayer || other === humanPlayer) return 'across';
+        return (player.slot < other.slot) ? 'left' : 'right';
     case 'distance':
-        if (player === humanPlayer) return undefined;
-        return Math.abs(player.slot - self.slot);
+        var other = (!args ? self : findVariablePlayer(args, self, target, bindings));
+        if (player !== other && (player === humanPlayer || other === humanPlayer)) return undefined;
+        return Math.abs(player.slot - other.slot);
     case 'slot':
         return player.slot;
     case 'collectible':
@@ -791,6 +795,13 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
             if (split_fn[2] && split_fn[2] === 'counter') {
                 if (targetCollectible) return targetCollectible.getCounter();
                 return 0;
+            } else if (split_fn[2] && split_fn[2] === 'wearing') {
+                if (targetCollectible && targetCollectible.clothing) {
+                    return humanPlayer.clothing.some(function (clothing) {
+                        return clothing.id === targetCollectible.clothing.id;
+                    });
+                }
+                return false;
             } else {
                 if (targetCollectible) return targetCollectible.isUnlocked();
                 return false;
@@ -971,6 +982,14 @@ function expandDialogue (dialogue, self, target, bindings) {
                             substitution = targetCollectible.getCounter();
                         } else {
                             substitution = 0;
+                        }
+                    } else if (fn_parts[1] && fn_parts[1] === 'wearing') {
+                        if (targetCollectible && targetCollectible.clothing) {
+                            substitution = humanPlayer.clothing.some(function (clothing) {
+                                return clothing.id === targetCollectible.clothing.id;
+                            });
+                        } else {
+                            substitution = false;
                         }
                     } else {
                         if (targetCollectible) {

@@ -20,6 +20,8 @@ var USAGE_TRACKING = undefined;
 var SENTRY_INITIALIZED = false;
 var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
+var UI_FONT_WEIGHT = 500;
+var UI_FONT_WIDTH = 100;
 
 var CURRENT_VERSION = undefined;
 var VERSION_COMMIT = undefined;
@@ -70,6 +72,17 @@ var humanPlayer;
 
 /* Current timeout ID, so we can cancel it when restarting the game in order to avoid trouble. */
 var timeoutID;
+
+
+/*
+ * Path to a compiled 'index' XML file combining collectible definitions for all opponents.
+ * This is automatically generated for the online version during CI/CD; if present, this is used
+ * to load collectibles for all characters at once, instead of requesting collectibles.xml for
+ * each opponent individually.
+ */
+
+var COLLECTIBLES_INDEX = "__COLLECTIBLES_INDEX";
+
 
 /**********************************************************************
  * Game Wide Global Variables
@@ -184,7 +197,7 @@ function initialSetup () {
         } catch (err) {
             captureError(err);
         }
-        /* Make sure that save data is loaded before updateTitleGender(),
+        /* Make sure that save data is loaded before updateTitleScreen(),
          * since the latter uses selectedClothing.
          */
         save.loadLocalStorage();
@@ -194,14 +207,15 @@ function initialSetup () {
         ]);
     }).then(function () {
         save.load();
-        loadVersionInfo();
-        loadGeneralCollectibles();
-        loadSelectScreen();
+        return loadVersionInfo();
+    }).then(loadSelectScreen).then(loadAllCollectibles).then(function () {
+        setupTitleClothing();
+        finishStartupLoading();
 
         if (!EPILOGUES_ENABLED && !COLLECTIBLES_ENABLED) {
             $('.title-gallery-edge').css('visibility', 'hidden');
         }
-        updateTitleGender();
+        updateTitleScreen();
         updateAnnouncementDropdown();
     });
 
@@ -260,6 +274,8 @@ function initialSetup () {
 
 function loadVersionInfo () {
     $('.substitute-version').text('Unknown Version');
+
+    beginStartupStage("Version Info");
     
     return fetchXML("version-info.xml").then(function($xml) {
         versionInfo = $xml;
@@ -284,6 +300,8 @@ function loadVersionInfo () {
 
 
 function loadConfigFile () {
+    beginStartupStage("Configuration");
+
     return fetchXML("config.xml").then(function($xml) {
         var _epilogues = $xml.children('epilogues').text();
         if(_epilogues.toLowerCase() === 'false') {
@@ -437,17 +455,6 @@ function loadConfigFile () {
     });
 }
 
-function loadGeneralCollectibles () {
-    return fetchXML('opponents/general_collectibles.xml').then(function($xml) {
-        $xml.children('collectible').each(function (idx, elem) {
-            generalCollectibles.push(new Collectible($(elem), undefined));
-        });
-    }).catch(function (err) {
-        console.error("Failed to load general collectibles");
-        captureError(err);
-    });
-}
-
 /**
  * Attempt to detect common ways of incorrectly running the offline version.
  * Specifically, we check the following:
@@ -592,6 +599,7 @@ function restartGame () {
     updateSelectionVisuals();
     updateAllGameVisuals();
     selectTitleCandy();
+    updateTitleScreen();
 
     forceTableVisibility(true);
 

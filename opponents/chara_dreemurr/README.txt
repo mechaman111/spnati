@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited October 14 2021
+README edited October 31 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -406,6 +406,9 @@ KIZUNA
 KOOL AID MAN
 -Generic responses to handle Kool Aid's, uh, unique stripping and masturbation sequence.
 
+KUMATORA
+-Responds to Kumatora as Chara is losing.
+
 KURUMU
 -Responds to Kurumu revealing her demon features.
 
@@ -460,6 +463,9 @@ MIKO
 MONIKA
 -Responds to Monika losing.
 
+MS FORTUNE
+-Response to Ms. Fortune's head falling off.
+
 MOON
 -Generic responses when Moon loses a hand and must strip.
 -Responds to Moon complaining about having to remove her accessories.
@@ -507,6 +513,9 @@ POLLY
 
 POT OF GREED
 -Generic responses to handle POG's uh, unique stripping and masturbation sequence.
+
+REIMU
+-Responds to her Get Rich Quick scheme.
 
 REMILIA
 -Responds the first time Remilia's maid uses her time-stop powers to strip her.
@@ -557,6 +566,9 @@ SPOOKY
 -Responds to Spooky or Chara losing.
 -Responds to Spooky talking about not being able to be hit.
 -Responds to Spooky making underwear.
+
+STOCKING
+-Responds to Stocking as Chara is losing.
 
 STREAMING-CHAN
 -Responds to Streaming-chan's interview.

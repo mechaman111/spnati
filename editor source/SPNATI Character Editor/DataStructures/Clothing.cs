@@ -45,6 +45,10 @@ namespace SPNATI_Character_Editor
 		[XmlAttribute("type")]
 		public string Type;
 
+		// only used for <clothing> elements within collectibles
+		[XmlAttribute("img")]
+		public string CollectibleImage;
+
 		[XmlAttribute("plural")]
 		[DefaultValue(false)]
 		public bool Plural;
@@ -55,6 +59,7 @@ namespace SPNATI_Character_Editor
 			Type = "major";
 			GenericName = "item";
 			Name = "new item";
+			CollectibleImage = null;
 			Plural = false;
 		}
 
@@ -84,6 +89,7 @@ namespace SPNATI_Character_Editor
 				ProperName = ProperName,
 				Name = Name,
 				GenericName = GenericName,
+				CollectibleImage = CollectibleImage,
 				Plural = Plural,
 			};
 			return copy;

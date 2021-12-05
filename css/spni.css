@@ -3,6 +3,22 @@
  various game screens and elements.
  ************************************************************/
 
+ @font-face {
+    font-family: 'Open Sans';
+    src: url("../fonts/OpenSans-VariableFont.ttf") format('truetype supports variations'),
+    url("../fonts/OpenSans-VariableFont.ttf") format('truetype-variations');
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url("../fonts/OpenSans-Italic-VariableFont.ttf") format('truetype supports variations'),
+    url("../fonts/OpenSans-Italic-VariableFont.ttf") format('truetype-variations');
+    font-style: italic;
+    font-display: swap;
+}
+
 html {
     width: 100%;
     height: 100%;
@@ -10,17 +26,25 @@ html {
     touch-action: manipulation;
 }
 
+:root {
+    --base-font-weight: 500;
+    --medium-font-weight: calc(var(--base-font-weight) + 100);
+    --base-font-stretch: 100%;
+}
+
 body {
     color: #050505;
     background-color: #050505;
     font-size: 1.4em;
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-family: 'Open Sans', "Trebuchet MS", Helvetica, sans-serif;
     background-image: url("../img/backgrounds/inventory.png");
     background-size: contain;
     /* Sensible initial value */
     background-position: center center;
     background-repeat: repeat-x;
     overflow: hidden;
+    font-weight: var(--base-font-weight);
+    font-stretch: var(--base-font-stretch);
 }
 
 button,
@@ -95,8 +119,20 @@ ul {
     padding-left: 2em;
 }
 
-label {
-    font-weight: 500;
+label,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-weight: var(--medium-font-weight);
 }
 
 .glyphicon {
@@ -516,31 +552,34 @@ ul.dropdown-menu>li {
     width: 100%;
 }
 
+.strip-selector-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2.25rem;
 
-.table-modal .clothing-modal-container {
-    float: left;
-    width: 20%;
-    height: 100%;
-    margin: 0.5% 2.5%;
+    width: 100%;
+    margin-left: 1.25rem;
+    margin-bottom: 1rem;
 }
 
-.table-modal .modal-clothing-image {
-    width: 100%;
-    height: 100%;
+.player-strip-selector {
+    display: none;
+    width: 9.5rem;
+    height: 9.5rem;
+
     opacity: 0.4;
     background-color: white;
 }
 
-.table-modal .modal-clothing-image:hover {
+.player-strip-selector.available {
+    display: inline;
+}
+
+.player-strip-selector:hover {
     opacity: 0.7;
 }
 
-.table-modal .modal-selected-clothing-image {
-    opacity: 1;
-    background-color: white;
-}
-
-.table-modal .modal-selected-clothing-image:hover {
+.player-strip-selector.selected, .player-strip-selector.selected:hover {
     opacity: 1;
 }
 
@@ -986,7 +1025,7 @@ ul.dropdown-menu>li {
     width: 100%;
     position: absolute;
     z-index: 0;
-    font-size: 117%;
+    font-size: 113%;
     background: #F5F5F5;
     opacity: 95%;
     border-radius: 1rem;
@@ -1335,7 +1374,7 @@ ul.dropdown-menu>li {
     margin-top: 10%;
 }
 
-#title-load-container {
+#warning-load-container {
     font-size: 4rem;
     text-shadow:
         -0.1rem -0.1rem 0 #000,
@@ -1346,6 +1385,14 @@ ul.dropdown-menu>li {
 
 .game-load-label {
     color: #F0F0F0;
+}
+
+.game-load-label::before {
+    content: "Loading ";
+}
+
+.game-load-label::after {
+    content: ": ";
 }
 
 .game-load-progress {
@@ -1469,19 +1516,55 @@ ul.dropdown-menu>li {
 
 /* Title clothing block elements: */
 
-.title-clothing-container {
-    margin-top: 1%;
-    margin-left: 1%;
+#title-clothing-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1rem 0.5rem;
+    
+    width: 47rem;
+    height: 23rem;
+    overflow-y: auto;
+    margin-left: 0.1rem;
 }
 
-.title-clothing-heading {
-    width: 10rem;
-    text-align: center;
-    padding: 0 0.5rem;
-    margin: 0 1rem;
-    font-size: 1.6rem;
-    background: linear-gradient(lightgrey, #888888);
-    background-color: lightgrey;
+.custom-clothing-img {
+    width: auto;
+    height: auto;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+#title-clothing-container .player-clothing-select {
+    width: 7rem;
+    height: 7rem;
+    opacity: 0.6;
+    background: repeating-linear-gradient(-45deg, #333 0px, #333 5px, #888 6px, #888 11px, #333 12px);
+}
+
+#title-clothing-container .player-clothing-select.available {
+    opacity: 0.6;
+    background: white;
+}
+
+#title-clothing-container .player-clothing-select.selected {
+    opacity: 1;
+}
+
+#title-clothing-container .player-clothing-select.available:hover {
+    opacity: 0.8;
+}
+
+#title-clothing-container .player-clothing-select.selected:hover {
+    opacity: 1;
+}
+
+#title-clothing-container .clothing-separator {
+    border-top: 0.2rem solid gray;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 99%;
 }
 
 #title-warning-label {
@@ -2138,6 +2221,52 @@ ul.dropdown-menu>li {
     width: 100%;
     height: auto;
     position: static;
+}
+
+.selection-card-favorite-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    padding-right: 0.3rem;
+}
+
+.selection-card-favorite-btn span {
+    font-size: 3.5rem;
+    color: #ffadbc;
+}
+
+/* For opponents that are favorited: */
+.selection-card-favorite-btn.favorited .favorite-icon {
+    display: inline;
+}
+
+.selection-card-favorite-btn.favorited .unfavorite-icon {
+    display: none;
+}
+
+.selection-card-favorite-btn.favorited:hover .favorite-icon {
+    display: none;
+}
+
+.selection-card-favorite-btn.favorited:hover .unfavorite-icon {
+    display: inline;
+}
+
+/* For opponents not favorited: */
+.selection-card-favorite-btn.not-favorited .favorite-icon {
+    display: none;
+}
+
+.selection-card-favorite-btn.not-favorited .unfavorite-icon {
+    display: inline;
+}
+
+.selection-card-favorite-btn.not-favorited:hover .favorite-icon {
+    display: inline;
+}
+
+.selection-card-favorite-btn.not-favorited:hover .unfavorite-icon {
+    display: none;
 }
 
 .selection-card-footer {
@@ -2873,7 +3002,7 @@ ul.dropdown-menu>li {
 
 #group-preset-background-label::before {
     content: "BG: ";
-    font-weight: 500;
+    font-weight: var(--medium-font-weight);
 }
 
 #group-preset-background-label {
@@ -3159,11 +3288,10 @@ ul.dropdown-menu>li {
  * main game screen.
  ************************************************************/
 
-.small-clothing-image {
+.legacy-ui .small-clothing-image-container {
     width: 28%;
     height: 47%;
     margin-bottom: 3.5%;
-    background-color: white;
 }
 
 .clothing-float-right {
@@ -3315,6 +3443,31 @@ ul.dropdown-menu>li {
 /* remove the "clear" button that occurs in some MS browsers */
 #player-masturbation-timer-box::-ms-clear {
     display: none;
+}
+
+.text-option-container {
+    display: flex;
+}
+
+.text-option-container .ui-text-option {
+    width: 20rem;
+    margin-right: 5rem;
+}
+
+.text-option-sample {
+    font-size: 1.75rem;
+    width: 15rem;
+}
+
+.text-option-label {
+    margin-left: auto;
+    margin-right: 0.5rem;
+    font-size: 1.75rem;
+    width: 5rem;
+}
+
+#text-width-label::after {
+    content: "%";
 }
 
 /***********************************************************
@@ -3505,8 +3658,15 @@ ul.dropdown-menu>li {
 }
 
 .small-clothing-image-container {
-    width: 12.5%;
-    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+.ui-minimal .small-clothing-image-container {
+    width: 4.25rem;
+    height: 4.25rem;
     margin-left: 1%;
     transform: none;
 
@@ -3514,19 +3674,20 @@ ul.dropdown-menu>li {
     transition-duration: 0.5s;
 }
 
-
-.player-lost .small-clothing-image-container {
-    width: 20%;
+.ui-minimal .player-lost .small-clothing-image-container {
+    width: 6.5rem;
+    height: 6.5rem;
 
     transition-property: width;
     transition-duration: 0.5s;
 }
 
-.minimal-clothing-area-row .small-clothing-image {
+.small-clothing-image {
     height: auto;
-    width: 100%;
-
-    margin-bottom: 0;
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
     object-fit: contain;
 }
 
@@ -3612,7 +3773,7 @@ ul.dropdown-menu>li {
 .epilogue-content .dialogue-bubble {
     padding: 0.9rem;
     margin: 0;
-    font-size: 107%;
+    font-size: 103%;
     border-radius: 0.7rem;
 }
 
@@ -4062,7 +4223,7 @@ ul.dropdown-menu>li {
     margin-top: 0.1em;
     margin-bottom: 0.2em;
     font-size: 2em;
-    font-weight: 500;
+    font-weight: var(--medium-font-weight);
     line-height: 1.1;
     text-align: left;
 }

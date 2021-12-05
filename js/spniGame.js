@@ -191,6 +191,9 @@ function loadGameScreen () {
         $cardButtons[i].attr('disabled', true);
     }
 
+    /* Set up strip modal selectors */
+    setupStrippingModal();
+
     /* enable and set up the main button */
     allowProgression(eGamePhase.DEAL);
 }
@@ -234,9 +237,9 @@ function displayHumanPlayerClothing () {
     for (var i = 0; i < 8; i++) {
         if (clothingImages[i]) {
             $gameClothingCells[i].attr(clothingImages[i]);
-            $gameClothingCells[i].css({opacity: 1});
+            $gameClothingCells[i].parent().css({opacity: 1});
         } else {
-            $gameClothingCells[i].css({opacity: 0});
+            $gameClothingCells[i].parent().css({opacity: 0});
         }
     }
 }
