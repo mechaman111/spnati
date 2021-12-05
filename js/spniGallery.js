@@ -998,8 +998,18 @@ CardDeckDisplay.prototype.render = function () {
 
     $deckTitle.text(this.imageSet.title);
     $deckSubtitle.text(this.imageSet.subtitle);
-    $deckCredits.text(this.imageSet.credits);
-    $deckDescription.text(this.imageSet.description);
+
+    if (this.imageSet.credits) {
+        $deckCredits.text(this.imageSet.credits).show();
+    } else {
+        $deckCredits.hide();
+    }
+
+    if (this.imageSet.description) {
+        $deckDescription.text(this.imageSet.description).show();
+    } else {
+        $deckDescription.hide();
+    }
 
     $deckStatusAlert.removeClass('locked').addClass('loading').text("(Loading...)").show();
 
