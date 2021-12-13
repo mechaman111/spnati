@@ -219,7 +219,6 @@ namespace SPNATI_Character_Editor.Activities
 				{
 					_front.Ranks = set.RankInterval;
 					_front.Suits = set.Suits;
-					MessageBox.Show("The available images for this set have changed since the last save, so the deck has been automatically updated to match.");
 				}
 			}
 			UpdateDeck(set);
@@ -574,13 +573,10 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			if (_deckSets == null)
 			{
-				//scan the img folder for usable directories
+				//scan the img/cards folder for usable directories
 				List<IRecord> list = new List<IRecord>();
 
-				//always add the root as an option for the default
-				list.Add(new DeckSet("img", "%s%i", ".jpg"));
-
-				foreach (string directory in Directory.EnumerateDirectories(Path.Combine(Config.SpnatiDirectory, "img")))
+				foreach (string directory in Directory.EnumerateDirectories(Path.Combine(Config.SpnatiDirectory, "img", "cards")))
 				{
 					ScanFolder(directory, list);
 				}
