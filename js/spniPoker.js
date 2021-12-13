@@ -292,7 +292,7 @@ function imageSetFromXML($xml) {
     var subtitle = $xml.children("subtitle").text();
     var description = $xml.children("description").text();
     var credits = $xml.children("credits").html();
-    var status = $xml.attr("status") || null;
+    var status = $xml.children("status").text() || null;
 
     var collectibleElem = $xml.children("collectible");
     var unlockChar = collectibleElem.attr("character") || null;

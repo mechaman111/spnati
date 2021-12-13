@@ -304,7 +304,6 @@ var playerCollectibles = {}; /* Indexed by player ID. */
 
 /** @type {CardDeckDisplay?} */
 var currentDeckDisplay = null;
-var deckListElems = [];
 
 function goToEpiloguesScreen() {
     if (SENTRY_INITIALIZED) Sentry.setTag("screen", "gallery-epilogues");
@@ -356,11 +355,10 @@ function loadGalleryScreen(){
 
     if (!CARD_DECKS_ENABLED) {
         $(".deck-switch-button").hide();
-    } else if (deckListElems.length == 0) {
-        deckListElems = Object.values(CARD_IMAGE_SETS).filter(function (set) {
+    } else {
+        $deckListPane.empty().append(Object.values(CARD_IMAGE_SETS).filter(function (set) {
             return set.isAvailable();
-        }).map(createDeckListElement);
-        $deckListPane.append(deckListElems);
+        }).map(createDeckListElement));
     }
     
     /* Set up filter lists: */
