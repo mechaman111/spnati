@@ -1175,8 +1175,8 @@ function loadDefaultFillSuggestions () {
                 return 1;
             }
             
-            if (!status1 || status1 === "unsorted" || status1 === "unsorted-updated") status1 = "zzzzz";
-            if (!status2 || status2 === "unsorted" || status2 === "unsorted-updated") status2 = "zzzzz";
+            if (!status1 || status1 === "unsorted" || status1 === "unsorted-updated" || status1 === "prefill") status1 = "zzzzz";
+            if (!status2 || status2 === "unsorted" || status2 === "unsorted-updated" || status2 === "prefill") status2 = "zzzzz";
             
             return status1.localeCompare(status2);
         });
