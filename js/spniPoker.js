@@ -247,7 +247,7 @@ CardImageSet.prototype.getCollectible = function () {
 
     if (!pl) return Promise.resolve(null);
 
-    return pl.loadCollectibles().then(function () {
+    return pl.fetchCollectibles().then(function () {
         return pl.collectibles.find(function (c) {
             return c.id === this.unlockCollectible;
         }.bind(this));
@@ -291,7 +291,7 @@ function imageSetFromXML($xml) {
     var title = $xml.children("title").text();
     var subtitle = $xml.children("subtitle").text();
     var description = $xml.children("description").text();
-    var credits = $xml.children("credits").text();
+    var credits = $xml.children("credits").html();
     var status = $xml.attr("status") || null;
 
     var collectibleElem = $xml.children("collectible");
