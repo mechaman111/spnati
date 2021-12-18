@@ -252,10 +252,6 @@ namespace SPNATI_Character_Editor
 		/// </summary>
 		public int TargetedCount;
 		/// <summary>
-		/// Total conditioned lines
-		/// </summary>
-		public int ConditionCount;
-		/// <summary>
 		/// Total generic lines
 		/// </summary>
 		public int GenericCount;
@@ -269,7 +265,7 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				return TargetedCount + ConditionCount + GenericCount + FilterCount;
+				return TargetedCount + GenericCount + FilterCount;
 			}
 		}
 
@@ -289,14 +285,13 @@ namespace SPNATI_Character_Editor
 			counts[LineFilter.Generic] = 0;
 			counts[LineFilter.Targeted] = 0;
 			counts[LineFilter.Filter] = 0;
-			counts[LineFilter.Conditional] = 0;
 			foreach (Case c in character.Behavior.GetWorkingCases())
 			{
 				if (!string.IsNullOrEmpty(c.Hidden) || !string.IsNullOrEmpty(c.Disabled))
 				{
 					continue;
 				}
-				LineFilter type = (c.HasTargetedConditions ? LineFilter.Targeted : c.HasFilters ? LineFilter.Filter : c.HasConditions ? LineFilter.Conditional : LineFilter.Generic);
+				LineFilter type = (c.HasTargetedConditions ? LineFilter.Targeted : c.HasFilters ? LineFilter.Filter : LineFilter.Generic);
 
 				int caseCount = 0;
 				TriggerDefinition trigger = TriggerDatabase.GetTrigger(c.Tag);
@@ -341,7 +336,6 @@ namespace SPNATI_Character_Editor
 			}
 			TargetedCount = counts[LineFilter.Targeted];
 			FilterCount = counts[LineFilter.Filter];
-			ConditionCount = counts[LineFilter.Conditional];
 			GenericCount = counts[LineFilter.Generic];
 			Targets = new List<TargetingInformation>();
 			foreach (TargetingInformation info in targetInfo.Values)

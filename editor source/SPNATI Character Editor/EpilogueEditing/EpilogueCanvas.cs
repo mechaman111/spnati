@@ -69,7 +69,7 @@ namespace SPNATI_Character_Editor.Controls
 		private SceneObject _overlay = null;
 		private List<SceneAnimation> _animations = new List<SceneAnimation>();
 
-		private Font _font = new Font("Trebuchet MS", 14);
+		private Font _font = new Font(Shell.Instance.Fonts.Families[0], 11.3f);
 		private StringFormat _textFormat = new StringFormat() { Alignment = StringAlignment.Center };
 		private Pen _borderPen;
 		private Pen _penOuterSelection;
@@ -149,9 +149,9 @@ namespace SPNATI_Character_Editor.Controls
 			//Point viewportTopLeft = ToScreenPoint(new Point(0, 0));
 			//Point viewportBottomRight = ToScreenPoint(new PointF(_scenePreview.Width, _scenePreview.Height));
 
-			//_font = new Font("Trebuchet MS", 14 * ZoomLevel / _scenePreview.Scale); //use this to scale font with viewport
-			//_font = new Font("Trebuchet MS", 14 * ZoomLevel); //use this to scale with zoom but constant relative to viewport
-			//both commented out keeps size 14 regardless of window size, which matches current game behavior
+			//_font = new Font(Shell.Instance.Fonts.Families[0], 11.3f * ZoomLevel / _scenePreview.Scale); //use this to scale font with viewport
+			//_font = new Font(Shell.Instance.Fonts.Families[0], 11.3f * ZoomLevel); //use this to scale with zoom but constant relative to viewport
+			//both commented out keeps size 11.3 regardless of window size, which matches current game behavior
 
 			////Scene edges
 			//g.DrawLine(_borderPen, viewportTopLeft.X, 0, viewportTopLeft.X, canvas.Height);

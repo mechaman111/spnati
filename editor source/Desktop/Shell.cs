@@ -3,6 +3,7 @@ using Desktop.Skinning;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -79,6 +80,8 @@ namespace Desktop
 			get { return tsSubAction.Text; }
 			set { tsSubAction.Text = value; }
 		}
+
+		public PrivateFontCollection Fonts;
 
 		private List<IActivity> _activationOrder = new List<IActivity>();
 
