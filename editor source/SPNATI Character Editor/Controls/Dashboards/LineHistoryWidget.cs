@@ -37,6 +37,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 			DataSeries lines = graphLines.AddSeries("Total");
 			DataSeries generic = graphLines.AddSeries("Generic");
 			DataSeries targeted = graphLines.AddSeries("Targeted");
+			DataSeries filtered = graphLines.AddSeries("Filtered");
 
 			cmdGoals.Text = (goals > 0 ? "" : "Set Goals");
 			lines.Threshold = goals;
@@ -73,10 +74,12 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				}
 				int diffLines = work.TotalLines - previous.TotalLines;
 				lines.AddPoint(6 - i, diffLines, label);
-				int diffGeneric = (work.GenericCount + work.ConditionCount) - (previous.GenericCount + previous.ConditionCount);
+				int diffGeneric = work.GenericCount - previous.GenericCount;
 				generic.AddPoint(6 - i, diffGeneric, label);
 				int diffTarget = work.TargetedCount - previous.TargetedCount;
 				targeted.AddPoint(6 - i, diffTarget, label);
+				int diffFilter = work.FilterCount - previous.FilterCount;
+				filtered.AddPoint(6 - i, diffFilter, label);
 
 				if (i == 0)
 				{

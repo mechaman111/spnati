@@ -101,39 +101,6 @@
 		}
 	}
 
-	public class SpecialLineCountAnalyzer : NumericAnalyzer
-	{
-		public override string Key
-		{
-			get { return "SpecialLineCount"; }
-		}
-
-		public override string Name
-		{
-			get { return "Line Count - Special"; }
-		}
-
-		public override string FullName
-		{
-			get { return "Special Line Count"; }
-		}
-
-		public override string ParentKey
-		{
-			get { return "Dialogue"; }
-		}
-
-		public override int GetValue(Character character)
-		{
-			return character.GetSpecialLineCount();
-		}
-
-		public override string[] GetValues()
-		{
-			return null;
-		}
-	}
-
 	public class FilterLineCountAnalyzer : NumericAnalyzer
 	{
 		public override string Key

@@ -785,16 +785,6 @@ namespace SPNATI_Character_Editor
 			return GetLineCount(LineFilter.Filter, out poses);
 		}
 
-		/// <summary>
-		/// Gets a count of the number of unique targeted lines
-		/// </summary>
-		/// <returns></returns>
-		public int GetSpecialLineCount()
-		{
-			int poses;
-			return GetLineCount(LineFilter.Special, out poses);
-		}
-
 		public void GetUniqueLineAndPoseCount(out int lines, out int poses)
 		{
 			lines = GetLineCount(LineFilter.None, out poses);
@@ -830,14 +820,12 @@ namespace SPNATI_Character_Editor
 				return;
 			}
 			bool targeted = theCase.HasTargetedConditions;
-			bool special = theCase.HasStageConditions;
-			bool generic = !theCase.HasConditions;
 			bool filter = theCase.HasFilters;
+			bool generic = !targeted && !filter;
 
 			if ((filters == LineFilter.None) ||
 				(filters & LineFilter.Generic) > 0 && generic ||
 				(filters & LineFilter.Targeted) > 0 && targeted ||
-				(filters & LineFilter.Special) > 0 && special ||
 				(filters & LineFilter.Filter) > 0 && filter)
 			{
 				foreach (DialogueLine line in theCase.Lines)
@@ -899,17 +887,9 @@ namespace SPNATI_Character_Editor
 			/// </summary>
 			Targeted = 2,
 			/// <summary>
-			/// Game state conditions
-			/// </summary>
-			Special = 4,
-			/// <summary>
 			/// Filter
 			/// </summary>
-			Filter = 8,
-			/// <summary>
-			/// Any conditions
-			/// </summary>
-			Conditional = Targeted | Special | Filter
+			Filter = 8
 		}
 
 		public IEnumerable<Case> GetWorkingCasesTargetedAtCharacter(Character character, TargetType targetTypes)
