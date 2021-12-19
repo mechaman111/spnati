@@ -1444,7 +1444,7 @@ function expandDialogue (dialogue, self, target, bindings) {
                 }
                 break;
             case 'background':
-                if (fn == undefined) {
+                if (fn == undefined || fn === 'id') {
                     substitution = activeBackground.id;
                 } else if (fn === 'tag') {
                     var bg_tag = fixupTagFormatting(fn_parts[1]);
