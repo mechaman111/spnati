@@ -378,9 +378,9 @@ function playerMustStrip (player) {
                 humanPlayer.removedClothing = clothing[0];
             } else {
                 if (humanPlayer.gender == eGender.MALE) {
-                    trigger = [[MALE_HUMAN_MUST_STRIP], [MALE_MUST_STRIP, OPPONENT_LOST]];
+                    trigger = [MALE_HUMAN_MUST_STRIP, MALE_MUST_STRIP, OPPONENT_LOST];
                 } else {
-                    trigger = [[FEMALE_HUMAN_MUST_STRIP], [FEMALE_MUST_STRIP, OPPONENT_LOST]];
+                    trigger = [FEMALE_HUMAN_MUST_STRIP, FEMALE_MUST_STRIP, OPPONENT_LOST];
                 }
             }
             

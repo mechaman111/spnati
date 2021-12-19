@@ -1313,12 +1313,12 @@ Opponent.prototype.loadXMLTriggers = function () {
                 }
 
                 let $case = $($cases.get(loadItemsCompleted));
-                let c = new Case($case);
-                let tag = $case.parent().attr('id');
+                let trigger = $case.parent().attr('id');
+                let c = new Case($case, trigger);
                 this.recordTargetedCase(c);
 
                 c.getStages().forEach(function (stage) {
-                    var key = tag+':'+stage;
+                    var key = trigger+':'+stage;
                     if (!this.cases.has(key)) {
                         this.cases.set(key, []);
                     }
