@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited October 31 2021
+README edited December 18 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -246,6 +246,9 @@ Most, if not all, of these come with a documented Marker. If you find one withou
 
 9S
 -Responds to 9S having to strip.
+
+AARAVI
+-Responds to Aaravi as Chara is losing.
 
 ADRIEN
 -REsponds to Adrien as he has to strip.
@@ -543,6 +546,9 @@ SAKURA
 -Responds to Sakura removing her makeup.
 -Responses as either of them are losing.
 
+SAMUS ARAN
+-Responds as Chara is losing.
+
 SANS
 -Generic responses to handle Sans's, uh, unique masturbation sequence.
 -Responses to some of Sans's after-finishing jokes.
@@ -569,6 +575,7 @@ SPOOKY
 
 STOCKING
 -Responds to Stocking as Chara is losing.
+-Responds to Stocking asking about demon appearances.
 
 STREAMING-CHAN
 -Responds to Streaming-chan's interview.
@@ -621,6 +628,9 @@ YUKARI
 -Responds to Yukari revealing her disguise.
 -Responds to 'Yukari' leaving.
 -Generic responses to handle the, ah, unique masturbation sequence of 'Yukari'.
+
+YUNA FFX
+-Responds to her as she is losing.
 
 YUNYUN
 -Responds to Yunyun attempting to befriend Chara.
