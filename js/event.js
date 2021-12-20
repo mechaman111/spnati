@@ -38,16 +38,24 @@ var $dropdownResortButton = $("#dropdown-resort-button");
  * @param {JQuery} $xml 
  * @returns {Date}
  */
-function parseDateRangeElem($xml) {
+function parseDateRangeElem($xml, useUTC) {
     var month = parseInt($xml.attr("month"), 10) - 1;
     var day = parseInt($xml.attr("day"), 10);
     var year = parseInt($xml.attr("year"), 10);
 
     if (isNaN(year)) {
-        year = (new Date()).getUTCFullYear();
+        if (useUTC) {
+            year = (new Date()).getUTCFullYear();
+        } else {
+            year = (new Date()).getFullYear();
+        }
     }
 
-    return new Date(Date.UTC(year, month, day));
+    if (useUTC) {
+        return new Date(Date.UTC(year, month, day));
+    } else {
+        return new Date(year, month, day);
+    }
 }
 
 /**
@@ -72,8 +80,8 @@ function DateRange(startDate, endDate, override) {
  * @param {JQuery} $xml 
  * @returns {DateRange}
  */
-DateRange.parseRange = function ($xml) {
-    var from = parseDateRangeElem($xml.children("from"));
+DateRange.parseRange = function ($xml, useUTC) {
+    var from = parseDateRangeElem($xml.children("from"), useUTC);
     var toElem = $xml.children("to");
     var to = from;
 
@@ -84,11 +92,15 @@ DateRange.parseRange = function ($xml) {
         } else {
             // Parse the element as a year/month/day set.
             // Add one day to the end date/time to make the range inclusive on both sides.
-            to = new Date(parseDateRangeElem(toElem).getTime() + DAY_MS);
+            to = new Date(parseDateRangeElem(toElem, useUTC).getTime() + DAY_MS);
 
             if (to.getTime() <= from.getTime() && !toElem.attr("year")) {
                 // Wrap the date around to the next year.
-                to.setUTCFullYear(to.getUTCFullYear() + 1);
+                if (useUTC) {
+                    to.setUTCFullYear(to.getUTCFullYear() + 1);
+                } else {
+                    to.setFullYear(to.getFullYear() + 1);
+                }
             }
         }
     } else {
@@ -106,13 +118,19 @@ DateRange.parseRange = function ($xml) {
  * @param {JQuery} $xml 
  * @returns 
  */
-DateRange.parseWeekOf = function ($xml) {
-    var refDate = parseDateRangeElem($xml);
+DateRange.parseWeekOf = function ($xml, useUTC) {
+    var refDate = parseDateRangeElem($xml, useUTC);
     var startDay = parseInt($xml.attr("start-on"), 10) || 0;
     var nDays = parseInt($xml.attr("days"), 10) || 8;
     var override = (($xml.attr("override") || "").trim().toLowerCase() === "true");
 
-    var adjustDays = refDate.getUTCDay() - startDay;
+    var adjustDays;
+
+    if (useUTC) {
+        adjustDays = refDate.getUTCDay() - startDay;
+    } else {
+        adjustDays = refDate.getDay() - startDay;
+    }
 
     /* If the reference day happens to fall on or later in the week than the start day,
      * push the start date back by a week so that the start is always strictly before the reference date.
@@ -361,9 +379,18 @@ ResortEventInfo.prototype.setEvent = function (event) {
     var startDate = event.getStartDate() || new Date();
 
     this.event = event;
-    this.year = startDate.getUTCFullYear();
+    var startMonth;
+    
+    if (event.useUTC) {
+        this.year = startDate.getUTCFullYear();
+        startMonth = startDate.getUTCMonth();
+    } else {
+        this.year = startDate.getFullYear();
+        startMonth = startDate.getMonth();
+    }
+        
     if (!this.season || this.season === "auto") {
-        switch (startDate.getUTCMonth()) {
+        switch (startMonth) {
         /* December - February */
         case 11:
         case 0:
@@ -435,8 +462,9 @@ ResortEventInfo.prototype.show = function () {
  * @param {HighlightedAttributeList} characters
  * @param {ResortEventInfo?} resort
  * @param {EventAnnouncement?} announcement
+ * @param {boolean} useUTC
  */
-function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags, includeStatuses, characters, resort, announcement) {
+function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags, includeStatuses, characters, resort, announcement, useUTC) {
     /** @type {string} */
     this.id = id;
 
@@ -471,6 +499,9 @@ function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags
     /** @type {EventAnnouncement?} */
     this.announcement = announcement;
     if (this.announcement) this.announcement.event = this;
+    
+    /** @type {boolean} */
+    this.useUTC = useUTC;
 }
 
 /**
@@ -481,10 +512,20 @@ function GameEvent(id, name, dateRanges, costumes, background, candyImages, tags
  GameEvent.prototype.getActiveRanges = function (queryDate) {
     if (OVERRIDE_EVENTS.size > 0 || MANUAL_EVENTS.has(this.id)) return [];
 
-    var queryYear = queryDate.getUTCFullYear();
-    var currentYearOverrides = this.dateRanges.filter(function (range) {
-        return range.override && queryYear >= range.from.getUTCFullYear() && queryYear <= range.to.getUTCFullYear();
-    });
+    var queryYear;
+    var currentYearOverrides;
+
+    if (this.useUTC) {
+        queryYear = queryDate.getUTCFullYear();
+        currentYearOverrides = this.dateRanges.filter(function (range) {
+            return range.override && queryYear >= range.from.getUTCFullYear() && queryYear <= range.to.getUTCFullYear();
+        });
+    } else {
+        queryYear = queryDate.getFullYear();
+        currentYearOverrides = this.dateRanges.filter(function (range) {
+            return range.override && queryYear >= range.from.getFullYear() && queryYear <= range.to.getFullYear();
+        });
+    }
 
     if (currentYearOverrides.length > 0) {
         /*
@@ -548,14 +589,22 @@ function parseEventElement ($xml) {
     }
 
     var id = $xml.attr("id");
+    var consistentTimezone = $xml.attr("consistent-timezone") || null;
+    var useUTC = false;
+    
+    if (consistentTimezone == "true")
+    {
+        useUTC = true;
+    }
+    
     var name = $xml.children("name").text() || null;
 
     var dateRanges = $xml.find("dates>date").map(function (index, elem) {
-        return DateRange.parseRange($(elem));
+        return DateRange.parseRange($(elem), useUTC);
     }).get();
 
     $xml.find("dates>weekOf").each(function (index, elem) {
-        dateRanges.push(DateRange.parseWeekOf($(elem)));
+        dateRanges.push(DateRange.parseWeekOf($(elem), useUTC));
     });
 
     var altCostumes = HighlightedAttributeList.parse($xml, "costumes");
@@ -577,7 +626,7 @@ function parseEventElement ($xml) {
         announceInfo = EventAnnouncement.parse(announceElem);
     }
 
-    return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags, includeStatuses, characters, resortInfo, announceInfo);
+    return new GameEvent(id, name, dateRanges, altCostumes, background, candyImages, fillTags, includeStatuses, characters, resortInfo, announceInfo, useUTC);
 }
 
 /**
