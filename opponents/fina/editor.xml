@@ -8,9 +8,6 @@
         <case name="Too Much Exposition" id="44" priority="Prompt" min="7" max="7">
             <description>Fina starts to worry she's giving too much exposition about her world, and asks if it's okay. (If your character encourages her, be sure to use a marker in your reply so I can flag her to continue.)</description>
         </case>
-        <case name="First Time Playing" id="96" priority="FYI" min="0" max="1">
-            <description>At the start of the game, Fina says she actually has no idea how to play poker. (Don't spend too much effort responding - she only does this the very first time someone plays with her.)</description>
-        </case>
         <case name="Lonely Empathy" id="132" priority="Prompt" min="0" max="2">
             <description>WARNING: IF YOU REPLY, REPLACE ~lonely.id~ IN THE CONDITIONS WITH YOUR CHARACTER'S ID OR DELETE IT. Fina asks a lonely-tagged character if she can do anything to help them feel welcome.</description>
         </case>
@@ -580,6 +577,10 @@
         <response id="3184" opponent="noire" opponentId="557" />
         <response id="3185" opponent="noire" opponentId="554" />
         <response id="3186" opponent="noire" opponentId="559" />
+        <response id="3188" opponent="estelle" opponentId="56" />
+        <response id="3189" opponent="estelle" opponentId="38" />
+        <response id="3190" opponent="estelle" opponentId="44" />
+        <response id="3191" opponent="estelle" opponentId="42" />
     </responses>
     <notes>
         <note id="1384">The Orb of Serenity is actually worth less than the three legendary Idols in Skies of Arcadia, but those are obtained in a completely different way depending on whether you're playing the Dreamcast original or the Gamecube remake, and I don't want to figure out how to handle that.</note>
@@ -689,6 +690,7 @@ Note to self: Please don't remove the stage and Said PlaysTotal conditions again
         <note id="3181">Two alt cases for this branch, for which I'm using the same marker with different variables stored in them to reduce marker bloat a bit.</note>
         <note id="3183">This uses the same marker as another case, with the markers storing different values for the different versions.</note>
         <note id="3184">This uses the same marker as another case, with the markers storing different values for the different versions.</note>
+        <note id="2410">This line won't usually play, though can in some corner cases. I'd like to move it by moving Estelle's "magical" question to a Hand prompt.</note>
     </notes>
     <labels>
         <label id="93" label="" folder="Stranger" sort="2" />
@@ -754,7 +756,7 @@ Note to self: Please don't remove the stage and Said PlaysTotal conditions again
         <label id="176" label="" color="6" folder="NPC Memory" sort="38" />
         <label id="177" label="" color="6" folder="NPC Memory" sort="40" />
         <label id="178" label="" color="6" folder="NPC Memory" sort="44" />
-        <label id="179" label="" color="6" folder="NPC Memory" sort="46" />
+        <label id="179" label="" color="3" folder="NPC Memory" sort="46" />
         <label id="180" label="" color="6" folder="NPC Memory" sort="30" />
         <label id="181" label="" folder="Friend" sort="144" />
         <label id="182" label="" color="6" folder="NPC Memory" sort="50" />
@@ -2572,12 +2574,12 @@ Note to self: Please don't remove the stage and Said PlaysTotal conditions again
         <label id="2408" label="" color="6" folder="" sort="0" />
         <label id="2409" label="" color="1" folder="" sort="0" />
         <label id="28" label="" color="6" folder="" sort="0" />
-        <label id="2410" label="" color="6" folder="" sort="0" />
-        <label id="2411" label="" color="6" folder="" sort="0" />
-        <label id="344" label="" color="6" folder="" sort="0" />
+        <label id="2410" label="" color="6" folder="Responses" sort="0" />
+        <label id="2411" label="" color="3" folder="" sort="0" />
+        <label id="344" label="" color="3" folder="" sort="0" />
         <label id="46" label="" color="6" folder="" sort="0" />
         <label id="45" label="" color="6" folder="" sort="0" />
-        <label id="2412" label="" color="6" folder="" sort="0" />
+        <label id="2412" label="" color="3" folder="" sort="0" />
         <label id="2413" label="" color="1" folder="" sort="0" />
         <label id="231" label="" color="6" folder="" sort="0" />
         <label id="34" label="" color="6" folder="" sort="0" />
@@ -3547,8 +3549,14 @@ Note to self: Please don't remove the stage and Said PlaysTotal conditions again
         <label id="3185" label="" color="1" folder="" sort="0" />
         <label id="3186" label="" color="1" folder="" sort="0" />
         <label id="3187" label="" folder="Friend" sort="0" />
+        <label id="3188" label="" folder="Responses" sort="0" />
+        <label id="3189" label="" folder="Responses" sort="0" />
+        <label id="3190" label="" folder="Responses" sort="0" />
+        <label id="3191" label="" folder="Responses" sort="0" />
+        <label id="3192" label="" folder="Friend" sort="0" />
+        <label id="3193" label="" folder="Friend" sort="0" />
     </labels>
-    <nextId>3187</nextId>
+    <nextId>3193</nextId>
     <markers>
         <marker scope="Public" name="" />
         <marker scope="Public" name="AikaBirthday">Fina notes that it's Aika's birthday today.</marker>
@@ -3931,9 +3939,62 @@ Note to self: Please don't remove the stage and Said PlaysTotal conditions again
         <marker scope="Public" name="FinaEmiStart1">First part of stripping conversation for Emi's first layer.</marker>
         <marker scope="Public" name="FinaEndingSinful">The game is over, and Fina feels the player is still under Chara's influence.</marker>
         <marker scope="Public" name="FinaEnjoysLosing">Fina admits that she wanted to lose the game, and deliberately didn't learn to play beforehand.</marker>
+        <marker scope="Public" name="FinaEstelleAuthor" />
+        <marker scope="Public" name="FinaEstelleBook" />
+        <marker scope="Public" name="FinaEstelleBookMarkers" />
+        <marker scope="Public" name="FinaEstelleBooks" />
         <marker scope="Public" name="FinaEstelleBra">Fina is surprised that Estelle needs help taking off her own bra.</marker>
         <marker scope="Public" name="FinaEstelleBraApology">Fina apologizes for expressing her surprise, saying she didn't mean to criticize Estelle.</marker>
+        <marker scope="Public" name="FinaEstelleContinue1" />
+        <marker scope="Public" name="FinaEstelleContinue2" />
+        <marker scope="Public" name="FinaEstelleContinue3" />
+        <marker scope="Public" name="FinaEstelleContinue4" />
+        <marker scope="Public" name="FinaEstelleContinue4Alt" />
+        <marker scope="Public" name="FinaEstelleContinue5" />
+        <marker scope="Public" name="FinaEstelleContinue7" />
+        <marker scope="Public" name="FinaEstelleCupil" />
+        <marker scope="Public" name="FinaEstelleDating" />
+        <marker scope="Public" name="FinaEstelleEnd1" />
+        <marker scope="Public" name="FinaEstelleEnd2" />
+        <marker scope="Public" name="FinaEstelleEnd3" />
+        <marker scope="Public" name="FinaEstelleEnd4" />
+        <marker scope="Public" name="FinaEstelleEnd4alt" />
+        <marker scope="Public" name="FinaEstelleEnd4Alt" />
+        <marker scope="Public" name="FinaEstelleEnd5" />
+        <marker scope="Public" name="FinaEstelleEnd7" />
+        <marker scope="Public" name="FinaEstelleFocus" />
         <marker scope="Public" name="FinaEstelleGreet">Fina greets Estelle, having met her in a previous game.</marker>
+        <marker scope="Public" name="FinaEstelleInjustice" />
+        <marker scope="Public" name="FinaEstelleMagical" />
+        <marker scope="Public" name="FinaEstelleMisunderstanding" />
+        <marker scope="Public" name="FinaEstelleReply1" />
+        <marker scope="Public" name="FinaEstelleReply2" />
+        <marker scope="Public" name="FinaEstelleReply3" />
+        <marker scope="Public" name="FinaEstelleReply4" />
+        <marker scope="Public" name="FinaEstelleReply5Clothed" />
+        <marker scope="Public" name="FinaEstelleReply5Clothed=stranger" />
+        <marker scope="Public" name="FinaEstelleReply5Exposed" />
+        <marker scope="Public" name="FinaEstelleReplyContinue1" />
+        <marker scope="Public" name="FinaEstelleReplyContinue2" />
+        <marker scope="Public" name="FinaEstelleReplyContinue3" />
+        <marker scope="Public" name="FinaEstelleReplyContinue4" />
+        <marker scope="Public" name="FinaEstelleReplyContinue5Clothed" />
+        <marker scope="Public" name="FinaEstelleReplyContinue5Clothed=stranger" />
+        <marker scope="Public" name="FinaEstelleReplyContinue5Exposed" />
+        <marker scope="Public" name="FinaEstelleReplyEnd1" />
+        <marker scope="Public" name="FinaEstelleReplyEnd2" />
+        <marker scope="Public" name="FinaEstelleReplyEnd3" />
+        <marker scope="Public" name="FinaEstelleReplyEnd4" />
+        <marker scope="Public" name="FinaEstelleReplyEnd5Clothed" />
+        <marker scope="Public" name="FinaEstelleReplyEnd5Exposed" />
+        <marker scope="Public" name="FinaEstelleShaving" />
+        <marker scope="Public" name="FinaEstelleStart1" />
+        <marker scope="Public" name="FinaEstelleStart2" />
+        <marker scope="Public" name="FinaEstelleStart3" />
+        <marker scope="Public" name="FinaEstelleStart4" />
+        <marker scope="Public" name="FinaEstelleStart5" />
+        <marker scope="Public" name="FinaEstelleStart6" />
+        <marker scope="Public" name="FinaEstelleStart7" />
         <marker scope="Public" name="FinaExhibitionistFinished" />
         <marker scope="Public" name="FinaExhibitionStrip1" />
         <marker scope="Public" name="FinaExhibitionStrip2" />
