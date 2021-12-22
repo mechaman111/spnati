@@ -1374,9 +1374,9 @@ function Condition($xml) {
  *****                  Case Object Specification                 *****
  **********************************************************************/
 
-function Case($xml) {
+function Case($xml, trigger) {
+    this.trigger =                  trigger;
     this.stage =                    $xml.attr('stage');
-    this.tag =                      $xml.attr('tag');
     this.target =                   $xml.attr("target");
     this.filter =                   $xml.attr("filter");
     this.targetStage =              parseInterval($xml.attr("targetStage"));
@@ -1492,6 +1492,13 @@ function Case($xml) {
 
         this.counters.forEach(function (c) { this.priority += c.priority; }, this);
 
+        if ((this.trigger == MALE_HUMAN_MUST_STRIP
+             || this.trigger == FEMALE_HUMAN_MUST_STRIP)
+            && this.target != "human"
+            && !this.counters.some(c => c.id == "human" && c.role == "target")) {
+            this.priority += 300;
+        }
+
         // Expression tests (priority = 50 for each)
         this.priority += (tests.length * 50);
     }
@@ -1515,7 +1522,10 @@ Case.prototype.getStages = function (n_layers) {
     if (this.stage) {
         var intervals = this.stage.split(/\s+/).map(parseInterval);
     } else {
-        var intervals = [getRelevantStagesForTrigger(this.tag, n_layers)];
+        /* Currently never used in practice, because the CE always
+         * adds a stage attributes instead of relying on the
+         * default. */
+        var intervals = [getRelevantStagesForTrigger(this.trigger, n_layers)];
     }
     
     return intervals.reduce(function (acc, interval) {
