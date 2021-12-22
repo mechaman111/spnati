@@ -1456,37 +1456,6 @@
             </case>
         </trigger>
 
-        <trigger id="male_human_must_strip">
-            <case stage="0-9">
-                <condition role="self" saidMarker="Mister1" />
-                <test expr="~player~" value="Mister" />
-                <state img="#-mendokuse.png" oneShotId="80" marker="Mister2">Maybe you just got lost? You can change your name on the start screen. There's also a button next to `Enter The Inventory' that lets you pick tags.</state>
-            </case>
-            <case stage="0-9">
-                <condition role="self" saidMarker="Mister2" />
-                <test expr="~player~" value="Mister" />
-                <state img="#-wah.png" oneShotId="81" marker="Mister3">I mean, without tags, how are we supposed to target you? You're a blank fucking slate!</state>
-            </case>
-            <case stage="0-9">
-                <condition role="self" saidMarker="Mister3" />
-                <test expr="~player~" value="Mister" />
-                <state img="#-thatdamnfinalchaosemerald.png" oneShotId="82" marker="Mister4">You're real. You have a physical body, free will, you can think and act however you please, and yet you can't even fill in a text box.</state>
-            </case>
-            <case stage="0-9" oneShotId="53">
-                <condition role="self" saidMarker="Charlie1" />
-                <test expr="~player~" value="Charlie" />
-                <state img="#-thatdamnfinalchaosemerald.png" marker="Charlie3">Just forget I said anything, jackass! It doesn't concern you.</state>
-            </case>
-            <case stage="0-9">
-                <test expr="~player~" value="Mister" />
-                <state img="#-wah.png" oneShotId="78" marker="Mister1">Seriously? `Mister'? You were too horny to even change your damn name?</state>
-            </case>
-            <case stage="0-9" oneShotId="49">
-                <test expr="~player~" value="Charlie" />
-                <state img="#-buthow.png" marker="Charlie1">Ch...Charlie?</state>
-            </case>
-        </trigger>
-
         <trigger id="male_must_strip">
             <case stage="0-7">
                 <condition role="target" character="dust" stage="0" />
@@ -1503,6 +1472,40 @@
             <case stage="0-7">
                 <condition role="target" character="pit" stage="0" />
                 <state img="#-idle.png">An angel? Get real. You're probably some `nice guy' role-player that's gone too far.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="self" saidMarker="Mister1" />
+                <condition role="target" character="human" />
+                <test expr="~player~" value="Mister" />
+                <state img="#-mendokuse.png" oneShotId="80" marker="Mister2">Maybe you just got lost? You can change your name on the start screen. There's also a button next to `Enter The Inventory' that lets you pick tags.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="self" saidMarker="Mister2" />
+                <condition role="target" character="human" />
+                <test expr="~player~" value="Mister" />
+                <state img="#-wah.png" oneShotId="81" marker="Mister3">I mean, without tags, how are we supposed to target you? You're a blank fucking slate!</state>
+            </case>
+            <case stage="0-9">
+                <condition role="self" saidMarker="Mister3" />
+                <condition role="target" character="human" />
+                <test expr="~player~" value="Mister" />
+                <state img="#-thatdamnfinalchaosemerald.png" oneShotId="82" marker="Mister4">You're real. You have a physical body, free will, you can think and act however you please, and yet you can't even fill in a text box.</state>
+            </case>
+            <case stage="0-9" oneShotId="53">
+                <condition role="self" saidMarker="Charlie1" />
+                <condition role="target" character="human" />
+                <test expr="~player~" value="Charlie" />
+                <state img="#-thatdamnfinalchaosemerald.png" marker="Charlie3">Just forget I said anything, jackass! It doesn't concern you.</state>
+            </case>
+            <case stage="0-9">
+                <condition role="target" character="human" />
+                <test expr="~player~" value="Mister" />
+                <state img="#-wah.png" oneShotId="78" marker="Mister1">Seriously? `Mister'? You were too horny to even change your damn name?</state>
+            </case>
+            <case stage="0-9" oneShotId="49">
+                <condition role="target" character="human" />
+                <test expr="~player~" value="Charlie" />
+                <state img="#-buthow.png" marker="Charlie1">Ch...Charlie?</state>
             </case>
             <case stage="0-9" oneShotId="89">
                 <condition filter="aggressive" role="target" />
@@ -1559,23 +1562,6 @@
             </case>
             <case stage="9">
                 <state img="#-MINDBOOLETS.png">I already finished, but I can still save all this in my spank bank for later!</state>
-            </case>
-        </trigger>
-
-        <trigger id="female_human_must_strip">
-            <case stage="0-9" oneShotId="58">
-                <condition role="self" saidMarker="Missy1" />
-                <test expr="~player~" value="Missy" />
-                <state img="#-headon.png" marker="Missy2">After the game, go back and get a proper name, alright? And give yourself tags while you're at it. Button's right next to `Enter The Inventory'.</state>
-            </case>
-            <case stage="0-9" oneShotId="57">
-                <condition role="self" saidMarker="Missy2" />
-                <test expr="~player~" value="Missy" />
-                <state img="#-wah.png" marker="Missy3">If you don't have tags, we can barely react to you. It's not like we can actually see you, so it's all we have to go on.</state>
-            </case>
-            <case stage="0-9" oneShotId="56">
-                <test expr="~player~" value="Missy" />
-                <state img="#-wah.png" marker="Missy1">Missy? Seriously? You changed your gender on the start screen, but not your name? The text box is right there!</state>
             </case>
         </trigger>
 
@@ -1715,6 +1701,23 @@
             <case stage="0-7 9">
                 <condition role="target" character="polly" stage="0" />
                 <state img="#-smug.png" marker="polly_party_girl">So, you're quite the party girl, huh? I would be too, if I went to parties.</state>
+            </case>
+            <case stage="0-9" oneShotId="58">
+                <condition role="self" saidMarker="Missy1" />
+                <condition role="target" character="human" />
+                <test expr="~player~" value="Miss" />
+                <state img="#-headon.png" marker="Missy2">After the game, go back and get a proper name, alright? And give yourself tags while you're at it. Button's right next to `Enter The Inventory'.</state>
+            </case>
+            <case stage="0-9" oneShotId="57">
+                <condition role="self" saidMarker="Missy2" />
+                <condition role="target" character="human" />
+                <test expr="~player~" value="Miss" />
+                <state img="#-wah.png" marker="Missy3">If you don't have tags, we can barely react to you. It's not like we can actually see you, so it's all we have to go on.</state>
+            </case>
+            <case stage="0-9" oneShotId="56">
+                <condition role="target" character="human" />
+                <test expr="~player~" value="Miss" />
+                <state img="#-wah.png" marker="Missy1">Miss? Seriously? You changed your gender on the start screen, but not your name? The text box is right there!</state>
             </case>
             <case stage="0-7" oneShotId="31">
                 <condition role="target" character="komi-san" />
