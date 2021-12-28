@@ -8,9 +8,6 @@
  *****                    Game Screen UI Elements                 *****
  **********************************************************************/
 
-/* game banner */
-$gameBanner = $("#game-banner");
-
 /* main UI elements */
 $gameBubbles = [$("#game-bubble-1"),
                 $("#game-bubble-2"),
@@ -180,6 +177,7 @@ function loadGameScreen () {
         }
     }.bind(this));
 
+    saveAllTranscriptEntries();
     updateAllBehaviours(null, null, GAME_START);
     updateBiggestLead();
 
@@ -577,9 +575,8 @@ function completeRevealPhase () {
     }
 
     /* update behaviour */
-    saveTranscriptMessage("<b>"+players[recentLoser].label+"</b> has lost the hand.");
     var clothes = playerMustStrip (recentLoser);
-    
+
     /* playerMustStrip() calls updateAllBehaviours. */
 
     /* highlight the loser */
@@ -658,7 +655,7 @@ function endRound () {
         }
         
         console.log("The game has ended!");
-        $gameBanner.html("Game Over! "+players[lastPlayer].label+" won Strip Poker Night at the Inventory!");
+        saveTranscriptMessage('<b>' + players[lastPlayer].label.escapeHTML() + "</b> won Strip Poker Night at the Inventory!");
         gameOver = true;
 
         if (SENTRY_INITIALIZED) {

@@ -674,13 +674,10 @@ function validateTitleScreen () {
         playerName = 'Miss';
     }
 
-    // Nuke all angle-brackets
-    playerName = playerName.replace(/<|>/g, '');
-
     humanPlayer.first = playerName;
     humanPlayer.label = playerName;
 
-    $gameLabels[HUMAN_PLAYER].html(humanPlayer.label);
+    $gameLabels[HUMAN_PLAYER].text(humanPlayer.label);
 
     /* count clothing */
     var clothingItems = save.selectedClothing();

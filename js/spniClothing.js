@@ -357,6 +357,9 @@ function playerMustStrip (player) {
     /* assume the player only has IMPORTANT_ARTICLES */
     var clothing = players[player].clothing;
 
+    saveTranscriptMessage("<b>"+players[recentLoser].label.escapeHTML()+"</b> has lost the hand"
+                          + (clothing.length > 0 ? '.' : ', and is out of clothes.'));
+
     if (clothing.length) {
         /* the player has clothes and will strip */
         if (player == HUMAN_PLAYER) {
