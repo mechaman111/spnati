@@ -279,16 +279,20 @@ function loadVersionInfo () {
     
     return fetchXML("version-info.xml").then(function($xml) {
         versionInfo = $xml;
-        CURRENT_VERSION = versionInfo.children('current').attr('version');
+        var versionElem = versionInfo.children('current');
+        CURRENT_VERSION = versionElem.attr('version');
 
         if (SENTRY_INITIALIZED) Sentry.setTag("game_version", CURRENT_VERSION);
         
         $('.substitute-version').text('v'+CURRENT_VERSION);
         console.log("Running SPNATI version "+CURRENT_VERSION);
+
+        var version_ts = parseInt(versionElem.attr("build-timestamp"), 10);
+        if (!version_ts) {
+            version_ts = versionInfo.find('>changelog > version[number=\"'+CURRENT_VERSION+'\"]').attr('timestamp');
+            version_ts = parseInt(version_ts, 10);
+        }
         
-        version_ts = versionInfo.find('>changelog > version[number=\"'+CURRENT_VERSION+'\"]').attr('timestamp');
-        
-        version_ts = parseInt(version_ts, 10);
         $('.substitute-version-time').text('(updated '+fuzzyTimeAgo(version_ts)+')');
 
         $('.version-button').click(showVersionModal);

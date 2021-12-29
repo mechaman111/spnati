@@ -9,6 +9,10 @@ cp img/* .public/img
 # Copy card images recursively.
 cp -r img/cards .public/img
 
+# Set build timestamp in version-info.xml.
+# `date +%s` returns timestamp in seconds; add %N and cut to include milliseconds.
+sed "s/__BUILD_TIMESTAMP/$(date +%s%N | cut -b1-13)/g" version-info.xml > .public/version-info.xml
+
 sed "s/__CI_COMMIT_SHA/${CI_COMMIT_SHA}/g; s/__VERSION/${VERSION}/g" prod-config.xml > .public/config.xml
 cp opponents/listing.xml .public/opponents
 cp opponents/general_collectibles.xml .public/opponents
