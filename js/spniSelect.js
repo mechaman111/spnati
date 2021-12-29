@@ -1109,7 +1109,9 @@ function loadDefaultFillSuggestions () {
         /* get a copy of the loaded opponents list */
         var possiblePicks = loadedOpponents.filter(function (opp) {
             /* Don't suggest anything but online characters, even in offline */
-            return !opp.status && !isCharacterUsed(opp);
+            return !opp.status && !isCharacterUsed(opp) && !fillPlayers.some(function (p) {
+                return p.id === opp.id;
+            });
         });
         
         var possibleNewPicks = possiblePicks.filter(function (opp) {
@@ -1188,7 +1190,9 @@ function loadDefaultFillSuggestions () {
             } else {
                 if (opp.status !== "testing" || isStaleOnTesting(opp)) return false;
             }
-            return !isCharacterUsed(opp);
+            return !isCharacterUsed(opp) && !fillPlayers.some(function (p) {
+                return p.id === opp.id;
+            });
         });
         
         if (DEFAULT_FILL === 'new' || DEFAULT_FILL === 'default') {
