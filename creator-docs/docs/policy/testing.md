@@ -14,7 +14,7 @@ Once a creator feels their character is sufficiently ready, they can begin the [
 
 For admittance on to testing, a new character file must meet the following requirements:
 
-- Compressed all image files. This can be done through the CE, or by uploading to [tinypng.com](https://tinypng.com/).  Note that all character sprites (not including epilogue images) must total under **11 mb**.
+- Compressed all image files. This can be done through the CE, or by uploading to [tinypng.com](https://tinypng.com/).  Note that all character sprites (not including epilogue images) must total under **15 mb**.
 
 - No broken images (checked by validation in the character editor).
 
