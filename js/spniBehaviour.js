@@ -528,6 +528,9 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
             lhs = self.timer;
         } else if (this.attr == "stamina") {
             lhs = self.stamina;
+        } else {
+            console.error("Unknown forfeit attribute: ", this.attr);
+            return;
         }
 
         if (typeof(rhs) !== 'number' || isNaN(rhs)) {
@@ -565,6 +568,7 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
         } else if (this.attr == "timer") {
             self.timer = newValue;
         } else {
+            /* Shouldn't get here... */
             console.error("Unknown forfeit attribute: ", this.attr);
         }
     }
@@ -587,6 +591,8 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
                 self.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
             }
             self.forfeitLocked = false;
+        } else {
+            console.error("Unknown heavy forfeit value: ", this.heavy);
         }
     }
 }
@@ -668,12 +674,14 @@ NicknameOperation.prototype.apply = function (self, opp) {
         if (newNicknames.indexOf(rhs) < 0) newNicknames.push(rhs);
     } else if (this.op == "-") {
         newNicknames = newNicknames.filter(function (v) { return v !== rhs; });
+    } else {
+        console.error("Unknown nickname operation: ", this.op);
     }
 
     if (newNicknames.length === 0) {
         delete self.nicknames[nickPlayerID];
     } else {
-        self.nicknames[nickPlayerID] = newNicknames;        
+        self.nicknames[nickPlayerID] = newNicknames;
     }
 }
 
@@ -706,6 +714,8 @@ NicknameOperation.prototype.apply = function (self, opp) {
         );
     } else if (type == "player") {
         return new PlayerAttributeOperation($elem.attr("attr"), $elem.attr("value"), parentCase);
+    } else {
+        console.error("Unknown operation tag type: ", type);
     }
 }
 
