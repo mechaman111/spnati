@@ -25,6 +25,7 @@ var SPECIAL_CASE_NAMES = {
     "wiifitfemale": "Wii Fit Trainer",
     "yshtola": "Y'shtola",
     "yuna_ffx": "Yuna (FFX)",
+    "yuno_uno": "Yuno",
         
     // classic opponents
     "amy_rose_classic": "Amy Rose",
