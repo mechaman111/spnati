@@ -47,6 +47,7 @@ var OPPONENT_CROTCH_IS_VISIBLE = "opponent_crotch_is_visible";
 var OPPONENT_START_MASTURBATING = "opponent_start_masturbating";
 var OPPONENT_MASTURBATING = "opponent_masturbating";
 var OPPONENT_HEAVY_MASTURBATING = "opponent_heavy_masturbating";
+var OPPONENT_FINISHING_MASTURBATING = "opponent_finishing_masturbating";
 var OPPONENT_FINISHED_MASTURBATING = "opponent_finished_masturbating";
 
 var PLAYERS_TIED = "tie";
@@ -517,7 +518,7 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
         (self.out && this.attr == "stamina")
     ) return;
 
-    if (this.attr) {
+    if (this.attr == "stamina" || this.attr == "timer") {
         var rhs = expandDialogue(
             this.value, self, opp, 
             this.parentCase && this.parentCase.variableBindings
@@ -567,10 +568,19 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
             self.stamina = newValue;
         } else if (this.attr == "timer") {
             self.timer = newValue;
-        } else {
-            /* Shouldn't get here... */
-            console.error("Unknown forfeit attribute: ", this.attr);
         }
+    } else if (this.attr == "redirect-finish") {
+        let finishingTarget = findVariablePlayer(
+            this.value, self, opp, this.parentCase && this.parentCase.variableBindings
+        );
+
+        if (finishingTarget) {
+            self.finishingTarget = finishingTarget;
+        } else {
+            console.error("Unknown finish redirection target: ", this.value);
+        }
+    } else if (this.attr) {
+        console.error("Unknown forfeit attribute: ", this.attr);
     }
 
     if (self.out) {
@@ -591,7 +601,7 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
                 self.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
             }
             self.forfeitLocked = false;
-        } else {
+        } else if (this.heavy) {
             console.error("Unknown heavy forfeit value: ", this.heavy);
         }
     }

@@ -31,6 +31,8 @@ var HEAVY_LAST_ROUND = 2;
  ************************************************************/
 function startMasturbation (player) {
     players[player].forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
+    players[player].forfeitLocked = false;
+    players[player].finishingTarget = players[player];
     players[player].out = true;
     players[player].hand = null;
     players[player].outOrder = players.countTrue(function(p) { return p.out; });
@@ -90,14 +92,14 @@ function tickForfeitTimers () {
             /* set the button state */
             $mainButton.html("Cumming...");
 
-            /* hide everyone else's dialogue bubble */
-            gameDisplays.forEach(function (d) {
-                if (d.slot != i) d.hideBubble();
-            });
-
             saveTranscriptMessage('<b>' + players[i].label.escapeHTML() + '</b> is finishing...');
             console.log(players[i].label+" is finishing!");
             if (i == HUMAN_PLAYER) {
+                /* Hide everyone's dialogue bubbles. */
+                gameDisplays.forEach(function (d) {
+                    d.hideBubble();
+                });
+
                 /* player's timer is up */
                 /* TEMP FIX: prevent this animation on Safari */
                 if (PLAYER_FINISHING_EFFECT) {
@@ -120,10 +122,29 @@ function tickForfeitTimers () {
                 players[i].forfeit = [PLAYER_FINISHING_MASTURBATING, CAN_SPEAK];
 
                 /* show them cumming */
-                players[i].updateBehaviour(PLAYER_FINISHING_MASTURBATING);
-                players[i].commitBehaviourUpdate();
-                
-                saveSingleTranscriptEntry(i);
+                let finishTarget = players[i].finishingTarget;
+                if (finishTarget && finishTarget.slot !== i) {
+                    /* If the player has redirected their finishing dialogue to another character,
+                     * play Opponent Finishing dialogue for them.
+                     */
+
+                    /* Hide everyone else's dialogue bubbles... */
+                    gameDisplays.forEach(function (d) {
+                        if (d.slot != finishTarget.slot) d.hideBubble();
+                    });
+
+                    finishTarget.updateBehaviour(OPPONENT_FINISHING_MASTURBATING, players[i]);
+                    finishTarget.commitBehaviourUpdate();
+                    saveSingleTranscriptEntry(finishTarget.slot);
+                } else {
+                    gameDisplays.forEach(function (d) {
+                        if (d.slot != i) d.hideBubble();
+                    });
+
+                    players[i].updateBehaviour(PLAYER_FINISHING_MASTURBATING);
+                    players[i].commitBehaviourUpdate();
+                    saveSingleTranscriptEntry(i);
+                }
 
                 /* trigger the callback */
                 var player = i, tableVisible = (tableOpacity > 0);
