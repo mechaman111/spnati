@@ -55,7 +55,9 @@ Afterwards, the initiator, receiver, and other characters at the table will play
 
 In addition to changing timers and finishing dialogue redirection, forfeit operations can also affect whether or not a character is heavily masturbating.
 
-These operations take place _alongside_ changes to attributes; this is to ensure a clear order of operations when a character's forfeit timer is changed alongside their heavy masturbation status.
+Operations affecting heavy masturbation are always applied after operations that change forfeit timers; this ensures that operations always use the correct timer values when resetting heavy masturbation status.
+
+These operations use the `heavy` attribute in XML.
 
 | Value | Meaning |
 |-------|---------|
@@ -91,6 +93,10 @@ Nickname operations will clear any per-target `nickname` marker set for the refe
 
 | Operation | Meaning |
 |-----------|---------|
-| `=`       | Sets the nickname for the referenced character. This clears out previously added nicknames from the list, so that the nickname set here is the only one used for the referenced character. |
+| `clear`   | Clear the nickname list for the referenced character, so that this character uses the referenced character's `label` attribute when naming them. |
+| `=`       | Sets the nickname for the referenced character. This clears out previously added nicknames from the list, so that the nickname set here is the only one used for the referenced character. Using this operation with a `name` that resolves to an empty string is equivalent to a `clear` operation. |
 | `+`       | Adds a new nickname for the referenced character, if the nickname isn't already being used for them. |
 | `-`       | Removes a nickname that is currently in use for the referenced character. |
+
+Nickname operations are applied in the order they're listed in the above table, starting with `clear` operations.
+Among other things, this ensures that dialogue can use `clear` or `=` operations to clear out the nickname list _and_ repopulate it with multiple nicknames in a single line, without relying on operations to be ordered correctly in XML.
