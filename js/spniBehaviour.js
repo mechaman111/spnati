@@ -574,10 +574,12 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
             this.value, self, opp, this.parentCase && this.parentCase.variableBindings
         );
 
-        if (finishingTarget) {
-            self.finishingTarget = finishingTarget;
-        } else {
+        if (!finishingTarget) {
             console.error("Unknown finish redirection target: ", this.value);
+        } else if (finishingTarget.slot == HUMAN_PLAYER) {
+            console.error("Attempted to redirect " + self.id + "'s finishing dialogue to human player");
+        } else {
+            self.finishingTarget = finishingTarget;
         }
     } else if (this.attr) {
         console.error("Unknown forfeit attribute: ", this.attr);

@@ -146,6 +146,12 @@ function tickForfeitTimers () {
                     saveSingleTranscriptEntry(i);
                 }
 
+                /* Make sure the character's timer is _actually_ zero, in case they try to do something like
+                 * reset their forfeit timer as part of a Finishing line.
+                 * Question: do we actually want to disallow this?
+                 */
+                players[i].timer = 0;
+
                 /* trigger the callback */
                 var player = i, tableVisible = (tableOpacity > 0);
                 timeoutID = window.setTimeout(function(){ allowProgression(eGamePhase.END_FORFEIT); }, ORGASM_DELAY);
