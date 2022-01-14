@@ -504,14 +504,12 @@ PlayerAttributeOperation.prototype.sortKey = function () {
  * @param {string} attr 
  * @param {string} op 
  * @param {string} value 
- * @param {string} heavyStatus 
  * @param {Case} parentCase 
  */
-function ForfeitTimerOperation (attr, op, value, heavyStatus, parentCase) {
+function ForfeitTimerOperation (attr, op, value, parentCase) {
     this.attr = attr;
     this.op = op || "=";
     this.value = value;
-    this.heavy = heavyStatus;
     this.parentCase = parentCase;
 }
 
@@ -764,7 +762,6 @@ NicknameOperation.prototype.sortKey = function () {
             $elem.attr("attr"), 
             $elem.attr("op") || "=",
             $elem.attr("value"),
-            $elem.attr("heavy"),
             parentCase
         );
     } else if (type == "nickname") {
@@ -2465,9 +2462,9 @@ Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
             curCase.checkConditions(this, opp))
         {
             if (curCase.hidden) {
-                //if it's hidden, set markers and collectibles but don't actually count as a match
-                curCase.cleanupMutableState();
+                // if it's hidden, set markers, collectibles, etc. but don't actually count as a match
                 this.applyHiddenStates(curCase, opp);
+                curCase.cleanupMutableState();
                 continue;
             }
 
