@@ -478,6 +478,16 @@ PlayerAttributeOperation.prototype.apply = function (self, opp) {
     }
 }
 
+/**
+ * Get a key for sorting operations of this type.
+ * 
+ * Operations with lower sort values should be applied before
+ * operations with higher values.
+ * @returns {number}
+ */
+PlayerAttributeOperation.prototype.sortKey = function () {
+    return (this.attr == "label") ? 0 : 1;
+}
 
 /**
  * A State-based operation for altering a character's forfeit:
@@ -527,11 +537,8 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
         let lhs = 0;
         if (this.attr == "timer") {
             lhs = self.timer;
-        } else if (this.attr == "stamina") {
-            lhs = self.stamina;
         } else {
-            console.error("Unknown forfeit attribute: ", this.attr);
-            return;
+            lhs = self.stamina;
         }
 
         if (typeof(rhs) !== 'number' || isNaN(rhs)) {
@@ -564,10 +571,10 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
         /* 0 is not a valid value for stamina and timer. */
         if (newValue === 0) newValue = 1;
 
-        if (this.attr == "stamina") {
-            self.stamina = newValue;
-        } else if (this.attr == "timer") {
+        if (this.attr == "timer") {
             self.timer = newValue;
+        } else {
+            self.stamina = newValue;
         }
     } else if (this.attr == "redirect-finish") {
         let finishingTarget = findVariablePlayer(
@@ -576,39 +583,55 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
 
         if (!finishingTarget) {
             console.error("Unknown finish redirection target: ", this.value);
-        } else if (finishingTarget.slot == HUMAN_PLAYER) {
+        } else if (finishingTarget === humanPlayer) {
             console.error("Attempted to redirect " + self.id + "'s finishing dialogue to human player");
         } else {
             self.finishingTarget = finishingTarget;
         }
-    } else if (this.attr) {
-        console.error("Unknown forfeit attribute: ", this.attr);
-    }
-
-    if (self.out) {
-        if (this.heavy == "true") {
+    } else if (this.attr == "heavy") {
+        if (this.value == "true") {
             /* Force the player into heavy masturbation. */
             self.forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
             self.forfeitLocked = true;
-        } else if (this.heavy == "false") {
+        } else if (this.value == "false") {
             /* Force the player out of heavy masturbation. */
             self.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
             self.forfeitLocked = true;
-        } else if (this.heavy == "reset") {
+        } else if (this.value == "reset") {
             /* Reset the player's forfeit type. */
-            var threshold = getRandomNumber(HEAVY_LAST_ROUND, HEAVY_FIRST_ROUND);
-            if (threshold >= self.timer) {
-                self.forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
-            } else {
-                self.forfeit = [PLAYER_MASTURBATING, CAN_SPEAK];
-            }
             self.forfeitLocked = false;
-        } else if (this.heavy) {
-            console.error("Unknown heavy forfeit value: ", this.heavy);
+            self.updateHeavyMasturbation();
+        } else {
+            console.error("Unknown heavy forfeit value: ", this.value);
         }
+    } else {
+        console.error("Unknown forfeit attribute: ", this.attr);
     }
+
 }
 
+/**
+ * Get a key for sorting operations of this type.
+ * 
+ * Operations with lower sort values should be applied before
+ * operations with higher values.
+ * @returns {number}
+ */
+ForfeitTimerOperation.prototype.sortKey = function () {
+    /* Forfeit timer updates, at least, should come before any operations
+     * that modify heavy masturbation status; this ensures that heavy
+     * masturbation reset operations use the correct timer value when
+     * rolling to see if the opponent should be heavily masturbating or not.
+     */
+    switch (this.attr) {
+    case "timer": return 0;
+    case "heavy": return 2;
+    case "stamina":
+    case "redirect-finish":
+    default:
+        return 1;
+    }
+}
 
 /**
  * A State-based operation for altering player nicknames.
@@ -651,10 +674,6 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
 NicknameOperation.prototype.apply = function (self, opp) {
     var newNicknames = [];
     var nickPlayerID = '';
-    var rhs = expandDialogue(
-        this.value, self, opp, 
-        this.parentCase && this.parentCase.variableBindings
-    );
     
     if (this.target === '*') {
         nickPlayerID = '*';
@@ -680,12 +699,18 @@ NicknameOperation.prototype.apply = function (self, opp) {
         }
     }
 
-    if (this.op == "=") {
-        newNicknames = [rhs];
+    /* NOTE: don't apply variable expansion to this.value here, since it will be expanded later
+     * during nickname substitution.
+     */
+
+    if (this.op == "clear" || (this.op == "=" && !this.value)) {
+        newNicknames = [];
+    } else if (this.op == "=") {
+        newNicknames = [this.value];
     } else if (this.op == "+") {
-        if (newNicknames.indexOf(rhs) < 0) newNicknames.push(rhs);
+        if (this.value.length > 0 && newNicknames.indexOf(this.value) < 0) newNicknames.push(this.value);
     } else if (this.op == "-") {
-        newNicknames = newNicknames.filter(function (v) { return v !== rhs; });
+        newNicknames = newNicknames.filter(function (v) { return v !== this.value; });
     } else {
         console.error("Unknown nickname operation: ", this.op);
     }
@@ -697,6 +722,31 @@ NicknameOperation.prototype.apply = function (self, opp) {
     }
 }
 
+/**
+ * Get a key for sorting operations of this type.
+ * 
+ * Operations with lower sort values should be applied before
+ * operations with higher values.
+ * @returns {number}
+ */
+NicknameOperation.prototype.sortKey = function () {
+    /* Operations that clear the nickname list ("clear" and "=") should
+     * come before operations that add nicknames ("=" and "+"), which should
+     * themselves come before operations that remove nicknames ("-").
+     * 
+     * This allows the nickname list to be cleared and replaced with a new
+     * set of (potentially multiple) nicknames, and it ensures that situations
+     * where the same nickname is (for some reason) both added and removed in a single state
+     * resolve in the same way every time.
+     */
+    switch (this.op) {
+    case "clear": return 0;
+    case "=": return 1;
+    case "+": return 2;
+    case "-": return 3;
+    default: return 4;
+    }
+}
 
 /**
  * Parse an XML operation element.
@@ -730,7 +780,6 @@ NicknameOperation.prototype.apply = function (self, opp) {
         console.error("Unknown operation tag type: ", type);
     }
 }
-
 
 /**********************************************************************
  *****                  State Object Specification                *****
@@ -788,6 +837,11 @@ function State($xml_or_state, parentCase) {
     } else {
         this.rawDialogue = $xml.html();
     }
+
+    this.operations.sort(function (a, b) {
+        return a.sortKey() - b.sortKey();
+    });
+
     this.weight = Number($xml.attr('weight')) || 1;
     if (this.weight < 0) this.weight = 0;
     

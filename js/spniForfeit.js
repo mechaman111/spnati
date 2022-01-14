@@ -25,6 +25,40 @@ var HEAVY_LAST_ROUND = 2;
  *****                      Forfeit Functions                     *****
  **********************************************************************/
 
+ /**
+  * Update this player's heavy masturbation status and return it.
+  *
+  * This method will set the player to heavy masturbation if the appropriate
+  * prerequisites are met: for AI players, this depends on random chance;
+  * for human players, this checks the timer value against a constant value.
+  *
+  * This does nothing for players that aren't masturbating (i.e. still in the game
+  * or already finished) and players whose forfeit statuses are locked by dialogue operations.
+  *
+  * In all cases, we return whether or not the player is heavily masturbating.
+  *
+  * @returns {boolean}
+  */
+Player.prototype.updateHeavyMasturbation = function () {
+    if (this.finished || !this.out) return false;
+
+    if (this.slot == HUMAN_PLAYER) {
+        /* Human player: go into heavy masturbation at 5 ticks left. */
+        this.forfeit[0] = (this.timer <= 4) ? PLAYER_HEAVY_MASTURBATING : PLAYER_MASTURBATING;
+    } else if (!this.forfeitLocked) {
+        /* AI player: roll random chance they go into heavy masturbation. */
+        this.forfeit = (
+            (this.timer <= getRandomNumber(HEAVY_LAST_ROUND, HEAVY_FIRST_ROUND)) ?
+            [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK] :
+            [PLAYER_MASTURBATING, CAN_SPEAK]
+        );
+    }
+
+    /* Players with locked forfeit status fall through with no changes. */
+
+    return this.forfeit[0] == PLAYER_HEAVY_MASTURBATING;
+}
+
 /************************************************************
  * Initiate masturbation for the selected player.
  * In the future, we might want to make this a method of Player.
@@ -171,31 +205,18 @@ function tickForfeitTimers () {
     for (var i = 0; i < players.length; i++) {
         if (players[i] && players[i].out && players[i].timer > 1) {
             players[i].timer--;
+            masturbatingPlayers.push(i);
+
+            let inHeavyMasturbation = players[i].updateHeavyMasturbation();
+            if (inHeavyMasturbation) heavyMasturbatingPlayers.push(i);
 
             if (i == HUMAN_PLAYER) {
                 /* human player */
                 /* update the player label */
                 $gameClothingLabel.html("<b>'Finished' in "+players[i].timer+" phases</b>");
                 $gamePlayerCountdown.html(players[i].timer);
-                if (players[i].timer <= 4) {
-                    players[i].forfeit[0] = PLAYER_HEAVY_MASTURBATING;
-                    $gamePlayerCountdown.addClass('pulse');
-                }
+                if (inHeavyMasturbation) $gamePlayerCountdown.addClass('pulse');
                 masturbatingPlayers.push(i); // Double the chance of commenting on human player
-            } else if (!players[i].forfeitLocked) {
-                /* AI player */
-                /* random chance they go into heavy masturbation */
-                // CHANGE THIS TO ACTIVATE ONLY IN THE LAST 4 TURNS
-                var randomChance = getRandomNumber(HEAVY_LAST_ROUND, HEAVY_FIRST_ROUND);
-                
-                if (randomChance > players[i].timer-1) {
-                    /* this player is now heavily masturbating */
-                    players[i].forfeit = [PLAYER_HEAVY_MASTURBATING, CANNOT_SPEAK];
-                }
-            }
-            masturbatingPlayers.push(i);
-            if (players[i].forfeit[0] == PLAYER_HEAVY_MASTURBATING) {
-                heavyMasturbatingPlayers.push(i);
             }
         }
     }
