@@ -2544,6 +2544,7 @@ Opponent.prototype.evaluateHiddenCases = function (triggers, opp, postDialogue) 
 
     /* Check conditions of all cases in each group in parallel, by filtering before applying effects. */
     hiddenGroups.forEach(function (group) {
+        console.log("[" + this.id + "] Evaluating " + group.length + (postDialogue ? " post" : " pre") + "-dialogue hidden cases at priority " + group[0].priority);
         group.filter(function (curCase) {
             return curCase.checkConditions(this, opp);
         }, this).forEach(function (matchedCase) {
@@ -2630,6 +2631,9 @@ Opponent.prototype.updateBehaviour = function(triggers, opp) {
  * @param {Player} opp 
  */
 Opponent.prototype.singleBehaviourUpdate = function (triggers, opp) {
+    /* Note the trigger set that actually matched in updateBehaviour,
+     * so that we can later evaluate post-dialogue hidden cases using those triggers.
+     */
     var evaluatedTrigger = this.updateBehaviour(triggers, opp);
     this.commitBehaviourUpdate();
     
@@ -2736,6 +2740,9 @@ function updateAllBehaviours (target, target_tags, other_tags) {
         players[i].updatePending = true;
     }
 
+    /* We need to keep track of which triggers (if any) actually matched for each player,
+     * so that we can evaluate post-dialogue hidden cases for those triggers afterwards.
+     */
     var postProcessingTriggers = new Array(5);
     for (var i = 1; i < players.length; i++) {
         if (!players[i] || !players[i].isLoaded()) continue;
