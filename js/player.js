@@ -182,6 +182,7 @@ Player.prototype.updateLabel = function () { }
 Player.prototype.updateIntelligence = function () { }
 Player.prototype.updateFolder = function () { }
 Player.prototype.updateBehaviour = function() { }
+Player.prototype.singleBehaviourUpdate = function() { }
 
 /**********************************************************************
  * Convert a tags list to canonical form:
@@ -677,8 +678,7 @@ Opponent.prototype.onSelected = function(individual) {
     if (individual) {
         updateAllBehaviours(this.slot, SELECTED, [[OPPONENT_SELECTED]]);
     } else {
-        this.updateBehaviour(SELECTED);
-        this.commitBehaviourUpdate();
+        this.singleBehaviourUpdate(SELECTED, null);
     }
 
     updateSelectionVisuals();

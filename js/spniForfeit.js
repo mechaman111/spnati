@@ -167,17 +167,13 @@ function tickForfeitTimers () {
                         if (d.slot != finishTarget.slot) d.hideBubble();
                     });
 
-                    finishTarget.updateBehaviour(OPPONENT_FINISHING_MASTURBATING, players[i]);
-                    finishTarget.commitBehaviourUpdate();
-                    saveSingleTranscriptEntry(finishTarget.slot);
+                    finishTarget.singleBehaviourUpdate(OPPONENT_FINISHING_MASTURBATING, players[i]);
                 } else {
                     gameDisplays.forEach(function (d) {
                         if (d.slot != i) d.hideBubble();
                     });
 
-                    players[i].updateBehaviour(PLAYER_FINISHING_MASTURBATING);
-                    players[i].commitBehaviourUpdate();
-                    saveSingleTranscriptEntry(i);
+                    players[i].singleBehaviourUpdate(PLAYER_FINISHING_MASTURBATING);
                 }
 
                 /* Make sure the character's timer is _actually_ zero, in case they try to do something like

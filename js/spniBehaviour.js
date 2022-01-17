@@ -2439,29 +2439,11 @@ Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
         bestMatchPriority = this.chosenState.parentCase.priority + 1;
     }
 
-    var hiddenCases = [];
     var cases = [];
-
     triggers.forEach(function (trigger) {
         var relCases = this.cases.get(trigger+':'+stageNum) || [];
         relCases.forEach(function (c) {
-            if (c.hidden) {
-                /* Specifically avoid handling hidden cases that use volatile conditions.
-                 * 
-                 * Pre-dialogue hidden cases from all characters are (at least conceptually speaking)
-                 * evaluated before any regular dialogue is processed; therefore, pre-dialogue hidden cases
-                 * can't target regular dialogue with volatile conditions, because it hasn't been determined yet.
-                 * 
-                 * This technically isn't the case with the current implementation, but attempting to evaluate and apply
-                 * volatile hidden cases here can result in a hidden case's effects being applied multiple times in one update.
-                 * 
-                 * Hidden cases that want to use volatile conditions should instead be marked for post-dialogue evaluation.
-                 * However, that isn't implemented yet.
-                 */
-                if (!volatileOnly && !c.isVolatile && (hiddenCases.indexOf(c) < 0)) hiddenCases.push(c);
-            } else {
-                if (cases.indexOf(c) < 0) cases.push(c);
-            }
+            if (!c.hidden && (cases.indexOf(c) < 0)) cases.push(c);
         });
     }, this);
 
@@ -2471,35 +2453,8 @@ Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
         return false;
     }
 
-    /* Sort hidden cases in order of descending custom priority. */
-    hiddenCases.sort(function (a, b) {
-        return b.priority - a.priority;
-    });
-
-    /* Group hidden cases together that have the same custom priority value. */
-    var curHiddenPriority = 0;
-    var curHiddenGroup = [];
-    var hiddenGroups = [];
-    hiddenCases.forEach(function (c) {
-        if (curHiddenPriority != c.priority && curHiddenGroup.length > 0) {
-            hiddenGroups.push(curHiddenGroup);
-            curHiddenGroup = [];
-        }
-        curHiddenGroup.push(c);
-        curHiddenPriority = c.priority;
-    });
-    if (curHiddenGroup.length > 0) hiddenGroups.push(curHiddenGroup);
-
-    /* Check conditions of all cases in each group in parallel, by filtering before applying effects. */
-    var self = this;
-    hiddenGroups.forEach(function (group) {
-        group.filter(function (curCase) {
-            return curCase.checkConditions(self, opp);
-        }).forEach(function (matchedCase) {
-            self.applyHiddenStates(matchedCase, opp);
-            matchedCase.cleanupMutableState();
-        });
-    });
+    /* Evaluate pre-dialogue hidden cases if we're not doing a reaction pass. */
+    if (!volatileOnly) this.evaluateHiddenCases(triggers, opp, false);
 
     /* Find the best match, as well as potential volatile matches. */
     var bestMatch = [];
@@ -2549,6 +2504,55 @@ Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
     return null;
 }
 
+Opponent.prototype.evaluateHiddenCases = function (triggers, opp, postDialogue) {
+    var cases = [];
+
+    triggers.forEach(function (trigger) {
+        var relCases = this.cases.get(trigger+':'+this.stage) || [];
+        relCases.forEach(function (c) {
+            if (
+                c.hidden &&
+                (postDialogue || !c.isVolatile) &&
+                ((c.priority < 0) == postDialogue) &&
+                (cases.indexOf(c) < 0)
+            ) {
+                cases.push(c);
+            }
+        });
+    }, this);
+
+    if (cases.length <= 0) return;
+
+    /* Sort hidden cases in order of descending custom priority. */
+    cases.sort(function (a, b) {
+        return b.priority - a.priority;
+    });
+
+    /* Group hidden cases together that have the same custom priority value. */
+    var curHiddenPriority = 0;
+    var curHiddenGroup = [];
+    var hiddenGroups = [];
+    cases.forEach(function (c) {
+        if (curHiddenPriority != c.priority && curHiddenGroup.length > 0) {
+            hiddenGroups.push(curHiddenGroup);
+            curHiddenGroup = [];
+        }
+        curHiddenGroup.push(c);
+        curHiddenPriority = c.priority;
+    });
+    if (curHiddenGroup.length > 0) hiddenGroups.push(curHiddenGroup);
+
+    /* Check conditions of all cases in each group in parallel, by filtering before applying effects. */
+    hiddenGroups.forEach(function (group) {
+        group.filter(function (curCase) {
+            return curCase.checkConditions(this, opp);
+        }, this).forEach(function (matchedCase) {
+            this.applyHiddenStates(matchedCase, opp);
+            matchedCase.cleanupMutableState();
+        }, this);
+    }, this);
+}
+
 /**
  * Updates this Opponent's chosenState and related information.
  * Also cleans up the previous chosenState's parent Case, if it exists.
@@ -2587,7 +2591,12 @@ Opponent.prototype.updateBehaviour = function(triggers, opp) {
     }
 
     if (Array.isArray(triggers) && Array.isArray(triggers[0])) {
-        return triggers.some(function(t) { return this.updateBehaviour(t, opp) }, this);
+        /* Return which trigger set actually matched within the passed-in array. */
+        for (let i=0; i < triggers.length; i++) {
+            let ret = this.updateBehaviour(triggers[i], opp);
+            if (ret !== null) return ret;
+        }
+        return null;
     }
     if (!Array.isArray(triggers)) {
         triggers = [triggers];
@@ -2606,10 +2615,28 @@ Opponent.prototype.updateBehaviour = function(triggers, opp) {
     if (state) {
         this.updateChosenState(state);
         this.lastUpdateTriggers = triggers;
-        
-        return true;
+        return triggers;
     }
-    return false;
+    return null;
+}
+
+/**
+ * Perform a full dialogue update for a single player.
+ * 
+ * This handles pre-dialogue hidden case evaluation, regular dialogue evaluation,
+ * committing chosen states, and post-dialogue hidden case evaluation in a single call.
+ * 
+ * @param {Array<string|Array<string>>|string} triggers 
+ * @param {Player} opp 
+ */
+Opponent.prototype.singleBehaviourUpdate = function (triggers, opp) {
+    var evaluatedTrigger = this.updateBehaviour(triggers, opp);
+    this.commitBehaviourUpdate();
+    
+    if (evaluatedTrigger) {
+        saveSingleTranscriptEntry(this.slot);
+        this.evaluateHiddenCases(evaluatedTrigger, opp, true);
+    }
 }
 
 /************************************************************
@@ -2709,18 +2736,28 @@ function updateAllBehaviours (target, target_tags, other_tags) {
         players[i].updatePending = true;
     }
 
+    var postProcessingTriggers = new Array(5);
     for (var i = 1; i < players.length; i++) {
         if (!players[i] || !players[i].isLoaded()) continue;
         if (target === null || i != target) {
-            players[i].updateBehaviour(other_tags, players[target]);
+            postProcessingTriggers[i] = players[i].updateBehaviour(other_tags, players[target]);
         } else if (i == target && target_tags !== null) {
-            players[i].updateBehaviour(target_tags, null);
+            postProcessingTriggers[i] = players[i].updateBehaviour(target_tags, null);
         }
         players[i].updatePending = false;
     }
     
     updateAllVolatileBehaviours();
     commitAllBehaviourUpdates(target_tags !== null ? players[target] : null);
+
+    for (var i = 1; i < players.length; i++) {
+        if (!players[i] || !players[i].isLoaded() || !postProcessingTriggers[i]) continue;
+        if (target === null || i != target) {
+            players[i].evaluateHiddenCases(postProcessingTriggers[i], players[target], true);
+        } else if (i == target && target_tags !== null) {
+            players[i].evaluateHiddenCases(postProcessingTriggers[i], null, true);
+        }
+    }
 }
 
 /************************************************************
