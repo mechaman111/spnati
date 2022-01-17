@@ -1827,10 +1827,7 @@ function Case($xml, trigger) {
     }
     
     // Calculate case priority ahead of time.
-    if (this.hidden) {
-        /* Only use custom priority for hidden cases, defaulting to 0 if no custom priority is set. */
-        this.priority = this.customPriority || 0;
-    } else if (this.customPriority !== undefined) {
+    if (this.customPriority !== undefined) {
         this.priority = this.customPriority;
     } else {
         this.priority = 0;
@@ -2439,29 +2436,12 @@ Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
         bestMatchPriority = this.chosenState.parentCase.priority + 1;
     }
 
-    var hiddenCases = [];
     var cases = [];
 
     triggers.forEach(function (trigger) {
         var relCases = this.cases.get(trigger+':'+stageNum) || [];
         relCases.forEach(function (c) {
-            if (c.hidden) {
-                /* Specifically avoid handling hidden cases that use volatile conditions.
-                 * 
-                 * Pre-dialogue hidden cases from all characters are (at least conceptually speaking)
-                 * evaluated before any regular dialogue is processed; therefore, pre-dialogue hidden cases
-                 * can't target regular dialogue with volatile conditions, because it hasn't been determined yet.
-                 * 
-                 * This technically isn't the case with the current implementation, but attempting to evaluate and apply
-                 * volatile hidden cases here can result in a hidden case's effects being applied multiple times in one update.
-                 * 
-                 * Hidden cases that want to use volatile conditions should instead be marked for post-dialogue evaluation.
-                 * However, that isn't implemented yet.
-                 */
-                if (!volatileOnly && !c.isVolatile && (hiddenCases.indexOf(c) < 0)) hiddenCases.push(c);
-            } else {
-                if (cases.indexOf(c) < 0) cases.push(c);
-            }
+            if (cases.indexOf(c) < 0) cases.push(c);
         });
     }, this);
 
@@ -2470,47 +2450,24 @@ Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
         console.log("Warning: couldn't find " + triggers + " dialogue for player " + this.slot + " at stage " + stageNum);
         return false;
     }
-
-    /* Sort hidden cases in order of descending custom priority. */
-    hiddenCases.sort(function (a, b) {
-        return b.priority - a.priority;
-    });
-
-    /* Group hidden cases together that have the same custom priority value. */
-    var curHiddenPriority = 0;
-    var curHiddenGroup = [];
-    var hiddenGroups = [];
-    hiddenCases.forEach(function (c) {
-        if (curHiddenPriority != c.priority && curHiddenGroup.length > 0) {
-            hiddenGroups.push(curHiddenGroup);
-            curHiddenGroup = [];
-        }
-        curHiddenGroup.push(c);
-        curHiddenPriority = c.priority;
-    });
-    if (curHiddenGroup.length > 0) hiddenGroups.push(curHiddenGroup);
-
-    /* Check conditions of all cases in each group in parallel, by filtering before applying effects. */
-    var self = this;
-    hiddenGroups.forEach(function (group) {
-        group.filter(function (curCase) {
-            return curCase.checkConditions(self, opp);
-        }).forEach(function (matchedCase) {
-            self.applyHiddenStates(matchedCase, opp);
-            matchedCase.cleanupMutableState();
-        });
-    });
-
+    
     /* Find the best match, as well as potential volatile matches. */
     var bestMatch = [];
     
     for (var i = 0; i < cases.length; i++) {
         var curCase = cases[i];
-
-        if ((curCase.priority >= bestMatchPriority) &&
+        
+        if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
             (!volatileOnly || curCase.isVolatile) &&
             curCase.checkConditions(this, opp))
         {
+            if (curCase.hidden) {
+                // if it's hidden, set markers, collectibles, etc. but don't actually count as a match
+                this.applyHiddenStates(curCase, opp);
+                curCase.cleanupMutableState();
+                continue;
+            }
+
             if (curCase.priority > bestMatchPriority) {
                 /* Cleanup all mutable state on previous best-match cases. */
                 bestMatch.forEach(function (c) { c.cleanupMutableState(); });
