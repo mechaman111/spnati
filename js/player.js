@@ -744,6 +744,16 @@ Opponent.prototype.setIntelligence = function (intelligence) {
 
 Opponent.prototype.updateFolder = function () {
     if (this.folders) this.folder = this.getByStage(this.folders);
+    if (!this.folder) {
+        /* Shouldn't happen, but... */
+        captureError(new Error(
+            "Could not find folder for " + this.id + " at stage " + this.stage +
+            (this.selected_costume ? " with alt costume " + this.selected_costume : "")
+        ));
+
+        this.folder = this.selected_costume || this.base_folder;
+    }
+
     if (this.folder == this.base_folder) {
         this.poses = this.default_costume.poses;
     } else if (this.alt_costume) {
