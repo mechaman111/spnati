@@ -74,6 +74,8 @@ def main():
             sh.copytree(src, dst)
         except FileNotFoundError:
             print("Could not copy: {}".format(src))
+        except FileExistsError:
+            pass # duplicate costume entry, ignore
 
     # Delete previously-determined stages in base folders:
     #for opp_id, stages in delete_stages.items():
