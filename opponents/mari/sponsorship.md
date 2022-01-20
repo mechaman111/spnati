@@ -22,7 +22,7 @@
 | Add 15 Must Strip (Female) lines | [`a4200be41d`](https://gitgud.io/spnati/spnati/-/commit/a4200be41d42416d29bef3b7dab096746b61784c) |
 | Add 6 new Removing Accessory (Female) lines | [`f69602ec8d`](https://gitgud.io/spnati/spnati/-/commit/f69602ec8d7e89582ff8949af607739824582813) |
 | Add 6 new Removed Accessory (Female) lines | [`9ec79f05b5`](https://gitgud.io/spnati/spnati/-/commit/9ec79f05b5) |
-| Add 6 new Removing Minor (Female) lines | N/A |
+| Add 6 new Removing Minor (Female) lines | [`5428639bd3`](https://gitgud.io/spnati/spnati/-/commit/5428639bd3) |
 | Add 6 new Removed Minor (Female) lines | N/A |
 
 ## BlueKoin
