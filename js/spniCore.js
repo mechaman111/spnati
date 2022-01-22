@@ -26,6 +26,8 @@ var UI_FONT_WIDTH = 100;
 var CURRENT_VERSION = undefined;
 var VERSION_COMMIT = undefined;
 var VERSION_TAG = undefined;
+var COMMITS_SINCE_TAG = undefined;
+var BUILD_TIMESTAMP = undefined;
 
 var DEFAULT_FILL = undefined;
 var FILL_DISABLED = false;
@@ -284,11 +286,31 @@ function loadVersionInfo () {
 
         if (SENTRY_INITIALIZED) Sentry.setTag("game_version", CURRENT_VERSION);
         
-        $('.substitute-version').text('v'+CURRENT_VERSION);
+        var displayedVersion = 'v' + CURRENT_VERSION;
+
+        /* As a sanity check, make sure that the tag git-describe found corresponds to the version number we think we're running. */
+        if (VERSION_TAG && VERSION_TAG.startsWith("v" + CURRENT_VERSION)) {
+            /* The output of git-describe is in the form:
+             * [tag name]-[commits since tag]-g[ID of commit]
+             * (for example, "v12.137.0-9-gfbf2fe588e").
+             */
+            let commit_sep = VERSION_TAG.lastIndexOf("-");
+            let commit_ctr_sep = VERSION_TAG.lastIndexOf("-", commit_sep-1);
+            COMMITS_SINCE_TAG = parseInt(VERSION_TAG.substring(commit_ctr_sep+1, commit_sep), 10);
+
+            /* Display commit count if both valid *and* nonzero. */
+            if (COMMITS_SINCE_TAG) {
+                displayedVersion = displayedVersion + "-" + n_commits;
+            }
+        }
+
+        $('.substitute-version').text(displayedVersion);
         console.log("Running SPNATI version "+CURRENT_VERSION);
 
         var version_ts = parseInt(versionElem.attr("build-timestamp"), 10);
-        if (!version_ts) {
+        if (version_ts) {
+            BUILD_TIMESTAMP = version_ts;
+        } else {
             version_ts = versionInfo.find('>changelog > version[number=\"'+CURRENT_VERSION+'\"]').attr('timestamp');
             version_ts = parseInt(version_ts, 10);
         }
@@ -682,6 +704,32 @@ $creditModal.on('shown.bs.modal', function() {
     $('#credit-modal-button').focus();
 });
 
+function createVersionRow (timestamp, version, text) {
+    var row = document.createElement('tr');
+    var versionCell = document.createElement('td');
+    var dateCell = document.createElement('td');
+    var logTextCell = document.createElement('td');
+
+    versionCell.className = 'changelog-version-label';
+    dateCell.className = 'changelog-date-label';
+    logTextCell.className = 'changelog-entry-text';
+
+    if (timestamp) {
+        var date = new Date(timestamp);
+        var locale = window.navigator.userLanguage || window.navigator.language
+        dateCell.innerText = date.toLocaleString(locale, {'dateStyle': 'medium', 'timeStyle': 'short'});
+    }
+
+    versionCell.innerText = version;
+    logTextCell.innerText = text;
+
+    row.appendChild(versionCell);
+    row.appendChild(dateCell);
+    row.appendChild(logTextCell);
+
+    return row;
+}
+
 /************************************************************
  * The player clicked the version button. Shows the version modal.
  ************************************************************/
@@ -703,30 +751,16 @@ function showVersionModal () {
         // Sort in reverse-precedence order
         return compareVersions(e1.version, e2.version) * -1;
     }).map(function (ent) {
-        var row = document.createElement('tr');
-        var versionCell = document.createElement('td');
-        var dateCell = document.createElement('td');
-        var logTextCell = document.createElement('td');
-        
-        versionCell.className = 'changelog-version-label';
-        dateCell.className = 'changelog-date-label';
-        logTextCell.className = 'changelog-entry-text';
-        
-        if (ent.timestamp) {
-            var date = new Date(ent.timestamp);
-            var locale = window.navigator.userLanguage || window.navigator.language
-            dateCell.innerText = date.toLocaleString(locale, {'dateStyle': 'medium', 'timeStyle': 'short'});
-        }
-        
-        versionCell.innerText = ent.version;
-        logTextCell.innerText = ent.text;
-        
-        row.appendChild(versionCell);
-        row.appendChild(dateCell);
-        row.appendChild(logTextCell);
-        
-        return row;
+        return createVersionRow(ent.timestamp, ent.version, ent.text);
     }));
+
+    if (COMMITS_SINCE_TAG) {
+        $changelog.prepend(createVersionRow(
+            BUILD_TIMESTAMP,
+            CURRENT_VERSION + "-" + COMMITS_SINCE_TAG,
+            COMMITS_SINCE_TAG + " commits have been pushed since the last version number update. These represent smaller and more frequent updates for which we haven't created a version log entry (yet)."
+        ));
+    }
     
     $versionModal.modal('show');
 }
