@@ -300,7 +300,7 @@ function loadVersionInfo () {
 
             /* Display commit count if both valid *and* nonzero. */
             if (COMMITS_SINCE_TAG) {
-                displayedVersion = displayedVersion + "-" + n_commits;
+                displayedVersion = displayedVersion + "-" + COMMITS_SINCE_TAG;
             }
         }
 
