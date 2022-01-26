@@ -38,6 +38,21 @@ function readPaddedString (dataView, pos, len) {
 }
 
 /**
+ * Normalize a file path for lookup in a data index.
+ *
+ * @param {string} path
+ * @returns {string}
+ */
+function normalizeIndexedPath (path) {
+    var norm = path.replace(/\/\/|\\/gm, "/").toLowerCase();
+    if (norm.startsWith("/")) {
+        return norm.substring(1);
+    } else {
+        return norm;
+    }
+}
+
+/**
  * Represents a potentially-indexed collection of XML data files.
  * 
  * Parsed versions of files belonging to the collection can be retrieved
@@ -74,7 +89,7 @@ DataFileCollection.prototype.parseIndex = function (buf) {
     while (curPos < dataView.byteLength) {
         let pathLen = dataView.getUint32(curPos, false);
         let dataLen = dataView.getUint32(curPos + 4, false);
-        let path = readPaddedString(dataView, curPos + 8, pathLen);
+        let path = normalizeIndexedPath(readPaddedString(dataView, curPos + 8, pathLen));
         let data = readPaddedString(dataView, curPos + 8 + pathLen, dataLen);
 
         this.rawIndex[path] = data;
@@ -113,16 +128,19 @@ DataFileCollection.prototype.removeCachedPath = function (path) {
  * @returns {string}
  */
 DataFileCollection.prototype.getFile = function (path) {
-    if (this.parsedIndex[path]) {
-        console.log("Found " + path + " in parsed cache");
-        return Promise.resolve(this.parsedIndex[path]);
-    } else if (this.rawIndex[path]) {
-        console.log("Found " + path + " in raw cache");
-        this.parsedIndex[path] = $(this.rawIndex[path]);
-        delete this.rawIndex[path];
-        return Promise.resolve(this.parsedIndex[path]);
+    var norm = normalizeIndexedPath(path);
+
+    if (this.parsedIndex[norm]) {
+        // console.log("Found " + path + " in parsed cache");
+        return Promise.resolve(this.parsedIndex[norm]);
+    } else if (this.rawIndex[norm]) {
+        // console.log("Found " + path + " in raw cache");
+        this.parsedIndex[norm] = $(this.rawIndex[norm]);
+        delete this.rawIndex[norm];
+        return Promise.resolve(this.parsedIndex[norm]);
     } else {
-        console.log("Fetched " + path + " from origin");
+        /* NOTE: use un-normalized path for requests */
+        // console.log("Fetched " + path + " from origin");
         return fetchXML(path).then(function ($xml) {
             this.parsedIndex[path] = $xml;
             return $xml;

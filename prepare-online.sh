@@ -31,7 +31,7 @@ python3 deploy-scripts/copy_alternate_costumes.py .public/ ./ all
 
 # Combine roster metadata, tags lists, collectible definitions, and costume
 # definitions for all deployed opponents to speed up loading for the online version.
-METADATA_INDEX_PATH=$(python3 deploy-scripts/compile_xml_index.py prod .public opponents/metadata.index 'opponents/*/collectibles.xml' 'opponents/*/meta.xml' 'opponents/*/tags.xml' 'opponents/reskins/*/costume.xml')
+METADATA_INDEX_PATH=$(python3 deploy-scripts/compile_xml_index.py --production .public opponents/metadata.index 'opponents/*/collectibles.xml' 'opponents/*/meta.xml' 'opponents/*/tags.xml' 'opponents/reskins/*/costume.xml')
 sed "s/__METADATA_XML_INDEX/${METADATA_INDEX_PATH}/g" js/fileIndex.js > .public/js/fileIndex.js
 
 # Rename JS and core game CSS for cache-busting purposes.
