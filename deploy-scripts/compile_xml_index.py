@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 import hashlib
 from pathlib import PurePath, Path
 from typing import List
+import gzip
 
 
 def pad_bytes(data: bytes, alignment: int = 4):
@@ -51,7 +52,11 @@ def compile_index(production: bool, root_dir: Path, out_base_path: PurePath, glo
     else:
         out_rel_path = out_base_path
 
-    with root_dir.joinpath(out_rel_path).open("wb") as f:
+    out_full_path = root_dir.joinpath(out_rel_path)
+    with out_full_path.open("wb") as f:
+        f.write(encoded)
+
+    with gzip.open(str(out_full_path) + ".gz", "wb") as f:
         f.write(encoded)
 
     # Escape slashes to make the result acceptable for insertion into sed's arguments.
