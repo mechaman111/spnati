@@ -400,7 +400,7 @@ function changeCharacterFilter (collectibleScreen) {
 }
 
 function loadGeneralCollectibles () {
-    return fetchXML('opponents/general_collectibles.xml').then(function($xml) {
+    return metadataIndex.getFile('opponents/general_collectibles.xml').then(function($xml) {
         $xml.children('collectible').each(function (idx, elem) {
             generalCollectibles.push(new Collectible($(elem), undefined));
         });
