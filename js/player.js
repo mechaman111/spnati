@@ -839,7 +839,7 @@ Opponent.prototype.loadAlternateCostume = function () {
     console.log("Loading alternate costume: "+this.selected_costume);
     this.loaded = false;
 
-    return fetchXML(this.selected_costume+'costume.xml').then(function ($xml) {
+    return metadataIndex.getFile(this.selected_costume+'costume.xml').then(function ($xml) {
         if (SENTRY_INITIALIZED) {
             Sentry.addBreadcrumb({
                 category: 'select',
@@ -908,21 +908,6 @@ Opponent.prototype.unloadAlternateCostume = function () {
 }
 
 /**
- * Loads the collectibles for this opponent from an XML element.
- */
-Opponent.prototype.loadCollectibles = function ($xml) {
-    var collectiblesArray = [];
-    $xml.children('collectible').each(function (idx, elem) {
-        collectiblesArray.push(new Collectible($(elem), this));
-    }.bind(this));
-
-    this.collectibles = collectiblesArray;
-    this.has_collectibles = this.collectibles.some(function (c) {
-        return !c.status || includedOpponentStatuses[c.status];
-    });
-}
-
-/**
  * Load the collectibles for this opponent by fetching collectibles.xml if necessary.
  * 
  * @returns {Promise<void>} A Promise that resolves after all collectibles are
@@ -936,12 +921,22 @@ Opponent.prototype.fetchCollectibles = function () {
         return immediatePromise();
     }
 
-    return fetchXML(this.folder + 'collectibles.xml')
-        .then(this.loadCollectibles.bind(this))
-        .catch(function (err) {
-            console.error("Error loading collectibles for "+this.id);
-            throw err;
+    console.log("Fetching collectibles for " + this.id);
+
+    return metadataIndex.getFile(this.folder + "collectibles.xml").then(function ($xml) {
+        var collectiblesArray = [];
+        $xml.children('collectible').each(function (idx, elem) {
+            collectiblesArray.push(new Collectible($(elem), this));
         }.bind(this));
+
+        this.collectibles = collectiblesArray;
+        this.has_collectibles = this.collectibles.some(function (c) {
+            return !c.status || includedOpponentStatuses[c.status];
+        });
+    }.bind(this)).catch(function (err) {
+        console.error("Error loading collectibles for "+this.id);
+        throw err;
+    }.bind(this));
 }
 
 /**

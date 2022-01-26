@@ -76,16 +76,6 @@ var humanPlayer;
 var timeoutID;
 
 
-/*
- * Path to a compiled 'index' XML file combining collectible definitions for all opponents.
- * This is automatically generated for the online version during CI/CD; if present, this is used
- * to load collectibles for all characters at once, instead of requesting collectibles.xml for
- * each opponent individually.
- */
-
-var COLLECTIBLES_INDEX = "__COLLECTIBLES_INDEX";
-
-
 /**********************************************************************
  * Game Wide Global Variables
  **********************************************************************/
@@ -210,7 +200,7 @@ function initialSetup () {
     }).then(function () {
         save.load();
         return loadVersionInfo();
-    }).then(loadSelectScreen).then(loadAllCollectibles).then(function () {
+    }).then(metadataIndex.loadIndex.bind(metadataIndex)).then(loadSelectScreen).then(loadAllCollectibles).then(function () {
         setupTitleClothing();
         finishStartupLoading();
 

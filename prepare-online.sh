@@ -26,14 +26,13 @@ python3 deploy-scripts/copy_backgrounds.py .public/
 # Include *.js and *.css to accommodate Monika.
 find `python opponents/list_opponents.py` -regextype egrep -iregex '.*\.(png|gif|jpe?g|xml|js|css|[ot]tf|woff2?)' | tar -cT - | tar -C .public -x
 
-# Combine all collectibles.xml files for deployed opponents to speed up loading
-# for the online version.
-COLLECTIBLES_INDEX_PATH=$(python3 deploy-scripts/compile_xml_index.py .public 'opponents/*/collectibles.xml' opponents/collectibles_index.xml)
-ESCAPED_COLLECTIBLES_INDEX_PATH=$(printf '%s\n' "$COLLECTIBLES_INDEX_PATH" | sed -e 's/[\/&]/\\&/g')
-sed "s/__COLLECTIBLES_INDEX/${ESCAPED_COLLECTIBLES_INDEX_PATH}/g" js/spniCore.js > .public/js/spniCore.js
-
 # Copy alternate costume files for deployment.
 python3 deploy-scripts/copy_alternate_costumes.py .public/ ./ all
+
+# Combine roster metadata, tags lists, collectible definitions, and costume
+# definitions for all deployed opponents to speed up loading for the online version.
+METADATA_INDEX_PATH=$(python3 deploy-scripts/compile_xml_index.py --production .public opponents/metadata.index 'opponents/general_collectibles.xml' 'opponents/*/collectibles.xml' 'opponents/*/meta.xml' 'opponents/*/tags.xml' 'opponents/reskins/*/costume.xml')
+sed "s/__METADATA_XML_INDEX/${METADATA_INDEX_PATH}/g" js/fileIndex.js > .public/js/fileIndex.js
 
 # Rename JS and core game CSS for cache-busting purposes.
 python3 deploy-scripts/cache_bust.py .public/

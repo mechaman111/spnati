@@ -397,7 +397,7 @@ function loadOpponentMeta (id, status, releaseNumber, highlightStatus) {
     console.log("Loading metadata for \""+id+"\"");
 
     return Promise.all(metaFiles.map(function (filename) {
-        return fetchXML('opponents/' + id + '/' + filename);
+        return metadataIndex.getFile("opponents/" + id + "/" + filename);
     })).then(function(files) {
         return new Opponent(id, files, status, releaseNumber, highlightStatus);
     }).catch(function(err) {
