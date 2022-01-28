@@ -19,6 +19,7 @@ var SPECIAL_CASE_NAMES = {
     "penny_polendina": "Penny (RWBY)",
     "pot_of_greed": "Pot of Greed",
     "ringo_ando": "Ringo",
+    "rogue_x-men": "Rogue (X-Men)",
     "saki_zls": "Saki (ZLS)",
     "scm": "Suction Cup Man",
     "uravity": "Ochako", // nmasp, wtf?
