@@ -22,6 +22,15 @@
             effect.execute();
         }, 750);
     });
+	
+	monika.registerBehaviourCallback('socks_back', function () {
+		var slot = monika.utils.monika_slot();
+		var effect = new monika.effects.GlitchPoseChange(slot, '10-happy.png', 130, 950, 1385 - 400);
+		
+		setTimeout(function () {
+			effect.execute();
+		}, 750);
+    });
 
     monika.registerBehaviourCallback('start_masturbating', function () {
         if (!monika.ACTIVE_FORFEIT_EFFECT && !monika.JOINT_FORFEIT_ACTIVE) {
