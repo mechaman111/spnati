@@ -269,6 +269,7 @@ function showOptionsModal () {
     setActiveOption('options-player-finishing-effect', PLAYER_FINISHING_EFFECT);
     $("#options-ui-font-weight").val(UI_FONT_WEIGHT);
     $("#options-ui-font-width").val(UI_FONT_WIDTH);
+    setActiveOption('options-ui-theme', UI_THEME);
 
     $("#options-modal").modal('show');
 }
@@ -325,6 +326,17 @@ function setUIFontSettings(weight, width) {
     targetSheet.innerText = ":root { --base-font-weight: " + weight + "; --base-font-stretch: " + roundedWidth + "% }";
 }
 
+function setUITheme (scheme) {
+    UI_THEME = scheme;
+    if (scheme == "dark-mode") {
+        $(":root").addClass("dark-mode");
+    } else if (scheme == "default") {
+        $(":root").removeClass("dark-mode");
+    } else {
+        console.error("Unknown color scheme: " + scheme);
+    }
+}
+
 $('ul#options-auto-fade').on('click', 'a', function() {
     AUTO_FADE = $(this).attr('data-value') == "true";
 });
@@ -364,6 +376,11 @@ $('.ui-text-option').on('input', function() {
         Number($('#options-ui-font-width').val()),
     );
 });
+
+$('ul#options-ui-theme').on('click', 'a', function() {
+    setUITheme($(this).attr('data-value') || "default");
+});
+
 
 $('ul#options-player-finishing-effect').on('click', 'a', function() {
     PLAYER_FINISHING_EFFECT = $(this).attr('data-value') == 'true';
