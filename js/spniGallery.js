@@ -429,9 +429,12 @@ function updateCollectiblesScreen() {
     $collectibleListPane.empty();
     
     var filter = $('#collectible-character-filter').val();
+    var showLocked = filter && filter === '__locked' 
     
-    if (!filter || filter === '__general') {
+    if (!filter || filter === '__general' || showLocked) {
         generalCollectibles.forEach(function (item) {
+            if (showLocked && item.isUnlocked()) return;
+
             var elem = item.listElement();
             if (elem) {
                 $collectibleListPane.append(elem);    
@@ -448,9 +451,11 @@ function updateCollectiblesScreen() {
                 return;
             }
 
-            if (filter && opp.id !== filter) return;
+            if (filter && !showLocked && opp.id !== filter) return;
             
             opp.collectibles.forEach(function (item) {
+                if (showLocked && item.isUnlocked()) return;
+
                 var elem = item.listElement();
                 if (elem) {
                     $collectibleListPane.append(elem);    
@@ -459,6 +464,7 @@ function updateCollectiblesScreen() {
         }
     });
 }
+
 
 function loadGalleryEndings(){
     if(allEndings.length > 0){
