@@ -39,7 +39,7 @@
 
 | Request | Commit |
 |---------|--------|
-| Add 10 targeted lines to Emi | N/A |
+| Add 10 targeted lines to Emi | [`48709f8e30`](https://gitgud.io/spnati/spnati/-/commit/48709f8e30b97c08b3985f77fe7b1d9f63fd6ad7) |
 
 ## Tweetsie12
 
