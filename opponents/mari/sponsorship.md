@@ -7,7 +7,7 @@
 | Request | Commit |
 |---------|--------|
 | Add 6 lines for repeated self losses | [`3c21bb8469`](https://gitgud.io/spnati/spnati/-/commit/3c21bb8469ea37d22545660cfe39c18d62c5f499) |
-| Add 7 lines for repeated opponent losses | N/A |
+| Add 7 lines for repeated opponent losses | [`ee78a13e98`](https://gitgud.io/spnati/spnati/-/commit/ee78a13e98e50b2521b5c52174c988e16c26e903) |
 | Add 10 filtered lines to Aggressive tag | N/A |
 | Add 10 filtered lines to Fighter tag | N/A |
 | Add 10 filtered lines to Supernatural tag | N/A |
@@ -23,7 +23,7 @@
 | Add 6 new Removing Accessory (Female) lines | [`f69602ec8d`](https://gitgud.io/spnati/spnati/-/commit/f69602ec8d7e89582ff8949af607739824582813) |
 | Add 6 new Removed Accessory (Female) lines | [`9ec79f05b5`](https://gitgud.io/spnati/spnati/-/commit/9ec79f05b5) |
 | Add 6 new Removing Minor (Female) lines | [`5428639bd3`](https://gitgud.io/spnati/spnati/-/commit/5428639bd3) |
-| Add 6 new Removed Minor (Female) lines | N/A |
+| Add 6 new Removed Minor (Female) lines | [`58e2950a6f`](https://gitgud.io/spnati/spnati/-/commit/58e2950a6ffd45fb6e3daba7fd25648282357fdc) |
 
 ## BlueKoin
 
@@ -47,4 +47,4 @@
 
 | Request | Commit |
 |---------|--------|
-| Add additional color to Mari's alt costumes| N/A |
+| Add additional color to Mari's alt costumes | N/A |
