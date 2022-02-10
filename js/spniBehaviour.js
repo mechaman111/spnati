@@ -1150,7 +1150,7 @@ function expandNicknames (self, target) {
     return target.label.escapeHTML();
 }
 
-function expandClothingVariable(clothing, fn, args, self, target, bindings) {
+function expandClothingVariable(clothing, fn, args, self, target, bindings, isRemoved) {
     if (fn == 'ifplural' && args) {
         args = args.split('|');
         return expandDialogue(args[clothing.plural ? 0 : clothing.plural === null && args.length > 2 ? 2 : 1], self, target, bindings);
@@ -1179,6 +1179,17 @@ function expandClothingVariable(clothing, fn, args, self, target, bindings) {
         return clothing[fn];
     } else if (fn === "id") {
         return clothing.id || "";
+    } else if (fn === "reveals") {
+        if (!isRemoved) return "none";
+
+        var revealedPos = getRevealedPosition(target || self, clothing);
+        if (revealedPos == UPPER_ARTICLE) {
+            return "chest";
+        } else if (revealedPos == LOWER_ARTICLE) {
+            return "crotch";
+        } else {
+            return "none";
+        }
     } else if (fn === undefined && args === undefined) {
         return clothing.name;
     }
@@ -1363,7 +1374,7 @@ function expandDialogue (dialogue, self, target, bindings) {
                 break;
             case 'clothing':
                 var clothing = (target||self).removedClothing;
-                substitution = expandClothingVariable(clothing, fn, args, self, target, bindings);
+                substitution = expandClothingVariable(clothing, fn, args, self, target, bindings, true);
                 break;
             case 'revealed':
                 target = target || self;
@@ -1377,7 +1388,7 @@ function expandDialogue (dialogue, self, target, bindings) {
                                               : [clothing.position, FULL_ARTICLE]);
                     if (revealedClothing.length) {
                         substitution = expandClothingVariable(revealedClothing[getRandomNumber(0, revealedClothing.length)],
-                                                              fn, args, self, target, bindings);
+                                                              fn, args, self, target, bindings, false);
                     }
                 }
                 break;
