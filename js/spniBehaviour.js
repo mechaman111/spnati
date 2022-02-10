@@ -1860,11 +1860,11 @@ function Case($xml, trigger) {
     }
 
     var hasTarget = !!this.target || this.counters.some(function (ctr) {
-        return (ctr.role == "target") && ctr.id;
+        return (ctr.role == "target") && (isNaN(ctr.count.max) || (ctr.count.max === null) || (ctr.count.max > 0)) && ctr.id;
     });
 
     var hasTargetStage = !!this.targetStage || this.counters.some(function (ctr) {
-        return (ctr.role == "target") && ctr.stage;
+        return (ctr.role == "target") && (isNaN(ctr.count.max) || (ctr.count.max === null) || (ctr.count.max > 0)) && ctr.stage;
     });
 
     if (hasTarget && hasTargetStage) {
