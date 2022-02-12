@@ -1149,8 +1149,8 @@ function loadDefaultFillSuggestions () {
             fillPlayers.push(randomOpponent);
         }
         
-        /* Remove bottom 33% from consideration */
-        var cutoff = possiblePicks.length / 3;
+        /* Remove bottom 20% from consideration */
+        var cutoff = possiblePicks.length / 5;
         
         for (var i = 0; i < cutoff; i++) {
             possiblePicks.pop();
