@@ -105,6 +105,39 @@ var GAME_OVER_DEFEAT = "game_over_defeat";
 
 var GLOBAL_CASE = "global";
 
+/* Lists of case types eligible to be autoconverted if a target condition is present. */
+var CONVERT_STRIP_CASES = [
+    MALE_REMOVING_ACCESSORY,
+    MALE_REMOVING_MINOR,
+    MALE_REMOVING_MAJOR,
+    MALE_CHEST_WILL_BE_VISIBLE,
+    MALE_CROTCH_WILL_BE_VISIBLE,
+    FEMALE_REMOVING_ACCESSORY,
+    FEMALE_REMOVING_MINOR,
+    FEMALE_REMOVING_MAJOR,
+    FEMALE_CHEST_WILL_BE_VISIBLE,
+    FEMALE_CROTCH_WILL_BE_VISIBLE,
+];
+
+var CONVERT_STRIPPED_CASES = [
+    MALE_REMOVED_ACCESSORY,
+    MALE_REMOVED_MINOR,
+    MALE_REMOVED_MAJOR,
+    MALE_CHEST_IS_VISIBLE,
+    MALE_SMALL_CROTCH_IS_VISIBLE,
+    MALE_MEDIUM_CROTCH_IS_VISIBLE,
+    MALE_LARGE_CROTCH_IS_VISIBLE,
+    MALE_CROTCH_IS_VISIBLE,
+    FEMALE_REMOVED_ACCESSORY,
+    FEMALE_REMOVED_MINOR,
+    FEMALE_REMOVED_MAJOR,
+    FEMALE_SMALL_CHEST_IS_VISIBLE,
+    FEMALE_MEDIUM_CHEST_IS_VISIBLE,
+    FEMALE_LARGE_CHEST_IS_VISIBLE,
+    FEMALE_CHEST_IS_VISIBLE,
+    FEMALE_CROTCH_IS_VISIBLE,
+];
+
 /* Tag alias list, mapping aliases to canonical tag names. */
 var TAG_ALIASES = {
     // Add new aliases as follows:
@@ -1824,6 +1857,24 @@ function Case($xml, trigger) {
 
     if (isNaN(this.customPriority)) {
         this.customPriority = undefined;
+    }
+
+    var hasTarget = !!this.target || this.counters.some(function (ctr) {
+        return (ctr.role == "target") && (isNaN(ctr.count.max) || (ctr.count.max === null) || (ctr.count.max > 0)) && ctr.id;
+    });
+
+    var hasTargetStage = !!this.targetStage || this.counters.some(function (ctr) {
+        return (ctr.role == "target") && (isNaN(ctr.count.max) || (ctr.count.max === null) || (ctr.count.max > 0)) && ctr.stage;
+    });
+
+    if (hasTarget && hasTargetStage) {
+        if (this.trigger == MALE_MUST_STRIP || this.trigger == FEMALE_MUST_STRIP) {
+            this.trigger = OPPONENT_LOST;
+        } else if (CONVERT_STRIP_CASES.indexOf(this.trigger) >= 0) {
+            this.trigger = OPPONENT_STRIPPING;
+        } else if (CONVERT_STRIPPED_CASES.indexOf(this.trigger) >= 0) {
+            this.trigger = OPPONENT_STRIPPED;
+        }
     }
     
     // Calculate case priority ahead of time.
