@@ -98,7 +98,7 @@ var CANDY_LIST = [
     "jura/2-interested.png",
     "jura/3-vain.png",
     "megumin/0-smug.png",              // High Roster Position
-    "megumin/0-showoff.png",
+    "megumin/0-flustered.png",
     "megumin/2-ecstatic.png",
     "megumin/3-embarrassed.png",
     "perona/0-calm.png",               // High Roster Position
