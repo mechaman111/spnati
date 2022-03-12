@@ -835,7 +835,7 @@ function State($xml_or_state, parentCase) {
     this.location = $xml.attr('location') || '';
     this.dialogue_layering = $xml.attr('dialogue-layer');
     this.fontSize = $xml.attr('font-size');
-    if (!['small', 'smaller'].includes(this.fontSize)) this.fontSize = undefined;
+    if (!['normal', 'small', 'smaller'].includes(this.fontSize)) this.fontSize = undefined;
     this.alt_images = null;
 
     /** @type {MarkerOperation[]} */
