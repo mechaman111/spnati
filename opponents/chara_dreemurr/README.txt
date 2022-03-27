@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited December 18 2021
+README edited March 26 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -250,6 +250,9 @@ Most, if not all, of these come with a documented Marker. If you find one withou
 AARAVI
 -Responds to Aaravi as Chara is losing.
 
+ADORA
+-Responds to Adora as she transforms.
+
 ADRIEN
 -REsponds to Adrien as he has to strip.
 
@@ -302,6 +305,9 @@ AZAMI
 TOYOTA SPRINTER
 -Generic responses to handle the car's, uh, unique stripping and masturbation sequence.
 
+BARBARA
+-Responds to Barabara as Chara is losing.
+
 BASIL
 -Response to Basil's prompt about flowers.
 
@@ -319,6 +325,9 @@ BROCK
 -Responds to Brock getting hit by a missile.
 -Responds to Brock explaining how he survived getting hit by a missile.
 -Responds to Brock as she is losing.
+
+CAGLIOSTRO
+-Responds to Caglio as she is losing.
 
 CHARLIE
 -Responds to Charlie as either one is losing.
@@ -402,6 +411,9 @@ JURA
 -Responses as Chara is losing.
 -Responds to Jura getting flowers from Amalia.
 
+KAZ
+-Responds to Kaz as he is losing.
+
 KIZUNA
 -Responds when Kizuna is in her masturbation stage, but using her 'downloading' poses.
 -Responds when Kizuna is in her masturbation stage and using more erotic poses.
@@ -464,7 +476,7 @@ MIKO
 -Case to handle Miko having gone bi-bye.
 
 MONIKA
--Responds to Monika losing.
+-Responds to Monika as either one is losing.
 
 MS FORTUNE
 -Response to Ms. Fortune's head falling off.
