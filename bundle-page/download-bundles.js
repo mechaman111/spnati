@@ -21,6 +21,8 @@ var SPECIAL_CASE_NAMES = {
     "ringo_ando": "Ringo",
     "rogue_x-men": "Rogue (X-Men)",
     "saki_zls": "Saki (ZLS)",
+    "sandy_cheeks": "Sandy",
+    "sannytess": "Sanny & Tess",
     "scm": "Suction Cup Man",
     "uravity": "Ochako", // nmasp, wtf?
     "wiifitfemale": "Wii Fit Trainer",
