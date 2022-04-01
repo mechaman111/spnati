@@ -3,7 +3,7 @@
 *********************************************************************************************************************************************************************************************
 No I'm totally not typing this to procrastinate submitting Chara for testing, this is purely for documentation what are you talking about?
 
-README edited March 26 2021
+README edited April 1 2021
 
 -------------------------------------------------------------------------------------------
 SUMMARY
@@ -381,9 +381,17 @@ FLUTTERSHY
 -Responds to Fluttershy asking if she's friends with the player.
 -Responds to Fluttershy as Chara is losing.
 
+FRISK
+-Responds to Frisk's various forms with their undertale stats, if applicable, and otherwise if not.
+-Responds to Papyrus, Mad Mew Mew, and Flowey recognizing her during Hand=Any.
+-Handles Lesser Dog.
+
 GALATEA
 -Responds to Galatea having to strip with rock puns.
 -Responds to Galatea complaining that Chara should stop joking about her.
+
+GRUNTILDA
+-Responds to Gruntilda transforming.
 
 JURA
 -Responses as Chara loses.
