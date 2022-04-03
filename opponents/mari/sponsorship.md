@@ -31,7 +31,7 @@
 
 | Request | Commit |
 |---------|--------|
-| Add 15 clothing-specific opponent strip generics | N/A |
+| Add 15 clothing-specific opponent strip generics | [`ecc8a953c7`](https://gitgud.io/spnati/spnati/-/commit/ecc8a953c7dba47a77fe5decfd586ab9fb1c39c4) |
 
 ## RinCal953
 
