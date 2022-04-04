@@ -605,7 +605,8 @@ OpponentDisplay.prototype.rescaleSimplePose = function (base_scale) {
 function calculateDialogueStylingAttributes (player) {
     var attrs = {
         "data-character": player.id,
-        "data-costume": player.alt_costume ? player.alt_costume.id : "default"
+        "data-costume": player.alt_costume ? player.alt_costume.id : "default",
+        "data-stage": player.stage
     };
 
     Object.keys(player.markers)
@@ -617,12 +618,19 @@ function calculateDialogueStylingAttributes (player) {
             if (value) attrs["data-marker-" + marker.substring(4)] = value;
         });
 
+    if (player.chosenState && player.chosenState.image) {
+        /* Remove custom: prefix and stage prefixes, if present
+         * Then remove file extensions, if present
+         */
+        attrs["data-pose"] = player.chosenState.image.replace(/^(?:custom\:\s*)?(?:\#\-)?/i, "").replace(/\.(?:jpe?g|png|gif)$/i, "");
+    }
+
     return attrs;
 }
 
 OpponentDisplay.prototype.updateBubbleAttributes = function (player) {
     var bubbleNode = this.bubble[0];
-    var removeAttrs = ["data-character", "data-costume"];
+    var removeAttrs = ["data-character", "data-costume", "data-dialogue-styles", "data-pose", "data-stage"];
     for (let i=0; i < bubbleNode.attributes.length; i++) {
         if (bubbleNode.attributes[i].name.startsWith("data-marker-")) {
             removeAttrs.push(bubbleNode.attributes[i].name);
@@ -706,7 +714,8 @@ OpponentDisplay.prototype.updateText = function (player) {
     }
 
     var stylingAttrs = calculateDialogueStylingAttributes(player);
-    var displayElems = parseStyleSpecifiers(player.chosenState.dialogue).map(function (comp) {
+    var specs = parseStyleSpecifiers(player.chosenState.dialogue);
+    var displayElems = specs.map(function (comp) {
         /* {'text': 'foo', 'classes': 'cls1 cls2 cls3'} --> <span class="cls1 cls2 cls3">foo</span> */
         
         var wrapperSpan = document.createElement('span');
@@ -716,6 +725,20 @@ OpponentDisplay.prototype.updateText = function (player) {
         
         return wrapperSpan;
     });
+
+    var uniqueClasses = specs.reduce(function (acc, comp) {
+        comp.classes.split(/\s+/).forEach(function (cls) {
+            if (cls.length > 0 && acc.indexOf(cls) < 0) {
+                acc.push(cls);
+            }
+        });
+
+        return acc;
+    }, []).sort();
+
+    if (uniqueClasses.length > 0) {
+        this.bubble.attr("data-dialogue-styles", uniqueClasses.join(" "));
+    }
 
     /* Show repeat count if debug mode is on. */
     if (showDebug && player.getRepeatCount() > 1) {
