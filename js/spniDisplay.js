@@ -602,7 +602,44 @@ OpponentDisplay.prototype.rescaleSimplePose = function (base_scale) {
     }
 }
 
+function calculateDialogueStylingAttributes (player) {
+    var attrs = {
+        "data-character": player.id,
+        "data-costume": player.alt_costume ? player.alt_costume.id : "default"
+    };
+
+    Object.keys(player.markers)
+        .concat(Object.keys(player.persistentMarkers))
+        .filter(function (marker) {
+            return marker.startsWith("css_");
+        }).forEach(function (marker) {
+            var value = player.getMarker(marker);
+            if (value) attrs["data-marker-" + marker.substring(4)] = value;
+        });
+
+    return attrs;
+}
+
+OpponentDisplay.prototype.updateBubbleAttributes = function (player) {
+    var bubbleNode = this.bubble[0];
+    var removeAttrs = ["data-character", "data-costume"];
+    for (let i=0; i < bubbleNode.attributes.length; i++) {
+        if (bubbleNode.attributes[i].name.startsWith("data-marker-")) {
+            removeAttrs.push(bubbleNode.attributes[i].name);
+        }
+    }
+
+    removeAttrs.forEach(function (attr) {
+        bubbleNode.removeAttribute(attr);
+    });
+
+    if (player) {
+        this.bubble.attr(calculateDialogueStylingAttributes(player));
+    }
+}
+
 OpponentDisplay.prototype.hideBubble = function () {
+    this.updateBubbleAttributes(null);
     this.dialogue.html("");
     this.bubble.hide();
 }
@@ -668,13 +705,14 @@ OpponentDisplay.prototype.updateText = function (player) {
         return;
     }
 
+    var stylingAttrs = calculateDialogueStylingAttributes(player);
     var displayElems = parseStyleSpecifiers(player.chosenState.dialogue).map(function (comp) {
         /* {'text': 'foo', 'classes': 'cls1 cls2 cls3'} --> <span class="cls1 cls2 cls3">foo</span> */
         
         var wrapperSpan = document.createElement('span');
         wrapperSpan.innerHTML = fixupDialogue(comp.text);
         wrapperSpan.className = comp.classes;
-        wrapperSpan.setAttribute('data-character', player.id);
+        $(wrapperSpan).attr(stylingAttrs);
         
         return wrapperSpan;
     });
@@ -724,6 +762,8 @@ OpponentDisplay.prototype.update = function(player) {
         return;
     }
     
+    this.updateBubbleAttributes(player);
+
     var chosenState = player.chosenState;
     
     /* update dialogue */
