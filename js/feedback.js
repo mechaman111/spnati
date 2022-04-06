@@ -32,6 +32,7 @@ function compileBaseErrorReport(userDesc, bugType) {
         'userAgent': navigator.userAgent,
         'origin': getReportedOrigin(),
         'visibleScreens': [],
+        'uiTheme': UI_THEME,
     };
 
     var data = {
@@ -448,6 +449,7 @@ function sentryInit() {
 
                     event.tags.rollback = inRollback();
                     event.tags.gamePhase = getGamePhaseString(gamePhase);
+                    event.tags.uiTheme = UI_THEME;
                 }
 
                 if (epiloguePlayer) {
@@ -530,6 +532,7 @@ function collectBaseUsageInfo(type) {
         'origin': getReportedOrigin(),
         'table': {},
         'tags': humanPlayer.tags,
+        'uiTheme': UI_THEME,
     };
 
 

@@ -22,6 +22,7 @@ var BASE_FONT_SIZE = 14;
 var BASE_SCREEN_WIDTH = 100;
 var UI_FONT_WEIGHT = 500;
 var UI_FONT_WIDTH = 100;
+var UI_THEME = "default";
 
 var CURRENT_VERSION = undefined;
 var VERSION_COMMIT = undefined;

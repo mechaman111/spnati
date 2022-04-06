@@ -36,6 +36,14 @@ var optionsBackground = defaultBackground;
 
 var useGroupBackgrounds = true;
 
+/* Map from UI theme setting keys (in the options menu and in save data)
+ * to the corresponding CSS classes to apply to the page root element.
+ */
+var UI_THEMES = {
+    "default": "default-theme",
+    "dark-mode": "dark-mode"
+};
+
 
 /**
  * Constructor for game Background objects.
@@ -269,6 +277,16 @@ function showOptionsModal () {
     setActiveOption('options-player-finishing-effect', PLAYER_FINISHING_EFFECT);
     $("#options-ui-font-weight").val(UI_FONT_WEIGHT);
     $("#options-ui-font-width").val(UI_FONT_WIDTH);
+    setActiveOption('options-ui-theme', UI_THEME);
+
+    /* Don't display UI theme selector on spnati.net yet
+     * TODO: remove this once transition period is over
+     */
+    if (isMainSite) {
+        $("#ui-theme-select-container").hide();
+    } else {
+        $("#ui-theme-select-container").show();
+    }
 
     $("#options-modal").modal('show');
 }
@@ -325,6 +343,16 @@ function setUIFontSettings(weight, width) {
     targetSheet.innerText = ":root { --base-font-weight: " + weight + "; --base-font-stretch: " + roundedWidth + "% }";
 }
 
+function setUITheme (scheme) {
+    UI_THEME = scheme;
+
+    $(":root").removeClass(Object.values(UI_THEMES)).addClass(UI_THEMES[scheme] || "default-theme");
+
+    if (!UI_THEMES[scheme]) {
+        console.error("Unknown UI theme: " + scheme);
+    }
+}
+
 $('ul#options-auto-fade').on('click', 'a', function() {
     AUTO_FADE = $(this).attr('data-value') == "true";
 });
@@ -364,6 +392,11 @@ $('.ui-text-option').on('input', function() {
         Number($('#options-ui-font-width').val()),
     );
 });
+
+$('ul#options-ui-theme').on('click', 'a', function() {
+    setUITheme($(this).attr('data-value') || "default");
+});
+
 
 $('ul#options-player-finishing-effect').on('click', 'a', function() {
     PLAYER_FINISHING_EFFECT = $(this).attr('data-value') == 'true';

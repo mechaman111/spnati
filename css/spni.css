@@ -165,6 +165,32 @@ h6,
 }
 
 /************************************************************
+ * Classes for dialogue bubble color schemes.
+ *
+ * These are defined as sets of CSS variables, since these colors
+ * may be referenced in more than one place.
+ ************************************************************/
+
+/* Default color scheme. */
+:root {
+    --dialogue-background-color: #F5F5F5;
+    --dialogue-text-color: black;
+
+    --loser-label-color: #dd4444;
+    --tied-label-color: #cccc44;
+    --current-label-color: #63aae7;
+}
+
+.dark-mode {
+    --dialogue-background-color: rgba(10, 10, 10, 0.5);
+    --dialogue-text-color: #fffdea;
+
+    --loser-label-color: hsla(0, 69%, 50%, 0.75);
+    --tied-label-color: rgba(204, 204, 68, 0.75);
+    --current-label-color: hsla(208, 73%, 60%, 0.75);
+}
+
+/************************************************************
  * Screen classes.
  ************************************************************/
 
@@ -1026,7 +1052,8 @@ ul.dropdown-menu>li {
     position: absolute;
     z-index: 0;
     font-size: 113%;
-    background: #F5F5F5;
+    background: var(--dialogue-background-color);
+    color: var(--dialogue-text-color);
     opacity: 95%;
     border-radius: 1rem;
     padding: 1.2rem;
@@ -1071,10 +1098,13 @@ ul.dropdown-menu>li {
 
     content: "";
     position: absolute;
-    background: #F5F5F5;
+    background: var(--dialogue-background-color);
     border-color: transparent black black transparent;
-    border-width: 0.25rem;
+    border-width: 0.35rem;
     border-style: solid;
+
+    /* Clip arrow to only the part sticking out of the box. */
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
 }
 
 .arrow-down::before {
@@ -2006,8 +2036,9 @@ ul.dropdown-menu>li {
     top: -5%;
     height: 5.5%;
     width: 99%;
-    background-color: #F5F5F5;
     text-align: center;
+    background: var(--dialogue-background-color);
+    color: var(--dialogue-text-color);
 }
 
 .opponent-suggestion-row {
@@ -2993,7 +3024,8 @@ ul.dropdown-menu>li {
     padding: 0.2rem 0.4rem;
     margin-top: 0.2rem;
 
-    background: #F5F5F5;
+    background: var(--dialogue-background-color);
+    color: var(--dialogue-text-color);
 
     display: flex;
     align-items: center;
@@ -3379,7 +3411,8 @@ ul.dropdown-menu>li {
 
 .name-label {
     text-align: center;
-    background-color: #F5F5F5;
+    background-color: var(--dialogue-background-color);
+    color: var(--dialogue-text-color);
     padding: 0.125em;
 }
 
@@ -3404,7 +3437,8 @@ ul.dropdown-menu>li {
     bottom: 28%;
     font-size: 90%;
     text-align: center;
-    background-color: #F5F5F5;
+    background-color: var(--dialogue-background-color);
+    color: var(--dialogue-text-color);
 }
 
 .large-card-image,
@@ -3721,15 +3755,15 @@ ul.dropdown-menu>li {
  * Classes for name labels to indicate current player, loser, etc.
  ************************************************************/
 .name-label.loser {
-    background-color: #DD4444;
+    background-color: var(--loser-label-color);
 }
 
 .name-label.tied {
-    background-color: #CCCC44;
+    background-color: var(--tied-label-color);
 }
 
 .name-label.current {
-    background-color: #63AAE7
+    background-color: var(--current-label-color);
 }
 
 /************************************************************
