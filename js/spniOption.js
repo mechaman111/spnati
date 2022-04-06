@@ -271,6 +271,15 @@ function showOptionsModal () {
     $("#options-ui-font-width").val(UI_FONT_WIDTH);
     setActiveOption('options-ui-theme', UI_THEME);
 
+    /* Don't display UI theme selector on spnati.net yet
+     * TODO: remove this once transition period is over
+     */
+    if (isMainSite) {
+        $("#ui-theme-select-container").hide();
+    } else {
+        $("#ui-theme-select-container").show();
+    }
+
     $("#options-modal").modal('show');
 }
 $("#options-modal").on('shown.bs.modal', function() {
