@@ -423,7 +423,7 @@ Save.prototype.saveOptions = function() {
         minimalUI: MINIMAL_UI,
         uiFontWeight: UI_FONT_WEIGHT,
         uiFontWidth: UI_FONT_WIDTH,
-        uiColorScheme: UI_THEME,
+        uiTheme: UI_THEME,
         stamina: humanPlayer.stamina,
         playerFinishingEffect: PLAYER_FINISHING_EFFECT,
     };

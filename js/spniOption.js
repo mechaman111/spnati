@@ -36,6 +36,14 @@ var optionsBackground = defaultBackground;
 
 var useGroupBackgrounds = true;
 
+/* Map from UI theme setting keys (in the options menu and in save data)
+ * to the corresponding CSS classes to apply to the page root element.
+ */
+var UI_THEMES = {
+    "default": "default-theme",
+    "dark-mode": "dark-mode"
+};
+
 
 /**
  * Constructor for game Background objects.
@@ -337,12 +345,11 @@ function setUIFontSettings(weight, width) {
 
 function setUITheme (scheme) {
     UI_THEME = scheme;
-    if (scheme == "dark-mode") {
-        $(":root").addClass("dark-mode");
-    } else if (scheme == "default") {
-        $(":root").removeClass("dark-mode");
-    } else {
-        console.error("Unknown color scheme: " + scheme);
+
+    $(":root").removeClass(Object.values(UI_THEMES)).addClass(UI_THEMES[scheme] || "default-theme");
+
+    if (!UI_THEMES[scheme]) {
+        console.error("Unknown UI theme: " + scheme);
     }
 }
 
