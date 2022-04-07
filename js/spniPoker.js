@@ -775,6 +775,11 @@ function setupDeck () {
  * Deals new cards to the given player.
  ************************************************************/
 function dealHand (player, numPlayers, playersBefore) {
+    /* The card animation gets wonky if the table isn't visible;
+     * Cards will fly off to the corner of the screen if they don't have a place to go.
+     */
+    forceTableVisibility(1);
+
     /* reset the strength so any hand condition won't use the last
      * round's result. */
     players[player].hand.strength = NONE;
@@ -804,6 +809,10 @@ function exchangeCards (player) {
             level: 'debug'
         });
     }
+
+    /* See above comment in dealHand re: the card animation and table visibility */
+    forceTableVisibility(1);
+
     /* Refresh display. */
     displayHand(player, player == HUMAN_PLAYER);
 
