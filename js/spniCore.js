@@ -59,7 +59,9 @@ var versionInfo = null;
 
 /* game table */
 var tableOpacity = 1;
+var hiddenTableOpacity = 0.3;
 $gameTable = $('#game-table');
+$gameTableHidden = $('#game-hidden-area');
 
 /* useful variables */
 var BLANK_PLAYER_IMAGE = "opponents/blank.png";
@@ -966,20 +968,23 @@ function showPlayerTagsModal () {
  ************************************************************/
 function toggleTableVisibility () {
     if (tableOpacity > 0) {
-        $gameTable.fadeOut();
+        $gameTable.fadeOut(100);
+		$gameTableHidden.fadeTo(100, hiddenTableOpacity);
         tableOpacity = 0;
     } else {
-        $gameTable.fadeIn();
+        $gameTable.fadeIn(100);
+		$gameTableHidden.fadeTo(100, 1.0);
         tableOpacity = 1;
     }
 }
 
 function forceTableVisibility(state) {
     if (!state) {
-        $gameTable.fadeOut();
+        $gameTable.fadeOut(100);
         tableOpacity = 0;
     } else {
-        $gameTable.fadeIn();
+        $gameTable.fadeIn(100);
+		$gameTableHidden.fadeTo(100, 1.0);
         tableOpacity = 1;
     }
 }
