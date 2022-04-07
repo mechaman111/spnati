@@ -969,11 +969,11 @@ function showPlayerTagsModal () {
 function toggleTableVisibility () {
     if (tableOpacity > 0) {
         $gameTable.fadeOut(100);
-		$gameTableHidden.fadeTo(100, hiddenTableOpacity);
+        $gameTableHidden.fadeTo(100, hiddenTableOpacity);
         tableOpacity = 0;
     } else {
         $gameTable.fadeIn(100);
-		$gameTableHidden.fadeTo(100, 1.0);
+        $gameTableHidden.fadeTo(100, 1.0);
         tableOpacity = 1;
     }
 }
@@ -984,7 +984,7 @@ function forceTableVisibility(state) {
         tableOpacity = 0;
     } else {
         $gameTable.fadeIn(100);
-		$gameTableHidden.fadeTo(100, 1.0);
+        $gameTableHidden.fadeTo(100, 1.0);
         tableOpacity = 1;
     }
 }
