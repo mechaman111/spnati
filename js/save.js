@@ -330,7 +330,7 @@ Save.prototype.loadOptions = function(){
     includedOpponentStatuses['event'] = false;
     includedOpponentStatuses['duplicate'] = false;
     
-    if ('showStatuses' in settings) {
+    if (!isMainSite && 'showStatuses' in settings) {
         for (var status of settings.showStatuses) {
             includedOpponentStatuses[status] = true;
         }
