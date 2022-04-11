@@ -1305,6 +1305,8 @@ function expandPlayerVariable(split_fn, args, player, self, target, bindings) {
         return player.ticksInStage;
     case 'timer':
         return player.out ? player.timer : player.stamina;
+    case 'heavy':
+        return (player.forfeit[0] === PLAYER_HEAVY_MASTURBATING) ? "true" : "false";
     default:
         return expandNicknames(self, player);
     }
