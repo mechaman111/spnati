@@ -115,6 +115,7 @@ Four special player IDs exist:
 | `.timeinstage`  | How many rounds the player has spent in the same stage; see the Time in Stage condition for more details about how this works.
 | `.timer`        | How many ticks the player has left before they finish masturbating. This is equal to their stamina if they're still in the game, as well as when their Start Masturbating dialogue is playing. On the other hand, this is (naturally) equal to 0 when and after they finish.
 | `.ticksinstage` | Counts how many ticks has spent in the same stage; this is similar to Time in Stage, but is incremented whenever forfeit timers are ticked (or whenever they would otherwise be ticked, for players that are not masturbating). The loser of a round's Ticks in Stage is 0 when their Stripped or Start Masturbating cases are played; in general, when a player is masturbating, the sum of their current forfeit timer and ticks in stage values should equal their stamina. Like Time in Stage, when a player finishes, this is not reset to 0 until immediately _after_ the Finished cases have played.
+| `.heavy` | Expands to `true` if the player is currently heavily masturbating, and `false` otherwise. Note that this expands to `false` when a character is finishing. |
 
 ### `.ifplural` 
 
