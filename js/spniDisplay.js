@@ -812,6 +812,43 @@ OpponentDisplay.prototype.updateImage = function(player) {
     }
 }
 
+/**
+ * 
+ * @param {Player} player 
+ */
+OpponentDisplay.prototype.updateTalkingTo = function (player) {
+    if (!player) {
+        this.bubble.tooltip("destroy");
+        return;
+    }
+
+    /* Collect the final list of players we're "talking to" for display purposes. */
+    var talkingTo = new Set();
+    if (player.chosenState.parentCase && player.chosenState.parentCase.displayedDependencies) {
+        player.chosenState.parentCase.displayedDependencies.forEach(function (p) {
+            if (p === player) return;
+            talkingTo.add(p);
+        });
+    }
+    
+    if (talkingTo.size > 0) {
+        var labels = [];
+        talkingTo.forEach(function (p) {
+            labels.push((p === humanPlayer) ? "You" : p.label);
+        });
+    
+        var text = "Talking to " + englishJoin(labels);
+        this.bubble.tooltip("destroy").attr("title", null).tooltip({
+            delay: { show: 50 },
+            placement: "bottom",
+            template: '<div class="tooltip dialogue-target-tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
+            title: text
+        });
+    } else {
+        this.bubble.tooltip("destroy");
+    }
+}
+
 OpponentDisplay.prototype.update = function(player) {
     if (!player) {
         this.hideBubble();
@@ -834,7 +871,7 @@ OpponentDisplay.prototype.update = function(player) {
 
     /* update dialogue */
     this.updateText(player);
-    
+
     /* update label */
     this.label.html(player.label.initCap());
 
@@ -853,6 +890,8 @@ OpponentDisplay.prototype.update = function(player) {
         this.dialogue.removeClass('small smaller');
         if (chosenState.fontSize != "normal") this.dialogue.addClass(chosenState.fontSize || player.fontSize);
     }
+    
+    this.updateTalkingTo(player);
 }
 
 OpponentDisplay.prototype.loop = function (timestamp) {

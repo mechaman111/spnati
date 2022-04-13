@@ -2197,9 +2197,7 @@ Case.prototype.toJSON = function () {
     return ser;
 }
 
-Case.prototype.checkConditions = function (self, opp) {
-    var volatileDependencies = new Set();
-    
+Case.prototype.checkConditions = function (self, opp) {    
     // one-time use
     if (this.oneShotId && self.oneShotCases[this.oneShotId]) {
         return false;
@@ -2229,6 +2227,19 @@ Case.prototype.checkConditions = function (self, opp) {
 
     var counterMatches = {};
     var unwantedSayings = [], unwantedMarkers = [], unwantedPoses = [];
+    var volatileDependencies = new Set();
+
+    /* Set of characters displayed in-game as being spoken to by this character.
+     *
+     * In general, this is the set of characters that are positively matched using
+     * ID and tag filter conditions, excluding the speaker.
+     * 
+     * This also excludes characters that are captured by a bound variable, but aren't
+     * present in the selected binding combination.
+     */
+    var unboundDisplayDependencies = new Set();
+    var boundDisplayDependencies = new Set();
+
     // filter counter targets
     if (!this.counters.every(function (ctr) {
         /* NOTE: the legacy timeInStage and targetTimeInStage attributes
@@ -2310,15 +2321,26 @@ Case.prototype.checkConditions = function (self, opp) {
         })) {
             return false;
         }
+
         if (inInterval(matches.length, ctr.count)) {
-            if (matches.length && ctr.variable) {
-                if (counterMatches.hasOwnProperty(ctr.variable)) {
-                    // If two <condition> elements define the same variable, take the intersection of the matches.
-                    // If any intersection is empty, getAllBindingCombinations() will return an empty array and the
-                    // case will not match.
-                    counterMatches[ctr.variable] = counterMatches[ctr.variable].filter(function(m) { return matches.indexOf(m) >= 0; });
-                } else {
-                    counterMatches[ctr.variable] = matches;
+            if (matches.length) {
+                if (ctr.variable) {
+                    if (counterMatches.hasOwnProperty(ctr.variable)) {
+                        // If two <condition> elements define the same variable, take the intersection of the matches.
+                        // If any intersection is empty, getAllBindingCombinations() will return an empty array and the
+                        // case will not match.
+                        counterMatches[ctr.variable] = counterMatches[ctr.variable].filter(function(m) { return matches.indexOf(m) >= 0; });
+                    } else {
+                        counterMatches[ctr.variable] = matches;
+                    }
+                }
+
+                /* Only add display dependencies if they're positively matched using a ID or tag condition. */
+                if ((ctr.id !== undefined) || (ctr.tag !== undefined)) {
+                    var depSet = ctr.variable ? boundDisplayDependencies : unboundDisplayDependencies;
+                    matches.forEach(function (dep) {
+                        depSet.add(dep);
+                    });
                 }
             }
             return true;
@@ -2373,8 +2395,18 @@ Case.prototype.checkConditions = function (self, opp) {
 
             return true;
         })) {
+            var displayedDependencies = unboundDisplayDependencies;
+
+            /* Add only the positively-matched bound characters to the displayed dependencies set. */
+            Object.values(bindingCombinations[i]).forEach(function (p) {
+                if (boundDisplayDependencies.has(p)) {
+                    displayedDependencies.add(p);
+                }
+            });
+
             this.variableBindings = bindingCombinations[i];
             this.volatileDependencies = volatileDependencies;
+            this.displayedDependencies = displayedDependencies;
             this.unwantedSayings = unwantedSayings;
             this.unwantedMarkers = unwantedMarkers;
             this.unwantedPoses = unwantedPoses;
@@ -2388,6 +2420,7 @@ Case.prototype.checkConditions = function (self, opp) {
 Case.prototype.cleanupMutableState = function () {
     delete this.variableBindings;
     delete this.volatileDependencies;
+    delete this.displayedDependencies;
     delete this.unwantedMarkers;
     delete this.unwantedSayings;
     delete this.unwantedPoses;
@@ -2812,10 +2845,13 @@ function commitAllBehaviourUpdates (target) {
     saveTranscriptEntries(updatedPlayers);
 }
 
-/*
- * Produces all combinations of variable bindings
+/**
+ * Produces all combinations of variable bindings.
  * Input: an array of pairs of variable name and matching player references
  * Return value: an array of objects with each variable name bound to a player reference.
+ * 
+ * @param {Array<[string, Player[]]>} variableMatches
+ * @returns {Array<Object<string, Player>>}
  */
 function getAllBindingCombinations (variableMatches) {
     if (variableMatches.length > 0) {
