@@ -2035,18 +2035,17 @@ function Case($xml, trigger) {
         "role": "self"
     });
 
-    /* Legacy consecutiveLosses has to be handled specially. */
-    var legacyConsecutiveLosses = conditionFromAttrs($xml, {
-        "consecutiveLosses": "consecutiveLosses",
-    }, {
-        "count": "1-",
-        "role": "focus"
-    });
-
     if (legacyTarget) this.counters.push(legacyTarget);
     if (legacyAlsoPlaying) this.counters.push(legacyAlsoPlaying);
     if (legacySelf) this.counters.push(legacySelf);
-    if (legacyConsecutiveLosses) this.counters.push(legacyConsecutiveLosses);
+
+    if ($xml.attr("consecutiveLosses")) {
+        this.counters.push(new Condition({
+            "consecutiveLosses": $xml.attr("consecutiveLosses"),
+            "role": "focus",
+            "count": "1-"
+        }));
+    }
 
     if ($xml.attr("totalMales")) {
         this.counters.push(new Condition({
