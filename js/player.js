@@ -1280,10 +1280,6 @@ Opponent.prototype.loadBehaviour = function (slot, individual) {
 Opponent.prototype.recordTargetedCase = function (caseObj) {
     var entities = new Set();
 
-    if (caseObj.target) entities.add(caseObj.target);
-    if (caseObj.alsoPlaying) entities.add(caseObj.alsoPlaying);
-    if (caseObj.filter && caseObj.filter[0] !== "!") entities.add(caseObj.filter);
-
     caseObj.counters.forEach(function (ctr) {
         /* Conditions checking if a character/tag is not at the table don't count as targeted. */
         if (ctr.id && ctr.count.max !== 0) entities.add(ctr.id);
@@ -1387,10 +1383,6 @@ Player.prototype.getImagesForStage = function (stage) {
     
     function processCase (c) {
         /* Skip cases requiring characters that aren't present. */
-        if (c.target && !players.some(function (p) { return p.id === c.target; })) return;
-        if (c.alsoPlaying && !players.some(function (p) { return p.id === c.alsoPlaying; })) return;
-        if (c.filter && !players.some(function (p) { return p.hasTag(c.filter); })) return;
-
         if (!c.counters.every(function (ctr) {
             var count = players.countTrue(function(p) {
                 if (ctr.id && p.id !== ctr.id) return false;

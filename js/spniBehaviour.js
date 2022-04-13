@@ -1674,6 +1674,7 @@ function Interval (str) {
     if (str === undefined) {
         this.min = this.max = null; return;
     }
+
     var m = str.match(/^\s*(-?\d+)?\s*-\s*(-?\d+)?\s*$/);
     if (m) {
         this.min = m[1] ? parseInt(m[1]) : null;
@@ -1801,7 +1802,6 @@ function checkMarker(predicate, self, target, currentOnly) {
     return evalOperator(val, op, cmpVal);
 }
 
-
 function checkSaidText(predicate, player) {
     var match = predicate.match(/^(.+)##\s*((?:\>|\<|\=|\!)\=?)\s*(\d+)\s*$/);
 
@@ -1834,33 +1834,32 @@ function checkSaidText(predicate, player) {
 }
 
 
-function Condition($xml) {
-    this.count  = parseInterval($xml.attr('count') || "1-");
-    this.role   = $xml.attr('role');
-    this.variable = normalizeBindingName($xml.attr('var'));
-    this.id     = $xml.attr('character');
-    this.tag    = $xml.attr('filter');
-    this.stage  = parseInterval($xml.attr('stage'));
-    this.layers = parseInterval($xml.attr('layers'));
-    this.startingLayers = parseInterval($xml.attr('startingLayers'));
-    this.gender         = $xml.attr('gender');
-    this.status         = $xml.attr('status');
-    this.timeInStage    = parseInterval($xml.attr('timeInStage'));
-    this.hand           = $xml.attr('hasHand');
-    this.consecutiveLosses = parseInterval($xml.attr('consecutiveLosses'));
-    this.saidMarker     = $xml.attr('saidMarker');
-    this.sayingMarker   = $xml.attr('sayingMarker');
-    this.notSaidMarker  = $xml.attr('notSaidMarker');
-    this.saying         = $xml.attr('saying');
-    this.said           = $xml.attr('said');
-    this.pose           = $xml.attr('pose');
+function Condition(options) {
+    this.count  = parseInterval(options['count'] || "1-");
+    this.role   = options['role'];
+    this.variable = normalizeBindingName(options['variable']);
+    this.id     = options['id'];
+    this.tag    = options['tag'];
+    this.stage  = parseInterval(options['stage']);
+    this.layers = parseInterval(options['layers']);
+    this.startingLayers = parseInterval(options['startingLayers']);
+    this.gender         = options['gender'];
+    this.status         = options['status'];
+    this.timeInStage    = parseInterval(options['timeInStage']);
+    this.hand           = options['hand'];
+    this.consecutiveLosses = parseInterval(options['consecutiveLosses']);
+    this.saidMarker     = options['saidMarker'];
+    this.sayingMarker   = options['sayingMarker'];
+    this.notSaidMarker  = options['notSaidMarker'];
+    this.saying         = options['saying'];
+    this.pose           = options['pose'];
     this.priority = 0;
 
     if (this.role == "self") {
         this.priority = (this.tag ? 0 : 0) + (this.status ? 20 : 0)
             + (this.consecutiveLosses ? 60 : 0) + (this.timeInStage ? 8 : 0)
             + (this.hand ? 20 : 0) + (this.gender ? 5 : 0)
-    } else if (this.role == "target") {
+    } else if (this.role == "target" || this.role == "focus") {
         this.priority = (this.id ? 300 : 0) + (this.tag ? 150 : 0)
             + (this.stage ? 80 : 0) + (this.status ? 70 : 0)
             + (this.layers ? 40 : 0) + (this.startingLayers ? 40 : 0)
@@ -1884,6 +1883,64 @@ function Condition($xml) {
     }
 }
 
+/**
+ * Create a Condition object by collecting attributes from an XML element.
+ * 
+ * @param {jQuery} $xml A jQuery object representing an XML element.
+ * @param {Object<string, string>} attrMap A mapping from XML attribute names to Condition option names.
+ * @param {Object<string, string>?} defaults Default values for Condition options.
+ * @returns {Condition?} A newly created Condition object, or null if no matching attributes were found (not including defaults).
+ */
+function conditionFromAttrs($xml, attrMap, defaults) {
+    var anyAttrSet = false;
+    var options = Object.assign({}, defaults || {});
+    Object.entries(attrMap).forEach(function (entry) {
+        var val = $xml.attr(entry[0]);
+        if (val) {
+            options[entry[1]] = val;
+            anyAttrSet = true;
+        }
+    });
+
+    if (anyAttrSet) return new Condition(options);
+    return null;
+}
+
+/**
+ * Create a Condition object from a <condition> XML element.
+ * @param {jQuery} $xml 
+ * @returns {Condition}
+ */
+function parseConditionXML($xml) {
+    var cond = conditionFromAttrs($xml, {
+        "count": "count",
+        "role": "role",
+        "var": "variable",
+        "character": "id",
+        "filter": "tag",
+        "stage": "stage",
+        "layers": "layers",
+        "startingLayers": "startingLayers",
+        "gender": "gender",
+        "status": "status",
+        "timeInStage": "timeInStage",
+        "hasHand": "hand",
+        "consecutiveLosses": "consecutiveLosses",
+        "saidMarker": "saidMarker",
+        "sayingMarker": "sayingMarker",
+        "notSaidMarker": "notSaidMarker",
+        "saying": "saying",
+        "pose": "pose",
+    }, {});
+
+    /* Handle the edge case of a <condition> element with nothing set.
+     * It's incredibly unlikely, but just to be safe...
+     */
+    if (!cond) cond = new Condition();
+    return cond;
+}
+
+
 /**********************************************************************
  *****                  Case Object Specification                 *****
  **********************************************************************/
@@ -1891,39 +1948,7 @@ function Condition($xml) {
 function Case($xml, trigger) {
     this.trigger =                  trigger;
     this.stage =                    $xml.attr('stage');
-    this.target =                   $xml.attr("target");
-    this.filter =                   $xml.attr("filter");
-    this.targetStage =              parseInterval($xml.attr("targetStage"));
-    this.targetLayers =             parseInterval($xml.attr("targetLayers"));
-    this.targetStartingLayers =     parseInterval($xml.attr("targetStartingLayers"));
-    this.targetStatus =             $xml.attr("targetStatus");
-    this.targetTimeInStage =        parseInterval($xml.attr("targetTimeInStage"));
-    this.targetSaidMarker =         $xml.attr("targetSaidMarker");
-    this.targetNotSaidMarker =      $xml.attr("targetNotSaidMarker");
-    this.targetSayingMarker =       $xml.attr("targetSayingMarker");
-    this.targetSaying =             $xml.attr("targetSaying");
-    this.oppHand =                  $xml.attr("oppHand");
-    this.hasHand =                  $xml.attr("hasHand");
-    this.alsoPlaying =              $xml.attr("alsoPlaying");
-    this.alsoPlayingStage =         parseInterval($xml.attr("alsoPlayingStage"));
-    this.alsoPlayingHand =          $xml.attr("alsoPlayingHand");
-    this.alsoPlayingTimeInStage =   parseInterval($xml.attr("alsoPlayingTimeInStage"));
-    this.alsoPlayingSaidMarker =    $xml.attr("alsoPlayingSaidMarker");
-    this.alsoPlayingNotSaidMarker = $xml.attr("alsoPlayingNotSaidMarker");
-    this.alsoPlayingSayingMarker =  $xml.attr("alsoPlayingSayingMarker");
-    this.alsoPlayingSaying =        $xml.attr("alsoPlayingSaying");
-    this.totalMales =               parseInterval($xml.attr("totalMales"));
-    this.totalFemales =             parseInterval($xml.attr("totalFemales"));
-    this.timeInStage =              parseInterval($xml.attr("timeInStage"));
-    this.consecutiveLosses =        parseInterval($xml.attr("consecutiveLosses"));
-    this.totalAlive =               parseInterval($xml.attr("totalAlive"));
-    this.totalExposed =             parseInterval($xml.attr("totalExposed"));
-    this.totalNaked =               parseInterval($xml.attr("totalNaked"));
-    this.totalMasturbating =        parseInterval($xml.attr("totalMasturbating"));
-    this.totalFinished =            parseInterval($xml.attr("totalFinished"));
     this.totalRounds =              parseInterval($xml.attr("totalRounds"));
-    this.saidMarker =               $xml.attr("saidMarker");
-    this.notSaidMarker =            $xml.attr("notSaidMarker");
     this.customPriority =           parseInt($xml.attr("priority"), 10);
     this.hidden =                   $xml.attr("hidden");
     this.addTags =                  $xml.attr("addCharacterTags");
@@ -1949,7 +1974,7 @@ function Case($xml, trigger) {
     
     this.counters = [];
     $xml.children("condition").each(function (idx, elem) {
-        this.counters.push(new Condition($(elem)));
+        this.counters.push(parseConditionXML($(elem)));
     }.bind(this));
     
     var tests = [];
@@ -1962,12 +1987,106 @@ function Case($xml, trigger) {
         this.customPriority = undefined;
     }
 
+    /* Convert old-style attributes on the <case> element to Condition objects: */
+    var legacyTarget = conditionFromAttrs($xml, {
+        "target": "id",
+        "filter": "tag",
+        "targetStage": "stage",
+        "targetLayers": "layers",
+        "targetStartingLayers": "startingLayers",
+        "targetStatus": "status",
+        "targetTimeInStage": "timeInStage",
+        "targetSaidMarker": "saidMarker",
+        "targetNotSaidMarker": "notSaidMarker",
+        "targetSayingMarker": "sayingMarker",
+        "targetSaying": "saying",
+        "oppHand": "hand"
+    }, {
+        "count": "1-",
+        "role": "target"
+    });
+
+    /* 
+     * NOTE: alsoPlayingHand confers a different priority value (+5)
+     * compared to a Condition element with hasHand and role="other" (which gives +15).
+     */
+    var legacyAlsoPlaying = conditionFromAttrs($xml, {
+        "alsoPlaying": "id",
+        "alsoPlayingStage": "stage",
+        "alsoPlayingHand": "hand",
+        "alsoPlayingTimeInStage": "timeInStage",
+        "alsoPlayingSaidMarker": "saidMarker",
+        "alsoPlayingNotSaidMarker": "notSaidMarker",
+        "alsoPlayingSayingMarker": "sayingMarker",
+        "alsoPlayingSaying": "saying",
+    }, {
+        "count": "1-",
+        "role": "other"
+    });
+
+    /* NOTE: specifically don't convert `stage`. */
+    var legacySelf = conditionFromAttrs($xml, {
+        "hasHand": "hand",
+        "timeInStage": "timeInStage",
+        "saidMarker": "saidMarker",
+        "notSaidMarker": "notSaidMarker"
+    }, {
+        "count": "1-",
+        "role": "self"
+    });
+
+    /* Legacy consecutiveLosses has to be handled specially. */
+    var legacyConsecutiveLosses = conditionFromAttrs($xml, {
+        "consecutiveLosses": "consecutiveLosses",
+    }, {
+        "count": "1-",
+        "role": "focus"
+    });
+
+    if (legacyTarget) this.counters.push(legacyTarget);
+    if (legacyAlsoPlaying) this.counters.push(legacyAlsoPlaying);
+    if (legacySelf) this.counters.push(legacySelf);
+    if (legacyConsecutiveLosses) this.counters.push(legacyConsecutiveLosses);
+
+    if ($xml.attr("totalMales")) {
+        this.counters.push(new Condition({
+            "count": $xml.attr("totalMales"),
+            "gender": "male"
+        }));
+    }
+
+    if ($xml.attr("totalFemales")) {
+        this.counters.push(new Condition({
+            "count": $xml.attr("totalFemales"),
+            "gender": "female"
+        }));
+    }
+
+    /* Handle totalAlive, totalExposed, etc.
+     * Priority for these is calculated specially, and is dependent on both the status being checked
+     * and the max value for the count.
+     */
+    [["alive", 2], ["exposed", 4], ["naked", 5], ["masturbating", 5], ["finished", 5]].forEach(function (entry) {
+        var status = entry[0];
+        var basePriority = entry[1];
+
+        var attr = "total" + status.initCap();
+        if ($xml.attr(attr)) {
+            var cond = new Condition({
+                "count": $xml.attr(attr),
+                "status": status
+            });
+            cond.priority = basePriority + cond.count.max;
+            this.counters.push(cond);
+        }
+    }.bind(this));
+
     var targetCondition = this.counters.find(function (ctr) {
         return (ctr.role == "target") && (isNaN(ctr.count.max) || (ctr.count.max === null) || (ctr.count.max > 0)) && ctr.id;
     });
 
     var targetID = targetCondition ? targetCondition.id : this.target;
-    var hasTargetStage = !!this.targetStage || this.counters.some(function (ctr) {
+    var hasTargetStage = this.counters.some(function (ctr) {
         return (ctr.role == "target") && (isNaN(ctr.count.max) || (ctr.count.max === null) || (ctr.count.max > 0)) && ctr.stage;
     });
 
@@ -1989,43 +2108,6 @@ function Case($xml, trigger) {
         this.priority = this.customPriority;
     } else {
         this.priority = 0;
-        if (this.target)                   this.priority += 300;
-        if (this.filter)                   this.priority += 150;
-        if (this.targetStage)              this.priority += 80;
-        if (this.targetLayers)             this.priority += 40;
-        if (this.targetStartingLayers)     this.priority += 40;
-        if (this.targetStatus)             this.priority += 70;
-        if (this.targetSaidMarker)         this.priority += 1;
-        if (this.targetSayingMarker)       this.priority += 1;
-        if (this.targetSaying)             this.priority += 1;
-        if (this.targetNotSaidMarker)      this.priority += 1;
-        if (this.consecutiveLosses)        this.priority += 60;
-        if (this.oppHand)                  this.priority += 30;
-        if (this.targetTimeInStage)        this.priority += 25;
-        if (this.hasHand)                  this.priority += 20;
-
-        if (this.alsoPlaying)              this.priority += 100;
-        if (this.alsoPlayingStage)         this.priority += 40;
-        if (this.alsoPlayingTimeInStage)   this.priority += 15;
-        if (this.alsoPlayingHand)          this.priority += 5;
-        if (this.alsoPlayingSaidMarker)    this.priority += 1;
-        if (this.alsoPlayingNotSaidMarker) this.priority += 1;
-        if (this.alsoPlayingSayingMarker)  this.priority += 1;
-        if (this.alsoPlayingSaying)        this.priority += 1;
-
-        if (this.totalRounds)              this.priority += 10;
-        if (this.timeInStage)              this.priority += 8;
-        if (this.totalMales)               this.priority += 5;
-        if (this.totalFemales)             this.priority += 5;
-        if (this.saidMarker)               this.priority += 1;
-        if (this.notSaidMarker)            this.priority += 1;
-
-        if (this.totalAlive)               this.priority += 2 + this.totalAlive.max;
-        if (this.totalExposed)             this.priority += 4 + this.totalExposed.max;
-        if (this.totalNaked)               this.priority += 5 + this.totalNaked.max;
-        if (this.totalMasturbating)        this.priority += 5 + this.totalMasturbating.max;
-        if (this.totalFinished)            this.priority += 5 + this.totalFinished.max;
-
         this.counters.forEach(function (c) { this.priority += c.priority; }, this);
 
         if ((this.trigger == MALE_HUMAN_MUST_STRIP
@@ -2039,11 +2121,9 @@ function Case($xml, trigger) {
         this.priority += (tests.length * 50);
     }
 
-    this.isVolatile = this.targetSayingMarker || this.targetSaying
-        || this.alsoPlayingSayingMarker || this.alsoPlayingSaying
-        || this.counters.some(function(c) {
-            return c.sayingMarker || c.saying || c.pose;
-        });
+    this.isVolatile = this.counters.some(function(c) {
+        return c.sayingMarker || c.saying || c.pose;
+    });
 }
 
 /**
@@ -2117,20 +2197,6 @@ Case.prototype.toJSON = function () {
     return ser;
 }
 
-Case.prototype.getAlsoPlaying = function (opp) {
-    if (!this.alsoPlaying) return null;
-    
-    var ap = null;
-    
-    players.forEach(function (p) {
-        if (!ap && p !== opp && p.id === this.alsoPlaying) {
-            ap = p;
-        }
-    }.bind(this));
-    
-    return ap;
-}
-
 Case.prototype.checkConditions = function (self, opp) {
     var volatileDependencies = new Set();
     
@@ -2154,166 +2220,6 @@ Case.prototype.checkConditions = function (self, opp) {
         }
     }
     
-    // target
-    if (this.target) {
-        if (!opp || this.target !== opp.id) {
-            return false; // failed "target" requirement
-        }
-    }
-    
-    // filter
-    if (this.filter) {
-        if (!opp || !opp.hasTag(this.filter)) {
-            return false; // failed "filter" requirement
-        }
-    }
-
-    // targetStage
-    if (this.targetStage) {
-        if (!opp || !inInterval(opp.stage, this.targetStage)) {
-            return false; // failed "targetStage" requirement
-        }
-    }
-    
-    // targetLayers
-    if (this.targetLayers) {
-        if (!opp || !inInterval(opp.countLayers(), this.targetLayers)) {
-            return false; 
-        }
-    }
-    
-    // targetStatus
-    if (this.targetStatus) {
-        if (!opp || !opp.checkStatus(this.targetStatus)) {
-            return false;
-        }
-    }
-
-    // targetStartingLayers
-    if (this.targetStartingLayers) {
-        if (!opp || !inInterval(opp.startingLayers, this.targetStartingLayers)) {
-            return false;
-        }
-    }
-
-    // targetSaidMarker
-    if (this.targetSaidMarker) {
-        if (!opp || !checkMarker(this.targetSaidMarker, opp, null)) {
-            return false;
-        }
-    }
-    
-    // targetNotSaidMarker
-    if (this.targetNotSaidMarker) {
-        if (!opp || checkMarker(this.targetNotSaidMarker, opp, null)) {
-            return false;
-        }
-    }
-
-    if (this.targetSayingMarker) {
-        if (!opp || !checkMarker(this.targetSayingMarker, opp, null, true)) {
-            return false;
-        }
-        volatileDependencies.add(opp);
-    }
-    if (this.targetSaying) {
-        if (!opp || !opp.chosenState || opp.updatePending) return false;
-        if (normalizeConditionText(opp.chosenState.rawDialogue).indexOf(normalizeConditionText(this.targetSaying)) < 0) return false;
-        volatileDependencies.add(opp);
-    }
-    
-
-    // consecutiveLosses
-    if (this.consecutiveLosses) {
-        if (opp) { // if there's a target, look at their losses
-            if (!inInterval(opp.consecutiveLosses, this.consecutiveLosses)) {
-                return false; // failed "consecutiveLosses" requirement
-            }
-        }
-        else { // else look at your own losses
-            if (!inInterval(self.consecutiveLosses, this.consecutiveLosses)) {
-                return false;
-            }
-        }
-    }
-
-    // oppHand
-    if (this.oppHand) {
-        if (!opp || !opp.hand || opp.hand.strength !== handStrengthFromString(this.oppHand)) {
-            return false;
-        }
-    }
-
-    // targetTimeInStage
-    if (this.targetTimeInStage) {
-        if (!opp || !inInterval(opp.timeInStage == -1 ? 0 //allow post-strip time to count as 0
-                                : opp.timeInStage, this.targetTimeInStage)) {
-            return false; // failed "targetTimeInStage" requirement
-        }
-    }
-
-    // hasHand
-    if (this.hasHand) {
-        if (!self.hand || self.hand.strength !== handStrengthFromString(this.hasHand)) {
-            return false;
-        }
-    }
-
-    // alsoPlaying, alsoPlayingStage, alsoPlayingTimeInStage, alsoPlayingHand (priority = 100, 40, 15, 5)
-    if (this.alsoPlaying) {
-        var ap = this.getAlsoPlaying(opp);
-        
-        if (!ap) {
-            return false; // failed "alsoPlaying" requirement
-        } else {
-            if (this.alsoPlayingStage) {
-                if (!inInterval(ap.stage, this.alsoPlayingStage)) {
-                    return false;        // failed "alsoPlayingStage" requirement
-                }
-            }
-                    
-            if (this.alsoPlayingTimeInStage) {
-                if (!inInterval(ap.timeInStage, this.alsoPlayingTimeInStage)) {
-                    return false;        // failed "alsoPlayingTimeInStage" requirement
-                }
-            }
-                    
-            if (this.alsoPlayingHand) {
-                if (!ap.hand || ap.hand.strength !== handStrengthFromString(this.alsoPlayingHand))
-                {
-                    return false;        // failed "alsoPlayingHand" requirement
-                }
-            }
-                    
-            // marker checks have very low priority as they're mainly intended to be used with other target types
-            if (this.alsoPlayingSaidMarker) {
-                if (!checkMarker(this.alsoPlayingSaidMarker, ap, opp)) {
-                    return false;
-                }
-            }
-                    
-            if (this.alsoPlayingNotSaidMarker) {
-                // Negated marker condition - false if it matches
-                if (checkMarker(this.alsoPlayingNotSaidMarker, ap, opp)) {
-                    return false;
-                }
-            }
-
-            if (this.alsoPlayingSayingMarker) {
-                if (!checkMarker(this.alsoPlayingSayingMarker, ap, opp, true)) {
-                    return false;
-                }
-                volatileDependencies.add(ap);
-            }
-            if (this.alsoPlayingSaying) {
-                if (ap.updatePending || !ap.chosenState || normalizeConditionText(ap.chosenState.rawDialogue).indexOf(normalizeConditionText(this.alsoPlayingSaying)) < 0) {
-                    return false;
-                }
-                volatileDependencies.add(ap);
-            }
-        }
-    }
-
     // totalRounds
     if (this.totalRounds) {
         if (!inInterval(currentRound, this.totalRounds)) {
@@ -2321,88 +2227,14 @@ Case.prototype.checkConditions = function (self, opp) {
         }
     }
 
-    // timeInStage
-    if (this.timeInStage) {
-        if (!inInterval(self.timeInStage == -1 ? 0 //allow post-strip time to count as 0
-                       : self.timeInStage, this.timeInStage)) {
-                           return false; // failed "timeInStage" requirement
-        }
-    }
-
-    // totalMales
-    if (this.totalMales) {
-        var count = players.countTrue(function(p) {
-            return p && p.gender === eGender.MALE;
-        });
-        
-        if (!inInterval(count, this.totalMales)) {
-            return false; // failed "totalMales" requirement
-        }
-    }
-
-    // totalFemales
-    if (this.totalFemales) {
-        var count = players.countTrue(function(p) {
-            return p && p.gender === eGender.FEMALE;
-        });
-        
-        if (!inInterval(count, this.totalFemales)) {
-            return false; // failed "totalFemales" requirement
-        }
-    }
-
-    // totalAlive
-    if (this.totalAlive) {
-        if (!inInterval(getNumPlayersInStage(STATUS_ALIVE), this.totalAlive)) {
-            return false; // failed "totalAlive" requirement
-        }
-    }
-
-    // totalExposed
-    if (this.totalExposed) {
-        if (!inInterval(getNumPlayersInStage(STATUS_EXPOSED), this.totalExposed)) {
-            return false; // failed "totalExposed" requirement
-        }
-    }
-
-    // totalNaked
-    if (this.totalNaked) {
-        if (!inInterval(getNumPlayersInStage(STATUS_NAKED), this.totalNaked)) {
-            return false; // failed "totalNaked" requirement
-        }
-    }
-
-    // totalMasturbating
-    if (this.totalMasturbating) {
-        if (!inInterval(getNumPlayersInStage(STATUS_MASTURBATING), this.totalMasturbating)) {
-            return false; // failed "totalMasturbating" requirement
-        }
-    }
-
-    // totalFinished
-    if (this.totalFinished) {
-        if (!inInterval(getNumPlayersInStage(STATUS_FINISHED), this.totalFinished)) {
-            return false; // failed "totalFinished" requirement
-        }
-    }
-
-    // self marker checks
-    if (this.saidMarker) {
-        if (!checkMarker(this.saidMarker, self, opp)) {
-            return false;
-        }
-    }
-    
-    if (this.notSaidMarker) {
-        if (checkMarker(this.notSaidMarker, self, opp)) {
-            return false;
-        }
-    }
-
     var counterMatches = {};
     var unwantedSayings = [], unwantedMarkers = [], unwantedPoses = [];
     // filter counter targets
     if (!this.counters.every(function (ctr) {
+        /* NOTE: the legacy timeInStage and targetTimeInStage attributes
+         * check if the matching player's timeInStage == -1, and if so replace it with 0.
+         * Is that necessary here?
+         */
         var matches = players.filter(function(p) {
             return p && (ctr.role === undefined
                     || (ctr.role == "self" && p == self)
@@ -2410,7 +2242,8 @@ Case.prototype.checkConditions = function (self, opp) {
                     || (ctr.role == "winner" && p.slot == recentWinner)
                     || (ctr.role == "opp" && p != self)
                     || (ctr.role == "aiopp" && p != humanPlayer && p != self)
-                    || (ctr.role == "other" && p != self && p != opp))
+                    || (ctr.role == "other" && p != self && p != opp)
+                    || (ctr.role == "focus" && (p == (!!opp ? opp : self))))
                 && (ctr.id === undefined || p.id == ctr.id)
                 && (ctr.stage === undefined || inInterval(p.stage, ctr.stage))
                 && (ctr.tag === undefined || p.hasTag(ctr.tag))
