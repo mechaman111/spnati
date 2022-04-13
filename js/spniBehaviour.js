@@ -2108,6 +2108,7 @@ function Case($xml, trigger) {
         this.priority = this.customPriority;
     } else {
         this.priority = 0;
+        if (this.totalRounds) this.priority += 10;
         this.counters.forEach(function (c) { this.priority += c.priority; }, this);
 
         if ((this.trigger == MALE_HUMAN_MUST_STRIP
