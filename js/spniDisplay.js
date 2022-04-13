@@ -842,7 +842,10 @@ OpponentDisplay.prototype.updateTalkingTo = function (player) {
                 labels.push((p === humanPlayer) ? "You" : p.label);
             });
 
-            if (labels.length === 0) return "";
+            if (labels.length === 0) {
+                $(this).tooltip("destroy");
+                return "";
+            }
         
             return "Talking to " + englishJoin(labels);
         }
