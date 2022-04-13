@@ -657,6 +657,7 @@ OpponentDisplay.prototype.updateBubbleAttributes = function (player) {
 OpponentDisplay.prototype.hideBubble = function () {
     this.updateBubbleAttributes(null);
     this.dialogue.html("");
+    this.bubble.tooltip("destroy");
     this.bubble.hide();
 }
 
@@ -822,31 +823,32 @@ OpponentDisplay.prototype.updateTalkingTo = function (player) {
         return;
     }
 
-    /* Collect the final list of players we're "talking to" for display purposes. */
-    var talkingTo = new Set();
-    if (player.chosenState.parentCase && player.chosenState.parentCase.displayedDependencies) {
-        player.chosenState.parentCase.displayedDependencies.forEach(function (p) {
-            if (p === player) return;
-            talkingTo.add(p);
-        });
-    }
-    
-    if (talkingTo.size > 0) {
-        var labels = [];
-        talkingTo.forEach(function (p) {
-            labels.push((p === humanPlayer) ? "You" : p.label);
-        });
-    
-        var text = "Talking to " + englishJoin(labels);
-        this.bubble.tooltip("destroy").attr("title", null).tooltip({
-            delay: { show: 50 },
-            placement: "bottom",
-            template: '<div class="tooltip dialogue-target-tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
-            title: text
-        });
-    } else {
-        this.bubble.tooltip("destroy");
-    }
+    this.bubble.attr("title", null).tooltip({
+        delay: { show: 50 },
+        placement: "bottom",
+        template: '<div class="tooltip dialogue-target-tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
+        title: function () {
+            /* Collect the final list of players we're "talking to" for display purposes. */
+            var talkingTo = new Set();
+            if (player.chosenState.parentCase && player.chosenState.parentCase.displayedDependencies) {
+                player.chosenState.parentCase.displayedDependencies.forEach(function (p) {
+                    if (p === player) return;
+                    talkingTo.add(p);
+                });
+            }
+
+            var labels = [];
+            talkingTo.forEach(function (p) {
+                labels.push((p === humanPlayer) ? "You" : p.label);
+            });
+
+            if (labels.length === 0) return "";
+        
+            return "Talking to " + englishJoin(labels);
+        }
+    });
+
+    if (showDebug) this.bubble.tooltip("show");
 }
 
 OpponentDisplay.prototype.update = function(player) {
