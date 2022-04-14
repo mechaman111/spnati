@@ -1936,7 +1936,7 @@ function parseConditionXML($xml) {
     /* Handle the edge case of a <condition> element with nothing set.
      * It's incredibly unlikely, but just to be safe...
      */
-    if (!cond) cond = new Condition();
+    if (!cond) cond = new Condition({});
     return cond;
 }
 
