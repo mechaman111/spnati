@@ -1283,6 +1283,7 @@ function autoResizeFont ()
             var ar = backgroundImage.width / backgroundImage.height;
             if (ar > 4/3) {
                 var scale = Math.sqrt(16/9 / ar);
+                if (scale < 1.0) scale = 1.0;
                 $("body").css("background-size", "auto " + Math.round(scale * h) + "px");
             } else {
                 var scale = Math.sqrt(ar);
