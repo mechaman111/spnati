@@ -8,7 +8,6 @@
 |---------|--------|
 | Add 6 lines for repeated self losses | [`3c21bb8469`](https://gitgud.io/spnati/spnati/-/commit/3c21bb8469ea37d22545660cfe39c18d62c5f499) |
 | Add 7 lines for repeated opponent losses | [`ee78a13e98`](https://gitgud.io/spnati/spnati/-/commit/ee78a13e98e50b2521b5c52174c988e16c26e903) |
-| Add 10 filtered lines to Aggressive tag | N/A |
 | Add 10 filtered lines to Fighter tag | [`0fed5365d5`](https://gitgud.io/spnati/spnati/commit/0fed5365d539aa4a18d5d1ea054731c808f3aea1) |
 | Add 10 filtered lines to Supernatural tag | [`3d74aee5e7`](https://gitgud.io/spnati/spnati/commit/3d74aee5e7d96ec514e20a091de4ac954ae6c2f7) |
 
@@ -47,4 +46,4 @@
 
 | Request | Commit |
 |---------|--------|
-| Add additional color to Mari's alt costumes | N/A |
+| Add additional color to Mari's alt costumes | [`00adb5e92c`](https://gitgud.io/spnati/spnati/commit/00adb5e92c2dfcfc6f080bdd40519f8a67f80994) |
