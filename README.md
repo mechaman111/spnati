@@ -6,7 +6,7 @@ Strip Poker Night at the Inventory is an online game currently hosted at https:/
 
 Yes! You can download the game from https://spnati.net/bundles/download-bundles.html. After downloading, simply run `start_offline.exe` (or `start_offline.sh` on Linux / Mac OSX).
 
-More information is available here: https://spnati.net/docs/basics/playingoffline.html
+We also provide a Dockerfile to build and run the game. More information for all offline play is available here: https://spnati.net/docs/basics/playingoffline.html
 
 **How do I get endings?**
 
