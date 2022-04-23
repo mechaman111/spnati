@@ -42,6 +42,7 @@ var SPECIAL_CASE_NAMES = {
     
     // newer opponents
     "asuna_yuuki": "Asuna",
+    "blake_belladonna": "Blake",
     "cammy_white": "Cammy",
     "chara_dreemurr": "Chara",
     "chell_wheatley": "Chell",
