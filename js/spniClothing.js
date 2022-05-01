@@ -200,7 +200,7 @@ var clothingStripSelectors = [];
  /**
   * Calculate the position a removed article of clothing reveals, if any.
   *
-  * This is either LOWER_ARTICLE, UPPER_ARTICLE, or null.
+  * This is either FULL_ARTICLE, LOWER_ARTICLE, UPPER_ARTICLE, or null.
   *
   * @param {Player} player
   * @param {Clothing} clothing
@@ -210,34 +210,52 @@ function getRevealedPosition (player, clothing) {
     var type = clothing.type;
     var pos = clothing.position;
 
-    /* starting with important articles */
+    /* Reveals only happen for important and major articles... */
     if (type == IMPORTANT_ARTICLE || type == MAJOR_ARTICLE) {
+        var hasLower = player.clothing.some(function(c) {
+            return ([LOWER_ARTICLE, FULL_ARTICLE].indexOf(c.position) >= 0) && (c !== clothing) && ([IMPORTANT_ARTICLE, MAJOR_ARTICLE].indexOf(c.type) >= 0);
+        });
+
+        var hasUpper = player.clothing.some(function(c) {
+            return ([UPPER_ARTICLE, FULL_ARTICLE].indexOf(c.position) >= 0) && (c !== clothing) && ([IMPORTANT_ARTICLE, MAJOR_ARTICLE].indexOf(c.type) >= 0);
+        });
+
         if (pos == FULL_ARTICLE) {
-            if (!player.clothing.some(function(c) {
-                return c.position == LOWER_ARTICLE && c !== clothing && [IMPORTANT_ARTICLE, MAJOR_ARTICLE].indexOf(c.type) >= 0;
-            })) {
-                // If removing this article exposes the crotch,
-                // pretend that it's an lower body article, even if it
-                // also exposes the chest (which is not a good idea).
+            if (!hasLower && !hasUpper) {
+                /* Article exposes both at once.
+                 * We can actually return early in this case:
+                 * we'd do the same thing for both major and important articles anyways.
+                 */
+                return FULL_ARTICLE;
+            } else if (!hasLower && hasUpper) {
+                /* Article only exposes crotch. */
                 pos = LOWER_ARTICLE;
-            } else {
-                // Otherwise treat it as a upper body article, whether
-                // it exposes the chest or not (it doesn't matter,
-                // except for with an important article).
+            } else if (hasLower && !hasUpper) {
+                /* Article only exposes chest. */
                 pos = UPPER_ARTICLE;
+            } else {
+                /* Article doesn't actually reveal anything.
+                 * For major items, we can just return null early.
+                 * For important items, we'd end up returning FULL_ARTICLE anyways, no matter what.
+                 */
+                return (type == IMPORTANT_ARTICLE) ? FULL_ARTICLE : null;
             }
         }
 
-        if (type == MAJOR_ARTICLE
-            && ([UPPER_ARTICLE, LOWER_ARTICLE, FULL_ARTICLE].indexOf(pos) < 0 || player.clothing.some(function(c) {
-                return (c.position == pos || c.position == FULL_ARTICLE)
-                    && c !== clothing && (c.type == IMPORTANT_ARTICLE || c.type == MAJOR_ARTICLE);
-            }))
-        ) { // There is another article left covering this part of the body
+        /* pos cannot be FULL_ARTICLE at this point. */
+
+        if (
+            (type == MAJOR_ARTICLE) && (
+                ([UPPER_ARTICLE, LOWER_ARTICLE].indexOf(pos) < 0) ||
+                ((pos == UPPER_ARTICLE) && hasUpper) ||
+                ((pos == LOWER_ARTICLE) && hasLower)
+            )
+        ) {
+            /* There is another article left covering this part of the body. */
             return null;
-        } else {
-            return pos;
         }
+
+        return pos;
     } else {
         return null;
     }
@@ -274,7 +292,8 @@ function getClothingTrigger (player, clothing, removed) {
                 return [FEMALE_CHEST_WILL_BE_VISIBLE, OPPONENT_CHEST_WILL_BE_VISIBLE];
             }
         }
-    } else if (revealPos == LOWER_ARTICLE) {
+    } else if ((revealPos == LOWER_ARTICLE) || (revealPos == FULL_ARTICLE)) {
+        /* Treat full-article reveals as being crotch reveals for the purposes of case triggering. */
         if (gender == eGender.MALE) {
             if (removed) {
                 if (size == eSize.LARGE) {

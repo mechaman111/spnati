@@ -1183,7 +1183,9 @@ function expandClothingVariable(clothing, fn, args, self, target, bindings, isRe
         if (!isRemoved) return "none";
 
         var revealedPos = getRevealedPosition(target || self, clothing);
-        if (revealedPos == UPPER_ARTICLE) {
+        if (revealedPos == FULL_ARTICLE) {
+            return "both";
+        } else if (revealedPos == UPPER_ARTICLE) {
             return "chest";
         } else if (revealedPos == LOWER_ARTICLE) {
             return "crotch";
