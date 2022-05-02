@@ -332,6 +332,10 @@ var $gameLoadProgress = $(".game-load-progress");
     "mikan/2-happy.png",
     "mikan/0-explain.png",
     "mikan/2-explain.png",
+    "cagliostro/0-Cutesy.png",
+    "cagliostro/0-Happy.png",
+    "cagliostro/0-Shrug.png",
+    "cagliostro/0-Interested.png"
 ];
 
 /* maybe move this data to an external file if the hardcoded stuff changes often enough */
