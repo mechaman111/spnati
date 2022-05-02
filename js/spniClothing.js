@@ -294,25 +294,32 @@ function getClothingTrigger (player, clothing, removed) {
         }
     } else if ((revealPos == LOWER_ARTICLE) || (revealPos == FULL_ARTICLE)) {
         /* Treat full-article reveals as being crotch reveals for the purposes of case triggering. */
+        var triggers = null;
         if (gender == eGender.MALE) {
             if (removed) {
                 if (size == eSize.LARGE) {
-                    return [MALE_LARGE_CROTCH_IS_VISIBLE, MALE_CROTCH_IS_VISIBLE, OPPONENT_CROTCH_IS_VISIBLE];
+                    triggers = [MALE_LARGE_CROTCH_IS_VISIBLE, MALE_CROTCH_IS_VISIBLE, OPPONENT_CROTCH_IS_VISIBLE];
                 } else if (size == eSize.SMALL) {
-                    return [MALE_SMALL_CROTCH_IS_VISIBLE, MALE_CROTCH_IS_VISIBLE, OPPONENT_CROTCH_IS_VISIBLE];
+                    triggers = [MALE_SMALL_CROTCH_IS_VISIBLE, MALE_CROTCH_IS_VISIBLE, OPPONENT_CROTCH_IS_VISIBLE];
                 } else {
-                    return [MALE_MEDIUM_CROTCH_IS_VISIBLE, MALE_CROTCH_IS_VISIBLE, OPPONENT_CROTCH_IS_VISIBLE];
+                    triggers = [MALE_MEDIUM_CROTCH_IS_VISIBLE, MALE_CROTCH_IS_VISIBLE, OPPONENT_CROTCH_IS_VISIBLE];
                 }
             } else {
-                return [MALE_CROTCH_WILL_BE_VISIBLE, OPPONENT_CROTCH_WILL_BE_VISIBLE];
+                triggers = [MALE_CROTCH_WILL_BE_VISIBLE, OPPONENT_CROTCH_WILL_BE_VISIBLE];
             }
         } else if (gender == eGender.FEMALE) {
             if (removed) {
-                return [FEMALE_CROTCH_IS_VISIBLE, OPPONENT_CROTCH_IS_VISIBLE];
+                triggers = [FEMALE_CROTCH_IS_VISIBLE, OPPONENT_CROTCH_IS_VISIBLE];
             } else {
-                return [FEMALE_CROTCH_WILL_BE_VISIBLE, OPPONENT_CROTCH_WILL_BE_VISIBLE];
+                triggers = [FEMALE_CROTCH_WILL_BE_VISIBLE, OPPONENT_CROTCH_WILL_BE_VISIBLE];
             }
         }
+
+        if (revealPos == FULL_ARTICLE) {
+            triggers.push(removed ? OPPONENT_BOTH_ARE_VISIBLE : OPPONENT_BOTH_WILL_BE_VISIBLE);
+        }
+
+        return triggers;
     } else {
         if (type == MAJOR_ARTICLE) {
             if (gender == eGender.MALE) {

@@ -40,6 +40,8 @@ var OPPONENT_LOST = "opponent_lost";
 var OPPONENT_STRIPPING = "opponent_stripping";
 var OPPONENT_STRIPPED = "opponent_stripped";
 
+var OPPONENT_BOTH_WILL_BE_VISIBLE = "opponent_both_will_be_visible";
+var OPPONENT_BOTH_ARE_VISIBLE = "opponent_both_are_visible";
 var OPPONENT_CHEST_WILL_BE_VISIBLE = "opponent_chest_will_be_visible";
 var OPPONENT_CROTCH_WILL_BE_VISIBLE = "opponent_crotch_will_be_visible";
 var OPPONENT_CHEST_IS_VISIBLE = "opponent_chest_is_visible";
@@ -117,6 +119,9 @@ var CONVERT_STRIP_CASES = [
     FEMALE_REMOVING_MAJOR,
     FEMALE_CHEST_WILL_BE_VISIBLE,
     FEMALE_CROTCH_WILL_BE_VISIBLE,
+    OPPONENT_BOTH_WILL_BE_VISIBLE,
+    OPPONENT_CHEST_WILL_BE_VISIBLE,
+    OPPONENT_CROTCH_WILL_BE_VISIBLE
 ];
 
 var CONVERT_STRIPPED_CASES = [
@@ -136,6 +141,9 @@ var CONVERT_STRIPPED_CASES = [
     FEMALE_LARGE_CHEST_IS_VISIBLE,
     FEMALE_CHEST_IS_VISIBLE,
     FEMALE_CROTCH_IS_VISIBLE,
+    OPPONENT_CHEST_IS_VISIBLE,
+    OPPONENT_CROTCH_IS_VISIBLE,
+    OPPONENT_BOTH_ARE_VISIBLE
 ];
 
 /* Tag alias list, mapping aliases to canonical tag names. */
