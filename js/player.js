@@ -629,7 +629,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
                 if (eventCostumeSettings.allowTestingGuests[costumeSet] !== undefined) {
                     this.allow_testing_guest = eventCostumeSettings.allowTestingGuests[costumeSet];
                 } else if (!this.matchesEventTag) {
-                    this.allow_testing_guest = true;
+                    this.allow_testing_guest = false;
                 }
             }
         }
