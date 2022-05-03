@@ -113,7 +113,7 @@
             Characters with multiple event costumes from the same set (or who have multiple enabled costumes due to overlapping events)
             will randomly select one to use by default when the game is loaded.
         -->
-        <costumes highlight="summer-event">summer</costumes>
+        <!-- <costumes highlight="summer">summer</costumes> -->
 
         <!--
             This specifies a character tag to highlight during the event.
@@ -126,16 +126,16 @@
             (To be specific, you can only filter against tags that work in the selection screen search menu.
             This excludes tags from alternate costumes as well as tags that are added via dialogue cases.)
         -->
-        <tag highlight="summer-event">summer_event_featured</tag>
+        <!-- <tag highlight="summer">summer_event_featured</tag> -->
 
         <!--
             This applies specific settings to a character during the event.
             Multiple characters can be configured by repeating this element.
         -->
-        <character highlight="summer-event">nami</character>
+        <!-- <character highlight="summer-event">nami</character>
         <character highlight="summer-event">misty_hgss</character>
         <character highlight="summer-event">shimakaze</character>
-        <character highlight="summer-event">athena</character>
+        <character highlight="summer-event">athena</character> -->
 
         <!--
             The <costumes>, <tag>, and <character> elements can all have the following optional attributes:
@@ -192,6 +192,11 @@
             other event characters (i.e. characters with event tags, or that are specifically listed) are not.
             Note that this attribute only applies to Testing characters, specifically.
         -->
+		
+        <!-- Put all costumes into the same group, but place new costumes higher -->
+        <character highlight="summer" partition="1" sort="2">yuno_uno</character>
+
+        <costumes highlight="summer" partition="1" sort="1">summer</costumes>
 
         <!--
             This specifies a list of candy images to use during the event.
