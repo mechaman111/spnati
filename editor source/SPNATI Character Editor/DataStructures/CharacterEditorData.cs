@@ -278,7 +278,7 @@ namespace SPNATI_Character_Editor
 
 			foreach (CaseNote note in Notes)
 			{
-				_notes[note.Id] = note.Text;
+				_notes[note.Id] = note.Text.Replace("<br>", Environment.NewLine);
 			}
 
 			foreach (CaseLabel label in Labels)
@@ -425,7 +425,7 @@ namespace SPNATI_Character_Editor
 				return;
 			}
 			AssignId(workingCase);
-			_notes[workingCase.Id] = text;
+			_notes[workingCase.Id] = text.Replace(Environment.NewLine, "<br>");
 		}
 
 		public string GetNote(Case workingCase)

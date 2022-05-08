@@ -43,8 +43,10 @@ namespace SPNATI_Character_Editor.Activities
 				ExpandGender();
 			}
 			valRounds.Value = _character.Stamina;
-			txtDescription.Text = _character.Metadata.Description;
+			txtDescription.Text = _character.Metadata.Description.Replace("<br>", Environment.NewLine);
 			txtHeight.Text = _character.Metadata.Height;
+			txtAge.Text = _character.Metadata.Age;
+			txtpronunciationGuide.Text = _character.Metadata.pronunciationGuide;
 			txtSource.Text = _character.Metadata.Source;
 			txtWriter.Text = _character.Metadata.Writer;
 			txtArtist.Text = _character.Metadata.Artist;
@@ -56,6 +58,7 @@ namespace SPNATI_Character_Editor.Activities
 				cboDefaultPic.SelectedItem = pose;
 			}
 			gridAI.Data = _character.Intelligence;
+			txtOtherNotes.Text = _character.Metadata.OtherNotes.Replace("<br>",Environment.NewLine);
 		}
 
 		/// <summary>
@@ -101,12 +104,15 @@ namespace SPNATI_Character_Editor.Activities
 				_character.Metadata.Gender = titleGender;
 			}
 			_character.Size = cboSize.SelectedItem.ToString();
-			_character.Metadata.Description = txtDescription.Text;
+			_character.Metadata.Description = txtDescription.Text.Replace(Environment.NewLine, "<br>");
 			_character.Metadata.Height = txtHeight.Text;
+			_character.Metadata.Age = txtAge.Text;
+			_character.Metadata.pronunciationGuide = txtpronunciationGuide.Text;
 			_character.Metadata.Source = txtSource.Text;
 			_character.Metadata.Writer = txtWriter.Text;
 			_character.Metadata.Artist = txtArtist.Text;
 			gridAI.Save(ColAIStage);
+			_character.Metadata.OtherNotes = txtOtherNotes.Text.Replace(Environment.NewLine,"<br>");
 		}
 
 		private void cboDefaultPic_SelectedIndexChanged(object sender, EventArgs e)
@@ -156,5 +162,100 @@ namespace SPNATI_Character_Editor.Activities
 			lblTitleLabel.Visible = true;
 			txtTitleLabel.Visible = true;
 		}
-	}
+
+        private void txtpronunciationGuide_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void skinnedGroupBox4_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void agelabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label23_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtHeight_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtAge_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pronunciationguidelabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cboTitleGender_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void skinnedGroupBox5_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gridAI_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void gridCredits_CellContentClick_1(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void label18_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtWriter_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtArtist_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label19_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void skinnedGroupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtDescription_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtOtherNotes_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void valRounds_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
