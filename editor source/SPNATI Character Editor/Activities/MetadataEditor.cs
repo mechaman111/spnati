@@ -58,7 +58,10 @@ namespace SPNATI_Character_Editor.Activities
 				cboDefaultPic.SelectedItem = pose;
 			}
 			gridAI.Data = _character.Intelligence;
-			txtOtherNotes.Text = _character.Metadata.OtherNotes.Replace("<br>",Environment.NewLine);
+			if (_character.Metadata.OtherNotes != null)
+			{
+				txtOtherNotes.Text = _character.Metadata.OtherNotes.Replace("<br>", Environment.NewLine);
+			}
 		}
 
 		/// <summary>

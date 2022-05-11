@@ -164,46 +164,46 @@
             // tsDisable
             // 
             this.tsDisable.Name = "tsDisable";
-            this.tsDisable.Size = new System.Drawing.Size(178, 22);
+            this.tsDisable.Size = new System.Drawing.Size(187, 22);
             this.tsDisable.Text = "Disable Case";
             this.tsDisable.Click += new System.EventHandler(this.tsDisable_Click);
             // 
             // tsEnable
             // 
             this.tsEnable.Name = "tsEnable";
-            this.tsEnable.Size = new System.Drawing.Size(178, 22);
+            this.tsEnable.Size = new System.Drawing.Size(187, 22);
             this.tsEnable.Text = "Enable Case";
             this.tsEnable.Click += new System.EventHandler(this.tsEnable_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(175, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(184, 6);
             // 
             // tsHide
             // 
             this.tsHide.Name = "tsHide";
-            this.tsHide.Size = new System.Drawing.Size(178, 22);
+            this.tsHide.Size = new System.Drawing.Size(187, 22);
             this.tsHide.Text = "Hide Case in Editor";
             this.tsHide.Click += new System.EventHandler(this.tsHide_Click);
             // 
             // tsUnhide
             // 
             this.tsUnhide.Name = "tsUnhide";
-            this.tsUnhide.Size = new System.Drawing.Size(178, 22);
+            this.tsUnhide.Size = new System.Drawing.Size(187, 22);
             this.tsUnhide.Text = "Unhide Case in Editor";
             this.tsUnhide.Click += new System.EventHandler(this.tsUnhide_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(175, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(184, 6);
             // 
             // tsShowHidden
             // 
             this.tsShowHidden.CheckOnClick = true;
             this.tsShowHidden.Name = "tsShowHidden";
-            this.tsShowHidden.Size = new System.Drawing.Size(178, 22);
+            this.tsShowHidden.Size = new System.Drawing.Size(187, 22);
             this.tsShowHidden.Text = "Show Hidden Cases";
             this.tsShowHidden.Click += new System.EventHandler(this.tsShowHidden_Click);
             // 
@@ -428,7 +428,6 @@
 		private Desktop.CommonControls.RecordField recTag;
 		private Desktop.Skinning.SkinnedLabel lblTag;
 		private Desktop.Skinning.SkinnedCheckBox chkHideTargeted;
-		private Desktop.CommonControls.AccordionListView lstDialogue;
 		private Desktop.Skinning.SkinnedIcon cmdLegend;
 		private System.Windows.Forms.ToolStripButton tsRecipe;
 		private Desktop.Skinning.SkinnedPanel skinnedPanel1;
@@ -441,5 +440,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsDisable;
         private System.Windows.Forms.ToolStripMenuItem tsEnable;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private Desktop.CommonControls.AccordionListView lstDialogue;
     }
 }
