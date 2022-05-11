@@ -339,6 +339,17 @@ Player.prototype.getMarker = function (baseName, target, numeric, targeted_only)
         name = getTargetMarker(baseName, target);
     }
 
+    if (!this.markers) {
+        console.error("Marker object not initialized for opponent " + this.id, this);
+        console.trace();
+
+        /* This might be a bad idea, since if we get here, then resetState()
+         * must not have been called for some reason.
+         * But better this than crashing... maybe?
+         */
+        this.markers = {};
+    }
+
     if (!this.persistentMarkers[baseName]) {
         val = this.markers[name];
 
