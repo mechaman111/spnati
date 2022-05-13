@@ -44,7 +44,7 @@
     - Needs a smug variant
   - Upper body, hands by face (medium movement / scene 12M)
     - Only need eyes open sprite?
-  - Upper body, one arm behind head, other up by chest (fast movement / scene 13M)
+  - ~~Upper body, one arm behind head, other up by chest (fast movement / scene 13M)~~
     - Need eyes open/closed variants
   - Upper body, arms in lap (post-climax / scene 14M)
     - Need eyes closed, eyes open/looking down, and eyes open/looking up variants
@@ -217,7 +217,7 @@
 
 **Mari**: Oh...!
 
-**Mari**: Come on... fuck me, `~player~`. Fuck this tight little pussy...!
+**Mari**: Come on... fuck me, `~player~`! Fuck my tight little pussy...!
 
 *(Mari and the player move even faster. Mari's actively being bounced around by the player.)*
 
