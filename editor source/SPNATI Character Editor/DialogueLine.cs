@@ -98,6 +98,14 @@ namespace SPNATI_Character_Editor
 			set { if (_markers != value) { _markers = value; NotifyPropertyChanged(); } }
 		}
 
+		private DialogueOperations _operations;
+		[XmlElement("operations")]
+		public DialogueOperations Operations
+		{
+			get { return _operations; }
+			set { if (_operations != value) { _operations = value; NotifyPropertyChanged(); } }
+		}
+
 		private string _direction;
 		[DefaultValue("down")]
 		[XmlAttribute("direction")]
@@ -221,6 +229,7 @@ namespace SPNATI_Character_Editor
 			Marker = null;
 			Images = new List<StageImage>();
 			Markers = new List<MarkerOperation>();
+			Operations = null;
 		}
 
 		public DialogueLine(string image, string text) : this()
@@ -263,6 +272,10 @@ namespace SPNATI_Character_Editor
 			{
 				copy.Markers.Add(marker.Copy());
 			}
+			if (Operations != null && !Operations.IsEmpty())
+			{
+				copy.Operations = Operations.Copy();
+			}
 			return copy;
 		}
 
@@ -290,6 +303,10 @@ namespace SPNATI_Character_Editor
 			foreach (MarkerOperation op in Markers)
 			{
 				hash = (hash * 397) ^ op.GetHashCode();
+			}
+			if (Operations != null)
+			{
+				hash = (hash * 397) ^ Operations.GetHashCode();
 			}
 			return hash;
 		}
@@ -354,7 +371,7 @@ namespace SPNATI_Character_Editor
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
 		private bool UseXmlText()
 		{
-			return Images.Count == 0 && Markers.Count == 0;
+			return Images.Count == 0 && Markers.Count == 0 && ((Operations == null) || Operations.IsEmpty());
 		}
 	}
 }
