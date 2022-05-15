@@ -649,10 +649,12 @@ TitleClothingSelectionIcon.prototype.update = function () {
     $(this.elem).removeClass("available selected");
     if (this.clothing.isAvailable()) {
         $(this.elem).addClass("available");
+		updateClothingCount();
     }
 
     if (this.clothing.isSelected()) {
         $(this.elem).addClass("selected");
+		updateClothingCount();
     }
 }
 
@@ -943,4 +945,15 @@ function selectTitleCandy() {
 
     $titleCandy[0].attr("src", "opponents/" + candy1);
     $titleCandy[1].attr("src", "opponents/" + candy2);
+}
+
+/************************************************************
+ * Update the warning text to say how many items of clothing are being worn.
+ ************************************************************/
+function updateClothingCount(){
+	/* the amount of clothing being worn */
+	var clothingCount = save.selectedClothing();
+	
+	$warningLabel.html(`Select from 0 to 8 articles. Wear whatever you want. (${clothingCount.length}/8)`);
+	return;
 }
