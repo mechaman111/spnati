@@ -339,7 +339,11 @@ var $gameLoadProgress = $(".game-load-progress");
     "mari/0-tease.png",
     "mari/0-cheer.png",
     "mari/3-relaxed.png",
-    "mari/4-coy.png"
+    "mari/4-coy.png",
+    "reimu/0-select.png",                   // Highlighted New Character
+    "reimu/0-smug.png",
+    "reimu/0-bluffing.png",
+    "reimu/0-pleasant.png"
 ];
 
 /* maybe move this data to an external file if the hardcoded stuff changes often enough */
