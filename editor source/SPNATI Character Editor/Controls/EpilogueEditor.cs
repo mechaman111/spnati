@@ -298,5 +298,10 @@ namespace SPNATI_Character_Editor.Controls
 				cboEnding.SelectedIndex = 0;
 			}
 		}
-	}
+
+        private void imageFileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+    }
 }

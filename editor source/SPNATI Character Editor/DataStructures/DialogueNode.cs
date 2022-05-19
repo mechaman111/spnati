@@ -190,7 +190,7 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				if (Case.Hidden == "1" || Case.Disabled == "1")
+				if (Case.Disabled == "1")
 				{
 					return "-";
 				}
