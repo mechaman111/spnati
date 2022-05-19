@@ -76,9 +76,10 @@ function GEnding(player, ending){
     }
 
     this.image = previewImage;
+    this.rawTitle = $(ending).html()
     this.title = offlineIndicator + $(ending).html();
     this.unlockHint = $(ending).attr('hint');
-    this.unlocked = function() { return EPILOGUES_UNLOCKED || save.hasEnding(player.id, this.title); };
+    this.unlocked = function() { return EPILOGUES_UNLOCKED || save.hasEnding(player.id, this.rawTitle); };
 }
 
 var unescapeSubstitutions = {
@@ -645,7 +646,8 @@ function doEpilogueFromGallery(){
             var endingElem = null;
             
             $xml.children('epilogue').each(function () {
-                if ($(this).children('title').html() === epilogue.title && $(this).attr('gender') === epilogue.gender) {
+                console.log($(this).children('title').html());
+                if ($(this).children('title').html() === epilogue.rawTitle && $(this).attr('gender') === epilogue.gender) {
                     endingElem = this;
                 }
             });

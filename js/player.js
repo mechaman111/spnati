@@ -116,6 +116,7 @@ Player.prototype.resetState = function () {
     this.timeInStage = 0;
     this.ticksInStage = 0;
     this.markers = {};
+    this.saidDialogue = {};
     this.hand = null;
 
     if (this.xml !== null) {
