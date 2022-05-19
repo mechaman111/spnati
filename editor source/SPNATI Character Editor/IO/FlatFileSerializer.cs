@@ -677,6 +677,10 @@ namespace SPNATI_Character_Editor
 			{
 				filters.Add("targetSaying:" + stageCase.TargetSaying.Replace(",", "&comma;"));
 			}
+			if (!string.IsNullOrEmpty(stageCase.TargetSaid))
+			{
+				filters.Add("targetSaid:" + stageCase.TargetSaid.Replace(",", "&comma;"));
+			}
 			if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
 			{
 				filters.Add("alsoPlaying:" + stageCase.AlsoPlaying);
@@ -708,6 +712,10 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(stageCase.AlsoPlayingSaying))
 			{
 				filters.Add("alsoPlayingSaying:" + stageCase.AlsoPlayingSaying.Replace(",", "&comma;"));
+			}
+			if (!string.IsNullOrEmpty(stageCase.AlsoPlayingSaid))
+			{
+				filters.Add("alsoPlayingSaid:" + stageCase.AlsoPlayingSaid.Replace(",", "&comma;"));
 			}
 			if (!string.IsNullOrEmpty(stageCase.HasHand))
 			{
@@ -1360,6 +1368,9 @@ namespace SPNATI_Character_Editor
 						case "targetsaying":
 							lineCase.TargetSaying = value.Replace("&comma;", ",");
 							break;
+						case "targetsaid":
+							lineCase.TargetSaid = value.Replace("&comma;", ",");
+							break;
 					}
 				}
 
@@ -1389,6 +1400,9 @@ namespace SPNATI_Character_Editor
 						break;
 					case "alsoplayingsaying":
 						lineCase.AlsoPlayingSaying = value.Replace("&comma;", ",");
+						break;
+					case "alsoplayingsaid":
+						lineCase.AlsoPlayingSaid = value.Replace("&comma;", ",");
 						break;
 					case "hashand":
 						lineCase.HasHand = value;
