@@ -1734,6 +1734,39 @@ function checkMarker(predicate, self, target, currentOnly) {
     return evalOperator(val, op, cmpVal);
 }
 
+
+function checkSaidText(predicate, player) {
+    var match = predicate.match(/^(.+)##\s*((?:\>|\<|\=|\!)\=?)\s*(\d+)\s*$/);
+
+    var matchText = predicate;
+    var cmpVal = 0;
+    var op = "!!";
+
+    if (match) {
+        matchText = match[1];
+        op = match[2];
+        cmpVal = parseInt(match[3], 10);
+    }
+
+    matchText = normalizeConditionText(matchText);
+    var matches = 0;
+
+    /* Entries in saidDialogue should already be normalized. */
+    Object.entries(player.saidDialogue).forEach(function (pair) {
+        var candidate = normalizeConditionText(pair[0]);
+        var candidateCount = pair[1];
+
+        if (candidate.indexOf(matchText) >= 0) {
+            matches += candidateCount;
+        }
+    });
+
+    console.log("Checking said text (" + player.id + "): " + matchText + " (" + matches + ") " + op + " " + cmpVal);
+
+    return evalOperator(matches, op, cmpVal);
+}
+
+
 function Condition($xml) {
     this.count  = parseInterval($xml.attr('count') || "1-");
     this.role   = $xml.attr('role');
@@ -1752,6 +1785,7 @@ function Condition($xml) {
     this.sayingMarker   = $xml.attr('sayingMarker');
     this.notSaidMarker  = $xml.attr('notSaidMarker');
     this.saying         = $xml.attr('saying');
+    this.said           = $xml.attr('said');
     this.pose           = $xml.attr('pose');
     this.priority = 0;
 
@@ -1775,7 +1809,7 @@ function Condition($xml) {
     }
     this.priority += (this.saidMarker ? 1 : 0) + (this.notSaidMarker ? 1 : 0)
         + (this.sayingMarker ? 1 : 0) + (this.saying ? 1 : 0)
-        + (this.pose ? 1 : 0);
+        + (this.said ? 1 : 0) + (this.pose ? 1 : 0);
 
     if (this.id && !this.variable) {
         /* Apply correct normalization to player ID when using it as a variable. */
@@ -2317,7 +2351,8 @@ Case.prototype.checkConditions = function (self, opp) {
                 && (ctr.hand === undefined || (p.hand && p.hand.strength === handStrengthFromString(ctr.hand)))
                 && (ctr.consecutiveLosses === undefined || inInterval(p.consecutiveLosses, ctr.consecutiveLosses))
                 && (ctr.saidMarker === undefined || checkMarker(ctr.saidMarker, p, opp))
-                && (ctr.notSaidMarker === undefined || !checkMarker(ctr.notSaidMarker, p, opp));
+                && (ctr.notSaidMarker === undefined || !checkMarker(ctr.notSaidMarker, p, opp))
+                && (ctr.said === undefined || checkSaidText(ctr.said, p));
         });
         var hasUpperBound = (ctr.count.max !== null && ctr.count.max < matches.length);
         if (ctr.sayingMarker !== undefined || ctr.saying !== undefined || ctr.pose !== undefined) matches = matches.filter(function(p) {
@@ -2693,6 +2728,11 @@ Opponent.prototype.applyState = function(state, opp) {
             this.updateTags();
         }
         parentCase.applyOneShot(this);
+
+        if (state.rawDialogue && !parentCase.hidden) {
+            var condText = normalizeConditionText(state.rawDialogue);
+            this.saidDialogue[condText] = (this.saidDialogue[condText] || 0) + 1;
+        }
     }
 }
 
