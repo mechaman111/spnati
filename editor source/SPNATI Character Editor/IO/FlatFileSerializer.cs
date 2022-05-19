@@ -60,12 +60,10 @@ namespace SPNATI_Character_Editor
 			lines.Add("#required for meta.xml");
 			lines.Add("#select screen image");
 			lines.Add("pic=" + Path.GetFileNameWithoutExtension(metadata.Portrait));
-			lines.Add("height=" + metadata.Height);
 			lines.Add("from=" + metadata.Source);
 			lines.Add("writer=" + metadata.Writer);
 			lines.Add("artist=" + metadata.Artist);
 			lines.Add("description=" + metadata.Description);
-			lines.Add("othernotes=" + metadata.OtherNotes);
 			lines.Add("z-layer=" + metadata.Z);
 			lines.Add("dialogue-layer=" + metadata.BubblePosition);
 			lines.Add("font-size=" + metadata.TextSize);
@@ -900,15 +898,6 @@ namespace SPNATI_Character_Editor
 					case "pic":
 						character.Metadata.Portrait = value;
 						break;
-					case "height":
-						character.Metadata.Height = value;
-						break;
-					case "age":
-						character.Metadata.Age = value;
-						break;
-					case "pronunciationGuide":
-						character.Metadata.pronunciationGuide = value;
-						break;
 					case "from":
 						character.Metadata.Source = value;
 						break;
@@ -920,9 +909,6 @@ namespace SPNATI_Character_Editor
 						break;
 					case "description":
 						character.Metadata.Description = value;
-						break;
-					case "othernotes":
-						character.Metadata.OtherNotes = value;
 						break;
 					case "z-layer":
 						int layer;

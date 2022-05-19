@@ -66,20 +66,6 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
-		[XmlElement("age")]
-		public string Age
-		{
-			get { return Get<string>(); }
-			set { Set(value); }
-		}
-
-		[XmlElement("pronunciation")]
-		public string pronunciationGuide
-		{
-			get { return Get<string>(); }
-			set { Set(value); }
-		}
-
 		[XmlElement("from")]
 		public string Source
 		{
@@ -103,13 +89,6 @@ namespace SPNATI_Character_Editor
 
 		[XmlElement("description")]
 		public string Description
-		{
-			get { return Get<string>(); }
-			set { Set(value); }
-		}
-
-		[XmlElement("othernotes")]
-		public string OtherNotes
 		{
 			get { return Get<string>(); }
 			set { Set(value); }

@@ -19,6 +19,18 @@ namespace SPNATI_Character_Editor
 		[XmlElement("owner")]
 		public string Owner;
 
+		[XmlElement("height")]
+		public string Height;
+
+		[XmlElement("age")]
+		public string Age;
+
+		[XmlElement("pronunciation")]
+		public string pronunciationGuide;
+
+		[XmlElement("othernotes")]
+		public string OtherNotes;
+
 		[XmlArray("noteworthy")]
 		[XmlArrayItem("case")]
 		/// <summary>
