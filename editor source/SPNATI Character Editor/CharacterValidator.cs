@@ -113,7 +113,7 @@ namespace SPNATI_Character_Editor
 					foreach (DialogueLine line in stageCase.Lines)
 					{
 						//Make sure it's not a placeholder
-						if (defaultLine.Equals(line.Text))
+						if (defaultLine.Equals(line.Text) && string.IsNullOrEmpty(stageCase.Hidden) && string.IsNullOrEmpty(stageCase.Disabled))
 						{
 							warnings.Add(new ValidationError(ValidationFilterLevel.Lines, string.Format("Case is still using placeholder text. {0}", caseLabel), context));
 						}
@@ -357,7 +357,12 @@ namespace SPNATI_Character_Editor
 			{
 				if (!string.IsNullOrEmpty(condition.Saying))
 				{
-					ValidateSaying(condition.Character, condition.Saying, warnings, caseTag, context);
+					ValidateSaying(condition.Character, condition.Saying, warnings, caseTag, context, "Saying Text");
+				}
+
+				if (!string.IsNullOrEmpty(condition.Said))
+				{
+					ValidateSaying(condition.Character, condition.Said, warnings, caseTag, context, "Said Text");
 				}
 
 				if (condition.Role == "target" && !trigger.HasTarget)
@@ -437,6 +442,11 @@ namespace SPNATI_Character_Editor
 					if (!String.IsNullOrEmpty(condition.Pose))
 					{
 						warnings.Add(new ValidationError(ValidationFilterLevel.Case, string.Format("Trying to use a Pose condition on Self, which will always fail. {0}", caseLabel), context));
+					}
+
+					if (!string.IsNullOrEmpty(condition.Said))
+					{
+						ValidateSaying(character.FolderName, condition.Said, warnings, caseTag, context, "Said Text");
 					}
 				}
 
@@ -586,6 +596,119 @@ namespace SPNATI_Character_Editor
 			if (!foundGeneric)
 			{
 				warnings.Add(new ValidationError(ValidationFilterLevel.Metadata, $"No clothing items have a classification. Are you sure this is correct?"));
+			}
+		}
+
+		// terrible duplication, fix later
+		private static void ValidateSkinWardrobe(Costume skin, List<ValidationError> warnings)
+		{
+			bool foundPlural = false;
+			bool foundGeneric = false;
+			string pluralGuess = null;
+			string upper = null;
+			string lower = null;
+			string importantUpper = null;
+			string importantLower = null;
+			bool foundBoth = false;
+			string otherMajor = null;
+			for (int i = 0; i < skin.Layers; i++)
+			{
+				Clothing c = skin.GetClothing(i);
+				foundPlural = c.Plural || foundPlural;
+				if (pluralGuess == null && !c.Plural && c.Name.EndsWith("s"))
+				{
+					pluralGuess = c.Name;
+				}
+				foundGeneric = !String.IsNullOrEmpty(c.GenericName) || foundGeneric;
+
+				if (c.Position == "upper" && c.Type == "major")
+					upper = c.Name;
+				if (c.Position == "lower" && c.Type == "major")
+					lower = c.Name;
+				if (c.Position == "both" && c.Type == "major")
+					foundBoth = true;
+				if (c.Position == "upper" && c.Type == "important")
+					importantUpper = c.Name;
+				if (c.Position == "lower" && c.Type == "important")
+					importantLower = c.Name;
+				if (c.Position == "other" && c.Type == "major")
+					otherMajor = c.Name;
+
+				if (IsUncountable(c.Name))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"Clothing layer \"{c.Name}\" of alternate costume \"{skin.Name}\" uses an uncountable noun with no plural form, which makes incoming generic dialogue awkward (ex. \"I've seen many {c.Name} in my day\"). Consider renaming this layer (ex. \"armor\" to \"breastplate\")."));
+				}
+
+				if (!c.Plural && falsePlurals.Contains(c.Name))
+				{
+					warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"Clothing layer \"{c.Name}\" of alternate costume \"{skin.Name}\" should be set to plural. Even though it's only one item, it's still a grammatically plural noun (ex. \"Those are some nice {c.Name}\")."));
+				}
+
+				if (!String.IsNullOrEmpty(c.GenericName))
+				{
+					bool validCategory = false;
+					bool lowercaseCategory = false;
+					foreach (ClothingCategoryItem cc in ClothingDefinitions.Instance.Categories)
+					{
+						if (cc.Key == c.GenericName)
+						{
+							validCategory = true;
+							break;
+						}
+						else if (cc.Key == c.GenericName.ToLower())
+						{
+							lowercaseCategory = true;
+							break;
+						}
+					}
+
+					if (!validCategory)
+					{
+						if (lowercaseCategory)
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"Clothing layer \"{c.Name}\" of alternate costume \"{skin.Name}\" has classification \"{c.GenericName}\", which is inappropriately capitalized. Opening the alternate costume's Wardrobe tab will fix this."));
+						}
+						else
+						{
+							warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"Clothing layer \"{c.Name}\" of alternate costume \"{skin.Name}\" has an invalid classification: \"{c.GenericName}\". Opening the alternate costume's Wardrobe tab will delete this classification, at which point you can enter a valid one if possible."));
+						}
+					}
+				}
+			}
+			if (!foundBoth)
+			{
+				if (string.IsNullOrEmpty(upper))
+				{
+					if (!string.IsNullOrEmpty(importantUpper))
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"Clothing layer \"{importantUpper}\" of alternate costume \"{skin.Name}\" has no major article covering it, meaning the character will be considered as having exposed underwear. Either an article{(!string.IsNullOrEmpty(lower) ? $" ({lower}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")} should be given position: both if it covers both the chest and crotch, or {importantUpper} should use type: major instead of important."));
+					}
+					else
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"Alternate costume \"{skin.Name}\" has no clothing of type: major, position: upper, meaning the character will be considered as having an exposed chest. If an item covers underwear over both the chest and crotch{(!string.IsNullOrEmpty(lower) ? $" ({lower}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")}, it should be given a position: both"));
+					}
+				}
+				if (string.IsNullOrEmpty(lower))
+				{
+					if (!string.IsNullOrEmpty(importantLower))
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"Clothing layer \"{importantLower}\" of alternate costume \"{skin.Name}\" has no major article covering it, meaning the character will be considered as having exposed underwear. Either an article{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")} should be given position: both if it covers both the chest and crotch, or {importantLower} should use type: major instead of important."));
+					}
+					else
+					{
+						warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"Alternate costume \"{skin.Name}\" has no clothing of type: major, position: lower, meaning the character will be considered as having an exposed crotch. If an item covers underwear over both the chest and crotch{(!string.IsNullOrEmpty(upper) ? $" ({upper}?)" : !string.IsNullOrEmpty(otherMajor) ? $" ({otherMajor}?)" : "")}, it should be given a position: both"));
+					}
+				}
+			}
+
+			if (!foundPlural && pluralGuess != null)
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"No clothing items on alternate costume \"{skin.Name}\" are marked as plural. Should they be (ex. {pluralGuess})?"));
+			}
+
+			if (!foundGeneric)
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.Reskins, $"No clothing items on alternate costume \"{skin.Name}\" have a classification. Are you sure this is correct?"));
 			}
 		}
 
@@ -1067,12 +1190,18 @@ namespace SPNATI_Character_Editor
 			return path;
 		}
 
-		private static void ValidateSaying(string target, string text, List<ValidationError> warnings, string caseLabel, ValidationContext context)
+		private static void ValidateSaying(string target, string text, List<ValidationError> warnings, string caseLabel, ValidationContext context, string conditionName)
 		{
 			if (string.IsNullOrEmpty(text))
 			{
 				return;
 			}
+
+			if (text.Contains("##"))
+            {
+				text = text.Substring(0, text.IndexOf("##"));
+			}
+
 			Character other = CharacterDatabase.Get(target);
 			if (other != null && other.IsFullyLoaded)
 			{
@@ -1094,7 +1223,7 @@ namespace SPNATI_Character_Editor
 				}
 				if (!found)
 				{
-					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"Using a Saying Text condition but {other.Name} never says this text: \"{text}\" ({caseLabel})", context));
+					warnings.Add(new ValidationError(ValidationFilterLevel.TargetedDialogue, $"Using a {conditionName} condition but {other.Name} never says this text: \"{text}\" ({caseLabel})", context));
 				}
 			}
 		}
@@ -1138,6 +1267,8 @@ namespace SPNATI_Character_Editor
 			{
 				unusedImages.Remove(link.PreviewImage);
 			}
+
+			ValidateSkinWardrobe(skin, warnings);
 
 			//go through each stage using the alt skin and make sure the images are all present
 			Dictionary<int, bool> stageUsingSkin = new Dictionary<int, bool>();
