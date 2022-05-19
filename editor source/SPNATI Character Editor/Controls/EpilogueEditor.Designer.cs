@@ -111,7 +111,6 @@
             // imageFileDialog
             // 
             this.imageFileDialog.FileName = "openFileDialog1";
-            this.imageFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.imageFileDialog_FileOk);
             // 
             // cmdDeleteEnding
             // 

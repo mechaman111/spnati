@@ -157,7 +157,6 @@
             this.gridAI.RowHeadersVisible = false;
             this.gridAI.Size = new System.Drawing.Size(230, 125);
             this.gridAI.TabIndex = 18;
-            this.gridAI.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAI_CellContentClick);
             // 
             // ColAIStage
             // 
@@ -217,7 +216,6 @@
             this.txtDescription.TabIndex = 15;
             this.toolTip1.SetToolTip(this.txtDescription, "A description of the character which will be displayed on the character select sc" +
         "reen.");
-            this.txtDescription.TextChanged += new System.EventHandler(this.txtDescription_TextChanged);
             // 
             // cboDefaultPic
             // 
@@ -261,7 +259,6 @@
             this.txtHeight.Size = new System.Drawing.Size(101, 20);
             this.txtHeight.TabIndex = 13;
             this.toolTip1.SetToolTip(this.txtHeight, "The character\'s height as portrayed in SPNATI. Does not show up in-game.");
-            this.txtHeight.TextChanged += new System.EventHandler(this.txtHeight_TextChanged);
             // 
             // txtLastName
             // 
@@ -286,7 +283,6 @@
             this.label23.Size = new System.Drawing.Size(41, 13);
             this.label23.TabIndex = 104;
             this.label23.Text = "Height:";
-            this.label23.Click += new System.EventHandler(this.label23_Click);
             // 
             // label3
             // 
@@ -337,7 +333,6 @@
             this.label19.Size = new System.Drawing.Size(44, 13);
             this.label19.TabIndex = 102;
             this.label19.Text = "Artist(s):";
-            this.label19.Click += new System.EventHandler(this.label19_Click);
             // 
             // txtArtist
             // 
@@ -348,7 +343,6 @@
             this.txtArtist.Name = "txtArtist";
             this.txtArtist.Size = new System.Drawing.Size(252, 20);
             this.txtArtist.TabIndex = 17;
-            this.txtArtist.TextChanged += new System.EventHandler(this.txtArtist_TextChanged);
             // 
             // label18
             // 
@@ -362,7 +356,6 @@
             this.label18.Size = new System.Drawing.Size(49, 13);
             this.label18.TabIndex = 101;
             this.label18.Text = "Writer(s):";
-            this.label18.Click += new System.EventHandler(this.label18_Click);
             // 
             // txtWriter
             // 
@@ -373,7 +366,6 @@
             this.txtWriter.Name = "txtWriter";
             this.txtWriter.Size = new System.Drawing.Size(252, 20);
             this.txtWriter.TabIndex = 16;
-            this.txtWriter.TextChanged += new System.EventHandler(this.txtWriter_TextChanged);
             // 
             // label17
             // 
@@ -418,7 +410,6 @@
             0,
             0,
             0});
-            this.valRounds.ValueChanged += new System.EventHandler(this.valRounds_ValueChanged);
             // 
             // label12
             // 
@@ -563,7 +554,6 @@
             this.cboTitleGender.TabIndex = 10;
             this.toolTip1.SetToolTip(this.cboTitleGender, "Gender as it displays for the character selection screen.");
             this.cboTitleGender.Visible = false;
-            this.cboTitleGender.SelectedIndexChanged += new System.EventHandler(this.cboTitleGender_SelectedIndexChanged);
             // 
             // lblTitleGender
             // 
@@ -591,7 +581,6 @@
             this.agelabel.Size = new System.Drawing.Size(29, 13);
             this.agelabel.TabIndex = 110;
             this.agelabel.Text = "Age:";
-            this.agelabel.Click += new System.EventHandler(this.agelabel_Click);
             // 
             // txtAge
             // 
@@ -602,7 +591,6 @@
             this.txtAge.Size = new System.Drawing.Size(101, 20);
             this.txtAge.TabIndex = 109;
             this.toolTip1.SetToolTip(this.txtAge, "The character\'s age as portrayed in SPNATI. Does not show up in-game.");
-            this.txtAge.TextChanged += new System.EventHandler(this.txtAge_TextChanged);
             // 
             // pronunciationguidelabel
             // 
@@ -616,7 +604,6 @@
             this.pronunciationguidelabel.Size = new System.Drawing.Size(75, 13);
             this.pronunciationguidelabel.TabIndex = 111;
             this.pronunciationguidelabel.Text = "Pronunciation:";
-            this.pronunciationguidelabel.Click += new System.EventHandler(this.pronunciationguidelabel_Click);
             // 
             // txtpronunciationGuide
             // 
@@ -627,7 +614,6 @@
             this.txtpronunciationGuide.Size = new System.Drawing.Size(101, 20);
             this.txtpronunciationGuide.TabIndex = 109;
             this.toolTip1.SetToolTip(this.txtpronunciationGuide, "A pronounciation guide for the character\'s name. Does not show up in-game.");
-            this.txtpronunciationGuide.TextChanged += new System.EventHandler(this.txtpronunciationGuide_TextChanged);
             // 
             // skinnedGroupBox2
             // 
@@ -646,7 +632,6 @@
             this.skinnedGroupBox2.TabIndex = 109;
             this.skinnedGroupBox2.TabStop = false;
             this.skinnedGroupBox2.Text = "Credits";
-            this.skinnedGroupBox2.Enter += new System.EventHandler(this.skinnedGroupBox2_Enter);
             // 
             // skinnedGroupBox3
             // 
@@ -705,7 +690,6 @@
             this.txtOtherNotes.TabIndex = 0;
             this.toolTip1.SetToolTip(this.txtOtherNotes, "This information is only seen in this editor, and could be used for taking notes," +
         " giving tips to other writers wanting to target your character, etc.");
-            this.txtOtherNotes.TextChanged += new System.EventHandler(this.txtOtherNotes_TextChanged);
             // 
             // lblTitleLabel
             // 
@@ -740,7 +724,6 @@
             this.skinnedGroupBox4.TabIndex = 112;
             this.skinnedGroupBox4.TabStop = false;
             this.skinnedGroupBox4.Text = "Bio";
-            this.skinnedGroupBox4.Enter += new System.EventHandler(this.skinnedGroupBox4_Enter);
             // 
             // skinnedGroupBox5
             // 
@@ -756,7 +739,6 @@
             this.skinnedGroupBox5.TabIndex = 113;
             this.skinnedGroupBox5.TabStop = false;
             this.skinnedGroupBox5.Text = "Other Notes";
-            this.skinnedGroupBox5.Enter += new System.EventHandler(this.skinnedGroupBox5_Enter);
             // 
             // MetadataEditor
             // 
