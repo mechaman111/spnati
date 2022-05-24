@@ -61,6 +61,9 @@ namespace SPNATI_Character_Editor
 
 			HashSet<string> usedCollectibles = new HashSet<string>();
 
+			Dictionary<int, bool> stageHasTieLines = new Dictionary<int, bool>();
+			bool hasAfterFinished = false;
+
 			//dialogue
 			foreach (Case stageCase in character.Behavior.GetWorkingCases())
 			{
@@ -71,7 +74,19 @@ namespace SPNATI_Character_Editor
 					string caseLabel = string.Format("({0})", stageCase.Tag);
 					string caseTag = stageCase.Tag;
 
-					warnings = ValidateCase(character, stageCase, context, trigger, caseLabel, caseTag, warnings, validHands, targetRange);
+                    if (stageCase.Tag == "tie")
+                    {
+						foreach (int stage in stageCase.Stages)
+                        {
+							stageHasTieLines[stage] = true;
+						}
+                    }
+					else if (stageCase.Tag == "after_masturbating")
+                    {
+						hasAfterFinished = true;
+                    }
+
+                    warnings = ValidateCase(character, stageCase, context, trigger, caseLabel, caseTag, warnings, validHands, targetRange);
 
 					foreach (Case subcase in stageCase.AlternativeConditions)
                     {
@@ -316,6 +331,34 @@ namespace SPNATI_Character_Editor
 				}
 			}
 
+			List<int> noTieStages = new List<int>();
+
+			for (int i = 0; i <= character.Layers + 2; i++)
+            {
+				if (!stageHasTieLines.ContainsKey(i) || !stageHasTieLines[i])
+                {
+					noTieStages.Add(i);
+                }
+            }
+
+			if (noTieStages.Count == character.Layers + 3)
+            {
+				warnings.Add(new ValidationError(ValidationFilterLevel.Case, "Character has no Absolute Tie lines."));
+			}
+			else if (noTieStages.Count == 1)
+			{
+				warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("Character has no Absolute Tie lines for stage {0}.", noTieStages[0])));
+			}
+			else if (noTieStages.Count > 0)
+            {
+				warnings.Add(new ValidationError(ValidationFilterLevel.MissingImages, string.Format("Character has no Absolute Tie lines for stages {0}.", joinNumbers(noTieStages, ", "))));
+			}
+
+			if (!hasAfterFinished)
+            {
+				warnings.Add(new ValidationError(ValidationFilterLevel.Case, "Character has no After Finished lines. Even if the Finished lines purposefully handle this case, it is advised to separate the Finished and After Finished lines into separate cases."));
+			}
+
 			//endings
 			foreach (Epilogue ending in character.Endings)
 			{
@@ -481,6 +524,48 @@ namespace SPNATI_Character_Editor
 
 			return warnings;
 		}
+
+		private static string joinNumbers(List<int> list, string separator)
+        {
+			string s = "";
+
+			for (int i = 0; i < list.Count; i++)
+            {
+				s += list[i];
+
+				int curIndex = i;
+				for (int j = i + 1; j < list.Count; j++)
+                {
+					if (list[j] == list[curIndex] + 1)
+                    {
+						curIndex++;
+                    }
+					else
+                    {
+						if (curIndex != i)
+                        {
+							s += "-" + list[curIndex];
+                        }
+
+						if (curIndex != list.Count - 1)
+                        {
+							s += separator;
+                        }
+
+						break;
+                    }
+                }
+
+				if (curIndex == list.Count - 1 && curIndex != i)
+                {
+					s += "-" + list[curIndex];
+                }
+
+				i = curIndex;
+            }
+
+			return s;
+        }
 
 		private static bool IsUncountable(string name)
 		{
