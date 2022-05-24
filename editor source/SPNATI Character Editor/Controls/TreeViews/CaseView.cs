@@ -71,7 +71,7 @@ namespace SPNATI_Character_Editor.Controls
 				_listView.AddColumn(column);
 
 				column = new AccordionColumn("Pri", "Priority");
-				column.Width = 31;
+				column.Width = 40;
 				column.TextAlign = HorizontalAlignment.Right;
 				_listView.AddColumn(column);
 			}

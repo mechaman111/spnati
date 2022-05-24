@@ -185,6 +185,16 @@ namespace SPNATI_Character_Editor
 			set { Set(value); }
 		}
 
+		[Text(DisplayName = "Said Text", GroupName = "Dialogue", GroupOrder = 49, Description = "Character has said some text")]
+		[DefaultValue("")]
+		[XmlAttribute("said")]
+		[JsonProperty("said")]
+		public string Said
+		{
+			get { return Get<string>(); }
+			set { Set(value); }
+		}
+
 		[PoseMatch(DisplayName = "Pose", GroupName = "Dialogue", GroupOrder = 50, Description ="Character is using a particular pose")]
 		[DefaultValue("")]
 		[XmlAttribute("pose")]
@@ -272,6 +282,9 @@ namespace SPNATI_Character_Editor
 							case "saying":
 								Saying = value;
 								break;
+							case "said":
+								Said = value;
+								break;
 							case "sayingmarker":
 								SayingMarker = value;
 								break;
@@ -342,6 +355,7 @@ namespace SPNATI_Character_Editor
 				NotSaidMarker == other.NotSaidMarker &&
 				SayingMarker == other.SayingMarker &&
 				Saying == other.Saying &&
+				Said == other.Said &&
 				ConsecutiveLosses == other.ConsecutiveLosses &&
 				Pose == other.Pose &&
 				(Variable ?? "") == (other.Variable ?? "");
@@ -364,6 +378,7 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (NotSaidMarker ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (SayingMarker ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Saying ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (Said ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (ConsecutiveLosses ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Variable ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (Pose ?? string.Empty).GetHashCode();
@@ -453,6 +468,10 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(Saying))
 			{
 				parts.Add("saying;" + Saying);
+			}
+			if (!string.IsNullOrEmpty(Said))
+			{
+				parts.Add("said;" + Said);
 			}
 			if (!string.IsNullOrEmpty(Pose))
 			{
@@ -606,6 +625,10 @@ namespace SPNATI_Character_Editor
 				{
 					str += $" saying text {Saying}";
 				}
+				if (!string.IsNullOrEmpty(Said))
+				{
+					str += $" said text {Said}";
+				}
 				if (!string.IsNullOrEmpty(Pose))
 				{
 					str += $" using pose {Pose}";
@@ -754,6 +777,10 @@ namespace SPNATI_Character_Editor
 			{
 				priority += 1;
 			}
+			if (!string.IsNullOrEmpty(Said))
+			{
+				priority += 1;
+			}
 			if (!string.IsNullOrEmpty(Pose))
 			{
 				priority += 1;
@@ -789,6 +816,7 @@ namespace SPNATI_Character_Editor
 					!string.IsNullOrEmpty(SayingMarker) ||
 					!string.IsNullOrEmpty(NotSaidMarker) ||
 					!string.IsNullOrEmpty(Saying) ||
+					!string.IsNullOrEmpty(Said) ||
 					!string.IsNullOrEmpty(Hand) ||
 					!string.IsNullOrEmpty(Layers) ||
 					!string.IsNullOrEmpty(StartingLayers) ||
@@ -817,6 +845,7 @@ namespace SPNATI_Character_Editor
 			SaidMarker = null;
 			NotSaidMarker = null;
 			Saying = null;
+			Said = null;
 			Hand = null;
 			Layers = null;
 			StartingLayers = null;

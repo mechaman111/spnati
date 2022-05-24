@@ -186,7 +186,7 @@ namespace SPNATI_Character_Editor
 
 		public WardrobeRestrictions GetWardrobeRestrictions()
 		{
-			return WardrobeRestrictions.LayerTypes | WardrobeRestrictions.LayerCount;
+			return WardrobeRestrictions.LayerCount;
 		}
 
 		public Clothing GetClothing(int index)

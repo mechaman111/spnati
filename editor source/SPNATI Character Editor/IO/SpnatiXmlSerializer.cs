@@ -179,6 +179,9 @@ namespace SPNATI_Character_Editor.IO
 				if (deleteTags && tuple.Item2 == "tags")
 					continue;
 
+				if (deleteTags && tuple.Item2 == "height")
+					continue;
+
 				FieldInformation field = tuple.Item1;
 
 				//Element

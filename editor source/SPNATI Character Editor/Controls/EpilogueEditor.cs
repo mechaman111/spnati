@@ -298,5 +298,5 @@ namespace SPNATI_Character_Editor.Controls
 				cboEnding.SelectedIndex = 0;
 			}
 		}
-	}
+    }
 }

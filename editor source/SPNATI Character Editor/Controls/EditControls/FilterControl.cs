@@ -143,6 +143,7 @@ namespace SPNATI_Character_Editor
 					_filter.Saying = values[14];
 					_filter.TimeInStage = values[15];
 					_filter.ConsecutiveLosses = values[16];
+					_filter.Said = values[17];
 				}
 			}
 
@@ -172,6 +173,7 @@ namespace SPNATI_Character_Editor
 			values.Add(_filter.NotSaidMarker);
 			values.Add(_filter.SayingMarker);
 			values.Add(_filter.Saying);
+			values.Add(_filter.Said);
 			values.Add(_filter.TimeInStage);
 			values.Add(_filter.ConsecutiveLosses);
 		}

@@ -43,8 +43,19 @@ namespace SPNATI_Character_Editor.Activities
 				ExpandGender();
 			}
 			valRounds.Value = _character.Stamina;
-			txtDescription.Text = _character.Metadata.Description;
-			txtHeight.Text = _character.Metadata.Height;
+			txtDescription.Text = _character.Metadata.Description.Replace("<br>", Environment.NewLine);
+
+			if(_character.Metadata.Height != null)
+            {
+				txtHeight.Text = _character.Metadata.Height;
+			}
+			else
+            {
+				txtHeight.Text = CharacterDatabase.GetEditorData(_character).Height;
+			}
+
+			txtAge.Text = CharacterDatabase.GetEditorData(_character).Age;
+			txtpronunciationGuide.Text = CharacterDatabase.GetEditorData(_character).pronunciationGuide;
 			txtSource.Text = _character.Metadata.Source;
 			txtWriter.Text = _character.Metadata.Writer;
 			txtArtist.Text = _character.Metadata.Artist;
@@ -56,6 +67,12 @@ namespace SPNATI_Character_Editor.Activities
 				cboDefaultPic.SelectedItem = pose;
 			}
 			gridAI.Data = _character.Intelligence;
+
+			string othernotes = CharacterDatabase.GetEditorData(_character).OtherNotes;
+			if (othernotes != null)
+			{
+				txtOtherNotes.Text = othernotes.Replace("<br>", Environment.NewLine);
+			}
 		}
 
 		/// <summary>
@@ -101,12 +118,15 @@ namespace SPNATI_Character_Editor.Activities
 				_character.Metadata.Gender = titleGender;
 			}
 			_character.Size = cboSize.SelectedItem.ToString();
-			_character.Metadata.Description = txtDescription.Text;
-			_character.Metadata.Height = txtHeight.Text;
+			_character.Metadata.Description = txtDescription.Text.Replace(Environment.NewLine, "<br>");
+			CharacterDatabase.GetEditorData(_character).Height = txtHeight.Text;
+			CharacterDatabase.GetEditorData(_character).Age = txtAge.Text;
+			CharacterDatabase.GetEditorData(_character).pronunciationGuide = txtpronunciationGuide.Text;
 			_character.Metadata.Source = txtSource.Text;
 			_character.Metadata.Writer = txtWriter.Text;
 			_character.Metadata.Artist = txtArtist.Text;
 			gridAI.Save(ColAIStage);
+			CharacterDatabase.GetEditorData(_character).OtherNotes = txtOtherNotes.Text.Replace(Environment.NewLine,"<br>");
 		}
 
 		private void cboDefaultPic_SelectedIndexChanged(object sender, EventArgs e)

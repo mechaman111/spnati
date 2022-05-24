@@ -282,6 +282,11 @@
             0,
             0,
             0});
+            this.valPriority.Minimum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            -2147483648});
             this.valPriority.Name = "valPriority";
             this.valPriority.Size = new System.Drawing.Size(54, 20);
             this.valPriority.TabIndex = 7;

@@ -60,7 +60,6 @@ namespace SPNATI_Character_Editor
 			lines.Add("#required for meta.xml");
 			lines.Add("#select screen image");
 			lines.Add("pic=" + Path.GetFileNameWithoutExtension(metadata.Portrait));
-			lines.Add("height=" + metadata.Height);
 			lines.Add("from=" + metadata.Source);
 			lines.Add("writer=" + metadata.Writer);
 			lines.Add("artist=" + metadata.Artist);
@@ -678,6 +677,10 @@ namespace SPNATI_Character_Editor
 			{
 				filters.Add("targetSaying:" + stageCase.TargetSaying.Replace(",", "&comma;"));
 			}
+			if (!string.IsNullOrEmpty(stageCase.TargetSaid))
+			{
+				filters.Add("targetSaid:" + stageCase.TargetSaid.Replace(",", "&comma;"));
+			}
 			if (!string.IsNullOrEmpty(stageCase.AlsoPlaying))
 			{
 				filters.Add("alsoPlaying:" + stageCase.AlsoPlaying);
@@ -709,6 +712,10 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(stageCase.AlsoPlayingSaying))
 			{
 				filters.Add("alsoPlayingSaying:" + stageCase.AlsoPlayingSaying.Replace(",", "&comma;"));
+			}
+			if (!string.IsNullOrEmpty(stageCase.AlsoPlayingSaid))
+			{
+				filters.Add("alsoPlayingSaid:" + stageCase.AlsoPlayingSaid.Replace(",", "&comma;"));
 			}
 			if (!string.IsNullOrEmpty(stageCase.HasHand))
 			{
@@ -898,9 +905,6 @@ namespace SPNATI_Character_Editor
 						break;
 					case "pic":
 						character.Metadata.Portrait = value;
-						break;
-					case "height":
-						character.Metadata.Height = value;
 						break;
 					case "from":
 						character.Metadata.Source = value;
@@ -1364,6 +1368,9 @@ namespace SPNATI_Character_Editor
 						case "targetsaying":
 							lineCase.TargetSaying = value.Replace("&comma;", ",");
 							break;
+						case "targetsaid":
+							lineCase.TargetSaid = value.Replace("&comma;", ",");
+							break;
 					}
 				}
 
@@ -1393,6 +1400,9 @@ namespace SPNATI_Character_Editor
 						break;
 					case "alsoplayingsaying":
 						lineCase.AlsoPlayingSaying = value.Replace("&comma;", ",");
+						break;
+					case "alsoplayingsaid":
+						lineCase.AlsoPlayingSaid = value.Replace("&comma;", ",");
 						break;
 					case "hashand":
 						lineCase.HasHand = value;

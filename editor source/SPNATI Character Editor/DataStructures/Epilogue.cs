@@ -76,6 +76,18 @@ namespace SPNATI_Character_Editor
 		[Boolean(DisplayName = "Allow Scene Skip", Description = "Allow the player to skip between scenes", GroupOrder = 15)]
 		public bool AllowSceneSkip;
 
+//		[DefaultValue("completion")]
+		[ComboBox(DisplayName = "Unlock Condition", Description = "The baseline requirement for unlocking an epilogue. From least to most stringent:\n\r" +
+			"completion - The game must have been completed.\ncharacter-loss - The epilogue character must lose the game.\noutlast - The human player must either win the game, or at least only lose after the epilogue character.\r" +
+			"player-win - The human player must win the entire game. This is the default behaviour if no other option is chosen.", GroupOrder = 30, Options = new string[] {
+			"completion",
+			"character-loss",
+			"outlast",
+			"player-win",
+		})]
+		[XmlAttribute("unlock")]
+		public string Unlock;
+
 		[XmlElement("scene")]
 		public List<Scene> Scenes = new List<Scene>();
 
