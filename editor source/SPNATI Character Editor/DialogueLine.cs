@@ -134,7 +134,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _fontSize;
-		[DefaultValue("normal")]
+		[DefaultValue("")]
 		[XmlAttribute("font-size")]
 		public string FontSize
 		{
@@ -224,7 +224,7 @@ namespace SPNATI_Character_Editor
 			Image = "";
 			Text = "";
 			Direction = "down";
-			FontSize = "normal";
+			FontSize = "";
 			Weight = 1;
 			Marker = null;
 			Images = new List<StageImage>();
@@ -364,7 +364,7 @@ namespace SPNATI_Character_Editor
 			get
 			{
 				return !string.IsNullOrEmpty(Gender) || !string.IsNullOrEmpty(Size) || Intelligence != null || (!string.IsNullOrEmpty(Direction) && Direction != "down") ||
-					(!string.IsNullOrEmpty(FontSize) && FontSize != "normal") || Label != null || !string.IsNullOrEmpty(Location) || !string.IsNullOrEmpty(Layer) || Weight != 1;
+					!string.IsNullOrEmpty(FontSize) || Label != null || !string.IsNullOrEmpty(Location) || !string.IsNullOrEmpty(Layer) || Weight != 1;
 			}
 		}
 

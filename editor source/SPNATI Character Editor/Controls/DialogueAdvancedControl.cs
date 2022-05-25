@@ -46,7 +46,7 @@ namespace SPNATI_Character_Editor.Controls
 			RowIndex = row;
 			_line = line;
 			_character = character;
-			string fontSize = line.FontSize;
+			string fontSize = line.FontSize == "" ? character.Metadata.TextSize.ToString() : line.FontSize;
 			cboDirection.Text = line.Direction ?? "";
 
 			cboSize.Text = line.Size ?? "";
@@ -93,7 +93,7 @@ namespace SPNATI_Character_Editor.Controls
 			}
 			_line.Direction = direction;
 			string fontSize = cboFontSize.Text;
-			if (string.IsNullOrEmpty(fontSize))
+			if (string.IsNullOrEmpty(fontSize) || fontSize == _character.Metadata.TextSize.ToString())
 			{
 				fontSize = null;
 			}

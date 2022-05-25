@@ -168,7 +168,7 @@ namespace SPNATI_Character_Editor.Controls
 			Pose = null;
 		}
 
-		public void SetText(DialogueLine line)
+		public void SetText(DialogueLine line, string globalSize)
 		{
 			_line = line;
 			if (line == null || line.Text == null || string.IsNullOrEmpty(line.Text) || line.Text.Trim() == "~blank~")
@@ -184,7 +184,12 @@ namespace SPNATI_Character_Editor.Controls
 				_percent = 0.5f;
 				_size = null;
 
-				if (!string.IsNullOrEmpty(line.FontSize) && line.FontSize != "normal")
+				if (!string.IsNullOrEmpty(globalSize) && globalSize != "normal")
+				{
+					_size = globalSize;
+				}
+
+				if (!string.IsNullOrEmpty(line.FontSize) && line.FontSize != globalSize)
 				{
 					_size = line.FontSize;
 				}

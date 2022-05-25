@@ -108,7 +108,7 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void UpdatePreview(DialogueLine line)
 		{
-			picPortrait.SetText(line);
+			picPortrait.SetText(line, _character.Metadata.TextSize.ToString());
 		}
 
 		private void UpdateLineCount()

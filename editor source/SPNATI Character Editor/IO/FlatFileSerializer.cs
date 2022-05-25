@@ -331,7 +331,7 @@ namespace SPNATI_Character_Editor
 					{
 						lineCode += $",direction:{defaultLine.Direction}";
 					}
-					if (!string.IsNullOrEmpty(defaultLine.FontSize) && defaultLine.FontSize != "normal")
+					if (!string.IsNullOrEmpty(defaultLine.FontSize))
 					{
 						lineCode += $",font-size:{defaultLine.FontSize}";
 					}
