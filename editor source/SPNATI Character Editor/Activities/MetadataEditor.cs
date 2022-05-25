@@ -82,8 +82,18 @@ namespace SPNATI_Character_Editor.Activities
 		{
 			_populatingImages = true;
 			List<PoseMapping> poses = _character.PoseLibrary.GetPoses(0);
+			List<PoseMapping> normalPoses = new List<PoseMapping>();
+
+			foreach (PoseMapping pose in poses)
+            {
+				if (!pose.DisplayName.Contains("custom:"))
+                {
+					normalPoses.Add(pose);
+                }
+            }
+
 			cboDefaultPic.DisplayMember = "DisplayName";
-			cboDefaultPic.DataSource = poses;
+			cboDefaultPic.DataSource = normalPoses;
 			_populatingImages = false;
 		}
 
