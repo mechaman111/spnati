@@ -60,6 +60,7 @@
             this.grpInfo = new Desktop.Skinning.SkinnedGroupBox();
             this.tableGeneral = new Desktop.CommonControls.PropertyTable();
             this.pageScenes = new System.Windows.Forms.TabPage();
+            this.canvas = new SPNATI_Character_Editor.Controls.EpilogueCanvas();
             this.pageEditor = new System.Windows.Forms.TabPage();
             this.liveEditor = new SPNATI_Character_Editor.Controls.LiveEpilogueEditor();
             this.strip = new Desktop.Skinning.SkinnedTabStrip();
@@ -72,6 +73,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.grpInfo.SuspendLayout();
+            this.pageScenes.SuspendLayout();
             this.pageEditor.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -498,12 +500,24 @@
             // pageScenes
             // 
             this.pageScenes.BackColor = System.Drawing.Color.White;
+            this.pageScenes.Controls.Add(this.canvas);
             this.pageScenes.ForeColor = System.Drawing.Color.Black;
             this.pageScenes.Location = new System.Drawing.Point(4, 22);
             this.pageScenes.Name = "pageScenes";
             this.pageScenes.Size = new System.Drawing.Size(965, 563);
             this.pageScenes.TabIndex = 1;
             this.pageScenes.Text = "Scenes";
+            // 
+            // canvas
+            // 
+            this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.canvas.Enabled = false;
+            this.canvas.Location = new System.Drawing.Point(0, 0);
+            this.canvas.Margin = new System.Windows.Forms.Padding(0);
+            this.canvas.Name = "canvas";
+            this.canvas.Size = new System.Drawing.Size(965, 563);
+            this.canvas.TabIndex = 23;
+            this.canvas.ZoomLevel = 1F;
             // 
             // pageEditor
             // 
@@ -568,6 +582,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.grpInfo.ResumeLayout(false);
+            this.pageScenes.ResumeLayout(false);
             this.pageEditor.ResumeLayout(false);
             this.ResumeLayout(false);
 
