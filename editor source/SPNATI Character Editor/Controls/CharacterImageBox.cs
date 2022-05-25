@@ -299,7 +299,7 @@ namespace SPNATI_Character_Editor.Controls
 			Graphics g = e.Graphics;
 
 			int screenHeight = canvas.Height - ScreenMargin * 2;
-			if (_line == null || _line.Layer != "over")
+			if (_line == null || _line.Layer == "under" || (_character.Character.Metadata.BubblePosition == DialogueLayer.under && String.IsNullOrEmpty(_line.Layer)))
 			{
 				DrawSpeechBubble(g, screenHeight);
 			}
@@ -321,7 +321,7 @@ namespace SPNATI_Character_Editor.Controls
 				g.DrawImage(_imageReference, canvas.Width / 2 - width / 2, screenHeight - availableHeight + ScreenMargin, width, availableHeight);
 			}
 
-			if (_line != null && _line.Layer == "over")
+			if (_line != null && (_line.Layer == "over" || (_character.Character.Metadata.BubblePosition == DialogueLayer.over && String.IsNullOrEmpty(_line.Layer))))
 			{
 				DrawSpeechBubble(g, screenHeight);
 			}

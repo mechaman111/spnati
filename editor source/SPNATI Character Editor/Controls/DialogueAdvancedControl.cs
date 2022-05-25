@@ -55,7 +55,7 @@ namespace SPNATI_Character_Editor.Controls
 			txtLabel.Text = line.Label;
 			chkResetAI.Checked = line.Intelligence == "";
 			chkResetLabel.Checked = line.Label == "";
-			chkLayer.Checked = line.Layer == "over";
+			chkLayer.Checked = line.Layer == "over" || (character.Metadata.BubblePosition.ToString() == "over" && line.Layer != "under");
 
 			valWeight.Value = Math.Max(valWeight.Minimum, Math.Min(valWeight.Maximum, (decimal)line.Weight));
 
@@ -142,7 +142,14 @@ namespace SPNATI_Character_Editor.Controls
 				_line.Label = label;
 			}
 
-			_line.Layer = chkLayer.Checked ? "over" : "";
+			if (_character.Metadata.BubblePosition == DialogueLayer.over)
+            {
+				_line.Layer = chkLayer.Checked ? "" : "under";
+			}
+			else
+            {
+				_line.Layer = chkLayer.Checked ? "over" : "";
+			}
 
 			return _line;
 		}
@@ -163,6 +170,11 @@ namespace SPNATI_Character_Editor.Controls
 		}
 
         private void cboFontSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+			DataUpdated?.Invoke(this, e);
+		}
+
+        private void chkLayer_CheckedChanged(object sender, EventArgs e)
         {
 			DataUpdated?.Invoke(this, e);
 		}

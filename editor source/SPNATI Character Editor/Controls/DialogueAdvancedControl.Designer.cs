@@ -397,6 +397,7 @@
             this.chkLayer.TabIndex = 0;
             this.chkLayer.Text = "Display over image";
             this.chkLayer.UseVisualStyleBackColor = true;
+            this.chkLayer.CheckedChanged += new System.EventHandler(this.chkLayer_CheckedChanged);
             // 
             // DialogueAdvancedControl
             // 
