@@ -198,6 +198,10 @@ namespace SPNATI_Character_Editor
 				{
 					return "*" + Case.CustomPriority;
 				}
+				else if (Case.Hidden == "1")
+				{
+					return "0";
+				}
 				string priority = Case.GetPriority().ToString();
 				if (Case.AlternativeConditions.Count > 0)
 				{
