@@ -95,7 +95,11 @@ namespace SPNATI_Character_Editor.Activities
 
 		private void UpdatePreviewImage(UpdateImageArgs data)
 		{
-			if (data.Image != null)
+			if (data == null)
+            {
+				picPortrait.RefreshImage();
+			}
+			else if (data.Image != null)
 			{
 				picPortrait.SetImage(data.Image);
 			}

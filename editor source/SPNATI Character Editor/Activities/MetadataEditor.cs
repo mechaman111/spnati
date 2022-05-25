@@ -102,6 +102,7 @@ namespace SPNATI_Character_Editor.Activities
 				return;
 			_character.Metadata.Portrait = image.Key.Replace("#-", "0-");
 			Workspace.SendMessage(WorkspaceMessages.UpdatePreviewImage, new UpdateImageArgs(_character, image, 0));
+			Workspace.SendMessage(WorkspaceMessages.PreviewLine, "");
 		}
 
 		public override void Save()
