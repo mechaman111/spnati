@@ -25,7 +25,7 @@ namespace SPNATI_Character_Editor.IO
 
 		private const string IndentString = "    ";
 
-		public void Serialize<T>(string filename, T data, bool deleteTags = false)
+		public void Serialize<T>(string filename, T data, bool deleteTags = false, bool deleteHeight = false)
 		{
 			IHookSerialization hook = data as IHookSerialization;
 			if (hook != null)
@@ -49,7 +49,7 @@ namespace SPNATI_Character_Editor.IO
 			XmlWriter writer = XmlWriter.Create(sb, settings);
 			sb.AppendLine("<?xml version='1.0' encoding='UTF-8'?>");
 
-			WriteElement(data, root.ElementName, writer, sb, deleteTags);
+			WriteElement(data, root.ElementName, writer, sb, deleteTags, deleteHeight);
 
 			writer.Flush();
 			sb.AppendLine();
@@ -72,7 +72,7 @@ namespace SPNATI_Character_Editor.IO
 			return elementInfo;
 		}
 
-		private void WriteElement(object data, string name, XmlWriter writer, StringBuilder builder, bool deleteTags = false)
+		private void WriteElement(object data, string name, XmlWriter writer, StringBuilder builder, bool deleteTags = false, bool deleteHeight = false)
 		{
 			if (data == null)
 				return;
@@ -179,7 +179,7 @@ namespace SPNATI_Character_Editor.IO
 				if (deleteTags && tuple.Item2 == "tags")
 					continue;
 
-				if (deleteTags && tuple.Item2 == "height")
+				if (deleteHeight && tuple.Item2 == "height")
 					continue;
 
 				FieldInformation field = tuple.Item1;

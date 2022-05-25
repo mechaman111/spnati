@@ -194,12 +194,17 @@ namespace SPNATI_Character_Editor
 			string filename = Path.Combine(dir, name + ".xml");
 
 			bool deleteTags = false;
+			bool deleteHeight = false;
 			if (name == "behaviour" || name == "meta")
 			{
 				deleteTags = true;
 			}
+			if (name == "meta" && CharacterDatabase.GetEditorData(character).Height != null)
+            {
+				deleteHeight = true;
+            }
 
-			if (ExportXml(data, filename, deleteTags))
+			if (ExportXml(data, filename, deleteTags, deleteHeight))
 			{
 				bool backupEnabled = Config.BackupEnabled;
 				if (backupEnabled)
@@ -450,13 +455,13 @@ namespace SPNATI_Character_Editor
 		/// <param name="data">Data to serialize</param>
 		/// <param name="filename">File name</param>
 		/// <returns>True if successful</returns>
-		public static bool ExportXml<T>(T data, string filename, bool deleteTags = false)
+		public static bool ExportXml<T>(T data, string filename, bool deleteTags = false, bool deleteHeight = false)
 		{
 			TextWriter writer = null;
 			try
 			{
 				SpnatiXmlSerializer test = new SpnatiXmlSerializer();
-				test.Serialize(filename, data, deleteTags);
+				test.Serialize(filename, data, deleteTags, deleteHeight);
 				return true;
 			}
 			catch (IOException e)
