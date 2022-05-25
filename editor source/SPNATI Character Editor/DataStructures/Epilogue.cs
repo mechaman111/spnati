@@ -78,8 +78,8 @@ namespace SPNATI_Character_Editor
 
 //		[DefaultValue("completion")]
 		[ComboBox(DisplayName = "Unlock Condition", Description = "The baseline requirement for unlocking an epilogue. From least to most stringent:\n\r" +
-			"completion - The game must have been completed.\ncharacter-loss - The epilogue character must lose the game.\noutlast - The human player must either win the game, or at least only lose after the epilogue character.\r" +
-			"player-win - The human player must win the entire game. This is the default behaviour if no other option is chosen.", GroupOrder = 30, Options = new string[] {
+			"completion - The game must have been completed. This is the default behaviour if no other option is chosen.\ncharacter-loss - The epilogue character must lose the game.\noutlast - The human player must either win the game, or at least only lose after the epilogue character.\r" +
+			"player-win - The human player must win the entire game.", GroupOrder = 30, Options = new string[] {
 			"completion",
 			"character-loss",
 			"outlast",
