@@ -321,10 +321,11 @@ async def do_disassembly(
     out_folder: Path,
     disable_hair: bool,
     trim: bool,
+    align: bool,
     zoom: int,
     camera_x: int,
     camera_y: int,
-    juice: Optional[int]
+    juice: Optional[int],
 ):
     parts_map, all_parts = compute_parts_map(code)
     export_parts = list(export_parts)
@@ -338,6 +339,10 @@ async def do_disassembly(
 
     if disable_hair:
         code[0]["ec"].attributes = []
+
+    if align:
+        code[0]["bc"][0] = "400"
+        code[0]["bc"][1] = "500"
 
     if juice is not None:
         code[0]["dc"][0] = str(juice)
@@ -392,16 +397,11 @@ async def main(
     code: KisekaeCode,
     parts: Iterable[str],
     outdir: Path,
-    disable_hair: bool,
-    trim: bool,
-    zoom: int,
-    camera_x: int,
-    camera_y: int,
-    juice: Optional[int]
+    args: argparse.Namespace
 ):
     async with kkl.connect(5) as client:
         await do_disassembly(
-            client, code, parts, outdir, disable_hair, trim, zoom, camera_x, camera_y, juice
+            client, code, parts, outdir, args.disable_hair, args.trim, args.align, args.zoom, args.camera_x, args.camera_y, args.juice
         )
 
 
@@ -425,12 +425,13 @@ if __name__ == "__main__":
     BASE_OUT_PATH = Path.cwd().joinpath("epilogue", "images")
 
     parser = argparse.ArgumentParser()
+    parser.add_argument("--no-align", "-A", action="store_false", dest="align")
     parser.add_argument("--disable-hair", "-d", action="store_true")
     parser.add_argument("--trim", "-t", action="store_true")
     parser.add_argument("--out-name", "-o")
     parser.add_argument("--zoom", "-z", type=int, default=7)
-    parser.add_argument("--camera-x", "-x", type=int)
-    parser.add_argument("--camera-y", "-y", type=int)
+    parser.add_argument("--camera-x", "-x")
+    parser.add_argument("--camera-y", "-y")
     parser.add_argument("--juice", "-j", type=int)
     parser.add_argument("codefile")
     parser.add_argument("parts", nargs="+", choices=VALID_PARTS)
@@ -442,10 +443,28 @@ if __name__ == "__main__":
 
     mx = (300 - 2) / (30 - 7)
     my = (400 - 24) / (30 - 7)
-    if args.camera_x is None:
-        args.camera_x = round((mx * (args.zoom - 7)) + 2)
-    if args.camera_y is None:
-        args.camera_y = round((my * (args.zoom - 7)) + 24)
+    baseline_cam_x = round((mx * (args.zoom - 7)) + 2)
+    baseline_cam_y = round((my * (args.zoom - 7)) + 24)
+
+    if args.camera_x is not None:
+        if args.camera_x.startswith("+"):
+            args.camera_x = baseline_cam_x + int(args.camera_x[1:])
+        elif args.camera_x.startswith("-"):
+            args.camera_x = baseline_cam_x - int(args.camera_x[1:])
+        else:
+            args.camera_x = int(args.camera_x)
+    else:
+        args.camera_x = baseline_cam_x
+
+    if args.camera_y is not None:
+        if args.camera_y.startswith("+"):
+            args.camera_y = baseline_cam_y + int(args.camera_y[1:])
+        elif args.camera_y.startswith("-"):
+            args.camera_y = baseline_cam_y - int(args.camera_y[1:])
+        else:
+            args.camera_y = int(args.camera_y)
+    else:
+        args.camera_y = baseline_cam_y
 
     with BASE_IN_PATH.joinpath(args.codefile + ".txt").open("r", encoding="utf-8") as f:
         code = KisekaeCode(f.read())
@@ -470,11 +489,6 @@ if __name__ == "__main__":
             code,
             args.parts,
             outpath,
-            args.disable_hair,
-            args.trim,
-            args.zoom,
-            args.camera_x,
-            args.camera_y,
-            args.juice,
+            args
         )
     )
