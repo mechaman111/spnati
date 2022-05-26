@@ -373,7 +373,10 @@ namespace SPNATI_Character_Editor.Controls
 				//scale to the height
 				float availableHeight = ShowTextBox ? screenHeight * (1 - TextPercent) : screenHeight * 0.9f;
 
-				availableHeight *= _character.Character.Metadata.Scale / 100;
+				if (_character != null)
+				{
+					availableHeight *= _character.Character.Metadata.Scale / 100;
+				}
 
 				int width = (int)(_imageReference.Width / (float)_imageReference.Height * availableHeight);
 				g.DrawImage(_imageReference, canvas.Width / 2 - width / 2, screenHeight - availableHeight + ScreenMargin, width, availableHeight);
