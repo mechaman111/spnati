@@ -22,7 +22,14 @@ namespace SPNATI_Character_Editor
 
 		public static void Load()
 		{
-			string filename = Path.Combine(Config.ExecutableDirectory, "variables.xml");
+			string path = Path.Combine(Config.SpnatiDirectory, "opponents");
+			string filename = Path.Combine(path, "variables.xml");
+			if (!File.Exists(filename))
+			{
+				//use the old location for backwards compatibility
+				filename = Path.Combine(Config.ExecutableDirectory, "variables.xml");
+			}
+
 			if (File.Exists(filename))
 			{
 				TextReader reader = null;

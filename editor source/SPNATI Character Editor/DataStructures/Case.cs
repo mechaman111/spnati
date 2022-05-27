@@ -1295,6 +1295,11 @@ namespace SPNATI_Character_Editor
 				}
 				bool filtered = Conditions.Any(c =>
 				{
+					if (c.Role == "self")
+					{
+						return false;
+					}
+
 					bool result = !string.IsNullOrEmpty(c.FilterTag);
 					if (result)
 					{
@@ -1328,15 +1333,18 @@ namespace SPNATI_Character_Editor
 				{
 					foreach (TargetCondition condition in Conditions)
 					{
-						if (!string.IsNullOrEmpty(condition.Character) && !humanTargets.Contains(condition.Character))
+						if (condition.Role != "self" && condition.Count != "0" && condition.Count != "0-0")
 						{
-							targeted = true;
-							break;
-						}
-						if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.Get(condition.FilterTag) != null && !humanTargets.Contains(condition.FilterTag))
-						{
-							targeted = true;
-							break;
+							if (!string.IsNullOrEmpty(condition.Character) && !humanTargets.Contains(condition.Character))
+							{
+								targeted = true;
+								break;
+							}
+							if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.Get(condition.FilterTag) != null && !humanTargets.Contains(condition.FilterTag))
+							{
+								targeted = true;
+								break;
+							}
 						}
 					}
 				}
@@ -1367,15 +1375,18 @@ namespace SPNATI_Character_Editor
 				{
 					foreach (TargetCondition condition in Conditions)
 					{
-						if (!string.IsNullOrEmpty(condition.Character))
+						if (condition.Role != "self")
 						{
-							targeted = true;
-							break;
-						}
-						if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.Get(condition.FilterTag) != null)
-						{
-							targeted = true;
-							break;
+							if (!string.IsNullOrEmpty(condition.Character))
+							{
+								targeted = true;
+								break;
+							}
+							if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.Get(condition.FilterTag) != null)
+							{
+								targeted = true;
+								break;
+							}
 						}
 					}
 				}
@@ -2560,6 +2571,10 @@ namespace SPNATI_Character_Editor
 					continue;
 				}
 				if (!string.IsNullOrEmpty(c.Target) && c.Target != speaker.FolderName && c.Target != sourceCase.Target)
+				{
+					continue;
+				}
+				if (c.HasTargetedConditions && !Character.IsCaseTargetedAtCharacter(c, speaker, TargetType.DirectTarget))
 				{
 					continue;
 				}

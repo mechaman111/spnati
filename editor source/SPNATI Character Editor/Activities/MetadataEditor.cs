@@ -43,7 +43,11 @@ namespace SPNATI_Character_Editor.Activities
 				ExpandGender();
 			}
 			valRounds.Value = _character.Stamina;
-			txtDescription.Text = _character.Metadata.Description.Replace("<br>", Environment.NewLine);
+
+			if (_character.Metadata.Description != null)
+            {
+				txtDescription.Text = _character.Metadata.Description.Replace("<br>", Environment.NewLine);
+			}
 
 			if(_character.Metadata.Height != null)
             {
