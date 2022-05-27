@@ -199,13 +199,7 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				{
 					if (trigger.Tag != "-" && !trigger.Optional && !string.IsNullOrEmpty(trigger.DefaultText))
 					{
-						for (int stage = 0; stage < _character.Layers + Clothing.ExtraStages; stage++)
-						{
-							if (TriggerDatabase.UsedInStage(trigger.Tag, _character, stage))
-							{
-								total++;
-							}
-						}
+						total++;
 					}
 				}
 
@@ -215,19 +209,12 @@ namespace SPNATI_Character_Editor.Controls.Dashboards
 				foreach (Case workingCase in cases)
 				{
 					string tag = workingCase.Tag;
-					foreach (int stage in workingCase.Stages)
+					if (visitedTags.Contains(tag))
 					{
-						if (TriggerDatabase.UsedInStage(tag, _character, stage))
-						{
-							string combo = tag + stage;
-							if (visitedTags.Contains(combo))
-							{
-								continue;
-							}
-							visitedTags.Add(combo);
-							finished--;
-						}
+						continue;
 					}
+					visitedTags.Add(tag);
+					finished--;
 				}
 
 				task.Value = finished;
