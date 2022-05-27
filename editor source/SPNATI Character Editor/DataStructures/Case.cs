@@ -2574,6 +2574,10 @@ namespace SPNATI_Character_Editor
 				{
 					continue;
 				}
+				if (c.HasTargetedConditions && !Character.IsCaseTargetedAtCharacter(c, speaker, TargetType.DirectTarget))
+				{
+					continue;
+				}
 				if (!c.MatchesTableConditions(sourceCase))
 				{
 					continue;

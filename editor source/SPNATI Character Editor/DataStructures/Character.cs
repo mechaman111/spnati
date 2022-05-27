@@ -919,7 +919,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private bool IsCaseTargetedAtCharacter(Case stageCase, Character character, TargetType allowedTargetTypes)
+		public static bool IsCaseTargetedAtCharacter(Case stageCase, Character character, TargetType allowedTargetTypes)
 		{
 			if (allowedTargetTypes == TargetType.None)
 				return false;
