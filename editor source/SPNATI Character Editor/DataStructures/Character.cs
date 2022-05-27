@@ -896,7 +896,7 @@ namespace SPNATI_Character_Editor
 		{
 			foreach (var workingCase in Behavior.GetWorkingCases())
 			{
-				if (IsCaseTargetedAtCharacter(workingCase, character, targetTypes))
+				if (IsCaseTargetedAtCharacter(workingCase, character, targetTypes) && String.IsNullOrEmpty(workingCase.Hidden) && String.IsNullOrEmpty(workingCase.Disabled))
 				{
 					yield return workingCase;
 				}
