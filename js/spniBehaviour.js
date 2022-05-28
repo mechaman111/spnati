@@ -572,7 +572,8 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
             lhs = self.stamina;
         }
 
-        if (typeof(rhs) !== 'number' || isNaN(rhs)) {
+        rhs = parseInt(rhs, 10);
+        if ((typeof(rhs) !== 'number') || isNaN(rhs)) {
             rhs = 0;
         }
 
