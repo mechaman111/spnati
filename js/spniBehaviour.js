@@ -599,8 +599,8 @@ ForfeitTimerOperation.prototype.apply = function (self, opp) {
             break;
         }
 
-        /* 0 is not a valid value for stamina and timer. */
-        if (newValue === 0) newValue = 1;
+        /* Values <= 0 are not valid for stamina and timer. */
+        if (newValue <= 0) newValue = 1;
 
         if (this.attr == "timer") {
             self.timer = newValue;
