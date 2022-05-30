@@ -1274,6 +1274,8 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
     if (caseObj.filter) entities.add(caseObj.filter);
 
     caseObj.counters.forEach(function (ctr) {
+        /* Conditions checking if a character/tag is not at the table don't count as targeted. */
+        if (ctr.count.max === 0) return;
         if (ctr.id) entities.add(ctr.id);
         if (ctr.tag) entities.add(ctr.tag);
     });
