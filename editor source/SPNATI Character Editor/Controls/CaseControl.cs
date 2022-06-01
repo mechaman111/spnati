@@ -416,6 +416,7 @@ namespace SPNATI_Character_Editor.Controls
 			//Self
 			table.AddSpeedButton("Self", "Said Marker", (data) => { return AddFilter("self", data, "SaidMarker"); });
 			table.AddSpeedButton("Self", "Not Said Marker", (data) => { return AddFilter("self", data, "NotSaidMarker"); });
+			table.AddSpeedButton("Self", "Said Text", (data) => { return AddFilter("self", data, "Said"); });
 			table.AddSpeedButton("Self", "Time in Stage", (data) => { return AddFilter("self", data, "TimeInStage"); });
 			table.AddSpeedButton("Self", "Consecutive Losses", (data) => { return AddFilter("self", data, "ConsecutiveLosses"); });
 			table.AddSpeedButton("Self", "Has Hand", (data) => { return AddFilter("self", data, "Hand"); });
@@ -441,6 +442,7 @@ namespace SPNATI_Character_Editor.Controls
 			table.AddSpeedButton("Opponent", "Opponent Not Said Marker", (data) => { return AddFilter("opp", data, "NotSaidMarker"); });
 			table.AddSpeedButton("Opponent", "Opponent Saying Marker", (data) => { return AddFilter("opp", data, "SayingMarker"); });
 			table.AddSpeedButton("Opponent", "Opponent Saying Text", (data) => { return AddFilter("opp", data, "Saying"); });
+			table.AddSpeedButton("Opponent", "Opponent Said Text", (data) => { return AddFilter("opp", data, "Said"); });
 			table.AddSpeedButton("Opponent", "Opponent Time in Stage", (data) => { return AddFilter("opp", data, "TimeInStage"); });
 			table.AddSpeedButton("Opponent", "Opponent Consecutive Losses", (data) => { return AddFilter("opp", data, "ConsecutiveLosses"); });
 			table.AddSpeedButton("Opponent", "Opponent Hand", (data) => { return AddFilter("opp", data, "Hand"); });
@@ -507,6 +509,7 @@ namespace SPNATI_Character_Editor.Controls
 				table.AddSpeedButton("Target", "Target Not Said Marker", (data) => { return AddFilter("target", data, "NotSaidMarker"); });
 				table.AddSpeedButton("Target", "Target Saying Marker", (data) => { return AddFilter("target", data, "SayingMarker"); });
 				table.AddSpeedButton("Target", "Target Saying Text", (data) => { return AddFilter("target", data, "Saying"); });
+				table.AddSpeedButton("Target", "Target Said Text", (data) => { return AddFilter("target", data, "Said"); });
 				table.AddSpeedButton("Target", "Target Time in Stage", (data) => { return AddFilter("target", data, "TimeInStage"); });
 				table.AddSpeedButton("Target", "Target Consecutive Losses", (data) => { return AddFilter("target", data, "ConsecutiveLosses"); });
 				table.AddSpeedButton("Target", "Target Hand", (data) => { return AddFilter("target", data, "Hand"); });

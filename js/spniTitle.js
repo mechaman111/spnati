@@ -328,6 +328,22 @@ var $gameLoadProgress = $(".game-load-progress");
     "supernova/0-imagine.png",
     "supernova/4-giggle.png",
     "supernova/4-horny.png",
+    "mikan/0-happy.png",
+    "mikan/2-happy.png",
+    "mikan/0-explain.png",
+    "mikan/2-explain.png",
+    "cagliostro/0-Cutesy.png",
+    "cagliostro/0-Happy.png",
+    "cagliostro/0-Shrug.png",
+    "cagliostro/0-Interested.png",
+    "mari/0-tease.png",
+    "mari/0-cheer.png",
+    "mari/3-relaxed.png",
+    "mari/4-coy.png",
+    "reimu/0-select.png",                   // Highlighted New Character
+    "reimu/0-smug.png",
+    "reimu/0-bluffing.png",
+    "reimu/0-pleasant.png"
 ];
 
 /* maybe move this data to an external file if the hardcoded stuff changes often enough */
@@ -637,10 +653,12 @@ TitleClothingSelectionIcon.prototype.update = function () {
     $(this.elem).removeClass("available selected");
     if (this.clothing.isAvailable()) {
         $(this.elem).addClass("available");
+		updateClothingCount();
     }
 
     if (this.clothing.isSelected()) {
         $(this.elem).addClass("selected");
+		updateClothingCount();
     }
 }
 
@@ -931,4 +949,15 @@ function selectTitleCandy() {
 
     $titleCandy[0].attr("src", "opponents/" + candy1);
     $titleCandy[1].attr("src", "opponents/" + candy2);
+}
+
+/************************************************************
+ * Update the warning text to say how many items of clothing are being worn.
+ ************************************************************/
+function updateClothingCount(){
+	/* the amount of clothing being worn */
+	var clothingCount = save.selectedClothing();
+	
+	$warningLabel.html(`Select from 0 to 8 articles. Wear whatever you want. (${clothingCount.length}/8)`);
+	return;
 }

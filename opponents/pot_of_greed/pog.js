@@ -52,24 +52,24 @@ if (!pog) var pog = (function (root) {
         });
     }
     
-    var THREE_PAIR = 5.5;
-    var SIX_STRAIGHT = 6.5;
-    var SIX_FLUSH = 6.7;
-    var SEVEN_STRAIGHT = 7.4;
-    var SEVEN_FLUSH = 7.6;
-    var STRAIGHT_PLUS_PAIR = 7.8;
-    var FULL_HOUSE_PLUS_PAIR = 8.4;
-    var TWO_THREE_OF_A_KINDS = 8.6;
+    var SIX_STRAIGHT = 7.2;
+    var STRAIGHT_PLUS_PAIR = 7.35;
+    var THREE_PAIR = 7.5;
+    var SIX_FLUSH = 7.65;
+    var FULL_HOUSE_PLUS_PAIR = 7.8;
+    var SEVEN_STRAIGHT = 8.2;
+    var TWO_THREE_OF_A_KINDS = 8.5;
     var FULLER_HOUSE = 8.8;
-    var FULLEST_HOUSE = 9.2;
-    var STRAIGHT_FLUSH_PLUS_PAIR = 9.4;
-    var SIX_STRAIGHT_FLUSH = 9.6;
-    var STRAIGHT_AND_PAIR_FLUSH = 9.8;
-    var SEVEN_STRAIGHT_FLUSH = 11;
-    var ROYAL_FLUSH_PLUS_PAIR = 12;
-    var SIX_ROYAL_FLUSH = 13;
-    var ROYAL_STRAIGHT_AND_PAIR_FLUSH = 14;
-    var SEVEN_ROYAL_FLUSH = 15;
+    var SEVEN_FLUSH = 9.5;
+    var STRAIGHT_FLUSH_PLUS_PAIR = 10;
+    var SIX_STRAIGHT_FLUSH = 11;
+    var FULLEST_HOUSE = 12;
+    var STRAIGHT_AND_PAIR_FLUSH = 13;
+    var ROYAL_FLUSH_PLUS_PAIR = 14;
+    var SIX_ROYAL_FLUSH = 15;
+    var ROYAL_STRAIGHT_AND_PAIR_FLUSH = 16;
+    var SEVEN_STRAIGHT_FLUSH = 17;
+    var SEVEN_ROYAL_FLUSH = 18;
 
     function loadScript(scriptName) {
         console.log("[Pot of Greed] Loading module: " + scriptName);

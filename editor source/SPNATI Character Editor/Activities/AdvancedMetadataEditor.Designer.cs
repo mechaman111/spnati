@@ -48,6 +48,8 @@
             this.label2 = new Desktop.Skinning.SkinnedLabel();
             this.valLayer = new Desktop.Skinning.SkinnedNumericUpDown();
             this.skinnedGroupBox1 = new Desktop.Skinning.SkinnedGroupBox();
+            this.cboFontSize = new Desktop.Skinning.SkinnedComboBox();
+            this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
             this.skinnedGroupBox2 = new Desktop.Skinning.SkinnedGroupBox();
             this.gridOtherNicknames = new Desktop.Skinning.SkinnedDataGridView();
             this.ColOtherNickname = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,8 +61,6 @@
             this.skinnedGroupBox3 = new Desktop.Skinning.SkinnedGroupBox();
             this.styleControl = new SPNATI_Character_Editor.Controls.StyleControl();
             this.skinnedLabel1 = new Desktop.Skinning.SkinnedLabel();
-            this.skinnedLabel2 = new Desktop.Skinning.SkinnedLabel();
-            this.cboFontSize = new Desktop.Skinning.SkinnedComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.valScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridLabels)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.valLayer)).BeginInit();
@@ -101,6 +101,7 @@
             0,
             0,
             0});
+            this.valScale.ValueChanged += new System.EventHandler(this.valScale_ValueChanged);
             // 
             // lblScale
             // 
@@ -273,6 +274,37 @@
             this.skinnedGroupBox1.TabIndex = 94;
             this.skinnedGroupBox1.TabStop = false;
             this.skinnedGroupBox1.Text = "Advanced Metadata";
+            // 
+            // cboFontSize
+            // 
+            this.cboFontSize.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.cboFontSize.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.cboFontSize.BackColor = System.Drawing.Color.White;
+            this.cboFontSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFontSize.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
+            this.cboFontSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.cboFontSize.FormattingEnabled = true;
+            this.cboFontSize.KeyMember = null;
+            this.cboFontSize.Location = new System.Drawing.Point(133, 194);
+            this.cboFontSize.Name = "cboFontSize";
+            this.cboFontSize.SelectedIndex = -1;
+            this.cboFontSize.SelectedItem = null;
+            this.cboFontSize.Size = new System.Drawing.Size(121, 21);
+            this.cboFontSize.Sorted = false;
+            this.cboFontSize.TabIndex = 93;
+            // 
+            // skinnedLabel2
+            // 
+            this.skinnedLabel2.AutoSize = true;
+            this.skinnedLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.skinnedLabel2.ForeColor = System.Drawing.Color.Black;
+            this.skinnedLabel2.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
+            this.skinnedLabel2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
+            this.skinnedLabel2.Location = new System.Drawing.Point(6, 197);
+            this.skinnedLabel2.Name = "skinnedLabel2";
+            this.skinnedLabel2.Size = new System.Drawing.Size(52, 13);
+            this.skinnedLabel2.TabIndex = 92;
+            this.skinnedLabel2.Text = "Text size:";
             // 
             // skinnedGroupBox2
             // 
@@ -473,37 +505,6 @@
             this.skinnedLabel1.TabIndex = 97;
             this.skinnedLabel1.Text = "To assign a nickname mid-game, set a per-target marker named \"nickname\" on a case" +
     " where the desired character is the target.";
-            // 
-            // skinnedLabel2
-            // 
-            this.skinnedLabel2.AutoSize = true;
-            this.skinnedLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.skinnedLabel2.ForeColor = System.Drawing.Color.Black;
-            this.skinnedLabel2.Highlight = Desktop.Skinning.SkinnedHighlight.Normal;
-            this.skinnedLabel2.Level = Desktop.Skinning.SkinnedLabelLevel.Normal;
-            this.skinnedLabel2.Location = new System.Drawing.Point(6, 197);
-            this.skinnedLabel2.Name = "skinnedLabel2";
-            this.skinnedLabel2.Size = new System.Drawing.Size(52, 13);
-            this.skinnedLabel2.TabIndex = 92;
-            this.skinnedLabel2.Text = "Text size:";
-            // 
-            // cboFontSize
-            // 
-            this.cboFontSize.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.cboFontSize.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.cboFontSize.BackColor = System.Drawing.Color.White;
-            this.cboFontSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFontSize.FieldType = Desktop.Skinning.SkinnedFieldType.Surface;
-            this.cboFontSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.cboFontSize.FormattingEnabled = true;
-            this.cboFontSize.KeyMember = null;
-            this.cboFontSize.Location = new System.Drawing.Point(133, 194);
-            this.cboFontSize.Name = "cboFontSize";
-            this.cboFontSize.SelectedIndex = -1;
-            this.cboFontSize.SelectedItem = null;
-            this.cboFontSize.Size = new System.Drawing.Size(121, 21);
-            this.cboFontSize.Sorted = false;
-            this.cboFontSize.TabIndex = 93;
             // 
             // AdvancedMetadataEditor
             // 

@@ -1,4 +1,4 @@
-if (!monika) var monika = (function (root) {
+if (!window.monika) window.monika = (function (root) {
 
     /* Polyfill String.prototype.repeat */
     if (!String.prototype.repeat) {
@@ -500,6 +500,8 @@ if (!monika) var monika = (function (root) {
         }
     }
     registerHook('updateGameVisual', 'post', setupTransientGlitches);
+
+    root.monika = exports;
 
     return exports;
 }(this));

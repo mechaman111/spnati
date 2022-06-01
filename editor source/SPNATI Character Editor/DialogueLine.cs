@@ -98,6 +98,14 @@ namespace SPNATI_Character_Editor
 			set { if (_markers != value) { _markers = value; NotifyPropertyChanged(); } }
 		}
 
+		private DialogueOperations _operations;
+		[XmlElement("operations")]
+		public DialogueOperations Operations
+		{
+			get { return _operations; }
+			set { if (_operations != value) { _operations = value; NotifyPropertyChanged(); } }
+		}
+
 		private string _direction;
 		[DefaultValue("down")]
 		[XmlAttribute("direction")]
@@ -126,7 +134,7 @@ namespace SPNATI_Character_Editor
 		}
 
 		private string _fontSize;
-		[DefaultValue("normal")]
+		[DefaultValue("")]
 		[XmlAttribute("font-size")]
 		public string FontSize
 		{
@@ -216,11 +224,12 @@ namespace SPNATI_Character_Editor
 			Image = "";
 			Text = "";
 			Direction = "down";
-			FontSize = "normal";
+			FontSize = "";
 			Weight = 1;
 			Marker = null;
 			Images = new List<StageImage>();
 			Markers = new List<MarkerOperation>();
+			Operations = null;
 		}
 
 		public DialogueLine(string image, string text) : this()
@@ -263,6 +272,10 @@ namespace SPNATI_Character_Editor
 			{
 				copy.Markers.Add(marker.Copy());
 			}
+			if (Operations != null && !Operations.IsEmpty())
+			{
+				copy.Operations = Operations.Copy();
+			}
 			return copy;
 		}
 
@@ -290,6 +303,10 @@ namespace SPNATI_Character_Editor
 			foreach (MarkerOperation op in Markers)
 			{
 				hash = (hash * 397) ^ op.GetHashCode();
+			}
+			if (Operations != null)
+			{
+				hash = (hash * 397) ^ Operations.GetHashCode();
 			}
 			return hash;
 		}
@@ -347,14 +364,14 @@ namespace SPNATI_Character_Editor
 			get
 			{
 				return !string.IsNullOrEmpty(Gender) || !string.IsNullOrEmpty(Size) || Intelligence != null || (!string.IsNullOrEmpty(Direction) && Direction != "down") ||
-					(!string.IsNullOrEmpty(FontSize) && FontSize != "normal") || Label != null || !string.IsNullOrEmpty(Location) || !string.IsNullOrEmpty(Layer) || Weight != 1;
+					!string.IsNullOrEmpty(FontSize) || Label != null || !string.IsNullOrEmpty(Location) || !string.IsNullOrEmpty(Layer) || Weight != 1;
 			}
 		}
 
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
 		private bool UseXmlText()
 		{
-			return Images.Count == 0 && Markers.Count == 0;
+			return Images.Count == 0 && Markers.Count == 0 && ((Operations == null) || Operations.IsEmpty());
 		}
 	}
 }

@@ -51,6 +51,7 @@ These conditions check markers, dialogue text, and poses. Usually, because marke
 | `notSaidMarker` | Not Said Marker  | Marker                 | Checks that a given marker has not been set.
 | `sayingMarker`  | Saying Marker    | Marker[-operator-value]| Checks that a marker is being set by a character's _current_ line of dialogue.
 | `saying`        | Saying Text      | String                 | Checks that a character's _current_ line of dialogue contains specific text. The comparison is done before variable substitutions, is case insensitive and ignores formatting.
+| `said`          | (TBD)            | String[-operator-value]| Checks how many times a character's _previously_ said dialogue contains specific text. The comparison is done before variable substitutions, is case insensitive and ignores formatting.
 | `pose`          | Pose             | Pose name              | Checks that a character's _current_ line of dialogue uses a pose with a specific name. The pose name excludes the stage prefix and filename extension.
 
 ### Volatile Conditions

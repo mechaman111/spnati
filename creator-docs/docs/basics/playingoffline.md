@@ -25,6 +25,19 @@ Type `about:config` in the url bar,  and accept the warning (we won't break anyt
     
 ---
 
+## Using Docker
+This solution requires experience with the command lines for macOS, Linux, or WSL. If you are not experienced with Docker Desktop on Windows/macOS or Docker on Linux, consider the Local Server Workaround below.
+
+We provide a Dockerfile to build and run SPNatI. We do not, however, host the built image for download.
+
+Prerequisite: [Set up Docker](https://docs.docker.com/get-started/) for your OS.
+
+1. Build a new version, navigate to your game files run: `docker build -t spnati:latest .`
+2. Run the new container: `docker run --rm -it -p 8080:8080 spnati:latest`
+3. Finally, simply navigate your web browser to `http://localhost:8080`
+
+If you want to change the game files for development, mount the SPNatI files into the container: `docker run --rm -it -p 8080:8080 -v /path/to/game:/usr/share/nginx/html spnati:latest`
+
 ## Local Server Workaround
 
 You can use a local webserver to access the offline version. Scripts and executables for starting webservers to access the offline version are included in the SPNatI repository.

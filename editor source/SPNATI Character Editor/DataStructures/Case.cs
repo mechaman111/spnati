@@ -432,6 +432,17 @@ namespace SPNATI_Character_Editor
 			set { if (_alsoPlayingSaying != value) { _alsoPlayingSaying = value; NotifyPropertyChanged(); } }
 		}
 
+		private string _alsoPlayingSaid;
+		[Text(DisplayName = "Also Playing Said Text", GroupOrder = 5, Description = "Another player has said some text")]
+		[XmlOrder(310)]
+		[XmlAttribute("alsoPlayingSaid")]
+		[JsonProperty("alsoPlayingSaid")]
+		public string AlsoPlayingSaid
+		{
+			get { return _alsoPlayingSaid; }
+			set { if (_alsoPlayingSaid != value) { _alsoPlayingSaid = value; NotifyPropertyChanged(); } }
+		}
+
 		private string _targetSaidMarker;
 		[MarkerCondition(DisplayName = "Target Said Marker", GroupOrder = 3, Description = "Target has said a marker", ShowPrivate = false, BoundProperties = new string[] { "Target" })]
 		[XmlOrder(320)]
@@ -474,6 +485,17 @@ namespace SPNATI_Character_Editor
 		{
 			get { return _targetSaying; }
 			set { if (_targetSaying != value) { _targetSaying = value; NotifyPropertyChanged(); } }
+		}
+
+		private string _targetSaid;
+		[Text(DisplayName = "Target Said Text", GroupOrder = 6, Description = "Target has said some text")]
+		[XmlOrder(350)]
+		[XmlAttribute("targetSaid")]
+		[JsonProperty("targetSaid")]
+		public string TargetSaid
+		{
+			get { return _targetSaid; }
+			set { if (_targetSaid != value) { _targetSaid = value; NotifyPropertyChanged(); } }
 		}
 
 		private string _priority;
@@ -755,6 +777,10 @@ namespace SPNATI_Character_Editor
 			{
 				result.Add(string.Format("(target saying \"{0}\")", TargetSaying));
 			}
+			if (!string.IsNullOrEmpty(TargetSaid))
+			{
+				result.Add(string.Format("(target said \"{0}\")", TargetSaid));
+			}
 			if (!string.IsNullOrEmpty(AlsoPlayingSaidMarker))
 			{
 				result.Add(string.Format("(other said {0})", AlsoPlayingSaidMarker));
@@ -770,6 +796,10 @@ namespace SPNATI_Character_Editor
 			if (!string.IsNullOrEmpty(AlsoPlayingSaying))
 			{
 				result.Add(string.Format("(other saying \"{0}\")", AlsoPlayingSaying));
+			}
+			if (!string.IsNullOrEmpty(AlsoPlayingSaid))
+			{
+				result.Add(string.Format("(other saying \"{0}\")", AlsoPlayingSaid));
 			}
 			if (Conditions.Count > 0)
 			{
@@ -956,6 +986,8 @@ namespace SPNATI_Character_Editor
 				totalPriority += 1;
 			if (!string.IsNullOrEmpty(TargetSaying))
 				totalPriority += 1;
+			if (!string.IsNullOrEmpty(TargetSaid))
+				totalPriority += 1;
 
 			if (!string.IsNullOrEmpty(HasHand))
 				totalPriority += 20;
@@ -977,6 +1009,8 @@ namespace SPNATI_Character_Editor
 				if (!string.IsNullOrEmpty(AlsoPlayingSayingMarker))
 					totalPriority += 1;
 				if (!string.IsNullOrEmpty(AlsoPlayingSaying))
+					totalPriority += 1;
+				if (!string.IsNullOrEmpty(AlsoPlayingSaid))
 					totalPriority += 1;
 			}
 
@@ -1112,7 +1146,9 @@ namespace SPNATI_Character_Editor
 			hash = (hash * 397) ^ (AlsoPlayingSayingMarker ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (ConsecutiveLosses ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (TargetSaying ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (TargetSaid ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (AlsoPlayingSaying ?? string.Empty).GetHashCode();
+			hash = (hash * 397) ^ (AlsoPlayingSaid ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (AddCharacterTags ?? string.Empty).GetHashCode();
 			hash = (hash * 397) ^ (RemoveCharacterTags ?? string.Empty).GetHashCode();
 			if (includePriority)
@@ -1233,7 +1269,9 @@ namespace SPNATI_Character_Editor
 				  !string.IsNullOrEmpty(NotSaidMarker) ||
 				  !string.IsNullOrEmpty(AlsoPlayingSayingMarker) ||
 				  !string.IsNullOrEmpty(TargetSaying) ||
+				  !string.IsNullOrEmpty(TargetSaid) ||
 				  !string.IsNullOrEmpty(AlsoPlayingSaying) ||
+				  !string.IsNullOrEmpty(AlsoPlayingSaid) ||
 				  !string.IsNullOrEmpty(Hidden) ||
 				  !string.IsNullOrEmpty(Disabled) ||
 				  Conditions.Count > 0 ||
@@ -1257,6 +1295,11 @@ namespace SPNATI_Character_Editor
 				}
 				bool filtered = Conditions.Any(c =>
 				{
+					if (c.Role == "self")
+					{
+						return false;
+					}
+
 					bool result = !string.IsNullOrEmpty(c.FilterTag);
 					if (result)
 					{
@@ -1290,15 +1333,18 @@ namespace SPNATI_Character_Editor
 				{
 					foreach (TargetCondition condition in Conditions)
 					{
-						if (!string.IsNullOrEmpty(condition.Character) && !humanTargets.Contains(condition.Character))
+						if (condition.Role != "self" && condition.Count != "0" && condition.Count != "0-0")
 						{
-							targeted = true;
-							break;
-						}
-						if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.Get(condition.FilterTag) != null && !humanTargets.Contains(condition.FilterTag))
-						{
-							targeted = true;
-							break;
+							if (!string.IsNullOrEmpty(condition.Character) && !humanTargets.Contains(condition.Character))
+							{
+								targeted = true;
+								break;
+							}
+							if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.Get(condition.FilterTag) != null && !humanTargets.Contains(condition.FilterTag))
+							{
+								targeted = true;
+								break;
+							}
 						}
 					}
 				}
@@ -1329,15 +1375,18 @@ namespace SPNATI_Character_Editor
 				{
 					foreach (TargetCondition condition in Conditions)
 					{
-						if (!string.IsNullOrEmpty(condition.Character))
+						if (condition.Role != "self")
 						{
-							targeted = true;
-							break;
-						}
-						if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.Get(condition.FilterTag) != null)
-						{
-							targeted = true;
-							break;
+							if (!string.IsNullOrEmpty(condition.Character))
+							{
+								targeted = true;
+								break;
+							}
+							if (!string.IsNullOrEmpty(condition.FilterTag) && CharacterDatabase.Get(condition.FilterTag) != null)
+							{
+								targeted = true;
+								break;
+							}
 						}
 					}
 				}
@@ -1804,6 +1853,7 @@ namespace SPNATI_Character_Editor
 			other.TargetNotSaidMarker = TargetNotSaidMarker;
 			other.TargetSayingMarker = TargetSayingMarker;
 			other.TargetSaying = TargetSaying;
+			other.TargetSaid = TargetSaid;
 			other.TargetStage = TargetStage;
 			other.TargetStartingLayers = TargetStartingLayers;
 			other.TargetStatus = TargetStatus;
@@ -1902,6 +1952,7 @@ namespace SPNATI_Character_Editor
 			other.AlsoPlayingTimeInStage = AlsoPlayingTimeInStage;
 			other.AlsoPlayingSayingMarker = AlsoPlayingSayingMarker;
 			other.AlsoPlayingSaying = AlsoPlayingSaying;
+			other.AlsoPlayingSaid = AlsoPlayingSaid;
 		}
 
 		/// <summary>
@@ -2523,6 +2574,10 @@ namespace SPNATI_Character_Editor
 				{
 					continue;
 				}
+				if (c.HasTargetedConditions && !Character.IsCaseTargetedAtCharacter(c, speaker, TargetType.DirectTarget))
+				{
+					continue;
+				}
 				if (!c.MatchesTableConditions(sourceCase))
 				{
 					continue;
@@ -2820,6 +2875,7 @@ namespace SPNATI_Character_Editor
 				!string.IsNullOrEmpty(AlsoPlayingNotSaidMarker) ||
 				!string.IsNullOrEmpty(AlsoPlayingSayingMarker) ||
 				!string.IsNullOrEmpty(AlsoPlayingSaying) ||
+				!string.IsNullOrEmpty(AlsoPlayingSaid) ||
 				!string.IsNullOrEmpty(AlsoPlayingTimeInStage) ||
 				!string.IsNullOrEmpty(TotalMales) ||
 				!string.IsNullOrEmpty(TotalPlaying) ||

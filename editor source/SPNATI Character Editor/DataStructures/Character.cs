@@ -896,7 +896,7 @@ namespace SPNATI_Character_Editor
 		{
 			foreach (var workingCase in Behavior.GetWorkingCases())
 			{
-				if (IsCaseTargetedAtCharacter(workingCase, character, targetTypes))
+				if (IsCaseTargetedAtCharacter(workingCase, character, targetTypes) && String.IsNullOrEmpty(workingCase.Hidden) && String.IsNullOrEmpty(workingCase.Disabled))
 				{
 					yield return workingCase;
 				}
@@ -919,7 +919,7 @@ namespace SPNATI_Character_Editor
 			}
 		}
 
-		private bool IsCaseTargetedAtCharacter(Case stageCase, Character character, TargetType allowedTargetTypes)
+		public static bool IsCaseTargetedAtCharacter(Case stageCase, Character character, TargetType allowedTargetTypes)
 		{
 			if (allowedTargetTypes == TargetType.None)
 				return false;
@@ -999,7 +999,7 @@ namespace SPNATI_Character_Editor
 				bool usesTag = (stageCase.Filter == tag);
 				if (!usesTag)
 				{
-					usesTag = stageCase.Conditions.Find(c => c.FilterTag == tag) != null;
+					usesTag = stageCase.Conditions.Find(c => c.FilterTag == tag && c.Count != "0" && c.Count != "0-0") != null;
 				}
 				if (usesTag)
 				{

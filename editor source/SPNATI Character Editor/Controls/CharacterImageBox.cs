@@ -142,6 +142,7 @@ namespace SPNATI_Character_Editor.Controls
 			SceneTransform = new Matrix();
 			int screenHeight = canvas.Height - ScreenMargin * 2;
 			int availableHeight = ShowTextBox ? (int)(screenHeight * (1 - TextPercent)) : (int)(screenHeight * 0.9f);
+			availableHeight = (int)(availableHeight * (_character == null ? 1 : (_character.Character.Metadata.Scale / 100)));
 			float screenScale = availableHeight / (Pose == null ? 1400.0f : Pose.BaseHeight);
 			SceneTransform.Scale(screenScale, screenScale, MatrixOrder.Append); // scale to display
 			SceneTransform.Translate(canvas.Width * 0.5f, screenHeight - availableHeight, MatrixOrder.Append); // center horizontally
@@ -168,7 +169,7 @@ namespace SPNATI_Character_Editor.Controls
 			Pose = null;
 		}
 
-		public void SetText(DialogueLine line)
+		public void SetText(DialogueLine line, string globalSize)
 		{
 			_line = line;
 			if (line == null || line.Text == null || string.IsNullOrEmpty(line.Text) || line.Text.Trim() == "~blank~")
@@ -184,7 +185,12 @@ namespace SPNATI_Character_Editor.Controls
 				_percent = 0.5f;
 				_size = null;
 
-				if (!string.IsNullOrEmpty(line.FontSize) && line.FontSize != "normal")
+				if (!string.IsNullOrEmpty(globalSize) && globalSize != "normal")
+				{
+					_size = globalSize;
+				}
+
+				if (!string.IsNullOrEmpty(line.FontSize) && line.FontSize != globalSize)
 				{
 					_size = line.FontSize;
 				}
@@ -205,6 +211,60 @@ namespace SPNATI_Character_Editor.Controls
 		public void SetMarkers(List<string> markers)
 		{
 			_markers = markers;
+		}
+
+		public void RefreshImage()
+        {
+			Destroy();
+
+			UpdateSceneTransform();
+			tmrTick.Stop();
+			if (_currentPose != null)
+			{
+				PoseReference poseRef = _currentPose.GetPose(_currentStage);
+				if (poseRef != null)
+				{
+					if (poseRef.Pose == null)
+					{
+						string file = Path.Combine(_character.Skin.GetDirectory(), poseRef.FileName);
+						if (!File.Exists(file))
+						{
+							file = Path.Combine(_character.GetDirectory(), poseRef.FileName);
+						}
+						_reference = ImageCache.Get(file);
+						_imageReference = _reference?.Image;
+						if (ImageAnimator.CanAnimate(_imageReference))
+						{
+							_animating = true;
+							ImageAnimator.Animate(_imageReference, OnFrameChanged);
+						}
+					}
+					else
+					{
+						Pose p = _character.Skin.CustomPoses.Find(cp => cp.Id == poseRef.Pose.Id);
+						if (p == null)
+						{
+							p = poseRef.Pose;
+						}
+						Pose = new LivePose(_character, p, _currentStage);
+						if (AutoPlayback)
+						{
+							_time = 0;
+							_lastTick = DateTime.Now;
+							tmrTick.Enabled = true;
+						}
+					}
+				}
+				else
+				{
+					_imageReference = null;
+				}
+			}
+			else
+			{
+				_imageReference = null;
+			}
+			canvas.Invalidate();
 		}
 
 		public void SetImage(Image image, bool disposeImage = true)
@@ -294,7 +354,7 @@ namespace SPNATI_Character_Editor.Controls
 			Graphics g = e.Graphics;
 
 			int screenHeight = canvas.Height - ScreenMargin * 2;
-			if (_line == null || _line.Layer != "over")
+			if (_line == null || _line.Layer == "under" || (_character.Character.Metadata.BubblePosition == DialogueLayer.under && String.IsNullOrEmpty(_line.Layer)))
 			{
 				DrawSpeechBubble(g, screenHeight);
 			}
@@ -312,11 +372,17 @@ namespace SPNATI_Character_Editor.Controls
 
 				//scale to the height
 				float availableHeight = ShowTextBox ? screenHeight * (1 - TextPercent) : screenHeight * 0.9f;
+
+				if (_character != null)
+				{
+					availableHeight *= _character.Character.Metadata.Scale / 100;
+				}
+
 				int width = (int)(_imageReference.Width / (float)_imageReference.Height * availableHeight);
 				g.DrawImage(_imageReference, canvas.Width / 2 - width / 2, screenHeight - availableHeight + ScreenMargin, width, availableHeight);
 			}
 
-			if (_line != null && _line.Layer == "over")
+			if (_line != null && (_line.Layer == "over" || (_character.Character.Metadata.BubblePosition == DialogueLayer.over && String.IsNullOrEmpty(_line.Layer))))
 			{
 				DrawSpeechBubble(g, screenHeight);
 			}

@@ -116,6 +116,7 @@ Player.prototype.resetState = function () {
     this.timeInStage = 0;
     this.ticksInStage = 0;
     this.markers = {};
+    this.saidDialogue = {};
     this.hand = null;
 
     if (this.xml !== null) {
@@ -337,6 +338,17 @@ Player.prototype.getMarker = function (baseName, target, numeric, targeted_only)
     var name = baseName;
     if (target && target.id) {
         name = getTargetMarker(baseName, target);
+    }
+
+    if (!this.markers) {
+        console.error("Marker object not initialized for opponent " + this.id, this);
+        console.trace();
+
+        /* This might be a bad idea, since if we get here, then resetState()
+         * must not have been called for some reason.
+         * But better this than crashing... maybe?
+         */
+        this.markers = {};
     }
 
     if (!this.persistentMarkers[baseName]) {
@@ -629,7 +641,7 @@ function Opponent (id, metaFiles, status, releaseNumber, highlightStatus) {
                 if (eventCostumeSettings.allowTestingGuests[costumeSet] !== undefined) {
                     this.allow_testing_guest = eventCostumeSettings.allowTestingGuests[costumeSet];
                 } else if (!this.matchesEventTag) {
-                    this.allow_testing_guest = true;
+                    this.allow_testing_guest = false;
                 }
             }
         }
@@ -1262,6 +1274,8 @@ Opponent.prototype.recordTargetedCase = function (caseObj) {
     if (caseObj.filter) entities.add(caseObj.filter);
 
     caseObj.counters.forEach(function (ctr) {
+        /* Conditions checking if a character/tag is not at the table don't count as targeted. */
+        if (ctr.count.max === 0) return;
         if (ctr.id) entities.add(ctr.id);
         if (ctr.tag) entities.add(ctr.tag);
     });

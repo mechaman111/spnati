@@ -190,13 +190,17 @@ namespace SPNATI_Character_Editor
 		{
 			get
 			{
-				if (Case.Hidden == "1" || Case.Disabled == "1")
+				if (Case.Disabled == "1")
 				{
 					return "-";
 				}
 				else if (!string.IsNullOrEmpty(Case.CustomPriority))
 				{
 					return "*" + Case.CustomPriority;
+				}
+				else if (Case.Hidden == "1")
+				{
+					return "0";
 				}
 				string priority = Case.GetPriority().ToString();
 				if (Case.AlternativeConditions.Count > 0)
