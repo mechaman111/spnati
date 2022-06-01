@@ -26,9 +26,11 @@ var eStrategies = {
 
 function determineAIAction (player) {
 
-    /* Choose a strategy for the hand based on intelligence */
+    /* Choose a strategy for the hand based on intelligence. Always use suboptimal for the player for card suggestions. */
     var strategy = eStrategies.KEEPALL;
-    if (player.intelligence == eIntelligence.BEST) {
+    if (player.id == 'human') {
+        strategy = eStrategies.SUBOPTIMAL;
+    } else if (player.intelligence == eIntelligence.BEST) {
         if (Math.random() > 0.01) {
             strategy = eStrategies.OPTIMAL;
         } else {
