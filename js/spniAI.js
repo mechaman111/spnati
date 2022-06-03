@@ -30,36 +30,54 @@ function determineAIAction (player) {
     var strategy = eStrategies.KEEPALL;
     if (player.id == 'human') {
         strategy = eStrategies.SUBOPTIMAL;
-    } else if (player.intelligence == eIntelligence.BEST) {
-        if (Math.random() > 0.01) {
-            strategy = eStrategies.OPTIMAL;
-        } else {
-            strategy = eStrategies.RANDOM;
-        }
-    } else if (player.intelligence == eIntelligence.GOOD) {
-        if (Math.random() > 0.25) {
-            strategy = eStrategies.SUBOPTIMAL;
-        } else {
-            strategy = eStrategies.RANDOM;
-        }
-    } else if (player.intelligence == eIntelligence.AVERAGE) {
-        if (Math.random() > 0.5) {
-            strategy = eStrategies.SUBOPTIMAL;
-        } else {
-            strategy = eStrategies.RANDOM;
-        }
-    } else if (player.intelligence == eIntelligence.BAD) {
-        if (Math.random() > 0.5) {
-            strategy = eStrategies.RANDOM;
-        } else {
-            strategy = eStrategies.WORST;
-        }
-    } else if (player.intelligence == eIntelligence.THROW) {
-        if (Math.random() > 0.99) {
-            strategy = eStrategies.RANDOM;
-        } else {
-            strategy = eStrategies.WORST;
-        }
+    } else {
+      var AIRoll = Math.random();
+      switch (player.intelligence) {
+        case eIntelligence.NOSWAP:
+          strategy = eStrategies.KEEPALL;
+          break;
+        case eIntelligence.BEST:
+          if (AIRoll > 0.01) {
+              strategy = eStrategies.OPTIMAL;
+          } else {
+              strategy = eStrategies.RANDOM;
+          }
+          break;
+        case eIntelligence.GOOD:
+          if (AIRoll > 0.5) {
+              strategy = eStrategies.OPTIMAL;
+          } else if (AIRoll > 0.1) {
+              strategy = eStrategies.SUBOPTIMAL;
+          } else {
+              strategy = eStrategies.RANDOM;
+          }
+          break;
+        case eIntelligence.AVERAGE:
+          if (AIRoll > 0.6) {
+              strategy = eStrategies.SUBOPTIMAL;
+          } else {
+              strategy = eStrategies.RANDOM;
+          }
+          break;
+        case eIntelligence.BAD:
+          if (AIRoll > 0.85) {
+              strategy = eStrategies.SUBOPTIMAL;
+          } else if (AIRoll > 0.35) {
+              strategy = eStrategies.RANDOM;
+          } else {
+              strategy = eStrategies.WORST;
+          }
+          break;
+        case eIntelligence.THROW:
+          if (AIRoll > 0.99) {
+              strategy = eStrategies.RANDOM;
+          } else {
+              strategy = eStrategies.WORST;
+          }
+          break;
+        default:
+          console.log("No intelligence match found for " + player.id + ". Defaulting to no-swap.");
+      }
     }
 
     /* determine the current hand */
@@ -201,7 +219,7 @@ function determineAIAction (player) {
                 return;
             }
         }
-        
+
         /* end of function, otherwise just trade in everything */
         player.hand.tradeIns = [true, true, true, true, true];
         console.log("Hand is horrid, trading in everything. "+player.hand.tradeIns);
