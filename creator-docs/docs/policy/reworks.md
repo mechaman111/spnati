@@ -40,23 +40,19 @@ The character will not need to return to Testing if the original writer is revis
 
 Significant enough dialogue changes may be asked to return to Testing. The mod team reserves the right to determine what constitutes a dialogue overhaul. In general, changes to most of a characters' generics will prompt a move back to Testing.
 
-#### Pose Changes and Additions by the Original Artist or an Adopting Artist
+#### Pose Changes and Additions
 
 Adjusting existing poses and adding new poses, without changing the Kisekae model, will _not_ warrant a move to Testing whether done by the original artist or a new artist.
 
-#### Model Changes by the Original Artist
+#### Model Changes
 
-Model changes by the original artist will need to return to Testing, _unless_ that character is eligible for and passes **Quick Pass**. More info on Quick Pass can be found below.
-
-#### Model Changes by an Adopting Artist
-
-Model changes by an adopting artist will always need to return to Testing.
+Model changes will need to return to Testing, _unless_ that character is eligible for and passes **Quick Pass**. More info on Quick Pass can be found below.
 
 ### Quick Pass
 
-Quick Pass is only applicable for **Main Roster reworks done by the original artist(s)** (model or posing). The rework must be primarily art driven without dramatic changes to interactions (e.g. changing of masturbation, silhouette, core personality, and so on).
+Quick Pass is applicable for Main Roster reworks (model or posing). The rework must be primarily art driven without dramatic changes to interactions (e.g. changing of masturbation, silhouette, core personality, and so on).
 
-The developer will submit the art update and ask for Quick Pass. **Creators with the Made 1+ Character roles can vote** either for or against the rework on Discord, using thumbs up/thumbs down emoji. Voting will begin after the art update has been merged into the game, and be open for **24 hours**.
+The developer will submit the art update and ask for Quick Pass. Creators can vote either for or against the rework on Discord, using thumbs up/thumbs down emoji. For reworks done by the original artist, **only creators with the Made 1+ Character roles can vote.** For reworks done by an adopting artist, **only creators with the Made 2+ Character roles can vote.** Voting will begin after the art update has been merged into the game, and be open for **24 hours**.
 
 At the conclusion of 24 hours, a character must have **five more** "yes" votes than "no" votes. If so, the character gets to stay on the main roster as-is.
 
