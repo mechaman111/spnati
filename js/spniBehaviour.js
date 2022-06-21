@@ -1169,6 +1169,12 @@ function expandClothingVariable(clothing, fn, args, self, target, bindings) {
         } else {
             return '';
         }
+    } else if (fn == "withart") {
+        if (clothing.plural === false) {
+            return indefiniteArticle(clothing.name) + ' ' + clothing.name;
+        } else {
+            return clothing.name;
+        }
     } else if ((fn == 'type' || fn == 'position' || fn == 'generic') && args === undefined) {
         return clothing[fn];
     } else if (fn === "id") {
