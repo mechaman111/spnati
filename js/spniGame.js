@@ -256,10 +256,7 @@ function makeAIDecision () {
     
     /* update a few hardcoded visuals */
     players[currentTurn].swapping = true;
-    players[currentTurn].updateBehaviour(SWAP_CARDS);
-    players[currentTurn].commitBehaviourUpdate();
-    
-    saveSingleTranscriptEntry(currentTurn);
+    players[currentTurn].singleBehaviourUpdate(SWAP_CARDS);
 
     /* wait and implement AI action */
     var n = players[currentTurn].hand.tradeIns.countTrue();
@@ -275,18 +272,14 @@ function reactToNewAICards () {
     /* update behaviour */
     players[currentTurn].hand.determine();
     if (players[currentTurn].hand.strength == HIGH_CARD) {
-        players[currentTurn].updateBehaviour([BAD_HAND, ANY_HAND]);
+        players[currentTurn].singleBehaviourUpdate([BAD_HAND, ANY_HAND]);
     } else if (players[currentTurn].hand.strength == PAIR) {
-        players[currentTurn].updateBehaviour([OKAY_HAND, ANY_HAND]);
+        players[currentTurn].singleBehaviourUpdate([OKAY_HAND, ANY_HAND]);
     } else {
-        players[currentTurn].updateBehaviour([GOOD_HAND, ANY_HAND]);
+        players[currentTurn].singleBehaviourUpdate([GOOD_HAND, ANY_HAND]);
     }
-    
-    players[currentTurn].commitBehaviourUpdate();
-    
+
     players[currentTurn].swapping = false;
-    
-    saveSingleTranscriptEntry(currentTurn);
 
     /* wait and then advance the turn */
     timeoutID = window.setTimeout(advanceTurn, GAME_DELAY / 2);
@@ -316,12 +309,9 @@ function advanceTurn () {
         /* check to see if they are still in the game */
         if (players[currentTurn].out && currentTurn > 0) {
             /* update their speech and skip their turn */
-            players[currentTurn].updateBehaviour(players[currentTurn].forfeit[1] == CAN_SPEAK ?
+            players[currentTurn].singleBehaviourUpdate(players[currentTurn].forfeit[1] == CAN_SPEAK ?
                                                  addTriggers(players[currentTurn].forfeit[0], ANY_HAND) :
                                                  players[currentTurn].forfeit[0]);
-            players[currentTurn].commitBehaviourUpdate();
-            
-            saveSingleTranscriptEntry(currentTurn);
 
             timeoutID = window.setTimeout(advanceTurn, GAME_DELAY);
             return;

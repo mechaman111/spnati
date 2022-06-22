@@ -1915,7 +1915,10 @@ function Case($xml, trigger) {
     }
     
     // Calculate case priority ahead of time.
-    if (this.customPriority !== undefined) {
+    if (this.hidden) {
+        /* Only use custom priority for hidden cases, defaulting to 0 if no custom priority is set. */
+        this.priority = this.customPriority || 0;
+    } else if (this.customPriority !== undefined) {
         this.priority = this.customPriority;
     } else {
         this.priority = 0;
@@ -2526,11 +2529,10 @@ Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
     }
 
     var cases = [];
-
     triggers.forEach(function (trigger) {
         var relCases = this.cases.get(trigger+':'+stageNum) || [];
         relCases.forEach(function (c) {
-            if (cases.indexOf(c) < 0) cases.push(c);
+            if (!c.hidden && (cases.indexOf(c) < 0)) cases.push(c);
         });
     }, this);
 
@@ -2539,24 +2541,20 @@ Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
         console.log("Warning: couldn't find " + triggers + " dialogue for player " + this.slot + " at stage " + stageNum);
         return false;
     }
-    
+
+    /* Evaluate pre-dialogue hidden cases if we're not doing a reaction pass. */
+    if (!volatileOnly) this.evaluateHiddenCases(triggers, opp, false);
+
     /* Find the best match, as well as potential volatile matches. */
     var bestMatch = [];
     
     for (var i = 0; i < cases.length; i++) {
         var curCase = cases[i];
-        
-        if ((curCase.hidden || curCase.priority >= bestMatchPriority) &&
+
+        if ((curCase.priority >= bestMatchPriority) &&
             (!volatileOnly || curCase.isVolatile) &&
             curCase.checkConditions(this, opp))
         {
-            if (curCase.hidden) {
-                // if it's hidden, set markers, collectibles, etc. but don't actually count as a match
-                this.applyHiddenStates(curCase, opp);
-                curCase.cleanupMutableState();
-                continue;
-            }
-
             if (curCase.priority > bestMatchPriority) {
                 /* Cleanup all mutable state on previous best-match cases. */
                 bestMatch.forEach(function (c) { c.cleanupMutableState(); });
@@ -2593,6 +2591,56 @@ Opponent.prototype.findBehaviour = function(triggers, opp, volatileOnly) {
 
     console.log("-------------------------------------");
     return null;
+}
+
+Opponent.prototype.evaluateHiddenCases = function (triggers, opp, postDialogue) {
+    var cases = [];
+
+    triggers.forEach(function (trigger) {
+        var relCases = this.cases.get(trigger+':'+this.stage) || [];
+        relCases.forEach(function (c) {
+            if (
+                c.hidden &&
+                (postDialogue || !c.isVolatile) &&
+                ((c.priority < 0) == postDialogue) &&
+                (cases.indexOf(c) < 0)
+            ) {
+                cases.push(c);
+            }
+        });
+    }, this);
+
+    if (cases.length <= 0) return;
+
+    /* Sort hidden cases in order of descending custom priority. */
+    cases.sort(function (a, b) {
+        return b.priority - a.priority;
+    });
+
+    /* Group hidden cases together that have the same custom priority value. */
+    var curHiddenPriority = 0;
+    var curHiddenGroup = [];
+    var hiddenGroups = [];
+    cases.forEach(function (c) {
+        if (curHiddenPriority != c.priority && curHiddenGroup.length > 0) {
+            hiddenGroups.push(curHiddenGroup);
+            curHiddenGroup = [];
+        }
+        curHiddenGroup.push(c);
+        curHiddenPriority = c.priority;
+    });
+    if (curHiddenGroup.length > 0) hiddenGroups.push(curHiddenGroup);
+
+    /* Check conditions of all cases in each group in parallel, by filtering before applying effects. */
+    hiddenGroups.forEach(function (group) {
+        console.log("[" + this.id + "] Evaluating " + group.length + (postDialogue ? " post" : " pre") + "-dialogue hidden cases at priority " + group[0].priority);
+        group.filter(function (curCase) {
+            return curCase.checkConditions(this, opp);
+        }, this).forEach(function (matchedCase) {
+            this.applyHiddenStates(matchedCase, opp);
+            matchedCase.cleanupMutableState();
+        }, this);
+    }, this);
 }
 
 /**
@@ -2633,7 +2681,12 @@ Opponent.prototype.updateBehaviour = function(triggers, opp) {
     }
 
     if (Array.isArray(triggers) && Array.isArray(triggers[0])) {
-        return triggers.some(function(t) { return this.updateBehaviour(t, opp) }, this);
+        /* Return which trigger set actually matched within the passed-in array. */
+        for (let i=0; i < triggers.length; i++) {
+            let ret = this.updateBehaviour(triggers[i], opp);
+            if (ret !== null) return ret;
+        }
+        return null;
     }
     if (!Array.isArray(triggers)) {
         triggers = [triggers];
@@ -2652,10 +2705,31 @@ Opponent.prototype.updateBehaviour = function(triggers, opp) {
     if (state) {
         this.updateChosenState(state);
         this.lastUpdateTriggers = triggers;
-        
-        return true;
+        return triggers;
     }
-    return false;
+    return null;
+}
+
+/**
+ * Perform a full dialogue update for a single player.
+ * 
+ * This handles pre-dialogue hidden case evaluation, regular dialogue evaluation,
+ * committing chosen states, and post-dialogue hidden case evaluation in a single call.
+ * 
+ * @param {Array<string|Array<string>>|string} triggers 
+ * @param {Player} opp 
+ */
+Opponent.prototype.singleBehaviourUpdate = function (triggers, opp) {
+    /* Note the trigger set that actually matched in updateBehaviour,
+     * so that we can later evaluate post-dialogue hidden cases using those triggers.
+     */
+    var evaluatedTrigger = this.updateBehaviour(triggers, opp);
+    this.commitBehaviourUpdate();
+    
+    if (evaluatedTrigger) {
+        saveSingleTranscriptEntry(this.slot);
+        this.evaluateHiddenCases(evaluatedTrigger, opp, true);
+    }
 }
 
 /************************************************************
@@ -2760,18 +2834,31 @@ function updateAllBehaviours (target, target_tags, other_tags) {
         players[i].updatePending = true;
     }
 
+    /* We need to keep track of which triggers (if any) actually matched for each player,
+     * so that we can evaluate post-dialogue hidden cases for those triggers afterwards.
+     */
+    var postProcessingTriggers = new Array(5);
     for (var i = 1; i < players.length; i++) {
         if (!players[i] || !players[i].isLoaded()) continue;
         if (target === null || i != target) {
-            players[i].updateBehaviour(other_tags, players[target]);
+            postProcessingTriggers[i] = players[i].updateBehaviour(other_tags, players[target]);
         } else if (i == target && target_tags !== null) {
-            players[i].updateBehaviour(target_tags, null);
+            postProcessingTriggers[i] = players[i].updateBehaviour(target_tags, null);
         }
         players[i].updatePending = false;
     }
     
     updateAllVolatileBehaviours();
     commitAllBehaviourUpdates(target_tags !== null ? players[target] : null);
+
+    for (var i = 1; i < players.length; i++) {
+        if (!players[i] || !players[i].isLoaded() || !postProcessingTriggers[i]) continue;
+        if (target === null || i != target) {
+            players[i].evaluateHiddenCases(postProcessingTriggers[i], players[target], true);
+        } else if (i == target && target_tags !== null) {
+            players[i].evaluateHiddenCases(postProcessingTriggers[i], null, true);
+        }
+    }
 }
 
 /************************************************************
